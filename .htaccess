@@ -46,6 +46,7 @@ php_value magic_quotes_gpc 0
 php_value magic_quotes_runtime 0
 php_value magic_quotes_sybase 0 
 php_value allow_url_fopen 0
+php_value arg_separator.output "&amp;"
 DirectoryIndex index.php
 AddDefaultCharset UTF-8
 Options -Indexes
