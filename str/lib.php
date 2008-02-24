@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -28,17 +28,11 @@ require ("../incfiles/func.php");
 require ("../incfiles/data.php");
 require ("../incfiles/head.php");
 require ("../incfiles/inc.php");
+mb_internal_encoding('UTF-8');
 
-include ('../incfiles/char.php');
-###########################
-
-if (!empty($_GET['act']))
-{
-    $act = $_GET['act'];
-}
+$act = isset($_GET['act']) ? $_GET['act'] : '';
 switch ($act)
 {
-        #######################
     case "symb":
         if (isset($_POST['submit']))
         {
@@ -71,8 +65,6 @@ switch ($act)
         echo "&#187;<a href='?'>К категориям</a><br/>";
         break;
 
-
-        ###################
     case "search":
         $_SESSION['lib'] = rand(1000, 9999);
 
@@ -114,9 +106,7 @@ switch ($act)
                     }
                     break;
                 case 2:
-                    $srh1 = utfwin($srh);
-                    $tx = utfwin($array[text]);
-                    $pg = strlen($tx);
+                    $pg = mb_strlen($tx);
                     if (!empty($_SESSION['symb']))
                     {
                         $simvol = $_SESSION['symb'];
@@ -124,13 +114,11 @@ switch ($act)
                     {
                         $simvol = 600;
                     }
-
                     $page = ceil($pg / $simvol);
                     $tx = str_replace("<br/>", " ", $tx);
                     if (stristr($tx, $srh1))
                     {
-
-                        $a = strpos($tx, $srh1);
+                        $a = mb_strpos($tx, $srh1);
                         $page = ceil($a / $simvol) + 1;
                         if ($a > 100)
                         {
@@ -141,19 +129,17 @@ switch ($act)
                             $a1 = 0;
                             $a2 = 100;
                         }
-                        $tx = substr($tx, $a1, $a2);
-                        $b = strpos($tx, " ");
-                        $b2 = strrpos($tx, " ");
-                        $b1 = strlen($tx);
-                        $tx = substr($tx, $b, $b2 - $b);
+                        $tx = mb_substr($tx, $a1, $a2);
+                        $b = mb_strpos($tx, " ");
+                        $b2 = mb_strrpos($tx, " ");
+                        $b1 = mb_strlen($tx);
+                        $tx = mb_substr($tx, $b, $b2 - $b);
                         $tx = str_replace($srh1, "<b>$srh1</b>", $tx);
                         $tx = "...$tx...";
-
-                        $tx = winutf($tx);
-
                         $res[] = "<a href='?id=" . $array[id] . "&amp;page=" . $page . "'>$array[name]</a><br/><br/>$tx<br/>";
                     }
                     break;
+
                 default:
                     header("location: lib.php");
                     break;
@@ -174,8 +160,6 @@ switch ($act)
             {
                 echo "по тексту<br/>";
             }
-
-
         }
         if (empty($_GET['page']))
         {
@@ -207,13 +191,9 @@ switch ($act)
             }
             echo "$div $res[$i]</div>";
         }
-
-        ###
         if ($g > 10)
         {
             echo "<hr/>";
-
-
             $ba = ceil($g / 10);
             if ($offpg != 1)
             {
@@ -224,7 +204,6 @@ switch ($act)
             }
             $asd = $start - 10;
             $asd2 = $start + 20;
-
             if ($start != 0)
             {
                 echo '<a href="lib.php?act=search&amp;mod=' . $mod . '&amp;srh=' . $srh . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
@@ -255,7 +234,6 @@ switch ($act)
                     if ($i < $g && $i >= 0)
                     {
                         $ii = floor(1 + $i / 10);
-
                         if ($start == $i)
                         {
                             echo " <b>$ii</b>";
@@ -291,20 +269,16 @@ switch ($act)
             echo "<form action='lib.php'>Перейти к странице:<br/><input type='hidden' name='act' value='search'/><input type='hidden' name='srh' value='" . $srh . "'/><input type='hidden' name='mod' value='" . $mod .
                 "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
         }
-        ##########
-
         if ($g != 0)
         {
             echo "<br/>Найдено совпадений: $g";
         }
         echo '<br/><a href="?">К категориям</a><br/>';
         break;
-        ###########################################
 
     case "new":
         echo "Новые статьи<br/>";
         $old = $realtime - (3 * 24 * 3600);
-
         $newfile = mysql_query("select * from `lib` where time > '" . $old . "' and type='bk' and moder='1' order by time desc;");
         $totalnew = mysql_num_rows($newfile);
         if (empty($_GET['page']))
@@ -322,7 +296,6 @@ switch ($act)
         {
             $end = $start + 10;
         }
-
         if ($totalnew != 0)
         {
             while ($newf = mysql_fetch_array($newfile))
@@ -342,24 +315,7 @@ switch ($act)
                     }
                     $vr = $newf[time] + $sdvig * 3600;
                     $vr = date("d.m.y / H:i", $vr);
-                    if ($newf[text] != "")
-                    {
-                        $tx = $newf[text];
-                        $tx = utfwin($tx);
-                        if (strlen($tx) > 100)
-                        {
-                            $tx = substr($tx, 0, 90);
-
-                            $tx = "<br/>$tx...";
-                        } else
-                        {
-                            $tx = "<br/>$tx";
-                        }
-                        $tx = winutf($tx);
-                    } else
-                    {
-                        $tx = "";
-                    }
+                    $tx = $newf[soft];
                     echo "$div<a href='?id=" . $newf[id] . "'>$newf[name]</a><br/>Добавил: $newf[avtor] ($vr)$tx <br/>";
                     $nadir = $newf[refid];
                     $pat = "";
@@ -370,19 +326,15 @@ switch ($act)
                         $pat = "$dnew1[text]/$pat";
                         $nadir = $dnew1[refid];
                     }
-                    $l = strlen($pat);
-                    $pat1 = substr($pat, 0, $l - 1);
+                    $l = mb_strlen($pat);
+                    $pat1 = mb_substr($pat, 0, $l - 1);
                     echo "[$pat1]</div>";
                 }
                 ++$i;
-
             }
-            ###
             if ($totalnew > 10)
             {
                 echo "<hr/>";
-
-
                 $ba = ceil($totalnew / 10);
                 if ($offpg != 1)
                 {
@@ -391,12 +343,10 @@ switch ($act)
                 {
                     echo "Страниц: $ba<br/>";
                 }
-
                 if ($start != 0)
                 {
                     echo '<a href="lib.php?act=new&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
                 }
-
                 $asd = $start - 10;
                 $asd2 = $start + 20;
                 if ($offpg != 1)
@@ -424,7 +374,6 @@ switch ($act)
                         if ($i < $totalnew && $i >= 0)
                         {
                             $ii = floor(1 + $i / 10);
-
                             if ($start == $i)
                             {
                                 echo " <b>$ii</b>";
@@ -457,10 +406,6 @@ switch ($act)
                 }
                 echo "<form action='lib.php'>Перейти к странице:<br/><input type='hidden' name='act' value='new'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
             }
-
-            #####
-
-
             if ($totalnew >= 1)
             {
                 echo "<br/>Всего новых статей за 3 дня: $totalnew";
@@ -470,11 +415,7 @@ switch ($act)
             echo "За три дня новых статей не было<br/>";
         }
         echo "<br/><a href='lib.php?'>В библиотеку</a><br/>";
-
         break;
-
-
-        ####################
 
     case "moder":
         if ($dostlmod == 1)
@@ -515,7 +456,6 @@ switch ($act)
             {
                 $end = $start + 10;
             }
-
             if ($md1 != 0)
             {
                 while ($md2 = mysql_fetch_array($md))
@@ -535,19 +475,7 @@ switch ($act)
                         }
                         $vr = $md2[time] + $sdvig * 3600;
                         $vr = date("d.m.y / H:i", $vr);
-                        $tx = str_replace("<br/>", " ", $md2[text]);
-                        $tx = utfwin($tx);
-                        if (strlen($tx) > 100)
-                        {
-                            $tx = substr($tx, 0, 90);
-
-                            $tx = "$tx...";
-                        } else
-                        {
-                            $tx = "$tx";
-                        }
-                        $tx = winutf($tx);
-
+                        $tx = $md2[soft];
                         echo "$div<a href='?id=" . $md2[id] . "'>$md2[name]</a><br/>Добавил: $md2[avtor] ($vr)<br/>$tx <br/>";
                         $nadir = $md2[refid];
                         $pat = "";
@@ -558,18 +486,15 @@ switch ($act)
                             $pat = "$dnew1[text]/$pat";
                             $nadir = $dnew1[refid];
                         }
-                        $l = strlen($pat);
-                        $pat1 = substr($pat, 0, $l - 1);
+                        $l = mb_strlen($pat);
+                        $pat1 = mb_substr($pat, 0, $l - 1);
                         echo "[$pat1]<br/><a href='?act=moder&amp;id=" . $md2[id] . "&amp;yes'> Принять</a></div>";
                     }
                     ++$i;
                 }
-                ############
                 if ($md1 > 10)
                 {
                     echo "<hr/>";
-
-
                     $ba = ceil($md1 / 10);
                     if ($offpg != 1)
                     {
@@ -580,7 +505,6 @@ switch ($act)
                     }
                     $asd = $start - (10);
                     $asd2 = $start + (10 * 2);
-
                     if ($start != 0)
                     {
                         echo '<a href="lib.php?act=moder&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
@@ -610,7 +534,6 @@ switch ($act)
                             if ($i < $md1 && $i >= 0)
                             {
                                 $ii = floor(1 + $i / 10);
-
                                 if ($start == $i)
                                 {
                                     echo " <b>$ii</b>";
@@ -637,23 +560,17 @@ switch ($act)
                     {
                         echo "<b>[$page]</b>";
                     }
-
-
                     if ($md1 > $start + 10)
                     {
                         echo ' <a href="lib.php?act=moder&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
                     }
                     echo "<form action='lib.php'>Перейти к странице:<br/><input type='hidden' name='act' value='moder'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
                 }
-
-
                 if ($md1 >= 1)
                 {
                     echo "<br/>Всего: $md1";
                 }
                 echo "<br/><a href='?act=moder&amp;all'>Принять все!</a><br/>";
-
-
             }
         } else
         {
@@ -662,8 +579,6 @@ switch ($act)
         echo "<a href='?'>К категориям</a><br/>";
         break;
 
-
-        ################################
     case "addkomm":
         if (!empty($_SESSION['pid']))
         {
@@ -673,7 +588,7 @@ switch ($act)
                 require ('../incfiles/end.php');
                 exit;
             }
-            $id = intval(check(trim($_GET['id'])));
+            $id = intval(trim($_GET['id']));
             if (isset($_POST['submit']))
             {
                 $flt = $realtime - 30;
@@ -696,12 +611,9 @@ switch ($act)
                 {
                     $msg = trans($msg);
                 }
-                $msg = utfwin($msg);
-                $msg = substr($msg, 0, 500);
-                $msg = winutf($msg);
+                $msg = mb_substr($msg, 0, 500);
                 $agn = strtok($agn, ' ');
                 mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','komm','','" . $login . "','" . $msg . "','" . $ipp . "','" . $agn . "','');");
-
                 if (empty($datauser[komm]))
                 {
                     $fpst = 1;
@@ -710,8 +622,7 @@ switch ($act)
                     $fpst = $datauser[komm] + 1;
                 }
                 mysql_query("update `users` set  komm='" . $fpst . "' where id='" . intval($_SESSION['pid']) . "';");
-
-                header("Location: lib.php?act=komm&id=$id");
+                echo 'Комментарий успешно добавлен';
             } else
             {
                 echo "Напишите комментарий<br/><br/><form action='?act=addkomm&amp;id=" . $id . "' method='post'>
@@ -726,16 +637,14 @@ Cообщение(max. 500)<br/>
         {
             echo "Вы не авторизованы!<br/>";
         }
-        echo '<br/><br/><a href="?act=komm&amp;id=' . $id . '">К комментариям</a><br/><a href="?act=view&amp;file=' . $id . '">К файлу</a><br/>';
+        echo '<br/><br/><a href="?act=komm&amp;id=' . $id . '">К комментариям</a><br/>';
         break;
 
-
-        ################################
     case "trans":
         include ("../pages/trans.$ras_pages");
         echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
         break;
-        ############################
+
     case "komm":
         if ($_GET['id'] == "")
         {
@@ -768,7 +677,6 @@ Cообщение(max. 500)<br/>
         {
             $end = $start + $kmess;
         }
-
         while ($mass = mysql_fetch_array($mess))
         {
             if ($i >= $start && $i < $end)
@@ -855,12 +763,9 @@ Cообщение(max. 500)<br/>
             }
             ++$i;
         }
-        #######
         if ($countm > $kmess)
         {
             echo "<hr/>";
-
-
             $ba = ceil($countm / $kmess);
             if ($offpg != 1)
             {
@@ -871,7 +776,6 @@ Cообщение(max. 500)<br/>
             }
             $asd = $start - ($kmess);
             $asd2 = $start + ($kmess * 2);
-
             if ($start != 0)
             {
                 echo '<a href="lib.php?act=komm&amp;id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
@@ -928,8 +832,6 @@ Cообщение(max. 500)<br/>
             {
                 echo "<b>[$page]</b>";
             }
-
-
             if ($countm > $start + $kmess)
             {
                 echo ' <a href="lib.php?act=komm&amp;id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
@@ -937,17 +839,13 @@ Cообщение(max. 500)<br/>
             echo "<form action='lib.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
                 "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
         }
-
-        ###########
         echo "<br/>Всего комментариев: $countm";
         echo '<br/><a href="?id=' . $id . '">К статье</a><br/>';
         break;
 
-        ##################
     case "del":
         if ($dostlmod == 1)
         {
-
             if ($_GET['id'] == "" || $_GET['id'] == "0")
             {
                 echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
@@ -1026,15 +924,11 @@ Cообщение(max. 500)<br/>
         {
             header("location: lib.php");
         }
-
         break;
 
-
-        ######################
     case "edit":
         if ($dostlmod == 1)
         {
-
             if ($_GET['id'] == "" || $_GET['id'] == "0")
             {
                 echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
@@ -1050,7 +944,10 @@ Cообщение(max. 500)<br/>
                 {
                     case "bk":
                         $name = check($_POST['name']);
-                        mysql_query("update `lib` set name='" . $name . "' where id='" . $id . "';");
+                        $name = mb_substr($name, 0, 50);
+                        $anons = check($_POST['anons']);
+                        $anons = mb_substr($anons, 0, 100);
+                        mysql_query("update `lib` set name='" . $name . "', soft='" . $anons . "' where id='" . $id . "';");
                         header("location: lib.php?id=$ms[refid]");
                         break;
                     case "cat":
@@ -1063,10 +960,8 @@ Cообщение(max. 500)<br/>
                         {
                             $user = 0;
                         }
-
                         $mod = intval(check($_POST['mod']));
                         mysql_query("update `lib` set text='" . $text . "',ip='" . $mod . "',soft='" . $user . "' where id='" . $id . "';");
-
                         header("location: lib.php?id=$id");
                         break;
                     default:
@@ -1080,7 +975,7 @@ Cообщение(max. 500)<br/>
                 switch ($ms[type])
                 {
                     case "bk":
-                        echo "Редактируем название статьи<br/><form action='lib.php?act=edit&amp;id=" . $id . "' method='post'>Название:<br/><input type='text' name='name' value='" . $ms[name] .
+                        echo "Редактируем название статьи<br/><form action='lib.php?act=edit&amp;id=" . $id . "' method='post'>Название:<br/><input type='text' name='name' value='" . $ms[name] . "'/><br/>Анонс:<br/><input type='text' name='anons' value='" . $ms[soft] .
                             "'/><br/><input type='submit' name='submit' value='Ok!'/></form><br/><a href='lib.php?id=" . $id . "'>Назад</a><br/>";
                         break;
                     case "komm":
@@ -1118,12 +1013,9 @@ Cообщение(max. 500)<br/>
         }
         break;
 
-
-        ###################
     case "load":
         if ($dostlmod == 1)
         {
-
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
@@ -1149,8 +1041,8 @@ Cообщение(max. 500)<br/>
                         require ('../incfiles/end.php');
                         exit;
                     }
-                    $mod = intval(check($_POST['mod']));
                     $name = check($_POST['name']);
+                    $name = mb_substr($name, 0, 50);
                     $fname = $_FILES['fail']['name'];
                     $ftip = format($fname);
                     $ftip = strtolower($ftip);
@@ -1179,15 +1071,31 @@ Cообщение(max. 500)<br/>
                             $ch = $fname;
                             @chmod("$ch", 0777);
                             @chmod("temp/$ch", 0777);
-
-                            $txt = file_get_contents("temp/$ch");
-                            $txt = check($txt);
-
-                            if ($mod == 0)
+                            $txt = file_get_contents("temp/$ch ");
+                            if (mb_check_encoding($txt, 'UTF-8'))
                             {
-                                $txt = utfwin($txt);
+                            } elseif (mb_check_encoding($txt, 'windows-1251'))
+                            {
+                                $txt = iconv("windows-1251", "UTF-8", $txt);
+                            } elseif (mb_check_encoding($txt, 'KOI8-R'))
+                            {
+                                $txt = iconv("KOI8-R", "UTF-8", $txt);
+                            } else
+                            {
+                                echo "Файл в неизвестной кодировке!<br /><a href='lib.php?act=load&amp;id=" . $id . "'>Повторить</a><br/>";
+                                require ('../incfiles/end.php');
+                                exit;
                             }
-                            mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $txt . "','','','1');");
+                            $txt = check($txt);
+                            if (!empty($_POST['anons']))
+                            {
+                                $anons = check($_POST['anons']);
+                                $anons = mb_substr($anons, 0, 100);
+                            } else
+                            {
+                                $anons = mb_substr($txt, 0, 100);
+                            }
+                            mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $txt . "','','" . $anons . "','1');");
                             unlink("temp/$ch");
                             $cid = mysql_insert_id();
                             echo "Статья добавлена<br/><a href='lib.php?id=" . $cid . "'>К статье</a><br/>";
@@ -1198,11 +1106,8 @@ Cообщение(max. 500)<br/>
                             exit;
                         }
                     }
-
-
                     if (!empty($_POST['fail1']))
                     {
-
                         $libedfile = $_POST['fail1'];
                         if (strlen($libedfile) > 0)
                         {
@@ -1229,16 +1134,11 @@ Cообщение(max. 500)<br/>
                             require ('../incfiles/end.php');
                             exit;
                         }
-
-
                         if (strlen($filebase64) > 0)
                         {
-
-
                             $FileName = "temp/$tmp_name";
                             $filedata = base64_decode($filebase64);
                             $fid = @fopen($FileName, "wb");
-
                             if ($fid)
                             {
                                 if (flock($fid, LOCK_EX))
@@ -1250,17 +1150,34 @@ Cообщение(max. 500)<br/>
                             }
                             if (file_exists($FileName) && filesize($FileName) == strlen($filedata))
                             {
-
-
                                 echo 'Файл загружен!<br/>';
-
                                 $txt = file_get_contents("temp/$tmp_name");
-                                $txt = check($txt);
-                                if ($mod == 0)
+                                if (mb_check_encoding($txt, 'windows-1251'))
                                 {
-                                    $txt = utfwin($txt);
+                                    $txt = iconv("windows-1251", "UTF-8", $txt);
+
+                                } elseif (mb_check_encoding($txt, 'KOI8-R'))
+                                {
+                                    $txt = iconv("KOI8-R", "UTF-8", $txt);
+                                } elseif (mb_check_encoding($txt, 'UTF-8'))
+                                {
+                                    $txt = $txt;
+                                } else
+                                {
+                                    echo "Файл в неизвестной кодировке!<br /><a href='lib.php?act=load&amp;id=" . $id . "'>Повторить</a><br/>";
+                                    require ('../incfiles/end.php');
+                                    exit;
                                 }
-                                mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $txt . "','','','1');");
+                                $txt = check($txt);
+                                if (!empty($_POST['anons']))
+                                {
+                                    $anons = check($_POST['anons']);
+                                    $anons = mb_substr($anons, 0, 100);
+                                } else
+                                {
+                                    $anons = mb_substr($txt, 0, 100);
+                                }
+                                mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $txt . "','','" . $anons . "','1');");
                                 unlink("temp/$tmp_name");
                                 $cid = mysql_insert_id();
                                 echo "Статья добавлена<br/><a href='lib.php?id=" . $cid . "'>К статье</a><br/>";
@@ -1272,11 +1189,10 @@ Cообщение(max. 500)<br/>
                     }
                 } else
                 {
-
-                    echo "Выгрузка статьи<br/><form action='lib.php?act=load&amp;id=" . $id .
-                        "' method='post' enctype='multipart/form-data'>Название статьи<br/><input type='text' name='name'/><br/>Выберите текстовый файл( .txt):<br/><input type='file' name='fail'/><hr/>Для Opera Mini:<br/><input name='fail1' value =''/>&nbsp;<br/>
+                    echo "Выгрузка статьи<br/>(Поддерживаются кодировки Win-1251, KOI8-R, UTF-8)<br/><form action='lib.php?act=load&amp;id=" . $id .
+                        "' method='post' enctype='multipart/form-data'>Название статьи (max 50)<br/><input type='text' name='name'/><br/>Анонс (max 100)<br/><input type='text' name='anons'/><br/>Выберите текстовый файл( .txt):<br/><input type='file' name='fail'/><hr/>Для Opera Mini:<br/><input name='fail1' value =''/>&nbsp;<br/>
 <a href='op:fileselect'>Выбрать файл</a>
-<hr/>Кодировка файла<br/><select name='mod'><option value='1'>Win-1251</option><option value='0'>UTF-8</option></select><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href ='lib.php?id=" . $id . "'>Назад</a><br/>";
+<hr/><input type='submit' name='submit' value='Ok!'/><br/></form><a href ='lib.php?id=" . $id . "'>Назад</a><br/>";
                 }
             } else
             {
@@ -1286,116 +1202,9 @@ Cообщение(max. 500)<br/>
         {
             header("location: lib.php");
         }
-
         break;
-        #############################
-    case "refr":
-        if ($dostsadm == 1)
-        {
-            /*
-            $host="gazenwagen.com";
-            $user="gazenold";
-            $pass="csd55630";
 
-            $connect=ftp_connect($host) or die ('cannot connect to ftp server');
-            $login=ftp_login($connect,$user,$pass) or die ('incorrect login or password');
-            */
-
-
-            if ($_GET['id'] == "")
-            {
-                echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
-                require ('../incfiles/end.php');
-                exit;
-            }
-            $id = intval(trim($_GET['id']));
-            $typ = mysql_query("select * from `lib` where id='" . $id . "';");
-            $ms = mysql_fetch_array($typ);
-            if ($id != 0 && $ms[type] != "cat")
-            {
-                echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
-                require ('../incfiles/end.php');
-                exit;
-            }
-            if ($ms[ip] == 0)
-            {
-                if (isset($_POST['submit']))
-                {
-                    $ii = 0;
-                    if (isset($_POST['tex']))
-                    {
-
-                        foreach ($_POST['tex'] as $v)
-                        {
-                            $txt = file_get_contents("temp/lib/$v");
-                            $txt = check($txt);
-                            $txt = utfwin($txt);
-                            $name = @file("temp/lib/$v");
-                            $name[0] = trim($name[0]);
-                            mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name[0] . "','" . $login . "','" . $txt . "','','','1');");
-                            $ii++;
-                        }
-                    }
-                    echo "Добавлено $ii статей<br/><a href='lib.php?id=" . $id . "'>В категорию</a><br/>";
-                } else
-                {
-                    echo "<form action='lib.php?act=refr&amp;id=" . $id . "' method='post'>";
-                    /*
-                    $d=ftp_nlist($connect,"lib");
-
-                    foreach ($d as $f){
-                    $f=str_replace("lib/","",$f);
-                    if (ctype_digit($f)) { 
-                    $d1=ftp_nlist($connect,"lib/$f");
-                    echo "$f<br/>";}
-                    foreach ($d1 as $f1){
-                    if (ereg (".txt$", "$f1")){
-                    echo "$f1<br/>";}}
-                    }
-                    */
-                    $dir = opendir("temp/lib");
-                    while ($file = readdir($dir))
-                    {
-                        if (($file != ".") && ($file != "..") && ($file != ".htaccess") && ($file != "index.php"))
-                        {
-                            $a[] = $file;
-                        }
-                    }
-                    closedir($dir);
-                    $total = count($a);
-                    for ($a1 = 0; $a1 < $total; $a1++)
-                    {
-                        $d = opendir("temp/lib/$a[$a1]");
-                        echo "$a[$a1]<br/>";
-                        while ($k = readdir($d))
-                        {
-                            if (ereg(".txt$", "$k"))
-                            {
-                                $file2 = $k;
-                                $name = @file("temp/lib/$a[$a1]/$file2");
-                                $name[0] = trim($name[0]);
-                                echo "<input type='checkbox' name='tex[]' value='" . $a[$a1] . "/" . $file2 . "'/>$name[0]<br/>";
-                            }
-                        }
-                        closedir($d);
-                    }
-                    echo "<input type='submit' name='submit' value='Ok!'/><br/></form><a href ='lib.php?id=" . $id . "'>Назад</a><br/>";
-
-                }
-            } else
-            {
-                echo "Ваще то эта категория не для статей,а для других категорий<br/>";
-            }
-
-            //ftp_close($connect);
-        } else
-        {
-            header("location: lib.php");
-        }
-        break;
-        ##############
     case "write":
-
         if ($_GET['id'] == "")
         {
             echo "Ошибка<br/><a href='lib.php?'>В библиотеку</a><br/>";
@@ -1429,13 +1238,17 @@ Cообщение(max. 500)<br/>
                         require ('../incfiles/end.php');
                         exit;
                     }
-
                     $text = check($_POST['text']);
-                    $text = utfwin($text);
                     $name = check($_POST['name']);
-                    $name = utfwin($name);
-                    $name = substr($name, 0, 50);
-                    $name = winutf($name);
+                    $name = mb_substr($name, 0, 50);
+                    if (!empty($_POST['anons']))
+                    {
+                        $anons = check($_POST['anons']);
+                        $anons = mb_substr($anons, 0, 100);
+                    } else
+                    {
+                        $anons = mb_substr($text, 0, 100);
+                    }
                     if ($dostlmod == 1)
                     {
                         $md = 1;
@@ -1443,14 +1256,14 @@ Cообщение(max. 500)<br/>
                     {
                         $md = 0;
                     }
-                    mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $text . "','','','" . $md . "');");
+                    mysql_query("insert into `lib` values(0,'" . $id . "','" . $realtime . "','bk','" . $name . "','" . $login . "','" . $text . "','','" . $anons . "','" . $md . "');");
                     $cid = mysql_insert_id();
                     echo "Статья добавлена<br/><a href='lib.php?id=" . $cid . "'>К статье</a><br/>";
                 } else
                 {
                     echo "Добавление статьи<br/><form action='lib.php?act=write&amp;id=" . $id .
-                        "' method='post'>Введите название(max. 50):<br/><input type='text' name='name'/><br/>Введите текст:<br/><textarea name='text' ></textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href ='lib.php?id=" . $id .
-                        "'>Назад</a><br/>";
+                        "' method='post'>Введите название(max. 50):<br/><input type='text' name='name'/><br/>Анонс(max. 100):<br/><input type='text' name='anons'/><br/>Введите текст:<br/><textarea name='text' ></textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href ='lib.php?id=" .
+                        $id . "'>Назад</a><br/>";
                 }
             } else
             {
@@ -1462,7 +1275,6 @@ Cообщение(max. 500)<br/>
         }
         echo "<a href='lib.php?'>В библиотеку</a><br/>";
         break;
-        #####################
 
     case "mkcat":
         if ($dostlmod == 1)
@@ -1510,9 +1322,7 @@ Cообщение(max. 500)<br/>
 
         break;
 
-        ########################
     default:
-
         if ($dostlmod == 1)
         {
             $mod = mysql_query("select * from `lib` where type = 'bk' and moder = '0';");
@@ -1541,15 +1351,11 @@ Cообщение(max. 500)<br/>
         }
         switch ($tip)
         {
-                ###
             case "cat":
-
                 $cat = mysql_query("select * from `lib` where type = 'cat' and refid = '" . $id . "';");
                 $totalcat = mysql_num_rows($cat);
                 $bk = mysql_query("select * from `lib` where type = 'bk' and refid = '" . $id . "' and moder='1';");
                 $totalbk = mysql_num_rows($bk);
-
-
                 if ($totalcat != 0)
                 {
                     $total = $totalcat;
@@ -1570,7 +1376,6 @@ Cообщение(max. 500)<br/>
                     }
                     while ($cat1 = mysql_fetch_array($cat))
                     {
-
                         if ($i >= $start && $i < $end)
                         {
                             $d = $i / 2;
@@ -1598,14 +1403,12 @@ Cообщение(max. 500)<br/>
                             {
                                 $kol = "0";
                             }
-
                             echo "$div<a href='lib.php?id=" . $cat1[id] . "'>$cat1[text]</a>($kol)</div>";
                         }
                         ++$i;
                     }
                 } elseif ($totalbk != 0)
                 {
-
                     $total = $totalbk;
                     if (empty($_GET['page']))
                     {
@@ -1639,18 +1442,7 @@ Cообщение(max. 500)<br/>
                             }
                             $vr = $bk1[time] + $sdvig * 3600;
                             $vr = date("d.m.y / H:i", $vr);
-                            $tx = str_replace("<br/>", " ", $bk1[text]);
-                            $tx = utfwin($tx);
-                            if (strlen($tx) > 100)
-                            {
-                                $tx = substr($tx, 0, 90);
-
-                                $tx = "$tx...";
-                            } else
-                            {
-                                $tx = "$tx";
-                            }
-                            $tx = winutf($tx);
+                            $tx = $bk1[soft];
                             echo "$div<a href='lib.php?id=" . $bk1[id] . "'>$bk1[name]</a><br/>Добавил: $bk1[avtor] ($vr)<br/>$tx</div>";
                         }
                         ++$i;
@@ -1659,12 +1451,9 @@ Cообщение(max. 500)<br/>
                 {
                     $total = 0;
                 }
-
                 if ($total > 10)
                 {
                     echo "<hr/>";
-
-
                     $ba = ceil($total / 10);
                     if ($offpg != 1)
                     {
@@ -1780,14 +1569,7 @@ Cообщение(max. 500)<br/>
                     {
                         echo "<a href='lib.php?act=load&amp;id=" . $id . "'>Выгрузить статью</a><br/>";
                     }
-                    if ($dostsadm == 1)
-                    {
-                        echo "<a href='lib.php?act=refr&amp;id=" . $id . "'>Добовить из файлов</a><br/>";
-                    }
-
                 }
-
-
                 if ($id != 0)
                 {
                     $dnam = mysql_query("select * from `lib` where type = 'cat' and id = '" . $id . "';");
@@ -1818,14 +1600,15 @@ Cообщение(max. 500)<br/>
                     echo "<input type='submit' value='Найти!'/></form><br/>";
                 }
                 break;
-                ##
+
             case "bk":
+                ////////////////////////////////////////////////////////////
                 if (!empty($_SESSION['symb']))
                 {
                     $simvol = $_SESSION['symb'];
                 } else
                 {
-                    $simvol = 500;
+                    $simvol = 2000; // Число символов на страницу по умолчанию
                 }
                 if (!empty($_GET['page']))
                 {
@@ -1834,26 +1617,20 @@ Cообщение(max. 500)<br/>
                 {
                     $page = 1;
                 }
-                /*
-                if (empty($_SESSION['lib'])){
-                if ($page==1){$_SESSION['rlib']=$id;}else{if ($_SESSION['rlib']==""||$_SESSION['rlib']!=$id){
-                header ("location: lib.php");}}}
-                */
                 echo "<b>$tp1[name]</b><hr/><br/>";
+                $tx = $tp1[text];
+                $tx = $tp1[text];
 
-                $tx = $tp1[text];
-                $tx = utfwin($tx);
-                $tx = $tp1[text];
-                $strrpos = strrpos($tx, " ");
+                # для постраничного вывода используется модифицированный код от hintoz #
+                $strrpos = mb_strrpos($tx, " ");
                 $pages = 1;
                 $t_si = 0;
                 while ($t_si < $strrpos)
                 {
-
-                    $string = substr($tx, $t_si, $simvol);
-                    $t_ki = strrpos($string, " ");
+                    $string = mb_substr($tx, $t_si, $simvol);
+                    $t_ki = mb_strrpos($string, " ");
                     $m_sim = $t_ki;
-                    $strings[$pages] = substr($string, 0, $m_sim);
+                    $strings[$pages] = $string;
                     $t_si = $t_ki + $t_si;
                     if ($page == $pages)
                     {
@@ -1866,52 +1643,22 @@ Cообщение(max. 500)<br/>
                     {
                         $pages++;
                     }
-
                 }
-
-
                 if ($page >= $pages)
                 {
                     $page = $pages - 1;
                     $page_text = $strings[$page];
                 }
-
-
                 $trans1 = array("– ", "«", "»", "“", "”", "…", "—");
                 $trans2 = array(" - ", "\"", "\"", "\"", "\"", "...", "-");
                 $page_text = str_replace($trans1, $trans2, $page_text);
-
-                $ntext = "$page_text ";
-                $substr_count = substr_count($ntext, "http://");
-
-                $n = 1;
-                $ofset = 0;
-                while ($n <= $substr_count)
-                {
-                    $pozicn = strpos($ntext, "http://", $ofset);
-                    $pozick = strpos($ntext, " ", $pozicn);
-                    $sim = $pozick - $pozicn;
-                    if ($sim == 0)
-                    {
-                        $sim = "";
-                    }
-                    if ($sim != "")
-                    {
-                        $sim = $sim + 1;
-                    }
-                    $zamenstr = substr($ntext, $pozicn, $sim);
-                    $zamenstr = trim($zamenstr);
-                    $ntext = str_replace($zamenstr, "<a href=\"$zamenstr\">$zamenstr</a>", $ntext);
-                    $ofset = $pozick + $pozick1 + 19;
-                    $n = $n + 1;
-                }
-
-                $page_text = $ntext;
-
-
+                $page_text = strip_tags($page_text, "<br/>");
                 $pages = $pages - 1;
-
-                $page_text = winutf($page_text);
+                if ($page != $pages)
+                {
+                    $prb = mb_strrpos($page_text, " ");
+                    $page_text = mb_substr($page_text, 0, $prb);
+                }
                 print "$page_text";
                 $next = $page + 1;
                 $prev = $page - 1;
@@ -1926,15 +1673,12 @@ Cообщение(max. 500)<br/>
                     {
                         echo "Страниц: $pages<br/>";
                     }
-
-
                     if ($page > 1)
                     {
                         print " <a href=\"lib.php?id=$id&amp;page=$prev\">&lt;&lt;</a> ";
                     }
                     if ($offpg != 1)
                     {
-
                         if ($page > 1)
                         {
                             print "<a href=\"lib.php?id=$id&amp;page=1\">1</a> ";
@@ -1957,8 +1701,6 @@ Cообщение(max. 500)<br/>
                         {
                             echo ' <a href="lib.php?id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="lib.php?id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
                         }
-
-
                         if ($prev > 1)
                         {
                             print "<a href=\"lib.php?id=$id&amp;page=$prev\">$prev</a> ";
@@ -1988,8 +1730,6 @@ Cообщение(max. 500)<br/>
                     {
                         echo "<b>[$page]</b>";
                     }
-
-
                     if ($page < $pages)
                     {
                         print " <a href=\"lib.php?id=$id&amp;page=$next\">&gt;&gt;</a>";
@@ -1997,21 +1737,19 @@ Cообщение(max. 500)<br/>
                     echo "<form action='lib.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
                         "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
                 }
-
                 echo "<br/>";
                 if ($dostlmod == 1)
                 {
                     echo "<a href='lib.php?act=del&amp;id=" . $id . "'>Удалить статью</a><br/>";
                     echo "<a href='lib.php?act=edit&amp;id=" . $id . "'>Изменить название</a><br/>";
                 }
-                $km = mysql_query("select * from `lib` where type = 'kom' and refid = '" . $id . "';");
+                $km = mysql_query("select * from `lib` where type = 'komm' and refid = '" . $id . "';");
                 $km1 = mysql_num_rows($km);
                 echo "<a href='lib.php?act=komm&amp;id=" . $id . "'>Комментарии</a>($km1)<br/>";
                 $dnam = mysql_query("select * from `lib` where type = 'cat' and id = '" . $tp1[refid] . "';");
                 $dnam1 = mysql_fetch_array($dnam);
                 $catname = "$dnam1[text]";
                 $dirid = "$dnam1[id]";
-
                 $nadir = $tp1[refid];
                 while ($nadir != "0")
                 {
@@ -2024,10 +1762,8 @@ Cообщение(max. 500)<br/>
                     $catname = $dnamm3[text];
                 }
                 echo "&#187;<a href='lib.php?'>В библиотеку</a><br/>";
-
-
                 break;
-                ##
+
             default:
                 header("location: lib.php");
                 break;

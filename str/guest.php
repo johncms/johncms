@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,9 +129,7 @@ switch ($act)
             exit;
         }
         $name = check(trim($_POST['name']));
-        $name = utfwin($name);
-        $name = substr($name, 0, 500);
-        $name = winutf($name);
+        $name = mb_substr($name, 0, 500);
         if (!empty($_SESSION['pid']))
         {
             $from = $login;
@@ -143,14 +141,7 @@ switch ($act)
         }
 
         $msg = check(trim($_POST['msg']));
-        $msg = utfwin($msg);
-        $msg = substr($msg, 0, 500);
-        if ($o >= 496)
-        {
-            $o = strrpos($msg, "<");
-            $msg = substr($msg, 0, $o);
-        }
-        $msg = winutf($msg);
+        $msg = mb_substr($msg, 0, 500);
         if ($_POST[msgtrans] == 1)
         {
             $msg = trans($msg);

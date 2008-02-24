@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,21 +56,22 @@ switch ($_GET['act'])
         echo 'ЗАВЕРШНИЕ УСТАНОВКИ<hr />';
         echo "<b>Создание таблиц</b><br/>";
         mysql_query("DROP TABLE IF EXISTS bann;");
-        $bnt = mysql_query("CREATE TABLE `bann` (
-  `user` varchar(25) NOT NULL default '',
-  `ip` varchar(20) NOT NULL default '',
-  `browser` text NOT NULL default '',
-  `admin` varchar(25) NOT NULL default '',
-  `time` int(15) NOT NULL,
-  `why` text NOT NULL default '',
-  `kolv` char(3) NOT NULL default '',
-  `type` char(1) NOT NULL default ''
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $bnt ? '<span class="green">OK</span> - Бан-лист<br/>':
-        '<span class="red">OШИБКА!</span> - Бан-лист<br/>';
+        mysql_query("CREATE TABLE `bann` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`user` varchar(25) NOT NULL default '',
+`ip` varchar(20) NOT NULL default '',
+`browser` text NOT NULL default '',
+`admin` varchar(25) NOT NULL default '',
+`time` int(15) NOT NULL,
+`why` text NOT NULL default '',
+`kolv` char(3) NOT NULL default '',
+`type` char(1) NOT NULL default '',
+PRIMARY KEY ( `id` )
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "bann"</body></html>');
+        echo '<span class="green">OK</span> - Бан-лист<br/>';
 
         mysql_query("DROP TABLE IF EXISTS themes;");
-        $tht = mysql_query("CREATE TABLE `themes` (
+        mysql_query("CREATE TABLE `themes` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `name` VARCHAR( 25 ) NOT NULL default '',
 `time` INT( 11 ) NOT NULL ,
@@ -94,88 +95,83 @@ switch ($_GET['act'])
 `coffs` VARCHAR( 15 ) NOT NULL default '',
 `cdinf` VARCHAR( 15 ) NOT NULL default '',
 PRIMARY KEY ( `id` ) 
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $tht ? '<span class="green">OK</span> - Темы<br/>':
-        '<span class="red">OШИБКА!</span> - Темы<br/>';
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "themes"</body></html>');
+        echo '<span class="green">OK</span> - Темы<br/>';
 
         mysql_query("DROP TABLE IF EXISTS chat;");
-        $ct = mysql_query("CREATE TABLE `chat` (
-  `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `realid` int(2) NOT NULL,
-  `type` char(3) NOT NULL default '',
-  `time` int(15) NOT NULL,
-  `from` varchar(25) NOT NULL default '',
-  `to` varchar(15) NOT NULL default '',
-  `dpar` char(3) NOT NULL default '',
-  `text` text NOT NULL default '',
-  `ip` text NOT NULL default '',
-  `soft` text NOT NULL default '',
-  `nas` text NOT NULL default '',
-  `otv` int(1) NOT NULL,
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $ct ? '<span class="green">OK</span> - Чат<br/>':
-        '<span class="red">OШИБКА!</span> - Чат<br/>';
+        mysql_query("CREATE TABLE `chat` (
+`id` int(11) NOT NULL auto_increment,
+`refid` int(11) NOT NULL,
+`realid` int(2) NOT NULL,
+`type` char(3) NOT NULL default '',
+`time` int(15) NOT NULL,
+`from` varchar(25) NOT NULL default '',
+`to` varchar(15) NOT NULL default '',
+`dpar` char(3) NOT NULL default '',
+`text` text NOT NULL default '',
+`ip` text NOT NULL default '',
+`soft` text NOT NULL default '',
+`nas` text NOT NULL default '',
+`otv` int(1) NOT NULL,
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "chat"</body></html>');
+        echo '<span class="green">OK</span> - Чат<br/>';
 
         mysql_query("DROP TABLE IF EXISTS count;");
-        $cct = mysql_query("CREATE TABLE `count` (
- `id` int(11) NOT NULL auto_increment,
-  `ip` varchar(15) NOT NULL default '',
-  `browser` text NOT NULL,
-  `time` varchar(25) NOT NULL default '',
-  `where` varchar(100) NOT NULL default '',
-  `name` varchar(25) NOT NULL default '',
+        mysql_query("CREATE TABLE `count` (
+`id` int(11) NOT NULL auto_increment,
+`ip` varchar(15) NOT NULL default '',
+`browser` text NOT NULL,
+`time` varchar(25) NOT NULL default '',
+`where` varchar(100) NOT NULL default '',
+`name` varchar(25) NOT NULL default '',
 `dos` binary(1) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $cct ? '<span class="green">OK</span> - Счётчик<br/>':
-        '<span class="red">OШИБКА!</span> - Счётчик<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "count"</body></html>');
+        echo '<span class="green">OK</span> - Счётчик<br/>';
 
         mysql_query("DROP TABLE IF EXISTS download;");
-        $dlt = mysql_query("CREATE TABLE `download` (
+        mysql_query("CREATE TABLE `download` (
 `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `adres` text NOT NULL,
-  `time` int(11) NOT NULL,
-  `name` text NOT NULL default '',
-  `type` varchar(4) NOT NULL default '',
+`refid` int(11) NOT NULL,
+`adres` text NOT NULL,
+`time` int(11) NOT NULL,
+`name` text NOT NULL default '',
+`type` varchar(4) NOT NULL default '',
 `avtor` varchar(25) NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
 `text` text NOT NULL default '',
 `screen` text NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $dlt ? '<span class="green">OK</span> - Загруз-центр<br/>':
-        '<span class="red">OШИБКА!</span> - Загруз-центр<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "download"</body></html>');
+        echo '<span class="green">OK</span> - Загруз-центр<br/>';
 
         mysql_query("DROP TABLE IF EXISTS upload;");
-        $ult = mysql_query("CREATE TABLE `upload` (
+        mysql_query("CREATE TABLE `upload` (
 `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `adres` text NOT NULL default '',
-  `time` int(11) NOT NULL,
-  `name` text NOT NULL default '',
-  `type` varchar(4) NOT NULL default '',
+`refid` int(11) NOT NULL,
+`adres` text NOT NULL default '',
+`time` int(11) NOT NULL,
+`name` text NOT NULL default '',
+`type` varchar(4) NOT NULL default '',
 `avtor` varchar(25) NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
 `text` text NOT NULL default '',
 `screen` text NOT NULL default '',
 `moder` binary(1) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $ult ? '<span class="green">OK</span> - Обменник<br/>':
-        '<span class="red">OШИБКА!</span> - Обменник<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "upload"</body></html>');
+        echo '<span class="green">OK</span> - Обменник<br/>';
 
         mysql_query("DROP TABLE IF EXISTS forum;");
-        $fmt = mysql_query("CREATE TABLE `forum` (
+        mysql_query("CREATE TABLE `forum` (
 `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `type` char(1) NOT NULL default '',
-  `time` int(11) NOT NULL,
-  `from` varchar(25) NOT NULL default '',
+`refid` int(11) NOT NULL,
+`type` char(1) NOT NULL default '',
+`time` int(11) NOT NULL,
+`from` varchar(25) NOT NULL default '',
 `to` varchar(25) NOT NULL default '',
 `realid` int(3) NOT NULL,
 `ip` text NOT NULL default '',
@@ -188,93 +184,90 @@ PRIMARY KEY ( `id` )
 `tedit` int(11) NOT NULL,
 `kedit` int(2) NOT NULL,
 `attach` text NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $fmt ? '<span class="green">OK</span> - Форум<br/>':
-        '<span class="red">OШИБКА!</span> - Форум<br/>';
+PRIMARY KEY  (`id`),
+KEY `from` (`from`),
+KEY `refid` (`refid`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "forum"</body></html>');
+        echo '<span class="green">OK</span> - Форум<br/>';
 
         mysql_query("DROP TABLE IF EXISTS gallery;");
-        $glt = mysql_query("CREATE TABLE `gallery` (
+        mysql_query("CREATE TABLE `gallery` (
 `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `time` int(11) NOT NULL,
-  `type` char(2) NOT NULL default '',
-  `avtor` varchar(25) NOT NULL default '',
+`refid` int(11) NOT NULL,
+`time` int(11) NOT NULL,
+`type` char(2) NOT NULL default '',
+`avtor` varchar(25) NOT NULL default '',
 `text` text NOT NULL default '',
 `name` text NOT NULL default '',
 `user` binary(1) NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $glt ? '<span class="green">OK</span> - Галерея<br/>':
-        '<span class="red">OШИБКА!</span> - Галерея<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "gallery"</body></html>');
+        echo '<span class="green">OK</span> - Галерея<br/>';
 
         mysql_query("DROP TABLE IF EXISTS lib;");
-        $lbt = mysql_query("CREATE TABLE `lib` (
+        mysql_query("CREATE TABLE `lib` (
 `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `time` int(11) NOT NULL,
-  `type` varchar(4) NOT NULL default '',
+`refid` int(11) NOT NULL,
+`time` int(11) NOT NULL,
+`type` varchar(4) NOT NULL default '',
 `name` varchar(50) NOT NULL default '',
-  `avtor` varchar(25) NOT NULL default '',
+`avtor` varchar(25) NOT NULL default '',
 `text` text NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
 `moder` binary(1) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $lbt ? '<span class="green">OK</span> - Библиотека<br/>':
-        '<span class="red">OШИБКА!</span> - Библиотека<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "lib"</body></html>');
+        echo '<span class="green">OK</span> - Библиотека<br/>';
 
         mysql_query("DROP TABLE IF EXISTS moder;");
-        $mdt = mysql_query("CREATE TABLE `moder` (
+        mysql_query("CREATE TABLE `moder` (
 `id` int(11) NOT NULL auto_increment,
-  `time` int(11) NOT NULL,
-  `to` varchar(25) NOT NULL default '',
-  `avtor` varchar(25) NOT NULL default '',
+`time` int(11) NOT NULL,
+`to` varchar(25) NOT NULL default '',
+`avtor` varchar(25) NOT NULL default '',
 `text` text NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $mdt ? '<span class="green">OK</span> - Модерка<br/>':
-        '<span class="red">OШИБКА!</span> - Модерка<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "moder"</body></html>');
+        echo '<span class="green">OK</span> - Модерка<br/>';
 
         mysql_query("DROP TABLE IF EXISTS news;");
-        $nwt = mysql_query("CREATE TABLE `news` (
+        mysql_query("CREATE TABLE `news` (
 `id` int(11) NOT NULL auto_increment,
-  `time` int(11) NOT NULL,
-  `avt` varchar(25) NOT NULL default '',
-  `name` text NOT NULL default '',
+`time` int(11) NOT NULL,
+`avt` varchar(25) NOT NULL default '',
+`name` text NOT NULL default '',
 `text` text NOT NULL default '',
 `kom` int(11) NOT NULL,
-   PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $nwt ? '<span class="green">OK</span> - Новости<br/>':
-        '<span class="red">OШИБКА!</span> - Новости<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "news"</body></html>');
+        echo '<span class="green">OK</span> - Новости<br/>';
 
         mysql_query("DROP TABLE IF EXISTS privat;");
-        $ptt = mysql_query("CREATE TABLE `privat` (
-  `id` int(11) NOT NULL auto_increment,
-  `user` varchar(25) NOT NULL default '',
-  `text` text NOT NULL,
-  `time` varchar(25) NOT NULL default '',
-  `author` varchar(25) NOT NULL default '',
-  `type` char(3) NOT NULL default '',
-  `chit` char(3) NOT NULL default '',
+        mysql_query("CREATE TABLE `privat` (
+`id` int(11) NOT NULL auto_increment,
+`user` varchar(25) NOT NULL default '',
+`text` text NOT NULL,
+`time` varchar(25) NOT NULL default '',
+`author` varchar(25) NOT NULL default '',
+`type` char(3) NOT NULL default '',
+`chit` char(3) NOT NULL default '',
 `temka` text NOT NULL default '',
 `otvet` binary(1) NOT NULL default '',
 `me` varchar(25) NOT NULL default '',
 `cont` varchar(25) NOT NULL default '',
 `ignor` varchar(25) NOT NULL default '',
 `attach` text NOT NULL default '',
-  UNIQUE KEY `id` (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $ptt ? '<span class="green">OK</span> - Приват<br/>':
-        '<span class="red">OШИБКА!</span> - Приват<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "privat"</body></html>');
+        echo '<span class="green">OK</span> - Приват<br/>';
+
         mysql_query("DROP TABLE IF EXISTS guest;");
-        $gbt = mysql_query("CREATE TABLE `guest` (
+        mysql_query("CREATE TABLE `guest` (
 `id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
 `time` INT( 15 ) NOT NULL ,
 `name` VARCHAR( 25 ) NOT NULL ,
@@ -286,14 +279,19 @@ PRIMARY KEY ( `id` )
 `otvet` TEXT NOT NULL ,
 `otime` INT( 15 ) NOT NULL ,
 PRIMARY KEY ( `id` ) 
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $gbt ? '<span class="green">OK</span> - Гостевая<br/>':
-        '<span class="red">OШИБКА!</span> - Гостевая<br/>';
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "guest"</body></html>');
+        echo '<span class="green">OK</span> - Гостевая<br/>';
 
         mysql_query("DROP TABLE IF EXISTS vik;");
-        $vct = mysql_query("CREATE TABLE `vik` (`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,`vopros` TEXT NOT NULL ,`otvet` TEXT NOT NULL , PRIMARY KEY ( `id` )) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $vct ? '<span class="green">OK</span> - Викторина<br/>':
-        '<span class="red">OШИБКА!</span> - Викторина<br/>';
+        mysql_query("CREATE TABLE `vik` (
+`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
+`vopros` TEXT NOT NULL ,
+`otvet` TEXT NOT NULL ,
+PRIMARY KEY ( `id` )
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "vik"</body></html>');
+        echo '<span class="green">OK</span> - Викторина<br/>';
+
+        // Импорт вопросов Викторины
         $file = file("vopros.txt");
         $count = count($file);
         for ($i = 0; $i < $count; $i++)
@@ -302,53 +300,53 @@ PRIMARY KEY ( `id` )
             mysql_query("INSERT INTO `vik` VALUES('0', '" . mysql_real_escape_string(trim($tx[0])) . "', '" . mysql_real_escape_string(trim($tx[1])) . "');");
         }
         echo "Вопросов: $i <br/>";
+
         mysql_query("DROP TABLE IF EXISTS settings;");
-        $stt = mysql_query("CREATE TABLE `settings` (
-  `id` int(11) NOT NULL auto_increment,
-  `nickadmina` varchar(25) NOT NULL default '',
-  `emailadmina` varchar(40) NOT NULL default '',
-  `nickadmina2` varchar(25) NOT NULL default '',
-  `sdvigclock` char(2) NOT NULL default '',
-  `copyright` varchar(100) NOT NULL default '',
-  `homeurl` varchar(150) NOT NULL default '',
-  `rashstr` varchar(10) NOT NULL default '',
-  `gzip` char(2) NOT NULL default '',
-  `admp` varchar(25) NOT NULL default '',
-  `rmod` binary(1) NOT NULL default '',
-  `fmod` binary(1) NOT NULL default '',
-  `flsz` int(4) NOT NULL,
-  `gb` binary(1) NOT NULL default '',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $stt ? '<span class="green">OK</span> - Настройки<br/>':
-        '<span class="red">OШИБКА!</span> - Настройки<br/>';
+        mysql_query("CREATE TABLE `settings` (
+`id` int(11) NOT NULL auto_increment,
+`nickadmina` varchar(25) NOT NULL default '',
+`emailadmina` varchar(40) NOT NULL default '',
+`nickadmina2` varchar(25) NOT NULL default '',
+`sdvigclock` char(2) NOT NULL default '',
+`copyright` varchar(100) NOT NULL default '',
+`homeurl` varchar(150) NOT NULL default '',
+`rashstr` varchar(10) NOT NULL default '',
+`gzip` char(2) NOT NULL default '',
+`admp` varchar(25) NOT NULL default '',
+`rmod` binary(1) NOT NULL default '',
+`fmod` binary(1) NOT NULL default '',
+`flsz` int(4) NOT NULL,
+`gb` binary(1) NOT NULL default '',
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "settings"</body></html>');
+        echo '<span class="green">OK</span> - Настройки<br/>';
 
         mysql_query("DROP TABLE IF EXISTS users;");
-        $ust = mysql_query("CREATE TABLE `users` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(25) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `imname` varchar(25) NOT NULL default '',
-  `sex` char(2) NOT NULL default '',
-  `komm` int(10) NOT NULL,
-  `postforum` int(10) NOT NULL,
-  `postchat` int(10) NOT NULL,
-  `otvetov` int(11) NOT NULL,
-  `yearofbirth` int(4) NOT NULL,
-  `datereg` int(11) NOT NULL,
-  `lastdate` int(11) NOT NULL,
-  `mail` varchar(50) NOT NULL default '',
-  `icq` int(9) NOT NULL,
-  `www` varchar(50) NOT NULL default '',
-  `about` text NOT NULL,
-  `live` varchar(50) NOT NULL default '',
-  `mibile` varchar(50) NOT NULL default '',
-  `rights` int(1) NOT NULL,
-  `status` text NOT NULL default '',
-  `ip` varchar(25) NOT NULL default '',
-  `browser` text NOT NULL,
-  `timererfesh` int(2) NOT NULL,
-  `kolanywhwere` int(2) NOT NULL,
+        mysql_query("CREATE TABLE `users` (
+`id` int(11) NOT NULL auto_increment,
+`name` varchar(25) NOT NULL,
+`password` varchar(32) NOT NULL,
+`imname` varchar(25) NOT NULL default '',
+`sex` char(2) NOT NULL default '',
+`komm` int(10) NOT NULL,
+`postforum` int(10) NOT NULL,
+`postchat` int(10) NOT NULL,
+`otvetov` int(11) NOT NULL,
+`yearofbirth` int(4) NOT NULL,
+`datereg` int(11) NOT NULL,
+`lastdate` int(11) NOT NULL,
+`mail` varchar(50) NOT NULL default '',
+`icq` int(9) NOT NULL,
+`www` varchar(50) NOT NULL default '',
+`about` text NOT NULL,
+`live` varchar(50) NOT NULL default '',
+`mibile` varchar(50) NOT NULL default '',
+`rights` int(1) NOT NULL,
+`status` text NOT NULL default '',
+`ip` varchar(25) NOT NULL default '',
+`browser` text NOT NULL,
+`timererfesh` int(2) NOT NULL,
+`kolanywhwere` int(2) NOT NULL,
 `bgcolor` varchar(15) NOT NULL default '',
 `tex` varchar(15) NOT NULL default '',
 `link` varchar(15) NOT NULL default '',
@@ -407,10 +405,9 @@ PRIMARY KEY ( `id` )
 `pereh` binary(1) NOT NULL default '',
 `balans` int(11) NOT NULL,
 `sestime` int(15) NOT NULL,
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;");
-        echo $ust ? '<span class="green">OK</span> - Юзеры<br/>':
-        '<span class="red">OШИБКА!</span> - Юзеры<br/>';
+PRIMARY KEY  (`id`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;")or die('Ошибка создания таблицы "users"</body></html>');
+        echo '<span class="green">OK</span> - Юзеры<br/>';
 
         $log = trim($_POST['wnickadmina']);
         $par = trim($_POST['wpassadmina']);

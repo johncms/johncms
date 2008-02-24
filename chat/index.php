@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -26,12 +26,15 @@ $headmod = "chat";
 require ("../incfiles/db.php");
 require ("../incfiles/func.php");
 require ("../incfiles/data.php");
-
 require ("../incfiles/char.php");
 require ("../incfiles/stat.php");
 
+// Определяем и проверяем переменные
+$id = isset($_GET['id']) ? intval($_GET['id']) : ''; // Идентификатор комнаты
+
 if (!empty($_SESSION['pid']))
 {
+    // Проверяем, забанен ли пользователь
     $tti = round(($datauser['chtime'] - $realtime) / 60);
     if ($datauser['chban'] == "1" && $tti > 0)
     {
@@ -50,66 +53,60 @@ if (!empty($_SESSION['pid']))
         exit;
     }
 
-    if (!empty($_GET['id']))
-    {
-        $id = intval(check($_GET['id']));
-        $where = "chat,$id";
-    } else
-    {
-        $where = "chat";
-    }
+    // Определяем местонахождение пользователя
+    $where = !empty($id) ? "chat,$id" : 'chat';
     mysql_query("insert into `count` values(0,'" . $ipp . "','" . $agn . "','" . $realtime . "','" . $where . "','" . $login . "','0');");
+
     if (!empty($_GET['act']))
     {
         $act = check($_GET['act']);
     }
     switch ($act)
     {
-        case "delpost":
+            /* Удаление одного поста
+            case "delpost":
             if ($dostcmod == 1)
             {
-                if (empty($_GET['id']))
-                {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
-                    echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
-                    require ("../incfiles/end.php");
-                    exit;
-                }
-                $id = intval(check($_GET['id']));
+            if (empty($_GET['id']))
+            {
+            require ("../incfiles/head.php");
+            require ("../incfiles/inc.php");
+            echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
+            require ("../incfiles/end.php");
+            exit;
+            }
+            $typ = mysql_query("select * from `chat` where id='" . $id . "';");
+            $ms = mysql_fetch_array($typ);
+            if ($ms[type] != "m")
+            {
+            require ("../incfiles/head.php");
+            require ("../incfiles/inc.php");
+            echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
+            require ("../incfiles/end.php");
+            exit;
+            }
+            if (isset($_GET['yes']))
+            {
 
-                $typ = mysql_query("select * from `chat` where id='" . $id . "';");
-                $ms = mysql_fetch_array($typ);
-                if ($ms[type] != "m")
-                {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
-                    echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
-                    require ("../incfiles/end.php");
-                    exit;
-                }
-                if (isset($_GET['yes']))
-                {
-
-                    mysql_query("delete from `chat` where `id`='" . $id . "';");
-                    header("Location: index.php?id=$ms[refid]");
-                } else
-                {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
-                    echo "Вы действительно хотите удалить пост?<br/>";
-                    echo "<a href='index.php?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a>|<a href='index.php?id=" . $ms[refid] . "'>Отмена</a><br/>";
-                }
+            mysql_query("delete from `chat` where `id`='" . $id . "';");
+            header("Location: $home/chat/index.php?id=$ms[refid]");
             } else
             {
-                echo "Доступ закрыт!!!<br/>";
+            require ("../incfiles/head.php");
+            require ("../incfiles/inc.php");
+            echo "Вы действительно хотите удалить пост?<br/>";
+            echo "<a href='index.php?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a>|<a href='index.php?id=" . $ms[refid] . "'>Отмена</a><br/>";
+            }
+            } else
+            {
+            echo "Доступ закрыт!!!<br/>";
             }
             break;
-
+            */
         case "room":
             if ($dostcmod == 1)
             {
-                if (empty($_GET['id']))
+                if (empty($id))
                 {
                     require ("../incfiles/head.php");
                     require ("../incfiles/inc.php");
@@ -117,8 +114,6 @@ if (!empty($_SESSION['pid']))
                     require ("../incfiles/end.php");
                     exit;
                 }
-                $id = intval(check($_GET['id']));
-
                 $typ = mysql_query("select * from `chat` where id='" . $id . "';");
                 $ms = mysql_fetch_array($typ);
                 if ($ms[type] != "r")
@@ -138,7 +133,7 @@ if (!empty($_SESSION['pid']))
 
                         mysql_query("delete from `chat` where `id`='" . $mes1[id] . "';");
                     }
-                    header("Location: index.php?id=$id");
+                    header("Location: $home/chat/index.php?id=$id");
                 } else
                 {
                     require ("../incfiles/head.php");
@@ -150,23 +145,19 @@ if (!empty($_SESSION['pid']))
             {
                 echo "Доступ закрыт!!!<br/>";
             }
+            require_once ("../incfiles/end.php");
             break;
 
         case "moders":
             require ("../incfiles/head.php");
             require ("../incfiles/inc.php");
             echo "<b>Модераторы чата</b><br/>";
-            if (!empty($_GET['id']))
-            {
-                $id = intval(check($_GET['id']));
-            }
             $mod = mysql_query("select * from `users` where rights='2';");
             $mod2 = mysql_num_rows($mod);
             if ($mod2 != 0)
             {
                 while ($mod1 = mysql_fetch_array($mod))
                 {
-
                     if ($login != $mod1[name])
                     {
                         echo "<a href='../str/anketa.php?user=" . $mod1[id] . "'><font color='" . $conik . "'>$mod1[name]</font></a>";
@@ -189,6 +180,7 @@ if (!empty($_SESSION['pid']))
                 echo "Не назначены<br/>";
             }
             echo "<a href='index.php?id=" . $id . "'>Назад</a><br/>";
+            require_once ("../incfiles/end.php");
             break;
 
         case "trans":
@@ -196,6 +188,7 @@ if (!empty($_SESSION['pid']))
             require ("../incfiles/inc.php");
             include ("../pages/trans.$ras_pages");
             echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
+            require_once ("../incfiles/end.php");
             break;
 
         case "say":
@@ -214,7 +207,7 @@ if (!empty($_SESSION['pid']))
                     $ipp = check($ipp);
             $agn = check(getenv(HTTP_USER_AGENT));
             $agn = strtok($agn, ' ');
-            if (empty($_GET['id']))
+            if (empty($id))
             {
                 require ("../incfiles/head.php");
                 require ("../incfiles/inc.php");
@@ -222,7 +215,6 @@ if (!empty($_SESSION['pid']))
                 require ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             if (empty($_SESSION['pid']))
             {
                 require ("../incfiles/head.php");
@@ -258,16 +250,10 @@ if (!empty($_SESSION['pid']))
                             require ("../incfiles/end.php");
                             exit;
                         }
-                        $msg = check(trim($_POST['msg']));
-                        $msg = utfwin($msg);
 
-                        $msg = substr($msg, 0, 500);
-                        if ($o >= 496)
-                        {
-                            $o = strrpos($msg, "<");
-                            $msg = substr($msg, 0, $o);
-                        }
-                        $msg = winutf($msg);
+                        // Принимаем сообщение и записываем в базу
+                        $msg = check(trim($_POST['msg']));
+                        $msg = mb_substr($msg, 0, 500);
                         if ($_POST[msgtrans] == 1)
                         {
                             $msg = trans($msg);
@@ -335,20 +321,21 @@ if (!empty($_SESSION['pid']))
                             }
                         }
 
-                        header("location: index.php?id=$id");
+                        header("location: $home/chat/index.php?id=$id");
                     } else
                     {
-                        require ("../incfiles/head.php");
-                        require ("../incfiles/inc.php");
-                        echo "Добавление сообщения в комнату <font color='" . $cntem . "'>$type1[text]</font>(max. 500):<br/><form action='index.php?act=say&amp;id=" . $id .
-                            "' method='post'><textarea cols='40' rows='3' title='Введите текст сообщения' name='msg'></textarea><br/>";
+                        require_once ("../incfiles/inc.php");
+                        require_once ("chat_header.php");
+                        echo 'Добавление сообщения<br />(max. 500)';
+                        echo '<div class="title1">'.$type1[text].'</div>';
+                        echo "<form action='index.php?act=say&amp;id=" . $id . "' method='post'><textarea cols='40' rows='3' title='Введите текст сообщения' name='msg'></textarea><br/>";
                         if ($offtr != 1)
                         {
                             echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения<br/>";
                         }
-                        echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/><br/></form>";
-                        echo "<a href='index.php?act=trans'>Транслит</a><br /><a href='../str/smile.php'>Смайлы</a><br/>";
-                        echo "<a href='index.php?id=" . $id . "'>Назад</a><br/>";
+                        echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form>";
+                        echo "<div class='title2'><a href='index.php?act=trans'>Транслит</a> | <a href='../str/smile.php'>Смайлы</a><br/>";
+                        echo "</div><br />[0] <a href='index.php?id=" . $id . "' accesskey='0'>Назад</a>";
                     }
                     break;
 
@@ -378,19 +365,11 @@ if (!empty($_SESSION['pid']))
                             exit;
                         }
                         $to = $type1[from];
-                        $priv = intval(check($_POST['priv']));
+                        $priv = intval($_POST['priv']);
                         $nas = check($_POST['nas']);
                         $msg = check(trim($_POST['msg']));
-                        $msg = utfwin($msg);
-                        $msg = substr($msg, 0, 500);
 
-                        $o = strrpos($msg, "<");
-                        if ($o >= 496)
-                        {
-                            $msg = substr($msg, 0, $o);
-                        }
-
-                        $msg = winutf($msg);
+                        $msg = mb_substr($msg, 0, 500);
                         if ($_POST[msgtrans] == 1)
                         {
                             $msg = trans($msg);
@@ -457,7 +436,7 @@ if (!empty($_SESSION['pid']))
                             }
                         }
 
-                        header("location: index.php?id=$th");
+                        header("location: $home/chat/index.php?id=$th");
                     } else
                     {
 
@@ -677,743 +656,41 @@ if (!empty($_SESSION['pid']))
                     echo "Ошибка!<br/>&#187;<a href='?'>В чат</a><br/>";
                     break;
             }
+            require ('chat_footer.php');
             break;
 
         case "chpas":
-            $id = intval($_GET['id']);
             $_SESSION['intim'] = "";
-            header("location: index.php?id=$id");
+            header("location: $home/chat/index.php?id=$id");
             break;
 
         case "pass":
-
-            $id = intval($_GET['id']);
             $parol = check($_POST['parol']);
             $_SESSION['intim'] = $parol;
             mysql_query("update `users` set alls='" . $parol . "' where id='" . intval($_SESSION['pid']) . "';");
-            header("location: index.php?id=$id");
+            header("location: $home/chat/index.php?id=$id");
             break;
 
         default:
-
-            if (empty($_GET['id']))
+            if (!empty($id))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
-                $_SESSION['intim'] = "";
-                $q = mysql_query("select * from `chat` where type='r' order by realid ;");
-                while ($mass = mysql_fetch_array($q))
-                {
-                    echo "<a href='index.php?id=" . $mass[id] . "'><font color='" . $cntem . "'>$mass[text]</font></a> (";
-                    wch($mass[id]);
-                    echo ")<br/>";
-                }
-                echo "<hr/>";
-       ##############
-                echo "<a href='who.php'>Кто в чате(".wch().")</a><br/>";  ####7.02.08########
-       ################         
-                echo "<a href='../str/usset.php?act=chat'>Настройки чата</a><br/>";
-            }
-
-            if (!empty($_GET['id']))
+                // Отображаем комнату Чата
+                require_once ('room.php');
+            } else
             {
-                $id = intval(check($_GET['id']));
-                $type = mysql_query("select * from `chat` where id= '" . $id . "';");
-                $type1 = mysql_fetch_array($type);
-                $tip = $type1[type];
-                switch ($tip)
-                {
-                        ###
-                    case "r":
-                        ##############
-                        if ($type1[dpar] != "in")
-                        {
-                            $_SESSION['intim'] = "";
-                        }
-                        if ($type1[dpar] == "in")
-                        {
-                            if (empty($_SESSION['intim']))
-                            {
-                                require ("../incfiles/head.php");
-                                require ("../incfiles/inc.php");
-                                echo "<form action='index.php?act=pass&amp;id=" . $id .
-                                    "' method='post'><br/>Введите пароль(max. 10):<br/><input type='text' name='parol' maxlength='10'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='index.php'>В чат</a><br/>";
-                                require ("../incfiles/end.php");
-                                exit;
-                            }
-                        }
-
-                        if ($type1[dpar] == "vik")
-                        {
-                            $prvik = mysql_query("select * from `chat` where dpar='vop' and type='m';");
-                            $prvik1 = mysql_num_rows($prvik);
-                            if ($prvik1 == "0")
-                            {
-                                mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','', 'm', '" . $realtime . "','Умник','','vop','Начинаем Викторину', '127.0.0.1', 'Nokia3310','','5');");
-                            }
-
-
-                            $protv = mysql_query("select * from `chat` where dpar='vop' and type='m' order by time desc;");
-                            while ($protv1 = mysql_fetch_array($protv))
-                            {
-                                $prr[] = $protv1[id];
-                            }
-                            $pro = mysql_query("select * from `chat` where dpar='vop' and type='m' and id='" . $prr[0] . "';");
-                            $prov = mysql_fetch_array($pro);
-                            $prr = array();
-                            if ($prov[otv] == "2" && $prov[time] < intval($realtime - 15))
-                            {
-                                $vopr = mysql_query("select * from `vik` where id='" . $prov['realid'] . "';");
-                                $vopr1 = mysql_fetch_array($vopr);
-                                $ans = $vopr1[otvet];
-                                $b = strlen($ans);
-                                $b = $b / 2;
-                                $c = substr($ans, 0, 2);
-                                for ($i = 2; $i <= $b; ++$i)
-                                {
-                                    $c = "$c*";
-                                }
-
-                                mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Первая подсказка " . $c . "', '127.0.0.1', 'Nokia3310', '', '');");
-                                mysql_query("update `chat` set otv='3' where id='" . $prov[id] . "';");
-                            }
-
-                            if ($prov[otv] == "3" && $prov[time] < intval($realtime - 30))
-                            {
-                                $vopr = mysql_query("select * from `vik` where id='" . $prov[realid] . "';");
-                                $vopr1 = mysql_fetch_array($vopr);
-                                $ans = $vopr1[otvet];
-                                $b = strlen($ans);
-                                $b = $b / 2;
-                                $c = substr($ans, 0, 4);
-                                for ($i = 3; $i <= $b; ++$i)
-                                {
-                                    $c = "$c*";
-                                }
-                                mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Вторая подсказка " . $c . "', '127.0.0.1', 'Nokia3310', '', '');");
-                                mysql_query("update `chat` set otv='4' where id='" . $prov[id] . "';");
-                            }
-                            if ($prov[otv] == "5" && $prov[time] < intval($realtime - 15))
-                            {
-                                $v = mysql_query("select * from `vik` ;");
-                                $c = mysql_num_rows($v);
-                                $num = rand(1, $c);
-                                $vik = mysql_query("select * from `vik` where id='" . $num . "';");
-                                $vik1 = mysql_fetch_array($vik);
-                                $vopros = $vik1[vopros];
-                                $len = strlen($vik1[otvet]) / 2;
-                                mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','" . $num . "', 'm','" . $realtime . "','Умник','','vop', '<b>Вопрос: " . $vopros . " (" . $len . " букв)</b>', '127.0.0.1', 'Nokia3310', '', '2');");
-                            }
-
-                            if (!empty($prov[time]) && $prov[time] < intval($realtime - 60))
-                            {
-                                if ($prov[otv] == "1")
-                                {
-
-                                    $v = mysql_query("select * from `vik` ;");
-                                    $c = mysql_num_rows($v);
-                                    $num = rand(1, $c);
-                                    $vik = mysql_query("select * from `vik` where id='" . $num . "';");
-                                    $vik1 = mysql_fetch_array($vik);
-                                    $vopros = $vik1[vopros];
-                                    $len = strlen($vik1[otvet]) / 2;
-                                    mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','" . $num . "', 'm','" . $realtime . "','Умник','','vop', '<b>Вопрос: " . $vopros . " (" . $len . " букв)</b>', '127.0.0.1', 'Nokia3310', '', '2');");
-                                }
-                                if ($prov[otv] == "4")
-                                {
-                                    mysql_query("INSERT INTO `chat` VALUES(
-'0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Время истекло! Вопрос не был угадан!','127.0.0.1', 'Nokia3310', '', '1');");
-                                    mysql_query("update `chat` set otv='1' where id='" . $prov[id] . "';");
-                                }
-                            }
-                        }
-                        $refr = rand(0, 999);
-                        if ($gzip == "1")
-                        {
-                            ob_start('ob_gzhandler');
-                        }
-                        $agent = $_SERVER['HTTP_USER_AGENT'];
-
-                        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-                        header("Cache-Control: no-cache, must-revalidate");
-                        header("Pragma: no-cache");
-                        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-
-                        if (eregi("msie", $agent) && eregi("windows", $agent))
-                        {
-                            header('Content-type: text/html; charset=UTF-8');
-                        } else
-                        {
-                            header('Content-type: application/xhtml+xml; charset=UTF-8');
-                        }
-                        echo '<?xml version="1.0" encoding="utf-8"?>';
-                        echo "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" ';
-                        echo "\n" . '"http://www.wapforum.org/DTD/xhtml-mobile10.dtd">';
-                        echo "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
-<head>
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>';
-
-                        echo "<meta http-equiv='refresh' content='" . $obn . ";URL=index.php?id=" . intval($_GET['id']) . "&amp;refr=" . $refr . "'/>";
-
-                        echo "<link rel='shortcut icon' href='favicon.ico' />
-      <title>
-      $textl
-      </title>
-<style type='text/css'>
-
-
-############################7.02.08
-
-
-body { background-color: #ffffff;  color: black;  font-family: Arial, Tahoma, sans-serif;  font-size: 8pt;  margin: 0px;  border: 0px;  padding: 0px;}
-form {padding: 0px; margin: 0px; font-size: small;}
-.header  {
-	background-color: #586776;
-	color: #FFFFFF;
-	font-size: 18px;
-	font-weight: bold;
-	font-family: Arial, Helvetica, sans-serif;
-	padding-top: 5px;
-	padding-right: 0px;
-	padding-bottom: 5px;
-	padding-left: 2px;
-	margin: 0px;
-}
-.maintxt {
-	font-weight: normal;
-	font-size: 8pt;
-	PADDING-RIGHT: 2px;
-	PADDING-LEFT: 2px;
-	PADDING-BOTTOM: 0px;
-	MARGIN: 0px;
-	PADDING-TOP: 0px;
-}
-.ackey {
-	text-decoration: underline;
-	font-size: 11px;
-}
-.topmenu {
-	color: #003300;
-	font-size: 11px;
-	font-weight: normal;
-	padding: 1px 0px 2px 3px;
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #FFFFFF;
-	margin: 0px;
-	border-top: 1px solid #000000;
-	border-bottom: 1px solid #586776;
-}
-.menu {
-	background-color: #d6dce2;
-	margin: 0px;
-	border-top-width: 1px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #FFFFFF;
-	border-bottom-color: #CCCCCC;
-}
-.fmenu {
-	color: #003300;
-	font-size: 11px;
-	font-weight: normal;
-	font-family: Arial, Helvetica, sans-serif;
-	padding-top: 1px;
-	padding-right: 1px;
-	padding-bottom: 2px;
-	padding-left: 3px;
-	margin: 0px;
-	border-top-width: 1px;
-	border-right-width: 0px;
-	border-bottom-width: 1px;
-	border-left-width: 0px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #586776;
-	border-right-color: #003300;
-	border-bottom-color: #003300;
-	border-left-color: #003300;
-}
-.footer  {
-	color: #FFFFFF;
-	background-color: #586776;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	font-weight: normal;
-	padding-top: 2px;
-	padding-right: 0;
-	padding-bottom: 3px;
-	padding-left: 3px;
-	margin: 0px;
-}
-.footer a:link, .footer a:visited {
-	color: #FFFFFF;
-}
-
-a:link, a:visited {
-	text-decoration: underline;
-	color: $clink;
-}
-
-a:hover {
-	text-decoration: none;
-	color: #ff6600;
-}
-
-a:active {
-	text-decoration: underline;
-	color: #666600;
-}
-
-body {
-	color: $colt;
-	background-color: $fon;
-}
-hr{
-	margin: 0;
-	border: 0;
-	border-top: 1px solid #586776;
-}
-.a 	{
-	background-color: $fon;
-	border: 1px solid #b5bec7;
-	margin-bottom: 3px;
-	padding: 2px;
-}
-
-.b 	{
-	background-color: $clb;
-	padding: 2px;
-	margin: 0px;
-}
-
-.c, .e {
-	background-color: $clc;
-	padding: 2px;
-	margin: 0px;
-}
-
-.d {
-	background-color: $fon;
-	text-align: left;
-	font-size: 12px;
-	color: $clink;
-}
-
-.end{
-	text-align: center;
-	color: #000000;
-}
-
-.hdr{
-	font-weight: bold;
-	border-bottom: 1px dotted #0000ff;
-	padding-left: 2px;
-	background-color: #f1f1f1;
-}
-
-</style>
-      </head>
-      <body>";
-    // Выводим логотип. Если нужно, то раскомментируйте строку ниже
-    //echo '<div><center><img src="' . $home . '/images/logo.gif" alt=""/></center></div>';
-
-    // Выводим название сайта
-    echo '<div class="header">' . $textl . '</div>';
-
-    // Выводим меню пользователя
-    echo '<div class="topmenu">';
-    $tvr = $realtime + $sdvig * 3600;
-    $vrem = date("H:i / d.m.Y", $tvr);
-
-    // Выводим текущее время. Если нужно, то раскомментируйте
-    //if ($headmod == "mainpage")
-    //{
-    //    echo $vrem . '<br/>';
-    //}
-
-    // Выводим приветствие
-    //if (!empty($_SESSION['pid']))
-    //{
-    //    echo "Привет,<b> " . $login . "</b>!<br/>";
-    //} else
-    //{
-    //    echo "Привет, прохожий!<br/>";
-    //}
-
-    // Выводим меню пользователя вверху сайта
-    if ($headmod != "mainpage" || isset($_GET['do']))
-    {
-        echo '<a href=\'' . $home . '\'>На главную</a> | ';
-    }
-    if (!empty($_SESSION['pid']))
-    {
-        echo "<a href='" . $home . "/index.php?do=cab'>Личное</a> | <a href='" . $home . "/exit.php'>Выход</a><br/>";
-    } else
-    {
-        echo "<a href='" . $home . "/in.php'>Вход</a> | <a href='" . $home . "/registration.php'>Регистрация</a><br/>";
-    }
-    echo '</div><div class="maintxt">';
-    
-     ###################
-     
-                        require ("../incfiles/inc.php");
-
-
-                        echo "<b><font color='" . $cntem . "'>$type1[text]</font></b><br/>";
-                        if ($type1[dpar] == "in")
-                        {
-                            echo "<a href='index.php?act=chpas&amp;id=" . $id . "'>Сменить пароль</a><br/>";
-                        }
-                        echo "<a href='index.php?id=" . $id . "&amp;refr=" . $refr . "'>Обновить</a><br/>";
-                        if ($carea == 1)
-                        {
-                            echo "Написать<br/><form action='index.php?act=say&amp;id=" . $id . "' method='post'><textarea cols='20' rows='2' title='Введите текст сообщения' name='msg'></textarea><br/>";
-                            if ($offtr != 1)
-                            {
-                                echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения<br/>";
-                            }
-                            echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/><br/></form>";
-                        } else
-                        {
-                            echo "<a href='index.php?act=say&amp;id=" . $id . "'>Написать</a>";
-                        }
-                        $q2 = mysql_query("select * from `chat` where type='m' and refid='" . $id . "';");
-                        while ($masss = mysql_fetch_array($q2))
-                        {
-                            $q3 = mysql_query("select * from `users` where name='" . $masss[from] . "';");
-                            $q4 = mysql_fetch_array($q3);
-                            $pasw = $q4[alls];
-                            if (($masss[dpar] != 1 || $masss[to] == $login || $masss[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
-                            {
-                                if ($type1[dpar] != "in" || $pasw == $datauser[alls])
-                                {
-                                    $cm[] = $masss[id];
-                                }
-                            }
-                        }
-                        $colmes = count($cm);
-
-                        if (empty($_GET['page']))
-                        {
-                            $page = 1;
-                        } else
-                        {
-                            $page = intval($_GET['page']);
-                        }
-                        $start = $page * $chmes - $chmes;
-                        if ($colmes < $start + $chmes)
-                        {
-                            $end = $colmes;
-                        } else
-                        {
-                            $end = $start + $chmes;
-                        }
-
-                        $q1 = mysql_query("select * from `chat` where type='m' and refid='" . $id . "'  order by time desc ;");
-                        $i = 0;
-                        while ($mass = mysql_fetch_array($q1))
-                        {
-                            if ($i >= $start && $i < $end)
-                            {
-                                $ign = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $mass[from] . "';");
-                                $ign1 = mysql_num_rows($ign);
-                                $als = mysql_query("select * from `users` where name='" . $mass[from] . "';");
-                                $als1 = mysql_fetch_array($als);
-                                $psw = $als1[alls];
-                                if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
-                                {
-                                    if ($type1[dpar] != "in" || $psw == $datauser[alls])
-                                    {
-                                        $d = $i / 2;
-                                        $d1 = ceil($d);
-                                        $d2 = $d1 - $d;
-                                        $d3 = ceil($d2);
-                                        if ($d3 == 0)
-                                        {
-                                            $div = "<div class='b'>";
-                                        } else
-                                        {
-                                            $div = "<div class='c'>";
-                                        }
-                                        if ($mass[from] != "Умник")
-                                        {
-                                            $uz = @mysql_query("select * from `users` where name='" . $mass[from] . "';");
-                                            $mass1 = @mysql_fetch_array($uz);
-                                        }
-                                        echo "$div";
-                                        if ($pfon == 1)
-                                        {
-                                            echo "<div style='background:" . $cpfon . ";'>";
-                                        }
-                                        if ($mass[from] != "Умник")
-                                        {
-                                            switch ($mass1[sex])
-                                            {
-                                                case "m":
-                                                    echo "<img src='../images/m.gif' alt=''/>";
-                                                    break;
-                                                case "zh":
-                                                    echo "<img src='../images/f.gif' alt=''/>";
-                                                    break;
-                                            }
-                                        }
-                                        if ($mass[from] != "Умник")
-                                        {
-                                            if ((!empty($_SESSION['pid'])) && ($_SESSION['pid'] != $mass1[id]))
-                                            {
-                                                echo "<a href='index.php?act=say&amp;id=" . $mass[id] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
-                                            } else
-                                            {
-                                                echo "<b><font color='" . $csnik . "'>$mass[from]</font></b>";
-                                            }
-                                        } else
-                                        {
-                                            echo "<b><font color='" . $conik . "'>$mass[from]</font></b>";
-                                        }
-                                        $vrp = $mass[time] + $sdvig * 3600;
-                                        $vr = date("d.m.Y / H:i", $vrp);
-                                        if ($mass[from] != "Умник")
-                                        {
-                                            switch ($mass1[rights])
-                                            {
-                                                case 7:
-                                                    echo "<font color='" . $cadms . "'> Adm </font>";
-                                                    break;
-                                                case 6:
-                                                    echo "<font color='" . $cadms . "'> Smd </font>";
-                                                    break;
-                                                case 2:
-                                                    echo "<font color='" . $cadms . "'> Mod </font>";
-                                                    break;
-                                                case 1:
-                                                    echo "<font color='" . $cadms . "'> Kil </font>";
-                                                    break;
-                                            }
-                                            $ontime = $mass1[lastdate];
-                                            $ontime2 = $ontime + 300;
-                                            if ($realtime > $ontime2)
-                                            {
-                                                echo "<font color='" . $coffs . "'> [Off]</font>";
-                                            } else
-                                            {
-                                                echo "<font color='" . $cons . "'> [ON]</font>";
-                                            }
-                                            if ($mass1[dayb] == $day && $mass1[monthb] == $mon)
-                                            {
-                                                echo "<font color='" . $cdinf . "'>!!!</font><br/>";
-                                            }
-                                        }
-                                        echo "<font color='" . $cdtim . "'>($vr)</font><br/>";
-
-                                        if ($pfon == 1)
-                                        {
-                                            echo "</div>";
-                                        }
-                                        if (!empty($mass[nas]))
-                                        {
-                                            echo "<font color='" . $cdinf . "'>$mass[nas]</font><br/>";
-                                        }
-                                        if ($mass[dpar] == 1)
-                                        {
-                                            echo "<font color='" . $clink . "'>[П!]</font>";
-                                        }
-                                        if (!empty($mass[to]))
-                                        {
-
-                                            if ($mass[to] == $login)
-                                            {
-                                                echo "<font color='" . $cdinf . "'><b>";
-                                            }
-                                            echo "$mass[to], ";
-                                            if ($mass[to] == $login)
-                                            {
-                                                echo "</b></font>";
-                                            }
-                                        }
-                                        $mass[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div style=\'background:' . $ccfon . ';color:' . $cctx . ';\'>\1<br/></div>', $mass[text]);
-                                        $mass[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
-
-                                        $mass[text] = eregi_replace("\\[l\\]([[:alnum:]_=/:-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[text]);
-                                        if (stristr($mass[text], "<a href="))
-                                        {
-                                            $mass[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-                                                "<a href='\\1\\3'>\\3</a>", $mass[text]);
-                                        } else
-                                        {
-                                            $mass[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass[text]);
-                                        }
-                                        if ($offsm != 1 && $offgr != 1)
-                                        {
-                                            $tekst = smiles($mass[text]);
-                                            $tekst = smilescat($tekst);
-
-                                            if ($mass[from] == nickadmina || $mass[from] == nickadmina2 || $mass1[rights] >= 1)
-                                            {
-                                                $tekst = smilesadm($tekst);
-                                            }
-                                        } else
-                                        {
-                                            $tekst = $mass[text];
-                                        }
-                                        if ($mass[to] == $login)
-                                        {
-                                            echo "<font color='" . $cdinf . "'><b>";
-                                        }
-                                        echo "$tekst<br/>";
-                                        if ($mass[to] == $login)
-                                        {
-                                            echo "</b></font>";
-                                        }
-                                        if ($dostcmod == 1)
-                                        {
-                                            echo "<a href='index.php?act=delpost&amp;id=" . $mass[id] . "'>Удалить</a><br/>";
-                                            echo "$mass[ip] - $mass[soft]<br/>";
-                                        }
-                                        echo "</div>";
-                                    }
-                                }
-                            }
-                            if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
-                            {
-                                if ($type1[dpar] != "in" || $psw == $datauser[alls])
-                                {
-                                    ++$i;
-                                }
-                            }
-                        }
-                        ##
-
-                        if ($colmes > $chmes)
-                        {
-                            echo "<hr/>";
-
-
-                            $ba = ceil($colmes / $chmes);
-                            if ($offpg != 1)
-                            {
-                                echo "Страницы:<br/>";
-                            } else
-                            {
-                                echo "Страниц: $ba<br/>";
-                            }
-                            $asd = $start - ($chmes);
-                            $asd2 = $start + ($chmes * 2);
-
-                            if ($start != 0)
-                            {
-                                echo '<a href="?id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-                            }
-                            if ($offpg != 1)
-                            {
-                                if ($asd < $colmes && $asd > 0)
-                                {
-                                    echo ' <a href="?id=' . $id . '&amp;page=1&amp;">1</a> .. ';
-                                }
-                                $page2 = $ba - $page;
-                                $pa = ceil($page / 2);
-                                $paa = ceil($page / 3);
-                                $pa2 = $page + floor($page2 / 2);
-                                $paa2 = $page + floor($page2 / 3);
-                                $paa3 = $page + (floor($page2 / 3) * 2);
-                                if ($page > 13)
-                                {
-                                    echo ' <a href="?id=' . $id . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="?id=' . $id . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-                                        '</a> <a href="?id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-                                } elseif ($page > 7)
-                                {
-                                    echo ' <a href="?id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="?id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                                }
-                                for ($i = $asd; $i < $asd2; )
-                                {
-                                    if ($i < $colmes && $i >= 0)
-                                    {
-                                        $ii = floor(1 + $i / $chmes);
-
-                                        if ($start == $i)
-                                        {
-                                            echo " <b>$ii</b>";
-                                        } else
-                                        {
-                                            echo ' <a href="?id=' . $id . '&amp;page=' . $ii . '">' . $ii . '</a> ';
-                                        }
-                                    }
-                                    $i = $i + $chmes;
-                                }
-                                if ($page2 > 12)
-                                {
-                                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="?id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) .
-                                        '</a> <a href="?id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-                                } elseif ($page2 > 6)
-                                {
-                                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="?id=' . $id . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                                }
-                                if ($asd2 < $colmes)
-                                {
-                                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $ba . '">' . $ba . '</a>';
-                                }
-                            } else
-                            {
-                                echo "<b>[$page]</b>";
-                            }
-
-
-                            if ($colmes > $start + $chmes)
-                            {
-                                echo ' <a href="?id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-                            }
-                        }
-         ###############               
-                        echo "<hr/><a href='who.php?id=" . $id . "'>Кто здесь?(".wch($id).")</a><br/>";
-                        
-                        echo "<a href='who.php'>Кто в чате(".wch().")</a><br/>";  #####7.02.08######
-         ##############
-                        echo "<a href='index.php?'>В чат</a><br/>";
-                        if ($dostcmod == 1)
-                        {
-                            echo "<a href='index.php?act=room&amp;id=" . $id . "'>Очистить комнату</a><br/>";
-                        }
-
-                        break;
-
-                        ##
-                        ###
-                    default:
-                        require ("../incfiles/head.php");
-                        require ("../incfiles/inc.php");
-                        echo "Ошибка!<br/>&#187;<a href='index.php?'>В чат</a><br/>";
-                        break;
-                }
+                // Отображаем прихожую Чата
+                require_once ('hall.php');
             }
-            if ($dostsmod == 1)
-            {
-                echo "<a href='../" . $admp . "/chat.php'>Управление комнатами</a><br/>";
-            }
-            echo "<a href='index.php?act=moders&amp;id=" . $id . "'>Модераторы</a><br/>";
-
-            break;
     }
 } else
 {
-    require ("../incfiles/head.php");
-    require ("../incfiles/inc.php");
+    require_once ("../incfiles/head.php");
+    require_once ("../incfiles/inc.php");
     echo "Вы не авторизованы!<br/><a href='../in.php'>Вход</a><br/>";
+    require_once ("../incfiles/end.php");
 }
-require ("../incfiles/end.php");
 
 ?>
-
 
 
 

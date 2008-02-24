@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -22,21 +22,11 @@
 define('_IN_PUSTO', 1);
 session_name('SESID');
 session_start();
-$headmod = 'pradd';
 $textl = 'Почта(письма)';
 require ("../incfiles/db.php");
 require ("../incfiles/func.php");
 require ("../incfiles/data.php");
 
-if ($_GET['act'] != "readmess")
-{
-    $newl = mysql_query("select * from `privat` where user = '" . $login . "' and type = 'in' and chit = 'no';");
-    $countnew = mysql_num_rows($newl);
-    if ($countnew > 0)
-    {
-        echo "<div style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
-    }
-}
 $msg = check(trim($_POST['msg']));
 if ($_POST[msgtrans] == 1)
 {
@@ -287,12 +277,10 @@ if (!empty($_SESSION['pid']))
             echo "<input type='hidden' name='idm' value='" . $id . "'/><input type='submit' value='Отправить' /></form>";
             echo "<a href='pradd.php?act=trans'>Транслит</a><br/><a href='smile.php'>Смайлы</a><br/>";
             break;
-            #############
 
         case "delch":
             require ("../incfiles/head.php");
             require ("../incfiles/inc.php");
-
             if (isset($_GET['yes']))
             {
                 $dc = $_SESSION['dc'];
@@ -321,9 +309,9 @@ if (!empty($_SESSION['pid']))
             }
             break;
 
-            ##############
         case "in":
-            require ("../incfiles/head.php");
+            $headmod = 'pradd';
+			require ("../incfiles/head.php");
             require ("../incfiles/inc.php");
             if (isset($_GET['new']))
             {
@@ -527,15 +515,12 @@ if (!empty($_SESSION['pid']))
             {
                 mysql_query("update `privat` set `chit`='yes' where `id`='" . $massiv1['id'] . "';");
             }
-            #########
             $newl = mysql_query("select * from `privat` where user = '" . $login . "' and type = 'in' and chit = 'no';");
             $countnew = mysql_num_rows($newl);
             if ($countnew > 0)
             {
                 echo "<div style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
             }
-
-            #############
             $mass = mysql_fetch_array(@mysql_query("select * from `users` where `name`='" . $massiv1[author] . "';"));
             $massiv1[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $massiv1[text]);
             $massiv1[text] = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $massiv1[text]);
@@ -561,7 +546,6 @@ if (!empty($_SESSION['pid']))
             {
                 $tekst = $massiv1[text];
             }
-
             echo "От <a href='anketa.php?user=" . $mass[id] . "'>$massiv1[author]</a><br/>";
             $vrp = $massiv1[time] + $sdvig * 3600;
             echo "(" . date("d.m.y H:i", $vrp) . ")<br/><div class='b'>Тема: $massiv1[temka]<br/></div><div class='c'>Текст: $tekst</div>";
@@ -569,7 +553,6 @@ if (!empty($_SESSION['pid']))
             {
                 echo "Прикреплённый файл: <a href='?act=load&amp;id=" . $id . "'>$massiv1[attach]</a><br/>";
             }
-
             echo "<a href='pradd.php?act=write&amp;adr=" . $mass[id] . "&amp;id=" . $massiv1[id] . "'>Ответить</a><br/><a href='pradd.php?act=delmess&amp;del=" . $massiv1[id] . "'>Удалить</a>";
             $mas2 = mysql_fetch_array(@mysql_query("select * from `privat` where `time`='$massiv1[time]' and author='$massiv1[author]' and type='out';"));
             if ($mas2[chit] == "no")

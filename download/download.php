@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -311,9 +311,7 @@ switch ($act)
                 {
                     $msg = trans($msg);
                 }
-                $msg = utfwin($msg);
-                $msg = substr($msg, 0, 500);
-                $msg = winutf($msg);
+                $msg = mb_substr($msg, 0, 500);
                 $agn = strtok($agn, ' ');
                 mysql_query("insert into `download` values(0,'" . $id . "','','" . $realtime . "','','komm','" . $login . "','" . $ipp . "','" . $agn . "','" . $msg . "','');");
                 if (empty($datauser[komm]))
@@ -630,17 +628,15 @@ Cообщение(max. 500)<br/>
                     if ($newf[text] != "")
                     {
                         $tx = $newf[text];
-                        $tx = utfwin($tx);
-                        if (strlen($tx) > 100)
+                        if (mb_strlen($tx) > 100)
                         {
-                            $tx = substr($tx, 0, 90);
+                            $tx = mb_substr($tx, 0, 90);
 
                             $tx = "<br/>$tx...";
                         } else
                         {
                             $tx = "<br/>$tx";
                         }
-                        $tx = winutf($tx);
                     } else
                     {
                         $tx = "";
@@ -655,8 +651,8 @@ Cообщение(max. 500)<br/>
                         $pat = "$dnew1[text]/$pat";
                         $nadir = $dnew1[refid];
                     }
-                    $l = strlen($pat);
-                    $pat1 = substr($pat, 0, $l - 1);
+                    $l = mb_strlen($pat);
+                    $pat1 = mb_substr($pat, 0, $l - 1);
                     echo "[$pat1]</div>";
                 }
                 ++$i;
@@ -2570,17 +2566,15 @@ Cообщение(max. 500)<br/>
                             if ($zap2[text] != "")
                             {
                                 $tx = $zap2[text];
-                                $tx = utfwin($tx);
-                                if (strlen($tx) > 100)
+                                if (mb_strlen($tx) > 100)
                                 {
-                                    $tx = substr($tx, 0, 90);
+                                    $tx = mb_substr($tx, 0, 90);
 
                                     $tx = "<br/>$tx...";
                                 } else
                                 {
                                     $tx = "<br/>$tx";
                                 }
-                                $tx = winutf($tx);
                             } else
                             {
                                 $tx = "";

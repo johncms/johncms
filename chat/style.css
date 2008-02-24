@@ -1,0 +1,34 @@
+body {
+	background-color: #dddddd;
+	margin: 0;
+	font: medium Arial, Helvetica, sans-serif;
+}
+
+hr{
+	margin: 0;
+}
+
+.title1{
+	background-color: black;
+	color: #ffffff;
+	font-weight: bold;
+	padding: 2px;
+	margin-top: 4px;
+	border-bottom: 2px solid orange;
+}
+
+.title2{
+	background-color: #000000;
+	color: #ffffff;
+	padding: 2px;
+	font-size: small;
+	border-top: 2px solid orange;
+}
+
+.title2 a:link, .title2 a:visited{
+	color: #c0c0c0;
+}
+.text{
+	background-color: white;
+	padding: 2px;
+}

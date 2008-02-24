@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -33,8 +33,6 @@ if (!empty($_SESSION['pid']))
         {
             echo "<form action='" . $home . "/auto.php' method='get'>Имя:<br/><input type='text' name='n' maxlength='20' value='" . $login .
                 "'/><br/>Пароль:<br/><input type='password' name='p' maxlength='20'/><br/><input type='checkbox' name='mem' value='1' checked='checked'/>Запомнить меня<br/><input type='submit' value='Вход'/></form>";
-
-
             mysql_query("update `users` set `browser`='" . $agn . "' where `id`='" . intval(check($_SESSION['pid'])) . "';");
             $_SESSION = array();
             setcookie('cpide', '');
@@ -47,7 +45,6 @@ if (!empty($_SESSION['pid']))
         mysql_query("update `users` set `browser`='" . $agn . "' where `id`='" . intval(check($_SESSION['pid'])) . "';");
     }
 }
-
 if (isset($_GET['login']) || isset($_GET['pid']) || isset($_GET['statad']) || isset($_GET['dostsadm']) || isset($_GET['dostadm']) || isset($_GET['dostsmod']) || isset($_GET['dostfmod']) || isset($_GET['dostcmod']) || isset($_GET['dostkmod']) ||
     isset($_GET['dostmod']) || isset($_GET['textl']) || isset($_GET['headmod']))
 {
@@ -56,8 +53,6 @@ if (isset($_GET['login']) || isset($_GET['pid']) || isset($_GET['statad']) || is
     echo '<a href=\'' . $home . '\'>&#169;' . $copyright . '</a></div></div></body></html>';
     exit;
 }
-
-
 if ($headmod != "pradd")
 {
     $newl = mysql_query("select * from `privat` where user = '" . $login . "' and type = 'in' and chit = 'no';");
@@ -67,7 +62,6 @@ if ($headmod != "pradd")
         echo "<div style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
     }
 }
-
 if (getenv("HTTP_CLIENT_IP"))
     $ipp = getenv("HTTP_CLIENT_IP");
 else
@@ -84,8 +78,6 @@ else
 $agn = getenv(HTTP_USER_AGENT);
 $agn = check($agn);
 $dtime = $realtime - 60;
-
-
 $dos = mysql_query("select * from `count` where ip='" . $ipp . "' and time>='" . $dtime . "' ;");
 $dos2 = mysql_num_rows($dos);
 $dos1 = mysql_query("select * from `count` where ip='" . $ipp . "' order by time desc ;");
@@ -109,7 +101,6 @@ if ($dos2 > 15)
         $dosp2 = mysql_num_rows($dosp);
         if ($dosp2 <= 3)
         {
-
             $messg = "Превышение допустимого количества переходов за единицу времени!!!$agn/$ipp.";
             if (empty($_SESSION['pid']))
             {
@@ -124,7 +115,6 @@ if ($dos2 > 15)
     }
 
     echo "Превышение допустимого количества переходов за единицу времени!!!<br/>Отдохните минутку<br/>";
-
     echo "<div style='text-align: center'>";
     echo '<a href=\'' . $home . '\'><b>&#169;' . $copyright . '</b></a></div></div></body></html>';
     exit;
@@ -188,7 +178,6 @@ if ($bann == "1")
         $whyban = "";
         if (@mysql_query("update `users` set  bantime='" . $vrem . "', why='" . $whyban . "', who='" . $whoban . "', ban='" . $banned . "'  where id='" . intval($_SESSION['pid']) . "';"))
             echo "<div>ВЫ БЫЛИ ЗАБАНЕНЫ<br/>Поздравляем!!! Время вашего бана вышло, постарайтесь вести себя достойно, чтобы не злить админа или модераторов</div>";
-
     }
     echo "<div style='text-align: center'>";
     echo '<a href=\'' . $home . '\'>&#169;' . $copyright . '-2007 г.</a></div></div></body></html>';
@@ -209,30 +198,23 @@ if ($bann == "2")
     echo '<a href=\'' . $home . '\'>&#169;' . $copyright . '-2007 г.</a></div></div></body></html>';
     exit;
 }
-
-
 if ($ipb1 != 0)
 {
     echo "<div>Вас забанил <font color='red'>$ipadm</font> по IP+Soft(<font color='red'>$REMOTE_ADDR/$HTTP_USER_AGENT</font>)</div>";
-
     echo "<div style='text-align: center'>";
     echo '<a href=\'' . $home . '\'>&#169;' . $copyright . '-2007 г.</a></div></div></body></html>';
     exit;
 }
-#
 if (!empty($_SESSION['pid']) && $headmod !== "auto" && $headmod !== "mainpage")
 {
     mysql_query("update `users` set lastdate='" . $realtime . "', ip='" . $ipp . "', browser='" . $agn . "' where id='" . intval($_SESSION['pid']) . "';");
 }
-
-
 if (!empty($_SESSION['pid']) && $headmod !== "auto" && !isset($_GET['enter']))
 {
     $vremja = $realtime - $datauser[lastdate];
     $vremja2 = $vrsite + $vremja;
     mysql_query("update `users` set  vremja='" . $vremja2 . "'  where id='" . intval($_SESSION['pid']) . "';");
 }
-#
 $rega = mysql_query("select * from `users` where preg='0' ;");
 $rega1 = mysql_fetch_array($rega);
 $rega2 = mysql_num_rows($rega);

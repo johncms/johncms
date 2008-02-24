@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,6 @@
 
 define('_IN_PUSTO', 1);
 
-
 $textl = 'Форум';
 $headmod = "forum";
 require ("../incfiles/db.php");
@@ -31,14 +30,11 @@ require ("../incfiles/stat.php");
 require ("../incfiles/head.php");
 require ("../incfiles/inc.php");
 require ("../incfiles/char.php");
-
-
 if (!empty($_SESSION['pid']))
 {
     $tti = round(($datauser['ftime'] - $realtime) / 60);
     if ($datauser['fban'] == "1" && $tti > 0)
     {
-
         echo "Вас пнули из форума<br/>Кто: <font color='" . $cdinf . "'>$datauser[fwho]</font><br/>";
         if ($datauser[fwhy] == "")
         {
@@ -51,8 +47,6 @@ if (!empty($_SESSION['pid']))
         require ("../incfiles/end.php");
         exit;
     }
-
-
     if (!empty($_GET['id']))
     {
         $id = intval(check($_GET['id']));
@@ -173,13 +167,11 @@ switch ($act)
                     exit;
                     break;
             }
-
             $mod = mysql_query("select * from `forum` where type='a' and refid='" . $mid . "';");
             $mod2 = mysql_num_rows($mod);
             echo "Модеры подфорума <font color='" . $cntem . "'>$pfr</font><br/><br/>";
             if ($mod2 != 0)
             {
-
                 while ($mod1 = mysql_fetch_array($mod))
                 {
                     $uz = mysql_query("select * from `users` where name='" . $mod1[from] . "';");
@@ -285,8 +277,6 @@ switch ($act)
                         echo "<a href='index.php?act=per&amp;id=" . $id . "&amp;other=" . $frm1[id] . "'>$frm1[text]</a><br/>";
                     }
                 }
-
-
                 echo "<hr/>";
             }
         } else
@@ -342,7 +332,6 @@ switch ($act)
         echo "<a href='index.php?'>В форум</a><br/>";
         break;
 
-
         ###
     case "ren":
 
@@ -395,7 +384,6 @@ switch ($act)
         echo "<a href='index.php?'>В форум</a><br/>";
         break;
 
-        ###############
     case "deltema":
 
         if ($dostfmod == 1)
@@ -644,14 +632,6 @@ switch ($act)
                     exit;
                 }
                 $msg = check(trim($_POST['msg']));
-                $msg = utfwin($msg);
-                $msg = substr($msg, 0, 500);
-                $o = strrpos($msg, "<");
-                if ($o >= 496)
-                {
-                    $msg = substr($msg, 0, $o);
-                }
-                $msg = winutf($msg);
                 if ($_POST[msgtrans] == 1)
                 {
                     $msg = trans($msg);
@@ -859,14 +839,12 @@ switch ($act)
             }
             $th = winutf($th);
             $msg = check(trim($_POST['msg']));
-            $msg = utfwin($msg);
-            $msg = substr($msg, 0, 500);
-            $o = strrpos($msg, "<");
-            if ($o >= 496)
-            {
-                $msg = substr($msg, 0, $o);
-            }
-            $msg = winutf($msg);
+            //$msg=utfwin($msg);
+            //$msg=substr($msg,0,500);
+            //$o=strrpos($msg,"<");
+            //if ($o>=496){
+            //$msg=substr($msg,0,$o);}
+            //$msg=winutf($msg);
             if ($_POST['msgtrans'] == 1)
             {
                 $msg = trans($msg);
@@ -1397,15 +1375,13 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
                     }
                     ############
                     $msg = check(trim($_POST['msg']));
-                    $msg = utfwin($msg);
+                    //$msg=utfwin($msg);
 
-                    $msg = substr($msg, 0, 500);
-                    if ($o >= 496)
-                    {
-                        $o = strrpos($msg, "<");
-                        $msg = substr($msg, 0, $o);
-                    }
-                    $msg = winutf($msg);
+                    //$msg=substr($msg,0,500);
+                    //if ($o>=496){
+                    //$o=strrpos($msg,"<");
+                    //$msg=substr($msg,0,$o);}
+                    //$msg=winutf($msg);
                     if ($_POST[msgtrans] == 1)
                     {
                         $msg = trans($msg);
@@ -1610,16 +1586,14 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
                         }
                     }
                     $msg = check(trim($_POST['msg']));
-                    $msg = utfwin($msg);
-                    $msg = substr($msg, 0, 500);
+                    //$msg=utfwin($msg);
+                    //$msg=substr($msg,0,500);
 
-                    $o = strrpos($msg, "<");
-                    if ($o >= 496)
-                    {
-                        $msg = substr($msg, 0, $o);
-                    }
+                    //$o=strrpos($msg,"<");
+                    //if ($o>=496){
+                    //$msg=substr($msg,0,$o);}
 
-                    $msg = winutf($msg);
+                    //$msg=winutf($msg);
                     if ($_POST[msgtrans] == 1)
                     {
                         $msg = trans($msg);
@@ -1907,6 +1881,229 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
         }
 
         break;
+        ############################################3
+    case "post":
+        if (empty($_GET['id']))
+        {
+            echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
+            require ("../incfiles/end.php");
+            exit;
+        }
+        $id = intval($_GET['id']);
+        $s = intval($_GET['s']);
+        if (!empty($_GET['page']))
+        {
+            $page = intval($_GET['page']);
+        } else
+        {
+            $page = 1;
+        }
+        $typ = mysql_query("select * from `forum` where id='" . $id . "';");
+        $ms = mysql_fetch_array($typ);
+        if ($ms[type] != "m")
+        {
+            echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
+            require ("../incfiles/end.php");
+            exit;
+        }
+        echo "<b>$ms[from]</b><br/>";
+        ;
+        $tx = $ms[text];
+        $tx = utfwin($tx);
+        $strrpos = strrpos($tx, " ");
+        $pages = 1;
+        $t_si = 0;
+        $simvol = 2000;
+        while ($t_si < $strrpos)
+        {
+            $string = substr($tx, $t_si, $simvol);
+            $t_ki = strrpos($string, " ");
+            $m_sim = $t_ki;
+            $kol = strlen($string);
+            if ($kol < $simvol)
+            {
+                $strings[$pages] = $string;
+            } else
+            {
+                $strings[$pages] = substr($string, 0, $m_sim);
+            }
+            $t_si = $t_ki + $t_si;
+            if ($page == $pages)
+            {
+                $page_text = $strings[$pages];
+            }
+            if ($strings[$pages] == "")
+            {
+                //$t_si=
+                $strrpos++;
+            } else
+            {
+                $pages++;
+            }
+        }
+        if ($page >= $pages)
+        {
+            $page = $pages - 1;
+            $page_text = $strings[$page];
+        }
+        $trans1 = array("– ", "«", "»", "“", "”", "…", "—");
+        $trans2 = array(" - ", "\"", "\"", "\"", "\"", "...", "-");
+        $page_text = str_replace($trans1, $trans2, $page_text);
+        $ntext = "$page_text ";
+        $substr_count = substr_count($ntext, "http://");
+        $n = 1;
+        $ofset = 0;
+        while ($n <= $substr_count)
+        {
+            $pozicn = strpos($ntext, "http://", $ofset);
+            $pozick = strpos($ntext, " ", $pozicn);
+            $sim = $pozick - $pozicn;
+            if ($sim == 0)
+            {
+                $sim = "";
+            }
+            if ($sim != "")
+            {
+                $sim = $sim + 1;
+            }
+            $zamenstr = substr($ntext, $pozicn, $sim);
+            $zamenstr = trim($zamenstr);
+            $ntext = str_replace($zamenstr, "<a href=\"$zamenstr\">$zamenstr</a>", $ntext);
+            $ofset = $pozick + $pozick1 + 19;
+            $n = $n + 1;
+        }
+        $page_text = $ntext;
+        $pages = $pages - 1;
+        $page_text = winutf($page_text);
+        $page_text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div style=\'background:' . $ccfon . ';color:' . $cctx . ';\'>\1<br/></div>', $page_text);
+        $page_text = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $page_text);
+        $page_text = eregi_replace("\\[l\\]([[:alnum:]_=/:-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $page_text);
+        if (stristr($page_text, "<a href="))
+        {
+            $page_text = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
+                "<a href='\\1\\3'>\\3</a>", $page_text);
+        } else
+        {
+            $page_text = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $page_text);
+        }
+        $uz = @mysql_query("select * from `users` where name='" . $ms[from] . "';");
+        $mass1 = @mysql_fetch_array($uz);
+        if ($offsm != 1 && $offgr != 1)
+        {
+            $page_text = smiles($page_text);
+            $page_text = smilescat($page_text);
+
+            if ($ms[from] == nickadmina || $ms[from] == nickadmina2 || $mass1[rights] >= 1)
+            {
+                $tekst = smilesadm($page_text);
+            }
+        } else
+        {
+            $tekst = $page_text;
+        }
+        print "$page_text";
+        $next = $page + 1;
+        $prev = $page - 1;
+
+        if ($pages > 1)
+        {
+            echo "</div><div class='a'>";
+            if ($offpg != 1)
+            {
+                echo "Страницы:<br/>";
+            } else
+            {
+                echo "Страниц: $pages<br/>";
+            }
+
+
+            if ($page > 1)
+            {
+                print " <a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=$prev\">&lt;&lt;</a> ";
+            }
+            if ($offpg != 1)
+            {
+
+                if ($page > 1)
+                {
+                    print "<a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=1\">1</a> ";
+                }
+                if ($prev > 2)
+                {
+                    print " .. ";
+                }
+                $page2 = $pages - $page;
+                $pa = ceil($page / 2);
+                $paa = ceil($page / 3);
+                $pa2 = $page + floor($page2 / 2);
+                $paa2 = $page + floor($page2 / 3);
+                $paa3 = $page + (floor($page2 / 3) * 2);
+                if ($page > 13)
+                {
+                    echo ' <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) .
+                        '</a> .. <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) .
+                        '</a> .. ';
+                } elseif ($page > 7)
+                {
+                    echo ' <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
+                }
+
+
+                if ($prev > 1)
+                {
+                    print "<a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=$prev\">$prev</a> ";
+                }
+                print "<b>$page</b> ";
+                if ($next < $pages)
+                {
+                    print "<a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=$next\">$next</a> ";
+                }
+                if ($page2 > 12)
+                {
+                    echo ' .. <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) .
+                        '</a> .. <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+                } elseif ($page2 > 6)
+                {
+                    echo ' .. <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="index.php?act=post&amp;id=' . $id . '&amp;s=' . $s . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
+                }
+                if ($next < ($pages - 1))
+                {
+                    print " .. ";
+                }
+                if ($page < $pages)
+                {
+                    print "<a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=$pages\">$pages</a> ";
+                }
+            } else
+            {
+                echo "<b>[$page]</b>";
+            }
+
+
+            if ($page < $pages)
+            {
+                print " <a href=\"index.php?act=post&amp;id=$id&amp;s=$s&amp;page=$next\">&gt;&gt;</a>";
+            }
+            echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id . "'/><input type='hidden' name='s' value='" . $s .
+                "'/><input type='hidden' name='act' value='post'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+        }
+
+        echo "<br/>";
+        echo "</div><div class='a'>";
+        $q5 = mysql_query("select * from `forum` where type='t' and id='" . $ms[refid] . "';");
+        $them = mysql_fetch_array($q5);
+        $q3 = mysql_query("select * from `forum` where type='r' and id='" . $them[refid] . "';");
+        $razd = mysql_fetch_array($q3);
+        $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd[refid] . "';");
+        $frm = mysql_fetch_array($q4);
+        echo "<div class='e'>&#187;<a href='?id=" . $ms[refid] . "&amp;page=" . $s . "'>$them[text]</a><br/>";
+        echo "&#187;<a href='?id=" . $type1[refid] . "'>$razd[text]</a><br/>";
+        echo "&#187;<a href='?id=" . $razd[refid] . "'>$frm[text]</a><br/>";
+        echo "&#187;<a href='?'>В форум</a></div>";
+        echo "</div><div class='a'>";
+
+
+        break;
         ###############################
     default:
 
@@ -1970,17 +2167,13 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
             echo "<hr/>";
             if (!empty($_SESSION['pid']))
             {
-       ############     
-                echo "<a href='who.php'>Кто в форуме(".
-                wfrm().")</a><br/>";     #7.02.08
-       ##############         
+                echo '<a href="who.php">Кто в форуме(' . wfrm() . ')</a><br/>';
             }
             echo "<a href='search.php'>Поиск по форуму</a><br/>";
             echo "<a href='index.php?act=faq'>FAQ</a><br/>";
             echo "<a href='../str/usset.php?act=forum'>Настройки форума</a><br/>";
             echo "<a href='index.php?act=read'>Правила форума</a><br/>";
         }
-
         if (!empty($_GET['id']))
         {
             $id = intval(check($_GET['id']));
@@ -2419,6 +2612,10 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
                             {
                                 echo "$mass[to], ";
                             }
+
+                            $lpost = utfwin($mass[text]);
+                            $lpost1 = strlen($lpost);
+
                             $mass[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div style=\'background:' . $ccfon . ';color:' . $cctx . ';\'>\1<br/></div>', $mass[text]);
                             $mass[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
 
@@ -2444,6 +2641,21 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
                             {
                                 $tekst = $mass[text];
                             }
+                            if ($lpost1 >= 500)
+                            {
+                                $tekst = utfwin($tekst);
+
+                                $tekst = substr($tekst, 0, 500);
+                                if ($o >= 496)
+                                {
+                                    $o = strrpos($tekst, "<");
+                                    $tekst = substr($tekst, 0, $o);
+                                }
+                                $tekst = winutf($tekst);
+                                $tekst = "$tekst...";
+                            }
+
+
                             echo "$tekst<br/>";
                             if ($mass[kedit] >= 1)
                             {
@@ -2451,12 +2663,20 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
                                 $dizm = date("d.m /H:i", $diz);
                                 echo "<font color='" . $cdinf . "'>Посл. изм. <b>$mass[edit]</b>  ($dizm) ,всего изм.:<b> $mass[kedit]</b></font><br/>";
                             }
+                            if ($lpost1 >= 500)
+                            {
+                                echo "<a href='index.php?act=post&amp;s=" . $page . "&amp;id=" . $mass[id] . "'>Весь пост</a><br/>";
+                            }
+
+
                             if (!empty($mass[attach]))
                             {
                                 $fls = filesize("./files/$mass[attach]");
                                 $fls = round($fls / 1024, 2);
                                 echo "<font color='" . $cdinf . "'>Прикреплённый файл: <a href='index.php?act=file&amp;id=" . $mass[id] . "'>$mass[attach]</a> ($fls кб.)</font><br/>";
                             }
+
+
                             $lp = mysql_query("select * from `forum` where type='m' and refid='" . $id . "'  order by time desc ;");
                             while ($arr = mysql_fetch_array($lp))
                             {
@@ -2602,13 +2822,9 @@ table { margin: 1px 0px 1px 0px; padding: 1px 1px 1px 1px; font-size: 13px;}
 
                     if (!empty($_SESSION['pid']))
                     {
-       #######             
-                        echo "<a href='who.php?id=" . $id . "'>Кто здесь?(".
-                        wfrm($id).")</a><br/>";      #7.02.08
-       #######                 
-                        
-                        
-                        
+                        echo "<a href='who.php?id=" . $id . "'>Кто здесь?(";
+                        wfrm($id);
+                        echo ")</a><br/>";
                     }
                     echo "<a href='?act=tema&amp;id=" . $id . "'>Скачать тему</a><br/>";
 

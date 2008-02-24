@@ -1,7 +1,7 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC1                                                        //
+// JohnCMS v.1.0.0 RC2                                                        //
 // Дата релиза: 08.02.2008                                                    //
 // Авторский сайт: http://gazenwagen.com                                      //
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,14 +27,11 @@ require_once ("incfiles/db.php");
 require_once ("incfiles/func.php");
 require_once ("incfiles/data.php");
 require_once ("incfiles/stat.php");
-require_once ("incfiles/head.php");
-require_once ("incfiles/inc.php");
 
 if (empty($_SESSION['pid']) && empty($_SESSION['provc']) && !empty($_COOKIE['cpide']) && !empty($_COOKIE['ckode']))
 {
     $unid = base64_decode($_COOKIE['cpide']);
     $unkod = base64_decode($_COOKIE['ckode']);
-
     $qp = mysql_query("select * from `users` where id='" . intval($unid) . "';");
     $qpp = mysql_num_rows($qp);
     if ($qpp == 1 && $unkod == $provkode)
@@ -47,14 +44,15 @@ if (empty($_SESSION['pid']) && empty($_SESSION['provc']) && !empty($_COOKIE['cpi
     }
 }
 
+require_once ("incfiles/head.php");
+require_once ("incfiles/inc.php");
+
 $reg = mysql_query("select * from `users` where id='" . intval($_SESSION['pid']) . "';");
 $reg1 = mysql_fetch_array($reg);
 $regadmin = trim($reg1['regadm']);
 if (isset($_GET['enter']))
 {
     mysql_query("update `users` set lastdate='" . $realtime . "', ip='" . $ipp . "', browser='" . $agn . "' where id='" . intval($_SESSION['pid']) . "';");
-
-
     if (isset($_GET['regprin']))
     {
         $reg = mysql_query("select * from `users` where id='" . intval($_SESSION['pid']) . "';");
@@ -81,7 +79,6 @@ if (isset($_GET['enter']))
     if (!isset($_GET['regprin']) && !empty($datauser[lastdate]))
     {
         echo "Последний раз вы заходили сюда $dpp с IP адреса $ipadr и браузера $soft<br/>";
-
         echo "За это время новостей";
         $nw = mysql_query("select * from `news` where
 time>'" . $datauser[lastdate] . "';");
@@ -95,9 +92,7 @@ time>'" . $datauser[lastdate] . "';");
         }
 
 
-        ##########
         $lp = mysql_query("select * from `forum` where type='t' and moder='1' and close!='1';");
-
         while ($arrt = mysql_fetch_array($lp))
         {
             $q3 = mysql_query("select * from `forum` where type='r' and id='" . $arrt[refid] . "';");
