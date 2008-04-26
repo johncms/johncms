@@ -1,61 +1,50 @@
 <?
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Äàòà ğåëèçà: 08.02.2008                                                    //
-// Àâòîğñêèé ñàéò: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// ĞÑ„Ğ¸Ñ†Ğ¸Ğ°Ğ»ÑŒĞ½Ñ‹Ğ¹ ÑĞ°Ğ¹Ñ‚ ÑĞ°Ğ¹Ñ‚ Ğ¿Ñ€Ğ¾ĞµĞºÑ‚Ğ°:      http://johncms.com                     //
+// Ğ”Ğ¾Ğ¿Ğ¾Ğ»Ğ½Ğ¸Ñ‚ĞµĞ»ÑŒĞ½Ñ‹Ğ¹ ÑĞ°Ğ¹Ñ‚ Ğ¿Ğ¾Ğ´Ğ´ĞµÑ€Ğ¶ĞºĞ¸:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Îğèãèíàëüíàÿ èäåÿ è êîä: Åâãåíèé Ğÿáèíèí aka JOHN77                        //
-// E-mail: 
-// Ìîäèôèêàöèÿ, îïòèìèçàöèÿ è äèçàéí: Îëåã Êàñüÿíîâ aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Ïëàãèàò è óäàëåíèå êîïèğàéòîâ çàğóãàíû íà áëèæàéøèõ ğîäñòâåííèêîâ!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Âíèìàíèå!                                                                  //
-// Àâòîğñêèå âåğñèè äàííûõ ñêğèïòîâ ïóáëèêóşòñÿ ÈÑÊËŞ×ÈÒÅËÜÍÎ íà ñàéòå        //
-// http://gazenwagen.com                                                      //
-// Åñëè Âû ñêà÷àëè äàííûé ñêğèïò ñ äğóãîãî ñàéòà, òî åãî ğàáîòà íå            //
-// ãàğàíòèğóåòñÿ è ïîääåğæêà íå îêàçûâàåòñÿ.                                  //
+// JohnCMS core team:                                                         //
+// Ğ•Ğ²Ğ³ĞµĞ½Ğ¸Ğ¹ Ğ ÑĞ±Ğ¸Ğ½Ğ¸Ğ½ aka john77          john77@gazenwagen.com                  //
+// ĞĞ»ĞµĞ³ ĞšĞ°ÑÑŒÑĞ½Ğ¾Ğ² aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Ğ˜Ğ½Ñ„Ğ¾Ñ€Ğ¼Ğ°Ñ†Ğ¸Ñ Ğ¾ Ğ²ĞµÑ€ÑĞ¸ÑÑ… ÑĞ¼Ğ¾Ñ‚Ñ€Ğ¸Ñ‚Ğµ Ğ² Ğ¿Ñ€Ğ¸Ğ»Ğ°Ğ³Ğ°ĞµĞ¼Ğ¾Ğ¼ Ñ„Ğ°Ğ¹Ğ»Ğµ version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-defined('_IN_PUSTO') or die('Error:restricted access');
+defined('_IN_JOHNCMS') or die('Error:restricted access');
 
-// Äàòà ïîñëåäíåé íîâîñòè
+// Ğ”Ğ°Ñ‚Ğ° Ğ¿Ğ¾ÑĞ»ĞµĞ´Ğ½ĞµĞ¹ Ğ½Ğ¾Ğ²Ğ¾ÑÑ‚Ğ¸
 function dnews()
 {
-    if (!empty($_SESSION[pid]))
+    if (!empty($_SESSION['uid']))
     {
-        $q = mysql_query("select * from `users` where id='" . intval($_SESSION['pid']) . "';");
-        $datauser = mysql_fetch_array($q);
-        $sdvig = trim($datauser['sdvig']);
-    }
-    $nw = @mysql_query("select * from `news` order by time desc;");
-    while ($nw1 = mysql_fetch_array($nw))
+        global $sdvig;
+    } else
     {
-        $ar[] = $nw1[time];
+        global $sdvigclock;
+        $sdvig = $sdvigclock;
     }
-    $vrn = $ar[0] + $sdvig * 3600;
+    $req = mysql_query("select `time` from `news` order by `time` desc;");
+    $res = mysql_fetch_array($req);
+    $vrn = $res['time'] + $sdvig * 3600;
     $vrn1 = date("H:i/d.m.y", $vrn);
     return $vrn1;
 }
 
-// Êîëëè÷åñòâî çàğåãèñòğèğîâàííûõ ïîëüçîâàòåëåé
+// ĞšĞ¾Ğ»Ğ»Ğ¸Ñ‡ĞµÑÑ‚Ğ²Ğ¾ Ğ·Ğ°Ñ€ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ñ… Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ĞµĞ¹
 function kuser()
 {
-    $uzs = @mysql_query("select * from `users` ;");
-    $uzs1 = @mysql_num_rows($uzs);
-    return $uzs1;
+    $req = mysql_query("select * from `users` ;");
+    $res = mysql_num_rows($req);
+    return $res;
 }
 
-// Ñòàòèñòèêà ôîğóìà
+// Ğ¡Ñ‡ĞµÑ‚Ñ‡Ğ¸Ğº "ĞšÑ‚Ğ¾ Ğ² Ñ„Ğ¾Ñ€ÑƒĞ¼Ğµ?"
 function wfrm($id)
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
+    global $realtime;
     $onltime = $realtime - 300;
     $count = 0;
     $qf = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
@@ -86,19 +75,15 @@ function wfrm($id)
     return $count;
 }
 
-// Ñòàòèñòèêà çàãğóçîê
+// Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ğ·Ğ°Ğ³Ñ€ÑƒĞ·Ğ¾Ğº
 function dload()
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
-    $fl = @mysql_query("select * from `download` where type='file' ;");
-    $countf = @mysql_num_rows($fl);
+    global $realtime;
+    $fl = mysql_query("select * from `download` where type='file' ;");
+    $countf = mysql_num_rows($fl);
     $old = $realtime - (3 * 24 * 3600);
-    $fl1 = @mysql_query("select * from `download` where time > '" . $old . "' and type='file' ;");
-    $countf1 = @mysql_num_rows($fl1);
+    $fl1 = mysql_query("select * from `download` where time > '" . $old . "' and type='file' ;");
+    $countf1 = mysql_num_rows($fl1);
     $out = $countf;
     if ($countf1 > 0)
     {
@@ -107,75 +92,41 @@ function dload()
     return $out;
 }
 
-// Ñòàòèñòèêà îáìåííèêà
-function uload()
+// Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ğ³Ğ°Ğ»Ğ»ĞµÑ€ĞµĞ¸
+// Ğ•ÑĞ»Ğ¸ Ğ²Ñ‹Ğ·Ğ²Ğ°Ñ‚ÑŒ Ñ Ğ¿Ğ°Ñ€Ğ°Ğ¼ĞµÑ‚Ñ€Ğ¾Ğ¼ 1, Ñ‚Ğ¾ Ğ±ÑƒĞ´ĞµÑ‚ Ğ²Ñ‹Ğ´Ğ°Ğ²Ğ°Ñ‚ÑŒ Ñ‚Ğ¾Ğ»ÑŒĞºĞ¾ ĞºĞ¾Ğ»Ğ»Ğ¸Ñ‡ĞµÑÑ‚Ğ²Ğ¾ Ğ½Ğ¾Ğ²Ñ‹Ñ… ĞºĞ°Ñ€Ñ‚Ğ¸Ğ½Ğ¾Ğº
+function fgal($mod = 0)
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
-    $fl = @mysql_query("select * from `upload` where type='file' and moder='1';");
-    $countf = @mysql_num_rows($fl);
+    global $realtime;
     $old = $realtime - (3 * 24 * 3600);
-    $fl1 = @mysql_query("select * from `upload` where time > '" . $old . "' and type='file' and moder='1';");
-    $countf1 = @mysql_num_rows($fl1);
-    $out = $countf;
-    if ($countf1 > 0)
+    $req = mysql_query("select * from `gallery` where time > '" . $old . "' and type='ft' ;");
+    $new = mysql_num_rows($req);
+    mysql_free_result($req);
+    if ($mod == 0)
     {
-        $out = $out . "/<font color='#FF0000'>+$countf1</font>";
-    }
-    $fm = @mysql_query("select * from `upload` where type='file' and moder='0';");
-    $countm = @mysql_num_rows($fm);
-    if (!empty($_SESSION[pid]))
-    {
-        $q = mysql_query("select * from `users` where id='" . intval($_SESSION['pid']) . "';");
-        $datauser = mysql_fetch_array($q);
-        $login = trim($datauser['name']);
-        $statad = trim($datauser['rights']);
-        if (($login == $nickadmina || $login == $nickadmina2 || $statad == "7" || $statad == "6" || $statad == "5") && ($countm > 0))
+        $req = mysql_query("select * from `gallery` where type='ft' ;");
+        $total = mysql_num_rows($req);
+        mysql_free_result($req);
+        $out = $total;
+        if ($new > 0)
         {
-            $out = $out . "/<a href='" . $home . "/download/upload.php?act=moder'><font color='#FF0000'> +$countm</font></a>";
+            $out = $out . "/<font color='#FF0000'>+$new</font>";
         }
-    }
-    return $out;
-}
-
-// Ñòàòèñòèêà ãàëëåğåè
-function fgal()
-{
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
-    $fl = @mysql_query("select * from `gallery` where type='ft' ;");
-    $countf = @mysql_num_rows($fl);
-    $old = $realtime - (3 * 24 * 3600);
-    $fl1 = @mysql_query("select * from `gallery` where time > '" . $old . "' and type='ft' ;");
-    $countf1 = @mysql_num_rows($fl1);
-    $out = $countf;
-    if ($countf1 > 0)
+    } else
     {
-        $out = $out . "/<font color='#FF0000'>+$countf1</font>";
+        $out = $new;
     }
     return $out;
 }
 
-// Äíè ğîæäåíèÿ
+// Ğ”Ğ½Ğ¸ Ñ€Ğ¾Ğ¶Ğ´ĞµĞ½Ğ¸Ñ
 function brth()
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
+    global $realtime;
     $mon = date("m", $realtime);
     if (substr($mon, 0, 1) == 0)
     {
         $mon = str_replace("0", "", $mon);
     }
-
     $day = date("d", $realtime);
     if (substr($day, 0, 1) == 0)
     {
@@ -186,48 +137,32 @@ function brth()
     return $count;
 }
 
-// Ñòàòèñòèêà áèáëèîòåêè
+// Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ğ±Ğ¸Ğ±Ğ»Ğ¸Ğ¾Ñ‚ĞµĞºĞ¸
 function stlib()
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
-    $fl = @mysql_query("select * from `lib` where type='bk' and moder='1';");
-    $countf = @mysql_num_rows($fl);
+    global $realtime;
+    global $dostlmod;
+    $fl = mysql_query("select * from `lib` where type='bk' and moder='1';");
+    $countf = mysql_num_rows($fl);
     $old = $realtime - (3 * 24 * 3600);
-    $fl1 = @mysql_query("select * from `lib` where time > '" . $old . "' and type='bk' and moder='1';");
-    $countf1 = @mysql_num_rows($fl1);
+    $fl1 = mysql_query("select * from `lib` where time > '" . $old . "' and type='bk' and moder='1';");
+    $countf1 = mysql_num_rows($fl1);
     $out = $countf;
     if ($countf1 > 0)
     {
-        $out = $out . "/+<font color='#FF0000'>$countf1</font>";
+        $out = $out . '/<font color="#FF0000">+' . $countf1 . '</font>';
     }
     $fm = @mysql_query("select * from `lib` where type='bk' and moder='0';");
     $countm = @mysql_num_rows($fm);
-    if (!empty($_SESSION[pid]))
-    {
-        $q = mysql_query("select * from `users` where id='" . intval($_SESSION['pid']) . "';");
-        $datauser = mysql_fetch_array($q);
-        $login = trim($datauser['name']);
-        $statad = trim($datauser['rights']);
-        if (($login == $nickadmina || $login == $nickadmina2 || $statad == "7" || $statad == "6" || $statad == "5") && ($countm > 0))
-        {
-            $out = $out . "/<a href='" . $home . "/str/lib.php?act=moder'><font color='#FF0000'> +$countm</font></a>";
-        }
-    }
+    if ($dostlmod == '1' && ($countm > 0))
+        $out = $out . "/<a href='" . $home . "/library/index.php?act=moder'><font color='#FF0000'> ĞœĞ¾Ğ´:$countm</font></a>";
     return $out;
 }
 
-// Ñòàòèñòèêà ×àòà
+// Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ğ§Ğ°Ñ‚Ğ°
 function wch($id)
 {
-    $tt = @mysql_query("select * from `settings` where  id='1';");
-    $tt1 = mysql_fetch_array($tt);
-    $sdvigclock = $tt1[sdvigclock];
-
-    $realtime = time() + $sdvigclock * 3600;
+    global $realtime;
     $onltime = $realtime - 300;
     $count = 0;
     $qf = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
@@ -258,11 +193,11 @@ function wch($id)
     return $count;
 }
 
-// Ñòàòèñòèêà ãîñòåâîé
+// Ğ¡Ñ‚Ğ°Ñ‚Ğ¸ÑÑ‚Ğ¸ĞºĞ° Ğ³Ğ¾ÑÑ‚ĞµĞ²Ğ¾Ğ¹
 function gbook()
 {
-    $gbs = @mysql_query("select * from `guest` ;");
-    $gbs1 = @mysql_num_rows($gbs);
+    $gbs = mysql_query("select * from `guest` ;");
+    $gbs1 = mysql_num_rows($gbs);
     return $gbs1;
 }
 ?>

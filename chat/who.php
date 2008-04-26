@@ -1,53 +1,27 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
 $textl = 'Кто в чате';
 $headmod = "chat";
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
-if (!empty($_SESSION['pid']))
+if (!empty($_SESSION['uid']))
 {
-    $tti = round(($datauser['chtime'] - $realtime) / 60);
-    if ($datauser['chban'] == "1" && $tti > 0)
-    {
-        require ("../incfiles/head.php");
-        require ("../incfiles/inc.php");
-        echo "Вас пнули из чата<br/>Кто: <font color='" . $cdinf . "'>$datauser[chwho]</font><br/>";
-        if ($datauser[chwhy] == "")
-        {
-            echo "<div>Причина не указана</div>";
-        } else
-        {
-            echo "Причина:<font color='" . $cdinf . "'> $datauser[chwhy]</font><br/>";
-        }
-        echo "Время до окончания: $tti минут<br/>";
-        require ("../incfiles/end.php");
-        exit;
-    }
     if (!empty($_GET['id']))
     {
         $id = intval(check($_GET['id']));
@@ -56,7 +30,7 @@ if (!empty($_SESSION['pid']))
         if ($ms[type] != "r")
         {
             echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         echo "Кто в комнате <font color='" . $cntem . "'>$ms[text]</font><hr/>";
@@ -175,6 +149,6 @@ if (!empty($_SESSION['pid']))
 {
     echo "Вы не авторизованы!<br/>";
 }
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 
 ?>

@@ -1,34 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
 $textl = 'Восстановление пароля';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-;
-require ("../incfiles/char.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 if ($_GET['act'] == "go")
 {
     $namm = check(trim($_POST['namm']));
@@ -39,7 +28,7 @@ if ($_GET['act'] == "go")
     {
         echo "Этого логина нет в базе данных<br/>";
         echo "<a href=\"?\">Назад</a><br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
     if (isset($_GET['continue']))
@@ -49,7 +38,7 @@ if ($_GET['act'] == "go")
         {
             echo "Указан неверный код<br/>";
             echo "<a href=\"?\">Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $newpas = rand(100000, 999999);
@@ -93,7 +82,7 @@ if ($_GET['act'] == "go")
         {
             echo "В анкете не указан e-mail адрес<br/>";
             echo "<a href=\"?\">Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
 
@@ -101,7 +90,7 @@ if ($_GET['act'] == "go")
         {
             echo "Не активирован e-mail адрес<br/>";
             echo "<a href=\"?\">Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
 
@@ -109,7 +98,7 @@ if ($_GET['act'] == "go")
         {
             echo "Указан неверный e-mail адрес<br/>";
             echo "<a href=\"?\">Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $pascod = rand(100000, 999999);
@@ -147,7 +136,7 @@ if ($_GET['act'] == "go")
     }
 
 
-    require ("../incfiles/end.php");
+    require_once ("../incfiles/end.php");
     exit;
 }
 
@@ -159,7 +148,7 @@ if (empty($_GET['act']))
         print '<form action=\'?act=go&amp;continue\' method=\'post\'>Ваш логин:<br/>' . '<input type=\'text\' name=\'namm\' value=\'\' format=\'*N\'/><br/>Код для восстановления:<br/>' . '<input type=\'text\' name=\'codepas\' value=\'\' format=\'*N\'/><br/><br/>' .
             '<input type=\'submit\' value=\'ok\'/></form>';
 
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
 
@@ -170,4 +159,4 @@ if (empty($_GET['act']))
 }
 
 
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");

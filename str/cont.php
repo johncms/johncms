@@ -1,35 +1,26 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name('SESID');
 session_start();
 $headmod = 'contacts';
 $textl = 'Контакты';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-if (!empty($_SESSION['pid']))
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
+if (!empty($_SESSION['uid']))
 {
     if (!empty($_GET['act']))
     {
@@ -41,7 +32,7 @@ if (!empty($_SESSION['pid']))
             include ("../pages/trans.$ras_pages");
             echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
             break;
-            ############################
+
         case "add":
             echo "<form action='cont.php?act=edit&amp;add=1' method='post'>
 	 Введите ник<br/>";
@@ -62,7 +53,7 @@ if (!empty($_SESSION['pid']))
                 if (empty($_GET['id']))
                 {
                     echo "Ошибка!<br/><a href='cont.php'>В контакты</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
 
@@ -211,5 +202,5 @@ if (!empty($_SESSION['pid']))
     }
 }
 echo "<a href='privat.php?'>В приват</a><br />";
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>

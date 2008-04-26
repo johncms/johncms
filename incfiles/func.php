@@ -1,27 +1,32 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-defined('_IN_PUSTO') or die('Error:restricted access');
+defined('_IN_JOHNCMS') or die('Error:restricted access');
 
-#######################
+function antilink($str)
+{
+    $str = strtr($str, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
+    return $str;
+}
+
+function texttolink($str)
+{
+    $str = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $str);
+    return $str;
+}
+
 function provcat($catalog)
 {
     $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $catalog . "';");
@@ -30,7 +35,7 @@ function provcat($catalog)
     if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]")))
     {
         echo "Ошибка при выборе категории<br/><a href='?'>К категориям</a><br/>";
-        require ('../incfiles/end.php');
+        require_once ('../incfiles/end.php');
         exit;
     }
 }
@@ -42,11 +47,11 @@ function provupl($catalog)
     if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]")))
     {
         echo "Ошибка при выборе категории<br/><a href='?'>К категориям</a><br/>";
-        require ('../incfiles/end.php');
+        require_once ('../incfiles/end.php');
         exit;
     }
 }
-#########################
+
 function deletcat($catalog)
 {
     $dir = opendir($catalog);
@@ -64,7 +69,7 @@ function deletcat($catalog)
     closedir($dir);
     rmdir($catalog);
 }
-####################
+
 function format($name)
 {
     $f1 = strrpos($name, ".");
@@ -74,7 +79,7 @@ function format($name)
 }
 
 
-##################################
+// Проверка переменных
 function check($str)
 {
     if (get_magic_quotes_gpc())
@@ -94,7 +99,7 @@ function check($str)
     $str = mysql_real_escape_string($str);
     return $str;
 }
-############################
+
 function trans($str)
 {
     $str = strtr($str, array("a" => "а", "b" => "б", "v" => "в", "g" => "г", "d" => "д", "e" => "е", "yo" => "ё", "zh" => "ж", "z" => "з", "i" => "и", "j" => "й", "k" => "к", "l" => "л", "m" => "м", "n" => "н", "o" => "о", "p" => "п", "r" =>
@@ -103,7 +108,6 @@ function trans($str)
         "Ш", "SH" => "Щ", "Q" => "Ъ", "Y" => "Ы", "X" => "Э", "YU" => "Ю", "YA" => "Я"));
     return $str;
 }
-#############################
 
 function smiles($str)
 {
@@ -120,7 +124,7 @@ function smiles($str)
     closedir($dir);
     return $str;
 }
-#############################
+
 function smilesadm($str)
 {
     $dir = opendir("../sm/adm");
@@ -138,7 +142,7 @@ function smilesadm($str)
     closedir($dir);
     return $str;
 }
-#############################
+
 function smilescat($str)
 {
     $dir = opendir("../sm/cat");
@@ -170,15 +174,89 @@ function smilescat($str)
     return $str;
 }
 
-###################################
 function offimg($str)
 {
     return eregi_replace("((<img src|alt)[-a-zA-Z0-9@:%_\+.~#?;&//=\(\)/\'\"\ />]+)", "", $str);
 
 }
+#################################3
+function navigate($adr_str, $itogo, $kol_na_str, $begin, $num_str)
+{
+    $ba = ceil($itogo / $kol_na_str);
+    $asd = $begin - ($kol_na_str);
+    $asd2 = $begin + ($kol_na_str * 2);
+    if ($asd < $itogo && $asd > 0)
+    {
+        echo ' <a href="' . $adr_str . '&amp;page=1&amp;">1</a> .. ';
+    }
+    $page2 = $ba - $num_str;
+    $pa = ceil($num_str / 2);
+    $paa = ceil($num_str / 3);
+    $pa2 = $num_str + floor($page2 / 2);
+    $paa2 = $num_str + floor($page2 / 3);
+    $paa3 = $num_str + (floor($page2 / 3) * 2);
+    if ($num_str > 13)
+    {
+        echo ' <a href="' . $adr_str . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="' . $adr_str . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="' . $adr_str . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
+            '</a> <a href="' . $adr_str . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+    } elseif ($num_str > 7)
+    {
+        echo ' <a href="' . $adr_str . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="' . $adr_str . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
+    }
+    for ($i = $asd; $i < $asd2; )
+    {
+        if ($i < $itogo && $i >= 0)
+        {
+            $ii = floor(1 + $i / $kol_na_str);
 
-// Задаем кодировку mb_string
-mb_internal_encoding('UTF-8');
+            if ($begin == $i)
+            {
+                echo " <b>$ii</b>";
+            } else
+            {
+                echo ' <a href="' . $adr_str . '&amp;page=' . $ii . '">' . $ii . '</a> ';
+            }
+        }
+        $i = $i + $kol_na_str;
+    }
+    if ($page2 > 12)
+    {
+        echo ' .. <a href="' . $adr_str . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="' . $adr_str . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="' . $adr_str . '&amp;page=' . ($paa3) . '">' . ($paa3) .
+            '</a> <a href="' . $adr_str . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+    } elseif ($page2 > 6)
+    {
+        echo ' .. <a href="' . $adr_str . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="' . $adr_str . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
+    }
+    if ($asd2 < $itogo)
+    {
+        echo ' .. <a href="' . $adr_str . '&amp;page=' . $ba . '">' . $ba . '</a>';
+    }
 
+}
+############################
+function tegi($str)
+{
+    $str = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $str);
+    $str = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $str);
+
+    if (stristr($str, "<a href="))
+    {
+        $str = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
+            "<a href='\\1\\3'>\\3</a>", $str);
+    } else
+    {
+        $str = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $str);
+    }
+
+
+    return $str;
+}
+
+function rus_lat($str)
+{
+    $str = strtr($str, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'i', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r',
+        'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch', 'ъ' => "", 'ы' => 'y', 'ь' => "", 'э' => 'ye', 'ю' => 'yu', 'я' => 'ya'));
+    return $str;
+}
 
 ?>

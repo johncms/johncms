@@ -1,32 +1,24 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $textl = 'Настройки сайта';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-                                            ###7.02.08
+require_once ("../incfiles/core.php");
+
 if ($dostadm == 1)
 {
     if (!empty($_GET['act']))
@@ -53,21 +45,16 @@ if ($dostadm == 1)
                 "' ,admp='" . $admp . "', fmod='" . $fm . "', flsz='" . $fsz . "',gb='" . $gbk . "', rmod='" . $rm . "' where id='1';");
             header("location: set.php?set");
             break;
-        default:
- ###############       
-        
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");     ###7.02.08
 
-################
+        default:
+            require_once ("../incfiles/head.php");
             if (isset($_GET[set]))
             {
                 echo "<div style='color: red'>Сайт настроен</div>";
             }
-            echo "Настройка системы.<br/>";
-            echo "Время на сервере: " . date("H.i(d/m/Y)") . "";
-            $setdata = array("sdvigclock" => "Временной сдвиг:", "copyright" => "Ваш копирайт:", "homeurl" => "Главная сайта без слэша в конце:", "flsz" => "Макс.допустимый размер файлов(кб.)", "admp" => "Папка с админкой:", "rashstr" =>
-                "Расширение страниц:");
+            echo '<b>АДМИН ПАНЕЛЬ</b><br />Настройка системы<hr/>';
+            echo '<br />Время на сервере: ' . date("H.i(d/m/Y)") . '<br /><br />';
+            $setdata = array("rashstr" => "Расширение страниц:");
 
             echo "<form method='post' action='set.php?act=set'>";
             if ($dostsadm == 1)
@@ -85,13 +72,12 @@ require ("../incfiles/inc.php");     ###7.02.08
      <input name='nadm2' type='hidden' value='" . $nickadmina2 . "'/>
      <input name='madm' type='hidden' value='" . $emailadmina . "'/>";
             }
-
-            foreach ($setdata as $key => $value)
-            {
-                echo "$setdata[$key]<br/><input type='text' name='" . $key . "' value='" . $set[$key] . "'/><br/>";
-            }
-
-
+            echo "Временной сдвиг:<br/><input type='text' name='sdvigclock' value='" . $sdvigclock . "'/><br/>";
+            echo "Ваш копирайт:<br/><input type='text' name='copyright' value='" . $copyright . "'/><br/>";
+            echo "Главная сайта без слэша в конце:<br/><input type='text' name='homeurl' value='" . $home . "'/><br/>";
+            echo "Макс.допустимый размер файлов(кб.):<br/><input type='text' name='flsz' value='" . $flsz . "'/><br/>";
+            echo "Папка с админкой:<br/><input type='text' name='admp' value='" . $admp . "'/><br/>";
+            echo "Расширение страниц:<br/><input type='text' name='rashstr' value='" . $ras_pages . "'/><br/>";
             echo "Включить gzip сжатие:<br/>Да";
             if ($gzip == "1")
             {
@@ -161,8 +147,8 @@ require ("../incfiles/inc.php");     ###7.02.08
             }
             echo "Нет<br/>";
 
-            echo "<br/><input value='Ok!' type='submit'/></form>";
-            echo "<a href='main.php'>В админку</a><br/>";
+            echo '<br/><input value="Ok!" type="submit"/></form>';
+            echo '<br /><a href="main.php">В админку</a><br/><br/>';
             break;
     }
 } else

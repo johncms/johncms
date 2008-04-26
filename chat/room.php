@@ -1,33 +1,26 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: john773@yandex.ru                                                  //
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// На этом же сайте оказывается техническая поддержка                         //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-defined('_IN_PUSTO') or die('Error:restricted access');
+defined('_IN_JOHNCMS') or die('Error:restricted access');
 
 ////////////////////////////////////////////////////////////
 // Комнаты Чата                                           //
 ////////////////////////////////////////////////////////////
-$type = mysql_query("select * from `chat` where id= '" . $id . "';");
+$type = mysql_query("select * from `chat` where `id`= '" . $id . "';");
 $type1 = mysql_fetch_array($type);
-$tip = $type1[type];
+$tip = $type1['type'];
 switch ($tip)
 {
     case "r":
@@ -39,11 +32,10 @@ switch ($tip)
         {
             if (empty($_SESSION['intim']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "<form action='index.php?act=pass&amp;id=" . $id .
                     "' method='post'><br/>Введите пароль(max. 10):<br/><input type='text' name='parol' maxlength='10'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='index.php'>В чат</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
         }
@@ -158,8 +150,7 @@ switch ($tip)
         $refr = rand(0, 999);
         $arefresh = true;
         require_once ('chat_header.php');
-        require ('../incfiles/inc.php');
-        if ($carea == 1)
+        if ($datauser['carea'] == 1)
         {
             echo "<form action='index.php?act=say&amp;id=" . $id . "' method='post'><textarea cols='20' rows='2' title='Введите текст сообщения' name='msg'></textarea><br/>";
             if ($offtr != 1)
@@ -181,9 +172,9 @@ switch ($tip)
             $pasw = $q4[alls];
             if (($masss[dpar] != 1 || $masss[to] == $login || $masss[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
             {
-                if ($type1[dpar] != "in" || $pasw == $datauser[alls])
+                if ($type1['dpar'] != "in" || $pasw == $datauser['alls'])
                 {
-                    $cm[] = $masss[id];
+                    $cm[] = $masss['id'];
                 }
             }
         }
@@ -204,8 +195,7 @@ switch ($tip)
         {
             $end = $start + $chmes;
         }
-
-        $q1 = mysql_query("select * from `chat` where type='m' and refid='" . $id . "'  order by time desc ;");
+        $q1 = mysql_query("select * from `chat` where type='m' and `refid`='" . $id . "'  order by time desc ;");
         $i = 0;
         while ($mass = mysql_fetch_array($q1))
         {
@@ -216,9 +206,9 @@ switch ($tip)
                 $als = mysql_query("select * from `users` where name='" . $mass[from] . "';");
                 $als1 = mysql_fetch_array($als);
                 $psw = $als1[alls];
-                if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
+				if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
                 {
-                    if ($type1[dpar] != "in" || $psw == $datauser[alls])
+                    if ($type1[dpar] != "in" || $psw == $datauser['alls'])
                     {
                         if ($mass[from] != "Умник")
                         {
@@ -226,10 +216,6 @@ switch ($tip)
                             $mass1 = @mysql_fetch_array($uz);
                         }
                         echo '<div class="text">';
-                        if ($pfon == 1)
-                        {
-                            echo "<div style='background:" . $cpfon . ";'>";
-                        }
                         if ($mass[from] != "Умник")
                         {
                             // Выводим значек пола
@@ -245,7 +231,7 @@ switch ($tip)
                         }
                         if ($mass[from] != "Умник")
                         {
-                            if ((!empty($_SESSION['pid'])) && ($_SESSION['pid'] != $mass1[id]))
+                            if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1[id]))
                             {
                                 echo "<a href='index.php?act=say&amp;id=" . $mass[id] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
                             } else
@@ -299,10 +285,6 @@ switch ($tip)
                             //}
                         }
                         echo "($vr): ";
-                        if ($pfon == 1)
-                        {
-                            echo "</div>";
-                        }
                         if (!empty($mass[nas]))
                         {
                             echo "<font color='" . $cdinf . "'>$mass[nas]</font><br/>";
@@ -324,7 +306,6 @@ switch ($tip)
                                 echo "</b></font>";
                             }
                         }
-                        $mass[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div style=\'background:' . $ccfon . ';color:' . $cctx . ';\'>\1<br/></div>', $mass[text]);
                         $mass[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
                         $mass[text] = eregi_replace("\\[l\\]([[:alnum:]_=/:-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[text]);
                         if (stristr($mass[text], "<a href="))
@@ -370,7 +351,7 @@ switch ($tip)
             }
             if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
             {
-                if ($type1[dpar] != "in" || $psw == $datauser[alls])
+                if ($type1[dpar] != "in" || $psw == $datauser['alls'])
                 {
                     ++$i;
                 }
@@ -466,7 +447,6 @@ switch ($tip)
 
     default:
         require_once ("../incfiles/head.php");
-        require_once ("../incfiles/inc.php");
         echo "Ошибка!<br/>&#187;<a href='index.php?'>В чат</a><br/>";
         require_once ('chat_footer.php');
 }

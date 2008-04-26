@@ -1,44 +1,30 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
 $headmod = 'gallery';
 $textl = 'Галерея сайта';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-require ("../incfiles/mp3.php");
-include ('../incfiles/pclzip.php');
-include ('../incfiles/char.php');
-
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 if (!empty($_GET['act']))
 {
     $act = check($_GET['act']);
 }
 switch ($act)
 {
-        ################
     case "new":
         echo "Новые фотографии<br/>";
         $old = $realtime - (3 * 24 * 3600);
@@ -60,7 +46,6 @@ switch ($act)
         {
             $end = $start + 10;
         }
-
         if ($totalnew != 0)
         {
             while ($newf = mysql_fetch_array($newfile))
@@ -78,13 +63,8 @@ switch ($act)
                     {
                         $div = "<div class='b'>";
                     }
-
-
                     echo "$div<br/>&nbsp;<a href='index.php?id=" . $newf[id] . "'>";
-
-                    #########
                     $infile = "foto/$newf[name]";
-
                     if (!empty($_SESSION['frazm']))
                     {
                         $razm = $_SESSION['frazm'];
@@ -96,8 +76,6 @@ switch ($act)
                     $width = $sizs[0];
                     $height = $sizs[1];
                     $quality = 100;
-
-
                     $x_ratio = $razm / $width;
                     $y_ratio = $razm / $height;
                     if (($width <= $razm) && ($height <= $razm))
@@ -115,7 +93,6 @@ switch ($act)
                             $tn_height = $razm;
                         }
                         $format = format($infile);
-
                     switch ($format)
                     {
                         case "gif":
@@ -131,13 +108,9 @@ switch ($act)
                             $im = ImageCreateFromPNG($infile);
                             break;
                     }
-
-
                     $im1 = imagecreatetruecolor($tn_width, $tn_height);
                     $namefile = "$newf[name]";
-
                     imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
-
                     switch ($format)
                     {
                         case "gif":
@@ -165,15 +138,11 @@ switch ($act)
                     }
                     imagedestroy($im);
                     imagedestroy($im1);
-
-
-                    ############
                     $vrf = $newf[time] + $sdvig * 3600;
                     $vrf1 = date("d.m.y / H:i", $vrf);
                     $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $newf[id] . "';");
                     $kom1 = mysql_num_rows($kom);
                     echo "</a><br/>Добавлено: $vrf1<br/>Подпись: $newf[text]<br/><a href='index.php?act=komm&amp;id=" . $newf[id] . "'>Комментарии</a> ($kom1)<br/>";
-
                     $al = mysql_query("select * from `gallery` where type = 'al' and id = '" . $newf[refid] . "';");
                     $al1 = mysql_fetch_array($al);
                     $rz = mysql_query("select * from `gallery` where type = 'rz' and id = '" . $al1[refid] . "';");
@@ -181,14 +150,10 @@ switch ($act)
                     echo "$rz1[text]/[$al1[text]]</div>";
                 }
                 ++$i;
-
             }
-            ###
             if ($totalnew > 10)
             {
                 echo "<hr/>";
-
-
                 $ba = ceil($totalnew / 10);
                 if ($offpg != 1)
                 {
@@ -202,7 +167,6 @@ switch ($act)
                 {
                     echo '<a href="index.php?act=new&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
                 }
-
                 $asd = $start - 10;
                 $asd2 = $start + 20;
                 if ($offpg != 1)
@@ -263,22 +227,14 @@ switch ($act)
                 }
                 echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='act' value='new'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
             }
-
-            #####
-
-
             echo "<br/>Всего новых фотографий за 3 дня: $totalnew";
         } else
         {
             echo "<br/>Нет новых фотографий за 3 дня";
         }
         echo "<br/><a href='index.php?'>В галерею</a><br/>";
-
-
         break;
 
-
-        ############
     case "edf":
 
         if ($dostsmod == 1)
@@ -286,7 +242,7 @@ switch ($act)
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(trim($_GET['id']));
@@ -295,7 +251,7 @@ switch ($act)
             if ($ms[type] != "ft")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             if (isset($_POST['submit']))
@@ -312,11 +268,8 @@ switch ($act)
         {
             header("location: index.php");
         }
-
         break;
 
-
-        ###################
     case "delf":
 
         if ($dostsmod == 1)
@@ -324,7 +277,7 @@ switch ($act)
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(trim($_GET['id']));
@@ -333,7 +286,7 @@ switch ($act)
             if ($ms[type] != "ft")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             if (isset($_GET['yes']))
@@ -356,20 +309,19 @@ switch ($act)
             header("location: index.php");
         }
         break;
-        #########################
+
     case "edit":
         if ($dostsmod == 1)
         {
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(trim($_GET['id']));
             $typ = mysql_query("select * from `gallery` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-
             switch ($ms[type])
             {
                 case "al":
@@ -384,6 +336,7 @@ switch ($act)
                             "'/><br/><input type='submit' name='submit' value='Ok!'/></form><br/><a href='index.php?id=" . $id . "'>Назад</a><br/>";
                     }
                     break;
+
                 case "rz":
                     if (isset($_POST['submit']))
                     {
@@ -412,7 +365,7 @@ switch ($act)
                     break;
                 default:
                     echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                     break;
             }
@@ -420,22 +373,20 @@ switch ($act)
         {
             header("location: index.php");
         }
-
         break;
-        ######################
+
     case "del":
         if ($dostsmod == 1)
         {
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(trim($_GET['id']));
             $typ = mysql_query("select * from `gallery` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-
             if (isset($_GET['yes']))
             {
                 switch ($ms[type])
@@ -477,13 +428,12 @@ switch ($act)
                         break;
                     default:
                         echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                        require ('../incfiles/end.php');
+                        require_once ('../incfiles/end.php');
                         exit;
                         break;
                 }
             } else
             {
-
                 switch ($ms[type])
                 {
                     case "al":
@@ -494,7 +444,7 @@ switch ($act)
                         break;
                     default:
                         echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                        require ('../incfiles/end.php');
+                        require_once ('../incfiles/end.php');
                         exit;
                         break;
                 }
@@ -504,18 +454,15 @@ switch ($act)
         {
             header("location: index.php");
         }
-
         break;
 
-
-        #########################
     case "delmes":
         if ($dostsmod == 1)
         {
             if ($_GET['id'] == "")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(trim($_GET['id']));
@@ -524,7 +471,7 @@ switch ($act)
             if ($ms[type] != "km")
             {
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             mysql_query("delete from `gallery` where `id`='" . $id . "';");
@@ -533,17 +480,15 @@ switch ($act)
         {
             echo "Нет доступа!<br/><a href='index.php'>В галерею</a><br/>";
         }
-
-
         break;
-        ########################
+
     case "addkomm":
-        if (!empty($_SESSION['pid']))
+        if (!empty($_SESSION['uid']))
         {
             if ($_GET['id'] == "")
             {
                 echo "Не выбрано фото<br/><a href='index.php'>В галерею</a><br/>";
-                require ('../incfiles/end.php');
+                require_once ('../incfiles/end.php');
                 exit;
             }
             $id = intval(check(trim($_GET['id'])));
@@ -555,13 +500,13 @@ switch ($act)
                 if ($af1 != 0)
                 {
                     echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($_POST['msg'] == "")
                 {
                     echo "Вы не ввели сообщение!<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 $msg = check(trim($_POST['msg']));
@@ -569,9 +514,7 @@ switch ($act)
                 {
                     $msg = trans($msg);
                 }
-                $msg = utfwin($msg);
-                $msg = substr($msg, 0, 500);
-                $msg = winutf($msg);
+                $msg = mb_substr($msg, 0, 500);
                 $agn = strtok($agn, ' ');
                 mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','km','" . $login . "','" . $msg . "','','','" . $ipp . "','" . $agn . "');");
                 if (empty($datauser[komm]))
@@ -581,7 +524,7 @@ switch ($act)
                 {
                     $fpst = $datauser[komm] + 1;
                 }
-                mysql_query("update `users` set  komm='" . $fpst . "' where id='" . intval($_SESSION['pid']) . "';");
+                mysql_query("update `users` set  komm='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
                 header("Location: index.php?act=komm&id=$id");
             } else
             {
@@ -601,26 +544,24 @@ Cообщение<br/>
         echo "<a href='index.php'>В галерею</a><br/>";
         break;
 
-
-        ################################
     case "trans":
         include ("../pages/trans.$ras_pages");
         echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
         break;
-        ############################
+
     case "komm":
         if ($_GET['id'] == "")
         {
 
             echo "Не выбрано фото<br/><a href='index.php'>В галерею</a><br/>";
-            require ('../incfiles/end.php');
+            require_once ('../incfiles/end.php');
             exit;
         }
         $id = intval(check(trim($_GET['id'])));
         $mess = mysql_query("select * from `gallery` where type='km' and refid='" . $id . "' order by time desc ;");
         $countm = mysql_num_rows($mess);
 
-        if (!empty($_SESSION['pid']))
+        if (!empty($_SESSION['uid']))
         {
             echo "<a href='?act=addkomm&amp;id=" . $id . "'>Написать</a><br/>";
         }
@@ -639,7 +580,6 @@ Cообщение<br/>
         {
             $end = $start + $kmess;
         }
-
         while ($mass = mysql_fetch_array($mess))
         {
             if ($i >= $start && $i < $end)
@@ -658,7 +598,7 @@ Cообщение<br/>
                 $uz = @mysql_query("select * from `users` where name='" . check($mass[avtor]) . "';");
                 $mass1 = @mysql_fetch_array($uz);
                 echo "$div";
-                if ((!empty($_SESSION['pid'])) && ($_SESSION['pid'] != $mass1[id]))
+                if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1[id]))
                 {
                     echo "<a href='../str/anketa.php?user=" . $mass1[id] . "'>$mass[avtor]</a>";
                 } else
@@ -723,12 +663,9 @@ Cообщение<br/>
             }
             ++$i;
         }
-        #######
         if ($countm > $kmess)
         {
             echo "<hr/>";
-
-
             $ba = ceil($countm / $kmess);
             if ($offpg != 1)
             {
@@ -796,8 +733,6 @@ Cообщение<br/>
             {
                 echo "<b>[$page]</b>";
             }
-
-
             if ($countm > $start + $kmess)
             {
                 echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
@@ -805,14 +740,11 @@ Cообщение<br/>
             echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
                 "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
         }
-
-        ###########
         echo "<br/>Всего комментариев: $countm";
         echo '<br/><a href="?id=' . $id . '">К фото</a><br/>';
         echo "<a href='index.php'>В галерею</a><br/>";
         break;
 
-        ######################
     case "preview":
         if (isset($_POST['submit']))
         {
@@ -845,16 +777,15 @@ Cообщение<br/>
         echo "<a href='index.php?'>В галерею</a><br/>";
         break;
 
-        #####################
     case "load":
-        if (empty($_SESSION['pid']))
+        if (empty($_SESSION['uid']))
         {
             header("location: index.php");
         }
         if (empty($_GET['id']))
         {
             echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $id = intval(check($_GET['id']));
@@ -863,12 +794,12 @@ Cообщение<br/>
         if ($ms[type] != "al")
         {
             echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $rz = mysql_query("select * from `gallery` where type='rz' and id='" . $ms[refid] . "';");
         $rz1 = mysql_fetch_array($rz);
-        if ((!empty($_SESSION['pid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
+        if ((!empty($_SESSION['uid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
         {
             $text = check($_POST['text']);
             $dopras = array("gif", "jpg", "png");
@@ -884,31 +815,31 @@ Cообщение<br/>
                 if ((preg_match("/php/i", $ffail)) or (preg_match("/.pl/i", $fname)) or ($fname == ".htaccess"))
                 {
                     echo "Попытка отправить файл запрещенного типа.<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if ($fsize >= 1024 * $ftsz)
                 {
                     echo "Вес файла превышает $ftsz кб<br/>
 <a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if (!in_array($formfail, $dopras))
                 {
                     echo "Разрешены только следующие типы файлов: $tff !.<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if (eregi("[^a-z0-9.()+_-]", $fname))
                 {
                     echo "В названии изображения $fname присутствуют недопустимые символы<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if ($rz1[user] == 1 && $ms[text] == $login)
                 {
-                    $fname = "$_SESSION[pid].$fname";  #######7.02.08#####
+                    $fname = "$_SESSION[pid].$fname"; #######7.02.08#####
                 }
                 if (file_exists("foto/$fname"))
                 {
@@ -928,8 +859,6 @@ Cообщение<br/>
             }
             if (!empty($_POST['fail1']))
             {
-
-
                 $uploadedfile = $_POST['fail1'];
                 if (strlen($uploadedfile) > 0)
                 {
@@ -942,34 +871,33 @@ Cообщение<br/>
                 if ((preg_match("/php/i", $ffail)) or (preg_match("/.pl/i", $fname)) or ($fname == ".htaccess"))
                 {
                     echo "Попытка отправить файл запрещенного типа.<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if (strlen(base64_decode($filebase64)) >= 1024 * $ftsz)
                 {
                     echo "Вес файла превышает $ftsz кб<br/>
 <a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if (!in_array($fftip, $dopras))
                 {
                     echo "Разрешены только следующие типы файлов: $tff !.<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if (eregi("[^a-z0-9.()+_-]", $tmp_name))
                 {
                     echo "В названии изображения $tmp_name присутствуют недопустимые символы<br/><a href='index.php?act=upl&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
-
                 if (strlen($filebase64) > 0)
                 {
                     if ($rz1[user] == 1 && $ms[text] == $login)
                     {
-                        $tmp_name = "$_SESSION[pid].$tmp_name";  ####7.02.08
+                        $tmp_name = "$_SESSION[pid].$tmp_name"; ####7.02.08
                     }
                     if (file_exists("foto/$fname"))
                     {
@@ -1005,16 +933,16 @@ Cообщение<br/>
             header("location: index.php");
         }
         break;
-        ##########################
+
     case "upl":
-        if (empty($_SESSION['pid']))
+        if (empty($_SESSION['uid']))
         {
             header("location: index.php");
         }
         if (empty($_GET['id']))
         {
             echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $id = intval(check($_GET['id']));
@@ -1023,12 +951,12 @@ Cообщение<br/>
         if ($ms[type] != "al")
         {
             echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $rz = mysql_query("select * from `gallery` where type='rz' and id='" . $ms[refid] . "';");
         $rz1 = mysql_fetch_array($rz);
-        if ((!empty($_SESSION['pid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
+        if ((!empty($_SESSION['uid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
         {
             $dopras = array("gif", "jpg", "png");
             $tff = implode(" ,", $dopras);
@@ -1041,14 +969,14 @@ Cообщение<br/>
             header("location: index.php");
         }
         break;
-        ################
+
     case "cral":
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
                 echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -1057,7 +985,7 @@ Cообщение<br/>
             if ($ms[type] != "rz")
             {
                 echo "Ошибка!<br/><a href='index.php'>В галерею</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
 
@@ -1079,14 +1007,14 @@ Cообщение<br/>
         }
 
         break;
-        ###################
+
     case "album":
-        if (!empty($_SESSION['pid']))
+        if (!empty($_SESSION['uid']))
         {
             if (empty($_GET['id']))
             {
                 echo "Ошибка!";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -1095,10 +1023,10 @@ Cообщение<br/>
             if ($ms[type] != "rz")
             {
                 echo "Ошибка!";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
-            mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','al','" . $login . "','" . $login . "','','','','');");
+            mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','al','" . $login . "','" . $login . "','','1','','');");
             $al = mysql_insert_id();
             header("location: index.php?id=$al");
         } else
@@ -1108,8 +1036,6 @@ Cообщение<br/>
 
         break;
 
-
-        #################
     case "razd":
         if ($dostsmod == 1)
         {
@@ -1129,7 +1055,7 @@ Cообщение<br/>
         }
 
         break;
-        #####################
+
     default:
         if (!empty($_GET['id']))
         {
@@ -1157,23 +1083,20 @@ Cообщение<br/>
                     {
                         $end = $start + 10;
                     }
-
+                    echo '<p><b>' . $ms[text] . '</b></p><hr />';
                     while ($al1 = mysql_fetch_array($al))
                     {
                         if ($i >= $start && $i < $end)
                         {
                             $fot = mysql_query("select * from `gallery` where type='ft' and  refid='" . $al1[id] . "';");
                             $countf = mysql_num_rows($fot);
-                            echo "<a href='index.php?id=" . $al1[id] . "'>$al1[text]</a> ($countf)<br/>";
+                            echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" />&nbsp;<a href="index.php?id=' . $al1[id] . '">' . $al1[text] . '</a> (' . $countf . ')</div>';
                         }
                         ++$i;
                     }
-                    ########
+                    echo "<hr/><p>";
                     if ($count > 10)
                     {
-                        echo "<hr/>";
-
-
                         $ba = ceil($count / 10);
                         if ($offpg != 1)
                         {
@@ -1250,10 +1173,8 @@ Cообщение<br/>
                             "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
                     }
 
-
-                    ##########
                     echo "Всего альбомов: $count<br/>";
-                    if (!empty($_SESSION['pid']) && $ms[user] == 1)
+                    if (!empty($_SESSION['uid']) && $ms[user] == 1)
                     {
                         $alb = mysql_query("select * from `gallery` where type='al' and  refid='" . $id . "' and avtor='" . $login . "';");
                         $cnt = mysql_num_rows($alb);
@@ -1272,8 +1193,7 @@ Cообщение<br/>
                         echo "<a href='index.php?act=del&amp;id=" . $id . "'>Удалить раздел</a><br/>";
                         echo "<a href='index.php?act=edit&amp;id=" . $id . "'>Изменить раздел</a><br/>";
                     }
-                    echo "<a href='index.php'>В галерею</a><br/>";
-
+                    echo "<a href='index.php'>В галерею</a></p>";
                     break;
 
                 case "al":
@@ -1297,8 +1217,7 @@ Cообщение<br/>
                             unlink("temp/$im[$imi]");
                         }
                     }
-
-                    echo "Альбом $ms[text]<br/>";
+                    echo "<p>Альбом <b>$ms[text]</b></p><hr/>";
                     $fot = mysql_query("select * from `gallery` where type='ft' and  refid='" . $id . "' order by time desc;");
                     $count = mysql_num_rows($fot);
                     if (empty($_GET['page']))
@@ -1318,7 +1237,6 @@ Cообщение<br/>
                     }
                     while ($fot1 = mysql_fetch_array($fot))
                     {
-                        #######
                         if ($i >= $start && $i < $end)
                         {
                             $d = $i / 2;
@@ -1332,11 +1250,8 @@ Cообщение<br/>
                             {
                                 $div = "<div class='b'>";
                             }
-                            echo "$div <br/>&nbsp;<a href='index.php?id=" . $fot1[id] . "'>";
-
-
+                            echo "$div&nbsp;<a href='index.php?id=" . $fot1[id] . "'>";
                             $infile = "foto/$fot1[name]";
-
                             if (!empty($_SESSION['frazm']))
                             {
                                 $razm = $_SESSION['frazm'];
@@ -1347,9 +1262,7 @@ Cообщение<br/>
                             $sizs = GetImageSize($infile);
                             $width = $sizs[0];
                             $height = $sizs[1];
-                            $quality = 80;           ######7.02.08
-
-
+                            $quality = 80; ######7.02.08
                             $x_ratio = $razm / $width;
                             $y_ratio = $razm / $height;
                             if (($width <= $razm) && ($height <= $razm))
@@ -1367,7 +1280,6 @@ Cообщение<br/>
                                     $tn_height = $razm;
                                 }
                                 $format = format($infile);
-
                             switch ($format)
                             {
                                 case "gif":
@@ -1383,13 +1295,9 @@ Cообщение<br/>
                                     $im = ImageCreateFromPNG($infile);
                                     break;
                             }
-
-
                             $im1 = imagecreatetruecolor($tn_width, $tn_height);
                             $namefile = "$fot1[name]";
-
                             imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
-
                             switch ($format)
                             {
                                 case "gif":
@@ -1417,19 +1325,17 @@ Cообщение<br/>
                             }
                             imagedestroy($im);
                             imagedestroy($im1);
-
-                            #############
                             $fotsz = filesize("foto/$ms[name]");
                             $vrf = $fot1[time] + $sdvig * 3600;
                             $vrf1 = date("d.m.y / H:i", $vrf);
                             $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $fot1[id] . "';");
                             $kom1 = mysql_num_rows($kom);
-   ####################
-                            echo "</a><br/>Добавлено: $vrf1<br/>Подпись: $fot1[text]<br/><a href='foto/$fot1[name]'>Скачать</a><br /><a href='index.php?act=komm&amp;id=" . $fot1[id] . "'>Комментарии</a> ($kom1)<br/>";
-                            
-   #######################7.02.08                         
-                            
-                            
+                            echo '</a>';
+                            if (!empty($fot1[text]))
+                                echo "$fot1[text]<br/>";
+                            if ($kom1 > 0)
+                                echo "<a href='index.php?act=komm&amp;id=" . $fot1[id] . "'>Комментарии</a> ($kom1)<br/>";
+                            //echo "<a href='foto/$fot1[name]'>Скачать</a><br />";
                             if ($dostsmod == 1)
                             {
                                 echo "<a href='index.php?act=edf&amp;id=" . $fot1[id] . "'>Изменить</a> | <a href='index.php?act=delf&amp;id=" . $fot1[id] . "'>Удалить</a><br/>";
@@ -1437,15 +1343,10 @@ Cообщение<br/>
                             echo "</div>";
                         }
                         ++$i;
-
-
                     }
-                    ############
+                        echo "<hr/><p>";
                     if ($count > 10)
                     {
-                        echo "<hr/>";
-
-
                         $ba = ceil($count / 10);
                         if ($offpg != 1)
                         {
@@ -1521,9 +1422,6 @@ Cообщение<br/>
                         echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
                             "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
                     }
-
-                    #############
-
                     if ($count != 0)
                     {
                         echo "Всего фотографий: $count<br/>";
@@ -1533,7 +1431,7 @@ Cообщение<br/>
                     }
                     $rz = mysql_query("select * from `gallery` where type='rz' and  id='" . $ms[refid] . "';");
                     $rz1 = mysql_fetch_array($rz);
-                    if ((!empty($_SESSION['pid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
+                    if ((!empty($_SESSION['uid']) && $rz1[user] == 1 && $ms[text] == $login) || ($dostsmod == 1))
                     {
                         echo "<a href='index.php?act=upl&amp;id=" . $id . "'>Выгрузить фото</a><br/>";
                     }
@@ -1543,7 +1441,7 @@ Cообщение<br/>
                         echo "<a href='index.php?act=edit&amp;id=" . $id . "'>Изменить альбом</a><br/>";
                     }
                     echo "<a href='index.php?id=" . $ms[refid] . "'>$rz1[text]</a><br/>";
-                    echo "<a href='index.php'>В галерею</a><br/>";
+                    echo "<a href='index.php'>В галерею</a></p>";
                     break;
 
                 case "ft":
@@ -1560,10 +1458,8 @@ Cообщение<br/>
                     $sizs = GetImageSize($infile);
                     $width = $sizs[0];
                     $height = $sizs[1];
-                    $quality = 85;                     ####7.02.08
-
+                    $quality = 85; ####7.02.08
                     $format = format($infile);
-
                     switch ($format)
                     {
                         case "gif":
@@ -1579,13 +1475,9 @@ Cообщение<br/>
                             $im = ImageCreateFromPNG($infile);
                             break;
                     }
-
-
                     $im1 = imagecreatetruecolor($width, $height);
                     $namefile = "$ms[name]";
-
                     imagecopy($im1, $im, 0, 0, 0, 0, $width, $height);
-
                     switch ($format)
                     {
                         case "gif":
@@ -1620,12 +1512,17 @@ Cообщение<br/>
                     $fheight = $sizs[1];
                     $vrf = $ms[time] + $sdvig * 3600;
                     $vrf1 = date("d.m.y / H:i", $vrf);
-                    echo "Размеры: $fwidth*$fheight пкс.<br/>Вес: $fotsz кб.<br/>Добавлено: $ms[avtor]<br/>Подпись: $ms[text]<br/>";
-                    $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $id . "';");
+					echo "<p>Подпись: $ms[text]<br/>";
+					$kom = mysql_query("select * from `gallery` where type='km' and refid='" . $id . "';");
                     $kom1 = mysql_num_rows($kom);
                     echo "<a href='index.php?act=komm&amp;id=" . $id . "'>Комментарии</a> ($kom1)<br/>";
+                    echo "Размеры: $fwidth*$fheight пкс.<br/>";
+					echo "Вес: $fotsz кб.<br/>";
+                    echo "Добавлено: $vrf1<br/>";
+					echo "Разместил: $ms[avtor]<br/>";
+					echo "<a href='foto/$ms[name]'>Скачать</a><br /><br />";
                     echo "<a href='index.php?id=" . $ms[refid] . "'>Назад</a><br/>";
-                    echo "<a href='index.php'>В галерею</a><br/>";
+                    echo "<a href='index.php'>В галерею</a></p>";
                     break;
 
                 default:
@@ -1634,17 +1531,17 @@ Cообщение<br/>
             }
         } else
         {
-            echo "<a href='index.php?act=new'>Новые фото</a><br/><br/>";
+            // Главная страница Галлереи
+            echo '<p><a href="index.php?act=new">Новые фото</a> (' . fgal(1) . ')</p><hr/>';
             $rz = mysql_query("select * from `gallery` where type='rz';");
             $count = mysql_num_rows($rz);
             while ($rz1 = mysql_fetch_array($rz))
             {
                 $al = mysql_query("select * from `gallery` where type='al' and  refid='" . $rz1[id] . "';");
                 $countal = mysql_num_rows($al);
-                echo "<a href='index.php?id=" . $rz1[id] . "'>$rz1[text]</a> ($countal)<br/>";
+                echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" />&nbsp;<a href="index.php?id=' . $rz1[id] . '">' . $rz1[text] . '</a> (' . $countal . ')</div>';
             }
-
-
+            echo '<hr /><p>';
             if ($count != 0)
             {
                 echo "Всего разделов: $count<br/>";
@@ -1655,13 +1552,11 @@ Cообщение<br/>
             if ($dostsmod == 1)
             {
                 echo "<a href='index.php?act=razd'>Создать раздел</a><br/>";
-            }  
-            ###############
-            echo "<a href='index.php?act=preview'>Размеры изображений</a><br/>";
-            ###########7.02.08
+            }
+            echo "<a href='index.php?act=preview'>Размеры изображений</a></p>";
         }
         break;
 }
 
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>

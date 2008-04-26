@@ -1,35 +1,27 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
-$textl = 'Новости сайта';
+$textl = 'Новости ресурса';
 $headmod = "news";
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
-$nw = mysql_query("select * from `news` order by time desc;");
+echo '<p><b>Новости ресурса</b></p><hr />';
+$nw = mysql_query("select * from `news` order by `time` desc;");
 if (!empty($_GET['kv']))
 {
     $count = intval(check($_GET['kv']));
@@ -52,7 +44,6 @@ if ($count < $start + $kmess)
 {
     $end = $start + $kmess;
 }
-
 while ($nw1 = mysql_fetch_array($nw))
 {
     if ($i >= $start && $i < $end)
@@ -71,7 +62,6 @@ while ($nw1 = mysql_fetch_array($nw))
         $nw1[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $nw1[text]);
         $nw1[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $nw1[text]);
         $nw1[text] = eregi_replace("\\[l\\]((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='\\1\\3'>\\7</a>", $nw1[text]);
-
         if (stristr($nw1[text], "<a href="))
         {
             $nw1[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)</a>",
@@ -93,30 +83,22 @@ while ($nw1 = mysql_fetch_array($nw))
         {
             $tekst = $nw1[text];
         }
-
-
         $vr = $nw1[time] + $sdvig * 3600;
         $vr1 = date("d.m.y / H:i", $vr);
-        echo "$div<b>$nw1[name]</b><br/>Добавил: $nw1[avt] ($vr1)<br/><br/>$tekst<br/>";
+        echo "$div<b>$nw1[name]</b><br/>$tekst<br/><font color='#999999'>Добавил: $nw1[avt] ($vr1)</font><br/>";
         if ($nw1[kom] != 0 && $nw1[kom] != "")
         {
             $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1[kom] . "';");
             $komm = mysql_num_rows($mes) - 1;
             echo "<a href='../forum/?id=" . $nw1[kom] . "'>Обсудить на форуме ($komm)</a><br/>";
-        } else
-        {
-            echo "Новость не нуждается в комментариях<br/>";
         }
-
         echo "</div>";
     }
     ++$i;
 }
-######
+echo "<hr/><p>";
 if ($count > $kmess)
 {
-    echo "<hr/>";
-
     $ba = ceil($count / $kmess);
     if ($offpg != 1)
     {
@@ -184,8 +166,6 @@ if ($count > $kmess)
     {
         echo "<b>[$page]</b>";
     }
-
-
     if ($count > $start + $kmess)
     {
         echo ' <a href="news.php?page=' . ($page + 1) . '">&gt;&gt;</a>';
@@ -199,6 +179,6 @@ if (!empty($_GET['kv']))
 {
     echo "Всего: $count<br/>";
 }
-
-require ("../incfiles/end.php");
+echo '</p>';
+require_once ("../incfiles/end.php");
 ?>

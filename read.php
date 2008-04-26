@@ -1,54 +1,55 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $headmod = 'info';
 $textl = 'Информация';
-require ("incfiles/db.php");
-require ("incfiles/func.php");
-require ("incfiles/data.php");
-require ("incfiles/head.php");
-require ("incfiles/inc.php");
-if (empty($_GET['f']))
+$rootpath = '';
+require_once ("incfiles/core.php");
+require_once ("incfiles/head.php");
+
+$do = isset($_GET['do']) ? $_GET['do'] : '';
+switch ($do)
 {
-    echo "<a href='read.php?f=pages/actmail'>Активация e-mail</a><br/>";
-    echo "<a href='read.php?f=pages/forum'>Правила форума</a><br/>";
-    echo "<a href='read.php?f=pages/forumfaq'>FAQ по форуму</a><br/>";
-    echo "<a href='read.php?f=pages/trans'>Справка по транслиту</a><br/>";
-    require ("incfiles/end.php");
-    exit;
+    case 'actmail':
+        include_once ('pages/actmail.txt');
+        break;
+
+    case 'forum':
+        include_once ('pages/forum.txt');
+        break;
+
+    case 'forumfaq':
+        include_once ('pages/forumfaq.txt');
+        break;
+
+    case 'trans':
+        include_once ('pages/trans.txt');
+        break;
+
+    default:
+        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">1</span>&nbsp;<a href="read.php?do=actmail" accesskey="1">Активация e-mail</a></div>';
+        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">2</span>&nbsp;<a href="read.php?do=forum" accesskey="2">Правила форума</a></div>';
+        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">3</span>&nbsp;<a href="read.php?do=forumfaq" accesskey="3">FAQ по форуму</a></div>';
+        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">4</span>&nbsp;<a href="read.php?do=trans" accesskey="4">Справка по транслиту</a></div>';
 }
-if (stristr($_GET['f'], "../"))
-{
-    echo "<b>Гыы шо,типо кулхацкер ниибаццо?</b><br/>";
-    require ("incfiles/end.php");
-    exit;
-}
-if (!eregi("[^a-z0-9_/-]", $_GET['f']))
-{
-    include "$_GET[f].$ras_pages";
-    echo "<a href='read.php'>В FAQ</a><br/>";
-}
-require ("incfiles/end.php");
+
+if ($do)
+    echo '<a href="read.php">В FAQ</a><br /><br />';
+require_once ("incfiles/end.php");
 
 ?>

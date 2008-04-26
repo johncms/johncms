@@ -1,31 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $textl = 'Чат';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
+require_once ("../incfiles/core.php");
 
 if ($dostsmod == 1)
 {
@@ -38,10 +30,9 @@ if ($dostsmod == 1)
         case "del":
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -49,10 +40,9 @@ if ($dostsmod == 1)
             $ms = mysql_fetch_array($typ);
             if ($ms[type] != "r")
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             switch ($ms[type])
@@ -70,17 +60,15 @@ if ($dostsmod == 1)
                         header("Location: chat.php");
                     } else
                     {
-                        require ("../incfiles/head.php");
-                        require ("../incfiles/inc.php");
+                        require_once ("../incfiles/head.php");
                         echo "Вы уверены,что хотите удалить комнату $ms[text]?<br/><a href='chat.php?act=del&amp;id=" . $id . "&amp;yes'>Да</a>|<a href='chat.php'>Нет</a><br/>";
                     }
 
                     break;
                 default:
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                     break;
             }
@@ -92,10 +80,9 @@ if ($dostsmod == 1)
             {
                 if ((empty($_POST['tr'])) && (empty($_POST['nr'])))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы не ввели имя комнаты!<br/><a href='chat.php?act=crroom'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $nr = check($_POST['nr']);
@@ -125,8 +112,7 @@ if ($dostsmod == 1)
                 header("Location: chat.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Добавление комнаты:<br/><form action='chat.php?act=crroom' method='post'>Тип комнаты<br/><select name='tr'><option value=''>простая</option>";
                 $v = mysql_query("select * from `chat` where type='r' and dpar='vik';");
                 $v1 = mysql_num_rows($v);
@@ -148,10 +134,9 @@ if ($dostsmod == 1)
         case "edit":
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -159,20 +144,18 @@ if ($dostsmod == 1)
             $ms = mysql_fetch_array($typ);
             if ($ms[type] != "r")
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             if (isset($_POST['submit']))
             {
                 if ((empty($_POST['tr'])) && ((empty($_POST['nr'])) || $_POST['nr'] == "Викторина" || $_POST['nr'] == "Интим"))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы не ввели новое название!<br/><a href='chat.php?act=edit&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $nr = check(trim($_POST['nr']));
@@ -189,10 +172,7 @@ if ($dostsmod == 1)
                 header("Location: chat.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
-
-
+                require_once ("../incfiles/head.php");
                 echo "Изменить комнату<br/><form action='chat.php?act=edit&amp;id=" . $id . "' method='post'>Тип комнаты<br/><select name='tr'>";
                 $v = mysql_query("select * from `chat` where type='r' and dpar='vik';");
                 $v1 = mysql_num_rows($v);
@@ -236,10 +216,9 @@ if ($dostsmod == 1)
         case "up":
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -247,20 +226,18 @@ if ($dostsmod == 1)
             $ms = mysql_fetch_array($typ);
             if ($ms[type] != "r")
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $ri = mysql_query("select * from `chat` where type='r' and realid<'" . $ms[realid] . "' order by realid desc;");
             $rei = mysql_num_rows($ri);
             if ($rei == 0)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Нельзя туда двигать!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             while ($rid = mysql_fetch_array($ri))
@@ -280,10 +257,9 @@ if ($dostsmod == 1)
 
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -291,20 +267,18 @@ if ($dostsmod == 1)
             $ms = mysql_fetch_array($typ);
             if ($ms[type] != "r")
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $ri = mysql_query("select * from `chat` where type='r' and realid>'" . $ms[realid] . "' order by realid ;");
             $rei = mysql_num_rows($ri);
             if ($rei == 0)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Нельзя туда двигать!<br/><a href='chat.php?'>В управление чатом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             while ($rid = mysql_fetch_array($ri))
@@ -321,8 +295,7 @@ if ($dostsmod == 1)
             break;
 
         default:
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $q = mysql_query("select * from `chat` where type='r' order by realid ;");
             while ($mass = mysql_fetch_array($q))
             {
@@ -362,5 +335,5 @@ if ($dostsmod == 1)
 {
     header("Location: ../index.php?err");
 }
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>

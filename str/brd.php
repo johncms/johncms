@@ -1,41 +1,32 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $headmod = 'birth';
 $textl = 'Именинники';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
 $page = $_GET['page'];
 if ($page <= 0)
 {
     $page = 1;
 }
-$q = mysql_query("select * from `users` where dayb='" . $day . "' and monthb='" . $mon . "' and preg='1';");
+$q = mysql_query("select * from `users` where `dayb`='" . $day . "' and `monthb`='" . $mon . "' and `preg`='1';");
 $count = mysql_num_rows($q);
 if (empty($_GET['page']))
 {
@@ -64,7 +55,7 @@ while ($arr = mysql_fetch_array($q))
             $pol = "<img src='../images/f.gif' alt=''/>";
         }
 
-        if (empty($_SESSION['pid']) || $_SESSION['pid'] == $arr[id])
+        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr[id])
         {
             print "$pol <b>$arr[name]</b>";
         } else
@@ -194,5 +185,6 @@ if ($count > 10)
 echo "<hr/>Всего именинников сегодня: $count<br/>";
 
 
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
+
 ?>

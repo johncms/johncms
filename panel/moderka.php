@@ -1,33 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
 $textl = 'Модерка';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-require ("../incfiles/char.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 if ($dostmod == 1)
 {
     if (!empty($_GET['act']))
@@ -37,22 +27,20 @@ if ($dostmod == 1)
     switch ($act)
     {
         case "add":
-
             if (isset($_POST['submit']))
             {
-
                 if ($_POST['msg'] == "")
                 {
                     echo "Вы не ввели сообщение!<br/><a href='moderka.php'>Модерка</a><br/>";
-                    require ('../incfiles/end.php');
+                    require_once ('../incfiles/end.php');
                     exit;
                 }
                 if ($_GET['id'] != "")
                 {
-                    $id = intval(check(trim($_GET['id'])));
+                    $id = intval(trim($_GET['id']));
                     $md = mysql_query("select * from `moder` where id='" . $id . "';");
                     $md1 = mysql_fetch_array($md);
-                    $to = $md1[avtor];
+                    $to = $md1['avtor'];
                 } else
                 {
                     $to = "";
@@ -62,11 +50,9 @@ if ($dostmod == 1)
                 {
                     $msg = trans($msg);
                 }
-                $msg = utfwin($msg);
-                $msg = substr($msg, 0, 500);
-                $msg = winutf($msg);
+                $msg = mb_substr($msg, 0, 500);
                 $agn = strtok($agn, ' ');
-                mysql_query("insert into `moder` values(0,'" . $realtime . "','" . $to . "','" . $login . "','" . $msg . "','" . $ipp . "','" . $agn . "');");
+                mysql_query("insert into `moder` values(0,'" . $realtime . "','" . $to . "','" . $user_id . "','" . $login . "','" . $msg . "','" . $ipp . "','" . $agn . "');");
                 header("Location: moderka.php");
             } else
             {
@@ -75,14 +61,12 @@ if ($dostmod == 1)
                     $id = intval(check(trim($_GET['id'])));
                     $md = mysql_query("select * from `moder` where id='" . $id . "';");
                     $md1 = mysql_fetch_array($md);
-                    $to = $md1[avtor];
+                    $to = $md1['avtor'];
                     echo "Пишем в модерку для $to ";
                 } else
                 {
                     echo "Пишем в модерку";
                 }
-
-
                 echo "<br/><br/><form action='moderka.php?act=add&amp;id=" . $id . "' method='post'>
 Cообщение(max.500)<br/>
 <textarea rows='3' name='msg'></textarea><br/><br/>
@@ -94,14 +78,22 @@ Cообщение(max.500)<br/>
             echo '<br/><br/><a href="moderka.php">Назад</a><br/>';
 
             break;
-            ################################
+
         case "trans":
             include ("../pages/trans.$ras_pages");
             echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
             break;
-            ############################
+
+        case 'clean':
+            if ($dostadm == 1)
+            {
+                mysql_query("TRUNCATE TABLE `moder`;");
+                echo '<p>Комната очищена<br /><br /><a href="moderka.php">Назад</a><br /><a href="main.php">В админку</a></p>';
+            }
+            break;
+
         default:
-            echo "<a href='moderka.php?act=add'>Написать</a><br/>";
+            echo "<p><a href='moderka.php?act=add'>Написать</a></p><hr/>";
             $md = mysql_query("select * from `moder` order by time desc;");
             $count = mysql_num_rows($md);
             if (empty($_GET['page']))
@@ -134,55 +126,55 @@ Cообщение(max.500)<br/>
                     {
                         $div = "<div class='b'>";
                     }
-                    $uz = @mysql_query("select * from `users` where name='" . check($mass[avtor]) . "';");
+                    $uz = @mysql_query("select * from `users` where `id`='" . $mass['user_id'] . "';");
                     $mass1 = @mysql_fetch_array($uz);
                     echo "$div";
-                    if ($_SESSION['pid'] != $mass1[id])
+                    if ($_SESSION['uid'] != $mass['user_id'])
                     {
-                        echo "<a href='moderka.php?act=add&amp;id=" . $mass[id] . "'>$mass[avtor]</a>";
+                        echo "<a href='moderka.php?act=add&amp;id=" . $mass['id'] . "'><b>$mass[avtor]</b></a>";
                     } else
                     {
-                        echo "$mass[avtor]";
+                        echo "<b>$mass[avtor]</b>";
                     }
-                    $vr = $mass[time] + $sdvig * 3600;
+                    $vr = $mass['time'] + $sdvig * 3600;
                     $vr1 = date("d.m.Y / H:i", $vr);
-                    $ontime = $mass1[lastdate];
+                    $ontime = $mass1['lastdate'];
                     $ontime2 = $ontime + 300;
                     if ($realtime > $ontime2)
                     {
-                        echo " [Off]";
+                        echo '<font color="#FF0000"> [Off]</font>';
                     } else
                     {
-                        echo " [ON]";
+                        echo '<font color="#00AA00"> [ON]</font>';
                     }
 
                     echo "($vr1)<br/>";
-                    $mass[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $mass[text]);
-                    $mass[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
-                    $mass[text] = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[text]);
+                    $mass['text'] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $mass['text']);
+                    $mass['text'] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass['text']);
+                    $mass['text'] = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass['text']);
 
-                    if (stristr($mass[text], "<a href="))
+                    if (stristr($mass['text'], "<a href="))
                     {
-                        $mass[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)</a>",
-                            "<a href='\\1\\3'>\\3</a>", $mass[text]);
+                        $mass['text'] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)</a>",
+                            "<a href='\\1\\3'>\\3</a>", $mass['text']);
                     } else
                     {
-                        $mass[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass[text]);
+                        $mass['text'] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass['text']);
                     }
                     if ($offsm != 1 && $offgr != 1)
                     {
-                        $tekst = smiles($mass[text]);
+                        $tekst = smiles($mass['text']);
                         $tekst = smilescat($tekst);
 
-                        if ($mass[from] == nickadmina || $mass[from] == nickadmina2 || $mass1[rights] >= 1)
+                        if ($mass['from'] == nickadmina || $mass['from'] == nickadmina2 || $mass1['rights'] >= 1)
                         {
                             $tekst = smilesadm($tekst);
                         }
                     } else
                     {
-                        $tekst = $mass[text];
+                        $tekst = $mass['text'];
                     }
-                    if (!empty($mass[to]))
+                    if (!empty($mass['to']))
                     {
                         echo "$mass[to], ";
                     }
@@ -191,12 +183,9 @@ Cообщение(max.500)<br/>
                 }
                 ++$i;
             }
-            #######
+            echo "<hr/><p>";
             if ($count > $kmess)
             {
-                echo "<hr/>";
-
-
                 $ba = ceil($count / $kmess);
                 if ($offpg != 1)
                 {
@@ -273,8 +262,10 @@ Cообщение(max.500)<br/>
                 echo "<form action='moderka.php'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
             }
 
-            echo "<br/>Всего сообщений: $count";
-            echo '<br/><a href="main.php">В админку</a><br/>';
+            echo 'Всего сообщений: ' . $count;
+            if ($dostadm == 1)
+                echo '<br/><a href="moderka.php?act=clean">Очистить комнату</a>';
+            echo '<br/><a href="main.php">В админку</a></p>';
 
 
             break;
@@ -283,5 +274,5 @@ Cообщение(max.500)<br/>
 {
     header("location: ../index.php?err");
 }
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>

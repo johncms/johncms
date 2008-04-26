@@ -1,31 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $textl = 'Форум';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
+require_once ("../incfiles/core.php");
 
 if ($dostsmod == 1)
 {
@@ -35,22 +27,19 @@ if ($dostsmod == 1)
     }
     switch ($act)
     {
-            ###########
         case "moders":
             if (isset($_POST['submit']))
             {
                 if (empty($_GET['id']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $id = intval(check($_GET['id']));
                 if (isset($_POST['mod']))
                 {
-
                     $q = mysql_query("select * from `forum` where type='a' and refid='" . $id . "';");
                     while ($q1 = mysql_fetch_array($q))
                     {
@@ -80,8 +69,7 @@ if ($dostsmod == 1)
                 header("Location: forum.php?act=moders&id=$id");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 if (!empty($_GET['id']))
                 {
                     $id = intval(check($_GET['id']));
@@ -91,7 +79,7 @@ if ($dostsmod == 1)
                     {
 
                         echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                        require ("../incfiles/end.php");
+                        require_once ("../incfiles/end.php");
                         exit;
                     }
                     echo "Назначение модеров в подфорум $ms[text]<br/><form action='forum.php?act=moders&amp;id=" . $id . "' method='post'>";
@@ -123,14 +111,13 @@ if ($dostsmod == 1)
             echo "<br/><a href='forum.php?'>В управление форумом</a><br/>";
 
             break;
-            ############
+
         case "del":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (empty($_GET['id']))
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -139,7 +126,7 @@ if ($dostsmod == 1)
             if ($ms[type] != "f" && $ms[type] != "r")
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             switch ($ms[type])
@@ -201,25 +188,22 @@ if ($dostsmod == 1)
             }
             echo "<a href='forum.php?'>В управление форумом</a><br/>";
             break;
-            ####
-        case "crraz":
 
+        case "crraz":
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
             $raz = mysql_query("select * from `forum` where type='f' and id='" . $id . "' ;");
             if (mysql_num_rows($raz) == 0)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $raz1 = mysql_fetch_array($raz);
@@ -227,10 +211,9 @@ if ($dostsmod == 1)
             {
                 if (empty($_POST['nr']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы не ввели имя раздела!<br/><a href='forum.php?act=crraz&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $nr = check($_POST['nr']);
@@ -247,29 +230,25 @@ if ($dostsmod == 1)
                     }
                     $rid = $arr1[0] + 1;
                 }
-                mysql_query("insert into `forum` values(0,'" . $id . "','r','" . $realtime . "','','','" . $rid . "','','','" . $nr . "','','','','','','','');");
+                mysql_query("insert into `forum` values(0,'" . $id . "','r','" . $realtime . "','','','" . $rid . "','','','" . $nr . "','','','','','','','','');");
                 header("Location: forum.php?id=$id");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Добавление раздела в подфорум <font color='orange'>$raz1[text]</font>:<br/><form action='forum.php?act=crraz&amp;id=" . $id .
                     "' method='post'><input type='text' name='nr'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form>";
             }
             echo "<a href='forum.php?'>В управление форумом</a><br/>";
             break;
 
-
-            #############
         case "crforum":
             if (isset($_POST['submit']))
             {
                 if (empty($_POST['nf']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы не ввели имя подфорума!<br/><a href='forum.php?act=crforum'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $nf = check($_POST['nf']);
@@ -286,24 +265,22 @@ if ($dostsmod == 1)
                     }
                     $rid = $arr1[0] + 1;
                 }
-                mysql_query("insert into `forum` values(0,'','f','" . $realtime . "','','','" . $rid . "','','','" . $nf . "','','','','','','','');");
+                mysql_query("insert into `forum` values(0,'','f','" . $realtime . "','','','" . $rid . "','','','" . $nf . "','','','','','','','','');");
                 header("Location: forum.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Добавление подфорума:<br/><form action='forum.php?act=crforum' method='post'><input type='text' name='nf'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form>";
             }
             echo "<a href='forum.php?'>В управление форумом</a><br/>";
             break;
-            ##########
+
         case "edit":
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -311,10 +288,9 @@ if ($dostsmod == 1)
             $ms = mysql_fetch_array($typ);
             if ($ms[type] != "f" && $ms[type] != "r")
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
 
@@ -322,10 +298,9 @@ if ($dostsmod == 1)
             {
                 if (empty($_POST['nf']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы не ввели новое название!<br/><a href='forum.php?act=edit&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $nf = check(trim($_POST['nf']));
@@ -334,20 +309,18 @@ if ($dostsmod == 1)
                 header("Location: forum.php?id=$ms[refid]");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Изменить название:<br/><form action='forum.php?act=edit&amp;id=" . $id . "' method='post'><input type='text' name='nf' value='" . $ms[text] . "'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form>";
             }
             echo "<a href='forum.php?'>В управление форумом</a><br/>";
             break;
-            ##########
+
         case "up":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (empty($_GET['id']))
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -356,7 +329,7 @@ if ($dostsmod == 1)
             if ($ms[type] != "f" && $ms[type] != "r")
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             switch ($ms[type])
@@ -372,7 +345,7 @@ if ($dostsmod == 1)
             if ($rei == 0)
             {
                 echo "Нельзя туда двигать!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             while ($rid = mysql_fetch_array($ri))
@@ -396,14 +369,13 @@ if ($dostsmod == 1)
             header("Location: forum.php?id=$ms[refid]");
 
             break;
-            ######
+
         case "down":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (empty($_GET['id']))
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -412,7 +384,7 @@ if ($dostsmod == 1)
             if ($ms[type] != "f" && $ms[type] != "r")
             {
                 echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             switch ($ms[type])
@@ -428,7 +400,7 @@ if ($dostsmod == 1)
             if ($rei == 0)
             {
                 echo "Нельзя туда двигать!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             while ($rid = mysql_fetch_array($ri))
@@ -456,8 +428,7 @@ if ($dostsmod == 1)
         case "them":
             if ($dostsadm == 1)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Скрытые темы<br/>";
                 $dt = mysql_query("select * from `forum` where type='t' and close='1';");
                 $dt1 = mysql_num_rows($dt);
@@ -494,14 +465,12 @@ if ($dostsmod == 1)
         case "ins":
             if ($dostsadm == 1)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 if (empty($_GET['id']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $id = intval(check($_GET['id']));
@@ -509,10 +478,9 @@ if ($dostsmod == 1)
                 $ms = mysql_fetch_array($typ);
                 if ($ms[type] != "t" && $ms[type] != "m")
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 mysql_query("update `forum` set  close='0' where id='" . $id . "';");
@@ -537,10 +505,9 @@ if ($dostsmod == 1)
             {
                 if (empty($_GET['id']))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $id = intval(check($_GET['id']));
@@ -548,10 +515,9 @@ if ($dostsmod == 1)
                 $ms = mysql_fetch_array($typ);
                 if ($ms[type] != "t" && $ms[type] != "m")
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if (!empty($ms[attach]))
@@ -592,8 +558,7 @@ if ($dostsmod == 1)
                     }
                 } else
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Вы уверены?<br/><a href='forum.php?act=delhid&amp;yes'>Да</a>|<a href='forum.php'>Нет</a><br/>";
                 }
             } else
@@ -606,8 +571,7 @@ if ($dostsmod == 1)
 
             if ($dostsadm == 1)
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Скрытые посты<br/>";
                 $dp = mysql_query("select * from `forum` where type='m' and close='1';");
                 $dp1 = mysql_num_rows($dp);
@@ -715,8 +679,7 @@ if ($dostsmod == 1)
 
             ######
         default:
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (empty($_GET['id']))
             {
                 echo "Все форумы<hr/>";
@@ -823,5 +786,5 @@ if ($dostsmod == 1)
     header("Location: ../index.php?err");
 }
 echo "<a href='../forum/?'>В форум</a><br/>";
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>

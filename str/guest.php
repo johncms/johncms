@@ -1,39 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
-
+define('_IN_JOHNCMS', 1);
 
 $headmod = 'guest';
 $textl = 'Гостевая';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/char.php");
-
-function antilink($str)
-{
-    $str = strtr($str, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
-    return $str;
-}
+require_once ("../incfiles/core.php");
 
 if (!empty($_GET['act']))
 {
@@ -46,172 +30,163 @@ switch ($act)
         {
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
             if (isset($_GET['yes']))
             {
-                mysql_query("delete from `guest` where `id`='" . $id . "';");
+                mysql_query("delete from `guest` where `id`='" . $id . "' LIMIT 1;");
                 header("Location: guest.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
-                echo "Вы действительно хотите удалить пост?<br/>";
-                echo "<a href='guest.php?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a>|<a href='guest.php'>Отмена</a><br/>";
+                require_once ("../incfiles/head.php");
+                echo '<p>Вы действительно хотите удалить пост?<br/>';
+                echo "<a href='guest.php?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a> | <a href='guest.php'>Отмена</a></p>";
             }
         } else
         {
             echo "Доступ закрыт!!!<br/>";
         }
         break;
-        ################################
+
     case "trans":
-        require ("../incfiles/head.php");
-        require ("../incfiles/inc.php");
+        require_once ("../incfiles/head.php");
         include ("../pages/trans.$ras_pages");
         echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
         break;
-        ############################
+
     case "say":
-        if (getenv("HTTP_CLIENT_IP"))
-            $ipp = getenv("HTTP_CLIENT_IP");
-        else
-            if (getenv("REMOTE_ADDR"))
-                $ipp = getenv("REMOTE_ADDR");
-            else
-                if (getenv("HTTP_X_FORWARDED_FOR"))
-                    $ipp = getenv("HTTP_X_FORWARDED_FOR");
-                else
-                {
-                    $ipp = "not detected";
-                }
-                $ipp = check($ipp);
-        $agn = check(getenv(HTTP_USER_AGENT));
         $agn = strtok($agn, ' ');
         $flt = $realtime - 30;
-        $af = mysql_query("select * from `guest` where soft='" . $agn . "' and time >='" . $flt . "' and ip ='" . $ipp . "';");
+        $af = mysql_query("select * from `guest` where soft='" . $agn . "' and time >='" . $flt . "' and ip ='" . $ipl . "';");
         $af1 = mysql_num_rows($af);
         if ($af1 > 0)
         {
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
-            echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='guest.php'>Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/head.php");
+            echo "<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><br/><a href='guest.php'>Назад</a></p>";
+            require_once ("../incfiles/end.php");
             exit;
         }
         if (empty($_POST['msg']) && empty($_POST['name']))
         {
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             echo "Вы не ввели имя!<br/><a href='guest.php'>Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         if (empty($_POST['msg']))
         {
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             echo "Вы не ввели сообщение!<br/><a href='guest.php'>Назад</a><br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         if (empty($_SESSION['guest']))
         {
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             echo "Спам!<br/>";
-            require ("../incfiles/end.php");
+            require_once ("../incfiles/end.php");
             exit;
         }
         $name = check(trim($_POST['name']));
-        $name = mb_substr($name, 0, 500);
-        if (!empty($_SESSION['pid']))
+        $name = mb_substr($name, 0, 25);
+        if (!empty($_SESSION['uid']))
         {
             $from = $login;
-            $gs = 0;
         } else
         {
             $from = $name;
-            $gs = 1;
+            $user_id = 0;
         }
-
-        $msg = check(trim($_POST['msg']));
+        $msg = trim($_POST['msg']);
         $msg = mb_substr($msg, 0, 500);
-        if ($_POST[msgtrans] == 1)
+        if ($_POST['msgtrans'] == 1)
         {
             $msg = trans($msg);
         }
-
-        mysql_query("insert into `guest` values(0,'" . $realtime . "','" . $from . "','" . $msg . "','" . $ipp . "','" . $agn . "','" . $gs . "','','','');");
+        mysql_query("insert into `guest` set
+		`time`='" . $realtime . "',
+		`user_id`='" . $user_id . "',
+		`name`='" . mysql_real_escape_string($from) . "',
+		`text`='" . mysql_real_escape_string($msg) . "',
+		`ip`='" . $ipl . "',
+		`soft`='" . mysql_real_escape_string($agn) . "';");
         header("location: guest.php");
         break;
-        #################
+
     case "otvet":
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
             if (isset($_POST['submit']))
             {
-                $otv = check($_POST['otv']);
-                mysql_query("update `guest` set  admin='" . $login . "',otvet='" . $otv . "',otime='" . $realtime . "' where id='" . $id . "';");
+                $otv = mb_substr($_POST['otv'], 0, 500);
+                mysql_query("update `guest` set
+				`admin`='" . $login . "',
+				`otvet`='" . mysql_real_escape_string($otv) . "',
+				`otime`='" . $realtime . "'
+				where id='" . $id . "';");
                 header("location: guest.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 $ps = mysql_query("select * from `guest` where id='" . $id . "';");
                 $ps1 = mysql_fetch_array($ps);
-                if (!empty($ps1[otvet]))
+                if (!empty($ps1['otvet']))
                 {
-                    echo "На этот пост уже ответили!<br/><br/>";
+                    echo "<br /><b>Внимание!<br />На этот пост уже ответили.</b><br/><br/>";
                 }
-                echo "Пост в гостевой:&quot;$ps1[name]: $ps1[text]&quot;<br/><br/><form action='guest.php?act=otvet&amp;id=" . $id . "' method='post'>Ответ:<br/><textarea rows='3' name='otv'>$ps1[otvet]</textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='guest.php?'>В гостевую</a><br/>";
+                $text = htmlentities($ps1['text'], ENT_QUOTES, 'UTF-8');
+                $otv = htmlentities($ps1['otvet'], ENT_QUOTES, 'UTF-8');
+                echo "Пост в гостевой:<br /><b>$ps1[name]:</b> $text&quot;<br/><br/><form action='guest.php?act=otvet&amp;id=" . $id . "' method='post'>Ответ:<br/><textarea rows='3' name='otv'>$otv</textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='guest.php?'>В гостевую</a><br/>";
             }
         } else
         {
             echo "Доступ закрыт!!!<br/>";
         }
         break;
-
 
     case "edit":
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
+            $id = intval($_GET['id']);
             if (isset($_POST['submit']))
             {
-                $msg = check($_POST['msg']);
-                mysql_query("update `guest` set text='" . $msg . "' where id='" . $id . "';");
+                $req = mysql_query("select `edit_count` from `guest` where `id`='" . $id . "';");
+                $res = mysql_fetch_array($req);
+                $edit_count = $res['edit_count'] + 1;
+                $msg = mb_substr($_POST['msg'], 0, 500);
+                mysql_query("update `guest` set
+				`text`='" . mysql_real_escape_string($msg) . "',
+				`edit_who`='" . $login . "',
+				`edit_time`='" . $realtime . "',
+				`edit_count`='" . $edit_count . "'
+				where `id`='" . $id . "';");
                 header("location: guest.php");
             } else
             {
-                require ("../incfiles/head.php");
-                require ("../incfiles/inc.php");
+                require_once ("../incfiles/head.php");
                 $ps = mysql_query("select * from `guest` where id='" . $id . "';");
                 $ps1 = mysql_fetch_array($ps);
-
-                echo "Редактировать пост:<br/><br/><form action='guest.php?act=edit&amp;id=" . $id . "' method='post'><textarea rows='3' name='msg'>$ps1[text]</textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='guest.php?'>В гостевую</a><br/>";
+                $text = htmlentities($ps1['text'], ENT_QUOTES, 'UTF-8');
+                echo "Редактировать пост:<br/><br/><form action='guest.php?act=edit&amp;id=" . $id . "' method='post'><textarea rows='3' name='msg'>$text</textarea><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='guest.php?'>В гостевую</a><br/>";
             }
         } else
         {
@@ -219,14 +194,59 @@ switch ($act)
         }
         break;
 
-    default:
-        require ("../incfiles/head.php");
-        require ("../incfiles/inc.php");
-        $_SESSION['guest'] = rand(1000, 9999);
-        if ((!empty($_SESSION['pid'])) || $gb != 0)
+    case 'clean':
+        if ($dostadm == 1)
         {
-            echo "<form action='guest.php?act=say' method='post'>";
-            if (empty($_SESSION['pid']))
+            if (isset($_POST['submit']))
+            {
+                $cl = isset($_POST['cl']) ? intval($_POST['cl']) : '';
+                switch ($cl)
+                {
+                    case '1':
+                        mysql_query("delete from `guest` where `time`<='" . ($realtime - 86400) . "';");
+                        mysql_query("OPTIMIZE TABLE `guest`;");
+                        require_once ("../incfiles/head.php");
+                        echo '<p>Все сообщения, старше 1 дня удалены из Гостевой.</p><p><a href="guest.php">В Гостевую</a></p>';
+                        break;
+
+                    case '2':
+                        mysql_query("TRUNCATE TABLE `guest`;");
+                        require_once ("../incfiles/head.php");
+                        echo '<p>Гостевая полностью очищена.</p><p><a href="guest.php">В Гостевую</a></p>';
+                        break;
+
+                    default:
+                        mysql_query("delete from `guest` where `time`<='" . ($realtime - 604800) . "';");
+                        mysql_query("OPTIMIZE TABLE `guest`;");
+                        require_once ("../incfiles/head.php");
+                        echo '<p>Все сообщения, старше 1 недели удалены из Гостевой.</p><p><a href="guest.php">В Гостевую</a></p>';
+                }
+            } else
+            {
+                require_once ("../incfiles/head.php");
+                echo '<p><b>Очистка Гостевой</b></p>';
+                echo '<u>Что чистим?</u>';
+                echo '<form id="clean" method="post" action="guest.php?act=clean">';
+                echo '<input type="radio" name="cl" value="0" checked="checked" />Старше 1 недели<br />';
+                echo '<input type="radio" name="cl" value="1" />Старше 1 дня<br />';
+                echo '<input type="radio" name="cl" value="2" />Очищаем все<br />';
+                echo '<input type="submit" name="submit" value="Очистить" />';
+                echo '</form>';
+                echo '<p><a href="guest.php">Отмена</a></p>';
+            }
+        } else
+        {
+            header("location: guest.php");
+        }
+        break;
+
+    default:
+        require_once ("../incfiles/head.php");
+        $_SESSION['guest'] = rand(1000, 9999);
+        if ((!empty($_SESSION['uid'])) || $gb != 0)
+        {
+            echo '<form action="guest.php?act=say" method="post">';
+            if (empty($_SESSION['uid']))
             {
                 echo "Имя(max. 25):<br/><input type='text' name='name' maxlength='25'/><br/>";
             }
@@ -240,8 +260,9 @@ switch ($act)
         {
             echo "Гостевая временно закрыта для добавления сообщений.<br/>";
         }
-        $q1 = mysql_query("select * from `guest` order by time desc ;");
-        $colmes = mysql_num_rows($q1);
+        $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`
+		FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` order by time desc ;");
+        $colmes = mysql_num_rows($req);
         if (empty($_GET['page']))
         {
             $page = 1;
@@ -257,7 +278,7 @@ switch ($act)
         {
             $end = $start + 10;
         }
-        while ($mass = mysql_fetch_array($q1))
+        while ($res = mysql_fetch_array($req))
         {
             if ($i >= $start && $i < $end)
             {
@@ -272,132 +293,121 @@ switch ($act)
                 {
                     $div = "<div class='c'>";
                 }
-                if ($mass[gost] != "1")
+                echo $div;
+                if ($res['user_id'] != "0")
                 {
-                    $uz = @mysql_query("select * from `users` where name='" . $mass[name] . "';");
-                    $mass1 = @mysql_fetch_array($uz);
-                }
-                echo "$div";
-                if ($pfon == 1)
-                {
-                    echo "<div style='background:" . $cpfon . ";'>";
-                }
-                if ($mass[gost] != "1")
-                {
-                    switch ($mass1[sex])
+                    switch ($res['sex'])
                     {
                         case "m":
-                            echo "<img src='../images/m.gif' alt=''/>";
+                            echo '<img src="../images/m.gif" alt=""/>&nbsp;';
                             break;
                         case "zh":
-                            echo "<img src='../images/f.gif' alt=''/>";
+                            echo '<img src="../images/f.gif" alt=""/>&nbsp;';
                             break;
                     }
-                }
-                if ($mass[gost] != "1")
-                {
-                    if ((!empty($_SESSION['pid'])) && ($_SESSION['pid'] != $mass1[id]))
+                    if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $res['user_id']))
                     {
-                        echo "<a href='anketa.php?user=" . $mass1[id] . "'><b><font color='" . $conik . "'>$mass[name]</font></b></a> ";
+                        echo '<a href="anketa.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a> ';
                     } else
                     {
-                        echo "<b><font color='" . $csnik . "'>$mass[name]</font></b>";
+                        echo '<b>' . $res['name'] . '</b>';
                     }
-                } else
-                {
-                    echo "<b><font color='" . $cdinf . "'>Гость </font><font color='" . $conik . "'>$mass[name]</font></b>";
-                }
-                $vrp = $mass[time] + $sdvig * 3600;
-                $vr = date("d.m.Y / H:i", $vrp);
-                if ($mass[gost] != "1")
-                {
-                    switch ($mass1[rights])
+                    switch ($res['rights'])
                     {
                         case 7:
-                            echo "<font color='" . $cadms . "'> Adm </font>";
+                            echo ' Adm ';
                             break;
                         case 6:
-                            echo "<font color='" . $cadms . "'> Smd </font>";
+                            echo ' Smd ';
                             break;
                         case 2:
-                            echo "<font color='" . $cadms . "'> Mod </font>";
+                            echo ' Mod ';
                             break;
                         case 1:
-                            echo "<font color='" . $cadms . "'> Kil </font>";
+                            echo ' Kil ';
                             break;
                     }
-                    $ontime = $mass1[lastdate];
+                    $ontime = $res['lastdate'];
                     $ontime2 = $ontime + 300;
                     if ($realtime > $ontime2)
                     {
-                        echo "<font color='" . $coffs . "'> [Off]</font>";
+                        echo '<font color="#FF0000"> [Off]</font>';
                     } else
                     {
-                        echo "<font color='" . $cons . "'> [ON]</font>";
+                        echo '<font color="#00AA00"> [ON]</font>';
                     }
-                }
-                echo "<font color='" . $cdtim . "'>($vr)</font><br/>";
-                if ($pfon == 1)
-                {
-                    echo "</div>";
-                }
-                if (!stristr($mass[text], "http://"))
-                {
-                    $mass[text] = antilink($mass[text]);
                 } else
                 {
-                    $mass[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "***", $mass[text]);
+                    echo '<b>Гость ' . $res['name'] . '</b>';
+                }
+                $vrp = $res['time'] + $sdvig * 3600;
+                $vr = date("d.m.y / H:i", $vrp);
+                echo ' <font color="#999999">(' . $vr . ')</font><br/>';
+                $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
+                if ($res['user_id'] != "0")
+                {
+                    $text = texttolink($text);
+                    $text = str_replace("\r\n", "<br />", $text);
                 }
                 if ($offsm != 1 && $offgr != 1)
                 {
-                    $tekst = smiles($mass[text]);
-                    $tekst = smilescat($tekst);
-
-                    if ($mass[name] == nickadmina || $mass[name] == nickadmina2 || $mass1[rights] >= 1)
-                    {
-                        $tekst = smilesadm($tekst);
-                    }
+                    $text = smiles($text);
+                    $text = smilescat($text);
+                }
+                if ($res['name'] == nickadmina || $res['name'] == nickadmina2 || $res['rights'] >= 1)
+                {
+                    if ($offsm != 1 && $offgr != 1)
+                        $text = smilesadm($text);
                 } else
                 {
-                    $tekst = $mass[text];
+                    $text = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "***", $text);
+                    $text = antilink($text);
                 }
-                echo "$tekst<br/>";
+                echo $text;
+
+
+                if ($res['edit_count'] >= 1)
+                {
+                    $diz = $res['edit_time'] + $sdvig * 3600;
+                    $dizm = date("d.m.y /H:i", $diz);
+                    echo "<br /><small><font color='#999999'>Посл. изм. <b>$res[edit_who]</b>  ($dizm)<br />Всего изм.:<b> $res[edit_count]</b></font></small>";
+                }
+
                 if ($dostsmod == 1)
                 {
-                    echo "<a href='guest.php?act=otvet&amp;id=" . $mass[id] . "'>Отв.</a> | <a href='guest.php?act=edit&amp;id=" . $mass[id] . "'>Изм.</a> | <a href='guest.php?act=delpost&amp;id=" . $mass[id] . "'>Удалить</a><br/>";
-                    echo "$mass[ip] - $mass[soft]<br/>";
+                    echo "<br /><a href='guest.php?act=otvet&amp;id=" . $res['id'] . "'>Отв.</a> | <a href='guest.php?act=edit&amp;id=" . $res['id'] . "'>Изм.</a> | <a href='guest.php?act=delpost&amp;id=" . $res['id'] . "'>Удалить</a><br/>";
+                    echo long2ip($res['ip']) . ' - ' . $res['soft'];
                 }
-                if ($mass[otvet] != "")
+                if ($res['otvet'] != '')
                 {
-                    $vrp1 = $mass[otime] + $sdvig * 3600;
+                    $otvet = htmlentities($res['otvet'], ENT_QUOTES, 'UTF-8');
+                    $otvet = str_replace("\r\n", "<br />", $otvet);
+                    $vrp1 = $res['otime'] + $sdvig * 3600;
                     $vr1 = date("d.m.Y / H:i", $vrp1);
-                    $mass[otvet] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div style=\'background:' . $ccfon . ';color:' . $cctx . ';\'>\1<br/></div>', $mass[otvet]);
-                    $mass[otvet] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[otvet]);
-                    $mass[otvet] = eregi_replace("\\[l\\]([[:alnum:]_=/:-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[otvet]);
-                    if (stristr($mass[otvet], "<a href="))
+                    $otvet = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $otvet);
+                    $otvet = eregi_replace("\\[l\\]([[ : alnum : ]_ = / : -] + (\\ . [[ : alnum : ]_ = / -] + ) * ( / [[ : alnum : ] + & . _ = / ~ % ] * (\\ ? [[ : alnum : ] ? + . &_ = /; % ] * ) ? ) ? )\\[l / \\](( . * ) ? )\\[ / l\
+                        \]", " < a href = 'http://\\1' > \\6 < / a > ", $otvet);
+                    if (stristr($otvet, " < a href = "))
                     {
-                        $mass[otvet] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-                            "<a href='\\1\\3'>\\3</a>", $mass[otvet]);
+                        $otvet = eregi_replace("\\ < a href\\ = '((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)' > [[ : alnum : ]_ = / -] + (\\ . [[ : alnum : ]_ = / -] + ) * ( / [[ :
+                        alnum : ] + & . _ = / ~ % ] * (\\ ? [[ : alnum : ] ? + &_ = /; % ] * ) ? ) ? ) < / a > ", " < a href = '\\1\\3' > \\3 < / a > ", $otvet);
                     } else
                     {
-                        $mass[otvet] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass[otvet]);
+                        $otvet = eregi_replace("((https ? | ftp) : //)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $otvet);
                     }
                     if ($offsm != 1 && $offgr != 1)
                     {
-                        $otvet = smiles($mass[otvet]);
+                        $otvet = smiles($otvet);
                         $otvet = smilescat($otvet);
                         $otvet = smilesadm($otvet);
-                    } else
-                    {
-                        $otvet = $mass[otvet];
                     }
-                    echo "<font color='" . $conik . "'>Отвечает <b>$mass[admin]</b>:</font><font color='" . $cdtim . "'>($vr1)</font><br/><font color='" . $cdinf . "'>$otvet</font><br/>";
+                    echo '<br /><font color="#FF3333"><b>' . $res['admin'] . '</b>: (' . $vr1 . ')<br/>' . $otvet . '</font>';
                 }
                 echo "</div>";
             }
             ++$i;
         }
-        echo "<hr/>Всего сообщений: $colmes<br/>";
+        echo "<hr/><p>Всего сообщений: $colmes<br/>";
         if ($colmes > 10)
         {
             $ba = ceil($colmes / 10);
@@ -471,8 +481,14 @@ switch ($act)
             {
                 echo ' <a href="guest.php?page=' . ($page + 1) . '">&gt;&gt;</a>';
             }
+            echo '<br />';
         }
+        if ($dostadm == 1)
+            echo '<a href="guest.php?act=clean">Чистка гостевой</a>';
+        echo '</p>';
         break;
 }
-require ("../incfiles/end.php");
+
+require_once ("../incfiles/end.php");
+
 ?>

@@ -1,37 +1,27 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name('SESID');
 session_start();
 $headmod = 'privat';
 $textl = 'Почта';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
-
-if (!empty($_SESSION['pid']))
+if (!empty($_SESSION['uid']))
 {
     $newl = mysql_query("select * from `privat` where `user` LIKE '" . $login . "' and `type` LIKE 'in' and `chit` LIKE 'no';");
     $countnew = mysql_num_rows($newl);
@@ -41,7 +31,7 @@ if (!empty($_SESSION['pid']))
     }
     $messages = mysql_query("select * from `privat` where user='$login' and type='in' ;");
     $count = mysql_num_rows($messages);
-    echo "<a href='pradd.php?act=in'>Входящих</a> ($count$newlet)<br/>";
+    echo "<p><a href='pradd.php?act=in'>Входящих</a> ($count$newlet)<br/>";
     $messages = mysql_query("select * from `privat` where author='$login' and type='out' ;");
     $count = mysql_num_rows($messages);
     $newo = mysql_query("select * from `privat` where `author` LIKE '" . $login . "' and `type` LIKE 'out' and `chit` LIKE 'no';");
@@ -69,9 +59,9 @@ if (!empty($_SESSION['pid']))
     echo "<a href='pradd.php?act=out'>Исходящие</a> ($count$newleto)<br/>";
     echo "<a href='cont.php?'>Контакты($g/$vscon)</a><br/>";
     echo "<a href='ignor.php?'>Игнор($ign1)</a><br/>";
-    echo "<a href='pradd.php?act=write'>Написать</a><br/>";
+    echo "<a href='pradd.php?act=write'>Написать</a></p>";
 }
 
-require ('../incfiles/end.php');
+require_once ('../incfiles/end.php');
 
 ?>

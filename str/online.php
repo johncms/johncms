@@ -1,35 +1,25 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $headmod = 'online';
 $textl = 'Онлайн';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
 $onltime = $realtime - 300;
 $q = @mysql_query("select * from `users` where lastdate>='" . intval($onltime) . "';");
@@ -72,7 +62,7 @@ while ($arr = mysql_fetch_array($q))
             $pol = "<img src='../images/f.gif' alt=''/>";
         }
 
-        if (empty($_SESSION['pid']) || $_SESSION['pid'] == $arr[id])
+        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr[id])
         {
             print "$div $pol <b>$arr[name]</b>";
         } else
@@ -104,7 +94,6 @@ while ($arr = mysql_fetch_array($q))
                 break;
         }
         echo "<br/>";
-        ##################
         $prh = @mysql_query("select * from `count` where time>='" . intval($arr[sestime]) . "' and name='" . $arr[name] . "';");
         $prh1 = mysql_num_rows($prh);
         $svr = $realtime - $arr[sestime];
@@ -161,14 +150,11 @@ while ($arr = mysql_fetch_array($q))
             }
         }
         echo '(' . $prh1 . ' - ' . $sitevr . ')<br/>';
-
-
-        #####################
         if ($dostmod == 1)
         {
             echo "$arr[ip]--$arr[browser]<br/>";
         }
-        if (!empty($_SESSION['pid']))
+        if (!empty($_SESSION['uid']))
         {
             echo "Где: ";
             $wh = mysql_query("select * from `count` where name='" . $arr[name] . "' order by time desc ;");
@@ -237,7 +223,7 @@ while ($arr = mysql_fetch_array($q))
                     echo "<a href='guest.php'>в гостевой</a>";
                     break;
                 case "lib":
-                    echo "<a href='lib.php'>в библиотеке</a>";
+                    echo "<a href='../library/index.php'>в библиотеке</a>";
                     break;
                 default:
                     echo "<a href='../index.php'>на главной</a>";
@@ -245,19 +231,13 @@ while ($arr = mysql_fetch_array($q))
             }
             echo "<br/>";
         }
-
-
         echo "</div>";
-
-
     }
     ++$i;
 }
-###########
 if ($count > 10)
 {
     echo "<hr/>";
-
     $ba = ceil($count / 10);
     if ($offpg != 1)
     {
@@ -325,19 +305,14 @@ if ($count > 10)
     {
         echo "<b>[$page]</b>";
     }
-
-
     if ($count > $start + 10)
     {
         echo ' <a href="online.php?page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
     echo "<form action='online.php'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
-###############
-
 
 echo "<hr/><div>Всего он-лайн: $count</div>";
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
+
 ?>
-
-

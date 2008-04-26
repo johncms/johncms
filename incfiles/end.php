@@ -1,67 +1,51 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-defined('_IN_PUSTO') or die('Error:restricted access');
+defined('_IN_JOHNCMS') or die('Error:restricted access');
 
 echo '</div><div class="fmenu">';
+if ($headmod != "mainpage" || isset($_GET['do']))
+{
+    echo '<a href=\'' . $home . '\'>На главную</a><br/>';
+}
 // Выводим меню быстрого перехода
-if (empty($_SESSION['pid']) || $pereh != 1)
+if (empty($_SESSION['uid']) || $datauser['pereh'] != 1)
 {
     echo "<form action='" . $home . "/go.php' method='post'><select name='adres' style='font-size:10px'><option selected='selected'>Быстрый переход </option>";
-    if (!empty($_SESSION['pid']))
+    if (!empty($_SESSION['uid']))
     {
         echo "<option value='privat'>Приват</option><option value='set'>Настройки</option><option value='prof'>Анкета</option><option value='chat'>Чат</option>";
     }
     echo "<option value='guest'>Гостевая</option><option value='forum'>Форум:</option>";
-    $fr = @mysql_query("select * from `forum` where type='f';");
+    $fr = @mysql_query("select `id`, `text` from `forum` where type='f';");
     while ($fr1 = mysql_fetch_array($fr))
     {
-        echo "<option value='frm." . $fr1[id] . "'>&nbsp;&quot; $fr1[text]&quot;</option>";
+        echo "<option value='frm." . $fr1[id] . "'>&nbsp;- $fr1[text]&quot;</option>";
     }
-    echo "<option value='news'>Новости</option><option value='gallery'>Галерея</option><option value='down'>Загрузки</option><option value='lib'>Библиотека</option><option value='gazen'>Ф Газенвагенъ</option></select><input style='font-size:9px' type='submit' value='Go!'/><br/></form>";    
-     ####7.02.08##########
-}
-if ($headmod != "mainpage" || isset($_GET['do']))
-{
-    echo '<a href=\'' . $home . '\'>На главную</a><br/>';
+    echo "<option value='news'>Новости</option><option value='gallery'>Галерея</option><option value='down'>Загрузки</option><option value='lib'>Библиотека</option><option value='gazen'>Ф Газенвагенъ</option></select><input style='font-size:9px' type='submit' value='Go!'/><br/></form>";
 }
 echo '</div>';
 
 // Выводим счетчик посетителей Online
 $ontime = $realtime - 300;
-$qon = @mysql_query("select * from `users` where lastdate>='" . intval($ontime) . "';");
+$qon = @mysql_query("select * from `users` where lastdate>='" . $ontime . "';");
 $qon2 = mysql_num_rows($qon);
 $massall = array();
-$all = @mysql_query("select * from `count` where time>='" . intval($ontime) . "' order by time desc;");
-while ($all1 = mysql_fetch_array($all))
-{
-    $ipbr = "$all1[ip]--$all1[browser]";
-    if (!in_array($ipbr, $massall))
-    {
-        $massall[] = $ipbr;
-    }
-}
-$all2 = count($massall);
-$massall = array();
-if (!empty($_SESSION['pid']))
+$all = @mysql_query("select * from `count` where time>='" . $ontime . "' GROUP BY `ip`, `browser`;");
+$all2 = mysql_num_rows($all);
+if (!empty($_SESSION['uid']))
 {
     echo '<div class="footer"><a href=\'' . $home . '/str/online.php\'>Онлайн: ' . $qon2 . ' / ' . $all2 . '</a></div>';
 } else
@@ -86,92 +70,36 @@ if ($gzip == "0")
 }
 
 // Выводим счетчик переходов и времени, проведенного на сайте
-if (!empty($_SESSION['pid']))
+if (!empty($_SESSION['uid']))
 {
-    $prh = @mysql_query("select * from `count` where time>='" . intval($datauser[sestime]) . "' and name='" . $login . "';");
+    $prh = @mysql_query("select * from `count` where `time`>='" . $datauser['sestime'] . "' and `name`='" . $login . "';");
     $prh1 = mysql_num_rows($prh);
-    $svr = $realtime - $datauser[sestime];
-    if ($svr >= "3600")
-    {
-        $hvr = ceil($svr / 3600) - 1;
-        if ($hvr < 10)
-        {
-            $hvr = "0$hvr";
-        }
-        $svr1 = $svr - $hvr * 3600;
-        $mvr = ceil($svr1 / 60) - 1;
-        if ($mvr < 10)
-        {
-            $mvr = "0$mvr";
-        }
-        $ivr = $svr1 - $mvr * 60;
-        if ($ivr < 10)
-        {
-            $ivr = "0$ivr";
-        }
-        if ($ivr == "60")
-        {
-            $ivr = "59";
-        }
-        $sitevr = "$hvr:$mvr:$ivr";
-    } else
-    {
-        if ($svr >= "60")
-        {
-            $mvr = ceil($svr / 60) - 1;
-            if ($mvr < 10)
-            {
-                $mvr = "0$mvr";
-            }
-            $ivr = $svr - $mvr * 60;
-            if ($ivr < 10)
-            {
-                $ivr = "0$ivr";
-            }
-            if ($ivr == "60")
-            {
-                $ivr = "59";
-            }
-            $sitevr = "00:$mvr:$ivr";
-        } else
-        {
-            $ivr = $svr;
-            if ($ivr < 10)
-            {
-                $ivr = "0$ivr";
-            }
-            $sitevr = "00:00:$ivr";
-        }
-    }
-    echo '<center>В онлайне: ' . $sitevr . '<br />Переходов: ' . $prh1 . '</center>';
+    echo '<center>В онлайне: ' . gmdate('H:i:s', ($realtime - $datauser['sestime'])) . '<br />Переходов: ' . $prh1 . '</center>';
 }
 echo "</div>";
 
 ////////////////////////////////////////////////////////////
 // Выводим счетчики и копирайты внизу страницы            //
 ////////////////////////////////////////////////////////////
-echo '<div class="end"><b>&#169;' . $copyright . '</b><br/>';
+echo '<div class="end"><b>' . $copyright . '</b><br/>';
 
 // Счетчики
 if ($headmod == "mainpage")
 {
-    echo ''; // На Главной странице
+    // Тут, вставляем коды счетчиков, которые будут выводиться
+    // ТОЛЬКО на главной странице сайта
+    echo '';
 } else
 {
-    echo ''; // На остальных страницах
+    // Тут, вставляем коды счетчиков, которые будут выводиться
+    // на ВСЕХ страницах сайта, кроме Главной
+    echo '';
 }
 
 echo '</div>';
 
-############
-
-    echo '<div class="end"><a href="http://gazenwagen.com">Powered by JohnCMS ver. 1.0</a></div>';   ###7.02.08
-    
- #################### 
-    
+// Данный копирайт нельзя убирать в течение 60 дней с момента установки скриптов
+echo '<div class="end"><a href="http://johncms.com">JohnCMS</a></div>';
 echo '</body></html>';
-
-ob_end_flush();
-exit;
 
 ?>

@@ -1,38 +1,51 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
 $textl = 'Вход';
-require ("incfiles/db.php");
-require ("incfiles/func.php");
-require ("incfiles/data.php");
-require ("incfiles/head.php");
-require ("incfiles/inc.php");
+$rootpath = '';
+require_once ("incfiles/core.php");
+require_once ("incfiles/head.php");
 
-if ($_GET['err'] == 1)
+$msg = isset($_GET['msg']) ? $_GET['msg'] : '';
+switch ($msg)
 {
-    echo "Ошибка авторизации!";
+    case '1':
+        echo "<br /><b>Вы не заполнили форму!</b>";
+        break;
+
+    case '2':
+        echo "<br /><b>Ошибка авторизации!</b>";
+        break;
+
+    case '3':
+        echo '<br /><b>Ваша заявка на регистрацию ещё не рассмотрена, ожидайте.</b><br /><br />';
+        require_once ("incfiles/end.php");
+        exit;
+
+    case '4':
+        $otkl = isset($_SESSION['otkl']) ? $_SESSION['otkl']:
+        '';
+        echo '<br /><b>Ваша заявка на регистрацию отклонена.</b><br />';
+        echo 'Причина:<br />' . $otkl . '<br /><br />';
+        require_once ("incfiles/end.php");
+        exit;
 }
-echo "<div class = 'e' ><form action='auto.php' method='get'>
+
+echo "<div class = 'e' ><form action='auto.php' method='post'>
 Имя:<br/>
 <input type='text' name='n' maxlength='20'/><br/>
 Пароль:<br/>
@@ -40,7 +53,8 @@ echo "<div class = 'e' ><form action='auto.php' method='get'>
 <input type='checkbox' name='mem' value='1'/>Запомнить меня<br/>
 <input type='submit' value='Вход'/>
 </form></div>";
-echo "<a href='str/skl.php?continue'>Продолжить восстановление пароля</a><br/>";
-require ("incfiles/end.php");
+echo "<br/><a href='str/skl.php?continue'>Забыли пароль?</a><br/><br/>";
+
+require_once ("incfiles/end.php");
 
 ?>

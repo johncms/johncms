@@ -39,7 +39,7 @@ Addtype video/3gpp .3gp
 
 php_value error_reporting 7
 php_value register_globals 0
-php_value session.use_trans_sid 0 
+php_value session.use_trans_sid 1
 php_value safe_mode_gid 1
 php_value safe_mode_include_dir 1
 php_value magic_quotes_gpc 0

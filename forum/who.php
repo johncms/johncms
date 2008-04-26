@@ -1,57 +1,27 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
-
+defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = 'Кто в форуме?';
-$headmod = "forum";
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-if (!empty($_SESSION['pid']))
-{
-    $tti = round(($datauser['ftime'] - $realtime) / 60);
-    if ($datauser['fban'] == "1" && $tti > 0)
-    {
-
-        echo "Вас пнули из форума<br/>Кто: <font color='red'>$datauser[fwho]</font><br/>";
-        if ($datauser[fwhy] == "")
-        {
-            echo "<div>Причина не указана</div>";
-        } else
-        {
-            echo "Причина:<font color='red'> $datauser[fwhy]</font><br>";
-        }
-        echo "Время до окончания: $tti минут<br/>";
-        require ("../incfiles/end.php");
-        exit;
-    }
-}
-if (empty($_SESSION['pid']))
+$headmod = 'forum';
+require_once ("../incfiles/head.php");
+if (empty($_SESSION['uid']))
 {
     echo "Вы не авторизованы!<br/>";
-    require ("../incfiles/end.php");
+    require_once ("../incfiles/end.php");
     exit;
 }
 if (!empty($_GET['id']))
@@ -59,10 +29,10 @@ if (!empty($_GET['id']))
     $id = intval(check($_GET['id']));
     $typ = mysql_query("select * from `forum` where id='" . $id . "';");
     $ms = mysql_fetch_array($typ);
-    if ($ms[type] != "t")
+    if ($ms['type'] != "t")
     {
         echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
     echo "Кто в теме <font color='#FF0000'>$ms[text]</font><hr/>";
@@ -104,7 +74,7 @@ if (!empty($_GET['id']))
     echo "<a href='index.php?id=" . $id . "'>В тему</a><br/>";
 } else
 {
-    echo "Кто в форуме<hr/>";
+    echo '<p><b>Кто в форуме</b></p><hr/>';
     $onltime = $realtime - 300;
     $qf = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
     while ($arrf = mysql_fetch_array($qf))
@@ -138,16 +108,11 @@ if (!empty($_GET['id']))
     {
         $end = $start + 10;
     }
-
-
     $q = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
-
     $i = 0;
     while ($arr = mysql_fetch_array($q))
     {
-
         $wh = mysql_query("select * from `count` where name='" . $arr[name] . "' order by time desc ;");
-
         while ($wh1 = mysql_fetch_array($wh))
         {
             $wh2[] = $wh1[where];
@@ -178,7 +143,6 @@ if (!empty($_GET['id']))
                 {
                     $adr = mysql_query("select * from `forum` where id='" . $wher1[1] . "';");
                     $adr1 = mysql_fetch_array($adr);
-                    ###
                     switch ($adr1[type])
                     {
                         case "m":
@@ -188,7 +152,6 @@ if (!empty($_GET['id']))
                             $razd = mysql_fetch_array($q3);
                             $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd[refid] . "';");
                             $frm = mysql_fetch_array($q4);
-
                             if ($tem[close] == 1)
                             {
                                 $adres = "<a href='index.php'>На главной форума</a>";
@@ -220,7 +183,6 @@ if (!empty($_GET['id']))
                             break;
                     }
                 }
-                ###
                 echo "<b>$arr[name]</b>";
                 switch ($arr[rights])
                 {
@@ -242,11 +204,9 @@ if (!empty($_GET['id']))
             $i++;
         }
     }
-    ##
+    echo "<hr/><p>";
     if ($count > 10)
     {
-        echo "<hr/>";
-
         $ba = ceil($count / 10);
         if ($offpg != 1)
         {
@@ -314,8 +274,6 @@ if (!empty($_GET['id']))
         {
             echo "<b>[$page]</b>";
         }
-
-
         if ($count > $start + 10)
         {
             echo ' <a href="who.php?id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
@@ -323,13 +281,10 @@ if (!empty($_GET['id']))
         echo "<form action='pradd.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
             "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
     }
-
-    ###
-
-    echo "<hr/>В форуме $count человек<br/>";
-    echo "<a href='index.php'>В форум</a><br/>";
+    echo "В форуме $count человек<br/>";
+    echo "<a href='index.php'>В форум</a></p>";
 }
 
+require_once ("../incfiles/end.php");
 
-require ("../incfiles/end.php");
 ?>

@@ -1,31 +1,22 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 if ($dostadm == 1)
 {
     if (!empty($_GET['act']))
@@ -41,18 +32,18 @@ if ($dostadm == 1)
                 if (empty($_POST['name']))
                 {
                     echo "Вы не ввели заголовок<br/><a href='news.php?act=new'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if (empty($_POST['text']))
                 {
                     echo "Вы не ввели текст<br/><a href='news.php?act=new'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $name = check($_POST['name']);
                 $text = check($_POST['text']);
-                if (!empty($_POST['pf']))
+                if (!empty($_POST['pf']) && ($_POST['pf'] != '0'))
                 {
                     $pf = intval(check($_POST['pf']));
                     $rz = $_POST['rz'];
@@ -65,40 +56,44 @@ if ($dostadm == 1)
                     {
                         if (in_array($v, $arr))
                         {
-                            mysql_query("insert into `forum` values(0,'" . $v . "','t','" . $realtime . "','" . $login . "','','','','','" . $name . "','','','1','','','','');");
+                            mysql_query("insert into `forum` values(0,'" . $v . "','t','" . $realtime . "','" . $login . "','','','','','" . $name . "','','','1','','','','','');");
                             $tem = mysql_query("select * from `forum` where type='t' and time='" . $realtime . "' and refid= '" . $v . "';");
                             $tem1 = mysql_fetch_array($tem);
                             $agn = strtok($agn, ' ');
-                            mysql_query("insert into `forum` values(0,'" . $tem1[id] . "','m','" . $realtime . "','" . $login . "','','','" . $ipp . "','" . $agn . "','" . $text . "','','','','','','','');");
+                            mysql_query("insert into `forum` values(0,'" . $tem1[id] . "','m','" . $realtime . "','" . $login . "','','','" . $ipp . "','" . $agn . "','" . $text . "','','','','','','','','');");
                         }
                     }
                 }
-
                 mysql_query("insert into `news` values(0,'" . $realtime . "','" . $login . "','" . $name . "','" . $text . "','" . $tem1[id] . "');");
-                echo "Новость добавлена.<br/><a href='news.php'>Продолжить</a><br/>";
+                echo "Новость добавлена.<p><a href='news.php'>Продолжить</a><br/>";
             } else
             {
-                echo "Добавление новости<br/><form action='news.php?act=new' method='post'>Заголовок:<br/><input type='text' name='name'/><br/>Текст:<br/><input type='text' name='text'/><hr/>";
+                echo 'Добавление новости<br/>';
+				echo '<form action="news.php?act=new" method="post">';
+				echo 'Заголовок:<br/><input type="text" name="name"/><br/>';
+				echo 'Текст:<br/><textarea cols="20" rows="4" name="text"/><br/><br/>';
                 echo "Выберите раздел форума для обсуждения новости:<br/>";
                 $fr = mysql_query("select * from `forum` where type='f';");
+                echo "<input type='radio' name='pf' value='0' checked='checked' />Не обсуждать<br />";
                 while ($fr1 = mysql_fetch_array($fr))
                 {
-                    echo "$fr1[text]<input type='radio' name='pf' value='" . $fr1[id] . "'/><select name='rz[]'>";
+                    echo "<input type='radio' name='pf' value='" . $fr1[id] . "'/>$fr1[text]<select name='rz[]'>";
                     $pr = mysql_query("select * from `forum` where type='r' and refid= '" . $fr1[id] . "';");
                     while ($pr1 = mysql_fetch_array($pr))
                     {
-                        echo "<option value='" . $pr1[id] . "'>$pr1[text]</option>";
+                        echo '<option value="' . $pr1[id] . '">'.$pr1[text].'</option>';
                     }
-                    echo "</select><br/>";
+                    echo '</select><br/>';
                 }
-                echo "<input type='submit' name='submit' value='Ok!'/></form><br/><a href='news.php'>К новостям</a><br/>";
+                echo '<br /><input type="submit" name="submit" value="Ok!"/></form><p><a href="news.php">К новостям</a><br/>';
             }
             break;
+
         case "edit":
             if (empty($_GET['id']))
             {
                 echo "Ошибка!<br/><a href='news.php'>К новостям</a><br>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             $id = intval(check($_GET['id']));
@@ -108,26 +103,26 @@ if ($dostadm == 1)
                 if (empty($_POST['name']))
                 {
                     echo "Вы не ввели заголовок<br/><a href='news.php?act=edit&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if (empty($_POST['text']))
                 {
                     echo "Вы не ввели текст<br/><a href='news.php?act=edit&amp;id=" . $id . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 $name = check($_POST['name']);
                 $text = check($_POST['text']);
 
                 mysql_query("update `news` set name='" . $name . "', text='" . $text . "' where id='" . $id . "';");
-                echo "Новость изменена.<br/><a href='news.php'>Продолжить</a><br/>";
+                echo "Новость изменена.<p><a href='news.php'>Продолжить</a><br/>";
             } else
             {
                 $n = mysql_query("select * from `news` where id='" . $id . "';");
                 $n1 = mysql_fetch_array($n);
-                echo "Редактирование новости<br/><form action='news.php?act=edit&amp;id=" . $id . "' method='post'>Заголовок:<br/><input type='text' name='name' value='" . $n1[name] . "'/><br/>Текст:<br/><input type='text' name='text' value='" . $n1[text] .
-                    "'/><br/><input type='submit' name='submit' value='Ok!'/></form><br/><a href='news.php'>К новостям</a><br/>";
+                echo "Редактирование новости<br/><form action='news.php?act=edit&amp;id=" . $id . "' method='post'>Заголовок:<br/><input type='text' name='name' value='" . $n1[name] . "'/><br/>Текст:<br/><textarea cols='20' rows='4' name='text'>" . $n1[text] .
+                    "</textarea><br/><input type='submit' name='submit' value='Ok!'/></form><p><a href='news.php'>К новостям</a><br/>";
             }
 
             break;
@@ -144,15 +139,15 @@ if ($dostadm == 1)
                         {
                             mysql_query("delete from `news` where `id`='" . $n1[id] . "';");
                         }
-                        echo "База новостей очищена!<br/><a href='news.php'>К новостям</a><br/>";
+                        echo "<p>База новостей очищена!<br/><a href='news.php'>К новостям</a><br/>";
                     } else
                     {
-                        echo "Вы уверены,что хотите удалить все новости?<br/><a href='news.php?act=del&amp;all&amp;yes'>Да</a> | <a href='news.php'>Нет</a><br/>";
+                        echo "<p>Вы уверены,что хотите удалить все новости?<br/><a href='news.php?act=del&amp;all&amp;yes'>Да</a> | <a href='news.php'>Нет</a><br/>";
                     }
                 } else
                 {
                     echo "Ошибка!<br/><a href='news.php'>К новостям</a><br>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
             } else
@@ -161,10 +156,10 @@ if ($dostadm == 1)
                 if (isset($_GET['yes']))
                 {
                     mysql_query("delete from `news` where `id`='" . $id . "';");
-                    echo "Новость удалена!<br/><a href='news.php'>К новостям</a><br/>";
+                    echo "<p>Новость удалена!<br/><a href='news.php'>К новостям</a><br/>";
                 } else
                 {
-                    echo "Вы уверены,что хотите удалить новость?<br/><a href='news.php?act=del&amp;id=" . $id . "&amp;yes'>Да</a> | <a href='news.php'>Нет</a><br/>";
+                    echo "<p>Вы уверены,что хотите удалить новость?<br/><a href='news.php?act=del&amp;id=" . $id . "&amp;yes'>Да</a> | <a href='news.php'>Нет</a><br/>";
                 }
             }
 
@@ -173,7 +168,7 @@ if ($dostadm == 1)
 
         default:
 
-            echo "Все новости<br/>";
+            echo "<b>НОВОСТИ</b><hr/>";
             $nw = mysql_query("select * from `news` order by time desc;");
             $count = mysql_num_rows($nw);
             if (empty($_GET['page']))
@@ -196,21 +191,9 @@ if ($dostadm == 1)
             {
                 if ($i >= $start && $i < $end)
                 {
-                    $d = $i / 2;
-                    $d1 = ceil($d);
-                    $d2 = $d1 - $d;
-                    $d3 = ceil($d2);
-                    if ($d3 == 0)
-                    {
-                        $div = "<div class='c'>";
-                    } else
-                    {
-                        $div = "<div class='b'>";
-                    }
                     $nw1[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $nw1[text]);
                     $nw1[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $nw1[text]);
                     $nw1[text] = eregi_replace("\\[l\\]((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='\\1\\3'>\\7</a>", $nw1[text]);
-
                     if (stristr($nw1[text], "<a href="))
                     {
                         $nw1[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
@@ -232,30 +215,22 @@ if ($dostadm == 1)
                     {
                         $tekst = $nw1[text];
                     }
-
-
                     $vr = $nw1[time] + $sdvig * 3600;
                     $vr1 = date("d.m.y / H:i", $vr);
-                    echo "$div<b>$nw1[name]</b><br/>Добавил: $nw1[avt] ($vr1)<br/><br/>$tekst<br/>";
+                    echo "<b>$nw1[name]</b><br/>$tekst<br/>Добавил: $nw1[avt] ($vr1)<br/>";
                     if ($nw1[kom] != 0 && $nw1[kom] != "")
                     {
                         $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1[kom] . "';");
                         $komm = mysql_num_rows($mes) - 1;
                         echo "<a href='../forum/?id=" . $nw1[kom] . "'>Комментарии ($komm)</a><br/>";
-                    } else
-                    {
-                        echo "Новость не нуждается в комментариях<br/>";
                     }
-                    echo "<a href='news.php?act=del&amp;id=" . $nw1[id] . "'>Удалить</a> | <a href='news.php?act=edit&amp;id=" . $nw1[id] . "'>Изменить</a><br/>";
-                    echo "</div>";
+                    echo "<a href='news.php?act=del&amp;id=" . $nw1[id] . "'>Удалить</a> | <a href='news.php?act=edit&amp;id=" . $nw1[id] . "'>Изменить</a><br/><br/>";
                 }
                 ++$i;
             }
-            ######
+            echo "<hr/><p>";
             if ($count > $kmess)
             {
-                echo "<hr/>";
-
                 $ba = ceil($count / $kmess);
                 if ($offpg != 1)
                 {
@@ -333,20 +308,15 @@ if ($dostadm == 1)
             }
             echo "Всего: $count<br/>";
             echo "<a href='news.php?act=new'>Добавить новость</a><br/>";
-
             echo "<a href='news.php?act=del&amp;all'>Удалить все новости</a><br/>";
-
-
             break;
     }
-    echo "<a href='../" . $admp . "/main.php'>В админку</a><br/>";
+    echo "<a href='../" . $admp . "/main.php'>В админку</a></p>";
 } else
 {
     header("location: ../index.php?err");
 }
 
 
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>
-
-

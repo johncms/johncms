@@ -1,31 +1,23 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name('SESID');
 session_start();
 $textl = 'Почта(письма)';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
+require_once ("../incfiles/core.php");
 
 $msg = check(trim($_POST['msg']));
 if ($_POST[msgtrans] == 1)
@@ -35,7 +27,7 @@ if ($_POST[msgtrans] == 1)
 $foruser = check(trim($_POST['foruser']));
 $tem = check(trim($_POST['tem']));
 $idm = intval(trim($_POST['idm']));
-if (!empty($_SESSION['pid']))
+if (!empty($_SESSION['uid']))
 {
     if (!empty($_GET['act']))
     {
@@ -44,14 +36,13 @@ if (!empty($_SESSION['pid']))
     switch ($act)
     {
         case "send":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $ign = mysql_query("select * from `privat` where me='" . $foruser . "' and ignor='" . $login . "';");
             $ign1 = mysql_num_rows($ign);
             if ($ign1 != 0)
             {
                 echo "Вы не можете отправить письмо для $foruser ,поскольку находитесь в его игнор-листе!!!<br/><a href='privat.php'>В приват</a><br/>";
-                require ("../incfiles/end.php");
+                require_once ("../incfiles/end.php");
                 exit;
             }
             if (!empty($foruser) and !empty($msg))
@@ -72,25 +63,25 @@ if (!empty($_SESSION['pid']))
                         if (in_array($tfl, $df))
                         {
                             echo "Попытка отправить файл запрещенного типа.<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                            require ("../incfiles/end.php");
+                            require_once ("../incfiles/end.php");
                             exit;
                         }
                         if ($fsize >= 1024 * $flsz)
                         {
                             echo "Вес файла превышает $flsz кб<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                            require ('../incfiles/end.php');
+                            require_once ('../incfiles/end.php');
                             exit;
                         }
                         if (eregi("[^a-z0-9.()+_-]", $fname))
                         {
                             echo "В названии файла <b>$fname</b> присутствуют недопустимые символы<br/>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                            require ('../incfiles/end.php');
+                            require_once ('../incfiles/end.php');
                             exit;
                         }
                         if ((preg_match("/php/i", $fname)) or (preg_match("/.pl/i", $fname)) or ($fname == ".htaccess"))
                         {
                             echo "Попытка отправить файл запрещенного типа.<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                            require ('../incfiles/end.php');
+                            require_once ('../incfiles/end.php');
                             exit;
                         }
                         if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../pratt/$fname")) == true)
@@ -117,25 +108,25 @@ if (!empty($_SESSION['pid']))
                     if (in_array($tfl, $df))
                     {
                         echo "Попытка отправить файл запрещенного типа.<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                        require ("../incfiles/end.php");
+                        require_once ("../incfiles/end.php");
                         exit;
                     }
                     if (strlen(base64_decode($filebase64)) >= 1024 * $flsz)
                     {
                         echo "Вес файла превышает $flsz кб<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                        require ('../incfiles/end.php');
+                        require_once ('../incfiles/end.php');
                         exit;
                     }
                     if (eregi("[^a-z0-9.()+_-]", $tmp_name))
                     {
                         echo "В названии файла <b>$tmp_name</b> присутствуют недопустимые символы<br/>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br /><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                        require ('../incfiles/end.php');
+                        require_once ('../incfiles/end.php');
                         exit;
                     }
                     if ((preg_match("/php/i", $tmp_name)) or (preg_match("/.pl/i", $tmp_name)) or ($tmp_name == ".htaccess"))
                     {
                         echo "Попытка отправить файл запрещенного типа.<br/><a href='pradd.php?act=write&amp;adr=" . $adres . "'>Повторить</a><br/>";
-                        require ('../incfiles/end.php');
+                        require_once ('../incfiles/end.php');
                         exit;
                     }
                     if (strlen($filebase64) > 0)
@@ -195,10 +186,9 @@ if (!empty($_SESSION['pid']))
                 $df = array("asp", "aspx", "shtml", "htd", "php", "php3", "php4", "php5", "phtml", "htt", "cfm", "tpl", "dtd", "hta", "pl", "js", "jsp");
                 if (in_array($tfl, $df))
                 {
-                    require ("../incfiles/head.php");
-                    require ("../incfiles/inc.php");
+                    require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/>&#187;<a href='pradd.php'>В приват</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if (file_exists("../pratt/$att"))
@@ -210,8 +200,7 @@ if (!empty($_SESSION['pid']))
 
         case "write":
             // Форма для отправки привата
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (!empty($_GET['adr']))
             {
                 $messages = mysql_query("select * from `users` where id='" . intval($_GET['adr']) . "';");
@@ -223,7 +212,7 @@ if (!empty($_SESSION['pid']))
                 if ($ign1 != 0)
                 {
                     echo "Вы не можете отправить письмо для $adresat ,поскольку находитесь в его игнор-листе!!!<br/><a href='privat.php'>В приват</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
             } else
@@ -279,8 +268,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "delch":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             if (isset($_GET['yes']))
             {
                 $dc = $_SESSION['dc'];
@@ -295,7 +283,7 @@ if (!empty($_SESSION['pid']))
                 if (empty($_POST['delch']))
                 {
                     echo "Вы не выбрали писем для удаления<br/><a href='pradd.php?act=in'>Назад</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 foreach ($_POST['delch'] as $v)
@@ -311,8 +299,7 @@ if (!empty($_SESSION['pid']))
 
         case "in":
             $headmod = 'pradd';
-			require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+			require_once ("../incfiles/head.php");
             if (isset($_GET['new']))
             {
                 $_SESSION['refpr'] = htmlspecialchars(getenv("HTTP_REFERER"));
@@ -466,8 +453,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "delread":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $mess1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in' and chit='yes';");
             while ($mas1 = mysql_fetch_array($mess1))
             {
@@ -486,8 +472,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "delin":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $mess1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in';");
             while ($mas1 = mysql_fetch_array($mess1))
             {
@@ -506,8 +491,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "readmess":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $id = intval(check($_GET['id']));
             $messages1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in' and id='" . $id . "';");
             $massiv1 = mysql_fetch_array($messages1);
@@ -566,8 +550,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "delmess":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $mess1 = mysql_query("select * from `privat` where id='" . intval($_GET['del']) . "' and type='in';");
             $mas1 = mysql_fetch_array($mess1);
             $delfile = $mas1[attach];
@@ -583,8 +566,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "delout":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $mess1 = mysql_query("select * from `privat` where author='$login' and type='out';");
             while ($mas1 = mysql_fetch_array($mess1))
             {
@@ -595,8 +577,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "out":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $messages = mysql_query("select * from `privat` where author='" . $login . "' and type='out' order by time desc;");
             echo "Исходящие<br/>";
             echo "<form action='pradd.php?act=delch' method='post'>";
@@ -632,8 +613,6 @@ if (!empty($_SESSION['pid']))
                     {
                         $div = "<div class='b'>";
                     }
-
-
                     $vpr = $massiv[time] + $sdvig * 3600;
                     echo "$div<input type='checkbox' name='delch[]' value='" . $massiv[id] . "'/><a href='pradd.php?act=readout&amp;id=" . $massiv[id] . "'>Для: $massiv[user]</a> (" . date("d.m.y H:i", $vpr) . ")<br/>Тема: $massiv[temka]<br/>";
                     if (!empty($massiv[attach]))
@@ -738,8 +717,7 @@ if (!empty($_SESSION['pid']))
             break;
 
         case "readout":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             $id = intval(check($_GET['id']));
             $messages1 = mysql_query("select * from `privat` where author='" . $login . "' and type='out' and id='" . $id . "';");
             $massiv1 = mysql_fetch_array($messages1);
@@ -777,8 +755,7 @@ if (!empty($_SESSION['pid']))
             echo "<a href='pradd.php?act=delmess&amp;del=" . $massiv1[id] . "'>Удалить</a>";
             break;
         case "trans":
-            require ("../incfiles/head.php");
-            require ("../incfiles/inc.php");
+            require_once ("../incfiles/head.php");
             include ("../pages/trans.$ras_pages");
             echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
             break;
@@ -787,6 +764,6 @@ if (!empty($_SESSION['pid']))
     echo "<a href='pradd.php?act=write'>Написать</a><br/>";
 }
 
-require ('../incfiles/end.php');
+require_once ('../incfiles/end.php');
 
 ?>

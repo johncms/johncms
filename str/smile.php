@@ -1,35 +1,25 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name('SESID');
 session_start();
 $headmod = 'smile';
 $textl = 'Смайлы';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
 if ($_GET['act'] == "cat")
 {
@@ -38,13 +28,19 @@ if ($_GET['act'] == "cat")
     if (stristr($d, "../"))
     {
         echo "Ошибка!<br/><a href=\"smile.php?\">В категории</a><br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
     $b = $d;
-    require ("../incfiles/smcat.php");
+    $b = str_replace('anim', 'Животные', $b);
+    $b = str_replace('emo', 'Эмоции', $b);
+    $b = str_replace('other', 'Разное', $b);
+    $b = str_replace('flow', 'Цветы', $b);
+    $b = str_replace('weapon', 'Оружие', $b);
+    $b = str_replace('prazd', 'Праздник', $b);
+    $b = str_replace('pogoda', 'Погода', $b);
+    $b = str_replace('person', 'Персонажи', $b);
     echo "<div>Категория: $b</div>";
-
     $dir = opendir("../sm/cat/$d");
     while ($file = readdir($dir))
     {
@@ -55,15 +51,13 @@ if ($_GET['act'] == "cat")
     }
     closedir($dir);
     sort($a);
-
     $total = count($a);
     if ($total == 0)
     {
         echo "Ошибка!<br/><a href=\"smile.php?\">В категории</a><br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
-
     if (empty($_GET['start']))
         $start = 0;
     else
@@ -77,27 +71,21 @@ if ($_GET['act'] == "cat")
     }
     for ($i = $start; $i < $end; $i++)
     {
-
         $smkod = str_replace(".gif", "", $a[$i]);
         $smkod1 = trans($smkod);
         echo '<img src="../sm/cat/' . $d . '/' . $a[$i] . '" alt=""/>';
         echo '- :' . $smkod . ':  :' . $smkod1 . ':<br/>';
     }
-
-
     $a = count($a);
     $ba = floor($a / 10);
     $ba2 = $ba * 10;
-
     echo '<br/>Страницы:';
     $asd = $start - (10 * 4);
     $asd2 = $start + (10 * 5);
-
     if ($asd < $a && $asd > 0)
     {
         echo ' <a href="smile.php?act=cat&amp;d=' . $d . '&amp;start=0&amp;' . SID . '">1</a> ... ';
     }
-
     for ($i = $asd; $i < $asd2; )
     {
         if ($i < $a && $i >= 0)
@@ -112,46 +100,39 @@ if ($_GET['act'] == "cat")
                 echo ' <a href="smile.php?act=cat&amp;d=' . $d . '&amp;start=' . $i . '&amp;' . SID . '">' . $ii . '</a>';
             }
         }
-
-
         $i = $i + 10;
     }
     if ($asd2 < $a)
     {
         echo ' ... <a href="smile.php?act=cat&amp;d=' . $d . '&amp;start=' . $ba2 . '&amp;' . SID . '">' . $ba . '</a>';
     }
-
-
     echo '<br/><br/>Смайлов в категории: ' . $total . '<br/>';
     echo "<a href=\"smile.php?\">В категории</a><br/>";
 
 }
-#####################
+
 if ($_GET['act'] == "adm")
 {
     if ($dostmod != 1)
     {
         echo "Ошибка!<br/><a href=\"?\">В категории</a><br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
     echo "<div>Категория: для администрации</div>";
-
-    $dir = opendir("../sm/adm"); // открываем текущую директорию
+    $dir = opendir("../sm/adm");
     while ($file = readdir($dir))
     {
         if (($file != ".") && ($file != "..") && ($file != ".htaccess") && ($file != "index.php") && ($file != "Thumbs.db")) // эти файлы игнорируем
-
         {
             $a[] = $file;
         }
-    } // записываем все что есть в массив
-    closedir($dir); //Закрываем
-    sort($a); //сортируем
-
-    $total = count($a); #считаем
+    }
+    closedir($dir);
+    sort($a);
+    $total = count($a);
     if (empty($_GET['start']))
-        $start = 0; # для вывода
+        $start = 0;
     else
         $start = $_GET['start'];
     if ($total < $start + 10)
@@ -163,27 +144,21 @@ if ($_GET['act'] == "adm")
     }
     for ($i = $start; $i < $end; $i++)
     { #цикл
-
         $smkod = str_replace(".gif", "", $a[$i]);
         $smkod1 = trans($smkod);
         echo '<img src="../sm/adm/' . $a[$i] . '" alt=""/>';
         echo '- :' . $smkod . ':  :' . $smkod1 . ':<br/>';
     }
-
-
     $a = count($a);
     $ba = floor($a / 10);
     $ba2 = $ba * 10;
-
     echo '<br/>Страницы:';
     $asd = $start - (10 * 4);
     $asd2 = $start + (10 * 5);
-
     if ($asd < $a && $asd > 0)
     {
         echo ' <a href="smile.php?act=adm&amp;start=0&amp;' . SID . '">1</a> ... ';
     }
-
     for ($i = $asd; $i < $asd2; )
     {
         if ($i < $a && $i >= 0)
@@ -198,29 +173,18 @@ if ($_GET['act'] == "adm")
                 echo ' <a href="smile.php?act=adm&amp;start=' . $i . '&amp;' . SID . '">' . $ii . '</a>';
             }
         }
-
-
         $i = $i + 10;
     }
     if ($asd2 < $a)
     {
         echo ' ... <a href="smile.php?act=adm&amp;start=' . $ba2 . '&amp;' . SID . '">' . $ba . '</a>';
     }
-
-
     echo '<br/><br/>Смайлов в категории: ' . $total . '<br/>';
     echo "<a href=\"smile.php?\">В категории</a><br/>";
-
 }
-
-#######################
-
-
 if ($_GET['act'] == "prost")
 {
-
     echo "<div>Категория: простые</div>";
-
     $dir = opendir("../sm/prost"); // открываем текущую директорию
     while ($file = readdir($dir))
     {
@@ -253,12 +217,9 @@ if ($_GET['act'] == "prost")
         echo '<img src="../sm/prost/' . $a[$i] . '" alt=""/>';
         echo '- :' . $smkod . '<br/>';
     }
-
-
     $a = count($a);
     $ba = floor($a / 10);
     $ba2 = $ba * 10;
-
     echo '<br/>Страницы:';
     $asd = $start - (10 * 4);
     $asd2 = $start + (10 * 5);
@@ -267,7 +228,6 @@ if ($_GET['act'] == "prost")
     {
         echo ' <a href="smile.php?act=prost&amp;start=0&amp;' . SID . '">1</a> ... ';
     }
-
     for ($i = $asd; $i < $asd2; )
     {
         if ($i < $a && $i >= 0)
@@ -282,15 +242,12 @@ if ($_GET['act'] == "prost")
                 echo ' <a href="smile.php?act=prost&amp;start=' . $i . '&amp;' . SID . '">' . $ii . '</a>';
             }
         }
-
-
         $i = $i + 10;
     }
     if ($asd2 < $a)
     {
         echo ' ... <a href="smile.php?act=prost&amp;start=' . $ba2 . '&amp;' . SID . '">' . $ba . '</a>';
     }
-
 
     echo '<br/><br/>Смайлов в категории: ' . $total . '<br/>';
     echo "<a href=\"smile.php?\">В категории</a><br/>";
@@ -305,9 +262,9 @@ if ($_GET['act'] == "")
     }
     if ($dostmod == 1)
     {
-        echo ' <a href="smile.php?act=adm&amp;">Смайлы для администрации</a><br/>';
+        echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=adm">Для администрации</a></div>';
     }
-    echo ' <a href="smile.php?act=prost&amp;">Простые смайлы</a><br/>';
+    echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=prost">Простые смайлы</a></div>';
     $dir = opendir("../sm/cat");
     while ($file = readdir($dir))
     {
@@ -317,16 +274,20 @@ if ($_GET['act'] == "")
         }
     }
     closedir($dir);
-
     $total = count($a);
-
-    sort($a); //сортируем
+    sort($a);
     $b = $a;
-    require ("../incfiles/smcat.php");
-
+    $b = str_replace('anim', 'Животные', $b);
+    $b = str_replace('emo', 'Эмоции', $b);
+    $b = str_replace('other', 'Разное', $b);
+    $b = str_replace('flow', 'Цветы', $b);
+    $b = str_replace('weapon', 'Оружие', $b);
+    $b = str_replace('prazd', 'Праздник', $b);
+    $b = str_replace('pogoda', 'Погода', $b);
+    $b = str_replace('person', 'Персонажи', $b);
     for ($i = 0; $i < $total; $i++)
     {
-        echo ' <a href="smile.php?act=cat&amp;d=' . $a[$i] . '&amp;">' . $b[$i] . '</a><br/>';
+        echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=cat&amp;d=' . $a[$i] . '&amp;">' . $b[$i] . '</a></div>';
     }
     echo "<br/>";
     $back = $_SESSION['refsm'];
@@ -338,9 +299,8 @@ if ($_GET['act'] == "")
     {
         $backtext = "В контакты";
     }
-    //if (!empty($backtext)){
-    echo "<a href=\"$back\">Назад</a><br/>";
+    echo "<a href=\"$back\">Назад</a>";
 }
-//}
-require ('../incfiles/end.php');
+require_once ('../incfiles/end.php');
+
 ?>

@@ -1,29 +1,19 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
-Error_Reporting(E_ALL & ~ E_NOTICE);
-Error_Reporting(ERROR | WARNING);
-session_name("SESID");
-session_start();
+define('_IN_JOHNCMS', 1);
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
@@ -46,57 +36,20 @@ a:hover { text-decoration: none; font-size: 12px; color : #E4F992 }
 .gray{ color: #FF0000; font: small; }
 </style>
 </head><body>";
+echo '<big><b>JohnCMS v.1.0.0</b></big><br />Установка системы<hr />';
 switch ($_GET['act'])
 {
     case "set":
         ////////////////////////////////////////////////////////////
         // Создание таблиц в базе данных MySQL                    //
         ////////////////////////////////////////////////////////////
-        require ("../incfiles/db.php");
+        require_once ("../incfiles/db.php");
+        require_once ("../incfiles/func.php");
+        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server');
+        mysql_select_db($db_name) or die('cannot connect to db');
+        mysql_query("SET NAMES 'utf8'", $connect);
         echo 'ЗАВЕРШНИЕ УСТАНОВКИ<hr />';
         echo "<b>Создание таблиц</b><br/>";
-        mysql_query("DROP TABLE IF EXISTS bann;");
-        mysql_query("CREATE TABLE `bann` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-`user` varchar(25) NOT NULL default '',
-`ip` varchar(20) NOT NULL default '',
-`browser` text NOT NULL default '',
-`admin` varchar(25) NOT NULL default '',
-`time` int(15) NOT NULL,
-`why` text NOT NULL default '',
-`kolv` char(3) NOT NULL default '',
-`type` char(1) NOT NULL default '',
-PRIMARY KEY ( `id` )
-) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "bann"</body></html>');
-        echo '<span class="green">OK</span> - Бан-лист<br/>';
-
-        mysql_query("DROP TABLE IF EXISTS themes;");
-        mysql_query("CREATE TABLE `themes` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-`name` VARCHAR( 25 ) NOT NULL default '',
-`time` INT( 11 ) NOT NULL ,
-`bgcolor` VARCHAR( 15 ) NOT NULL default '',
-`tex` VARCHAR( 15 ) NOT NULL default '',
-`link` VARCHAR( 15 ) NOT NULL default '',
-`bclass` VARCHAR( 15 ) NOT NULL default '',
-`cclass` VARCHAR( 15 ) NOT NULL default '',
-`pfon` BINARY( 1 ) NOT NULL default '',
-`cpfon` VARCHAR( 15 ) NOT NULL default '',
-`ccfon` VARCHAR( 15 ) NOT NULL default '',
-`cctx` VARCHAR( 15 ) NOT NULL default '',
-`cntem` VARCHAR( 15 ) NOT NULL default '',
-`ccolp` VARCHAR( 15 ) NOT NULL default '',
-`cdtim` VARCHAR( 15 ) NOT NULL default '',
-`cssip` VARCHAR( 15 ) NOT NULL default '',
-`csnik` VARCHAR( 15 ) NOT NULL default '',
-`conik` VARCHAR( 15 ) NOT NULL default '',
-`cadms` VARCHAR( 15 ) NOT NULL default '',
-`cons` VARCHAR( 15 ) NOT NULL default '',
-`coffs` VARCHAR( 15 ) NOT NULL default '',
-`cdinf` VARCHAR( 15 ) NOT NULL default '',
-PRIMARY KEY ( `id` ) 
-) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "themes"</body></html>');
-        echo '<span class="green">OK</span> - Темы<br/>';
 
         mysql_query("DROP TABLE IF EXISTS chat;");
         mysql_query("CREATE TABLE `chat` (
@@ -113,7 +66,12 @@ PRIMARY KEY ( `id` )
 `soft` text NOT NULL default '',
 `nas` text NOT NULL default '',
 `otv` int(1) NOT NULL,
-PRIMARY KEY  (`id`)
+PRIMARY KEY  (`id`),
+KEY `refid` (`refid`),
+KEY `type` (`type`),
+KEY `time` (`time`),
+KEY `from` (`from`),
+KEY `to` (`to`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "chat"</body></html>');
         echo '<span class="green">OK</span> - Чат<br/>';
 
@@ -126,7 +84,10 @@ PRIMARY KEY  (`id`)
 `where` varchar(100) NOT NULL default '',
 `name` varchar(25) NOT NULL default '',
 `dos` binary(1) NOT NULL default '',
-PRIMARY KEY  (`id`)
+PRIMARY KEY  (`id`),
+KEY `time` (`time`),
+KEY `where` (`where`),
+KEY `name` (`name`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "count"</body></html>');
         echo '<span class="green">OK</span> - Счётчик<br/>';
 
@@ -136,34 +97,19 @@ PRIMARY KEY  (`id`)
 `refid` int(11) NOT NULL,
 `adres` text NOT NULL,
 `time` int(11) NOT NULL,
-`name` text NOT NULL default '',
+`name` text NOT NULL,
 `type` varchar(4) NOT NULL default '',
 `avtor` varchar(25) NOT NULL default '',
-`ip` text NOT NULL default '',
-`soft` text NOT NULL default '',
-`text` text NOT NULL default '',
-`screen` text NOT NULL default '',
-PRIMARY KEY  (`id`)
+`ip` text NOT NULL,
+`soft` text NOT NULL,
+`text` text NOT NULL,
+`screen` text NOT NULL,
+PRIMARY KEY  (`id`),
+KEY `refid` (`refid`),
+KEY `type` (`type`),
+KEY `time` (`time`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "download"</body></html>');
         echo '<span class="green">OK</span> - Загруз-центр<br/>';
-
-        mysql_query("DROP TABLE IF EXISTS upload;");
-        mysql_query("CREATE TABLE `upload` (
-`id` int(11) NOT NULL auto_increment,
-`refid` int(11) NOT NULL,
-`adres` text NOT NULL default '',
-`time` int(11) NOT NULL,
-`name` text NOT NULL default '',
-`type` varchar(4) NOT NULL default '',
-`avtor` varchar(25) NOT NULL default '',
-`ip` text NOT NULL default '',
-`soft` text NOT NULL default '',
-`text` text NOT NULL default '',
-`screen` text NOT NULL default '',
-`moder` binary(1) NOT NULL default '',
-PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "upload"</body></html>');
-        echo '<span class="green">OK</span> - Обменник<br/>';
 
         mysql_query("DROP TABLE IF EXISTS forum;");
         mysql_query("CREATE TABLE `forum` (
@@ -184,9 +130,14 @@ PRIMARY KEY  (`id`)
 `tedit` int(11) NOT NULL,
 `kedit` int(2) NOT NULL,
 `attach` text NOT NULL default '',
+`dlcount` int(11) NOT NULL default '0',
 PRIMARY KEY  (`id`),
+KEY `refid` (`refid`),
+KEY `type` (`type`),
+KEY `time` (`time`),
 KEY `from` (`from`),
-KEY `refid` (`refid`)
+KEY `to` (`to`),
+KEY `moder` (`moder`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "forum"</body></html>');
         echo '<span class="green">OK</span> - Форум<br/>';
 
@@ -202,7 +153,11 @@ KEY `refid` (`refid`)
 `user` binary(1) NOT NULL default '',
 `ip` text NOT NULL default '',
 `soft` text NOT NULL default '',
-PRIMARY KEY  (`id`)
+PRIMARY KEY  (`id`),
+KEY `refid` (`refid`),
+KEY `time` (`time`),
+KEY `type` (`type`),
+KEY `avtor` (`avtor`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "gallery"</body></html>');
         echo '<span class="green">OK</span> - Галерея<br/>';
 
@@ -213,12 +168,18 @@ PRIMARY KEY  (`id`)
 `time` int(11) NOT NULL,
 `type` varchar(4) NOT NULL default '',
 `name` varchar(50) NOT NULL default '',
+`announce` text NOT NULL,
 `avtor` varchar(25) NOT NULL default '',
-`text` text NOT NULL default '',
-`ip` text NOT NULL default '',
-`soft` text NOT NULL default '',
-`moder` binary(1) NOT NULL default '',
-PRIMARY KEY  (`id`)
+`text` mediumtext NOT NULL,
+`ip` int(11) NOT NULL,
+`soft` text NOT NULL,
+`moder` binary(1) NOT NULL default '\0',
+`count` int(11) NOT NULL default '0',
+PRIMARY KEY  (`id`),
+KEY `type` (`type`),
+KEY `moder` (`moder`),
+KEY `time` (`time`),
+KEY `refid` (`refid`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "lib"</body></html>');
         echo '<span class="green">OK</span> - Библиотека<br/>';
 
@@ -227,6 +188,7 @@ PRIMARY KEY  (`id`)
 `id` int(11) NOT NULL auto_increment,
 `time` int(11) NOT NULL,
 `to` varchar(25) NOT NULL default '',
+`user_id` int(11) NOT NULL,
 `avtor` varchar(25) NOT NULL default '',
 `text` text NOT NULL default '',
 `ip` text NOT NULL default '',
@@ -262,23 +224,31 @@ PRIMARY KEY  (`id`)
 `cont` varchar(25) NOT NULL default '',
 `ignor` varchar(25) NOT NULL default '',
 `attach` text NOT NULL default '',
-PRIMARY KEY  (`id`)
+PRIMARY KEY  (`id`),
+KEY `me` (`me`),
+KEY `ignor` (`ignor`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "privat"</body></html>');
         echo '<span class="green">OK</span> - Приват<br/>';
 
         mysql_query("DROP TABLE IF EXISTS guest;");
         mysql_query("CREATE TABLE `guest` (
-`id` INT( 11 ) NOT NULL AUTO_INCREMENT ,
-`time` INT( 15 ) NOT NULL ,
-`name` VARCHAR( 25 ) NOT NULL ,
-`text` TEXT NOT NULL ,
-`ip` TEXT NOT NULL ,
-`soft` TEXT NOT NULL ,
-`gost` BINARY( 1 ) NOT NULL ,
-`admin` VARCHAR( 25 ) NOT NULL ,
-`otvet` TEXT NOT NULL ,
-`otime` INT( 15 ) NOT NULL ,
-PRIMARY KEY ( `id` ) 
+`id` int(11) NOT NULL auto_increment,
+`time` int(11) NOT NULL,
+`user_id` int(11) NOT NULL,
+`name` varchar(25) NOT NULL,
+`text` text NOT NULL,
+`ip` int(11) NOT NULL,
+`soft` varchar(100) NOT NULL,
+`admin` varchar(25) NOT NULL,
+`otvet` text NOT NULL,
+`otime` int(11) NOT NULL,
+`edit_who` varchar(20) NOT NULL,
+`edit_time` int(11) NOT NULL,
+`edit_count` tinyint(4) NOT NULL default '0',
+PRIMARY KEY  (`id`),
+KEY `soft` (`soft`),
+KEY `time` (`time`),
+KEY `ip` (`ip`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "guest"</body></html>');
         echo '<span class="green">OK</span> - Гостевая<br/>';
 
@@ -304,19 +274,20 @@ PRIMARY KEY ( `id` )
         mysql_query("DROP TABLE IF EXISTS settings;");
         mysql_query("CREATE TABLE `settings` (
 `id` int(11) NOT NULL auto_increment,
-`nickadmina` varchar(25) NOT NULL default '',
-`emailadmina` varchar(40) NOT NULL default '',
-`nickadmina2` varchar(25) NOT NULL default '',
-`sdvigclock` char(2) NOT NULL default '',
-`copyright` varchar(100) NOT NULL default '',
-`homeurl` varchar(150) NOT NULL default '',
-`rashstr` varchar(10) NOT NULL default '',
-`gzip` char(2) NOT NULL default '',
-`admp` varchar(25) NOT NULL default '',
-`rmod` binary(1) NOT NULL default '',
-`fmod` binary(1) NOT NULL default '',
+`nickadmina` varchar(25) NOT NULL,
+`emailadmina` varchar(40) NOT NULL,
+`nickadmina2` varchar(25) NOT NULL,
+`sdvigclock` tinyint(4) NOT NULL,
+`copyright` varchar(100) NOT NULL,
+`homeurl` varchar(150) NOT NULL,
+`rashstr` varchar(10) NOT NULL,
+`gzip` char(2) NOT NULL,
+`admp` varchar(25) NOT NULL,
+`rmod` binary(1) NOT NULL,
+`fmod` binary(1) NOT NULL,
 `flsz` int(4) NOT NULL,
-`gb` binary(1) NOT NULL default '',
+`gb` binary(1) NOT NULL,
+`clean_time` int(11) NOT NULL,
 PRIMARY KEY  (`id`)
 ) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "settings"</body></html>');
         echo '<span class="green">OK</span> - Настройки<br/>';
@@ -324,13 +295,14 @@ PRIMARY KEY  (`id`)
         mysql_query("DROP TABLE IF EXISTS users;");
         mysql_query("CREATE TABLE `users` (
 `id` int(11) NOT NULL auto_increment,
-`name` varchar(25) NOT NULL,
+`name` varchar(20) NOT NULL,
+`name_lat` varchar(40) NOT NULL,
 `password` varchar(32) NOT NULL,
-`imname` varchar(25) NOT NULL default '',
-`sex` char(2) NOT NULL default '',
-`komm` int(10) NOT NULL,
-`postforum` int(10) NOT NULL,
-`postchat` int(10) NOT NULL,
+`imname` varchar(35) NOT NULL,
+`sex` char(2) NOT NULL,
+`komm` int(10) NOT NULL default '0',
+`postforum` int(10) NOT NULL default '0',
+`postchat` int(10) NOT NULL default '0',
 `otvetov` int(11) NOT NULL,
 `yearofbirth` int(4) NOT NULL,
 `datereg` int(11) NOT NULL,
@@ -345,13 +317,8 @@ PRIMARY KEY  (`id`)
 `status` text NOT NULL default '',
 `ip` varchar(25) NOT NULL default '',
 `browser` text NOT NULL,
-`timererfesh` int(2) NOT NULL,
-`kolanywhwere` int(2) NOT NULL,
-`bgcolor` varchar(15) NOT NULL default '',
-`tex` varchar(15) NOT NULL default '',
-`link` varchar(15) NOT NULL default '',
-`bclass` varchar(15) NOT NULL default '',
-`cclass` varchar(15) NOT NULL default '',
+`timererfesh` int(2) NOT NULL default '20',
+`kolanywhwere` int(2) NOT NULL default '10',
 `ban` int(1) NOT NULL,
 `why` text NOT NULL default '',
 `who` varchar(25) NOT NULL default '',
@@ -362,8 +329,6 @@ PRIMARY KEY  (`id`)
 `kod` int(15) NOT NULL,
 `mailact` binary(1) NOT NULL default '',
 `mailvis` binary(1) NOT NULL default '',
-`vremja` int(15) NOT NULL,
-`sdvig` int(2) NOT NULL,
 `dayb` int(2) NOT NULL,
 `monthb` int(2) NOT NULL,
 `fban` binary(1) NOT NULL default '',
@@ -374,55 +339,57 @@ PRIMARY KEY  (`id`)
 `chwhy` text NOT NULL default '',
 `chwho` varchar(25) NOT NULL default '',
 `chtime` int(15) NOT NULL,
-`offpg` binary(1) NOT NULL default '',
-`offgr` binary(1) NOT NULL default '',
-`offsm` binary(1) NOT NULL default '',
-`offtr` int(15) NOT NULL,
+`sdvig` int(2) NOT NULL default '0',
+`offpg` BOOL NOT NULL DEFAULT '0',
+`offgr` BOOL NOT NULL DEFAULT '0',
+`offsm` BOOL NOT NULL DEFAULT '0',
+`offtr` BOOL NOT NULL DEFAULT '0',
+`pereh` BOOL NOT NULL DEFAULT '0',
 `nastroy` text NOT NULL default '',
 `plus` int(3) NOT NULL,
 `minus` int(3) NOT NULL,
 `vrrat` int(11) NOT NULL,
-`pfon` binary(1) NOT NULL default '',
-`cpfon` varchar(15) NOT NULL default '',
-`ccfon` varchar(15) NOT NULL default '',
-`cctx` varchar(15) NOT NULL default '',
-`cntem` varchar(15) NOT NULL default '',
-`ccolp` varchar(15) NOT NULL default '',
-`cdtim` varchar(15) NOT NULL default '',
-`cssip` varchar(15) NOT NULL default '',
-`csnik` varchar(15) NOT NULL default '',
-`conik` varchar(15) NOT NULL default '',
-`cadms` varchar(15) NOT NULL default '',
-`cons` varchar(15) NOT NULL default '',
-`coffs` varchar(15) NOT NULL default '',
-`cdinf` varchar(15) NOT NULL default '',
-`upfp` binary(1) NOT NULL default '',
-`farea` binary(1) NOT NULL default '',
-`chmes` int(2) NOT NULL,
+`upfp` BOOL NOT NULL DEFAULT '0',
+`farea` BOOL NOT NULL DEFAULT '0',
+`chmes` int(2) NOT NULL default '10',
 `nmenu` text NOT NULL default '',
-`carea` binary(1) NOT NULL default '',
+`carea` BOOL NOT NULL DEFAULT '0',
 `alls` varchar(25) NOT NULL default '',
-`pereh` binary(1) NOT NULL default '',
 `balans` int(11) NOT NULL,
 `sestime` int(15) NOT NULL,
-PRIMARY KEY  (`id`)
-) TYPE=MyISAM DEFAULT CHARSET=utf8;")or die('Ошибка создания таблицы "users"</body></html>');
+`total_on_site` int(11) NOT NULL default '0',
+PRIMARY KEY  (`id`),
+KEY `name_lat` (`name_lat`),
+KEY `lastdate` (`lastdate`)
+) TYPE=MyISAM DEFAULT CHARSET=utf8;") or die('Ошибка создания таблицы "users"</body></html>');
         echo '<span class="green">OK</span> - Юзеры<br/>';
 
         $log = trim($_POST['wnickadmina']);
+        $latlog = rus_lat(mb_strtolower($log));
         $par = trim($_POST['wpassadmina']);
         $par1 = md5(md5($par));
-        $tim = time();
         $meil = trim($_POST['wemailadmina']);
         $hom = trim($_POST[whome]);
         $brow = $_SERVER["HTTP_USER_AGENT"];
         $ip = $_SERVER["REMOTE_ADDR"];
         $cop = trim($_POST['wcopyright']);
-        mysql_query("insert into `users` values(0,'" . $log . "','" . $par1 . "','','m','0','0','0','0','','" . $tim . "','" . $tim . "','" . $meil . "','0','" . $hom . "','','','','7','','" . $ip . "','" . $brow .
-            "','20','20','','','','','','0','','','','','1','','','1','1','0','0','','','0','','','0','0','','','','0','0','0','0','','0','0','0','0','','','','','','','','','','','','','','0','0','15','','0','','','','');");
-        mysql_query("insert into `settings` values(0,'" . $log . "','" . $meil . "','','0','" . $cop . "','" . $hom . "','txt','0','panel','0','0','300','0');");
+        mysql_query("insert into `users` set
+		`name`='" . mysql_real_escape_string($log) . "',
+		`name_lat`='" . mysql_real_escape_string($latlog) . "',
+		`password`='" . mysql_real_escape_string($par1) . "',
+		`sex`='m',
+		`datereg`='" . time() . "',
+		`lastdate`='" . time() . "',
+		`mail`='" . mysql_real_escape_string($meil) . "',
+		`www`='" . mysql_real_escape_string($hom) . "',
+		`rights`='7',
+		`ip`='" . $ip . "',
+		`browser`='" . mysql_real_escape_string($brow) . "',
+		`preg`='1';");
+        $user_id = mysql_insert_id();
+        mysql_query("insert into `settings` values(0,'" . $log . "','" . $meil . "','','0','" . $cop . "','" . $hom . "','txt','0','panel','0','0','300','0','0');");
         echo "<hr/>Необходимо:<br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.<br/>";
-        echo "<a href='../auto.php?n=" . $_POST['wnickadmina'] . "&amp;p=" . $_POST['wpassadmina'] . "'>Вход!!!</a><br/>";
+        echo "<a href='../auto.php?id=" . $user_id . "&amp;p=" . $_POST['wpassadmina'] . "'>Вход!!!</a><br/>";
         break;
 
     case "admin":
@@ -430,10 +397,7 @@ PRIMARY KEY  (`id`)
         $duser = trim($_POST['user']);
         $dpass = trim($_POST['pass']);
         $dname = trim($_POST['name']);
-        $text = "<?php\r\n
-" . "defined('_IN_PUSTO') or die ('Error:restricted access');\r\n" . "Error_Reporting(E_ALL & ~E_NOTICE);\r\n" . "Error_Reporting (ERROR | WARNING);\r\n" . "session_name(\"SESID\");\r\n" . "session_start();\r\n" . "$" . "db_host=\"$dhost\";\r\n" .
-            "$" . "db_user=\"$duser\";\r\n" . "$" . "db_pass=\"$dpass\";\r\n" . "$" . "db_name=\"$dname\";\r\n" . "$" . "connect=mysql_connect(" . "$" . "db_host, " . "$" . "db_user, " . "$" . "db_pass) or die ('cannot connect to server');\r\n" .
-            "mysql_select_db(" . "$" . "db_name) or die ('cannot connect to db');\r\n" . "mysql_query( \"SET NAMES 'utf8'\", " . "$" . "connect );\r\n" . "?>";
+        $text = "<?php\r\n\r\n" . "defined('_IN_JOHNCMS') or die ('Error: restricted access');\r\n\r\n" . "$" . "version_info = 100270408;\r\n\r\n" . "$" . "db_host=\"$dhost\";\r\n" . "$" . "db_user=\"$duser\";\r\n" . "$" . "db_pass=\"$dpass\";\r\n" . "$" . "db_name=\"$dname\";\r\n" . "\r\n?>";
         $fp = @fopen("../incfiles/db.php", "w");
         fputs($fp, $text);
         fclose($fp);
@@ -462,6 +426,10 @@ PRIMARY KEY  (`id`)
         echo '</form>';
         break;
 
+    case 'update':
+        echo 'Обновление системы завершено.<br />Не забудьте удалить папку /install';
+        break;
+
     default:
         ////////////////////////////////////////////////////////////
         // Предварительная проверка системы                       //
@@ -470,10 +438,10 @@ PRIMARY KEY  (`id`)
         // 2) Проверка прав доступа к файлам и папкам             //
         ////////////////////////////////////////////////////////////
         $err = false;
-        echo '<b>ПРОВЕРКА СИСТЕМЫ</b>';
+        echo '<b>ПРОВЕРКА СИСТЕМЫ</b><br /><br />';
 
         // Проверка настроек PHP
-        echo '<hr/><b>Настройки PHP</b><br />';
+        echo '<b><u>Настройки PHP</u></b><br />';
         if (version_compare(phpversion(), '4.1.0', '>'))
         {
             echo '<span class="green">OK</span> - Версия PHP ' . phpversion() . '<br />';
@@ -521,7 +489,7 @@ PRIMARY KEY  (`id`)
         }
 
         // Проверка загрузки необходимых расширений PHP
-        echo '<hr /><b>Расширения PHP</b><br />';
+        echo '<br /><b><u>Расширения PHP</u></b><br />';
         if (extension_loaded('mysql'))
         {
             echo '<span class="green">OK</span> - mysql<br />';
@@ -567,12 +535,14 @@ PRIMARY KEY  (`id`)
 
         // Проверка прав доступа к файлам и папкам
         function permissions($filez) {
-            $filez = @decoct(@fileperms("$filez")) % 1000;
+            $filez = @decoct(@fileperms("../$filez")) % 1000;
             return $filez;
         }
         $cherr = "";
-        $arr = array("../incfiles", "../gallery/foto", "../gallery/temp", "../str/temp", "../pratt", "../forum/files", "../forum/temtemp", "../download/arctemp", "../download/files", "../download/graftemp", "../download/screen",
-            "../download/mp3temp", "../download/upl");
+
+        // Проверка прав доступа к папкам
+        $arr = array("incfiles/", "gallery/foto/", "gallery/temp/", "library/files/", "library/temp/", "pratt/", "forum/files/", "forum/temtemp/", "download/arctemp/", "download/files/",
+            "download/graftemp/", "download/screen/", "download/mp3temp/", "download/upl/");
         foreach ($arr as $v)
         {
             if (permissions($v) < 777)
@@ -584,7 +554,22 @@ PRIMARY KEY  (`id`)
                 $cherr = $cherr . '<span class="green">OK</span> - ' . $v . '<br/>';
             }
         }
-        echo '<hr /><b>Права доступа</b><br />';
+
+        // Проверка прав доступа к файлам
+        $arr = array("flood.dat", "library/java/textfile.txt", "library/java/META-INF/MANIFEST.MF");
+        foreach ($arr as $v)
+        {
+            if (permissions($v) < 666)
+            {
+                $cherr = $cherr . '<span class="red">ОШИБКА!</span> - ' . $v . '<br/><span class="gray">Необходимо установить права доступа 666.</span><br />';
+                $err = 1;
+            } else
+            {
+                $cherr = $cherr . '<span class="green">OK</span> - ' . $v . '<br/>';
+            }
+        }
+
+        echo '<br /><b><u>Права доступа</u></b><br />';
         echo $cherr;
         echo '<hr />';
         switch ($err)
@@ -600,7 +585,8 @@ PRIMARY KEY  (`id`)
                 break;
 
             default:
-                echo '<span class="green">ОТЛИЧНО!</span> Все настройки правильные<br /><a href="index.php?act=db">Продолжить установку</a>';
+                echo '<span class="green">ОТЛИЧНО!</span><br />Все настройки правильные<br /><br /><a href="index.php?act=db">Установка системы</a><br /><br />';
+                echo '<a href="update/">Обновление с версии RC-2</a><br />';
         }
         break;
 }

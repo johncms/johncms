@@ -1,10 +1,4 @@
-<?
-defined('_IN_PUSTO') or die('Error:restricted access');
-?>
-
-<div>Правила транслита
-  
-<br/>
+<br /><b>Правила транслита</b><br/><br/>
 а - a<br/>
 б - b<br/>
 в - v<br/>
@@ -69,5 +63,4 @@ defined('_IN_PUSTO') or die('Error:restricted access');
 Э - X<br/>
 Ю - YU<br/>
 Я - YA<br/>
-
-</div>
+<br />

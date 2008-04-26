@@ -1,41 +1,29 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS v.1.0.0 RC2                                                        //
-// Дата релиза: 08.02.2008                                                    //
-// Авторский сайт: http://gazenwagen.com                                      //
+// JohnCMS                             Content Management System              //
+// Официальный сайт сайт проекта:      http://johncms.com                     //
+// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
-// Оригинальная идея и код: Евгений Рябинин aka JOHN77                        //
-// E-mail: 
-// Модификация, оптимизация и дизайн: Олег Касьянов aka AlkatraZ              //
-// E-mail: alkatraz@batumi.biz                                                //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
-////////////////////////////////////////////////////////////////////////////////
-// Внимание!                                                                  //
-// Авторские версии данных скриптов публикуются ИСКЛЮЧИТЕЛЬНО на сайте        //
-// http://gazenwagen.com                                                      //
-// Если Вы скачали данный скрипт с другого сайта, то его работа не            //
-// гарантируется и поддержка не оказывается.                                  //
+// JohnCMS core team:                                                         //
+// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
+// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+//                                                                            //
+// Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-define('_IN_PUSTO', 1);
+define('_IN_JOHNCMS', 1);
 session_name("SESID");
 session_start();
 $headmod = 'anketa';
 $textl = 'Анкета';
-require ("../incfiles/db.php");
-require ("../incfiles/func.php");
-require ("../incfiles/data.php");
-require ("../incfiles/head.php");
-require ("../incfiles/inc.php");
-require ("../incfiles/char.php");
+require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 $tti = $realtime;
 
-if (!empty($_SESSION['pid']))
+if (!empty($_SESSION['uid']))
 {
-
-
     if (empty($_GET['user']))
     {
         $user = $idus;
@@ -43,36 +31,32 @@ if (!empty($_SESSION['pid']))
     {
         $user = $_GET['user'];
     }
-
-    $user = intval(check(trim($user)));
+    $user = intval(trim($user));
     $q = @mysql_query("select * from `users` where id='" . $user . "';");
     $arr = @mysql_fetch_array($q);
     $arr2 = mysql_num_rows($q);
     if ($arr2 == 0)
     {
         echo "Пользователя с таким id не существует!<br/>";
-        require ("../incfiles/end.php");
+        require_once ("../incfiles/end.php");
         exit;
     }
     if (!empty($_GET['act']))
     {
         $act = check($_GET['act']);
     }
-
     if ($act == "statistic")
     {
-
-        echo "Статистика<br/>";
-        echo "Комментариев: $arr[komm] <br/>";
-        echo "Сообщений в форуме: $arr[postforum] <br/>";
-        echo "Сообщений в чате: $arr[postchat] <br/>";
-        echo "Ответов в чате: $arr[otvetov] <br/>";
-        echo "Игровой баланс: $arr[balans] <br/>";
-        echo "<a href='anketa.php?user=" . $arr[id] . "&amp;'>В анкету</a><br/>";
-        require ("../incfiles/end.php");
+        echo "<p><b>Статистика</b><br/>";
+        echo "&nbsp;Комментариев: $arr[komm] <br/>";
+        echo "&nbsp;Сообщений в форуме: $arr[postforum] <br/>";
+        echo "&nbsp;Сообщений в чате: $arr[postchat] <br/>";
+        echo "&nbsp;Ответов в чате: $arr[otvetov] <br/>";
+        echo "&nbsp;Игровой баланс: $arr[balans] </p>";
+        echo "<p><a href='anketa.php?user=" . $arr[id] . "&amp;'>В анкету</a></p>";
+        require_once ("../incfiles/end.php");
         exit;
     }
-
     if ($user == $idus)
     {
         switch ($act)
@@ -84,10 +68,8 @@ if (!empty($_SESSION['pid']))
 
             case "editname":
                 $nname = check(trim($_POST['nname']));
-                $nname = utfwin($nname);
-                $nname = substr($nname, 0, 15);
-                $nname = winutf($nname);
-                mysql_query("update `users` set imname='" . $nname . "' where id='" . $_SESSION['pid'] . "';");
+                $nname = mb_substr($nname, 0, 15);
+                mysql_query("update `users` set imname='" . $nname . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $nname<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -107,29 +89,27 @@ if (!empty($_SESSION['pid']))
                 if ($par11 !== $passw)
                 {
                     echo "Неверно указан текущий пароль<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($par2 !== $par3)
                 {
                     echo "Вы ошиблись при подтверждении нового пароля<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($par2 == "")
                 {
                     echo "Вы не ввели новый пароль<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
-                mysql_query("update `users` set password='" . $par22 . "' where id='" . $_SESSION['pid'] . "';");
+                mysql_query("update `users` set password='" . $par22 . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Пароль изменен,войдите на сайт заново<br/><a href='../in.php'>Вход</a><br/>";
-                unset($_SESSION['pid']);
-                unset($_SESSION['provc']);
-                setcookie('cpide', '');
-                setcookie('ckode', '');
-                setcookie(session_name(), '');
-                session_destroy();
+                unset($_SESSION['uid']);
+                unset($_SESSION['ups']);
+                setcookie('cuid', '');
+                setcookie('cups', '');
                 break;
 
             case "gor":
@@ -139,10 +119,8 @@ if (!empty($_SESSION['pid']))
 
             case "editgor":
                 $ngor = check(trim($_POST['ngor']));
-                $ngor = utfwin($ngor);
-                $ngor = substr($ngor, 0, 20);
-                $ngor = winutf($ngor);
-                mysql_query("update `users` set live='" . $ngor . "' where id='" . $_SESSION['pid'] . "';");
+                $ngor = mb_substr($ngor, 0, 20);
+                mysql_query("update `users` set live='" . $ngor . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $ngor<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -153,10 +131,8 @@ if (!empty($_SESSION['pid']))
 
             case "editinf":
                 $ninf = check(trim($_POST['ninf']));
-                $ninf = utfwin($ninf);
-                $ninf = substr($ninf, 0, 500);
-                $ninf = winutf($ninf);
-                mysql_query("update `users` set about='" . $ninf . "' where id='" . $_SESSION['pid'] . "';");
+                $ninf = mb_substr($ninf, 0, 500);
+                mysql_query("update `users` set about='" . $ninf . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $ninf<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -166,10 +142,9 @@ if (!empty($_SESSION['pid']))
                 break;
 
             case "editicq":
-                $nicq = intval(check(trim($_POST['nicq'])));
-
+                $nicq = intval(trim($_POST['nicq']));
                 $nicq = substr($nicq, 0, 9);
-                mysql_query("update `users` set icq='" . $nicq . "' where id='" . $_SESSION['pid'] . "';");
+                mysql_query("update `users` set icq='" . $nicq . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $nicq<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -180,10 +155,8 @@ if (!empty($_SESSION['pid']))
 
             case "editmobila":
                 $nmobila = check(trim($_POST['nmobila']));
-                $nmobila = utfwin($nmobila);
-                $nmobila = substr($nmobila, 0, 50);
-                $nmobila = winutf($nmobila);
-                mysql_query("update `users` set mibile='" . $nmobila . "' where id='" . $_SESSION['pid'] . "';");
+                $nmobila = mb_substr($nmobila, 0, 50);
+                mysql_query("update `users` set mibile='" . $nmobila . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $nmobila<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -216,10 +189,10 @@ if (!empty($_SESSION['pid']))
                 break;
 
             case "editdr":
-                $user_day = intval(check(trim($_POST['user_day'])));
-                $user_month = intval(check(trim($_POST['user_month'])));
-                $user_year = intval(check(trim($_POST['user_year'])));
-                mysql_query("update `users` set dayb='" . $user_day . "', monthb='" . $user_month . "' ,yearofbirth='" . $user_year . "' where id='" . $_SESSION['pid'] . "';");
+                $user_day = intval(trim($_POST['user_day']));
+                $user_month = intval(trim($_POST['user_month']));
+                $user_year = intval(trim($_POST['user_year']));
+                mysql_query("update `users` set dayb='" . $user_day . "', monthb='" . $user_month . "' ,yearofbirth='" . $user_year . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $user_day $mesyac[$user_month] $user_year<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -230,10 +203,8 @@ if (!empty($_SESSION['pid']))
 
             case "editsite":
                 $nsite = check(trim($_POST['nsite']));
-                $nsite = utfwin($nsite);
-                $nsite = substr($nsite, 0, 50);
-                $nsite = winutf($nsite);
-                mysql_query("update `users` set www='" . $nsite . "' where id='" . $_SESSION['pid'] . "';");
+                $nsite = mb_substr($nsite, 0, 50);
+                mysql_query("update `users` set www='" . $nsite . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $nsite<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -270,17 +241,14 @@ if (!empty($_SESSION['pid']))
 
             case "editmail":
                 $nmail = htmlspecialchars($_POST[nmail]);
-
                 if (!eregi("^[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]{2,4}\$", $nmail))
                 {
                     echo "Некорректный формат e-mail адреса!";
                     echo "<a href='anketa.php?action=mail'>Повторить</a><br/>";
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
-                $nmail = utfwin($nmail);
-                $nmail = substr($nmail, 0, 50);
-                $nmail = winutf($nmail);
+                $nmail = mb_substr($nmail, 0, 50);
                 $nmailvis = intval(check($_POST['nmailvis']));
                 if ($nmail != $arr[mail])
                 {
@@ -289,9 +257,7 @@ if (!empty($_SESSION['pid']))
                 {
                     $nmailact = $arr[mailact];
                 }
-
-                mysql_query("update `users` set mail='" . $nmail . "', mailvis='" . $nmailvis . "', mailact='" . $nmailact . "' where id='" . $_SESSION['pid'] . "';");
-
+                mysql_query("update `users` set mail='" . $nmail . "', mailvis='" . $nmailvis . "', mailact='" . $nmailact . "' where id='" . $_SESSION['uid'] . "';");
                 echo "Принято: $nmail<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
                 break;
 
@@ -302,8 +268,7 @@ if (!empty($_SESSION['pid']))
                     {
                         if (intval($_POST['provact']) == $arr[kod])
                         {
-
-                            mysql_query("update `users` set mailact='1' where id='" . $_SESSION['pid'] . "';");
+                            mysql_query("update `users` set mailact='1' where id='" . $_SESSION['uid'] . "';");
                             unset($_SESSION['activ']);
                             echo "E-mail адрес успешно активирован<br/>";
                             echo "<a href='anketa.php?user=" . $idus . "'>В анкету</a><br/>";
@@ -317,7 +282,7 @@ if (!empty($_SESSION['pid']))
                         echo "<form action='anketa.php?user=" . $idus . "&amp;act=activmail&amp;continue' method='post'>Код активации:<br/><input type='text' name='provact'/><br/><input type='submit' name='submit' value='ok'/></form><br/><a href='anketa.php?user=" .
                             $idus . "'>Назад</a><br/>";
                     }
-                    require ("../incfiles/end.php");
+                    require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($_SESSION['activ'] != 1)
@@ -326,10 +291,9 @@ if (!empty($_SESSION['pid']))
                     $subject = "E-mail activation";
                     $mail = "Здравствуйте " . $login . "\r\nКод для активации e-mail адреса " . $mailcode . "\r\nТеперь Вы можете продолжить активацию\r\n";
 
-                    $subject = utfwin($subject);
-
-                    $name = utfwin($name);
-                    $mail = utfwin($mail);
+                    $subject = iconv('UTF-8', 'KOI8-R', $subject);
+                    $name = iconv('UTF-8', 'KOI8-R', $name);
+                    $mail = iconv('UTF-8', 'KOI8-R', $mail);
 
                     $name = convert_cyr_string($name, 'w', 'k');
                     $subject = convert_cyr_string($subject, 'w', 'k');
@@ -344,7 +308,7 @@ if (!empty($_SESSION['pid']))
                     $adds .= "X-Mailer: PHP v." . phpversion();
 
                     mail($arr[mail], $subject, $mail, $adds);
-                    mysql_query("update `users` set kod='" . $mailcode . "' where id='" . $_SESSION['pid'] . "';");
+                    mysql_query("update `users` set kod='" . $mailcode . "' where id='" . $_SESSION['uid'] . "';");
                     echo 'Код для активации выслан по указанному адресу<br/>';
                     $_SESSION['activ'] = 1;
                 } else
@@ -355,11 +319,29 @@ if (!empty($_SESSION['pid']))
                 break;
 
             default:
-                echo " Моя анкета<br/>";
+                echo "<p><b>Моя анкета</b></p><hr/>";
+                echo '<p>Ник: <b>' . $login . '</b><br />';
+                if ($arr['sex'] == "m")
+                {
+                    echo "Зарегистрирован";
+                }
+                if ($arr['sex'] == "zh")
+                {
+                    echo "Зарегистрирована";
+                }
+                echo ": " . date("d.m.Y", $arr[datereg]) . "<br/>";
+                if ($arr['sex'] == "m")
+                {
+                    echo 'Всего пробыл';
+                }
+                if ($arr['sex'] == "zh")
+                {
+                    echo 'Всего пробыла';
+                }
+                echo ' на сайте: ' . gmdate('H:i:s', $arr['total_on_site']) . '<br />';
                 $mmon = $arr[monthb];
-                echo "<a href='anketa.php?act=par&amp;user=" . $idus . "'>Пароль:</a><br/>";
-
-                echo "<a href='anketa.php?act=name'>Имя:</a>$arr[imname]<br/>";
+                echo "<a href='anketa.php?act=par&amp;user=" . $idus . "'>Сменить пароль</a></p>";
+                echo "<p><a href='anketa.php?act=name'>Имя:</a>$arr[imname]<br/>";
                 echo "<a href='anketa.php?act=gor'>Город:</a>$arr[live]<br/>";
                 echo "<a href='anketa.php?act=inf'>О себе:</a>$arr[about]<br/>";
                 echo "<a href='anketa.php?act=icq'>ICQ:</a>$arr[icq]<br/>";
@@ -370,15 +352,22 @@ if (!empty($_SESSION['pid']))
                 }
                 echo "<br/><a href='anketa.php?act=mobila'>Мобила:</a>$arr[mibile]<br/>";
                 echo "<a href='anketa.php?act=dr'>Дата рождения:</a>$arr[dayb] $mesyac[$mmon] $arr[yearofbirth]<br/>";
-                echo "<a href='anketa.php?act=site'>Сайт:</a>$arr[www]<br/>";
+                echo "<a href='anketa.php?act=site'>Сайт:</a>$arr[www]</p><hr/>";
 
 
-                echo "<a href='anketa.php?act=statistic'>Моя статистика</a><br/>";
+                echo '<p><a href="anketa.php?act=statistic">Моя активность</a><br/>';
+                $req = mysql_query("select * from `gallery` where `type`='al' and `user`=1 and `avtor`='" . $arr['name'] . "' LIMIT 1;");
+                if (mysql_num_rows($req) == 1)
+                {
+                    $res = mysql_fetch_array($req);
+                    echo '<a href="../gallery/index.php?id=' . $res['id'] . '">Личный альбом</a><br />';
+                }
                 if ($dostadm == 1)
                 {
                     echo "<a href='../" . $admp . "/editusers.php?act=edit&amp;user=" . $idus . "'>Редактировать свои данные</a><br/>";
                 }
-                require ("../incfiles/end.php");
+                echo '</p>';
+                require_once ("../incfiles/end.php");
                 exit;
                 break;
         }
@@ -482,64 +471,147 @@ if (!empty($_SESSION['pid']))
         echo "<hr/><a href='anketa.php?user=" . $arr[id] . "'>Назад</a><br/>";
     }
 
+    ////////////////////////////////////////////////////////////
+    // Выводим анкету пользователя                            //
+    ////////////////////////////////////////////////////////////
     if ($act == "")
     {
-        echo "$arr[name] (id: $arr[id])";
+        echo '<p>Ник: <b>' . $arr['name'] . '</b> (id: ' . $arr['id'] . ')';
         $ontime = $arr[lastdate];
         $ontime2 = $ontime + 300;
         $preg = $arr[preg];
         $regadm = $arr[regadm];
-
         if ($realtime > $ontime2)
         {
-            echo " [Off]<br/>";
+            echo '<font color="#FF0000"> [Off]</font><br/>';
+            if ($arr['sex'] == "m")
+            {
+                echo "Последний раз был";
+            }
+            if ($arr['sex'] == "zh")
+            {
+                echo "Последний раз была";
+            }
+            echo ": " . date("d.m.Y (H:i)", $arr['lastdate']) . '<br />';
         } else
         {
-            echo " [ON]<br/>";
+            echo '<font color="#00AA00"> [ON]</font><br/>';
         }
-
+        echo 'Пол: ';
+        if ($arr[sex] == "m")
+        {
+            echo "<b>Муж.</b><br/>";
+        }
+        if ($arr[sex] == "zh")
+        {
+            echo "<b>Жен.</b><br/>";
+        }
         if ($arr[dayb] == $day && $arr[monthb] == $mon)
         {
             echo "<font color='" . $clink . "'>ИМЕНИННИК!!!</font><br/>";
         }
-
-
-        switch ($arr[rights])
+        if ($arr['rights'] != 0)
         {
-            case 1:
-                echo 'Киллер';
-                break;
-            case 2:
-                echo 'Модер чата';
-                break;
-            case 3:
-                echo 'Модер форума';
-                break;
-            case 4:
-                echo 'Зам. админа по загрузкам';
-                break;
-            case 5:
-                echo 'Зам. админа по библиотеке';
-                break;
-            case 6:
-                echo 'Супермодератор';
-                break;
-            case 7:
-                echo 'Админ';
-                break;
-            default:
-                echo 'Юзер';
+            echo 'Должность: ';
+            switch ($arr['rights'])
+            {
+                case 1:
+                    echo 'Киллер';
+                    break;
+                case 2:
+                    echo 'Модер чата';
+                    break;
+                case 3:
+                    echo 'Модер форума';
+                    break;
+                case 4:
+                    echo 'Зам. админа по загрузкам';
+                    break;
+                case 5:
+                    echo 'Зам. админа по библиотеке';
+                    break;
+                case 6:
+                    echo 'Супермодератор';
+                    break;
+                case 7:
+                    echo 'Админ';
+                    break;
+            }
+            echo '<br/>';
         }
-        echo '<br/>';
-        if (!empty($arr[status]))
+        if (!empty($arr['status']))
         {
             $stats = $arr[status];
             $stats = smiles($stats);
             $stats = smilescat($stats);
-
             $stats = smilesadm($stats);
-            echo "$stats<br/>";
+            echo "Статус: $stats<br/>";
         }
+        echo '</p><p>';
+
+        if ($arr[ban] == "1" && $arr[bantime] > $realtime || $arr[ban] == "2")
+        {
+            echo "<a href='anketa.php?act=ban&amp;user=" . $arr[id] . "'><font color='red'>Бан!</font></a><br/>";
+        }
+        ##########
+        $kol = mysql_query("select * from `bann` WHERE `user` = '" . $arr['name'] . "' and `kolv` = 'yes';");
+        $kol2 = mysql_num_rows($kol);
+        if ($kol2 != 0)
+        {
+            echo "<a href='anketa.php?act=kolvo&amp;user=" . $arr[id] . "'>Всего наказаний: $kol2</a><br/>";
+        }
+
+        echo "Имя: $arr[imname]<br/>";
+        if (!empty($arr[dateofbirth]))
+        {
+            echo "Дата рождения: $arr[dayb] $mesyac[$mmon] $arr[yearofbirth]<br/>";
+        }
+        if (!empty($arr[live]))
+        {
+            echo "Город: $arr[live]<br/>";
+        }
+        if (!empty($arr[about]))
+        {
+            echo "О себе: $arr[about]<br/>";
+        }
+        if (!empty($arr[mibile]))
+        {
+            echo "Мобила: $arr[mibile]<br/>";
+        }
+        echo '</p><p>';
+        if ($arr[mailact] == 1)
+        {
+            if (!empty($arr[mail]))
+            {
+                echo "E-mail:";
+                if ($arr[mailvis] == 1)
+                {
+                    echo "$arr[mail]<br/>";
+                } else
+                {
+                    echo "скрыт<br/>";
+                }
+            }
+        }
+        if (!empty($arr[icq]))
+        {
+            echo 'ICQ:&nbsp;<img src="http://web.icq.com/whitepages/online?icq=' . $arr[icq] . '&amp;img=5" width="12" height="12" alt=""/>&nbsp;' . $arr[icq] . '<br/> ';
+        }
+        if (!empty($arr[www]) && $arr[www] !== "http://" && stristr($arr[www], "http://"))
+        {
+            $sait = str_replace("http://", "", $arr[www]);
+            echo "Сайт: <a href='" . $arr[www] . "'>$sait</a><br/>";
+        }
+        echo '</p><p>';
+        if ($arr['sex'] == "m")
+        {
+            echo "Зарегистрирован";
+        }
+        if ($arr['sex'] == "zh")
+        {
+            echo "Зарегистрирована";
+        }
+        echo ": " . date("d.m.Y", $arr[datereg]) . "<br/>";
         if ($dostadm == "1")
         {
             if ($preg == 0 && $regadm == "")
@@ -559,133 +631,26 @@ if (!empty($_SESSION['pid']))
                 echo "Регистрация без подтверждения<br/>";
             }
         }
-        if ($arr[ban] == "1" && $arr[bantime] > $realtime || $arr[ban] == "2")
-        {
-            echo "<a href='anketa.php?act=ban&amp;user=" . $arr[id] . "'><font color='red'>Бан!</font></a><br/>";
-        }
-        ##########
-        $kol = mysql_query("select * from `bann` WHERE `user` = '" . $arr['name'] . "' and `kolv` = 'yes';");
-        $kol2 = mysql_num_rows($kol);
-        if ($kol2 != 0)
-        {
-            echo "<a href='anketa.php?act=kolvo&amp;user=" . $arr[id] . "'>Всего наказаний: $kol2</a><br/>";
-        }
-
-        ##############
-        echo "Имя: $arr[imname]<br/>";
-        if ($arr[sex] == "m")
-        {
-            echo "Парень<br/>";
-        }
-        if ($arr[sex] == "zh")
-        {
-            echo "Девушка<br/>";
-        }
-        if (!empty($arr[dateofbirth]))
-        {
-            echo "Дата рождения: $arr[dayb] $mesyac[$mmon] $arr[yearofbirth]<br/>";
-        }
         if ($arr['sex'] == "m")
         {
-            echo "Зарегистрирован";
+            echo 'Всего пробыл';
         }
         if ($arr['sex'] == "zh")
         {
-            echo "Зарегистрирована";
-        }
-        echo ": " . date("d.m.Y", $arr[datereg]) . "<br/>";
-        if ($arr['sex'] == "m")
-        {
-            echo "Последний раз был";
-        }
-        if ($arr['sex'] == "zh")
-        {
-
-            echo "Последний раз была";
-        }
-        echo ": " . date("d.m.Y (H:i)", $arr[lastdate]) . "<br/>";
-
-        if ($arr[mailact] == 1)
-        {
-
-            if (!empty($arr[mail]))
-            {
-                echo "E-mail:";
-                if ($arr[mailvis] == 1)
-                {
-                    echo "$arr[mail]<br/>";
-                } else
-                {
-                    echo "скрыт<br/>";
-                }
-            }
-        }
-        if (!empty($arr[icq]))
-        {
-            echo '<img src="http://web.icq.com/whitepages/online?icq=' . $arr[icq] . '&amp;img=5" alt=""/> ICQ:' . $arr[icq] . ' <br/> ';
+            echo 'Всего пробыла';
         }
 
-        if (!empty($arr[www]) && $arr[www] !== "http://" && stristr($arr[www], "http://"))
+        echo ' на сайте: ' . gmdate('H:i:s', $arr['total_on_site']);
+        echo '<br /><a href="anketa.php?act=statistic&amp;user=' . $arr[id] . '">Активность юзера</a><br/>';
+		echo '</p><p>';
+        $req = mysql_query("select * from `gallery` where `type`='al' and `user`=1 and `avtor`='" . $arr['name'] . "' LIMIT 1;");
+        if (mysql_num_rows($req) == 1)
         {
-            $sait = str_replace("http://", "", $arr[www]);
-            echo "Сайт: <a href='" . $arr[www] . "'>$sait</a><br/>";
+            $res = mysql_fetch_array($req);
+            echo '<a href="../gallery/index.php?id=' . $res['id'] . '">Личный альбом</a><br />';
         }
-        if (!empty($arr[about]))
+        if (!empty($_SESSION['uid']))
         {
-            echo "О себе: $arr[about]<br/>";
-        }
-        if (!empty($arr[live]))
-        {
-            echo "Город: $arr[live]<br/>";
-        }
-        if (!empty($arr[mibile]))
-        {
-            echo "Мобила: $arr[mibile]<br/>";
-        }
-
-        $svr = $arr[vremja];
-        if ($svr >= "3600")
-        {
-            $hvr = ceil($svr / 3600) - 1;
-            $svr1 = $svr - $hvr * 3600;
-            $mvr = ceil($svr1 / 60) - 1;
-            $ivr = $svr1 - $mvr * 60;
-            if ($ivr == "60")
-            {
-                $ivr = "59";
-            }
-            $sitevr = "$hvr ч. $mvr мин. $ivr сек. ";
-        } else
-        {
-            if ($svr >= "60")
-            {
-                $mvr = ceil($svr / 60) - 1;
-                $ivr = $svr - $mvr * 60;
-                if ($ivr == "60")
-                {
-                    $ivr = "59";
-                }
-                $sitevr = "$mvr мин. $ivr сек. ";
-            } else
-            {
-                $ivr = $svr;
-                $sitevr = "$ivr сек. ";
-            }
-        }
-        if ($arr['sex'] == "m")
-        {
-            echo "Провел ";
-        }
-        if ($arr['sex'] == "zh")
-        {
-            echo "Провела ";
-        }
-
-        echo "времени на сайте: $sitevr<br/>";
-        echo "<a href='anketa.php?act=statistic&amp;user=" . $arr[id] . "'>Статистика юзера</a><br/>";
-        if (!empty($_SESSION['pid']))
-        {
-
             $contacts = mysql_query("select * from `privat` where me='" . $login . "' and cont='" . $arr['name'] . "';");
             $conts = mysql_num_rows($contacts);
             if ($conts != 1)
@@ -712,19 +677,19 @@ if (!empty($_SESSION['pid']))
 
         if ($dostkmod == "1")
         {
-            echo "$arr[ip]<br/>$arr[browser]<br/>";
+            echo '</p><p>';
+            echo "IP: $arr[ip]<br/>Browser: $arr[browser]<br/>";
             echo "<a href='../" . $admp . "/zaban.php?user=" . $arr['id'] . "'>Банить</a><br/>";
         }
         if ($dostadm == "1")
         {
             echo "<a href='../" . $admp . "/editusers.php?act=edit&amp;user=" . $arr[id] . "'>Редактировать</a><br/><a href='../" . $admp . "/editusers.php?act=del&amp;user=" . $arr[id] . "'>Удалить</a><br/>";
         }
+        echo '</p>';
     }
 } else
 {
     echo "Вы не авторизованы!<br/>";
 }
-require ("../incfiles/end.php");
+require_once ("../incfiles/end.php");
 ?>
-
-
