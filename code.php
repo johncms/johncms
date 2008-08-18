@@ -1,13 +1,13 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
+// JohnCMS                                                                    //
 // Официальный сайт сайт проекта:      http://johncms.com                     //
 // Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Евгений Рябинин aka john77          john77@johncms.com                     //
+// Олег Касьянов aka AlkatraZ          alkatraz@johncms.com                   //
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
@@ -17,7 +17,6 @@ session_name('SESID');
 session_start();
 if (!isset($_SESSION['code']))
     exit;
-header("Content-Type: image/gif");
 
 // Задаем размеры изображения
 $imwidth = 85;
@@ -49,7 +48,12 @@ for ($i = 0; $i < $stringlength; $i++)
 }
 
 // Передача изображения в Браузер
+ob_start();
 ImageGif($im);
 ImageDestroy($im);
+header("Content-Type: image/gif");
+header('Content-Disposition: inline; filename=code.gif');
+header('Content-Length: '.ob_get_length());
+ob_end_flush();
 
 ?>

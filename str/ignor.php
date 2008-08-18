@@ -28,15 +28,16 @@ if (!empty($_SESSION['uid']))
     }
     switch ($act)
     {
-
         case "add":
+            echo '<div class="phdr">Добавить в игнор</div>';
             echo "<form action='ignor.php?act=edit&amp;add=1' method='post'>
 	 Введите ник<br/>";
             echo "<input type='text' name='nik' value='' /><br/>
  <input type='submit' value='Добавить' />  
   </form>";
-            echo "<a href='?'>В список</a><br/>";
+            echo '<p><a href="ignor.php">В список</a><br/>';
             break;
+
         case "edit":
             if (!empty($_POST['nik']))
             {
@@ -52,33 +53,28 @@ if (!empty($_SESSION['uid']))
                     require_once ("../incfiles/end.php");
                     exit;
                 }
-
-                $id = intval(check(trim($_GET['id'])));
+                $id = intval($_GET['id']);
                 $nk = mysql_query("select * from `users` where id='" . $id . "';");
                 $nk1 = mysql_fetch_array($nk);
-                $nik = $nk1[name];
+                $nik = $nk1['name'];
             }
             if (!empty($_GET['add']))
             {
                 $add = intval($_GET['add']);
             }
             $adс = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $nik . "';");
-
             $adc1 = mysql_num_rows($adс);
             $addc = mysql_query("select * from `users` where name='" . $nik . "';");
             $addc2 = mysql_fetch_array($addc);
             $addc1 = mysql_num_rows($addc);
             if ($add == 1)
             {
-
-                if ($addc2[rights] >= 1 || $nik == $nickadmina || $nik == $nickadmina)
+                if ($addc2['rights'] >= 1 || $nik == $nickadmina || $nik == $nickadmina)
                 {
-                    echo "Администрацию нельзя в игнор!!!<br/><a href='ignor.php'>В список</a><br/>";
+                    echo '<p>Администрацию нельзя в игнор!!!<br/><a href="ignor.php">В список</a></p>';
                     require_once ("../incfiles/end.php");
                     exit;
                 }
-
-
                 if ($adc1 == 0)
                 {
                     if ($addc1 == 1)
@@ -99,7 +95,6 @@ if (!empty($_SESSION['uid']))
                 {
                     if ($addc1 == 1)
                     {
-
                         mysql_query("delete from `privat` where me='" . $login . "' and ignor='" . $nik . "';");
                         echo "Юзер удалён из игнора<br/>";
                     } else
@@ -111,34 +106,36 @@ if (!empty($_SESSION['uid']))
                     echo "Этого логина нет в Вашем игноре<br/>";
                 }
             }
-            echo "<a href='?'>В список</a><br />";
-
+            echo "<p><a href='?'>В список</a><br />";
             break;
 
 
         default:
+            echo '<div class="phdr">Игнор-лист</div>';
             $ig = mysql_query("select * from `privat` where me='" . $login . "' and ignor!='';");
             $colig = mysql_num_rows($ig);
             while ($mass = mysql_fetch_array($ig))
             {
                 $uz = mysql_query("select * from `users` where name='$mass[ignor]';");
                 $mass1 = mysql_fetch_array($uz);
-                echo "$mass[ignor] <a href='ignor.php?act=edit&amp;id=" . $mass1[id] . "'>[Удалить]</a>";
-                $ontime = $mass1[pvrem];
+                echo '<div class="menu">' . $mass['ignor'];
+                $ontime = $mass1['lastdate'];
                 $ontime2 = $ontime + 300;
                 if ($realtime > $ontime2)
                 {
-                    echo " [Off]<br/>";
+                    echo '<font color="#FF0000"> [Off]</font>';
                 } else
                 {
-                    echo " [ON]<br/>";
+                    echo '<font color="#00AA00"> [ON]</font>';
                 }
+                echo ' <a href="ignor.php?act=edit&amp;id=' . $mass1['id'] . '">[X]</a></div>';
             }
-
-            echo "<hr /><a href='?act=add'>Добавить юзера в игнор</a><br />";
+            echo '<p><a href="?act=add">Добавить юзера в игнор</a><br />';
             break;
     }
 }
-echo "<a href='privat.php?'>В приват</a><br />";
+
+echo "<a href='privat.php?'>В приват</a></p>";
 require_once ("../incfiles/end.php");
+
 ?>

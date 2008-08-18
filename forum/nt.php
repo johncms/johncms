@@ -23,7 +23,7 @@ if (empty($_GET['id']))
     exit;
 }
 $id = intval(check($_GET['id']));
-if (empty($_SESSION['uid']))
+if (!$user_id || $ban['1'] || $ban['11'])
 {
     require_once ("../incfiles/head.php");
     echo "Вы не авторизованы!<br/>";
@@ -83,7 +83,7 @@ if (isset($_POST['submit']))
         require_once ("../incfiles/end.php");
         exit;
     }
-    if ($fmod != 1)
+    if ($set['fmod'] != 1)
     {
         $fmd = 1;
     } else
@@ -99,7 +99,7 @@ if (isset($_POST['submit']))
     $postid = mysql_insert_id();
     $fpst = $datauser['postforum'] + 1;
     mysql_query("update `users` set  postforum='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
-    if ($fmod != 1)
+    if ($set['fmod'] != 1)
     {
         $hid = $rid;
     } else
@@ -138,7 +138,7 @@ if (isset($_POST['submit']))
             exit;
         }
     }
-    if ($fmod == 1)
+    if ($set['fmod'] == 1)
     {
         echo "Внимание!В данный момент в форуме включена премодерация тем,то есть Ваша тема будет открыта для общего доступа только после проверки модератором.<br/>";
     }

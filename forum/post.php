@@ -1,13 +1,13 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
+// JohnCMS                                                                    //
 // Официальный сайт сайт проекта:      http://johncms.com                     //
 // Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Евгений Рябинин aka john77          john77@johncms.com                     //
+// Олег Касьянов aka AlkatraZ          alkatraz@johncms.com                   //
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ if ($ms['type'] != "m")
 }
 echo "<b>$ms[from]</b><br/>";
 $tekst = $ms['text'];
-$tekst = tegi($tekst);
+$tekst = tags($tekst);
 $uz = @mysql_query("select `id`, `from`, `rights` FROM `users` where name='" . $ms['from'] . "';");
 $mass1 = @mysql_fetch_array($uz);
 if ($offsm != 1 && $offgr != 1)

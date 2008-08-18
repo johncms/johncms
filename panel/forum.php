@@ -14,8 +14,7 @@
 */
 
 define('_IN_JOHNCMS', 1);
-session_name("SESID");
-session_start();
+
 $textl = 'Форум';
 require_once ("../incfiles/core.php");
 
@@ -54,7 +53,10 @@ if ($dostsmod == 1)
                         $q3 = mysql_num_rows($q2);
                         if ($q3 == 0)
                         {
-                            mysql_query("insert into `forum` values(0,'" . $id . "','a','','" . check($v) . "','','','','','','','','','','','','');");
+                            mysql_query("INSERT INTO `forum` SET
+							`refid`='".$id."',
+							`type`='a',
+							`from`='" . check($v) . "';");
                         }
                     }
                 } else
@@ -783,7 +785,7 @@ if ($dostsmod == 1)
 
 } else
 {
-    header("Location: ../index.php?err");
+    header("Location: ../index.php?mod=404");
 }
 echo "<a href='../forum/?'>В форум</a><br/>";
 require_once ("../incfiles/end.php");

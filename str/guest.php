@@ -1,13 +1,13 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
+// JohnCMS                                                                    //
 // Официальный сайт сайт проекта:      http://johncms.com                     //
 // Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Евгений Рябинин aka john77          john77@johncms.com                     //
+// Олег Касьянов aka AlkatraZ          alkatraz@johncms.com                   //
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
@@ -15,34 +15,47 @@
 
 define('_IN_JOHNCMS', 1);
 
-$headmod = 'guest';
-$textl = 'Гостевая';
 require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
-if (!empty($_GET['act']))
+// Проверяем права доступа в Админ-Клуб
+if (isset($_SESSION['ga']) && $dostmod != 1)
+    unset($_SESSION['ga']);
+
+// Задаем заголовки страницы
+$headmod = 'guest';
+$textl = isset($_SESSION['ga']) ? 'Админ-Клуб' : 'Гостевая';
+
+// Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
+if (!$set['mod_guest'] && $dostadm != 1)
 {
-    $act = check($_GET['act']);
+    echo '<p>' . $set['mod_guest_msg'] . '</p>';
+    require_once ("../incfiles/end.php");
+    exit;
 }
+
+$act = isset($_GET['act']) ? $_GET['act'] : '';
 switch ($act)
 {
     case "delpost":
+        ////////////////////////////////////////////////////////////
+        // Удаление отдельного поста                              //
+        ////////////////////////////////////////////////////////////
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
-                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
+            $id = intval($_GET['id']);
             if (isset($_GET['yes']))
             {
-                mysql_query("delete from `guest` where `id`='" . $id . "' LIMIT 1;");
+                mysql_query("DELETE FROM `guest` WHERE `id`='" . $id . "' LIMIT 1;");
                 header("Location: guest.php");
             } else
             {
-                require_once ("../incfiles/head.php");
                 echo '<p>Вы действительно хотите удалить пост?<br/>';
                 echo "<a href='guest.php?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a> | <a href='guest.php'>Отмена</a></p>";
             }
@@ -53,44 +66,53 @@ switch ($act)
         break;
 
     case "trans":
-        require_once ("../incfiles/head.php");
+        ////////////////////////////////////////////////////////////
+        // Справка по транслиту                                   //
+        ////////////////////////////////////////////////////////////
         include ("../pages/trans.$ras_pages");
         echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
         break;
 
     case "say":
-        $agn = strtok($agn, ' ');
-        $flt = $realtime - 30;
-        $af = mysql_query("select * from `guest` where soft='" . $agn . "' and time >='" . $flt . "' and ip ='" . $ipl . "';");
-        $af1 = mysql_num_rows($af);
-        if ($af1 > 0)
+        ////////////////////////////////////////////////////////////
+        // Добавление нового поста                                //
+        ////////////////////////////////////////////////////////////
+        if (empty($user_id) && empty($_POST['name']))
         {
-            require_once ("../incfiles/head.php");
-            echo "<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><br/><a href='guest.php'>Назад</a></p>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
-        if (empty($_POST['msg']) && empty($_POST['name']))
-        {
-            require_once ("../incfiles/head.php");
-            echo "Вы не ввели имя!<br/><a href='guest.php'>Назад</a><br/>";
+            echo "<p>Вы не ввели имя!<br/><a href='guest.php'>Назад</a></p>";
             require_once ("../incfiles/end.php");
             exit;
         }
         if (empty($_POST['msg']))
         {
-            require_once ("../incfiles/head.php");
-            echo "Вы не ввели сообщение!<br/><a href='guest.php'>Назад</a><br/>";
+            echo "<p>Вы не ввели сообщение!<br/><a href='guest.php'>Назад</a></p>";
             require_once ("../incfiles/end.php");
             exit;
         }
-        if (empty($_SESSION['guest']))
+        if (empty($_SESSION['guest']) || $ban['1'] || $ban['13'])
         {
-            require_once ("../incfiles/head.php");
-            echo "Спам!<br/>";
+            echo "<p><b>Спам!</b></p>";
             require_once ("../incfiles/end.php");
             exit;
         }
+        if (!$user_id && $_SESSION['code'] != $_POST['code'])
+        {
+            echo "<p>Код введен неверно!<br/><a href='guest.php'>Назад</a></p>";
+            require_once ("../incfiles/end.php");
+            exit;
+        }
+        $agn = strtok($agn, ' ');
+        // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
+        $admset = isset($_SESSION['ga']) ? 1:
+        0;
+        $req = mysql_query("SELECT * FROM `guest` WHERE `soft`='" . mysql_real_escape_string($agn) . "' AND `time` >='" . ($realtime - 30) . "' AND `ip` ='" . $ipl . "' AND `adm`='" . $admset . "';");
+        if (mysql_num_rows($req) > 0)
+        {
+            echo "<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><br/><a href='guest.php'>Назад</a></p>";
+            require_once ("../incfiles/end.php");
+            exit;
+        }
+        unset($_SESSION['guest']);
         $name = check(trim($_POST['name']));
         $name = mb_substr($name, 0, 25);
         if (!empty($_SESSION['uid']))
@@ -107,7 +129,9 @@ switch ($act)
         {
             $msg = trans($msg);
         }
-        mysql_query("insert into `guest` set
+        // Вставляем сообщение в базу
+        mysql_query("INSERT INTO `guest` SET
+		`adm`='" . $admset . "',
 		`time`='" . $realtime . "',
 		`user_id`='" . $user_id . "',
 		`name`='" . mysql_real_escape_string($from) . "',
@@ -118,11 +142,13 @@ switch ($act)
         break;
 
     case "otvet":
+        ////////////////////////////////////////////////////////////
+        // Добавление "ответа Админа"                             //
+        ////////////////////////////////////////////////////////////
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
-                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
@@ -139,7 +165,6 @@ switch ($act)
                 header("location: guest.php");
             } else
             {
-                require_once ("../incfiles/head.php");
                 $ps = mysql_query("select * from `guest` where id='" . $id . "';");
                 $ps1 = mysql_fetch_array($ps);
                 if (!empty($ps1['otvet']))
@@ -157,11 +182,13 @@ switch ($act)
         break;
 
     case "edit":
+        ////////////////////////////////////////////////////////////
+        // Редактирование поста                                   //
+        ////////////////////////////////////////////////////////////
         if ($dostsmod == 1)
         {
             if (empty($_GET['id']))
             {
-                require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='guest.php?'>В гостевую</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
@@ -182,7 +209,6 @@ switch ($act)
                 header("location: guest.php");
             } else
             {
-                require_once ("../incfiles/head.php");
                 $ps = mysql_query("select * from `guest` where id='" . $id . "';");
                 $ps1 = mysql_fetch_array($ps);
                 $text = htmlentities($ps1['text'], ENT_QUOTES, 'UTF-8');
@@ -195,6 +221,9 @@ switch ($act)
         break;
 
     case 'clean':
+        ////////////////////////////////////////////////////////////
+        // Очистка Гостевой                                       //
+        ////////////////////////////////////////////////////////////
         if ($dostadm == 1)
         {
             if (isset($_POST['submit']))
@@ -203,28 +232,46 @@ switch ($act)
                 switch ($cl)
                 {
                     case '1':
-                        mysql_query("delete from `guest` where `time`<='" . ($realtime - 86400) . "';");
+                        // Чистим сообщения, старше 1 дня
+                        if (isset($_SESSION['ga']))
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='1' AND `time`<='" . ($realtime - 86400) . "';");
+                        } else
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='0' AND `time`<='" . ($realtime - 86400) . "';");
+                        }
                         mysql_query("OPTIMIZE TABLE `guest`;");
-                        require_once ("../incfiles/head.php");
-                        echo '<p>Все сообщения, старше 1 дня удалены из Гостевой.</p><p><a href="guest.php">В Гостевую</a></p>';
+                        echo '<p>Удалены все сообщения, старше 1 дня.</p><p><a href="guest.php">Вернуться</a></p>';
                         break;
 
                     case '2':
-                        mysql_query("TRUNCATE TABLE `guest`;");
-                        require_once ("../incfiles/head.php");
-                        echo '<p>Гостевая полностью очищена.</p><p><a href="guest.php">В Гостевую</a></p>';
+                        // Проводим полную очистку
+                        if (isset($_SESSION['ga']))
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='1';");
+                        } else
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='0';");
+                        }
+                        mysql_query("OPTIMIZE TABLE `guest`;");
+                        echo '<p>Удалены все сообщения.</p><p><a href="guest.php">Вернуться</a></p>';
                         break;
 
                     default:
-                        mysql_query("delete from `guest` where `time`<='" . ($realtime - 604800) . "';");
+                        // Чистим сообщения, старше 1 недели
+                        if (isset($_SESSION['ga']))
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='1' AND `time`<='" . ($realtime - 604800) . "';");
+                        } else
+                        {
+                            mysql_query("DELETE FROM `guest` WHERE `adm`='0' AND `time`<='" . ($realtime - 604800) . "';");
+                        }
                         mysql_query("OPTIMIZE TABLE `guest`;");
-                        require_once ("../incfiles/head.php");
                         echo '<p>Все сообщения, старше 1 недели удалены из Гостевой.</p><p><a href="guest.php">В Гостевую</a></p>';
                 }
             } else
             {
-                require_once ("../incfiles/head.php");
-                echo '<p><b>Очистка Гостевой</b></p>';
+                echo '<p><b>Очистка сообщений</b></p>';
                 echo '<u>Что чистим?</u>';
                 echo '<form id="clean" method="post" action="guest.php?act=clean">';
                 echo '<input type="radio" name="cl" value="0" checked="checked" />Старше 1 недели<br />';
@@ -240,28 +287,68 @@ switch ($act)
         }
         break;
 
-    default:
-        require_once ("../incfiles/head.php");
-        $_SESSION['guest'] = rand(1000, 9999);
-        if ((!empty($_SESSION['uid'])) || $gb != 0)
+    case 'ga':
+        ////////////////////////////////////////////////////////////
+        // Переключение режима работы Гостевая / Админ-клуб       //
+        ////////////////////////////////////////////////////////////
+        if ($dostmod == 1)
         {
+            if ($_GET['do'] == 'set')
+            {
+                $_SESSION['ga'] = 1;
+                $textl = 'Админ-Клуб';
+            } else
+            {
+                unset($_SESSION['ga']);
+                $textl = 'Гостевая';
+            }
+        }
+
+    default:
+        ////////////////////////////////////////////////////////////
+        // Отображаем Гостевую, или Админ клуб                    //
+        ////////////////////////////////////////////////////////////
+        if (!$set['mod_guest'])
+            echo '<p><font color="#FF0000"><b>Гостевая закрыта!</b></font></p>';
+        // Форма ввода нового сообщения
+        if (($user_id || $set['gb'] != 0) && !$ban['1'] && !$ban['13'])
+        {
+            $_SESSION['guest'] = rand(1000, 9999);
             echo '<form action="guest.php?act=say" method="post">';
-            if (empty($_SESSION['uid']))
+            if (!$user_id)
             {
                 echo "Имя(max. 25):<br/><input type='text' name='name' maxlength='25'/><br/>";
             }
-            echo "Текст сообщения(max. 500):<br/><textarea cols='20' rows='2' title='Введите текст сообщения' name='msg'></textarea><br/>";
+            echo 'Текст сообщения(max. 500):<br/><textarea cols="20" rows="2" name="msg"></textarea><br/>';
             if ($offtr != 1)
             {
                 echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения<br/>";
             }
-            echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form><br /><hr/>";
+            if (!$user_id)
+            {
+                // CAPTCHA для гостей
+                $_SESSION['code'] = rand(1000, 9999);
+                echo '<img src="../code.php" alt="Код"/><br />';
+                echo '<input type="text" size="4" maxlength="4"  name="code"/>&nbsp;введите код<br /><br />';
+            }
+            echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form><br />";
         } else
         {
-            echo "Гостевая временно закрыта для добавления сообщений.<br/>";
+            echo "<p>Гостевая закрыта.</p>";
         }
-        $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`
-		FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` order by time desc ;");
+        if (isset($_SESSION['ga']) && ($login == $nickadmina || $login == $nickadmina2 || $rights >= "1"))
+        {
+            // Запрос для Админ клуба
+            echo '<b>АДМИН-КЛУБ</b><hr class="redhr" />';
+            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`
+			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='1' ORDER BY `time` DESC;");
+        } else
+        {
+            // Запрос для обычной Гастивухи
+            echo '<hr />';
+            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`
+			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='0' ORDER BY `time` DESC;");
+        }
         $colmes = mysql_num_rows($req);
         if (empty($_GET['page']))
         {
@@ -296,6 +383,7 @@ switch ($act)
                 echo $div;
                 if ($res['user_id'] != "0")
                 {
+                    // Значок пола
                     switch ($res['sex'])
                     {
                         case "m":
@@ -305,13 +393,15 @@ switch ($act)
                             echo '<img src="../images/f.gif" alt=""/>&nbsp;';
                             break;
                     }
-                    if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $res['user_id']))
+                    // Ник юзера и ссылка на Анкету
+                    if (!empty($user_id) && ($user_id != $res['user_id']))
                     {
                         echo '<a href="anketa.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a> ';
                     } else
                     {
                         echo '<b>' . $res['name'] . '</b>';
                     }
+                    // Должность
                     switch ($res['rights'])
                     {
                         case 7:
@@ -327,9 +417,9 @@ switch ($act)
                             echo ' Kil ';
                             break;
                     }
-                    $ontime = $res['lastdate'];
-                    $ontime2 = $ontime + 300;
-                    if ($realtime > $ontime2)
+                    // Онлайн / Офлайн
+                    $ontime = $res['lastdate'] + 300;
+                    if ($realtime > $ontime)
                     {
                         echo '<font color="#FF0000"> [Off]</font>';
                     } else
@@ -338,76 +428,72 @@ switch ($act)
                     }
                 } else
                 {
+                    // Ник Гостя
                     echo '<b>Гость ' . $res['name'] . '</b>';
                 }
                 $vrp = $res['time'] + $sdvig * 3600;
                 $vr = date("d.m.y / H:i", $vrp);
                 echo ' <font color="#999999">(' . $vr . ')</font><br/>';
+                if (!empty($res['status']))
+                    echo '<div class="status"><img src="../images/star.gif" alt=""/>&nbsp;'.$res['status'] . '</div>';
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
                 if ($res['user_id'] != "0")
                 {
-                    $text = texttolink($text);
+                    // Для зарегистрированных показываем ссылки и смайлы
+                    $text = tags($text);
                     $text = str_replace("\r\n", "<br />", $text);
-                }
-                if ($offsm != 1 && $offgr != 1)
-                {
-                    $text = smiles($text);
-                    $text = smilescat($text);
-                }
-                if ($res['name'] == nickadmina || $res['name'] == nickadmina2 || $res['rights'] >= 1)
-                {
                     if ($offsm != 1 && $offgr != 1)
-                        $text = smilesadm($text);
+                    {
+                        $text = smiles($text);
+                        $text = smilescat($text);
+                        if ($res['name'] == nickadmina || $res['name'] == nickadmina2 || $res['rights'] >= 1)
+                        {
+                            $text = smilesadm($text);
+                        }
+                    }
                 } else
                 {
-                    $text = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "***", $text);
+                    // Для гостей фильтруем ссылки
                     $text = antilink($text);
                 }
+                // Отображаем текст поста
                 echo $text;
-
-
+                // Если пост редактировался, показываем кто и когда
                 if ($res['edit_count'] >= 1)
                 {
                     $diz = $res['edit_time'] + $sdvig * 3600;
                     $dizm = date("d.m.y /H:i", $diz);
                     echo "<br /><small><font color='#999999'>Посл. изм. <b>$res[edit_who]</b>  ($dizm)<br />Всего изм.:<b> $res[edit_count]</b></font></small>";
                 }
-
-                if ($dostsmod == 1)
-                {
-                    echo "<br /><a href='guest.php?act=otvet&amp;id=" . $res['id'] . "'>Отв.</a> | <a href='guest.php?act=edit&amp;id=" . $res['id'] . "'>Изм.</a> | <a href='guest.php?act=delpost&amp;id=" . $res['id'] . "'>Удалить</a><br/>";
-                    echo long2ip($res['ip']) . ' - ' . $res['soft'];
-                }
-                if ($res['otvet'] != '')
+                // Ответ Модера
+                if (!empty($res['otvet']))
                 {
                     $otvet = htmlentities($res['otvet'], ENT_QUOTES, 'UTF-8');
                     $otvet = str_replace("\r\n", "<br />", $otvet);
+                    $otvet = tags($otvet);
                     $vrp1 = $res['otime'] + $sdvig * 3600;
                     $vr1 = date("d.m.Y / H:i", $vrp1);
-                    $otvet = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $otvet);
-                    $otvet = eregi_replace("\\[l\\]([[ : alnum : ]_ = / : -] + (\\ . [[ : alnum : ]_ = / -] + ) * ( / [[ : alnum : ] + & . _ = / ~ % ] * (\\ ? [[ : alnum : ] ? + . &_ = /; % ] * ) ? ) ? )\\[l / \\](( . * ) ? )\\[ / l\
-                        \]", " < a href = 'http://\\1' > \\6 < / a > ", $otvet);
-                    if (stristr($otvet, " < a href = "))
-                    {
-                        $otvet = eregi_replace("\\ < a href\\ = '((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)' > [[ : alnum : ]_ = / -] + (\\ . [[ : alnum : ]_ = / -] + ) * ( / [[ :
-                        alnum : ] + & . _ = / ~ % ] * (\\ ? [[ : alnum : ] ? + &_ = /; % ] * ) ? ) ? ) < / a > ", " < a href = '\\1\\3' > \\3 < / a > ", $otvet);
-                    } else
-                    {
-                        $otvet = eregi_replace("((https ? | ftp) : //)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $otvet);
-                    }
                     if ($offsm != 1 && $offgr != 1)
                     {
                         $otvet = smiles($otvet);
                         $otvet = smilescat($otvet);
                         $otvet = smilesadm($otvet);
                     }
-                    echo '<br /><font color="#FF3333"><b>' . $res['admin'] . '</b>: (' . $vr1 . ')<br/>' . $otvet . '</font>';
+                    echo '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $vr1 . ')<br/>' . $otvet . '</div>';
+                }
+                // Ссылки на Модерские функции
+                if ($dostsmod == 1)
+                {
+                    echo '<div class="func"><a href="guest.php?act=otvet&amp;id=' . $res['id'] . '">Отв.</a> | <a href="guest.php?act=edit&amp;id=' . $res['id'] . '">Изм.</a> | <a href="guest.php?act=delpost&amp;id=' . $res['id'] . '">Удалить</a><br/>';
+                    echo long2ip($res['ip']) . ' - ' . $res['soft'] . '</div>';
                 }
                 echo "</div>";
             }
             ++$i;
         }
-        echo "<hr/><p>Всего сообщений: $colmes<br/>";
+        echo isset($_SESSION['ga']) ? '<hr class="redhr" />':
+        '<hr />';
+        echo "<p>Всего сообщений: $colmes<br/>";
         if ($colmes > 10)
         {
             $ba = ceil($colmes / 10);
@@ -483,9 +569,21 @@ switch ($act)
             }
             echo '<br />';
         }
+        // Для Админов даем ссылку на чистку Гостевой
         if ($dostadm == 1)
-            echo '<a href="guest.php?act=clean">Чистка гостевой</a>';
+            echo '<a href="guest.php?act=clean">Чистка истории</a>';
         echo '</p>';
+        // Для Модеров и выше, даем ссылку на Админ-клуб
+        if ($dostmod == 1)
+        {
+            if (isset($_SESSION['ga']))
+            {
+                echo '<p><a href="guest.php?act=ga"><b>Гостевая</b></a></p>';
+            } else
+            {
+                echo '<p><a href="guest.php?act=ga&amp;do=set"><b>Админ-Клуб</b></a></p>';
+            }
+        }
         break;
 }
 

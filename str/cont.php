@@ -30,17 +30,17 @@ if (!empty($_SESSION['uid']))
     {
         case "trans":
             include ("../pages/trans.$ras_pages");
-            echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
+            echo '<p><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
             break;
 
         case "add":
-            echo "<form action='cont.php?act=edit&amp;add=1' method='post'>
-	 Введите ник<br/>";
+            echo "<form action='cont.php?act=edit&amp;add=1' method='post'>Введите ник<br/>";
             echo "<input type='text' name='nik' value='' /><br/>
  <input type='submit' value='Добавить' />  
   </form>";
-            echo "<a href='?'>В список</a><br/>";
+            echo "<p><a href='?'>В список</a><br/>";
             break;
+
         case "edit":
             if (!empty($_POST['nik']))
             {
@@ -57,17 +57,16 @@ if (!empty($_SESSION['uid']))
                     exit;
                 }
 
-                $id = intval(check(trim($_GET['id'])));
+                $id = intval($_GET['id']);
                 $nk = mysql_query("select * from `users` where id='" . $id . "';");
                 $nk1 = mysql_fetch_array($nk);
-                $nik = $nk1[name];
+                $nik = $nk1['name'];
             }
             if (!empty($_GET['add']))
             {
                 $add = intval($_GET['add']);
             }
             $adс = mysql_query("select * from `privat` where me='" . $login . "' and cont='" . $nik . "';");
-
             $adc1 = mysql_num_rows($adс);
             $addc = mysql_query("select * from `users` where name='" . $nik . "';");
             $addc1 = mysql_num_rows($addc);
@@ -105,8 +104,7 @@ if (!empty($_SESSION['uid']))
                     echo "Этого логина нет в Ваших контактах<br/>";
                 }
             }
-            echo "<a href='?'>В контакты</a><br />";
-
+            echo "<p><a href='?'>В контакты</a><br />";
             break;
 
 
@@ -119,8 +117,6 @@ if (!empty($_SESSION['uid']))
                 $contime = mysql_query("select * from `privat` where me='$login' and cont='" . $userr['name'] . "';");
                 $ctim = mysql_fetch_array($contime);
                 $dtime = date("d.m.Y / H:i", $ctim['time']);
-                echo "<div>";
-
                 echo "<form action='pradd.php?act=send' method='post' enctype='multipart/form-data'>
 	 Для: $adresat<br/>";
                 echo "Имя: $userr[imname]<br/>";
@@ -133,16 +129,16 @@ if (!empty($_SESSION['uid']))
                     echo "Девушка<br/>";
                 }
                 echo "Дата добавления: $dtime<br/>";
-                if ($userr[mailact] == 1)
+                if ($userr['mailact'] == 1)
                 {
-                    if (!empty($userr[icq]))
+                    if (!empty($userr['icq']))
                     {
-                        echo '<img src="http://web.icq.com/whitepages/online?icq=' . $userr[icq] . '&amp;img=5" alt=""/> ICQ:' . $userr[icq] . ' <br/> ';
+                        echo '<img src="http://web.icq.com/whitepages/online?icq=' . $userr['icq'] . '&amp;img=5" alt=""/> ICQ:' . $userr['icq'] . ' <br/> ';
                     }
                     if (!empty($userr['mail']))
                     {
                         echo "E-mail:";
-                        if ($userr[mailvis] == 1)
+                        if ($userr['mailvis'] == 1)
                         {
                             echo "$userr[mail]<br/>";
                         } else
@@ -151,7 +147,7 @@ if (!empty($_SESSION['uid']))
                         }
                     }
                 }
-                if (!empty($userr[www]) && $userr[www] !== "http://" && stristr($userr[www], "http://"))
+                if (!empty($userr['www']) && $userr['www'] !== "http://" && stristr($userr['www'], "http://"))
                 {
                     echo "Сайт: <a href='" . $userr['www'] . "'>" . $userr['www'] . "</a><br/>";
                 }
@@ -170,37 +166,41 @@ if (!empty($_SESSION['uid']))
       <br/>
       <input type='submit' value='Отправить' />  
   </form>";
-                echo "<a href='cont.php?act=trans'>Транслит</a><br /><a href='smile.php'>Смайлы</a><br /><a href='?'>В список</a></div>";
+                echo "<p><a href='cont.php?act=trans'>Транслит</a><br /><a href='smile.php'>Смайлы</a><br /><a href='?'>В список</a><br />";
             } else
             {
-                echo "Ошибка-не указан адресат<br/>";
+                echo '<p>Ошибка-не указан адресат<br/>';
             }
             break;
 
 
         default:
-            $contacts = mysql_query("select * from `privat` where me='$login' and cont!='';");
+            echo '<div class="phdr">Контакты</div>';
+			$contacts = mysql_query("select * from `privat` where me='$login' and cont!='';");
             $colcon = mysql_num_rows($contacts);
             while ($mass = mysql_fetch_array($contacts))
             {
                 $uz = mysql_query("select * from `users` where name='$mass[cont]';");
                 $mass1 = mysql_fetch_array($uz);
-                echo "<a href='?act=write&amp;user=" . $mass1[id] . "'>$mass[cont]</a>";
-                $ontime = $mass1[pvrem];
+                echo '<div class="menu"><a href="?act=write&amp;user=' . $mass1['id'] . '">'.$mass['cont'].'</a>';
+                $ontime = $mass1['lastdate'];
                 $ontime2 = $ontime + 300;
                 if ($realtime > $ontime2)
                 {
-                    echo " [Off]<br/>";
+                    echo '<font color="#FF0000"> [Off]</font>';
                 } else
                 {
-                    echo " [ON]<br/>";
+                    echo '<font color="#00AA00"> [ON]</font>';
                 }
+                echo ' <a href="cont.php?act=edit&amp;id=' . $mass1['id'] . '">[X]</a></div>';
             }
 
-            echo "<hr /><a href='?act=add'>Добавить контакт</a><br />";
+            echo '<p><a href="?act=add">Добавить контакт</a><br />';
             break;
     }
 }
-echo "<a href='privat.php?'>В приват</a><br />";
+
+echo '<a href="privat.php">В приват</a></p>';
 require_once ("../incfiles/end.php");
+
 ?>

@@ -19,14 +19,31 @@ $textl = 'Чат';
 $headmod = "chat";
 require_once ("../incfiles/core.php");
 
+// Закрываем доступ в чат
+if (!$set['mod_chat'] && $dostadm != 1)
+{
+    require_once ("../incfiles/head.php");
+    echo '<p>' . $set['mod_chat_msg'] . '</p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
 // Определяем и проверяем переменные
 $id = isset($_GET['id']) ? intval($_GET['id']) : false; // Идентификатор комнаты
 
-if (!empty($_SESSION['uid']))
+if ($ban['1'] || $ban['12'])
+{
+    require_once ("../incfiles/head.php");
+    echo '<p>Для Вас доступ в Чат закрыт.</p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
+if ($user_id)
 {
     // Определяем местонахождение пользователя
     $where = !empty($id) ? "chat,$id" : 'chat';
-    mysql_query("insert into `count` values(0,'" . $ipp . "','" . $agn . "','" . $realtime . "','" . $where . "','" . $login . "','0');");
+    mysql_query("insert into `count` values(0,'" . $ipp . "','" . mysql_real_escape_string($agn) . "','" . $realtime . "','" . $where . "','" . $login . "','0');");
 
     if (!empty($_GET['act']))
     {
@@ -60,7 +77,7 @@ if (!empty($_SESSION['uid']))
                     while ($mes1 = mysql_fetch_array($mes))
                     {
 
-                        mysql_query("delete from `chat` where `id`='" . $mes1[id] . "';");
+                        mysql_query("delete from `chat` where `id`='" . $mes1['id'] . "';");
                     }
                     header("Location: $home/chat/index.php?id=$id");
                 } else
@@ -96,10 +113,10 @@ if (!empty($_SESSION['uid']))
                     $ontime2 = $ontime + 300;
                     if ($realtime > $ontime2)
                     {
-                        echo "<font color='" . $coffs . "'> [Off]</font><br/>";
+                        echo '<font color="#FF0000"> [Off]</font>';
                     } else
                     {
-                        echo "<font color='" . $cons . "'> [ON]</font><br/>";
+                        echo '<font color="#00AA00"> [ON]</font>';
                     }
                 }
             } else
@@ -118,20 +135,6 @@ if (!empty($_SESSION['uid']))
             break;
 
         case "say":
-            if (getenv("HTTP_CLIENT_IP"))
-                $ipp = getenv("HTTP_CLIENT_IP");
-            else
-                if (getenv("REMOTE_ADDR"))
-                    $ipp = getenv("REMOTE_ADDR");
-                else
-                    if (getenv("HTTP_X_FORWARDED_FOR"))
-                        $ipp = getenv("HTTP_X_FORWARDED_FOR");
-                    else
-                    {
-                        $ipp = "not detected";
-                    }
-                    $ipp = check($ipp);
-            $agn = check(getenv(HTTP_USER_AGENT));
             $agn = strtok($agn, ' ');
             if (empty($id))
             {
@@ -176,12 +179,12 @@ if (!empty($_SESSION['uid']))
                         // Принимаем сообщение и записываем в базу
                         $msg = check(trim($_POST['msg']));
                         $msg = mb_substr($msg, 0, 500);
-                        if ($_POST[msgtrans] == 1)
+                        if ($_POST['msgtrans'] == 1)
                         {
                             $msg = trans($msg);
                         }
 
-                        mysql_query("insert into `chat` values(0,'" . $id . "','','m','" . $realtime . "','" . $login . "','','0','" . $msg . "','" . $ipp . "','" . $agn . "','','');");
+                        mysql_query("insert into `chat` values(0,'" . $id . "','','m','" . $realtime . "','" . $login . "','','0','" . $msg . "','" . $ipp . "','" . mysql_real_escape_string($agn) . "','','');");
                         if (empty($datauser[postchat]))
                         {
                             $fpst = 1;
@@ -200,7 +203,6 @@ if (!empty($_SESSION['uid']))
                             $pro = mysql_query("select * from `chat` where dpar='vop' and type='m' and id='" . $prr[0] . "';");
                             $protv1 = mysql_fetch_array($pro);
                             $prr = array();
-
                             $ans = $protv1[realid];
                             $vopr = mysql_query("select * from `vik` where id='" . $ans . "';");
                             $vopr1 = mysql_fetch_array($vopr);
@@ -247,7 +249,7 @@ if (!empty($_SESSION['uid']))
                     {
                         require_once ("chat_header.php");
                         echo 'Добавление сообщения<br />(max. 500)';
-                        echo '<div class="title1">'.$type1[text].'</div>';
+                        echo '<div class="title1">' . $type1[text] . '</div>';
                         echo "<form action='index.php?act=say&amp;id=" . $id . "' method='post'><textarea cols='40' rows='3' title='Введите текст сообщения' name='msg'></textarea><br/>";
                         if ($offtr != 1)
                         {
@@ -293,7 +295,7 @@ if (!empty($_SESSION['uid']))
                             $msg = trans($msg);
                         }
 
-                        mysql_query("insert into `chat` values(0,'" . $th . "','','m','" . $realtime . "','" . $login . "','" . $to . "','" . $priv . "','" . $msg . "','" . $ipp . "','" . $agn . "','" . $nas . "','');");
+                        mysql_query("insert into `chat` values(0,'" . $th . "','','m','" . $realtime . "','" . $login . "','" . $to . "','" . $priv . "','" . $msg . "','" . $ipp . "','" . mysql_real_escape_string($agn) . "','" . $nas . "','');");
                         if (empty($datauser[postchat]))
                         {
                             $fpst = 1;

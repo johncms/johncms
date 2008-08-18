@@ -27,7 +27,7 @@ $countm = mysql_num_rows($mess);
 $fayl = mysql_query("select * from `download` where type='file' and id='" . $id . "';");
 $fayl1 = mysql_fetch_array($fayl);
 echo "Комментируем файл <font color='" . $clink . "'>$fayl1[name]</font><br/>";
-if (!empty($_SESSION['uid']))
+if ($user_id && !$ban['1'] && !$ban['10'])
 {
     echo "<a href='?act=addkomm&amp;id=" . $id . "'>Написать</a><br/>";
 }

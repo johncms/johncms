@@ -24,6 +24,15 @@ $filesroot = "../download";
 $screenroot = "$filesroot/screen";
 $loadroot = "$filesroot/files";
 
+// Закрываем доступ к загрузкам
+if (!$set['mod_down'] && $dostadm != 1)
+{
+    require_once ("../incfiles/head.php");
+    echo '<p>' . $set['mod_down_msg'] . '</p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
 $act = isset($_GET['act']) ? $_GET['act'] : '';
 $do = array('rat', 'delmes', 'search', 'addkomm', 'komm', 'new', 'zip', 'arc', 'down', 'dfile', 'opis', 'renf', 'screen', 'ren', 'import', 'cut', 'refresh', 'upl', 'view', 'makdir', 'select', 'preview', 'delcat', 'mp3', 'trans');
 if (in_array($act, $do))
@@ -32,13 +41,15 @@ if (in_array($act, $do))
 } else
 {
     require_once ("../incfiles/head.php");
+    if (!$set['mod_down'])
+        echo '<p><font color="#FF0000"><b>Загруз-зона закрыта!</b></font></p>';
     if (empty($_GET['cat']))
     {
         echo "<p><a href='?act=new'>Новые файлы</a></p><hr />";
         $loaddir = $loadroot;
     } else
     {
-        $cat = intval(trim($_GET['cat']));
+        $cat = intval($_GET['cat']);
         provcat($cat);
         $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
         $adrdir = mysql_fetch_array($cat1);
@@ -75,7 +86,7 @@ if (in_array($act, $do))
                 switch ($zap2['type'])
                 {
                     case "cat":
-                        echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" />&nbsp;<a href="?cat=' . $zap2[id] . '">' . $zap2[text] . '</a>';
+                        echo '<div class="menu"><a href="?cat=' . $zap2['id'] . '">' . $zap2['text'] . '</a>';
                         $g = 0;
                         $g1 = 0;
                         $kf = mysql_query("select * from `download` where type='file' ;");
@@ -102,7 +113,7 @@ if (in_array($act, $do))
                         break;
 
                     case "file":
-                        $ft = format($zap2[name]);
+                        $ft = format($zap2['name']);
                         switch ($ft)
                         {
                             case "mp3":
@@ -127,9 +138,9 @@ if (in_array($act, $do))
                                 $imt = "file.gif";
                                 break;
                         }
-                        if ($zap2[text] != "")
+                        if ($zap2['text'] != "")
                         {
-                            $tx = $zap2[text];
+                            $tx = $zap2['text'];
                             if (mb_strlen($tx) > 100)
                             {
                                 $tx = mb_substr($tx, 0, 90);
@@ -143,7 +154,7 @@ if (in_array($act, $do))
                         {
                             $tx = "";
                         }
-                        echo "<img src='" . $filesroot . "/img/" . $imt . "' alt=''/><a href='?act=view&amp;file=" . $zap2[id] . "'>$zap2[name]</a>$tx<br/>";
+                        echo "<img src='" . $filesroot . "/img/" . $imt . "' alt=''/><a href='?act=view&amp;file=" . $zap2['id'] . "'>$zap2[name]</a>$tx<br/>";
                         break;
                 }
             }
@@ -262,20 +273,20 @@ if (in_array($act, $do))
     {
         $dnam = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
         $dnam1 = mysql_fetch_array($dnam);
-        $dnam2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnam1[refid] . "';");
+        $dnam2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnam1['refid'] . "';");
         $dnam3 = mysql_fetch_array($dnam2);
         $dirname = "$dnam3[text]";
         $dirid = "$dnam1[id]";
-        $nadir = $dnam1[refid];
+        $nadir = $dnam1['refid'];
         while ($nadir != "" && $nadir != "0")
         {
             echo "&#187;<a href='?cat=" . $nadir . "'>$dirname</a><br/>";
             $dnamm = mysql_query("select * from `download` where type = 'cat' and id = '" . $nadir . "';");
             $dnamm1 = mysql_fetch_array($dnamm);
-            $dnamm2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnamm1[refid] . "';");
+            $dnamm2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnamm1['refid'] . "';");
             $dnamm3 = mysql_fetch_array($dnamm2);
-            $nadir = $dnamm1[refid];
-            $dirname = $dnamm3[text];
+            $nadir = $dnamm1['refid'];
+            $dirname = $dnamm3['text'];
         }
         echo "&#187;<a href='?'>В загрузки</a><br/>";
     }

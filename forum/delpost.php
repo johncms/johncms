@@ -24,11 +24,10 @@ if ($dostfmod == 1)
         require_once ("../incfiles/end.php");
         exit;
     }
-    $id = intval(check($_GET['id']));
-
+    $id = intval($_GET['id']);
     $typ = mysql_query("select * from `forum` where id='" . $id . "';");
     $ms = mysql_fetch_array($typ);
-    if ($ms[type] != "m")
+    if ($ms['type'] != "m")
     {
         require_once ("../incfiles/head.php");
         echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
@@ -39,7 +38,7 @@ if ($dostfmod == 1)
     {
         if ($dostsadm == 1)
         {
-            if (!empty($ms[attach]))
+            if (!empty($ms['attach']))
             {
                 unlink("files/$ms[attach]");
             }
@@ -59,13 +58,13 @@ if ($dostfmod == 1)
         header("Location: index.php?id=$ms[refid]");
     }
     require_once ("../incfiles/head.php");
-    echo "Вы действительно хотите удалить пост?<br/>";
-    echo "<a href='?act=delpost&amp;id=" . $id . "&amp;yes'>Удалить</a>";
-    if (($dostsadm == 1) && ($ms[close] != 1))
+    echo '<p>Вы действительно хотите удалить пост?</p>';
+    echo '<p><a href="?act=delpost&amp;id=' . $id . '&amp;yes">Удалить</a><br />';
+    if (($dostsadm == 1) && ($ms['close'] != 1))
     {
-        echo "|<a href='index.php?act=delpost&amp;id=" . $id . "&amp;hid'>Скрыть</a>";
+        echo '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;hid">Скрыть</a><br />';
     }
-    echo "|<a href='index.php?id=" . $ms[refid] . "'>Отмена</a><br/>";
+    echo '<a href="index.php?id=' . $ms['refid'] . '">Отмена</a></p>';
 } else
 {
     echo "Доступ закрыт!!!<br>";

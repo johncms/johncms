@@ -24,11 +24,11 @@ $tip = $type1['type'];
 switch ($tip)
 {
     case "r":
-        if ($type1[dpar] != "in")
+        if ($type1['dpar'] != "in")
         {
             $_SESSION['intim'] = "";
         }
-        if ($type1[dpar] == "in")
+        if ($type1['dpar'] == "in")
         {
             if (empty($_SESSION['intim']))
             {
@@ -39,7 +39,7 @@ switch ($tip)
                 exit;
             }
         }
-        if ($type1[dpar] == "vik")
+        if ($type1['dpar'] == "vik")
         {
             $prvik = mysql_query("select * from `chat` where dpar='vop' and type='m';");
             $prvik1 = mysql_num_rows($prvik);
@@ -51,7 +51,7 @@ switch ($tip)
             $protv = mysql_query("select * from `chat` where dpar='vop' and type='m' order by time desc;");
             while ($protv1 = mysql_fetch_array($protv))
             {
-                $prr[] = $protv1[id];
+                $prr[] = $protv1['id'];
             }
             $pro = mysql_query("select * from `chat` where dpar='vop' and type='m' and id='" . $prr[0] . "';");
             $prov = mysql_fetch_array($pro);
@@ -60,11 +60,12 @@ switch ($tip)
             ////////////////////////////////////////////////////////////
             // Первая подсказка Умника                                //
             ////////////////////////////////////////////////////////////
-            if ($prov[otv] == "2" && $prov[time] < intval($realtime - 50)) // Время ожидания от начала до первой подсказки
+            if ($prov['otv'] == "2" && $prov['time'] < intval($realtime - 50)) // Время ожидания от начала до первой подсказки
+
             {
                 $vopr = mysql_query("select * from `vik` where id='" . $prov['realid'] . "';");
                 $vopr1 = mysql_fetch_array($vopr);
-                $ans = $vopr1[otvet];
+                $ans = $vopr1['otvet'];
                 $b = mb_strlen($ans);
                 if ($b < 4)
                 {
@@ -81,17 +82,18 @@ switch ($tip)
                 }
                 mysql_query("INSERT INTO `chat` VALUES(
 '0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Подсказка " . $c . "', '127.0.0.1', 'Nokia3310', '', '');");
-                mysql_query("update `chat` set otv='" . $e . "' where id='" . $prov[id] . "';");
+                mysql_query("update `chat` set otv='" . $e . "' where id='" . $prov['id'] . "';");
             }
 
             ////////////////////////////////////////////////////////////
             // Вторая подсказка Умника                                //
             ////////////////////////////////////////////////////////////
-            if ($prov[otv] == "3" && $prov[time] < intval($realtime - 100)) // Время ожидания от начала до второй подсказки
+            if ($prov['otv'] == "3" && $prov['time'] < intval($realtime - 100)) // Время ожидания от начала до второй подсказки
+
             {
-                $vopr = mysql_query("select * from `vik` where id='" . $prov[realid] . "';");
+                $vopr = mysql_query("select * from `vik` where id='" . $prov['realid'] . "';");
                 $vopr1 = mysql_fetch_array($vopr);
-                $ans = $vopr1[otvet];
+                $ans = $vopr1['otvet'];
                 $b = mb_strlen($ans);
                 $d = (round($b / 3)) + 1;
                 //if ($d == 1)
@@ -103,18 +105,19 @@ switch ($tip)
                 }
                 mysql_query("INSERT INTO `chat` VALUES(
 '0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Вторая подсказка " . $c . "', '127.0.0.1', 'Nokia3310', '', '');");
-                mysql_query("update `chat` set otv='4' where id='" . $prov[id] . "';");
+                mysql_query("update `chat` set otv='4' where id='" . $prov['id'] . "';");
             }
 
-            if ($prov[otv] == "5" && $prov[time] < intval($realtime - 15)) // Пауза перед новым вопросом
+            if ($prov['otv'] == "5" && $prov[time] < intval($realtime - 15)) // Пауза перед новым вопросом
+
             {
                 $v = mysql_query("select * from `vik` ;");
                 $c = mysql_num_rows($v);
                 $num = rand(1, $c);
                 $vik = mysql_query("select * from `vik` where id='" . $num . "';");
                 $vik1 = mysql_fetch_array($vik);
-                $vopros = $vik1[vopros];
-                $len = mb_strlen($vik1[otvet]);
+                $vopros = $vik1['vopros'];
+                $len = mb_strlen($vik1['otvet']);
                 mysql_query("INSERT INTO `chat` VALUES(
 '0', '" . $id . "','" . $num . "', 'm','" . $realtime . "','Умник','','vop', '<b>Вопрос: " . $vopros . " (" . $len . " букв)</b>', '127.0.0.1', 'Nokia3310', '', '2');");
             }
@@ -122,28 +125,28 @@ switch ($tip)
             ////////////////////////////////////////////////////////////
             // Диалог Умника в викторине                              //
             ////////////////////////////////////////////////////////////
-            if (!empty($prov[time]) && $prov[time] < intval($realtime - 150)) // Общее время ожидания ответа на вопрос
+            if (!empty($prov['time']) && $prov['time'] < ($realtime - 150)) // Общее время ожидания ответа на вопрос
 
             {
                 // Задаем вопрос в викторине
-                if ($prov[otv] == "1")
+                if ($prov['otv'] == "1")
                 {
                     $v = mysql_query("select * from `vik` ;");
                     $c = mysql_num_rows($v);
                     $num = rand(1, $c);
                     $vik = mysql_query("select * from `vik` where id='" . $num . "';");
                     $vik1 = mysql_fetch_array($vik);
-                    $vopros = $vik1[vopros];
-                    $len = mb_strlen($vik1[otvet]);
+                    $vopros = $vik1['vopros'];
+                    $len = mb_strlen($vik1['otvet']);
                     mysql_query("INSERT INTO `chat` VALUES(
 '0', '" . $id . "','" . $num . "', 'm','" . $realtime . "','Умник','','vop', '<b>Вопрос: " . $vopros . " (" . $len . " букв)</b>', '127.0.0.1', 'Nokia3310', '', '2');");
                 }
                 // Если не было правильного ответа, то выводим сообшение
-                if ($prov[otv] == "4")
+                if ($prov['otv'] == "4")
                 {
                     mysql_query("INSERT INTO `chat` VALUES(
 '0', '" . $id . "','', 'm','" . $realtime . "','Умник','','', 'Время истекло! Вопрос не был угадан!','127.0.0.1', 'Nokia3310', '', '1');");
-                    mysql_query("update `chat` set otv='1' where id='" . $prov[id] . "';");
+                    mysql_query("update `chat` set otv='1' where id='" . $prov['id'] . "';");
                 }
             }
         }
@@ -163,14 +166,14 @@ switch ($tip)
             echo '[1] <a href="index.php?act=say&amp;id=' . $id . '" accesskey="1">Сказать</a><br />';
         }
         echo '[2] <a href="index.php?id=' . $id . '&amp;refr=' . $refr . '" accesskey="2">Обновить</a><br/>';
-        echo '<div class="title1">' . $type1[text] . '</div>';
+        echo '<div class="title1">' . $type1['text'] . '</div>';
         $q2 = mysql_query("select * from `chat` where type='m' and refid='" . $id . "';");
         while ($masss = mysql_fetch_array($q2))
         {
-            $q3 = mysql_query("select * from `users` where name='" . $masss[from] . "';");
+            $q3 = mysql_query("select * from `users` where name='" . $masss['from'] . "';");
             $q4 = mysql_fetch_array($q3);
-            $pasw = $q4[alls];
-            if (($masss[dpar] != 1 || $masss[to] == $login || $masss[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
+            $pasw = $q4['alls'];
+            if (($masss['dpar'] != 1 || $masss['to'] == $login || $masss['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
             {
                 if ($type1['dpar'] != "in" || $pasw == $datauser['alls'])
                 {
@@ -201,22 +204,22 @@ switch ($tip)
         {
             if ($i >= $start && $i < $end)
             {
-                $ign = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $mass[from] . "';");
+                $ign = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $mass['from'] . "';");
                 $ign1 = mysql_num_rows($ign);
-                $als = mysql_query("select * from `users` where name='" . $mass[from] . "';");
+                $als = mysql_query("select * from `users` where name='" . $mass['from'] . "';");
                 $als1 = mysql_fetch_array($als);
-                $psw = $als1[alls];
-				if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
+                $psw = $als1['alls'];
+                if (($mass['dpar'] != 1 || $mass['to'] == $login || $mass['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
                 {
-                    if ($type1[dpar] != "in" || $psw == $datauser['alls'])
+                    if ($type1['dpar'] != "in" || $psw == $datauser['alls'])
                     {
-                        if ($mass[from] != "Умник")
+                        if ($mass['from'] != "Умник")
                         {
-                            $uz = @mysql_query("select * from `users` where name='" . $mass[from] . "';");
+                            $uz = @mysql_query("select * from `users` where name='" . $mass['from'] . "';");
                             $mass1 = @mysql_fetch_array($uz);
                         }
                         echo '<div class="text">';
-                        if ($mass[from] != "Умник")
+                        if ($mass['from'] != "Умник")
                         {
                             // Выводим значек пола
                             //switch ($mass1[sex])
@@ -229,11 +232,11 @@ switch ($tip)
                             //        break;
                             //}
                         }
-                        if ($mass[from] != "Умник")
+                        if ($mass['from'] != "Умник")
                         {
-                            if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1[id]))
+                            if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1['id']))
                             {
-                                echo "<a href='index.php?act=say&amp;id=" . $mass[id] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
+                                echo "<a href='index.php?act=say&amp;id=" . $mass['id'] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
                             } else
                             {
                                 echo "<b><font color='" . $csnik . "'>$mass[from]</font></b>";
@@ -244,14 +247,14 @@ switch ($tip)
                         }
 
                         // Дата и время
-                        $vrp = $mass[time] + $sdvig * 3600;
+                        $vrp = $mass['time'] + $sdvig * 3600;
                         $vr = date("H:i", $vrp); // Только время
                         //$vr = date("d.m.Y / H:i", $vrp); // Дата и время
 
-                        if ($mass[from] != "Умник")
+                        if ($mass['from'] != "Умник")
                         {
                             // Выводим метку должности
-                            switch ($mass1[rights])
+                            switch ($mass1['rights'])
                             {
                                 case 7:
                                     echo " [Adm] ";
@@ -266,7 +269,6 @@ switch ($tip)
                                     echo " [Kil] ";
                                     break;
                             }
-
                             // Выводим метку Онлайн / Офлайн
                             //$ontime = $mass1[lastdate];
                             //$ontime2 = $ontime + 300;
@@ -277,7 +279,6 @@ switch ($tip)
                             //{
                             //    echo "<font color='" . $cons . "'> [ON]</font>";
                             //}
-
                             // Выводим метку именнинника
                             //if ($mass1[dayb] == $day && $mass1[monthb] == $mon)
                             //{
@@ -285,60 +286,47 @@ switch ($tip)
                             //}
                         }
                         echo "($vr): ";
-                        if (!empty($mass[nas]))
+                        if (!empty($mass['nas']))
                         {
                             echo "<font color='" . $cdinf . "'>$mass[nas]</font><br/>";
                         }
-                        if ($mass[dpar] == 1)
+                        if ($mass['dpar'] == 1)
                         {
                             echo "<font color='" . $clink . "'>[П!]</font>";
                         }
-                        if (!empty($mass[to]))
+                        if (!empty($mass['to']))
                         {
 
-                            if ($mass[to] == $login)
+                            if ($mass['to'] == $login)
                             {
                                 echo "<font color='" . $cdinf . "'><b>";
                             }
                             echo "$mass[to], ";
-                            if ($mass[to] == $login)
+                            if ($mass['to'] == $login)
                             {
                                 echo "</b></font>";
                             }
                         }
-                        $mass[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
-                        $mass[text] = eregi_replace("\\[l\\]([[:alnum:]_=/:-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[text]);
-                        if (stristr($mass[text], "<a href="))
-                        {
-                            $mass[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-                                "<a href='\\1\\3'>\\3</a>", $mass[text]);
-                        } else
-                        {
-                            $mass[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass[text]);
-                        }
+                        $text = tags($mass['text']);
                         if ($offsm != 1 && $offgr != 1)
                         {
-                            $tekst = smiles($mass[text]);
-                            $tekst = smilescat($tekst);
+                            $text = smiles($text);
+                            $text = smilescat($text);
 
-                            if ($mass[from] == nickadmina || $mass[from] == nickadmina2 || $mass1[rights] >= 1)
+                            if ($mass['from'] == nickadmina || $mass['from'] == nickadmina2 || $mass1['rights'] >= 1)
                             {
-                                $tekst = smilesadm($tekst);
+                                $text = smilesadm($text);
                             }
-                        } else
-                        {
-                            $tekst = $mass[text];
                         }
-                        if ($mass[to] == $login)
+                        if ($mass['to'] == $login)
                         {
-                            echo "<font color='" . $cdinf . "'><b>";
+                            echo '<b>';
                         }
-                        echo "$tekst<br/>";
-                        if ($mass[to] == $login)
+                        echo $text . '<br/>';
+                        if ($mass['to'] == $login)
                         {
-                            echo "</b></font>";
+                            echo '</b>';
                         }
-
                         // Удаление постов и информация о браузере
                         //if ($dostcmod == 1)
                         //{
@@ -349,9 +337,9 @@ switch ($tip)
                     }
                 }
             }
-            if (($mass[dpar] != 1 || $mass[to] == $login || $mass[from] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
+            if (($mass['dpar'] != 1 || $mass['to'] == $login || $mass['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
             {
-                if ($type1[dpar] != "in" || $psw == $datauser['alls'])
+                if ($type1['dpar'] != "in" || $psw == $datauser['alls'])
                 {
                     ++$i;
                 }
@@ -434,7 +422,7 @@ switch ($tip)
         }
         echo '<div class="title2"><a href="who.php?id=' . $id . '">Кто в чате(' . wch($id) . '/' . wch() . ')</a></div>';
         echo '[0] <a href="index.php?" accesskey="0">Прихожая</a><br/>';
-        if ($type1[dpar] == "in")
+        if ($type1['dpar'] == "in")
         {
             echo '[3] <a href="index.php?act=chpas&amp;id=' . $id . '" accesskey="3">Сменить пароль</a><br/>';
         }

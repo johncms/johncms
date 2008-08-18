@@ -26,6 +26,9 @@ if ($headmod != "forum" && $headmod != "chat")
     mysql_query("insert into `count` values(0,'" . $ipp . "','" . $agn . "','" . $realtime . "','" . $headmod . "','" . $user1 . "','0');");
 }
 
+if (isset($ban))
+    echo '<div class="alarm">БАН&nbsp;<a href="' . $home . '/index.php?mod=ban">Подробно</a></div>';
+
 // Проверяем, есть ли новые письма
 if ($headmod != "pradd")
 {
@@ -33,7 +36,7 @@ if ($headmod != "pradd")
     $countnew = mysql_num_rows($newl);
     if ($countnew > 0)
     {
-        echo "<div style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
+        echo "<div class=\"rmenu\" style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
     }
 }
 

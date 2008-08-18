@@ -20,7 +20,7 @@ $headmod = 'online';
 $textl = 'Онлайн';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
-
+echo '<div class="phdr">Кто в онлайне?</div>';
 $onltime = $realtime - 300;
 $q = @mysql_query("select * from `users` where lastdate>='" . intval($onltime) . "';");
 $count = mysql_num_rows($q);
@@ -54,22 +54,22 @@ while ($arr = mysql_fetch_array($q))
         {
             $div = "<div class='c'>";
         }
-        if ($arr[sex] == "m")
+        if ($arr['sex'] == "m")
         {
             $pol = "<img src='../images/m.gif' alt=''/>";
-        } elseif ($arr[sex] == "zh")
+        } elseif ($arr['sex'] == "zh")
         {
             $pol = "<img src='../images/f.gif' alt=''/>";
         }
 
-        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr[id])
+        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr['id'])
         {
             print "$div $pol <b>$arr[name]</b>";
         } else
         {
-            print "$div $pol <a href='anketa.php?user=" . $arr[id] . "'>$arr[name]</a>";
+            print "$div $pol <a href='anketa.php?user=" . $arr['id'] . "'>$arr[name]</a>";
         }
-        switch ($arr[rights])
+        switch ($arr['rights'])
         {
             case 7:
                 echo ' Adm ';
@@ -93,10 +93,9 @@ while ($arr = mysql_fetch_array($q))
                 echo ' Kil ';
                 break;
         }
-        echo "<br/>";
-        $prh = @mysql_query("select * from `count` where time>='" . intval($arr[sestime]) . "' and name='" . $arr[name] . "';");
+        $prh = @mysql_query("select * from `count` where time>='" . intval($arr['sestime']) . "' and name='" . $arr['name'] . "';");
         $prh1 = mysql_num_rows($prh);
-        $svr = $realtime - $arr[sestime];
+        $svr = $realtime - $arr['sestime'];
         if ($svr >= "3600")
         {
             $hvr = ceil($svr / 3600) - 1;
@@ -152,12 +151,12 @@ while ($arr = mysql_fetch_array($q))
         echo '(' . $prh1 . ' - ' . $sitevr . ')<br/>';
         if ($dostmod == 1)
         {
-            echo "$arr[ip]--$arr[browser]<br/>";
+            echo long2ip($arr['ip']) . "--$arr[browser]<br/>";
         }
         if (!empty($_SESSION['uid']))
         {
             echo "Где: ";
-            $wh = mysql_query("select * from `count` where name='" . $arr[name] . "' order by time desc ;");
+            $wh = mysql_query("select * from `count` where name='" . $arr['name'] . "' order by time desc ;");
             $i1 = 0;
             while ($wh1 = mysql_fetch_array($wh))
             {
@@ -312,7 +311,7 @@ if ($count > 10)
     echo "<form action='online.php'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
 
-echo "<hr/><div>Всего он-лайн: $count</div>";
+echo '<div class="bmenu">Всего он-лайн: ' . $count . '</div>';
 require_once ("../incfiles/end.php");
 
 ?>

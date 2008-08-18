@@ -19,8 +19,15 @@ $textl = 'Регистрация';
 $rootpath = '';
 require_once ("incfiles/core.php");
 require_once ("incfiles/head.php");
-echo '<b>РЕГИСТРАЦИЯ</b><hr />';
 
+if ($regban || !$set['mod_reg'])
+{
+	echo '<p>Регистрация временно закрыта.</p>';
+	require_once ("incfiles/end.php");
+	exit;
+}
+
+echo '<div class="phdr">Регистрация на сайте</div>';
 function regform()
 {
     $cod = rand(1000, 9999);
@@ -92,7 +99,7 @@ if (isset($_POST['submit']))
 
     if (empty($error))
     {
-        if ($rmod != 1)
+        if ($set['rmod'] != 1)
         {
             $preg = 1;
         } else
@@ -119,7 +126,7 @@ if (isset($_POST['submit']))
         echo "Ваш Пароль: " . $reg_pass . "<br/>";
         echo "Ссылка для автовхода:<br/><input type='text' value='" . $home . "/auto.php?id=" . $usid . "&amp;p=" . $reg_pass . "' /><br/>";
 
-        if ($rmod == 1)
+        if ($set['rmod'] == 1)
         {
             echo "Пожалуйста,ожидайте подтверждения Вашей регистрации администратором<br/>";
         } else
@@ -136,7 +143,7 @@ if (isset($_POST['submit']))
 // Форма регистрации
 else
 {
-    if ($rmod == 1)
+    if ($set['rmod'] == 1)
     {
         echo "Внимание!В данный момент на сайте включена премодерация регистрации.<br/>Вы сможете получить авторизованный доступ к разделам сайта после подтверждения Вашей регистрации администратором.<br/>";
     }

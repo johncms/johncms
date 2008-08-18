@@ -26,7 +26,7 @@ if (empty($_SESSION['uid']))
 }
 if (!empty($_GET['id']))
 {
-    $id = intval(check($_GET['id']));
+    $id = intval($_GET['id']);
     $typ = mysql_query("select * from `forum` where id='" . $id . "';");
     $ms = mysql_fetch_array($typ);
     if ($ms['type'] != "t")
@@ -41,17 +41,17 @@ if (!empty($_GET['id']))
     $q = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
     while ($arr = mysql_fetch_array($q))
     {
-        $wh = mysql_query("select * from `count` where name='" . $arr[name] . "' order by time desc ;");
+        $wh = mysql_query("select * from `count` where name='" . $arr['name'] . "' order by time desc ;");
         while ($wh1 = mysql_fetch_array($wh))
         {
-            $wh2[] = $wh1[where];
+            $wh2[] = $wh1['where'];
         }
         $wher = $wh2[0];
         $wh2 = array();
         if ($wher == $whr)
         {
             echo "<b>$arr[name]</b>";
-            switch ($arr[rights])
+            switch ($arr['rights'])
             {
                 case 7:
                     echo ' Adm ';
@@ -79,10 +79,10 @@ if (!empty($_GET['id']))
     $qf = @mysql_query("select * from `users` where  lastdate>='" . intval($onltime) . "';");
     while ($arrf = mysql_fetch_array($qf))
     {
-        $whf = mysql_query("select * from `count` where name='" . $arrf[name] . "' order by time desc ;");
+        $whf = mysql_query("select * from `count` where name='" . $arrf['name'] . "' order by time desc ;");
         while ($whf1 = mysql_fetch_array($whf))
         {
-            $whf2[] = $whf1[where];
+            $whf2[] = $whf1['where'];
         }
         $wherf = $whf2[0];
         $whf2 = array();
@@ -112,10 +112,10 @@ if (!empty($_GET['id']))
     $i = 0;
     while ($arr = mysql_fetch_array($q))
     {
-        $wh = mysql_query("select * from `count` where name='" . $arr[name] . "' order by time desc ;");
+        $wh = mysql_query("select * from `count` where name='" . $arr['name'] . "' order by time desc ;");
         while ($wh1 = mysql_fetch_array($wh))
         {
-            $wh2[] = $wh1[where];
+            $wh2[] = $wh1['where'];
         }
         $wher = $wh2[0];
         $wh2 = array();
@@ -143,16 +143,16 @@ if (!empty($_GET['id']))
                 {
                     $adr = mysql_query("select * from `forum` where id='" . $wher1[1] . "';");
                     $adr1 = mysql_fetch_array($adr);
-                    switch ($adr1[type])
+                    switch ($adr1['type'])
                     {
                         case "m":
-                            $q2 = mysql_query("select * from `forum` where type='t' and id='" . $adr1[refid] . "';");
+                            $q2 = mysql_query("select * from `forum` where type='t' and id='" . $adr1['refid'] . "';");
                             $tem = mysql_fetch_array($q2);
-                            $q3 = mysql_query("select * from `forum` where type='r' and id='" . $tem[refid] . "';");
+                            $q3 = mysql_query("select * from `forum` where type='r' and id='" . $tem['refid'] . "';");
                             $razd = mysql_fetch_array($q3);
-                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd[refid] . "';");
+                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd['refid'] . "';");
                             $frm = mysql_fetch_array($q4);
-                            if ($tem[close] == 1)
+                            if ($tem['close'] == 1)
                             {
                                 $adres = "<a href='index.php'>На главной форума</a>";
                             } else
@@ -161,30 +161,30 @@ if (!empty($_GET['id']))
                             }
                             break;
                         case "t":
-                            $q3 = mysql_query("select * from `forum` where type='r' and id='" . $adr1[refid] . "';");
+                            $q3 = mysql_query("select * from `forum` where type='r' and id='" . $adr1['refid'] . "';");
                             $razd = mysql_fetch_array($q3);
-                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd[refid] . "';");
+                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd['refid'] . "';");
                             $frm = mysql_fetch_array($q4);
-                            if ($adr1[close] == 1)
+                            if ($adr1['close'] == 1)
                             {
                                 $adres = "<a href='index.php'>На главной форума</a>";
                             } else
                             {
-                                $adres = "<a href='index.php?id=" . $adr1[id] . "'>$frm[text]/$razd[text]/$adr1[text]</a>";
+                                $adres = "<a href='index.php?id=" . $adr1['id'] . "'>$frm[text]/$razd[text]/$adr1[text]</a>";
                             }
                             break;
                         case "r":
-                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $adr1[refid] . "';");
+                            $q4 = mysql_query("select * from `forum` where type='f' and id='" . $adr1['refid'] . "';");
                             $frm = mysql_fetch_array($q4);
-                            $adres = "<a href='index.php?id=" . $adr1[id] . "'>$frm[text]/$adr1[text]</a>";
+                            $adres = "<a href='index.php?id=" . $adr1['id'] . "'>$frm[text]/$adr1[text]</a>";
                             break;
                         case "f":
-                            $adres = "<a href='index.php?id=" . $adr1[id] . "'>$adr1[text]</a>";
+                            $adres = "<a href='index.php?id=" . $adr1['id'] . "'>$adr1[text]</a>";
                             break;
                     }
                 }
                 echo "<b>$arr[name]</b>";
-                switch ($arr[rights])
+                switch ($arr['rights'])
                 {
                     case 7:
                         echo ' Adm ';
@@ -220,13 +220,13 @@ if (!empty($_GET['id']))
 
         if ($start != 0)
         {
-            echo '<a href="who.php?id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
+            echo '<a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
         }
         if ($offpg != 1)
         {
             if ($asd < $count && $asd > 0)
             {
-                echo ' <a href="who.php?id=' . $id . '&amp;page=1&amp;">1</a> .. ';
+                echo ' <a href="index.php?act=who&amp;id=' . $id . '&amp;page=1&amp;">1</a> .. ';
             }
             $page2 = $ba - $page;
             $pa = ceil($page / 2);
@@ -236,11 +236,11 @@ if (!empty($_GET['id']))
             $paa3 = $page + (floor($page2 / 3) * 2);
             if ($page > 13)
             {
-                echo ' <a href="who.php?id=' . $id . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="who.php?id=' . $id . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-                    '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+                echo ' <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
+                    '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
             } elseif ($page > 7)
             {
-                echo ' <a href="who.php?id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
+                echo ' <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
             }
             for ($i = $asd; $i < $asd2; )
             {
@@ -253,22 +253,22 @@ if (!empty($_GET['id']))
                         echo " <b>$ii</b>";
                     } else
                     {
-                        echo ' <a href="who.php?id=' . $id . '&amp;page=' . $ii . '">' . $ii . '</a> ';
+                        echo ' <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $ii . '">' . $ii . '</a> ';
                     }
                 }
                 $i = $i + 10;
             }
             if ($page2 > 12)
             {
-                echo ' .. <a href="who.php?id=' . $id . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="who.php?id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) .
-                    '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+                echo ' .. <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) .
+                    '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
             } elseif ($page2 > 6)
             {
-                echo ' .. <a href="who.php?id=' . $id . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="who.php?id=' . $id . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
+                echo ' .. <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
             }
             if ($asd2 < $count)
             {
-                echo ' .. <a href="who.php?id=' . $id . '&amp;page=' . $ba . '">' . $ba . '</a>';
+                echo ' .. <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . $ba . '">' . $ba . '</a>';
             }
         } else
         {
@@ -276,7 +276,7 @@ if (!empty($_GET['id']))
         }
         if ($count > $start + 10)
         {
-            echo ' <a href="who.php?id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
+            echo ' <a href="index.php?act=who&amp;id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
         }
         echo "<form action='pradd.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
             "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";

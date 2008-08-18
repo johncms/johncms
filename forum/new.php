@@ -1,13 +1,13 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
+// JohnCMS                                                                    //
 // Официальный сайт сайт проекта:      http://johncms.com                     //
 // Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Евгений Рябинин aka john77          john77@johncms.com                     //
+// Олег Касьянов aka AlkatraZ          alkatraz@johncms.com                   //
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,6 +18,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = 'Форум-новые';
 $headmod = "forums";
 require_once ("../incfiles/head.php");
+echo '<p class="rhdr">Новое на форуме</p><hr />';
 if (empty($_SESSION['uid']))
 {
     if (isset($_GET['newup']))
@@ -48,18 +49,18 @@ if (!empty($_SESSION['uid']))
                     exit;
                 }
                 $rz = mysql_query("select `id` from `forum` where type='f';");
-				while ($rz1 = mysql_fetch_array($rz))
+                while ($rz1 = mysql_fetch_array($rz))
                 {
-                    $rz2[] = $rz1[id];
+                    $rz2[] = $rz1['id'];
                 }
                 if (isset($_POST['pf']))
                 {
                     $q = mysql_query("select `id`, `refid` from `forum` where type='n' and `from`='" . $login . "';");
                     while ($q1 = mysql_fetch_array($q))
                     {
-                        if (in_array($q1[refid], $_POST['pf']))
+                        if (in_array($q1['refid'], $_POST['pf']))
                         {
-                            mysql_query("delete from `forum` where `id`='" . $q1[id] . "';");
+                            mysql_query("delete from `forum` where `id`='" . $q1['id'] . "';");
                         }
                     }
                     foreach ($rz2 as $v)
@@ -70,7 +71,11 @@ if (!empty($_SESSION['uid']))
                             $q3 = mysql_num_rows($q2);
                             if ($q3 == 0)
                             {
-                                mysql_query("insert into `forum` values(0,'" . intval(check($v)) . "','n','','" . $login . "','','','','','','','','','','','','');");
+                                mysql_query("INSERT INTO `forum` SET
+								`refid`='" . intval($v) . "',
+								`type`='n',
+								`from`='" . $login . "'
+								;");
                             }
                         }
                     }
@@ -83,7 +88,11 @@ if (!empty($_SESSION['uid']))
                         $q3 = mysql_num_rows($q2);
                         if ($q3 == 0)
                         {
-                            mysql_query("insert into `forum` values(0,'" . $rz3[id] . "','n','','" . $login . "','','','','','','','','','','','','');");
+                            mysql_query("INSERT INTO `forum` SET
+							`refid`='" . $rz3['id'] . "',
+							`type`='n',
+							`from`='" . $login . "'
+							;");
                         }
                     }
                 }
@@ -288,38 +297,29 @@ if (!empty($_SESSION['uid']))
         default:
             if ($dostsadm == 1)
             {
-                $lp = mysql_query("select `id`, `time`, `refid` from `forum` where type='t' and moder='1';");
+                $lp = mysql_query("select * from `forum` where type='t' and moder='1';");
             } else
             {
-                $lp = mysql_query("select `id`, `time`, `refid` from `forum` where type='t' and moder='1' and close!='1';");
+                $lp = mysql_query("select * from `forum` where type='t' and moder='1' and close!='1';");
             }
             $knt = 0;
             while ($arrt = mysql_fetch_array($lp))
             {
-                $q3 = mysql_query("select `id`, `refid` from `forum` where type='r' and id='" . $arrt[refid] . "';");
+                $q3 = mysql_query("select * from `forum` where type='r' and id='" . $arrt['refid'] . "';");
                 $q4 = mysql_fetch_array($q3);
-                $rz = mysql_query("select `id` from `forum` where type='n' and refid='" . $q4[refid] . "' and `from`='" . $login . "';");
-                $np = mysql_query("select `id` from `forum` where type='l' and time>='" . $arrt[time] . "' and refid='" . $arrt[id] . "' and `from`='" . $login . "';");
+                $rz = mysql_query("select * from `forum` where type='n' and refid='" . $q4['refid'] . "' and `from`='" . $login . "';");
+                $np = mysql_query("select * from `forum` where type='l' and time>='" . $arrt['time'] . "' and refid='" . $arrt['id'] . "' and `from`='" . $login . "';");
                 if ((mysql_num_rows($np)) != 1 && (mysql_num_rows($rz)) != 1)
                 {
                     $knt = $knt + 1;
                 }
             }
-            $ba = ceil($knt / $kmess);
             if (empty($_GET['page']))
             {
                 $page = 1;
             } else
             {
                 $page = intval($_GET['page']);
-            }
-            if ($page < 1)
-            {
-                $page = 1;
-            }
-            if ($page > $ba)
-            {
-                $page = $ba;
             }
             $start = $page * $kmess - $kmess;
             if ($knt < $start + $kmess)
@@ -329,74 +329,94 @@ if (!empty($_SESSION['uid']))
             {
                 $end = $start + $kmess;
             }
-            if ($dostsadm == 1)
+            if (((empty($_SESSION['pid'])) && (!empty($_SESSION['uppost'])) && ($_SESSION['uppost'] == 1)) || ((!empty($_SESSION['pid'])) && $upfp == 1))
             {
-                $lp = mysql_query("select * from `forum` where type='t' and moder='1' order by time desc LIMIT " . $start . "," . $end . ";");
+                if ($dostsadm == 1)
+                {
+                    $lp = mysql_query("select * from `forum` where type='t' and moder='1' order by `time` desc ;");
+                } else
+                {
+                    $lp = mysql_query("select * from `forum` where type='t' and moder='1' and close!='1' order by `time` desc ;");
+                }
             } else
             {
-                $lp = mysql_query("select * from `forum` where type='t' and moder='1' and close!='1' order by time desc LIMIT " . $start . "," . $end . ";");
+                if ($dostsadm == 1)
+                {
+                    $lp = mysql_query("select * from `forum` where type='t' and moder='1' order by `time` desc;");
+                } else
+                {
+                    $lp = mysql_query("select * from `forum` where type='t' and moder='1' and close!='1' order by `time` desc;");
+                }
             }
             while ($arrt = mysql_fetch_array($lp))
             {
-                $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $arrt[refid] . "';");
+                $q3 = mysql_query("select * from `forum` where type='r' and id='" . $arrt['refid'] . "';");
                 $q4 = mysql_fetch_array($q3);
-                $rz = mysql_query("select `id` from `forum` where type='n' and refid='" . $q4[refid] . "' and `from`='" . $login . "';");
-                $np = mysql_query("select `id` from `forum` where type='l' and time>='" . $arrt[time] . "' and refid='" . $arrt[id] . "' and `from`='" . $login . "';");
+                $rz = mysql_query("select * from `forum` where type='n' and refid='" . $q4['refid'] . "' and `from`='" . $login . "';");
+                $np = mysql_query("select * from `forum` where type='l' and time>='" . $arrt['time'] . "' and refid='" . $arrt['id'] . "' and `from`='" . $login . "';");
                 if ((mysql_num_rows($np)) != 1 && (mysql_num_rows($rz)) != 1)
                 {
-                    $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $arrt[refid] . "';");
+                    $q3 = mysql_query("select * from `forum` where type='r' and id='" . $arrt['refid'] . "';");
                     $razd = mysql_fetch_array($q3);
-                    $q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd[refid] . "';");
+                    $q4 = mysql_query("select * from `forum` where type='f' and id='" . $razd['refid'] . "';");
                     $frm = mysql_fetch_array($q4);
-                    $colmes = mysql_query("select `id` from `forum` where type='m' and close!='1' and refid='" . $arrt[id] . "' order by time desc;");
-                    $nikuser = mysql_query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $arrt[id] . "'ORDER BY time DESC LIMIT 1;");
+                    $colmes = mysql_query("select * from `forum` where type='m' and close!='1' and refid='" . $arrt['id'] . "' order by time desc;");
+                    $pp = 0;
+                    while ($nik = mysql_fetch_array($colmes))
+                    {
+                        if ($pp < 1)
+                        {
+                            $idnik = $nik['id'];
+                        }
+                        ++$pp;
+                    }
                     $colmes1 = mysql_num_rows($colmes);
                     $cpg = ceil($colmes1 / $kmess);
-                    $colmes1 = $colmes1 - 1;
-                    $colmes1 = mysql_num_rows($colmes) - 1;
                     if ($colmes1 < 0)
                     {
                         $colmes1 = 0;
                     }
-                    $nam = mysql_fetch_array($nikuser);
-                    $d = $i / 2;
-                    $d1 = ceil($d);
-                    $d2 = $d1 - $d;
-                    $d3 = ceil($d2);
-                    if ($d3 == 0)
+                    $nick = mysql_query("select * from `forum` where type='m' and id='" . $idnik . "';");
+                    $nam = mysql_fetch_array($nick);
+                    if ($i >= $start && $i < $end)
                     {
-                        $div = "<div class='b'>";
-                    } else
-                    {
-                        $div = "<div class='c'>";
-                    }
-                    echo "$div";
-                    if ($arrt[edit] == 1)
-                    {
-                        echo "<img src='../images/tz.gif' alt=''/>";
-                    } else
-                    {
-                        echo "<img src='../images/np.gif' alt=''/>";
-                    }
-                    echo "<a href='index.php?id=" . $arrt[id] . "&amp;page=" . $page . "'><font color='" . $cntem . "'>$arrt[text]</font></a><font color='" . $ccolp . "'>[$colmes1]</font>";
-                    if ($cpg > 1)
-                    {
-                        if (((empty($_SESSION['uid'])) && (!empty($_SESSION['uppost'])) && ($_SESSION['uppost'] == 1)) || ((!empty($_SESSION['uid'])) && $upfp == 1))
+                        $d = $i / 2;
+                        $d1 = ceil($d);
+                        $d2 = $d1 - $d;
+                        $d3 = ceil($d2);
+                        if ($d3 == 0)
                         {
-                            echo "<a href='index.php?id=$arrt[id]&amp;page=$cpg'>[&lt;&lt;]</a>";
+                            $div = "<div class='b'>";
                         } else
                         {
-                            echo "<a href='index.php?id=$arrt[id]&amp;page=$cpg'>[&gt;&gt;]</a>";
+                            $div = "<div class='c'>";
                         }
+                        echo "$div";
+                        if ($arrt['edit'] == 1)
+                        {
+                            echo '<img src="../images/tz.gif" alt=""/>';
+                        } elseif ($arrt['close'] == 1)
+                        {
+                        	echo '<img src="../images/dl.gif" alt=""/>';
+                        } else
+                        {
+                            echo '<img src="../images/np.gif" alt=""/>';
+                        }
+                        echo '<a href="index.php?id=' . $arrt['id'] . '&amp;page=' . $page . '"><b>' . $arrt['text'] . '</b></a>&nbsp;[' . $colmes1 . ']';
+                        if ($cpg > 1)
+                        {
+                            echo "&nbsp;<a href='index.php?id=$arrt[id]&amp;page=$cpg'>&gt;&gt;&gt;</a>";
+                        }
+                        echo "<br /><small><a href='index.php?id=" . $razd['id'] . "'>$frm[text]/$razd[text]</a>";
+                        echo "<br /></small>[$arrt[from]"; // Авторы
+                        if (!empty($nam['from']))
+                        {
+                            echo "&nbsp;/&nbsp;$nam[from]";
+                        }
+                        echo "]";
+                        echo " <small><font color='#999999'>" . date("H:i /d.m.y", $arrt['time']) . '</font>'; // Дата
+                        echo "</small></div>";
                     }
-                    echo "<font color='" . $cdtim . "'>(" . date("H:i /d.m.y", $arrt[time]) . ")</font><br/><font color='" . $cssip . "'>[$arrt[from]</font>";
-                    if (!empty($nam[from]))
-                    {
-                        echo "<font color='" . $cssip . "'>/$nam[from]</font>";
-                    }
-                    echo "<font color='" . $cssip . "'>]</font><br/>";
-                    echo "$frm[text]/$razd[text]";
-                    echo "</div>";
                     $i++;
                 }
             }
@@ -404,6 +424,7 @@ if (!empty($_SESSION['uid']))
             echo "Всего: $knt<br/>";
             if ($knt > $kmess)
             {
+                $ba = ceil($knt / $kmess);
                 if ($offpg != 1)
                 {
                     echo "Страницы:<br/>";
@@ -411,26 +432,73 @@ if (!empty($_SESSION['uid']))
                 {
                     echo "Страниц: $ba<br/>";
                 }
+                $asd = $start - ($kmess * 2);
+                $asd2 = $start + ($kmess * 2);
                 if ($start != 0)
                 {
                     echo '<a href="index.php?act=new&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
                 }
                 if ($offpg != 1)
                 {
-                    navigate('index.php?act=new', $knt, $kmess, $start, $page);
+                    if ($asd < $knt && $asd > 0)
+                    {
+                        echo ' <a href="index.php?act=new&amp;page=1&amp;">1</a> .. ';
+                    }
+                    $page2 = $ba - $page;
+                    $pa = ceil($page / 2);
+                    $paa = ceil($page / 3);
+                    $pa2 = $page + floor($page2 / 2);
+                    $paa2 = $page + floor($page2 / 3);
+                    $paa3 = $page + (floor($page2 / 3) * 2);
+                    if ($page > 13)
+                    {
+                        echo ' <a href="index.php?act=new&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=new&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="index.php?act=new&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
+                            '</a> <a href="index.php?act=new&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+                    } elseif ($page > 7)
+                    {
+                        echo ' <a href="index.php?act=new&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=new&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
+                    }
+                    for ($i = $asd; $i < $asd2; )
+                    {
+                        if ($i < $knt && $i >= 0)
+                        {
+                            $ii = floor(1 + $i / $kmess);
+
+                            if ($start == $i)
+                            {
+                                echo " <b>$ii</b>";
+                            } else
+                            {
+                                echo ' <a href="index.php?act=new&amp;page=' . $ii . '">' . $ii . '</a> ';
+                            }
+                        }
+                        $i = $i + $kmess;
+                    }
+                    if ($page2 > 12)
+                    {
+                        echo ' .. <a href="index.php?act=new&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=new&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="index.php?act=new&amp;page=' . ($paa3) . '">' . ($paa3) .
+                            '</a> <a href="index.php?act=new&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+                    } elseif ($page2 > 6)
+                    {
+                        echo ' .. <a href="index.php?act=new&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="index.php?act=new&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
+                    }
+                    if ($asd2 < $knt)
+                    {
+                        echo ' .. <a href="index.php?act=new&amp;page=' . $ba . '">' . $ba . '</a>';
+                    }
                 } else
                 {
                     echo "<b>[$page]</b>";
                 }
+
                 if ($knt > $start + $kmess)
                 {
                     echo ' <a href="index.php?act=new&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
                 }
-                echo "<form action='index.php?act=new'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
             }
-            echo '<a href="index.php?act=new&amp;do=reset">Сброс!</a><br/>';
+            echo '<p><a href="index.php?act=new&amp;do=reset">Сброс!</a><br/>';
             echo '<a href="index.php?act=new&amp;do=all">Показать за период...</a><br/>';
-            echo '<a href="index.php?act=new&amp;do=razd">Выбор подфорумов</a><br/>';
+            echo '<a href="index.php?act=new&amp;do=razd">Выбор подфорумов</a></p>';
             if (empty($_SESSION['uid']))
             {
                 if ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0))
@@ -448,12 +516,12 @@ if (!empty($_SESSION['uid']))
     $lp = mysql_query("select * from `forum` where type='t' and moder='1' order by time desc LIMIT 10;");
     while ($arr = mysql_fetch_array($lp))
     {
-        $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $arr[refid] . "';");
+        $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $arr['refid'] . "';");
         $razd = mysql_fetch_array($q3);
-        $q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd[refid] . "';");
+        $q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd['refid'] . "';");
         $frm = mysql_fetch_array($q4);
-        $colmes = mysql_query("select `id` from `forum` where type='m' and close!='1' and refid='" . $arr[id] . "' order by time desc;");
-        $nikuser = mysql_query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $arr[id] . "'ORDER BY time DESC LIMIT 1;");
+        $colmes = mysql_query("select `id` from `forum` where type='m' and close!='1' and refid='" . $arr['id'] . "' order by time desc;");
+        $nikuser = mysql_query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $arr['id'] . "'ORDER BY time DESC LIMIT 1;");
         $colmes1 = mysql_num_rows($colmes);
         $cpg = ceil($colmes1 / $kmess);
         $colmes1 = $colmes1 - 1;
@@ -474,14 +542,14 @@ if (!empty($_SESSION['uid']))
             $div = "<div class='c'>";
         }
         echo "$div";
-        if ($arrt[edit] == 1)
+        if ($arrt['edit'] == 1)
         {
             echo "<img src='../images/tz.gif' alt=''/>";
         } else
         {
             echo "<img src='../images/np.gif' alt=''/>";
         }
-        echo "<a href='index.php?id=" . $arr[id] . "'>$arr[text]</a>[$colmes1]";
+        echo "<a href='index.php?id=" . $arr['id'] . "'>$arr[text]</a>[$colmes1]";
         if ($cpg > 1)
         {
             if (((empty($_SESSION['uid'])) && (!empty($_SESSION['uppost'])) && ($_SESSION['uppost'] == 1)) || ((!empty($_SESSION['uid'])) && $upfp == 1))
@@ -495,8 +563,8 @@ if (!empty($_SESSION['uid']))
         echo "<br/>";
 
 
-        echo "(" . date("H:i /d.m.y", $arr[time]) . ")<br/>[$arr[from]";
-        if (!empty($nam[from]))
+        echo "(" . date("H:i /d.m.y", $arr['time']) . ")<br/>[$arr[from]";
+        if (!empty($nam['from']))
         {
             echo "/$nam[from]";
         }

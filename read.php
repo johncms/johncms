@@ -42,10 +42,10 @@ switch ($do)
         break;
 
     default:
-        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">1</span>&nbsp;<a href="read.php?do=actmail" accesskey="1">Активация e-mail</a></div>';
-        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">2</span>&nbsp;<a href="read.php?do=forum" accesskey="2">Правила форума</a></div>';
-        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">3</span>&nbsp;<a href="read.php?do=forumfaq" accesskey="3">FAQ по форуму</a></div>';
-        echo '<div class="menu"><img alt="" src="images/arrow.gif" width="7" height="12" /> &nbsp;<span class="ackey">4</span>&nbsp;<a href="read.php?do=trans" accesskey="4">Справка по транслиту</a></div>';
+        echo '<div class="menu"><a href="read.php?do=actmail">Активация e-mail</a></div>';
+        echo '<div class="menu"><a href="read.php?do=forum">Правила форума</a></div>';
+        echo '<div class="menu"><a href="read.php?do=forumfaq">FAQ по форуму</a></div>';
+        echo '<div class="menu"><a href="read.php?do=trans">Справка по транслиту</a></div>';
 }
 
 if ($do)

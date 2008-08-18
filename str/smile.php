@@ -20,7 +20,7 @@ $headmod = 'smile';
 $textl = 'Смайлы';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
-
+echo '<div class="phdr">Смайлы</div>';
 if ($_GET['act'] == "cat")
 {
     $d = $_GET['d'];
@@ -258,13 +258,13 @@ if ($_GET['act'] == "")
 {
     if (empty($_SESSION['refsm']))
     {
-        $_SESSION['refsm'] = $ref;
+        $_SESSION['refsm'] = htmlspecialchars(getenv("HTTP_REFERER"));
     }
     if ($dostmod == 1)
     {
-        echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=adm">Для администрации</a></div>';
+        echo '<div class="menu"><a href="smile.php?act=adm">Для администрации</a></div>';
     }
-    echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=prost">Простые смайлы</a></div>';
+    echo '<div class="menu"><a href="smile.php?act=prost">Простые смайлы</a></div>';
     $dir = opendir("../sm/cat");
     while ($file = readdir($dir))
     {
@@ -287,9 +287,8 @@ if ($_GET['act'] == "")
     $b = str_replace('person', 'Персонажи', $b);
     for ($i = 0; $i < $total; $i++)
     {
-        echo '<div class="menu"><img alt="" src="../images/arrow.gif" width="7" height="12" /> &nbsp;<a href="smile.php?act=cat&amp;d=' . $a[$i] . '&amp;">' . $b[$i] . '</a></div>';
+        echo '<div class="menu"><a href="smile.php?act=cat&amp;d=' . $a[$i] . '&amp;">' . $b[$i] . '</a></div>';
     }
-    echo "<br/>";
     $back = $_SESSION['refsm'];
     if (stristr($back, "pradd.php"))
     {
@@ -299,7 +298,7 @@ if ($_GET['act'] == "")
     {
         $backtext = "В контакты";
     }
-    echo "<a href=\"$back\">Назад</a>";
+    echo '<div class="bmenu"><a href="' . $back . '">Назад</a></div>';
 }
 require_once ('../incfiles/end.php');
 

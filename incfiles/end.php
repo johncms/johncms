@@ -16,7 +16,7 @@
 defined('_IN_JOHNCMS') or die('Error:restricted access');
 
 echo '</div><div class="fmenu">';
-if ($headmod != "mainpage" || isset($_GET['do']))
+if ($headmod != "mainpage" || isset($_GET['do']) || isset($_GET['mod']))
 {
     echo '<a href=\'' . $home . '\'>На главную</a><br/>';
 }
@@ -34,37 +34,30 @@ if (empty($_SESSION['uid']) || $datauser['pereh'] != 1)
     {
         echo "<option value='frm." . $fr1[id] . "'>&nbsp;- $fr1[text]&quot;</option>";
     }
-    echo "<option value='news'>Новости</option><option value='gallery'>Галерея</option><option value='down'>Загрузки</option><option value='lib'>Библиотека</option><option value='gazen'>Ф Газенвагенъ</option></select><input style='font-size:9px' type='submit' value='Go!'/><br/></form>";
+    echo "<option value='news'>Новости</option><option value='gallery'>Галерея</option><option value='down'>Загрузки</option><option value='lib'>Библиотека</option><option value='gazen'>Ф Газенвагенъ</option></select><input style='font-size:9px' type='submit' value='Go!'/></form>";
 }
-echo '</div>';
+//echo '</div>';
 
 // Выводим счетчик посетителей Online
 $ontime = $realtime - 300;
-$qon = @mysql_query("select * from `users` where lastdate>='" . $ontime . "';");
+$qon = @mysql_query("SELECT * FROM `users` WHERE `lastdate`>='" . $ontime . "';");
 $qon2 = mysql_num_rows($qon);
 $massall = array();
-$all = @mysql_query("select * from `count` where time>='" . $ontime . "' GROUP BY `ip`, `browser`;");
+$all = @mysql_query("SELECT * FROM `count` WHERE `time`>='" . $ontime . "' GROUP BY `ip`, `browser`;");
 $all2 = mysql_num_rows($all);
-if (!empty($_SESSION['uid']))
-{
-    echo '<div class="footer"><a href=\'' . $home . '/str/online.php\'>Онлайн: ' . $qon2 . ' / ' . $all2 . '</a></div>';
-} else
-{
-    echo '<div class="footer">Онлайн: ' . $qon2 . ' / ' . $all2 . '</div>';
-}
+echo '</div><div class="footer">' . ($user_id ? '<a href="' . $home . '/str/online.php">Онлайн: ' . $qon2 . ' / ' . $all2 . '</a>' : 'Онлайн: ' . $qon2 . ' / ' . $all2) . '</div>';
 
 echo '<div>';
 
 // Выводим параметры Gzip сжатия
-if ($gzip == "1")
+if ($set['gzip'])
 {
     $Contents = ob_get_contents();
     $gzib_file = strlen($Contents);
     $gzib_file_out = strlen(gzcompress($Contents, 9));
     $gzib_pro = round(100 - (100 / ($gzib_file / $gzib_file_out)), 1);
     echo '<center>Cжатие вкл. (' . $gzib_pro . '%)</center>';
-}
-if ($gzip == "0")
+} else
 {
     echo '<center>Cжатие выкл.</center>';
 }
@@ -99,7 +92,7 @@ if ($headmod == "mainpage")
 echo '</div>';
 
 // Данный копирайт нельзя убирать в течение 60 дней с момента установки скриптов
-echo '<div class="end"><a href="http://johncms.com">JohnCMS</a></div>';
+echo '<div class="end"><a href="http://johncms.com">JohnCMS 1.5.0</a></div>';
 echo '</body></html>';
 
 ?>

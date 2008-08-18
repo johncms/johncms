@@ -1,13 +1,13 @@
 <?php
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
+// JohnCMS                                                                    //
 // Официальный сайт сайт проекта:      http://johncms.com                     //
 // Дополнительный сайт поддержки:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Евгений Рябинин aka john77          john77@johncms.com                     //
+// Олег Касьянов aka AlkatraZ          alkatraz@johncms.com                   //
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ $headmod = "news";
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
 
-echo '<p><b>Новости ресурса</b></p><hr />';
+echo '<div class="phdr">Новости ресурса</div>';
 $nw = mysql_query("select * from `news` order by `time` desc;");
 if (!empty($_GET['kv']))
 {
@@ -59,38 +59,22 @@ while ($nw1 = mysql_fetch_array($nw))
         {
             $div = "<div class='b'>";
         }
-        $nw1[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $nw1[text]);
-        $nw1[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $nw1[text]);
-        $nw1[text] = eregi_replace("\\[l\\]((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='\\1\\3'>\\7</a>", $nw1[text]);
-        if (stristr($nw1[text], "<a href="))
-        {
-            $nw1[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)</a>",
-                "<a href='\\1\\3'>\\3</a>", $nw1[text]);
-        } else
-        {
-            $nw1[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $nw1[text]);
-        }
+        $text = $nw1['text'];
+        $text = tags($text);
         if ($offsm != 1 && $offgr != 1)
         {
-            $tekst = smiles($nw1[text]);
-            $tekst = smilescat($tekst);
-
-            if ($nw1[from] == nickadmina || $nw1[from] == nickadmina2 || $nw11[rights] >= 1)
-            {
-                $tekst = smilesadm($tekst);
-            }
-        } else
-        {
-            $tekst = $nw1[text];
+            $text = smiles($text);
+            $text = smilescat($text);
+            $text = smilesadm($text);
         }
-        $vr = $nw1[time] + $sdvig * 3600;
+        $vr = $nw1['time'] + $sdvig * 3600;
         $vr1 = date("d.m.y / H:i", $vr);
-        echo "$div<b>$nw1[name]</b><br/>$tekst<br/><font color='#999999'>Добавил: $nw1[avt] ($vr1)</font><br/>";
-        if ($nw1[kom] != 0 && $nw1[kom] != "")
+        echo $div . '<b>' . $nw1['name'] . '</b><br/>' . $text . '<br/><font color="#999999">Добавил: ' . $nw1['avt'] . ' (' . $vr1 . ')</font><br/>';
+        if ($nw1['kom'] != 0 && $nw1['kom'] != "")
         {
-            $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1[kom] . "';");
+            $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1['kom'] . "';");
             $komm = mysql_num_rows($mes) - 1;
-            echo "<a href='../forum/?id=" . $nw1[kom] . "'>Обсудить на форуме ($komm)</a><br/>";
+            echo '<a href="../forum/?id=' . $nw1['kom'] . '">Обсудить на форуме (' . $komm . ')</a><br/>';
         }
         echo "</div>";
     }

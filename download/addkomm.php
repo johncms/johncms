@@ -14,7 +14,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if (!empty($_SESSION['uid']))
+if ($user_id && !$ban['1'] && !$ban['10'])
 {
     if ($_GET['id'] == "")
     {

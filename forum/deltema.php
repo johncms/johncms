@@ -24,11 +24,10 @@ if ($dostfmod == 1)
         require_once ("../incfiles/end.php");
         exit;
     }
-    $id = intval(check($_GET['id']));
-
+    $id = intval($_GET['id']);
     $typ = mysql_query("select * from `forum` where id='" . $id . "';");
     $ms = mysql_fetch_array($typ);
-    if ($ms[type] != "t")
+    if ($ms['type'] != "t")
     {
         require_once ("../incfiles/head.php");
         echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
@@ -42,16 +41,14 @@ if ($dostfmod == 1)
             $delp = mysql_query("select * from `forum` where type='m' and refid='" . $id . "';");
             while ($arrd = mysql_fetch_array($delp))
             {
-                if (!empty($arrd[attach]))
+                if (!empty($arrd['attach']))
                 {
                     unlink("files/$arrd[attach]");
                 }
-                mysql_query("delete from `forum` where `id`='" . $arrd[id] . "';");
+                mysql_query("delete from `forum` where `id`='" . $arrd['id'] . "';");
             }
 
             mysql_query("delete from `forum` where `id`='" . $id . "';");
-
-
         } else
         {
             mysql_query("update `forum` set  close='1' where id='" . $id . "';");
@@ -67,16 +64,16 @@ if ($dostfmod == 1)
         header("Location: ?id=$ms[refid]");
     }
     require_once ("../incfiles/head.php");
-    echo "Вы действительно хотите удалить тему?<br/>";
-    echo "<a href='?act=deltema&amp;id=" . $id . "&amp;yes'>Удалить</a>";
-    if (($dostsadm == 1) && ($ms[close] != 1))
+    echo '<p>Вы действительно хотите удалить тему?</p>';
+    echo '<p><a href="?act=deltema&amp;id=' . $id . '&amp;yes">Удалить</a><br />';
+    if (($dostsadm == 1) && ($ms['close'] != 1))
     {
-        echo "|<a href='?act=deltema&amp;id=" . $id . "&amp;hid'>Скрыть</a>";
+        echo '<a href="?act=deltema&amp;id=' . $id . '&amp;hid">Скрыть</a><br />';
     }
-    echo "|<a href='?id=" . $ms[refid] . "'>Отмена</a><br/>";
+    echo '<a href="?id=' . $ms['refid'] . '">Отмена</a></p>';
 } else
 {
-    echo "Доступ закрыт!!!<br>";
+    echo '<p>Доступ закрыт!!!</p>';
 }
 
 ?>

@@ -15,11 +15,150 @@
 
 defined('_IN_JOHNCMS') or die('Error:restricted access');
 
-function antilink($str)
+function tags($var = '')
 {
-    $str = strtr($str, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
+    ////////////////////////////////////////////////////////////
+    // Обработка ссылок и тэгов BBCODE в тексте               //
+    ////////////////////////////////////////////////////////////
+    if (stristr($var, "<a href="))
+    {
+        $var = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
+            "<a href='\\1\\3'>\\3</a>", $var);
+    } else
+    {
+        $var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $var);
+    }
+    // Обработка BBcode
+    $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<strong>\1</strong>', $var);
+    $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
+    $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
+    $var = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:red">\1</span>', $var);
+    $var = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
+    $var = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
+    $var = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $var);
+    $var = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $var);
+    return $var;
+}
+
+function antilink($var)
+{
+    ////////////////////////////////////////////////////////////
+    // Маскировка ссылок в тексте                             //
+    ////////////////////////////////////////////////////////////
+    $var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "[реклама]", $var);
+    $var = strtr($var, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
+    return $var;
+}
+
+function trans($str)
+{
+    ////////////////////////////////////////////////////////////
+    // Транслитерация текста                                  //
+    ////////////////////////////////////////////////////////////
+    $str = strtr($str, array('a' => 'а', 'b' => 'б', 'v' => 'в', 'g' => 'г', 'd' => 'д', 'e' => 'е', 'yo' => 'ё', 'zh' => 'ж', 'z' => 'з', 'i' => 'и', 'j' => 'й', 'k' => 'к', 'l' => 'л', 'm' => 'м', 'n' => 'н', 'o' => 'о', 'p' => 'п', 'r' =>
+        'р', 's' => 'с', 't' => 'т', 'u' => 'у', 'f' => 'ф', 'h' => 'х', 'c' => 'ц', 'ch' => 'ч', 'w' => 'ш', 'sh' => 'щ', 'q' => 'ъ', 'y' => 'ы', 'x' => 'э', 'yu' => 'ю', 'ya' => 'я', 'A' => 'А', 'B' => 'Б', 'V' => 'В', 'G' => 'Г', 'D' => 'Д', 'E' =>
+        'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т', 'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' =>
+        'Ш', 'SH' => 'Щ', 'Q' => 'Ъ', 'Y' => 'Ы', 'X' => 'Э', 'YU' => 'Ю', 'YA' => 'Я'));
     return $str;
 }
+
+function pagenav($var = array())
+{
+    ////////////////////////////////////////////////////////////
+    // Навигация по страницам                                 //
+    ////////////////////////////////////////////////////////////
+    $ba = ceil($var['total'] / $var['numpr']);
+    $page = ($ba > $var['page']) ? $var['page'] : $ba;
+    $start = $page * $var['numpr'] - $var['numpr'];
+    $asd = $start - ($var['numpr']);
+    $asd2 = $start + ($var['numpr'] * 2);
+    echo '<div class="f-pgn">';
+    // Ссылка на предыдущую страницу
+    if ($start > 0)
+        echo '<a href="' . $var['address'] . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
+    if ($asd < $var['total'] && $asd > 0)
+    {
+        echo ' <a href="' . $var['address'] . '&amp;page=1">1</a> .. ';
+    }
+    $page2 = $ba - $page;
+    $pa = ceil($page / 2);
+    $paa = ceil($page / 3);
+    $pa2 = $page + floor($page2 / 2);
+    $paa2 = $page + floor($page2 / 3);
+    $paa3 = $page + (floor($page2 / 3) * 2);
+    if ($page > 13)
+    {
+        echo ' <a href="' . $var['address'] . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="' . $var['address'] . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="' . $var['address'] . '&amp;page=' . ($paa * 2) . '">' . ($paa *
+            2) . '</a> <a href="' . $var['address'] . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+    } elseif ($page > 7)
+    {
+        echo ' <a href="' . $var['address'] . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="' . $var['address'] . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
+    }
+    for ($i = $asd; $i < $asd2; )
+    {
+        if ($i < $var['total'] && $i >= 0)
+        {
+            $ii = floor(1 + $i / $var['numpr']);
+            if ($start == $i)
+            {
+                echo " <b>$ii</b>";
+            } else
+            {
+                echo ' <a href="' . $var['address'] . '&amp;page=' . $ii . '">' . $ii . '</a> ';
+            }
+        }
+        $i = $i + $var['numpr'];
+    }
+    if ($page2 > 12)
+    {
+        echo ' .. <a href="' . $var['address'] . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="' . $var['address'] . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="' . $var['address'] . '&amp;page=' . ($paa3) . '">' . ($paa3) .
+            '</a> <a href="' . $var['address'] . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+    } elseif ($page2 > 6)
+    {
+        echo ' .. <a href="' . $var['address'] . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="' . $var['address'] . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
+    }
+    if ($asd2 < $var['total'])
+    {
+        echo ' .. <a href="' . $var['address'] . '&amp;page=' . $ba . '">' . $ba . '</a>';
+    }
+    // Ссылка на следующую страницу
+    if ($var['total'] > $start + $var['numpr'])
+        echo ' <a href="' . $var['address'] . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
+    echo '</div>';
+}
+
+function timecount($var)
+{
+    ////////////////////////////////////////////////////////////
+    // Функция пересчета на дни, или часы                     //
+    ////////////////////////////////////////////////////////////
+    $str = '';
+    if ($var < 0)
+        $var = 0;
+    $day = ceil($var / 86400);
+    if ($var > 2592000)
+    {
+    	$str = 'До отмены';
+    } elseif ($var >= 432000)
+    {
+        $str = $day . ' дней';
+    } elseif ($var >= 172800)
+    {
+        $str = $day . ' дня';
+    } elseif ($var >= 86400)
+    {
+        $str = '1 день';
+    } else
+    {
+        $str = gmdate('H:i:s', round($var));
+    }
+    return $str;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Старые функции, которые постепенно будут удаляться.                        //
+// НЕ ИСПОЛЬЗУЙТЕ их в своих модулях!!!                                       //
+////////////////////////////////////////////////////////////////////////////////
 
 function texttolink($str)
 {
@@ -100,15 +239,6 @@ function check($str)
     return $str;
 }
 
-function trans($str)
-{
-    $str = strtr($str, array("a" => "а", "b" => "б", "v" => "в", "g" => "г", "d" => "д", "e" => "е", "yo" => "ё", "zh" => "ж", "z" => "з", "i" => "и", "j" => "й", "k" => "к", "l" => "л", "m" => "м", "n" => "н", "o" => "о", "p" => "п", "r" =>
-        "р", "s" => "с", "t" => "т", "u" => "у", "f" => "ф", "h" => "х", "c" => "ц", "ch" => "ч", "w" => "ш", "sh" => "щ", "q" => "ъ", "y" => "ы", "x" => "э", "yu" => "ю", "ya" => "я", "A" => "А", "B" => "Б", "V" => "В", "G" => "Г", "D" => "Д", "E" =>
-        "Е", "YO" => "Ё", "ZH" => "Ж", "Z" => "З", "I" => "И", "J" => "Й", "K" => "К", "L" => "Л", "M" => "М", "N" => "Н", "O" => "О", "P" => "П", "R" => "Р", "S" => "С", "T" => "Т", "U" => "У", "F" => "Ф", "H" => "Х", "C" => "Ц", "CH" => "Ч", "W" =>
-        "Ш", "SH" => "Щ", "Q" => "Ъ", "Y" => "Ы", "X" => "Э", "YU" => "Ю", "YA" => "Я"));
-    return $str;
-}
-
 function smiles($str)
 {
     $dir = opendir("../sm/prost");
@@ -179,7 +309,7 @@ function offimg($str)
     return eregi_replace("((<img src|alt)[-a-zA-Z0-9@:%_\+.~#?;&//=\(\)/\'\"\ />]+)", "", $str);
 
 }
-#################################3
+
 function navigate($adr_str, $itogo, $kol_na_str, $begin, $num_str)
 {
     $ba = ceil($itogo / $kol_na_str);
@@ -232,24 +362,6 @@ function navigate($adr_str, $itogo, $kol_na_str, $begin, $num_str)
         echo ' .. <a href="' . $adr_str . '&amp;page=' . $ba . '">' . $ba . '</a>';
     }
 
-}
-############################
-function tegi($str)
-{
-    $str = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $str);
-    $str = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $str);
-
-    if (stristr($str, "<a href="))
-    {
-        $str = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-            "<a href='\\1\\3'>\\3</a>", $str);
-    } else
-    {
-        $str = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $str);
-    }
-
-
-    return $str;
 }
 
 function rus_lat($str)

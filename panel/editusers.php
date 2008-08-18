@@ -14,10 +14,10 @@
 */
 
 define('_IN_JOHNCMS', 1);
-session_name("SESID");
-session_start();
+
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
+
 if ($dostadm == 1)
 {
     if (empty($_GET['user']))
@@ -27,13 +27,11 @@ if ($dostadm == 1)
         exit;
     }
 
-
     $qus = @mysql_query("select * from `users` where id='" . intval($_GET['user']) . "';");
     $userprof = @mysql_fetch_array($qus);
     $nam = trim($userprof['name']);
-    ##########
 
-    if (($login !== $nickadmina) && ($nam == $nickadmina) || ($nam !== $login) && ($nickadmina !== $login) && ($datauser['rights'] == "7") && ($userprof['rights'] == "7"))
+    if (($login !== $nickadmina) && ($nam == $nickadmina) || ($nam !== $login) && ($nickadmina !== $login) && ($rights == 7) && ($userprof['rights'] == "7"))
     {
         echo "У ВАС НЕДОСТАТОЧНО ПРАВ ДЛЯ ЭТОГО!<br/>";
         require_once ("../incfiles/end.php");

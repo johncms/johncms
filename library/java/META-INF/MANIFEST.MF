@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-MIDlet-1: Книга 2, , br.BookReader
-MIDlet-Name: Книга 2
+MIDlet-1: Книга 6, , br.BookReader
+MIDlet-Name: Книга 6
 MIDlet-Vendor: JohnCMS
 MIDlet-Version: 1.5.3
 MIDletX-No-Command: true

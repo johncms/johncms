@@ -1,3 +1,5 @@
+RemoveType .php3 .phtml .php4 .php5 .cgi .pl
+
 AddType text/vnd.wap.wml;charset=utf-8 .wml
 AddType application/vnd.sonyericsson.mms-template tpl
 AddType application/vnd.wap.wmlc .wmlc
@@ -51,10 +53,12 @@ DirectoryIndex index.php
 AddDefaultCharset UTF-8
 Options -Indexes
 
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} ^TRACE
+RewriteRule .* - [F]
+
 ErrorDocument 401 http://gazenwagen.com/?err
 ErrorDocument 402 http://gazenwagen.com/?err	
 ErrorDocument 403 http://gazenwagen.com/?err
 ErrorDocument 404 http://gazenwagen.com/?err
 ErrorDocument 500 http://gazenwagen.com/?err
-
-

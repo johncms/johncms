@@ -1,13 +1,21 @@
 <br/><b>Информация по форуму</b><br/><br/>
-<b><u>Теги</u></b><br/>
-&nbsp;[c]текст в отдельном поле[/c]<br />
-&nbsp;[b]<b>жирный шрифт</b>[/b]<br/>
-&nbsp;[l]адрес ссылки(без http://)[l/]название ссылки[/l]<br/>
 &nbsp;Для написания ссылки достаточно ввести http://адрес ссылки<br/><br/>
-<b><u>Графические обозначения</u></b><br/>
+
+<p><b>ТЕГИ</b></p><p>
+&nbsp;[b] <b>жирный</b> [/b]<br />
+&nbsp;[u] <u>подчеркнутый</u> [/u]<br />
+&nbsp;[i] <i>наклонный</i> [/i]</p><p>
+
+&nbsp;[red] <span style="color:red">Красный</span> [/red]<br />
+&nbsp;[green] <span style="color:green">Зеленый</span> [/green]<br />
+&nbsp;[blue] <span style="color:blue">Синий</span> [/blue]</p><p>
+
+&nbsp;[c]текст в отдельном поле[/c]<br />
+&nbsp;[l]адрес ссылки(без http://)[l/]название ссылки[/l]</p>
+<br /><p><b>МЕТКИ</b></p><p>
 &nbsp;<img src='../images/pt.gif' alt=''/> Прикреплённая тема<br/>
 &nbsp;<img src='../images/tz.gif' alt=''/> Закрытая тема<br/>
 &nbsp;<img src='../images/np.gif' alt=''/> В этой теме есть новые непрочитанные посты(для авторизованных)<br/>
 &nbsp;<img src='../images/op.gif' alt=''/> В этой теме нет новых непрочитанных постов(для авторизованных)<br/>
 &nbsp;<img src='../images/m.gif' alt=''/> Автор поста парень<br/>
-&nbsp;<img src='../images/f.gif' alt=''/> Автор поста девушка<br/><br/>
+&nbsp;<img src='../images/f.gif' alt=''/> Автор поста девушка</p><br />

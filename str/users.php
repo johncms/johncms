@@ -19,7 +19,7 @@ $headmod = 'users';
 $textl = 'Юзеры';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
-
+echo '<div class="phdr">Список пользователей</div>';
 $q = mysql_query("select `id`, `name`, `sex`, `lastdate` from `users`;");
 $count = mysql_num_rows($q);
 if (empty($_GET['page']))
@@ -41,21 +41,21 @@ while ($arr = mysql_fetch_array($q))
 {
     if ($i >= $start && $i < $end)
     {
-        if ($arr[sex] == "m")
+        if ($arr['sex'] == "m")
         {
             echo '<img src="../images/m.gif" alt=""/>&nbsp;';
-        } elseif ($arr[sex] == "zh")
+        } elseif ($arr['sex'] == "zh")
         {
             echo '<img src="../images/f.gif" alt=""/>&nbsp;';
         }
-        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr[id])
+        if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr['id'])
         {
             print "<b>$arr[name]</b>";
         } else
         {
-            print "<a href='anketa.php?user=" . $arr[id] . "'>$arr[name]</a>";
+            print "<a href='anketa.php?user=" . $arr['id'] . "'>$arr[name]</a>";
         }
-        switch ($arr[rights])
+        switch ($arr['rights'])
         {
             case 7:
                 echo ' Adm ';
@@ -79,7 +79,7 @@ while ($arr = mysql_fetch_array($q))
                 echo ' Kil ';
                 break;
         }
-        $ontime = $arr[lastdate];
+        $ontime = $arr['lastdate'];
         $ontime2 = $ontime + 300;
         if ($realtime > $ontime2)
         {

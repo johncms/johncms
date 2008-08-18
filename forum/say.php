@@ -16,7 +16,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $agn = strtok($agn, ' ');
-if (empty($_GET['id']))
+if (empty($_GET['id']) || !$user_id || $ban['1'] || $ban['11'])
 {
     require_once ("../incfiles/head.php");
     echo "Ошибка!<br/><a href='index.php?'>В форум</a><br/>";
@@ -24,23 +24,16 @@ if (empty($_GET['id']))
     exit;
 }
 $id = intval($_GET['id']);
-if (empty($_SESSION['uid']))
-{
-    require_once ("../incfiles/head.php");
-    echo "Вы не авторизованы!<br/>";
-    require_once ("../incfiles/end.php");
-    exit;
-}
 $type = mysql_query("select * from `forum` where id= '" . $id . "';");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
 switch ($tip)
 {
     case "t":
-        if ($type1[edit] == 1)
+        if ($type1['edit'] == 1)
         {
             require_once ("../incfiles/head.php");
-            echo "Вы не можете писать в закрытую тему<br/><a href='index.php?id=" . $id . "'>В тему</a><br/>";
+            echo '<p>Вы не можете писать в закрытую тему</p><p><a href="index.php?id=' . $id . '">&lt;&lt; Назад</a></p>';
             require_once ("../incfiles/end.php");
             exit;
         }
@@ -52,14 +45,14 @@ switch ($tip)
             if ($af1 > 0)
             {
                 require_once ("../incfiles/head.php");
-                echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='?id=" . $id . "'>В тему</a><br/>";
+                echo '<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд</p><p><a href="?id=' . $id . '">&lt;&lt; Назад</a></p>';
                 require_once ("../incfiles/end.php");
                 exit;
             }
             if (empty($_POST['msg']))
             {
                 require_once ("../incfiles/head.php");
-                echo "Вы не ввели сообщение!<br/><a href='index.php?act=say&amp;id=" . $id . "'>Повторить</a><br/>";
+                echo '<p>Вы не ввели сообщение!</p><p><a href="index.php?act=say&amp;id=' . $id . '">&lt;&lt; Повторить</a></p>';
                 require_once ("../incfiles/end.php");
                 exit;
             }
@@ -82,7 +75,6 @@ switch ($tip)
             mysql_query("update `users` set  postforum='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
             $pa = mysql_query("select `id` from `forum` where type='m' and refid= '" . $id . "';");
             $pa2 = mysql_num_rows($pa);
-
             if (((empty($_SESSION['uid'])) && (!empty($_SESSION['uppost'])) && ($_SESSION['uppost'] == 1)) || ((!empty($_SESSION['uid'])) && $upfp == 1))
             {
                 $page = 1;
@@ -90,8 +82,6 @@ switch ($tip)
             {
                 $page = ceil($pa2 / $kmess);
             }
-
-            #echo "Сообщение добавлено<br/><a href='index.php?id=" . $id . "&amp;page=" . $page . "'>Продолжить</a><br/>";
             $np = mysql_query("select * from `forum` where type='l' and refid='" . $id . "' and `from`='" . $login . "';");
             $np1 = mysql_num_rows($np);
             if ($np1 == 0)
@@ -203,8 +193,6 @@ switch ($tip)
             {
                 $page = ceil($pa2 / $kmess);
             }
-
-            # echo "Сообщение добавлено<br/><a href='index.php?id=" . $th . "&amp;page=" . $page . "'>Продолжить</a><br/>";
             $np = mysql_query("select * from `forum` where type='l' and refid='" . $th . "' and `from`='" . $login . "';");
             $np1 = mysql_num_rows($np);
             if ($np1 == 0)
@@ -233,7 +221,6 @@ switch ($tip)
             {
                 $qt = " $type1[text]";
             }
-            ##
             $user = mysql_query("select * from `users` where name='" . $type1[from] . "';");
             $udat = mysql_fetch_array($user);
             echo "<b><font color='" . $conik . "'>$type1[from]</font></b>";
@@ -302,9 +289,6 @@ switch ($tip)
             }
             if (!empty($_SESSION['uid']))
             {
-                ####
-                ######
-                ########
                 $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
                 $nmen1 = array(1 => "imname", "live", "about", "icq", "mail", "mibila", "Дата рождения ", "www");
                 if (!empty($nmenu))
@@ -312,7 +296,6 @@ switch ($tip)
                     $nmenu1 = explode(",", $nmenu);
                     foreach ($nmenu1 as $v)
                     {
-
                         if ($v != 7 && $v != 5 && $v != 8)
                         {
                             $dus = $nmen1[$v];
@@ -321,7 +304,6 @@ switch ($tip)
                                 echo "$nmen[$v]: $udat[$dus]<br/>";
                             }
                         }
-
                         if ($v == 5)
                         {
                             if (!empty($udat[mail]))
@@ -354,10 +336,6 @@ switch ($tip)
                         }
                     }
                 }
-                ####ник меню
-                ########
-                ############
-
                 if ($dostkmod == 1)
                 {
                     echo "<a href='../" . $admp . "/zaban.php?user=" . $udat[id] . "&amp;forum&amp;id=" . $id . "'>Банить</a><br/>";
@@ -392,7 +370,6 @@ switch ($tip)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            ##
             if (isset($_GET['cyt']))
             {
                 if (($datauser[postforum] == "" || $datauser[postforum] == 0))
@@ -426,8 +403,6 @@ switch ($tip)
                         exit;
                     }
                 }
-
-
                 echo "Добавление сообщения в тему <font color='" . $cntem . "'>$th1[text]</font> для <font color='" . $conik . "'>$type1[from]</font>:<br/><form action='?act=say&amp;id=" . $id . "' method='post' enctype='multipart/form-data'>";
             }
             echo "<textarea cols='20' rows='3' title='Введите ответ' name='msg'></textarea><br/><input type='checkbox' name='addfiles' value='1' /> Добавить файл<br/>";
