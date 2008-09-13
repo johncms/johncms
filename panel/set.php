@@ -40,11 +40,6 @@ if ($dostadm == 1)
             mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['fm']) . "' WHERE `key`='fmod';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['gb']) . "' WHERE `key`='gb';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['rm']) . "' WHERE `key`='rmod';");
-            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
-            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
-            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
-            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
-            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
             header("location: set.php?set");
             break;
 
@@ -73,12 +68,10 @@ if ($dostadm == 1)
             echo 'Макс.допустимый размер файлов(кб.):<br/><input type="text" name="flsz" value="' . intval($set['flsz']) . '"/><br/>';
             echo 'Папка с админкой:<br/><input type="text" name="admp" value="' . htmlentities($set['admp']) . '"/><br/>';
             echo 'Расширение страниц:<br/><input type="text" name="rashstr" value="' . htmlentities($set['rashstr']) . '"/><br/>';
-
             echo '<p><input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"' : '') . ' />&nbsp;GZIP сжатие<br/>';
             echo '<input name="rm" type="checkbox" value="1" ' . ($set['rmod'] ? 'checked="checked"' : '') . ' />&nbsp;мод. регистрации<br/>';
             echo '<input name="fm" type="checkbox" value="1" ' . ($set['fmod'] ? 'checked="checked"' : '') . ' />&nbsp;мод. форума<br/>';
             echo '<input name="gb" type="checkbox" value="1" ' . ($set['gb'] ? 'checked="checked"' : '') . ' />&nbsp;гостевая для гостей</p>';
-
             echo '<input value="Ok!" type="submit"/></form>';
             echo '<p><a href="main.php">В админку</a></p>';
             break;

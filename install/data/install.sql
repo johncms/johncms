@@ -25,6 +25,7 @@ CREATE TABLE `cms_ban_users` (
   `ban_while` int(11) NOT NULL,
   `ban_type` tinyint(4) NOT NULL default '1',
   `ban_who` varchar(30) NOT NULL,
+  `ban_ref` int(11) NOT NULL,
   `ban_reason` text NOT NULL,
   `ban_raz` varchar(30) NOT NULL,
   PRIMARY KEY  (`id`),

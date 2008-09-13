@@ -210,6 +210,7 @@ if ($user_id && $user_ps)
             $nmenu = $datauser['nmenu'];
             $chmes = $datauser['chmes'];
             $rights = $datauser['rights'];
+            $lastdate = $datauser['lastdate'];
             mysql_free_result($req);
 
             ////////////////////////////////////////////////////////////
@@ -225,8 +226,8 @@ if ($user_id && $user_ps)
                 mysql_free_result($req);
                 if (isset($ban['9']))
                 {
-                	header("HTTP/1.0 404 Not Found");
-                	exit;
+                    header("HTTP/1.0 404 Not Found");
+                    exit;
                 }
             }
 
@@ -269,19 +270,23 @@ if ($user_id && $user_ps)
             }
 
             // Устанавливаем время начала сессии
-            if ($datauser['lastdate'] <= ($realtime - 300))
+            if ($lastdate <= ($realtime - 300))
                 mysql_query("UPDATE `users` SET `sestime`='" . $realtime . "' WHERE `id`='" . $user_id . "';");
 
             // Обновляем данные
             $totalonsite = $datauser['total_on_site'];
-            if ($datauser['lastdate'] >= ($realtime - 300))
-                $totalonsite = $totalonsite + $realtime - $datauser['lastdate'];
+            if ($lastdate >= ($realtime - 300))
+                $totalonsite = $totalonsite + $realtime - $lastdate;
             mysql_query("UPDATE `users` SET
 			`total_on_site`='" . $totalonsite . "',
 			`lastdate`='" . $realtime . "',
 			`ip`='" . $ipl . "',
 			`browser`='" . mysql_real_escape_string($agn) . "'
 			WHERE `id`='" . $user_id . "';");
+
+            // Если юзера не было на сайте более 1-го часа , показываем дайджест
+            if ($lastdate < ($realtime - 3600))
+                header("Location: " . $home . "/index.php?mod=digest&last=" . $lastdate);
         } else
         {
             // Если пароль не совпадает, уничтожаем переменные сессии и чистим куки

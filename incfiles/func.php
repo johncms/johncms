@@ -20,24 +20,26 @@ function tags($var = '')
     ////////////////////////////////////////////////////////////
     // Обработка ссылок и тэгов BBCODE в тексте               //
     ////////////////////////////////////////////////////////////
-    if (stristr($var, "<a href="))
-    {
-        $var = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-            "<a href='\\1\\3'>\\3</a>", $var);
-    } else
-    {
-        $var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $var);
-    }
-    // Обработка BBcode
-    $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<strong>\1</strong>', $var);
+	$var = preg_replace_callback('{(?:(\w+://)|www\.|wap\.)[\w-]+(\.[\w-]+)*(?: : \d+)?[^<>"\'()\[\]\s]*(?:(?<! [[:punct:]])|(?<= [-/&+*]))}xis', "hrefCallback", $var);
+    $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
     $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
     $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
     $var = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:red">\1</span>', $var);
     $var = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
     $var = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
-    $var = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $var);
-    $var = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $var);
+    $var = preg_replace('#\[c\](.*?)\[/c\]#si', '<span class="quote">\1</span>', $var);
+    //$var = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $var);
     return $var;
+}
+
+function hrefCallback($p)
+{
+    ////////////////////////////////////////////////////////////
+    // Служебная функция парсинга URL                         //
+    ////////////////////////////////////////////////////////////
+    $name = htmlspecialchars($p[0]);
+    $href = !empty($p[1]) ? $name : "http://$name";
+    return "<a href=\"$href\">$name</a>";
 }
 
 function antilink($var)
@@ -138,7 +140,7 @@ function timecount($var)
     $day = ceil($var / 86400);
     if ($var > 2592000)
     {
-    	$str = 'До отмены';
+        $str = 'До отмены';
     } elseif ($var >= 432000)
     {
         $str = $day . ' дней';

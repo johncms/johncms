@@ -442,10 +442,11 @@ if (in_array($act, $do))
                                 {
                                     $div = "<div class='c'>";
                                 }
-                                $uz = mysql_query("SELECT `id`, 'from', `sex`, `rights`, `lastdate`, `dayb`, `status` FROM `users` WHERE `name`='" . $mass['from'] . "';");
+                                $uz = mysql_query("SELECT `id`, 'from', `sex`, `rights`, `lastdate`, `dayb`, `status`, `datereg` FROM `users` WHERE `name`='" . $mass['from'] . "';");
                                 $mass1 = mysql_fetch_array($uz);
                                 echo "$div";
-                                switch ($mass1['sex'])
+                                echo $mass1['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
+								switch ($mass1['sex'])
                                 {
                                     case "m":
                                         echo "<img src='../images/m.gif' alt=''/>";

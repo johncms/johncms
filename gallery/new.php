@@ -15,8 +15,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<p><b>Новые фотографии</b></p><hr />';
+echo '<div class="phdr">Новые фотографии</div>';
 $old = $realtime - (3 * 24 * 3600);
+
 $newfile = mysql_query("select * from `gallery` where time > '" . $old . "' and type='ft' order by time desc;");
 $totalnew = mysql_num_rows($newfile);
 if (empty($_GET['page']))
@@ -46,12 +47,12 @@ if ($totalnew != 0)
             $d3 = ceil($d2);
             if ($d3 == 0)
             {
-                echo '<div class="c"><p>';
+                $div = "<div class='c'>";
             } else
             {
-                echo '<div class="b"><p>';
+                $div = "<div class='b'>";
             }
-            echo "<a href='index.php?id=" . $newf['id'] . "'>";
+            echo "$div<br/>&nbsp;<a href='index.php?id=" . $newf['id'] . "'>";
             $infile = "foto/$newf[name]";
             if (!empty($_SESSION['frazm']))
             {
@@ -104,46 +105,44 @@ if ($totalnew != 0)
                 case "gif":
                     $imagnam = "temp/$namefile.temp.gif";
                     ImageGif($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/></a>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
                     break;
                 case "jpg":
                     $imagnam = "temp/$namefile.temp.jpg";
                     imageJpeg($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/></a>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
                     break;
                 case "jpeg":
                     $imagnam = "temp/$namefile.temp.jpg";
                     imageJpeg($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/></a>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                     break;
                 case "png":
                     $imagnam = "temp/$namefile.temp.png";
                     imagePng($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/></a>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                     break;
             }
             imagedestroy($im);
             imagedestroy($im1);
+            $vrf = $newf[time] + $sdvig * 3600;
+            $vrf1 = date("d.m.y / H:i", $vrf);
             $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $newf['id'] . "';");
             $kom1 = mysql_num_rows($kom);
-            if (!empty($newf['text']))
-                echo '<div>Подпись: ' . $newf['text'] . '</div>';
-            echo '</p><p>';
-			echo '<div><a href="index.php?act=komm&amp;id=' . $newf['id'] . '">Комментарии</a> (' . $kom1 . ')</div>';
+            echo "</a><br/>Добавлено: $vrf1<br/>Подпись: $newf[text]<br/><a href='index.php?act=komm&amp;id=" . $newf['id'] . "'>Комментарии</a> ($kom1)<br/>";
             $al = mysql_query("select * from `gallery` where type = 'al' and id = '" . $newf['refid'] . "';");
             $al1 = mysql_fetch_array($al);
             $rz = mysql_query("select * from `gallery` where type = 'rz' and id = '" . $al1['refid'] . "';");
             $rz1 = mysql_fetch_array($rz);
-            echo '<div><a href="index.php?id='.$al1['id'].'">' . $rz1['text'] . '&nbsp;/&nbsp;' . $al1['text'] . '</a></div>';
+            echo '<a href="index.php?id='.$al1['id'].'">' . $rz1['text'] . '&nbsp;/&nbsp;' . $al1['text'] . '</a></div>';
         }
         ++$i;
-        echo '</p></div>';
     }
-    echo '<hr />';
     if ($totalnew > 10)
     {
+        echo "<hr/>";
         $ba = ceil($totalnew / 10);
         if ($offpg != 1)
         {

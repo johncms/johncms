@@ -38,19 +38,13 @@ switch ($adres)
         header("location: library/index.php");
         break;
     case "down":
-        header("location: download/download.php");
-        break;
-    case "upl":
-        header("location: download/upload.php");
+        header("location: download/index.php");
         break;
     case "gallery":
         header("location: gallery/index.php");
         break;
     case "news":
         header("location: str/news.php");
-        break;
-    case "znak":
-        header("location: str/znak.php");
         break;
     case "guest":
         header("location: str/guest.php");

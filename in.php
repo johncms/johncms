@@ -50,7 +50,7 @@ echo "<div class = 'e' ><form action='auto.php' method='post'>
 <input type='text' name='n' maxlength='20'/><br/>
 Пароль:<br/>
 <input type='password' name='p' maxlength='20'/><br/>
-<input type='checkbox' name='mem' value='1'/>Запомнить меня<br/>
+<input type='checkbox' name='mem' value='1' checked='checked' />Запомнить меня<br/>
 <input type='submit' value='Вход'/>
 </form></div>";
 echo "<br/><a href='str/skl.php?continue'>Забыли пароль?</a><br/><br/>";

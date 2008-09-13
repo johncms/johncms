@@ -71,7 +71,7 @@ if ($dostlmod == 1)
                     $ch = $fname;
                     @chmod("$ch", 0777);
                     @chmod("temp/$ch", 0777);
-                    $txt = file_get_contents("temp/$ch ");
+                    $txt = file_get_contents("temp/$ch");
                     if (mb_check_encoding($txt, 'UTF-8'))
                     {
                     } elseif (mb_check_encoding($txt, 'windows-1251'))

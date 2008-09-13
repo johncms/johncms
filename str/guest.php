@@ -340,13 +340,13 @@ switch ($act)
         {
             // Запрос для Админ клуба
             echo '<b>АДМИН-КЛУБ</b><hr class="redhr" />';
-            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`
+            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
 			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='1' ORDER BY `time` DESC;");
         } else
         {
             // Запрос для обычной Гастивухи
             echo '<hr />';
-            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`
+            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
 			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='0' ORDER BY `time` DESC;");
         }
         $colmes = mysql_num_rows($req);
@@ -383,16 +383,10 @@ switch ($act)
                 echo $div;
                 if ($res['user_id'] != "0")
                 {
+                    // Значек нового юзера
+					echo $res['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
                     // Значок пола
-                    switch ($res['sex'])
-                    {
-                        case "m":
-                            echo '<img src="../images/m.gif" alt=""/>&nbsp;';
-                            break;
-                        case "zh":
-                            echo '<img src="../images/f.gif" alt=""/>&nbsp;';
-                            break;
-                    }
+                    echo '<img src="../images/' . ($res['sex'] == 'm' ? 'm' : 'f') . '.gif" alt=""/>&nbsp;';
                     // Ник юзера и ссылка на Анкету
                     if (!empty($user_id) && ($user_id != $res['user_id']))
                     {
@@ -435,7 +429,7 @@ switch ($act)
                 $vr = date("d.m.y / H:i", $vrp);
                 echo ' <font color="#999999">(' . $vr . ')</font><br/>';
                 if (!empty($res['status']))
-                    echo '<div class="status"><img src="../images/star.gif" alt=""/>&nbsp;'.$res['status'] . '</div>';
+                    echo '<div class="status"><img src="../images/star.gif" alt=""/>&nbsp;' . $res['status'] . '</div>';
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
                 if ($res['user_id'] != "0")
                 {

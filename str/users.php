@@ -20,15 +20,9 @@ $textl = 'Юзеры';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
 echo '<div class="phdr">Список пользователей</div>';
-$q = mysql_query("select `id`, `name`, `sex`, `lastdate` from `users`;");
-$count = mysql_num_rows($q);
-if (empty($_GET['page']))
-{
-    $page = 1;
-} else
-{
-    $page = intval($_GET['page']);
-}
+$req = mysql_query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg` FROM `users` ORDER BY `datereg` DESC;");
+$count = mysql_num_rows($req);
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $start = $page * 10 - 10;
 if ($count < $start + 10)
 {
@@ -37,10 +31,12 @@ if ($count < $start + 10)
 {
     $end = $start + 10;
 }
-while ($arr = mysql_fetch_array($q))
+while ($arr = mysql_fetch_array($req))
 {
     if ($i >= $start && $i < $end)
     {
+        echo '<div class="menu">';
+        echo $arr['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
         if ($arr['sex'] == "m")
         {
             echo '<img src="../images/m.gif" alt=""/>&nbsp;';
@@ -50,7 +46,7 @@ while ($arr = mysql_fetch_array($q))
         }
         if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr['id'])
         {
-            print "<b>$arr[name]</b>";
+            print '<b>' . $arr['name'] . '</b>';
         } else
         {
             print "<a href='anketa.php?user=" . $arr['id'] . "'>$arr[name]</a>";
@@ -88,10 +84,11 @@ while ($arr = mysql_fetch_array($q))
         {
             echo '<font color="#00AA00"> [ON]</font><br/>';
         }
+        echo '</div>';
     }
     ++$i;
 }
-    echo "<hr/><p>";
+echo '<div class="bmenu">Всего: ' . $count . '</div><p>';
 if ($count > 10)
 {
     $ba = ceil($count / 10);
@@ -161,15 +158,12 @@ if ($count > 10)
     {
         echo "<b>[$page]</b>";
     }
-
-
     if ($count > $start + 10)
     {
         echo ' <a href="users.php?page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
     echo "<form action='users.php'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
-echo "<div>Всего: $count</div>";
 echo '<a href="' . $_SESSION['refsm'] . '">Назад</a></p>';
 
 require_once ("../incfiles/end.php");

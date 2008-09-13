@@ -17,13 +17,7 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Cache-Control: no-cache, must-revalidate");
 header("Pragma: no-cache");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
-if (stristr($agn, "msie") && stristr($agn, "windows"))
-{
-    header('Content-type: text/html; charset=UTF-8');
-} else
-{
-    header('Content-type: application/xhtml+xml; charset=UTF-8');
-}
+header((stristr($agn, "msie") && stristr($agn, "windows")) ? 'Content-type: text/html; charset=UTF-8' : 'Content-type: application/xhtml+xml; charset=UTF-8');
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" ';
 echo "\n" . '"http://www.wapforum.org/DTD/xhtml-mobile10.dtd">';

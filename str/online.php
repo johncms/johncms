@@ -64,10 +64,14 @@ while ($arr = mysql_fetch_array($q))
 
         if (empty($_SESSION['uid']) || $_SESSION['uid'] == $arr['id'])
         {
-            print "$div $pol <b>$arr[name]</b>";
+            echo $div;
+            echo $arr['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
+			print "$pol <b>$arr[name]</b>";
         } else
         {
-            print "$div $pol <a href='anketa.php?user=" . $arr['id'] . "'>$arr[name]</a>";
+            echo $div;
+			echo $arr['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
+			print "$pol <a href='anketa.php?user=" . $arr['id'] . "'>$arr[name]</a>";
         }
         switch ($arr['rights'])
         {

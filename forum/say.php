@@ -15,7 +15,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$agn = strtok($agn, ' ');
 if (empty($_GET['id']) || !$user_id || $ban['1'] || $ban['11'])
 {
     require_once ("../incfiles/head.php");
@@ -61,7 +60,8 @@ switch ($tip)
             {
                 $msg = trans($msg);
             }
-            mysql_query("insert into `forum` set 
+            $agn = strtok($agn, ' ');
+			mysql_query("insert into `forum` set 
 			`refid`='" . $id . "',
 			`type`='m',
 			`time`='" . $realtime . "',
@@ -149,11 +149,11 @@ switch ($tip)
                 exit;
             }
             $msg = check(trim($_POST['msg']));
-            if ($_POST[msgtrans] == 1)
+            if ($_POST['msgtrans'] == 1)
             {
                 $msg = trans($msg);
             }
-            $to = $type1[from];
+            $to = $type1['from'];
             if (isset($_GET['cyt']))
             {
                 if (!empty($_POST['citata']))
@@ -161,14 +161,14 @@ switch ($tip)
                     $citata = trim($_POST['citata']);
                 } else
                 {
-                    $citata = $type1[text];
+                    $citata = $type1['text'];
                 }
                 $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
                 $citata = strip_tags($citata, "<br/>");
                 $citata = mb_strcut($citata, 0, 200);
                 $citata = check($citata);
                 $citata = str_replace("&lt;br/&gt;", "<br/>", $citata);
-                $tp = date("d.m.Y/H:i", $type1[time]);
+                $tp = date("d.m.Y/H:i", $type1['time']);
                 $msg = "[c]$to($tp):&quot; $citata &quot;[/c]$msg";
                 $to = "";
             }
@@ -201,9 +201,9 @@ switch ($tip)
             } else
             {
                 $np2 = mysql_fetch_array($np);
-                mysql_query("update `forum` set  time='" . $realtime . "' where id='" . $np2[id] . "';");
+                mysql_query("update `forum` set  time='" . $realtime . "' where id='" . $np2['id'] . "';");
             }
-            $addfiles = intval($_POST[addfiles]);
+            $addfiles = intval($_POST['addfiles']);
             if ($addfiles == 1)
             {
                 header("Location: index.php?id=$fadd&act=addfile");
@@ -214,18 +214,18 @@ switch ($tip)
         } else
         {
             require_once ("../incfiles/head.php");
-            if (!empty($type1[to]))
+            if (!empty($type1['to']))
             {
                 $qt = "$type1[to], $type1[text]";
             } else
             {
                 $qt = " $type1[text]";
             }
-            $user = mysql_query("select * from `users` where name='" . $type1[from] . "';");
+            $user = mysql_query("select * from `users` where name='" . $type1['from'] . "';");
             $udat = mysql_fetch_array($user);
             echo "<b><font color='" . $conik . "'>$type1[from]</font></b>";
             echo " (id: $udat[id])";
-            $ontime = $udat[lastdate];
+            $ontime = $udat['lastdate'];
             $ontime2 = $ontime + 300;
             if ($realtime > $ontime2)
             {
@@ -234,11 +234,11 @@ switch ($tip)
             {
                 echo "<font color='" . $cons . "'> [ON]</font><br/>";
             }
-            if ($udat[dayb] == $day && $udat[monthb] == $mon)
+            if ($udat['dayb'] == $day && $udat['monthb'] == $mon)
             {
                 echo "<font color='" . $cdinf . "'>ИМЕНИННИК!!!</font><br/>";
             }
-            switch ($udat[rights])
+            switch ($udat['rights'])
             {
                 case 7:
                     echo ' Админ ';
@@ -265,9 +265,9 @@ switch ($tip)
                     echo ' юзер ';
                     break;
             }
-            if (!empty($udat[status]))
+            if (!empty($udat['status']))
             {
-                $stats = $udat[status];
+                $stats = $udat['status'];
                 $stats = smiles($stats);
                 $stats = smilescat($stats);
 
@@ -306,10 +306,10 @@ switch ($tip)
                         }
                         if ($v == 5)
                         {
-                            if (!empty($udat[mail]))
+                            if (!empty($udat['mail']))
                             {
                                 echo "$nmen[$v]: ";
-                                if ($udat[mailvis] == 1)
+                                if ($udat['mailvis'] == 1)
                                 {
                                     echo "$udat[mail]<br/>";
                                 } else
@@ -320,17 +320,17 @@ switch ($tip)
                         }
                         if ($v == 8)
                         {
-                            if (!empty($udat[www]))
+                            if (!empty($udat['www']))
                             {
-                                $sit = str_replace("http://", "", $udat[www]);
+                                $sit = str_replace("http://", "", $udat['www']);
                                 echo "$nmen[$v]: <a href='$udat[www]'>$sit</a><br/>";
                             }
                         }
                         if ($v == 7)
                         {
-                            if ((!empty($udat[dayb])) && (!empty($udat[monthb])))
+                            if ((!empty($udat['dayb'])) && (!empty($udat['monthb'])))
                             {
-                                $mnt = $udat[monthb];
+                                $mnt = $udat['monthb'];
                                 echo "$nmen[$v]: $udat[dayb] $mesyac[$mnt]<br/>";
                             }
                         }
@@ -338,33 +338,33 @@ switch ($tip)
                 }
                 if ($dostkmod == 1)
                 {
-                    echo "<a href='../" . $admp . "/zaban.php?user=" . $udat[id] . "&amp;forum&amp;id=" . $id . "'>Банить</a><br/>";
+                    echo '<a href="../' . $admp . '/zaban.php?do=ban&amp;id=' . $udat['id'] . '&amp;fid=' . $id . '">Банить</a><br/>';
                 } elseif ($dostfmod == 1)
                 {
-                    echo "<a href='../" . $admp . "/zaban.php?user=" . $udat[id] . "&amp;forum&amp;id=" . $id . "'>Пнуть</a><br/>";
+                    echo "<a href='../" . $admp . "/zaban.php?user=" . $udat['id'] . "&amp;forum&amp;id=" . $id . "'>Пнуть</a><br/>";
                 }
-                echo "<a href='../str/anketa.php?user=" . $udat[id] . "'>Подробнее...</a><br/>";
+                echo "<a href='../str/anketa.php?user=" . $udat['id'] . "'>Подробнее...</a><br/>";
                 $contacts = mysql_query("select * from `privat` where me='$login' and cont='" . $udat['name'] . "';");
                 $conts = mysql_num_rows($contacts);
                 if ($conts != 1)
                 {
-                    echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat[name] . "&amp;add=1'>Добавить в контакты</a><br/>";
+                    echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в контакты</a><br/>";
                 } else
                 {
-                    echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat[name] . "'>Удалить из контактов</a><br/>";
+                    echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из контактов</a><br/>";
                 }
                 $igns = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $udat['name'] . "';");
                 $ignss = mysql_num_rows($igns);
                 if ($igns != 1)
                 {
-                    echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat[name] . "&amp;add=1'>Добавить в игнор</a><br/>";
+                    echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в игнор</a><br/>";
                 } else
                 {
-                    echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat[name] . "'>Удалить из игнора</a><br/>";
+                    echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из игнора</a><br/>";
                 }
-                echo "<a href='../str/pradd.php?act=write&amp;adr=" . $udat[id] . "'>Написать в приват</a><br/>";
+                echo "<a href='../str/pradd.php?act=write&amp;adr=" . $udat['id'] . "'>Написать в приват</a><br/>";
             }
-            if ($th1[edit] == 1)
+            if ($th1['edit'] == 1)
             {
                 echo "Вы не можете писать в закрытую тему<br/><a href='?id=" . $th . "'>В тему</a><br/>";
                 require_once ("../incfiles/end.php");
@@ -372,13 +372,13 @@ switch ($tip)
             }
             if (isset($_GET['cyt']))
             {
-                if (($datauser[postforum] == "" || $datauser[postforum] == 0))
+                if (($datauser['postforum'] == "" || $datauser['postforum'] == 0))
                 {
                     if (!isset($_GET['yes']))
                     {
                         include ("../pages/forum.txt");
 
-                        echo "<a href='?act=say&amp;id=" . $id . "&amp;yes&amp;cyt'>Согласен</a>|<a href='?id=" . $type1[refid] . "'>Не согласен</a><br/>";
+                        echo "<a href='?act=say&amp;id=" . $id . "&amp;yes&amp;cyt'>Согласен</a>|<a href='?id=" . $type1['refid'] . "'>Не согласен</a><br/>";
                         require_once ("../incfiles/end.php");
                         exit;
                     }
@@ -392,13 +392,13 @@ switch ($tip)
                     "&amp;cyt' method='post' enctype='multipart/form-data'><textarea cols='20' title='Редактирование цитаты' rows='3' name='citata'>$qt</textarea><br/>Ответ(max. 500):<br/>";
             } else
             {
-                if (($datauser[postforum] == "" || $datauser[postforum] == 0))
+                if (($datauser['postforum'] == "" || $datauser['postforum'] == 0))
                 {
                     if (!isset($_GET['yes']))
                     {
                         include ("../pages/forum.txt");
 
-                        echo "<a href='?act=say&amp;id=" . $id . "&amp;yes'>Согласен</a>|<a href='?id=" . $type1[refid] . "'>Не согласен</a><br/>";
+                        echo "<a href='?act=say&amp;id=" . $id . "&amp;yes'>Согласен</a>|<a href='?id=" . $type1['refid'] . "'>Не согласен</a><br/>";
                         require_once ("../incfiles/end.php");
                         exit;
                     }
@@ -414,7 +414,7 @@ switch ($tip)
             echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/><br/></form>";
         }
         echo "<a href='index.php?act=trans'>Транслит</a><br /><a href='../str/smile.php'>Смайлы</a><br/>";
-        echo "<a href='?id=" . $type1[refid] . "'>Назад</a><br/>";
+        echo "<a href='?id=" . $type1['refid'] . "'>Назад</a><br/>";
         break;
 
     default:

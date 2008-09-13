@@ -63,7 +63,7 @@ if ($user_id)
                 }
                 $typ = mysql_query("select * from `chat` where id='" . $id . "';");
                 $ms = mysql_fetch_array($typ);
-                if ($ms[type] != "r")
+                if ($ms['type'] != "r")
                 {
                     require_once ("../incfiles/head.php");
                     echo "Ошибка!<br/><a href='index.php?'>В чат</a><br/>";
@@ -102,14 +102,14 @@ if ($user_id)
             {
                 while ($mod1 = mysql_fetch_array($mod))
                 {
-                    if ($login != $mod1[name])
+                    if ($login != $mod1['name'])
                     {
-                        echo "<a href='../str/anketa.php?user=" . $mod1[id] . "'><font color='" . $conik . "'>$mod1[name]</font></a>";
+                        echo "<a href='../str/anketa.php?user=" . $mod1['id'] . "'><font color='" . $conik . "'>$mod1[name]</font></a>";
                     } else
                     {
                         echo "<font color='" . $csnik . "'>$mod1[name]</font>";
                     }
-                    $ontime = $mod1[lastdate];
+                    $ontime = $mod1['lastdate'];
                     $ontime2 = $ontime + 300;
                     if ($realtime > $ontime2)
                     {
@@ -135,7 +135,6 @@ if ($user_id)
             break;
 
         case "say":
-            $agn = strtok($agn, ' ');
             if (empty($id))
             {
                 require_once ("../incfiles/head.php");
@@ -152,7 +151,7 @@ if ($user_id)
             }
             $type = mysql_query("select * from `chat` where id= '" . $id . "';");
             $type1 = mysql_fetch_array($type);
-            $tip = $type1[type];
+            $tip = $type1['type'];
             switch ($tip)
             {
                 case "r":
@@ -183,36 +182,36 @@ if ($user_id)
                         {
                             $msg = trans($msg);
                         }
-
+                        $agn = strtok($agn, ' ');
                         mysql_query("insert into `chat` values(0,'" . $id . "','','m','" . $realtime . "','" . $login . "','','0','" . $msg . "','" . $ipp . "','" . mysql_real_escape_string($agn) . "','','');");
-                        if (empty($datauser[postchat]))
+                        if (empty($datauser['postchat']))
                         {
                             $fpst = 1;
                         } else
                         {
-                            $fpst = $datauser[postchat] + 1;
+                            $fpst = $datauser['postchat'] + 1;
                         }
                         mysql_query("update `users` set  postchat='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
-                        if ($type1[dpar] == "vik")
+                        if ($type1['dpar'] == "vik")
                         {
                             $protv = mysql_query("select * from `chat` where dpar='vop' and type='m' order by time desc;");
                             while ($protv2 = mysql_fetch_array($protv))
                             {
-                                $prr[] = $protv2[id];
+                                $prr[] = $protv2['id'];
                             }
                             $pro = mysql_query("select * from `chat` where dpar='vop' and type='m' and id='" . $prr[0] . "';");
                             $protv1 = mysql_fetch_array($pro);
                             $prr = array();
-                            $ans = $protv1[realid];
+                            $ans = $protv1['realid'];
                             $vopr = mysql_query("select * from `vik` where id='" . $ans . "';");
                             $vopr1 = mysql_fetch_array($vopr);
-                            $answer = $vopr1[otvet];
-                            if (!empty($msg) && !empty($answer) && $protv1[otv] != 1)
+                            $answer = $vopr1['otvet'];
+                            if (!empty($msg) && !empty($answer) && $protv1['otv'] != 1)
                             {
                                 if (preg_match("/$answer/i", "$msg"))
                                 {
-                                    $itg = $datauser[otvetov] + 1;
-                                    switch ($protv1[otv])
+                                    $itg = $datauser['otvetov'] + 1;
+                                    switch ($protv1['otv'])
                                     {
                                         case "2":
                                             $pods = ", не используя подсказок";
@@ -227,9 +226,9 @@ if ($user_id)
                                             $bls = 2;
                                             break;
                                     }
-                                    $balans = $datauser[balans] + $bls;
-                                    $otvtime = $realtime - $protv1[time];
-                                    if ($datauser[sex] == "m")
+                                    $balans = $datauser['balans'] + $bls;
+                                    $otvtime = $realtime - $protv1['time'];
+                                    if ($datauser['sex'] == "m")
                                     {
                                         $tx = "молодец! Ты угадал правильный ответ:  $answer за $otvtime секунд $pods ,и заработал $bls баллов. Всего правильных ответов:<b>$itg</b>, твой игровой баланс $balans баллов.";
                                     } else
@@ -239,7 +238,7 @@ if ($user_id)
                                     $mtim = $realtime + 1;
                                     mysql_query("INSERT INTO `chat` VALUES(
 '0','" . $id . "','','m','" . $mtim . "','Умник','" . $login . "','', '" . $tx . "', '127.0.0.1', 'Nokia3310', '','');");
-                                    mysql_query("update `chat` set otv='1' where id='" . $protv1[id] . "';");
+                                    mysql_query("update `chat` set otv='1' where id='" . $protv1['id'] . "';");
                                     mysql_query("update `users` set otvetov='" . $itg . "',balans='" . $balans . "' where id='" . intval($_SESSION['uid']) . "';");
                                 }
                             }
@@ -249,7 +248,7 @@ if ($user_id)
                     {
                         require_once ("chat_header.php");
                         echo 'Добавление сообщения<br />(max. 500)';
-                        echo '<div class="title1">' . $type1[text] . '</div>';
+                        echo '<div class="title1">' . $type1['text'] . '</div>';
                         echo "<form action='index.php?act=say&amp;id=" . $id . "' method='post'><textarea cols='40' rows='3' title='Введите текст сообщения' name='msg'></textarea><br/>";
                         if ($offtr != 1)
                         {
@@ -262,7 +261,7 @@ if ($user_id)
                     break;
 
                 case "m":
-                    $th = $type1[refid];
+                    $th = $type1['refid'];
                     $th2 = mysql_query("select * from `chat` where id= '" . $th . "';");
                     $th1 = mysql_fetch_array($th2);
                     if (isset($_POST['submit']))
@@ -284,24 +283,24 @@ if ($user_id)
                             require_once ("../incfiles/end.php");
                             exit;
                         }
-                        $to = $type1[from];
+                        $to = $type1['from'];
                         $priv = intval($_POST['priv']);
                         $nas = check($_POST['nas']);
                         $msg = check(trim($_POST['msg']));
 
                         $msg = mb_substr($msg, 0, 500);
-                        if ($_POST[msgtrans] == 1)
+                        if ($_POST['msgtrans'] == 1)
                         {
                             $msg = trans($msg);
                         }
 
                         mysql_query("insert into `chat` values(0,'" . $th . "','','m','" . $realtime . "','" . $login . "','" . $to . "','" . $priv . "','" . $msg . "','" . $ipp . "','" . mysql_real_escape_string($agn) . "','" . $nas . "','');");
-                        if (empty($datauser[postchat]))
+                        if (empty($datauser['postchat']))
                         {
                             $fpst = 1;
                         } else
                         {
-                            $fpst = $datauser[postchat] + 1;
+                            $fpst = $datauser['postchat'] + 1;
                         }
                         mysql_query("update `users` set  postchat='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
                         if ($th1[dpar] == "vik")
@@ -309,21 +308,21 @@ if ($user_id)
                             $protv = mysql_query("select * from `chat` where dpar='vop' and type='m' order by time desc;");
                             while ($protv2 = mysql_fetch_array($protv))
                             {
-                                $prr[] = $protv2[id];
+                                $prr[] = $protv2['id'];
                             }
                             $pro = mysql_query("select * from `chat` where dpar='vop' and type='m' and id='" . $prr[0] . "';");
                             $protv1 = mysql_fetch_array($pro);
                             $prr = array();
-                            $ans = $protv1[realid];
+                            $ans = $protv1['realid'];
                             $vopr = mysql_query("select * from `vik` where id='" . $ans . "';");
                             $vopr1 = mysql_fetch_array($vopr);
-                            $answer = $vopr1[otvet];
-                            if (!empty($msg) && !empty($answer) && $protv1[otv] != 1)
+                            $answer = $vopr1['otvet'];
+                            if (!empty($msg) && !empty($answer) && $protv1['otv'] != 1)
                             {
                                 if (preg_match("/$answer/i", "$msg"))
                                 {
-                                    $itg = $datauser[otvetov] + 1;
-                                    switch ($protv1[otv])
+                                    $itg = $datauser['otvetov'] + 1;
+                                    switch ($protv1['otv'])
                                     {
                                         case "2":
                                             $pods = ", не используя подсказок";
@@ -338,9 +337,9 @@ if ($user_id)
                                             $bls = 2;
                                             break;
                                     }
-                                    $balans = $datauser[balans] + $bls;
-                                    $otvtime = $realtime - $protv1[time];
-                                    if ($datauser[sex] == "m")
+                                    $balans = $datauser['balans'] + $bls;
+                                    $otvtime = $realtime - $protv1['time'];
+                                    if ($datauser['sex'] == "m")
                                     {
                                         $tx = "молодец! Ты угадал правильный ответ:  $answer за $otvtime секунд $pods ,и заработал $bls баллов. Всего правильных ответов:<b>$itg</b>, твой игровой баланс $balans баллов.";
                                     } else
@@ -350,7 +349,7 @@ if ($user_id)
                                     $mtim = $realtime + 1;
                                     mysql_query("INSERT INTO `chat` VALUES(
 '0','" . $th . "','','m','" . $mtim . "','Умник','" . $login . "','', '" . $tx . "', '127.0.0.1', 'Nokia3310', '','');");
-                                    mysql_query("update `chat` set otv='1' where id='" . $protv1[id] . "';");
+                                    mysql_query("update `chat` set otv='1' where id='" . $protv1['id'] . "';");
                                     mysql_query("update `users` set otvetov='" . $itg . "',balans='" . $balans . "' where id='" . intval($_SESSION['uid']) . "';");
                                 }
                             }
@@ -359,14 +358,14 @@ if ($user_id)
                     } else
                     {
                         require_once ("../incfiles/head.php");
-                        $user = mysql_query("select * from `users` where name='" . $type1[from] . "';");
+                        $user = mysql_query("select * from `users` where name='" . $type1['from'] . "';");
                         $ruz = mysql_num_rows($user);
                         if ($ruz != 0)
                         {
                             $udat = mysql_fetch_array($user);
                             echo "<b><font color='" . $conik . "'>$type1[from]</font></b>";
                             echo " (id: $udat[id])";
-                            $ontime = $udat[lastdate];
+                            $ontime = $udat['lastdate'];
                             $ontime2 = $ontime + 300;
                             if ($realtime > $ontime2)
                             {
@@ -375,11 +374,11 @@ if ($user_id)
                             {
                                 echo "<font color='" . $cons . "'> [ON]</font><br/>";
                             }
-                            if ($udat[dayb] == $day && $udat[monthb] == $mon)
+                            if ($udat['dayb'] == $day && $udat['monthb'] == $mon)
                             {
                                 echo "<font color='" . $cdinf . "'>ИМЕНИННИК!!!</font><br/>";
                             }
-                            switch ($udat[rights])
+                            switch ($udat['rights'])
                             {
                                 case 7:
                                     echo ' Админ ';
@@ -407,9 +406,9 @@ if ($user_id)
                                     break;
                             }
                             echo "<br/>";
-                            if (!empty($udat[status]))
+                            if (!empty($udat['status']))
                             {
-                                $stats = $udat[status];
+                                $stats = $udat['status'];
                                 $stats = smiles($stats);
                                 $stats = smilescat($stats);
 
@@ -425,7 +424,7 @@ if ($user_id)
                             {
                                 echo "Девушка<br/>";
                             }
-                            if (!empty($udat[balans]))
+                            if (!empty($udat['balans']))
                             {
                                 echo "Игровой баланс: $udat[balans] баллов<br/>";
                             }
@@ -433,12 +432,12 @@ if ($user_id)
                             {
                                 echo "<font color='" . $cdinf . "'>Бан!</font><br/>";
                             }
-                            if (empty($udat[nastroy]))
+                            if (empty($udat['nastroy']))
                             {
                                 $nstr = "без настроения";
                             } else
                             {
-                                $nstr = $udat[nastroy];
+                                $nstr = $udat['nastroy'];
                             }
                             echo "Настроение: $udat[nastroy]<br/>";
                         }
@@ -483,7 +482,7 @@ if ($user_id)
                         echo "<a href='index.php?act=trans'>Транслит</a><br/><a href='../str/smile.php'>Смайлы</a><br/>";
                         if ($ruz != 0)
                         {
-                            echo "<br/><a href='../str/pradd.php?act=write&amp;adr=" . $udat[id] . "'>Написать в приват</a><br/>";
+                            echo "<br/><a href='../str/pradd.php?act=write&amp;adr=" . $udat['id'] . "'>Написать в приват</a><br/>";
 
                             $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
                             $nmen1 = array(1 => "imname", "live", "about", "icq", "mail", "mibila", "Дата рождения ", "www");
@@ -503,10 +502,10 @@ if ($user_id)
                                     }
                                     if ($v == 5)
                                     {
-                                        if (!empty($udat[mail]))
+                                        if (!empty($udat['mail']))
                                         {
                                             echo "$nmen[$v]: ";
-                                            if ($udat[mailvis] == 1)
+                                            if ($udat['mailvis'] == 1)
                                             {
                                                 echo "$udat[mail]<br/>";
                                             } else
@@ -517,51 +516,51 @@ if ($user_id)
                                     }
                                     if ($v == 8)
                                     {
-                                        if (!empty($udat[www]))
+                                        if (!empty($udat['www']))
                                         {
-                                            $sit = str_replace("http://", "", $udat[www]);
+                                            $sit = str_replace("http://", "", $udat['www']);
                                             echo "$nmen[$v]: <a href='$udat[www]'>$sit</a><br/>";
                                         }
                                     }
                                     if ($v == 7)
                                     {
-                                        if ((!empty($udat[dayb])) && (!empty($udat[monthb])))
+                                        if ((!empty($udat['dayb'])) && (!empty($udat['monthb'])))
                                         {
-                                            $mnt = $udat[monthb];
+                                            $mnt = $udat['monthb'];
                                             echo "$nmen[$v]: $udat[dayb] $mesyac[$mnt]<br/>";
                                         }
                                     }
                                 }
                             }
 
-                            echo "<a href='../str/anketa.php?user=" . $udat[id] . "'>Подробнее...</a><br/>";
+                            echo "<a href='../str/anketa.php?user=" . $udat['id'] . "'>Подробнее...</a><br/>";
                             if ($dostkmod == 1)
                             {
-                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat[id] . "&amp;chat&amp;id=" . $id . "'>Банить</a><br/>";
+                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat['id'] . "&amp;chat&amp;id=" . $id . "'>Банить</a><br/>";
                             } elseif ($dostcmod == 1)
                             {
-                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat[id] . "&amp;chat&amp;id=" . $id . "'>Пнуть</a><br/>";
+                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat['id'] . "&amp;chat&amp;id=" . $id . "'>Пнуть</a><br/>";
                             }
-                            $contacts = mysql_query("select * from `privat` where me='" . $login . "' and cont='" . $udat[name] . "';");
+                            $contacts = mysql_query("select * from `privat` where me='" . $login . "' and cont='" . $udat['name'] . "';");
                             $conts = mysql_num_rows($contacts);
                             if ($conts == 0)
                             {
-                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat[name] . "&amp;add=1'>Добавить в контакты</a><br/>";
+                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в контакты</a><br/>";
                             } else
                             {
-                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat[name] . "'>Удалить из контактов</a><br/>";
+                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из контактов</a><br/>";
                             }
-                            $igns = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $udat[name] . "';");
+                            $igns = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $udat['name'] . "';");
                             $ignss = mysql_num_rows($igns);
                             if ($ignss == 0)
                             {
-                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat[name] . "&amp;add=1'>Добавить в игнор</a><br/>";
+                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в игнор</a><br/>";
                             } else
                             {
-                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat[name] . "'>Удалить из игнора</a><br/>";
+                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из игнора</a><br/>";
                             }
                         }
-                        echo "<a href='index.php?id=" . $type1[refid] . "'>Назад</a><br/>";
+                        echo "<a href='index.php?id=" . $type1['refid'] . "'>Назад</a><br/>";
                     }
                     break;
 

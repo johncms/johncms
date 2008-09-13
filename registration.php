@@ -114,7 +114,7 @@ if (isset($_POST['submit']))
 			`about`='" . $reg_about . "',
 			`sex`='" . $reg_sex . "',
 			`rights`='0',
-			`ip`='" . $ipp . "',
+			`ip`='" . $ipl . "',
 			`browser`='" . $agn . "',
 			`datereg`='" . $realtime . "',
 			`preg`='" . $preg . "';");

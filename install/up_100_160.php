@@ -24,7 +24,7 @@ a:hover { text-decoration: none; font-size: 12px; color : #E4F992 }
 .gray{ color: #FF0000; font: small; }
 </style>
 </head><body>";
-echo '<big><b>JohnCMS v.1.5.0</b></big><br />Обновление системы<hr />';
+echo '<big><b>JohnCMS v.1.6.0</b></big><br />Обновление системы<hr />';
 $error = false;
 $do = isset($_GET['do']) ? $_GET['do'] : '';
 switch ($do)
@@ -70,7 +70,7 @@ switch ($do)
         // Удаление старой таблицы настроек
         mysql_query("DROP TABLE IF EXISTS `settings`;");
         echo '<span class="green">OK</span> перенос настроек<br />';
-        echo '<hr /><a href="update.php?do=final">Продолжить</a>';
+        echo '<hr /><a href="up_100_160.php?do=final">Продолжить</a>';
         break;
 
     case 'final':
@@ -81,9 +81,9 @@ switch ($do)
     default:
         echo '<p><big><span class="red">ВНИМАНИЕ!</span></big><br />Перед началом процедуры обновления, ОБЯЗАТЕЛЬНО сделайте резервную копию базы данных.';
         echo '<br />Если по какой то причине обновление не пройдет до конца, Вам придется восстанавливать базу из резервной копии.</p>';
-        echo '<p>Учтите, что обновление возможно ТОЛЬКО(!!!) для версий системы не ниже 1.0.0<br />Бета и RC-1, RC-2 версии с данным обновлением несовместимы.</p>';
+        echo '<p>Учтите, что обновление возможно только для версий системы 1.0.0, или 1.0.1<br />Бета и RC-1, RC-2 версии с данным обновлением несовместимы.</p>';
         echo '<hr />Если Вы нажмете ссылку "Продолжить", то отмена изменений будет невозможна без восстановления из резервной копии.<br />Вы уверены?';
-        echo '<br /><a href="update.php?do=update">Продолжить</a>';
+        echo '<br /><a href="up_100_160.php?do=update">Продолжить</a>';
 }
 
 echo '</body>

@@ -39,7 +39,7 @@ if ($ms['type'] != "m")
     require_once ('../incfiles/end.php');
     exit;
 }
-echo "<b>$ms[from]</b><br/>";
+echo '<div class="menu"><b>' . $ms['from'] . '</b><br />';
 $tekst = $ms['text'];
 $tekst = tags($tekst);
 $uz = @mysql_query("select `id`, `from`, `rights` FROM `users` where name='" . $ms['from'] . "';");
@@ -49,24 +49,24 @@ if ($offsm != 1 && $offgr != 1)
     $tekst = smiles($tekst);
     $tekst = smilescat($tekst);
 
-    if ($ms[from] == nickadmina || $ms[from] == nickadmina2 || $mass1[rights] >= 1)
+    if ($ms['from'] == nickadmina || $ms['from'] == nickadmina2 || $mass1['rights'] >= 1)
     {
         $tekst = smilesadm($tekst);
     }
 }
-echo $tekst;
-echo "<br/>";
-echo "</div><div class='a'>";
-$q5 = mysql_query("select * from `forum` where type='t' and id='" . $ms[refid] . "';");
+echo $tekst . '</div>';
+//echo "</div><div class='a'>";
+$q5 = mysql_query("select * from `forum` where type='t' and id='" . $ms['refid'] . "';");
 $them = mysql_fetch_array($q5);
-$q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $them[refid] . "';");
+$q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $them['refid'] . "';");
 $razd = mysql_fetch_array($q3);
-$q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd[refid] . "';");
+$q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd['refid'] . "';");
 $frm = mysql_fetch_array($q4);
-echo "<div class='e'>&#187;<a href='index.php?id=" . $ms[refid] . "&amp;page=" . $s . "'>$them[text]</a><br/>";
-echo "&#187;<a href='index.php?id=" . $type1[refid] . "'>$razd[text]</a><br/>";
-echo "&#187;<a href='index.php?id=" . $razd[refid] . "'>$frm[text]</a><br/>";
+echo "<div>&#187;<a href='index.php?id=" . $ms['refid'] . "&amp;page=" . $s . "'>$them[text]</a><br/>";
+echo "&#187;<a href='index.php?id=" . $type1['refid'] . "'>$razd[text]</a><br/>";
+echo "&#187;<a href='index.php?id=" . $razd['refid'] . "'>$frm[text]</a><br/>";
 echo "&#187;<a href='index.php?'>В форум</a></div>";
-echo "</div><div class='a'>";
+//echo "</div><div class='a'>";
+
 
 ?>

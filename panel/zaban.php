@@ -94,7 +94,11 @@ if ($dostkmod == 1)
                 echo '<div class="menu">Забанил: ' . $res['ban_who'] . '</div>';
                 echo '<div class="menu">Когда: ' . gmdate('d.m.Y, H:i:s', $res['ban_while']) . '</div>';
                 echo '<div class="menu">Срок: ' . timecount($res['ban_time'] - $res['ban_while']) . '</div>';
-                echo '<div class="menu">Причина: ' . $res['ban_reason'] . '</div>';
+                echo '<div class="bmenu">Причина</div>';
+                if (!empty($res['ban_ref']))
+                    echo '<div class="menu">Нарушение <a href="' . $home . '/forum/index.php?act=post&amp;id=' . $res['ban_ref'] . '">на форуме</a></div>';
+                if (!empty($res['ban_reason']))
+                    echo '<div class="menu">' . $res['ban_reason'] . '</div>';
                 echo '<div class="bmenu">Осталось: ' . timecount($res['ban_time'] - $realtime) . '</div><p>';
                 echo '<a href="zaban.php?do=razban&amp;id=' . $id . '">Разбанить</a>';
                 if ($dostadm == 1)
@@ -148,7 +152,10 @@ if ($dostkmod == 1)
                     $term = isset($_POST['term']) ? intval($_POST['term']) : '';
                     $timeval = isset($_POST['timeval']) ? intval($_POST['timeval']) : '';
                     $time = isset($_POST['time']) ? intval($_POST['time']) : '';
-                    $reason = !empty($_POST['reason']) ? check($_POST['reason']) : 'Причина не указана';
+                    $reason = !empty($_POST['reason']) ? check($_POST['reason']) : '';
+                    $banref = isset($_POST['banref']) ? intval($_POST['banref']) : '';
+                    if (empty($reason) && empty($banref))
+                        $reason = 'Причина не указана';
                     if (empty($term) || empty($timeval) || empty($time) || $timeval < 1)
                     {
                         echo 'Отсутствуют необходимые данные';
@@ -196,6 +203,7 @@ if ($dostkmod == 1)
 					`ban_while`='" . $realtime . "',
 					`ban_type`='" . $term . "',
 					`ban_who`='" . $login . "',
+					`ban_ref`='" . $banref . "',
 					`ban_reason`='" . $reason . "'
 					;");
                     $detail = mysql_insert_id();
@@ -224,6 +232,13 @@ if ($dostkmod == 1)
                     if ($dostadm == 1)
                         echo '<input name="time" type="radio" value="4" /><b>до отмены</b></div>';
                     echo '<div class="rmenu"><b>Причина Бана:</b></div>';
+                    if (isset($_GET['fid']))
+                    {
+                        // Если бан из форума, фиксируем ID поста
+                        $fid = intval($_GET['fid']);
+                        echo '<div class="menu">Нарушение <a href="' . $home . '/forum/index.php?act=post&amp;id=' . $fid . '">на форуме</a></div>';
+                        echo '<input type="hidden" value="' . $fid . '" name="banref" />';
+                    }
                     echo '<div class="menu"><textarea cols="20" rows="4" name="reason"></textarea></div>';
                     echo '<div class="bmenu"><input type="submit" name="submit" value="Банить"/></div>';
                     echo '</form>';

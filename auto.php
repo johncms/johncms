@@ -71,31 +71,6 @@ if ($res['preg'] == "0" && $res['regadm'] !== "")
 
 $user_id = $res['id'];
 
-/*
-// Если регистрация подтверждена
-if ($res['preg'] == "1" && $res['regadm'] !== "" && $res['pvrem'] == "0")
-{
-if (@mysql_query("update `users` set  pvrem='$realtime'  where name='" . check($_GET['n']) . "';"))
-{
-if (session_start())
-{
-if ($_GET['mem'] == 1)
-{
-$cpid = base64_encode(intval($provid));
-$ckod = base64_encode(intval($provkode));
-SetCookie("cpide", $cpid, time() + 3600 * 24 * 365);
-SetCookie("ckode", $ckod, time() + 3600 * 24 * 365);
-}
-$_SESSION['uid'] = intval($provid);
-$_SESSION['provc'] = intval($provkode);
-
-header("Location: index.php?enter&regprin");
-exit;
-}
-}
-}
-*/
-
 // Установка данных COOKIE
 if ($_POST['mem'] == 1)
 {
@@ -109,6 +84,6 @@ if ($_POST['mem'] == 1)
 $_SESSION['uid'] = $user_id;
 $_SESSION['ups'] = $user_ps;
 mysql_query("update `users` set `sestime`='" . $realtime . "' where `id`='" . $user_id . "';");
-header("Location: index.php");
+header("Location: index.php?mod=digest");
 
 ?>
