@@ -22,16 +22,8 @@ if (empty($_GET['id']))
     require_once ("../incfiles/end.php");
     exit;
 }
-$id = intval($_GET['id']);
 $s = intval($_GET['s']);
-if (!empty($_GET['page']))
-{
-    $page = intval($_GET['page']);
-} else
-{
-    $page = 1;
-}
-$typ = mysql_query("select * from `forum` where id='" . $id . "';");
+$typ = mysql_query("SELECT * FROM `forum` WHERE `id`='" . $id . "';");
 $ms = mysql_fetch_array($typ);
 if ($ms['type'] != "m")
 {
@@ -40,21 +32,23 @@ if ($ms['type'] != "m")
     exit;
 }
 echo '<div class="menu"><b>' . $ms['from'] . '</b><br />';
-$tekst = $ms['text'];
-$tekst = tags($tekst);
+$text = htmlentities($ms['text'], ENT_QUOTES, 'UTF-8');
+$text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
+$text = str_replace("\r\n", "<br/>", $text);
+$text = tags($text);
 $uz = @mysql_query("select `id`, `from`, `rights` FROM `users` where name='" . $ms['from'] . "';");
 $mass1 = @mysql_fetch_array($uz);
 if ($offsm != 1 && $offgr != 1)
 {
-    $tekst = smiles($tekst);
-    $tekst = smilescat($tekst);
+    $text = smiles($text);
+    $text = smilescat($text);
 
     if ($ms['from'] == nickadmina || $ms['from'] == nickadmina2 || $mass1['rights'] >= 1)
     {
-        $tekst = smilesadm($tekst);
+        $text = smilesadm($text);
     }
 }
-echo $tekst . '</div>';
+echo $text . '</div>';
 //echo "</div><div class='a'>";
 $q5 = mysql_query("select * from `forum` where type='t' and id='" . $ms['refid'] . "';");
 $them = mysql_fetch_array($q5);

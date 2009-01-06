@@ -27,13 +27,13 @@ class ipinit
     function ipinit()
     {
         // Получение реального IP адреса
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && ip2long($_SERVER['HTTP_X_FORWARDED_FOR']) != 0)
         {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } elseif (isset($_SERVER['HTTP_VIA']))
+        } elseif (isset($_SERVER['HTTP_VIA']) && ip2long($_SERVER['HTTP_VIA']) != 0)
         {
             $ip = $_SERVER['HTTP_VIA'];
-        } elseif (isset($_SERVER['REMOTE_ADDR']))
+        } elseif (isset($_SERVER['REMOTE_ADDR']) && ip2long($_SERVER['REMOTE_ADDR']) != 0)
         {
             $ip = $_SERVER['REMOTE_ADDR'];
         } else

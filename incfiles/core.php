@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -18,6 +19,11 @@ defined('_IN_JOHNCMS') or die('Error:restricted access');
 Error_Reporting(E_ALL & ~ E_NOTICE);
 Error_Reporting(ERROR | WARNING);
 mb_internal_encoding('UTF-8');
+
+// Включаем замер времени генерации страницы
+$mtime = explode(' ', microtime());
+$mtime = $mtime[1] + $mtime[0];
+$starttime = $mtime;
 
 if (!isset($rootpath))
     $rootpath = '../';
@@ -51,6 +57,13 @@ if (get_magic_quotes_gpc())
 }
 
 ////////////////////////////////////////////////////////////
+// Получаем и фильтруем основные переменные для системы   //
+////////////////////////////////////////////////////////////
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false; // Идентификатор
+$page = isset($_GET['page']) ? abs(intval($_GET['page'])) : 1; // Номер страницы
+$act = isset($_GET['act']) ? trim($_GET['act']) : ''; // Выбор действия
+
+////////////////////////////////////////////////////////////
 // 1) Получаем реальный IP                                //
 // 2) Проверяем на попытку HTTP флуда                     //
 ////////////////////////////////////////////////////////////
@@ -75,7 +88,7 @@ $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect t
 ////////////////////////////////////////////////////////////
 // Проверяем адрес IP на Бан                              //
 ////////////////////////////////////////////////////////////
-$req = mysql_query("SELECT `ban_type`, `link` FROM `cms_ban_ip` WHERE `ip`='" . $ipl . "';") or die('Error: table "cms_ban_ip"');
+$req = mysql_query("SELECT `ban_type`, `link` FROM `cms_ban_ip` WHERE `ip`='" . $ipl . "' LIMIT 1;") or die('Error: table "cms_ban_ip"');
 if (mysql_num_rows($req) != 0)
 {
     $res = mysql_fetch_array($req);
@@ -137,6 +150,7 @@ $home = $set['homeurl']; // Домашняя страница
 $ras_pages = $set['rashstr']; // Расширение текстовых страниц
 $admp = $set['admp']; // Папка с Админкой
 $flsz = $set['flsz']; // Максимальный размер файлов
+$skindef = $set['skindef'];// скин по умолчанию для гостей
 // Дата и время
 $realtime = time() + $sdvigclock * 3600;
 $mon = date("m", $realtime);
@@ -199,13 +213,13 @@ if ($user_id && $user_ps)
         {
             // Получение параметров пользователя
             $idus = $user_id;
+			$skin = $datauser['skin']; // скин юзера
             $login = $datauser['name']; // Логин (Ник) пользователя
             $sdvig = $datauser['sdvig']; // Сдвиг времени
             $kmess = $datauser['kolanywhwere']; // Число сообщений на страницу
             $offpg = $datauser['offpg'];
-            $offtr = $datauser['offtr']; // Выключить транслит
-            $offgr = $datauser['offgr']; // Выключить графику
-            $offsm = $datauser['offsm']; // Выключить смайлы
+            $offtr = $datauser['offtr'] ? 0 : 1; // Выключить транслит
+            $offsm = $datauser['offsm'] ? 0 : 1; // Выключить смайлы
             $upfp = $datauser['upfp'];
             $nmenu = $datauser['nmenu'];
             $chmes = $datauser['chmes'];
@@ -285,7 +299,7 @@ if ($user_id && $user_ps)
 			WHERE `id`='" . $user_id . "';");
 
             // Если юзера не было на сайте более 1-го часа , показываем дайджест
-            if ($lastdate < ($realtime - 3600))
+            if ($lastdate < ($realtime - 3600) && $datauser['digest'] == 1 && $headmod == 'mainpage')
                 header("Location: " . $home . "/index.php?mod=digest&last=" . $lastdate);
         } else
         {
@@ -310,8 +324,7 @@ if ($user_id && $user_ps)
 }
 
 // Подключаем дополнительные файлы
-require_once ($rootpath . 'incfiles/func.php'); // Вспомогательные функции
-require_once ($rootpath . 'incfiles/stat.php'); // Статистика
+require_once ($rootpath . 'incfiles/func.php');
 
 // Буфферизация вывода
 if ($set['gzip'] == 1)

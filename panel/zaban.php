@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -18,13 +19,125 @@ define('_IN_JOHNCMS', 1);
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
 
-if ($dostkmod == 1)
+if ($dostsmod == 1)
 {
     require_once ('../incfiles/ban.php');
     $id = isset($_GET['id']) ? intval($_GET['id']) : '';
     $do = isset($_GET['do']) ? $_GET['do'] : '';
     switch ($do)
     {
+        case 'clean':
+            ////////////////////////////////////////////////////////////
+            // Амнистия, запись в базу данных                         //
+            ////////////////////////////////////////////////////////////
+            if ($dostadm)
+            {
+                $amnesty = isset($_POST['amnesty']) ? intval($_POST['amnesty']) : '';
+                switch ($amnesty)
+                {
+                    case 1:
+                        // Амнистия
+                        $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . $realtime . "';");
+                        while ($res = mysql_fetch_array($req))
+                        {
+                            $ban_left = $res['ban_time'] - $realtime;
+                            if ($ban_left < 259200)
+                            {
+                                // Разбаниваем всех, кому осталось менее 3-х суток
+                                mysql_query("UPDATE `cms_ban_users` SET `ban_time`='" . $realtime . "', `ban_raz`='--Амнистия--' WHERE `id`='" . $res['id'] . "';");
+                            } elseif ($ban_left < 2592000)
+                            {
+                                // У кого бан менее 30 дней, уменьшаем срок в 2 раза
+                                $ban_time = $res['ban_time'] - (($res['ban_time'] - $realtime) / 2);
+                                mysql_query("UPDATE `cms_ban_users` SET `ban_time`='" . $ban_time . "', `ban_raz`='--Амнистия--' WHERE `id`='" . $res['id'] . "';");
+                            }
+                        }
+                        break;
+                    case 2:
+                        // Разбаниваем активные
+                        $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . $realtime . "';");
+                        while ($res = mysql_fetch_array($req))
+                        {
+                            $ban_left = $res['ban_time'] - $realtime;
+                            if ($ban_left < 2592000)
+                            {
+                                mysql_query("UPDATE `cms_ban_users` SET `ban_time`='" . $realtime . "', `ban_raz`='--Амнистия--' WHERE `id`='" . $res['id'] . "';");
+                            }
+                        }
+                        break;
+                    case 3:
+                        // Удаляем активные баны
+                        mysql_query("DELETE FROM `cms_ban_users` WHERE `ban_time` > '" . $realtime . "';");
+                        mysql_query("OPTIMIZE TABLE `cms_ban_users`;");
+                        break;
+                    case 4:
+                        // Удаляем историю у неактивных банов
+                        mysql_query("DELETE FROM `cms_ban_users` WHERE `ban_time` < '" . $realtime . "';");
+                        mysql_query("OPTIMIZE TABLE `cms_ban_users`;");
+                        break;
+                    case 5:
+                        // Полная очистка базы банов
+                        mysql_query("TRUNCATE TABLE `cms_ban_users`;");
+                        break;
+                    default:
+                        echo '<p>Ошибка</p>';
+                        require_once ("../incfiles/end.php");
+                        exit;
+                }
+                header("Location: zaban.php?do=amnesty&type=$amnesty&ok");
+            }
+            break;
+
+        case 'amnesty':
+            ////////////////////////////////////////////////////////////
+            // Амнистия, форма выбора действий                        //
+            ////////////////////////////////////////////////////////////
+            if ($dostadm)
+            {
+                if (isset($_GET['ok']))
+                {
+                    echo '<p><b>Амнистия проведена успешно</b><br /><small>';
+                    $type = isset($_GET['type']) ? intval($_GET['type']) : '';
+                    switch ($type)
+                    {
+                        case 1:
+                            echo 'Разбанены все, у кого оставшийся срок был менее 3-х суток<br />Уменьшен в 2 раза срок для тех, у кого осталось более 3-х суток.';
+                            break;
+                        case 2:
+                            echo 'Разбанены все активные баны.';
+                            break;
+                        case 3:
+                            echo 'Удалены все активные баны, и их записи из истории нарушений.';
+                            break;
+                        case 4:
+                            echo 'Полностью удалена вся история нарушений для неактивных банов.';
+                            break;
+                        case 5:
+                            echo 'База банов полностью очищена.<br />Удалены все активные баны и вся история нарушений.';
+                            break;
+                    }
+                    echo '</small></p><p><a href="main.php">В админку</a></p>';
+                } else
+                {
+                    echo '<div class="phdr">Амнистия</div>';
+                    echo '<div class="menu"><form action="zaban.php?do=clean" method="post"><p>';
+                    echo '<input type="radio" value="1" checked="checked" name="amnesty" />&nbsp;Амнистия<br />';
+                    echo '<input type="radio" value="2" name="amnesty" />&nbsp;Разбанить активные<br />';
+                    echo '<input type="radio" value="3" name="amnesty" />&nbsp;Удалить активные<br />';
+                    echo '<input type="radio" value="4" name="amnesty" />&nbsp;Очистить историю<br />';
+                    echo '<input type="radio" value="5" name="amnesty" />&nbsp;Очистить базу';
+                    echo '</p>Внимание, отмена невозможна.<br />Вы уверены?<p><input type="submit" value="Амнистия" /></p><p><a href="main.php">В админку</a></p></form></div>';
+                    echo '<div class="bmenu">';
+                    echo '<p><b>Амнистия</b><br /><small>Разбанивает всех, у кого оставшийся срок менее 3-х суток<br />Уменьшает в 2 раза срок тем, у кого осталось более 3, но менее 30 суток.<br />Не влияет на бан "До отмены".<br />История нарушений сохраняется.</small></p>';
+                    echo '<p><b>Разбанить активные</b><br /><small>Разбанивает все активные баны, кроме "До отмены"<br />История нарушений сохраняется.</small></p>';
+                    echo '<p><b>Удалить активные</b><br /><small>Удаляет все активные баны, и их записи из истории нарушений.</small></p>';
+                    echo '<p><b>Очистить историю</b><br /><small>Полностью удаляет всю историю нарушений для неактивных банов.<br />Не влияет на активные баны.</small></p>';
+                    echo '<p><b>Очистить базу</b><br /><small>База банов полностью очищается.<br />Удаляются все активные баны и вся история нарушений.</small></p>';
+                    echo '</div>';
+                }
+            }
+            break;
+
         case 'razban':
             ////////////////////////////////////////////////////////////
             // Снятие бана с сохранением истории нарушений            //
@@ -223,15 +336,15 @@ if ($dostkmod == 1)
                     echo '<input name="term" type="radio" value="13" />Гостевая<br />';
                     echo '<input name="term" type="radio" value="14" />Галерея<br />';
                     if ($dostadm == 1)
-                        echo '<input name="term" type="radio" value="9" /><b>блокировка</b></div>';
-                    echo '<div class="rmenu"><b>Срок Бана:</b></div>';
+                        echo '<input name="term" type="radio" value="9" /><b>блокировка</b>';
+                    echo '</div><div class="rmenu"><b>Срок Бана:</b></div>';
                     echo '<div class="menu"><input type="text" name="timeval" size="2" maxlength="2" value="10"/>&nbsp;время<br/>';
                     echo '<input name="time" type="radio" value="1" checked="checked" />минут (60 max)<br />';
                     echo '<input name="time" type="radio" value="2" />часов (24 max)<br />';
                     echo '<input name="time" type="radio" value="3" />дней (30 max)<br />';
                     if ($dostadm == 1)
-                        echo '<input name="time" type="radio" value="4" /><b>до отмены</b></div>';
-                    echo '<div class="rmenu"><b>Причина Бана:</b></div>';
+                        echo '<input name="time" type="radio" value="4" /><b>до отмены</b>';
+                    echo '</div><div class="rmenu"><b>Причина Бана:</b></div>';
                     if (isset($_GET['fid']))
                     {
                         // Если бан из форума, фиксируем ID поста
@@ -287,8 +400,10 @@ if ($dostkmod == 1)
             {
                 echo '<p>Список пуст</p>';
             }
-            echo '<p><a href="main.php?do=search">Банить</a><br /><a href="">Амнистия</a></p>';
-            echo '<p><a href="main.php">В админку</a></p>';
+            echo '<p><a href="main.php?do=search">Банить</a><br />';
+            if ($dostadm)
+                echo '<a href="zaban.php?do=amnesty">Амнистия</a>';
+            echo '</p><p><a href="main.php">В админку</a></p>';
     }
 } else
 {

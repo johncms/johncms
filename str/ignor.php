@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -53,7 +54,6 @@ if (!empty($_SESSION['uid']))
                     require_once ("../incfiles/end.php");
                     exit;
                 }
-                $id = intval($_GET['id']);
                 $nk = mysql_query("select * from `users` where id='" . $id . "';");
                 $nk1 = mysql_fetch_array($nk);
                 $nik = $nk1['name'];
@@ -109,6 +109,19 @@ if (!empty($_SESSION['uid']))
             echo "<p><a href='?'>В список</a><br />";
             break;
 
+        case 'del':
+            $req = mysql_query("SELECT * FROM `privat` WHERE `id`='" . $id . "' AND `me`='" . $login . "';");
+            $res = mysql_fetch_array($req);
+            if (mysql_num_rows($req) == 1)
+            {
+                mysql_query("DELETE FROM `privat` WHERE `id`='" . $id . "';");
+				echo '<p>Юзер <b>' . $res['ignor'] . '</b> удалён из игнора</p>';
+            } else
+            {
+                echo '<p>Ошибка</p>';
+            }
+            echo '<p><a href="?">Игнор-лист</a><br />';
+            break;
 
         default:
             echo '<div class="phdr">Игнор-лист</div>';
@@ -128,7 +141,7 @@ if (!empty($_SESSION['uid']))
                 {
                     echo '<font color="#00AA00"> [ON]</font>';
                 }
-                echo ' <a href="ignor.php?act=edit&amp;id=' . $mass1['id'] . '">[X]</a></div>';
+                echo ' <a href="ignor.php?act=del&amp;id=' . $mass['id'] . '">[X]</a></div>';
             }
             echo '<p><a href="?act=add">Добавить юзера в игнор</a><br />';
             break;

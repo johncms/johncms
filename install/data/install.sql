@@ -132,6 +132,18 @@ CREATE TABLE `forum` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
+-- Структура таблицы `cms_forum_rdm`
+--
+DROP TABLE IF EXISTS `cms_forum_rdm`;
+CREATE TABLE IF NOT EXISTS `cms_forum_rdm` (
+  `topic_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY  (`topic_id`,`user_id`),
+  KEY `time` (`time`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
 -- Структура таблицы `gallery`
 --
 DROP TABLE IF EXISTS `gallery`;
@@ -281,7 +293,8 @@ INSERT INTO `cms_settings` (`key`, `val`) VALUES
 ('mod_gal', '1'),
 ('mod_gal_msg', 'Галерея временно закрыта'),
 ('mod_down', '1'),
-('mod_down_msg', 'Загрузки временно закрыты');
+('mod_down_msg', 'Загрузки временно закрыты'),
+('skindef', 'default');
 
 
 --
@@ -298,36 +311,36 @@ CREATE TABLE `users` (
   `komm` int(10) NOT NULL default '0',
   `postforum` int(10) NOT NULL default '0',
   `postchat` int(10) NOT NULL default '0',
-  `otvetov` int(11) NOT NULL,
+  `otvetov` int(11) NOT NULL default '0',
   `yearofbirth` int(4) NOT NULL,
   `datereg` int(11) NOT NULL,
   `lastdate` int(11) NOT NULL,
-  `mail` varchar(50) NOT NULL default '',
+  `mail` varchar(50) NOT NULL,
   `icq` int(9) NOT NULL,
-  `www` varchar(50) NOT NULL default '',
+  `www` varchar(50) NOT NULL,
   `about` text NOT NULL,
-  `live` varchar(50) NOT NULL default '',
-  `mibile` varchar(50) NOT NULL default '',
+  `live` varchar(50) NOT NULL,
+  `mibile` varchar(50) NOT NULL,
   `rights` int(1) NOT NULL,
   `status` text NOT NULL,
-  `ip` varchar(25) NOT NULL default '',
+  `ip` varchar(25) NOT NULL,
   `browser` text NOT NULL,
   `timererfesh` int(2) NOT NULL default '20',
   `kolanywhwere` int(2) NOT NULL default '10',
   `time` int(11) NOT NULL,
-  `preg` binary(1) NOT NULL default '\0',
-  `regadm` varchar(25) NOT NULL default '',
+  `preg` binary(1) NOT NULL default '0',
+  `regadm` varchar(25) NOT NULL,
   `kod` int(15) NOT NULL,
-  `mailact` binary(1) NOT NULL default '\0',
-  `mailvis` binary(1) NOT NULL default '\0',
+  `mailact` binary(1) NOT NULL default '0',
+  `mailvis` binary(1) NOT NULL default '0',
   `dayb` int(2) NOT NULL,
   `monthb` int(2) NOT NULL,
   `sdvig` int(2) NOT NULL default '0',
   `offpg` tinyint(1) NOT NULL default '0',
   `offgr` tinyint(1) NOT NULL default '0',
-  `offsm` tinyint(1) NOT NULL default '0',
-  `offtr` tinyint(1) NOT NULL default '0',
-  `pereh` tinyint(1) NOT NULL default '0',
+  `offsm` tinyint(1) NOT NULL default '1',
+  `offtr` tinyint(1) NOT NULL default '1',
+  `pereh` tinyint(1) NOT NULL default '1',
   `nastroy` text NOT NULL,
   `plus` int(3) NOT NULL,
   `minus` int(3) NOT NULL,
@@ -341,6 +354,8 @@ CREATE TABLE `users` (
   `balans` int(11) NOT NULL,
   `sestime` int(15) NOT NULL,
   `total_on_site` int(11) NOT NULL default '0',
+  `digest` tinyint(4) NOT NULL default '1',
+  `skin` varchar(15) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name_lat` (`name_lat`),
   KEY `lastdate` (`lastdate`)

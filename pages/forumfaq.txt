@@ -3,8 +3,9 @@
 
 <p><b>ТЕГИ</b></p><p>
 &nbsp;[b] <b>жирный</b> [/b]<br />
+&nbsp;[i] <i>наклонный</i> [/i]<br />
 &nbsp;[u] <u>подчеркнутый</u> [/u]<br />
-&nbsp;[i] <i>наклонный</i> [/i]</p><p>
+&nbsp;[s] <strike>перечеркнутый</strike> [/s]</p><p>
 
 &nbsp;[red] <span style="color:red">Красный</span> [/red]<br />
 &nbsp;[green] <span style="color:green">Зеленый</span> [/green]<br />

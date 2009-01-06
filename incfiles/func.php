@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,19 +16,300 @@
 
 defined('_IN_JOHNCMS') or die('Error:restricted access');
 
+////////////////////////////////////////////////////////////////////////////////
+// Статистические функции и счетчики                                          //
+////////////////////////////////////////////////////////////////////////////////
+
+function forum_new()
+{
+    ////////////////////////////////////////////////////////////
+    // Счетчик непрочитанных тем на форуме                    //
+    ////////////////////////////////////////////////////////////
+    global $user_id;
+    global $realtime;
+    global $dostadm;
+    if ($user_id)
+    {
+        if ($dostadm)
+        {
+            $req = mysql_query("SELECT COUNT(*) FROM `forum`
+			LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user_id . "'
+			WHERE `forum`.`type`='t'
+			AND (`cms_forum_rdm`.`topic_id` Is Null
+			OR `forum`.`time` > `cms_forum_rdm`.`time`);");
+            return mysql_result($req, 0);
+        } else
+        {
+            $req = mysql_query("SELECT COUNT(*) FROM `forum`
+			LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user_id . "'
+			WHERE `forum`.`type`='t'
+			AND `moder`='1'
+			AND `close`!='1'
+			AND (`cms_forum_rdm`.`topic_id` Is Null
+			OR `forum`.`time` > `cms_forum_rdm`.`time`);");
+            return mysql_result($req, 0);
+        }
+    } else
+    {
+        return false;
+    }
+}
+
+function dnews()
+{
+    ////////////////////////////////////////////////////////////
+    // Дата последней новости                                 //
+    ////////////////////////////////////////////////////////////
+    if (!empty($_SESSION['uid']))
+    {
+        global $sdvig;
+    } else
+    {
+        global $sdvigclock;
+        $sdvig = $sdvigclock;
+    }
+    $req = mysql_query("select `time` from `news` order by `time` desc;");
+    $res = mysql_fetch_array($req);
+    $vrn = $res['time'] + $sdvig * 3600;
+    $vrn1 = date("H:i/d.m.y", $vrn);
+    return $vrn1;
+}
+
+function kuser()
+{
+    ////////////////////////////////////////////////////////////
+    // Колличество зарегистрированных пользователей           //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    // Общее колличество
+    $req = mysql_query("SELECT * FROM `users` ;");
+    $total = mysql_num_rows($req);
+    // Зарегистрированные за последние сутки
+    $req = mysql_query("SELECT * FROM `users` WHERE `datereg`>" . ($realtime - 86400) . ";");
+    $res = mysql_num_rows($req);
+    if ($res > 0)
+        $total = $total . '&nbsp;<font color="#FF0000">+' . $res . '</font>';
+    return $total;
+}
+
+function wfrm($id)
+{
+    ////////////////////////////////////////////////////////////
+    // Счетчик "Кто в форуме?"                                //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    $onltime = $realtime - 300;
+    $count = 0;
+    $qf = @mysql_query("select * from `users` where  lastdate>='" . $onltime . "';");
+    while ($arrf = mysql_fetch_array($qf))
+    {
+        $whf = mysql_query("select * from `count` where name='" . $arrf['name'] . "' order by time desc ;");
+        while ($whf1 = mysql_fetch_array($whf))
+        {
+            $whf2[] = $whf1['where'];
+        }
+        $wherf = $whf2[0];
+        $whf2 = array();
+        $wherf1 = explode(",", $wherf);
+        if (empty($id))
+        {
+            if ($wherf1[0] == "forum")
+            {
+                $count = $count + 1;
+            }
+        } else
+        {
+            if ($wherf == "forum,$id")
+            {
+                $count = $count + 1;
+            }
+        }
+    }
+    return $count;
+}
+
+function dload()
+{
+    ////////////////////////////////////////////////////////////
+    // Статистика загрузок                                    //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    $fl = mysql_query("select `id` from `download` where `type`='file' ;");
+    $countf = mysql_num_rows($fl);
+    $old = $realtime - (3 * 24 * 3600);
+    $fl1 = mysql_query("select `id` from `download` where `time` > '" . $old . "' and `type`='file' ;");
+    $countf1 = mysql_num_rows($fl1);
+    $out = $countf;
+    if ($countf1 > 0)
+    {
+        $out = $out . "/<font color='#FF0000'>+$countf1</font>";
+    }
+    return $out;
+}
+
+function fgal($mod = 0)
+{
+    ////////////////////////////////////////////////////////////
+    // Статистика галлереи                                    //
+    ////////////////////////////////////////////////////////////
+    // Если вызвать с параметром 1, то будет выдавать только колличество новых картинок
+    global $realtime;
+    $old = $realtime - (3 * 24 * 3600);
+    $req = mysql_query("select `id` from `gallery` where `time` > '" . $old . "' and `type`='ft' ;");
+    $new = mysql_num_rows($req);
+    mysql_free_result($req);
+    if ($mod == 0)
+    {
+        $req = mysql_query("select `id` from `gallery` where `type`='ft' ;");
+        $total = mysql_num_rows($req);
+        mysql_free_result($req);
+        $out = $total;
+        if ($new > 0)
+        {
+            $out = $out . "/<font color='#FF0000'>+$new</font>";
+        }
+    } else
+    {
+        $out = $new;
+    }
+    return $out;
+}
+
+function brth()
+{
+    ////////////////////////////////////////////////////////////
+    // Дни рождения                                           //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    $mon = date("m", $realtime);
+    if (substr($mon, 0, 1) == 0)
+    {
+        $mon = str_replace("0", "", $mon);
+    }
+    $day = date("d", $realtime);
+    if (substr($day, 0, 1) == 0)
+    {
+        $day = str_replace("0", "", $day);
+    }
+    $q = mysql_query("select * from `users` where dayb='" . $day . "' and monthb='" . $mon . "' and preg='1';");
+    $count = mysql_num_rows($q);
+    return $count;
+}
+
+function stlib()
+{
+    ////////////////////////////////////////////////////////////
+    // Статистика библиотеки                                  //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    global $dostlmod;
+    $fl = mysql_query("select `id` from `lib` where `type`='bk' and `moder`='1';");
+    $countf = mysql_num_rows($fl);
+    $old = $realtime - (3 * 24 * 3600);
+    $fl1 = mysql_query("select `id` from `lib` where `time` > '" . $old . "' and `type`='bk' and `moder`='1';");
+    $countf1 = mysql_num_rows($fl1);
+    $out = $countf;
+    if ($countf1 > 0)
+    {
+        $out = $out . '/<font color="#FF0000">+' . $countf1 . '</font>';
+    }
+    $fm = @mysql_query("select `id` from `lib` where `type`='bk' and `moder`='0';");
+    $countm = @mysql_num_rows($fm);
+    if ($dostlmod == '1' && ($countm > 0))
+        $out = $out . "/<a href='" . $home . "/library/index.php?act=moder'><font color='#FF0000'> Мод:$countm</font></a>";
+    return $out;
+}
+
+function wch($id)
+{
+    ////////////////////////////////////////////////////////////
+    // Статистика Чата                                        //
+    ////////////////////////////////////////////////////////////
+    global $realtime;
+    $onltime = $realtime - 300;
+    $count = 0;
+    $qf = @mysql_query("select `id` from `users` where  `lastdate` >='" . intval($onltime) . "';");
+    while ($arrf = mysql_fetch_array($qf))
+    {
+        $whf = mysql_query("select `id` from `count` where `name`='" . $arrf['name'] . "' order by `time` desc ;");
+        while ($whf1 = mysql_fetch_array($whf))
+        {
+            $whf2[] = $whf1[where];
+        }
+        $wherf = $whf2[0];
+        $whf2 = array();
+        $wherf1 = explode(",", $wherf);
+        if (empty($id))
+        {
+            if ($wherf1[0] == "chat")
+            {
+                $count = $count + 1;
+            }
+        } else
+        {
+            if ($wherf == "chat,$id")
+            {
+                $count = $count + 1;
+            }
+        }
+    }
+    return $count;
+}
+
+function gbook($mod = 0)
+{
+    ////////////////////////////////////////////////////////////
+    // Статистика гостевой                                    //
+    ////////////////////////////////////////////////////////////
+    // Если вызвать с параметром 1, то будет выдавать колличество новых в гостевой
+    // Если вызвать с параметром 2, то будет выдавать колличество новых в Админ-Клубе
+    global $realtime;
+    global $dostmod;
+    switch ($mod)
+    {
+        case 1:
+            $req = mysql_query("SELECT `id` FROM `guest` WHERE `adm`='0' AND `time`>'" . ($realtime - 86400) . "';");
+            $count = mysql_num_rows($req);
+            break;
+
+        case 2:
+            if ($dostmod == 1)
+            {
+                $req = mysql_query("SELECT `id` FROM `guest` WHERE `adm`='1' AND `time`>'" . ($realtime - 86400) . "';");
+                $count = mysql_num_rows($req);
+            }
+            break;
+
+        default:
+            $req = mysql_query("SELECT `id` FROM `guest` WHERE `adm`='0' AND `time`>'" . ($realtime - 86400) . "';");
+            $count = mysql_num_rows($req);
+            if ($dostmod == 1)
+            {
+                $req = mysql_query("SELECT `id` FROM `guest` WHERE `adm`='1' AND `time`>'" . ($realtime - 86400) . "';");
+                $count = $count . '&nbsp;/&nbsp;<span class="red">' . mysql_num_rows($req) . '</span>';
+            }
+    }
+    return $count;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Основные функции (используются в большинстве модулей системы)              //
+////////////////////////////////////////////////////////////////////////////////
+
 function tags($var = '')
 {
     ////////////////////////////////////////////////////////////
     // Обработка ссылок и тэгов BBCODE в тексте               //
     ////////////////////////////////////////////////////////////
-	$var = preg_replace_callback('{(?:(\w+://)|www\.|wap\.)[\w-]+(\.[\w-]+)*(?: : \d+)?[^<>"\'()\[\]\s]*(?:(?<! [[:punct:]])|(?<= [-/&+*]))}xis', "hrefCallback", $var);
+    $var = preg_replace_callback('{(?:(\w+://)|www\.|wap\.)[\w-]+(\.[\w-]+)*(?: : \d+)?[^<>"\'()\[\]\s]*(?:(?<! [[:punct:]])|(?<= [-/&+*]))}xis', "hrefCallback", $var);
     $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
     $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
     $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
+    $var = preg_replace('#\[s\](.*?)\[/s\]#si', '<span style="text-decoration: line-through;">\1</span>', $var);
     $var = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:red">\1</span>', $var);
     $var = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
     $var = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
-    $var = preg_replace('#\[c\](.*?)\[/c\]#si', '<span class="quote">\1</span>', $var);
     //$var = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $var);
     return $var;
 }
@@ -62,6 +344,19 @@ function trans($str)
         'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т', 'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' =>
         'Ш', 'SH' => 'Щ', 'Q' => 'Ъ', 'Y' => 'Ы', 'X' => 'Э', 'YU' => 'Ю', 'YA' => 'Я'));
     return $str;
+}
+
+function unhtmlentities($string)
+{
+    ////////////////////////////////////////////////////////////
+    // Декодирование htmlentities, PHP4совместимый режим      //
+    ////////////////////////////////////////////////////////////
+    $string = str_replace('&amp;', '&', $string);
+    $string = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
+    $string = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $string);
+    $trans_tbl = get_html_translation_table(HTML_ENTITIES);
+    $trans_tbl = array_flip($trans_tbl);
+    return strtr($string, $trans_tbl);
 }
 
 function pagenav($var = array())
@@ -141,7 +436,7 @@ function timecount($var)
     if ($var > 2592000)
     {
         $str = 'До отмены';
-    } elseif ($var >= 432000)
+    } elseif ($var > 345600)
     {
         $str = $day . ' дней';
     } elseif ($var >= 172800)
@@ -304,12 +599,6 @@ function smilescat($str)
         closedir($d);
     }
     return $str;
-}
-
-function offimg($str)
-{
-    return eregi_replace("((<img src|alt)[-a-zA-Z0-9@:%_\+.~#?;&//=\(\)/\'\"\ />]+)", "", $str);
-
 }
 
 function navigate($adr_str, $itogo, $kol_na_str, $begin, $num_str)

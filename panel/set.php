@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -27,6 +28,7 @@ if ($dostadm == 1)
     switch ($act)
     {
         case "set":
+            mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['skindef']) . "' WHERE `key`='skindef';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm']) . "' WHERE `key`='nickadmina';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string(htmlspecialchars($_POST['madm'])) . "' WHERE `key`='emailadmina';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . check($_POST['nadm2']) . "' WHERE `key`='nickadmina2';");
@@ -64,14 +66,30 @@ if ($dostadm == 1)
             }
             echo 'Временной сдвиг:<br/><input type="text" name="sdvigclock" value="' . intval($set['sdvigclock']) . '"/><br/>';
             echo 'Ваш копирайт:<br/><input type="text" name="copyright" value="' . htmlentities($set['copyright']) . '"/><br/>';
+            echo '<p>Изменить тему<br/>';
+            $dr = opendir('../theme');
+            echo '<select name="skindef">';
+            while ($skindef = readdir($dr))
+            {
+                if (($skindef != ".") && ($skindef != ".."))
+                {
+                    $skindef = str_replace(".css", "", $skindef);
+                    echo '<option' . ($set['skindef'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
+                }
+            }
+            echo "</select></p>";
             echo 'Главная сайта без слэша в конце:<br/><input type="text" name="homeurl" value="' . htmlentities($set['homeurl']) . '"/><br/>';
             echo 'Макс.допустимый размер файлов(кб.):<br/><input type="text" name="flsz" value="' . intval($set['flsz']) . '"/><br/>';
             echo 'Папка с админкой:<br/><input type="text" name="admp" value="' . htmlentities($set['admp']) . '"/><br/>';
             echo 'Расширение страниц:<br/><input type="text" name="rashstr" value="' . htmlentities($set['rashstr']) . '"/><br/>';
-            echo '<p><input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"' : '') . ' />&nbsp;GZIP сжатие<br/>';
-            echo '<input name="rm" type="checkbox" value="1" ' . ($set['rmod'] ? 'checked="checked"' : '') . ' />&nbsp;мод. регистрации<br/>';
-            echo '<input name="fm" type="checkbox" value="1" ' . ($set['fmod'] ? 'checked="checked"' : '') . ' />&nbsp;мод. форума<br/>';
-            echo '<input name="gb" type="checkbox" value="1" ' . ($set['gb'] ? 'checked="checked"' : '') . ' />&nbsp;гостевая для гостей</p>';
+            echo '<p><input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"':
+            '') . ' />&nbsp;GZIP сжатие<br/>';
+            echo '<input name="rm" type="checkbox" value="1" ' . ($set['rmod'] ? 'checked="checked"':
+            '') . ' />&nbsp;мод. регистрации<br/>';
+            echo '<input name="fm" type="checkbox" value="1" ' . ($set['fmod'] ? 'checked="checked"':
+            '') . ' />&nbsp;мод. форума<br/>';
+            echo '<input name="gb" type="checkbox" value="1" ' . ($set['gb'] ? 'checked="checked"':
+            '') . ' />&nbsp;гостевая для гостей</p>';
             echo '<input value="Ok!" type="submit"/></form>';
             echo '<p><a href="main.php">В админку</a></p>';
             break;

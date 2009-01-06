@@ -15,6 +15,7 @@
 
 define('_IN_JOHNCMS', 1);
 
+$headmod = 'guest';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
 
@@ -23,7 +24,6 @@ if (isset($_SESSION['ga']) && $dostmod != 1)
     unset($_SESSION['ga']);
 
 // Задаем заголовки страницы
-$headmod = 'guest';
 $textl = isset($_SESSION['ga']) ? 'Админ-Клуб' : 'Гостевая';
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)

@@ -11,30 +11,41 @@
 //                                                                            //
 // Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
 ////////////////////////////////////////////////////////////////////////////////
+// Визуальный мод инсталлятора от Piks                                        //
+////////////////////////////////////////////////////////////////////////////////
 */
 
 define('_IN_JOHNCMS', 1);
 header("Cache-Control: no-cache, must-revalidate");
 header("Content-type: application/xhtml+xml; charset=UTF-8");
+$version = 'JohnCMS 2.0.0';
+$codename = '';
 echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en'>
-<head>
-<meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'/>";
-echo "<link rel='shortcut icon' href='ico.gif' />
-<title>Установка системы</title>
-<style type='text/css'>
-body { font-weight: normal; font-family: Century Gothic; font-size: 12px; color: #FFFFFF; background-color: #000033}
-a:link { text-decoration: underline; color : #D3ECFF}
-a:active { text-decoration: underline; color : #2F3528 }
-a:visited { text-decoration: underline; color : #31F7D4}
-a:hover { text-decoration: none; font-size: 12px; color : #E4F992 }
-.red { color: #FF0000; font-weight: bold; }
-.green{ color: #009933; font-weight: bold; }
-.gray{ color: #FF0000; font: small; }
-</style>
-</head><body>";
-echo '<big><b>JohnCMS</b></big><br />Установка системы<hr />';
+<head><meta http-equiv='content-type' content='application/xhtml+xml; charset=utf-8'/>";
+echo '<link rel="shortcut icon" href="ico.gif" />
+<title>' . $version . '' . $codename . ' - Установка системы</title>
+<link rel="stylesheet" href="style.css" type="text/css" /></head><body>';
 
+echo '<div class="head"><b>' . $version . '</b>' . $codename . '<br />';
+switch ($_GET['act']) {
+	case 'demo':
+	echo 'Демо данные';
+	break;
+	case 'admin':
+	echo 'Установки сайта';
+	break;
+	case 'db':
+	echo 'Настройки соединения';
+	break;
+	case 'check':
+	echo 'Проверка сервера';
+	break;
+	default:
+	echo 'Установка системы';
+	break;
+}
+echo '</div><div class="txt">';
 switch ($_GET['act'])
 {
     case 'set':
@@ -43,8 +54,8 @@ switch ($_GET['act'])
         ////////////////////////////////////////////////////////////
         require_once ("../incfiles/db.php");
         require_once ("../incfiles/func.php");
-        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server</body></html>');
-        mysql_select_db($db_name) or die('cannot connect to db');
+        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server</div></body></html>');
+        mysql_select_db($db_name) or die('cannot connect to db</div></body></html>');
         mysql_query("SET NAMES 'utf8'", $connect);
         $error = '';
         @set_magic_quotes_runtime(0);
@@ -64,7 +75,7 @@ switch ($_GET['act'])
         }
         if (empty($error))
         {
-            echo '<span class="green">OK</span> - Таблицы созданы<br />';
+            echo '<span class="green">Oк</span> - Таблицы созданы<br />';
 
             // Принимаем данные из формы
             $log = trim($_POST['wnickadmina']);
@@ -89,16 +100,16 @@ switch ($_GET['act'])
 			`rights`='7',
 			`ip`='" . $ip . "',
 			`browser`='" . mysql_real_escape_string($brow) . "',
-			`preg`='1';") or die('Ошибка настройки администратора</body></html>');
+			`preg`='1';") or die('Ошибка настройки администратора</div></body></html>');
             $user_id = mysql_insert_id();
-            echo '<span class="green">OK</span> - администратор настроен<br />';
+            echo '<span class="green">Oк</span> - администратор настроен<br />';
 
             // Импорт настроек
             mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($log) . "' WHERE `key`='nickadmina';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($meil) . "' WHERE `key`='emailadmina';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string(trim($_POST['wcopyright'])) . "' WHERE `key`='copyright';");
             mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($hom) . "' WHERE `key`='homeurl';");
-            echo '<span class="green">OK</span> - настройки импортированы<br />';
+            echo '<span class="green">Oк</span> - настройки импортированы<br />';
 
             // Импорт вопросов Викторины
             $file = file("data/vopros.txt");
@@ -111,21 +122,16 @@ switch ($_GET['act'])
 				`otvet`='" . mysql_real_escape_string(trim($tx[1])) . "'
 				");
             }
-            echo '<span class="green">OK</span> - викторина импортирована (' . $i . ')<br />';
+            echo '<span class="green">Oк</span> - викторина импортирована (' . $i . ' вопросов)<br /><br />';
+            echo "Поздравляем! Установка " . $version . "" . $codename . " закончена.<br />Не забудьте:<br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.";
             // Установка ДЕМО данных
-            echo '<hr /><p>При желании, Вы можете установить ДЕМО данные<br />Это может быть полезно для начинающих сайтостроителей.<br />В базу будут внесены некоторые исходные настроики и материалы.</p>';
-            echo '<form method="post" action="index.php?act=demo">';
-            echo '<input name="id" type="hidden" value="' . $user_id . '"/>';
-            echo '<input name="ps" type="hidden" value="' . $_POST['wpassadmina'] . '"/>';
-            echo '<input value="Установить" type="submit"/></form>';
-            // Напоминание и ссылка на вход
-            echo "<hr/><span class='red'>НЕ ЗАБУДЬТЕ!!!</span><br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.<br/>";
-            echo "<a href='../auto.php?id=" . $user_id . "&amp;p=" . $_POST['wpassadmina'] . "'>Вход на сайт</a><br/>";
+            echo '<div class="menu" style="margin-bottom: 5px;"><div class="tmenu">Демо Данные</div><div class="smenu">При желании, Вы можете установить <a href="index.php?act=demo&amp;id=' . $user_id . '&amp;ps=' . $_POST['wpassadmina'] . '">Демо данные</a><br />Это может быть полезно для начинающих сайтостроителей.<br />В базу будут внесены некоторые исходные настроики и материалы.</div></div>';
+            echo "<p class='step'><a class='button' href='../auto.php?id=" . $user_id . "&amp;p=" . $_POST['wpassadmina'] . "'>Вход на сайт</a></p>";
         } else
         {
             // Если были ошибки, выводим их
             echo $error;
-            echo '<br /><span class="red">ERROR!!!</span><br />При создании таблиц возникла ошибка.<br />Продолжение невозможно.';
+            echo '<br /><span class="red">Error!</span><br />При создании таблиц возникла ошибка.<br />Продолжение невозможно.';
         }
         break;
 
@@ -135,7 +141,7 @@ switch ($_GET['act'])
         ////////////////////////////////////////////////////////////
         require_once ("../incfiles/db.php");
         require_once ("../incfiles/func.php");
-        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server</body></html>');
+        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server</div></body></html>');
         mysql_select_db($db_name) or die('cannot connect to db');
         mysql_query("SET NAMES 'utf8'", $connect);
         $error = '';
@@ -161,10 +167,10 @@ switch ($_GET['act'])
         {
             // Если были ошибки, выводим их
             echo $error;
-            echo '<br /><span class="red">ERROR!!!</span><br />В процессе установки ДЕМО данных возникли ошибки.';
+            echo '<br /><span class="red">Error!</span><br />В процессе установки ДЕМО данных возникли ошибки.<br />';
         }
-        echo "<hr/><span class='red'>НЕ ЗАБУДЬТЕ!!!</span><br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.<br/>";
-        echo "<a href='../auto.php?id=" . $_POST['id'] . "&amp;p=" . $_POST['ps'] . "'>Вход на сайт</a><br/>";
+        echo "Поздравляем! Установка " . $version . "" . $codename . " закончена.<br />Не забудьте:<br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.<br />";
+        echo "<p style='step'><a class='button' href='../auto.php?id=" . $_GET['id'] . "&amp;p=" . $_GET['ps'] . "'>Вход на сайт</a></p>";
         break;
 
     case "admin":
@@ -180,32 +186,29 @@ switch ($_GET['act'])
         $fp = @fopen("../incfiles/db.php", "w");
         fputs($fp, $text);
         fclose($fp);
-        echo 'Установка сайта<br/>';
+        echo 'Введите следующую информацию. Не волнуйтесь, вы всегда сможете изменить эти настройки.';
         echo '<form method="post" action="index.php?act=set">';
-        echo 'Ник админа:<br/><input name="wnickadmina" maxlength="50" /><br/>';
-        echo 'Пароль админа:<br/><input name="wpassadmina" maxlength="50" /><br/>';
-        echo 'е-mail админа:<br/><input name="wemailadmina" maxlength="50" /><br/>';
-        echo 'Копирайт:<br/><input name="wcopyright" maxlength="100" /><br/>';
-        echo 'Главная сайта без слэша в конце:<br/><input name="whome" maxlength="100" value="http://' . $_SERVER["SERVER_NAME"] . '" /><br/><br/>';
-        echo '<input value="Установить" type="submit"/></form>';
+        echo '<div class="conf">Ваш ник:<br/><input name="wnickadmina" maxlength="50" value="Admin" /></div>';
+        echo '<div class="conf">Ваш пароль:<br/><input name="wpassadmina" maxlength="50" value="password" /></div>';
+        echo '<div class="conf">Ваш e-mail<br/><input name="wemailadmina" maxlength="50" /></div>';
+        echo '<div class="conf">Копирайт:<br/><input name="wcopyright" maxlength="100" /></div>';
+        echo '<div class="conf">Главная сайта без слэша в конце:<br/><input name="whome" maxlength="100" value="http://' . $_SERVER["SERVER_NAME"] . '" /></div><div style="padding-left: 2px; margin-left: 1px; margin-top: 8px;"><input value="Установить" type="submit" class="button" /></div></form>';
         break;
 
     case 'db':
         ////////////////////////////////////////////////////////////
         // Настройка соединения с MySQL                           //
         ////////////////////////////////////////////////////////////
-        echo '<center><b>Настройки соединения</b></center><br/><br/>';
-        echo '<form action="index.php?act=admin&amp;" method="post">';
-        echo '<div style="background:#003300;color:#CCCCCC;">';
-        echo 'Сервер<br/><input type="text" name="host" value="localhost"/><br/>';
-        echo 'Имя пользователя<br/><input type="text" name="user" /><br/>';
-        echo 'Пароль<br/><input type="password" name="pass" /><br/>';
-        echo 'Название базы<br/><input type="text" name="name" /><br/><br/>';
-        echo '<input type="submit" value="Ok!"/><br/></div><br/>';
-        echo '</form>';
+        echo '<form action="index.php?act=admin" method="post">';
+        echo 'Ниже вы должны ввести настройки соединения с базой данных MySQL.<br />Если вы не уверенны в них, свяжитесь с вашим хостинг-провайдером.';
+        echo '<div class="conf">Сервер<br /><input type="text" name="host" value="localhost"/></div>';
+        echo '<div class="conf">Название базы<br /><input type="text" name="name" value="johncms"/></div>';
+        echo '<div class="conf">Имя пользователя<br /><input type="text" name="user" value="root"/></div>';
+        echo '<div class="conf">MySQL пароль<br /><input type="text" name="pass"/></div>';
+        echo '<div style="padding-left: 2px; margin-left: 1px; margin-top: 8px;"><input type="submit" class="button" value="Отправить"/></div></form>';
         break;
 
-    default:
+    case 'check':
         ////////////////////////////////////////////////////////////
         // Предварительная проверка системы                       //
         // 1) Проверка настроек PHP                               //
@@ -213,82 +216,83 @@ switch ($_GET['act'])
         // 2) Проверка прав доступа к файлам и папкам             //
         ////////////////////////////////////////////////////////////
         $err = false;
-        echo '<b>ПРОВЕРКА СИСТЕМЫ</b><br /><br />';
 
         // Проверка настроек PHP
-        echo '<b><u>Настройки PHP</u></b><br />';
+        echo '<div class="menu"><div class="tmenu">Настройки PHP</div>';
         if (version_compare(phpversion(), '4.1.0', '>'))
         {
-            echo '<span class="green">OK</span> - Версия PHP ' . phpversion() . '<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - Версия PHP ' . phpversion() . '</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА!</span> - Версия PHP ' . phpversion() . '<br />';
-            echo '<span class="gray">Эта версия PHP устаревшая и не поддерживается системой.</span><br />';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - Версия PHP ' . phpversion() . '<br />';
+            echo '<span class="gray">Эта версия PHP устаревшая и не поддерживается системой.</span></div>';
         }
         if (!ini_get('register_globals'))
         {
-            echo '<span class="green">OK</span> - register_globals OFF<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - register_globals OFF</div>';
         } else
         {
             $err = 2;
-            echo '<span class="red">ВНИМАНИЕ!</span> - register_globals OFF<br />';
-            echo '<span class="gray">Вы можете продолжить установку, однако система в большей степени будет подвержена уязвимостям.</span><br />';
+            echo '<div class="smenu"><span class="red">Внимание!</span> - register_globals OFF<br />';
+            echo '<span class="gray">Вы можете продолжить установку, однако система в большей степени будет подвержена уязвимостям.</span></div>';
         }
         if (ini_get('arg_separator.output') == '&amp;')
         {
-            echo '<span class="green">OK</span> - arg_separator.output "&amp;amp;"<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - arg_separator.output "&amp;amp;"</div>';
         } else
         {
             $err = 2;
-            echo '<span class="red">ВНИМАНИЕ!</span> - arg_separator.output "' . htmlentities(ini_get('arg_separator.output')) . '"<br />';
-            echo '<span class="gray">Вы можете продолжить установку, однако настоятельно рекомендуется установить этот параметр на "&amp;amp;",<br /> иначе будут неправильно обрабатываться гиперссылки в XHTML.</span><br />';
+            echo '<div class="smenu"><span class="red">Внимание!</span> - arg_separator.output "' . htmlentities(ini_get('arg_separator.output')) . '"<br />';
+            echo '<span class="gray">Вы можете продолжить установку, однако настоятельно рекомендуется установить этот параметр на "&amp;amp;",<br /> иначе будут неправильно обрабатываться гиперссылки в xHTML.</span></div>';
         }
+        echo '</div>';
 
         // Проверка загрузки необходимых расширений PHP
-        echo '<br /><b><u>Расширения PHP</u></b><br />';
+        echo '<div class="menu"><div class="tmenu">Расширения PHP</div>';
         if (extension_loaded('mysql'))
         {
-            echo '<span class="green">OK</span> - mysql<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - mysql</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА! - PHP расширение "mysql" не загружено.</span><br />';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - PHP расширение "mysql" не загружено.</div>';
         }
         if (extension_loaded('gd'))
         {
-            echo '<span class="green">OK</span> - gd<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - gd</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА! - PHP расширение "gd" не загружено.</span><br />';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - PHP расширение "gd" не загружено.</div>';
         }
         if (extension_loaded('zlib'))
         {
-            echo '<span class="green">OK</span> - zlib<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - zlib</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА! - PHP расширение "zlib" не загружено.</span><br />';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - PHP расширение "zlib" не загружено.</div>';
         }
         if (extension_loaded('iconv'))
         {
-            echo '<span class="green">OK</span> - iconv<br />';
+            echo '<div class="smenu"><span class="green">Oк</span> - iconv</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА! - PHP расширение "iconv" не загружено.</span><br />';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - PHP расширение "iconv" не загружено.</div>';
         }
         if (extension_loaded('mbstring'))
         {
-            echo '<span class="green">OK</span> - mb_string<br />';
+            echo '<div class="smenu"><span class="green">Ок</span> - mb_string</div>';
         } else
         {
             $err = 1;
-            echo '<span class="red">ОШИБКА! - PHP расширение "mbstring" не загружено.</span><br />';
-            echo 'Если Вы тестируете сайт локально на "Денвере", то там, в настройках по умолчанию данное расширение не подключено.<br />';
-            echo 'Вам необходимо (для Денвера) открыть файл php.ini, который находится в папке /usr/local/php5 (или php4, в зависимости от версии) и отредактировать строку ;extension=php_mbstring.dll убрав точку с запятой в начале строки.';
+            echo '<div class="smenu"><span class="red">Ошибка!</span> - PHP расширение "mbstring" не загружено.<br />';
+            echo '<span class="gray">Если Вы тестируете сайт локально на "Денвере", то там, в настройках по умолчанию данное расширение не подключено.<br />';
+            echo 'Вам необходимо (для Денвера) открыть файл php.ini, который находится в папке /usr/local/php5 (или php4, в зависимости от версии) и отредактировать строку ;extension=php_mbstring.dll убрав точку с запятой в начале строки.</span></div>';
         }
+        echo '</div>';
 
         // Проверка прав доступа к файлам и папкам
         function permissions($filez) {
@@ -304,11 +308,11 @@ switch ($_GET['act'])
         {
             if (permissions($v) < 777)
             {
-                $cherr = $cherr . '<span class="red">ОШИБКА!</span> - ' . $v . '<br/><span class="gray">Необходимо установить права доступа 777.</span><br />';
+                $cherr = $cherr . '<div class="smenu"><span class="red">Ошибка!</span> - ' . $v . '<br /><span class="gray">Необходимо установить права доступа 777.</span></div>';
                 $err = 1;
             } else
             {
-                $cherr = $cherr . '<span class="green">OK</span> - ' . $v . '<br/>';
+                $cherr = $cherr . '<div class="smenu"><span class="green">Oк</span> - ' . $v . '</div>';
             }
         }
 
@@ -318,35 +322,47 @@ switch ($_GET['act'])
         {
             if (permissions($v) < 666)
             {
-                $cherr = $cherr . '<span class="red">ОШИБКА!</span> - ' . $v . '<br/><span class="gray">Необходимо установить права доступа 666.</span><br />';
+                $cherr = $cherr . '<div class="smenu"><span class="red">Ошибка!</span> - ' . $v . '<br/><span class="gray">Необходимо установить права доступа 666.</span></div>';
                 $err = 1;
             } else
             {
-                $cherr = $cherr . '<span class="green">OK</span> - ' . $v . '<br/>';
+                $cherr = $cherr . '<div class="smenu"><span class="green">Ок</span> - ' . $v . '</div>';
             }
         }
 
-        echo '<br /><b><u>Права доступа</u></b><br />';
+        echo '<div class="menu"><div class="tmenu">Права доступа</div>';
         echo $cherr;
-        echo '<hr />';
+        echo '</div><br />';
         switch ($err)
         {
             case '1':
-                echo '<span class="red">ВНИМАНИЕ!</span> Имеются критические ошибки!<br />Вы не сможете продолжить инсталляцию, пока не устраните их.<br />';
-                echo '<a href="index.php">Проверить заново</a>';
+                echo '<span class="red">Внимание!</span> Имеются критические ошибки!<br />Вы не сможете продолжить инсталляцию, пока не устраните их.';
+                echo '<p clss="step"><a class="button" href="index.php?act=check">Проверить заново</a></p>';
                 break;
 
             case '2':
-                echo '<span class="red">ВНИМАНИЕ!</span> Имеются ошибки в конфигурации!<br />Вы можете продолжить инсталляцию, однако нормальная работа системы не гарантируется.<br />';
-                echo '<a href="index.php">Проверить заново</a><br /><a href="index.php?act=db">Продолжить установку</a>';
+                echo '<span class="red">Внимание!</span> Имеются ошибки в конфигурации!<br />Вы можете продолжить инсталляцию, однако нормальная работа системы не гарантируется.';
+                echo '<p class="step"><a class="button" href="index.php?act=check">Проверить заново</a> <a class="button" href="index.php?act=db">Продолжить установку</a></p>';
                 break;
 
             default:
-                echo '<span class="green">ОТЛИЧНО!</span><br />Все настройки правильные<br /><br /><a href="index.php?act=db">Установка системы</a><br /><br />';
+                echo '<span class="green">Отлично!</span><br />Все настройки правильные.<p class="step"><a class="button" href="index.php?act=db">Продолжить установку</a></p>';
         }
+	break;
+	
+	default:
+	///////////////////////////////////////////////////////
+	//Приветствие										 //
+	///////////////////////////////////////////////////////
+	echo '<p>Добро пожаловать в JohnCMS.<br />Перед началом инсталляции, настоятельно рекомендуем ознакомиться с инструкцией, в файле <a href="../readme.txt">readme.txt</a>.';
+	echo '<br />Список изменений, в сравнении с предыдущей версией, находится в файле <a href="../version.txt">version.txt</a>.</p>';
+	echo '<p>Дополнительную информацию Вы можете получить на официальном сайте проекта <a href="http://johncms.com">johncms.com</a>,<br />или на доп. сайте поддержки <a href="http://gazenwagen.com">gazenwagen.com</a>.</p>';
+	echo '<p>Установка и использование скриптов JohnCMS, означает полное согласие с условиями <a href="../license.txt">лицензии</a>.</p>';
+	echo '<p class="step"><a class="button" href="index.php?act=check">Начать установку</a></p>';
+	break;
 }
 
-echo "</body></html>";
+echo '</div></body></html>';
 
 function split_sql($sql)
 {

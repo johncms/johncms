@@ -43,15 +43,15 @@ if ($dostadm == 1)
                     exit;
                 }
                 $name = check($_POST['name']);
-                $text = check($_POST['text']);
+                $text = mysql_real_escape_string($_POST['text']);
                 if (!empty($_POST['pf']) && ($_POST['pf'] != '0'))
                 {
-                    $pf = intval(check($_POST['pf']));
+                    $pf = intval($_POST['pf']);
                     $rz = $_POST['rz'];
                     $pr = mysql_query("select * from `forum` where type='r' and refid= '" . $pf . "';");
                     while ($pr1 = mysql_fetch_array($pr))
                     {
-                        $arr[] = $pr1[id];
+                        $arr[] = $pr1['id'];
                     }
                     foreach ($rz as $v)
                     {
@@ -61,7 +61,7 @@ if ($dostadm == 1)
                             $tem = mysql_query("select * from `forum` where type='t' and time='" . $realtime . "' and refid= '" . $v . "';");
                             $tem1 = mysql_fetch_array($tem);
                             $agn = strtok($agn, ' ');
-                            mysql_query("insert into `forum` values(0,'" . $tem1[id] . "','m','" . $realtime . "','" . $login . "','','','" . $ipp . "','" . $agn . "','" . $text . "','','','','','','','','');");
+                            mysql_query("insert into `forum` values(0,'" . $tem1['id'] . "','m','" . $realtime . "','" . $login . "','','','" . $ipp . "','" . $agn . "','" . $text . "','','','','','','','','');");
                         }
                     }
                 }
@@ -78,11 +78,11 @@ if ($dostadm == 1)
                 echo "<input type='radio' name='pf' value='0' checked='checked' />Не обсуждать<br />";
                 while ($fr1 = mysql_fetch_array($fr))
                 {
-                    echo "<input type='radio' name='pf' value='" . $fr1[id] . "'/>$fr1[text]<select name='rz[]'>";
-                    $pr = mysql_query("select * from `forum` where type='r' and refid= '" . $fr1[id] . "';");
+                    echo "<input type='radio' name='pf' value='" . $fr1['id'] . "'/>$fr1[text]<select name='rz[]'>";
+                    $pr = mysql_query("select * from `forum` where type='r' and refid= '" . $fr1['id'] . "';");
                     while ($pr1 = mysql_fetch_array($pr))
                     {
-                        echo '<option value="' . $pr1[id] . '">'.$pr1[text].'</option>';
+                        echo '<option value="' . $pr1['id'] . '">'.$pr1['text'].'</option>';
                     }
                     echo '</select><br/>';
                 }
@@ -97,7 +97,6 @@ if ($dostadm == 1)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             if (isset($_POST['submit']))
             {
 
@@ -114,7 +113,7 @@ if ($dostadm == 1)
                     exit;
                 }
                 $name = check($_POST['name']);
-                $text = check($_POST['text']);
+                $text = mysql_real_escape_string($_POST['text']);
 
                 mysql_query("update `news` set name='" . $name . "', text='" . $text . "' where id='" . $id . "';");
                 echo "Новость изменена.<p><a href='news.php'>Продолжить</a><br/>";
@@ -168,7 +167,6 @@ if ($dostadm == 1)
             break;
 
         default:
-
             echo "<b>НОВОСТИ</b><hr/>";
             $nw = mysql_query("select * from `news` order by time desc;");
             $count = mysql_num_rows($nw);
@@ -192,40 +190,29 @@ if ($dostadm == 1)
             {
                 if ($i >= $start && $i < $end)
                 {
-                    $nw1[text] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $nw1[text]);
-                    $nw1[text] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $nw1[text]);
-                    $nw1[text] = eregi_replace("\\[l\\]((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/;%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='\\1\\3'>\\7</a>", $nw1[text]);
-                    if (stristr($nw1[text], "<a href="))
-                    {
-                        $nw1[text] = eregi_replace("\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)</a>",
-                            "<a href='\\1\\3'>\\3</a>", $nw1[text]);
-                    } else
-                    {
-                        $nw1[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $nw1[text]);
-                    }
+                    $text = htmlentities($nw1['text'], ENT_QUOTES, 'UTF-8');
+					$text = str_replace("\r\n", "<br/>", $text);
+					$text = tags($text);
                     if ($offsm != 1 && $offgr != 1)
                     {
-                        $tekst = smiles($nw1[text]);
-                        $tekst = smilescat($tekst);
+                        $text = smiles($text);
+                        $text = smilescat($text);
 
-                        if ($nw1[from] == nickadmina || $nw1[from] == nickadmina2 || $nw11[rights] >= 1)
+                        if ($nw1['from'] == nickadmina || $nw1['from'] == nickadmina2 || $nw11['rights'] >= 1)
                         {
-                            $tekst = smilesadm($tekst);
+                            $text = smilesadm($text);
                         }
-                    } else
-                    {
-                        $tekst = $nw1[text];
                     }
-                    $vr = $nw1[time] + $sdvig * 3600;
+                    $vr = $nw1['time'] + $sdvig * 3600;
                     $vr1 = date("d.m.y / H:i", $vr);
-                    echo "<b>$nw1[name]</b><br/>$tekst<br/>Добавил: $nw1[avt] ($vr1)<br/>";
-                    if ($nw1[kom] != 0 && $nw1[kom] != "")
+                    echo "<b>$nw1[name]</b><br/>$text<br/>Добавил: $nw1[avt] ($vr1)<br/>";
+                    if ($nw1['kom'] != 0 && $nw1['kom'] != "")
                     {
-                        $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1[kom] . "';");
+                        $mes = mysql_query("select * from `forum` where type='m' and refid= '" . $nw1['kom'] . "';");
                         $komm = mysql_num_rows($mes) - 1;
-                        echo "<a href='../forum/?id=" . $nw1[kom] . "'>Комментарии ($komm)</a><br/>";
+                        echo "<a href='../forum/?id=" . $nw1['kom'] . "'>Комментарии ($komm)</a><br/>";
                     }
-                    echo "<a href='news.php?act=del&amp;id=" . $nw1[id] . "'>Удалить</a> | <a href='news.php?act=edit&amp;id=" . $nw1[id] . "'>Изменить</a><br/><br/>";
+                    echo "<a href='news.php?act=del&amp;id=" . $nw1['id'] . "'>Удалить</a> | <a href='news.php?act=edit&amp;id=" . $nw1[id] . "'>Изменить</a><br/><br/>";
                 }
                 ++$i;
             }

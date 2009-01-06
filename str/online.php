@@ -202,7 +202,7 @@ while ($arr = mysql_fetch_array($q))
                     echo "<a href='../read.php'>читает FAQ</a>";
                     break;
                 case "load":
-                    echo "<a href='../download/download.php'>в загрузках</a>";
+                    echo "<a href='../download/index.php'>в загрузках</a>";
                     break;
                 case "upload":
                     echo "<a href='../download/upload.php'>в обменнике</a>";

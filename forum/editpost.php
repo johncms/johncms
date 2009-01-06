@@ -22,7 +22,6 @@ if (empty($_GET['id']))
     require_once ("../incfiles/end.php");
     exit;
 }
-$id = intval(check($_GET['id']));
 if (empty($_SESSION['uid']))
 {
     echo "Вы не авторизованы!<br/>";
@@ -31,29 +30,29 @@ if (empty($_SESSION['uid']))
 }
 $typ = mysql_query("select * from `forum` where id='" . $id . "';");
 $ms = mysql_fetch_array($typ);
-if ($ms[type] != "m")
+if ($ms['type'] != "m")
 {
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
 }
 
-$lp = mysql_query("select * from `forum` where type='m' and refid='" . $ms[refid] . "'  order by time desc ;");
+$lp = mysql_query("select * from `forum` where type='m' and refid='" . $ms['refid'] . "'  order by time desc ;");
 while ($arr = mysql_fetch_array($lp))
 {
-    $idpp[] = $arr[id];
+    $idpp[] = $arr['id'];
 }
 $idpr = $idpp[0];
 $tpp = $realtime - 300;
 $lp1 = mysql_query("select * from `forum` where id='" . $idpr . "';");
 $arr1 = mysql_fetch_array($lp1);
-if (($dostfmod != 1) && (($ms[from] != $login) || ($arr1[id] != $ms[id]) || ($ms[time] < $tpp)))
+if (($dostfmod != 1) && (($ms['from'] != $login) || ($arr1['id'] != $ms['id']) || ($ms['time'] < $tpp)))
 {
-    echo "Ошибка!Вероятно,прошло более 5 минут со времени написания поста,или он уже не последний<br/><a href='?id=" . $ms[refid] . "'>В тему</a><br/>";
+    echo "Ошибка!Вероятно,прошло более 5 минут со времени написания поста,или он уже не последний<br/><a href='?id=" . $ms['refid'] . "'>В тему</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
 }
-if (($dostfmod == 1) || (($arr1[from] == $login) && ($arr1[id] == $ms[id]) && ($ms[time] > $tpp)))
+if (($dostfmod == 1) || (($arr1['from'] == $login) && ($arr1['id'] == $ms['id']) && ($ms['time'] > $tpp)))
 {
     if (isset($_POST['submit']))
     {
@@ -63,13 +62,12 @@ if (($dostfmod == 1) || (($arr1[from] == $login) && ($arr1[id] == $ms[id]) && ($
             require_once ("../incfiles/end.php");
             exit;
         }
-        $msg = check(trim($_POST['msg']));
-
-        if ($_POST[msgtrans] == 1)
+        $msg = mysql_real_escape_string(trim($_POST['msg']));
+        if ($_POST['msgtrans'] == 1)
         {
             $msg = trans($msg);
         }
-        $koled = $ms[kedit] + 1;
+        $koled = $ms['kedit'] + 1;
         mysql_query("update `forum` set  tedit='" . $realtime . "', edit='" . $login . "', kedit='" . $koled . "', text='" . $msg . "' where id='" . $id . "';");
         $pa = mysql_query("select * from `forum` where type='m' and refid= '" . $id . "';");
         $pa2 = mysql_num_rows($pa);
@@ -81,10 +79,9 @@ if (($dostfmod == 1) || (($arr1[from] == $login) && ($arr1[id] == $ms[id]) && ($
         {
             $page = ceil($pa2 / $kmess);
         }
-        echo "Сообщение изменено.<br/><a href='index.php?id=" . $ms[refid] . "&amp;page=" . $page . "'>Продолжить</a><br/>";
+        echo "Сообщение изменено.<br/><a href='index.php?id=" . $ms['refid'] . "&amp;page=" . $page . "'>Продолжить</a><br/>";
     } else
     {
-        $ms[text] = str_replace("<br/>", "\r\n", $ms[text]);
         echo "Редактирование сообщения (max. 500):<br/><form action='?act=editpost&amp;id=" . $id . "' method='post'><textarea cols='20' rows='3' title='Введите текст сообщения' name='msg'>$ms[text]</textarea><br/>";
         if ($offtr != 1)
         {
@@ -94,6 +91,6 @@ if (($dostfmod == 1) || (($arr1[from] == $login) && ($arr1[id] == $ms[id]) && ($
         echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/><br/></form>";
     }
 }
-echo "<a href='index.php?id=" . $ms[refid] . "'>Назад</a><br/>";
+echo "<a href='index.php?id=" . $ms['refid'] . "'>Назад</a><br/>";
 
 ?>

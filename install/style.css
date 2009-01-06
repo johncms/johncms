@@ -1,0 +1,16 @@
+body {font-family: Verdana; font-size: 12px; color: #333333; background-color: #FFFFFF; margin: 0;}
+a {text-decoration: underline; color : #0040B6; font-size: 13px;}
+.head {background-color: #F0F0F0; padding: 3px; border-bottom: 3px solid #E8E8E8; color: #777777; font-size: 14px;}
+.button {padding: 2px; border: 1px solid #A3A3A3; color: #224466; background: #F0F0F0; font-size: 14px; text-decoration: none;}
+.conf, .smenu, .tmenu {margin: 1px; padding: 3px;}
+.red, .green, .tmenu {font-weight: bold;}
+.help {border-left: 3px solid #8B8378; padding-left: 2px; margin-top: 10px;}
+.red {color: #FF0000;}
+.green {color: #009933;}
+.gray {color: #8B8878;}
+.txt {margin: 2px;}
+.menu {border: 1px solid #E2E2E5; margin-top: 5px;}
+.smenu {background-color: #F1F1F1;}
+.tmenu {background-color: #E2E2E5;}
+.step {margin: 8px 0 0 0;}
+.conf {background-color: #E5E5E5;}

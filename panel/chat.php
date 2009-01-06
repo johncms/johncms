@@ -18,7 +18,7 @@ define('_IN_JOHNCMS', 1);
 $textl = 'Чат';
 require_once ("../incfiles/core.php");
 
-if ($dostsmod == 1)
+if ($dostadm == 1)
 {
     if (!empty($_GET['act']))
     {
@@ -34,17 +34,16 @@ if ($dostsmod == 1)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             $typ = mysql_query("select * from `chat` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-            if ($ms[type] != "r")
+            if ($ms['type'] != "r")
             {
                 require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            switch ($ms[type])
+            switch ($ms['type'])
             {
                 case "r":
                     if (isset($_GET['yes']))
@@ -53,7 +52,7 @@ if ($dostsmod == 1)
                         while ($mes1 = mysql_fetch_array($mes))
                         {
 
-                            mysql_query("delete from `chat` where `id`='" . $mes1[id] . "';");
+                            mysql_query("delete from `chat` where `id`='" . $mes1['id'] . "';");
                         }
                         mysql_query("delete from `chat` where `id`='" . $id . "';");
                         header("Location: chat.php");
@@ -103,7 +102,7 @@ if ($dostsmod == 1)
                 {
                     while ($arr = mysql_fetch_array($q))
                     {
-                        $arr1[] = $arr[realid];
+                        $arr1[] = $arr['realid'];
                     }
                     $rid = $arr1[0] + 1;
                 }
@@ -138,10 +137,9 @@ if ($dostsmod == 1)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             $typ = mysql_query("select * from `chat` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-            if ($ms[type] != "r")
+            if ($ms['type'] != "r")
             {
                 require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
@@ -177,7 +175,7 @@ if ($dostsmod == 1)
                 $v1 = mysql_num_rows($v);
                 $a = mysql_query("select * from `chat` where type='r' and dpar='in';");
                 $a1 = mysql_num_rows($a);
-                if (empty($ms[dpar]))
+                if (empty($ms['dpar']))
                 {
                     echo "<option value=''>простая</option>";
                     if ($v1 == 0)
@@ -190,7 +188,7 @@ if ($dostsmod == 1)
                     }
                 }
 
-                if ($ms[dpar] == "vik")
+                if ($ms['dpar'] == "vik")
                 {
                     echo "<option value='vik'>викторина</option><option value=''>простая</option>";
                     if ($a1 == 0)
@@ -199,7 +197,7 @@ if ($dostsmod == 1)
                     }
                 }
 
-                if ($ms[dpar] == "in")
+                if ($ms['dpar'] == "in")
                 {
                     echo "<option value='in'>интим</option><option value=''>простая</option>";
                     if ($v1 == 0)
@@ -220,17 +218,16 @@ if ($dostsmod == 1)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             $typ = mysql_query("select * from `chat` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-            if ($ms[type] != "r")
+            if ($ms['type'] != "r")
             {
                 require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $ri = mysql_query("select * from `chat` where type='r' and realid<'" . $ms[realid] . "' order by realid desc;");
+            $ri = mysql_query("select * from `chat` where type='r' and realid<'" . $ms['realid'] . "' order by realid desc;");
             $rei = mysql_num_rows($ri);
             if ($rei == 0)
             {
@@ -241,12 +238,12 @@ if ($dostsmod == 1)
             }
             while ($rid = mysql_fetch_array($ri))
             {
-                $arr[] = $rid[id];
+                $arr[] = $rid['id'];
             }
             $tr = mysql_query("select * from `chat` where type='r' and id='" . $arr[0] . "';");
             $tr1 = mysql_fetch_array($tr);
-            $real1 = $tr1[realid];
-            $real2 = $ms[realid];
+            $real1 = $tr1['realid'];
+            $real2 = $ms['realid'];
             mysql_query("update `chat` set  realid='" . $real1 . "' where id='" . $id . "';");
             mysql_query("update `chat` set  realid='" . $real2 . "' where id='" . $arr[0] . "';");
             header("Location: chat.php");
@@ -261,17 +258,16 @@ if ($dostsmod == 1)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $id = intval(check($_GET['id']));
             $typ = mysql_query("select * from `chat` where id='" . $id . "';");
             $ms = mysql_fetch_array($typ);
-            if ($ms[type] != "r")
+            if ($ms['type'] != "r")
             {
                 require_once ("../incfiles/head.php");
                 echo "Ошибка!<br/><a href='chat.php?'>В управление чатом</a><br/>";
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            $ri = mysql_query("select * from `chat` where type='r' and realid>'" . $ms[realid] . "' order by realid ;");
+            $ri = mysql_query("select * from `chat` where type='r' and realid>'" . $ms['realid'] . "' order by realid ;");
             $rei = mysql_num_rows($ri);
             if ($rei == 0)
             {
@@ -282,12 +278,12 @@ if ($dostsmod == 1)
             }
             while ($rid = mysql_fetch_array($ri))
             {
-                $arr[] = $rid[id];
+                $arr[] = $rid['id'];
             }
             $tr = mysql_query("select * from `chat` where type='r' and id='" . $arr[0] . "';");
             $tr1 = mysql_fetch_array($tr);
-            $real1 = $tr1[realid];
-            $real2 = $ms[realid];
+            $real1 = $tr1['realid'];
+            $real2 = $ms['realid'];
             mysql_query("update `chat` set  realid='" . $real1 . "' where id='" . $id . "';");
             mysql_query("update `chat` set  realid='" . $real2 . "' where id='" . $arr[0] . "';");
             header("Location: chat.php");
@@ -309,20 +305,20 @@ if ($dostsmod == 1)
                 {
                     $div = "<div class='c'>";
                 }
-                $ri = mysql_query("select * from `chat` where type='r' and  realid>'" . $mass[realid] . "';");
+                $ri = mysql_query("select * from `chat` where type='r' and  realid>'" . $mass['realid'] . "';");
                 $rei = mysql_num_rows($ri);
-                $ri1 = mysql_query("select * from `chat` where type='r' and realid<'" . $mass[realid] . "';");
+                $ri1 = mysql_query("select * from `chat` where type='r' and realid<'" . $mass['realid'] . "';");
                 $rei1 = mysql_num_rows($ri1);
                 echo "$div$mass[text]<br/>";
                 if ($rei1 != 0)
                 {
-                    echo "<a href='chat.php?act=up&amp;id=" . $mass[id] . "'>Вверх</a> | ";
+                    echo "<a href='chat.php?act=up&amp;id=" . $mass['id'] . "'>Вверх</a> | ";
                 }
                 if ($rei != 0)
                 {
-                    echo "<a href='chat.php?act=down&amp;id=" . $mass[id] . "'>Вниз</a> | ";
+                    echo "<a href='chat.php?act=down&amp;id=" . $mass['id'] . "'>Вниз</a> | ";
                 }
-                echo "<a href='chat.php?act=edit&amp;id=" . $mass[id] . "'>Edit</a> | <a href='chat.php?act=del&amp;id=" . $mass[id] . "'>Del</a>";
+                echo "<a href='chat.php?act=edit&amp;id=" . $mass['id'] . "'>Edit</a> | <a href='chat.php?act=del&amp;id=" . $mass['id'] . "'>Del</a>";
                 echo "</div>";
                 ++$i;
             }

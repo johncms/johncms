@@ -23,8 +23,8 @@ if ($dostdmod == 1)
         require_once ('../incfiles/end.php');
         exit;
     }
-    $file = intval(trim($_GET['file']));
-    $file1 = mysql_query("select * from `download` where type = 'file' and id = '" . $file . "';");
+    $file = intval($_GET['file']);
+    $file1 = mysql_query("SELECT * FROM `download` WHERE `type` = 'file' AND `id` = '" . $file . "';");
     $file2 = mysql_num_rows($file1);
     $adrfile = mysql_fetch_array($file1);
     if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]")))
@@ -37,13 +37,13 @@ if ($dostdmod == 1)
     if (isset($_POST['submit']))
     {
         $newt = check(trim($_POST['newt']));
-        mysql_query("update `download` set text='" . $newt . "' where id='" . $file . "';");
+        mysql_query("update `download` set `text`='" . $newt . "' where `id`='" . $file . "';");
         echo "Описание изменено <br/>";
     } else
     {
-        echo "<form action='?act=opis&amp;file=" . $file . "' method='post'>";
-        echo "Описание: <br/><input type='text' name='newt' value='" . $adrfile[text] . "'/><br/>";
-
+        $str = str_replace("<br/>", "\r\n", $adrfile['text']);
+		echo "<form action='?act=opis&amp;file=" . $file . "' method='post'>";
+        echo 'Описание:<br/><textarea cols="20" rows="4" name="newt">' . $str . '</textarea><br/>';
         echo "<input type='submit' name='submit' value='Изменить'/></form><br/>";
     }
 } else

@@ -22,7 +22,6 @@ if (empty($_GET['id']))
     require_once ("../incfiles/end.php");
     exit;
 }
-$id = intval(check($_GET['id']));
 if (!$user_id || $ban['1'] || $ban['11'])
 {
     require_once ("../incfiles/head.php");
@@ -69,7 +68,7 @@ if (isset($_POST['submit']))
     }
     $th = mb_substr($th, 0, 100);
     $th = check(trim($_POST['th']));
-    $msg = check(trim($_POST['msg']));
+    $msg = mysql_real_escape_string(trim($_POST['msg']));
     if ($_POST['msgtrans'] == 1)
     {
         $th = trans($th);

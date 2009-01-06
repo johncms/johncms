@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -18,7 +19,7 @@ define('_IN_JOHNCMS', 1);
 $textl = 'Форум';
 require_once ("../incfiles/core.php");
 
-if ($dostsmod == 1)
+if ($dostadm == 1)
 {
     if (!empty($_GET['act']))
     {
@@ -36,7 +37,6 @@ if ($dostsmod == 1)
                     require_once ("../incfiles/end.php");
                     exit;
                 }
-                $id = intval(check($_GET['id']));
                 if (isset($_POST['mod']))
                 {
                     $q = mysql_query("select * from `forum` where type='a' and refid='" . $id . "';");
@@ -54,7 +54,7 @@ if ($dostsmod == 1)
                         if ($q3 == 0)
                         {
                             mysql_query("INSERT INTO `forum` SET
-							`refid`='".$id."',
+							`refid`='" . $id . "',
 							`type`='a',
 							`from`='" . check($v) . "';");
                         }
@@ -789,4 +789,5 @@ if ($dostsmod == 1)
 }
 echo "<a href='../forum/?'>В форум</a><br/>";
 require_once ("../incfiles/end.php");
+
 ?>

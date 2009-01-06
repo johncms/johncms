@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -18,61 +19,147 @@ define('_IN_JOHNCMS', 1);
 $headmod = 'settings';
 $textl = 'Настройки';
 require_once ("../incfiles/core.php");
+require_once ("../incfiles/head.php");
 
-if (!empty($_SESSION['uid']))
+if ($user_id)
 {
-    $q = mysql_query("select * from `users` where id='" . intval(check($_SESSION['uid'])) . "';");
-    $datauser = mysql_fetch_array($q);
-    if (!empty($_GET['act']))
-    {
-        $act = check($_GET['act']);
-    }
-    $arrcol = array("#000000" => "Чёрный", "#000033" => "Тёмно-синий", "#000099" => "Синий", "#0000FF" => "Светло-синий", "#0099FF" => "Голубой", "#99CCFF" => "Светло-голубой", "#00CCCC" => "Аквамарин", "#660066" => "Фиолетовый", "#660000" =>
-        "Бордовый", "#990000" => "Тёмно-красный", "#CC0000" => "Красный", "#FF0000" => "Ярко-красный", "#FF0033" => "Алый", "#FF9900" => "Оранжевый", "#FFCC00" => "Золотой", "#FFFF00" => "Жёлтый", "#FFFFCC" => "Светло-жёлтый", "#003300" =>
-        "Тёмно-зелёный", "#006600" => "Зелёный", "#009900" => "Ярко-зелёный", "#99FF99" => "Светло-зелёный", "#99FF33" => "Салатовый", "#009999" => "Бирюзовый", "#660033" => "Лиловый", "#990033" => "Малиновый", "#CC33CC" => "Сиреневый", "#FF0066" =>
-        "Розовый", "#FF6666" => "Коралл", "#FF9999" => "Светлый коралл", "#663300" => "Тёмно-коричневый", "#666600" => "Коричневый", "#CC6600" => "Светло-коричневый", "#996600" => "Горчичный", "#333333" => "Тёмно-серый", "#666666" => "Серый",
-        "#999999" => "Светло-серый", "#CCCCCC" => "Серебряный", "#FFFFFF" => "Белый");
-    $num = array_keys($arrcol);
-    foreach ($num as $i => $color)
-    {
-        if ($i >= 0 && $i < 4 || $i > 6 && $i < 13 || $i == 17 || $i == 18 || $i > 21 && $i <= 33)
-        {
-            $numb[] = $color;
-        }
-    }
     switch ($act)
     {
-            ######
-        case "help":
-            require_once ("../incfiles/head.php");
-            echo "Справка по цветам<br/>";
-            foreach ($arrcol as $k => $v)
+        case "all":
+            if (isset($_POST['submit']))
             {
-                if (in_array($k, $numb))
+                $sdvig = intval($_POST['sdvig']);
+                if ($sdvig < -24)
+                    $sdvig = -24;
+                if ($sdvig > 24)
+                    $sdvig = 24;
+                $kolanywhwere = abs(intval($_POST['kolanywhwere']));
+                if ($kolanywhwere < 5)
+                    $kolanywhwere = 5;
+                if ($kolanywhwere > 99)
+                    $kolanywhwere = 99;
+                mysql_query("UPDATE `users` SET
+				`sdvig`='" . $sdvig . "',
+				`kolanywhwere`='" . $kolanywhwere . "',
+				`pereh`='" . intval($_POST['pereh']) . "',
+				`offsm`='" . intval($_POST['offsm']) . "',
+				`offtr`='" . intval($_POST['offtr']) . "',
+				`digest`='" . intval($_POST['digest']) . "',
+				`skin`='" . check(trim($_POST['skin'])) . "'
+				WHERE id='" . $user_id . "';");
+                header("Location: usset.php?act=all&yes");
+            } else
+            {
+                echo '<form action="usset.php?act=all" method="post" >';
+                echo '<div class="phdr"><b>Общие настройки</b></div>';
+                if (isset($_GET['yes']))
                 {
-                    $cl = "#FFFFFF";
-                } else
-                {
-                    $cl = "#000000";
+                    echo '<div class="rmenu">Настройки сохранены</div>';
                 }
-                echo "<div style='background:" . $k . ";color:" . $cl . ";'>$v</div>";
+                echo '<div class="menu"><input type="text" name="sdvig" size="3" maxlength="3" value="' . $datauser['sdvig'] . '"/> Сдвиг времени</div>';
+                echo '<div class="menu"><input type="text" name="kolanywhwere" size="3" maxlength="3" value="' . $datauser['kolanywhwere'] . '"/> Строк на страницу</div>';
+                echo '<div class="menu">';
+                echo '<input name="offsm" type="checkbox" value="1" ' . ($datauser['offsm'] ? 'checked="checked"' : '') . ' />&nbsp;Смайлы<br/>';
+                echo '<input name="offtr" type="checkbox" value="1" ' . ($datauser['offtr'] ? 'checked="checked"' : '') . ' />&nbsp;Транслит<br/>';
+                echo '<input name="pereh" type="checkbox" value="1" ' . ($datauser['pereh'] ? 'checked="checked"' : '') . ' />&nbsp;Быстрый переход<br/>';
+                echo '<input name="digest" type="checkbox" value="1" ' . ($datauser['digest'] ? 'checked="checked"' : '') . ' />&nbsp;Дайджест';
+                echo '</div>';
+                echo '<div class="menu">Изменить скин<br/>';
+                echo '<select name="skin">';
+                $dr = opendir('../theme');
+				while ($skindef = readdir($dr))
+                {
+                    if (($skindef != ".") && ($skindef != ".."))
+                    {
+                        $skindef = str_replace(".css", "", $skindef);
+                        echo '<option' . ($skin == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
+                    }
+                }
+                echo '</select></div>';
+                echo '<div class="menu"><input type="submit" name="submit" value="Запомнить"/></div></form>';
+                echo '<div class="bmenu"><a href="usset.php">Меню настроек</a></div>';
             }
-            echo "<hr/><a href='usset.php?act=color'>Назад</a><br/>";
             break;
 
-        case "yes":
-            $pereh = intval(check(trim($_POST['pereh'])));
-            $offgr = intval(check(trim($_POST['offgr'])));
-            $offsm = intval(check(trim($_POST['offsm'])));
-            $offtr = intval(check(trim($_POST['offtr'])));
-            $offpg = intval(check(trim($_POST['offpg'])));
-            $sdvig = intval(check(trim($_POST['sdvig'])));
-            mysql_query("update `users` set  sdvig='" . $sdvig . "',offgr='" . $offgr . "',pereh='" . $pereh . "',offsm='" . $offsm . "',offtr='" . $offtr . "',offpg='" . $offpg . "' where id='" . intval($_SESSION['uid']) . "';");
-            header("Location: usset.php?yes");
+        case "forum":
+            $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
+            if (isset($_POST['submit']))
+            {
+                $upfp = intval($_POST['upfp']);
+                $farea = intval($_POST['farea']);
+                foreach ($_POST['nmenu'] as $value)
+                {
+                    $nmenu1[] = intval($value);
+                }
+                $nmenu = implode(",", $nmenu1);
+                mysql_query("update `users` set nmenu='" . $nmenu . "',farea='" . $farea . "',upfp='" . $upfp . "' where id='" . intval($_SESSION['uid']) . "';");
+                header("Location: usset.php?act=forum&yes");
+            } else
+            {
+                echo '<div class="phdr"><b>Настройки Форума</b></div>';
+                if (isset($_GET['yes']))
+                {
+                    echo '<div class="rmenu">Настройки форума сохранены</div>';
+                }
+                echo '<form action="usset.php?act=forum" method="post">';
+                echo '<div class="menu">Новые посты:<br/>';
+                if ($datauser['upfp'] == "0")
+                {
+                    echo "<input name='upfp' type='radio' value='0' checked='checked'/>";
+                } else
+                {
+                    echo "<input name='upfp' type='radio' value='0' />";
+                }
+                echo " Внизу<br />";
+                if ($datauser['upfp'] == "1")
+                {
+                    echo "<input name='upfp' type='radio' value='1' checked='checked' />";
+                } else
+                {
+                    echo "<input name='upfp' type='radio' value='1'/>";
+                }
+                echo ' Вверху</div>';
+                echo '<div class="menu">Поле ввода:<br/>';
+                if ($datauser['farea'] == "1")
+                {
+                    echo "<input name='farea' type='radio' value='1' checked='checked'/>";
+                } else
+                {
+                    echo "<input name='farea' type='radio' value='1' />";
+                }
+                echo " Вкл.<br />";
+                if ($datauser['farea'] == "0")
+                {
+                    echo "<input name='farea' type='radio' value='0' checked='checked' />";
+                } else
+                {
+                    echo "<input name='farea' type='radio' value='0'/>";
+                }
+                echo ' Выкл.</div>';
+
+                echo '<div class="menu">Ник-меню:<br/>';
+                if (!empty($datauser['nmenu']))
+                {
+                    $nmenu1 = explode(",", $datauser['nmenu']);
+                }
+                foreach ($nmen as $k => $v)
+                {
+                    if (in_array($k, $nmenu1))
+                    {
+                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "' checked='checked'/>$v<br/>";
+                    } else
+                    {
+                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "'/>$v<br/>";
+                    }
+                }
+                echo '</div>';
+                echo '<div class="menu"><input type="submit" name="submit" value="Сохранить"/></div></form>';
+                echo '<div class="gmenu"><a href="../forum">В форум</a></div>';
+                echo '<div class="bmenu"><a href="usset.php">Меню настроек</a></div>';
+            }
             break;
 
         case "chat":
-
             if (isset($_POST['submit']))
             {
                 if ($dostsadm == 1)
@@ -88,9 +175,9 @@ if (!empty($_SESSION['uid']))
                 {
                     $nastr = check(trim($_POST['nastr']));
                 }
-                $refresh = intval(check(trim($_POST['refresh'])));
-                $chmess = intval(check(trim($_POST['chmess'])));
-                $charea = intval(check(trim($_POST['charea'])));
+                $refresh = intval($_POST['refresh']);
+                $chmess = intval($_POST['chmess']);
+                $charea = intval($_POST['charea']);
                 if ($chmess < 5)
                 {
                     $chmess = 5;
@@ -103,41 +190,39 @@ if (!empty($_SESSION['uid']))
                 {
                     $refresh = 15;
                 }
-
                 mysql_query("update `users` set chmes='" . $chmess . "',carea='" . $charea . "',timererfesh='" . $refresh . "',nastroy='" . $nastr . "' where id='" . intval($_SESSION['uid']) . "';");
                 header("Location: usset.php?act=chat&yes");
-
-
             } else
             {
-                require_once ("../incfiles/head.php");
-                if (isset($_GET['yes']))
-                {
-                    echo "Ваши настройки чата изменены!<br/>";
-                }
                 $nastr = array("без настроения", "бодрое", "прекрасное", "весёлое", "Унылое", "ангельское", "агрессивное", "изумлённое", "удивленное", "злое", "сердитое", "сонное", "озлобленное", "скучающее", "оживлённое", "угрюмое", "размышляющее",
                     "занятое", "нахальное", "холодное", "смущённое", "крутое", "смутённое", "дьявольское", "сварливое", "счастливое", "горячее", "влюблённое", "невинное", "вдохновлённое", "одинокое", "скрытое", "пушистое", "задумчивое", "психоделическое",
                     "расслабленое", "грустное", "испуганное", "шокированное", "потрясенное", "больное", "хитрое", "усталое", "утомленное");
-                echo "<form action='usset.php?act=chat' method='post' >Настройки чата<br/>Время обновления в чате<br/><input type='text' name='refresh' value='" . $datauser[timererfesh] .
-                    "'/><br/>Количество постов на страницу:<br/><input type='text' name='chmess' value='" . $datauser[chmes] . "'/><br/>";
-                echo "Поле ввода:<br/>Вкл.&nbsp;&nbsp;";
-                if ($datauser[carea] == "1")
+                echo '<div class="phdr"><b>Настройки чата</b></div>';
+                if (isset($_GET['yes']))
+                {
+                    echo '<div class="rmenu">Ваши настройки чата изменены</div>';
+                }
+                echo '<form action="usset.php?act=chat" method="post">';
+                echo '<div class="menu"><input type="text" name="refresh" size="3" maxlength="3" value="' . $datauser['timererfesh'] . '"/> Обновление (сек.)</div>';
+                echo '<div class="menu"><input type="text" name="chmess" size="3" maxlength="3" value="' . $datauser['chmes'] . '"/> Постов на странице</div>';
+                echo '<div class="menu">Поле ввода:<br/>';
+                if ($datauser['carea'] == "1")
                 {
                     echo "<input name='charea' type='radio' value='1' checked='checked'/>";
                 } else
                 {
                     echo "<input name='charea' type='radio' value='1' />";
                 }
-                echo " &nbsp; &nbsp; ";
-                if ($datauser[carea] == "0")
+                echo ' Вкл.<br />';
+                if ($datauser['carea'] == "0")
                 {
                     echo "<input name='charea' type='radio' value='0' checked='checked' />";
                 } else
                 {
                     echo "<input name='charea' type='radio' value='0'/>";
                 }
-                echo "Выкл.<br/>";
-                echo "Настроение:<br/><select name='nastr'>";
+                echo ' Выкл.</div>';
+                echo '<div class="menu">Выберите настроение:<br/><select name="nastr">';
                 if (!empty($datauser['nastroy']))
                 {
                     echo "<option>$datauser[nastroy]</option>";
@@ -149,7 +234,7 @@ if (!empty($_SESSION['uid']))
                         echo "<option>$v</option>";
                     }
                 }
-                echo "</select><br/>";
+                echo '</select><br/>';
                 if ($dostsadm == 1)
                 {
                     if (in_array($datauser['nastroy'], $nastr))
@@ -159,395 +244,23 @@ if (!empty($_SESSION['uid']))
                     {
                         $nastroy1 = $nastroy;
                     }
-                    echo "Иное настроение(имеет больший приоритет!):<br/><input type='text' name='snas' value='" . $nastroy1 . "'/><br/>";
+                    echo "Или укажите свое:<br/><input type='text' name='snas' value='" . $nastroy1 . "'/><br/>";
                 }
-                echo "<input type='submit' name='submit' value='ok'/></form><br/>";
-
-                echo "<a href='usset.php'>Общие настройки</a><br/>";
-                echo "<a href='../chat/?'>В чат</a><br/>";
+                echo '</div><div class="menu"><input type="submit" name="submit" value="Сохранить"/></div></form>';
+                echo '<div class="gmenu"><a href="../chat">В чат</a></div>';
+                echo '<div class="bmenu"><a href="usset.php">Меню настроек</a></div>';
             }
-
-            break;
-
-            ###############
-        case "forum":
-
-            $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
-            if (isset($_POST['submit']))
-            {
-
-                $kolmess = intval(check(trim($_POST['kolmess'])));
-                if ($kolmess < 5)
-                {
-                    $kolmess = 5;
-                }
-                if ($kolmess > 30)
-                {
-                    $kolmess = 30;
-                }
-                $upfp = intval(check(trim($_POST['upfp'])));
-                $farea = intval(check(trim($_POST['farea'])));
-
-                foreach ($_POST['nmenu'] as $value)
-                {
-                    $nmenu1[] = intval(check(trim($value)));
-                }
-                $nmenu = implode(",", $nmenu1);
-
-                mysql_query("update `users` set nmenu='" . $nmenu . "',farea='" . $farea . "',upfp='" . $upfp . "',kolanywhwere='" . $kolmess . "' where id='" . intval($_SESSION['uid']) . "';");
-                header("Location: usset.php?act=forum&yes");
-
-
-            } else
-            {
-                require_once ("../incfiles/head.php");
-                if (isset($_GET['yes']))
-                {
-                    echo "Ваши настройки форума изменены!<br/>";
-                }
-                echo "<form action='usset.php?act=forum' method='post' >Настройки форума<br/>Количество постов и тем на страницу:<br/><input type='text' name='kolmess' value='" . $datauser[kolanywhwere] . "'/><br/>";
-                echo "Новые посты:<br/>Внизу";
-                if ($datauser[upfp] == "0")
-                {
-                    echo "<input name='upfp' type='radio' value='0' checked='checked'/>";
-                } else
-                {
-                    echo "<input name='upfp' type='radio' value='0' />";
-                }
-                echo " &nbsp; &nbsp; ";
-                if ($datauser[upfp] == "1")
-                {
-                    echo "<input name='upfp' type='radio' value='1' checked='checked' />";
-                } else
-                {
-                    echo "<input name='upfp' type='radio' value='1'/>";
-                }
-                echo "Вверху<br/>";
-                echo "Поле ввода:<br/>Вкл.&nbsp;&nbsp;";
-                if ($datauser[farea] == "1")
-                {
-                    echo "<input name='farea' type='radio' value='1' checked='checked'/>";
-                } else
-                {
-                    echo "<input name='farea' type='radio' value='1' />";
-                }
-                echo " &nbsp; &nbsp; ";
-                if ($datauser[farea] == "0")
-                {
-                    echo "<input name='farea' type='radio' value='0' checked='checked' />";
-                } else
-                {
-                    echo "<input name='farea' type='radio' value='0'/>";
-                }
-                echo "Выкл.<br/>";
-
-                echo "Ник-меню:<br/>";
-                if (!empty($datauser[nmenu]))
-                {
-                    $nmenu1 = explode(",", $datauser[nmenu]);
-                }
-
-                foreach ($nmen as $k => $v)
-                {
-                    if (in_array($k, $nmenu1))
-                    {
-                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "' checked='checked'/>$v<br/>";
-                    } else
-                    {
-                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "'/>$v<br/>";
-                    }
-                }
-
-
-                echo "<input type='submit' name='submit' value='ok'/></form><br/>";
-
-
-                echo "<a href='usset.php'>Общие настройки</a><br/>";
-                echo "<a href='../forum/?'>В форум</a><br/>";
-            }
-            break;
-            #####################
-        case "view":
-            if (empty($_GET['id']))
-            {
-                require_once ("../incfiles/head.php");
-                echo "Ошибка!<br/>";
-                exit;
-            }
-            $id = intval(check($_GET['id']));
-            $th = mysql_query("select * from `themes` where id='" . $id . "';");
-            $thm = mysql_fetch_array($th);
-            if (isset($_POST['submit']))
-            {
-                mysql_query("update `users` set pfon='" . $thm[pfon] . "',cpfon='" . $thm[cpfon] . "',ccfon='" . $thm[ccfon] . "',cctx='" . $thm[cctx] . "',bgcolor='" . $thm[bgcolor] . "',tex='" . $thm[tex] . "',link='" . $thm[link] . "',bclass='" . $thm[bclass] .
-                    "',cntem='" . $thm[cntem] . "',ccolp='" . $thm[ccolp] . "',cdtim='" . $thm[cdtim] . "',cssip='" . $thm[cssip] . "',csnik='" . $thm[csnik] . "',cclass='" . $thm[cclass] . "',conik='" . $thm[conik] . "',cadms='" . $thm[cadms] . "',cons='" . $thm[cons] .
-                    "',coffs='" . $thm[coffs] . "',cdinf='" . $thm[cdinf] . "' where id='" . intval(check($_SESSION['uid'])) . "';");
-                header("Location: usset.php?act=color&yes");
-            } else
-            {
-                require_once ("../incfiles/head.php");
-                echo "<div style='background:" . $thm[bgcolor] . ";'><font color='" . $thm[tex] . "'>Внешний вид раздела форума</font><br/>";
-
-                echo "<font color='" . $thm[cntem] . "'><b>Название раздела</b></font><br/><font color='" . $thm[link] . "'>Ссылка &quot; Новая тема&quot;</font><br/>";
-
-                echo "<div style='background:" . $thm[bclass] . ";'><img src='../images/op.gif' alt=''/><font color='" . $thm[cntem] . "'>Название темы</font><font color='" . $thm[ccolp] . "'> [Кол-во постов]</font><br/><font color='" . $thm[cdtim] .
-                    "'>(Дата и время)</font><br/><font color='" . $thm[cssip] . "'>[Автор темы и посл. поста]</font></div><div style='background:" . $thm[cclass] . ";'><img src='../images/np.gif' alt=''/><font color='" . $thm[cntem] .
-                    "'>Название темы</font><font color='" . $thm[ccolp] . "'> [Кол-во постов]</font><br/><font color='" . $thm[cdtim] . "'>(Дата и время)</font><br/><font color='" . $thm[cssip] . "'>[Автор темы и посл. поста]</font></div><hr/>";
-                echo "<font color='" . $thm[tex] . "'>Внешний вид темы</font><br/>";
-
-                echo "<font color='" . $thm[cntem] . "'><b>Название темы</b></font><br/><font color='" . $thm[ccolp] . "'>Кол-во постов</font><br/><font color='" . $thm[link] . "'>Ссылка &quot; Вниз&quot;</font><br/>";
-
-                echo "<div style='background:" . $thm[bclass] . ";'>";
-                if ($thm[pfon] == 1)
-                {
-                    echo "<div style='background:" . $thm[cpfon] . ";'>";
-                }
-
-                echo "<img src='../images/m.gif' alt=''/><b><font color='" . $thm[csnik] . "'>Свой ник</font></b><font color='" . $thm[cadms] . "'> Адмстатус </font><font color='" . $thm[cons] . "'> [ON]</font><font color='" . $thm[cdtim] .
-                    "'>(Время поста)</font><br/>";
-                if ($thm[pfon] == 1)
-                {
-                    echo "</div>";
-                }
-
-                echo "<font color='" . $thm[tex] . "'>Текст</font><br/><font color='" . $thm[cdinf] . "'>Доп. информация</font><br/></div><div style='background:" . $thm[cclass] . ";'>";
-
-                if ($thm[pfon] == 1)
-                {
-                    echo "<div style='background:" . $thm[cpfon] . ";'>";
-                }
-
-                echo "<img src='../images/f.gif' alt=''/><b><font color='" . $thm[conik] . "'>Чужой ник</font></b> <font color='" . $thm[conik] . "'> [ц]</font><font color='" . $thm[coffs] . "'> [Off]</font><font color='" . $thm[cdtim] .
-                    "'>(Время поста)</font><br/>";
-                if ($thm[pfon] == 1)
-                {
-                    echo "</div>";
-                }
-
-                echo "<div style='background:" . $thm[ccfon] . ";'><font color='" . $thm[cctx] . "'>Цитата</font><br/></div><font color='" . $thm[tex] . "'>Текст</font><br/><font color='" . $thm[cdinf] . "'>Доп. информация</font><br/></div>";
-                echo "<form action='usset.php?act=view&amp;id=" . $id . "' method='post'><input type='submit' name='submit' value='Установить'/></form><br/>";
-                echo "</div>";
-                echo "<a href='usset.php?act=other'>Готовые схемы</a><br/>";
-                echo "<a href='usset.php'>Общие настройки</a><br/>";
-            }
-
-            break;
-
-
-            ####################
-        case "other":
-            require_once ("../incfiles/head.php");
-            $q3 = mysql_query("select * from `themes`;");
-            $count = mysql_num_rows($q3);
-            if (empty($_GET['page']))
-            {
-                $page = 1;
-            } else
-            {
-                $page = intval($_GET['page']);
-            }
-            $start = $page * 10 - 10;
-            if ($count < $start + 10)
-            {
-                $end = $count;
-            } else
-            {
-                $end = $start + 10;
-            }
-            $i = 0;
-            while ($arr = mysql_fetch_array($q3))
-            {
-                if ($i >= $start && $i < $end)
-                {
-                    $vr = date("d.m.y", $arr[time]);
-                    echo "<a href='usset.php?act=view&amp;id=" . $arr[id] . "'>$arr[name]($vr)</a><br/>";
-                }
-                ++$i;
-            }
-            if ($count > 10)
-            {
-                echo "<hr/>";
-
-                $ba = ceil($count / 10);
-                if ($offpg != 1)
-                {
-                    echo "Страницы:<br/>";
-                } else
-                {
-                    echo "Страниц: $ba<br/>";
-                }
-                $asd = $start - (10);
-                $asd2 = $start + (10 * 2);
-
-                if ($start != 0)
-                {
-                    echo '<a href="usset.php?act=other&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-                }
-                if ($offpg != 1)
-                {
-                    if ($asd < $count && $asd > 0)
-                    {
-                        echo ' <a href="usset.php?act=other&amp;page=1&amp;">1</a> .. ';
-                    }
-                    $page2 = $ba - $page;
-                    $pa = ceil($page / 2);
-                    $paa = ceil($page / 3);
-                    $pa2 = $page + floor($page2 / 2);
-                    $paa2 = $page + floor($page2 / 3);
-                    $paa3 = $page + (floor($page2 / 3) * 2);
-                    if ($page > 13)
-                    {
-                        echo ' <a href="usset.php?act=other&amp;page=' . $paa . '">' . $paa . '</a> <a href="usset.php?act=other&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="usset.php?act=other&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-                            '</a> <a href="users.php?page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-                    } elseif ($page > 7)
-                    {
-                        echo ' <a href="usset.php?act=other&amp;page=' . $pa . '">' . $pa . '</a> <a href="usset.php?act=other&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                    }
-                    for ($i = $asd; $i < $asd2; )
-                    {
-                        if ($i < $count && $i >= 0)
-                        {
-                            $ii = floor(1 + $i / 10);
-
-                            if ($start == $i)
-                            {
-                                echo " <b>$ii</b>";
-                            } else
-                            {
-                                echo ' <a href="usset.php?act=other&amp;page=' . $ii . '">' . $ii . '</a> ';
-                            }
-                        }
-                        $i = $i + 10;
-                    }
-                    if ($page2 > 12)
-                    {
-                        echo ' .. <a href="usset.php?act=other&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="usset.php?act=other&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="usset.php?act=other&amp;page=' . ($paa3) . '">' . ($paa3) .
-                            '</a> <a href="usset.php?act=other&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-                    } elseif ($page2 > 6)
-                    {
-                        echo ' .. <a href="usset.php?act=other&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="usset.php?act=other&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                    }
-                    if ($asd2 < $count)
-                    {
-                        echo ' .. <a href="usset.php?act=other&amp;page=' . $ba . '">' . $ba . '</a>';
-                    }
-                } else
-                {
-                    echo "<b>[$page]</b>";
-                }
-
-
-                if ($count > $start + 10)
-                {
-                    echo ' <a href="usset.php?act=other&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-                }
-                echo "<form action='usset.php'>Перейти к странице:<br/><input type='text' name='page' title='Введите номер страницы'/><input type='hidden' name='act' value='other'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
-            }
-
-            echo "<hr/><div>Всего: $count</div>";
-
             break;
 
         default:
-            require_once ("../incfiles/head.php");
-            if (isset($_GET['yes']))
-            {
-                echo "Ваши настройки изменены!<br/>";
-            }
-            echo "<form action='usset.php?act=yes' method='post' >Общие настройки<br/>Временной сдвиг:<br/><input type='text' name='sdvig' value='" . $datauser[sdvig] . "'/><br/>";
-            echo "Графика:<br/>Вкл.";
-            if ($offgr == "0")
-            {
-                echo "<input name='offgr' type='radio' value='0' checked='checked'/>";
-            } else
-            {
-                echo "<input name='offgr' type='radio' value='0' />";
-            }
-            echo " &nbsp; &nbsp; ";
-            if ($offgr == "1")
-            {
-                echo "<input name='offgr' type='radio' value='1' checked='checked' />";
-            } else
-            {
-                echo "<input name='offgr' type='radio' value='1'/>";
-            }
-            echo "Выкл<br/>";
-
-            echo "Смайлы:<br/>Вкл.";
-            if ($offsm == "0")
-            {
-                echo "<input name='offsm' type='radio' value='0' checked='checked'/>";
-            } else
-            {
-                echo "<input name='offsm' type='radio' value='0' />";
-            }
-            echo " &nbsp; &nbsp; ";
-            if ($offsm == "1")
-            {
-                echo "<input name='offsm' type='radio' value='1' checked='checked' />";
-            } else
-            {
-                echo "<input name='offsm' type='radio' value='1'/>";
-            }
-            echo "Выкл<br/>";
-
-            echo "Постраничный вывод:<br/>Вкл.";
-            if ($offpg == "0")
-            {
-                echo "<input name='offpg' type='radio' value='0' checked='checked'/>";
-            } else
-            {
-                echo "<input name='offpg' type='radio' value='0' />";
-            }
-            echo " &nbsp; &nbsp; ";
-            if ($offpg == "1")
-            {
-                echo "<input name='offpg' type='radio' value='1' checked='checked' />";
-            } else
-            {
-                echo "<input name='offpg' type='radio' value='1'/>";
-            }
-            echo "Выкл<br/>";
-
-            echo "Выбор транслита:<br/>Вкл.";
-            if ($offtr == "0")
-            {
-                echo "<input name='offtr' type='radio' value='0' checked='checked'/>";
-            } else
-            {
-                echo "<input name='offtr' type='radio' value='0' />";
-            }
-            echo " &nbsp; &nbsp; ";
-            if ($offtr == "1")
-            {
-                echo "<input name='offtr' type='radio' value='1' checked='checked' />";
-            } else
-            {
-                echo "<input name='offtr' type='radio' value='1'/>";
-            }
-            echo "Выкл<br/>";
-
-            echo "Быстрый переход:<br/>Вкл.";
-            if ($datauser['pereh'] == "0")
-            {
-                echo "<input name='pereh' type='radio' value='0' checked='checked'/>";
-            } else
-            {
-                echo "<input name='pereh' type='radio' value='0' />";
-            }
-            echo " &nbsp; &nbsp; ";
-            if ($datauser['pereh'] == "1")
-            {
-                echo "<input name='pereh' type='radio' value='1' checked='checked' />";
-            } else
-            {
-                echo "<input name='pereh' type='radio' value='1'/>";
-            }
-            echo "Выкл<br/>";
-
-            echo "<input type='submit' value='ok'/></form><br/>";
-            echo "<a href='usset.php?act=forum'>Настройки форума</a><br/>";
-            echo "<a href='usset.php?act=chat'>Настройки чата</a><br/><br/>";
+            echo '<div class="phdr"><b>Личные настройки</b></div>';
+            echo '<div class="menu"><a href="usset.php?act=all">Общие</a><br /><small>Данные настройки влияют на весь сайт и его модули.</small></div>';
+            echo '<div class="menu"><a href="usset.php?act=forum">Форум</a><br /><small>Настройка отображения информации на Форуме.</small></div>';
+            echo '<div class="menu"><a href="usset.php?act=chat">Чат</a><br /><small>Индивидуальная настройка Чата.</small></div>';
+            echo '<div class="bmenu"><a href="../index.php?mod=cab">В кабинет</a></div>';
+            echo '<div class=""></div>';
+            echo '<div class=""></div>';
+            echo '<div class=""></div>';
             break;
     }
 } else
@@ -556,4 +269,5 @@ if (!empty($_SESSION['uid']))
     print "Ошибка!<br/>";
 }
 require_once ("../incfiles/end.php");
+
 ?>

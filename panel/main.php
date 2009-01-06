@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -118,12 +119,12 @@ if ($dostmod == 1)
             echo 'Забаненных: ' . ($total > 0 ? '<a href="zaban.php">' . $total . '</a>' : '0') . '</div>';
             echo '<div class="menu"><a href="main.php?do=search">Поиск</a></div>';
             echo '<div class="menu"><a href="zaban.php">Бан-панель</a></div>';
-            echo '<div class="rmenu">Модули</div>';
-            echo '<div class="menu"><a href="news.php">Новости</a></div>';
-            echo '<div class="menu"><a href="forum.php">Форум</a></div>';
-            echo '<div class="menu"><a href="chat.php">Чат</a></div>';
             if ($dostadm == 1)
             {
+                echo '<div class="rmenu">Модули</div>';
+                echo '<div class="menu"><a href="news.php">Новости</a></div>';
+                echo '<div class="menu"><a href="forum.php">Форум</a></div>';
+                echo '<div class="menu"><a href="chat.php">Чат</a></div>';
                 echo '<div class="rmenu">Система</div>';
                 echo '<div class="menu"><a href="ipban.php">Бан по IP</a></div>';
                 echo '<div class="menu"><a href="main.php?do=modules">Модули (вкл/выкл)</a></div>';

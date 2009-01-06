@@ -50,7 +50,7 @@ if (!empty($_SESSION['uid']))
         echo '<div class="menu">Игровой баланс: ' . $arr['balans'] . '</div>';
         if ($total > 0)
             echo '<div class="rmenu">Нарушения: <a href="anketa.php?act=ban&amp;user=' . $user . '">' . $total . '</a></div>';
-        echo '<div class="bmenu"><a href="anketa.php?user=' . $arr['id'] . '">В анкету</a></div>';
+        echo '<div class="bmenu"><a href="../index.php?mod=cab">В кабинет</a></div>';
         require_once ("../incfiles/end.php");
         exit;
     }
@@ -418,7 +418,7 @@ if (!empty($_SESSION['uid']))
                 {
                     echo 'Всего пробыла';
                 }
-                echo ' на сайте: ' . gmdate('H:i:s', $arr['total_on_site']) . '<br />';
+                echo ' на сайте: ' . timecount($arr['total_on_site']) . '<br />';
                 $mmon = $arr['monthb'];
                 echo "<a href='anketa.php?act=par&amp;user=" . $idus . "'>Сменить пароль</a></p>";
                 echo "<p><a href='anketa.php?act=name'>Имя:</a>$arr[imname]<br/>";
@@ -600,7 +600,7 @@ if (!empty($_SESSION['uid']))
         {
             echo 'Всего пробыла';
         }
-        echo ' на сайте: ' . gmdate('H:i:s', $arr['total_on_site']) . '</div>';
+        echo ' на сайте: ' . timecount($arr['total_on_site']) . '</div>';
 
         // Если были нарушения, показываем ссылку на их историю
         $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `user_id`='" . $user . "';");
