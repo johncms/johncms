@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -21,7 +22,17 @@ if ($_GET['id'] == "")
     require_once ('../incfiles/end.php');
     exit;
 }
-$id = intval($_GET['id']);
+
+// Проверка на спам
+$old = ($rights > 0 || $dostsadm = 1) ? 10 : 60;
+if ($lastpost > ($realtime - $old))
+{
+    require_once ("../incfiles/head.php");
+    echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href ="index.php?id=' . $id . '">Назад</a></p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
 $typ = mysql_query("select * from `lib` where id='" . $id . "';");
 $ms = mysql_fetch_array($typ);
 if ($id != 0 && $ms['type'] != "cat")
@@ -95,7 +106,8 @@ if ($ms['ip'] == 0)
             {
                 echo '<p>Статья добавлена<br/>Спасибо за то, что нам написали.</p><p>После проверки Модератором, Ваша статья будет опубликована в библиотеке.</p>';
             }
-            echo '<p><a href="index.php?id=' . $cid . '">К статье</a></p>';
+            mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
+			echo '<p><a href="index.php?id=' . $cid . '">К статье</a></p>';
         } else
         {
             echo "Добавление статьи<br/><form action='index.php?act=write&amp;id=" . $id .

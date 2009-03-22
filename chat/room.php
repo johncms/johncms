@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -18,7 +19,7 @@ defined('_IN_JOHNCMS') or die('Error:restricted access');
 ////////////////////////////////////////////////////////////
 // Комнаты Чата                                           //
 ////////////////////////////////////////////////////////////
-$type = mysql_query("select * from `chat` where `id`= '" . $id . "';");
+$type = mysql_query("SELECT * FROM `chat` WHERE `id`= '" . $id . "' LIMIT 1;");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
 switch ($tip)
@@ -34,7 +35,7 @@ switch ($tip)
             {
                 require_once ("../incfiles/head.php");
                 echo "<form action='index.php?act=pass&amp;id=" . $id .
-                    "' method='post'><br/>Введите пароль(max. 10):<br/><input type='text' name='parol' maxlength='10'/><br/><input type='submit' name='submit' value='Ok!'/><br/></form><a href='index.php'>В чат</a><br/>";
+                    "' method='post'><br/>Пароль (max. 10):<br/><input type='text' name='parol' size='10' maxlength='10'/><input type='submit' name='submit' value='Ok!'/></form><p><a href='index.php'>Прихожая</a></p>";
                 require_once ("../incfiles/end.php");
                 exit;
             }
@@ -167,174 +168,106 @@ switch ($tip)
         }
         echo '[2] <a href="index.php?id=' . $id . '&amp;refr=' . $refr . '" accesskey="2">Обновить</a><br/>';
         echo '<div class="title1">' . $type1['text'] . '</div>';
-        $q2 = mysql_query("select * from `chat` where type='m' and refid='" . $id . "';");
-        while ($masss = mysql_fetch_array($q2))
-        {
-            $q3 = mysql_query("select * from `users` where name='" . $masss['from'] . "';");
-            $q4 = mysql_fetch_array($q3);
-            $pasw = $q4['alls'];
-            if (($masss['dpar'] != 1 || $masss['to'] == $login || $masss['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
-            {
-                if ($type1['dpar'] != "in" || $pasw == $datauser['alls'])
-                {
-                    $cm[] = $masss['id'];
-                }
-            }
-        }
-        $colmes = count($cm);
-
-        if (empty($_GET['page']))
-        {
-            $page = 1;
-        } else
-        {
-            $page = intval($_GET['page']);
-        }
-        $start = $page * $chmes - $chmes;
-        if ($colmes < $start + $chmes)
-        {
-            $end = $colmes;
-        } else
-        {
-            $end = $start + $chmes;
-        }
-        $q1 = mysql_query("select * from `chat` where type='m' and `refid`='" . $id . "'  order by time desc ;");
+        $req = mysql_query("SELECT COUNT(*) FROM `chat` WHERE `refid` = '" . $id . "' AND `type` = 'm'");
+        $colmes = mysql_result($req, 0);
+        $req = mysql_query("SELECT * FROM `chat` WHERE `refid` = '" . $id . "' AND `type` = 'm' ORDER BY `time` DESC LIMIT " . $start . "," . $chmes);
         $i = 0;
-        while ($mass = mysql_fetch_array($q1))
+        while ($mass = mysql_fetch_array($req))
         {
-            if ($i >= $start && $i < $end)
+            $ign = mysql_query("SELECT COUNT(*) FROM `privat` WHERE `me` = '" . $login . "' AND `ignor` = '" . $mass['from'] . "'");
+            $ign1 = mysql_result($ign, 0);
+            $als = mysql_query("select * from `users` where name='" . $mass['from'] . "';");
+            $als1 = mysql_fetch_array($als);
+            $psw = $als1['alls'];
+            if (($mass['dpar'] != 1 || $mass['to'] == $login || $mass['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
             {
-                $ign = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $mass['from'] . "';");
-                $ign1 = mysql_num_rows($ign);
-                $als = mysql_query("select * from `users` where name='" . $mass['from'] . "';");
-                $als1 = mysql_fetch_array($als);
-                $psw = $als1['alls'];
-                if (($mass['dpar'] != 1 || $mass['to'] == $login || $mass['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
+                if ($type1['dpar'] != 'in' || $psw == $datauser['alls'])
                 {
-                    if ($type1['dpar'] != "in" || $psw == $datauser['alls'])
+                    if ($mass['from'] != "Умник")
                     {
-                        if ($mass['from'] != "Умник")
+                        $uz = @mysql_query("select * from `users` where name='" . $mass['from'] . "';");
+                        $mass1 = @mysql_fetch_array($uz);
+                    }
+                    //echo '<div class="text">';
+                    echo ceil(ceil($lr / 2) - ($lr / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
+                    if ($mass['from'] != "Умник")
+                    {
+                        if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1['id']))
                         {
-                            $uz = @mysql_query("select * from `users` where name='" . $mass['from'] . "';");
-                            $mass1 = @mysql_fetch_array($uz);
-                        }
-                        echo '<div class="text">';
-                        if ($mass['from'] != "Умник")
-                        {
-                            // Выводим значек пола
-                            //switch ($mass1[sex])
-                            //{
-                            //    case "m":
-                            //        echo "<img src='../images/m.gif' alt=''/>";
-                            //        break;
-                            //    case "zh":
-                            //        echo "<img src='../images/f.gif' alt=''/>";
-                            //        break;
-                            //}
-                        }
-                        if ($mass['from'] != "Умник")
-                        {
-                            if ((!empty($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1['id']))
-                            {
-                                echo "<a href='index.php?act=say&amp;id=" . $mass['id'] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
-                            } else
-                            {
-                                echo "<b><font color='" . $csnik . "'>$mass[from]</font></b>";
-                            }
+                            echo "<a href='index.php?act=say&amp;id=" . $mass['id'] . "'><b><font color='" . $conik . "'>$mass[from]</font></b></a> ";
                         } else
                         {
-                            echo "<b><font color='" . $conik . "'>$mass[from]</font></b>";
+                            echo "<b><font color='" . $csnik . "'>$mass[from]</font></b>";
                         }
-
-                        // Дата и время
-                        $vrp = $mass['time'] + $sdvig * 3600;
-                        $vr = date("H:i", $vrp); // Только время
-                        //$vr = date("d.m.Y / H:i", $vrp); // Дата и время
-
-                        if ($mass['from'] != "Умник")
-                        {
-                            // Выводим метку должности
-                            switch ($mass1['rights'])
-                            {
-                                case 7:
-                                    echo " [Adm] ";
-                                    break;
-                                case 6:
-                                    echo " [Smd] ";
-                                    break;
-                                case 2:
-                                    echo " [Mod] ";
-                                    break;
-                                case 1:
-                                    echo " [Kil] ";
-                                    break;
-                            }
-                            // Выводим метку Онлайн / Офлайн
-                            //$ontime = $mass1[lastdate];
-                            //$ontime2 = $ontime + 300;
-                            //if ($realtime > $ontime2)
-                            //{
-                            //    echo "<font color='" . $coffs . "'> [Off]</font>";
-                            //} else
-                            //{
-                            //    echo "<font color='" . $cons . "'> [ON]</font>";
-                            //}
-                            // Выводим метку именнинника
-                            //if ($mass1[dayb] == $day && $mass1[monthb] == $mon)
-                            //{
-                            //    echo "<font color='" . $cdinf . "'>!!!</font><br/>";
-                            //}
-                        }
-                        echo "($vr): ";
-                        if (!empty($mass['nas']))
-                        {
-                            echo "<font color='" . $cdinf . "'>$mass[nas]</font><br/>";
-                        }
-                        if ($mass['dpar'] == 1)
-                        {
-                            echo "<font color='" . $clink . "'>[П!]</font>";
-                        }
-                        if (!empty($mass['to']))
-                        {
-
-                            if ($mass['to'] == $login)
-                            {
-                                echo "<font color='" . $cdinf . "'><b>";
-                            }
-                            echo "$mass[to], ";
-                            if ($mass['to'] == $login)
-                            {
-                                echo "</b></font>";
-                            }
-                        }
-                        $text = tags($mass['text']);
-                        if ($offsm != 1 && $offgr != 1)
-                        {
-                            $text = smiles($text);
-                            $text = smilescat($text);
-
-                            if ($mass['from'] == nickadmina || $mass['from'] == nickadmina2 || $mass1['rights'] >= 1)
-                            {
-                                $text = smilesadm($text);
-                            }
-                        }
-                        if ($mass['to'] == $login)
-                        {
-                            echo '<b>';
-                        }
-                        echo $text . '<br/>';
-                        if ($mass['to'] == $login)
-                        {
-                            echo '</b>';
-                        }
-                        // Удаление постов и информация о браузере
-                        //if ($dostcmod == 1)
-                        //{
-                        //    echo "<a href='index.php?act=delpost&amp;id=" . $mass[id] . "'>Удалить</a><br/>";
-                        //    echo "$mass[ip] - $mass[soft]<br/>";
-                        //}
-                        echo "</div>";
+                    } else
+                    {
+                        echo "<b><font color='" . $conik . "'>$mass[from]</font></b>";
                     }
+                    $vrp = $mass['time'] + $sdvig * 3600;
+                    $vr = date("H:i", $vrp); // Время поста
+                    if ($mass['from'] != "Умник")
+                    {
+                        // Выводим метку должности
+                        switch ($mass1['rights'])
+                        {
+                            case 7:
+                                echo " [Adm] ";
+                                break;
+                            case 6:
+                                echo " [Smd] ";
+                                break;
+                            case 2:
+                                echo " [Mod] ";
+                                break;
+                            case 1:
+                                echo " [Kil] ";
+                                break;
+                        }
+                    }
+                    echo "($vr): ";
+                    if (!empty($mass['nas']))
+                    {
+                        echo "<font color='" . $cdinf . "'>$mass[nas]</font><br/>";
+                    }
+                    if ($mass['dpar'] == 1)
+                    {
+                        echo "<font color='" . $clink . "'>[П!]</font>";
+                    }
+                    if (!empty($mass['to']))
+                    {
+
+                        if ($mass['to'] == $login)
+                        {
+                            echo "<font color='" . $cdinf . "'><b>";
+                        }
+                        echo "$mass[to], ";
+                        if ($mass['to'] == $login)
+                        {
+                            echo "</b></font>";
+                        }
+                    }
+                    $text = tags($mass['text']);
+                    if ($offsm != 1 && $offgr != 1)
+                    {
+                        $text = smiles($text);
+                        $text = smilescat($text);
+
+                        if ($mass['from'] == nickadmina || $mass['from'] == nickadmina2 || $mass1['rights'] >= 1)
+                        {
+                            $text = smilesadm($text);
+                        }
+                    }
+                    if ($mass['to'] == $login)
+                    {
+                        echo '<b>';
+                    }
+                    echo $text . '<br/>';
+                    if ($mass['to'] == $login)
+                    {
+                        echo '</b>';
+                    }
+                    echo "</div>";
+                    ++$lr;
                 }
             }
             if (($mass['dpar'] != 1 || $mass['to'] == $login || $mass['from'] == $login || $dostsadm == 1) && ($ign1 == 0 || $dostcmod == 1))
@@ -345,82 +278,15 @@ switch ($tip)
                 }
             }
         }
+        echo '<div class="title2"><a href="who.php?id=' . $id . '">Кто в чате(' . wch($id) . '/' . wch(0, 1) . ')</a></div>';
         if ($colmes > $chmes)
         {
-            echo "<hr/>";
-            $ba = ceil($colmes / $chmes);
-            if ($offpg != 1)
-            {
-                echo "Страницы:<br/>";
-            } else
-            {
-                echo "Страниц: $ba<br/>";
-            }
-            $asd = $start - ($chmes);
-            $asd2 = $start + ($chmes * 2);
-
-            if ($start != 0)
-            {
-                echo '<a href="?id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-            }
-            if ($offpg != 1)
-            {
-                if ($asd < $colmes && $asd > 0)
-                {
-                    echo ' <a href="?id=' . $id . '&amp;page=1&amp;">1</a> .. ';
-                }
-                $page2 = $ba - $page;
-                $pa = ceil($page / 2);
-                $paa = ceil($page / 3);
-                $pa2 = $page + floor($page2 / 2);
-                $paa2 = $page + floor($page2 / 3);
-                $paa3 = $page + (floor($page2 / 3) * 2);
-                if ($page > 13)
-                {
-                    echo ' <a href="?id=' . $id . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="?id=' . $id . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-                        '</a> <a href="?id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-                } elseif ($page > 7)
-                {
-                    echo ' <a href="?id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="?id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                }
-                for ($i = $asd; $i < $asd2; )
-                {
-                    if ($i < $colmes && $i >= 0)
-                    {
-                        $ii = floor(1 + $i / $chmes);
-
-                        if ($start == $i)
-                        {
-                            echo " <b>$ii</b>";
-                        } else
-                        {
-                            echo ' <a href="?id=' . $id . '&amp;page=' . $ii . '">' . $ii . '</a> ';
-                        }
-                    }
-                    $i = $i + $chmes;
-                }
-                if ($page2 > 12)
-                {
-                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="?id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) .
-                        '</a> <a href="?id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-                } elseif ($page2 > 6)
-                {
-                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="?id=' . $id . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                }
-                if ($asd2 < $colmes)
-                {
-                    echo ' .. <a href="?id=' . $id . '&amp;page=' . $ba . '">' . $ba . '</a>';
-                }
-            } else
-            {
-                echo "<b>[$page]</b>";
-            }
-            if ($colmes > $start + $chmes)
-            {
-                echo ' <a href="?id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-            }
+            echo '<p>' . pagenav('?id=' . $id . '&amp;', $start, $colmes, $chmes) . '</p>';
+            echo '<p><form action="index.php" method="get">
+			<input type="hidden" name="id" value="' . $id . '"/>
+			<input type="text" name="page" size="2"/>
+			<input type="submit" value="К странице &gt;&gt;"/></form></p>';
         }
-        echo '<div class="title2"><a href="who.php?id=' . $id . '">Кто в чате(' . wch($id) . '/' . wch() . ')</a></div>';
         echo '[0] <a href="index.php?" accesskey="0">Прихожая</a><br/>';
         if ($type1['dpar'] == "in")
         {

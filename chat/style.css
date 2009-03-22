@@ -8,6 +8,18 @@ hr{
 	margin: 0;
 }
 
+.list1{
+	background-color: #efefef;
+	padding-top: 1px;
+	padding-bottom: 2px;
+}
+
+.list2{
+	background-color: white;
+	padding-top: 1px;
+	padding-bottom: 2px;
+}
+
 .title1{
 	background-color: black;
 	color: #ffffff;
@@ -27,8 +39,4 @@ hr{
 
 .title2 a:link, .title2 a:visited{
 	color: #c0c0c0;
-}
-.text{
-	background-color: white;
-	padding: 2px;
 }

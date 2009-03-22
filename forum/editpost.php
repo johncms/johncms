@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -79,18 +80,20 @@ if (($dostfmod == 1) || (($arr1['from'] == $login) && ($arr1['id'] == $ms['id'])
         {
             $page = ceil($pa2 / $kmess);
         }
-        echo "Сообщение изменено.<br/><a href='index.php?id=" . $ms['refid'] . "&amp;page=" . $page . "'>Продолжить</a><br/>";
+        echo '<p>Сообщение изменено.<br/><a href="index.php?id=' . $ms['refid'] . '&amp;start=' . $start . '">Продолжить</a></p>';
     } else
     {
-        echo "Редактирование сообщения (max. 500):<br/><form action='?act=editpost&amp;id=" . $id . "' method='post'><textarea cols='20' rows='3' title='Введите текст сообщения' name='msg'>$ms[text]</textarea><br/>";
+        echo '<div class="phdr"><b>Изменить сообщение</b></div>';
+        echo '<div class="rmenu"><form action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
+        echo '<textarea cols="20" rows="3" name="msg">' . htmlentities($ms['text'], ENT_QUOTES, 'UTF-8') . '</textarea><br/>';
         if ($offtr != 1)
         {
-            echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения
-      <br/>";
+            echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения<br/>";
         }
-        echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/><br/></form>";
+        echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form></div>";
+        echo '<div class="bmenu"><a href="index.php?act=trans">Транслит</a> | <a href="../str/smile.php">Смайлы</a></div>';
+        echo '<p><a href="index.php?id=' . $ms['refid'] . '&amp;start=' . $start . '">Назад</a></p>';
     }
 }
-echo "<a href='index.php?id=" . $ms['refid'] . "'>Назад</a><br/>";
 
 ?>

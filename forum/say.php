@@ -23,7 +23,18 @@ if (empty($_GET['id']) || !$user_id || $ban['1'] || $ban['11'])
     require_once ("../incfiles/end.php");
     exit;
 }
-$agn = strtok($agn, ' ');
+
+// Проверка на спам
+$old = ($rights > 0 || $dostsadm = 1) ? 10 : 30;
+if ($lastpost > ($realtime - $old))
+{
+    require_once ("../incfiles/head.php");
+    echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a></p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
+$agn1 = strtok($agn, ' ');
 $type = mysql_query("SELECT * FROM `forum` WHERE `id`= '" . $id . "';");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
@@ -39,16 +50,6 @@ switch ($tip)
         }
         if (isset($_POST['submit']))
         {
-            $flt = $realtime - 30;
-            $af = mysql_query("select * from `forum` where type='m' and time >='" . $flt . "' and `from` = '" . check(trim($login)) . "';");
-            $af1 = mysql_num_rows($af);
-            if ($af1 > 0)
-            {
-                require_once ("../incfiles/head.php");
-                echo '<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд</p><p><a href="?id=' . $id . '">&lt;&lt; Назад</a></p>';
-                require_once ("../incfiles/end.php");
-                exit;
-            }
             if (empty($_POST['msg']))
             {
                 require_once ("../incfiles/head.php");
@@ -67,12 +68,15 @@ switch ($tip)
 			`time`='" . $realtime . "',
 			`from`='" . $login . "',
 			`ip`='" . $ipp . "',
-			`soft`='" . mysql_real_escape_string($agn) . "',
+			`soft`='" . mysql_real_escape_string($agn1) . "',
 			`text`='" . mysql_real_escape_string($msg) . "';");
             $fadd = mysql_insert_id();
             mysql_query("UPDATE `forum` SET  `time`='" . $realtime . "' WHERE `id`='" . $id . "';");
             $fpst = $datauser['postforum'] + 1;
-            mysql_query("UPDATE `users` SET  `postforum`='" . $fpst . "' WHERE `id`='" . $user_id . "';");
+            mysql_query("UPDATE `users` SET
+			`postforum`='" . $fpst . "',
+			`lastpost` = '" . $realtime . "'
+			WHERE `id`='" . $user_id . "';");
             $pa = mysql_query("select `id` from `forum` where type='m' and refid= '" . $id . "';");
             $pa2 = mysql_num_rows($pa);
             if (((empty($_SESSION['uid'])) && (!empty($_SESSION['uppost'])) && ($_SESSION['uppost'] == 1)) || ((!empty($_SESSION['uid'])) && $upfp == 1))
@@ -128,7 +132,7 @@ switch ($tip)
             echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></div></form>";
         }
         echo '<div class="bmenu"><a href="index.php?act=trans">Транслит</a> | <a href="../str/smile.php">Смайлы</a></div>';
-        echo '<p><a href="?id=' . $id . '">Назад</a></p>';
+        echo '<p><a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a></p>';
         break;
 
     case "m":
@@ -137,16 +141,6 @@ switch ($tip)
         $th1 = mysql_fetch_array($th2);
         if (isset($_POST['submit']))
         {
-            $flt = $realtime - 30;
-            $af = mysql_query("select * from `forum` where type='m' and time>'" . $flt . "' and `from`= '" . $login . "';");
-            $af1 = mysql_num_rows($af);
-            if ($af1 != 0)
-            {
-                require_once ("../incfiles/head.php");
-                echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='?id=" . $th . "'>В тему</a><br/>";
-                require_once ("../incfiles/end.php");
-                exit;
-            }
             if (empty($_POST['msg']))
             {
                 require_once ("../incfiles/head.php");
@@ -181,7 +175,7 @@ switch ($tip)
 			`from`='" . $login . "',
 			`to`='" . $to . "',
 			`ip`='" . $ipp . "',
-			`soft`='" . mysql_real_escape_string($agn) . "',
+			`soft`='" . mysql_real_escape_string($agn1) . "',
 			`text`='" . mysql_real_escape_string($msg) . "';");
             $fadd = mysql_insert_id();
             mysql_query("update `forum` set  time='" . $realtime . "' where id='" . $th . "';");
@@ -192,7 +186,10 @@ switch ($tip)
             {
                 $fpst = $datauser['postforum'] + 1;
             }
-            mysql_query("update `users` set  postforum='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
+            mysql_query("UPDATE `users` SET
+			`postforum` = '" . $fpst . "',
+			`lastpost` = '" . $realtime . "'
+			WHERE `id` = '" . $user_id . "';");
             $pa = mysql_query("select * from `forum` where type='m' and refid= '" . $th . "';");
             $pa2 = mysql_num_rows($pa);
 
@@ -251,6 +248,7 @@ switch ($tip)
             echo '<div class="phdr">Тема: <b>' . $th1['text'] . '</b></div>';
             $qt = str_replace("<br/>", "\r\n", $qt);
             $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
+            $qt = htmlentities($qt, ENT_QUOTES, 'UTF-8');
             echo '<form action="?act=say&amp;id=' . $id . '&amp;cyt" method="post" enctype="multipart/form-data">';
             if (isset($_GET['cyt']))
             {

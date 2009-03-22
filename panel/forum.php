@@ -42,9 +42,9 @@ if ($dostadm == 1)
                     $q = mysql_query("select * from `forum` where type='a' and refid='" . $id . "';");
                     while ($q1 = mysql_fetch_array($q))
                     {
-                        if (!in_array($q1[from], $_POST['mod']))
+                        if (!in_array($q1['from'], $_POST['mod']))
                         {
-                            mysql_query("delete from `forum` where `id`='" . $q1[id] . "';");
+                            mysql_query("delete from `forum` where `id`='" . $q1['id'] . "';");
                         }
                     }
                     foreach ($_POST['mod'] as $v)
@@ -65,7 +65,7 @@ if ($dostadm == 1)
                     $q = mysql_query("select * from `forum` where type='a' and refid='" . $id . "';");
                     while ($q1 = mysql_fetch_array($q))
                     {
-                        mysql_query("delete from `forum` where `id`='" . $q1[id] . "';");
+                        mysql_query("delete from `forum` where `id`='" . $q1['id'] . "';");
                     }
                 }
                 header("Location: forum.php?act=moders&id=$id");
@@ -74,12 +74,10 @@ if ($dostadm == 1)
                 require_once ("../incfiles/head.php");
                 if (!empty($_GET['id']))
                 {
-                    $id = intval(check($_GET['id']));
                     $typ = mysql_query("select * from `forum` where id='" . $id . "';");
                     $ms = mysql_fetch_array($typ);
-                    if ($ms[type] != "f")
+                    if ($ms['type'] != "f")
                     {
-
                         echo "Ошибка!<br/><a href='forum.php?'>В управление форумом</a><br/>";
                         require_once ("../incfiles/end.php");
                         exit;
@@ -88,14 +86,14 @@ if ($dostadm == 1)
                     $q = mysql_query("select * from `users` where rights='3';");
                     while ($q1 = mysql_fetch_array($q))
                     {
-                        $q2 = mysql_query("select * from `forum` where type='a' and `from`='" . $q1[name] . "' and refid='" . $id . "';");
+                        $q2 = mysql_query("select * from `forum` where type='a' and `from`='" . $q1['name'] . "' and refid='" . $id . "';");
                         $q3 = mysql_num_rows($q2);
                         if ($q3 == 0)
                         {
-                            echo "<input type='checkbox' name='mod[]' value='" . $q1[name] . "'/>$q1[name]<br/>";
+                            echo "<input type='checkbox' name='mod[]' value='" . $q1['name'] . "'/>$q1[name]<br/>";
                         } else
                         {
-                            echo "<input type='checkbox' name='mod[]' value='" . $q1[name] . "' checked='checked'/>$q1[name]<br/>";
+                            echo "<input type='checkbox' name='mod[]' value='" . $q1['name'] . "' checked='checked'/>$q1[name]<br/>";
                         }
                     }
                     echo "<input type='submit' name='submit' value='Ok!'/><br/></form>";

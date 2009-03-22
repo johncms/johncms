@@ -82,17 +82,14 @@ if ($user_id)
             break;
 
         case "forum":
-            $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
             if (isset($_POST['submit']))
             {
                 $upfp = intval($_POST['upfp']);
                 $farea = intval($_POST['farea']);
-                foreach ($_POST['nmenu'] as $value)
-                {
-                    $nmenu1[] = intval($value);
-                }
-                $nmenu = implode(",", $nmenu1);
-                mysql_query("update `users` set nmenu='" . $nmenu . "',farea='" . $farea . "',upfp='" . $upfp . "' where id='" . intval($_SESSION['uid']) . "';");
+                mysql_query("UPDATE `users` SET 
+				`farea`='" . $farea . "',
+				`upfp`='" . $upfp . "'
+				WHERE `id`='" . $user_id . "';");
                 header("Location: usset.php?act=forum&yes");
             } else
             {
@@ -136,23 +133,6 @@ if ($user_id)
                     echo "<input name='farea' type='radio' value='0'/>";
                 }
                 echo ' Выкл.</div>';
-
-                echo '<div class="menu">Ник-меню:<br/>';
-                if (!empty($datauser['nmenu']))
-                {
-                    $nmenu1 = explode(",", $datauser['nmenu']);
-                }
-                foreach ($nmen as $k => $v)
-                {
-                    if (in_array($k, $nmenu1))
-                    {
-                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "' checked='checked'/>$v<br/>";
-                    } else
-                    {
-                        echo "<input type='checkbox' name='nmenu[]' value='" . $k . "'/>$v<br/>";
-                    }
-                }
-                echo '</div>';
                 echo '<div class="menu"><input type="submit" name="submit" value="Сохранить"/></div></form>';
                 echo '<div class="gmenu"><a href="../forum">В форум</a></div>';
                 echo '<div class="bmenu"><a href="usset.php">Меню настроек</a></div>';

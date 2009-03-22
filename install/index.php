@@ -317,7 +317,7 @@ switch ($_GET['act'])
         }
 
         // Проверка прав доступа к файлам
-        $arr = array("flood.dat", "library/java/textfile.txt", "library/java/META-INF/MANIFEST.MF");
+        $arr = array('flood.dat', 'library/java/textfile.txt', 'library/java/META-INF/MANIFEST.MF', 'panel/filebase.dat');
         foreach ($arr as $v)
         {
             if (permissions($v) < 666)
@@ -354,7 +354,7 @@ switch ($_GET['act'])
 	///////////////////////////////////////////////////////
 	//Приветствие										 //
 	///////////////////////////////////////////////////////
-	echo '<p>Добро пожаловать в JohnCMS.<br />Перед началом инсталляции, настоятельно рекомендуем ознакомиться с инструкцией, в файле <a href="../readme.txt">readme.txt</a>.';
+	echo '<p>Добро пожаловать в JohnCMS.<br />Перед началом инсталляции, настоятельно рекомендуем ознакомиться с инструкцией, в файле <a href="../install.txt">install.txt</a>.';
 	echo '<br />Список изменений, в сравнении с предыдущей версией, находится в файле <a href="../version.txt">version.txt</a>.</p>';
 	echo '<p>Дополнительную информацию Вы можете получить на официальном сайте проекта <a href="http://johncms.com">johncms.com</a>,<br />или на доп. сайте поддержки <a href="http://gazenwagen.com">gazenwagen.com</a>.</p>';
 	echo '<p>Установка и использование скриптов JohnCMS, означает полное согласие с условиями <a href="../license.txt">лицензии</a>.</p>';

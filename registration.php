@@ -106,18 +106,19 @@ if (isset($_POST['submit']))
         {
             $preg = 0;
         }
-        mysql_query("insert into `users` set
-			`name`='" . mysql_real_escape_string($reg_nick) . "',
-			`name_lat`='" . mysql_real_escape_string($lat_nick) . "',
-			`password`='" . mysql_real_escape_string($pass) . "',
-			`imname`='" . $reg_name . "',
-			`about`='" . $reg_about . "',
-			`sex`='" . $reg_sex . "',
-			`rights`='0',
-			`ip`='" . $ipl . "',
-			`browser`='" . $agn . "',
-			`datereg`='" . $realtime . "',
-			`preg`='" . $preg . "';");
+        mysql_query("INSERT INTO `users` SET
+		`name`='" . mysql_real_escape_string($reg_nick) . "',
+		`name_lat`='" . mysql_real_escape_string($lat_nick) . "',
+		`password`='" . mysql_real_escape_string($pass) . "',
+		`imname`='" . $reg_name . "',
+		`about`='" . $reg_about . "',
+		`sex`='" . $reg_sex . "',
+		`rights`='0',
+		`ip`='" . $ipl . "',
+		`browser`='" . $agn . "',
+		`datereg`='" . $realtime . "',
+		`lastdate`='" . $realtime . "',
+		`preg`='" . $preg . "';");
 
         $usid = mysql_insert_id();
         echo "Вы зарегистрированы!<br/>";

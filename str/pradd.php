@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -14,31 +15,40 @@
 */
 
 define('_IN_JOHNCMS', 1);
-session_name('SESID');
-session_start();
 $textl = 'Почта(письма)';
 require_once ("../incfiles/core.php");
 
-$msg = check(trim($_POST['msg']));
-if ($_POST[msgtrans] == 1)
+
+if ($user_id)
 {
-    $msg = trans($msg);
-}
-$foruser = check(trim($_POST['foruser']));
-$tem = check(trim($_POST['tem']));
-$idm = intval($_POST['idm']);
-if (!empty($_SESSION['uid']))
-{
-    if (!empty($_GET['act']))
+    $msg = check(trim($_POST['msg']));
+    if ($_POST['msgtrans'] == 1)
     {
-        $act = check($_GET['act']);
+        $msg = trans($msg);
     }
+    $foruser = check(trim($_POST['foruser']));
+    $tem = check(trim($_POST['tem']));
+    $idm = intval($_POST['idm']);
+
+    $act = isset($_GET['act']) ? $_GET['act'] : '';
     switch ($act)
     {
         case 'send':
             ////////////////////////////////////////////////////////////
             // Отправка письма и обработка прикрепленного файла       //
             ////////////////////////////////////////////////////////////
+
+            // Проверка на спам
+            $old = ($rights > 0 || $dostsadm = 1) ? 10:
+            30;
+            if ($lastpost > ($realtime - $old))
+            {
+                require_once ("../incfiles/head.php");
+                echo "<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог $old секунд<br/><br/><a href='privat.php'>Назад</a></p>";
+                require_once ("../incfiles/end.php");
+                exit;
+            }
+
             if ($ban['1'] || $ban['3'])
                 exit;
             require_once ("../incfiles/head.php");
@@ -88,7 +98,7 @@ if (!empty($_SESSION['uid']))
                     if ($do_file || $do_file_mini)
                     {
                         // Список допустимых расширений файлов.
-                        $al_ext = array('rar', 'zip', 'pdf', 'txt', 'tar', 'gz', 'jpg', 'jpeg', 'gif', 'png', 'bmp', '3gp', 'mp3', 'mpg', 'sis', 'thm', 'jar', 'jad');
+                        $al_ext = array('rar', 'zip', 'pdf', 'txt', 'tar', 'gz', 'jpg', 'jpeg', 'gif', 'png', 'bmp', '3gp', 'mp3', 'mpg', 'sis', 'thm', 'jar', 'jad', 'cab', 'sis', 'sisx', 'exe', 'msi');
                         $ext = explode(".", $fname);
                         // Проверка на допустимый размер файла
                         if ($fsize >= 1024 * $flsz)
@@ -186,6 +196,7 @@ if (!empty($_SESSION['uid']))
                     {
                         mysql_query("update `privat` set otvet='1' where id='" . $idm . "';");
                     }
+                    mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
                     echo "<p>Письмо отправлено!</p>";
                     if (!empty($_SESSION['refpr']))
                     {
@@ -234,6 +245,18 @@ if (!empty($_SESSION['uid']))
             ////////////////////////////////////////////////////////////
             if ($ban['1'] || $ban['3'])
                 exit;
+
+            // Проверка на спам
+            $old = ($rights > 0 || $dostsadm = 1) ? 10:
+            30;
+            if ($lastpost > ($realtime - $old))
+            {
+                require_once ("../incfiles/head.php");
+                echo "<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог $old секунд<br/><br/><a href='privat.php'>Назад</a></p>";
+                require_once ("../incfiles/end.php");
+                exit;
+            }
+
             require_once ("../incfiles/head.php");
             if (!empty($_GET['adr']))
             {

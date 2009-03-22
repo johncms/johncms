@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -16,7 +17,7 @@
 define('_IN_JOHNCMS', 1);
 
 $textl = 'Чат';
-$headmod = "chat";
+$headmod = 'chat';
 require_once ("../incfiles/core.php");
 
 // Закрываем доступ в чат
@@ -28,9 +29,6 @@ if (!$set['mod_chat'] && $dostadm != 1)
     exit;
 }
 
-// Определяем и проверяем переменные
-$id = isset($_GET['id']) ? intval($_GET['id']) : false; // Идентификатор комнаты
-
 if ($ban['1'] || $ban['12'])
 {
     require_once ("../incfiles/head.php");
@@ -41,9 +39,14 @@ if ($ban['1'] || $ban['12'])
 
 if ($user_id)
 {
-    // Определяем местонахождение пользователя
-    $where = !empty($id) ? "chat,$id" : 'chat';
-    mysql_query("insert into `count` values(0,'" . $ipp . "','" . mysql_real_escape_string($agn) . "','" . $realtime . "','" . $where . "','" . $login . "','0');");
+    // Фиксируем местонахождение пользователя
+    $where = !empty($id) ? 'chat,' . $id : 'chat';
+    mysql_query("INSERT INTO `count` SET
+	`ip`='" . $ipp . "',
+	`browser`='" . mysql_real_escape_string($agn) . "',
+	`time`='" . $realtime . "',
+	`where`='" . $where . "',
+	`name`='" . $login . "';");
 
     if (!empty($_GET['act']))
     {
@@ -142,13 +145,17 @@ if ($user_id)
                 require_once ("../incfiles/end.php");
                 exit;
             }
-            if (empty($_SESSION['uid']))
+
+            // Проверка на спам
+            $old = ($rights > 0 || $dostsadm = 1) ? 5: 10;
+            if ($lastpost > ($realtime - $old))
             {
                 require_once ("../incfiles/head.php");
-                echo "Вы не авторизованы!<br/>";
+                echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href="index.php?id=' . $id . '">Назад</a></p>';
                 require_once ("../incfiles/end.php");
                 exit;
             }
+
             $type = mysql_query("select * from `chat` where id= '" . $id . "';");
             $type1 = mysql_fetch_array($type);
             $tip = $type1['type'];
@@ -157,16 +164,6 @@ if ($user_id)
                 case "r":
                     if (isset($_POST['submit']))
                     {
-                        $flt = $realtime - 10;
-                        $af = mysql_query("select * from `chat` where type='m' and time >='" . $flt . "' and `from` = '" . trim($login) . "';");
-                        $af1 = mysql_num_rows($af);
-                        if ($af1 > 0)
-                        {
-                            require_once ("../incfiles/head.php");
-                            echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 10 секунд<br/><a href='index.php?id=" . $id . "'>Назад</a><br/>";
-                            require_once ("../incfiles/end.php");
-                            exit;
-                        }
                         if (empty($_POST['msg']))
                         {
                             require_once ("../incfiles/head.php");
@@ -191,7 +188,10 @@ if ($user_id)
                         {
                             $fpst = $datauser['postchat'] + 1;
                         }
-                        mysql_query("update `users` set  postchat='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
+                        mysql_query("UPDATE `users` SET
+						`postchat` = '" . $fpst . "',
+						`lastpost` = '" . $realtime . "'
+						WHERE `id` = '" . $user_id . "';");
                         if ($type1['dpar'] == "vik")
                         {
                             $protv = mysql_query("select * from `chat` where dpar='vop' and type='m' order by time desc;");

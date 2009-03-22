@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -105,10 +106,19 @@ switch ($act)
         // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
         $admset = isset($_SESSION['ga']) ? 1:
         0;
-        $req = mysql_query("SELECT * FROM `guest` WHERE `soft`='" . mysql_real_escape_string($agn) . "' AND `time` >='" . ($realtime - 30) . "' AND `ip` ='" . $ipl . "' AND `adm`='" . $admset . "';");
-        if (mysql_num_rows($req) > 0)
+        // Антиспам, проверка на частоту добавления сообщений
+        if ($user_id)
         {
-            echo "<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><br/><a href='guest.php'>Назад</a></p>";
+            $old = ($rights > 0 || $dostsadm = 1) ? 10 : 30;
+            $spam = $lastpost > ($realtime - $old) ? 1 : false;
+        } else
+        {
+            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `soft`='" . mysql_real_escape_string($agn) . "' AND `time` >='" . ($realtime - 30) . "' AND `ip` ='" . $ipl . "' AND `adm`='" . $admset . "';");
+            $spam = mysql_result($req, 0) > 0 ? 1 : false;
+        }
+        if ($spam)
+        {
+            echo "<p><b>Антифлуд!</b><br />Вы не можете так часто добавлять сообщения<br/>Порог $old секунд<br/><br/><a href='guest.php'>Назад</a></p>";
             require_once ("../incfiles/end.php");
             exit;
         }
@@ -138,6 +148,9 @@ switch ($act)
 		`text`='" . mysql_real_escape_string($msg) . "',
 		`ip`='" . $ipl . "',
 		`soft`='" . mysql_real_escape_string($agn) . "';");
+        // Фиксируем время последнего поста (антиспам)
+        if ($user_id)
+            mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
         header("location: guest.php");
         break;
 
@@ -338,53 +351,34 @@ switch ($act)
         }
         if (isset($_SESSION['ga']) && ($login == $nickadmina || $login == $nickadmina2 || $rights >= "1"))
         {
-            // Запрос для Админ клуба
-            echo '<b>АДМИН-КЛУБ</b><hr class="redhr" />';
-            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
-			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='1' ORDER BY `time` DESC;");
+            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1'");
         } else
         {
-            // Запрос для обычной Гастивухи
-            echo '<hr />';
-            $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
-			FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='0' ORDER BY `time` DESC;");
+            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='0'");
         }
-        $colmes = mysql_num_rows($req);
-        if (empty($_GET['page']))
+        $colmes = mysql_result($req, 0); // Число сообщений в гастивухе
+        if ($colmes > 0)
         {
-            $page = 1;
-        } else
-        {
-            $page = intval($_GET['page']);
-        }
-        $start = $page * 10 - 10;
-        if ($colmes < $start + 10)
-        {
-            $end = $colmes;
-        } else
-        {
-            $end = $start + 10;
-        }
-        while ($res = mysql_fetch_array($req))
-        {
-            if ($i >= $start && $i < $end)
+            if (isset($_SESSION['ga']) && ($login == $nickadmina || $login == $nickadmina2 || $rights >= "1"))
             {
-                $d = $i / 2;
-                $d1 = ceil($d);
-                $d2 = $d1 - $d;
-                $d3 = ceil($d2);
-                if ($d3 == 0)
-                {
-                    $div = "<div class='b'>";
-                } else
-                {
-                    $div = "<div class='c'>";
-                }
-                echo $div;
+                // Запрос для Админ клуба
+                echo '<b>АДМИН-КЛУБ</b><hr class="redhr" />';
+                $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+				FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess . ";");
+            } else
+            {
+                // Запрос для обычной Гастивухи
+                echo '<hr />';
+                $req = mysql_query("SELECT `guest`.*, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+				FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id` WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess . ";");
+            }
+            while ($res = mysql_fetch_array($req))
+            {
+                echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
                 if ($res['user_id'] != "0")
                 {
                     // Значек нового юзера
-					echo $res['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
+                    echo $res['datereg'] > $realtime - 86400 ? '<img src="../images/add.gif" alt=""/>&nbsp;' : '';
                     // Значок пола
                     echo '<img src="../images/' . ($res['sex'] == 'm' ? 'm' : 'f') . '.gif" alt=""/>&nbsp;';
                     // Ник юзера и ссылка на Анкету
@@ -482,91 +476,23 @@ switch ($act)
                     echo long2ip($res['ip']) . ' - ' . $res['soft'] . '</div>';
                 }
                 echo "</div>";
+                ++$i;
             }
-            ++$i;
-        }
-        echo isset($_SESSION['ga']) ? '<hr class="redhr" />':
-        '<hr />';
-        echo "<p>Всего сообщений: $colmes<br/>";
-        if ($colmes > 10)
+            echo isset($_SESSION['ga']) ? '<hr class="redhr" />' : '<hr />';
+            echo "<p>Всего сообщений: $colmes<br/>";
+            if ($colmes > $kmess)
+            {
+                echo '<p>' . pagenav('guest.php?', $start, $colmes, $kmess) . '</p>';
+                echo '<p><form action="guest.php" method="get"><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
+            }
+            // Для Админов даем ссылку на чистку Гостевой
+            if ($dostadm == 1)
+                echo '<a href="guest.php?act=clean">Чистка истории</a>';
+            echo '</p>';
+        } else
         {
-            $ba = ceil($colmes / 10);
-            if ($offpg != 1)
-            {
-                echo "Страницы: ";
-            } else
-            {
-                echo "Страниц: $ba ";
-            }
-            $asd = $start - (10);
-            $asd2 = $start + (10 * 2);
-
-            if ($start != 0)
-            {
-                echo '<a href="guest.php?page=' . ($page - 1) . '">&lt;&lt;</a> ';
-            }
-            if ($offpg != 1)
-            {
-                if ($asd < $colmes && $asd > 0)
-                {
-                    echo ' <a href="guest.php?page=1&amp;">1</a> .. ';
-                }
-                $page2 = $ba - $page;
-                $pa = ceil($page / 2);
-                $paa = ceil($page / 3);
-                $pa2 = $page + floor($page2 / 2);
-                $paa2 = $page + floor($page2 / 3);
-                $paa3 = $page + (floor($page2 / 3) * 2);
-                if ($page > 13)
-                {
-                    echo ' <a href="guest.php?page=' . $paa . '">' . $paa . '</a> <a href="guest.php?page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="guest.php?page=' . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="guest.php?page=' . ($paa * 2 + 1) .
-                        '">' . ($paa * 2 + 1) . '</a> .. ';
-                } elseif ($page > 7)
-                {
-                    echo ' <a href="guest.php?page=' . $pa . '">' . $pa . '</a> <a href="guest.php?page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                }
-                for ($i = $asd; $i < $asd2; )
-                {
-                    if ($i < $colmes && $i >= 0)
-                    {
-                        $ii = floor(1 + $i / 10);
-
-                        if ($start == $i)
-                        {
-                            echo " <b>$ii</b>";
-                        } else
-                        {
-                            echo ' <a href="guest.php?page=' . $ii . '">' . $ii . '</a> ';
-                        }
-                    }
-                    $i = $i + 10;
-                }
-                if ($page2 > 12)
-                {
-                    echo ' .. <a href="guest.php?page=' . $paa2 . '">' . $paa2 . '</a> <a href="guest.php?page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="guest.php?page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="guest.php?page=' . ($paa3 + 1) .
-                        '">' . ($paa3 + 1) . '</a> ';
-                } elseif ($page2 > 6)
-                {
-                    echo ' .. <a href="guest.php?page=' . $pa2 . '">' . $pa2 . '</a> <a href="guest.php?page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                }
-                if ($asd2 < $colmes)
-                {
-                    echo ' .. <a href="guest.php?page=' . $ba . '">' . $ba . '</a>';
-                }
-            } else
-            {
-                echo "<b>[$page]</b>";
-            }
-            if ($colmes > $start + 10)
-            {
-                echo ' <a href="guest.php?page=' . ($page + 1) . '">&gt;&gt;</a>';
-            }
-            echo '<br />';
+            echo '<p>В Гостевой сообщений нет.</p>';
         }
-        // Для Админов даем ссылку на чистку Гостевой
-        if ($dostadm == 1)
-            echo '<a href="guest.php?act=clean">Чистка истории</a>';
-        echo '</p>';
         // Для Модеров и выше, даем ссылку на Админ-клуб
         if ($dostmod == 1)
         {

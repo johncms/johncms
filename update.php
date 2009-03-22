@@ -23,7 +23,7 @@ a:hover { text-decoration: none; font-size: 12px; color : #E4F992 }
 .gray{ color: #FF0000; font: small; }
 </style>
 </head><body>";
-echo '<big><b>JohnCMS v.2.0.0</b></big> Обновление<hr />';
+echo '<big><b>JohnCMS v.2.2.0</b></big><br />Обновление с версии 2.0.0<hr />';
 
 // Подключаемся к базе данных
 require_once ("incfiles/db.php");
@@ -36,78 +36,74 @@ $do = isset($_GET['do']) ? $_GET['do'] : '';
 switch ($do)
 {
     case 'step1':
-        echo '<b><u>Подготовка таблиц</u></b><br />';
-        // Создаем таблицу меток прочтения
-        mysql_query("DROP TABLE IF EXISTS `cms_forum_rdm`");
-        mysql_query("CREATE TABLE `cms_forum_rdm` (
-        `topic_id` int(11) NOT NULL,
-        `user_id` int(11) NOT NULL,
-        `time` int(11) NOT NULL,
-        PRIMARY KEY  (`topic_id`,`user_id`),
-        KEY `time` (`time`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=utf8");
-        echo '<span class="green">OK</span> таблица меток готова<br />';
-        // Модифицируем таблицу `users`
-        mysql_query("ALTER TABLE `users` ADD `digest` TINYINT NOT NULL DEFAULT '1'");
-        mysql_query("ALTER TABLE `users` ADD `skin` varchar(20) NOT NULL");
-        mysql_query("ALTER TABLE `users` CHANGE `offsm` `offsm` TINYINT( 1 ) NOT NULL DEFAULT '1'");
-        mysql_query("ALTER TABLE `users` CHANGE `offtr` `offtr` TINYINT( 1 ) NOT NULL DEFAULT '1'");
-        mysql_query("ALTER TABLE `users` CHANGE `pereh` `pereh` TINYINT( 1 ) NOT NULL DEFAULT '1'");
-        echo '<span class="green">OK</span> таблица users готова<br />';
-        // Конвертируем пользовательские настройки
-        $req = mysql_query("SELECT `id` FROM `users`");
-        while ($res = mysql_fetch_array($req))
-        {
-            mysql_query("UPDATE `users` SET `offsm`='1', `offtr`='1', `pereh`='1' WHERE `id`='" . $res['id'] . "';");
+        echo '<b><u>Права доступа</u></b><br />';
+        // Проверка прав доступа к файлам и папкам
+        function permissions($filez) {
+            $filez = @decoct(@fileperms($filez)) % 1000;
+            return $filez;
         }
-        mysql_query("INSERT INTO `cms_settings` SET `key`='skindef', `val`='default';");
-		echo '<span class="green">OK</span> настройки готовы<br />';
-        echo '<hr /><a href="update.php?do=step2">Продолжить</a>';
+        $cherr = '';
+        $err = false;
+        // Проверка прав доступа к папкам
+        $arr = array("gallery/foto/", "gallery/temp/", "library/files/", "library/temp/", "pratt/", "forum/files/", "forum/temtemp/", "download/arctemp/", "download/files/", "download/graftemp/", "download/screen/", "download/mp3temp/",
+            "download/upl/");
+        foreach ($arr as $v)
+        {
+            if (permissions($v) < 777)
+            {
+                $cherr = $cherr . '<div class="smenu"><span class="red">Ошибка!</span> - ' . $v . '<br /><span class="gray">Необходимо установить права доступа 777.</span></div>';
+                $err = 1;
+            } else
+            {
+                $cherr = $cherr . '<div class="smenu"><span class="green">Oк</span> - ' . $v . '</div>';
+            }
+        }
+        // Проверка прав доступа к файлам
+        $arr = array('flood.dat', 'library/java/textfile.txt', 'library/java/META-INF/MANIFEST.MF', 'panel/filebase.dat');
+        foreach ($arr as $v)
+        {
+            if (permissions($v) < 666)
+            {
+                $cherr = $cherr . '<div class="smenu"><span class="red">Ошибка!</span> - ' . $v . '<br/><span class="gray">Необходимо установить права доступа 666.</span></div>';
+                $err = 1;
+            } else
+            {
+                $cherr = $cherr . '<div class="smenu"><span class="green">Ок</span> - ' . $v . '</div>';
+            }
+        }
+        echo '<div class="menu">';
+        echo $cherr;
+        echo '</div><br />';
+        if ($err)
+        {
+            echo '<span class="red">Внимание!</span> Имеются критические ошибки!<br />Вы не сможете продолжить инсталляцию, пока не устраните их.';
+            echo '<p clss="step"><a class="button" href="index.php?act=check">Проверить заново</a></p>';
+        } else
+        {
+            echo '<span class="green">Отлично!</span><br />Все настройки правильные.<hr /><a class="button" href="update.php?do=step2">Продолжить</a>';
+        }
         break;
 
     case 'step2':
-        echo '<b><u>Удаление меток форума</u></b><br />';
-        echo '<p>Внимание!<br />На больших форумах, данная процедура может длиться довольно долго.</p>';
-        // Удаляем метки (l)
-        $req = mysql_query("DELETE FROM `forum` WHERE `type`='l';");
-        echo '<span class="green">OK</span> метки удалены.<br />';
-        echo '<hr /><a href="update.php?do=step3">Продолжить</a>';
-        break;
-
-    case 'step3':
-        echo '<b><u>Конвертация форума</u></b><br />';
-        echo '<p>Внимание!<br />На больших форумах, данная процедура может длиться довольно долго.</p>';
-        $req = mysql_query("SELECT * FROM `forum` WHERE `type`='m';");
-        while ($res = mysql_fetch_array($req))
-        {
-            $text = $res['text'];
-            $text = str_replace("<br/>", "\r\n", $text);
-
-            $text = str_replace('&amp;', '&', $text);
-            $text = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $text);
-            $text = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $text);
-            $trans_tbl = get_html_translation_table(HTML_ENTITIES);
-            $trans_tbl = array_flip($trans_tbl);
-            $text = strtr($text, $trans_tbl);
-
-            $text = mysql_real_escape_string($text);
-            mysql_query("UPDATE `forum` SET
-        `text`='" . $text . "'
-        WHERE `id`='" . $res['id'] . "';");
-        }
-        echo '<span class="green">OK</span> конвертация завершена.<br />';
-		echo '<hr /><a href="update.php?do=final">Продолжить</a>';
+        echo '<b><u>Подготовка таблиц</u></b><br />';
+        // Модифицируем таблицу `users`
+        mysql_query("ALTER TABLE `users` ADD `skype` VARCHAR( 50 ) NOT NULL AFTER `icq`");
+        mysql_query("ALTER TABLE `users` ADD `jabber` VARCHAR( 50 ) NOT NULL AFTER `skype`");
+        mysql_query("ALTER TABLE `users` ADD `immunity` BOOL NOT NULL AFTER `id`");
+        mysql_query("ALTER TABLE `users` ADD `lastpost` INT NOT NULL");
+        echo '<span class="green">OK</span> таблица users готова<br />';
+        echo '<hr /><a href="update.php?do=final">Продолжить</a>';
         break;
 
     case 'final':
-        mysql_query("OPTIMIZE TABLE `forum`;");
+        mysql_query("OPTIMIZE TABLE `users`;");
         echo '<b><span class="green">Поздравляем!</span></b><br />Процедура обновления успешно завершена.<br />Не забудьте удалить папку /install';
         echo '<hr /><a href="../../index.php">На сайт</a>';
         break;
 
     default:
         echo '<p><big><span class="red">ВНИМАНИЕ!</span></big><ul>';
-        echo '<li>Учтите, что обновление возможно только для системы JohnCMS 1.6.0</li>';
+        echo '<li>Учтите, что обновление возможно только для системы <b>JohnCMS 2.0.0</b></li>';
         echo '<li>Если Вы используете какие-либо моды, то возможность обновления обязательно согласуйте с их авторами.</li>';
         echo '<li>Перед началом процедуры обновления, ОБЯЗАТЕЛЬНО сделайте резервную копию базы данных. Если по какой то причине обновление не пройдет до конца, Вам придется восстанавливать базу из резервной копии.</li>';
         echo '<li>Если Вы нажмете ссылку "Продолжить", то отмена изменений будет невозможна без восстановления из резервной копии.</li>';

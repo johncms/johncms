@@ -1,8 +1,17 @@
-a:link, a:visited{ color: #0000bb; text-decoration: underline; }
+a:link, a:visited{
+	color: #0000bb;
+	text-decoration: underline;
+}
 
-a:hover{ color: #ff6600; text-decoration: none; }
+a:hover{
+	color: #ff6600;
+	text-decoration: none;
+}
 
-a:active{ color: #666600; text-decoration: underline; }
+a:active{
+	color: #666600;
+	text-decoration: underline;
+}
 
 body{
 	margin: 0px;
@@ -13,9 +22,17 @@ body{
 	font-size: small;
 }
 
-form{ padding: 0px; margin: 0px; font-size: small; }
+form{
+	padding: 0px;
+	margin: 0px;
+	font-size: small;
+}
 
-hr{ margin: 0; border: 0; border-top: 1px solid gray; }
+hr{
+	margin: 0;
+	border: 0;
+	border-top: 1px solid gray;
+}
 
 .a{
 	border: 1px solid #b5bec7;
@@ -32,9 +49,16 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	padding: 3px 0px 3px 4px;
 }
 
-.alarm a:link, .alarm a:visited{ font-size: x-small; color: white; }
+.alarm a:link, .alarm a:visited{
+	font-size: x-small;
+	color: white;
+}
 
-.b{ padding: 2px; margin: 0px; background-color: #e8e8e8; }
+.b{
+	padding: 2px;
+	margin: 0px;
+	background-color: #e8e8e8;
+}
 
 .bmenu{
 	margin: 0px;
@@ -43,9 +67,15 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border: 1px solid white;
 }
 
-.c{ padding: 2px; margin: 0px; background-color: #ffffff; }
+.c{
+	padding: 2px;
+	margin: 0px;
+	background-color: #ffffff;
+}
 
-.end{ text-align: center; }
+.end{
+	text-align: center;
+}
 
 .fmenu{
 	margin: 0px;
@@ -63,7 +93,10 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border-bottom: 1px solid red;
 }
 
-.footer a:link, .footer a:visited{ color: #D2D2D2; text-decoration: none; }
+.footer a:link, .footer a:visited{
+	color: #D2D2D2;
+	text-decoration: none;
+}
 
 .func{
 	color: gray;
@@ -95,6 +128,20 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border-top: 1px solid red;
 }
 
+.list1{
+	margin: 0px;
+	padding: 3px 4px 4px 4px;
+	background-color: #eeecd9;
+	border: 1px solid white;
+}
+
+.list2{
+	margin: 0px;
+	padding: 3px 4px 4px 4px;
+	background-color: #f5f5f5;
+	border: 1px solid white;
+}
+
 .maintxt{
 	margin: 0px;
 	font-weight: normal;
@@ -123,9 +170,15 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border-left: 3px solid #c0c0c0;
 }
 
-.red{ color: red; }
+.red{
+	color: red;
+}
 
-.redhr{ margin: 0; border: 0; border-top: 3px solid red; }
+.redhr{
+	margin: 0;
+	border: 0;
+	border-top: 3px solid red;
+}
 
 .reply{
 	padding: 2px 0px 2px 4px;
@@ -140,15 +193,20 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border: 1px solid white;
 }
 
-.status{ color: #CD853F; font-weight: bold; }
+.status{
+	color: #CD853F;
+	font-weight: bold;
+}
 
 .sub{
 	font-size: x-small;
-	border-top: 1px solid #bcb669;
-	border-left: 1px solid #bcb669;
-	padding-left: 4px;
+	border-top: 1px dotted #c6c17f;
+	padding: 0px 0px 0px 20px;
 	margin-top: 4px;
-	background-color: #e0e0bc;
+}
+
+.sub a:link, .sub a:visited{
+	text-decoration: none;
 }
 
 .tmn{
@@ -159,6 +217,11 @@ hr{ margin: 0; border: 0; border-top: 1px solid gray; }
 	border-top: 3px solid #45515d;
 }
 
-.tmn a:link, .tmn a:visited, .fmenu a:link, .fmenu a:visited{ color: white; text-decoration: none; }
+.tmn a:link, .tmn a:visited, .fmenu a:link, .fmenu a:visited{
+	color: white;
+	text-decoration: none;
+}
 
-.tmn a:hover, .fmenu a:hover{ text-decoration: underline; }
+.tmn a:hover, .fmenu a:hover{
+	text-decoration: underline;
+}

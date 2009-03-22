@@ -69,7 +69,7 @@ switch ($mod)
         echo '<div class="menu"><a href="str/anketa.php">Ваша анкета</a></div>';
         echo '<div class="menu"><a href="str/anketa.php?act=statistic">Статистика</a></div>';
         echo '<div class="menu"><a href="str/usset.php">Настройки</a></div>';
-        if ($dostsmod == 1)
+        if ($dostmod == 1)
             echo '<div class="menu">Админка <a href="' . $admp . '/main.php">&gt;&gt;&gt;</a></div>';
         echo '<div class="bmenu"><a href="index.php?mod=digest">Новое на сайте</a></div>';
         break;

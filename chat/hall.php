@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -19,15 +20,18 @@ require_once ("../incfiles/head.php");
 if (!$set['mod_chat'])
     echo '<p><font color="#FF0000"><b>Чат закрыт!</b></font></p>';
 
-echo '<div class="phdr">Чат</div>';
+echo '<div class="phdr"><b>Чат</b></div>';
 $_SESSION['intim'] = '';
 $q = mysql_query("select * from `chat` where type='r' order by realid ;");
 while ($mass = mysql_fetch_array($q))
 {
-    echo '<div class="menu"><a href="index.php?id=' . $mass['id'] . '">' . $mass['text'] . '</a> (' . wch($mass['id']) . ')</div>';
+    echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
+    echo '<a href="index.php?id=' . $mass['id'] . '">' . $mass['text'] . '</a> (' . wch($mass['id']) . ')</div>';
+    ++$i;
 }
-echo '<div class="bmenu"><a href="who.php">Кто в чате(' . wch() . ')</a></div>';
-echo '<p><a href="index.php?act=moders&amp;id=' . $id . '">Модераторы</a><br/>';
+echo '<div class="bmenu">В прихожей (' . wch() . ')</div>';
+echo '<p><a href="who.php">Кто в чате? (' . wch(0, 1) . ')</a><br/>';
+echo '<a href="index.php?act=moders&amp;id=' . $id . '">Модераторы</a><br/>';
 echo "<a href='../str/usset.php?act=chat'>Настройки чата</a></p>";
 require_once ('../incfiles/end.php');
 

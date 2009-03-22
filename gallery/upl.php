@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -26,7 +27,17 @@ if (empty($_GET['id']))
     require_once ("../incfiles/end.php");
     exit;
 }
-$id = intval($_GET['id']);
+
+// Проверка на спам
+$old = ($rights > 0 || $dostsadm = 1) ? 10 : 60;
+if ($lastpost > ($realtime - $old))
+{
+    require_once ("../incfiles/head.php");
+    echo '<p><b>Антифлуд!</b><br />Порог ' . $old . ' секунд<br/><br/><a href="index.php?id=' . $id . '">Назад</a></p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
 $type = mysql_query("select * from `gallery` where id='" . $id . "';");
 $ms = mysql_fetch_array($type);
 if ($ms['type'] != "al")

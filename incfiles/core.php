@@ -61,7 +61,9 @@ if (get_magic_quotes_gpc())
 ////////////////////////////////////////////////////////////
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false; // Идентификатор
 $page = isset($_GET['page']) ? abs(intval($_GET['page'])) : 1; // Номер страницы
+$start = isset($_GET['start']) ? abs(intval($_GET['start'])) : 0; // Для постраничной навигации
 $act = isset($_GET['act']) ? trim($_GET['act']) : ''; // Выбор действия
+$agn = htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 100), ENT_QUOTES); // User Agent
 
 ////////////////////////////////////////////////////////////
 // 1) Получаем реальный IP                                //
@@ -150,8 +152,12 @@ $home = $set['homeurl']; // Домашняя страница
 $ras_pages = $set['rashstr']; // Расширение текстовых страниц
 $admp = $set['admp']; // Папка с Админкой
 $flsz = $set['flsz']; // Максимальный размер файлов
-$skindef = $set['skindef'];// скин по умолчанию для гостей
-// Дата и время
+$skindef = $set['skindef']; // скин по умолчанию для гостей
+
+////////////////////////////////////////////////////////////
+// Дата и время                                           //
+////////////////////////////////////////////////////////////
+date_default_timezone_set('Europe/Moscow');
 $realtime = time() + $sdvigclock * 3600;
 $mon = date("m", $realtime);
 if (substr($mon, 0, 1) == 0)
@@ -175,9 +181,6 @@ if ($set['clean_time'] <= ($realtime - 43200))
     mysql_query("OPTIMIZE TABLE `count`;");
     mysql_query("UPDATE `cms_settings` SET  `val`='" . $realtime . "' WHERE `key`='clean_time';");
 }
-
-// Получаем переменные окружения
-$agn = htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 100), ENT_QUOTES); // User Agent
 
 ////////////////////////////////////////////////////////////
 // Авторизация по сессии                                  //
@@ -213,7 +216,7 @@ if ($user_id && $user_ps)
         {
             // Получение параметров пользователя
             $idus = $user_id;
-			$skin = $datauser['skin']; // скин юзера
+            $skin = $datauser['skin']; // скин юзера
             $login = $datauser['name']; // Логин (Ник) пользователя
             $sdvig = $datauser['sdvig']; // Сдвиг времени
             $kmess = $datauser['kolanywhwere']; // Число сообщений на страницу
@@ -225,6 +228,7 @@ if ($user_id && $user_ps)
             $chmes = $datauser['chmes'];
             $rights = $datauser['rights'];
             $lastdate = $datauser['lastdate'];
+            $lastpost = $datauser['lastpost'];
             mysql_free_result($req);
 
             ////////////////////////////////////////////////////////////
@@ -325,6 +329,9 @@ if ($user_id && $user_ps)
 
 // Подключаем дополнительные файлы
 require_once ($rootpath . 'incfiles/func.php');
+
+// Актуализация переменных
+$start = isset($_GET['page']) ? $page * $kmess - $kmess : $start;
 
 // Буфферизация вывода
 if ($set['gzip'] == 1)

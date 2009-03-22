@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -23,18 +24,19 @@ if ($user_id && !$ban['1'] && !$ban['10'])
         require_once ('../incfiles/end.php');
         exit;
     }
-    $id = intval($_GET['id']);
+
+    // Проверка на спам
+    $old = ($rights > 0 || $dostsadm = 1) ? 10 : 60;
+    if ($lastpost > ($realtime - $old))
+    {
+        require_once ("../incfiles/head.php");
+        echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href="?act=komm&amp;id=' . $id . '">Назад</a></p>';
+        require_once ("../incfiles/end.php");
+        exit;
+    }
+
     if (isset($_POST['submit']))
     {
-        $flt = $realtime - 30;
-        $af = mysql_query("select * from `gallery` where type='km' and time>'" . $flt . "' and avtor= '" . $login . "';");
-        $af1 = mysql_num_rows($af);
-        if ($af1 != 0)
-        {
-            echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
         if ($_POST['msg'] == "")
         {
             echo "Вы не ввели сообщение!<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
@@ -56,7 +58,10 @@ if ($user_id && !$ban['1'] && !$ban['10'])
         {
             $fpst = $datauser['komm'] + 1;
         }
-        mysql_query("update `users` set  komm='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
+        mysql_query("UPDATE `users` SET
+		`komm` = '" . $fpst . "',
+		`lastpost` = '" . $realtime . "'
+		WHERE `id` = '" . $user_id . "';");
         header("Location: index.php?act=komm&id=$id");
     } else
     {

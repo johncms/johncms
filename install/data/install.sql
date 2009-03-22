@@ -303,6 +303,7 @@ INSERT INTO `cms_settings` (`key`, `val`) VALUES
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL auto_increment,
+  `immunity` tinyint(1) NOT NULL,
   `name` varchar(20) NOT NULL,
   `name_lat` varchar(40) NOT NULL,
   `password` varchar(32) NOT NULL,
@@ -317,6 +318,8 @@ CREATE TABLE `users` (
   `lastdate` int(11) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `icq` int(9) NOT NULL,
+  `skype` varchar(50) NOT NULL,
+  `jabber` varchar(50) NOT NULL,
   `www` varchar(50) NOT NULL,
   `about` text NOT NULL,
   `live` varchar(50) NOT NULL,
@@ -356,6 +359,7 @@ CREATE TABLE `users` (
   `total_on_site` int(11) NOT NULL default '0',
   `digest` tinyint(4) NOT NULL default '1',
   `skin` varchar(15) NOT NULL,
+  `lastpost` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name_lat` (`name_lat`),
   KEY `lastdate` (`lastdate`)

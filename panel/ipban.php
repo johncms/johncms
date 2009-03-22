@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS v.1.1.0                     30.05.2008                             //
@@ -280,59 +281,36 @@ if ($dostadm == 1)
             // Вывод общего списка забаненных IP                      //
             ////////////////////////////////////////////////////////////
             echo '<div class="phdr">Бан по IP</div>';
-            $req = mysql_query("SELECT * FROM `cms_ban_ip` ORDER BY `ip` ASC;");
-            $total = @mysql_num_rows($req);
-            $page = (isset($_GET['page']) && ($_GET['page'] > 0)) ? intval($_GET['page']):
-            1;
-            $start = $page * $kmess - $kmess;
-            if ($total < $start + $kmess)
+            $req = mysql_query("SELECT COUNT(*) FROM `cms_ban_ip`");
+            $total = mysql_result($req, 0);
+            if ($total > 0)
             {
-                $end = $total;
-            } else
-            {
-                $end = $start + $kmess;
-            }
-            if ($total != 0)
-            {
+                $start = isset($_GET['page']) ? $page * $kmess - $kmess : $start;
+                $req = mysql_query("SELECT * FROM `cms_ban_ip` ORDER BY `ip` ASC LIMIT " . $start . "," . $kmess . ";");
                 while ($res = mysql_fetch_array($req))
                 {
-                    if ($i >= $start && $i < $end)
+                    echo '<div class="menu"><a href="ipban.php?do=detail&amp;ip=' . $res['ip'] . '">' . long2ip($res['ip']) . '</a>';
+                    switch ($res['ban_type'])
                     {
-                        $d = $i / 2;
-                        $d1 = ceil($d);
-                        $d2 = $d1 - $d;
-                        $d3 = ceil($d2);
-                        if ($d3 == 0)
-                        {
-                            echo '<div class="c">';
-                        } else
-                        {
-                            echo '<div class="b">';
-                        }
-                        echo '<a href="ipban.php?do=detail&amp;ip=' . $res['ip'] . '">' . long2ip($res['ip']) . '</a>';
-                        switch ($res['ban_type'])
-                        {
-                            case 2:
-                                echo ' Редирект';
-                                break;
+                        case 2:
+                            echo ' Редирект';
+                            break;
 
-                            case 3:
-                                echo ' Регистрация';
-                                break;
+                        case 3:
+                            echo ' Регистрация';
+                            break;
 
-                            default:
-                                echo ' <b>Блокировка</b>';
-                        }
-                        echo '</div>';
+                        default:
+                            echo ' <b>Блокировка</b>';
                     }
+                    echo '</div>';
                     ++$i;
                 }
+                echo '<div class="bmenu">Всего: ' . $total . '</div>';
                 if ($total > $kmess)
                 {
-                    echo '<p>';
-					$pagenav = array('address' => 'ipban.php?', 'total' => $total, 'numpr' => $kmess, 'page' => $page);
-                    pagenav($pagenav);
-                    echo '</p>';
+                    echo '<p>' . pagenav('ipban.php?', $start, $total, $kmess) . '</p>';
+                    echo '<p><form action="ipban.php" method="get"><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
                 }
             } else
             {

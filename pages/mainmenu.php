@@ -1,4 +1,5 @@
 <?
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -79,7 +80,7 @@ switch ($do)
 {
     case 'info': // Подраздел информации
         echo '<div class="phdr">Информация</div>';
-		echo '<div class="menu"><a href="str/users.php">Список юзеров</a> (' . kuser() . ')</div>';
+        echo '<div class="menu"><a href="str/users.php">Список юзеров</a> (' . kuser() . ')</div>';
         echo '<div class="menu"><a href="str/brd.php">Именинники</a> (' . brth() . ')</div>';
         echo '<div class="menu"><a href="str/moders.php">Администрация</a></div>';
         echo '<div class="menu"><a href="str/smile.php?">Смайлы</a></div>';
@@ -89,14 +90,17 @@ switch ($do)
 
     default: // Главное меню
         echo '<div class="bmenu">Информация</div>';
-		echo '<div class="menu"><a href="str/news.php">Все новости</a> (' . dnews() . ')</div>';
+        $req = mysql_query("SELECT COUNT(*) FROM `news` WHERE `time`>'" . ($realtime - 86400) . "'");
+        $total = mysql_result($req, 0);
+        $total = $total > 0 ? '(<font color="#FF0000">+' . $total . '</font>)' : '';
+        echo '<div class="menu"><a href="str/news.php">Новости</a> ' . $total . '</div>';
         echo '<div class="menu"><a href="index.php?do=info">Информация</a></div>';
         echo '<div class="bmenu">Общение</div>';
-		echo '<div class="menu"><a href="str/guest.php">Гостевая</a> (' . gbook() . ')</div>';
+        echo '<div class="menu"><a href="str/guest.php">Гостевая</a> (' . gbook() . ')</div>';
         echo '<div class="menu"><a href="forum/">Форум</a> (' . wfrm() . ')</div>';
         echo '<div class="menu"><a href="chat/">Чат</a> (' . wch() . ')</div>';
         echo '<div class="bmenu">Полезное</div>';
-		echo '<div class="menu"><a href="gallery/">Галерея</a> (' . fgal() . ')</div>';
+        echo '<div class="menu"><a href="gallery/">Галерея</a> (' . fgal() . ')</div>';
         echo '<div class="menu"><a href="library/">Библиотека</a> (' . stlib() . ')</div>';
         echo '<div class="menu"><a href="download/">Загрузки</a> (' . dload() . ')</div>';
         echo '<div class="bmenu"><a href="http://gazenwagen.com">Ф Газенвагенъ</a></div>';

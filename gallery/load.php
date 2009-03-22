@@ -26,7 +26,17 @@ if (empty($_GET['id']))
     require_once ("../incfiles/end.php");
     exit;
 }
-$id = intval($_GET['id']);
+
+// Проверка на спам
+$old = ($rights > 0 || $dostsadm = 1) ? 10 : 60;
+if ($lastpost > ($realtime - $old))
+{
+    require_once ("../incfiles/head.php");
+    echo '<p><b>Антифлуд!</b><br />Порог ' . $old . ' секунд<br/><br/><a href="index.php?id=' . $id . '">Назад</a></p>';
+    require_once ("../incfiles/end.php");
+    exit;
+}
+
 $type = mysql_query("select * from `gallery` where id='" . $id . "';");
 $ms = mysql_fetch_array($type);
 if ($ms['type'] != "al")
@@ -89,6 +99,7 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
             @chmod("foto/$ch", 0777);
             echo "Фото загружено!<br/><a href='index.php?id=" . $id . "'>В альбом</a><br/>";
             mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','ft','" . $login . "','" . $text . "','" . $ch . "','','','');");
+            mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
         } else
         {
             echo "Ошибка при загрузке фото<br/><a href='index.php?id=" . $id . "'>В альбом</a><br/>";
@@ -159,6 +170,7 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
                 echo "Фото загружено!<br/><a href='index.php?id=" . $id . "'>В альбом</a><br/>";
                 $ch = "$tmp_name";
                 mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','ft','" . $login . "','" . $text . "','" . $ch . "','','','');");
+                mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
             } else
             {
                 echo "Ошибка при загрузке фото<br/><a href='index.php?id=" . $id . "'>В альбом</a><br/>";
