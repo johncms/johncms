@@ -212,7 +212,10 @@ if ($dostmod == 1)
             {
                 echo '<div class="bmenu">Модули</div>';
                 echo '<div class="menu"><a href="main.php?do=modules">Модули (вкл/выкл)</a></div>';
-                //echo '<div class="menu"><a href="news.php">Новости</a></div>';
+                if ($dostsadm)
+                    echo '<div class="menu"><a href="counters.php">Счетчики</a></div>';
+                if ($dostadm)
+                    echo '<div class="menu"><a href="news.php">Новости</a></div>';
                 echo '<div class="menu"><a href="forum.php">Форум</a></div>';
                 echo '<div class="menu"><a href="chat.php">Чат</a></div>';
                 echo '<div class="bmenu">Система</div>';

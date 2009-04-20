@@ -123,8 +123,7 @@ switch ($act)
             exit;
         }
         unset($_SESSION['guest']);
-        $name = check(trim($_POST['name']));
-        $name = mb_substr($name, 0, 25);
+        $name = mb_substr(trim($_POST['name']), 0, 20);
         if (!empty($_SESSION['uid']))
         {
             $from = $login;
@@ -417,7 +416,7 @@ switch ($act)
                 } else
                 {
                     // Ник Гостя
-                    echo '<b>Гость ' . $res['name'] . '</b>';
+                    echo '<b>Гость ' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '</b>';
                 }
                 $vrp = $res['time'] + $sdvig * 3600;
                 $vr = date("d.m.y / H:i", $vrp);

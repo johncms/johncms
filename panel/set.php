@@ -65,7 +65,7 @@ if ($dostadm == 1)
                 echo "<input name='nadm' type='hidden' value='" . $nickadmina . "'/><input name='nadm2' type='hidden' value='" . $nickadmina2 . "'/><input name='madm' type='hidden' value='" . htmlentities($set['emailadmina']) . "'/>";
             }
             echo 'Временной сдвиг:<br/><input type="text" name="sdvigclock" value="' . intval($set['sdvigclock']) . '"/><br/>';
-            echo 'Ваш копирайт:<br/><input type="text" name="copyright" value="' . htmlentities($set['copyright']) . '"/><br/>';
+            echo 'Ваш копирайт:<br/><input type="text" name="copyright" value="' . htmlentities($set['copyright'], ENT_QUOTES, 'UTF-8') . '"/><br/>';
             echo '<p>Изменить тему<br/>';
             $dr = opendir('../theme');
             echo '<select name="skindef">';

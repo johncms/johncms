@@ -86,7 +86,7 @@ if (isset($_POST['submit']))
     if (empty($error))
     {
         $pass = md5(md5($reg_pass));
-        $reg_name = check(mb_substr($reg_name, 0, 30));
+        $reg_name = check(mb_substr($reg_name, 0, 20));
         $reg_about = check(mb_substr($reg_about, 0, 500));
         $reg_sex = check(mb_substr($reg_sex, 0, 2));
         // Проверка, занят ли ник

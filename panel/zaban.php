@@ -351,6 +351,10 @@ if ($dostmod == 1)
                     {
                         echo '<input name="term" type="hidden" value="11" />';
                         echo '<div class="menu">Пинок по форуму';
+                    } elseif ($dostcmod == 1)
+                    {
+                        echo '<input name="term" type="hidden" value="12" />';
+                        echo '<div class="menu">Пинок по чату';
                     }
                     echo '</div><div class="rmenu"><b>Срок Бана:</b></div>';
                     echo '<div class="menu"><input type="text" name="timeval" size="2" maxlength="2" value="10"/>&nbsp;время<br/>';

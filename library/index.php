@@ -28,7 +28,6 @@ if (!$set['mod_lib'] && $dostadm != 1)
     exit;
 }
 
-$act = isset($_GET['act']) ? $_GET['act'] : '';
 $do = array('java', 'symb', 'search', 'new', 'moder', 'addkomm', 'komm', 'del', 'edit', 'load', 'write', 'mkcat', 'topread', 'trans');
 if (in_array($act, $do))
 {
@@ -48,7 +47,9 @@ if (in_array($act, $do))
             if ($res > 0)
                 echo '<div class="rmenu">Модерации ожидают <a href="index.php?act=moder">' . $res . '</a> статей</div>';
         }
-        $old = $realtime - (3 * 24 * 3600); // Сколько суток считать статьи новыми?
+        // Сколько суток считать статьи новыми?
+        $old = $realtime - (3 * 24 * 3600);
+        // Считаем новое в библиотеке
         $req = mysql_query("SELECT COUNT(*) FROM `lib` WHERE `time` > '" . $old . "' AND `type`='bk' AND `moder`='1'");
         $res = mysql_result($req, 0);
         echo '<div class="gmenu"><p>';
@@ -94,41 +95,19 @@ if (in_array($act, $do))
                     {
                         $kol = "0";
                     }
-                    echo '<div class="menu"><a href="index.php?id=' . $cat1['id'] . '">' . $cat1['text'] . '</a>(' . $kol . ')</div>';
+                    echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
+                    echo '<a href="index.php?id=' . $cat1['id'] . '">' . $cat1['text'] . '</a>(' . $kol . ')</div>';
                     ++$i;
                 }
-                echo '<div class="bmenu">Всего категорий: ' . $totalcat . '</div>';
+                echo '<div class="phdr">Всего категорий: ' . $totalcat . '</div>';
             } elseif ($totalbk > 0)
             {
                 $total = $totalbk;
-                $ba = ceil($total / 10);
-                if ($page > $ba)
-                {
-                    $page = $ba;
-                }
-                $start = $page * 10 - 10;
-                if ($total < $start + 10)
-                {
-                    $end = $total;
-                } else
-                {
-                    $end = $start + 10;
-                }
-                $bk = mysql_query("select * from `lib` where type = 'bk' and refid = '" . $id . "' and moder='1' order by time desc LIMIT " . $start . "," . $end . ";");
+                $bk = mysql_query("select * from `lib` where type = 'bk' and refid = '" . $id . "' and moder='1' order by `time` desc LIMIT " . $start . "," . $kmess . ";");
                 while ($bk1 = mysql_fetch_array($bk))
                 {
-                    $d = $i / 2;
-                    $d1 = ceil($d);
-                    $d2 = $d1 - $d;
-                    $d3 = ceil($d2);
-                    if ($d3 == 0)
-                    {
-                        $div = "<div class='c'>";
-                    } else
-                    {
-                        $div = "<div class='b'>";
-                    }
-                    $vr = $bk1[time] + $sdvig * 3600;
+                    echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
+                    $vr = $bk1['time'] + $sdvig * 3600;
                     $vr = date("d.m.y / H:i", $vr);
                     echo $div . '<b><a href="index.php?id=' . $bk1['id'] . '">' . htmlentities($bk1['name'], ENT_QUOTES, 'UTF-8') . '</a></b><br/>';
                     echo htmlentities($bk1['announce'], ENT_QUOTES, 'UTF-8') . '<br />';
@@ -136,50 +115,17 @@ if (in_array($act, $do))
                     echo 'Прочтений: ' . $bk1['count'] . '</div>';
                     ++$i;
                 }
+                echo '<div class="phdr">Всего статей: ' . $totalbk . '</div>';
             } else
             {
                 $total = 0;
             }
             echo '<p>';
-            if ($total > 10)
+            // Навигация по страницам
+            if ($total > $kmess)
             {
-                if ($offpg != 1)
-                {
-                    echo "Страницы:<br/>";
-                } else
-                {
-                    echo "Страниц: $ba<br/>";
-                }
-                if ($start != 0)
-                {
-                    echo '<a href="index.php?id=' . $id . '&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-                }
-                if ($offpg != 1)
-                {
-                    navigate('index.php?id=' . $id . '', $total, 10, $start, $page);
-                } else
-                {
-                    echo "<b>[$page]</b>";
-                }
-                if ($total > $start + 10)
-                {
-                    echo ' <a href="index.php?id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-                }
-                echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
-                    "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
-            }
-            if ($total != 0)
-            {
-                if ($totalcat >= 1)
-                {
-                    echo 'Всего категорий: ' . $totalcat . '<br/>';
-                } elseif ($totalbk >= 1)
-                {
-                    echo 'Всего статей: ' . $totalbk . '<br/>';
-                }
-            } else
-            {
-                echo 'В данной категории нет статей!<br/>';
+                echo '<p>' . pagenav('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</p>';
+                echo '<p><form action="index.php" method="get"><input type="hidden" name="id" value="' . $id . '"/><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
             }
             if ($dostlmod == 1 && $id != 0)
             {

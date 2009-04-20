@@ -156,7 +156,7 @@ if ($user_id)
                 exit;
             }
 
-            $type = mysql_query("select * from `chat` where id= '" . $id . "';");
+            $type = mysql_query("SELECT * FROM `chat` WHERE `id` = '" . $id . "' LIMIT 1");
             $type1 = mysql_fetch_array($type);
             $tip = $type1['type'];
             switch ($tip)
@@ -357,13 +357,13 @@ if ($user_id)
                         header("location: $home/chat/index.php?id=$th");
                     } else
                     {
-                        require_once ("../incfiles/head.php");
+                        require_once ("chat_header.php");
                         $user = mysql_query("select * from `users` where name='" . $type1['from'] . "';");
                         $ruz = mysql_num_rows($user);
                         if ($ruz != 0)
                         {
                             $udat = mysql_fetch_array($user);
-                            echo "<b><font color='" . $conik . "'>$type1[from]</font></b>";
+                            echo "<a href='../str/anketa.php?user=" . $udat['id'] . "'><b>$type1[from]</b></a>";
                             echo " (id: $udat[id])";
                             $ontime = $udat['lastdate'];
                             $ontime2 = $ontime + 300;
@@ -405,17 +405,11 @@ if ($user_id)
                                     echo ' юзер ';
                                     break;
                             }
-                            echo "<br/>";
+                            echo '<br/>';
                             if (!empty($udat['status']))
                             {
-                                $stats = $udat['status'];
-                                $stats = smiles($stats);
-                                $stats = smilescat($stats);
-
-                                $stats = smilesadm($stats);
-                                echo "<font color='" . $cdinf . "'>$stats</font><br/>";
+                                echo $udat['status'] . '<br/>';
                             }
-
                             if ($udat['sex'] == "m")
                             {
                                 echo "Парень<br/>";
@@ -441,17 +435,17 @@ if ($user_id)
                             }
                             echo "Настроение: $udat[nastroy]<br/>";
                         }
-                        echo "Добавление сообщения в комнату <font color='" . $cntem . "'>$th1[text]</font> для <font color='" . $conik . "'>$type1[from]</font>(max. 500):<br/><form action='index.php?act=say&amp;id=" . $id . "' method='post'>";
+                        echo "Добавление сообщения в комнату <b>$th1[text]</b><br />для <b>$type1[from]</b>(max. 500):<br/><form action='index.php?act=say&amp;id=" . $id . "' method='post'>";
                         echo "<textarea cols='40' rows='3' title='Введите ответ' name='msg'></textarea><br/>";
                         if ($offtr != 1)
                         {
                             echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения
       <br/>";
                         }
-                        echo "<select name='priv'>";
-                        echo "<option value='0'>Всем</option>";
-                        echo "<option value='1'>Приватно</option>";
-                        echo "</select><br/>";
+                        echo '<select name="priv">';
+                        echo '<option value="0">Всем</option>';
+                        echo '<option value="1">Приватно</option>';
+                        echo '</select><br/>';
                         echo "Эмоции:<br/><select name='nas'>
 <option value=''>Бeз эмoций</option>
 <option value='[Paдocтнo] '>Paдocтнo</option>
@@ -483,81 +477,9 @@ if ($user_id)
                         if ($ruz != 0)
                         {
                             echo "<br/><a href='../str/pradd.php?act=write&amp;adr=" . $udat['id'] . "'>Написать в приват</a><br/>";
-
-                            $nmen = array(1 => "Имя", "Город", "Инфа", "ICQ", "E-mail", "Мобила", "Дата рождения", "Сайт");
-                            $nmen1 = array(1 => "imname", "live", "about", "icq", "mail", "mibila", "Дата рождения ", "www");
-                            if (!empty($nmenu))
+                            if ($dostcmod == 1)
                             {
-                                $nmenu1 = explode(",", $nmenu);
-                                foreach ($nmenu1 as $v)
-                                {
-
-                                    if ($v != 7 && $v != 5 && $v != 8)
-                                    {
-                                        $dus = $nmen1[$v];
-                                        if (!empty($udat[$dus]))
-                                        {
-                                            echo "$nmen[$v]: $udat[$dus]<br/>";
-                                        }
-                                    }
-                                    if ($v == 5)
-                                    {
-                                        if (!empty($udat['mail']))
-                                        {
-                                            echo "$nmen[$v]: ";
-                                            if ($udat['mailvis'] == 1)
-                                            {
-                                                echo "$udat[mail]<br/>";
-                                            } else
-                                            {
-                                                echo "скрыт<br/>";
-                                            }
-                                        }
-                                    }
-                                    if ($v == 8)
-                                    {
-                                        if (!empty($udat['www']))
-                                        {
-                                            $sit = str_replace("http://", "", $udat['www']);
-                                            echo "$nmen[$v]: <a href='$udat[www]'>$sit</a><br/>";
-                                        }
-                                    }
-                                    if ($v == 7)
-                                    {
-                                        if ((!empty($udat['dayb'])) && (!empty($udat['monthb'])))
-                                        {
-                                            $mnt = $udat['monthb'];
-                                            echo "$nmen[$v]: $udat[dayb] $mesyac[$mnt]<br/>";
-                                        }
-                                    }
-                                }
-                            }
-
-                            echo "<a href='../str/anketa.php?user=" . $udat['id'] . "'>Подробнее...</a><br/>";
-                            if ($dostkmod == 1)
-                            {
-                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat['id'] . "&amp;chat&amp;id=" . $id . "'>Банить</a><br/>";
-                            } elseif ($dostcmod == 1)
-                            {
-                                echo "<a href='../" . $admp . "/zaban.php?user=" . $udat['id'] . "&amp;chat&amp;id=" . $id . "'>Пнуть</a><br/>";
-                            }
-                            $contacts = mysql_query("select * from `privat` where me='" . $login . "' and cont='" . $udat['name'] . "';");
-                            $conts = mysql_num_rows($contacts);
-                            if ($conts == 0)
-                            {
-                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в контакты</a><br/>";
-                            } else
-                            {
-                                echo "<a href='../str/cont.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из контактов</a><br/>";
-                            }
-                            $igns = mysql_query("select * from `privat` where me='" . $login . "' and ignor='" . $udat['name'] . "';");
-                            $ignss = mysql_num_rows($igns);
-                            if ($ignss == 0)
-                            {
-                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "&amp;add=1'>Добавить в игнор</a><br/>";
-                            } else
-                            {
-                                echo "<a href='../str/ignor.php?act=edit&amp;nik=" . $udat['name'] . "'>Удалить из игнора</a><br/>";
+                                echo "<a href='../" . $admp . "/zaban.php?do=ban&amp;id=" . $udat['id'] . "&amp;chat'>Пнуть</a><br/>";
                             }
                         }
                         echo "<a href='index.php?id=" . $type1['refid'] . "'>Назад</a><br/>";

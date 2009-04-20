@@ -16,15 +16,94 @@
 
 defined('_IN_JOHNCMS') or die('Error:restricted access');
 
-////////////////////////////////////////////////////////////////////////////////
-// Статистические функции и счетчики                                          //
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Показ различных счетчиков внизу страницы               //
+////////////////////////////////////////////////////////////
+function counters()
+{
+    global $headmod;
+    $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
+    if (mysql_num_rows($req) > 0)
+    {
+        while ($res = mysql_fetch_array($req))
+        {
+            $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
+            $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
+            $count = ($headmod == 'mainpage') ? $link1 : $link2;
+            if (!empty($count))
+                echo $count;
+        }
+    }
+}
 
+////////////////////////////////////////////////////////////
+// Счетчик посетителей онлайн                             //
+////////////////////////////////////////////////////////////
+function usersonline()
+{
+    global $realtime;
+    global $user_id;
+    global $home;
+    $ontime = $realtime - 300;
+    $qon = mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate`>='" . $ontime . "';");
+    $qon2 = mysql_result($qon, 0);
+    $all = mysql_query("SELECT `id` FROM `count` WHERE `time`>='" . $ontime . "' GROUP BY `ip`, `browser`;");
+    $all2 = mysql_num_rows($all);
+    return ($user_id ? '<a href="' . $home . '/str/online.php">Онлайн: ' . $qon2 . ' / ' . $all2 . '</a>' : 'Онлайн: ' . $qon2 . ' / ' . $all2);
+}
+
+////////////////////////////////////////////////////////////
+// Вывод коэффициента сжатия Zlib                         //
+////////////////////////////////////////////////////////////
+function zipcount()
+{
+    global $set;
+    if ($set['gzip'])
+    {
+        $Contents = ob_get_contents();
+        $gzib_file = strlen($Contents);
+        $gzib_file_out = strlen(gzcompress($Contents, 9));
+        $gzib_pro = round(100 - (100 / ($gzib_file / $gzib_file_out)), 1);
+        echo '<div>Cжатие вкл. (' . $gzib_pro . '%)</div>';
+    } else
+    {
+        echo '<div>Cжатие выкл.</div>';
+    }
+}
+
+////////////////////////////////////////////////////////////
+// Счетсик времени, проведенного на сайте                 //
+////////////////////////////////////////////////////////////
+function timeonline()
+{
+    global $realtime;
+    global $datauser;
+    global $user_id;
+    if ($user_id)
+        echo '<div>В онлайне: ' . gmdate('H:i:s', ($realtime - $datauser['sestime'])) . '</div>';
+}
+
+////////////////////////////////////////////////////////////
+// Подсчет колличества переходов по сайту                 //
+////////////////////////////////////////////////////////////
+function movements()
+{
+    global $datauser;
+    global $user_id;
+    global $login;
+    if ($user_id)
+    {
+        $req = mysql_query("SELECT COUNT(*) FROM `count` WHERE `time` > '" . $datauser['sestime'] . "' AND `name` = '" . $login . "'");
+        $count = mysql_result($req, 0);
+        echo '<div>Переходов: ' . $count . '</div>';
+    }
+}
+
+////////////////////////////////////////////////////////////
+// Счетчик непрочитанных тем на форуме                    //
+////////////////////////////////////////////////////////////
 function forum_new()
 {
-    ////////////////////////////////////////////////////////////
-    // Счетчик непрочитанных тем на форуме                    //
-    ////////////////////////////////////////////////////////////
     global $user_id;
     global $realtime;
     global $dostadm;
@@ -55,11 +134,11 @@ function forum_new()
     }
 }
 
+////////////////////////////////////////////////////////////
+// Дата последней новости                                 //
+////////////////////////////////////////////////////////////
 function dnews()
 {
-    ////////////////////////////////////////////////////////////
-    // Дата последней новости                                 //
-    ////////////////////////////////////////////////////////////
     if (!empty($_SESSION['uid']))
     {
         global $sdvig;
@@ -75,11 +154,11 @@ function dnews()
     return $vrn1;
 }
 
+////////////////////////////////////////////////////////////
+// Колличество зарегистрированных пользователей           //
+////////////////////////////////////////////////////////////
 function kuser()
 {
-    ////////////////////////////////////////////////////////////
-    // Колличество зарегистрированных пользователей           //
-    ////////////////////////////////////////////////////////////
     global $realtime;
     // Общее колличество
     $req = mysql_query("SELECT * FROM `users` ;");
@@ -92,11 +171,11 @@ function kuser()
     return $total;
 }
 
+////////////////////////////////////////////////////////////
+// Счетчик "Кто в форуме?"                                //
+////////////////////////////////////////////////////////////
 function wfrm($id = '')
 {
-    ////////////////////////////////////////////////////////////
-    // Счетчик "Кто в форуме?"                                //
-    ////////////////////////////////////////////////////////////
     global $realtime;
     $onltime = $realtime - 300;
     $count = 0;
@@ -128,11 +207,11 @@ function wfrm($id = '')
     return $count;
 }
 
+////////////////////////////////////////////////////////////
+// Статистика загрузок                                    //
+////////////////////////////////////////////////////////////
 function dload()
 {
-    ////////////////////////////////////////////////////////////
-    // Статистика загрузок                                    //
-    ////////////////////////////////////////////////////////////
     global $realtime;
     $fl = mysql_query("select `id` from `download` where `type`='file' ;");
     $countf = mysql_num_rows($fl);
@@ -147,12 +226,12 @@ function dload()
     return $out;
 }
 
+////////////////////////////////////////////////////////////
+// Статистика галлереи                                    //
+////////////////////////////////////////////////////////////
+// Если вызвать с параметром 1, будет выдавать только колличество новых картинок
 function fgal($mod = 0)
 {
-    ////////////////////////////////////////////////////////////
-    // Статистика галлереи                                    //
-    ////////////////////////////////////////////////////////////
-    // Если вызвать с параметром 1, то будет выдавать только колличество новых картинок
     global $realtime;
     $old = $realtime - (3 * 24 * 3600);
     $req = mysql_query("select `id` from `gallery` where `time` > '" . $old . "' and `type`='ft' ;");
@@ -175,11 +254,11 @@ function fgal($mod = 0)
     return $out;
 }
 
+////////////////////////////////////////////////////////////
+// Дни рождения                                           //
+////////////////////////////////////////////////////////////
 function brth()
 {
-    ////////////////////////////////////////////////////////////
-    // Дни рождения                                           //
-    ////////////////////////////////////////////////////////////
     global $realtime;
     $mon = date("m", $realtime);
     if (substr($mon, 0, 1) == 0)
@@ -196,11 +275,11 @@ function brth()
     return $count;
 }
 
+////////////////////////////////////////////////////////////
+// Статистика библиотеки                                  //
+////////////////////////////////////////////////////////////
 function stlib()
 {
-    ////////////////////////////////////////////////////////////
-    // Статистика библиотеки                                  //
-    ////////////////////////////////////////////////////////////
     global $realtime;
     global $dostlmod;
     $fl = mysql_query("select `id` from `lib` where `type`='bk' and `moder`='1';");
@@ -220,12 +299,12 @@ function stlib()
     return $out;
 }
 
+////////////////////////////////////////////////////////////
+// Статистика Чата                                        //
+////////////////////////////////////////////////////////////
+// Если вызвать с параметром 0,1 то покажет общее число юзеров в Чате
 function wch($id = false, $mod = false)
 {
-    ////////////////////////////////////////////////////////////
-    // Статистика Чата                                        //
-    ////////////////////////////////////////////////////////////
-    // Если вызвать с параметром 0,1 то покажет общее число юзеров в Чате
     global $realtime;
     $onltime = $realtime - 60;
     if ($mod)
@@ -247,13 +326,13 @@ function wch($id = false, $mod = false)
     return $count;
 }
 
+////////////////////////////////////////////////////////////
+// Статистика гостевой                                    //
+////////////////////////////////////////////////////////////
+// Если вызвать с параметром 1, то будет выдавать колличество новых в гостевой
+// Если вызвать с параметром 2, то будет выдавать колличество новых в Админ-Клубе
 function gbook($mod = 0)
 {
-    ////////////////////////////////////////////////////////////
-    // Статистика гостевой                                    //
-    ////////////////////////////////////////////////////////////
-    // Если вызвать с параметром 1, то будет выдавать колличество новых в гостевой
-    // Если вызвать с параметром 2, то будет выдавать колличество новых в Админ-Клубе
     global $realtime;
     global $dostmod;
     switch ($mod)
@@ -283,17 +362,12 @@ function gbook($mod = 0)
     return $count;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-// Основные функции (используются в большинстве модулей системы)              //
-////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////
+// Обработка ссылок и тэгов BBCODE в тексте               //
+////////////////////////////////////////////////////////////
 function tags($var = '')
 {
-    ////////////////////////////////////////////////////////////
-    // Обработка ссылок и тэгов BBCODE в тексте               //
-    ////////////////////////////////////////////////////////////
-    $var = preg_replace_callback('{(?:(\w+://)|www\.|wap\.)[\w-]+(\.[\w-]+)*(?: : \d+)?[^<>"\'()\[\]\s]*(?:(?<! [[:punct:]])|(?<= [-/&+*]))}xis', "hrefCallback", $var);
+    $var = preg_replace_callback('{(?:(\w+://)|www\.|wap\.)[\w-]+(\.[\w-]+)*(?: : \d+)?[^<>"\'()\[\]\s]*(?:(?<! [[:punct:]])|(?<= [-/&+*;]))}xis', "hrefCallback", $var);
     $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
     $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
     $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
@@ -305,30 +379,41 @@ function tags($var = '')
     return $var;
 }
 
+// Служебная функция парсинга URL
 function hrefCallback($p)
 {
-    ////////////////////////////////////////////////////////////
-    // Служебная функция парсинга URL                         //
-    ////////////////////////////////////////////////////////////
     $href = !empty($p[1]) ? $p[0] : 'http://' . $p[0];
     return '<a href="' . $href . '">' . $p[0] . '</a>';
 }
 
+// Вырезание BBcode тэгов из текста
+function notags($var = '')
+{
+    $var = preg_replace('#\[b\](.*?)\[/b\]#si', '\1', $var);
+    $var = preg_replace('#\[i\](.*?)\[/i\]#si', '\1', $var);
+    $var = preg_replace('#\[u\](.*?)\[/u\]#si', '\1', $var);
+    $var = preg_replace('#\[s\](.*?)\[/s\]#si', '\1', $var);
+    $var = preg_replace('#\[red\](.*?)\[/red\]#si', '\1', $var);
+    $var = preg_replace('#\[green\](.*?)\[/green\]#si', '\1', $var);
+    $var = preg_replace('#\[blue\](.*?)\[/blue\]#si', '\1', $var);
+    return $var;
+}
+
+////////////////////////////////////////////////////////////
+// Маскировка ссылок в тексте                             //
+////////////////////////////////////////////////////////////
 function antilink($var)
 {
-    ////////////////////////////////////////////////////////////
-    // Маскировка ссылок в тексте                             //
-    ////////////////////////////////////////////////////////////
     $var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "[реклама]", $var);
     $var = strtr($var, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
     return $var;
 }
 
+////////////////////////////////////////////////////////////
+// Транслитерация текста                                  //
+////////////////////////////////////////////////////////////
 function trans($str)
 {
-    ////////////////////////////////////////////////////////////
-    // Транслитерация текста                                  //
-    ////////////////////////////////////////////////////////////
     $str = strtr($str, array('a' => 'а', 'b' => 'б', 'v' => 'в', 'g' => 'г', 'd' => 'д', 'e' => 'е', 'yo' => 'ё', 'zh' => 'ж', 'z' => 'з', 'i' => 'и', 'j' => 'й', 'k' => 'к', 'l' => 'л', 'm' => 'м', 'n' => 'н', 'o' => 'о', 'p' => 'п', 'r' =>
         'р', 's' => 'с', 't' => 'т', 'u' => 'у', 'f' => 'ф', 'h' => 'х', 'c' => 'ц', 'ch' => 'ч', 'w' => 'ш', 'sh' => 'щ', 'q' => 'ъ', 'y' => 'ы', 'x' => 'э', 'yu' => 'ю', 'ya' => 'я', 'A' => 'А', 'B' => 'Б', 'V' => 'В', 'G' => 'Г', 'D' => 'Д', 'E' =>
         'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т', 'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' =>
@@ -336,11 +421,11 @@ function trans($str)
     return $str;
 }
 
+////////////////////////////////////////////////////////////
+// Декодирование htmlentities, PHP4совместимый режим      //
+////////////////////////////////////////////////////////////
 function unhtmlentities($string)
 {
-    ////////////////////////////////////////////////////////////
-    // Декодирование htmlentities, PHP4совместимый режим      //
-    ////////////////////////////////////////////////////////////
     $string = str_replace('&amp;', '&', $string);
     $string = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $string);
     $string = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $string);
@@ -349,41 +434,32 @@ function unhtmlentities($string)
     return strtr($string, $trans_tbl);
 }
 
+////////////////////////////////////////////////////////////
+// Функция постраничной навигации                         //
+////////////////////////////////////////////////////////////
+// За основу взята аналогичная функция от форума SMF2.0   //
+////////////////////////////////////////////////////////////
 function pagenav($base_url, $start, $max_value, $num_per_page)
 {
-    ////////////////////////////////////////////////////////////
-    // Функция постраничной навигации                         //
-    ////////////////////////////////////////////////////////////
-    // В качестве основы использован модифицированный         //
-    // вариант аналогичной функции от форума SMF2.0           //
-    ////////////////////////////////////////////////////////////
-    $pgcont = 4; // Число ссылок на страницы в блоке
+    $pgcont = 4;
     $pgcont = (int)($pgcont - ($pgcont % 2)) / 2;
-    // Not greater than the upper bound.
     if ($start >= $max_value)
         $start = max(0, (int)$max_value - (((int)$max_value % (int)$num_per_page) == 0 ? $num_per_page : ((int)$max_value % (int)$num_per_page)));
-    // And it has to be a multiple of $num_per_page!
     else
         $start = max(0, (int)$start - ((int)$start % (int)$num_per_page));
     $base_link = '<a class="navpg" href="' . strtr($base_url, array('%' => '%%')) . 'start=%d' . '">%s</a> ';
-    // Левый указатель (<<)
     $pageindex = $start == 0 ? '' : sprintf($base_link, $start - $num_per_page, '&lt;&lt;');
-    // Ссылка на первую страницу (>1< ... 6 7 [8] 9 10 ... 15)
     if ($start > $num_per_page * $pgcont)
         $pageindex .= sprintf($base_link, 0, '1');
-    // Точки перед блоком ссылок  (1 >...< 6 7 [8] 9 10 ... 15)
     if ($start > $num_per_page * ($pgcont + 1))
         $pageindex .= '<span style="font-weight: bold;"> ... </span>';
-    // Ссылки перед текушей страницей (1 ... >6 7< [8] 9 10 ... 15)
     for ($nCont = $pgcont; $nCont >= 1; $nCont--)
         if ($start >= $num_per_page * $nCont)
         {
             $tmpStart = $start - $num_per_page * $nCont;
             $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
         }
-    // Текущая страница (1 ... 6 7 >[8]< 9 10 ... 15)
     $pageindex .= '[<b>' . ($start / $num_per_page + 1) . '</b>] ';
-    // Ссылки после текущей страницы (1 ... 6 7 [8] >9 10< ... 15)
     $tmpMaxPages = (int)(($max_value - 1) / $num_per_page) * $num_per_page;
     for ($nCont = 1; $nCont <= $pgcont; $nCont++)
         if ($start + $num_per_page * $nCont <= $tmpMaxPages)
@@ -391,26 +467,23 @@ function pagenav($base_url, $start, $max_value, $num_per_page)
             $tmpStart = $start + $num_per_page * $nCont;
             $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
         }
-    // Точки после блока ссылок (1 ... 6 7 [8] 9 10 >...< 15)
     if ($start + $num_per_page * ($pgcont + 1) < $tmpMaxPages)
         $pageindex .= '<span style="font-weight: bold;"> ... </span>';
-    // Ссылка на последнюю страницу (1 ... 6 7 [8] 9 10 ... >15<)
     if ($start + $num_per_page * $pgcont < $tmpMaxPages)
         $pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
-    // Show the right arrow.
-    if ($start + $num_per_page <= $max_value)
+    if ($start + $num_per_page < $max_value)
     {
         $display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
-		$pageindex .= sprintf($base_link, $display_page, '&gt;&gt;');
+        $pageindex .= sprintf($base_link, $display_page, '&gt;&gt;');
     }
     return $pageindex;
 }
 
+////////////////////////////////////////////////////////////
+// Функция пересчета на дни, или часы                     //
+////////////////////////////////////////////////////////////
 function timecount($var)
 {
-    ////////////////////////////////////////////////////////////
-    // Функция пересчета на дни, или часы                     //
-    ////////////////////////////////////////////////////////////
     $str = '';
     if ($var < 0)
         $var = 0;
@@ -434,11 +507,11 @@ function timecount($var)
     return $str;
 }
 
+////////////////////////////////////////////////////////////
+// Форматирование размера файлов                          //
+////////////////////////////////////////////////////////////
 function formatsize($size)
 {
-    ////////////////////////////////////////////////////////////
-    // Форматирование размера файлов                          //
-    ////////////////////////////////////////////////////////////
     if ($size >= 1073741824)
     {
         $size = round($size / 1073741824 * 100) / 100 . ' Gb';
@@ -455,10 +528,32 @@ function formatsize($size)
     return $size;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Старые функции, которые постепенно будут удаляться.                        //
-// НЕ ИСПОЛЬЗУЙТЕ их в своих модулях!!!                                       //
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+// Проверка переменных                                    //
+////////////////////////////////////////////////////////////
+function check($str)
+{
+    $str = htmlentities($str, ENT_QUOTES, 'UTF-8');
+    $str = str_replace("\'", "&#39;", $str);
+    $str = str_replace("\r\n", "<br/>", $str);
+    $str = strtr($str, array(chr("0") => "", chr("1") => "", chr("2") => "", chr("3") => "", chr("4") => "", chr("5") => "", chr("6") => "", chr("7") => "", chr("8") => "", chr("9") => "", chr("10") => "", chr("11") => "", chr("12") => "", chr
+        ("13") => "", chr("14") => "", chr("15") => "", chr("16") => "", chr("17") => "", chr("18") => "", chr("19") => "", chr("20") => "", chr("21") => "", chr("22") => "", chr("23") => "", chr("24") => "", chr("25") => "", chr("26") => "", chr("27") =>
+        "", chr("28") => "", chr("29") => "", chr("30") => "", chr("31") => ""));
+    $str = str_replace('\\', "&#92;", $str);
+    $str = str_replace("|", "I", $str);
+    $str = str_replace("||", "I", $str);
+    $str = str_replace("/\\\$/", "&#36;", $str);
+    $str = str_replace("[l]http://", "[l]", $str);
+    $str = str_replace("[l] http://", "[l]", $str);
+    $str = mysql_real_escape_string($str);
+    return $str;
+}
+
+
+#############################################################
+## Старые функции, которые постепенно будут удаляться.      #
+## НЕ ИСПОЛЬЗУЙТЕ их в своих модулях!!!                     #
+#############################################################
 
 function texttolink($str)
 {
@@ -517,31 +612,9 @@ function format($name)
     return $fname;
 }
 
-
-// Проверка переменных
-function check($str)
-{
-    if (get_magic_quotes_gpc())
-        $str = stripslashes($str);
-    $str = htmlentities($str, ENT_QUOTES, 'UTF-8');
-    $str = str_replace("\'", "&#39;", $str);
-    $str = str_replace("\r\n", "<br/>", $str);
-    $str = strtr($str, array(chr("0") => "", chr("1") => "", chr("2") => "", chr("3") => "", chr("4") => "", chr("5") => "", chr("6") => "", chr("7") => "", chr("8") => "", chr("9") => "", chr("10") => "", chr("11") => "", chr("12") => "", chr
-        ("13") => "", chr("14") => "", chr("15") => "", chr("16") => "", chr("17") => "", chr("18") => "", chr("19") => "", chr("20") => "", chr("21") => "", chr("22") => "", chr("23") => "", chr("24") => "", chr("25") => "", chr("26") => "", chr("27") =>
-        "", chr("28") => "", chr("29") => "", chr("30") => "", chr("31") => ""));
-    $str = str_replace('\\', "&#92;", $str);
-    $str = str_replace("|", "I", $str);
-    $str = str_replace("||", "I", $str);
-    $str = str_replace("/\\\$/", "&#36;", $str);
-    $str = str_replace("[l]http://", "[l]", $str);
-    $str = str_replace("[l] http://", "[l]", $str);
-    $str = mysql_real_escape_string($str);
-    return $str;
-}
-
 function smiles($str)
 {
-    $dir = opendir("../sm/prost");
+    $dir = opendir($_SERVER["DOCUMENT_ROOT"] . "/sm/prost");
     while ($file = readdir($dir))
     {
         if (ereg(".gif$", "$file"))
@@ -557,7 +630,7 @@ function smiles($str)
 
 function smilesadm($str)
 {
-    $dir = opendir("../sm/adm");
+    $dir = opendir($_SERVER["DOCUMENT_ROOT"] . "/sm/adm");
     while ($file = readdir($dir))
     {
         if (ereg(".gif$", "$file"))
@@ -575,7 +648,7 @@ function smilesadm($str)
 
 function smilescat($str)
 {
-    $dir = opendir("../sm/cat");
+    $dir = opendir($_SERVER["DOCUMENT_ROOT"] . "/sm/cat");
     while ($file = readdir($dir))
     {
         if (($file != ".") && ($file != "..") && ($file != ".htaccess") && ($file != "index.php"))
@@ -587,7 +660,7 @@ function smilescat($str)
     $total = count($a);
     for ($a1 = 0; $a1 < $total; $a1++)
     {
-        $d = opendir("../sm/cat/$a[$a1]");
+        $d = opendir($_SERVER["DOCUMENT_ROOT"] . "/sm/cat/$a[$a1]");
         while ($k = readdir($d))
         {
             if (ereg(".gif$", "$k"))
@@ -602,60 +675,6 @@ function smilescat($str)
         closedir($d);
     }
     return $str;
-}
-
-function navigate($adr_str, $itogo, $kol_na_str, $begin, $num_str)
-{
-    $ba = ceil($itogo / $kol_na_str);
-    $asd = $begin - ($kol_na_str);
-    $asd2 = $begin + ($kol_na_str * 2);
-    if ($asd < $itogo && $asd > 0)
-    {
-        echo ' <a href="' . $adr_str . '&amp;page=1&amp;">1</a> .. ';
-    }
-    $page2 = $ba - $num_str;
-    $pa = ceil($num_str / 2);
-    $paa = ceil($num_str / 3);
-    $pa2 = $num_str + floor($page2 / 2);
-    $paa2 = $num_str + floor($page2 / 3);
-    $paa3 = $num_str + (floor($page2 / 3) * 2);
-    if ($num_str > 13)
-    {
-        echo ' <a href="' . $adr_str . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="' . $adr_str . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="' . $adr_str . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-            '</a> <a href="' . $adr_str . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-    } elseif ($num_str > 7)
-    {
-        echo ' <a href="' . $adr_str . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="' . $adr_str . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-    }
-    for ($i = $asd; $i < $asd2; )
-    {
-        if ($i < $itogo && $i >= 0)
-        {
-            $ii = floor(1 + $i / $kol_na_str);
-
-            if ($begin == $i)
-            {
-                echo " <b>$ii</b>";
-            } else
-            {
-                echo ' <a href="' . $adr_str . '&amp;page=' . $ii . '">' . $ii . '</a> ';
-            }
-        }
-        $i = $i + $kol_na_str;
-    }
-    if ($page2 > 12)
-    {
-        echo ' .. <a href="' . $adr_str . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="' . $adr_str . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="' . $adr_str . '&amp;page=' . ($paa3) . '">' . ($paa3) .
-            '</a> <a href="' . $adr_str . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-    } elseif ($page2 > 6)
-    {
-        echo ' .. <a href="' . $adr_str . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="' . $adr_str . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-    }
-    if ($asd2 < $itogo)
-    {
-        echo ' .. <a href="' . $adr_str . '&amp;page=' . $ba . '">' . $ba . '</a>';
-    }
-
 }
 
 function rus_lat($str)

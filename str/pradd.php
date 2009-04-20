@@ -335,7 +335,7 @@ if ($user_id)
                 $prd = $_SESSION['prd'];
                 foreach ($dc as $delid)
                 {
-                    mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
+                    mysql_query("DELETE FROM `privat` WHERE `user` = '" . $login . "' AND `id`='" . intval($delid) . "'");
                 }
                 echo "Отмеченные письма удалены<br/><a href='" . $prd . "'>Назад</a><br/>";
             } else

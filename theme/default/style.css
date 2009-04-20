@@ -62,7 +62,7 @@ hr{
 
 .bmenu{
 	margin: 0px;
-	padding: 2px 0px 3px 4px;
+	padding: 2px 4px 4px 4px;
 	background-color: #bfc6cf;
 	border: 1px solid white;
 }
@@ -224,4 +224,12 @@ hr{
 
 .tmn a:hover, .fmenu a:hover{
 	text-decoration: underline;
+}
+
+.news{
+	font-size: x-small;
+	color: #333333;
+	padding: 3px 4px 4px 4px;
+	background-color: #EEEEEE;
+	border: 1px solid white;
 }

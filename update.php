@@ -23,7 +23,7 @@ a:hover { text-decoration: none; font-size: 12px; color : #E4F992 }
 .gray{ color: #FF0000; font: small; }
 </style>
 </head><body>";
-echo '<big><b>JohnCMS v.2.2.0</b></big><br />Обновление с версии 2.0.0<hr />';
+echo '<big><b>JohnCMS v.2.4.0</b></big><br />Обновление с версии 2.3.0<hr />';
 
 // Подключаемся к базе данных
 require_once ("incfiles/db.php");
@@ -86,30 +86,51 @@ switch ($do)
 
     case 'step2':
         echo '<b><u>Подготовка таблиц</u></b><br />';
-        // Модифицируем таблицу `users`
-        mysql_query("ALTER TABLE `users` ADD `skype` VARCHAR( 50 ) NOT NULL AFTER `icq`");
-        mysql_query("ALTER TABLE `users` ADD `jabber` VARCHAR( 50 ) NOT NULL AFTER `skype`");
-        mysql_query("ALTER TABLE `users` ADD `immunity` BOOL NOT NULL AFTER `id`");
-        mysql_query("ALTER TABLE `users` ADD `lastpost` INT NOT NULL");
-        echo '<span class="green">OK</span> таблица users готова<br />';
+        // Таблица счетчиков
+		mysql_query("DROP TABLE IF EXISTS `cms_counters`");
+		mysql_query("CREATE TABLE IF NOT EXISTS `cms_counters` (
+		`id` int(11) NOT NULL auto_increment,
+		`sort` int(11) NOT NULL default '1',
+		`name` varchar(30) NOT NULL,
+		`link1` text NOT NULL,
+		`link2` text NOT NULL,
+		`mode` tinyint(4) NOT NULL default '1',
+		`switch` tinyint(1) NOT NULL default '0',
+		PRIMARY KEY  (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+        echo '<span class="green">OK</span> таблица cms_counters создана<br />';
+        // Таблица бана по IP
+		mysql_query("DROP TABLE IF EXISTS `cms_ban_ip`");
+		mysql_query("CREATE TABLE `cms_ban_ip` (
+		`id` int(11) NOT NULL auto_increment,
+		`ip1` int(11) NOT NULL,
+		`ip2` int(11) NOT NULL,
+		`ban_type` tinyint(4) NOT NULL default '0',
+		`link` varchar(100) NOT NULL,
+		`who` varchar(25) NOT NULL,
+		`reason` text NOT NULL,
+		`date` int(11) NOT NULL,
+		PRIMARY KEY  (`id`),
+		UNIQUE KEY `ip1` (`ip1`),
+		UNIQUE KEY `ip2` (`ip2`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+        echo '<span class="green">OK</span> таблица cms_ban_ip создана<br />';
         echo '<hr /><a href="update.php?do=final">Продолжить</a>';
         break;
 
     case 'final':
-        mysql_query("OPTIMIZE TABLE `users`;");
         echo '<b><span class="green">Поздравляем!</span></b><br />Процедура обновления успешно завершена.<br />Не забудьте удалить папку /install';
         echo '<hr /><a href="../../index.php">На сайт</a>';
         break;
 
     default:
         echo '<p><big><span class="red">ВНИМАНИЕ!</span></big><ul>';
-        echo '<li>Учтите, что обновление возможно только для системы <b>JohnCMS 2.0.0</b></li>';
+        echo '<li>Учтите, что обновление возможно только для системы <b>JohnCMS 2.3.0</b></li>';
         echo '<li>Если Вы используете какие-либо моды, то возможность обновления обязательно согласуйте с их авторами.</li>';
         echo '<li>Перед началом процедуры обновления, ОБЯЗАТЕЛЬНО сделайте резервную копию базы данных. Если по какой то причине обновление не пройдет до конца, Вам придется восстанавливать базу из резервной копии.</li>';
         echo '<li>Если Вы нажмете ссылку "Продолжить", то отмена изменений будет невозможна без восстановления из резервной копии.</li>';
         echo '<li></li>';
         echo '</ul></p>';
-
         echo '<hr />Вы уверены?<br /><a href="update.php?do=step1">Продолжить</a>';
 }
 

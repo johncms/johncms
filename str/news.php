@@ -82,9 +82,9 @@ switch ($do)
             } else
             {
                 echo '<form action="news.php?do=add" method="post">';
-                echo 'Заголовок:<br/><input type="text" name="name"/><br/>';
-                echo 'Текст:<br/><textarea cols="20" rows="4" name="text"/><br/><br/>';
-                echo 'Выберите раздел форума для обсуждения новости:<br/>';
+                echo '<div class="menu"><u>Заголовок</u><br/><input type="text" name="name"/></div>';
+                echo '<div class="menu"><u>Текст</u><br/><textarea rows="4" name="text"></textarea></div>';
+                echo '<div class="menu"><u>Раздел форума для обсуждения новости</u><br/>';
                 $fr = mysql_query("SELECT * FROM `forum` WHERE `type` = 'f'");
                 echo '<input type="radio" name="pf" value="0" checked="checked" />Не обсуждать<br />';
                 while ($fr1 = mysql_fetch_array($fr))
@@ -97,7 +97,7 @@ switch ($do)
                     }
                     echo '</select><br/>';
                 }
-                echo '<br /><input type="submit" name="submit" value="Ok!"/></form><p><a href="news.php">К новостям</a></p>';
+                echo '</div><div class="bmenu"><input type="submit" name="submit" value="Ok!"/></div></form><p><a href="news.php">К новостям</a></p>';
             }
         } else
         {
@@ -165,8 +165,8 @@ switch ($do)
                 switch ($cl)
                 {
                     case '1':
-                        // Чистим новости, старше 1 дня
-                        mysql_query("DELETE FROM `news` WHERE `time`<='" . ($realtime - 86400) . "'");
+                        // Чистим новости, старше 1 недели
+                        mysql_query("DELETE FROM `news` WHERE `time`<='" . ($realtime - 604800) . "'");
                         mysql_query("OPTIMIZE TABLE `news`;");
                         echo '<p>Удалены все новости, старше 1 дня.</p><p><a href="news.php">К новостям</a></p>';
                         break;
@@ -178,8 +178,8 @@ switch ($do)
                         break;
 
                     default:
-                        // Чистим сообщения, старше 1 недели
-                        mysql_query("DELETE FROM `news` WHERE `time`<='" . ($realtime - 604800) . "'");
+                        // Чистим сообщения, старше 1 месяца
+                        mysql_query("DELETE FROM `news` WHERE `time`<='" . ($realtime - 2592000) . "'");
                         mysql_query("OPTIMIZE TABLE `news`;");
                         echo '<p>Удалены все новости, старше 1 недели.</p><p><a href="news.php">К новостям</a></p>';
                 }
@@ -187,8 +187,8 @@ switch ($do)
             {
                 echo '<p><u>Что чистим?</u>';
                 echo '<form id="clean" method="post" action="news.php?do=clean">';
-                echo '<input type="radio" name="cl" value="0" checked="checked" />Старше 1 недели<br />';
-                echo '<input type="radio" name="cl" value="1" />Старше 1 дня<br />';
+                echo '<input type="radio" name="cl" value="0" checked="checked" />Старше 1 месяца<br />';
+                echo '<input type="radio" name="cl" value="1" />Старше 1 недели<br />';
                 echo '<input type="radio" name="cl" value="2" />Очищаем все<br />';
                 echo '<input type="submit" name="submit" value="Очистить" />';
                 echo '</form></p>';
@@ -233,6 +233,8 @@ switch ($do)
         {
             echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
             $text = $nw1['text'];
+            $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
+			$text = str_replace("\r\n", "<br/>", $text);
             $text = tags($text);
             if ($offsm != 1 && $offgr != 1)
             {
@@ -247,7 +249,8 @@ switch ($do)
             {
                 $mes = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $nw1['kom'] . "'");
                 $komm = mysql_result($mes, 0) - 1;
-                echo '<a href="../forum/?id=' . $nw1['kom'] . '">Обсудить на форуме (' . $komm . ')</a><br/>';
+                if ($komm >= 0)
+                    echo '<a href="../forum/?id=' . $nw1['kom'] . '">Обсудить на форуме (' . $komm . ')</a><br/>';
             }
             if ($dostsmod == 1)
             {

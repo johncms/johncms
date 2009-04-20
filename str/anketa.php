@@ -23,7 +23,7 @@ require_once ("../incfiles/core.php");
 require_once ("../incfiles/head.php");
 $tti = $realtime;
 
-if (!empty($_SESSION['uid']))
+if ($user_id)
 {
     $user = isset($_GET['user']) ? intval($_GET['user']) : $user_id;
     $q = @mysql_query("select * from `users` where id='" . $user . "';");
@@ -137,26 +137,30 @@ if (!empty($_SESSION['uid']))
         require_once ("../incfiles/end.php");
         exit;
     }
-    if ($user == $idus)
+    if ($user == $user_id)
     {
         switch ($act)
         {
             case 'name':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editname' method='post'>Изменить имя(max. 15):<br/><input type='text' name='nname' value='" . $arr[imname] .
-                    "'/><br/><input type='submit'  value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editname' method='post'>Изменить имя(max. 15):<br/><input type='text' name='nname' value='" . $arr['imname'] .
+                    "'/><br/><input type='submit'  value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editname':
-                $nname = check(trim($_POST['nname']));
-                $nname = mb_substr($nname, 0, 15);
-                mysql_query("update `users` set imname='" . $nname . "' where id='" . $_SESSION['uid'] . "';");
-                echo "Принято: $nname<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['nname']), 0, 20));
+                mysql_query("update `users` set imname='" . $var . "' where id='" . $user_id . "';");
+                echo '<p>Принято: ' . $var . '<br/><a href="anketa.php?user=' . $user_id . '">Продолжить</a></p>';
                 break;
 
             case 'par':
-                echo "<form action='anketa.php?user=" . $idus .
-                    "&amp;act=editpar' method='post'>Старый пароль:<br/><input type='text' name='par1'/><br/>Новый пароль:<br/><input type='text' name='par2'/><br/>Подтвердите пароль:<br/><input type='text' name='par3'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" .
-                    $idus . "'>Назад</a><br/>";
+                echo '<div class="phdr">Смена пароля</div>';
+                echo '<form action="anketa.php?user=' . $user_id . '&amp;act=editpar" method="post">';
+                echo '<div class="menu"><u>Старый пароль</u><br/><input type="text" name="par1"/></div>';
+                echo '<div class="menu">Новый пароль:<br/><input type="text" name="par2"/><br/>';
+                echo 'Подтвердите пароль:<br/><input type="text" name="par3"/><br/>';
+                echo '<small>Мин. 3, макс. 10 символов.<br />Разрешены буквы Латинского алфавита и цифры.</small></div>';
+                echo '<div class="bmenu"><input type="submit" value="ok"/></div></form>';
+                echo "<br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editpar':
@@ -168,23 +172,35 @@ if (!empty($_SESSION['uid']))
                 $par22 = md5(md5($par2));
                 if ($par11 !== $passw)
                 {
-                    echo "Неверно указан текущий пароль<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
+                    echo "Неверно указан текущий пароль<br/><a href='anketa.php?act=par&amp;user=" . $user_id . "'>Повторить</a><br/>";
                     require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($par2 !== $par3)
                 {
-                    echo "Вы ошиблись при подтверждении нового пароля<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
+                    echo "Вы ошиблись при подтверждении нового пароля<br/><a href='anketa.php?act=par&amp;user=" . $user_id . "'>Повторить</a><br/>";
                     require_once ("../incfiles/end.php");
                     exit;
                 }
                 if ($par2 == "")
                 {
-                    echo "Вы не ввели новый пароль<br/><a href='anketa.php?act=par&amp;user=" . $idus . "'>Повторить</a><br/>";
+                    echo "Вы не ввели новый пароль<br/><a href='anketa.php?act=par&amp;user=" . $user_id . "'>Повторить</a><br/>";
                     require_once ("../incfiles/end.php");
                     exit;
                 }
-                mysql_query("update `users` set password='" . $par22 . "' where id='" . $_SESSION['uid'] . "';");
+                if (preg_match("/[^\da-zA-Z_]+/", $par2))
+                {
+                    echo "Недопустимые символы в новом пароле<br/><a href='anketa.php?act=par&amp;user=" . $user_id . "'>Повторить</a><br/>";
+                    require_once ("../incfiles/end.php");
+                    exit;
+                }
+                if (strlen($par2) < 3 || strlen($par2) > 10)
+                {
+                    echo "Недопустимая длина нового пароля<br/><a href='anketa.php?act=par&amp;user=" . $user_id . "'>Повторить</a><br/>";
+                    require_once ("../incfiles/end.php");
+                    exit;
+                }
+                mysql_query("update `users` set `password` = '" . $par22 . "' where `id` = '" . $user_id . "';");
                 echo "Пароль изменен,войдите на сайт заново<br/><a href='../in.php'>Вход</a><br/>";
                 unset($_SESSION['uid']);
                 unset($_SESSION['ups']);
@@ -193,79 +209,73 @@ if (!empty($_SESSION['uid']))
                 break;
 
             case 'gor':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editgor' method='post'>Изменить город(max. 20):<br/><input type='text' name='ngor' value='" . $arr['live'] .
-                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editgor' method='post'>Изменить город(max. 20):<br/><input type='text' name='ngor' value='" . $arr['live'] .
+                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editgor':
-                $ngor = check(trim($_POST['ngor']));
-                $ngor = mb_substr($ngor, 0, 20);
-                mysql_query("update `users` set live='" . $ngor . "' where id='" . $_SESSION['uid'] . "';");
-                echo "Принято: $ngor<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['ngor']), 0, 20));
+                mysql_query("update `users` set live='" . $var . "' where id='" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'inf':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editinf' method='post'>Изменить инфу(max. 500):<br/><input type='text' name='ninf' value='" . $arr['about'] .
-                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editinf' method='post'>Изменить инфу(max. 500):<br/><textarea cols=\"20\" rows=\"4\" name=\"ninf\">" . $arr['about'] .
+                    "</textarea><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editinf':
-                $ninf = check(trim($_POST['ninf']));
-                $ninf = mb_substr($ninf, 0, 500);
-                mysql_query("update `users` set about='" . $ninf . "' where id='" . $user_id . "';");
-                echo "Принято: $ninf<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['ninf']), 0, 500));
+                mysql_query("update `users` set about='" . $var . "' where id='" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'icq':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editicq' method='post'>Изменить ICQ:<br/><input type='text' name='nicq' value='" . $arr['icq'] . "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus .
-                    "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editicq' method='post'>Изменить ICQ:<br/><input type='text' name='nicq' value='" . $arr['icq'] . "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" .
+                    $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editicq':
-                $nicq = intval($_POST['nicq']);
-                $nicq = substr($nicq, 0, 9);
-                mysql_query("update `users` set icq='" . $nicq . "' where id='" . $user_id . "';");
-                echo "Принято: $nicq<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = intval(substr($_POST['nicq'], 0, 9));
+                mysql_query("update `users` set icq='" . $var . "' where id='" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'skype':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editskype' method='post'>Изменить Skype(max. 30):<br/><input type='text' name='skype' value='" . $arr['skype'] .
-                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editskype' method='post'>Изменить Skype(max. 30):<br/><input type='text' name='skype' value='" . $arr['skype'] .
+                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editskype':
-                $skype = check(trim($_POST['skype']));
-                $skype = mb_substr($skype, 0, 30);
-                mysql_query("UPDATE `users` SET `skype` = '" . $skype . "' WHERE `id` = '" . $user_id . "';");
-                echo "Принято: $skype<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['skype']), 0, 30));
+                mysql_query("UPDATE `users` SET `skype` = '" . $var . "' WHERE `id` = '" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'jabber':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editjabber' method='post'>Изменить Jabber(max. 30):<br/><input type='text' name='jabber' value='" . $arr['jabber'] .
-                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editjabber' method='post'>Изменить Jabber(max. 30):<br/><input type='text' name='jabber' value='" . $arr['jabber'] .
+                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editjabber':
-                $jabber = check(trim($_POST['jabber']));
-                $jabber = mb_substr($jabber, 0, 30);
-                mysql_query("UPDATE `users` SET `jabber` = '" . $jabber . "' WHERE `id` = '" . $user_id . "';");
-                echo "Принято: $jabber<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['jabber']), 0, 30));
+                mysql_query("UPDATE `users` SET `jabber` = '" . $var . "' WHERE `id` = '" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'mobila':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editmobila' method='post'>Изменить номер телефона (max.20):<br/><input type='text' name='nmobila' value='" . $arr['mibile'] .
-                    "' /><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editmobila' method='post'>Изменить номер телефона (max.20):<br/><input type='text' name='nmobila' value='" . $arr['mibile'] .
+                    "' /><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editmobila':
-                $nmobila = check(trim($_POST['nmobila']));
-                $nmobila = mb_substr($nmobila, 0, 20);
-                mysql_query("update `users` set `mibile` = '" . $nmobila . "' where id='" . $user_id . "';");
-                echo "Принято: $nmobila<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['nmobila']), 0, 20));
+                mysql_query("update `users` set `mibile` = '" . $var . "' where id='" . $user_id . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'dr':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editdr' method='post'>Изменить дату рождения:<br/><select name='user_day' class='textbox'><option>$arr[dayb]</option>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editdr' method='post'>Изменить дату рождения:<br/><select name='user_day' class='textbox'><option>$arr[dayb]</option>";
                 $i = 1;
                 while ($i <= 31)
                 {
@@ -287,7 +297,7 @@ if (!empty($_SESSION['uid']))
                     echo "<option value='" . $i . "'>$i</option>";
                     ++$i;
                 }
-                echo "</select><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "</select><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editdr':
@@ -295,28 +305,27 @@ if (!empty($_SESSION['uid']))
                 $user_month = intval($_POST['user_month']);
                 $user_year = intval($_POST['user_year']);
                 mysql_query("update `users` set dayb='" . $user_day . "', monthb='" . $user_month . "' ,yearofbirth='" . $user_year . "' where id='" . $_SESSION['uid'] . "';");
-                echo "Принято: $user_day $mesyac[$user_month] $user_year<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                echo "Принято: $user_day $mesyac[$user_month] $user_year<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'site':
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editsite' method='post'>Изменить сайт(max. 50):<br/><input type='text' name='nsite' value='" . $arr['www'] .
-                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editsite' method='post'>Изменить сайт(max. 50):<br/><input type='text' name='nsite' value='" . $arr['www'] .
+                    "'/><br/><input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 break;
 
             case 'editsite':
-                $nsite = check(trim($_POST['nsite']));
-                $nsite = mb_substr($nsite, 0, 50);
-                mysql_query("update `users` set www='" . $nsite . "' where id='" . $_SESSION['uid'] . "';");
-                echo "Принято: $nsite<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                $var = check(mb_substr(trim($_POST['nsite']), 0, 50));
+                mysql_query("update `users` set www='" . $var . "' where id='" . $_SESSION['uid'] . "';");
+                echo "Принято: $var<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'mail':
                 if ($arr['mailact'] == 0)
                 {
-                    echo 'Ваш адрес e-mail необходимо<a href="anketa.php?act=activmail&amp;user=' . $idus . '"> активировать</a><br/>
-(<a href="anketa.php?act=helpactiv&amp;user=' . $idus . '">Зачем это нужно?</a>)<br/>';
+                    echo 'Ваш адрес e-mail необходимо<a href="anketa.php?act=activmail&amp;user=' . $user_id . '"> активировать</a><br/>
+(<a href="anketa.php?act=helpactiv&amp;user=' . $user_id . '">Зачем это нужно?</a>)<br/>';
                 }
-                echo "<form action='anketa.php?user=" . $idus . "&amp;act=editmail' method='post'>Изменить E-mail(max. 50):<br/><input type='text' name='nmail' value='" . $arr['mail'] . "'/><br/>";
+                echo "<form action='anketa.php?user=" . $user_id . "&amp;act=editmail' method='post'>Изменить E-mail(max. 50):<br/><input type='text' name='nmail' value='" . $arr['mail'] . "'/><br/>";
                 if ($arr['mailact'] == 1)
                 {
                     switch ($arr['mailvis'])
@@ -329,10 +338,10 @@ if (!empty($_SESSION['uid']))
                             break;
                     }
                 }
-                echo "<input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $idus . "'>Назад</a><br/>";
+                echo "<input type='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                 if ($arr['mailact'] == 0)
                 {
-                    echo "<a href='anketa.php?act=activmail&amp;user=" . $idus . "&amp;continue'>Продолжить активацию</a><br/>";
+                    echo "<a href='anketa.php?act=activmail&amp;user=" . $user_id . "&amp;continue'>Продолжить активацию</a><br/>";
                 }
                 break;
 
@@ -364,7 +373,7 @@ if (!empty($_SESSION['uid']))
 				`mailvis`='" . $nmailvis . "',
 				`mailact`='" . $nmailact . "'
 				where `id`='" . $user_id . "';");
-                echo "Принято: $nmail<br/><a href='anketa.php?user=" . $idus . "'>Продолжить</a><br/>";
+                echo "Принято: $nmail<br/><a href='anketa.php?user=" . $user_id . "'>Продолжить</a><br/>";
                 break;
 
             case 'activmail':
@@ -378,16 +387,16 @@ if (!empty($_SESSION['uid']))
                             mysql_query("update `users` set `mailact`='1' where `id`='" . $user_id . "';");
                             unset($_SESSION['activ']);
                             echo "E-mail адрес успешно активирован<br/>";
-                            echo "<a href='anketa.php?user=" . $idus . "'>В анкету</a><br/>";
+                            echo "<a href='anketa.php?user=" . $user_id . "'>В анкету</a><br/>";
                         } else
                         {
                             echo "Неверный код<br/>";
-                            echo "<a href='anketa.php?act=activmail&amp;user=" . $idus . "&amp;continue'>Повторить</a><br/>";
+                            echo "<a href='anketa.php?act=activmail&amp;user=" . $user_id . "&amp;continue'>Повторить</a><br/>";
                         }
                     } else
                     {
-                        echo "<form action='anketa.php?user=" . $idus . "&amp;act=activmail&amp;continue' method='post'>Код активации:<br/><input type='text' name='provact'/><br/><input type='submit' name='submit' value='ok'/></form><br/><a href='anketa.php?user=" .
-                            $idus . "'>Назад</a><br/>";
+                        echo "<form action='anketa.php?user=" . $user_id .
+                            "&amp;act=activmail&amp;continue' method='post'>Код активации:<br/><input type='text' name='provact'/><br/><input type='submit' name='submit' value='ok'/></form><br/><a href='anketa.php?user=" . $user_id . "'>Назад</a><br/>";
                     }
                     require ("../incfiles/end.php");
                     exit;
@@ -418,7 +427,7 @@ if (!empty($_SESSION['uid']))
                 {
                     echo "Код для активации уже выслан<br/>";
                 }
-                echo "<a href='anketa.php?user=" . $idus . "'>В анкету</a><br/>";
+                echo "<a href='anketa.php?user=" . $user_id . "'>В анкету</a><br/>";
                 break;
 
             default:
@@ -452,9 +461,9 @@ if (!empty($_SESSION['uid']))
                 }
                 if ($dostadm == 1)
                 {
-                    echo "<a href='../" . $admp . "/editusers.php?act=edit&amp;user=" . $idus . "'>Редактировать анкету</a><br/>";
+                    echo "<a href='../" . $admp . "/editusers.php?act=edit&amp;user=" . $user_id . "'>Редактировать анкету</a><br/>";
                 }
-                echo '<div><a href="anketa.php?act=par&amp;user=' . $idus . '">Сменить пароль</a></div>';
+                echo '<div><a href="anketa.php?act=par&amp;user=' . $user_id . '">Сменить пароль</a></div>';
                 echo '</p>';
                 require_once ("../incfiles/end.php");
                 exit;
@@ -652,19 +661,19 @@ if (!empty($_SESSION['uid']))
 
         if ($dostmod == 1)
         {
-            echo '<p>IP: ' . long2ip($arr['ip']) . '<br/>Browser: ' . $arr['browser'] . '</p>';
+            echo '<p>IP: ' . long2ip($arr['ip']) . '<br/>Browser: ' . $arr['browser'] . '</p><p>';
             if ($arr['immunity'] == 1)
             {
-            	echo '<p>[!]&nbsp;Иммунитет<br />';
+                echo '[!]&nbsp;Иммунитет<br />';
             } else
             {
                 if ($dostsmod == 1)
                 {
-                    echo "<p><a href='../" . $admp . "/zaban.php?do=ban&amp;id=" . $arr['id'] . "'>Банить</a><br/>";
+                    echo "<a href='../" . $admp . "/zaban.php?do=ban&amp;id=" . $arr['id'] . "'>Банить</a><br/>";
                 } elseif ($dostfmod == 1 && isset($_GET['fid']))
                 {
                     $fid = intval($_GET['fid']);
-                    echo '<p><a href="../' . $admp . '/zaban.php?do=ban&amp;id=' . $arr['id'] . '&amp;fid=' . $fid . '">Пнуть из форума</a><br/>';
+                    echo '<a href="../' . $admp . '/zaban.php?do=ban&amp;id=' . $arr['id'] . '&amp;fid=' . $fid . '">Пнуть из форума</a><br/>';
                 }
             }
             if ($dostadm == "1")

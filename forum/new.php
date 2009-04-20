@@ -181,7 +181,7 @@ if ($user_id)
 
         default:
             ////////////////////////////////////////////////////////////
-            // Вывод списка непрочитанных тем форума                  //
+            // Вывод непрочитанных тем (для зарегистрированных)       //
             ////////////////////////////////////////////////////////////
             $total = forum_new();
             if ($total > 0)
@@ -243,7 +243,7 @@ if ($user_id)
                     {
                         echo '&nbsp;/&nbsp;' . $nick['from'];
                     }
-                    echo " <font color='#777777'>" . date("d.m.y / H:i", $nick['time']) . '</font>';
+                    echo ' <font color="#777777">' . date("d.m.y / H:i", $nick['time']) . '</font>';
                     echo '</div></div>';
                     ++$i;
                 }
@@ -263,35 +263,23 @@ if ($user_id)
     }
 } else
 {
-    $lp = mysql_query("select * from `forum` where type='t' and moder='1' order by time desc LIMIT 10;");
-    while ($arr = mysql_fetch_array($lp))
+    ////////////////////////////////////////////////////////////
+    // Вывод непрочитанных тем (для незарегистрированных)     //
+    ////////////////////////////////////////////////////////////
+    echo '<div class="phdr"><b>Последние 10 тем</b></div>';
+	$req = mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `moder` = '1' AND `close`!='1' ORDER BY `time` DESC LIMIT 10;");
+    while ($arr = mysql_fetch_array($req))
     {
         $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $arr['refid'] . "';");
         $razd = mysql_fetch_array($q3);
         $q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd['refid'] . "';");
         $frm = mysql_fetch_array($q4);
-        $colmes = mysql_query("select `id` from `forum` where type='m' and close!='1' and refid='" . $arr['id'] . "' order by time desc;");
         $nikuser = mysql_query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $arr['id'] . "'ORDER BY time DESC LIMIT 1;");
-        $colmes1 = mysql_num_rows($colmes);
+        $colmes = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $arr['id'] . "'");
+        $colmes1 = mysql_result($colmes, 0);
         $cpg = ceil($colmes1 / $kmess);
-        $colmes1 = $colmes1 - 1;
-        if ($colmes1 < 0)
-        {
-            $colmes1 = 0;
-        }
         $nam = mysql_fetch_array($nikuser);
-        $d = $i / 2;
-        $d1 = ceil($d);
-        $d2 = $d1 - $d;
-        $d3 = ceil($d2);
-        if ($d3 == 0)
-        {
-            $div = "<div class='b'>";
-        } else
-        {
-            $div = "<div class='c'>";
-        }
-        echo "$div";
+        echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
         if ($arrt['edit'] == 1)
         {
             echo "<img src='../images/tz.gif' alt=''/>";
@@ -310,19 +298,15 @@ if ($user_id)
                 echo "<a href='index.php?id=$arr[id]&amp;page=$cpg'>[&gt;&gt;]</a>";
             }
         }
-        echo "<br/>";
-
-
-        echo "(" . date("H:i /d.m.y", $arr['time']) . ")<br/>[$arr[from]";
+        echo '<br/><div class="sub"><a href="index.php?id=' . $razd['id'] . '">' . $frm['text'] . '&nbsp;/&nbsp;' . $razd['text'] . '</a><br />';
+        echo $arr['from'];
         if (!empty($nam['from']))
         {
-            echo "/$nam[from]";
+            echo '&nbsp;/&nbsp;' . $nam['from'];
         }
-        echo "]<br/>";
-        echo "$frm[text]/$razd[text]";
-        echo "</div>";
+        echo ' <font color="#777777">' . date("d.m.y / H:i", $nick['time']) . '</font>';
+        echo '</div></div>';
         $i++;
-
     }
 }
 

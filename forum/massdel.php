@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 ////////////////////////////////////////////////////////////
 // Удаление выбранных постов с форума                     //
 ////////////////////////////////////////////////////////////
-if ($dostsmod == 1)
+if ($dostfmod == 1)
 {
     require_once ("../incfiles/head.php");
     if (isset($_GET['yes']))
