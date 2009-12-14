@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,10 +16,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if ($dostsmod == 1)
-{
-    if ($_GET['id'] == "")
-    {
+if ($rights >= 6) {
+    if ($_GET['id'] == "") {
         echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
@@ -26,17 +25,13 @@ if ($dostsmod == 1)
     $id = intval($_GET['id']);
     $typ = mysql_query("select * from `gallery` where id='" . $id . "';");
     $ms = mysql_fetch_array($typ);
-    if (isset($_GET['yes']))
-    {
-        switch ($ms['type'])
-        {
-            case "al":
+    if (isset ($_GET['yes'])) {
+        switch ($ms['type']) {
+            case "al" :
                 $ft = mysql_query("select * from `gallery` where `type`='ft' and `refid`='" . $id . "';");
-                while ($ft1 = mysql_fetch_array($ft))
-                {
+                while ($ft1 = mysql_fetch_array($ft)) {
                     $km = mysql_query("select * from `gallery` where type='km' and refid='" . $ft1['id'] . "';");
-                    while ($km1 = mysql_fetch_array($km))
-                    {
+                    while ($km1 = mysql_fetch_array($km)) {
                         mysql_query("delete from `gallery` where `id`='" . $km1['id'] . "';");
                     }
                     unlink("foto/$ft1[name]");
@@ -45,16 +40,13 @@ if ($dostsmod == 1)
                 mysql_query("delete from `gallery` where `id`='" . $id . "';");
                 header("location: index.php?id=$ms[refid]");
                 break;
-            case "rz":
+            case "rz" :
                 $al = mysql_query("select * from `gallery` where type='al' and refid='" . $id . "';");
-                while ($al1 = mysql_fetch_array($al))
-                {
+                while ($al1 = mysql_fetch_array($al)) {
                     $ft = mysql_query("select * from `gallery` where type='ft' and refid='" . $al1['id'] . "';");
-                    while ($ft1 = mysql_fetch_array($ft))
-                    {
+                    while ($ft1 = mysql_fetch_array($ft)) {
                         $km = mysql_query("select * from `gallery` where type='km' and refid='" . $ft1['id'] . "';");
-                        while ($km1 = mysql_fetch_array($km))
-                        {
+                        while ($km1 = mysql_fetch_array($km)) {
                             mysql_query("delete from `gallery` where `id`='" . $km1['id'] . "';");
                         }
                         unlink("foto/$ft1[name]");
@@ -65,23 +57,22 @@ if ($dostsmod == 1)
                 mysql_query("delete from `gallery` where `id`='" . $id . "';");
                 header("location: index.php");
                 break;
-            default:
+            default :
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
                 require_once ('../incfiles/end.php');
                 exit;
                 break;
         }
-    } else
-    {
-        switch ($ms['type'])
-        {
-            case "al":
+    }
+    else {
+        switch ($ms['type']) {
+            case "al" :
                 echo "Вы уверены в удалении альбома $ms[text]?<br/>";
                 break;
-            case "rz":
+            case "rz" :
                 echo "Вы уверены в удалении раздела $ms[text]?<br/>";
                 break;
-            default:
+            default :
                 echo "Ошибка<br/><a href='index.php'>В галерею</a><br/>";
                 require_once ('../incfiles/end.php');
                 exit;
@@ -89,8 +80,8 @@ if ($dostsmod == 1)
         }
         echo "<a href='index.php?act=del&amp;id=" . $id . "&amp;yes'>Да</a> | <a href='index.php?id=" . $id . "'>Нет</a><br/>";
     }
-} else
-{
+}
+else {
     header("location: index.php");
 }
 

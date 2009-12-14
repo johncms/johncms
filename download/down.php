@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,20 +15,18 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$id = intval($_GET['id']);
+
 $fil = mysql_query("select * from `download` where id='$id';");
 $mas = mysql_fetch_array($fil);
-if (!empty($mas[name]))
-{
-    if (file_exists("$mas[adres]/$mas[name]"))
-    {
+if (!empty ($mas[name])) {
+    if (file_exists("$mas[adres]/$mas[name]")) {
         $sc = $mas[ip] + 1;
         mysql_query("update `download` set ip = '" . $sc . "' where id = '" . $id . "';");
         $_SESSION['upl'] = "";
         header("location: $mas[adres]/$mas[name]");
     }
-} else
-{
+}
+else {
     require_once ("../incfiles/head.php");
     echo "Ошибка!<br/>&#187;<a href='?'>К категориям</a><br/>";
 }

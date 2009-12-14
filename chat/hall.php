@@ -23,9 +23,8 @@ if (!$set['mod_chat'])
 echo '<div class="phdr"><b>Чат</b></div>';
 $_SESSION['intim'] = '';
 $q = mysql_query("select * from `chat` where type='r' order by realid ;");
-while ($mass = mysql_fetch_array($q))
-{
-    echo ceil(ceil($i / 2) - ($i / 2)) == 0 ? '<div class="list1">' : '<div class="list2">';
+while ($mass = mysql_fetch_array($q)) {
+    echo is_integer($i / 2) ? '<div class="list1">' : '<div class="list2">';
     echo '<a href="index.php?id=' . $mass['id'] . '">' . $mass['text'] . '</a> (' . wch($mass['id']) . ')</div>';
     ++$i;
 }

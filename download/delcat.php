@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,13 +15,12 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if (($dostdmod == 1) && (!empty($_GET['cat'])))
-{
+
+if (($rights == 4 || $rights >= 6) && (!empty ($_GET['cat']))) {
     $cat = $_GET['cat'];
     $delcat = mysql_query("select * from `download` where type = 'cat' and refid = '" . $cat . "';");
     $delcat1 = mysql_num_rows($delcat);
-    if ($delcat1 == 0)
-    {
+    if ($delcat1 == 0) {
         provcat($cat);
         $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
         $adrdir = mysql_fetch_array($cat1);

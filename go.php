@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,53 +15,53 @@
 */
 
 define('_IN_JOHNCMS', 1);
+
 $rootpath = '';
-require_once ("incfiles/core.php");
+require_once ('incfiles/core.php');
+
 $adres = check($_POST['adres']);
-switch ($adres)
-{
-    case "chat":
+switch ($adres) {
+    case "chat" :
         header("location: chat/index.php");
         break;
-    case "forum":
+    case "forum" :
         header("location: forum/index.php");
         break;
-    case "set":
+    case "set" :
         header("location: str/usset.php");
         break;
-    case "privat":
-        header("location: str/privat.php");
+    case "privat" :
+        header("location: index.php?act=cab");
         break;
-    case "prof":
+    case "prof" :
         header("location: str/anketa.php");
         break;
-    case "lib":
+    case "lib" :
         header("location: library/index.php");
         break;
-    case "down":
+    case "down" :
         header("location: download/index.php");
         break;
-    case "gallery":
+    case "gallery" :
         header("location: gallery/index.php");
         break;
-    case "news":
+    case "news" :
         header("location: str/news.php");
         break;
-    case "guest":
+    case "guest" :
         header("location: str/guest.php");
         break;
-    case "gazen":
+    case "gazen" :
         header("location: http://gazenwagen.com");
         break;
 
-    default:
+    default :
         $ar = explode(".", $adres);
-        if ($ar[0] == "frm")
-        {
+        if ($ar[0] == "frm") {
             header("location: forum/index.php?id=$ar[1]");
-        } else
-        {
-            header("location: index.php");
+        }
+        else {
+            header('location: index.php');
         }
         break;
 }

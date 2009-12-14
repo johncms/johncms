@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,24 +16,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (isset($_POST['submit']))
-{
-    if (!empty($_POST['razmer']))
-    {
+if (isset ($_POST['submit'])) {
+    if (!empty ($_POST['razmer'])) {
         $razmer = intval($_POST['razmer']);
     }
     $_SESSION['frazm'] = $razmer;
     echo "На время текущей сессии <br/>принят максимальный размер изображений <br/>при просмотре $razmer*$razmer px<br/>";
-} else
-{
+}
+else {
     echo "<form action='index.php?act=preview' method='post'>
 	Выберите размеры просмотра картинок:<br/><select name='razmer'>";
-    if (!empty($_SESSION['frazm']))
-    {
+    if (!empty ($_SESSION['frazm'])) {
         $realr = $_SESSION['frazm'];
         echo "<option value='" . $realr . "'>" . $realr . "*" . $realr . "</option>";
     }
-    echo "<option value='32'>32*32</option>
+    echo
+    "<option value='32'>32*32</option>
 <option value='50'>50*50</option>
 <option value='64'>64*64</option>
 <option value='80'>80*80</option>

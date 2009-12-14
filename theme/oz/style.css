@@ -1,0 +1,200 @@
+@charset "utf-8";
+
+/*
+	design: oz
+	icq: 422618
+	mailto:vitaliy@petrychuk.com
+	url: http://petrychuk.com
+*/
+
+body {
+	background-color: #efefef;
+	color: #636363;
+	font: 13px Trebuchet MS, Tahoma;
+	margin: 0;
+}
+.logo {
+	background: #b6b7b8;
+	padding: 5px 0 2px 0;
+}
+.alarm {
+	background: #E61313;
+	margin: 0 0 2px 0;
+	color: #fff;
+	font-weight: bold;
+	padding: 3px 0px 3px 4px;
+}
+.end {
+	text-align: center;
+}
+.footer {
+	background: url(images/footer.gif) repeat-x top #c0c0c0;
+	color: #fff;
+	margin: 1px 0;
+	padding: 3px 1px 4px 6px;
+}
+.footer a { color: #555; }
+.copy {
+	border-top: 1px solid #c2c2c2;
+	text-align: center;
+	color: #3f5864;
+	padding: 3px 1px 1px 1px;
+	margin: 1px 0;
+}
+.copy a { color: #2688B3; }
+.func {
+	border-left: 4px solid #2FB0D0;
+	color: #757575;
+	font-size: 10px;
+	padding: 0 0 0 4px;
+}
+.gray { color: gray; }
+.green{ color: green; }
+.hdr {
+	background-color: #f1f1f1;
+	border-bottom: 1px solid #595959;
+	font-weight: bold;
+	padding-left: 2px;
+}
+.header {
+	background: #efefef;
+	border-bottom: 2px solid #cbcbcb;
+	color: #8b8b8b;
+	margin: 0 0 1px 0;
+	padding: 4px 1px 4px 6px;
+}
+.header b { color: #45aad0; }
+.left { float: left; }
+.list1 {
+	background: #EEE;
+	margin: 1px 0;
+	padding: 3px 1px 4px 4px;
+}
+.list2 {
+	background: #F7F7F7;
+	margin: 1px 0;
+	padding: 3px 1px 4px 4px;
+}
+.b, .c {
+	margin: 0px;
+	padding: 2px;
+}
+.b { background: #F7F7F7; }
+.c { background: #fff; }
+.b b { color: #396C82; }
+.c b { color: #619FBA; }
+.maintxt{
+	border: 1px solid #e1e1e1;
+	background: #fff;
+	color: #989898;
+	margin: 4px 4px 3px 4px;
+	padding: 2px 2px 2px 2px;
+}
+.tmn {
+	background: url(images/tmn.gif) repeat-x top left #e8e8e8;
+	border-top: 1px solid #bebebe;
+	border-bottom: 1px solid #d1d1d1;
+	color: #989898;
+	margin: 1px 0;
+	padding: 3px 0px 4px 6px;
+}
+.tmn a, .fmenu a { color: #4d4d4d; }
+.tmn a:hover,.fmenu a:hover{
+	text-decoration: underline;
+}
+.bmenu, .phdr {
+	background: url(images/bmenu.gif) repeat-x top left #a7a7a7;
+	margin: 0px;
+	color: #fff;
+	padding: 2px 4px 4px 4px;
+}
+.bmenu a, .phdr a { color: #fff; }
+.bmenu a:hover, .phdr a:hover { color: #ebebeb; text-decoration: none; }
+.gmenu {
+	background: #E1E9EA;
+	margin: 1px 0;
+	color: #264564;
+	padding: 3px 4px 3px 4px;
+}
+.gmenu a { color: #4780B8; }
+.fmenu {
+	color: #989898;
+    padding-left: 4px;
+    padding-bottom: 2px
+}
+.fmenu a { color: #64819B; }
+.rmenu {
+	background: #F5E9EB;
+	border: 1px solid #E2C0C7;
+	margin: 1px 0;
+	padding: 4px;
+}
+.rmenu input, .rmenu textarea, .rmenu select { border: 1px solid #E2C0C7; }
+.rmenu input:focus, .rmenu textarea:focus { border: 1px solid #DBB0B9; background: #FDFBFB; }
+.phdr {
+	padding: 4px 4px 4px 4px;
+	margin: 1px 0;
+}
+.menu {
+	background: #f0f0f0;
+	margin: 2px 0;
+	padding: 3px 4px 3px 4px;
+}
+.menu a { color: #0e83a5; }
+.menu a:hover { color: #007ed2; }
+.news{
+	background-color: #EEEEEE;
+	border: 1px solid white;
+	color: #333333;
+	font-size: x-small;
+	padding: 3px 4px 4px 4px;
+}
+.quote{
+	border-left: 4px solid #c0c0c0;
+	color: #878787;
+	font-size: x-small;
+	padding: 2px 0px 2px 4px;
+}
+.red, .red a {
+	color: #f00;
+}
+.reply {
+	border-left: 4px solid red;
+	color: #f00;
+	padding: 2px 0px 2px 4px;
+}
+.status{
+	color: #CD853F;
+	font-weight: bold;
+}
+.sub {
+	border-top: 1px dotted #c6c17f;
+	font-size: x-small;
+	margin-top: 4px;
+}
+.clip {
+	color: #4a5663;
+	border: 1px solid white;
+	font-size: x-small;
+	background-color: #bfc6cf;
+	padding: 4px 4px 8px 4px;
+}
+.clip a { color: #424e59; }
+.phpcode {
+	background-color: #E0E6E9;
+	border: 1px dotted #9FAEBB;
+	margin-top: 4px;
+	padding: 0px 2px 0px 2px;
+}
+a { color: #0000bb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin: 1px; }
+form, input, textarea, select { font: 13px Trebuchet MS, Tahoma; margin: 0; }
+form {  }
+input, textarea, select { background: #fff; border: 1px solid #d8d8d8; color: #686868; padding: 3px; margin: 1px 0; }
+input:focus, textarea:focus { background: #F4F4F4; border: 1px solid #BCBCBC; }
+input[type="submit"] { background: url(images/input.gif) repeat-x bottom #fefefe; padding: 3px 8px; }
+input[type="file"] { margin: 2px 0; }
+hr { border: 0; border-top: 1px dotted #E1E1E1; margin: 5px 0; }
+h3 { margin: 0; padding: 0 0 2px 0; }
+ul { margin: 0; padding-left: 20px; }

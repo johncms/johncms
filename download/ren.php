@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,11 +15,10 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once ("../incfiles/head.php");
-if ($dostdmod == 1)
-{
-    if (empty($_GET['cat']))
-    {
+if ($rights == 4 || $rights >= 6) {
+    if (empty ($_GET['cat'])) {
         echo "Ошибка!<br /><a href='?'>В загрузки</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
@@ -28,28 +28,25 @@ if ($dostdmod == 1)
     $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
     $adrdir = mysql_fetch_array($cat1);
     $namedir = "$adrdir[adres]/$adrdir[name]";
-    if (isset($_POST['submit']))
-    {
-        if (!empty($_POST['newrus']))
-        {
+    if (isset ($_POST['submit'])) {
+        if (!empty ($_POST['newrus'])) {
             $newrus = check(trim($_POST['newrus']));
-        } else
-        {
+        }
+        else {
             $newrus = "$adrdir[text]";
         }
 
-        if (mysql_query("update `download` set text='" . $newrus . "' where id='" . $cat . "';"))
-        {
+        if (mysql_query("update `download` set text='" . $newrus . "' where id='" . $cat . "';")) {
             echo "Название для отображения изменено<br/>";
         }
-    } else
-    {
+    }
+    else {
         echo "<form action='?act=ren&amp;cat=" . $cat . "' method='post'>";
         echo "Отображать каталог как: <br/><input type='text' name='newrus' value='" . $adrdir[text] . "'/><br/>";
         echo "<input type='submit' name='submit' value='Изменить'/></form><br/>";
     }
-} else
-{
+}
+else {
     echo "Нет доступа!";
 }
 echo "&#187;<a href='?cat=" . $cat . "'>В папку</a><br/>";

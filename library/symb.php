@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -15,24 +16,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (isset($_POST['submit']))
-{
-    if (!empty($_POST['simvol']))
-    {
+if (isset ($_POST['submit'])) {
+    if (!empty ($_POST['simvol'])) {
         $simvol = intval($_POST['simvol']);
     }
     $_SESSION['symb'] = $simvol;
     echo "На время текущей сессии <br/>принято количество символов на страницу: $simvol <br/>";
-} else
-{
+}
+else {
     echo "<form action='?act=symb' method='post'>
 	Выберите количество символов на страницу:<br/><select name='simvol'>";
-    if (!empty($_SESSION['symb']))
-    {
+    if (!empty ($_SESSION['symb'])) {
         $realr = $_SESSION['symb'];
         echo "<option value='" . $realr . "'>" . $realr . "</option>";
     }
-    echo "<option value='500'>500</option>
+    echo
+    "<option value='500'>500</option>
 <option value='1000'>1000</option>
 <option value='2000'>2000</option>
 <option value='3000'>3000</option>

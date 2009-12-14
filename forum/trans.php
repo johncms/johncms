@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -14,6 +15,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once ("../incfiles/head.php");
 include ("../pages/trans.$ras_pages");
 echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';

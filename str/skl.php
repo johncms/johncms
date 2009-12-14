@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,148 +16,132 @@
 
 define('_IN_JOHNCMS', 1);
 
-$textl = 'Восстановление пароля';
-require_once ("../incfiles/core.php");
-require_once ("../incfiles/head.php");
-if ($_GET['act'] == "go")
-{
-    $namm = check(trim($_POST['namm']));
-    $q = @mysql_query("select * from `users` where name='" . $namm . "';");
-    $arr = @mysql_fetch_array($q);
-    $arr2 = mysql_num_rows($q);
-    if ($arr2 == 0)
-    {
-        echo "Этого логина нет в базе данных<br/>";
-        echo "<a href=\"?\">Назад</a><br/>";
-        require_once ("../incfiles/end.php");
-        exit;
+$textl = 'Пароль';
+require_once ('../incfiles/core.php');
+require_once ('../incfiles/char.php');
+require_once ('../incfiles/head.php');
+
+function passgen($length) {
+    $vals = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for ($i = 1; $i <= $length; $i++) {
+        $result .= $vals {
+            rand(0, strlen($vals))
+        }
+        ;
     }
-    if (isset($_GET['continue']))
-    {
-        $codepas = intval($_POST['codepas']);
-        if ($arr[kod] != $codepas)
-        {
-            echo "Указан неверный код<br/>";
-            echo "<a href=\"?\">Назад</a><br/>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
-        $newpas = rand(100000, 999999);
-        $newpass = md5(md5($newpas));
-        if ($_SESSION['newpar1'] != 1)
-        {
-            mysql_query("update `users` set password='" . $newpass . "' where name='" . $namm . "';");
-            $subject = "New password: Step 2";
-            $mail = "Здравствуйте\r\nВы успешно восстановили пароль на сайте " . $copyright . "\r\nВаш новый пароль" . $newpas . " . \r\n";
-
-            $subject = utfwin($subject);
-
-            $name = utfwin($name);
-            $mail = utfwin($mail);
-
-            $name = convert_cyr_string($name, 'w', 'k');
-            $subject = convert_cyr_string($subject, 'w', 'k');
-            $mail = convert_cyr_string($mail, 'w', 'k');
-            $adds = "From: <" . $emailadmina . ">\n";
-
-            $adds .= "X-sender: <" . $emailadmina . ">\n";
-            $adds .= "Content-Type: text/plain; charset=koi8-r\n";
-
-            $adds .= "MIME-Version: 1.0\r\n";
-            $adds .= "Content-Transfer-Encoding: 8bit\r\n";
-            $adds .= "X-Mailer: PHP v." . phpversion();
-
-            mail($arr[mail], $subject, $mail, $adds);
-
-            echo 'Новый пароль выслан по указанному адресу<br/>';
-            $_SESSION['newpar1'] = 1;
-        } else
-        {
-            echo "Новый пароль уже выслан<br/>";
-        }
-    } else
-    {
-        $email = htmlspecialchars(stripslashes(trim($_POST['email'])));
-
-        if ($arr[mail] == "")
-        {
-            echo "В анкете не указан e-mail адрес<br/>";
-            echo "<a href=\"?\">Назад</a><br/>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
-
-        if ($arr[mailact] != 1)
-        {
-            echo "Не активирован e-mail адрес<br/>";
-            echo "<a href=\"?\">Назад</a><br/>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
-
-        if ($arr[mail] != $email)
-        {
-            echo "Указан неверный e-mail адрес<br/>";
-            echo "<a href=\"?\">Назад</a><br/>";
-            require_once ("../incfiles/end.php");
-            exit;
-        }
-        $pascod = rand(100000, 999999);
-        if ($_SESSION['newpar'] != 1)
-        {
-            mysql_query("update `users` set kod='" . $pascod . "' where name='" . $namm . "';");
-            $subject = "New password: Step 1";
-            $mail = "Здравствуйте\r\nКто то,возможно Вы,запустили процедуру восстановления пароля на сайте " . $copyright . "\r\nКод для восстановления пароля " . $pascod . " . Теперь Вы можете продолжить восстановление\r\n";
-
-            $subject = utfwin($subject);
-
-            $name = utfwin($name);
-            $mail = utfwin($mail);
-
-            $name = convert_cyr_string($name, 'w', 'k');
-            $subject = convert_cyr_string($subject, 'w', 'k');
-            $mail = convert_cyr_string($mail, 'w', 'k');
-            $adds = "From: <" . $emailadmina . ">\n";
-
-            $adds .= "X-sender: <" . $emailadmina . ">\n";
-            $adds .= "Content-Type: text/plain; charset=koi8-r\n";
-
-            $adds .= "MIME-Version: 1.0\r\n";
-            $adds .= "Content-Transfer-Encoding: 8bit\r\n";
-            $adds .= "X-Mailer: PHP v." . phpversion();
-
-            mail($email, $subject, $mail, $adds);
-
-            echo 'Код для восстановления выслан по указанному адресу<br/>';
-            $_SESSION['newpar'] = 1;
-        } else
-        {
-            echo "Код для восстановления уже выслан<br/>";
-        }
-    }
-
-
-    require_once ("../incfiles/end.php");
-    exit;
+    return $result;
 }
 
-if (empty($_GET['act']))
-{
-    if (isset($_GET['continue']))
-    {
-        echo "Продолжаем восстановление пароля<br/>";
-        print '<form action=\'?act=go&amp;continue\' method=\'post\'>Ваш логин:<br/>' . '<input type=\'text\' name=\'namm\' value=\'\' format=\'*N\'/><br/>Код для восстановления:<br/>' . '<input type=\'text\' name=\'codepas\' value=\'\' format=\'*N\'/><br/><br/>' .
-            '<input type=\'submit\' value=\'ok\'/></form>';
+switch ($act) {
+    case 'sent' :
+        // Принимаем и проверяем данные
+        $nick = isset ($_POST['nick']) ? rus_lat(mb_strtolower(check($_POST['nick']))) : '';
+        $email = isset ($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
+        $code = isset ($_POST['code']) ? intval($_POST['code']) : '';
+        $error = false;
+        if (!$nick || !$email || !$code)
+            $error = 'Необходимо заполнить все поля формы';
+        elseif (!isset ($_SESSION['code']) || $_SESSION['code'] < 1000 || $code != $_SESSION['code'])
+            $error = 'Проверочный код введен неверно';
+        unset ($_SESSION['code']);
+        if (!$error) {
+            // Проверяем данные по базе
+            $req = mysql_query("SELECT * FROM `users` WHERE `name_lat` = '$nick' LIMIT 1");
+            if (mysql_num_rows($req) == 1) {
+                $res = mysql_fetch_array($req);
+                if (empty ($res['mail']) || $res['mail'] != $email)
+                    $error = 'E-mail адрес указан неверно';
+                if ($res['rest_time'] > $realtime - 86400)
+                    $error = 'Пароль можно восстанавливать не чаще 1 раза в сутки';
+            }
+            else {
+                $error = 'Такой пользователь не зарегистрирован';
+            }
+        }
+        if (!$error) {
+            // Высылаем инструкции на E-mail
+            $subject = 'Востановление пароля';
+            $mail = "Здравствуйте, " . $res['name'] . "\r\nВы начали процедуру восстановлению пароля на сайте " . $home . "\r\n";
+            $mail .= "Для того чтобы восстановить пароль, вам необходимо перейти по ссылке: \n\n$home/str/skl.php?act=set&id=" . $res['id'] . "&code=" . session_id() . "\n\n";
+            $mail .= "Ссылка действительна в течение 1 часа\r\n";
+            $mail .= "Если это письмо попало к вам по ошибке или вы не собираетесь восстанавливать пароль, то просто проигнорируйте его";
+            //$mail = utfwin($mail);
+            $adds = "From: <" . $emailadmina . ">\r\n";
+            $adds .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+            if (mail($res['mail'], $subject, $mail, $adds)) {
+                mysql_query("UPDATE `users` SET `rest_code` = '" . session_id() . "', `rest_time` = '$realtime' WHERE `id` = '" . $res['id'] . "'");
+                echo '<div class="gmenu"><p>Инструкции по восстановлению пароля высланы на указанный Вами адрес E-mail</p></div>';
+            }
+            else {
+                echo '<div class="rmenu"><p>Ошибка отправки E-mail</p></div>';
+            }
+        }
+        else {
+            // Выводим сообщение об ошибке
+            echo '<div class="rmenu"><p>ОШИБКА!<br />' . $error . '<br /><a href="skl.php">Назад</a></p></div>';
+        }
+        break;
 
-        require_once ("../incfiles/end.php");
-        exit;
-    }
+    case 'set' :
+        $code = isset ($_GET['code']) ? trim($_GET['code']) : '';
+        $error = false;
+        if (!$id || !$code)
+            $error = 'Отсутствуют необходимые данные';
+        $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
+        if (mysql_num_rows($req) == 1) {
+            $res = mysql_fetch_array($req);
+            if (empty ($res['rest_code']) || empty ($res['rest_time']) || $code != $res['rest_code']) {
+                $error = 'Восстановление пароля невозможно';
+            }
+            if (!$error && $res['rest_time'] < $realtime - 3600) {
+                $error = 'Время, отведенное на восстановления пароля прошло';
+                mysql_query("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = '$id'");
+            }
+        }
+        else {
+            $error = 'Такого пользователя нет';
+        }
+        if (!$error) {
+            // Высылаем пароль на E-mail
+            $pass = passgen(4);
+            $subject = 'Ваш новый пароль';
+            $mail = "Здравствуйте, " . $res['name'] . "\r\nВы изменили пароль на сайте " . $home . "\r\n";
+            $mail .= "Ваш новый пароль: $pass\r\n";
+            $mail .= "После входа на сайт, Вы сможете сменить пароль на другой, какой пожелаете.";
+            $adds = "From: <" . $emailadmina . ">\n";
+            $adds .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+            if (mail($res['mail'], $subject, $mail, $adds)) {
+                mysql_query("UPDATE `users` SET `rest_code` = '', `password` = '" . md5(md5($pass)) . "' WHERE `id` = '$id'");
+                echo '<div class="phdr">Меняем пароль</div>';
+                echo '<div class="gmenu"><p>Пароль успешно изменен.<br />Новый пароль выслан на ваш адрес E-mail</p></div>';
+            }
+            else {
+                echo '<div class="rmenu"><p>Ошибка отправки E-mail</p></div>';
+            }
+        }
+        else {
+            // Выводим сообщение об ошибке
+            echo '<div class="rmenu"><p>ОШИБКА!<br />' . $error . '</p></div>';
+        }
+        break;
 
-    echo "Восстановление пароля<br/>(Для этого у Вас в анкете должен быть указан и активирован e-mail адрес)<br/>";
-    print '<form action=\'?act=go\' method=\'post\'>Ваш логин:<br/>' . '<input type=\'text\' name=\'namm\' value=\'\' format=\'*N\'/><br/>Ваш e-mail:<br/>' . '<input type=\'text\' name=\'email\' value=\'\' format=\'*N\'/><br/><br/>' .
-        '<input type=\'submit\' value=\'ok\'/></form>';
+    default :
+        echo '<div class="phdr"><b>Восстановление пароля</b></div>';
+        echo '<div class="menu"><form action="skl.php?act=sent" method="post">';
+        echo '<p>Ваш логин:<br/><input type="text" name="nick" /><br/>';
+        echo 'Ваш e-mail:<br/><input type="text" name="email" /></p>';
 
+        // CAPTCHA
+        $_SESSION['code'] = rand(1000, 9999);
+        echo '<p><img src="../code.php" alt="Код"/><br />';
+        echo '<input type="text" size="4" maxlength="4"  name="code"/>&nbsp;Введите код</p>';
+
+        echo '<p><input type="submit" value="Отправить"/></p></form></div>';
+        echo
+        '<div class="phdr"><small>Пароль будет выслан на E-mail Адрес, указанный в Вашей анкете.<br />ВНИМЕНИЕ! Если в анкете не был указан E-mail адрес, то Вы не сможете восстановить пароль</small></div>';
+        break;
 }
 
+require_once ('../incfiles/end.php');
 
-require_once ("../incfiles/end.php");
+?>

@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,142 +16,113 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (empty($_GET['id']))
-{
-    require_once ("../incfiles/head.php");
-    echo "Ошибка!<br/><a href='index.php'>В форум</a><br/>";
-    require_once ("../incfiles/end.php");
+if (!$id || !$user_id || $ban['1'] || $ban['11']) {
+    header("Location: index.php");
     exit;
 }
-if (!$user_id || $ban['1'] || $ban['11'])
-{
+// Проверка на спам
+$old = ($rights > 0) ? 10 : 30;
+if ($datauser['lastpost'] > ($realtime - $old)) {
     require_once ("../incfiles/head.php");
-    echo "Вы не авторизованы!<br/>";
+    echo '<div class="rmenu"><p>АНТИФЛУД!<br />Вы не можете так часто писать, порог ' . $old . ' секунд<br/><a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a></p></div>';
     require_once ("../incfiles/end.php");
     exit;
 }
 
-$type = mysql_query("select * from `forum` where id= '" . $id . "';");
+$type = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
-if ($tip != "r")
-{
+if ($tip != "r") {
     require_once ("../incfiles/head.php");
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
 }
-if (isset($_POST['submit']))
-{
-    $flt = $realtime - 30;
-    $af = mysql_query("select * from `forum` where type='m' and time>'" . $flt . "' and `from`= '" . $login . "';");
-    $af1 = mysql_num_rows($af);
-    if ($af1 != 0)
-    {
-        require_once ("../incfiles/head.php");
-        echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='?id=" . $id . "'>В раздел</a><br/>";
-        require_once ("../incfiles/end.php");
+if (isset ($_POST['submit'])) {
+    $error = false;
+    if (empty ($_POST['th']))
+        $error = '<div>Вы не ввели название темы</div>';
+    if (empty ($_POST['msg']))
+        $error .= '<div>Вы не ввели сообщение</div>';
+    if (!$error) {
+        $th = mb_substr($th, 0, 100);
+        $th = check($_POST['th']);
+        $msg = trim($_POST['msg']);
+        if ($_POST['msgtrans'] == 1) {
+            $th = trans($th);
+            $msg = trans($msg);
+        }
+        // Прверяем, есть ли уже такая тема в текущем разделе?
+        if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'"), 0) > 0)
+            $error = 'Тема с таким названием уже есть в этом разделе';
+        // Проверяем, не повторяется ли сообщение?
+        $req = mysql_query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
+        if (mysql_num_rows($req) > 0) {
+            $res = mysql_fetch_array($req);
+            if ($msg == $res['text'])
+                $error = 'Такое сообщение уже было';
+        }
+    }
+    if (!$error) {
+        // Добавляем тему
+        mysql_query("INSERT INTO `forum` SET
+		`refid` = '$id',
+		`type` = 't',
+		`time` = '$realtime',
+		`user_id` = '$user_id',
+		`from` = '$login',
+		`text` = '$th'");
+        $rid = mysql_insert_id();
+        // Добавляем текст поста
+        mysql_query("INSERT INTO `forum` SET
+		`refid` = '$rid',
+		`type` = 'm',
+		`time` = '$realtime',
+		`user_id` = '$user_id',
+		`from` = '$login',
+		`ip` = '$ipp',
+		`soft` = '" . mysql_real_escape_string($agn) . "',
+		`text` = '" .
+        mysql_real_escape_string($msg) . "'");
+        $postid = mysql_insert_id();
+        // Записываем счетчик постов юзера
+        $fpst = $datauser['postforum'] + 1;
+        mysql_query("UPDATE `users` SET  `postforum` = '$fpst', `lastpost` = '$realtime' WHERE `id` = '$user_id'");
+        // Ставим метку о прочтении
+        mysql_query("INSERT INTO `cms_forum_rdm` SET  `topic_id`='$rid', `user_id`='$user_id', `time`='$realtime'");
+        if ($_POST['addfiles'] == 1)
+            header("Location: index.php?id=$postid&act=addfile");
+        else
+            header("Location: index.php?id=$rid");
+    }
+    else {
+        // Выводим сообщение об ошибке
+        require_once ('../incfiles/head.php');
+        echo '<div class="rmenu"><p>ОШИБКА!<br />' . $error . '<br /><a href="index.php?act=nt&amp;id=' . $id . '">Повторить</a></p></div>';
+        require_once ('../incfiles/end.php');
         exit;
     }
-    if (empty($_POST['th']))
-    {
-        require_once ("../incfiles/head.php");
-        echo "Вы не ввели название темы!<br/><a href='index.php?act=nt&amp;id=" . $id . "'>Повторить</a><br/>";
-        require_once ("../incfiles/end.php");
-        exit;
-    }
-    if (empty($_POST['msg']))
-    {
-        require_once ("../incfiles/head.php");
-        echo "Вы не ввели сообщение!<br/><a href='index.php?act=nt&amp;id=" . $id . "'>Повторить</a><br/>";
-        require_once ("../incfiles/end.php");
-        exit;
-    }
-    $th = mb_substr($th, 0, 100);
-    $th = check(trim($_POST['th']));
-    $msg = mysql_real_escape_string(trim($_POST['msg']));
-    if ($_POST['msgtrans'] == 1)
-    {
-        $th = trans($th);
-		$msg = trans($msg);
-    }
-    $pt = mysql_query("select `id` from `forum` where type='t' and refid='" . $id . "' and text='" . $th . "';");
-    if (mysql_num_rows($pt) != 0)
-    {
-        require_once ("../incfiles/head.php");
-        echo "Ошибка!Тема с таким названием уже есть в этом разделе<br/><a href='index.php?act=nt&amp;id=" . $id . "'>Повторить</a><br/>";
-        require_once ("../incfiles/end.php");
-        exit;
-    }
-    if ($set['fmod'] != 1)
-    {
-        $fmd = 1;
-    } else
-    {
-        $fmd = 0;
-    }
-    mysql_query("insert into `forum` values(0,'" . $id . "','t','" . $realtime . "','" . $login . "','','','','','" . $th . "','','','" . $fmd . "','','','','','');");
-    $rid = mysql_insert_id();
-    $thm = mysql_query("select `id`, `refid` from `forum` where type='t'  and id= '" . $rid . "';");
-    $tem1 = mysql_fetch_array($thm);
-    $agn = strtok($agn, ' ');
-    mysql_query("insert into `forum` values(0,'" . $rid . "','m','" . $realtime . "','" . $login . "','','','" . $ipp . "','" . $agn . "','" . $msg . "','','','','','','','" . $ch . "','');");
-    $postid = mysql_insert_id();
-    $fpst = $datauser['postforum'] + 1;
-    mysql_query("update `users` set  postforum='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
-    if ($set['fmod'] != 1)
-    {
-        $hid = $rid;
-    } else
-    {
-        $hid = $tem1[refid];
-    }
-    #echo "Тема добавлена<br/><a href='index.php?id=" . $hid . "'>Продолжить</a><br/>";
-    $np = mysql_query("select `id` from `forum` where type='l' and refid='" . $tem1[id] . "' and `from`='" . $login . "';");
-    $np1 = mysql_num_rows($np);
-    if ($np1 == 0)
-    {
-        mysql_query("insert into `forum` values(0,'" . $tem1[id] . "','l','" . $realtime . "','" . $login . "','','','','','','','','','','','','');");
-    } else
-    {
-        $np2 = mysql_fetch_array($np);
-        mysql_query("update `forum` set  time='" . $realtime . "' where id='" . $np2[id] . "';");
-    }
-    $addfiles = intval($_POST[addfiles]);
-    if ($addfiles == 1)
-    {
-        header("Location: index.php?id=$postid&act=addfile");
-    } else
-    {
-        header("Location: index.php?id=$hid");
-    }
-} else
-{
-    require_once ("../incfiles/head.php");
-    if ($datauser['postforum'] == 0)
-    {
-        if (!isset($_GET['yes']))
-        {
-            include ("../pages/forum.txt");
-            echo "<a href='index.php?act=nt&amp;id=" . $id . "&amp;yes'>Согласен</a>|<a href='index.php?id=" . $id . "'>Не согласен</a><br/>";
-            require_once ("../incfiles/end.php");
+}
+else {
+    require_once ('../incfiles/head.php');
+    if ($datauser['postforum'] == 0) {
+        if (!isset ($_GET['yes'])) {
+            include ('../pages/forum.txt');
+            echo "<a href='index.php?act=nt&amp;id=" . $id . "&amp;yes'>Согласен</a> | <a href='index.php?id=" . $id . "'>Не согласен</a><br/>";
+            require_once ('../incfiles/end.php');
             exit;
         }
     }
-    if ($set['fmod'] == 1)
-    {
-        echo "Внимание!В данный момент в форуме включена премодерация тем,то есть Ваша тема будет открыта для общего доступа только после проверки модератором.<br/>";
-    }
-    echo "Добавление темы в раздел <font color='" . $cntem . "'>$type1[text]</font>:<br/><form action='index.php?act=nt&amp;id=" . $id .
-        "' method='post' enctype='multipart/form-data'>Название(max. 100):<br/><input type='text' size='20' maxlength='100' title='Введите название темы' name='th'/><br/>Сообщение(max. 500):<br/><textarea cols='20' rows='3' title='Введите сообщение' name='msg'></textarea><br/><input type='checkbox' name='addfiles' value='1' /> Добавить файл<br/>";
-    if ($offtr != 1)
-    {
-        echo "<input type='checkbox' name='msgtrans' value='1' /> Транслит сообщения
-      <br/>";
-    }
-    echo "<input type='submit' name='submit' title='Нажмите для отправки' value='Отправить'/><br/></form>";
-    echo "<a href='index.php?act=trans'>Транслит</a><br /><a href='../str/smile.php'>Смайлы</a><br/>";
-    echo "<a href='?id=" . $id . "'>Назад</a><br/>";
+    echo '<div class="phdr">Добавление темы</div><div class="menu">Раздел: ' . $type1['text'] . '</div>';
+    echo '<form action="index.php?act=nt&amp;id=' . $id . '" method="post">';
+    echo '<div class="gmenu"><p>Название(max. 100):<br/><input type="text" size="20" maxlength="100" name="th"/><br/>';
+    echo 'Сообщение:<br/><textarea cols="' . $set_forum['farea_w'] . '" rows="' . $set_forum['farea_h'] . '" name="msg"></textarea><br />';
+    echo '<input type="checkbox" name="addfiles" value="1" /> Добавить файл';
+    if ($set_user['translit'])
+        echo '<br /><input type="checkbox" name="msgtrans" value="1" /> Транслит сообщения';
+    echo '</p><p><input type="submit" name="submit" value="Отправить"/></p></div></form>';
+    echo '<div class="phdr"><a href="index.php?act=trans">Транслит</a> | <a href="../str/smile.php">Смайлы</a></div>';
+    echo '<p><a href="?id=' . $id . '">Назад</a></p>';
 }
 
 ?>

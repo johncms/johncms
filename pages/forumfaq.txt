@@ -1,22 +1,20 @@
-<br/><b>Информация по форуму</b><br/><br/>
-&nbsp;Для написания ссылки достаточно ввести http://адрес ссылки<br/><br/>
-
-<p><b>ТЕГИ</b></p><p>
-&nbsp;[b] <b>жирный</b> [/b]<br />
-&nbsp;[i] <i>наклонный</i> [/i]<br />
-&nbsp;[u] <u>подчеркнутый</u> [/u]<br />
-&nbsp;[s] <strike>перечеркнутый</strike> [/s]</p><p>
-
-&nbsp;[red] <span style="color:red">Красный</span> [/red]<br />
-&nbsp;[green] <span style="color:green">Зеленый</span> [/green]<br />
-&nbsp;[blue] <span style="color:blue">Синий</span> [/blue]</p><p>
-
-&nbsp;[c]текст в отдельном поле[/c]<br />
-&nbsp;[l]адрес ссылки(без http://)[l/]название ссылки[/l]</p>
-<br /><p><b>МЕТКИ</b></p><p>
-&nbsp;<img src='../images/pt.gif' alt=''/> Прикреплённая тема<br/>
-&nbsp;<img src='../images/tz.gif' alt=''/> Закрытая тема<br/>
-&nbsp;<img src='../images/np.gif' alt=''/> В этой теме есть новые непрочитанные посты(для авторизованных)<br/>
-&nbsp;<img src='../images/op.gif' alt=''/> В этой теме нет новых непрочитанных постов(для авторизованных)<br/>
-&nbsp;<img src='../images/m.gif' alt=''/> Автор поста парень<br/>
-&nbsp;<img src='../images/f.gif' alt=''/> Автор поста девушка</p><br />
+<div class="phdr"><b>BBcode тэги</b></div>
+<div class="menu"><a href="http://gazenwagen.com">Ссылка</a>&nbsp;&nbsp;[url=http://адрес_ссылки]название ссылки[/url]</div>
+<div class="menu"><b>жирный</b>&nbsp;&nbsp;[b]...[/b]</div>
+<div class="menu"><i>наклонный</i>&nbsp;&nbsp;[i]...[/i]</div>
+<div class="menu"><u>подчеркнутый</u>&nbsp;&nbsp;[u]...[/u]</div>
+<div class="menu"><strike>перечеркнутый</strike>&nbsp;&nbsp;[s]...[/s]</div>
+<div class="menu">исходный код PHP&nbsp;&nbsp;[php]...[/php]</div>
+<div class="menu"><span style="color:red">Красный</span>&nbsp;&nbsp;[red]...[/red]</div>
+<div class="menu"><span style="color:green">Зеленый</span>&nbsp;&nbsp;[green]...[/green]</div>
+<div class="menu"><span style="color:blue">Синий</span>&nbsp;&nbsp;[blue]...[/blue]</div>
+<div class="menu"><span class="quote">текст в блоке</span>&nbsp;&nbsp;[c]...[/c]</div>
+<div class="bmenu"><small>Для написания простой ссылки достаточно ввести http://адрес ссылки</small></div>
+&nbsp;
+<div class="phdr"><b>МЕТКИ</b></div>
+<div class="menu">
+<img src='../images/pt.gif' alt=''/> Прикреплённая тема<br/>
+<img src='../images/tz.gif' alt=''/> Закрытая тема<br/>
+<img src='../images/np.gif' alt=''/> В этой теме есть новые непрочитанные посты(для авторизованных)<br/>
+<img src='../images/op.gif' alt=''/> В этой теме нет новых непрочитанных постов(для авторизованных)</div>
+<div class="bmenu">&nbsp;</div>

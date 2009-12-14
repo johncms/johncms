@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,29 +15,25 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once ("../incfiles/head.php");
 $delimag = opendir("$filesroot/graftemp");
-while ($imd = readdir($delimag))
-{
-    if ($imd != "." && $imd != ".." && $imd != "index.php")
-    {
+while ($imd = readdir($delimag)) {
+    if ($imd != "." && $imd != ".." && $imd != "index.php") {
         $im[] = $imd;
     }
 }
 closedir($delimag);
 $totalim = count($im);
-for ($imi = 0; $imi < $totalim; $imi++)
-{
+for ($imi = 0; $imi < $totalim; $imi++) {
     $filtime[$imi] = filemtime("$filesroot/graftemp/$im[$imi]");
     $tim = time();
     $ftime1 = $tim - 10;
-    if ($filtime[$imi] < $ftime1)
-    {
+    if ($filtime[$imi] < $ftime1) {
         unlink("$filesroot/graftemp/$im[$imi]");
     }
 }
-if ($_GET['file'] == "")
-{
+if ($_GET['file'] == "") {
     echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
     require_once ('../incfiles/end.php');
     exit;
@@ -46,8 +43,7 @@ $file1 = mysql_query("select * from `download` where type = 'file' and id = '" .
 $file2 = mysql_num_rows($file1);
 $adrfile = mysql_fetch_array($file1);
 
-if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]")))
-{
+if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
     echo "Ошибка при выборе файла<br/><a href='?'>К категориям</a><br/>";
     require_once ('../incfiles/end.php');
     exit;
@@ -59,22 +55,20 @@ $filtime = filemtime("$adrfile[adres]/$adrfile[name]");
 $filtime = date("d.m.Y", $filtime);
 echo "Файл: $adrfile[name]<br/>Вес:$siz кб<br/>Загружен:$filtime<br/>";
 $graf = array("gif", "jpg", "png");
-$prg = strtolower(format($adrfile[name]));
-if (in_array($prg, $graf))
-{
+$prg = strtolower(format($adrfile['name']));
+if (in_array($prg, $graf)) {
     $sizsf = GetImageSize("$adrfile[adres]/$adrfile[name]");
     $widthf = $sizsf[0];
     $heightf = $sizsf[1];
     echo "Размеры $widthf*$heightf px<br/>";
     #  !предпросмотр!
-    $namefile = $adrfile[name];
+    $namefile = $adrfile['name'];
     $infile = "$adrfile[adres]/$namefile";
 
-    if (!empty($_SESSION['razm']))
-    {
+    if (!empty ($_SESSION['razm'])) {
         $razm = $_SESSION['razm'];
-    } else
-    {
+    }
+    else {
         $razm = 50;
     }
     $sizs = GetImageSize($infile);
@@ -83,57 +77,54 @@ if (in_array($prg, $graf))
     $quality = 100;
     $x_ratio = $razm / $width;
     $y_ratio = $razm / $height;
-    if (($width <= $razm) && ($height <= $razm))
-    {
+    if (($width <= $razm) && ($height <= $razm)) {
         $tn_width = $width;
         $tn_height = $height;
-    } else
-        if (($x_ratio * $height) < $razm)
-        {
+    }
+    else
+        if (($x_ratio * $height) < $razm) {
             $tn_height = ceil($x_ratio * $height);
             $tn_width = $razm;
-        } else
-        {
+        }
+        else {
             $tn_width = ceil($y_ratio * $width);
             $tn_height = $razm;
-        }
-        switch ($prg)
-        {
-            case "gif":
-                $im = ImageCreateFromGIF($infile);
-                break;
-            case "jpg":
-                $im = ImageCreateFromJPEG($infile);
-                break;
-            case "jpeg":
-                $im = ImageCreateFromJPEG($infile);
-                break;
-            case "png":
-                $im = ImageCreateFromPNG($infile);
-                break;
-        }
+    }
+    switch ($prg) {
+        case "gif" :
+            $im = ImageCreateFromGIF($infile);
+            break;
+        case "jpg" :
+            $im = ImageCreateFromJPEG($infile);
+            break;
+        case "jpeg" :
+            $im = ImageCreateFromJPEG($infile);
+            break;
+        case "png" :
+            $im = ImageCreateFromPNG($infile);
+            break;
+    }
     $im1 = ImageCreateTrueColor($tn_width, $tn_height);
     imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
     $path = "$filesroot/graftemp";
-    switch ($prg)
-    {
-        case "gif":
+    switch ($prg) {
+        case "gif" :
             $imagnam = "$path/$namefile.temp.gif";
             ImageGif($im1, $imagnam, $quality);
             echo "<img src='" . $imagnam . "' alt=''/><br/>";
             break;
-        case "jpg":
+        case "jpg" :
             $imagnam = "$path/$namefile.temp.jpg";
             imageJpeg($im1, $imagnam, $quality);
             echo "<img src='" . $imagnam . "' alt=''/><br/>";
             break;
-        case "jpeg":
+        case "jpeg" :
             $imagnam = "$path/$namefile.temp.jpg";
             imageJpeg($im1, $imagnam, $quality);
             echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
             break;
-        case "png":
+        case "png" :
             $imagnam = "$path/$namefile.temp.png";
             imagePng($im1, $imagnam, $quality);
             echo "<img src='" . $imagnam . "' alt=''/><br/>";
@@ -141,47 +132,42 @@ if (in_array($prg, $graf))
     }
     imagedestroy($im);
     imagedestroy($im1);
-    @chmod("$imagnam", 0644);
+    @ chmod("$imagnam", 0644);
 }
-if ($prg == "mp3")
-{
+if ($prg == "mp3") {
     $id3 = new MP3_Id();
     $result = $id3->read("$adrfile[adres]/$adrfile[name]");
     $result = $id3->study();
 
     echo '<p>';
-	echo 'Исполнитель: <b>' . $id3->artists . '</b><br />';
+    echo 'Исполнитель: <b>' . $id3->artists . '</b><br />';
     echo 'Альбом: <b>' . $id3->album . '</b><br />';
     echo 'Год выхода: <b>' . $id3->year . '</b><br />';
     echo 'Композиция: <b>' . $id3->name . '</b>';
     echo '</p>';
-	
-	echo "Каналы:" . $id3->getTag('mode') . "<br/>";
-    if ($id3->getTag('bitrate') != 0)
-    {
+
+    echo "Каналы:" . $id3->getTag('mode') . "<br/>";
+    if ($id3->getTag('bitrate') != 0) {
         echo "Битрейт: " . $id3->getTag('bitrate') . " кбит/сек<br/>
 Длительность: " . $id3->getTag('length') . "<br/>";
-    } else
-    {
+    }
+    else {
         echo "Не удалось распознать кодек<br/>";
     }
 }
-if (empty($adrfile[text]))
-{
+if (empty ($adrfile['text'])) {
     echo "<p>Описание отсутствует</p>";
-} else
-{
+}
+else {
     echo "<p>Описание:<br/>$adrfile[text]</p>";
 }
 
-if (!empty($adrfile[ip]))
-{
+if (!empty ($adrfile['ip'])) {
     echo "Скачиваний: $adrfile[ip]<br/>";
 }
 
-if (!empty($adrfile[soft]))
-{
-    $rating = explode(",", $adrfile[soft]);
+if (!empty ($adrfile['soft'])) {
+    $rating = explode(",", $adrfile['soft']);
 
     $rat = $rating[0] / $rating[1];
     $rat = round($rat, 2);
@@ -189,26 +175,22 @@ if (!empty($adrfile[soft]))
 }
 
 echo "Оценить:<br/><form action='index.php?act=rat&amp;id=" . $file . "' method='post'><select name='rat'>";
-for ($i = 10; $i >= 1; --$i)
-{
+for ($i = 10; $i >= 1;--$i) {
     echo "<option>$i</option>";
 }
 echo "</select><input type='submit' value='Ok!'/></form><br/>";
-if ((!in_array($prg, $graf)) && ($prg != "mp3"))
-{
-    if (empty($adrfile[screen]))
-    {
+if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
+    if (empty ($adrfile['screen'])) {
         echo "Скриншот отсутствует<br/>";
-    } else
-    {
+    }
+    else {
         echo "Скриншот<br/>";
         $infile = "$screenroot/$adrfile[screen]";
 
-        if (!empty($_SESSION['razm']))
-        {
+        if (!empty ($_SESSION['razm'])) {
             $razm = $_SESSION['razm'];
-        } else
-        {
+        }
+        else {
             $razm = 50;
         }
         $sizs = GetImageSize($infile);
@@ -220,42 +202,38 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3"))
         $tekst = $copyright;
         $x_ratio = $razm / $width;
         $y_ratio = $razm / $height;
-        if (($width <= $razm) && ($height <= $razm))
-        {
+        if (($width <= $razm) && ($height <= $razm)) {
             $tn_width = $width;
             $tn_height = $height;
-        } else
-            if (($x_ratio * $height) < $razm)
-            {
+        }
+        else
+            if (($x_ratio * $height) < $razm) {
                 $tn_height = ceil($x_ratio * $height);
                 $tn_width = $razm;
-            } else
-            {
+            }
+            else {
                 $tn_width = ceil($y_ratio * $width);
                 $tn_height = $razm;
-            }
-            $format = format($infile);
-        switch ($format)
-        {
-            case "gif":
+        }
+        $format = format($infile);
+        switch ($format) {
+            case "gif" :
                 $im = ImageCreateFromGIF($infile);
                 break;
-            case "jpg":
+            case "jpg" :
                 $im = ImageCreateFromJPEG($infile);
                 break;
-            case "jpeg":
+            case "jpeg" :
                 $im = ImageCreateFromJPEG($infile);
                 break;
-            case "png":
+            case "png" :
                 $im = ImageCreateFromPNG($infile);
                 break;
         }
         $color = imagecolorallocate($im, 55, 255, 255);
         $fontdir = opendir("$filesroot/fonts");
-        while ($ttf = readdir($fontdir))
-        {
-            if ($ttf != "." && $ttf != ".." && $ttf != "index.php")
-            {
+        while ($ttf = readdir($fontdir)) {
+            if ($ttf != "." && $ttf != ".." && $ttf != "index.php") {
                 $arr[] = $ttf;
             }
         }
@@ -271,25 +249,24 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3"))
 
         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
         $path = "$filesroot/graftemp";
-        switch ($format)
-        {
-            case "gif":
+        switch ($format) {
+            case "gif" :
                 $imagnam = "$path/$namefile.temp.gif";
                 ImageGif($im1, $imagnam, $quality);
                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
                 break;
-            case "jpg":
+            case "jpg" :
                 $imagnam = "$path/$namefile.temp.jpg";
                 imageJpeg($im1, $imagnam, $quality);
                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
                 break;
-            case "jpeg":
+            case "jpeg" :
                 $imagnam = "$path/$namefile.temp.jpg";
                 imageJpeg($im1, $imagnam, $quality);
                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                 break;
-            case "png":
+            case "png" :
                 $imagnam = "$path/$namefile.temp.png";
                 imagePng($im1, $imagnam, $quality);
                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
@@ -299,44 +276,38 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3"))
         imagedestroy($im1);
     }
 }
-if (($dostdmod == 1) && (!empty($_GET['file'])))
-{
+if (($rights == 4 || $rights >= 6) && (!empty ($_GET['file']))) {
     echo "<hr/>";
-    if ((!in_array($prg, $graf)) && ($prg != "mp3"))
-    {
+    if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
         echo "<a href='?act=screen&amp;file=" . $file . "'>Скриншот</a><br/>";
     }
     echo "<a href='?act=opis&amp;file=" . $file . "'>Описание</a><br/>";
     echo "<a href='?act=renf&amp;file=" . $file . "'>Переименовать файл</a><br/>";
     echo "<a href='?act=dfile&amp;file=" . $file . "'>Удалить файл</a><hr/>";
 }
-$comm = mysql_query("select * from `download` where type = 'komm' and refid = '$file';");
-$totalkomm = mysql_num_rows($comm);
-if ($prg == "mp3")
-{
+if ($prg == "mp3") {
     echo "<a href='?act=cut&amp;id=" . $file . "'>Нарезать</a><br/>";
 }
-if ($prg == "zip")
-{
+if ($prg == "zip") {
     echo "<a href='?act=zip&amp;file=" . $file . "'>Открыть архив</a><br/>";
 }
-echo "<a href='?act=down&amp;id=" . $file . "'>Скачать</a><br/><a href='?act=komm&amp;id=" . $file . "'>Комментарии ($totalkomm)</a><br/>";
-
-
-$dnam = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile[refid] . "';");
+if ($set['mod_down_comm'] || $rights >= 7) {
+    $totalkomm = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'komm' AND `refid` = '$file'"), 0);
+    echo "<a href='?act=down&amp;id=" . $file . "'>Скачать</a><br/><a href='?act=komm&amp;id=" . $file . "'>Комментарии ($totalkomm)</a><br/>";
+}
+$dnam = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile['refid'] . "';");
 $dnam1 = mysql_fetch_array($dnam);
 $dirname = "$dnam1[text]";
 $dirid = "$dnam1[id]";
-$nadir = $adrfile[refid];
-while ($nadir != "" && $nadir != "0")
-{
+$nadir = $adrfile['refid'];
+while ($nadir != "" && $nadir != "0") {
     echo "&#187;<a href='?cat=" . $nadir . "'>$dirname</a><br/>";
     $dnamm = mysql_query("select * from `download` where type = 'cat' and id = '" . $nadir . "';");
     $dnamm1 = mysql_fetch_array($dnamm);
-    $dnamm2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnamm1[refid] . "';");
+    $dnamm2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnamm1['refid'] . "';");
     $dnamm3 = mysql_fetch_array($dnamm2);
-    $nadir = $dnamm1[refid];
-    $dirname = $dnamm3[text];
+    $nadir = $dnamm1['refid'];
+    $dirname = $dnamm3['text'];
 }
 echo "&#187;<a href='?'>В загрузки</a><br/>";
 

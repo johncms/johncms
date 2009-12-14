@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                                                                    //
@@ -15,6 +16,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+$headmod = 'forumlaw';
 require_once ("../incfiles/head.php");
 include ("../pages/forum.txt");
 echo "<a href='index.php'>В форум</a><br/>";

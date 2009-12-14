@@ -1,2 +1,3 @@
 /.idea
 /incfiles/db.php
+/cache/*.dat

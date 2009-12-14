@@ -1,4 +1,26 @@
 --
+-- Структура таблицы `cms_ads`
+--
+DROP TABLE IF EXISTS `cms_ads`;
+CREATE TABLE `cms_ads` (
+  `id` int(11) NOT NULL auto_increment,
+  `type` int(2) NOT NULL,
+  `view` int(2) NOT NULL,
+  `layout` int(2) NOT NULL,
+  `count` int(11) NOT NULL,
+  `count_link` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `link` text NOT NULL,
+  `to` int(10) NOT NULL default '0',
+  `color` varchar(10) NOT NULL,
+  `time` int(11) NOT NULL,
+  `day` int(11) NOT NULL,
+  `font` int(2) NOT NULL,
+  `mesto` int(2) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
 -- Структура таблицы `cms_ban_ip`
 --
 DROP TABLE IF EXISTS `cms_ban_ip`;
@@ -77,22 +99,21 @@ CREATE TABLE `chat` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Структура таблицы `count`
+-- Структура таблицы `cms_guests`
 --
-DROP TABLE IF EXISTS `count`;
-CREATE TABLE `count` (
-  `id` int(11) NOT NULL auto_increment,
-  `ip` varchar(15) NOT NULL,
-  `browser` text NOT NULL,
-  `time` varchar(25) NOT NULL,
-  `where` varchar(100) NOT NULL,
-  `name` varchar(25) NOT NULL,
-  `dos` binary(1) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `time` (`time`),
-  KEY `where` (`where`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `cms_guests`;
+CREATE TABLE `cms_guests` (
+  `session_id` char(32) NOT NULL,
+  `ip` int(11) NOT NULL,
+  `browser` tinytext NOT NULL,
+  `lastdate` int(11) NOT NULL,
+  `sestime` int(11) NOT NULL,
+  `movings` int(11) NOT NULL default '0',
+  `place` varchar(30) NOT NULL,
+  PRIMARY KEY  (`session_id`),
+  KEY `time` (`lastdate`),
+  KEY `place` (`place`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Структура таблицы `download`
@@ -122,31 +143,27 @@ CREATE TABLE `download` (
 DROP TABLE IF EXISTS `forum`;
 CREATE TABLE `forum` (
   `id` int(11) NOT NULL auto_increment,
-  `refid` int(11) NOT NULL,
-  `type` char(1) NOT NULL,
-  `time` int(11) NOT NULL,
-  `from` varchar(25) NOT NULL,
-  `to` varchar(25) NOT NULL,
-  `realid` int(3) NOT NULL,
+  `refid` int(11) NOT NULL default '0',
+  `type` char(1) NOT NULL default '',
+  `time` int(11) NOT NULL default '0',
+  `user_id` int(11) NOT NULL,
+  `from` varchar(25) NOT NULL default '',
+  `realid` int(3) NOT NULL default '0',
   `ip` text NOT NULL,
   `soft` text NOT NULL,
   `text` text NOT NULL,
-  `close` binary(1) NOT NULL,
-  `vip` binary(1) NOT NULL,
-  `moder` binary(1) NOT NULL,
+  `close` tinyint(1) NOT NULL default '0',
+  `vip` tinyint(1) NOT NULL default '0',
   `edit` text NOT NULL,
-  `tedit` int(11) NOT NULL,
-  `kedit` int(2) NOT NULL,
-  `attach` text NOT NULL,
-  `dlcount` int(11) NOT NULL default '0',
+  `tedit` int(11) NOT NULL default '0',
+  `kedit` int(2) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `refid` (`refid`),
   KEY `type` (`type`),
   KEY `time` (`time`),
-  KEY `from` (`from`),
-  KEY `to` (`to`),
-  KEY `moder` (`moder`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `user_id` (`user_id`),
+  FULLTEXT KEY `text` (`text`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Структура таблицы `cms_forum_rdm`
@@ -159,6 +176,54 @@ CREATE TABLE IF NOT EXISTS `cms_forum_rdm` (
   PRIMARY KEY  (`topic_id`,`user_id`),
   KEY `time` (`time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Структура таблицы `cms_forum_files`
+--
+DROP TABLE IF EXISTS `cms_forum_files`;
+CREATE TABLE `cms_forum_files` (
+  `id` int(11) NOT NULL auto_increment,
+  `cat` int(11) NOT NULL,
+  `subcat` int(11) NOT NULL,
+  `topic` int(11) NOT NULL,
+  `post` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  `filename` text NOT NULL,
+  `filetype` tinyint(4) NOT NULL,
+  `dlcount` int(11) NOT NULL,
+  `del` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `cat` (`cat`),
+  KEY `subcat` (`subcat`),
+  KEY `topic` (`topic`),
+  KEY `post` (`post`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Структура таблицы `forum_vote`
+--
+DROP TABLE IF EXISTS `forum_vote`;
+CREATE TABLE `forum_vote` (
+  `id` int(11) NOT NULL auto_increment,
+  `type` int(2) NOT NULL default '0',
+  `time` int(11) NOT NULL default '0',
+  `topic` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `count` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Структура таблицы `forum_vote_us`
+--
+DROP TABLE IF EXISTS `forum_vote_us`;
+CREATE TABLE `forum_vote_us` (
+  `id` int(11) NOT NULL auto_increment,
+  `user` int(11) NOT NULL default '0',
+  `topic` int(11) NOT NULL,
+  `vote` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Структура таблицы `gallery`
@@ -194,7 +259,7 @@ CREATE TABLE `guest` (
   `name` varchar(25) NOT NULL,
   `text` text NOT NULL,
   `ip` int(11) NOT NULL,
-  `soft` varchar(100) NOT NULL,
+  `browser` tinytext NOT NULL,
   `admin` varchar(25) NOT NULL,
   `otvet` text NOT NULL,
   `otime` int(11) NOT NULL,
@@ -203,7 +268,6 @@ CREATE TABLE `guest` (
   `edit_count` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `adm` (`adm`),
-  KEY `soft` (`soft`),
   KEY `time` (`time`),
   KEY `ip` (`ip`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -283,36 +347,27 @@ CREATE TABLE `cms_settings` (
 -- Дамп данных таблицы `cms_settings`
 --
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
-('nickadmina', ''),
 ('emailadmina', ''),
-('nickadmina2', ''),
+('meta_key', ''),
+('meta_desc', ''),
 ('sdvigclock', '0'),
-('copyright', ''),
+('copyright', 'JohnCMS'),
 ('homeurl', ''),
-('rashstr', 'txt'),
 ('admp', 'panel'),
 ('flsz', '1000'),
-('gzip', '0'),
-('rmod', '0'),
-('fmod', '0'),
-('gb', '0'),
-('clean_time', '0'),
-('mod_reg', '1'),
-('mod_reg_msg', 'Регистрация временно закрыта'),
-('mod_forum', '1'),
-('mod_forum_msg', 'Форум временно закрыт'),
-('mod_chat', '1'),
-('mod_chat_msg', 'Чат временно закрыт'),
-('mod_guest', '1'),
-('mod_guest_msg', 'Гостевая временно закрыта'),
-('mod_lib', '1'),
-('mod_lib_msg', 'Библиотека временно закрыта'),
-('mod_gal', '1'),
-('mod_gal_msg', 'Галерея временно закрыта'),
-('mod_down', '1'),
-('mod_down_msg', 'Загрузки временно закрыты'),
+('gzip', '1'),
+('clean_time', ''),
+('mod_reg', '2'),
+('mod_forum', '2'),
+('mod_chat', '2'),
+('mod_guest', '2'),
+('mod_lib', '2'),
+('mod_gal', '2'),
+('mod_down_comm', '1'),
+('mod_down', '2'),
+('mod_lib_comm', '1'),
+('mod_gal_comm', '1'),
 ('skindef', 'default');
-
 
 --
 -- Структура таблицы `users`
@@ -321,65 +376,57 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL auto_increment,
   `immunity` tinyint(1) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `name_lat` varchar(40) NOT NULL,
-  `password` varchar(32) NOT NULL,
-  `imname` varchar(35) NOT NULL,
-  `sex` char(2) NOT NULL,
+  `name` varchar(25) NOT NULL default '',
+  `name_lat` varchar(40) NOT NULL default '',
+  `password` varchar(32) NOT NULL default '',
+  `imname` varchar(25) NOT NULL default '',
+  `sex` varchar(2) NOT NULL default '',
   `komm` int(10) NOT NULL default '0',
   `postforum` int(10) NOT NULL default '0',
+  `postguest` int(11) NOT NULL default '0',
   `postchat` int(10) NOT NULL default '0',
   `otvetov` int(11) NOT NULL default '0',
-  `yearofbirth` int(4) NOT NULL,
-  `datereg` int(11) NOT NULL,
-  `lastdate` int(11) NOT NULL,
-  `mail` varchar(50) NOT NULL,
-  `icq` int(9) NOT NULL,
+  `yearofbirth` int(4) NOT NULL default '0',
+  `datereg` int(11) NOT NULL default '0',
+  `lastdate` int(11) NOT NULL default '0',
+  `mail` varchar(50) NOT NULL default '',
+  `icq` int(9) NOT NULL default '0',
   `skype` varchar(50) NOT NULL,
   `jabber` varchar(50) NOT NULL,
-  `www` varchar(50) NOT NULL,
+  `www` varchar(50) NOT NULL default '',
   `about` text NOT NULL,
-  `live` varchar(50) NOT NULL,
-  `mibile` varchar(50) NOT NULL,
-  `rights` int(1) NOT NULL,
+  `live` varchar(50) NOT NULL default '',
+  `mibile` varchar(50) NOT NULL default '',
+  `rights` int(1) NOT NULL default '0',
   `status` text NOT NULL,
-  `ip` varchar(25) NOT NULL,
+  `ip` varchar(25) NOT NULL default '',
   `browser` text NOT NULL,
-  `timererfesh` int(2) NOT NULL default '20',
-  `kolanywhwere` int(2) NOT NULL default '10',
-  `time` int(11) NOT NULL,
-  `preg` binary(1) NOT NULL default '0',
-  `regadm` varchar(25) NOT NULL,
-  `kod` int(15) NOT NULL,
-  `mailact` binary(1) NOT NULL default '0',
-  `mailvis` binary(1) NOT NULL default '0',
-  `dayb` int(2) NOT NULL,
-  `monthb` int(2) NOT NULL,
-  `sdvig` int(2) NOT NULL default '0',
-  `offpg` tinyint(1) NOT NULL default '0',
-  `offgr` tinyint(1) NOT NULL default '0',
-  `offsm` tinyint(1) NOT NULL default '1',
-  `offtr` tinyint(1) NOT NULL default '1',
-  `pereh` tinyint(1) NOT NULL default '1',
-  `nastroy` text NOT NULL,
-  `plus` int(3) NOT NULL,
-  `minus` int(3) NOT NULL,
-  `vrrat` int(11) NOT NULL,
-  `upfp` tinyint(1) NOT NULL default '0',
-  `farea` tinyint(1) NOT NULL default '0',
-  `chmes` int(2) NOT NULL default '10',
-  `nmenu` text NOT NULL,
-  `carea` tinyint(1) NOT NULL default '0',
+  `time` int(11) NOT NULL default '0',
+  `preg` binary(1) NOT NULL default '\0',
+  `regadm` varchar(25) NOT NULL default '',
+  `kod` int(15) NOT NULL default '0',
+  `mailvis` tinyint(1) NOT NULL default '1',
+  `dayb` int(2) NOT NULL default '0',
+  `monthb` int(2) NOT NULL default '0',
+  `plus` int(3) NOT NULL default '0',
+  `minus` int(3) NOT NULL default '0',
+  `vrrat` int(11) NOT NULL default '0',
   `alls` varchar(25) NOT NULL default '',
-  `balans` int(11) NOT NULL,
-  `sestime` int(15) NOT NULL,
+  `balans` int(11) NOT NULL default '0',
+  `sestime` int(15) NOT NULL default '0',
   `total_on_site` int(11) NOT NULL default '0',
-  `digest` tinyint(4) NOT NULL default '1',
-  `skin` varchar(15) NOT NULL,
   `lastpost` int(11) NOT NULL,
+  `rest_code` varchar(32) NOT NULL,
+  `rest_time` int(11) NOT NULL,
+  `movings` int(11) NOT NULL default '0',
+  `place` varchar(30) NOT NULL,
+  `set_user` text NOT NULL,
+  `set_forum` text NOT NULL,
+  `set_chat` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name_lat` (`name_lat`),
-  KEY `lastdate` (`lastdate`)
+  KEY `lastdate` (`lastdate`),
+  KEY `place` (`place`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --

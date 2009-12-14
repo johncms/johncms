@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,10 +16,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (!empty($_SESSION['uid']))
-{
-    if (empty($_GET['id']))
-    {
+if (!empty ($_SESSION['uid'])) {
+    if (empty ($_GET['id'])) {
         echo "Ошибка!";
         require_once ("../incfiles/end.php");
         exit;
@@ -26,8 +25,7 @@ if (!empty($_SESSION['uid']))
     $id = intval($_GET['id']);
     $type = mysql_query("select * from `gallery` where id='" . $id . "';");
     $ms = mysql_fetch_array($type);
-    if ($ms[type] != "rz")
-    {
+    if ($ms[type] != "rz") {
         echo "Ошибка!";
         require_once ("../incfiles/end.php");
         exit;
@@ -35,8 +33,8 @@ if (!empty($_SESSION['uid']))
     mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','al','" . $login . "','" . $login . "','','1','','');");
     $al = mysql_insert_id();
     header("location: index.php?id=$al");
-} else
-{
+}
+else {
     header("location: index.php");
 }
 

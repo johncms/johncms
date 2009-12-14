@@ -1,43 +1,46 @@
-RemoveType .php3 .phtml .php4 .php5 .cgi .pl
-
-AddType text/vnd.wap.wml;charset=utf-8 .wml
+Addtype application/zip .zip
+Addtype application/x-rar-compressed .rar
 AddType application/vnd.sonyericsson.mms-template tpl
-AddType application/vnd.wap.wmlc .wmlc
-AddType text/vnd.wap.wmlscript .wmls
-AddType application/vnd.wap.wmlscriptc .wmlsc
-AddType image/vnd.wap.wbmp .wbmp
 AddType application/vnd.eri.thm .thm 
 AddType application/vnd.mophun.application .mpn  
 AddType application/vnd.mophun.certificate .mpc
+AddType application/vnd.smaf .mmf
+AddType application/x-tar .hid
+Addtype application/smil .smil 
+Addtype application/smil .smi 
+Addtype application/java-archive .jar 
+Addtype application/vnd.symbian.install .sis
+Addtype application/vnd.wap.mms-message .mms
+Addtype application/octet-stream .exe
+
+Addtype text/x-imelody .imy 
+Addtype text/x-emelody .emy 
+Addtype text/x-vcard .vcf 
+Addtype text/x-vcalendar .vcs 
+Addtype text/calendar .ics
 AddType text/vnd.sun.j2me.app-descriptor;charset=UTF-8 .jad
 addtype text/x-vmel .mel
-addtype audio/imelody .imy
-AddType application/vnd.smaf .mmf
 addtype text/x-vmel .emy
+
+addtype audio/imelody .imy
 AddType audio/amr .amr
 AddType audio/x-wav .wav
-AddType application/x-tar .hid
+Addtype audio/wav .wav 
+Addtype audio/midi .midi 
+Addtype audio/midi .mid 
+Addtype audio/rmf .rmf
+
 Addtype image/jpeg .jpg 
 Addtype image/jpeg .jpeg 
 Addtype image/gif .gif 
 Addtype image/png .png 
 Addtype image/bmp .bmp 
-Addtype text/x-imelody .imy 
-Addtype text/x-emelody .emy 
-Addtype text/x-vcard .vcf 
-Addtype text/x-vcalendar .vcs 
-Addtype text/calendar .ics 
-Addtype application/smil .smil 
-Addtype application/smil .smi 
-Addtype application/java-archive .jar 
-Addtype application/vnd.symbian.install .sis 
-Addtype audio/wav .wav 
-Addtype audio/midi .midi 
-Addtype audio/midi .mid 
-Addtype audio/rmf .rmf 
-Addtype application/vnd.wap.mms-message .mms 
+
 AddType video/mp4 .mp4
 Addtype video/3gpp .3gp
+
+RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
+AddType application/x-httpd-php-source .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 
 php_value error_reporting 7
 php_value register_globals 0
@@ -57,7 +60,6 @@ RewriteEngine On
 RewriteCond %{REQUEST_METHOD} ^TRACE
 RewriteRule .* - [F]
 
-ErrorDocument 401 http://gazenwagen.com/?err
 ErrorDocument 402 http://gazenwagen.com/?err	
 ErrorDocument 403 http://gazenwagen.com/?err
 ErrorDocument 404 http://gazenwagen.com/?err

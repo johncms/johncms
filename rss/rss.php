@@ -11,6 +11,8 @@
 //                                                                            //
 // Информацию о версиях смотрите в прилагаемом файле version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
+// Спасибо Esi0n за помощь в написании функции RSS                            //
+////////////////////////////////////////////////////////////////////////////////
 */
 
 define('_IN_JOHNCMS', 1);
@@ -20,40 +22,39 @@ header('content-type: application/rss+xml');
 echo '<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>
 <title>' . $copyright . ' | Новости ресурса</title>
-<link>' . $home . '</link>
+<link>' . $home .
+'</link>
 <description>Новости сайта</description>
 <language>ru-RU</language>
 <webMaster>' . $emailadmina . '</webMaster> ';
 
 // Новости
 $req = mysql_query('SELECT * FROM `news` ORDER BY `time` DESC LIMIT 15;');
-if (mysql_num_rows($req) > 0)
-{
-    while ($res = mysql_fetch_assoc($req))
-    {
+if (mysql_num_rows($req) > 0) {
+    while ($res = mysql_fetch_assoc($req)) {
         echo '
 	<item>
 <title>Новости: ' . $res['name'] . '</title>
 <link>' . $home . '/str/news.php</link>
 <author>' . $res['avt'] . '</author>
 <description>' . $res['text'] . '</description>
-<pubDate>' . date('r', $res['time']) . '</pubDate>
+<pubDate>' . date('r', $res['time']) .
+        '</pubDate>
 	</item>';
     }
 }
 
 // Библиотека
 $req = mysql_query("select * from `lib` where `type`='bk' and `moder`='1' order by `time` desc LIMIT 15;");
-if (mysql_num_rows($req) > 0)
-{
-    while ($res = mysql_fetch_array($req))
-    {
+if (mysql_num_rows($req) > 0) {
+    while ($res = mysql_fetch_array($req)) {
         echo '
 	<item>
 <title>Библиотека: ' . $res['name'] . '</title>
 <link>' . $home . '/library/index.php?id=' . $res['id'] . '</link>
 <author>' . $res['avtor'] . '</author>
-<description>' . $res['announce'] . '</description>
+<description>' . $res['announce'] .
+        '</description>
 <pubDate>' . date('r', $res['time']) . '</pubDate>
 	</item>';
     }

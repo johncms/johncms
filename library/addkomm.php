@@ -16,43 +16,35 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if ($user_id && !$ban['1'] && !$ban['10'])
-{
-    if (!$id)
-    {
+if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_lib_comm'] || $rights >= 7)) {
+    if (!$id) {
         echo "Не выбрана статья<br/><a href='?'>К категориям</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
     }
     $req = mysql_query("SELECT `name` FROM `lib` WHERE `type` = 'bk' AND `id` = '" . $id . "' LIMIT 1");
-    if (mysql_num_rows($req) != 1)
-    {
+    if (mysql_num_rows($req) != 1) {
         // если статья не существует, останавливаем скрипт
         echo '<p>Не выбрана статья<br/><a href="index.php">К категориям</a></p>';
         require_once ('../incfiles/end.php');
         exit;
     }
     // Проверка на спам
-    $old = ($rights > 0 || $dostsadm = 1) ? 10 : 60;
-    if ($lastpost > ($realtime - $old))
-    {
+    $old = ($rights > 0) ? 10 : 60;
+    if ($datauser['lastpost'] > ($realtime - $old)) {
         require_once ("../incfiles/head.php");
         echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href="?act=komm&amp;id=' . $id . '">Назад</a></p>';
         require_once ("../incfiles/end.php");
         exit;
     }
-    //TODO: Добавить проверку на существование статьи
-    if (isset($_POST['submit']))
-    {
-        if ($_POST['msg'] == "")
-        {
+    if (isset ($_POST['submit'])) {
+        if ($_POST['msg'] == "") {
             echo "Вы не ввели сообщение!<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
             require_once ('../incfiles/end.php');
             exit;
         }
         $msg = check(trim($_POST['msg']));
-        if ($_POST['msgtrans'] == 1)
-        {
+        if ($_POST['msgtrans'] == 1) {
             $msg = trans($msg);
         }
         $msg = mb_substr($msg, 0, 500);
@@ -63,28 +55,30 @@ if ($user_id && !$ban['1'] && !$ban['10'])
         `type` = 'komm',
         `avtor` = '" . $login . "',
         `count` = '" . $user_id . "',
-        `text` = '" . $msg . "',
+        `text` = '" . $msg
+        . "',
         `ip` = '" . $ipl . "',
         `soft` = '" . mysql_real_escape_string($agn) . "'");
         $fpst = $datauser['komm'] + 1;
         mysql_query("UPDATE `users` SET
 		`komm`='" . $fpst . "',
 		`lastpost` = '" . $realtime . "'
-		WHERE `id`='" . $user_id . "';");
+		WHERE `id`='" . $user_id . "'");
         echo '<p>Комментарий успешно добавлен<br />';
-    } else
-    {
-        echo "<p>Напишите комментарий<br/><br/><form action='?act=addkomm&amp;id=" . $id . "' method='post'>
+    }
+    else {
+        echo "<p>Напишите комментарий<br/><br/><form action='?act=addkomm&amp;id=" . $id .
+        "' method='post'>
 Cообщение(max. 500)<br/>
 <textarea rows='3' name='msg'></textarea><br/><br/>
 <input type='checkbox' name='msgtrans' value='1' /> Транслит<br/>
-<input type='submit' name='submit' value='добавить' />  
+<input type='submit' name='submit' value='добавить' />
   </form><br/>";
         echo "<a href='index.php?act=trans'>Транслит</a><br /><a href='../str/smile.php'>Смайлы</a><br/>";
     }
     echo '<a href="?act=komm&amp;id=' . $id . '">К комментариям</a></p>';
-} else
-{
+}
+else {
     echo "<p>Ошибка</p>";
 }
 

@@ -19,28 +19,23 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 ////////////////////////////////////////////////////////////
 // Удаление выбранных постов с форума                     //
 ////////////////////////////////////////////////////////////
-if ($dostfmod == 1)
-{
+if ($rights == 3 || $rights >= 6) {
     require_once ("../incfiles/head.php");
-    if (isset($_GET['yes']))
-    {
+    if (isset ($_GET['yes'])) {
         $dc = $_SESSION['dc'];
         $prd = $_SESSION['prd'];
-        foreach ($dc as $delid)
-        {
+        foreach ($dc as $delid) {
             mysql_query("UPDATE `forum` SET  `close` = '1' WHERE `id`='" . intval($delid) . "';");
         }
         echo "Отмеченные посты удалены<br/><a href='" . $prd . "'>Назад</a><br/>";
-    } else
-    {
-        if (empty($_POST['delch']))
-        {
+    }
+    else {
+        if (empty ($_POST['delch'])) {
             echo '<p>Вы ничего не выбрали для удаления<br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a></p>';
             require_once ("../incfiles/end.php");
             exit;
         }
-        foreach ($_POST['delch'] as $v)
-        {
+        foreach ($_POST['delch'] as $v) {
             $dc[] = intval($v);
         }
         $_SESSION['dc'] = $dc;

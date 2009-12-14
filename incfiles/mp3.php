@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -14,6 +15,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once "pear.php";
 define('PEAR_MP3_ID_FNO', 1);
 define('PEAR_MP3_ID_RE', 2);

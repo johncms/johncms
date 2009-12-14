@@ -16,29 +16,24 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require_once ("../incfiles/head.php");
+require_once ('../incfiles/head.php');
 $delf = opendir("temtemp");
-while ($tt = readdir($delf))
-{
-    if ($tt != "." && $tt != ".." && $tt != "index.php")
-    {
+while ($tt = readdir($delf)) {
+    if ($tt != "." && $tt != ".." && $tt != 'index.php') {
         $tm[] = $tt;
     }
 }
 closedir($delf);
 $totalt = count($tm);
-for ($it = 0; $it < $totalt; $it++)
-{
+for ($it = 0; $it < $totalt; $it++) {
     $filtime[$it] = filemtime("temtemp/$tm[$it]");
     $tim = time();
     $ftime1 = $tim - 300;
-    if ($filtime[$it] < $ftime1)
-    {
+    if ($filtime[$it] < $ftime1) {
         unlink("temtemp/$tm[$it]");
     }
 }
-if (empty($_GET['id']))
-{
+if (empty ($_GET['id'])) {
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
@@ -46,25 +41,21 @@ if (empty($_GET['id']))
 $type = mysql_query("select * from `forum` where id= '" . $id . "';");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
-if ($tip != "t")
-{
+if ($tip != "t") {
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
 }
-if (isset($_POST['submit']))
-{
-    $tema = mysql_query("select * from `forum` where type='m' and refid= '" . $id . "' order by time ASC;");
+if (isset ($_POST['submit'])) {
+    $tema = mysql_query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close` != '1'") . " ORDER BY `id` ASC");
     $mod = intval($_POST['mod']);
-    switch ($mod)
-    {
-        case 1:
+    switch ($mod) {
+        case 1 :
             ////////////////////////////////////////////////////////////
             // Сохраняем тему в текстовом формате                     //
             ////////////////////////////////////////////////////////////
             $text = $type1['text'] . "\r\n\r\n";
-            while ($arr = mysql_fetch_array($tema))
-            {
+            while ($arr = mysql_fetch_assoc($tema)) {
                 $txt_tmp = str_replace("[c]", "Цитата:{", $arr['text']);
                 $txt_tmp = str_replace("[/c]", "}-Ответ:", $txt_tmp);
                 $txt_tmp = str_replace("&quot;", "\"", $txt_tmp);
@@ -81,20 +72,21 @@ if (isset($_POST['submit']))
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("$fp", 0777);
-            @chmod("temtemp/$num.txt", 0777);
+            @ chmod("$fp", 0777);
+            @ chmod("temtemp/$num.txt", 0777);
             echo "<a href='?act=loadtem&amp;n=" . $num . "'>Скачать</a><br/>Ссылка активна 5 минут!<br/><a href='?'>В форум</a><br/>";
             break;
 
-        case 2:
+        case 2 :
             ////////////////////////////////////////////////////////////
             // Сохраняем тему в формате HTML                          //
             ////////////////////////////////////////////////////////////
-            $text = "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+            $text =
+            "<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN'><html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Форум</title>
 <style type='text/css'>
 body { color: #000000; background-color: #FFFFFF }
-div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}  
+div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
 .b {background-color: #FFFFFF; }
 .c {background-color: #EEEEEE; }
 .quote{font-size: x-small; padding: 2px 0px 2px 4px; color: #878787; border-left: 3px solid #c0c0c0;
@@ -102,17 +94,15 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
 </style></head>
       <body><p><b><u>$type1[text]</u></b></p>";
             $i = 1;
-            while ($arr = mysql_fetch_array($tema))
-            {
+            while ($arr = mysql_fetch_array($tema)) {
                 $d = $i / 2;
                 $d1 = ceil($d);
                 $d2 = $d1 - $d;
                 $d3 = ceil($d2);
-                if ($d3 == 0)
-                {
+                if ($d3 == 0) {
                     $div = "<div class='b'>";
-                } else
-                {
+                }
+                else {
                     $div = "<div class='c'>";
                 }
                 $txt_tmp = htmlentities($arr['text'], ENT_QUOTES, 'UTF-8');
@@ -131,14 +121,15 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("$fp", 0777);
-            @chmod("temtemp/$num.htm", 0777);
+            @ chmod("$fp", 0777);
+            @ chmod("temtemp/$num.htm", 0777);
             echo "<a href='?act=loadtem&amp;n=" . $num . "'>Скачать</a><br/>Ссылка активна 5 минут!<br/><a href='?'>В форум</a><br/>";
             break;
     }
-} else
-{
-    echo "<p>Выберите формат<br/><form action='?act=tema&amp;id=" . $id . "' method='post'><br/><select name='mod'>
+}
+else {
+    echo "<p>Выберите формат<br/><form action='?act=tema&amp;id=" . $id .
+    "' method='post'><br/><select name='mod'>
 	<option value='1'>.txt</option>
 	<option value='2'>.htm</option>
 	</select><input type='submit' name='submit' value='Ok!'/><br/></form></p>";

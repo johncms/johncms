@@ -1,4 +1,5 @@
 <?php
+
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
@@ -15,8 +16,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (empty($_GET['n']))
-{
+if (empty ($_GET['n'])) {
     require_once ("../incfiles/head.php");
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
@@ -24,10 +24,8 @@ if (empty($_GET['n']))
 }
 $n = $_GET['n'];
 $o = opendir("temtemp");
-while ($f = readdir($o))
-{
-    if ($f != "." && $f != ".." && $f != "index.php" && $f != ".htaccess")
-    {
+while ($f = readdir($o)) {
+    if ($f != "." && $f != ".." && $f != "index.php" && $f != ".htaccess") {
         $ff = format($f);
         $f1 = str_replace(".$ff", "", $f);
         $a[] = $f;
@@ -35,19 +33,16 @@ while ($f = readdir($o))
     }
 }
 $tt = count($a);
-if (!in_array($n, $b))
-{
+if (!in_array($n, $b)) {
     require_once ("../incfiles/head.php");
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
     require_once ("../incfiles/end.php");
     exit;
 }
-for ($i = 0; $i < $tt; $i++)
-{
+for ($i = 0; $i < $tt; $i++) {
     $tf = format($a[$i]);
     $tf1 = str_replace(".$tf", "", $a[$i]);
-    if ($n == $tf1)
-    {
+    if ($n == $tf1) {
         header("Location: temtemp/$n.$tf");
     }
 }

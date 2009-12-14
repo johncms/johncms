@@ -17,215 +17,100 @@ define('_IN_JOHNCMS', 1);
 
 $textl = 'Администрация';
 $headmod = "moders";
-require_once ("../incfiles/core.php");
-require_once ("../incfiles/head.php");
-$adm = mysql_query("select * from `users` where rights='7';");
-$adm2 = mysql_num_rows($adm);
-if ($adm2 != 0)
-{
-    echo "<p><b>Администраторы:</b><br/>";
-    while ($adm1 = mysql_fetch_array($adm))
-    {
-        $user = mysql_query("select * from `users` where id='" . $adm1[id] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat[name]))
-        {
-            echo "<a href='anketa.php?user=" . $udat[id] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat[lastdate];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
-    }
-    echo '</p>';
-}
-$smd = mysql_query("select * from `users` where rights='6';");
-$smd2 = mysql_num_rows($smd);
-if ($smd2 != 0)
-{
-    echo "<p><b>Супермодераторы:</b><br/>";
-    while ($smd1 = mysql_fetch_array($smd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $smd1[id] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat[name]))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat[id] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat[lastdate];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
-    }
-    echo '</p>';
-}
+require_once ('../incfiles/core.php');
+require_once ('../incfiles/head.php');
 
-// Статистика модеров по Библиотеке
-$lmd = mysql_query("select * from `users` where rights='5';");
-$lmd2 = mysql_num_rows($lmd);
-if ($lmd2 != 0)
-{
-    echo "<p><b>Зам. адм. по библиотеке:</b><br/>";
-    while ($lmd1 = mysql_fetch_array($lmd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $lmd1['id'] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat['name']))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat['id'] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat['lastdate'];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
-    }
-    echo '</p>';
-}
+echo '<div class="phdr"><b>Администрация ресурса</b></div>';
 
-// Статистика модеров по загрузкам
-$dmd = mysql_query("select * from `users` where rights='4';");
-$dmd2 = mysql_num_rows($dmd);
-if ($dmd2 != 0)
-{
-    echo "<p><b>Зам. адм. по загрузкам:</b><br/>";
-    while ($dmd1 = mysql_fetch_array($dmd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $dmd1['id'] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat['name']))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat['id'] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat['lastdate'];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
+// Супервайзоры
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '9'");
+if (mysql_num_rows($req)) {
+    echo '<div class="bmenu">Супервайзоры</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($sw % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$sw;
     }
-    echo '</p>';
 }
-
-// Статистика по Модерам Форума
-$fmd = mysql_query("select * from `users` where rights='3';");
-$fmd2 = mysql_num_rows($fmd);
-if ($fmd2 != 0)
-{
-    echo "<p><b>Модеры форума:</b><br/>";
-    while ($fmd1 = mysql_fetch_array($fmd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $fmd1['id'] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat['name']))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat['id'] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat['lastdate'];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
+// Администраторы
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '7'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Администраторы</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($adm % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$adm;
     }
-    echo '</p>';
 }
-
-// Статистика по Модерам Чата
-$cmd = mysql_query("select * from `users` where rights='2';");
-$cmd2 = mysql_num_rows($cmd);
-if ($cmd2 != 0)
-{
-    echo "<p><b>Модеры чата:</b><br/>";
-    while ($cmd1 = mysql_fetch_array($cmd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $cmd1['id'] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat['name']))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat['id'] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat['lastdate'];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
+// Старшие Модераторы
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '6'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Старшие Модераторы</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($smd % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$smd;
     }
-    echo '</p>';
 }
-
-// Статистика по Киллерам
-$kmd = mysql_query("select * from `users` where rights='1';");
-$kmd2 = mysql_num_rows($kmd);
-if ($kmd2 != 0)
-{
-    echo "<p><b>Киллеры:</b><br/>";
-    while ($kmd1 = mysql_fetch_array($kmd))
-    {
-        $user = mysql_query("select * from `users` where id='" . $kmd1['id'] . "';");
-        $udat = mysql_fetch_array($user);
-        if ((!empty($_SESSION['uid'])) && ($login != $udat['name']))
-        {
-            echo "&nbsp;&nbsp;<a href='anketa.php?user=" . $udat['id'] . "'>$udat[name]</a>";
-        } else
-        {
-            echo "&nbsp;&nbsp;$udat[name]";
-        }
-        $ontime = $udat['lastdate'];
-        $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2)
-        {
-            echo '&nbsp;<font color="#FF0000"> [Off]</font><br/>';
-        } else
-        {
-            echo '&nbsp;<font color="#00AA00"> [ON]</font><br />';
-        }
+// Модераторы Библиотеки
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '5'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Модераторы Библиотеки</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($lmod % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$lmod;
     }
-    echo '</p>';
 }
-
+// Модераторы Загрузок
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '4'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Модераторы Загрузок</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($dmod % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$dmod;
+    }
+}
+// Модераторы Форума
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '3'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Модераторы Форума</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($fmod % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$fmod;
+    }
+}
+// Модераторы Чата
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '2'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Модераторы Чата</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($cmod % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$cmod;
+    }
+}
+// Киллеры
+$req = mysql_query("SELECT * FROM `users` WHERE `rights` = '1'");
+if (mysql_num_rows($req)) {
+    $i = 0;
+    echo '<div class="bmenu">Киллеры</div>';
+    while ($res = mysql_fetch_assoc($req)) {
+        echo ($kil % 2) ? '<div class="list2">' : '<div class="list1">';
+        echo show_user($res, 1) . '</div>';
+        ++$kil;
+    }
+}
+echo '<div class="phdr">Всего: ' . ($sw + $adm + $smd + $lmod + $dmod + $fmod + $cmod + $kil) . '</div>';
+echo '<p><a href="../index.php?act=users">Актив сайта</a></p>';
 require_once ("../incfiles/end.php");
 
 ?>
