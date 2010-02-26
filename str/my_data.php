@@ -58,39 +58,38 @@ if ($id && $rights >= 7 && $act == 'reset') {
     exit;
 }
 echo '<div class="phdr"><a href="anketa.php?id=' . $user['id'] . '"><b>' . ($id && $id != $user_id ? 'Анкета' : 'Личная анкета') . '</b></a> | Редактирование</div>';
-if (isset ($_GET['delavatar'])) {
+if (isset($_GET['delavatar'])) {
     // Удаляем аватар
-    @ unlink('../files/avatar/' . $user['id'] . '.png');
+    @unlink('../files/avatar/' . $user['id'] . '.png');
     echo '<div class="rmenu">Аватар удален</div>';
-}
-elseif (isset ($_GET['delphoto'])) {
+} elseif (isset($_GET['delphoto'])) {
     // Удаляем фото
-    @ unlink('../files/photo/' . $user['id'] . '.jpg');
-    @ unlink('../files/photo/' . $user['id'] . '_small.jpg');
+    @unlink('../files/photo/' . $user['id'] . '.jpg');
+    @unlink('../files/photo/' . $user['id'] . '_small.jpg');
     echo '<div class="rmenu">Фотография удалена</div>';
-}
-elseif (isset ($_POST['submit'])) {
+} elseif (isset($_POST['submit'])) {
     $error = array();
     // Данные юзера
-    $user['imname'] = isset ($_POST['imname']) ? check(mb_substr($_POST['imname'], 0, 25)) : '';
-    $user['live'] = isset ($_POST['live']) ? check(mb_substr($_POST['live'], 0, 50)) : '';
-    $user['dayb'] = isset ($_POST['dayb']) ? intval($_POST['dayb']) : 0;
-    $user['monthb'] = isset ($_POST['monthb']) ? intval($_POST['monthb']) : 0;
-    $user['yearofbirth'] = isset ($_POST['yearofbirth']) ? intval($_POST['yearofbirth']) : 0;
-    $user['about'] = isset ($_POST['about']) ? check(mb_substr($_POST['about'], 0, 500)) : '';
-    $user['mibile'] = isset ($_POST['mibile']) ? check(mb_substr($_POST['mibile'], 0, 40)) : '';
-    $user['mail'] = isset ($_POST['mail']) ? check(mb_substr($_POST['mail'], 0, 40)) : '';
-    $user['mailvis'] = isset ($_POST['mailvis']) ? 1 : 0;
-    $user['icq'] = isset ($_POST['icq']) ? intval($_POST['icq']) : 0;
-    $user['skype'] = isset ($_POST['skype']) ? check(mb_substr($_POST['skype'], 0, 40)) : '';
-    $user['jabber'] = isset ($_POST['jabber']) ? check(mb_substr($_POST['jabber'], 0, 40)) : '';
-    $user['www'] = isset ($_POST['www']) ? check(mb_substr($_POST['www'], 0, 40)) : '';
+    $user['imname'] = isset($_POST['imname']) ? check(mb_substr($_POST['imname'], 0, 25)) : '';
+    $user['live'] = isset($_POST['live']) ? check(mb_substr($_POST['live'], 0, 50)) : '';
+    $user['dayb'] = isset($_POST['dayb']) ? intval($_POST['dayb']) : 0;
+    $user['monthb'] = isset($_POST['monthb']) ? intval($_POST['monthb']) : 0;
+    $user['yearofbirth'] = isset($_POST['yearofbirth']) ? intval($_POST['yearofbirth']) : 0;
+    $user['about'] = isset($_POST['about']) ? check(mb_substr($_POST['about'], 0, 500)) : '';
+    $user['mibile'] = isset($_POST['mibile']) ? check(mb_substr($_POST['mibile'], 0, 40)) : '';
+    $user['mail'] = isset($_POST['mail']) ? check(mb_substr($_POST['mail'], 0, 40)) : '';
+    $user['mailvis'] = isset($_POST['mailvis']) ? 1 : 0;
+    $user['icq'] = isset($_POST['icq']) ? intval($_POST['icq']) : 0;
+    $user['skype'] = isset($_POST['skype']) ? check(mb_substr($_POST['skype'], 0, 40)) : '';
+    $user['jabber'] = isset($_POST['jabber']) ? check(mb_substr($_POST['jabber'], 0, 40)) : '';
+    $user['www'] = isset($_POST['www']) ? check(mb_substr($_POST['www'], 0, 40)) : '';
     // Данные юзера (для Администраторов)
-    $user['name'] = isset ($_POST['name']) ? check(mb_substr($_POST['name'], 0, 20)) : $user['name'];
-    $user['status'] = isset ($_POST['status']) ? check(mb_substr($_POST['status'], 0, 50)) : '';
-    $user['immunity'] = isset ($_POST['immunity']) ? 1 : 0;
-    $user['sex'] = isset ($_POST['sex']) && $_POST['sex'] == 'm' ? 'm' : 'zh';
-    $user['rights'] = isset ($_POST['rights']) ? abs(intval($_POST['rights'])) : 0;
+    $user['name'] = isset($_POST['name']) ? check(mb_substr($_POST['name'], 0, 20)) : $user['name'];
+    $user['status'] = isset($_POST['status']) ? check(mb_substr($_POST['status'], 0, 50)) : '';
+    $user['immunity'] = isset($_POST['immunity']) ? 1 : 0;
+    $user['karma_off'] = isset($_POST['karma_off']) ? 1 : 0;
+    $user['sex'] = isset($_POST['sex']) && $_POST['sex'] == 'm' ? 'm' : 'zh';
+    $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : 0;
     // Проводим необходимые проверки
     if ($user['id'] == $user_id)
         $user['rights'] = $datauser['rights'];
@@ -112,14 +111,12 @@ elseif (isset ($_POST['submit'])) {
         `imname` = '" . $user['imname'] . "',
         `live` = '" . $user['live'] . "',
         `dayb` = '" . $user['dayb'] . "',
-        `monthb` = '" . $user['monthb'] .
-        "',
+        `monthb` = '" . $user['monthb'] . "',
         `yearofbirth` = '" . $user['yearofbirth'] . "',
         `about` = '" . $user['about'] . "',
         `mibile` = '" . $user['mibile'] . "',
         `mail` = '" . $user['mail'] . "',
-        `mailvis` = '" . $user['mailvis'
-        ] . "',
+        `mailvis` = '" . $user['mailvis'] . "',
         `icq` = '" . $user['icq'] . "',
         `skype` = '" . $user['skype'] . "',
         `jabber` = '" . $user['jabber'] . "',
@@ -130,8 +127,8 @@ elseif (isset ($_POST['submit'])) {
             `name` = '" . $user['name'] . "',
             `status` = '" . $user['status'] . "',
             `immunity` = '" . $user['immunity'] . "',
-            `sex` = '" . $user['sex'] .
-            "',
+            `karma_off` = '" . $user['karma_off'] . "',
+            `sex` = '" . $user['sex'] . "',
             `rights` = '" . $user['rights'] . "'
             WHERE `id` = '" . $user['id'] . "' LIMIT 1");
         }
@@ -148,6 +145,7 @@ echo '<li>Логин: <b>' . $user['name_lat'] . '</b></li>';
 if ($rights >= 7) {
     echo '<li>Ник: (мин.2, макс. 20)<br /><input type="text" value="' . $user['name'] . '" name="name" /></li>';
     echo '<li>Статус: (макс. 50)<br /><input type="text" value="' . $user['status'] . '" name="status" /></li>';
+    echo '<li><a href="my_pass.php?id=' . $id . '">Сменить пароль</a></li>';
 }
 else {
     echo '<li><span class="gray">Ник:</span> <b>' . $user['name'] . '</b></li>';
@@ -159,7 +157,7 @@ if (file_exists(('../files/avatar/' . $user['id'] . '.png'))) {
     echo '<img src="../files/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /><br />';
     $link = ' | <a href="my_data.php?delavatar">Удалить</a>';
 }
-echo '<small><a href="my_images.php?act=up_avatar&amp;id=' . $user['id'] . '">Выгрузить</a> | <a href="">Выбрать</a>' . $link . '</small></li>';
+echo '<small><a href="my_images.php?act=up_avatar&amp;id=' . $user['id'] . '">Выгрузить</a> | <a href="avatar.php">Выбрать</a>' . $link . '</small></li>';
 // Фотография
 echo '<li>Фотография:<br />';
 $link = '';
@@ -182,8 +180,7 @@ echo '</ul></p>';
 // Связь
 echo '<p><h3><img src="../images/mail.png" width="16" height="16" class="left" />&nbsp;Связь</h3><ul>';
 echo '<li><span class="gray">Тел. номер:</span><br /><input type="text" value="' . $user['mibile'] . '" name="mibile" /></li>';
-echo
-'<li><span class="gray">E-mail:</span><br /><small>Внимание! Правильно указывайте свой адрес электронной почты!<br />Именно на него будет высылаться Ваш пароль.</small><br />';
+echo '<li><span class="gray">E-mail:</span><br /><small>Внимание! Правильно указывайте свой адрес электронной почты!<br />Именно на него будет высылаться Ваш пароль.</small><br />';
 echo '<input type="text" value="' . $user['mail'] . '" name="mail" /><br />';
 echo '<input name="mailvis" type="checkbox" value="1" ' . ($user['mailvis'] ? 'checked="checked"' : '') . ' />&nbsp;Показывать в Анкете</li>';
 echo '<li><span class="gray">ICQ:</span><br /><input type="text" value="' . $user['icq'] . '" name="icq" size="10" maxlength="10" /></li>';
@@ -194,8 +191,10 @@ echo '</ul></p></div>';
 // Административные функции
 if ($rights >= 7) {
     echo '<div class="rmenu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&nbsp;Настройки</h3><ul>';
-    if ($rights == 9)
+    if ($rights == 9) {
         echo '<li><input name="immunity" type="checkbox" value="1" ' . ($user['immunity'] ? 'checked="checked"' : '') . ' />&nbsp;<span class="green"><b>Иммунитет</b></span></li>';
+        echo '<li><input name="karma_off" type="checkbox" value="1" ' . ($user['karma_off'] ? 'checked="checked"' : '') . ' />&nbsp;<span class="red"><b>Запретить карму</b></span></li>';
+    }
     echo '<li><a href="my_pass.php?id=' . $user['id'] . '">Сменить пароль</a></li>';
     echo '<li><a href="my_data.php?act=reset&amp;id=' . $user['id'] . '">Сбросить настройки</a></li>';
     echo '<li>Укажите пол:<br />';

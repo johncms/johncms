@@ -25,7 +25,7 @@ if ($rights == 3 || $rights >= 6) {
         $dc = $_SESSION['dc'];
         $prd = $_SESSION['prd'];
         foreach ($dc as $delid) {
-            mysql_query("UPDATE `forum` SET  `close` = '1' WHERE `id`='" . intval($delid) . "';");
+            mysql_query("UPDATE `forum` SET  `close` = '1', `close_who` = '$login' WHERE `id`='" . intval($delid) . "';");
         }
         echo "Отмеченные посты удалены<br/><a href='" . $prd . "'>Назад</a><br/>";
     }

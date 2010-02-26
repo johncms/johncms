@@ -59,6 +59,7 @@ switch ($act) {
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
+                //$handle->mime_check = false;
                 $handle->allowed = array('image/jpeg', 'image/gif', 'image/png');
                 $handle->file_max_size = 1024 * $flsz;
                 $handle->file_overwrite = true;
@@ -68,8 +69,8 @@ switch ($act) {
                 $handle->image_convert = 'png';
                 $handle->process('../files/avatar/');
                 if ($handle->processed) {
-                        echo '<div class="gmenu"><p>Аватар загружен<br /><a href="my_data.php?id=' . $user['id'] . '">Продолжить</a></p></div>';
-                        echo '<div class="phdr"><a href="anketa.php?id=' . $user['id'] . '">В анкету</a></div>';
+                    echo '<div class="gmenu"><p>Аватар загружен<br /><a href="my_data.php?id=' . $user['id'] . '">Продолжить</a></p></div>';
+                    echo '<div class="phdr"><a href="anketa.php?id=' . $user['id'] . '">В анкету</a></div>';
                 }
                 else {
                     echo display_error($handle->error);
@@ -83,10 +84,10 @@ switch ($act) {
             echo '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $flsz) . '" />';
             echo '</p><p><input type="submit" name="submit" value="Выгрузить" />';
             echo '</p></div></form>';
-            echo '<div class="phdr"><small>Для выгрузки разрешены файлы JPG, JPEG, PNG, GIF<br />Размер файла не должен превышать ' . $flsz . 'кб.<br />';
+            echo '<div class="phdr"><small>Для выгрузки разрешены файлы JPG, JPEG, PNG, GIF<br />Размер файла не должен превышать ' . $flsz . ' кб.<br />';
             echo 'Вне зависимости от разрешения исходного файла, он будет преобразован в размер 32х32<br />';
             echo 'Новое изображение заменит старое (если оно было)';
-            echo 'Для лучшего результата, исходное изображение долдно иметь равное соотношение сторон</small></div>';
+            echo 'Для лучшего результата, исходное изображение должно иметь равное соотношение сторон</small></div>';
         }
         break;
 
@@ -97,6 +98,7 @@ switch ($act) {
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
+                //$handle->mime_check = false;
                 $handle->allowed = array('image/jpeg', 'image/gif', 'image/png');
                 $handle->file_max_size = 1024 * $flsz;
                 $handle->file_overwrite = true;

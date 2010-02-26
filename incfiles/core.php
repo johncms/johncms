@@ -17,7 +17,6 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 Error_Reporting(E_ALL & ~ E_NOTICE);
-Error_Reporting(ERROR | WARNING);
 mb_internal_encoding('UTF-8');
 @ ini_set('arg_separator.output', '&amp;');
 @ ini_set('session.use_trans_sid', '0');
@@ -75,7 +74,7 @@ session_start();
 // Подключаемся к базе данных                             //
 ////////////////////////////////////////////////////////////
 require_once ($rootpath . 'incfiles/db.php');
-$connect = @ mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server');
+$connect = @ mysql_pconnect($db_host, $db_user, $db_pass) or die('cannot connect to server');
 @ mysql_select_db($db_name) or die('cannot connect to db');
 @ mysql_query("SET NAMES 'utf8'", $connect);
 
@@ -188,7 +187,7 @@ if (isset ($_SESSION['uid']) && isset ($_SESSION['ups'])) {
 elseif (isset ($_COOKIE['cuid']) && isset ($_COOKIE['cups'])) {
     $user_id = intval(base64_decode($_COOKIE['cuid']));
     $_SESSION['uid'] = $user_id;
-    $user_ps = md5(md5(base64_decode($_COOKIE['cups'])));
+    $user_ps = md5($_COOKIE['cups']);
     $_SESSION['ups'] = $user_ps;
     $cookauth = true;
 }

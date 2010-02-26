@@ -40,45 +40,48 @@ function get_top($order = 'postforum') {
 ////////////////////////////////////////////////////////////
 // Показываем топ                                         //
 ////////////////////////////////////////////////////////////
+$top_karma = $set_karma['on'] ? ' | <a href="users_top.php?act=karma">Карма</a>' : '';
 switch ($act) {
-    case 'guest' :
-        echo
-        '<p><a href="users_top.php?act=forum">Форум</a> | Гостевая | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a></p>';
+    case 'guest':
+        echo '<p><a href="users_top.php?act=forum">Форум</a> | Гостевая | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a>' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Самые активные в Гостевой</b></div>';
         echo get_top('postguest');
         echo '<div class="phdr"><a href="../str/guest.php">В Гостевую</a></div>';
         break;
-    case 'chat' :
-        echo
-        '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | Чат | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a></p>';
+    case 'chat':
+        echo '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | Чат | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a>' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Самые активные в Чате</b></div>';
         echo get_top('postchat');
         echo '<div class="phdr"><a href="../chat/index.php">В Чат</a></div>';
         break;
-    case 'vic' :
-        echo
-        '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | Викторина | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a></p>';
+    case 'vic':
+        echo '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | Викторина | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a>' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Лучшие &quot;умники&quot; Викторины</b></div>';
         echo get_top('otvetov');
         echo '<div class="phdr"><a href="../chat/index.php">В Чат</a></div>';
         break;
-    case 'bal' :
-        echo
-        '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | Баланс | <a href="users_top.php?act=kom">Комментарии</a></p>';
+    case 'bal':
+        echo '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | Баланс | <a href="users_top.php?act=kom">Комментарии</a>' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Самые большие игровые Балансы</b></div>';
         echo get_top('balans');
         echo '<div class="phdr"><a href="../index.php">На Главную</a></div>';
         break;
-    case 'kom' :
-        echo
-        '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | Комментарии</p>';
+    case 'kom':
+        echo '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | Комментарии' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Больше всего комментировали</b></div>';
         echo get_top('komm');
         echo '<div class="phdr"><a href="../index.php">На Главную</a></div>';
         break;
-    default :
-        echo
-        '<p>Форум | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a></p>';
+    case 'karma':
+        if ($set_karma['on']) {
+            echo '<p><a href="users_top.php?act=forum">Форум</a> | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a> | Карма</p>';
+            echo '<div class="phdr"><b>Больше всего карма у ...</b></div>';
+            echo get_top('karma');
+            echo '<div class="phdr"><a href="../index.php">На Главную</a></div>';
+        }
+        break;
+    default:
+        echo '<p>Форум | <a href="users_top.php?act=guest">Гостевая</a> | <a href="users_top.php?act=chat">Чат</a> | <a href="users_top.php?act=vic">Викторина</a> | <a href="users_top.php?act=bal">Баланс</a> | <a href="users_top.php?act=kom">Комментарии</a>' . $top_karma . '</p>';
         echo '<div class="phdr"><b>Самые активные на Форуме</b></div>';
         echo get_top('postforum');
         echo '<div class="phdr"><a href="../forum/index.php">В Форум</a></div>';

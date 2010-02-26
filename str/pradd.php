@@ -15,6 +15,7 @@
 */
 
 define('_IN_JOHNCMS', 1);
+
 $textl = 'Почта(письма)';
 require_once ("../incfiles/core.php");
 
@@ -26,7 +27,6 @@ if ($user_id) {
     $foruser = check(trim($_POST['foruser']));
     $tem = check(trim($_POST['tem']));
     $idm = intval($_POST['idm']);
-
     $act = isset ($_GET['act']) ? $_GET['act'] : '';
     switch ($act) {
         case 'send' :
@@ -42,7 +42,6 @@ if ($user_id) {
                 require_once ("../incfiles/end.php");
                 exit;
             }
-
             if ($ban['1'] || $ban['3'])
                 exit;
             require_once ("../incfiles/head.php");
@@ -60,10 +59,7 @@ if ($user_id) {
                     $messag = mysql_query("select * from `users` where name='" . $foruser . "';");
                     $us = mysql_fetch_array($messag);
                     $adres = $us['id'];
-
-                    ////////////////////////////////////////////////////////////
-                    // Проверка, был ли выгружен файл и с какого браузера     //
-                    ////////////////////////////////////////////////////////////
+                    // Проверка, был ли выгружен файл и с какого браузера
                     $do_file = false;
                     $do_file_mini = false;
                     // Проверка загрузки с обычного браузера
@@ -80,10 +76,7 @@ if ($user_id) {
                         $filebase64 = $array [1];
                         $fsize = strlen(base64_decode($filebase64));
                     }
-
-                    ////////////////////////////////////////////////////////////
-                    // Обработка файла (если есть)                            //
-                    ////////////////////////////////////////////////////////////
+                    // Обработка файла (если есть)
                     if ($do_file || $do_file_mini) {
                         // Список допустимых расширений файлов.
                         $al_ext = array('rar', 'zip', 'pdf', 'txt', 'tar', 'gz', 'jpg', 'jpeg', 'gif', 'png', 'bmp', '3gp', 'mp3', 'mpg', 'sis', 'thm', 'jar', 'jad', 'cab', 'sis', 'sisx', 'exe', 'msi');
@@ -91,6 +84,7 @@ if ($user_id) {
                         // Проверка на допустимый размер файла
                         if ($fsize >= 1024 * $flsz) {
                             echo '<p><b>ОШИБКА!</b></p><p>Вес файла превышает ' . $flsz . ' кб.';
+
                             echo '</p><p><a href="pradd.php?act=write&amp;adr=' . $adres . '">Повторить</a></p>';
                             require_once ('../incfiles/end.php');
                             exit;
@@ -216,7 +210,6 @@ if ($user_id) {
             ////////////////////////////////////////////////////////////
             if ($ban['1'] || $ban['3'])
                 exit;
-
             // Проверка на спам
             $old = ($rights > 0) ? 10 : 30;
             if ($datauser['lastpost'] > ($realtime - $old)) {
@@ -225,7 +218,6 @@ if ($user_id) {
                 require_once ("../incfiles/end.php");
                 exit;
             }
-
             require_once ("../incfiles/head.php");
             if (!empty ($_GET['adr'])) {
                 $messages = mysql_query("select * from `users` where id='" . intval($_GET['adr']) . "';");
@@ -294,7 +286,7 @@ if ($user_id) {
                 $dc = $_SESSION['dc'];
                 $prd = $_SESSION['prd'];
                 foreach ($dc as $delid) {
-                    mysql_query("DELETE FROM `privat` WHERE `user` = '" . $login . "' AND `id`='" . intval($delid) . "'");
+                    mysql_query("DELETE FROM `privat` WHERE (`user` = '$login' OR `author` = '$login') AND `id`='" . intval($delid) . "'");
                 }
                 echo "Отмеченные письма удалены<br/><a href='" . $prd . "'>Назад</a><br/>";
             }
@@ -307,7 +299,6 @@ if ($user_id) {
                 foreach ($_POST['delch'] as $v) {
                     $dc[] = intval($v);
                 }
-
                 $_SESSION['dc'] = $dc;
                 $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
                 echo "Вы уверены в удалении писем?<br/><a href='pradd.php?act=delch&amp;yes'>Да</a> | <a href='" . htmlspecialchars(getenv("HTTP_REFERER")) . "'>Нет</a><br/>";
@@ -322,120 +313,45 @@ if ($user_id) {
             require_once ("../incfiles/head.php");
             if (isset ($_GET['new'])) {
                 $_SESSION['refpr'] = htmlspecialchars(getenv("HTTP_REFERER"));
-                $messages = mysql_query("select * from `privat` where user='" . $login . "' and type='in' and chit='no' order by time desc;");
+                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'"), 0);
+                $req = mysql_query("SELECT * FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no' ORDER BY `id` DESC LIMIT $start,$kmess");
                 echo '<div class="phdr">Новые входящие</div>';
             }
             else {
-                $messages = mysql_query("select * from `privat` where user='" . $login . "' and type='in' order by time desc;");
-                echo '<div class="phdr">Входящие письма</div>';
+                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in'"), 0);
+                $req = mysql_query("SELECT * FROM `privat` WHERE `user` = '$login' AND `type` = 'in' ORDER BY `id` DESC LIMIT $start,$kmess");
+                echo '<div class="phdr"><b>Входящие письма</b></div>';
             }
-            echo "<form action='pradd.php?act=delch' method='post'>";
-            $count = mysql_num_rows($messages);
-            if (empty ($_GET['page'])) {
-                $page = 1;
-            }
-            else {
-                $page = intval($_GET['page']);
-            }
-            $start = $page * $kmess - $kmess;
-            if ($count < $start + $kmess) {
-                $end = $count;
-            }
-            else {
-                $end = $start + $kmess;
-            }
-            while ($massiv = mysql_fetch_array($messages)) {
-                if ($i >= $start && $i < $end) {
-                    $d = $i / 2;
-                    $d1 = ceil($d);
-                    $d2 = $d1 - $d;
-                    $d3 = ceil($d2);
-                    if ($d3 == 0) {
-                        $div = "<div class='c'>";
-                    }
-                    else {
-                        $div = "<div class='b'>";
-                    }
-                    $mas = mysql_fetch_array(@ mysql_query("select * from `users` where `name`='" . $massiv['author'] . "';"));
-                    echo "$div<input type='checkbox' name='delch[]' value='" . $massiv['id'] . "'/><a href='pradd.php?id=" . $massiv['id'] . "&amp;act=readmess'>От $massiv[author]</a>";
-                    $vrp = $massiv['time'] + $set_user['sdvig'] * 3600;
-                    echo "(" . date("d.m.y H:i", $vrp) . ")<br/>Тема: $massiv[temka]<br/>";
-                    if (!empty ($massiv['attach'])) {
-                        echo "+ вложение<br/>";
-                    }
-                    if ($massiv['chit'] == "no") {
-                        echo "Не прочитано<br/>";
-                    }
-                    if ($massiv['otvet'] == 0) {
-                        echo "Не отвечено<br/>";
-                    }
-                    echo '</div>';
+            echo '<form action="pradd.php?act=delch" method="post">';
+            while ($res = mysql_fetch_assoc($req)) {
+                if ($res['chit'] == "no") {
+                    echo '<div class="gmenu">';
                 }
+                else {
+                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+                }
+                echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/><a href="pradd.php?id=' . $res['id'] . '&amp;act=readmess">От: ' . $res['author'] . '</a>';
+                $vrp = $res['time'] + $set_user['sdvig'] * 3600;
+                echo '&nbsp;<span class="gray">(' . date("d.m.y H:i", $vrp) . ')<br/>Тема:</span> ' . $res['temka'] . '<br/>';
+                if (!empty ($res['attach'])) {
+                    echo "+ вложение<br/>";
+                }
+                if ($res['otvet'] == 0) {
+                    echo "Не отвечено<br/>";
+                }
+                echo '</div>';
                 ++$i;
             }
-            echo "<hr/>";
-            if ($count > $kmess)                //TODO: Переделать на новый листинг по страницам
-
-                {
-                $ba = ceil($count / $kmess);
-                echo "Страницы:<br/>";
-                $asd = $start - ($kmess);
-                $asd2 = $start + ($kmess * 2);
-
-                if ($start != 0) {
-                    echo '<a href="pradd.php?act=in&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-                }
-                if ($asd < $count && $asd > 0) {
-                    echo ' <a href="pradd.php?act=in&amp;page=1&amp;">1</a> .. ';
-                }
-                $page2 = $ba - $page;
-                $pa = ceil($page / 2);
-                $paa = ceil($page / 3);
-                $pa2 = $page + floor($page2 / 2);
-                $paa2 = $page + floor($page2 / 3);
-                $paa3 = $page + (floor($page2 / 3) * 2);
-                if ($page > 13) {
-                    echo ' <a href="pradd.php?act=in&amp;page=' . $paa . '">' . $paa . '</a> <a href="pradd.php?act=in&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="pradd.php?act=in&amp;page=' . ($paa * 2) . '">' . ($paa *
-                    2) . '</a> <a href="pradd.php?act=in&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-                }
-                elseif ($page > 7) {
-                    echo ' <a href="pradd.php?act=in&amp;page=' . $pa . '">' . $pa . '</a> <a href="pradd.php?act=in&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                }
-                for ($i = $asd; $i < $asd2;) {
-                    if ($i < $count && $i >= 0) {
-                        $ii = floor(1 + $i / $kmess);
-
-                        if ($start == $i) {
-                            echo " <b>$ii</b>";
-                        }
-                        else {
-                            echo ' <a href="pradd.php?act=in&amp;page=' . $ii . '">' . $ii . '</a> ';
-                        }
-                    }
-                    $i = $i + $kmess;
-                }
-                if ($page2 > 12) {
-                    echo ' .. <a href="pradd.php?act=in&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="pradd.php?act=in&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="pradd.php?act=in&amp;page=' . ($paa3) . '">' . ($paa3
-                    ) . '</a> <a href="pradd.php?act=in&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-                }
-                elseif ($page2 > 6) {
-                    echo ' .. <a href="pradd.php?act=in&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="pradd.php?act=in&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                }
-                if ($asd2 < $count) {
-                    echo ' .. <a href="pradd.php?act=in&amp;page=' . $ba . '">' . $ba . '</a>';
-                }
-                if ($count > $start + $kmess) {
-                    echo ' <a href="pradd.php?act=in&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-                }
-                echo
-                "<form action='pradd.php'>Перейти к странице:<br/><input type='hidden' name='act' value='in'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+            if ($total > 0) {
+                echo '<div class="rmenu"><input type="submit" value="Удалить отмеченные"/></div>';
             }
-            echo "Всего: $count<br/>";
-            if ($count > 0) {
-                echo "<input type='submit' value='Удалить отмеченные'/><br/>";
+            echo '</form>';
+            echo '<div class="phdr">Всего: ' . $total . '</div>';
+            if ($total > $kmess) {
+                echo '<p>' . pagenav('pradd.php?act=in&amp;', $start, $total, $kmess) . '</p>';
+                echo '<p><form action="pradd.php?act=in" method="post"><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
             }
-            echo "</form>";
-            if ($count > 0) {
+            if ($total > 0) {
                 echo "<a href='pradd.php?act=delread'>Удалить прочитанные</a><br/>";
                 echo "<a href='pradd.php?act=delin'>Удалить все входящие</a><br/>";
             }
@@ -465,17 +381,16 @@ if ($user_id) {
             // Удаление всех входящих писем                           //
             ////////////////////////////////////////////////////////////
             require_once ("../incfiles/head.php");
-            $mess1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in';");
+            $mess1 = mysql_query("select * from `privat` where user='$login' and type='in'");
             while ($mas1 = mysql_fetch_array($mess1)) {
-                $delid = $mas1['id'];
                 $delfile = $mas1['attach'];
                 if (!empty ($delfile)) {
                     if (file_exists("../pratt/$delfile")) {
                         unlink("../pratt/$delfile");
                     }
                 }
-                mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
             }
+            mysql_query("DELETE FROM `privat` WHERE `user` = '$login' AND `type` = 'in'");
             echo "Входящие письма удалены<br/>";
             break;
 
@@ -520,8 +435,8 @@ if ($user_id) {
             ////////////////////////////////////////////////////////////
             // Удаление отдельного сообщения                          //
             ////////////////////////////////////////////////////////////
-            require_once ("../incfiles/head.php");
-            $mess1 = mysql_query("select * from `privat` where id='" . intval($_GET['del']) . "' and type='in';");
+            require_once ('../incfiles/head.php');
+            $mess1 = mysql_query("SELECT * FROM `privat` WHERE `user` = '$login' AND `id` = '" . intval($_GET['del']) . "' LIMIT 1");
             $mas1 = mysql_fetch_array($mess1);
             $delfile = $mas1['attach'];
             if (!empty ($delfile)) {
@@ -529,8 +444,8 @@ if ($user_id) {
                     unlink("../pratt/$delfile");
                 }
             }
-            mysql_query("delete from `privat` where `id`='" . intval($_GET['del']) . "';");
-            echo "Сообщение удалено!<br/>";
+            mysql_query("DELETE FROM `privat` WHERE (`user` = '$login' OR `author` = '$login') AND `id` = '" . intval($_GET['del']) . "' LIMIT 1");
+            echo 'Сообщение удалено!<br/>';
             break;
 
         case 'delout' :
@@ -551,109 +466,36 @@ if ($user_id) {
             // Список отправленных                                    //
             ////////////////////////////////////////////////////////////
             require_once ("../incfiles/head.php");
-            $messages = mysql_query("select * from `privat` where author='" . $login . "' and type='out' order by time desc;");
-            echo '<div class="phdr">Исходящие письма</div>';
+            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `author` = '$login' AND `type` = 'out'"), 0);
+            $req = mysql_query("SELECT * FROM `privat` WHERE `author` = '$login' AND `type` = 'out' ORDER BY `id` DESC LIMIT $start,$kmess");
+            echo '<div class="phdr"><b>Отправленные письма</b></div>';
             echo "<form action='pradd.php?act=delch' method='post'>";
-            $count = mysql_num_rows($messages);
-            if (empty ($_GET['page'])) {
-                $page = 1;
-            }
-            else {
-                $page = intval($_GET['page']);
-            }
-            $start = $page * $kmess - $kmess;
-            if ($count < $start + $kmess) {
-                $end = $count;
-            }
-            else {
-                $end = $start + $kmess;
-            }
-            while ($massiv = mysql_fetch_array($messages)) {
-                if ($i >= $start && $i < $end) {
-                    $d = $i / 2;
-                    $d1 = ceil($d);
-                    $d2 = $d1 - $d;
-                    $d3 = ceil($d2);
-                    if ($d3 == 0) {
-                        $div = "<div class='c'>";
-                    }
-                    else {
-                        $div = "<div class='b'>";
-                    }
-                    $vpr = $massiv['time'] + $set_user['sdvig'] * 3600;
-                    echo "$div<input type='checkbox' name='delch[]' value='" . $massiv['id'] . "'/><a href='pradd.php?act=readout&amp;id=" . $massiv['id'] . "'>Для: $massiv[user]</a> (" . date("d.m.y H:i", $vpr) .
-                    ")<br/>Тема: $massiv[temka]<br/>";
-                    if (!empty ($massiv['attach'])) {
-                        echo "+ вложение<br/>";
-                    }
-                    if ($massiv['chit'] == "no") {
-                        echo "Не прочитано<br/>";
-                    }
-                    echo '</div>';
+            while ($res = mysql_fetch_assoc($req)) {
+                if ($res['chit'] == "no") {
+                    echo '<div class="gmenu">';
                 }
+                else {
+                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+                }
+                echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>Для: <a href="pradd.php?id=' . $res['id'] . '&amp;act=readout">' . $res['user'] . '</a>';
+                $vrp = $res['time'] + $set_user['sdvig'] * 3600;
+                echo '&nbsp;<span class="gray">(' . date("d.m.y H:i", $vrp) . ')<br/>Тема:</span> ' . $res['temka'] . '<br/>';
+                if (!empty ($res['attach'])) {
+                    echo "+ вложение<br/>";
+                }
+                echo '</div>';
                 ++$i;
             }
-            echo '<hr/>';
-            if ($count > $kmess)                //TODO: Переделать на новый листинг по страницам
-
-                {
-                $ba = ceil($count / $kmess);
-                echo "Страницы:<br/>";
-                $asd = $start - ($kmess);
-                $asd2 = $start + ($kmess * 2);
-                if ($start != 0) {
-                    echo '<a href="pradd.php?act=out&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-                }
-                if ($asd < $count && $asd > 0) {
-                    echo ' <a href="pradd.php?act=out&amp;page=1&amp;">1</a> .. ';
-                }
-                $page2 = $ba - $page;
-                $pa = ceil($page / 2);
-                $paa = ceil($page / 3);
-                $pa2 = $page + floor($page2 / 2);
-                $paa2 = $page + floor($page2 / 3);
-                $paa3 = $page + (floor($page2 / 3) * 2);
-                if ($page > 13) {
-                    echo ' <a href="pradd.php?act=out&amp;page=' . $paa . '">' . $paa . '</a> <a href="pradd.php?act=out&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="pradd.php?act=out&amp;page=' . ($paa * 2) . '">' . ($paa
-                    * 2) . '</a> <a href="pradd.php?act=out&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-                }
-                elseif ($page > 7) {
-                    echo ' <a href="pradd.php?act=out&amp;page=' . $pa . '">' . $pa . '</a> <a href="pradd.php?act=out&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-                }
-                for ($i = $asd; $i < $asd2;) {
-                    if ($i < $count && $i >= 0) {
-                        $ii = floor(1 + $i / $kmess);
-                        if ($start == $i) {
-                            echo " <b>$ii</b>";
-                        }
-                        else {
-                            echo ' <a href="pradd.php?act=out&amp;page=' . $ii . '">' . $ii . '</a> ';
-                        }
-                    }
-                    $i = $i + $kmess;
-                }
-                if ($page2 > 12) {
-                    echo ' .. <a href="pradd.php?act=out&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="pradd.php?act=out&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="pradd.php?act=out&amp;page=' . ($paa3) . '">' .
-                    ($paa3) . '</a> <a href="pradd.php?act=out&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-                }
-                elseif ($page2 > 6) {
-                    echo ' .. <a href="pradd.php?act=out&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="pradd.php?act=out&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-                }
-                if ($asd2 < $count) {
-                    echo ' .. <a href="pradd.php?act=out&amp;page=' . $ba . '">' . $ba . '</a>';
-                }
-                if ($count > $start + $kmess) {
-                    echo ' <a href="pradd.php?act=out&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-                }
-                echo
-                "<form action='pradd.php'>Перейти к странице:<br/><input type='hidden' name='act' value='out'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+            if ($total > 0) {
+                echo '<div class="rmenu"><input type="submit" value="Удалить отмеченные"/></div>';
             }
-            echo "Всего: $count<br/>";
-            if ($count > 0) {
-                echo "<input type='submit' value='Удалить отмеченные'/><br/>";
+            echo '</form>';
+            echo '<div class="phdr">Всего: ' . $total . '</div>';
+            if ($total > $kmess) {
+                echo '<p>' . pagenav('pradd.php?act=out&amp;', $start, $total, $kmess) . '</p>';
+                echo '<p><form action="pradd.php?act=out" method="post"><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
             }
-            echo "</form>";
-            if ($count > 0) {
+            if ($total > 0) {
                 echo "<a href='pradd.php?act=delout'>Удалить все исходящие</a><br/>";
             }
             break;
@@ -685,6 +527,7 @@ if ($user_id) {
             echo '<br/><br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">Назад</a><br/>';
             break;
     }
+
     echo "<p><a href='../index.php?act=cab'>В кабинет</a><br/>";
     echo "<a href='pradd.php?act=write'>Написать</a></p>";
 }

@@ -37,7 +37,7 @@ class mainpage {
             $reqtime = $realtime - ($this->settings['days'] * 86400);
             $req = mysql_query("SELECT * FROM `news` WHERE `time` > '" . $reqtime . "' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
             if (mysql_num_rows($req) > 0) {
-                $news = '<div class="bmenu">Новости</div>';
+                $news = '<div class="phdr"><b>Новости</b></div>';
                 while ($res = mysql_fetch_array($req)) {
                     $text = $res['text'];
                     // Если текст больше заданного предела, обрезаем
@@ -73,7 +73,7 @@ class mainpage {
                             $news .= $text;
                             break;
                         default :
-                            $news .= '<u>' . $res['name'] . '</u><br />' . $text;
+                            $news .= '<b>' . $res['name'] . '</b><br />' . $text;
                     }
                     // Ссылка на каменты
                     if (!empty ($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
@@ -106,7 +106,7 @@ class mainpage {
         $ltime = $realtime - (86400 * 3);
         $req = mysql_query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . $ltime . "'");
         $res = mysql_result($req, 0);
-        return ($res > 0 ? '/<font color="#FF0000">+' . $res . '</font>' : false);
+        return ($res > 0 ? '/<span class="red">+' . $res . '</span>' : false);
     }
 }
 

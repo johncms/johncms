@@ -50,7 +50,7 @@ if ($rights == 3 || $rights >= 6) {
     }
     elseif (isset ($_GET['hid']) || isset ($_GET['yes']) && $rights < 9) {
         // Скрываем топик
-        mysql_query("UPDATE `forum` SET `close` = '1' WHERE `id` = '" . $id . "' LIMIT 1");
+        mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '" . $id . "' LIMIT 1");
         // Скрываем прикрепленные файлы
         $req1 = mysql_query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
         if (mysql_num_rows($req1) > 0) {
@@ -62,12 +62,13 @@ if ($rights == 3 || $rights >= 6) {
     }
 
     require_once ("../incfiles/head.php");
-    echo '<p>Вы действительно хотите удалить тему?</p>';
-    echo '<p><a href="?act=deltema&amp;id=' . $id . '&amp;yes">Удалить</a><br />';
-    if ($rights == 9 && $res['close'] != 1) {
-        echo '<a href="?act=deltema&amp;id=' . $id . '&amp;hid">Скрыть</a><br />';
-    }
-    echo '<a href="?id=' . $id . '">Отмена</a></p>';
+    echo '<div class="phdr"><b>Форум:</b> удалить тему</div>';
+    echo '<div class="rmenu"><p>Вы действительно хотите удалить?';
+    echo '</p><p><a href="index.php?id=' . $id . '">Не удалять</a> | <a href="index.php?act=deltema&amp;id=' . $id . '&amp;yes">Удалить</a>';
+    if ($rights == 9 && $res['close'] != 1)
+        echo ' | <a href="index.php?act=deltema&amp;id=' . $id . '&amp;hid">Скрыть</a>';
+    echo '</p></div>';
+    echo '<div class="phdr">&nbsp;</div>';
 }
 else {
     echo '<p>Доступ закрыт!!!</p>';

@@ -25,7 +25,7 @@ class ipinit {
     private $requests;    // Число запросов с IP адреса за период времени
 
     function __construct() {
-        $this->ip = $this->getip();
+        $this->ip = ip2long($this->getip());
         // Проверка адреса IP на HTTP флуд
         if ($this->flood_chk) {
             $this->requests = $this->reqcount();
@@ -36,17 +36,12 @@ class ipinit {
 
     // Получаем реальный адрес IP
     private function getip() {
-        $ip1 = isset ($_SERVER['HTTP_X_FORWARDED_FOR']) ? ip2long($_SERVER['HTTP_X_FORWARDED_FOR']) : false;
-        $ip2 = isset ($_SERVER['HTTP_VIA']) ? ip2long($_SERVER['HTTP_VIA']) : false;
-        $ip3 = isset ($_SERVER['REMOTE_ADDR']) ? ip2long($_SERVER['REMOTE_ADDR']) : false;
-        if ($ip1 && $ip1 > 184549376) {
-            return $ip1;
+        if (isset ($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = explode(",", $_SERVER['HTTP_X_FORWARDED_FOR']);
+            return $ip[sizeof($ip) - 1];
         }
-        elseif ($ip2 && $ip2 > 184549376) {
-            return $ip2;
-        }
-        elseif ($ip3) {
-            return $ip3;
+        elseif ($_SERVER['REMOTE_ADDR']) {
+            return $_SERVER['REMOTE_ADDR'];
         }
         else {
             die('Unknown IP');

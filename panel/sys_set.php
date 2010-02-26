@@ -50,11 +50,11 @@ echo '</p><p><h3>META тэги</h3>';
 echo '&nbsp;Ключевые слова:<br />&nbsp;<textarea cols="20" rows="4" name="meta_key">' . $set['meta_key'] . '</textarea><br />';
 echo '&nbsp;Описание:<br />&nbsp;<textarea cols="20" rows="4" name="meta_desc">' . $set['meta_desc'] . '</textarea>';
 echo '</p><p><h3>Тема оформления</h3>&nbsp;<select name="skindef">';
-$dr = opendir('../theme');
-while ($skindef = readdir($dr)) {
+$dir = opendir('../theme');
+while ($skindef = readdir($dir)) {
     if (($skindef != '.') && ($skindef != '..') && ($skindef != '.svn')) {
         $skindef = str_replace('.css', '', $skindef);
-        echo '<option' . ($set_user['skin'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
+        echo '<option' . ($set['skindef'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
     }
 }
 closedir($dir);

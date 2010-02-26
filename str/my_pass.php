@@ -57,9 +57,15 @@ switch ($act) {
         $newpass = isset ($_POST['newpass']) ? trim($_POST['newpass']) : '';
         $newconf = isset ($_POST['newconf']) ? trim($_POST['newconf']) : '';
         $autologin = isset ($_POST['autologin']) ? 1 : 0;
-        if (!$oldpass || !$newpass || !$newconf)
-            $error[] = 'Нужно заполнить все поля формы';
-        if (md5(md5($oldpass)) !== $user['password'] && !$error)
+        if ($rights >= 7) {
+            if (!$newpass || !$newconf)
+                $error[] = 'Нужно заполнить все поля формы';
+        }
+        else {
+            if (!$oldpass || !$newpass || !$newconf)
+                $error[] = 'Нужно заполнить все поля формы';
+        }
+        if (!$error && $rights < 7 && md5(md5($oldpass)) !== $user['password'])
             $error[] = 'Старый пароль введен неверно';
         if ($newpass != $newconf)
             $error[] = 'Подтверждение нового пароля введено неверно';
@@ -72,13 +78,13 @@ switch ($act) {
             mysql_query("UPDATE `users` SET `password` = '" . mysql_real_escape_string(md5(md5($newpass))) . "' WHERE `id` = '" . $user['id'] . "' LIMIT 1");
             // Проверяем и записываем COOKIES
             if (isset ($_COOKIE['cuid']) && isset ($_COOKIE['cups']))
-                setcookie('cups', base64_encode($newpass), time() + 3600 * 24 * 365);
+                setcookie('cups', md5($newpass), time() + 3600 * 24 * 365);
             echo '<div class="gmenu"><p><b>Пароль успешно изменен</b><br />';
             if ($autologin) {
                 // Показываем ссылку на Автологин
                 echo '</p><p>Ссылка на Автологин:<br /><input type="text" value="' . $home . '/auto.php?id=' . $user['id'] . '&amp;p=' . $newpass . '" /><br />';
                 echo
-                '</p><p><b>Внимание!</b><br />В целях безопасности, никогда не используйте Автологин в ненадежных местах (интернет-кафе, чужие компьютеы и др.)';
+                '</p><p><b>Внимание!</b><br />В целях безопасности, никогда не используйте Автологин в ненадежных местах (интернет-кафе, чужие компьютеры и др.)';
             }
             echo '</p></div>';
         }
@@ -90,7 +96,7 @@ switch ($act) {
 
     default :
         echo '<div class="phdr"><b>Меняем пароль:</b> ' . $user['name'] . '</div>';
-        echo '<form action="my_pass.php?act=change" method="post">';
+        echo '<form action="my_pass.php?act=change' . ($id ? '&amp;id=' . $id : '') . '" method="post">';
         if (!$id || $rights < 7)
             echo '<div class="menu"><p>Введите старый пароль:<br /><input type="password" name="oldpass" /></p></div>';
         echo '<div class="gmenu"><p>Введите новый пароль:<br /><input type="password" name="newpass" /><br />Повторите пароль:<br /><input type="password" name="newconf" />';

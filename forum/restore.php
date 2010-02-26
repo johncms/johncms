@@ -17,13 +17,13 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if (($rights != 3 && $rights < 6) || !$id) {
-    header('Location: index.php');
+    header('Location: http://gazenwagen.com?act=404');
     exit;
 }
 $req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND (`type` = 't' OR `type` = 'm') LIMIT 1");
 if (mysql_num_rows($req)) {
     $res = mysql_fetch_assoc($req);
-    mysql_query("UPDATE `forum` SET `close` = '0' WHERE `id` = '$id'");
+    mysql_query("UPDATE `forum` SET `close` = '0', `close_who` = '$login' WHERE `id` = '$id'");
     if ($res['type'] == 't') {
         header('Location: index.php?id=' . $id);
     }

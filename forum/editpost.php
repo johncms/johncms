@@ -63,8 +63,7 @@ else {
 }
 
 if (!$error) {
-    switch ($do
-            ) {
+    switch ($do) {
             case 'restore' :
                 ////////////////////////////////////////////////////////////
                 // Восстановление удаленного поста                        //
@@ -75,7 +74,7 @@ if (!$error) {
                     $res_u = mysql_fetch_assoc($req_u);
                     mysql_query("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "' LIMIT 1");
                 }
-                mysql_query("UPDATE `forum` SET `close` = '0' WHERE `id` = '$id' LIMIT 1");
+                mysql_query("UPDATE `forum` SET `close` = '0', `close_who` = '$login' WHERE `id` = '$id' LIMIT 1");
                 header('Location: ' . $link);
                 break;
 
@@ -123,11 +122,11 @@ if (!$error) {
                 if ($posts == 1) {
                     // Если это был последний пост темы, то скрываем саму тему
                     $res_l = mysql_fetch_assoc(mysql_query("SELECT `refid` FROM `forum` WHERE `id` = '" . $res['refid'] . "' LIMIT 1"));
-                    mysql_query("UPDATE `forum` SET `close` = '1' WHERE `id` = '" . $res['refid'] . "' AND `type` = 't' LIMIT 1");
+                    mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '" . $res['refid'] . "' AND `type` = 't' LIMIT 1");
                     header('Location: index.php?id=' . $res_l['refid']);
                 }
                 else {
-                    mysql_query("UPDATE `forum` SET `close` = '1' WHERE `id` = '$id' LIMIT 1");
+                    mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id' LIMIT 1");
                     header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
                 }
             }

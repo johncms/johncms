@@ -237,8 +237,12 @@ else {
                 // Выводим название топика
                 echo '<div class="phdr"><a name="up" id="up"></a><a href="#down"><img src="../theme/' . $set_user['skin'] . '/images/down.png" alt="Вниз" width="20" height="10" border="0"/></a>&nbsp;&nbsp;<b>' . $type1['text'] .
                 '</b></div>';
+                // Метки удаления темы
                 if ($type1['close'])
-                    echo '<div class="rmenu"><b>Тема удалена</b></div>';
+                    echo '<div class="rmenu">Тему удалил: <b>' . $type1['close_who'] . '</b></div>';
+                elseif (!empty ($type1['close_who']) && $rights >= 7)
+                    echo '<div class="gmenu"><small>Отменил удаление темы: <b>' . $type1['close_who'] . '</b></small></div>';
+                // Метки закрытия темы    
                 if ($type1['edit'])
                     echo '<div class="rmenu">Тема закрыта</div>';
                 ////////////////////////////////////////////////////////////
@@ -341,7 +345,10 @@ else {
                     echo '<form action="index.php?act=massdel" method="post">';
                 $i = 1;
                 while ($res = mysql_fetch_assoc($req)) {
-                    echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
+                    if ($res['close'])
+                        echo '<div class="rmenu">';
+                    else
+                        echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
                     if ($set_user['avatar']) {
                         echo '<table cellpadding="0" cellspacing="0"><tr><td>';
                         if (file_exists(('../files/avatar/' . $res['user_id'] . '.png')))
@@ -366,10 +373,8 @@ else {
                     echo $user_rights[$res['rights']];
                     // Метка Онлайн / Офлайн
                     echo ($realtime > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
-                    // Ссылки на бан, ответ и цитирование
+                    // Ссылки на ответ и цитирование
                     if ($user_id && $user_id != $res['user_id']) {
-                        //if ($rights == 3 || $rights >= 6)
-                            //echo '<span class="red"><a href="../' . $admp . '/zaban.php?do=ban&amp;id=' . $res['user_id'] . '&amp;fid=' . $res['id'] . '">[б]</a></span>&nbsp;';
                         echo '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">[о]</a>&nbsp;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">[ц]</a> ';
                     }
                     // Время поста
@@ -379,10 +384,6 @@ else {
                         echo '<div class="status"><img src="../theme/' . $set_user['skin'] . '/images/label.png" alt="" align="middle"/>&nbsp;' . $res['status'] . '</div>';
                     if ($set_user['avatar'])
                         echo '</td></tr></table>';
-                    ###########################
-                    if ($res['close']) {
-                        echo '<span class="red">Пост удалён!</span><br/>';
-                    }
                     ////////////////////////////////////////////////////////////
                     // Вывод текста поста                                     //
                     ////////////////////////////////////////////////////////////
@@ -423,7 +424,18 @@ else {
                     if (mysql_num_rows($freq) > 0) {
                         $fres = mysql_fetch_assoc($freq);
                         $fls = round(filesize('./files/' . $fres['filename']) / 1024, 2);
-                        echo '<br /><span class="gray">Прикреплённый файл:<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a> (' . $fls . ' кб.)<br/>';
+                        echo '<br /><span class="gray">Прикреплённый файл:';
+                        // Предпросмотр изображений
+                        $att_ext = strtolower(format('./files/' . $fres['filename']));
+                        $pic_ext = array('gif', 'jpg', 'jpeg', 'png');
+                        if (in_array($att_ext, $pic_ext)) {
+                            echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+                            echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="Нажмите для просмотра изображения" /></a></div>';
+                        }
+                        else {
+                            echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+                        }
+                        echo ' (' . $fls . ' кб.)<br/>';
                         echo 'Скачано: ' . $fres['dlcount'] . ' раз.</span>';
                     }
                     if ((($rights == 3 || $rights >= 6) && $rights >= $res['rights']) || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > $realtime - 300) || ($res['user_id'] == $user_id && $set_forum
@@ -436,8 +448,14 @@ else {
                         if ($rights >= 7 && $res['close'] == 1)
                             echo '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">Восстановить</a> | ';
                         echo '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">Удалить</a>';
+                        if ($res['close']) {
+                            echo '<div class="red">Пост удалил: <b>' . $res['close_who'] . '</b></div>';
+                        }
+                        elseif (!empty ($res['close_who'])) {
+                            echo '<div class="green">Пост восстановил: <b>' . $res['close_who'] . '</b></div>';
+                        }
                         if ($rights == 3 || $rights >= 6)
-                            echo '<br /><span class="gray">' . $res['ip'] . ' - ' . $res['soft'] . '</span>';
+                            echo '<div class="gray">' . $res['ip'] . ' - ' . $res['soft'] . '</div>';
                         echo '</div>';
                     }
                     echo '</div>';

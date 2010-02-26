@@ -81,7 +81,11 @@ switch ($mod) {
                 }
                 $rid = $arr1[0] + 1;
             }
-            mysql_query("insert into `chat` values(0,'','" . $rid . "','r','" . $realtime . "','','','" . $tr . "','" . $nr . "','','','','');");
+            mysql_query("INSERT INTO `chat` SET
+            `realid` = '$rid',
+            `type` = 'r',
+            `dpar` = '$tr',
+            `text` = '$nr'");
             header("Location: index.php?act=mod_chat");
         }
         else {

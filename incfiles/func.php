@@ -162,7 +162,6 @@ function fgal($mod = 0) {
     global $realtime;
     $old = $realtime - (3 * 24 * 3600);
     $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `time` > '" . $old . "' AND `type` = 'ft'"), 0);
-    mysql_free_result($req);
     if ($mod == 0) {
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft'"), 0);
         $out = $total;

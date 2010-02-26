@@ -153,6 +153,7 @@ CREATE TABLE `forum` (
   `soft` text NOT NULL,
   `text` text NOT NULL,
   `close` tinyint(1) NOT NULL default '0',
+  `close_who` varchar(25) NOT NULL,
   `vip` tinyint(1) NOT NULL default '0',
   `edit` text NOT NULL,
   `tedit` int(11) NOT NULL default '0',
@@ -161,6 +162,7 @@ CREATE TABLE `forum` (
   KEY `refid` (`refid`),
   KEY `type` (`type`),
   KEY `time` (`time`),
+  KEY `close` (`close`),
   KEY `user_id` (`user_id`),
   FULLTEXT KEY `text` (`text`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -347,12 +349,13 @@ CREATE TABLE `cms_settings` (
 -- Дамп данных таблицы `cms_settings`
 --
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
+('meta_desc', ''),
 ('emailadmina', ''),
 ('meta_key', ''),
-('meta_desc', ''),
 ('sdvigclock', '0'),
-('copyright', 'JohnCMS'),
+('copyright', 'JohnCMS 3.1.0'),
 ('homeurl', ''),
+('karma', 'a:6:{s:12:"karma_points";i:5;s:10:"karma_time";i:86400;s:5:"forum";i:50;s:4:"time";i:0;s:2:"on";i:1;s:3:"adm";i:0;}'),
 ('admp', 'panel'),
 ('flsz', '1000'),
 ('gzip', '1'),
@@ -367,7 +370,8 @@ INSERT INTO `cms_settings` (`key`, `val`) VALUES
 ('mod_down', '2'),
 ('mod_lib_comm', '1'),
 ('mod_gal_comm', '1'),
-('skindef', 'default');
+('skindef', 'default'),
+('news', 'a:8:{s:4:"view";i:1;s:4:"size";i:500;s:8:"quantity";i:2;s:4:"days";i:5;s:6:"breaks";i:1;s:7:"smileys";i:0;s:4:"tags";i:1;s:3:"kom";i:1;}');
 
 --
 -- Структура таблицы `users`
@@ -379,6 +383,7 @@ CREATE TABLE `users` (
   `name` varchar(25) NOT NULL default '',
   `name_lat` varchar(40) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
+  `failed_login` tinyint(4) NOT NULL default '0',
   `imname` varchar(25) NOT NULL default '',
   `sex` varchar(2) NOT NULL default '',
   `komm` int(10) NOT NULL default '0',
@@ -408,8 +413,6 @@ CREATE TABLE `users` (
   `mailvis` tinyint(1) NOT NULL default '1',
   `dayb` int(2) NOT NULL default '0',
   `monthb` int(2) NOT NULL default '0',
-  `plus` int(3) NOT NULL default '0',
-  `minus` int(3) NOT NULL default '0',
   `vrrat` int(11) NOT NULL default '0',
   `alls` varchar(25) NOT NULL default '',
   `balans` int(11) NOT NULL default '0',
@@ -423,10 +426,33 @@ CREATE TABLE `users` (
   `set_user` text NOT NULL,
   `set_forum` text NOT NULL,
   `set_chat` text NOT NULL,
+  `karma` int(11) NOT NULL default '0',
+  `karma_time` int(11) NOT NULL default '0',
+  `plus_minus` varchar(40) NOT NULL default '0|0',
+  `karma_off` int(1) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `name_lat` (`name_lat`),
   KEY `lastdate` (`lastdate`),
   KEY `place` (`place`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Структура таблицы `karma_users`
+--
+DROP TABLE IF EXISTS `karma_users`;
+CREATE TABLE `karma_users` (
+  `id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `karma_user` int(11) NOT NULL,
+  `points` int(2) NOT NULL,
+  `type` int(1) NOT NULL,
+  `time` int(11) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `karma_user` (`karma_user`),
+  KEY `type` (`type`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --

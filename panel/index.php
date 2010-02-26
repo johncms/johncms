@@ -27,7 +27,7 @@ if ($rights < 6) {
 }
 
 require_once ('../incfiles/head.php');
-$array = array('usr_reg', 'usr_adm', 'usr_list', 'usr_del', 'usr_ban', 'usr_search_nick', 'usr_search_ip', 'mod_ads', 'mod_counters', 'mod_news', 'mod_forum', 'mod_chat', 'sys_set', 'sys_smileys', 'sys_access', 'sys_antispy', 'sys_ipban');
+$array = array('usr_reg', 'usr_adm', 'usr_list', 'usr_del', 'usr_ban', 'usr_search_nick', 'usr_search_ip', 'mod_ads', 'mod_counters', 'mod_news', 'mod_forum', 'mod_chat', 'sys_set', 'sys_smileys', 'sys_access', 'sys_antispy', 'sys_ipban', 'mod_karma');
 if (in_array($act, $array) && file_exists($act . '.php')) {
     require_once ($act . '.php');
 }
@@ -59,6 +59,7 @@ else {
         echo '<li><a href="index.php?act=mod_news">Новости</a></li>';
         echo '<li><a href="index.php?act=mod_forum">Форум</a></li>';
         echo '<li><a href="index.php?act=mod_chat">Чат</a></li>';
+        echo '<li><a href="index.php?act=mod_karma">Карма</a></li>';
         echo '</ul></p>';
     }
     echo '</div>';

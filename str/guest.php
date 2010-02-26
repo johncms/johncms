@@ -88,11 +88,11 @@ switch ($act) {
         $admset = isset ($_SESSION['ga']) ? 1 : 0;
         // Антиспам, проверка на частоту добавления сообщений
         if ($user_id) {
-            $old = ($rights > 0) ? 10 : 30;
+            $old = ($rights > 0) ? 5 : 10;
             $spam = $datauser['lastpost'] > ($realtime - $old) ? 1 : false;
         }
         else {
-            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `soft`='" . mysql_real_escape_string($agn) . "' AND `time` >='" . ($realtime - 30) . "' AND `ip` ='" . $ipl . "' AND `adm`='" . $admset . "'");
+            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `browser`='" . mysql_real_escape_string($agn) . "' AND `time` >='" . ($realtime - 30) . "' AND `ip` ='" . $ipl . "' AND `adm`='" . $admset . "'");
             $spam = mysql_result($req, 0) > 0 ? 1 : false;
         }
         if ($spam) {
@@ -129,8 +129,7 @@ switch ($act) {
 		`user_id`='" . $user_id . "',
 		`name`='" . $from . "',
 		`text`='" . mysql_real_escape_string($msg) . "',
-		`ip`='" . $ipl .
-        "',
+		`ip`='" . $ipl . "',
 		`browser`='" . mysql_real_escape_string($agn) . "'");
         // Фиксируем время последнего поста (антиспам)
         if ($user_id) {

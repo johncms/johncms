@@ -233,8 +233,8 @@ switch ($act) {
         echo '<input name="online" type="checkbox" value="1" ' . ($set_user['online'] ? 'checked="checked"' : '') . ' />&nbsp;Время в Online<br />';
         echo '<input name="movings" type="checkbox" value="1" ' . ($set_user['movings'] ? 'checked="checked"' : '') . ' />&nbsp;Счетчик переходов';
         echo '</p><p><h3>Тема оформления</h3><select name="skin">';
-        $dr = opendir('../theme');
-        while ($skindef = readdir($dr)) {
+        $dir = opendir('../theme');
+        while ($skindef = readdir($dir)) {
             if (($skindef != '.') && ($skindef != '..') && ($skindef != '.svn')) {
                 $skindef = str_replace('.css', '', $skindef);
                 echo '<option' . ($set_user['skin'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';

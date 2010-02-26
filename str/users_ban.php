@@ -115,7 +115,16 @@ switch ($act) {
 					`ban_type` = '$term',
 					`ban_who` = '$login',
 					`ban_reason` = '" . mysql_real_escape_string($reason) . "'") or die('error');
-                    echo '<div class="rmenu"><p><h3>Пользователь забанен</h3></p></div>';
+                    if ($set_karma['on']) {
+                       $points = $set_karma['karma_points']*2;
+                       mysql_query("INSERT INTO `karma_users` SET `user_id` = '0', `name` = 'Система', `karma_user` = '$id', `points` = '$points', `type` = '0', `time` = '$realtime', `text` = 'Бан ($ban_term[$term])'");
+                       $plm = explode('|', $user['plus_minus']);
+                       $karma = $user['karma'] - $points;
+                       $plus_minus = $plm[0] . '|' . ($plm[1] + $points);
+                       mysql_query("UPDATE `users` SET `karma`='$karma', `plus_minus`='$plus_minus' WHERE `id` = '$id' LIMIT 1");
+                       $text = ' и получил <span class="red">-' . $points . ' очков</span> к карме';
+                    }
+                    echo '<div class="rmenu"><p><h3>Пользователь забанен ' . $text . '</h3></p></div>';
                 }
                 else {
                     echo display_error($error);

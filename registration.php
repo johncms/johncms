@@ -42,7 +42,7 @@ function regform() {
     echo '<small>Макс. 30 символов.</small></p>';
     echo '<p>О себе: <small>(макс. 500 символов)</small><br/><textarea rows="3" name="about">' . check($_POST['about']) . '</textarea></p></div>';
     echo '<div class="gmenu"><p>Если Вы не видите рисунок с кодом,<br />включите поддержку графики в настройках браузера<br />и обновите страницу.<br />';
-    echo '<img src="code.php" alt=""/><br />';
+    echo '<img src="code.php" alt="Проверочный код"/><br />';
     echo 'Код с картинки:<br/><input type="text" size="4" maxlength="4"  name="kod"/></p></div>';
     echo '<div class="bmenu"><input type="submit" name="submit" value="Регистрация"/></div></form>';
 }
@@ -68,7 +68,7 @@ if (isset ($_POST['submit'])) {
     // Проверка пароля
     if (empty ($reg_pass))
         $error = $error . 'Не введён пароль!<br/>';
-    elseif (mb_strlen($reg_pass) < 3)
+    elseif (mb_strlen($reg_pass) < 3 || mb_strlen($reg_pass) > 10)
         $error = $error . 'Недопустимая длина пароля<br />';
     if (preg_match("/[^\da-zA-Z_]+/", $reg_pass))
         $error = $error . 'Недопустимые символы в пароле!<br/>';
@@ -118,12 +118,12 @@ if (isset ($_POST['submit'])) {
         echo "Ваш id: " . $usid . "<br/>";
         echo "Ваш логин: " . $reg_nick . "<br/>";
         echo "Ваш Пароль: " . $reg_pass . "<br/>";
-        echo "Ссылка для автовхода:<br/><input type='text' value='" . $home . "/auto.php?id=" . $usid . "&amp;p=" . $reg_pass . "' /><br/>";
-        if ($set['rmod'] == 1) {
+        echo "Ссылка для автовхода:<br/><input type='text' value='" . $home . "/login.php?id=" . $usid . "&amp;p=" . $reg_pass . "' /><br/>";
+        if ($set['mod_reg'] == 1) {
             echo "Пожалуйста,ожидайте подтверждения Вашей регистрации администратором<br/>";
         }
         else {
-            echo "<br /><a href='auto.php?id=" . $usid . "&amp;p=" . $reg_pass . "'>ВХОД</a><br/><br/>";
+            echo "<br /><a href='login.php?id=" . $usid . "&amp;p=" . $reg_pass . "'>ВХОД</a><br/><br/>";
         }
     }
     else {

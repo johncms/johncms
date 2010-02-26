@@ -16,6 +16,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $headmod = isset ($headmod) ? mysql_real_escape_string($headmod) : '';
 if ($headmod == 'mainpage')
     $textl = $copyright;
@@ -76,8 +77,8 @@ echo '<div class="header">Привет ' . ($user_id ? '<b> ' . $login . '</b>!'
 // Выводим меню пользователя
 echo '<div class="tmn">';
 echo ($headmod != "mainpage" || ($headmod == 'mainpage' && $act)) ? '<a href=\'' . $home . '\'>На главную</a> | ' : '';
-echo ($user_id && $_GET['mod'] != 'cab') ? '<a href="' . $home . '/index.php?act=cab">Личное</a> | ' : '';
-echo $user_id ? '<a href="' . $home . '/exit.php">Выход</a>' : '<a href="' . $home . '/in.php">Вход</a> | <a href="' . $home . '/registration.php">Регистрация</a>';
+echo ($user_id && $mod != 'cab') ? '<a href="' . $home . '/index.php?act=cab">Личное</a> | ' : '';
+echo $user_id ? '<a href="' . $home . '/exit.php">Выход</a>' : '<a href="' . $home . '/login.php">Вход</a> | <a href="' . $home . '/registration.php">Регистрация</a>';
 echo '</div>';
 echo '<div class="maintxt">';
 
@@ -89,8 +90,12 @@ if (!empty ($cms_ads[1]))
 // Фиксация местоположений посетителей                    //
 ////////////////////////////////////////////////////////////
 $sql = '';
+$set_karma = unserialize($set['karma']);
 if ($user_id) {
-    // Фиксируем местоположение авторизованных
+	// Фиксируем местоположение авторизованных
+    if(!$datauser['karma_off'] && $set_karma['on'] && $datauser['karma_time'] <= ($realtime-86400)) {
+       $sql = "`karma_time` = '$realtime', ";
+    }
     $movings = $datauser['movings'];
     if ($datauser['lastdate'] < ($realtime - 300)) {
         $movings = 0;
@@ -155,8 +160,7 @@ if (isset ($ban))
     echo '<div class="alarm">БАН&nbsp;<a href="' . $home . '/str/users_ban.php">Подробно</a></div>';
 
 // Проверяем, есть ли новые письма
-if ($headmod != "pradd") {
-    $newl = mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'");
+if ($headmod != "pradd" && $user_id) {
     $countnew = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'"), 0);
     if ($countnew > 0) {
         echo "<div class=\"rmenu\" style='text-align: center'><a href='$home/str/pradd.php?act=in&amp;new'><b><font color='red'>Вам письмо: $countnew</font></b></a></div>";
