@@ -25,7 +25,7 @@ $error = '';
 if (!$set['mod_lib'] && $rights < 7)
     $error = 'Библиотека закрыта';
 elseif ($set['mod_lib'] == 1 && !$user_id)
-    $error = 'Доступ в Библиотеку открыт только <a href="../in.php">авторизованным</a> посетителям';
+    $error = 'Доступ в Библиотеку открыт только <a href="../login.php">авторизованным</a> посетителям';
 if ($error) {
     require_once ("../incfiles/head.php");
     echo '<div class="rmenu"><p>' . $error . '</p></div>';

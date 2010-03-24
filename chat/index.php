@@ -27,7 +27,7 @@ if (!$set['mod_chat'] && !$rights < 7)
 elseif ($ban['1'] || $ban['12'])
     $error = 'Для Вас доступ в Чат закрыт';
 elseif (!$user_id)
-    $error = 'Доступ в Чат открыт только <a href="../in.php">авторизованным</a> посетителям';
+    $error = 'Доступ в Чат открыт только <a href="../login.php">авторизованным</a> посетителям';
 if ($error) {
     require_once ("../incfiles/head.php");
     echo '<div class="rmenu"><p>' . $error . '</p></div>';

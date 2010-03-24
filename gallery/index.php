@@ -26,7 +26,7 @@ $error = '';
 if (!$set['mod_gal'] && $rights < 7)
     $error = 'Галерея закрыта';
 elseif ($set['mod_gal'] == 1 && !$user_id)
-    $error = 'Доступ в Галерею открыт только <a href="../in.php">авторизованным</a> посетителям';
+    $error = 'Доступ в Галерею открыт только <a href="../login.php">авторизованным</a> посетителям';
 if ($error) {
     require_once ("../incfiles/head.php");
     echo '<div class="rmenu"><p>' . $error . '</p></div>';

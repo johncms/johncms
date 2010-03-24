@@ -21,7 +21,7 @@ require_once ('../incfiles/core.php');
 
 if (!$user_id) {
     require_once ('../incfiles/head.php');
-    display_error('Только для зарегистрированных посетителей');
+    echo display_error('Только для зарегистрированных посетителей');
     require_once ('../incfiles/end.php');
     exit;
 }

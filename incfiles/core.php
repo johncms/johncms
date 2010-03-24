@@ -167,7 +167,7 @@ $mesyac = array(1 => "января", "февраля", "марта", "апрел
 ////////////////////////////////////////////////////////////
 if ($set['clean_time'] <= ($realtime - 43200)) {
     // Очищаем таблицу `cms_guests`
-    mysql_query("DELETE FROM `cms_guests` WHERE `time` < '" . ($realtime - 600) . "'");
+    mysql_query("DELETE FROM `cms_guests` WHERE `lastdate` < '" . ($realtime - 600) . "'");
     mysql_query("OPTIMIZE TABLE `cms_guests`");
     mysql_query("UPDATE `cms_settings` SET  `val`='" . $realtime . "' WHERE `key`='clean_time'");
     // Очищаем Чат

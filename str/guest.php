@@ -111,7 +111,7 @@ switch ($act) {
             $user_id = 0;
         }
         $msg = trim($_POST['msg']);
-        $msg = mb_substr($msg, 0, 500);
+        $msg = mb_substr($msg, 0, 5000);
         if ($_POST['msgtrans'] == 1) {
             $msg = trans($msg);
         }
@@ -145,7 +145,7 @@ switch ($act) {
         ////////////////////////////////////////////////////////////
         if ($rights >= 6 && $id) {
             if (isset ($_POST['submit'])) {
-                $otv = mb_substr($_POST['otv'], 0, 500);
+                $otv = mb_substr($_POST['otv'], 0, 5000);
                 mysql_query("UPDATE `guest` SET
 				`admin` = '" . $login . "',
 				`otvet` = '" . mysql_real_escape_string($otv) . "',
@@ -283,7 +283,7 @@ switch ($act) {
             echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form></div>";
         }
         else {
-            echo '<div class="rmenu">Писать могут только <a href="../in.php">авторизованные</a> посетители</div>';
+            echo '<div class="rmenu">Писать могут только <a href="../login.php">авторизованные</a> посетители</div>';
         }
         if (isset ($_SESSION['ga']) && ($login == $nickadmina || $login == $nickadmina2 || $rights >= "1")) {
             $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1'");

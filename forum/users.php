@@ -33,7 +33,7 @@ else {
     while ($res = mysql_fetch_array($req)) {
         echo is_integer($i / 2) ? '<div class="list1">' : '<div class="list2">';
         if ($res['sex'])
-            echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($res['sex'] == 'm' ? 'm' : 'f') . ($res['datereg'] > $realtime - 86400 ? '_new.gif" width="20"' : '.gif" width="16"') . ' height="16"/>&nbsp;';
+            echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > $realtime - 86400 ? '_new.png" width="20"' : '.png" width="16"') . ' height="16"/>&nbsp;';
         else
             echo '<img src="../images/del.png" width="12" height="12" />&nbsp;';
         if (!$user_id || $user_id == $res['id']) {

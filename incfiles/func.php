@@ -80,8 +80,7 @@ function forum_new($mod = 0) {
     if ($user_id) {
         $req = mysql_query("SELECT COUNT(*) FROM `forum`
         LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user_id . "'
-        WHERE `forum`.`type`='t'" . ($rights >= 7 ?
-        "" : " AND `forum`.`close` != '1'") . "
+        WHERE `forum`.`type`='t'" . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
         AND (`cms_forum_rdm`.`topic_id` Is Null
         OR `forum`.`time` > `cms_forum_rdm`.`time`)");
         $total = mysql_result($req, 0);
@@ -263,8 +262,7 @@ function notags($var = '') {
     ////////////////////////////////////////////////////////////
     // Вырезание BBcode тэгов из текста                       //
     ////////////////////////////////////////////////////////////
-    $var = strtr($var, array('[green]' => '', '[/green]' => '', '[red]' => '', '[/red]' => '', '[blue]' => '', '[/blue]' => '', '[b]' => '', '[/b]' => '', '[i]' => '', '[/i]' => '', '[u]' => '', '[/u]' => '', '[s]' => '', '[/s]' => '',
-    '[c]' => '', '[/c]' => ''));
+    $var = strtr($var, array('[green]' => '', '[/green]' => '', '[red]' => '', '[/red]' => '', '[blue]' => '', '[/blue]' => '', '[b]' => '', '[/b]' => '', '[i]' => '', '[/i]' => '', '[u]' => '', '[/u]' => '', '[s]' => '', '[/s]' => '', '[c]' => '', '[/c]' => ''));
     return $var;
 }
 
@@ -281,10 +279,7 @@ function trans($str) {
     ////////////////////////////////////////////////////////////
     // Транслитерация текста                                  //
     ////////////////////////////////////////////////////////////
-    $str = strtr($str, array('a' => 'а', 'b' => 'б', 'v' => 'в', 'g' => 'г', 'd' => 'д', 'e' => 'е', 'yo' => 'ё', 'zh' => 'ж', 'z' => 'з', 'i' => 'и', 'j' => 'й', 'k' => 'к', 'l' => 'л', 'm' => 'м', 'n' => 'н', 'o' => 'о',
-    'p' => 'п', 'r' => 'р', 's' => 'с', 't' => 'т', 'u' => 'у', 'f' => 'ф', 'h' => 'х', 'c' => 'ц', 'ch' => 'ч', 'w' => 'ш', 'sh' => 'щ', 'q' => 'ъ', 'y' => 'ы', 'x' => 'э', 'yu' => 'ю', 'ya' => 'я', 'A' => 'А', 'B' => 'Б',
-    'V' => 'В', 'G' => 'Г', 'D' => 'Д', 'E' => 'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т',
-    'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' => 'Ш', 'SH' => 'Щ', 'Q' => 'Ъ', 'Y' => 'Ы', 'X' => 'Э', 'YU' => 'Ю', 'YA' => 'Я'));
+    $str = strtr($str, array('a' => 'а', 'b' => 'б', 'v' => 'в', 'g' => 'г', 'd' => 'д', 'e' => 'е', 'yo' => 'ё', 'zh' => 'ж', 'z' => 'з', 'i' => 'и', 'j' => 'й', 'k' => 'к', 'l' => 'л', 'm' => 'м', 'n' => 'н', 'o' => 'о', 'p' => 'п', 'r' => 'р', 's' => 'с', 't' => 'т', 'u' => 'у', 'f' => 'ф', 'h' => 'х', 'c' => 'ц', 'ch' => 'ч', 'w' => 'ш', 'sh' => 'щ', 'q' => 'ъ', 'y' => 'ы', 'x' => 'э', 'yu' => 'ю', 'ya' => 'я', 'A' => 'А', 'B' => 'Б', 'V' => 'В', 'G' => 'Г', 'D' => 'Д', 'E' => 'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т', 'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' => 'Ш', 'SH' => 'Щ', 'Q' => 'Ъ', 'Y' => 'Ы', 'X' => 'Э', 'YU' => 'Ю', 'YA' => 'Я'));
     return $str;
 }
 
@@ -389,9 +384,7 @@ function check($str) {
     ////////////////////////////////////////////////////////////
     $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
     $str = nl2br($str);
-    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) =>
-    '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30)
-    => '', chr(31) => ''));
+    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) => '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30) => '', chr(31) => ''));
     $str = str_replace("\'", "&#39;", $str);
     $str = str_replace('\\', "&#92;", $str);
     $str = str_replace("|", "I", $str);
@@ -419,9 +412,7 @@ function checkout($str, $br = 0, $tags = 0) {
         $str = tags($str);
     elseif ($tags == 2)
         $str = notags($str);
-    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) =>
-    '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30)
-    => '', chr(31) => ''));
+    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) => '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30) => '', chr(31) => ''));
     return $str;
 }
 
@@ -529,8 +520,7 @@ function rus_lat($str) {
     ////////////////////////////////////////////////////////////
     // Транслитерация с Русского в латиницу                   //
     ////////////////////////////////////////////////////////////
-    $str = strtr($str, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'i', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o',
-    'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch', 'ъ' => "", 'ы' => 'y', 'ь' => "", 'э' => 'ye', 'ю' => 'yu', 'я' => 'ya'));
+    $str = strtr($str, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'i', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch', 'ъ' => "", 'ы' => 'y', 'ь' => "", 'э' => 'ye', 'ю' => 'yu', 'я' => 'ya'));
     return $str;
 }
 
@@ -596,6 +586,35 @@ function show_user($user = array(), $status = 0, $ip = 0, $str = '', $text = '',
         }
         $out .= '</div>';
     }
+    return $out;
+}
+
+function mobileads($mad_siteId = NULL) {
+    ////////////////////////////////////////////////////////////
+    // Рекламная сеть mobileads.ru                            //
+    ////////////////////////////////////////////////////////////
+    $out = '';
+    $mad_socketTimeout = 2;    // таймаут соединения с сервером mobileads.ru
+    ini_set("default_socket_timeout", $mad_socketTimeout);
+    $mad_pageEncoding = "UTF-8";    // устанавливаем кодировку страницы
+    $mad_ua = urlencode(@ $_SERVER['HTTP_USER_AGENT']);
+    $mad_ip = urlencode(@ $_SERVER['REMOTE_ADDR']);
+    $mad_xip = urlencode(@ $_SERVER['HTTP_X_FORWARDED_FOR']);
+    $mad_ref = urlencode(@ $_SERVER['SERVER_NAME'] . @ $_SERVER['REQUEST_URI']);
+    $mad_lines = "";
+    $mad_fp = @ fsockopen("mobileads.ru", 80, $mad_errno, $mad_errstr, $mad_socketTimeout);
+    if ($mad_fp) {
+        // переменная $mad_lines будет содержать массив, непарные элементы которого будут ссылками, парные - названием
+        $mad_lines = @ file("http://mobileads.ru/links?id=$mad_siteId&ip=$mad_ip&xip=$mad_xip&ua=$mad_ua&ref=$mad_ref");
+    }
+    @ fclose($mad_fp);    // вывод ссылок
+    for ($malCount = 0; $malCount < count($mad_lines); $malCount += 2) {
+        $linkURL = trim($mad_lines[$malCount]);
+        $linkName = iconv("Windows-1251", $mad_pageEncoding, $mad_lines[$malCount + 1]);
+        $out .= '<a href="' . $linkURL . '">' . $linkName . '</a><br />';
+    }
+    $_SESSION['mad_links'] = $out;
+    $_SESSION['mad_time'] = $realtime;
     return $out;
 }
 

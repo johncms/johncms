@@ -71,9 +71,9 @@ if ($set_karma['on'] && $user_id) {
                         mysql_query("UPDATE `users` SET `karma`='$karma', `plus_minus`='$plus_minus' WHERE `id` = '$id' LIMIT 1");
                         echo '<div class="gmenu">Выполнено!<br /><a href="anketa.php?id=' . $id . '">Продолжить</a></div>';
                     } else {
-                        echo '<div class="phdr"><b>Отдамаем голос за ' . $res['name'] . '</b></div><form action="karma.php?act=user&amp;id=' . $id
+                        echo '<div class="phdr"><b>Отдаем голос за ' . $res['name'] . '</b></div><form action="karma.php?act=user&amp;id=' . $id
                             . '" method="post"><div class="gmenu"><b>Тип голоса:</b><br />
-                            <input name="type" type="radio" value="1" checked="checked"/> Положительный<br /><input name="type" type="radio" value="0"/> Отрицательный<br /><b>Колличество голосов:</b><br /><select size="1" name="points">';
+                            <input name="type" type="radio" value="1" checked="checked"/> Положительный<br /><input name="type" type="radio" value="0"/> Отрицательный<br /><b>Количество голосов:</b><br /><select size="1" name="points">';
                         for ($i = 1; $i < ($set_karma['karma_points'] - $sum + 1); $i++) {
                             echo '<option value="' . $i . '">' . $i . '</option>';
                         }
@@ -106,7 +106,7 @@ if ($set_karma['on'] && $user_id) {
                         }
                         mysql_query("DELETE FROM `karma_users` WHERE `id` = '$del' LIMIT 1");
                         mysql_query("UPDATE `users` SET `karma`='$karma', `plus_minus`='$plus_minus' WHERE `id` = '$id' LIMIT 1");
-                        header('Location: karma.php?id=' . $id . '&amp;type=' . $type);
+                        header('Location: karma.php?id=' . $id . '&type=' . $type);
                     } else {
                         echo '<p>Вы действительно хотите удалить отзыв?<br/>';
                         echo '<a href="karma.php?act=delete&amp;id=' . $id . '&amp;del='.$del.'&amp;type=' . $type . '&amp;yes">Удалить</a> | <a href="karma.php?id=' . $id . '&amp;type=' . $type . '">Отмена</a></p>';
