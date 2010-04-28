@@ -36,9 +36,8 @@ class ipinit {
 
     // Получаем реальный адрес IP
     private function getip() {
-        if (isset ($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = explode(",", $_SERVER['HTTP_X_FORWARDED_FOR']);
-            return $ip[sizeof($ip) - 1];
+        if (isset ($_SERVER['HTTP_X_FORWARDED_FOR']) && $this->ip_valid($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
         elseif ($_SERVER['REMOTE_ADDR']) {
             return $_SERVER['REMOTE_ADDR'];
@@ -77,6 +76,15 @@ class ipinit {
         fwrite($in, pack('LL', $this->ip, $now));
         fclose($in);
         return $requests;
+    }
+
+    // Валидация IP адреса
+    function ip_valid($ip = '') {
+        $d = explode('.', $ip);
+        for ($x = 0; $x < 4; $x++)
+            if (!is_numeric($d[$x]) || ($d[$x] < 0) || ($d[$x] > 255))
+                return false;
+            return $ip;
     }
 }
 

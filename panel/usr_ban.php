@@ -61,7 +61,7 @@ switch ($mod) {
         ////////////////////////////////////////////////////////////
         // Список нарушителей                                     //
         ////////////////////////////////////////////////////////////
-        echo '<div class="phdr"><a href="index.php"><b>Админ танель</b></a> | список нарушителей</div>';
+        echo '<div class="phdr"><a href="index.php"><b>Админ панель</b></a> | список нарушителей</div>';
         echo '<div class="gmenu"><p><span class="gray">Сортировка:</span> ';
         if (isset ($_GET['count']))
             echo '<a href="index.php?act=usr_ban">Срок</a> | Нарушения</p></div>';

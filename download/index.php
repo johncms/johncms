@@ -20,7 +20,7 @@ $headmod = 'load';
 $textl = 'Загрузки';
 require_once ("../incfiles/core.php");
 require_once ("../incfiles/mp3.php");
-require_once ("../incfiles/pclzip.php");
+require_once ("../incfiles/class_pclzip.php");
 $filesroot = "../download";
 $screenroot = "$filesroot/screen";
 $loadroot = "$filesroot/files";

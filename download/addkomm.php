@@ -24,13 +24,12 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights <
         exit;
     }
     if (isset ($_POST['submit'])) {
-        $flt = $realtime - 30;
-        $af = mysql_query("select * from `download` where type='komm' and time>'" . $flt . "' and avtor= '" . $login . "';");
-        $af1 = mysql_num_rows($af);
-        if ($af1 != 0) {
-            require_once ("../incfiles/head.php");
-            echo "Антифлуд!Вы не можете так часто добавлять сообщения<br/>Порог 30 секунд<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
-            require_once ("../incfiles/end.php");
+        // Проверка на флуд
+        $flood = antiflood();
+        if ($flood){
+            require_once ('../incfiles/head.php');
+            echo display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="index.php?act=komm&amp;id=' . $id . '">Назад</a>');
+            require_once ('../incfiles/end.php');
             exit;
         }
         if ($_POST['msg'] == "") {
@@ -46,13 +45,11 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights <
         $msg = mb_substr($msg, 0, 500);
         $agn = strtok($agn, ' ');
         mysql_query("insert into `download` values(0,'" . $id . "','','" . $realtime . "','','komm','" . $login . "','" . $ipp . "','" . $agn . "','" . $msg . "','');");
-        if (empty ($datauser[komm])) {
-            $fpst = 1;
-        }
-        else {
-            $fpst = $datauser[komm] + 1;
-        }
-        mysql_query("update `users` set  komm='" . $fpst . "' where id='" . intval($_SESSION['uid']) . "';");
+        $fpst = $datauser['komm'] + 1;
+        mysql_query("UPDATE `users` SET
+		`komm`='" . $fpst . "',
+		`lastpost` = '" . $realtime . "'
+		WHERE `id`='" . $user_id . "'");
         header("Location: index.php?act=komm&id=$id");
     }
     else {

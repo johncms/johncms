@@ -22,12 +22,13 @@ function counters() {
     ////////////////////////////////////////////////////////////
     global $headmod;
     $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
+
     if (mysql_num_rows($req) > 0) {
         while ($res = mysql_fetch_array($req)) {
             $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
             $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
             $count = ($headmod == 'mainpage') ? $link1 : $link2;
-            if (!empty ($count))
+            if (!empty($count))
                 echo $count;
         }
     }
@@ -54,8 +55,7 @@ function zipcount() {
         $gzib_file_out = strlen(gzcompress($Contents, 9));
         $gzib_pro = round(100 - (100 / ($gzib_file / $gzib_file_out)), 1);
         echo '<div>Cжатие вкл. (' . $gzib_pro . '%)</div>';
-    }
-    else {
+    } else {
         echo '<div>Cжатие выкл.</div>';
     }
 }
@@ -88,8 +88,7 @@ function forum_new($mod = 0) {
             echo '<p><a href="index.php?act=new">Непрочитанное</a>&nbsp;' . ($total ? '<span class="red">(<b>' . $total . '</b>)</span>' : '') . '</p>';
         else
             return $total;
-    }
-    else {
+    } else {
         if ($mod)
             echo '<p><a href="index.php?act=new">Последние 10 тем</a></p>';
         else
@@ -106,8 +105,7 @@ function dnews() {
     if (mysql_num_rows($req)) {
         $res = mysql_fetch_array($req);
         return date("H:i/d.m.y", $res['time'] + $set_user['sdvig'] * 3600);
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -166,8 +164,7 @@ function fgal($mod = 0) {
         $out = $total;
         if ($new > 0)
             $out .= '&nbsp;/&nbsp;<span class="red"><a href="/gallery/index.php?act=new">+' . $new . '</a></span>';
-    }
-    else {
+    } else {
         $out = $new;
     }
     return $out;
@@ -206,16 +203,14 @@ function gbook($mod = 0) {
     // Если вызвать с параметром 2, то будет выдавать колличество новых в Админ-Клубе
     global $realtime, $rights;
     switch ($mod) {
-        case 1 :
+        case 1:
             $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='0' AND `time` > '" . ($realtime - 86400) . "'"), 0);
             break;
-
-        case 2 :
+        case 2:
             if ($rights >= 1)
                 $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time` > '" . ($realtime - 86400) . "'"), 0);
             break;
-
-        default :
+        default:
             $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='0' AND `time` > '" . ($realtime - 86400) . "'"), 0);
             if ($rights >= 1) {
                 $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time`>'" . ($realtime - 86400) . "'");
@@ -229,7 +224,7 @@ function tags($var = '') {
     ////////////////////////////////////////////////////////////
     // Обработка ссылок и тэгов BBCODE в тексте               //
     ////////////////////////////////////////////////////////////
-    $var = preg_replace(array('#\[php\](.*?)\[\/php\]#se'), array("''.highlight('$1').''"), str_replace("]\n", "]", $var));
+    $var = preg_replace(array ('#\[php\](.*?)\[\/php\]#se'), array ("''.highlight('$1').''"), str_replace("]\n", "]", $var));
     $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
     $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
     $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
@@ -241,18 +236,29 @@ function tags($var = '') {
     $var = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'url_replace', $var);
     return $var;
 }
+
 function highlight($php) {
     // Служебная функция подсветки PHP кода (прислал FlySelf)
-    $php = strtr($php, array('<br />' => '', '\\' => 'slash_JOHNCMS'));
+    $php = strtr($php, array (
+        '<br />' => '',
+        '\\' => 'slash_JOHNCMS'
+    ));
+
     $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
     $php = substr($php, 0, 2) != "<?" ? $php = "<?php\n" . $php . "\n?>" : $php;
     $php = highlight_string(stripslashes($php), true);
-    $php = strtr($php, array('slash_JOHNCMS' => '&#92;', ':' => '&#58;', '[' => '&#91;'));
+    $php = strtr($php, array (
+        'slash_JOHNCMS' => '&#92;',
+        ':' => '&#58;',
+        '[' => '&#91;'
+    ));
+
     return '<div class="phpcode">' . $php . '</div>';
 }
+
 function url_replace($m) {
     // Служебная функция парсинга URL (прислал FlySelf)
-    if (!isset ($m[3]))
+    if (!isset($m[3]))
         return '<a href="' . $m[1] . '">' . $m[2] . '</a>';
     else
         return '<a href="' . $m[3] . '">' . $m[3] . '</a>';
@@ -262,7 +268,24 @@ function notags($var = '') {
     ////////////////////////////////////////////////////////////
     // Вырезание BBcode тэгов из текста                       //
     ////////////////////////////////////////////////////////////
-    $var = strtr($var, array('[green]' => '', '[/green]' => '', '[red]' => '', '[/red]' => '', '[blue]' => '', '[/blue]' => '', '[b]' => '', '[/b]' => '', '[i]' => '', '[/i]' => '', '[u]' => '', '[/u]' => '', '[s]' => '', '[/s]' => '', '[c]' => '', '[/c]' => ''));
+    $var = strtr($var, array (
+        '[green]' => '',
+        '[/green]' => '',
+        '[red]' => '',
+        '[/red]' => '',
+        '[blue]' => '',
+        '[/blue]' => '',
+        '[b]' => '',
+        '[/b]' => '',
+        '[i]' => '',
+        '[/i]' => '',
+        '[u]' => '',
+        '[/u]' => '',
+        '[s]' => '',
+        '[/s]' => '',
+        '[c]' => '',
+        '[/c]' => ''
+    ));
     return $var;
 }
 
@@ -270,8 +293,19 @@ function antilink($var) {
     ////////////////////////////////////////////////////////////
     // Маскировка ссылок в тексте                             //
     ////////////////////////////////////////////////////////////
-    $var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "[реклама]", $var);
-    $var = strtr($var, array(".ru" => "***", ".com" => "***", ".net" => "***", ".org" => "***", ".info" => "***", ".mobi" => "***", ".wen" => "***", ".kmx" => "***", ".h2m" => "***"));
+    //TODO: Убрать eregi
+    //$var = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/;%]*)?)?)", "[реклама]", $var);
+    $var = strtr($var, array (
+        ".ru" => "***",
+        ".com" => "***",
+        ".net" => "***",
+        ".org" => "***",
+        ".info" => "***",
+        ".mobi" => "***",
+        ".wen" => "***",
+        ".kmx" => "***",
+        ".h2m" => "***"
+    ));
     return $var;
 }
 
@@ -279,7 +313,72 @@ function trans($str) {
     ////////////////////////////////////////////////////////////
     // Транслитерация текста                                  //
     ////////////////////////////////////////////////////////////
-    $str = strtr($str, array('a' => 'а', 'b' => 'б', 'v' => 'в', 'g' => 'г', 'd' => 'д', 'e' => 'е', 'yo' => 'ё', 'zh' => 'ж', 'z' => 'з', 'i' => 'и', 'j' => 'й', 'k' => 'к', 'l' => 'л', 'm' => 'м', 'n' => 'н', 'o' => 'о', 'p' => 'п', 'r' => 'р', 's' => 'с', 't' => 'т', 'u' => 'у', 'f' => 'ф', 'h' => 'х', 'c' => 'ц', 'ch' => 'ч', 'w' => 'ш', 'sh' => 'щ', 'q' => 'ъ', 'y' => 'ы', 'x' => 'э', 'yu' => 'ю', 'ya' => 'я', 'A' => 'А', 'B' => 'Б', 'V' => 'В', 'G' => 'Г', 'D' => 'Д', 'E' => 'Е', 'YO' => 'Ё', 'ZH' => 'Ж', 'Z' => 'З', 'I' => 'И', 'J' => 'Й', 'K' => 'К', 'L' => 'Л', 'M' => 'М', 'N' => 'Н', 'O' => 'О', 'P' => 'П', 'R' => 'Р', 'S' => 'С', 'T' => 'Т', 'U' => 'У', 'F' => 'Ф', 'H' => 'Х', 'C' => 'Ц', 'CH' => 'Ч', 'W' => 'Ш', 'SH' => 'Щ', 'Q' => 'Ъ', 'Y' => 'Ы', 'X' => 'Э', 'YU' => 'Ю', 'YA' => 'Я'));
+    $str = strtr($str, array (
+        'a' => 'а',
+        'b' => 'б',
+        'v' => 'в',
+        'g' => 'г',
+        'd' => 'д',
+        'e' => 'е',
+        'yo' => 'ё',
+        'zh' => 'ж',
+        'z' => 'з',
+        'i' => 'и',
+        'j' => 'й',
+        'k' => 'к',
+        'l' => 'л',
+        'm' => 'м',
+        'n' => 'н',
+        'o' => 'о',
+        'p' => 'п',
+        'r' => 'р',
+        's' => 'с',
+        't' => 'т',
+        'u' => 'у',
+        'f' => 'ф',
+        'h' => 'х',
+        'c' => 'ц',
+        'ch' => 'ч',
+        'w' => 'ш',
+        'sh' => 'щ',
+        'q' => 'ъ',
+        'y' => 'ы',
+        'x' => 'э',
+        'yu' => 'ю',
+        'ya' => 'я',
+        'A' => 'А',
+        'B' => 'Б',
+        'V' => 'В',
+        'G' => 'Г',
+        'D' => 'Д',
+        'E' => 'Е',
+        'YO' => 'Ё',
+        'ZH' => 'Ж',
+        'Z' => 'З',
+        'I' => 'И',
+        'J' => 'Й',
+        'K' => 'К',
+        'L' => 'Л',
+        'M' => 'М',
+        'N' => 'Н',
+        'O' => 'О',
+        'P' => 'П',
+        'R' => 'Р',
+        'S' => 'С',
+        'T' => 'Т',
+        'U' => 'У',
+        'F' => 'Ф',
+        'H' => 'Х',
+        'C' => 'Ц',
+        'CH' => 'Ч',
+        'W' => 'Ш',
+        'SH' => 'Щ',
+        'Q' => 'Ъ',
+        'Y' => 'Ы',
+        'X' => 'Э',
+        'YU' => 'Ю',
+        'YA' => 'Я'
+    ));
     return $str;
 }
 
@@ -302,12 +401,12 @@ function pagenav($base_url, $start, $max_value, $num_per_page) {
     // За основу взята аналогичная функция от форума SMF2.0   //
     ////////////////////////////////////////////////////////////
     $pgcont = 4;
-    $pgcont = (int) ($pgcont - ($pgcont % 2)) / 2;
+    $pgcont = (int)($pgcont - ($pgcont % 2)) / 2;
     if ($start >= $max_value)
-        $start = max(0, (int) $max_value - (((int) $max_value % (int) $num_per_page) == 0 ? $num_per_page : ((int) $max_value % (int) $num_per_page)));
+        $start = max(0, (int)$max_value - (((int)$max_value % (int)$num_per_page) == 0 ? $num_per_page : ((int)$max_value % (int)$num_per_page)));
     else
-        $start = max(0, (int) $start - ((int) $start % (int) $num_per_page));
-    $base_link = '<a class="navpg" href="' . strtr($base_url, array('%' => '%%')) . 'start=%d' . '">%s</a> ';
+        $start = max(0, (int)$start - ((int)$start % (int)$num_per_page));
+    $base_link = '<a class="navpg" href="' . strtr($base_url, array ('%' => '%%')) . 'start=%d' . '">%s</a> ';
     $pageindex = $start == 0 ? '' : sprintf($base_link, $start - $num_per_page, '&lt;&lt;');
     if ($start > $num_per_page * $pgcont)
         $pageindex .= sprintf($base_link, 0, '1');
@@ -318,22 +417,22 @@ function pagenav($base_url, $start, $max_value, $num_per_page) {
             $tmpStart = $start - $num_per_page * $nCont;
             $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
         }
-        $pageindex .= '[<b>' . ($start / $num_per_page + 1) . '</b>] ';
-    $tmpMaxPages = (int) (($max_value - 1) / $num_per_page) * $num_per_page;
+    $pageindex .= '[<b>' . ($start / $num_per_page + 1) . '</b>] ';
+    $tmpMaxPages = (int)(($max_value - 1) / $num_per_page) * $num_per_page;
     for ($nCont = 1; $nCont <= $pgcont; $nCont++)
         if ($start + $num_per_page * $nCont <= $tmpMaxPages) {
             $tmpStart = $start + $num_per_page * $nCont;
             $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
         }
-        if ($start + $num_per_page * ($pgcont + 1) < $tmpMaxPages)
-            $pageindex .= '<span style="font-weight: bold;"> ... </span>';
-        if ($start + $num_per_page * $pgcont < $tmpMaxPages)
-            $pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
-        if ($start + $num_per_page < $max_value) {
-            $display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
-            $pageindex .= sprintf($base_link, $display_page, '&gt;&gt;');
-        }
-        return $pageindex;
+    if ($start + $num_per_page * ($pgcont + 1) < $tmpMaxPages)
+        $pageindex .= '<span style="font-weight: bold;"> ... </span>';
+    if ($start + $num_per_page * $pgcont < $tmpMaxPages)
+        $pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
+    if ($start + $num_per_page < $max_value) {
+        $display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
+        $pageindex .= sprintf($base_link, $display_page, '&gt;&gt;');
+    }
+    return $pageindex;
 }
 
 function timecount($var) {
@@ -346,14 +445,11 @@ function timecount($var) {
     $day = ceil($var / 86400);
     if ($var > 345600) {
         $str = $day . ' дней';
-    }
-    elseif ($var >= 172800) {
+    }  elseif ($var >= 172800) {
         $str = $day . ' дня';
-    }
-    elseif ($var >= 86400) {
+    }  elseif ($var >= 86400) {
         $str = '1 день';
-    }
-    else {
+    } else {
         $str = gmdate('G:i:s', $var);
     }
     return $str;
@@ -365,14 +461,11 @@ function formatsize($size) {
     ////////////////////////////////////////////////////////////
     if ($size >= 1073741824) {
         $size = round($size / 1073741824 * 100) / 100 . ' Gb';
-    }
-    elseif ($size >= 1048576) {
+    }  elseif ($size >= 1048576) {
         $size = round($size / 1048576 * 100) / 100 . ' Mb';
-    }
-    elseif ($size >= 1024) {
+    }  elseif ($size >= 1024) {
         $size = round($size / 1024 * 100) / 100 . ' Kb';
-    }
-    else {
+    } else {
         $size = $size . ' b';
     }
     return $size;
@@ -384,7 +477,40 @@ function check($str) {
     ////////////////////////////////////////////////////////////
     $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
     $str = nl2br($str);
-    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) => '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30) => '', chr(31) => ''));
+    $str = strtr($str, array (
+        chr(0)=> '',
+        chr(1)=> '',
+        chr(2)=> '',
+        chr(3)=> '',
+        chr(4)=> '',
+        chr(5)=> '',
+        chr(6)=> '',
+        chr(7)=> '',
+        chr(8)=> '',
+        chr(9)=> '',
+        chr(10)=> '',
+        chr(11)=> '',
+        chr(12)=> '',
+        chr(13)=> '',
+        chr(14)=> '',
+        chr(15)=> '',
+        chr(16)=> '',
+        chr(17)=> '',
+        chr(18)=> '',
+        chr(19)=> '',
+        chr(20)=> '',
+        chr(21)=> '',
+        chr(22)=> '',
+        chr(23)=> '',
+        chr(24)=> '',
+        chr(25)=> '',
+        chr(26)=> '',
+        chr(27)=> '',
+        chr(28)=> '',
+        chr(29)=> '',
+        chr(30)=> '',
+        chr(31)=> ''
+    ));
     $str = str_replace("\'", "&#39;", $str);
     $str = str_replace('\\', "&#92;", $str);
     $str = str_replace("|", "I", $str);
@@ -412,7 +538,40 @@ function checkout($str, $br = 0, $tags = 0) {
         $str = tags($str);
     elseif ($tags == 2)
         $str = notags($str);
-    $str = strtr($str, array(chr(0) => '', chr(1) => '', chr(2) => '', chr(3) => '', chr(4) => '', chr(5) => '', chr(6) => '', chr(7) => '', chr(8) => '', chr(9) => '', chr(10) => '', chr(11) => '', chr(12) => '', chr(13) => '', chr(14) => '', chr(15) => '', chr(16) => '', chr(17) => '', chr(18) => '', chr(19) => '', chr(20) => '', chr(21) => '', chr(22) => '', chr(23) => '', chr(24) => '', chr(25) => '', chr(26) => '', chr(27) => '', chr(28) => '', chr(29) => '', chr(30) => '', chr(31) => ''));
+    $str = strtr($str, array (
+        chr(0)=> '',
+        chr(1)=> '',
+        chr(2)=> '',
+        chr(3)=> '',
+        chr(4)=> '',
+        chr(5)=> '',
+        chr(6)=> '',
+        chr(7)=> '',
+        chr(8)=> '',
+        chr(9)=> '',
+        chr(10)=> '',
+        chr(11)=> '',
+        chr(12)=> '',
+        chr(13)=> '',
+        chr(14)=> '',
+        chr(15)=> '',
+        chr(16)=> '',
+        chr(17)=> '',
+        chr(18)=> '',
+        chr(19)=> '',
+        chr(20)=> '',
+        chr(21)=> '',
+        chr(22)=> '',
+        chr(23)=> '',
+        chr(24)=> '',
+        chr(25)=> '',
+        chr(26)=> '',
+        chr(27)=> '',
+        chr(28)=> '',
+        chr(29)=> '',
+        chr(30)=> '',
+        chr(31)=> ''
+    ));
     return $str;
 }
 
@@ -427,7 +586,7 @@ function smileys($str, $adm = 0) {
     // Записываем КЭШ смайлов
     if ($adm == 2) {
         // Обрабатываем простые смайлы
-        $array1 = array();
+        $array1 = array ();
         $path = $rootpath . 'smileys/simply/';
         $dir = opendir($path);
         while ($file = readdir($dir)) {
@@ -439,8 +598,8 @@ function smileys($str, $adm = 0) {
         }
         closedir($dir);
         // Обрабатываем Админские смайлы
-        $array2 = array();
-        $array3 = array();
+        $array2 = array ();
+        $array3 = array ();
         $path = $rootpath . 'smileys/admin/';
         $dir = opendir($path);
         while ($file = readdir($dir)) {
@@ -452,8 +611,8 @@ function smileys($str, $adm = 0) {
             }
         }
         // Обрабатываем смайлы в каталогах
-        $array4 = array();
-        $array5 = array();
+        $array4 = array ();
+        $array5 = array ();
         $cat = glob($rootpath . 'smileys/user/*', GLOB_ONLYDIR);
         $total = count($cat);
         for ($i = 0; $i < $total; $i++) {
@@ -475,12 +634,10 @@ function smileys($str, $adm = 0) {
             fputs($fp, $smileys . "\r\n" . $smileys_adm);
             fclose($fp);
             return $count;
-        }
-        else {
+        } else {
             return false;
         }
-    }
-    else {
+    } else {
         // Выдаем кэшированные смайлы
         if (file_exists($rootpath . 'cache/smileys_cache.dat')) {
             $file = file($rootpath . 'cache/smileys_cache.dat');
@@ -488,30 +645,26 @@ function smileys($str, $adm = 0) {
             if ($adm)
                 $smileys = array_merge($smileys, unserialize($file[1]));
             return strtr($str, $smileys);
-        }
-        else {
+        } else {
             return $str;
         }
     }
 }
 
-function display_error($error = false) {
+function display_error($error = false, $link = '') {
     ////////////////////////////////////////////////////////////
     // Сообщения об ошибках                                   //
     ////////////////////////////////////////////////////////////
     if ($error) {
-        $out = '<div class="rmenu"><p>ОШИБКА!';
+        $out = '<div class="rmenu"><p><b>ОШИБКА!</b>';
         if (is_array($error)) {
-            foreach ($error as $val)
-                $out .= '<div>' . $val . '</div>';
-        }
-        else {
+            foreach ($error as $val)$out .= '<div>' . $val . '</div>';
+        } else {
             $out .= '<br />' . $error;
         }
-        $out .= '</p></div>';
+        $out .= '</p><p>' . $link . '</p></div>';
         return $out;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -520,34 +673,67 @@ function rus_lat($str) {
     ////////////////////////////////////////////////////////////
     // Транслитерация с Русского в латиницу                   //
     ////////////////////////////////////////////////////////////
-    $str = strtr($str, array('а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'e', 'ж' => 'j', 'з' => 'z', 'и' => 'i', 'й' => 'i', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch', 'ъ' => "", 'ы' => 'y', 'ь' => "", 'э' => 'ye', 'ю' => 'yu', 'я' => 'ya'));
+    $str = strtr($str, array (
+        'а' => 'a',
+        'б' => 'b',
+        'в' => 'v',
+        'г' => 'g',
+        'д' => 'd',
+        'е' => 'e',
+        'ё' => 'e',
+        'ж' => 'j',
+        'з' => 'z',
+        'и' => 'i',
+        'й' => 'i',
+        'к' => 'k',
+        'л' => 'l',
+        'м' => 'm',
+        'н' => 'n',
+        'о' => 'o',
+        'п' => 'p',
+        'р' => 'r',
+        'с' => 's',
+        'т' => 't',
+        'у' => 'u',
+        'ф' => 'f',
+        'х' => 'h',
+        'ц' => 'c',
+        'ч' => 'ch',
+        'ш' => 'sh',
+        'щ' => 'sch',
+        'ъ' => "",
+        'ы' => 'y',
+        'ь' => "",
+        'э' => 'ye',
+        'ю' => 'yu',
+        'я' => 'ya'
+    ));
     return $str;
 }
 
-function show_user($user = array(), $status = 0, $ip = 0, $str = '', $text = '', $sub = '') {
-////////////////////////////////////////////////////////////
-// Отображение пользователей                              //
-////////////////////////////////////////////////////////////
-// $user (array)     - массив запроса в таблицу `users`   //
-// $status (boolean) - показать статус                    //
-// $ip (int)         - отображение IP и UserAgent         //
-//                     0 - не показывать                  //
-//                     1 - показать                       //
-//                     2 - показать ссылку на IP поиск    //
-// $str (string)     - строка выводится после Ника юзера  //
-// $text (string)    - выводится после строки со статусом //
-// $sub (string)     - строка выводится в области "sub"   //
-////////////////////////////////////////////////////////////
+function show_user($user = array (), $status = 0, $ip = 0, $str = '', $text = '', $sub = '') {
+    ////////////////////////////////////////////////////////////
+    // Отображение пользователей                              //
+    ////////////////////////////////////////////////////////////
+    // $user (array)     - массив запроса в таблицу `users`   //
+    // $status (boolean) - показать статус                    //
+    // $ip (int)         - отображение IP и UserAgent         //
+    //                     0 - не показывать                  //
+    //                     1 - показать                       //
+    //                     2 - показать ссылку на IP поиск    //
+    // $str (string)     - строка выводится после Ника юзера  //
+    // $text (string)    - выводится после строки со статусом //
+    // $sub (string)     - строка выводится в области "sub"   //
+    ////////////////////////////////////////////////////////////
     global $set_user, $realtime, $user_id, $admp, $home;
     $out = false;
     if (!$user['id']) {
         $out = '<b>Гость</b>';
-        if (!empty ($user['name']))
+        if (!empty($user['name']))
             $out .= ': ' . $user['name'];
-        if (!empty ($str))
+        if (!empty($str))
             $out .= ' ' . $str;
-    }
-    else {
+    } else {
         if ($set_user['avatar']) {
             $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
             if (file_exists(('../files/avatar/' . $user['id'] . '.png')))
@@ -561,12 +747,22 @@ function show_user($user = array(), $status = 0, $ip = 0, $str = '', $text = '',
         else
             $out .= '<img src="../images/del.png" width="12" height="12" align="middle" />&nbsp;';
         $out .= !$user_id || $user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="../str/anketa.php?id=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
-        $rights = array(0 => '', 1 => '(GMod)', 2 => '(CMod)', 3 => '(FMod)', 4 => '(DMod)', 5 => '(LMod)', 6 => '(Smd)', 7 => '(Adm)', 9 => '(SV!)');
+        $rights = array (
+            0 => '',
+            1 => '(GMod)',
+            2 => '(CMod)',
+            3 => '(FMod)',
+            4 => '(DMod)',
+            5 => '(LMod)',
+            6 => '(Smd)',
+            7 => '(Adm)',
+            9 => '(SV!)'
+        );
         $out .= ' ' . $rights[$user['rights']];
         $out .= ($realtime > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
-        if (!empty ($str))
+        if (!empty($str))
             $out .= ' ' . $str;
-        if ($status && !empty ($user['status']))
+        if ($status && !empty($user['status']))
             $out .= '<div class="status"><img src="../theme/' . $set_user['skin'] . '/images/label.png" alt="" align="middle" />&nbsp;' . $user['status'] . '</div>';
         if ($set_user['avatar'])
             $out .= '</td></tr></table>';
@@ -575,7 +771,7 @@ function show_user($user = array(), $status = 0, $ip = 0, $str = '', $text = '',
         $out .= '<div>' . $text . '</div>';
     if ($sub || $ip) {
         $out .= '<div class="sub">';
-        if (!empty ($sub))
+        if (!empty($sub))
             $out .= $sub;
         if ($ip) {
             $out .= '<div class="gray"><u>UserAgent</u>:&nbsp;' . $user['browser'] . '<br />';
@@ -589,25 +785,84 @@ function show_user($user = array(), $status = 0, $ip = 0, $str = '', $text = '',
     return $out;
 }
 
+function ip_valid($ip = '') {
+    ////////////////////////////////////////////////////////////
+    // Функция валидации IP адреса                            //
+    ////////////////////////////////////////////////////////////
+    $d = explode('.', $ip);
+    for ($x = 0; $x < 4; $x++)
+        if (!is_numeric($d[$x]) || ($d[$x] < 0) || ($d[$x] > 255))
+            return false;
+    return $ip;
+}
+
+function antiflood() {
+    ////////////////////////////////////////////////////////////
+    // Глобальная система Антифлуда                           //
+    ////////////////////////////////////////////////////////////
+    // Режимы работы:                                         //
+    // 1 - Адаптивный                                         //
+    // 2 - День / Ночь                                        //
+    // 3 - День                                               //
+    // 4 - Ночь                                               //
+    ////////////////////////////////////////////////////////////
+    global $set, $user_id, $datauser, $realtime;
+    $default = array (
+        'mode' => 2,
+        'day' => 10,
+        'night' => 30,
+        'dayfrom' => 10,
+        'dayto' => 22
+    );
+    $af = isset($set['antiflood']) ? unserialize($set['antiflood']) : $default;
+    switch ($af['mode']) {
+        case 1:
+            // Адаптивный режим
+            $onltime = $realtime - 600;
+            $adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > '$onltime'"), 0);
+            $limit = $adm > 0 ? $af['day'] : $af['night'];
+            break;
+        case 3:
+            // День
+            $limit = $af['day'];
+            break;
+        case 4:
+            // Ночь
+            $limit = $af['night'];
+            break;
+        default:
+            // По умолчанию день / ночь
+            $c_time = date('G', $realtime);
+            $limit = $c_time > $af['day'] && $c_time < $af['night'] ? $af['day'] : $af['night'];
+    }
+    if ($datauser['rights'] > 0)
+        $limit = 4; // Для Администрации задаем лимит в 4 секунды
+    $flood = $datauser['lastpost'] + $limit - $realtime;
+    if ($flood > 0)
+        return $flood;
+    else
+        return false;
+}
+
 function mobileads($mad_siteId = NULL) {
     ////////////////////////////////////////////////////////////
     // Рекламная сеть mobileads.ru                            //
     ////////////////////////////////////////////////////////////
     $out = '';
-    $mad_socketTimeout = 2;    // таймаут соединения с сервером mobileads.ru
+    $mad_socketTimeout = 2;      // таймаут соединения с сервером mobileads.ru
     ini_set("default_socket_timeout", $mad_socketTimeout);
-    $mad_pageEncoding = "UTF-8";    // устанавливаем кодировку страницы
-    $mad_ua = urlencode(@ $_SERVER['HTTP_USER_AGENT']);
-    $mad_ip = urlencode(@ $_SERVER['REMOTE_ADDR']);
-    $mad_xip = urlencode(@ $_SERVER['HTTP_X_FORWARDED_FOR']);
-    $mad_ref = urlencode(@ $_SERVER['SERVER_NAME'] . @ $_SERVER['REQUEST_URI']);
+    $mad_pageEncoding = "UTF-8"; // устанавливаем кодировку страницы
+    $mad_ua = urlencode(@$_SERVER['HTTP_USER_AGENT']);
+    $mad_ip = urlencode(@$_SERVER['REMOTE_ADDR']);
+    $mad_xip = urlencode(@$_SERVER['HTTP_X_FORWARDED_FOR']);
+    $mad_ref = urlencode(@$_SERVER['SERVER_NAME'] . @$_SERVER['REQUEST_URI']);
     $mad_lines = "";
-    $mad_fp = @ fsockopen("mobileads.ru", 80, $mad_errno, $mad_errstr, $mad_socketTimeout);
+    $mad_fp = @fsockopen("mobileads.ru", 80, $mad_errno, $mad_errstr, $mad_socketTimeout);
     if ($mad_fp) {
         // переменная $mad_lines будет содержать массив, непарные элементы которого будут ссылками, парные - названием
-        $mad_lines = @ file("http://mobileads.ru/links?id=$mad_siteId&ip=$mad_ip&xip=$mad_xip&ua=$mad_ua&ref=$mad_ref");
+        $mad_lines = @file("http://mobileads.ru/links?id=$mad_siteId&ip=$mad_ip&xip=$mad_xip&ua=$mad_ua&ref=$mad_ref");
     }
-    @ fclose($mad_fp);    // вывод ссылок
+    @fclose($mad_fp); // вывод ссылок
     for ($malCount = 0; $malCount < count($mad_lines); $malCount += 2) {
         $linkURL = trim($mad_lines[$malCount]);
         $linkName = iconv("Windows-1251", $mad_pageEncoding, $mad_lines[$malCount + 1]);
@@ -633,7 +888,7 @@ function provcat($catalog) {
     $adrdir = mysql_fetch_array($cat1);
     if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]"))) {
         echo 'Ошибка при выборе категории<br/><a href="?">К категориям</a><br/>';
-        require_once ('../incfiles/end.php');
+        require_once('../incfiles/end.php');
         exit;
     }
 }
@@ -643,11 +898,9 @@ function deletcat($catalog) {
     while (($file = readdir($dir))) {
         if (is_file($catalog . "/" . $file)) {
             unlink($catalog . "/" . $file);
+        } else if (is_dir($catalog . "/" . $file) && ($file != ".") && ($file != "..")) {
+            deletcat($catalog . "/" . $file);
         }
-        else
-            if (is_dir($catalog . "/" . $file) && ($file != ".") && ($file != "..")) {
-                deletcat($catalog . "/" . $file);
-            }
     }
     closedir($dir);
     rmdir($catalog);

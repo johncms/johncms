@@ -42,11 +42,10 @@ Addtype video/3gpp .3gp
 RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 AddType application/x-httpd-php-source .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 
+php_flag display_errors 0
 php_value error_reporting 7
 php_value register_globals 0
 php_value session.use_trans_sid 1
-php_value safe_mode_gid 1
-php_value safe_mode_include_dir 1
 php_value magic_quotes_gpc 0
 php_value magic_quotes_runtime 0
 php_value magic_quotes_sybase 0 

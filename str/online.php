@@ -15,13 +15,11 @@
 */
 
 define('_IN_JOHNCMS', 1);
-
 $headmod = 'online';
 $textl = 'Онлайн';
-require_once ("../incfiles/core.php");
-require_once ("../incfiles/head.php");
-
-echo '<div class="phdr"><b>Кто на сайте?</b></div>';
+require_once('../incfiles/core.php');
+require_once('../incfiles/head.php');
+echo '<div class="phdr"><b>Кто на сайте</b></div>';
 echo '<div class="bmenu">Список ' . ($act == 'guest' ? 'гостей' : 'авторизованных') . '</div>';
 $onltime = $realtime - 300;
 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($act == 'guest' ? 'cms_guests' : 'users') . "` WHERE `lastdate` > '$onltime'"), 0);
@@ -33,76 +31,89 @@ if ($total) {
             // Вычисляем местоположение
             $where = explode(",", $res['place']);
             switch ($where[0]) {
-                case 'forumfiles' :
+                case 'forumfiles':
                     $place = '<a href="../forum/index.php?act=files">Файлы форума</a>';
                     break;
-                case 'forumwho' :
+
+                case 'forumwho':
                     $place = '<a href="../forum/index.php?act=who">Смотрит кто в форуме?</a>';
                     break;
-                case 'anketa' :
+
+                case 'anketa':
                     $place = '<a href="anketa.php">Анкета</a>';
                     break;
-                case 'settings' :
+
+                case 'settings':
                     $place = '<a href="usset.php">Настройки</a>';
                     break;
-                case 'users' :
+
+                case 'users':
                     $place = '<a href="users.php">Список юзеров</a>';
                     break;
-                case 'online' :
+
+                case 'online':
                     $place = 'Тут, в списке';
                     break;
-                case 'privat' :
-                case 'pradd' :
+
+                case 'privat':
+                case 'pradd':
                     $place = '<a href="../index.php?act=cab">Приват</a>';
                     break;
-                case 'birth' :
+
+                case 'birth':
                     $place = '<a href="brd.php">Список именинников</a>';
                     break;
-                case 'read' :
+
+                case 'read':
                     $place = '<a href="../read.php">Читает FAQ</a>';
                     break;
-                case 'load' :
+
+                case 'load':
                     $place = '<a href="../download/index.php">Загрузки</a>';
                     break;
-                case 'gallery' :
+
+                case 'gallery':
                     $place = '<a href="../gallery/index.php">Галерея</a>';
                     break;
-                case 'forum' :
-                case 'forums' :
+
+                case 'forum':
+                case 'forums':
                     $place = '<a href="../forum/index.php">Форум</a>&nbsp;/&nbsp;<a href="../forum/index.php?act=who">&gt;&gt;</a>';
                     break;
-                case 'chat' :
+
+                case 'chat':
                     $place = '<a href="../chat/index.php">Чат</a>';
                     break;
-                case 'guest' :
+
+                case 'guest':
                     $place = '<a href="guest.php">Гостевая</a>';
                     break;
-                case 'lib' :
+
+                case 'lib':
                     $place = '<a href="../library/index.php">Библиотека</a>';
                     break;
-                case 'mainpage' :
-                default :
+
+                case 'mainpage':
+                default:
                     $place = '<a href="../index.php">Главная</a>';
                     break;
             }
         }
-        $set_user['avatar'] = 0;
-        echo show_user($res, 0, ($act == 'guest' || ($rights >= 1 && $rights >= $res['rights']) ? ($rights >= 6 ? 2 : 1) : 0), ' (' . $res['movings'] . ' - ' . timecount($realtime - $res['sestime']) . ') ' . $place);
+        echo show_user($res, 0, ($act == 'guest' || ($rights >= 1) ? ($rights >= 1 ? 2 : 1) : 0), ' (' . $res['movings'] . ' - ' . timecount($realtime - $res['sestime']) . ')<br /><img src="../images/info.png" width="16" height="16" align="middle" />&nbsp;' . $place);
         echo '</div>';
         ++$i;
     }
-}
-else {
+} else {
     echo '<div class="menu"><p>Никого нет</p></div>';
 }
 echo '<div class="phdr">Всего: ' . $total . '</div>';
 if ($total > 10) {
     echo '<p>' . pagenav('online.php?' . ($act == 'guest' ? 'act=guest&amp;' : ''), $start, $total, $kmess) . '</p>';
     echo '<p><form action="online.php" method="get"><input type="text" name="page" size="2"/>' . ($act == 'guest' ? '<input type="hidden" value="guest" name="act" />' : '') .
-    '<input type="submit" value="К странице &gt;&gt;"/></form></p>';
+        '<input type="submit" value="К странице &gt;&gt;"/></form></p>';
 }
 if ($user_id)
     echo '<p><a href="online.php' . ($act == 'guest' ? '">Показать авторизованных' : '?act=guest">Показать гостей') . '</a></p>';
-require_once ("../incfiles/end.php");
+require_once('../incfiles/end.php');
 
 ?>

@@ -81,7 +81,7 @@ switch ($act) {
         echo '<div class="gmenu"><p><h3><img src="images/rate.gif" width="16" height="16" class="left" />&nbsp;Мои активы</h3><ul>';
         echo '<li><a href="str/my_stat.php?act=forum">Последние записи</a></li>';
         echo '<li><a href="str/my_stat.php">Моя Статистика</a></li>';
-        if ($rights >= 6) {
+        if ($rights >= 1) {
             $guest = gbook(2);
             echo '<li><a href="str/guest.php?act=ga&amp;do=set">Админ-Клуб</a> (<span class="red">' . $guest . '</span>)</li>';
             echo '<li><span class="red"><a href="' . $admp . '/index.php"><b>Админ панель</b></a></span></li>';

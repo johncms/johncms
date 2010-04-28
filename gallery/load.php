@@ -25,13 +25,12 @@ if (empty ($_GET['id'])) {
     require_once ("../incfiles/end.php");
     exit;
 }
-
-// Проверка на спам
-$old = ($rights > 0) ? 10 : 60;
-if ($datauser['lastpost'] > ($realtime - $old)) {
-    require_once ("../incfiles/head.php");
-    echo '<p><b>Антифлуд!</b><br />Порог ' . $old . ' секунд<br/><br/><a href="index.php?id=' . $id . '">Назад</a></p>';
-    require_once ("../incfiles/end.php");
+// Проверка на флуд
+$flood = antiflood();
+if ($flood){
+    require_once ('../incfiles/head.php');
+    echo display_error('Вы не можете так часто добавлять картинки<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="index.php?id=' . $id . '">Назад</a>');
+    require_once ('../incfiles/end.php');
     exit;
 }
 

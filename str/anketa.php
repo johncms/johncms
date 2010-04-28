@@ -15,38 +15,33 @@
 */
 
 define('_IN_JOHNCMS', 1);
-
 $headmod = 'anketa';
-require_once ('../incfiles/core.php');
-
+require_once('../incfiles/core.php');
 if (!$user_id) {
-    require_once ('../incfiles/head.php');
+    require_once('../incfiles/head.php');
     echo display_error('Только для зарегистрированных посетителей');
-    require_once ('../incfiles/end.php');
+    require_once('../incfiles/end.php');
     exit;
 }
-
 if ($id && $id != $user_id) {
     // Если был запрос на юзера, то получаем его данные
     $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
     if (mysql_num_rows($req)) {
         $user = mysql_fetch_assoc($req);
         $textl = 'Анкета: ' . $user['name'];
-    }
-    else {
-        require_once ('../incfiles/head.php');
+    } else {
+        require_once('../incfiles/head.php');
         echo display_error('Такого пользователя не существует');
-        require_once ("../incfiles/end.php");
+        require_once("../incfiles/end.php");
         exit;
     }
-}
-else {
+} else {
     $id = false;
     $textl = 'Личная анкета';
     $user = $datauser;
 }
 
-require_once ('../incfiles/head.php');
+require_once('../incfiles/head.php');
 
 ////////////////////////////////////////////////////////////
 // Выводим анкету пользователя                            //
@@ -60,8 +55,7 @@ echo '<b>' . $user['name'] . '</b> (id: ' . $user['id'] . ')';
 if ($realtime > $user['lastdate'] + 300) {
     echo '<span class="red"> [Off]</span>';
     $lastvisit = date("d.m.Y (H:i)", $user['lastdate']);
-}
-else {
+} else {
     echo '<span class="green"> [ON]</span>';
 }
 echo '</h3><ul>';
@@ -70,15 +64,23 @@ if (file_exists(('../files/avatar/' . $user['id'] . '.png'))) {
     echo '<li>Аватар:<br /><img src="../files/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /></li>';
 }
 // Показываем фотографию (если есть)
-if (file_exists(('../files/photo/' . $user['id'] . '_small.jpg'))) {
+if (file_exists(('../files/photo/' . $user['id'] . '_small.jpg')))
     echo '<li>Фотография:<br /><a href="../files/photo/' . $user['id'] . '.jpg"><img src="../files/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a></li>';
-}
 if (!empty($user['status']))
     echo '<li><span class="gray">Статус: </span>' . $user['status'] . '</li>';
 echo '<li><span class="gray">Логин:</span> <b>' . $user['name_lat'] . '</b></li>';
 if ($user['rights']) {
     echo '<li><span class="gray">Должность:</span> ';
-    $rank = array(1 => 'Киллер', 2 => 'Модер Чата', 3 => 'Модер Форума', 4 => 'Модер Загрузок', 5 => 'Модер Библиотеки', 6 => 'Супермодератор', 7 => 'Администратор', 9 => 'Супервизор');
+    $rank = array (
+        1 => 'Киллер',
+        2 => 'Модер Чата',
+        3 => 'Модер Форума',
+        4 => 'Модер Загрузок',
+        5 => 'Модер Библиотеки',
+        6 => 'Супермодератор',
+        7 => 'Администратор',
+        9 => 'Супервизор'
+    );
     echo '<span class="red"><b>' . $rank[$user['rights']] . '</b></span>';
     echo '</li>';
 }
@@ -86,7 +88,7 @@ if (isset($lastvisit))
     echo '<li><span class="gray">Последний визит:</span> ' . $lastvisit . '</li>';
 if ($rights >= 1 && $rights >= $user['rights']) {
     echo '<li><span class="gray">UserAgent:</span> ' . $user['browser'] . '</li>';
-    echo '<li><span class="gray">Адрес IP:</span> ' . long2ip($user['ip']) . '</li>';
+    echo '<li><span class="gray">Адрес IP:</span> <a href="../' . $admp . '/index.php?act=usr_search_ip&amp;ip=' . $user['ip'] . '">' . long2ip($user['ip']) . '</a></li>';
     if ($user['immunity'])
         echo '<li><span class="green"><b>ИММУНИТЕТ</b></span></li>';
 }
@@ -99,16 +101,13 @@ if ($set_karma['on']) {
     if ($exp[0] > $exp[1]) {
         $karma = $exp[1] ? ceil($exp[0] / $exp[1]) : $exp[0];
         $images = $karma > 10 ? '2' : '1';
+    } else if ($exp[1] > $exp[0]) {
+        $karma = $exp[0] ? ceil($exp[1] / $exp[0]) : $exp[1];
+        $images = $karma > 10 ? '-2' : '-1';
+    } else {
+        $images = 0;
     }
-    else
-        if ($exp[1] > $exp[0]) {
-            $karma = $exp[0] ? ceil($exp[1] / $exp[0]) : $exp[1];
-            $images = $karma > 10 ? '-2' : '-1';
-        }
-        else {
-            $images = 0;
-        }
-        echo '<table  width="100%"><tr><td width="22" valign="top"><img src="../images/k_' . $images . '.gif"/></td><td>';
+    echo '<table  width="100%"><tr><td width="22" valign="top"><img src="../images/k_' . $images . '.gif"/></td><td>';
     echo '<b>Карма (' . $user['karma'] . ')</b><div class="sub">
    <span class="green"><a href="karma.php?id=' . $id . '&amp;type=1">За (' . $exp[0] . ')</a></span> | <span class="red"><a href="karma.php?id=' . $id . '&amp;type=2">Против (' . $exp[1] . ')</a></span>';
     if ($id) {
@@ -119,8 +118,7 @@ if ($set_karma['on']) {
                 echo '<br /><a href="karma.php?act=user&amp;id=' . $id . '">Отдать голос</a>';
             }
         }
-    }
-    else {
+    } else {
         $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400)), 0);
         if ($total_karma > 0)
             echo '<br /><a href="karma.php?act=new">Новые отзывы</a> (' . $total_karma . ')';
@@ -216,13 +214,11 @@ if ($id && $id != $user_id) {
         if ($user['rights'] == 0 && $user['name'] != $nickadmina && $user['name'] != $nickadmina) {
             echo "<a href='ignor.php?act=edit&amp;id=" . $id . "&amp;add=1'>Добавить в игнор</a><br/>";
         }
-    }
-    else {
+    } else {
         echo "<a href='ignor.php?act=edit&amp;id=" . $id . "'>Удалить из игнора</a><br/>";
     }
     echo '<a href="pradd.php?act=write&amp;adr=' . $user['id'] . '">Написать в приват</a></p>';
 }
 
-require_once ('../incfiles/end.php');
-
+require_once('../incfiles/end.php');
 ?>

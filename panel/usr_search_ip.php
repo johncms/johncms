@@ -16,82 +16,61 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-////////////////////////////////////////////////////////////
-// Принимаем данные, выводим форму поиска                 //
-////////////////////////////////////////////////////////////
-$search = isset ($_POST['search']) ? trim($_POST['search']) : '';
+$error = array ();
+$search = isset($_POST['search']) ? trim($_POST['search']) : '';
 $search = $search ? $search : rawurldecode(trim($_GET['search']));
-if (isset ($_GET['ip']))
+if (isset($_GET['ip']))
     $search = long2ip(intval($_GET['ip']));
 
-echo '<div class="phdr"><a href="index.php"><b>Админ панель</b></a> | Поиск по IP</div>';
+    echo '<div class="phdr"><a href="index.php"><b>Админ панель</b></a> | Поиск по IP</div>';
 echo '<form action="index.php?act=usr_search_ip" method="post"><div class="gmenu"><p>';
 echo '<input type="text" name="search" value="' . checkout($search) . '" />';
 echo '<input type="submit" value="Поиск" name="submit" /><br />';
 echo '</p></div></form>';
 
 if ($search) {
-    ////////////////////////////////////////////////////////////
-    // Проверям на ошибки                                     //
-    ////////////////////////////////////////////////////////////
-    $error = array();
-    $ip = str_replace(' ', '', $search);    // Убираем пробелы
-    if (stristr($ip, '-')) {
+    if (strstr($search, '-')) {
         ////////////////////////////////////////////////////////////
         // Обрабатываем диапазон адресов                          //
         ////////////////////////////////////////////////////////////
-        if (!ereg("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\-([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$", $ip))
-            $error = 'Неправильно введен диапазон адресов IP';
-        if (!$error) {
-            $iparr = explode('-', $ip);
-            $ip1 = ip2long($iparr[0]);
-            $ip2 = ip2long($iparr[1]);
-            $mode = 1;
-            if (!$ip1)
-                $error = '<div>Неправильно введен первый адрес</div>';
-            if (!$ip2)
-                $error .= '<div>Неправильно введен второй адрес</div>';
-            if (!$error && $ip1 > $ip2)
-                $error = 'Второй адрес должен быть больше первого';
-        }
-    }
-    elseif (stristr($ip, '*')) {
+        $array = explode('-', $search);
+        $ip = trim($array[0]);
+        if (!ip_valid($ip))
+            $error[] = 'Первый адрес введен неверно';
+        else
+            $ip1 = ip2long($ip);
+        $ip = trim($array[1]);
+        if (!ip_valid($ip))
+            $error[] = 'Второй адрес введен неверно';
+        else
+            $ip2 = ip2long($ip);
+    } elseif (strstr($search, '*')) {
         ////////////////////////////////////////////////////////////
         // Обрабатываем адреса с маской                           //
         ////////////////////////////////////////////////////////////
-        $iptmp = explode('*', $ip);
-        $ip = eregi_replace(".$", "", $iptmp[0]);        // Убираем точку в конце
-        $iparr = explode('.', $ip);        // Разбиваем по частям
-        if (isset ($iparr[2])) {
-            $ip1 = $iparr[0] . '.' . $iparr[1] . '.' . $iparr[2] . '.0';
-            $ip2 = $iparr[0] . '.' . $iparr[1] . '.' . $iparr[2] . '.255';
+        $array = explode('.', $search);
+        for ($i = 0; $i < 4; $i++) {
+            if (!isset($array[$i]) || $array[$i] == '*') {
+                $ipt1[$i] = '0';
+                $ipt2[$i] = '255';
+            } elseif (is_numeric($array[$i]) && $array[$i] >= 0 && $array[$i] <= 255) {
+                $ipt1[$i] = $array[$i];
+                $ipt2[$i] = $array[$i];
+            } else {
+                $error = 'Адрес введен неверно';
+            }
+            $ip1 = ip2long($ipt1[0] . '.' . $ipt1[1] . '.' . $ipt1[2] . '.' . $ipt1[3]);
+            $ip2 = ip2long($ipt2[0] . '.' . $ipt2[1] . '.' . $ipt2[2] . '.' . $ipt2[3]);
         }
-        elseif (isset ($iparr[1])) {
-            $ip1 = $iparr[0] . '.' . $iparr[1] . '.0.0';
-            $ip2 = $iparr[0] . '.' . $iparr[1] . '.255.255';
-        }
-        else {
-            $ip1 = $iparr[0] . '.0.0.0';
-            $ip2 = $iparr[0] . '.255.255.255';
-        }
-        $ip1 = ip2long($ip1);
-        $ip2 = ip2long($ip2);
-        $mode = 2;
-        if (!$ip1)
-            $error = '<div>Неправильно введен адрес</div>';
-    }
-    else {
+    } else {
         ////////////////////////////////////////////////////////////
         // Обрабатываем одиночный адрес                           //
         ////////////////////////////////////////////////////////////
-        if (!ereg("^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$", $ip))
-            $error = 'Неправильно введен адрес IP';
-        $ip = ip2long($ip);
-        if (!$error && !$ip)
-            $error = 'Неправильно введен адрес IP';
-        if (!$error) {
-            $ip1 = $ip;
-            $ip2 = $ip;
+        if (!ip_valid($search)) {
+            $error = 'Адрес введен неверно';
+        } else {
+            $ip1 = ip2long($search);
+            $ip2 = $ip1;
         }
     }
 }
@@ -110,8 +89,7 @@ if ($search && !$error) {
             echo '</div>';
             ++$i;
         }
-    }
-    else {
+    } else {
         echo '<div class="menu"><p>По Вашему запросу ничего не найдено</p></div>';
     }
     echo '<div class="phdr">Всего найдено: ' . $total . '</div>';
@@ -119,14 +97,13 @@ if ($search && !$error) {
         // Навигация по страницам
         echo '<p>' . pagenav('index.php?act=usr_search_ip&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . rawurlencode($search) . '&amp;', $start, $total, $kmess) . '</p>';
         echo '<p><form action="index.php?act=usr_search_ip" method="post"><input type="hidden" name="search" value="' . checkout($search) .
-        '" /><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
+            '" /><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
     }
     echo '<p><a href="index.php?act=usr_search_ip">Новый поиск</a></p>';
-}
-else {
+} else {
     // Выводим сообщение об ошибке
     if ($error)
-        echo '<div class="rmenu"><p>ОШИБКА!<br />' . $error . '</p></div>';
+        echo display_error($error);
     // Инструкции для поиска
     echo '<div class="phdr"><small><b>Примеры запросов:</b><br /><font color="#FF0000">10.5.7.1</font> - Поиск одного адреса<br />';
     echo '<font color="#FF0000">10.5.7.1-10.5.7.100</font> - Поиск по диапазону адресов (знак маски * использовать нельзя)<br />';

@@ -22,16 +22,14 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_gal_comm'] || $rights >=
         require_once ('../incfiles/end.php');
         exit;
     }
-
-    // Проверка на спам
-    $old = ($rights > 0) ? 10 : 60;
-    if ($datauser['lastpost'] > ($realtime - $old)) {
-        require_once ("../incfiles/head.php");
-        echo '<p><b>Антифлуд!</b><br />Вы не можете так часто писать<br/>Порог ' . $old . ' секунд<br/><br/><a href="?act=komm&amp;id=' . $id . '">Назад</a></p>';
-        require_once ("../incfiles/end.php");
+    // Проверка на флуд
+    $flood = antiflood();
+    if ($flood){
+        require_once ('../incfiles/head.php');
+        echo display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="?act=komm&amp;id=' . $id . '">Назад</a>');
+        require_once ('../incfiles/end.php');
         exit;
     }
-
     if (isset ($_POST['submit'])) {
         if ($_POST['msg'] == "") {
             echo "Вы не ввели сообщение!<br/><a href='index.php?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";

@@ -54,7 +54,7 @@ class mainpage {
                         $text = str_replace("\r\n", "<br/>", $text);
                     // Парсинг смайлов
                     if ($this->settings['smileys']) {
-                        $text = call_user_func('smileys', $text);                        //TODO: Проверить Админские смайлы
+                        $text = call_user_func('smileys', $text, 1);
                     }
                     // Обрабатываем тэги
                     if ($this->settings['tags']) {

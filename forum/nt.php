@@ -20,12 +20,13 @@ if (!$id || !$user_id || $ban['1'] || $ban['11']) {
     header("Location: index.php");
     exit;
 }
-// Проверка на спам
-$old = ($rights > 0) ? 10 : 30;
-if ($datauser['lastpost'] > ($realtime - $old)) {
-    require_once ("../incfiles/head.php");
-    echo '<div class="rmenu"><p>АНТИФЛУД!<br />Вы не можете так часто писать, порог ' . $old . ' секунд<br/><a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a></p></div>';
-    require_once ("../incfiles/end.php");
+
+// Проверка на флуд
+$flood = antiflood();
+if ($flood){
+    require_once ('../incfiles/head.php');
+    echo display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a>');
+    require_once ('../incfiles/end.php');
     exit;
 }
 

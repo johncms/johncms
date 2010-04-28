@@ -57,7 +57,7 @@ if (!$error && $user_pass && ($user_login || $id)) {
                 $display_form = 0;
                 $_SESSION['code'] = rand(1000, 9999);
                 echo '<form action="login.php" method="post">' .
-                    '<div class="menu"><p><img src="code.php" alt="Проверочный код"/><br />' .
+                    '<div class="menu"><p><img src="code.php?chk=' . rand(1000, 9999) . '" alt="Проверочный код"/><br />' .
                     'Введите код с картинки:<br/><input type="text" size="4" maxlength="4"  name="code"/>' .
                     '<input type="hidden" name="n" value="' . $user_login . '"/>' .
                     '<input type="hidden" name="p" value="' . $user_pass . '"/>' .

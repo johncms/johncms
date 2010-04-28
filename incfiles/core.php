@@ -52,8 +52,7 @@ $page = isset ($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['p
 $start = isset ($_GET['start']) ? abs(intval($_GET['start'])) : 0;
 $act = isset ($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset ($_GET['mod']) ? trim($_GET['mod']) : '';
-$do
-    = isset ($_GET['do']) ? trim($_GET['do']) : '';
+$do = isset ($_GET['do']) ? trim($_GET['do']) : '';
 $agn = htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 100), ENT_QUOTES);
 
 ////////////////////////////////////////////////////////////
