@@ -44,7 +44,7 @@ class scaner {
     public $good_files = array (
         '../.htaccess',
         '../login.php',
-        '../code.php',
+        '../captcha.php',
         '../exit.php',
         '../go.php',
         '../index.php',
@@ -317,7 +317,7 @@ class scaner {
                                         'file_size' => $file_size
                                     );
                             } else {
-                                if (!in_array($folder . '/' . $file, $this->good_files) or $file_size > 250000)
+                                if (!in_array($folder . '/' . $file, $this->good_files) or $file_size > 300000)
                                     $this->bad_files[] = array (
                                         'file_path' => $folder . '/' . $file,
                                         'file_name' => $file,

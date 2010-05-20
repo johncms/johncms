@@ -82,7 +82,7 @@ switch ($act) {
             echo '<div class="gmenu"><p><b>Пароль успешно изменен</b><br />';
             if ($autologin) {
                 // Показываем ссылку на Автологин
-                echo '</p><p>Ссылка на Автологин:<br /><input type="text" value="' . $home . '/auto.php?id=' . $user['id'] . '&amp;p=' . $newpass . '" /><br />';
+                echo '</p><p>Ссылка на Автологин:<br /><input type="text" value="' . $home . '/login.php?id=' . $user['id'] . '&amp;p=' . $newpass . '" /><br />';
                 echo
                 '</p><p><b>Внимание!</b><br />В целях безопасности, никогда не используйте Автологин в ненадежных местах (интернет-кафе, чужие компьютеры и др.)';
             }

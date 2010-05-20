@@ -9,8 +9,6 @@
 // JohnCMS core team:                                                         //
 // Евгений Рябинин aka john77          john77@gazenwagen.com                  //
 // Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Плагиат и удаление копирайтов заруганы на ближайших родственников!!!       //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
@@ -18,8 +16,7 @@ define('_IN_JOHNCMS', 1);
 
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n";
 echo '<html xmlns="http://www.w3.org/1999/xhtml">' . "\n";
-echo
-"<title>JohnCMS 3.1.0 - Установка</title>
+echo "<title>JohnCMS 3.2.1 - Установка</title>
 <style type='text/css'>
 body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}
 h2{ margin: 0; padding: 0; padding-bottom: 4px; }
@@ -30,7 +27,7 @@ li { padding-bottom: 6px; }
 .gray{ color: #999999; font: small; }
 </style>
 </head><body>";
-echo '<h2 class="green">JohnCMS v.3.1.0</h2>Установка системы<hr />';
+echo '<h2 class="green">JohnCMS v.3.2.1</h2>Установка системы<hr />';
 
 switch ($_GET['act']) {
     case 'set' :
@@ -81,10 +78,9 @@ switch ($_GET['act']) {
 			`mail`='" . mysql_real_escape_string($meil) . "',
 			`www`='" . mysql_real_escape_string($hom) . "',
 			`rights`='9',
-			`ip`='" . $ip .
-            "',
+			`ip`='" . $ip . "',
 			`browser`='" . mysql_real_escape_string($brow) . "',
-			`preg`='1';") or die('Ошибка настройки администратора</div></body></html>');
+			`preg`='1'") or die('Ошибка настройки администратора</div></body></html>');
             $user_id = mysql_insert_id();
             echo '<span class="green">Oк</span> - администратор настроен<br />';
 

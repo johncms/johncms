@@ -15,18 +15,19 @@
 */
 
 define('_IN_JOHNCMS', 1);
+
 $rootpath = '';
 require_once('incfiles/core.php');
 require_once('incfiles/head.php');
 echo '<div class="phdr"><b>Вход в систему</b></div>';
 
 $error = array ();
-$caphcha = false;
+$captcha = false;
 $display_form = 1;
 $user_login = isset($_POST['n']) ? check($_POST['n']) : NULL;
 $user_pass = isset($_REQUEST['p']) ? check($_REQUEST['p']) : NULL;
 $user_mem = isset($_POST['mem']) ? 1 : 0;
-$user_code = isset($_POST['code']) ? abs(intval($_POST['code'])) : NULL;
+$user_code = isset($_POST['code']) ? trim($_POST['code']) : NULL;
 if ($user_pass && !$user_login && !$id)
     $error[] = 'Вы не ввели имя';
 if (($user_login || $id) && !$user_pass)
@@ -43,7 +44,7 @@ if (!$error && $user_pass && ($user_login || $id)) {
         $user = mysql_fetch_assoc($req);
         if ($user['failed_login'] > 2) {
             if ($user_code) {
-                if ($user_code > 999 && $user_code == $_SESSION['code']) {
+                if (mb_strlen($user_code) > 3 && $user_code == $_SESSION['code']) {
                     // Если введен правильный проверочный код
                     unset($_SESSION['code']);
                     $captcha = true;
@@ -55,10 +56,9 @@ if (!$error && $user_pass && ($user_login || $id)) {
             } else {
                 // Показываем CAPTCHA
                 $display_form = 0;
-                $_SESSION['code'] = rand(1000, 9999);
                 echo '<form action="login.php" method="post">' .
-                    '<div class="menu"><p><img src="code.php?chk=' . rand(1000, 9999) . '" alt="Проверочный код"/><br />' .
-                    'Введите код с картинки:<br/><input type="text" size="4" maxlength="4"  name="code"/>' .
+                    '<div class="menu"><p><img src="captcha.php?r=' . rand(1000, 9999) . '" alt="Проверочный код"/><br />' .
+                    'Введите код с картинки:<br/><input type="text" size="5" maxlength="5"  name="code"/>' .
                     '<input type="hidden" name="n" value="' . $user_login . '"/>' .
                     '<input type="hidden" name="p" value="' . $user_pass . '"/>' .
                     '<input type="hidden" name="mem" value="' . $user_mem . '"/>' .
@@ -112,6 +112,7 @@ if (!$error && $user_pass && ($user_login || $id)) {
         $error[] = 'Авторизация не прошла';
     }
 }
+
 if ($display_form) {
     if ($error)
         echo display_error($error);
@@ -124,4 +125,5 @@ if ($display_form) {
 }
 
 require_once('incfiles/end.php');
+
 ?>

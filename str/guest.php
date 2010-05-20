@@ -15,10 +15,11 @@
 */
 
 define('_IN_JOHNCMS', 1);
+
 $headmod = 'guest';
 $textl = 'Гостевая';
 require_once("../incfiles/core.php");
-require_once("../incfiles/head.php");
+require_once('../incfiles/head.php');
 
 // Проверяем права доступа в Админ-Клуб
 if (isset($_SESSION['ga']) && $rights < 1)
@@ -30,7 +31,7 @@ $textl = isset($_SESSION['ga']) ? 'Админ-Клуб' : 'Гостевая';
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (!$set['mod_guest'] && $rights < 7) {
     echo '<div class="rmenu"><p>Гостевая закрыта</p></div>';
-    require_once("../incfiles/end.php");
+    require_once('../incfiles/end.php');
     exit;
 }
 switch ($act) {
@@ -66,7 +67,7 @@ switch ($act) {
         $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 20) : '';
         $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
-        $code = isset($_POST['code']) ? intval($_POST['code']) : rand(1000, 9999);
+        $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $from = $user_id ? $login : mysql_real_escape_string($name);
         // Транслит сообщения
         if ($trans)
@@ -80,8 +81,10 @@ switch ($act) {
             $error[] = 'Вы не ввели сообщение';
         if ($ban['1'] || $ban['13'])
             $error[] = 'Вы не можете писать в Гостевой';
-        if (!$user_id && $_SESSION['code'] != $code)
+        // CAPTCHA для гостей
+        if (!$user_id && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code']))
             $error[] = 'Проверочный код введен неверно';
+        unset($_SESSION['code']);
         if ($user_id) {
             // Антифлуд для зарегистрированных пользователей
             $flood = antiflood();
@@ -104,7 +107,6 @@ switch ($act) {
                 exit;
             }
         }
-        $_SESSION['code'] = rand(1000, 9999);
         if (!$error) {
             // Вставляем сообщение в базу
             mysql_query("INSERT INTO `guest` SET
@@ -257,9 +259,8 @@ switch ($act) {
                 echo '<input type="checkbox" name="msgtrans" value="1" /> Транслит сообщения<br/>';
             if (!$user_id) {
                 // CAPTCHA для гостей
-                $_SESSION['code'] = rand(1000, 9999);
-                echo '<img src="../code.php?chk=' . rand(1000, 9999) . '" alt="Код"/><br />';
-                echo '<input type="text" size="4" maxlength="4"  name="code"/>&nbsp;введите код<br />';
+                echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="Проверочный код"/><br />';
+                echo '<input type="text" size="5" maxlength="5"  name="code"/>&nbsp;введите код<br />';
             }
             echo "<input type='submit' title='Нажмите для отправки' name='submit' value='Отправить'/></form></div>";
         } else {
@@ -286,7 +287,7 @@ switch ($act) {
             }
             while ($res = mysql_fetch_assoc($req)) {
                 $text = '';
-                echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
+                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 if (empty($res['id'])) {
                     // Запрос по гостям
                     $req_g = mysql_query("SELECT `lastdate` FROM `cms_guests` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1");
@@ -344,5 +345,5 @@ switch ($act) {
         break;
 }
 
-require_once("../incfiles/end.php");
+require_once('../incfiles/end.php');
 ?>
