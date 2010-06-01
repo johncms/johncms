@@ -22,7 +22,6 @@ function counters() {
     ////////////////////////////////////////////////////////////
     global $headmod;
     $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
-
     if (mysql_num_rows($req) > 0) {
         while ($res = mysql_fetch_array($req)) {
             $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
@@ -182,18 +181,18 @@ function stlib() {
     if ($countf1 > 0)
         $out = $out . '&nbsp;/&nbsp;<span class="red"><a href="/library/index.php?act=new">+' . $countf1 . '</a></span>';
     $countm = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = '0'"), 0);
+
     if (($rights == 5 || $rights >= 6) && $countm > 0)
         $out = $out . "/<a href='" . $home . "/library/index.php?act=moder'><font color='#FF0000'> Мод:$countm</font></a>";
     return $out;
 }
 
 function wch($id = false, $mod = false) {
-    ////////////////////////////////////////////////////////////
-    // Статистика Чата                                        //
-    ////////////////////////////////////////////////////////////
-    //TODO: Написать функцию статистики Чата
-    return 0;
-}
+////////////////////////////////////////////////////////////
+// Статистика Чата                                        //
+////////////////////////////////////////////////////////////
+//TODO: Написать функцию статистики Чата
+return 0; }
 
 function gbook($mod = 0) {
     ////////////////////////////////////////////////////////////
@@ -243,25 +242,26 @@ function highlight($php) {
         '<br />' => '',
         '\\' => 'slash_JOHNCMS'
     ));
-
     $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
     $php = substr($php, 0, 2) != "<?" ? $php = "<?php\n" . $php . "\n?>" : $php;
     $php = highlight_string(stripslashes($php), true);
     $php = strtr($php, array (
         'slash_JOHNCMS' => '&#92;',
         ':' => '&#58;',
-        '[' => '&#91;'
+        '[' => '&#91;',
+        '&nbsp;' => ' '
     ));
-
     return '<div class="phpcode">' . $php . '</div>';
 }
 
 function url_replace($m) {
     // Служебная функция парсинга URL (прислал FlySelf)
     if (!isset($m[3]))
-        return '<a href="' . $m[1] . '">' . $m[2] . '</a>';
-    else
+        return '<a href="' . str_replace(':', '&#58;', $m[1]) . '">' . str_replace(':', '&#58;', $m[2]) . '</a>';
+    else {
+        $m[3] = str_replace(':', '&#58;', $m[3]);
         return '<a href="' . $m[3] . '">' . $m[3] . '</a>';
+    }
 }
 
 function notags($var = '') {
@@ -871,6 +871,35 @@ function mobileads($mad_siteId = NULL) {
     $_SESSION['mad_links'] = $out;
     $_SESSION['mad_time'] = $realtime;
     return $out;
+}
+
+function forum_link($m) {
+    ////////////////////////////////////////////////////////////
+    // Вспомогательная Функция обработки ссылок форума        //
+    //////////////////////////////////////////////////////////// 
+    global $home;
+    if (!isset ($m[3])) {
+        return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
+    }
+    else {
+        $p = parse_url($m[3]);
+        if ('http://' . $p['host'] . $p['path'] . '?id=' == $home . '/forum/index.php?id=') {
+            $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
+            $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
+            if (mysql_num_rows($req) > 0) {
+                $res = mysql_fetch_array($req);
+                $name = strtr($res['text'], array('&quot;' => '', '&amp;' => '', '&lt;' => '', '&gt;' => '', '&#039;' => '', '[' => '', ']' => ''));
+                if (mb_strlen($name) > 40)
+                    $name = mb_substr($name, 0, 40) . '...';
+                return '[url=' . $m[3] . ']' . $name . '[/url]';
+            }
+            else {
+                return $m[3];
+            }
+        }
+        else
+            return $m[3];
+    }
 }
 
 /*

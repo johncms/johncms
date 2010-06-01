@@ -30,37 +30,12 @@ if ($flood){
     exit;
 }
 
-//вспомогательная функция для обработки ссылок (AlkatraZ, FlySelf)
-function forum_link($m) {
-    global $home;
-    if (!isset ($m[3])) {
-        return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
-    }
-    else {
-        $p = parse_url($m[3]);
-        if ('http://' . $p['host'] . $p['path'] . '?id=' == $home . '/forum/index.php?id=') {
-            $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
-                $name = strtr($res['text'], array('&quot;' => '', '&amp;' => '', '&lt;' => '', '&gt;' => '', '&#039;' => '', '[' => '', ']' => ''));
-                if (mb_strlen($name) > 40)
-                    $name = mb_substr($name, 0, 40) . '...';
-                return '[url=' . $m[3] . ']' . $name . '[/url]';
-            }
-            else {
-                return $m[3];
-            }
-        }
-        else
-            return $m[3];
-    }
-}
 $headmod = 'forum,' . $id . ',1';
 $agn1 = strtok($agn, ' ');
 $type = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
+
 switch ($tip) {
     case "t" :
         ////////////////////////////////////////////////////////////

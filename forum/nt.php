@@ -15,7 +15,6 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
 if (!$id || !$user_id || $ban['1'] || $ban['11']) {
     header("Location: index.php");
     exit;
@@ -23,10 +22,10 @@ if (!$id || !$user_id || $ban['1'] || $ban['11']) {
 
 // Проверка на флуд
 $flood = antiflood();
-if ($flood){
-    require_once ('../incfiles/head.php');
+if ($flood) {
+    require_once('../incfiles/head.php');
     echo display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="?id=' . $id . '&amp;start=' . $start . '">Назад</a>');
-    require_once ('../incfiles/end.php');
+    require_once('../incfiles/end.php');
     exit;
 }
 
@@ -34,25 +33,28 @@ $type = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
 $type1 = mysql_fetch_array($type);
 $tip = $type1['type'];
 if ($tip != "r") {
-    require_once ("../incfiles/head.php");
+    require_once("../incfiles/head.php");
     echo "Ошибка!<br/><a href='?'>В форум</a><br/>";
-    require_once ("../incfiles/end.php");
+    require_once("../incfiles/end.php");
     exit;
 }
-if (isset ($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     $error = false;
-    if (empty ($_POST['th']))
+    $th = isset($_POST['th']) ? trim($_POST['th']) : '';
+    $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+    if (empty($th))
         $error = '<div>Вы не ввели название темы</div>';
-    if (empty ($_POST['msg']))
+    if (mb_strlen($th) < 2)
+        $error = 'Название темы слишком короткое';
+    if (empty($msg))
         $error .= '<div>Вы не ввели сообщение</div>';
     if (!$error) {
-        $th = mb_substr($th, 0, 100);
-        $th = check($_POST['th']);
-        $msg = trim($_POST['msg']);
+        $th = check(mb_substr($th, 0, 100));
         if ($_POST['msgtrans'] == 1) {
             $th = trans($th);
             $msg = trans($msg);
         }
+        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
         // Прверяем, есть ли уже такая тема в текущем разделе?
         if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'"), 0) > 0)
             $error = 'Тема с таким названием уже есть в этом разделе';
@@ -67,24 +69,23 @@ if (isset ($_POST['submit'])) {
     if (!$error) {
         // Добавляем тему
         mysql_query("INSERT INTO `forum` SET
-		`refid` = '$id',
-		`type` = 't',
-		`time` = '$realtime',
-		`user_id` = '$user_id',
-		`from` = '$login',
-		`text` = '$th'");
+        `refid` = '$id',
+        `type` = 't',
+        `time` = '$realtime',
+        `user_id` = '$user_id',
+        `from` = '$login',
+        `text` = '$th'");
         $rid = mysql_insert_id();
         // Добавляем текст поста
         mysql_query("INSERT INTO `forum` SET
-		`refid` = '$rid',
-		`type` = 'm',
-		`time` = '$realtime',
-		`user_id` = '$user_id',
-		`from` = '$login',
-		`ip` = '$ipp',
-		`soft` = '" . mysql_real_escape_string($agn) . "',
-		`text` = '" .
-        mysql_real_escape_string($msg) . "'");
+        `refid` = '$rid',
+        `type` = 'm',
+        `time` = '$realtime',
+        `user_id` = '$user_id',
+        `from` = '$login',
+        `ip` = '$ipp',
+        `soft` = '" . mysql_real_escape_string($agn) . "',
+        `text` = '" . mysql_real_escape_string($msg) . "'");
         $postid = mysql_insert_id();
         // Записываем счетчик постов юзера
         $fpst = $datauser['postforum'] + 1;
@@ -95,22 +96,20 @@ if (isset ($_POST['submit'])) {
             header("Location: index.php?id=$postid&act=addfile");
         else
             header("Location: index.php?id=$rid");
-    }
-    else {
+    } else {
         // Выводим сообщение об ошибке
-        require_once ('../incfiles/head.php');
+        require_once('../incfiles/head.php');
         echo '<div class="rmenu"><p>ОШИБКА!<br />' . $error . '<br /><a href="index.php?act=nt&amp;id=' . $id . '">Повторить</a></p></div>';
-        require_once ('../incfiles/end.php');
+        require_once('../incfiles/end.php');
         exit;
     }
-}
-else {
-    require_once ('../incfiles/head.php');
+} else {
+    require_once('../incfiles/head.php');
     if ($datauser['postforum'] == 0) {
-        if (!isset ($_GET['yes'])) {
-            include ('../pages/forum.txt');
+        if (!isset($_GET['yes'])) {
+            include('../pages/forum.txt');
             echo "<a href='index.php?act=nt&amp;id=" . $id . "&amp;yes'>Согласен</a> | <a href='index.php?id=" . $id . "'>Не согласен</a><br/>";
-            require_once ('../incfiles/end.php');
+            require_once('../incfiles/end.php');
             exit;
         }
     }
