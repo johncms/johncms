@@ -17,7 +17,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once ("../incfiles/head.php");
-echo '<div class="phdr">Новые файлы</div>';
+echo '<div class="phdr">' . $lng['new_files'] . '</div>';
 
 $old = $realtime - (3 * 24 * 3600);
 $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . $old . "' AND `type` = 'file'");
@@ -26,12 +26,12 @@ if ($total > 0) {
     ////////////////////////////////////////////////////////////
     // Выводим список новых файлов                            //
     ////////////////////////////////////////////////////////////
-    $req = mysql_query("SELECT * FROM `download` WHERE `time` > '" . $old . "' AND `type` = 'file' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+    $req = mysql_query("SELECT * FROM `download` WHERE `time` > '$old' AND `type` = 'file' ORDER BY `time` DESC LIMIT $start,$kmess");
     while ($newf = mysql_fetch_array($req)) {
-        echo is_integer($i / 2) ? '<div class="list1">' : '<div class="list2">';
+        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         $fsz = filesize("$newf[adres]/$newf[name]");
         $fsz = round($fsz / 1024, 2);
-        $ft = format("$newf[adres]/$newf[name]");
+        $ft = functions::format("$newf[adres]/$newf[name]");
         switch ($ft) {
             case "mp3" :
                 $imt = "mp3.png";
@@ -83,15 +83,15 @@ if ($total > 0) {
         echo "[$pat1]</div>";
         ++$i;
     }
-    echo '<div class="phdr">Всего: ' . $total . '</div>';
+    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
     if ($total > 10) {
-        echo '<p>' . pagenav('index.php?act=new&amp;', $start, $total, $kmess) . '</p>';
-        echo '<p><form action="index.php" method="get"><input type="hidden" value="new" name="act" /><input type="text" name="page" size="2"/><input type="submit" value="К странице &gt;&gt;"/></form></p>';
+        echo '<p>' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</p>';
+        echo '<p><form action="index.php" method="get"><input type="hidden" value="new" name="act" /><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
     }
 }
 else {
-    echo "За три дня новых файлов не было<br/>";
+    echo '<p>' . $lng['list_empty'] . '</p>';
 }
-echo "<p><a href='index.php?'>К категориям</a></p>";
+echo "<p><a href='index.php?'>" . $lng['back'] . "</a></p>";
 
 ?>

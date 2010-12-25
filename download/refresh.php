@@ -15,8 +15,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
-require_once ("../incfiles/head.php");
+require_once("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
     $dropen = opendir("$loadroot");
     while (($file1 = readdir($dropen))) {
@@ -30,7 +29,7 @@ if ($rights == 4 || $rights >= 6) {
                     mysql_query("insert into `download` values(0,'','" . $loadroot . "','" . $realtime . "','" . $file1 . "','cat','','','','" . $file1 . "','');");
                 }
             }
-            $drt = array();
+            $drt = array ();
         }
     }
     $obn = mysql_query("select * from `download` where type = 'cat' ;");
@@ -38,12 +37,10 @@ if ($rights == 4 || $rights >= 6) {
         $dirop = "$obn1[adres]/$obn1[name]";
         if (is_dir("$dirop")) {
             $diropen = opendir("$dirop");
-
             while (($file = readdir($diropen))) {
                 if ($file != "." && $file != ".." && $file != "index.php") {
                     $pap = "$obn1[adres]/$obn1[name]";
-                    $obn2 = mysql_query("select * from `download` where name = '" . check(trim($file)) . "' and adres = '" . $pap . "' ;");
-
+                    $obn2 = mysql_query("select * from `download` where name = '" . functions::check($file) . "' and adres = '" . $pap . "' ;");
                     while ($obndir = mysql_fetch_array($obn2)) {
                         $fod[] = $obndir[name];
                     }
@@ -55,7 +52,7 @@ if ($rights == 4 || $rights >= 6) {
                             mysql_query("insert into `download` values(0,'" . $obn1[id] . "','" . $pap . "','" . $realtime . "','" . $file . "','file','','','','','');");
                         }
                     }
-                    $fod = array();                    ########## 7.02.08
+                    $fod = array (); ########## 7.02.08
                 }
             }
         }
@@ -80,15 +77,11 @@ if ($rights == 4 || $rights >= 6) {
             $idf = $idf + 1;
         }
     }
-    echo "База обновлена<br/>Добавлено $totald папок и $totalf файлов<br/>
-Удалено $idd папок и $idf файлов<br/>";
+    echo '<h3>' . $lng_dl['refreshed'] . "</h3>" . $lng_dl['added'] . " $totald " . $lng_dl['folders'] . " и $totalf " . $lng_dl['files'] . "<br/>
+" . $lng_dl['deleted'] . " $idd " . $lng_dl['folders'] . " и $idf " . $lng_dl['files'] . "<br/>";
     if ($totald != 0 || $totalf != 0) {
-        echo "<a href='?act=refresh'>Продолжить цикл</a><br/>";
+        echo "<a href='?act=refresh'>" . $lng_dl['refresh_continue'] . "</a><br/>";
     }
 }
-else {
-    echo "Нет доступа!<br/>";
-}
-echo "&#187;<a href='?'>К категориям</a><br/>";
-
+echo "<p><a href='?'>" . $lng['back'] . "</a></p>";
 ?>

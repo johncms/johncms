@@ -39,15 +39,18 @@ class KCAPTCHA {
             mt_rand(0, 100),
             mt_rand(0, 100)
         );
+
         $background_color = array (
             mt_rand(200, 255),
             mt_rand(200, 255),
             mt_rand(200, 255)
         );
+
         $jpeg_quality = 90;
         ////////////////////////////////////////////////////////////
         $fonts = array ();
         $fontsdir_absolute = dirname(__FILE__) . '/' . $fontsdir;
+
         if ($handle = opendir($fontsdir_absolute)) {
             while (false !== ($file = readdir($handle))) {
                 if (preg_match('/\.png$/i', $file)) {
@@ -57,6 +60,7 @@ class KCAPTCHA {
             closedir($handle);
         }
         $alphabet_length = strlen($alphabet);
+
         do {
             // generating random keystring
             while (true) {
@@ -159,6 +163,7 @@ class KCAPTCHA {
         // amplitudes
         $rand9 = mt_rand(330, 420) / 110;
         $rand10 = mt_rand(330, 450) / 110;
+
         //wave distortion
         for ($x = 0; $x < $width; $x++) {
             for ($y = 0; $y < $height; $y++) {
@@ -196,20 +201,28 @@ class KCAPTCHA {
                 imagesetpixel($img2, $x, $y, imagecolorallocate($img2, $newred, $newgreen, $newblue));
             }
         }
+        ob_start();
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Cache-Control: no-store, no-cache, must-revalidate');
         header('Cache-Control: post-check=0, pre-check=0', FALSE);
         header('Pragma: no-cache');
+
         if (function_exists("imagejpeg")) {
             header("Content-Type: image/jpeg");
             imagejpeg($img2, null, $jpeg_quality);
+            $ext = 'jpg';
         } else if (function_exists("imagegif")) {
             header("Content-Type: image/gif");
             imagegif($img2);
+            $ext = 'gif';
         } else if (function_exists("imagepng")) {
             header("Content-Type: image/x-png");
             imagepng($img2);
+            $ext = 'png';
         }
+        header('Content-Disposition: inline; filename=' . ((rand(10, 9999))) . '.' . $ext);
+        header('Content-Length: ' . ob_get_length());
+        ob_end_flush();
     }
 
     // returns keystring
@@ -221,5 +234,4 @@ session_name('SESID');
 session_start();
 $captcha = new KCAPTCHA();
 $_SESSION['code'] = $captcha->getKeyString();
-
 ?>

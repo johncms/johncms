@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require_once ("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
     if (!empty ($_GET['cat'])) {
-        $cat = $_GET['cat'];
+        $cat = intval($_GET['cat']);
     }
     if (isset ($_POST['submit'])) {
         if (empty ($cat)) {
@@ -32,8 +32,8 @@ if ($rights == 4 || $rights >= 6) {
             $adrdir = mysql_fetch_array($cat1);
             $droot = "$adrdir[adres]/$adrdir[name]";
         }
-        $drn = check(trim($_POST['drn']));
-        $rusn = check(trim($_POST['rusn']));
+        $drn = functions::check($_POST['drn']);
+        $rusn = functions::check($_POST['rusn']);
         $mk = mkdir("$droot/$drn", 0777);
         if ($mk == true) {
             chmod("$droot/$drn", 0777);
@@ -44,24 +44,19 @@ if ($rights == 4 || $rights >= 6) {
             echo "&#187;<a href='?cat=" . $newcat[id] . "'>В папку</a><br/>";
         }
         else {
-            echo "Ошибка<br/>";
+            echo "ERROR<br/>";
         }
     }
     else {
-        echo "<form action='?act=makdir&amp;cat=" . $_GET['cat'] .
-        "' method='post'>
-         Название папки:<br/>
-         <input type='text' name='drn'/><br/>
-         Название для отображения:<br/>
-         <input type='text' name='rusn'/><br/>
-
-         <input type='submit' name='submit' value='Создать'/><br/>
+        echo "<form action='?act=makdir&amp;cat=" . intval($_GET['cat']) . "' method='post'>
+         <p>" . $lng_dl['folder_name'] . "<br />
+         <input type='text' name='drn'/></p>
+         <p>" . $lng_dl['folder_name_for_list'] . ":<br/>
+         <input type='text' name='rusn'/></p>
+         <p><input type='submit' name='submit' value='Создать'/></p>
          </form>";
     }
 }
-else {
-    echo "Нет доступа!<br/>";
-}
-echo "&#187;<a href='?'>К категориям</a><br/>";
+echo "<a href='?'>" . $lng['back'] . "</a><br/>";
 
 ?>

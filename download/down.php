@@ -28,7 +28,7 @@ if (!empty ($mas[name])) {
 }
 else {
     require_once ("../incfiles/head.php");
-    echo "Ошибка!<br/>&#187;<a href='?'>К категориям</a><br/>";
+    echo "ERROR<br/>&#187;<a href='?'>Back</a><br/>";
 }
 
 ?>

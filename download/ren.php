@@ -15,12 +15,11 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
-require_once ("../incfiles/head.php");
+require_once("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
-    if (empty ($_GET['cat'])) {
-        echo "Ошибка!<br /><a href='?'>В загрузки</a><br/>";
-        require_once ('../incfiles/end.php');
+    if (empty($_GET['cat'])) {
+        echo "ERROR<br /><a href='?'>Back</a><br/>";
+        require_once('../incfiles/end.php');
         exit;
     }
     $cat = intval(trim($_GET['cat']));
@@ -28,27 +27,20 @@ if ($rights == 4 || $rights >= 6) {
     $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
     $adrdir = mysql_fetch_array($cat1);
     $namedir = "$adrdir[adres]/$adrdir[name]";
-    if (isset ($_POST['submit'])) {
-        if (!empty ($_POST['newrus'])) {
-            $newrus = check(trim($_POST['newrus']));
-        }
-        else {
+    if (isset($_POST['submit'])) {
+        if (!empty($_POST['newrus'])) {
+            $newrus = functions::check($_POST['newrus']);
+        } else {
             $newrus = "$adrdir[text]";
         }
-
         if (mysql_query("update `download` set text='" . $newrus . "' where id='" . $cat . "';")) {
-            echo "Название для отображения изменено<br/>";
+            echo '<p>' . $lng_dl['name_changed'] . '</p>';
         }
-    }
-    else {
-        echo "<form action='?act=ren&amp;cat=" . $cat . "' method='post'>";
-        echo "Отображать каталог как: <br/><input type='text' name='newrus' value='" . $adrdir[text] . "'/><br/>";
-        echo "<input type='submit' name='submit' value='Изменить'/></form><br/>";
+    } else {
+        echo "<form action='?act=ren&amp;cat=" . $cat . "' method='post'><p>";
+        echo $lng_dl['folder_name_for_list'] . "<br/><input type='text' name='newrus' value='" . $adrdir[text] . "'/></p>";
+        echo "<p><input type='submit' name='submit' value='" . $lng_dl['change'] . "'/></p></form>";
     }
 }
-else {
-    echo "Нет доступа!";
-}
-echo "&#187;<a href='?cat=" . $cat . "'>В папку</a><br/>";
-
+echo "<p><a href='?cat=" . $cat . "'>" . $lng['back'] . "</a></p>";
 ?>

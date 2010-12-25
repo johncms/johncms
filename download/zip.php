@@ -29,7 +29,7 @@ for ($imp = 0; $imp < $totalmp; $imp++) {
     $tim = time();
     $ftime1 = $tim - 300;
     if ($filtime[$imp] < $ftime1) {
-        unlink("$filesroot/arctemp/$mp[$imp]");
+        @unlink("$filesroot/arctemp/$mp[$imp]");
     }
 }
 if ($_GET['file'] == "") {
@@ -94,7 +94,7 @@ for ($i = $start; $i < $end; $i++) {
     $path = $selectfile[$i];
     $fname = ereg_replace(".*[\\/]", "", $path);
     $zdir = ereg_replace("[\\/]?[^\\/]*$", "", $path);
-    $tfl = strtolower(format($fname));
+    $tfl = strtolower(functions::format($fname));
     $df = array("asp", "aspx", "shtml", "htd", "php", "php3", "php4", "php5", "phtml", "htt", "cfm", "tpl", "dtd", "hta", "pl", "js", "jsp");
     if (in_array($tfl, $df)) {
         echo "$zdir/$fname";

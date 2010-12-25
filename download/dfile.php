@@ -15,12 +15,11 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
-require_once ("../incfiles/head.php");
+require_once("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
     if ($_GET['file'] == "") {
-        echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
-        require_once ('../incfiles/end.php');
+        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
+        require_once('../incfiles/end.php');
         exit;
     }
     $file = intval(trim($_GET['file']));
@@ -28,19 +27,22 @@ if ($rights == 4 || $rights >= 6) {
     $file2 = mysql_num_rows($file1);
     $adrfile = mysql_fetch_array($file1);
     if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
-        echo "Ошибка при выборе файла<br/><a href='?'>К категориям</a><br/>";
-        require_once ('../incfiles/end.php');
+        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
+        require_once('../incfiles/end.php');
         exit;
     }
-    $refd = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile[refid] . "';");
+    $refd = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile[refid] . "'");
     $refd1 = mysql_fetch_array($refd);
-    unlink("$adrfile[adres]/$adrfile[name]");
-    mysql_query("delete from `download` where id='" . $adrfile[id] . "' LIMIT 1;");
-    echo "Файл удалён<br/>";
+    if (isset($_POST['submit'])) {
+        unlink("$adrfile[adres]/$adrfile[name]");
+        mysql_query("delete from `download` where id='" . $adrfile[id] . "' LIMIT 1;");
+        echo '<p>' . $lng_dl['file_deleted'] . '</p>';
+    } else {
+        echo '<p>' . $lng['delete_confirmation'] . '</p>' .
+            '<form action="index.php?act=dfile&amp;file=' . $file . '" method="post">' .
+            '<input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
+            '</form><p><a href="index.php?act=view&amp;file=' . $file . '">' . $lng['cancel'] . '</a></p>';
+    }
 }
-else {
-    echo "Нет доступа!";
-}
-echo "&#187;<a href='?cat=" . $refd1[id] . "'>В папку</a><br/>";
-
+echo "<p><a href='?cat=" . $refd1[id] . "'>" . $lng['back'] . "</a></p>";
 ?>

@@ -22,7 +22,7 @@ if ($rights == 4 || $rights >= 6) {
         $loaddir = $loadroot;
     }
     else {
-        $cat = intval(trim($_GET['cat']));
+        $cat = intval($_GET['cat']);
         provcat($cat);
         $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $cat . "';");
         $adrdir = mysql_fetch_array($cat1);
@@ -30,9 +30,9 @@ if ($rights == 4 || $rights >= 6) {
     }
     if (isset ($_POST['submit'])) {
         $url = trim($_POST['url']);
-        $opis = check(trim($_POST['opis']));
-        $newn = check(trim($_POST['newn']));
-        $tipf = format($url);
+        $opis = functions::check($_POST['opis']);
+        $newn = functions::check($_POST['newn']);
+        $tipf = functions::format($url);
         if (eregi("[^a-z0-9.()+_-]", $newn)) {
             echo
             "В новом названии файла <b>$newn</b> присутствуют недопустимые символы<br/>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br /><a href='?act=import&amp;cat="
@@ -46,7 +46,7 @@ if ($rights == 4 || $rights >= 6) {
             if (copy($url, $import)) {
                 $ch = "$newn.$tipf";
                 echo "Файл успешно загружен<br/>";
-                mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . $realtime . "','" . $ch . "','file','','','','" . $opis . "','');");
+                mysql_query("insert into `download` values(0,'$cat','" . mysql_real_escape_string($loaddir) . "','$realtime','" . mysql_real_escape_string($ch) . "','file','','','','" . $opis . "','');");
             }
             else {
                 echo "Загрузка файла не удалась!<br/>";

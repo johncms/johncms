@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require_once ("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
     if ($_GET['file'] == "") {
-        echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
+        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
     }
@@ -28,26 +28,26 @@ if ($rights == 4 || $rights >= 6) {
     $file2 = mysql_num_rows($file1);
     $adrfile = mysql_fetch_array($file1);
     if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
-        echo "Ошибка при выборе файла<br/><a href='?'>К категориям</a><br/>";
+        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
     }
     $stt = "$adrfile[text]";
     if (isset ($_POST['submit'])) {
-        $newt = check(trim($_POST['newt']));
+        $newt = functions::check($_POST['newt']);
         mysql_query("update `download` set `text`='" . $newt . "' where `id`='" . $file . "';");
-        echo "Описание изменено <br/>";
+        echo $lng_dl['description_changed'] . "<br/>";
     }
     else {
         $str = str_replace("<br/>", "\r\n", $adrfile['text']);
         echo "<form action='?act=opis&amp;file=" . $file . "' method='post'>";
-        echo 'Описание:<br/><textarea cols="20" rows="4" name="newt">' . $str . '</textarea><br/>';
+        echo $lng['description'] . ':<br/><textarea cols="20" rows="4" name="newt">' . $str . '</textarea><br/>';
         echo "<input type='submit' name='submit' value='Изменить'/></form><br/>";
     }
 }
 else {
     echo "Нет доступа!";
 }
-echo "&#187;<a href='?act=view&amp;file=" . $file . "'>К файлу</a><br/>";
+echo "<p><a href='?act=view&amp;file=" . $file . "'>" . $lng['back'] . "</a></p>";
 
 ?>

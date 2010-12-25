@@ -19,7 +19,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 4 || $rights >= 6) {
     if ($_GET['id'] == "") {
         require_once ("../incfiles/head.php");
-        echo "Ошибка<br/><a href='index.php?'>К категориям</a><br/>";
+        echo "ERROR<br/><a href='index.php?'>Back</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
     }
@@ -28,16 +28,12 @@ if ($rights == 4 || $rights >= 6) {
     $ms = mysql_fetch_array($typ);
     if ($ms[type] != "komm") {
         require_once ("../incfiles/head.php");
-        echo "Ошибка<br/><a href='index.php?'>К категориям</a><br/>";
+        echo "ERROR<br/><a href='index.php?'>Back</a><br/>";
         require_once ('../incfiles/end.php');
         exit;
     }
-    mysql_query("delete from `download` where `id`='" . $id . "';");
+    mysql_query("delete from `download` where `id`='" . $id . "'");
     header("location: index.php?act=komm&id=$ms[refid]");
-}
-else {
-    require_once ("../incfiles/head.php");
-    echo "Нет доступа!<br/><a href='index.php?'>К категориям</a><br/>";
 }
 
 ?>

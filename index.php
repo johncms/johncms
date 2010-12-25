@@ -2,196 +2,119 @@
 
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
+// JohnCMS                Mobile Content Management System                    //
+// Project site:          http://johncms.com                                  //
+// Support site:          http://gazenwagen.com                               //
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
+// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
+// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
+//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
 define('_IN_JOHNCMS', 1);
-
 $headmod = 'mainpage';
-
 // Внимание! Если файл находится в корневой папке, нужно указать $rootpath = '';
 $rootpath = '';
 
-require_once ('incfiles/core.php');
-require_once ('incfiles/head.php');
-
-if (isset ($_GET['err']))
+require('incfiles/core.php');
+require('incfiles/head.php');
+if (isset($_SESSION['ref']))
+    unset($_SESSION['ref']);
+if (isset($_GET['err']))
     $act = 404;
 switch ($act) {
-    case '404' :
-        ////////////////////////////////////////////////////////////
-        // Сообщение об ошибке 404                                //
-        ////////////////////////////////////////////////////////////
-        echo display_error('Запрошенная Вами страница отсутствует');
+    case '404':
+        /*
+        -----------------------------------------------------------------
+        Сообщение об ошибке 404
+        -----------------------------------------------------------------
+        */
+        echo functions::display_error($lng['error_404']);
         break;
 
-    case 'users' :
-        //TODO: Сделать переключатель доступа из Админки, показвать, или нет Актив гостям
-        echo '<div class="phdr"><b>Актив Сайта</b></div>';
-        echo '<div class="menu"><a href="str/users_search.php">Поиск юзера</a></div>';
-        echo '<div class="menu"><a href="str/users.php">Список юзеров</a> (' . kuser() . ')</div>';
-        $mon = date("m", $realtime);
-        if (substr($mon, 0, 1) == 0) {
-            $mon = str_replace("0", "", $mon);
-        }
-        $day = date("d", $realtime);
-        if (substr($day, 0, 1) == 0) {
-            $day = str_replace("0", "", $day);
-        }
-        $brth = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . $day . "' AND `monthb` = '" . $mon . "' AND `preg` = '1'"), 0);
-        if ($brth)
-            echo '<div class="menu"><a href="str/brd.php">Именинники</a> (' . $brth . ')</div>';
-        echo '<div class="menu"><a href="str/moders.php">Администрация</a></div>';
-        echo '<div class="menu"><a href="str/users_top.php">Топ активности</a></div>';
-        echo '<div class="phdr">&nbsp;</div>';
-        break;
-
-    case 'info' :
-        ////////////////////////////////////////////////////////////
-        // Информационный блок                                    //
-        ////////////////////////////////////////////////////////////
-        echo '<div class="phdr"><b>Информация</b></div>';
-        echo '<div class="menu"><a href="str/smile.php">Смайлы</a></div>';
-        echo '<div class="menu"><a href="str/avatar.php">Аватары</a></div>';
-        echo '<div class="menu"><a href="read.php?">FAQ (ЧаВо)</a></div>';
-        //TODO: Разобраться с сессией, по возможности удалить
-        $_SESSION['refsm'] = '../index.php?act=info';
-        break;
-
-    case 'cab' :
-        ////////////////////////////////////////////////////////////
-        // Личный кабинет                                         //
-        ////////////////////////////////////////////////////////////
+    case 'digest':
+        /*
+        -----------------------------------------------------------------
+        Дайджест
+        -----------------------------------------------------------------
+        */
         if (!$user_id) {
-            echo display_error('Только для зарегистрированных');
-            require_once ('incfiles/end.php');
+            echo functions::display_error($lng['access_guest_forbidden']);
+            require_once('incfiles/end.php');
             exit;
         }
-        echo '<div class="phdr"><b>Личный кабинет</b></div>';
-        // Блок статистики
-        echo '<div class="gmenu"><p><h3><img src="images/rate.gif" width="16" height="16" class="left" />&nbsp;Мои активы</h3><ul>';
-        echo '<li><a href="str/my_stat.php?act=forum">Последние записи</a></li>';
-        echo '<li><a href="str/my_stat.php">Моя Статистика</a></li>';
-        if ($rights >= 1) {
-            $guest = gbook(2);
-            echo '<li><a href="str/guest.php?act=ga&amp;do=set">Админ-Клуб</a> (<span class="red">' . $guest . '</span>)</li>';
-            echo '<li><span class="red"><a href="' . $admp . '/index.php"><b>Админ панель</b></a></span></li>';
-        }
-        echo '</ul></p></div>';
-        echo '<div class="menu"><p><h3><img src="images/mail.png" width="16" height="16" class="left" />&nbsp;Моя почта</h3><ul>';
-        // Блок почты
-        $count_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in'"), 0);
-        $count_newmail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '" . $login . "' AND `type` = 'in' AND `chit` = 'no'"), 0);
-        echo '<li><a href="str/pradd.php?act=in">Входящие</a>&nbsp;(' . $count_mail . ($count_newmail ? '&nbsp;/&nbsp;<span class="red"><a href="str/pradd.php?act=in&amp;new">+' . $count_newmail . '</a></span>' : '') . ')</li>';
-        $count_sentmail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `author` = '$login' AND `type` = 'out'"), 0);
-        $count_sentunread = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `author` = '$login' AND `type` = 'out' AND `chit` = 'no'"), 0);
-        echo '<li><a href="str/pradd.php?act=out">Отправленные</a>&nbsp;(' . $count_sentmail . ($count_sentunread ? '&nbsp;/&nbsp;<span class="red">' . $count_sentunread . '</span>' : '') . ')</li>';
-        $count_files = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `attach` != ''"), 0);
-        //echo '<li><a href="str/pradd.php?act=files">Файлы</a>&nbsp;(' . $count_files . ')</li>';
-        if (!$ban['1'] && !$ban['3'])
-            echo '<p><form action="str/pradd.php?act=write" method="post"><input type="submit" value=" Написать " /></form></p>';
-        // Блок контактов
-        echo '</ul><h3><img src="images/contacts.png" width="16" height="16" class="left" />&nbsp;Мои контакты</h3><ul>';
-        $count_contacts = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `me` = '$login' AND `cont` != ''"), 0);
-        echo '<li><a href="str/cont.php">Контакты</a>&nbsp;(' . $count_contacts . ')</li>';
-        $count_ignor = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `me` = '$login' AND `ignor` != ''"), 0);
-        echo '<li><a href="str/ignor.php">Игнор</a>&nbsp;(' . $count_ignor . ')</li>';
-        echo '</ul></p></div>';
-        // Блок настроек
-        echo '<div class="bmenu"><p><h3><img src="images/settings.png" width="16" height="16" class="left" />&nbsp;Мои настройки</h3><ul>';
-        echo '<li><a href="str/anketa.php">Моя анкета</a></li>';
-        echo '<li><a href="str/my_pass.php">Сменить пароль</a></li>';
-        echo '<li><a href="str/my_set.php">Общие настройки</a></li>';
-        echo '<li><a href="str/my_set.php?act=forum">Форум</a></li>';
-        echo '<li><a href="str/my_set.php?act=chat">Чат</a></li>';
-        echo '</ul></p></div>';
-        break;
-
-    case 'digest' :
-        ////////////////////////////////////////////////////////////
-        // Дайджест                                               //
-        ////////////////////////////////////////////////////////////
-        if (!$user_id) {
-            echo display_error('Только для зарегистрированных');
-            require_once ('incfiles/end.php');
-            exit;
-        }
-        echo '<div class="phdr">Дайджест</div>';
-        echo '<div class="gmenu"><p>Привет, <b>' . $login . '</b><br/>Добро пожаловать на ' . $copyright . '!<br /><a href="index.php">Войти на сайт</a></p></div>';
+        echo '<div class="phdr"><b>' . $lng['digest'] . '</b></div>';
+        echo '<div class="gmenu"><p>' . $lng['hi'] . ', <b>' . $login . '</b><br/>' . $lng['welcome_to'] . ' ' . $set['copyright'] . '!<br /><a href="index.php">' . $lng['enter_on_site'] . '</a></p></div>';
         // Поздравление с днем рождения
-        if ($datauser['dayb'] == $day && $datauser['monthb'] == $mon) {
-            echo '<div class="rmenu"><p>С ДНЁМ РОЖДЕНИЯ!!!</p></div>';
+        if ($datauser['dayb'] == date('j', $realtime) && $datauser['monthb'] == date('n', $realtime)) {
+            echo '<div class="rmenu"><p>' . $lng['happy_birthday'] . '</p></div>';
         }
         // Дайджест Администратора
         if ($rights >= 1) {
             $newusers_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `datereg` > '" . ($realtime - 86400) . "' AND `preg` = '1'"), 0);
             $reg_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg` = 0"), 0);
             $ban_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time`>'" . $realtime . "'"), 0);
-            echo '<div class="bmenu">События в админке</div>';
-            echo '<div class="menu"><ul>';
+            echo '<div class="menu"><p><h3>' . $lng['administrative_events'] . '</h3><ul>';
             if ($newusers_total > 0)
-                echo '<li><a href="str/users.php">Новые посетители</a> (' . $newusers_total . ')</li>';
+                echo '<li><a href="users/users.php">' . $lng['users_new'] . '</a> (' . $newusers_total . ')</li>';
             if ($reg_total > 0)
-                echo '<li><a href="' . $admp . '/index.php?act=usr_reg">На регистрации</a> (' . $reg_total . ')</li>';
+                echo '<li><a href="' . $set['admp'] . '/index.php?act=reg">' . $lng['users_on_reg'] . '</a> (' . $reg_total . ')</li>';
             if ($ban_total > 0)
-                echo '<li><a href="' . $admp . '/index.php?act=usr_ban">Имеют Бан</a> (' . $ban_total . ')</li>';
+                echo '<li><a href="' . $set['admp'] . '/index.php?act=ban_panel">' . $lng['users_on_ban'] . '</a> (' . $ban_total . ')</li>';
             $total_libmod = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = 0"), 0);
             if ($total_libmod > 0)
-                echo '<li><a href="library/index.php?act=moder">Мод. Библиотеки</a> (' . $total_libmod . ')</li>';
-            $total_admin = gbook(2);
+                echo '<li><a href="library/index.php?act=moder">' . $lng['library_on_moderation'] . '</a> (' . $total_libmod . ')</li>';
+            $total_admin = functions::stat_guestbook(2);
             if ($total_admin > 0)
-                echo '<li><a href="str/guest.php?act=ga&amp;do=set">Админ-Клуб</a> (' . $total_admin . ')</li>';
+                echo '<li><a href="guestbook/index.php?act=ga&amp;do=set">' . $lng['admin_club'] . '</a> (' . $total_admin . ')</li>';
             if (!$newusers_total && !$reg_total && !$ban_total && !$total_libmod && !$total_admin)
-                echo 'Новых событий нет';
-            echo '</ul></div>';
+                echo '<li>' . $lng['events_no_new'] . '</li>';
+            echo '</ul></p></div>';
         }
         // Дайджест юзеров
-        echo '<div class="bmenu">Новое на сайте</div><div class="menu"><ul>';
+        echo '<div class="menu"><p><h3>' . $lng['site_new'] . '</h3><ul>';
         $total_news = mysql_result(mysql_query("SELECT COUNT(*) FROM `news` WHERE `time` > " . ($realtime - 86400)), 0);
         if ($total_news > 0)
-            echo '<li><a href="str/news.php">Новости</a> (' . $total_news . ')</li>';
-        $total_forum = forum_new();
+            echo '<li><a href="news/index.php">' . $lng['news'] . '</a> (' . $total_news . ')</li>';
+        $total_forum = functions::forum_new();
         if ($total_forum > 0)
-            echo '<li><a href="forum/index.php?act=new">Форум</a> (' . $total_forum . ')</li>';
-        $total_guest = gbook(1);
+            echo '<li><a href="forum/index.php?act=new">' . $lng['forum'] . '</a> (' . $total_forum . ')</li>';
+        $total_guest = functions::stat_guestbook(1);
         if ($total_guest > 0)
-            echo '<li><a href="str/guest.php?act=ga">Гостевая</a> (' . $total_guest . ')</li>';
-        $total_gal = fgal(1);
+            echo '<li><a href="guestbook/index.php?act=ga">' . $lng['guestbook'] . '</a> (' . $total_guest . ')</li>';
+        $total_gal = functions::stat_gallery(1);
         if ($total_gal > 0)
-            echo '<li><a href="gallery/index.php?act=new">Галерея</a> (' . $total_gal . ')</li>';
-        if($set_karma['on']) {
-           $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400)), 0);
-           if ($total_karma > 0)
-               echo '<li><a href="str/karma.php?act=new">Новые отзывы</a> (' . $total_karma . ')</li>';
+            echo '<li><a href="gallery/index.php?act=new">' . $lng['gallery'] . '</a> (' . $total_gal . ')</li>';
+        if ($set_karma['on']) {
+            $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400)), 0);
+            if ($total_karma > 0)
+                echo '<li><a href="users/profile.php?act=karma&amp;mod=new">' . $lng['new_responses'] . '</a> (' . $total_karma . ')</li>';
         }
         $old = $realtime - (3 * 24 * 3600);
         $total_lib = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = 1 AND `time` > " . $old), 0);
         if ($total_lib > 0)
-            echo '<li><a href="library/index.php?act=new">Библиотека</a> (' . $total_lib . ')</li>';
+            echo '<li><a href="library/index.php?act=new">' . $lng['library'] . '</a> (' . $total_lib . ')</li>';
         // Если нового нет, выводим сообщение
         if (!$total_news && !$total_forum && !$total_guest && !$total_gal && !$total_lib && !$total_karma)
-            echo 'Новостей нет';
+            echo '<li>' . $lng['events_no_new'] . '</li>';
         // Дата последнего посещения
-        $last = isset ($_GET['last']) ? intval($_GET['last']) : $datauser['lastdate'];
-        echo '</ul></div><div class="phdr">Последнее посещение: ' . date("d.m.Y (H:i)", $last) . '</div>';
+        $last = isset($_GET['last']) ? intval($_GET['last']) : $datauser['lastdate'];
+        echo '</ul></p></div><div class="phdr">' . $lng['last_visit'] . ': ' . date("d.m.Y (H:i)", $last) . '</div>';
         break;
 
-    default :
-        ////////////////////////////////////////////////////////////
-        // Главное меню сайта                                     //
-        ////////////////////////////////////////////////////////////
-        include_once 'pages/mainmenu.php';
+    default:
+        /*
+        -----------------------------------------------------------------
+        Главное меню сайта
+        -----------------------------------------------------------------
+        */
+        if (isset($_SESSION['ref']))
+            unset($_SESSION['ref']);
+        include 'pages/mainmenu.php';
+        if (!$is_mobile)
+            include 'sitemap/index.php';
 }
 
-require_once ('incfiles/end.php');
-
+require('incfiles/end.php');
 ?>

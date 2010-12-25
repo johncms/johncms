@@ -1,12 +1,4 @@
 --
--- ДЕМО данные Чата
---
-INSERT INTO `chat` (`realid`, `type`, `dpar`, `text`) VALUES
-(1, 'r', 'vik', 'Викторина'),
-(2, 'r', 'in', 'Интим'),
-(3, 'r', '', 'Общение');
-
---
 -- ДЕМО данные Новостей
 --
 INSERT INTO `news` (`time`, `avt`, `name`, `text`, `kom`) VALUES
@@ -38,7 +30,6 @@ INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, 
 -- ДЕМО данные Галереи
 --
 INSERT INTO `gallery` (`id`, `refid`, `time`, `type`, `text`, `user`) VALUES
-(1, 0, 1216913206, 'rz', 'Личные альбомы', '1'),
 (2, 0, 1216913224, 'rz', 'Картинки', ''),
 (3, 2, 1216913232, 'al', 'Природа', ''),
 (4, 2, 1216913245, 'al', 'Животные', ''),

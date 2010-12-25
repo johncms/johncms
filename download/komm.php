@@ -18,12 +18,12 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once ("../incfiles/head.php");
 if ($_GET['id'] == "") {
-    echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
+    echo "ERROR<br/><a href='?'>Back</a><br/>";
     require_once ('../incfiles/end.php');
     exit;
 }
-if (!$set['mod_down_comm'] || $rights < 7) {
-    echo '<p>Комментарии закрыты<br/><a href="index.php">К загрузкам</a></p>';
+if (!$set['mod_down_comm'] && $rights < 7) {
+    echo '<p>ERROR<br/><a href="index.php">Back</a></p>';
     require_once ('../incfiles/end.php');
     exit;
 }
@@ -31,7 +31,7 @@ $mess = mysql_query("select * from `download` where type='komm' and refid='" . $
 $countm = mysql_num_rows($mess);
 $fayl = mysql_query("select * from `download` where type='file' and id='" . $id . "';");
 $fayl1 = mysql_fetch_array($fayl);
-echo "Комментируем файл <font color='" . $clink . "'>$fayl1[name]</font><br/>";
+echo '<p>' . $lng['comments'] . ": <span class='red'>$fayl1[name]</span></p>";
 if ($user_id && !$ban['1'] && !$ban['10']) {
     echo "<a href='?act=addkomm&amp;id=" . $id . "'>Написать</a><br/>";
 }
@@ -61,11 +61,11 @@ while ($mass = mysql_fetch_array($mess)) {
         else {
             $div = "<div class='b'>";
         }
-        $uz = @ mysql_query("select * from `users` where name='" . check($mass[avtor]) . "';");
+        $uz = @ mysql_query("select * from `users` where name='" . functions::check($mass[avtor]) . "';");
         $mass1 = @ mysql_fetch_array($uz);
         echo "$div";
         if ((!empty ($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1[id])) {
-            echo "<a href='anketa.php?id=" . $mass1[id] . "'>$mass[avtor]</a>";
+            echo "<a href='../users/profile.php?user=" . $mass1[id] . "'>$mass[avtor]</a>";
         }
         else {
             echo "$mass[avtor]";
@@ -97,18 +97,8 @@ while ($mass = mysql_fetch_array($mess)) {
         echo "($vr1)<br/>";
         $mass['text'] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $mass[text]);
         $mass['text'] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
-        $mass['text'] = eregi_replace("\\[l\\]([[:alnum:]_=:/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+.&_=/%]*)?)?)\\[l/\\]((.*)?)\\[/l\\]", "<a href='http://\\1'>\\6</a>", $mass[text]);
-
-        if (stristr($mass[text], "<a href=")) {
-            $mass[text] = eregi_replace(
-            "\\<a href\\='((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)'>[[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)</a>",
-            "<a href='\\1\\3'>\\3</a>", $mass[text]);
-        }
-        else {
-            $mass[text] = eregi_replace("((https?|ftp)://)([[:alnum:]_=/-]+(\\.[[:alnum:]_=/-]+)*(/[[:alnum:]+&._=/~%]*(\\?[[:alnum:]?+&_=/%]*)?)?)", "<a href='\\1\\3'>\\3</a>", $mass[text]);
-        }
         if ($set_user['smileys']) {
-            $tekst = smileys($mass['text'], ($mass['from'] == $nickadmina || $mass['from'] == $nickadmina2 || $mass1['rights'] >= 1) ? 1 : 0);
+            $tekst = functions::smileys($mass['text'], ($mass['from'] == $nickadmina || $mass['from'] == $nickadmina2 || $mass1['rights'] >= 1) ? 1 : 0);
         }
         else {
             $tekst = $mass['text'];
@@ -176,7 +166,7 @@ if ($countm > $kmess) {
     echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
     "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
-echo "<br/>Всего комментариев: $countm";
-echo '<br/><a href="?act=view&amp;file=' . $id . '">К файлу</a><br/>';
+echo "<br/>" . $lng['total'] . ": $countm";
+echo '<br/><a href="?act=view&amp;file=' . $id . '">' . $lng['back'] . '</a><br/>';
 
 ?>

@@ -2,85 +2,113 @@
 
 /*
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
+// JohnCMS                Mobile Content Management System                    //
+// Project site:          http://johncms.com                                  //
+// Support site:          http://gazenwagen.com                               //
 ////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
+// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
+// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
+//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-@ ini_set("max_execution_time", "600");
+@ini_set("max_execution_time", "600");
 define('_IN_JOHNCMS', 1);
 define('_IN_JOHNADM', 1);
 
-$textl = 'Админ панель';
-require_once ('../incfiles/core.php');
+require('../incfiles/core.php');
+// Подключаем язык Админ-панели
+$lng = array_merge($lng, $core->load_lng('admin'));
 
+// Проверяем права доступа
 if ($rights < 1) {
-    header('Location: http://gazenwagen.com/?err');
+    header('Location: http://johncms.com/?err');
     exit;
 }
 
-require_once ('../incfiles/head.php');
-$array = array('usr_reg', 'usr_adm', 'usr_list', 'usr_del', 'usr_ban', 'usr_search_nick', 'usr_search_ip', 'mod_ads', 'mod_counters', 'mod_news', 'mod_forum', 'mod_chat', 'sys_set', 'sys_smileys', 'sys_access', 'sys_antispy', 'sys_ipban', 'mod_karma', 'sys_flood');
-if (in_array($act, $array) && file_exists($act . '.php')) {
-    require_once ($act . '.php');
-}
-else {
-    ////////////////////////////////////////////////////////////
-    // Главное меню админки                                   //
-    ////////////////////////////////////////////////////////////
-    echo '<div class="phdr"><b>Админ панель</b></div>';
-    echo '<div class="gmenu"><p><h3><img src="../images/users.png" width="16" height="16" class="left" />&nbsp;Пользователи</h3><ul>';
+$headmod = 'admin';
+$textl = $lng['admin_panel'];
+require_once('../incfiles/head.php');
+$array = array (
+    'ads'               => 'includes/modules',
+    'counters'          => 'includes/modules',
+    'forum'             => 'includes/modules',
+    'karma'             => 'includes/modules',
+    'news'              => 'includes/modules',
+    'languages'         => 'includes/system',
+    'seo'               => 'includes/system',
+    'settings'          => 'includes/system',
+    'smileys'           => 'includes/system',
+    'access'            => 'includes/security',
+    'antiflood'         => 'includes/security',
+    'antispy'           => 'includes/security',
+    'ipban'             => 'includes/ip',
+    'search_ip'         => 'includes/ip',
+    'administrators'    => 'includes/users',
+    'ban_panel'         => 'includes/users',
+    'reg'               => 'includes/users',
+    'search_user'       => 'includes/users',
+    'users'             => 'includes/users',
+    'usr_del'           => 'includes/users'
+);
+$path = !empty($array[$act]) ? $array[$act] . '/' : '';
+if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
+    require_once($path . $act . '.php');
+} else {
+    /*
+    -----------------------------------------------------------------
+    Главное меню Админ панели
+    -----------------------------------------------------------------
+    */
     $regtotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'"), 0);
-    if ($regtotal)
-        echo '<li><span class="red"><b><a href="index.php?act=usr_reg">На регистрации</a>&nbsp;(' . $regtotal . ')</b></span></li>';
-    echo '<li><a href="index.php?act=usr_adm">Администрация</a>&nbsp;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>';
-    //TODO: Написать показ числа новых
-    echo '<li><a href="index.php?act=usr_list">Пользователи</a>&nbsp;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users`"), 0) . ')</li>';
     $bantotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '$realtime'"), 0);
-    echo '<li><a href="index.php?act=usr_ban">Бан-панель</a>&nbsp;(' . $bantotal . ')</li>';
-    echo '</ul></p><p><h3><img src="../images/search.png" width="16" height="16" class="left" />&nbsp;Поиск</h3><ul>';
-    echo '<li><a href="index.php?act=usr_search_nick">Поиск по Нику</a></li>';
-    echo '<li><a href="index.php?act=usr_search_ip">Поиск по IP</a></li>';
-    echo '</ul></p></div>';
-    echo '<div class="menu">';
+    echo '<div class="phdr"><b>' . $lng['admin_panel'] . '</b></div>' .
+        '<div class="user"><p><h3><img src="../images/users.png" width="16" height="16" class="left" />&#160;' . $lng['users'] . '</h3><ul>';
+    if ($regtotal && $rights >= 6)
+        echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
+    echo '<li><a href="index.php?act=administrators">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
+        '<li><a href="index.php?act=users">' . $lng['users'] . '</a>&#160;(' . functions::stat_users() . ')</li>' .
+        '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
+        '<li><a href="index.php?act=search_user"><b>' . $lng['search'] . '</b></a></li>' .
+        '</ul></p></div>' .
+        '<div class="list2">';
     // Блок модулей
     if ($rights >= 7) {
-        echo '<p><h3><img src="../images/modules.png" width="16" height="16" class="left" />&nbsp;Модули</h3><ul>';
-        echo '<li><a href="index.php?act=mod_ads">Реклама</a></li>';
+        echo '<p><h3><img src="../images/modules.png" width="16" height="16" class="left" />&#160;' . $lng['modules'] . '</h3><ul>' .
+            '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>';
         if ($rights == 9)
-            echo '<li><a href="index.php?act=mod_counters">Счетчики</a></li>';
-        echo '<li><a href="index.php?act=mod_news">Новости</a></li>';
-        echo '<li><a href="index.php?act=mod_forum">Форум</a></li>';
-        echo '<li><a href="index.php?act=mod_chat">Чат</a></li>';
-        echo '<li><a href="index.php?act=mod_karma">Карма</a></li>';
-        echo '</ul></p>';
+            echo '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>';
+        echo '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li>' .
+            '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
+            '<li><a href="index.php?act=karma">' . $lng['karma'] . '</a></li>' .
+            '</ul></p>';
+    }
+    // Работа с IP адресами
+    echo '<p><h3><img src="../images/network.png" width="16" height="16" class="left" />&#160;' . $lng['ip_settings'] . '</h3><ul>' .
+        '<li><a href="index.php?act=search_ip">' . $lng['ip_search'] . '</a></li>';
+    if ($rights == 9) {
+        echo '<li><a href="index.php?act=ipban">' . $lng['ip_ban'] . '</a></li>';
+    }
+    echo '</ul></p>';
+    if ($rights >= 7) {
+        // Блок системных настроек
+        echo '<p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['system'] . '</h3><ul>';
+        if ($rights == 9) {
+            echo '<li><a href="index.php?act=settings">' . $lng['site_settings'] . '</a></li>' .
+                '<li><a href="index.php?act=languages">' . $lng['language_settings'] . '</a></li>';
+        }
+        echo '<li><a href="index.php?act=smileys">' . $lng['refresh_smileys'] . '</a></li>' .
+            '</ul></p></div>';
+        // Блок безопасности
+        echo '<div class="bmenu">' .
+            '<p><h3><img src="../images/admin.png" width="16" height="16" class="left" />&#160;' . $lng['security'] . '</h3><ul>' .
+            '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' .
+            '<li><a href="index.php?act=access">' . $lng['access_rights'] . '</a></li>' .
+            '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
+            '</ul></p>';
     }
     echo '</div>';
-    // Блок системных настроек
-    if ($rights >= 7) {
-        echo '<div class="bmenu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&nbsp;Система</h3><ul>';
-        if ($rights == 9)
-            echo '<li><a href="index.php?act=sys_set">Настройки сайта</a></li>';
-        echo '<li><a href="index.php?act=sys_smileys">Обновить смайлы</a></li>';
-        //echo '<li><a href="">Очистка</a></li>';
-        echo '</ul></p>';
-        echo '<p><h3><img src="../images/admin.png" width="16" height="16" class="left" />&nbsp;Безопасность</h3><ul>';
-        echo '<li><a href="index.php?act=sys_flood">Антифлуд</a></li>';
-        echo '<li><a href="index.php?act=sys_access">Права доступа</a></li>';
-        echo '<li><a href="index.php?act=sys_antispy">Сканер антишпион</a></li>';
-        if ($rights == 9)
-            echo '<li><a href="index.php?act=sys_ipban">Бан по IP</a></li>';
-        echo '</ul></p></div>';
-    }
 }
 
-require_once ('../incfiles/end.php');
-
+require('../incfiles/end.php');
 ?>

@@ -15,20 +15,21 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-require_once ("../incfiles/head.php");
+require_once ('../incfiles/head.php');
+echo '<div class="phdr"><a href="index.php"><b>' . $lng['downloads'] . '</b></a> | ' . $lng['search'] . '</div>';
 if (!empty ($_GET['srh'])) {
-    $srh = check(trim($_GET['srh']));
+    $srh = functions::check($_GET['srh']);
 }
 else {
     if ($_POST['srh'] == "") {
-        echo "Вы не ввели условие поиска!<br/><a href='?'>В загрузки</a><br/>";
+        echo functions::display_error($lng_dl['search_string_empty'], '<a href="index.php">' . $lng['back'] . '</a>');
         require_once ('../incfiles/end.php');
         exit;
     }
-    $srh = check(trim($_POST['srh']));
+    $srh = functions::check($_POST['srh']);
 }
 if (!empty ($_GET['srh'])) {
-    $srh = check(trim($_GET['srh']));
+    $srh = functions::check($_GET['srh']);
 }
 $psk = mysql_query("select * from `download` where  type='file' ;");
 if (empty ($_GET['start']))
@@ -38,18 +39,18 @@ else
 
 while ($array = mysql_fetch_array($psk)) {
     if (stristr($array [name], $srh)) {
-        $res[] = "Найдено по названию:<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>";
+        $res[] = $lng_dl['found_by_name'] . ":<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>";
     }
     if (stristr($array [text], $srh)) {
-        $res[] = "Найдено по описанию:<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>$array[text]<br/>";
+        $res[] = $lng_dl['found_by_description'] . ":<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>$array[text]<br/>";
     }
 }
 $g = count($res);
 if ($g == 0) {
-    echo "<br/>По вашему запросу ничего не найдено<br/>";
+    echo '<p>' . $lng['search_results_empty'] . '</p>';
 }
 else {
-    echo "Результаты поиска<br/>";
+    echo '<p>' . $lng['search_results'] . '</p>';
 }
 if (empty ($_GET['page'])) {
     $page = 1;
@@ -81,7 +82,7 @@ if ($g > 10) {
     echo "<hr/>";
 
     $ba = ceil($g / 10);
-    echo "Страницы:<br/>";    //TODO: Переделать на новый листинг по страницам
+    echo "Pages:<br/>";    //TODO: Переделать на новый листинг по страницам
     $asd = $start - 10;
     $asd2 = $start + 20;
 
@@ -130,12 +131,12 @@ if ($g > 10) {
     if ($g > $start + 10) {
         echo ' <a href="index.php?act=search&amp;srh=' . $srh . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
-    echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='act' value='search'/><input type='hidden' name='srh' value='" . $srh .
-    "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+    echo "<form action='index.php'>To Page:<br/><input type='hidden' name='act' value='search'/><input type='hidden' name='srh' value='" . $srh .
+    "'/><input type='text' name='page' /><br/><input type='submit' value='Go!'/></form>";
 }
 if ($g != 0) {
-    echo "<br/>Найдено совпадений: $g";
+    echo "<div class='phdr'>" . $lng['total'] . ": $g</div>";
 }
-echo '<br/><a href="?">В загрузки</a><br/>';
+echo '<p><a href="?">' . $lng['downloads'] . '</a></p>';
 
 ?>

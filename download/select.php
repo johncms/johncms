@@ -15,38 +15,28 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
-require_once ("../incfiles/head.php");
-if (!empty ($_GET['cat'])) {
+require_once("../incfiles/head.php");
+if (!empty($_GET['cat'])) {
     $cat = $_GET['cat'];
     provcat($cat);
     if ($rights == 4 || $rights >= 6) {
-        echo
-        "<form action='?act=upl' method='post' enctype='multipart/form-data'>
-         Выберите файл(max $flsz кб.):<br/>
-         <input type='file' name='fail'/><br/>
-         Скриншот:<br/>
-         <input type='file' name='screens'/><hr/>
-Для Opera Mini:<br/><input name='fail1' value =''/>&nbsp;<br/>
-<a href='op:fileselect'>Выбрать файл</a>
-<br/><input name='screens1' value =''/>&nbsp;<br/>
-<a href='op:fileselect'>Выбрать рисунок</a><hr/>
-Описание:<br/>
-       <textarea name='opis'></textarea><br/>
-         Сохранить как(без расширения):<br/>
-         <input type='text' name='newname'/><br/>
-<input type='hidden' name='cat' value='"
-        . $cat . "'/>
-         <input type='submit' value='Загрузить'/><br/>
+        echo "<form action='?act=upl' method='post' enctype='multipart/form-data'>
+         <p>" . $lng['select'] . " (max " . $set['flsz'] . " кб.):<br/>
+         <input type='file' name='fail'/></p>
+         <p>" . $lng_dl['screenshot'] . ":<br/>
+         <input type='file' name='screens'/></p>
+         <p>" . $lng['description'] . ":<br/>
+         <textarea name='opis'></textarea></p>
+         <p>" . $lng_dl['save_as'] . ":<br/>
+         <input type='text' name='newname'/></p>
+         <input type='hidden' name='cat' value='" . $cat . "'/>
+         <p><input type='submit' value='" . $lng_dl['upload'] . "'/></p>
          </form>";
-    }
-    else {
+    } else {
         echo "Нет доступа!<br/>";
     }
-    echo "&#187;<a href='?cat=" . $cat . "'>Вернуться</a><br/>";
+    echo "<a href='?cat=" . $cat . "'>" . $lng['back'] . "</a><br/>";
+} else {
+    echo 'ERROR';
 }
-else {
-    echo "Ошибка:не выбрана категория<br/>";
-}
-
 ?>
