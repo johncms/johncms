@@ -122,14 +122,16 @@ if (isset($_POST['submit'])) {
         }
     }
     echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['new_topic'] . '</div>' .
-        '<form action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
+        '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .
         '<p><h3>' . $lng['section'] . '</h3>' .
         '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
         '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th"/></p>' .
-        '<p><h3>' . $lng_forum['post'] . '</h3>' .
-        '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+        '<p><h3>' . $lng_forum['post'] . '</h3>';
+    if(!$is_mobile)
+        echo '</p><p>' . functions::auto_bb('form', 'msg');
+    echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
     if ($set_user['translit'])
         echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];

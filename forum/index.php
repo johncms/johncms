@@ -595,9 +595,11 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                     }
                     if ($set_forum['postcut'] && mb_strlen($text) > $cut) {
                         $text = mb_substr($text, 0, $cut);
-                        $text = functions::checkout($text, 1, 0);
+                        $text = functions::checkout($text, 1, 1);
                         $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
-                        echo $text . '...<br /><a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+                        if ($set_user['smileys'])
+                            $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+                        echo functions::notags($text) . '...<br /><a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
                     } else {
                         // Или, обрабатываем тэги и выводим весь текст
                         $text = functions::checkout($text, 1, 1);
@@ -763,7 +765,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     if (!$id) {
         echo '<a href="../pages/faq.php?act=forum">' . $lng_forum['forum_rules'] . '</a><br/>';
         echo '<a href="index.php?act=moders">' . $lng['moders'] . '</a><br />';
-        echo '<a href="index.php?act=faq">FAQ</a>';
+        echo '<a href="../pages/faq.php?act=forum">FAQ</a>';
     }
     echo '</p>';
     if (!$user_id) {

@@ -173,10 +173,10 @@ if (in_array($act, $array)) {
                     // Выводим анонс текстового описания (если есть)
                     $tx = $zap2['text'];
                     if (mb_strlen($tx) > 100) {
-                        $tx = mb_substr($tx, 0, 90);
+                        $tx = mb_substr(strip_tags($tx), 0, 90);
                         $tx .= '...';
                     }
-                    echo '<div class="sub">' . $tx . '</div>';
+                    echo '<div class="sub">' . functions::checkout($tx) . '</div>';
                 }
                 echo '</div>';
             }

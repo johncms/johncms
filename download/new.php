@@ -58,7 +58,7 @@ if ($total > 0) {
         if ($newf['text'] != "") {
             $tx = $newf['text'];
             if (mb_strlen($tx) > 100) {
-                $tx = mb_substr($tx, 0, 90);
+                $tx = mb_substr(strip_tags($tx), 0, 90);
 
                 $tx = "<br/>$tx...";
             }

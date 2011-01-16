@@ -164,7 +164,7 @@ switch ($mod) {
                 '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . $lng['font_underline'] . '</u></p></div>' .
                 '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? $lng['edit'] : $lng['add']) . '" /></div></form>' .
                 '<p><a href="index.php?act=ads">' . $lng['advertisement'] . '</a><br />' .
-                '<a href="index.php?act=ads">' . $lng['admin_panel'] . '</a></p>';
+                '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
         }
         break;
 

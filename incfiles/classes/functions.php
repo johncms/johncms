@@ -110,12 +110,15 @@ var length = element.selectionEnd - element.selectionStart;
 element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2 + str.substr(start + length);
 } else document.' . $form . '.' . $field . '.value += text1+text2;}</script>
 <a href="javascript:tag(\'[b]\', \'[/b]\')"><img src="' . $set['homeurl'] . '/images/bb/b.png" alt="b" title="Жирный"/></a>
-<a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . $set['homeurl'] . '/images/bb/i.png" alt="i" title="Наклонный"/></a><a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="../images/bb/u.png" alt="u" title="Подчёркнутый"/></a>
-<a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . $set['homeurl'] . '/images/bb/s.png" alt="s" title="Перечёркнутый"/></a><a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="../images/bb/q.png" alt="quote" title="Цитата"/></a>
+<a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . $set['homeurl'] . '/images/bb/i.png" alt="i" title="Наклонный"/></a>
+<a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . $set['homeurl'] . '/images/bb/u.png" alt="u" title="Подчёркнутый"/></a>
+<a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . $set['homeurl'] . '/images/bb/s.png" alt="s" title="Перечёркнутый"/></a>
+<a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . $set['homeurl'] . '/images/bb/q.png" alt="quote" title="Цитата"/></a>
 <a href="javascript:tag(\'[php]\', \'[/php]\')"><img src="' . $set['homeurl'] . '/images/bb/cod.png" alt="cod" title="Код"/></a>
 <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . $set['homeurl'] . '/images/bb/l.png" alt="url" title="Ссылка" /></a>
 <a href="javascript:tag(\'[red]\', \'[/red]\')"><img src="' . $set['homeurl'] . '/images/bb/re.png" alt="red" title="Красный"/></a>
-<a href="javascript:tag(\'[green]\', \'[/green]\')"><img src="' . $set['homeurl'] . '/images/bb/gr.png" alt="green" title="Зелёный"/></a><a href="javascript:tag(\'[blue]\', \'[/blue]\')"><img src="../images/bb/bl.png" alt="blue" title="Синий"/></a><br />';
+<a href="javascript:tag(\'[green]\', \'[/green]\')"><img src="' . $set['homeurl'] . '/images/bb/gr.png" alt="green" title="Зелёный"/></a>
+<a href="javascript:tag(\'[blue]\', \'[/blue]\')"><img src="' . $set['homeurl'] . '/images/bb/bl.png" alt="blue" title="Синий"/></a><br />';
     }
 
     /*
@@ -385,7 +388,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
         $out = false;
 
         if (!$user['id']) {
-            $out = '<b>Гость</b>';
+            $out = '<b>' . $lng['guest'] . '</b>';
             if (!empty($user['name']))
                 $out .= ': ' . $user['name'];
             if (!empty($arg['header']))

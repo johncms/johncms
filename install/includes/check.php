@@ -4,7 +4,6 @@ $error_php = array ();
 $error_rights_folders = array ();
 $error_rights_files = array ();
 $warning = array ();
-echo '<h2 class="blue">' . $lng['check_settings'] . '</h2>';
 
 /*
 -----------------------------------------------------------------

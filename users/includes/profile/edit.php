@@ -200,7 +200,6 @@ if ($rights >= 7) {
     if ($user['id'] != $user_id) {
         echo '<p><h3><img src="../images/admin.png" width="16" height="16" class="left" />&#160;' . $lng_profile['rank'] . '</h3><ul>' .
             '<input type="radio" value="0" name="rights" ' . (!$user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . $lng_profile['rank_0'] . '</b><br />' .
-            '<input type="radio" value="2" name="rights" ' . ($user['rights'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['rank_2'] . '<br />' .
             '<input type="radio" value="3" name="rights" ' . ($user['rights'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['rank_3'] . '<br />' .
             '<input type="radio" value="4" name="rights" ' . ($user['rights'] == 4 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['rank_4'] . '<br />' .
             '<input type="radio" value="5" name="rights" ' . ($user['rights'] == 5 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['rank_5'] . '<br />' .

@@ -22,16 +22,16 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 -----------------------------------------------------------------
 */
 function tags($var = '') {
-    $var = preg_replace(array ('#\[php\](.*?)\[\/php\]#se'), array ("''.highlight('$1').''"), str_replace("]\n", "]", $var));
-    $var = preg_replace('#\[b\](.*?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
-    $var = preg_replace('#\[i\](.*?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
-    $var = preg_replace('#\[u\](.*?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
-    $var = preg_replace('#\[s\](.*?)\[/s\]#si', '<span style="text-decoration: line-through;">\1</span>', $var);
-    $var = preg_replace('#\[red\](.*?)\[/red\]#si', '<span style="color:red">\1</span>', $var);
-    $var = preg_replace('#\[green\](.*?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
-    $var = preg_replace('#\[blue\](.*?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
-    $var = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $var);
-    $var = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'url_replace', $var);
+    $var = preg_replace(array ('#\[php\](.+?)\[\/php\]#se'), array ("''.highlight('$1').''"), str_replace("]\n", "]", $var));
+    $var = preg_replace('#\[b\](.+?)\[/b\]#si', '<span style="font-weight: bold;">\1</span>', $var);
+    $var = preg_replace('#\[i\](.+?)\[/i\]#si', '<span style="font-style:italic;">\1</span>', $var);
+    $var = preg_replace('#\[u\](.+?)\[/u\]#si', '<span style="text-decoration:underline;">\1</span>', $var);
+    $var = preg_replace('#\[s\](.+?)\[/s\]#si', '<span style="text-decoration: line-through;">\1</span>', $var);
+    $var = preg_replace('#\[red\](.+?)\[/red\]#si', '<span style="color:red">\1</span>', $var);
+    $var = preg_replace('#\[green\](.+?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
+    $var = preg_replace('#\[blue\](.+?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
+    $var = preg_replace('#\[c\](.+?)\[/c\]#si', '<div class="quote">\1</div>', $var);
+    $var = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://[0-9a-z\.-]+\.[a-z0-9]{2,6}((&amp;)?[0-9a-zA-Z/\.\?\~=_%])*)~', 'url_replace', $var);
     return $var;
 }
 

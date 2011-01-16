@@ -27,7 +27,6 @@ if (empty($_SESSION['uid'])) {
     }
 }
 if ($user_id) {
-    $do = isset($_GET['do']) ? $_GET['do'] : '';
     switch ($do) {
         case 'reset':
             /*
@@ -66,13 +65,13 @@ if ($user_id) {
             -----------------------------------------------------------------
             */
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_show_for_period'] . '</div>';
-            echo '<div class="menu"><p><form action="index.php?act=new&amp;do=all" method="post">' . $lng_forum['unread_period'] . ':<br/>';
+            echo '<div class="menu"><p><form action="index.php?act=new&amp;do=period" method="post">' . $lng_forum['unread_period'] . ':<br/>';
             echo '<input type="text" maxlength="3" name="vr" value="24" size="3"/>';
-            echo '<input type="hidden" name="act" value="all"/><input type="submit" name="submit" value="' . $lng['show'] . '"/></form></p></div>';
+            echo '<input type="submit" name="submit" value="' . $lng['show'] . '"/></form></p></div>';
             echo '<div class="phdr"><a href="index.php?act=new">' . $lng['back'] . '</a></div>';
             break;
 
-        case 'all':
+        case 'period':
             /*
             -----------------------------------------------------------------
             Показ новых тем за выбранный период
@@ -92,6 +91,8 @@ if ($user_id) {
             }
             $count = mysql_result($req, 0);
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_all_for_period'] . ' ' . $vr . ' ' . $lng_forum['hours'] . '</div>';
+            if ($count > $kmess)
+                echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>';
             if ($count > 0) {
                 if ($rights == 9) {
                     $req = mysql_query("SELECT * FROM `forum` WHERE `type`='t' AND `time` > '" . $vr1 . "' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
@@ -130,21 +131,17 @@ if ($user_id) {
                     echo '</div></div>';
                     ++$i;
                 }
-                echo '<div class="phdr">' . $lng['total'] . ': ' . $count . '</div>';
-                if ($count > $kmess) {
-                    echo '<p>' . functions::display_pagination('index.php?act=new&amp;do=all&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</p>';
-                    echo '<p><form action="index.php" method="get">
-                    <input type="hidden" name="act" value="new"/>
-                    <input type="hidden" name="do" value="all"/>
-                    <input type="hidden" name="vr" value="' . $vr .
-                        '"/>
-                    <input type="text" name="page" size="2"/>
-                    <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
-                }
             } else {
                 echo '<div class="menu"><p>' . $lng_forum['unread_period_empty'] . '</p></div>';
             }
-            echo '<div class="phdr"><a href="index.php?act=new">' . $lng['back'] . '</a></div>';
+            echo '<div class="phdr">' . $lng['total'] . ': ' . $count . '</div>';
+            if ($count > $kmess) {
+                echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>' .
+                    '<p><form action="index.php?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
+                    <input type="text" name="page" size="2"/>
+                    <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            }
+            echo '<p><a href="index.php?act=new">' . $lng['back'] . '</a></p>';
             break;
 
         default:
@@ -155,6 +152,8 @@ if ($user_id) {
             */
             $total = functions::forum_new();
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng['unread'] . '</div>';
+            if ($total > $kmess)
+                echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
             if ($total > 0) {
                 $req = mysql_query("SELECT * FROM `forum`
                 LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '$user_id'
@@ -199,7 +198,7 @@ if ($user_id) {
             }
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</p>' .
+                echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>' .
                     '<p><form action="index.php" method="get">' .
                     '<input type="hidden" name="act" value="new"/>' .
                     '<input type="text" name="page" size="2"/>' .
@@ -230,14 +229,14 @@ if ($user_id) {
             $cpg = ceil($colmes1 / $kmess);
             $nam = mysql_fetch_assoc($nikuser);
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    // Значки
-                    $icons = array (
-                        ($np ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
-                        ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
-                        ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
-                        ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
-                    );
-                    echo functions::display_menu($icons, '&#160;', '&#160;');
+            // Значки
+            $icons = array (
+                ($np ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
+                ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
+                ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
+                ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
+            );
+            echo functions::display_menu($icons, '&#160;', '&#160;');
             echo '<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $_SESSION['uppost'] ? '&amp;clip&amp;page=' . $cpg : '') . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';
             if ($cpg > 1)
                 echo '&#160;<a href="index.php?id=' . $res['id'] . ($_SESSION['uppost'] ? '' : '&amp;clip&amp;page=' . $cpg) . '">&gt;&gt;</a>';

@@ -71,6 +71,7 @@ while ($nadir != "" && $nadir != "0") {
 echo '</div><div class="menu"><p>';
 echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br/>' .
     '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br/>';
+
 $graf = array (
     "gif",
     "jpg",
@@ -125,37 +126,15 @@ if (in_array($prg, $graf)) {
     $im1 = ImageCreateTrueColor($tn_width, $tn_height);
     imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
     $path = "$filesroot/graftemp";
-    switch ($prg) {
-        case "gif":
-            $imagnam = "$path/$namefile.temp.gif";
-            ImageGif($im1, $imagnam, $quality);
-            echo "<p><img src='" . $imagnam . "' alt=''/></p>";
-            break;
-
-        case "jpg":
-            $imagnam = "$path/$namefile.temp.jpg";
-            imageJpeg($im1, $imagnam, $quality);
-            echo "<p><img src='" . $imagnam . "' alt=''/></p>";
-            break;
-
-        case "jpeg":
-            $imagnam = "$path/$namefile.temp.jpg";
-            imageJpeg($im1, $imagnam, $quality);
-            echo "<p><img src='" . $imagnam . "' alt=''/></p>";
-
-            break;
-
-        case "png":
-            $imagnam = "$path/$namefile.temp.png";
-            imagePng($im1, $imagnam, $quality);
-            echo "<p><img src='" . $imagnam . "' alt=''/></p>";
-            break;
-    }
+    $imagnam = "$path/$namefile.temp.png";
+    imageJpeg($im1, $imagnam, $quality);
+    echo "<p><img src='" . $imagnam . "' alt=''/></p>";
     imagedestroy($im);
     imagedestroy($im1);
     @chmod("$imagnam", 0644);
     echo $widthf . ' x ' . $heightf . 'px<br/>';
 }
+
 if ($prg == "mp3") {
     $id3 = new MP3_Id();
     $result = $id3->read("$adrfile[adres]/$adrfile[name]");
@@ -178,6 +157,7 @@ if ($prg == "mp3") {
 if (!empty($adrfile['text'])) {
     echo "<p>Описание:<br/>$adrfile[text]</p>";
 }
+
 if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
     if (!empty($adrfile['screen'])) {
         $infile = "$screenroot/$adrfile[screen]";

@@ -27,40 +27,6 @@ function show_errors($error) {
     }
 }
 switch ($_GET['mod']) {
-    case 'demo':
-        ////////////////////////////////////////////////////////////
-        // Установка ДЕМО данных                                  //
-        ////////////////////////////////////////////////////////////
-        require_once("../incfiles/db.php");
-        require_once("../incfiles/func.php");
-        $connect = mysql_connect($db_host, $db_user, $db_pass) or die('cannot connect to server</div></body></html>');
-        mysql_select_db($db_name) or die('cannot connect to db');
-        mysql_query("SET NAMES 'utf8'", $connect);
-        $error = '';
-        @set_magic_quotes_runtime(0);
-        // Читаем SQL файл и заносим его в базу данных
-        $query = fread(fopen('data/demo.sql', 'r'), filesize('data/demo.sql'));
-        $pieces = split_sql($query);
-        for ($i = 0; $i < count($pieces); $i++) {
-            $pieces[$i] = trim($pieces[$i]);
-            if (!empty($pieces[$i]) && $pieces[$i] != "#") {
-                if (!mysql_query($pieces[$i])) {
-                    $error = $error . mysql_error() . '<br />';
-                }
-            }
-        }
-        if (empty($error)) {
-            echo '<span class="green">OK</span> - ДЕМО данные установлены<br />';
-        } else {
-            // Если были ошибки, выводим их
-            echo $error;
-            echo '<br /><span class="red">Error!</span><br />В процессе установки ДЕМО данных возникли ошибки.<br />';
-        }
-        echo "Поздравляем! Установка " . $version . "" . $codename .
-            " закончена.<br />Не забудьте:<br />1) Сменить права к папке incfiles на 755<br />2) Сменить права на файл incfiles/db.php 644<br />3) Удалить папку install с сайта.<br />";
-        echo "<p style='step'><a class='button' href='../login.php?id=" . $_GET['id'] . "&amp;p=" . $_GET['ps'] . "'>Вход на сайт</a></p>";
-        break;
-
     case 'final':
         /*
         -----------------------------------------------------------------
@@ -204,7 +170,7 @@ switch ($_GET['mod']) {
                 mysql_query("INSERT INTO `users` SET
                     `name` = '" . mysql_real_escape_string($admin_user) . "',
                     `name_lat` = '" . mysql_real_escape_string(mb_strtolower($admin_user)) . "',
-                    `password` = '" . mysql_real_escape_string(md5(md5($admin_pass))) . "',
+                    `password` = '" . md5(md5($admin_pass)) . "',
                     `sex` = 'm',
                     `datereg` = '" . time() . "',
                     `lastdate` = '" . time() . "',
@@ -268,9 +234,10 @@ switch ($_GET['mod']) {
     default:
         /*
         -----------------------------------------------------------------
-        Проверка прав доступа
+        Проверка настроек PHP и прав доступа
         -----------------------------------------------------------------
         */
+        echo '<h2 class="blue">' . $lng['check_settings'] . '</h2>';
         $folders = array (
             '/download/arctemp/',
             '/download/files/',
@@ -302,7 +269,7 @@ switch ($_GET['mod']) {
                 '<p><a href="index.php?lng_id=' . $lng_id . '">&lt;&lt; ' . $lng['back'] . '</a> | ' .
                 '<a href="index.php?act=install&amp;lng_id=' . $lng_id . '">' . $lng['check_again'] . '</a></p>' .
                 '<p>' . $lng['ignore_warnings'] . '</p>' .
-                '<p><a href="">' . $lng['start_installation'] . '</a> ' . $lng['not_recommended'] . '</p>';
+                '<p><a href="index.php?act=install&amp;mod=set&amp;lng_id=' . $lng_id . '">' . $lng['start_installation'] . '</a> ' . $lng['not_recommended'] . '</p>';
         } else {
             echo '<p>' . $lng['configuration_successful'] . '</p>' .
                 '<a href="index.php?lng_id=' . $lng_id . '">&lt;&lt; ' . $lng['back'] . '</a> | ' .

@@ -14,13 +14,14 @@
 
 define('INSTALL', 1);
 define('_IN_JOHNCMS', 1);
+@ini_set("max_execution_time", "600");
 
 // Служебные переменные
 $install = false;
 $update = false;
 $lng_install = false;
 $lng_id = 1;
-$system_build = 686; // Версия системы
+$system_build = 710; // Версия системы
 
 /*
 -----------------------------------------------------------------
@@ -28,12 +29,15 @@ $system_build = 686; // Версия системы
 -----------------------------------------------------------------
 */
 if (file_exists('../incfiles/db.php') && file_exists('../incfiles/core.php')) {
+    // Если система инсталлирована
     require('../incfiles/core.php');
     if (!$core->system_build)
         $update = true;
 } else {
+    // Если система не инсталлирована
+    $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
+    $mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
     $install = true;
-    // Стартуем сессию
     session_name('SESID');
     session_start();
 }
@@ -81,13 +85,33 @@ $lng = $lng_phrases[$lng_id];
 
 /*
 -----------------------------------------------------------------
-HTML Пролог
+HTML Пролог и заголовки страниц
 -----------------------------------------------------------------
 */
+switch ($act) {
+    case 'install':
+        $pagetitle = $lng['install'];
+        $pagedesc = '';
+        break;
+
+    case 'update':
+        $pagetitle = $lng['update'];
+        $pagedesc = 'Обновление с версии 3.2.2';
+        break;
+
+    case 'languages':
+        $pagetitle = $lng['install_languages'];
+        $pagedesc = '';
+        break;
+
+    default:
+        $pagetitle = $lng['install'];
+        $pagedesc = false;
+}
 ob_start();
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
     '<html xmlns="http://www.w3.org/1999/xhtml">' .
-    '<title>JohnCMS 4.0.0 - Установка</title>' .
+    '<title>JohnCMS 4.0.0 - ' . $pagetitle . '</title>' .
     '<style type="text/css">' .
     'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
     'h2{margin: 0; padding: 0; padding-bottom: 4px;}' .
@@ -101,15 +125,13 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
     '.small{font-size: x-small}' .
     '</style>' .
     '</head><body>' .
-    '<h2 class="green">JohnCMS 4.0.0</h2><hr />';
+    '<h2 class="green">JohnCMS 4.0.0</h2>' . $pagedesc . '<hr />';
 
 /*
 -----------------------------------------------------------------
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
-$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
 $actions = array (
     'install',
     'update',

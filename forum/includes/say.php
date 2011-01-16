@@ -118,7 +118,7 @@ switch ($type1['type']) {
                 '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
             if ($set_user['translit'])
                 echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-            echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+            echo '</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '"/></p>' .
                 '</div></form>';
         }
         echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
@@ -271,7 +271,7 @@ switch ($type1['type']) {
                 '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
             if ($set_user['translit'])
                 echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-            echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>';
+            echo '</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '"/></p></div></form>';
         }
         echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
             '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .

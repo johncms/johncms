@@ -75,9 +75,9 @@ $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 99 ? $set_user['kmess'] 
 */
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false;
 $user = isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : false;
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$do = isset($_GET['do']) ? trim($_GET['do']) : '';
+$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
+$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
+$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : '';
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 

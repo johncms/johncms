@@ -23,7 +23,7 @@ if ($user_id) {
     }
     $res = mysql_fetch_array($req);
     // Создаем JAR файл
-    if (!file_exists('files/' . $id . '.jar')) {
+    if (!file_exists('../files/library/' . $id . '.jar')) {
         $midlet_name = mb_substr($res['name'], 0, 10);
         $midlet_name = iconv('UTF-8', 'windows-1251', $midlet_name);
         // Записываем текст статьи

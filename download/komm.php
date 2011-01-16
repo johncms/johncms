@@ -56,10 +56,10 @@ while ($mass = mysql_fetch_array($mess)) {
         $d2 = $d1 - $d;
         $d3 = ceil($d2);
         if ($d3 == 0) {
-            $div = "<div class='c'>";
+            $div = "<div class='list2'>";
         }
         else {
-            $div = "<div class='b'>";
+            $div = "<div class='list1'>";
         }
         $uz = @ mysql_query("select * from `users` where name='" . functions::check($mass[avtor]) . "';");
         $mass1 = @ mysql_fetch_array($uz);
@@ -95,15 +95,10 @@ while ($mass = mysql_fetch_array($mess)) {
             echo " [ON]";
         }
         echo "($vr1)<br/>";
-        $mass['text'] = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class=\'d\'>\1<br/></div>', $mass[text]);
-        $mass['text'] = preg_replace('#\[b\](.*?)\[/b\]#si', '<b>\1</b>', $mass[text]);
-        if ($set_user['smileys']) {
-            $tekst = functions::smileys($mass['text'], ($mass['from'] == $nickadmina || $mass['from'] == $nickadmina2 || $mass1['rights'] >= 1) ? 1 : 0);
-        }
-        else {
-            $tekst = $mass['text'];
-        }
-        echo "$tekst<br/>";
+        $text = functions::checkout($mass['text'], 1, 1);
+        if ($set_user['smileys'])
+            $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+        echo '<div>' . $text . '</div>';
         if ($rights == 4 || $rights >= 6) {
             echo "$mass[ip] - $mass[soft]<br/><a href='index.php?act=delmes&amp;id=" . $mass['id'] . "'>(Удалить)</a><br/>";
         }

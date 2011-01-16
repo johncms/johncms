@@ -104,27 +104,6 @@ body {
     padding: 3px 1px 4px 4px;
 }
 
-.b, .c {
-    margin: 0px;
-    padding: 2px;
-}
-
-.b {
-    background: #F7F7F7;
-}
-
-.c {
-    background: #fff;
-}
-
-.b b {
-    color: #396C82;
-}
-
-.c b {
-    color: #619FBA;
-}
-
 .maintxt {
     border: 1px solid #e1e1e1;
     background: #fff;

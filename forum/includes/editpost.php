@@ -171,11 +171,13 @@ if (!$error) {
                 header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
             } else {
                 echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_message'] . '</div>' .
-                    '<div class="rmenu"><form action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post">' .
-                    '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea><br/>';
+                    '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
+                if(!$is_mobile)
+                    echo functions::auto_bb('form', 'msg');
+                echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea><br/>';
                 if ($set_user['translit'])
-                    echo '<input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'] . '<br/>';
-                echo '<input type="submit" name="submit" value="' . $lng['save'] . '"/></form></div>' .
+                    echo '<input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
+                echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form></div>' .
                     '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
                     '<p><a href="' . $link . '">' . $lng['back'] . '</a></p>';
             }

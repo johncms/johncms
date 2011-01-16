@@ -54,10 +54,10 @@ switch ($act) {
         if ($rights >= 1) {
             $newusers_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `datereg` > '" . ($realtime - 86400) . "' AND `preg` = '1'"), 0);
             $reg_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg` = 0"), 0);
-            $ban_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time`>'" . $realtime . "'"), 0);
+            $ban_total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . $realtime . "'"), 0);
             echo '<div class="menu"><p><h3>' . $lng['administrative_events'] . '</h3><ul>';
             if ($newusers_total > 0)
-                echo '<li><a href="users/users.php">' . $lng['users_new'] . '</a> (' . $newusers_total . ')</li>';
+                echo '<li><a href="users/index.php?act=userlist">' . $lng['users_new'] . '</a> (' . $newusers_total . ')</li>';
             if ($reg_total > 0)
                 echo '<li><a href="' . $set['admp'] . '/index.php?act=reg">' . $lng['users_on_reg'] . '</a> (' . $reg_total . ')</li>';
             if ($ban_total > 0)

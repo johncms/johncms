@@ -97,6 +97,7 @@ switch ($mod) {
 Показываем список фотографий, отсортированных по рейтингу
 -----------------------------------------------------------------
 */
+unset($_SESSION['ref']);
 echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';
 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE $where"), 0);
 if ($total) {
@@ -113,7 +114,7 @@ if ($total) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         if ($res['access'] == 4 || $rights >= 7) {
             // Если доступ открыт всем, или смотрит Администратор
-            echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '"><img src="../../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
+            echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (!empty($res['description']))
                 echo '<div class="gray">' . functions::smileys(functions::checkout($res['description'], 1)) . '</div>';
         } elseif ($res['access'] == 3) {
@@ -128,6 +129,7 @@ if ($total) {
         if ($res['access'] == 4 || $rights >= 6) {
             echo vote_photo($res) .
                 '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
+                '<div class="gray">' . $lng['date'] . ': ' . date("d.m.Y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . '</div>' .
                 '<a href="album.php?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
                 '<br /><a href="album.php?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
         }

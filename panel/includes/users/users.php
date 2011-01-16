@@ -40,7 +40,7 @@ $req = mysql_query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY $order LIMIT
 while ($res = mysql_fetch_array($req)) {
     $link = '';
     if ($rights >= 7)
-        $link .= '<a href="../users/profile.php?act=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=usr_del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a> | ';
+        $link .= '<a href="../users/profile.php?act=edit&amp;user=' . $res['id'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=usr_del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a> | ';
     $link .= '<a href="../users/profile.php?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . $lng['ban_do'] . '</a>';
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
     echo functions::display_user($res, array('header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link));
@@ -52,6 +52,6 @@ if ($total > $kmess) {
     echo '<p>' . functions::display_pagination('index.php?act=users&amp;sort=' . $sort . '&amp;', $start, $total, $kmess) . '</p>';
     echo '<p><form action="index.php?act=users&amp;sort=' . $sort . '" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
-echo '<p><a href="index.php?act=usr_search">' . $lng['search_user'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<p><a href="index.php?act=search_user">' . $lng['search_user'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 
 ?>
