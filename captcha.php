@@ -1,20 +1,16 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 *
 * Данный модуль построен на основе алгоритма и кода KCAPTCHA v.1.2.6
 * KCAPTCHA PROJECT, Copyright by Kruglov Sergei, 2006, 2007, 2008
 * www.captcha.ru, www.kruglov.ru
-*  
 */
 
 class KCAPTCHA {
@@ -51,7 +47,7 @@ class KCAPTCHA {
         $fonts = array ();
         $fontsdir_absolute = dirname(__FILE__) . '/' . $fontsdir;
 
-        if ($handle = opendir($fontsdir_absolute)) {
+        if (($handle = opendir($fontsdir_absolute)) !== false) {
             while (false !== ($file = readdir($handle))) {
                 if (preg_match('/\.png$/i', $file)) {
                     $fonts[] = $fontsdir_absolute . '/' . $file;
@@ -97,7 +93,6 @@ class KCAPTCHA {
             $img = imagecreatetruecolor($width, $height);
             imagealphablending($img, true);
             $white = imagecolorallocate($img, 255, 255, 255);
-            $black = imagecolorallocate($img, 0, 0, 0);
             imagefilledrectangle($img, 0, 0, $width - 1, $height - 1, $white);
             // draw text
             $x = 1;
@@ -206,7 +201,7 @@ class KCAPTCHA {
         header('Cache-Control: no-store, no-cache, must-revalidate');
         header('Cache-Control: post-check=0, pre-check=0', FALSE);
         header('Pragma: no-cache');
-
+        $ext = '';
         if (function_exists("imagejpeg")) {
             header("Content-Type: image/jpeg");
             imagejpeg($img2, null, $jpeg_quality);

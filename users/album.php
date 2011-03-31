@@ -1,24 +1,21 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 define('_IN_JOHNCMS', 1);
 require('../incfiles/core.php');
 $lng_profile = $core->load_lng('profile');
+$textl = $lng_profile['album'];
 $headmod = 'album';
 require('../incfiles/head.php');
 
-//TODO: Разобраться с правами доступа к функциям!!!
 $max_album = 10;
 $max_photo = 200;
 $al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : NULL;

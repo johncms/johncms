@@ -13,13 +13,12 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-Error_Reporting(E_ALL & ~E_NOTICE);
+//Error_Reporting(E_ALL & ~E_NOTICE);
 @ini_set('session.use_trans_sid', '0');
 @ini_set('arg_separator.output', '&amp;');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
-if (!isset($rootpath))
-    $rootpath = '../';
+$rootpath = isset($rootpath) ? $rootpath : '../';
 
 /*
 -----------------------------------------------------------------
@@ -63,9 +62,9 @@ $home = $set['homeurl'];                 // Домашняя страница
 $user_id = $core->user_id;        // Идентификатор пользователя
 $rights = $core->user_rights;     // Права доступа
 $datauser = $core->user_data;     // Все данные пользователя
-$login = $datauser['name'];       // Ник пользователя
 $set_user = $core->user_settings; // Пользовательские настройки
 $ban = $core->user_ban;           // Бан
+$login = isset($datauser['name']) ? $datauser['name'] : false;
 $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 99 ? $set_user['kmess'] : 10;
 
 /*
@@ -80,6 +79,7 @@ $mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : '';
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+$headmod = isset($headmod) ? $headmod : '';
 
 /*
 -----------------------------------------------------------------

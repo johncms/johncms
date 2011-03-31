@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
@@ -428,6 +425,7 @@ switch ($mod) {
             // Управление категориями
             echo '<div class="bmenu">' . $lng_forum['category_list'] . '</div>';
             $req = mysql_query("SELECT * FROM `forum` WHERE `type` = 'f' ORDER BY `realid` ASC");
+            $i = 0;
             while ($res = mysql_fetch_assoc($req)) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['text'] . '</b></a> ' .
@@ -498,6 +496,7 @@ switch ($mod) {
             FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
             WHERE `forum`.`type` = 't' AND `forum`.`close` = '1' $sort ORDER BY `forum`.`id` DESC LIMIT $start, $kmess");
             if (mysql_num_rows($req)) {
+                $i = 0;
                 while ($res = mysql_fetch_assoc($req)) {
                     $subcat = mysql_fetch_assoc(mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'"));
                     $cat = mysql_fetch_assoc(mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $subcat['refid'] . "'"));
@@ -578,6 +577,7 @@ switch ($mod) {
             FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
             WHERE `forum`.`type` = 'm' AND `forum`.`close` = '1' $sort ORDER BY `forum`.`id` DESC LIMIT $start, $kmess");
             if (mysql_num_rows($req)) {
+                $i = 0;
                 while ($res = mysql_fetch_assoc($req)) {
                     $res['ip'] = ip2long($res['ip']);
                     $posttime = ' <span class="gray">(' . date("d.m.Y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . ')</span>';
@@ -662,6 +662,7 @@ switch ($mod) {
                 echo '<div class="bmenu"><b>' . $lng_forum['category'] . ':</b> ' . $ms['text'] . '</div>';
                 echo '<form action="index.php?act=forum&amp;mod=moders&amp;id=' . $id . '" method="post">';
                 $q = mysql_query("SELECT * FROM `users` WHERE `rights` = '3'");
+                $i = 0;
                 while ($q1 = mysql_fetch_assoc($q)) {
                     $q2 = mysql_query("SELECT * FROM `forum` WHERE `type` = 'a' AND `from` = '" . $q1['name'] . "' and `refid` = '$id'");
                     $q3 = mysql_num_rows($q2);
@@ -677,6 +678,7 @@ switch ($mod) {
             } else {
                 echo '<div class="bmenu">' . $lng_forum['select_category'] . '</div>';
                 $q = mysql_query("select * from `forum` where type='f' order by realid;");
+                $i = 0;
                 while ($q1 = mysql_fetch_array($q)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo '<a href="index.php?act=forum&amp;mod=moders&amp;id=' . $q1['id'] . '">' . $q1['text'] . '</a></div>';

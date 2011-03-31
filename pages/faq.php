@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 define('_IN_JOHNCMS', 1);
@@ -23,6 +20,7 @@ require('../incfiles/head.php');
 if (empty($_SESSION['ref'])) {
     $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
 }
+$set['users_smileys'] = 20;
 switch ($act) {
     case 'forum':
         /*
@@ -69,6 +67,13 @@ switch ($act) {
             exit;
         }
         echo '<div class="phdr"><a href="faq.php?act=smileys"><b>' . $lng['smileys'] . '</b></a> | ' . htmlentities(file_get_contents($rootpath . 'images/smileys/user/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
+        if (!$is_mobile) {
+            $user_sm = unserialize($datauser['smileys']);
+            if (!is_array($user_sm))
+                $user_sm = array ();
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $set['users_smileys'] . ')</div>' .
+                '<form action="faq.php?act=set_my_sm&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
+        }
         $array = array ();
         $dir = opendir('../images/smileys/user/' . $id);
         while ($file = readdir($dir)) {
@@ -85,14 +90,18 @@ switch ($act) {
             for ($i = $start; $i < $end; $i++) {
                 $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', $array[$i], 1);
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<img src="../images/smileys/user/' . $id . '/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . $lng['lng_or'] . ' :' . functions::trans($smile) . ':</div>';
+                if (!$is_mobile)
+                    $smileys = (in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
+                echo $smileys . '<img src="../images/smileys/user/' . $id . '/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . $lng['lng_or'] . ' :' . functions::trans($smile) . ':</div>';
             }
         } else {
             echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
         }
+        if (!$is_mobile)
+            echo '<div class="gmenu"><input type="submit" name="add" value=" ' . $lng['add'] . ' "/></div></form>';
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('faq.php?act=smusr&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>';
+            echo '<div class="topmenu">' . functions::display_pagination('faq.php?act=smusr&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
             echo '<p><form action="faq.php?act=smusr&amp;id=' . $id . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
@@ -112,6 +121,13 @@ switch ($act) {
             exit;
         }
         echo '<div class="phdr"><a href="faq.php?act=smileys"><b>' . $lng['smileys'] . '</b></a> | ' . $lng_faq['smileys_adm'] . '</div>';
+        if (!$is_mobile) {
+            $user_sm = unserialize($datauser['smileys']);
+            if (!is_array($user_sm))
+                $user_sm = array ();
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $set['users_smileys'] . ')</div>' .
+                '<form action="faq.php?act=set_my_sm&amp;start=' . $start . '&amp;adm" method="post">';
+        }
         $array = array ();
         $dir = opendir('../images/smileys/admin');
         while ($file = readdir($dir)) {
@@ -128,19 +144,119 @@ switch ($act) {
             for ($i = $start; $i < $end; $i++) {
                 $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', $array[$i], 1);
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . $lng['lng_or'] . ' :' . trans($smile) . ':</div>';
+                if (!$is_mobile)
+                    $smileys = (in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
+                echo $smileys . '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . $lng['lng_or'] . ' :' . trans($smile) . ':</div>';
             }
         } else {
             echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
         }
+        if (!$is_mobile)
+            echo '<div class="gmenu"><input type="submit" name="add" value=" ' . $lng['add'] . ' "/></div></form>';
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('faq.php?act=smadm&amp;', $start, $total, $kmess) . '</p>';
+            echo '<div class="topmenu">' . functions::display_pagination('faq.php?act=smadm&amp;', $start, $total, $kmess) . '</div>';
             echo '<p><form action="faq.php?act=smadm" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
         }
         echo '<p><a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a></p>';
+        break;
+
+    case 'my_smileys':
+        /*
+        -----------------------------------------------------------------
+        Список своих смайлов
+        -----------------------------------------------------------------
+        */
+        if ($is_mobile || $page != 1) {
+            echo functions::display_error($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
+            require('../incfiles/end.php');
+            exit;
+        }
+        echo '<div class="phdr"><a href="faq.php?act=smileys"><b>' . $lng['smileys'] . '</b></a> | ' . $lng['my_smileys'] . '</div>';
+        $smileys = unserialize($datauser['smileys']);
+        if (!$smileys)
+            $smileys = array ();
+        $total = count($smileys);
+        if ($total)
+            echo '<form action="faq.php?act=set_my_sm&amp;start=' . $start . '" method="post">';
+        if ($total > $kmess) {
+            $smileys = array_chunk($smileys, $kmess, TRUE);
+            if ($start) {
+                $key = ($start - $start % $kmess) / $kmess;
+                $smileys_view = $smileys[$key];
+                if (!count($smileys_view))
+                    $smileys_view = $smileys[0];
+                $smileys = $smileys_view;
+            } else {
+                $smileys = $smileys[0];
+            }
+        }
+        foreach ($smileys as $value) {
+            $smileys_res .= $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            $smileys_res .= '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;:' . $value . ':</div>';
+            $i++;
+        }
+        echo functions::smileys($smileys_res, $rights >= 1 ? 1 : 0);
+        if ($total) {
+            echo '<div class="rmenu"><input type="submit" name="delete" value=" ' . $lng['delete'] . ' "/></div></form>';
+        } else {
+            echo '<div class="menu"><p>' . $lng['list_empty'] . '<br /><a href="faq.php?act=smileys">' . $lng['add_smileys'] . '</a></p></div>';
+        }
+        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . ' / ' . ($set['users_smileys']) . '</div>';
+        if ($total > $kmess)
+            echo '<div class="topmenu"><p>' . functions::display_pagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</p></div>';
+        echo '<p>' . ($total ? '<a href="faq.php?act=set_my_sm&amp;clean">' . $lng['clear'] . '</a><br />' : '') . '<a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a></p>';
+        break;
+
+    case 'set_my_sm':
+        /*
+        -----------------------------------------------------------------
+        Настраиваем список своих смайлов
+        -----------------------------------------------------------------
+        */
+        $adm = isset($_GET['adm']) ? 1 : 0;
+        $add = $_POST['add'];
+        $delete = $_POST['delete'];
+        if ($is_mobile || ($adm && $rights < 1) || ($add && !$adm && !$id) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
+            echo functions::display_error($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
+            require('../incfiles/end.php');
+            exit;
+        }
+        $smileys = unserialize($datauser['smileys']);
+        if (!is_array($smileys))
+            $smileys = array ();
+        if ($delete)
+            $smileys = array_diff($smileys, $_POST['delete_sm']);
+        if ($add) {
+            $add_sm = $_POST['add_sm'];
+            if (file_exists('../files/cache/smileys_cache.dat')) {
+                $file = file('../files/cache/smileys_cache.dat');
+                $cache = unserialize($file[0]);
+                if ($rights)
+                    $cache = array_merge($cache, unserialize($file[1]));
+                foreach ($add_sm as $value)
+                    if (!array_key_exists(':' . $value . ':', $cache))
+                        $delete_sm[] = $value;
+                echo print_r($delete_sm);
+                if (is_array($delete_sm))
+                    $add_sm = array_diff($delete_sm, $add_sm);
+            }
+            $smileys = array_unique(array_merge($smileys, $add_sm));
+        }
+        if (isset($_GET['clean']))
+            $smileys = array ();
+        if (count($smileys) > $set['users_smileys']) {
+            $smileys = array_chunk($smileys, $set['users_smileys'], TRUE);
+            $smileys = $smileys[0];
+        }
+        mysql_query("UPDATE `users` SET `smileys` = '" . mysql_real_escape_string(serialize($smileys)) . "' WHERE `id` = '$user_id'");
+        if ($delete || isset($_GET['clean'])) {
+            header('location: faq.php?act=my_smileys&start=' . $start . '');
+        } else {
+            header('location: faq.php?act=' . ($adm ? 'smadm' : 'smusr&id=' . $id . '') . '&start=' . $start . '');
+        }
         break;
 
     case 'smileys':
@@ -150,9 +266,10 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         echo '<div class="phdr"><a href="faq.php"><b>F.A.Q.</b></a> | ' . $lng['smileys'] . '</div>';
-        if ($rights >= 1) {
+        if (!$is_mobile && is_array(unserialize($datauser['smileys'])))
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a> (' . count(unserialize($datauser['smileys'])) . ' / ' . $set['users_smileys'] . ')</div>';
+        if ($rights >= 1)
             echo '<div class="gmenu"><a href="faq.php?act=smadm">' . $lng_faq['smileys_adm'] . '</a> (' . (int)count(glob($rootpath . 'images/smileys/admin/*.gif')) . ')</div>';
-        }
         $dir = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);
         $total_dir = count($dir);
         for ($i = 0; $i < $total_dir; $i++) {
@@ -172,12 +289,22 @@ switch ($act) {
         if ($id && is_dir($rootpath . 'images/avatars/' . $id)) {
             $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : false;
             if ($user_id && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
-                // Устанавливаем пользовательский Аватар
-                if(@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $user_id . '.png'))
-                    echo '<div class="gmenu"><p>' . $lng['avatar_applied'] . '<br />' .
-                        '<a href="../users/profile.php?act=edit">' . $lng['continue'] . '</a></p></div>';
-                else
-                    echo functions::display_error($lng['error_avatar_select'], '<a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a>');
+                if (isset($_POST['submit'])) {
+                    // Устанавливаем пользовательский Аватар
+                    if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $user_id . '.png')) {
+                        echo '<div class="gmenu"><p>' . $lng['avatar_applied'] . '<br />' .
+                            '<a href="../users/profile.php?act=edit">' . $lng['continue'] . '</a></p></div>';
+                    } else {
+                        echo functions::display_error($lng['error_avatar_select'], '<a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a>');
+                    }
+                } else {
+                    echo '<div class="phdr"><a href="faq.php?act=avatars"><b>' . $lng['avatars'] . '</b></a> | ' . $lng_faq['set_to_profile'] . '</div>' .
+                        '<div class="rmenu"><p>' . $lng_faq['avatar_change_warning'] . '</p>' .
+                        '<p><img src="../images/avatars/' . $id . '/' . $avatar . '.png" alt="" /></p>' .
+                        '<p><form action="faq.php?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar . '" method="post"><input type="submit" name="submit" value="' . $lng['save'] . '"/></form></p>' .
+                        '</div>' .
+                        '<div class="phdr"><a href="faq.php?act=avatars&amp;id=' . $id . '">' . $lng['cancel'] . '</a></div>';
+                }
             } else {
                 // Показываем список Аватаров
                 echo '<div class="phdr"><a href="faq.php?act=avatars"><b>' . $lng['avatars'] . '</b></a> | ' . htmlentities(file_get_contents($rootpath . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';

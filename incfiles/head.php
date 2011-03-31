@@ -1,21 +1,17 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $headmod = isset($headmod) ? mysql_real_escape_string($headmod) : '';
-if ($headmod == 'mainpage')
-    $textl = $set['copyright'];
+$textl = isset($textl) ? $textl : $set['copyright'];
 
 /*
 -----------------------------------------------------------------
@@ -47,12 +43,12 @@ echo "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $
 Рекламный модуль
 -----------------------------------------------------------------
 */
-$cms_ads = array ();
+$cms_ads = false;
 $view = $user_id ? 2 : 1;
 $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
 $req = mysql_query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
 if (mysql_num_rows($req) > 0 && $headmod != 'admin') {
-    while ($res = mysql_fetch_array($req)) {
+    while (($res = mysql_fetch_assoc($req)) !== false) {
         $name = explode("|", $res['name']);
         $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
         if (!empty($res['color']))
@@ -82,7 +78,7 @@ if ($cms_ads[0])
 Выводим логотип
 -----------------------------------------------------------------
 */
-echo '<div><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt="" border="0"/></a></div>';
+echo '<div><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></div>';
 
 /*
 -----------------------------------------------------------------

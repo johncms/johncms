@@ -115,7 +115,6 @@ switch ($_GET['mod']) {
                     '$db_name = ' . "'$db_name';\r\n" .
                     '$db_user = ' . "'$db_user';\r\n" .
                     '$db_pass = ' . "'$db_pass';\r\n\r\n" .
-                    '$system_build = ' . "'$system_build';\r\n\r\n" .
                     '?>';
                 if (!file_put_contents('../incfiles/db.php', $dbfile)) {
                     echo 'ERROR: Can not write db.php</body></html>';

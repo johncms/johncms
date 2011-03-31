@@ -1,14 +1,12 @@
 <?php
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 //TODO: Разобраться с подкаталогом /incfiles/lib
@@ -122,6 +120,7 @@ class scaner {
         '../forum/includes/vip.php',
         '../forum/includes/vote.php',
         '../forum/includes/who.php',
+        '../forum/contents.php',
         '../forum/index.php',
         '../forum/search.php',
         '../forum/thumbinal.php',
@@ -158,6 +157,7 @@ class scaner {
         '../incfiles/classes/core.php',
         '../incfiles/classes/functions.php',
         '../incfiles/classes/mainpage.php',
+        '../incfiles/classes/sitemap.php',
         '../incfiles/core.php',
         '../incfiles/db.php',
         '../incfiles/end.php',
@@ -174,7 +174,7 @@ class scaner {
         '../library/addkomm.php',
         '../library/del.php',
         '../library/edit.php',
-        '../library/files/index.php',
+        '../library/contents.php',
         '../library/index.php',
         '../library/java.php',
         '../library/komm.php',
@@ -192,23 +192,25 @@ class scaner {
         '../pages/faq.php',
         '../pages/index.php',
         '../pages/mainmenu.php',
-        '../panel/includes/ip/ipban.php',
-        '../panel/includes/ip/search_ip.php',
-        '../panel/includes/modules/ads.php',
-        '../panel/includes/modules/counters.php',
         '../panel/includes/modules/forum.php',
-        '../panel/includes/modules/karma.php',
         '../panel/includes/modules/news.php',
         '../panel/includes/security/access.php',
-        '../panel/includes/security/antiflood.php',
         '../panel/includes/security/antispy.php',
+        '../panel/includes/security/httpaf.php',
+        '../panel/includes/security/ipban.php',
+        '../panel/includes/system/ads.php',
+        '../panel/includes/system/counters.php',
         '../panel/includes/system/languages.php',
         '../panel/includes/system/seo.php',
         '../panel/includes/system/settings.php',
+        '../panel/includes/system/sitemap.php',
         '../panel/includes/system/smileys.php',
         '../panel/includes/users/administrators.php',
+        '../panel/includes/users/antiflood.php',
         '../panel/includes/users/ban_panel.php',
+        '../panel/includes/users/karma.php',
         '../panel/includes/users/reg.php',
+        '../panel/includes/users/search_ip.php',
         '../panel/includes/users/search_user.php',
         '../panel/includes/users/users.php',
         '../panel/includes/users/usr_del.php',

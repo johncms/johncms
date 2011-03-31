@@ -162,6 +162,7 @@ if ($user_id) {
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)
                 ORDER BY `forum`.`time` DESC
                 LIMIT $start, $kmess");
+                $i = 0;
                 while ($res = mysql_fetch_assoc($req)) {
                     if ($res['close'])
                         echo '<div class="rmenu">';
@@ -177,7 +178,7 @@ if ($user_id) {
                     $nick = mysql_fetch_assoc($colmes);
                     // Значки
                     $icons = array (
-                        ($np ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
+                        (isset($np) ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
                         ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
                         ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
                         ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')

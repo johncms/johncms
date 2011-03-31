@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -29,22 +26,25 @@ if ($user['id'] == $user_id && $total < $max_album || $rights >= 7) {
 }
 echo '<div class="user"><p>' . functions::display_user($user, array ('iphide' => 1,)) . '</p></div>';
 if ($total) {
+    $i = 0;
     while ($res = mysql_fetch_assoc($req)) {
         $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $res['id'] . "'"), 0);
         echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
-            '<a href="album.php?act=show&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '"><b>' . functions::checkout($res['name']) . '</b></a>&#160;(' . $count . ')' .
-            '<div class="sub">';
-        if ($user['id'] == $user_id || $rights >= 6) {
+            '<a href="album.php?act=show&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '"><b>' . functions::checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
+        if ($user['id'] == $user_id || $rights >= 6 || !empty($res['description'])) {
             $menu = array (
                 '<a href="album.php?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['up'] . '</a>',
                 '<a href="album.php?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['down'] . '</a>',
                 '<a href="album.php?act=edit&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a>',
                 '<a href="album.php?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['delete'] . '</a>'
             );
-            echo functions::display_menu($menu) . '<br />';
+            echo '<div class="sub">' .
+                (!empty($res['description']) ? '<div class="gray">' . functions::checkout($res['description'], 1, 1) . '</div>' : '') .
+                ($user['id'] == $user_id || $rights >= 6 ? functions::display_menu($menu) : '') .
+                '</div>';
         }
-        echo functions::checkout($res['description'], 1, 1, 1) . '</div></div>';
+        echo '</div>';
         ++$i;
     }
 } else {

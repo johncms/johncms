@@ -1,18 +1,16 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 define('_IN_JOHNCMS', 1);
+
 $rootpath = '';
 require('incfiles/core.php');
 require('incfiles/head.php');
@@ -94,8 +92,7 @@ if (!$error && $user_pass && ($user_login || $id)) {
                 // Если логин неудачный
                 if ($user['failed_login'] < 3) {
                     // Прибавляем к счетчику неудачных логинов
-                    $failed_login = $user['failed_login'] + 1;
-                    mysql_query("UPDATE `users` SET `failed_login` = '$failed_login' WHERE `id` = '" . $user['id'] . "'");
+                    mysql_query("UPDATE `users` SET `failed_login` = '" . ($user['failed_login'] + 1) . "' WHERE `id` = '" . $user['id'] . "'");
                 }
                 $error[] = $lng['authorisation_not_passed'];
             }

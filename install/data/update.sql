@@ -217,6 +217,7 @@ ALTER TABLE `users` CHANGE `mailvis` `mailvis` BOOLEAN NOT NULL DEFAULT '0';
 ALTER TABLE `users` CHANGE `preg` `preg` BOOLEAN NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `comm_count` INT UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE `users` ADD `comm_old` INT UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE `users` ADD `smileys` text NOT NULL;
 
 --
 -- Модифицируем записи таблицы `cms_settings`

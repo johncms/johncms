@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Restricted access');
@@ -34,8 +31,9 @@ class mainpage {
             $reqtime = $this->settings['days'] ? $realtime - ($this->settings['days'] * 86400) : 0;
             $req = mysql_query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
             if (mysql_num_rows($req) > 0) {
+                $i = 0;
                 $news = '';
-                while ($res = mysql_fetch_array($req)) {
+                while (($res = mysql_fetch_array($req)) !== false) {
                     $text = $res['text'];
                     // Если текст больше заданного предела, обрезаем
                     if (mb_strlen($text) > $this->settings['size']) {

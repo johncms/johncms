@@ -111,7 +111,7 @@ switch ($act) {
 ob_start();
 echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
     '<html xmlns="http://www.w3.org/1999/xhtml">' .
-    '<title>JohnCMS 4.0.0 - ' . $pagetitle . '</title>' .
+    '<title>JohnCMS 4.1.0 - ' . $pagetitle . '</title>' .
     '<style type="text/css">' .
     'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
     'h2{margin: 0; padding: 0; padding-bottom: 4px;}' .
@@ -125,7 +125,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
     '.small{font-size: x-small}' .
     '</style>' .
     '</head><body>' .
-    '<h2 class="green">JohnCMS 4.0.0</h2>' . $pagedesc . '<hr />';
+    '<h2 class="green">JohnCMS 4.1.0</h2>' . $pagedesc . '<hr />';
 
 /*
 -----------------------------------------------------------------

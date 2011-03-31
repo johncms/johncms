@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -82,15 +79,15 @@ if (isset($_GET['delavatar'])) {
     $user['status'] = isset($_POST['status']) ? functions::check(mb_substr($_POST['status'], 0, 50)) : '';
     $user['karma_off'] = isset($_POST['karma_off']);
     $user['sex'] = isset($_POST['sex']) && $_POST['sex'] == 'm' ? 'm' : 'zh';
-    $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : 0;
+    $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : $user['rights'];
     // Проводим необходимые проверки
-    if ($user['id'] == $user_id)
-        $user['rights'] = $datauser['rights'];
+    if($user['rights'] > $rights || $user['rights'] > 9 || $user['rights'] < 0)
+        $user['rights'] = 0;
     if ($rights >= 7) {
         if (mb_strlen($user['name']) < 2 || mb_strlen($user['name']) > 20)
             $error[] = $lng_profile['error_nick_lenght'];
         $lat_nick = functions::rus_lat(mb_strtolower($user['name']));
-        if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick))
+        if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick))
             $error[] = $lng_profile['error_nick_symbols'];
     }
     if ($user['dayb'] || $user['monthb'] || $user['yearofbirth']) {

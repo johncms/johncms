@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
@@ -19,8 +16,9 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 Принимаем данные, выводим форму поиска
 -----------------------------------------------------------------
 */
-$search = isset($_POST['search']) ? trim($_POST['search']) : '';
-$search = $search ? $search : rawurldecode(trim($_GET['search']));
+$search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
+$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
+$search = $search_post ? $search_post : $search_get;
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['search_nick'] . '</div>';
 echo '<form action="index.php?act=search_user" method="post"><div class="gmenu"><p>';
 echo '<input type="text" name="search" value="' . functions::checkout($search) . '" />';
@@ -55,6 +53,7 @@ if ($search && !$error) {
     $total = mysql_result($req, 0);
     if ($total > 0) {
         $req = mysql_query("SELECT * FROM `users` WHERE `name_lat` LIKE '" . mysql_real_escape_string($search_db) . "' ORDER BY `name` ASC LIMIT $start, $kmess");
+        $i = 0;
         while ($res = mysql_fetch_array($req)) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             echo functions::display_user($res);

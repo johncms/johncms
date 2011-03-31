@@ -1,23 +1,20 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 class core {
-    // Системные переменные
-    public $system_build;                  // Версия системы
-    public $ip;                            // IP адрес в LONG формате
-    public $user_agent = 'Not Recognised'; // User Agent (Browser)
+    public $system_build = 760;            // Версия системы
+    public $ip;                            // IP адрес
+    public $ip_viaproxy;                   // IP адрес за прокси-сервером
+    public $user_agent;                    // User Agent (Browser)
     public $system_settings = array ();    // Системные настройки
     public $system_time;                   // Системное время
     public $language_id;                   // Идентификатор языка
@@ -25,18 +22,16 @@ class core {
     public $language_phrases = array ();   // Массив с фразами выбранного языка
     public $regban = false;                // Запрет регистрации пользователей
 
-    // Пользовательские переменные
-    public $user_id = false;          // Идентификатор пользователя
-    public $user_rights = 0;          // Права доступа
-    public $user_data = array ();     // Все данные пользователя
-    public $user_settings = array (); // Пользовательские настройки
-    public $user_ban = array ();      // Бан
+    public $user_id = false;               // Идентификатор пользователя
+    public $user_rights = 0;               // Права доступа
+    public $user_data = array ();          // Все данные пользователя
+    public $user_settings = array ();      // Пользовательские настройки
+    public $user_ban = array ();           // Бан
 
-    // Параметры проверки на HTTP флуд
-    private $flood_chk = 1;          // Включение - выключение функции IP антифлуда
-    private $flood_interval = '120'; // Интервал времени в секундах
-    private $flood_limit = '40';     // Число разрешенных запросов за интервал
-
+    private $flood_chk = 0;                // Включение - выключение функции IP антифлуда
+    private $flood_interval = '120';       // Интервал времени в секундах
+    private $flood_limit = '20';           // Число разрешенных запросов за интервал
+    
     /*
     -----------------------------------------------------------------
     Конструктор класса, выполняем основную последовательность
@@ -44,12 +39,13 @@ class core {
     */
     function __construct() {
         // Получаем реальный адрес IP
-        $this->ip = ip2long($this->ip_get());
+        $this->ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
+        $this->ip_viaproxy = isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $this->ip_valid($_SERVER['HTTP_X_FORWARDED_FOR']) ? ip2long($_SERVER['HTTP_X_FORWARDED_FOR']) : false;
 
         // Проверка адреса IP на флуд
-        if ($this->flood_chk) {
+        if ($this->flood_chk && !$this->ip_whitelist($this->ip)) {
             if ($this->ip_reqcount() > $this->flood_limit)
-                die('Flood!!!');
+                die('Error: exceeded limit of allowed requests (FLOOD)');
         }
 
         // Удаляем слэши
@@ -57,14 +53,17 @@ class core {
             $this->del_slashes();
 
         // Получаем User Agent
-        $this->user_agent = $this->ua_get();
-        
+        $this->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 150), ENT_QUOTES) : 'Not Recognised';
+
         // Стартуем сессию
         session_name('SESID');
         session_start();
 
         // Соединяемся с базой данных
         $this->db_connect();
+
+        // Проверяем адрес IP на бан
+        $this->ip_ban();
 
         // Получаем системные настройки
         $this->system_settings();
@@ -87,34 +86,13 @@ class core {
     private function db_connect() {
         global $rootpath;
         require($rootpath . 'incfiles/db.php');
-        $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('Error: cannot connect to DB server');
-        @mysql_select_db($db_name) or die('Error: cannot select DB');
+        $db_host = isset($db_host) ? $db_host : 'localhost';
+        $db_user = isset($db_user) ? $db_user : '';
+        $db_pass = isset($db_pass) ? $db_pass : '';
+        $db_name = isset($db_name) ? $db_name : '';
+        $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('Error: cannot connect to database server');
+        @mysql_select_db($db_name) or die('Error: specified database does not exist');
         @mysql_query("SET NAMES 'utf8'", $connect);
-        $this->system_build = isset($system_build) ? $system_build : false;
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Получаем реальный адрес IP
-    -----------------------------------------------------------------
-    */
-    private function ip_get() {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $this->ip_valid($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }  elseif ($_SERVER['REMOTE_ADDR']) {
-            return $_SERVER['REMOTE_ADDR'];
-        } else {
-            die('Unknown IP');
-        }
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Получаем User Agent
-    -----------------------------------------------------------------
-    */
-    private function ua_get(){
-        return htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 150), ENT_QUOTES);
     }
 
     /*
@@ -124,17 +102,18 @@ class core {
     */
     private function ip_reqcount() {
         global $rootpath;
+        $file = $rootpath . 'files/cache/ip_flood.dat';
         $tmp = array ();
         $requests = 1;
 
-        if (!file_exists($rootpath . 'files/cache/http_antiflood.dat'))
-            $in = fopen($rootpath . 'files/cache/http_antiflood.dat', "w+");
+        if (!file_exists($file))
+            $in = fopen($file, "w+");
         else
-            $in = fopen($rootpath . 'files/cache/http_antiflood.dat', "r+");
-        flock($in, LOCK_EX) or die("Cannot flock ANTIFLOOD file.");
+            $in = fopen($file, "r+");
+        flock($in, LOCK_EX) or die("Error: can not access antiflood file");
         $now = time();
 
-        while ($block = fread($in, 8)) {
+        while (($block = fread($in, 8)) !== false) {
             $arr = unpack("Lip/Ltime", $block);
             if (($now - $arr['time']) > $this->flood_interval) {
                 continue;
@@ -168,8 +147,28 @@ class core {
         for ($x = 0; $x < 4; $x++)
             if (!is_numeric($d[$x]) || ($d[$x] < 0) || ($d[$x] > 255))
                 return false;
-
         return $ip;
+    }
+
+    /*
+    -----------------------------------------------------------------
+    Обрабатываем "белый" список IP адресов
+    -----------------------------------------------------------------
+    */
+    private function ip_whitelist($ip) {
+        global $rootpath;
+        $file = $rootpath . 'files/cache/ip_wlist.dat';
+
+        if (file_exists($file)) {
+            foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $val) {
+                $tmp = explode(':', $val);
+                if (!$tmp[1])
+                    $tmp[1] = $tmp[0];
+                if ($ip >= $tmp[0] && $ip <= $tmp[1])
+                    return true;
+            }
+        }
+        return false;
     }
 
     /*
@@ -184,7 +183,7 @@ class core {
             &$_COOKIE
         );
 
-        while (list($k, $v) = each($in)) {
+        while ((list($k, $v) = each($in)) !== false) {
             foreach ($v as $key => $val) {
                 if (!is_array($val)) {
                     $in[$k][$key] = stripslashes($val);
@@ -207,7 +206,7 @@ class core {
     Проверяем адрес IP на Бан
     -----------------------------------------------------------------
     */
-    function ip_ban() {
+    public function ip_ban() {
         $req = mysql_query("SELECT `ban_type`, `link` FROM `cms_ban_ip` WHERE '" . $this->ip . "' BETWEEN `ip1` AND `ip2` LIMIT 1") or die('Error: table "cms_ban_ip"');
 
         if (mysql_num_rows($req)) {
@@ -224,9 +223,42 @@ class core {
                 case 3:
                     $this->regban = true;
                     break;
-                    default :
+
+                default :
                     header("HTTP/1.0 404 Not Found");
                     exit;
+            }
+        }
+    }
+
+    /*
+    -----------------------------------------------------------------
+    Определяем системный язык
+    -----------------------------------------------------------------
+    */
+    private function lng_detect() {
+        if($this->user_id && !empty($this->user_data['set_language'])){
+            $this->language_id = $this->user_data['set_language'];
+        } elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            if (isset($_SESSION['lng_id']) && isset($_SESSION['lng_iso'])) {
+                $this->language_id = $_SESSION['lng_id'];
+                $this->language_iso = $_SESSION['lng_iso'];
+            } else {
+                $sys_lng = array();
+                $req = mysql_query("SELECT `id`, `iso` FROM `cms_lng_list`");
+                while (($res = mysql_fetch_assoc($req)) !== false) {
+                    $sys_lng[$res['iso']] = $res['id'];
+                }
+                foreach (explode(',', strtolower(trim($_SERVER['HTTP_ACCEPT_LANGUAGE']))) as $var) {
+                    $lng = substr($var, 0, 2);
+                    if (array_key_exists($lng, $sys_lng)) {
+                        $this->language_id = $sys_lng[$lng];
+                        $this->language_iso = $lng;
+                        $_SESSION['lng_id'] = $sys_lng[$lng];
+                        $_SESSION['lng_iso'] = $lng;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -241,7 +273,7 @@ class core {
 
         if (mysql_num_rows($req)) {
             $out = array ();
-            while ($res = mysql_fetch_assoc($req)) {
+            while (($res = mysql_fetch_assoc($req)) !== false) {
                 if (!empty($res['custom'])) {
                     $out[$res['keyword']] = $res['custom'];
                 } else {
@@ -260,8 +292,9 @@ class core {
     -----------------------------------------------------------------
     */
     private function system_settings() {
+        $out = array();
         $req = mysql_query("SELECT * FROM `cms_settings`");
-        while ($res = mysql_fetch_row($req)) {
+        while (($res = mysql_fetch_row($req)) !== false) {
             $out[$res[0]] = $res[1];
         }
         $this->language_id = $out['lng_id'];
@@ -278,7 +311,6 @@ class core {
     private function user_authorize() {
         $user_id = false;
         $user_ps = false;
-
         if (isset($_SESSION['uid']) && isset($_SESSION['ups'])) {
             // Авторизация по сессии
             $user_id = abs(intval($_SESSION['uid']));
@@ -290,22 +322,23 @@ class core {
             $user_ps = md5(trim($_COOKIE['cups']));
             $_SESSION['ups'] = $user_ps;
         }
-
         if ($user_id && $user_ps) {
             $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$user_id'");
             if (mysql_num_rows($req)) {
-                $this->user_data = mysql_fetch_assoc($req);
-                if ($user_ps === $this->user_data['password']) {
+                $user_data = mysql_fetch_assoc($req);
+                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == $this->ip && $user_data['browser'] == $this->user_agent ? true : false;
+                if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно
-                    $this->user_id = $this->user_data['id'];         // ID пользователя
-                    $this->user_rights = $this->user_data['rights']; // Права доступа
-                    $this->user_settings = $this->user_settings();   // Пользовательские настройки
-                    $this->user_ip();                                // Обработка истории IP адресов
-                    $this->user_ban_check();                         // Проверка на Бан
-                    if (!empty($this->user_data['set_language']))    // Язык
-                        $this->language_id = $this->user_data['set_language'];
+                    $this->user_data = $user_data;
+                    $this->user_id = $user_data['id'];         // ID пользователя
+                    $this->user_rights = $user_data['rights']; // Права доступа
+                    $this->user_settings();                    // Пользовательские настройки
+                    $this->lng_detect();                       // Определяем системный язык
+                    $this->user_ip();                          // Обработка истории IP адресов
+                    $this->user_ban_check();                   // Проверка на Бан
                 } else {
                     // Если авторизация не прошла
+                    mysql_query("UPDATE `users` SET `failed_login` = '" . ($user_data['failed_login'] + 1) . "' WHERE `id` = '" . $user_data['id'] . "'");
                     $this->user_unset();
                 }
             } else {
@@ -328,7 +361,7 @@ class core {
 
         if (mysql_num_rows($req)) {
             $this->user_rights = 0;
-            while ($res = mysql_fetch_row($req)) {
+            while (($res = mysql_fetch_row($req)) !== false) {
                 $this->user_ban[$res[4]] = 1;
             }
         }
@@ -362,11 +395,7 @@ class core {
     -----------------------------------------------------------------
     */
     private function user_settings() {
-        if (!empty($this->user_data['set_user'])) {
-            return unserialize($this->user_data['set_user']);
-        } else {
-            return $this->user_setings_default();
-        }
+        $this->user_settings = !empty($this->user_data['set_user']) ? unserialize($this->user_data['set_user']) : $this->user_setings_default();
     }
 
     /*
@@ -391,6 +420,7 @@ class core {
             'translit' => 0                              // Транслит
         );
 
+        $this->lng_detect();                             // Определяем язык по браузеру
         return $settings;
     }
 

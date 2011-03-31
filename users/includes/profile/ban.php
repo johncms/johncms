@@ -268,7 +268,7 @@ switch ($mod) {
         // Меню
         $menu = array ();
         if ($rights >= 6)
-            $menu[] = '<a href="../' . $set['admp'] . '/index.php?act=usr_ban">' . $lng_ban['ban_panel'] . '</a>';
+            $menu[] = '<a href="../' . $set['admp'] . '/index.php?act=ban_panel">' . $lng_ban['ban_panel'] . '</a>';
         if ($rights == 9)
             $menu[] = '<a href="profile.php?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . $lng_ban['clear_history'] . '</a>';
         if (!empty($menu))
@@ -280,6 +280,7 @@ switch ($mod) {
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'"), 0);
         if ($total) {
             $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT $start, $kmess");
+            $i = 0;
             while ($res = mysql_fetch_assoc($req)) {
                 $remain = $res['ban_time'] - $realtime;
                 $period = $res['ban_time'] - $res['ban_while'];

@@ -1,28 +1,26 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 define('_IN_JOHNCMS', 1);
-$headmod = 'mainpage';
-// Внимание! Если файл находится в корневой папке, нужно указать $rootpath = '';
-$rootpath = '';
 
+$headmod = 'mainpage';
+$rootpath = ''; // Внимание! Если файл находится в корневой папке, нужно указать $rootpath = '';
 require('incfiles/core.php');
 require('incfiles/head.php');
+
 if (isset($_SESSION['ref']))
     unset($_SESSION['ref']);
 if (isset($_GET['err']))
     $act = 404;
+
 switch ($act) {
     case '404':
         /*
@@ -112,9 +110,17 @@ switch ($act) {
         if (isset($_SESSION['ref']))
             unset($_SESSION['ref']);
         include 'pages/mainmenu.php';
-        if (!$is_mobile)
-            include 'sitemap/index.php';
-}
 
+        /*
+        -----------------------------------------------------------------
+        Карта сайта
+        -----------------------------------------------------------------
+        */
+        $set_map = isset($set['sitemap']) ? unserialize($set['sitemap']) : array();
+        if (($set_map['forum'] || $set_map['lib']) && ($set_map['users'] || !$user_id) && ($set_map['browsers'] || !$is_mobile)) {
+            $map = new sitemap();
+            echo '<div class="sitemap">' . $map->site() . '</div>';
+        }
+}
 require('incfiles/end.php');
 ?>

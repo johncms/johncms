@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -56,7 +53,7 @@ $count_files = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `us
 echo '<h3><img src="../images/mail.png" width="16" height="16" class="left" />&#160;' . $lng_profile['my_mail'] . '</h3><ul>' .
     '<li><a href="pradd.php?act=in">' . $lng_profile['received'] . '</a>&#160;(' . $count_mail . ($count_newmail ? '&#160;/&#160;<span class="red"><a href="pradd.php?act=in&amp;new">+' . $count_newmail . '</a></span>' : '') . ')</li>' .
     '<li><a href="pradd.php?act=out">' . $lng_profile['sent'] . '</a>&#160;(' . $count_sentmail . ($count_sentunread ? '&#160;/&#160;<span class="red">' . $count_sentunread . '</span>' : '') . ')</li>';
-if (!$ban['1'] && !$ban['3'])
+if (!isset($ban['1']) && !isset($ban['3']))
     echo '<p><form action="pradd.php?act=write" method="post"><input type="submit" value=" ' . $lng['write'] . ' " /></form></p>';
 // Блок контактов
 $count_contacts = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `me` = '$login' AND `cont` != ''"), 0);

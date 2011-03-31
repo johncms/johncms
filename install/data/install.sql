@@ -592,6 +592,7 @@ CREATE TABLE `users` (
   `karma_off` int(1) NOT NULL,
   `comm_count` int(10) unsigned NOT NULL,
   `comm_old` int(10) unsigned NOT NULL DEFAULT '0',
+  `smileys` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name_lat` (`name_lat`),
   KEY `lastdate` (`lastdate`),

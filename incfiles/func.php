@@ -1,17 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -31,7 +26,7 @@ function tags($var = '') {
     $var = preg_replace('#\[green\](.+?)\[/green\]#si', '<span style="color:green">\1</span>', $var);
     $var = preg_replace('#\[blue\](.+?)\[/blue\]#si', '<span style="color:blue">\1</span>', $var);
     $var = preg_replace('#\[c\](.+?)\[/c\]#si', '<div class="quote">\1</div>', $var);
-    $var = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://[0-9a-z\.-]+\.[a-z0-9]{2,6}((&amp;)?[0-9a-zA-Z/\.\?\~=_%])*)~', 'url_replace', $var);
+    $var = preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'url_replace', $var);
     return $var;
 }
 
@@ -65,11 +60,22 @@ function highlight($php) {
 -----------------------------------------------------------------
 */
 function url_replace($m) {
-    if (!isset($m[3]))
-        return '<a href="' . str_replace(':', '&#58;', $m[1]) . '">' . str_replace(':', '&#58;', $m[2]) . '</a>';
-    else {
+    global $set;
+    if (!isset($m[3])) {
+        $tmp = parse_url($m[1]);
+        if('http://' . $tmp['host'] == $set['homeurl']){
+            return '<a href="' . str_replace(':', '&#58;', $m[1]) . '">' . str_replace(':', '&#58;', $m[2]) . '</a>';
+        } else {
+            return '<a href="'  . $set['homeurl'] . '/go.php?url=' . base64_encode(str_replace(':', '&#58;', $m[1])) . '">' . str_replace(':', '&#58;', $m[2]) . '</a>';
+        }
+    } else {
+        $tmp = parse_url($m[3]);
         $m[3] = str_replace(':', '&#58;', $m[3]);
-        return '<a href="' . $m[3] . '">' . $m[3] . '</a>';
+        if('http://' . $tmp['host'] == $set['homeurl']){
+            return '<a href="' . $m[3] . '">' . $m[3] . '</a>';
+        } else {
+            return '<a href="' . $set['homeurl'] . '/go.php?url=' . base64_encode($m[3]) . '">' . $m[3] . '</a>';
+        }
     }
 }
 
@@ -204,12 +210,9 @@ function pagenav($base_url, $start, $max_value, $num_per_page) {
 -----------------------------------------------------------------
 */
 function timecount($var) {
-    $str = '';
-
     if ($var < 0)
         $var = 0;
     $day = ceil($var / 86400);
-
     if ($var > 345600) {
         $str = $day . ' дней';
     }  elseif ($var >= 172800) {
@@ -283,7 +286,7 @@ function check($str) {
         chr(31)=> ''
     ));
 
-    $str = str_replace("\'", "&#39;", $str);
+    $str = str_replace("'", "&#39;", $str);
     $str = str_replace('\\', "&#92;", $str);
     $str = str_replace("|", "I", $str);
     $str = str_replace("||", "I", $str);
@@ -308,7 +311,7 @@ function checkout($str, $br = 0, $tags = 0) {
     if ($tags == 1)
         $str = tags($str);
     elseif ($tags == 2)
-        $str = notags($str);
+        $str = functions::notags($str);
     $str = strtr($str, array (
         chr(0)=> '',
         chr(1)=> '',
@@ -368,30 +371,11 @@ function smileys($str, $adm = 0) {
 
 /*
 -----------------------------------------------------------------
-Сообщения об ошибках
------------------------------------------------------------------
-*/
-function display_error($error = false, $link = '') {
-    if ($error) {
-        $out = '<div class="rmenu"><p><b>ОШИБКА!</b>';
-        if (is_array($error)) {
-            foreach ($error as $val)$out .= '<div>' . $val . '</div>';
-        } else {
-            $out .= '<br />' . $error;
-        }
-        $out .= '</p><p>' . $link . '</p></div>';
-        return $out;
-    } else {
-        return false;
-    }
-}
-
-/*
------------------------------------------------------------------
 Рекламная сеть mobileads.ru
 -----------------------------------------------------------------
 */
 function mobileads($mad_siteId = NULL) {
+    global $realtime;
     $out = '';
     $mad_socketTimeout = 2;      // таймаут соединения с сервером mobileads.ru
     ini_set("default_socket_timeout", $mad_socketTimeout);

@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Restricted access');
@@ -25,8 +22,8 @@ class functions {
     4 - Ночь
     -----------------------------------------------------------------
     */
-    function antiflood() {
-        global $set, $user_id, $datauser, $realtime;
+    static function antiflood() {
+        global $set, $datauser, $realtime;
         $default = array (
             'mode' => 2,
             'day' => 10,
@@ -76,7 +73,7 @@ class functions {
     Маскировка ссылок в тексте
     -----------------------------------------------------------------
     */
-    function antilink($var) {
+    static function antilink($var) {
         $var = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $var);
         $var = strtr($var, array (
             '.ru' => '***',
@@ -95,30 +92,67 @@ class functions {
 
         return $var;
     }
-    function auto_bb($form, $field) {
-        global $set;
-        return '<script language="JavaScript" type="text/javascript">
-function tag(text1, text2) {
-if ((document.selection)) {
-document.' . $form . '.' . $field . '.focus();
-document.' . $form . '.document.selection.createRange().text = text1+document.' . $form . '.document.selection.createRange().text+text2;
-} else if(document.forms[\'' . $form . '\'].elements[\'' . $field . '\'].selectionStart!=undefined) {
-var element = document.forms[\'' . $form . '\'].elements[\'' . $field . '\'];
-var str = element.value;
-var start = element.selectionStart;
-var length = element.selectionEnd - element.selectionStart;
-element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2 + str.substr(start + length);
-} else document.' . $form . '.' . $field . '.value += text1+text2;}</script>
-<a href="javascript:tag(\'[b]\', \'[/b]\')"><img src="' . $set['homeurl'] . '/images/bb/b.png" alt="b" title="Жирный"/></a>
-<a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . $set['homeurl'] . '/images/bb/i.png" alt="i" title="Наклонный"/></a>
-<a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . $set['homeurl'] . '/images/bb/u.png" alt="u" title="Подчёркнутый"/></a>
-<a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . $set['homeurl'] . '/images/bb/s.png" alt="s" title="Перечёркнутый"/></a>
-<a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . $set['homeurl'] . '/images/bb/q.png" alt="quote" title="Цитата"/></a>
-<a href="javascript:tag(\'[php]\', \'[/php]\')"><img src="' . $set['homeurl'] . '/images/bb/cod.png" alt="cod" title="Код"/></a>
-<a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . $set['homeurl'] . '/images/bb/l.png" alt="url" title="Ссылка" /></a>
-<a href="javascript:tag(\'[red]\', \'[/red]\')"><img src="' . $set['homeurl'] . '/images/bb/re.png" alt="red" title="Красный"/></a>
-<a href="javascript:tag(\'[green]\', \'[/green]\')"><img src="' . $set['homeurl'] . '/images/bb/gr.png" alt="green" title="Зелёный"/></a>
-<a href="javascript:tag(\'[blue]\', \'[/blue]\')"><img src="' . $set['homeurl'] . '/images/bb/bl.png" alt="blue" title="Синий"/></a><br />';
+
+    /*
+    -----------------------------------------------------------------
+    ББ панель (для компьютеров)
+    -----------------------------------------------------------------
+    */
+    static function auto_bb($form, $field) {
+        global $set, $datauser, $lng, $user_id;
+        $smileys = unserialize($datauser['smileys']);
+        if(!empty($smileys)){
+            $res_sm = '';
+            $my_smileys = '<small><a href="' . $set['homeurl'] . '/pages/faq.php?act=my_smileys">' . $lng['edit_list'] . '</a></small><br />';
+            foreach ($smileys as $value)
+                $res_sm .= '<a href="javascript:tag(\'' . $value . '\', \'\', \':\');">:' . $value . ':</a> ';
+		    $my_smileys .= functions::smileys($res_sm, $datauser['rights'] >= 1 ? 1 : 0);
+        } else {
+            $my_smileys = '<small><a href="' . $set['homeurl'] . '/pages/faq.php?act=smileys">' . $lng['add_smileys'] . '</a></small>';
+        }
+        $out = '<style>
+            .smileys{
+			background-color: rgba(178,178,178,0.5);
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid white;
+            display: none;
+            overflow: auto;
+            max-width: 250px;
+            max-height: 100px;
+            position: absolute;
+            }
+            .smileys_from:hover .smileys{
+            display: block;
+            }
+            </style>
+            <script language="JavaScript" type="text/javascript">
+            function tag(text1, text2, text3) {
+            if ((document.selection)) {
+                document.' . $form . '.' . $field . '.focus();
+                document.' . $form . '.document.selection.createRange().text = text3+text1+document.' . $form . '.document.selection.createRange().text+text2+text3;
+            } else if(document.forms[\'' . $form . '\'].elements[\'' . $field . '\'].selectionStart!=undefined) {
+                var element = document.forms[\'' . $form . '\'].elements[\'' . $field . '\'];
+                var str = element.value;
+                var start = element.selectionStart;
+                var length = element.selectionEnd - element.selectionStart;
+                element.value = str.substr(0, start) + text3 + text1 + str.substr(start, length) + text2 + text3 + str.substr(start + length);
+            } else document.' . $form . '.' . $field . '.value += text3+text1+text2+text3;}</script>
+            <a href="javascript:tag(\'[b]\', \'[/b]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/b.png" alt="b" title="' . $lng['tag_bold'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[i]\', \'[/i]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/i.png" alt="i" title="' . $lng['tag_italic'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[u]\', \'[/u]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/u.png" alt="u" title="' . $lng['tag_underline'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[s]\', \'[/s]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/s.png" alt="s" title="' . $lng['tag_strike'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[c]\', \'[/c]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/q.png" alt="quote" title="' . $lng['tag_quote'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[php]\', \'[/php]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/cod.png" alt="cod" title="' . $lng['tag_code'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[url=]\', \'[/url]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/l.png" alt="url" title="' . $lng['tag_link'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[red]\', \'[/red]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/re.png" alt="red" title="' . $lng['tag_red'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[green]\', \'[/green]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/gr.png" alt="green" title="' . $lng['tag_green'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[blue]\', \'[/blue]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/bl.png" alt="blue" title="' . $lng['tag_blue'] . '" border="0"/></a>';
+            if($user_id){
+                $out .= ' <span class="smileys_from" style="display: inline-block; cursor:pointer"><img src="' . $set['homeurl'] . '/images/bb/sm.png" alt="sm" title="' . $lng['smileys'] . '" border="0"/>
+                <div class="smileys">' . $my_smileys . '</div></span>';
+            }
+            return $out . '<br />';
     }
 
     /*
@@ -126,7 +160,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Проверка переменных
     -----------------------------------------------------------------
     */
-    function check($str) {
+    static function check($str) {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
         $str = nl2br($str);
         $str = strtr($str, array (
@@ -164,7 +198,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
             chr(31)=> ''
         ));
 
-        $str = str_replace("\'", "&#39;", $str);
+        $str = str_replace("'", "&#39;", $str);
         $str = str_replace('\\', "&#92;", $str);
         $str = str_replace("|", "I", $str);
         $str = str_replace("||", "I", $str);
@@ -183,7 +217,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $tags=2         вырезание тэгов
     -----------------------------------------------------------------
     */
-    function checkout($str, $br = 0, $tags = 0) {
+    static function checkout($str, $br = 0, $tags = 0) {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
 
         if ($br == 1)
@@ -238,7 +272,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Счетчик Фотоальбомов / фотографий юзеров
     -----------------------------------------------------------------
     */
-    function count_photo() {
+    static function count_photo() {
         global $realtime, $set;
         $albumcount = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`"), 0);
         $photocount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files`"), 0);
@@ -251,12 +285,12 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Показ различных счетчиков внизу страницы
     -----------------------------------------------------------------
     */
-    function display_counters() {
+    static function display_counters() {
         global $headmod;
         $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
 
         if (mysql_num_rows($req) > 0) {
-            while ($res = mysql_fetch_array($req)) {
+            while (($res = mysql_fetch_array($req)) !== false) {
                 $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
                 $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
                 $count = ($headmod == 'mainpage') ? $link1 : $link2;
@@ -271,16 +305,12 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Сообщения об ошибках
     -----------------------------------------------------------------
     */
-    function display_error($error = false, $link = '') {
+    static function display_error($error = '', $link = '') {
         global $lng;
 
         if ($error) {
-            $out = '<div class="rmenu"><p><b>' . $lng['error'] . '!</b>';
-            if (is_array($error)) {
-                foreach ($error as $val)$out .= '<div>' . $val . '</div>';
-            } else {
-                $out .= '<br />' . $error;
-            }
+            $out = '<div class="rmenu"><p><b>' . $lng['error'] . '!</b><br />';
+            $out .= is_array($error) ? implode('<br />', $error) : $error;
             $out .= '</p><p>' . $link . '</p></div>';
             return $out;
         } else {
@@ -296,24 +326,8 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $end_space - выводится в конце
     -----------------------------------------------------------------
     */
-    function display_menu($val = array (), $delimiter = ' | ', $end_space = '') {
-        $out = '';
-
-        foreach ($val as $key => $menu) {
-            if (empty($menu))
-                unset($val[$key]);
-        }
-
-        if (empty($val))
-            return false;
-
-        //ksort($val);
-        $last = array_pop($val);
-
-        foreach ($val as $menu) {
-            $out .= $menu . $delimiter;
-        }
-        return $out . $last . $end_space;
+    static function display_menu($val = array (), $delimiter = ' | ', $end_space = '') {
+        return implode($delimiter, array_diff($val, array(''))) . $end_space;
     }
 
     /*
@@ -322,7 +336,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     За основу взята аналогичная функция от форума SMF2.0
     -----------------------------------------------------------------
     */
-    function display_pagination($base_url, $start, $max_value, $num_per_page) {
+    static function display_pagination($base_url, $start, $max_value, $num_per_page) {
         $pgcont = 4;
         $pgcont = (int)($pgcont - ($pgcont % 2)) / 2;
 
@@ -383,7 +397,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
        [footer]    (string)    Строка выводится внизу области "sub"
     -----------------------------------------------------------------
     */
-    function display_user($user = array (), $arg = array ()) {
+    static function display_user($user = false, $arg = false) {
         global $set, $set_user, $realtime, $user_id, $rights, $lng, $rootpath;
         $out = false;
 
@@ -423,25 +437,25 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
             $out .= ($realtime > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
             if (!empty($arg['header']))
                 $out .= ' ' . $arg['header'];
-            if (!$arg['stshide'] && !empty($user['status']))
+            if (!isset($arg['stshide']) && !empty($user['status']))
                 $out .= '<div class="status"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/label.png" alt="" align="middle" />&#160;' . $user['status'] . '</div>';
             if ($set_user['avatar'])
                 $out .= '</td></tr></table>';
         }
 
-        if ($arg['body'])
+        if (isset($arg['body']))
             $out .= '<div>' . $arg['body'] . '</div>';
-        $ipinf = ($rights || $user_id == $user['id']) && !$arg['iphide'] ? 1 : 0;
-        $lastvisit = $realtime > $user['lastdate'] + 300 && $arg['lastvisit'] ? date("d.m.Y (H:i)", $user['lastdate']) : false;
+        $ipinf = ($rights || $user['id'] && $user['id'] == $user_id) && !isset($arg['iphide']) ? 1 : 0;
+        $lastvisit = $realtime > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? date("d.m.Y (H:i)", $user['lastdate']) : false;
 
-        if ($ipinf || $lastvisit || $arg['sub'] || $arg['footer']) {
+        if ($ipinf || $lastvisit || isset($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
-            if ($arg['sub'])
+            if (isset($arg['sub']))
                 $out .= '<div>' . $arg['sub'] . '</div>';
             if ($lastvisit)
                 $out .= '<div><span class="gray">' . $lng['last_visit'] . ':</span> ' . $lastvisit . '</div>';
             $iphist = '';
-            if ($ipinf && $arg['iphist']) {
+            if ($ipinf && isset($arg['iphist'])) {
                 $iptotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'"), 0);
                 $iphist = '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a>';
             }
@@ -453,7 +467,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
                 else
                     $out .= '<div><span class="gray">' . $lng['last_ip'] . ':</span> ' . long2ip($user['ip']) . $iphist . '</div>';
             }
-            if ($arg['footer'])
+            if (isset($arg['footer']))
                 $out .= $arg['footer'];
             $out .= '</div>';
         }
@@ -465,7 +479,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Форматирование имени файла
     -----------------------------------------------------------------
     */
-    function format($name) {
+    static function format($name) {
         $f1 = strrpos($name, ".");
         $f2 = substr($name, $f1 + 1, 999);
         $fname = strtolower($f2);
@@ -477,7 +491,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Вспомогательная Функция обработки ссылок форума
     -----------------------------------------------------------------
     */
-    function forum_link($m) {
+    static function forum_link($m) {
         global $set;
 
         if (!isset($m[3])) {
@@ -517,7 +531,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $mod = 1   Выводит ссылки на непрочитанное
     -----------------------------------------------------------------
     */
-    function forum_new($mod = 0) {
+    static function forum_new($mod = 0) {
         global $user_id, $rights, $lng;
 
         if ($user_id) {
@@ -544,7 +558,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Получаем данные пользователя
     -----------------------------------------------------------------
     */
-    function get_user($id = false) {
+    static function get_user($id = false) {
         global $datauser, $user_id;
 
         if ($id && $id != $user_id) {
@@ -564,7 +578,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Вырезание BBcode тэгов из текста
     -----------------------------------------------------------------
     */
-    function notags($var = '') {
+    static function notags($var = '') {
         $var = strtr($var, array (
             '[green]' => '',
             '[/green]' => '',
@@ -592,7 +606,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Транслитерация с Русского в латиницу
     -----------------------------------------------------------------
     */
-    function rus_lat($str) {
+    static function rus_lat($str) {
         $str = strtr($str, array (
             'а' => 'a',
             'б' => 'b',
@@ -640,16 +654,17 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $adm=2 пересоздаст кэш смайлов
     -----------------------------------------------------------------
     */
-    function smileys($str, $adm = 0) {
+    static function smileys($str, $adm = 0) {
         global $rootpath, $set;
 
         // Записываем КЭШ смайлов
         if ($adm == 2) {
+            $count = 0;
             // Обрабатываем простые смайлы
             $array1 = array ();
             $path = 'images/smileys/simply/';
             $dir = opendir($rootpath . $path);
-            while ($file = readdir($dir)) {
+            while (($file = readdir($dir)) !== false) {
                 $name = explode(".", $file);
                 if ($name[1] == 'gif' || $name[1] == 'jpg' || $name[1] == 'png') {
                     $array1[':' . $name[0]] = '<img src="' . $set['homeurl'] . '/' . $path . $file . '" alt="" />';
@@ -662,7 +677,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
             $array3 = array ();
             $path = 'images/smileys/admin/';
             $dir = opendir($rootpath . $path);
-            while ($file = readdir($dir)) {
+            while (($file = readdir($dir)) !== false) {
                 $name = explode(".", $file);
                 if ($name[1] == 'gif' || $name[1] == 'jpg' || $name[1] == 'png') {
                     $array2[':' . self::trans($name[0]) . ':'] = '<img src="' . $set['homeurl'] . '/' . $path . $file . '" alt="" />';
@@ -677,7 +692,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
             $total = count($cat);
             for ($i = 0; $i < $total; $i++) {
                 $dir = opendir($cat[$i]);
-                while ($file = readdir($dir)) {
+                while (($file = readdir($dir)) !== false) {
                     $name = explode(".", $file);
                     if ($name[1] == 'gif' || $name[1] == 'jpg' || $name[1] == 'png') {
                         $path = str_replace('..', $set['homeurl'], $cat[$i]);
@@ -691,7 +706,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
             $smileys = serialize(array_merge($array1, $array4, $array5));
             $smileys_adm = serialize(array_merge($array2, $array3));
             // Записываем в файл Кэша
-            if ($fp = fopen($rootpath . 'files/cache/smileys_cache.dat', 'w')) {
+            if (($fp = fopen($rootpath . 'files/cache/smileys_cache.dat', 'w')) !== false) {
                 fputs($fp, $smileys . "\r\n" . $smileys_adm);
                 fclose($fp);
                 return $count;
@@ -717,7 +732,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Колличество зарегистрированных пользователей
     -----------------------------------------------------------------
     */
-    function stat_users($refresh = false) {
+    static function stat_users($refresh = false) {
         global $realtime;
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users`"), 0);
         $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `datereg` > '" . ($realtime - 86400) . "'"), 0);
@@ -732,7 +747,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Статистика загрузок
     -----------------------------------------------------------------
     */
-    function stat_download() {
+    static function stat_download() {
         global $realtime;
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file'"), 0);
         $old = $realtime - (3 * 24 * 3600);
@@ -748,7 +763,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Статистика Форума
     -----------------------------------------------------------------
     */
-    function stat_forum() {
+    static function stat_forum() {
         global $user_id, $rights, $set;
         $total_thm = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't'" . ($rights >= 7 ? "" : " AND `close` != '1'")), 0);
         $total_msg = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm'" . ($rights >= 7 ? "" : " AND `close` != '1'")), 0);
@@ -770,7 +785,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $mod = 1    будет выдавать только колличество новых картинок
     -----------------------------------------------------------------
     */
-    function stat_gallery($mod = 0) {
+    static function stat_gallery($mod = 0) {
         global $realtime;
         $old = $realtime - (3 * 24 * 3600);
         $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `time` > '" . $old . "' AND `type` = 'ft'"), 0);
@@ -794,9 +809,9 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     $mod = 2    колличество новых в Админ-Клубе
     -----------------------------------------------------------------
     */
-    function stat_guestbook($mod = 0) {
+    static function stat_guestbook($mod = 0) {
         global $realtime, $rights;
-
+        $count = 0;
         switch ($mod) {
             case 1:
                 $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='0' AND `time` > '" . ($realtime - 86400) . "'"), 0);
@@ -822,7 +837,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Вывод коэффициента сжатия Zlib
     -----------------------------------------------------------------
     */
-    function stat_gzip() {
+    static function stat_gzip() {
         global $set, $lng;
 
         if ($set['gzip']) {
@@ -841,7 +856,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Статистика библиотеки
     -----------------------------------------------------------------
     */
-    function stat_library() {
+    static function stat_library() {
         global $realtime, $rights, $set;
         $countf = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = '1'"), 0);
         $old = $realtime - (3 * 24 * 3600);
@@ -862,7 +877,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Дата последней новости
     -----------------------------------------------------------------
     */
-    function stat_news() {
+    static function stat_news() {
         //TODO: Разобраться, нужна ли функция, если нет, то удалить
         global $set_user;
         $req = mysql_query("SELECT `time` FROM `news` ORDER BY `time` DESC LIMIT 1");
@@ -880,7 +895,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Счетчик посетителей онлайн
     -----------------------------------------------------------------
     */
-    function stat_online() {
+    static function stat_online() {
         global $realtime, $user_id, $lng, $set;
         $users = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > '" . ($realtime - 300) . "'"), 0);
         $guests = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_guests` WHERE `lastdate` > '" . ($realtime - 300) . "'"), 0);
@@ -892,7 +907,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Счетсик времени, проведенного на сайте
     -----------------------------------------------------------------
     */
-    function stat_timeonline() {
+    static function stat_timeonline() {
         global $realtime, $datauser, $user_id, $lng;
 
         if ($user_id)
@@ -904,10 +919,8 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Функция пересчета на дни, или часы
     -----------------------------------------------------------------
     */
-    function timecount($var) {
+    static function timecount($var) {
         global $lng;
-        $str = '';
-
         if ($var < 0)
             $var = 0;
         $day = ceil($var / 86400);
@@ -929,7 +942,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     Транслитерация текста
     -----------------------------------------------------------------
     */
-    function trans($str) {
+    static function trans($str) {
         $str = strtr($str, array (
             'a' => 'а',
             'b' => 'б',
@@ -1007,7 +1020,7 @@ element.value = str.substr(0, start) + text1 + str.substr(start, length) + text2
     За основу взята функция от ManHunter http://www.manhunter.ru
     -----------------------------------------------------------------
     */
-    function mobile_detect() {
+    static function mobile_detect() {
         if (isset($_SESSION['is_mobile'])) {
             return $_SESSION['is_mobile'];
         }
