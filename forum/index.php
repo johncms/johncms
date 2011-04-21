@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 
@@ -21,16 +21,12 @@ if (isset($_SESSION['ref']))
 Настройки форума
 -----------------------------------------------------------------
 */
-if ($user_id)
-    $set_forum = unserialize($datauser['set_forum']);
-// Настроки по-умолчанию
-if (!isset($set_forum) || empty($set_forum))
-    $set_forum = array (
-        'farea' => 0,
-        'upfp' => 0,
-        'postclip' => 1,
-        'postcut' => 2
-    );
+$set_forum = $user_id && !empty($datauser['set_forum']) ? unserialize($datauser['set_forum']) : array(
+    'farea' => 0,
+    'upfp' => 0,
+    'postclip' => 1,
+    'postcut' => 2
+);
 
 /*
 -----------------------------------------------------------------
@@ -38,7 +34,7 @@ if (!isset($set_forum) || empty($set_forum))
 -----------------------------------------------------------------
 */
 // Файлы архивов
-$ext_arch = array (
+$ext_arch = array(
     'zip',
     'rar',
     '7z',
@@ -46,12 +42,12 @@ $ext_arch = array (
     'gz'
 );
 // Звуковые файлы
-$ext_audio = array (
+$ext_audio = array(
     'mp3',
     'amr'
 );
 // Файлы документов и тексты
-$ext_doc = array (
+$ext_doc = array(
     'txt',
     'pdf',
     'doc',
@@ -60,12 +56,12 @@ $ext_doc = array (
     'xls'
 );
 // Файлы Java
-$ext_java = array (
+$ext_java = array(
     'jar',
     'jad'
 );
 // Файлы картинок
-$ext_pic = array (
+$ext_pic = array(
     'jpg',
     'jpeg',
     'gif',
@@ -73,12 +69,12 @@ $ext_pic = array (
     'bmp'
 );
 // Файлы SIS
-$ext_sis = array (
+$ext_sis = array(
     'sis',
     'sisx'
 );
 // Файлы видео
-$ext_video = array (
+$ext_video = array(
     '3gp',
     'avi',
     'flv',
@@ -86,12 +82,12 @@ $ext_video = array (
     'mp4'
 );
 // Файлы Windows
-$ext_win = array (
+$ext_win = array(
     'exe',
     'msi'
 );
 // Другие типы файлов (что не перечислены выше)
-$ext_other = array ('wmf');
+$ext_other = array('wmf');
 
 /*
 -----------------------------------------------------------------
@@ -122,7 +118,7 @@ if (empty($id)) {
 } else {
     $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '" . $id . "'");
     $res = mysql_fetch_assoc($req);
-    $hdr = strtr($res['text'], array (
+    $hdr = strtr($res['text'], array(
         '&quot;' => '',
         '&amp;' => '',
         '&lt;' => '',
@@ -139,36 +135,35 @@ if (empty($id)) {
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$array = array (
-    'addfile' => 'includes',
-    'addvote' => 'includes',
-    'close' => 'includes',
-    'deltema' => 'includes',
-    'delvote' => 'includes',
-    'editpost' => 'includes',
-    'editvote' => 'includes',
-    'file' => 'includes',
-    'files' => 'includes',
-    'filter' => 'includes',
-    'loadtem' => 'includes',
-    'massdel' => 'includes',
-    'moders' => 'includes',
-    'new' => 'includes',
-    'nt' => 'includes',
-    'per' => 'includes',
-    'post' => 'includes',
-    'ren' => 'includes',
-    'restore' => 'includes',
-    'say' => 'includes',
-    'tema' => 'includes',
-    'users' => 'includes',
-    'vip' => 'includes',
-    'vote' => 'includes',
-    'who' => 'includes'
+$array = array(
+    'addfile',
+    'addvote',
+    'close',
+    'deltema',
+    'delvote',
+    'editpost',
+    'editvote',
+    'file',
+    'files',
+    'filter',
+    'loadtem',
+    'massdel',
+    'moders',
+    'new',
+    'nt',
+    'per',
+    'post',
+    'ren',
+    'restore',
+    'say',
+    'tema',
+    'users',
+    'vip',
+    'vote',
+    'who'
 );
-$path = !empty($array[$act]) ? $array[$act] . '/' : '';
-if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once($path . $act . '.php');
+if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
+    require('includes/' . $array[$key] . '.php');
 } else {
     require('../incfiles/head.php');
 
@@ -275,8 +270,8 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         -----------------------------------------------------------------
         */
         echo '<p>' . functions::forum_new(1) . '</p>' .
-            '<div class="phdr">' . functions::display_menu($tree) . '</div>' .
-            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . $lng['search'] . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+             '<div class="phdr">' . functions::display_menu($tree) . '</div>' .
+             '<div class="topmenu"><a href="search.php?id=' . $id . '">' . $lng['search'] . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
         /*
         -----------------------------------------------------------------
@@ -328,7 +323,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                     $req = mysql_query("SELECT * FROM `forum` WHERE `type`='t'" . ($rights >= 7 ? '' : " AND `close`!='1'") . " AND `refid`='$id' ORDER BY `vip` DESC, `time` DESC LIMIT $start, $kmess");
                     $i = 0;
                     while (($res = mysql_fetch_assoc($req)) !== false) {
-                        if($res['close'])
+                        if ($res['close'])
                             echo '<div class="rmenu">';
                         else
                             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -367,10 +362,10 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                 if ($total > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                         '<p><form action="index.php?id=' . $id . '" method="post">' .
+                         '<input type="text" name="page" size="2"/>' .
+                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                         '</form></p>';
                 }
                 break;
 
@@ -397,7 +392,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                     $sql .= ')';
                 }
                 if ($user_id && !$filter) {
-                // Фиксация факта прочтения топика
+                    // Фиксация факта прочтения топика
                 }
                 if ($rights < 7 && $type1['close'] == 1) {
                     echo '<div class="rmenu"><p>' . $lng_forum['topic_deleted'] . '<br/><a href="?id=' . $type1['refid'] . '">' . $lng_forum['to_section'] . '</a></p></div>';
@@ -434,16 +429,16 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         // Выводим форму с опросами
                         echo '<form action="index.php?act=vote&amp;id=' . $id . '" method="post">';
                         while (($vote = mysql_fetch_assoc($vote_result)) !== false) {
-                            echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . functions::checkout($vote['name']) . '<br />';
+                            echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . functions::checkout($vote['name'], 0, 1) . '<br />';
                         }
                         echo '<p><input type="submit" name="submit" value="' . $lng['vote'] . '"/><br /><a href="index.php?id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
-                            '">' . $lng_forum['results'] . '</a></p></form></div>';
+                             '">' . $lng_forum['results'] . '</a></p></form></div>';
                     } else {
                         // Выводим результаты голосования
                         echo '<small>';
                         while (($vote = mysql_fetch_assoc($vote_result)) !== false) {
                             $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-                            echo functions::checkout($vote['name']) . ' [' . $vote['count'] . ']<br />';
+                            echo functions::checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']<br />';
                             echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . $lng_forum['rating'] . ': ' . $count_vote . '%" /><br />';
                         }
                         echo '</small></div><div class="bmenu">' . $lng_forum['total_votes'] . ': ';
@@ -474,12 +469,12 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         echo '<img src="../images/del.png" width="10" height="10" alt=""/>&#160;';
                     if ($user_id && $user_id != $postres['user_id']) {
                         echo '<a href="../users/profile.php?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
-                            '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . $lng_forum['reply_btn'] . '</a> ' .
-                            '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . $lng_forum['cytate_btn'] . '</a> ';
+                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . $lng_forum['reply_btn'] . '</a> ' .
+                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . $lng_forum['cytate_btn'] . '</a> ';
                     } else {
                         echo '<b>' . $postres['from'] . '</b> ';
                     }
-                    $user_rights = array (
+                    $user_rights = array(
                         1 => 'Kil',
                         3 => 'Mod',
                         6 => 'Smd',
@@ -508,22 +503,22 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                 $req = mysql_query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                 FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
                 WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'"
-                    . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql ORDER BY `forum`.`id` $order LIMIT $start, $kmess");
+                                   . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql ORDER BY `forum`.`id` $order LIMIT $start, $kmess");
                 // Верхнее поле "Написать"
                 if (($user_id && !$type1['edit'] && $set_forum['upfp']) || ($rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
                         echo '<p>';
-                        if(!$is_mobile)
+                        if (!$is_mobile)
                             echo functions::auto_bb('form1', 'msg');
                         echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
+                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
                         if ($set_user['translit'])
                             echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
                         echo '</p>';
                     }
                     echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p>' .
-                        '</form></div>';
+                         '</form></div>';
                 }
                 if ($rights == 3 || $rights >= 6)
                     echo '<form action="index.php?act=massdel" method="post">';
@@ -552,7 +547,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         echo '<b>' . $res['from'] . '</b> ';
                     }
                     // Метка должности
-                    $user_rights = array (
+                    $user_rights = array(
                         3 => '(FMod)',
                         6 => '(Smd)',
                         7 => '(Adm)',
@@ -564,7 +559,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                     // Ссылки на ответ и цитирование
                     if ($user_id && $user_id != $res['user_id']) {
                         echo '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . $lng_forum['reply_btn'] . '</a>&#160;' .
-                            '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . $lng_forum['cytate_btn'] . '</a> ';
+                             '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . $lng_forum['cytate_btn'] . '</a> ';
                     }
                     // Время поста
                     echo ' <span class="gray">(' . date("d.m.Y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . ')</span><br />';
@@ -589,7 +584,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                             case 3:
                                 $cut = 3000;
                                 break;
-                                default :
+                            default :
                                 $cut = 500;
                         }
                     }
@@ -620,7 +615,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         echo '<br /><span class="gray">' . $lng_forum['attached_file'] . ':';
                         // Предпросмотр изображений
                         $att_ext = strtolower(functions::format('./files/forum/attach/' . $fres['filename']));
-                        $pic_ext = array (
+                        $pic_ext = array(
                             'gif',
                             'jpg',
                             'jpeg',
@@ -648,7 +643,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         if ($rights == 3 || $rights >= 6)
                             echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>&#160;';
                         echo functions::display_menu($menu);
-                              if ($res['close']) {
+                        if ($res['close']) {
                             echo '<div class="red">' . $lng_forum['who_delete_post'] . ': <b>' . $res['close_who'] . '</b></div>';
                         } elseif (!empty($res['close_who'])) {
                             echo '<div class="green">' . $lng_forum['who_restore_post'] . ': <b>' . $res['close_who'] . '</b></div>';
@@ -669,26 +664,26 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
                         echo '<p>';
-                        if(!$is_mobile)
+                        if (!$is_mobile)
                             echo functions::auto_bb('form2', 'msg');
                         echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea><br/></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
+                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
                         if ($set_user['translit'])
                             echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
                         echo '</p>';
                     }
                     echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p>' .
-                        '</form></div>';
+                         '</form></div>';
                 }
                 echo '<div class="phdr"><a name="down" id="down"></a><a href="#up">' .
-                    '<img src="../theme/' . $set_user['skin'] . '/images/up.png" alt="' . $lng['up'] . '" width="20" height="10" border="0"/></a>' .
-                    '&#160;&#160;' . $lng['total'] . ': ' . $colmes . '</div>';
+                     '<img src="../theme/' . $set_user['skin'] . '/images/up.png" alt="' . $lng['up'] . '" width="20" height="10" border="0"/></a>' .
+                     '&#160;&#160;' . $lng['total'] . ': ' . $colmes . '</div>';
                 if ($colmes > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                         '<p><form action="index.php?id=' . $id . '" method="post">' .
+                         '<input type="text" name="page" size="2"/>' .
+                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                         '</form></p>';
                 } else {
                     echo '<br />';
                 }
@@ -700,7 +695,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                 if ($rights == 3 || $rights >= 6) {
                     echo '<p><div class="func">';
                     echo isset($topic_vote) && $topic_vote > 0 ? '<a href="index.php?act=editvote&amp;id=' . $id . '">' . $lng_forum['edit_vote'] . '</a><br/><a href="index.php?act=delvote&amp;id=' . $id . '">' . $lng_forum['delete_vote'] . '</a><br/>'
-                        : '<a href="index.php?act=addvote&amp;id=' . $id . '">' . $lng_forum['add_vote'] . '</a><br/>';
+                            : '<a href="index.php?act=addvote&amp;id=' . $id . '">' . $lng_forum['add_vote'] . '</a><br/>';
                     echo '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng_forum['topic_rename'] . '</a><br/>';
                     // Закрыть - открыть тему
                     if ($type1['edit'] == 1)
@@ -717,7 +712,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                         echo '<a href="index.php?act=vip&amp;id=' . $id . '&amp;vip">' . $lng_forum['topic_fix'] . '</a>';
                     echo '<br/><a href="index.php?act=per&amp;id=' . $id . '">' . $lng_forum['topic_move'] . '</a></div></p>';
                 }
-                if($wholink)
+                if ($wholink)
                     echo '<div>' . $wholink . '</div>';
                 if ($filter)
                     echo '<div><a href="index.php?act=filter&amp;id=' . $id . '&amp;do=unset">' . $lng_forum['filter_cancel'] . '</a></div>';
@@ -743,8 +738,8 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         */
         $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files`" . ($rights >= 7 ? '' : " WHERE `del` != '1'")), 0);
         echo '<p>' . functions::forum_new(1) . '</p>' .
-            '<div class="phdr"><b>' . $lng['forum'] . '</b></div>' .
-            '<div class="topmenu"><a href="search.php">' . $lng['search'] . '</a> | <a href="index.php?act=files">' . $lng_forum['files_forum'] . '</a> <span class="red">(' . $count . ')</span></div>';
+             '<div class="phdr"><b>' . $lng['forum'] . '</b></div>' .
+             '<div class="topmenu"><a href="search.php">' . $lng['search'] . '</a> | <a href="index.php?act=files">' . $lng_forum['files_forum'] . '</a> <span class="red">(' . $count . ')</span></div>';
         $req = mysql_query("SELECT `id`, `text`, `soft` FROM `forum` WHERE `type`='f' ORDER BY `realid`");
         $i = 0;
         while (($res = mysql_fetch_array($req)) !== false) {
@@ -781,4 +776,5 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 }
 
 require_once('../incfiles/end.php');
+
 ?>

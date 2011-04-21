@@ -1,15 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -33,8 +30,8 @@ if ($rights == 3 || $rights >= 6) {
             ");
             mysql_query("UPDATE `forum` SET  `realid` = '1'  WHERE `id` = '$id'");
             $vote_count = abs(intval($_POST['count_vote']));
-            if ($vote_count > 8)
-                $vote_count = 8;
+            if ($vote_count > 20)
+                $vote_count = 20;
             else if ($vote_count < 2)
                 $vote_count = 2;
             for ($vote = 0; $vote < $vote_count; $vote++) {
@@ -61,13 +58,13 @@ if ($rights == 3 || $rights >= 6) {
             --$_POST['count_vote'];
         if ($_POST['count_vote'] < 2 || empty($_POST['count_vote']))
             $_POST['count_vote'] = 2;
-        elseif ($_POST['count_vote'] > 8)
-            $_POST['count_vote'] = 8;
+        elseif ($_POST['count_vote'] > 20)
+            $_POST['count_vote'] = 20;
         for ($vote = 0; $vote < $_POST['count_vote']; $vote++) {
             echo $lng_forum['answer'] . ' ' . ($vote + 1) . '(max. 50): <br/><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br/>';
         }
         echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>';
-        echo ($_POST['count_vote'] < 8) ? '<br/><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
+        echo ($_POST['count_vote'] < 20) ? '<br/><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
         echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/><br/>' : '<br/>';
         echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form>';
         echo '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>';

@@ -1,43 +1,9 @@
-Addtype application/zip .zip
-Addtype application/x-rar-compressed .rar
-AddType application/vnd.sonyericsson.mms-template tpl
-AddType application/vnd.eri.thm .thm 
-AddType application/vnd.mophun.application .mpn  
-AddType application/vnd.mophun.certificate .mpc
-AddType application/vnd.smaf .mmf
-AddType application/x-tar .hid
-Addtype application/smil .smil 
-Addtype application/smil .smi 
-Addtype application/java-archive .jar 
-Addtype application/vnd.symbian.install .sis
-Addtype application/vnd.wap.mms-message .mms
-Addtype application/octet-stream .exe
-
-Addtype text/x-imelody .imy 
-Addtype text/x-emelody .emy 
-Addtype text/x-vcard .vcf 
-Addtype text/x-vcalendar .vcs 
-Addtype text/calendar .ics
-AddType text/vnd.sun.j2me.app-descriptor;charset=UTF-8 .jad
-addtype text/x-vmel .mel
-addtype text/x-vmel .emy
-
-addtype audio/imelody .imy
-AddType audio/amr .amr
-AddType audio/x-wav .wav
-Addtype audio/wav .wav 
-Addtype audio/midi .midi 
-Addtype audio/midi .mid 
-Addtype audio/rmf .rmf
-
-Addtype image/jpeg .jpg 
-Addtype image/jpeg .jpeg 
-Addtype image/gif .gif 
-Addtype image/png .png 
-Addtype image/bmp .bmp 
-
-AddType video/mp4 .mp4
-Addtype video/3gpp .3gp
+Options -Indexes
+ErrorDocument 402 http://johncms.com/?err
+ErrorDocument 403 http://johncms.com/?err
+ErrorDocument 404 http://johncms.com/?err
+ErrorDocument 500 http://johncms.com/?err
+DirectoryIndex index.php
 
 RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 AddType application/x-httpd-php-source .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
@@ -48,18 +14,19 @@ php_value register_globals 0
 php_flag session.use_trans_sid off
 php_value magic_quotes_gpc 0
 php_value magic_quotes_runtime 0
-php_value magic_quotes_sybase 0 
+php_value magic_quotes_sybase 0
 php_value allow_url_fopen 0
 php_value arg_separator.output "&amp;"
-DirectoryIndex index.php
 AddDefaultCharset UTF-8
-Options -Indexes
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault A1209600
+  <FilesMatch \.php$>
+    ExpiresActive Off
+  </FilesMatch>
+</IfModule>
 
 RewriteEngine On
 RewriteCond %{REQUEST_METHOD} ^TRACE
 RewriteRule .* - [F]
-
-ErrorDocument 402 http://johncms.com/?err	
-ErrorDocument 403 http://johncms.com/?err
-ErrorDocument 404 http://johncms.com/?err
-ErrorDocument 500 http://johncms.com/?err

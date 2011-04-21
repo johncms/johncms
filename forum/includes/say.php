@@ -232,6 +232,7 @@ switch ($type1['type']) {
                 header("Location: index.php?id=$th&page=$page");
             }
         } else {
+            $textl = $lng['forum'];
             require('../incfiles/head.php');
             $qt = " $type1[text]";
             if (($datauser['postforum'] == "" || $datauser['postforum'] == 0)) {

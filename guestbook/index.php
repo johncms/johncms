@@ -147,8 +147,8 @@ switch ($act) {
                 echo '<div class="menu">' .
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . functions::checkout($res['text']) . '</div>' .
-                    '<form action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . $lng['reply'] . '</h3>' .
+                    '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
+                    '<p><h3>' . $lng['reply'] . '</h3>' . functions::auto_bb('form', 'otv') .
                     '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
                     '</form></div>' .

@@ -25,34 +25,32 @@ if ($rights < 1) {
 
 $headmod = 'admin';
 $textl = $lng['admin_panel'];
-require_once('../incfiles/head.php');
+require('../incfiles/head.php');
 $array = array (
-    'forum' => 'includes/modules',
-    'news' => 'includes/modules',
-    'ads' => 'includes/system',
-    'counters' => 'includes/system',
-    'languages' => 'includes/system',
-    'seo' => 'includes/system',
-    'settings' => 'includes/system',
-    'sitemap' => 'includes/system',
-    'smileys' => 'includes/system',
-    'access' => 'includes/security',
-    'antispy' => 'includes/security',
-    'httpaf' => 'includes/security',
-    'ipban' => 'includes/security',
-    'administrators' => 'includes/users',
-    'antiflood' => 'includes/users',
-    'ban_panel' => 'includes/users',
-    'karma' => 'includes/users',
-    'reg' => 'includes/users',
-    'search_ip' => 'includes/users',
-    'search_user' => 'includes/users',
-    'users' => 'includes/users',
-    'usr_del' => 'includes/users'
+    'forum',
+    'news',
+    'ads',
+    'counters',
+    'languages',
+    'settings',
+    'sitemap',
+    'smileys',
+    'access',
+    'antispy',
+    'httpaf',
+    'ipban',
+    'administrators',
+    'antiflood',
+    'ban_panel',
+    'karma',
+    'reg',
+    'search_ip',
+    'search_user',
+    'users',
+    'usr_del'
 );
-$path = !empty($array[$act]) ? $array[$act] . '/' : '';
-if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once($path . $act . '.php');
+if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
+    require('includes/' . $array[$key] . '.php');
 } else {
     $regtotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'"), 0);
     $bantotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '$realtime'"), 0);

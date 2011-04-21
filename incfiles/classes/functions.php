@@ -1,19 +1,21 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Restricted access');
+
 class functions {
+
     /*
     -----------------------------------------------------------------
-    Глобальная система Антифлуда
+    Антифлуд
     -----------------------------------------------------------------
     Режимы работы:
     1 - Адаптивный
@@ -24,16 +26,14 @@ class functions {
     */
     static function antiflood() {
         global $set, $datauser, $realtime;
-        $default = array (
+        $default = array(
             'mode' => 2,
             'day' => 10,
             'night' => 30,
             'dayfrom' => 10,
             'dayto' => 22
         );
-
         $af = isset($set['antiflood']) ? unserialize($set['antiflood']) : $default;
-
         switch ($af['mode']) {
             case 1:
                 // Адаптивный режим
@@ -41,27 +41,22 @@ class functions {
                 $adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > '$onltime'"), 0);
                 $limit = $adm > 0 ? $af['day'] : $af['night'];
                 break;
-
             case 3:
                 // День
                 $limit = $af['day'];
                 break;
-
             case 4:
                 // Ночь
                 $limit = $af['night'];
                 break;
-
             default:
                 // По умолчанию день / ночь
                 $c_time = date('G', $realtime);
                 $limit = $c_time > $af['day'] && $c_time < $af['night'] ? $af['day'] : $af['night'];
         }
-
         if ($datauser['rights'] > 0)
             $limit = 4; // Для Администрации задаем лимит в 4 секунды
         $flood = $datauser['lastpost'] + $limit - $realtime;
-
         if ($flood > 0)
             return $flood;
         else
@@ -75,7 +70,7 @@ class functions {
     */
     static function antilink($var) {
         $var = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $var);
-        $var = strtr($var, array (
+        $var = strtr($var, array(
             '.ru' => '***',
             '.com' => '***',
             '.biz' => '***',
@@ -89,7 +84,6 @@ class functions {
             '.kmx' => '***',
             '.h2m' => '***'
         ));
-
         return $var;
     }
 
@@ -99,14 +93,17 @@ class functions {
     -----------------------------------------------------------------
     */
     static function auto_bb($form, $field) {
-        global $set, $datauser, $lng, $user_id;
-        $smileys = unserialize($datauser['smileys']);
-        if(!empty($smileys)){
+        global $set, $datauser, $lng, $user_id, $is_mobile;
+        if($is_mobile){
+            return false;
+        }
+        $smileys = !empty($datauser['smileys']) ? unserialize($datauser['smileys']) : '';
+        if (!empty($smileys)) {
             $res_sm = '';
             $my_smileys = '<small><a href="' . $set['homeurl'] . '/pages/faq.php?act=my_smileys">' . $lng['edit_list'] . '</a></small><br />';
             foreach ($smileys as $value)
                 $res_sm .= '<a href="javascript:tag(\'' . $value . '\', \'\', \':\');">:' . $value . ':</a> ';
-		    $my_smileys .= functions::smileys($res_sm, $datauser['rights'] >= 1 ? 1 : 0);
+            $my_smileys .= functions::smileys($res_sm, $datauser['rights'] >= 1 ? 1 : 0);
         } else {
             $my_smileys = '<small><a href="' . $set['homeurl'] . '/pages/faq.php?act=smileys">' . $lng['add_smileys'] . '</a></small>';
         }
@@ -148,11 +145,11 @@ class functions {
             <a href="javascript:tag(\'[red]\', \'[/red]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/re.png" alt="red" title="' . $lng['tag_red'] . '" border="0"/></a>
             <a href="javascript:tag(\'[green]\', \'[/green]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/gr.png" alt="green" title="' . $lng['tag_green'] . '" border="0"/></a>
             <a href="javascript:tag(\'[blue]\', \'[/blue]\', \'\')"><img src="' . $set['homeurl'] . '/images/bb/bl.png" alt="blue" title="' . $lng['tag_blue'] . '" border="0"/></a>';
-            if($user_id){
-                $out .= ' <span class="smileys_from" style="display: inline-block; cursor:pointer"><img src="' . $set['homeurl'] . '/images/bb/sm.png" alt="sm" title="' . $lng['smileys'] . '" border="0"/>
+        if ($user_id) {
+            $out .= ' <span class="smileys_from" style="display: inline-block; cursor:pointer"><img src="' . $set['homeurl'] . '/images/bb/sm.png" alt="sm" title="' . $lng['smileys'] . '" border="0"/>
                 <div class="smileys">' . $my_smileys . '</div></span>';
-            }
-            return $out . '<br />';
+        }
+        return $out . '<br />';
     }
 
     /*
@@ -163,41 +160,40 @@ class functions {
     static function check($str) {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
         $str = nl2br($str);
-        $str = strtr($str, array (
-            chr(0)=> '',
-            chr(1)=> '',
-            chr(2)=> '',
-            chr(3)=> '',
-            chr(4)=> '',
-            chr(5)=> '',
-            chr(6)=> '',
-            chr(7)=> '',
-            chr(8)=> '',
-            chr(9)=> '',
-            chr(10)=> '',
-            chr(11)=> '',
-            chr(12)=> '',
-            chr(13)=> '',
-            chr(14)=> '',
-            chr(15)=> '',
-            chr(16)=> '',
-            chr(17)=> '',
-            chr(18)=> '',
-            chr(19)=> '',
-            chr(20)=> '',
-            chr(21)=> '',
-            chr(22)=> '',
-            chr(23)=> '',
-            chr(24)=> '',
-            chr(25)=> '',
-            chr(26)=> '',
-            chr(27)=> '',
-            chr(28)=> '',
-            chr(29)=> '',
-            chr(30)=> '',
-            chr(31)=> ''
+        $str = strtr($str, array(
+            chr(0) => '',
+            chr(1) => '',
+            chr(2) => '',
+            chr(3) => '',
+            chr(4) => '',
+            chr(5) => '',
+            chr(6) => '',
+            chr(7) => '',
+            chr(8) => '',
+            chr(9) => '',
+            chr(10) => '',
+            chr(11) => '',
+            chr(12) => '',
+            chr(13) => '',
+            chr(14) => '',
+            chr(15) => '',
+            chr(16) => '',
+            chr(17) => '',
+            chr(18) => '',
+            chr(19) => '',
+            chr(20) => '',
+            chr(21) => '',
+            chr(22) => '',
+            chr(23) => '',
+            chr(24) => '',
+            chr(25) => '',
+            chr(26) => '',
+            chr(27) => '',
+            chr(28) => '',
+            chr(29) => '',
+            chr(30) => '',
+            chr(31) => ''
         ));
-
         $str = str_replace("'", "&#39;", $str);
         $str = str_replace('\\', "&#92;", $str);
         $str = str_replace("|", "I", $str);
@@ -219,51 +215,48 @@ class functions {
     */
     static function checkout($str, $br = 0, $tags = 0) {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
-
         if ($br == 1)
             $str = nl2br($str);
         elseif ($br == 2)
             $str = str_replace("\r\n", ' ', $str);
-
         //TODO: Передеать на новую функцию подсветки Тэгов
         if ($tags == 1)
             $str = call_user_func('tags', $str);
         elseif ($tags == 2)
             $str = self::notags($str);
-        $str = strtr($str, array (
-            chr(0)=> '',
-            chr(1)=> '',
-            chr(2)=> '',
-            chr(3)=> '',
-            chr(4)=> '',
-            chr(5)=> '',
-            chr(6)=> '',
-            chr(7)=> '',
-            chr(8)=> '',
-            chr(9)=> '',
-            chr(11)=> '',
-            chr(12)=> '',
-            chr(13)=> '',
-            chr(14)=> '',
-            chr(15)=> '',
-            chr(16)=> '',
-            chr(17)=> '',
-            chr(18)=> '',
-            chr(19)=> '',
-            chr(20)=> '',
-            chr(21)=> '',
-            chr(22)=> '',
-            chr(23)=> '',
-            chr(24)=> '',
-            chr(25)=> '',
-            chr(26)=> '',
-            chr(27)=> '',
-            chr(28)=> '',
-            chr(29)=> '',
-            chr(30)=> '',
-            chr(31)=> ''
+        $str = strtr($str, array(
+            chr(0) => '',
+            chr(1) => '',
+            chr(2) => '',
+            chr(3) => '',
+            chr(4) => '',
+            chr(5) => '',
+            chr(6) => '',
+            chr(7) => '',
+            chr(8) => '',
+            chr(9) => '',
+            chr(11) => '',
+            chr(12) => '',
+            chr(13) => '',
+            chr(14) => '',
+            chr(15) => '',
+            chr(16) => '',
+            chr(17) => '',
+            chr(18) => '',
+            chr(19) => '',
+            chr(20) => '',
+            chr(21) => '',
+            chr(22) => '',
+            chr(23) => '',
+            chr(24) => '',
+            chr(25) => '',
+            chr(26) => '',
+            chr(27) => '',
+            chr(28) => '',
+            chr(29) => '',
+            chr(30) => '',
+            chr(31) => ''
         ));
-
         return $str;
     }
 
@@ -288,7 +281,6 @@ class functions {
     static function display_counters() {
         global $headmod;
         $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
-
         if (mysql_num_rows($req) > 0) {
             while (($res = mysql_fetch_array($req)) !== false) {
                 $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
@@ -307,7 +299,6 @@ class functions {
     */
     static function display_error($error = '', $link = '') {
         global $lng;
-
         if ($error) {
             $out = '<div class="rmenu"><p><b>' . $lng['error'] . '!</b><br />';
             $out .= is_array($error) ? implode('<br />', $error) : $error;
@@ -326,7 +317,7 @@ class functions {
     $end_space - выводится в конце
     -----------------------------------------------------------------
     */
-    static function display_menu($val = array (), $delimiter = ' | ', $end_space = '') {
+    static function display_menu($val = array(), $delimiter = ' | ', $end_space = '') {
         return implode($delimiter, array_diff($val, array(''))) . $end_space;
     }
 
@@ -337,42 +328,33 @@ class functions {
     -----------------------------------------------------------------
     */
     static function display_pagination($base_url, $start, $max_value, $num_per_page) {
-        $pgcont = 4;
-        $pgcont = (int)($pgcont - ($pgcont % 2)) / 2;
-
+        $neighbors = 2;
         if ($start >= $max_value)
             $start = max(0, (int)$max_value - (((int)$max_value % (int)$num_per_page) == 0 ? $num_per_page : ((int)$max_value % (int)$num_per_page)));
         else
             $start = max(0, (int)$start - ((int)$start % (int)$num_per_page));
-        $base_link = '<a class="navpg" href="' . strtr($base_url, array ('%' => '%%')) . 'start=%d' . '">%s</a> ';
+        $base_link = '<a class="navpg" href="' . strtr($base_url, array('%' => '%%')) . 'start=%d' . '">%s</a> ';
         $pageindex = $start == 0 ? '' : sprintf($base_link, $start - $num_per_page, '&lt;&lt;');
-
-        if ($start > $num_per_page * $pgcont)
+        if ($start > $num_per_page * $neighbors)
             $pageindex .= sprintf($base_link, 0, '1');
-
-        if ($start > $num_per_page * ($pgcont + 1))
+        if ($start > $num_per_page * ($neighbors + 1))
             $pageindex .= '<span style="font-weight: bold;"> ... </span>';
-
-        for ($nCont = $pgcont; $nCont >= 1; $nCont--)
+        for ($nCont = $neighbors; $nCont >= 1; $nCont--)
             if ($start >= $num_per_page * $nCont) {
                 $tmpStart = $start - $num_per_page * $nCont;
                 $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
             }
         $pageindex .= '[<b>' . ($start / $num_per_page + 1) . '</b>] ';
         $tmpMaxPages = (int)(($max_value - 1) / $num_per_page) * $num_per_page;
-
-        for ($nCont = 1; $nCont <= $pgcont; $nCont++)
+        for ($nCont = 1; $nCont <= $neighbors; $nCont++)
             if ($start + $num_per_page * $nCont <= $tmpMaxPages) {
                 $tmpStart = $start + $num_per_page * $nCont;
                 $pageindex .= sprintf($base_link, $tmpStart, $tmpStart / $num_per_page + 1);
             }
-
-        if ($start + $num_per_page * ($pgcont + 1) < $tmpMaxPages)
+        if ($start + $num_per_page * ($neighbors + 1) < $tmpMaxPages)
             $pageindex .= '<span style="font-weight: bold;"> ... </span>';
-
-        if ($start + $num_per_page * $pgcont < $tmpMaxPages)
+        if ($start + $num_per_page * $neighbors < $tmpMaxPages)
             $pageindex .= sprintf($base_link, $tmpMaxPages, $tmpMaxPages / $num_per_page + 1);
-
         if ($start + $num_per_page < $max_value) {
             $display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start + $num_per_page);
             $pageindex .= sprintf($base_link, $display_page, '&gt;&gt;');
@@ -418,11 +400,11 @@ class functions {
             }
             if ($user['sex'])
                 $out .= '<img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/' . ($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > $realtime - 86400 ? '_new' : '')
-                    . '.png" width="16" height="16" align="middle" alt="' . ($user['sex'] == 'm' ? 'М' : 'Ж') . '" />&#160;';
+                        . '.png" width="16" height="16" align="middle" alt="' . ($user['sex'] == 'm' ? 'М' : 'Ж') . '" />&#160;';
             else
                 $out .= '<img src="' . $set['homeurl'] . '/images/del.png" width="12" height="12" align="middle" />&#160;';
             $out .= !$user_id || $user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
-            $rank = array (
+            $rank = array(
                 0 => '',
                 1 => '(GMod)',
                 2 => '(CMod)',
@@ -442,7 +424,6 @@ class functions {
             if ($set_user['avatar'])
                 $out .= '</td></tr></table>';
         }
-
         if (isset($arg['body']))
             $out .= '<div>' . $arg['body'] . '</div>';
         $ipinf = ($rights || $user['id'] && $user['id'] == $user_id) && !isset($arg['iphide']) ? 1 : 0;
@@ -463,7 +444,7 @@ class functions {
                 $out .= '<div><span class="gray">UserAgent:</span> ' . $user['browser'] . '</div>';
                 if ($rights)
                     $out .= '<div><span class="gray">' . $lng['last_ip'] . ':</span> <a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . $user['ip'] . '">' . long2ip($user['ip']) . '</a>' . $iphist
-                        . '</div>';
+                            . '</div>';
                 else
                     $out .= '<div><span class="gray">' . $lng['last_ip'] . ':</span> ' . long2ip($user['ip']) . $iphist . '</div>';
             }
@@ -493,7 +474,6 @@ class functions {
     */
     static function forum_link($m) {
         global $set;
-
         if (!isset($m[3])) {
             return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
         } else {
@@ -503,7 +483,7 @@ class functions {
                 $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
                 if (mysql_num_rows($req) > 0) {
                     $res = mysql_fetch_array($req);
-                    $name = strtr($res['text'], array (
+                    $name = strtr($res['text'], array(
                         '&quot;' => '',
                         '&amp;' => '',
                         '&lt;' => '',
@@ -533,7 +513,6 @@ class functions {
     */
     static function forum_new($mod = 0) {
         global $user_id, $rights, $lng;
-
         if ($user_id) {
             $req = mysql_query("SELECT COUNT(*) FROM `forum`
         LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user_id . "'
@@ -560,7 +539,6 @@ class functions {
     */
     static function get_user($id = false) {
         global $datauser, $user_id;
-
         if ($id && $id != $user_id) {
             $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
             if (mysql_num_rows($req)) {
@@ -579,7 +557,7 @@ class functions {
     -----------------------------------------------------------------
     */
     static function notags($var = '') {
-        $var = strtr($var, array (
+        $var = strtr($var, array(
             '[green]' => '',
             '[/green]' => '',
             '[red]' => '',
@@ -597,7 +575,6 @@ class functions {
             '[c]' => '',
             '[/c]' => ''
         ));
-
         return $var;
     }
 
@@ -607,7 +584,7 @@ class functions {
     -----------------------------------------------------------------
     */
     static function rus_lat($str) {
-        $str = strtr($str, array (
+        $str = strtr($str, array(
             'а' => 'a',
             'б' => 'b',
             'в' => 'v',
@@ -642,7 +619,6 @@ class functions {
             'ю' => 'yu',
             'я' => 'ya'
         ));
-
         return $str;
     }
 
@@ -656,12 +632,11 @@ class functions {
     */
     static function smileys($str, $adm = 0) {
         global $rootpath, $set;
-
         // Записываем КЭШ смайлов
         if ($adm == 2) {
             $count = 0;
             // Обрабатываем простые смайлы
-            $array1 = array ();
+            $array1 = array();
             $path = 'images/smileys/simply/';
             $dir = opendir($rootpath . $path);
             while (($file = readdir($dir)) !== false) {
@@ -673,8 +648,8 @@ class functions {
             }
             closedir($dir);
             // Обрабатываем Админские смайлы
-            $array2 = array ();
-            $array3 = array ();
+            $array2 = array();
+            $array3 = array();
             $path = 'images/smileys/admin/';
             $dir = opendir($rootpath . $path);
             while (($file = readdir($dir)) !== false) {
@@ -686,8 +661,8 @@ class functions {
                 }
             }
             // Обрабатываем смайлы в каталогах
-            $array4 = array ();
-            $array5 = array ();
+            $array4 = array();
+            $array5 = array();
             $cat = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);
             $total = count($cat);
             for ($i = 0; $i < $total; $i++) {
@@ -732,11 +707,10 @@ class functions {
     Колличество зарегистрированных пользователей
     -----------------------------------------------------------------
     */
-    static function stat_users($refresh = false) {
+    static function stat_users() {
         global $realtime;
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users`"), 0);
         $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `datereg` > '" . ($realtime - 86400) . "'"), 0);
-
         if ($res > 0)
             $total .= '&#160;/&#160;<span class="red">+' . $res . '</span>';
         return $total;
@@ -752,7 +726,6 @@ class functions {
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file'"), 0);
         $old = $realtime - (3 * 24 * 3600);
         $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . $old . "' AND `type` = 'file'"), 0);
-
         if ($new > 0)
             $total .= '&#160;/&#160;<span class="red"><a href="/download/?act=new">+' . $new . '</a></span>';
         return $total;
@@ -768,13 +741,11 @@ class functions {
         $total_thm = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't'" . ($rights >= 7 ? "" : " AND `close` != '1'")), 0);
         $total_msg = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm'" . ($rights >= 7 ? "" : " AND `close` != '1'")), 0);
         $out = $total_thm . '&#160;/&#160;' . $total_msg . '';
-
         if ($user_id) {
             $new = self::forum_new();
             if ($new)
                 $out .= '&#160;/&#160;<span class="red"><a href="' . $set['homeurl'] . '/forum/index.php?act=new">+' . $new . '</a></span>';
         }
-
         return $out;
     }
 
@@ -862,7 +833,6 @@ class functions {
         $old = $realtime - (3 * 24 * 3600);
         $countf1 = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `time` > '" . $old . "' AND `type` = 'bk' AND `moder` = '1'"), 0);
         $out = $countf;
-
         if ($countf1 > 0)
             $out = $out . '&#160;/&#160;<span class="red"><a href="/library/index.php?act=new">+' . $countf1 . '</a></span>';
         $countm = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = '0'"), 0);
@@ -881,7 +851,6 @@ class functions {
         //TODO: Разобраться, нужна ли функция, если нет, то удалить
         global $set_user;
         $req = mysql_query("SELECT `time` FROM `news` ORDER BY `time` DESC LIMIT 1");
-
         if (mysql_num_rows($req)) {
             $res = mysql_fetch_array($req);
             return date("H:i/d.m.y", $res['time'] + $set_user['sdvig'] * 3600);
@@ -909,7 +878,6 @@ class functions {
     */
     static function stat_timeonline() {
         global $realtime, $datauser, $user_id, $lng;
-
         if ($user_id)
             echo '<div>' . $lng['online'] . ': ' . gmdate('H:i:s', ($realtime - $datauser['sestime'])) . '</div>';
     }
@@ -924,12 +892,11 @@ class functions {
         if ($var < 0)
             $var = 0;
         $day = ceil($var / 86400);
-
         if ($var > 345600) {
             $str = $day . ' ' . $lng['timecount_days'];
-        }  elseif ($var >= 172800) {
+        } elseif ($var >= 172800) {
             $str = $day . ' ' . $lng['timecount_days_r'];
-        }  elseif ($var >= 86400) {
+        } elseif ($var >= 86400) {
             $str = '1 ' . $lng['timecount_day'];
         } else {
             $str = date('G:i', $var);
@@ -943,7 +910,7 @@ class functions {
     -----------------------------------------------------------------
     */
     static function trans($str) {
-        $str = strtr($str, array (
+        $str = strtr($str, array(
             'a' => 'а',
             'b' => 'б',
             'v' => 'в',
@@ -1009,7 +976,6 @@ class functions {
             'YU' => 'Ю',
             'YA' => 'Я'
         ));
-
         return $str;
     }
 
@@ -1026,38 +992,35 @@ class functions {
         }
         $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
         $accept = strtolower($_SERVER['HTTP_ACCEPT']);
-
         if ((strpos($accept, 'text/vnd.wap.wml') !== false) || (strpos($accept, 'application/vnd.wap.xhtml+xml') !== false)) {
             $_SESSION['is_mobile'] = 1;
             return 1;
         }
-
         if (isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE'])) {
             $_SESSION['is_mobile'] = 2;
             return 2;
         }
-
         if (preg_match('/(mini 9.5|vx1000|lge |m800|e860|u940|ux840|compal|' .
-            'wireless| mobi|ahong|lg380|lgku|lgu900|lg210|lg47|lg920|lg840|' .
-            'lg370|sam-r|mg50|s55|g83|t66|vx400|mk99|d615|d763|el370|sl900|' .
-            'mp500|samu3|samu4|vx10|xda_|samu5|samu6|samu7|samu9|a615|b832|' .
-            'm881|s920|n210|s700|c-810|_h797|mob-x|sk16d|848b|mowser|s580|' .
-            'r800|471x|v120|rim8|c500foma:|160x|x160|480x|x640|t503|w839|' .
-            'i250|sprint|w398samr810|m5252|c7100|mt126|x225|s5330|s820|' .
-            'htil-g1|fly v71|s302|-x113|novarra|k610i|-three|8325rc|8352rc|' .
-            'sanyo|vx54|c888|nx250|n120|mtk |c5588|s710|t880|c5005|i;458x|' .
-            'p404i|s210|c5100|teleca|s940|c500|s590|foma|samsu|vx8|vx9|a1000|' .
-            '_mms|myx|a700|gu1100|bc831|e300|ems100|me701|me702m-three|sd588|' .
-            's800|8325rc|ac831|mw200|brew |d88|htc\/|htc_touch|355x|m50|km100|' .
-            'd736|p-9521|telco|sl74|ktouch|m4u\/|me702|8325rc|kddi|phone|lg |' .
-            'sonyericsson|samsung|240x|x320vx10|nokia|sony cmd|motorola|' .
-            'up.browser|up.link|mmp|symbian|smartphone|midp|wap|vodafone|o2|' .
-            'pocket|kindle|mobile|psp|treo)/', $user_agent)) {
+                       'wireless| mobi|ahong|lg380|lgku|lgu900|lg210|lg47|lg920|lg840|' .
+                       'lg370|sam-r|mg50|s55|g83|t66|vx400|mk99|d615|d763|el370|sl900|' .
+                       'mp500|samu3|samu4|vx10|xda_|samu5|samu6|samu7|samu9|a615|b832|' .
+                       'm881|s920|n210|s700|c-810|_h797|mob-x|sk16d|848b|mowser|s580|' .
+                       'r800|471x|v120|rim8|c500foma:|160x|x160|480x|x640|t503|w839|' .
+                       'i250|sprint|w398samr810|m5252|c7100|mt126|x225|s5330|s820|' .
+                       'htil-g1|fly v71|s302|-x113|novarra|k610i|-three|8325rc|8352rc|' .
+                       'sanyo|vx54|c888|nx250|n120|mtk |c5588|s710|t880|c5005|i;458x|' .
+                       'p404i|s210|c5100|teleca|s940|c500|s590|foma|samsu|vx8|vx9|a1000|' .
+                       '_mms|myx|a700|gu1100|bc831|e300|ems100|me701|me702m-three|sd588|' .
+                       's800|8325rc|ac831|mw200|brew |d88|htc\/|htc_touch|355x|m50|km100|' .
+                       'd736|p-9521|telco|sl74|ktouch|m4u\/|me702|8325rc|kddi|phone|lg |' .
+                       'sonyericsson|samsung|240x|x320vx10|nokia|sony cmd|motorola|' .
+                       'up.browser|up.link|mmp|symbian|smartphone|midp|wap|vodafone|o2|' .
+                       'pocket|kindle|mobile|psp|treo)/', $user_agent)) {
             $_SESSION['is_mobile'] = 3;
             return 3;
         }
 
-        if (in_array(substr($user_agent, 0, 4), Array (
+        if (in_array(substr($user_agent, 0, 4), Array(
             "1207",
             "3gso",
             "4thp",
@@ -1464,4 +1427,5 @@ class functions {
         return false;
     }
 }
+
 ?>

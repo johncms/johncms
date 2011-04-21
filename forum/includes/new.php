@@ -55,7 +55,7 @@ if ($user_id) {
                     WHERE `topic_id` = '" . $res['id'] . "' AND `user_id` = '$user_id'
                 ");
             }
-            echo '<div class="menu"><p>' . $lng_forum['unread_reset_done'] . '<br /><a href="index.php">' . $lng['to_forum'] . '</a></p></div>';
+            echo '<div class="menu"><p>' . $lng_forum['unread_reset_done'] . '<br /><a href="index.php">' . $lng_forum['to_forum'] . '</a></p></div>';
             break;
 
         case 'select':

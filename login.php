@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 
@@ -16,7 +16,7 @@ require('incfiles/core.php');
 require('incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng['login'] . '</b></div>';
 
-$error = array ();
+$error = array();
 $captcha = false;
 $display_form = 1;
 $user_login = isset($_POST['n']) ? functions::check($_POST['n']) : NULL;
@@ -28,9 +28,9 @@ if ($user_pass && !$user_login && !$id)
 if (($user_login || $id) && !$user_pass)
     $error[] = $lng['error_empty_password'];
 if ($user_login && (mb_strlen($user_login) < 2 || mb_strlen($user_login) > 20))
-    $error[] = $lng['nick'] .  ': ' . $lng['error_nicklenght'];
+    $error[] = $lng['nick'] . ': ' . $lng['error_wrong_lenght'];
 if ($user_pass && (mb_strlen($user_pass) < 3 || mb_strlen($user_pass) > 15))
-    $error[] = $lng['password'] . ': ' . $lng['error_password_lenght'];
+    $error[] = $lng['password'] . ': ' . $lng['error_wrong_lenght'];
 if (!$error && $user_pass && ($user_login || $id)) {
     // Запрос в базу на юзера
     $sql = $id ? "`id` = '$id'" : "`name_lat`='" . functions::rus_lat(mb_strtolower($user_login)) . "'";
@@ -52,12 +52,12 @@ if (!$error && $user_pass && ($user_login || $id)) {
                 // Показываем CAPTCHA
                 $display_form = 0;
                 echo '<form action="login.php" method="post">' .
-                    '<div class="menu"><p><img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['verifying_code'] . '"/><br />' .
-                    $lng['enter_code'] . ':<br/><input type="text" size="5" maxlength="5"  name="code"/>' .
-                    '<input type="hidden" name="n" value="' . $user_login . '"/>' .
-                    '<input type="hidden" name="p" value="' . $user_pass . '"/>' .
-                    '<input type="hidden" name="mem" value="' . $user_mem . '"/>' .
-                    '<input type="submit" name="submit" value="' . $lng['continue'] . '"/></p></div></form>';
+                     '<div class="menu"><p><img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['verifying_code'] . '"/><br />' .
+                     $lng['enter_code'] . ':<br/><input type="text" size="5" maxlength="5"  name="code"/>' .
+                     '<input type="hidden" name="n" value="' . $user_login . '"/>' .
+                     '<input type="hidden" name="p" value="' . $user_pass . '"/>' .
+                     '<input type="hidden" name="mem" value="' . $user_mem . '"/>' .
+                     '<input type="submit" name="submit" value="' . $lng['continue'] . '"/></p></div></form>';
             }
         }
         if ($user['failed_login'] < 3 || $captcha) {
@@ -105,13 +105,13 @@ if ($display_form) {
     if ($error)
         echo functions::display_error($error);
     echo '<div class="gmenu"><form action="login.php" method="post"><p>' . $lng['login_name'] . ':<br/>' .
-        '<input type="text" name="n" value="' . htmlentities($user_login, ENT_QUOTES, 'UTF-8') . '" maxlength="20"/>' .
-        '<br/>' . $lng['password'] . ':<br/>' .
-        '<input type="password" name="p" maxlength="20"/></p>' .
-        '<p><input type="checkbox" name="mem" value="1" checked="checked"/>' . $lng['remember'] . '</p>' .
-        '<p><input type="submit" value="' . $lng['login'] . '"/></p>' .
-        '</form></div>' .
-        '<div class="phdr"><a href="users/skl.php?continue">' . $lng['forgotten_password'] . '?</a></div>';
+         '<input type="text" name="n" value="' . htmlentities($user_login, ENT_QUOTES, 'UTF-8') . '" maxlength="20"/>' .
+         '<br/>' . $lng['password'] . ':<br/>' .
+         '<input type="password" name="p" maxlength="20"/></p>' .
+         '<p><input type="checkbox" name="mem" value="1" checked="checked"/>' . $lng['remember'] . '</p>' .
+         '<p><input type="submit" value="' . $lng['login'] . '"/></p>' .
+         '</form></div>' .
+         '<div class="phdr"><a href="users/skl.php?continue">' . $lng['forgotten_password'] . '?</a></div>';
 }
 
 require('incfiles/end.php');

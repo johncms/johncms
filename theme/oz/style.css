@@ -77,11 +77,12 @@ body {
 }
 
 .header {
-    background: #efefef;
+background: url(images/footer.gif) repeat-x top #c0c0c0;
     border-bottom: 2px solid #cbcbcb;
     color: #8b8b8b;
     margin: 0 0 1px 0;
     padding: 4px 1px 4px 6px;
+    border-top: 2px solid #FFFFFF
 }
 
 .header b {

@@ -14,9 +14,10 @@
 
 define('_IN_JOHNCMS', 1);
 
-$headmod = 'ignor';
-$textl = 'Игнор-лист';
 require_once("../incfiles/core.php");
+$lng_pm = $core->load_lng('pm');
+$headmod = 'ignor';
+$textl = 'Block List';
 require_once('../incfiles/head.php');
 
 if (!empty($_SESSION['uid'])) {
@@ -25,23 +26,20 @@ if (!empty($_SESSION['uid'])) {
     }
     switch ($act) {
         case "add":
-            echo '<div class="phdr">Добавить в игнор</div>';
-            echo "<form action='ignor.php?act=edit&amp;add=1' method='post'>
-     Введите ник<br/>";
-            echo "<input type='text' name='nik' value='' /><br/>
- <input type='submit' value='Добавить' />
-  </form>";
-            echo '<p><a href="ignor.php">В список</a><br/>';
+            echo '<div class="phdr">' . $lng_pm['add_to_ignor'] . '</div>';
+            echo "<form action='ignor.php?act=edit&amp;add=1' method='post'>" . $lng_pm['enter_nick'] . "<br/>";
+            echo "<input type='text' name='nik' value='' /><br/><input type='submit' value='" . $lng['add'] . "' /></form>";
+            echo '<a href="ignor.php">' . $lng['back'] . '</a><br/>';
             break;
 
         case "edit":
             if (!empty($_POST['nik'])) {
                 $nik = functions::check($_POST['nik']);
-            }  elseif (!empty($_GET['nik'])) {
+            } elseif (!empty($_GET['nik'])) {
                 $nik = functions::check($_GET['nik']);
             } else {
                 if (empty($_GET['id'])) {
-                    echo "Ошибка!<br/><a href='ignor.php'>В список</a><br/>";
+                    echo "ERROR!<br/><a href='ignor.php'>Back</a><br/>";
                     require_once('../incfiles/end.php');
                     exit;
                 }
@@ -58,34 +56,34 @@ if (!empty($_SESSION['uid'])) {
             $addc2 = mysql_fetch_array($addc);
             $addc1 = mysql_num_rows($addc);
             if ($add == 1) {
-                if ($addc2['rights'] >= 1 || $nik == $nickadmina || $nik == $nickadmina) {
-                    echo '<p>Администрацию нельзя в игнор!!!<br/><a href="ignor.php">В список</a></p>';
+                if ($addc2['rights'] >= 1) {
+                    echo '<p>' . $lng_pm['block_adm'] . '<br/><a href="ignor.php">' . $lng['back'] . '</a></p>';
                     require_once('../incfiles/end.php');
                     exit;
                 }
                 if ($adc1 == 0) {
                     if ($addc1 == 1) {
                         mysql_query("insert into `privat` values(0,'" . $foruser . "','','" . $realtime . "','','','','','0','" . $login . "','','" . $nik . "','');");
-                        echo "Юзер добавлен в игнор<br/>";
+                        echo $lng_pm['block_added'] . "<br/>";
                     } else {
-                        echo "Данный логин отсутствует в базе данных<br/>";
+                        echo $lng['error_user_not_exist'] . "<br/>";
                     }
                 } else {
-                    echo "Данный логин уже есть в Вашем игноре<br/>";
+                    echo $lng_pm['contact_exists'] . "<br/>";
                 }
             } else {
                 if ($adc1 == 1) {
                     if ($addc1 == 1) {
                         mysql_query("delete from `privat` where me='" . $login . "' and ignor='" . $nik . "';");
-                        echo "Юзер удалён из игнора<br/>";
+                        echo $lng_pm['block_deleted'] . "<br/>";
                     } else {
-                        echo "Данный логин отсутствует в базе данных<br/>";
+                        echo $lng['error_user_not_exist'] . "<br/>";
                     }
                 } else {
-                    echo "Этого логина нет в Вашем игноре<br/>";
+                    echo $lng_pm['contact_does_not_exists'] . "<br/>";
                 }
             }
-            echo "<p><a href='?'>В список</a><br />";
+            echo "<a href='?'>" . $lng_pm['block_list'] . "</a><br />";
             break;
 
         case 'del':
@@ -93,35 +91,38 @@ if (!empty($_SESSION['uid'])) {
             $res = mysql_fetch_array($req);
             if (mysql_num_rows($req) == 1) {
                 mysql_query("DELETE FROM `privat` WHERE `id`='" . $id . "';");
-                echo '<p>Юзер <b>' . $res['ignor'] . '</b> удалён из игнора</p>';
+                echo '<p>' . $lng_pm['block_deleted'] . '</p>';
             } else {
-                echo '<p>Ошибка</p>';
+                echo '<p>ERROR</p>';
             }
-            echo '<p><a href="?">Игнор-лист</a><br />';
+            echo '<a href="?">' . $lng_pm['block_list'] . '</a><br />';
             break;
 
         default:
-            echo '<div class="phdr">Игнор-лист</div>';
+            echo '<div class="phdr"><b>' . $lng_pm['block_list'] . '</b></div>';
             $ig = mysql_query("select * from `privat` where me='" . $login . "' and ignor!='';");
-            $colig = mysql_num_rows($ig);
-            while ($mass = mysql_fetch_array($ig)) {
-                $uz = mysql_query("select * from `users` where name='$mass[ignor]';");
-                $mass1 = mysql_fetch_array($uz);
-                echo '<div class="menu">' . $mass['ignor'];
-                $ontime = $mass1['lastdate'];
-                $ontime2 = $ontime + 300;
-                if ($realtime > $ontime2) {
-                    echo '<font color="#FF0000"> [Off]</font>';
-                } else {
-                    echo '<font color="#00AA00"> [ON]</font>';
+            if (mysql_num_rows($ig)) {
+                while ($mass = mysql_fetch_array($ig)) {
+                    $uz = mysql_query("select * from `users` where name='$mass[ignor]';");
+                    $mass1 = mysql_fetch_array($uz);
+                    echo '<div class="menu">' . $mass['ignor'];
+                    $ontime = $mass1['lastdate'];
+                    $ontime2 = $ontime + 300;
+                    if ($realtime > $ontime2) {
+                        echo '<font color="#FF0000"> [Off]</font>';
+                    } else {
+                        echo '<font color="#00AA00"> [ON]</font>';
+                    }
+                    echo ' <a href="ignor.php?act=del&amp;id=' . $mass['id'] . '">[X]</a></div>';
                 }
-                echo ' <a href="ignor.php?act=del&amp;id=' . $mass['id'] . '">[X]</a></div>';
+            } else {
+                echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
             }
-            echo '<p><a href="?act=add">Добавить юзера в игнор</a><br />';
+            echo '<div class="phdr"><a href="?act=add">' . $lng_pm['add_to_ignor'] . '</a></div>';
             break;
     }
 }
-echo "<a href='profile.php?act=office'>В кабинет</a></p>";
+echo "<p><a href='profile.php?act=office'>" . $lng['personal'] . "</a></p>";
 
 require_once('../incfiles/end.php');
 

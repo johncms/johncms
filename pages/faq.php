@@ -20,7 +20,10 @@ require('../incfiles/head.php');
 if (empty($_SESSION['ref'])) {
     $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
 }
-$set['users_smileys'] = 20;
+
+// Сколько смайлов разрешено выбрать пользователям?
+$user_smileys = 20;
+
 switch ($act) {
     case 'forum':
         /*
@@ -68,15 +71,15 @@ switch ($act) {
         }
         echo '<div class="phdr"><a href="faq.php?act=smileys"><b>' . $lng['smileys'] . '</b></a> | ' . htmlentities(file_get_contents($rootpath . 'images/smileys/user/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
         if (!$is_mobile) {
-            $user_sm = unserialize($datauser['smileys']);
+            $user_sm = isset($datauser['smileys']) ? unserialize($datauser['smileys']) : '';
             if (!is_array($user_sm))
                 $user_sm = array ();
-            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $set['users_smileys'] . ')</div>' .
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
                 '<form action="faq.php?act=set_my_sm&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
         }
         $array = array ();
         $dir = opendir('../images/smileys/user/' . $id);
-        while ($file = readdir($dir)) {
+        while (($file = readdir($dir)) !== false) {
             if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
                 $array[] = $file;
             }
@@ -125,12 +128,12 @@ switch ($act) {
             $user_sm = unserialize($datauser['smileys']);
             if (!is_array($user_sm))
                 $user_sm = array ();
-            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $set['users_smileys'] . ')</div>' .
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
                 '<form action="faq.php?act=set_my_sm&amp;start=' . $start . '&amp;adm" method="post">';
         }
         $array = array ();
         $dir = opendir('../images/smileys/admin');
-        while ($file = readdir($dir)) {
+        while (($file = readdir($dir)) !== false) {
             if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
                 $array[] = $file;
             }
@@ -175,9 +178,7 @@ switch ($act) {
             exit;
         }
         echo '<div class="phdr"><a href="faq.php?act=smileys"><b>' . $lng['smileys'] . '</b></a> | ' . $lng['my_smileys'] . '</div>';
-        $smileys = unserialize($datauser['smileys']);
-        if (!$smileys)
-            $smileys = array ();
+        $smileys = !empty($datauser['smileys']) ? unserialize($datauser['smileys']) : array();
         $total = count($smileys);
         if ($total)
             echo '<form action="faq.php?act=set_my_sm&amp;start=' . $start . '" method="post">';
@@ -193,18 +194,19 @@ switch ($act) {
                 $smileys = $smileys[0];
             }
         }
+        $i = 0;
         foreach ($smileys as $value) {
-            $smileys_res .= $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $smileys_res .= '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;:' . $value . ':</div>';
+            $smile = ':' . $value . ':';
+            echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+                 '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' . functions::smileys($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . $lng['lng_or'] . ' ' . trans($smile) . '</div>';
             $i++;
         }
-        echo functions::smileys($smileys_res, $rights >= 1 ? 1 : 0);
         if ($total) {
             echo '<div class="rmenu"><input type="submit" name="delete" value=" ' . $lng['delete'] . ' "/></div></form>';
         } else {
             echo '<div class="menu"><p>' . $lng['list_empty'] . '<br /><a href="faq.php?act=smileys">' . $lng['add_smileys'] . '</a></p></div>';
         }
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . ' / ' . ($set['users_smileys']) . '</div>';
+        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . ' / ' . $user_smileys . '</div>';
         if ($total > $kmess)
             echo '<div class="topmenu"><p>' . functions::display_pagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</p></div>';
         echo '<p>' . ($total ? '<a href="faq.php?act=set_my_sm&amp;clean">' . $lng['clear'] . '</a><br />' : '') . '<a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a></p>';
@@ -247,8 +249,8 @@ switch ($act) {
         }
         if (isset($_GET['clean']))
             $smileys = array ();
-        if (count($smileys) > $set['users_smileys']) {
-            $smileys = array_chunk($smileys, $set['users_smileys'], TRUE);
+        if (count($smileys) > $user_smileys) {
+            $smileys = array_chunk($smileys, $user_smileys, TRUE);
             $smileys = $smileys[0];
         }
         mysql_query("UPDATE `users` SET `smileys` = '" . mysql_real_escape_string(serialize($smileys)) . "' WHERE `id` = '$user_id'");
@@ -266,8 +268,10 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         echo '<div class="phdr"><a href="faq.php"><b>F.A.Q.</b></a> | ' . $lng['smileys'] . '</div>';
-        if (!$is_mobile && is_array(unserialize($datauser['smileys'])))
-            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a> (' . count(unserialize($datauser['smileys'])) . ' / ' . $set['users_smileys'] . ')</div>';
+        if($user_id && !$is_mobile){
+            $mycount = !empty($datauser['smileys']) ? count(unserialize($datauser['smileys'])) : '0';
+            echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
+        }
         if ($rights >= 1)
             echo '<div class="gmenu"><a href="faq.php?act=smadm">' . $lng_faq['smileys_adm'] . '</a> (' . (int)count(glob($rootpath . 'images/smileys/admin/*.gif')) . ')</div>';
         $dir = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);

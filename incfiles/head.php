@@ -1,15 +1,16 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $headmod = isset($headmod) ? mysql_real_escape_string($headmod) : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
 
@@ -18,25 +19,21 @@ $textl = isset($textl) ? $textl : $set['copyright'];
 Выводим HTML заголовки страницы, подключаем CSS файл
 -----------------------------------------------------------------
 */
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-header("Cache-Control: no-cache, must-revalidate");
-header("Pragma: no-cache");
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . "GMT");
 header((stristr($agn, "msie") && stristr($agn, "windows")) ? 'Content-type: text/html; charset=UTF-8' : 'Content-type: application/xhtml+xml; charset=UTF-8');
 echo '<?xml version="1.0" encoding="utf-8"?>' . "\n" .
-    "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">' .
-    "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">' .
-    "\n" . '<head><meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>' .
-    "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico" />' .
-    "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com" />'; // ВНИМАНИЕ!!! Данный копирайт удалять нельзя
-if (!empty($set['meta_key']))
-    echo "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '" />';
-if (!empty($set['meta_desc']))
-    echo "\n" . '<meta name="description" content="' . $set['meta_desc'] . '" />';
-echo "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php" />' .
-    "\n" . '<title>' . $textl . '</title>' .
-    "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css" type="text/css" />' .
-    "\n" . '</head><body>';
+     "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">' .
+     "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">' .
+     "\n" . '<head>' .
+     "\n" . '<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>' .
+     "\n" . '<meta http-equiv="Content-Style-Type" content="text/css" />' .
+     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com" />' . // ВНИМАНИЕ!!! Данный копирайт удалять нельзя
+     (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '" />' : '') .
+     (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '" />' : '') .
+     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css" type="text/css" />' .
+     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico" />' .
+     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php" />' .
+     "\n" . '<title>' . $textl . '</title>' .
+     "\n" . '</head><body>';
 
 /*
 -----------------------------------------------------------------
@@ -44,24 +41,26 @@ echo "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $
 -----------------------------------------------------------------
 */
 $cms_ads = false;
-$view = $user_id ? 2 : 1;
-$layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
-$req = mysql_query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
-if (mysql_num_rows($req) > 0 && $headmod != 'admin') {
-    while (($res = mysql_fetch_assoc($req)) !== false) {
-        $name = explode("|", $res['name']);
-        $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
-        if (!empty($res['color']))
-            $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
-        // Если было задано начертание шрифта, то применяем
-        $font = $res['bold'] ? 'font-weight: bold;' : false;
-        $font .= $res['italic'] ? ' font-style:italic;' : false;
-        $font .= $res['underline'] ? ' text-decoration:underline;' : false;
-        if ($font)
-            $name = '<span style="' . $font . '">' . $name . '</span>';
-        $cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br/>';
-        if (($res['day'] != 0 && $realtime >= ($res['time'] + $res['day'] * 3600 * 24)) || ($res['count_link'] != 0 && $res['count'] >= $res['count_link']))
-            mysql_query("UPDATE `cms_ads` SET `to` = '1'  WHERE `id` = '" . $res['id'] . "'");
+if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
+    $view = $user_id ? 2 : 1;
+    $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
+    $req = mysql_query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
+    if (mysql_num_rows($req) > 0) {
+        while (($res = mysql_fetch_assoc($req)) !== false) {
+            $name = explode("|", $res['name']);
+            $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
+            if (!empty($res['color']))
+                $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
+            // Если было задано начертание шрифта, то применяем
+            $font = $res['bold'] ? 'font-weight: bold;' : false;
+            $font .= $res['italic'] ? ' font-style:italic;' : false;
+            $font .= $res['underline'] ? ' text-decoration:underline;' : false;
+            if ($font)
+                $name = '<span style="' . $font . '">' . $name . '</span>';
+            $cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br/>';
+            if (($res['day'] != 0 && $realtime >= ($res['time'] + $res['day'] * 3600 * 24)) || ($res['count_link'] != 0 && $res['count'] >= $res['count_link']))
+                mysql_query("UPDATE `cms_ads` SET `to` = '1'  WHERE `id` = '" . $res['id'] . "'");
+        }
     }
 }
 
@@ -70,15 +69,17 @@ if (mysql_num_rows($req) > 0 && $headmod != 'admin') {
 Рекламный блок сайта
 -----------------------------------------------------------------
 */
-if ($cms_ads[0])
-    echo $cms_ads[0];
+if ($cms_ads[0]) echo $cms_ads[0];
 
 /*
 -----------------------------------------------------------------
-Выводим логотип
+Выводим логотип и переключатель языков
 -----------------------------------------------------------------
 */
-echo '<div><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></div>';
+echo '<table style="width: 100%;"><tr>' .
+     '<td valign="bottom"><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></td>' .
+     (count($core->lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper($core->lng) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . $core->lng . '.gif" alt=""/>&#160;</td>' : '') .
+     '</tr></table>';
 
 /*
 -----------------------------------------------------------------
@@ -89,23 +90,21 @@ echo '<div class="header"> ' . $lng['hi'] . ', ' . ($user_id ? '<b>' . $login . 
 
 /*
 -----------------------------------------------------------------
-Выводим главное меню пользователя
+Главное меню пользователя
 -----------------------------------------------------------------
 */
-echo '<div class="tmn">';
-echo ($headmod != "mainpage" || ($headmod == 'mainpage' && $act)) ? '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a> | ' : '';
-echo ($user_id) ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . $lng['personal'] . '</a> | ' : '';
-echo $user_id
-    ? '<a href="' . $set['homeurl'] . '/exit.php">' . $lng['exit'] . '</a>' : '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a> | <a href="' . $set['homeurl'] . '/registration.php">' . $lng['registration'] . '</a>';
-echo '</div><div class="maintxt">';
+echo '<div class="tmn">' .
+     (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a> | ' : '') .
+     ($user_id ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . $lng['personal'] . '</a> | ' : '') .
+     ($user_id ? '<a href="' . $set['homeurl'] . '/exit.php">' . $lng['exit'] . '</a>' : '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a> | <a href="' . $set['homeurl'] . '/registration.php">' . $lng['registration'] . '</a>') .
+     '</div><div class="maintxt">';
 
 /*
 -----------------------------------------------------------------
 Рекламный блок сайта
 -----------------------------------------------------------------
 */
-if (!empty($cms_ads[1]))
-    echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
+if (!empty($cms_ads[1])) echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
 
 /*
 -----------------------------------------------------------------
@@ -180,8 +179,7 @@ if ($user_id) {
 Выводим сообщение о Бане
 -----------------------------------------------------------------
 */
-if (!empty($ban))
-    echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . $lng['in_detail'] . '</a></div>';
+if (!empty($ban)) echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . $lng['in_detail'] . '</a></div>';
 
 /*
 -----------------------------------------------------------------
@@ -189,16 +187,10 @@ if (!empty($ban))
 -----------------------------------------------------------------
 */
 if ($user_id) {
-    $list = array ();
-    if ($headmod != "pradd") {
-        $new_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'"), 0);
-        if ($new_mail)
-            $list[] = '<a href="' . $set['homeurl'] . '/users/pradd.php?act=in&amp;new">' . $lng['mail'] . '</a>&#160;(' . $new_mail . ')';
-    }
-    if ($datauser['comm_count'] > $datauser['comm_old']) {
-        $list[] = '<a href="' . $set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
-    }
-    if(!empty($list))
-        echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
+    $list = array();
+    $new_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'"), 0);
+    if ($new_mail) $list[] = '<a href="' . $set['homeurl'] . '/users/pradd.php?act=in&amp;new">' . $lng['mail'] . '</a>&#160;(' . $new_mail . ')';
+    if ($datauser['comm_count'] > $datauser['comm_old']) $list[] = '<a href="' . $set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+    if (!empty($list)) echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
 }
 ?>
