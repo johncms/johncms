@@ -1,22 +1,18 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 echo '<div class="phdr">' . $lng_gal['new_photo'] . '</div>';
-$old = $realtime - (3 * 24 * 3600);
-$newfile = mysql_query("select * from `gallery` where time > '" . $old . "' and type='ft' order by time desc;");
+$newfile = mysql_query("select * from `gallery` where time > '" . (time() - 259200) . "' and type='ft' order by time desc;");
 $totalnew = mysql_num_rows($newfile);
 if (empty($_GET['page'])) {
     $page = 1;
@@ -114,11 +110,9 @@ if ($totalnew != 0) {
             }
             imagedestroy($im);
             imagedestroy($im1);
-            $vrf = $newf[time] + $set_user['sdvig'] * 3600;
-            $vrf1 = date("d.m.y / H:i", $vrf);
             $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $newf['id'] . "';");
             $kom1 = mysql_num_rows($kom);
-            echo "</a><br/>" . $lng['date'] . ": $vrf1<br/>" . $lng['description'] . ": $newf[text]<br/>";
+            echo "</a><br/>" . $lng['date'] . ': ' . functions::display_date($newf['time']) . '<br/>' . $lng['description'] . ": $newf[text]<br/>";
             $al = mysql_query("select * from `gallery` where type = 'al' and id = '" . $newf['refid'] . "';");
             $al1 = mysql_fetch_array($al);
             $rz = mysql_query("select * from `gallery` where type = 'rz' and id = '" . $al1['refid'] . "';");

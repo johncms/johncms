@@ -29,14 +29,12 @@ if (isset($_POST['submit'])) {
     mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['copyright']) . "' WHERE `key` = 'copyright'");
     mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check(preg_replace("#/$#", '', trim($_POST['homeurl']))) . "' WHERE `key` = 'homeurl'");
     mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['flsz']) . "' WHERE `key` = 'flsz'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['gz']) . "' WHERE `key` = 'gzip'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['fm']) . "' WHERE `key` = 'fmod'");
+    mysql_query("UPDATE `cms_settings` SET `val`='" . isset($_POST['gz']) . "' WHERE `key` = 'gzip'");
     mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['meta_key']) . "' WHERE `key` = 'meta_key'");
     mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['meta_desc']) . "' WHERE `key` = 'meta_desc'");
     $req = mysql_query("SELECT * FROM `cms_settings`");
     $set = array ();
     while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
-    $realtime = time() + $set['timeshift'] * 3600;
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 /*
@@ -58,14 +56,14 @@ echo '<p>' .
 echo '<p>' .
     '<h3>' . $lng['clock_settings'] . '</h3>' .
     '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $set['timeshift'] . '"/> ' . $lng['time_shift'] . ' (+-12)<br />' .
-    '<span style="font-weight:bold; background-color:#C0FFC0">' . date("H:i", $realtime) . '</span> ' . $lng['system_time'] .
+    '<span style="font-weight:bold; background-color:#C0FFC0">' . date("H:i", time() + $set['timeshift'] * 3600) . '</span> ' . $lng['system_time'] .
     '<br /><span style="font-weight:bold; background-color:#FFC0C0">' . date("H:i") . '</span> ' . $lng['server_time'] .
     '</p>';
 // META тэги
 echo '<p>' .
     '<h3>' . $lng['meta_tags'] . '</h3>' .
-    '&#160;' . $lng['meta_keywords'] . ':<br />&#160;<textarea cols="20" rows="4" name="meta_key">' . $set['meta_key'] . '</textarea><br />' .
-    '&#160;' . $lng['meta_description'] . ':<br />&#160;<textarea cols="20" rows="4" name="meta_desc">' . $set['meta_desc'] . '</textarea>' .
+    '&#160;' . $lng['meta_keywords'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_key">' . $set['meta_key'] . '</textarea><br />' .
+    '&#160;' . $lng['meta_description'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_desc">' . $set['meta_desc'] . '</textarea>' .
     '</p>';
 // Выбор темы оформления
 echo '<p><h3>' . $lng['design_template'] . '</h3>&#160;<select name="skindef">';

@@ -3,7 +3,7 @@
 --
 DROP TABLE IF EXISTS `cms_ads`;
 CREATE TABLE `cms_ads` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` int(2) NOT NULL,
   `view` int(2) NOT NULL,
   `layout` int(2) NOT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE `cms_album_views` (
 --
 DROP TABLE IF EXISTS `cms_album_votes`;
 CREATE TABLE `cms_album_votes` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
   `file_id` int(10) unsigned NOT NULL,
   `vote` tinyint(2) NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `cms_album_votes` (
 --
 DROP TABLE IF EXISTS `cms_ban_ip`;
 CREATE TABLE `cms_ban_ip` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ip1` bigint(11) NOT NULL DEFAULT '0',
   `ip2` bigint(11) NOT NULL DEFAULT '0',
   `ban_type` tinyint(4) NOT NULL DEFAULT '0',
@@ -141,7 +141,7 @@ CREATE TABLE `cms_ban_ip` (
 --
 DROP TABLE IF EXISTS `cms_ban_users`;
 CREATE TABLE `cms_ban_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL DEFAULT '0',
   `ban_time` int(11) NOT NULL DEFAULT '0',
   `ban_while` int(11) NOT NULL DEFAULT '0',
@@ -160,8 +160,8 @@ CREATE TABLE `cms_ban_users` (
 --
 DROP TABLE IF EXISTS `cms_counters`;
 CREATE TABLE `cms_counters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sort` int(11) NOT NULL DEFAULT '1',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sort` int(10) NOT NULL DEFAULT '1',
   `name` varchar(30) NOT NULL,
   `link1` text NOT NULL,
   `link2` text NOT NULL,
@@ -175,15 +175,15 @@ CREATE TABLE `cms_counters` (
 --
 DROP TABLE IF EXISTS `cms_forum_files`;
 CREATE TABLE `cms_forum_files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cat` int(11) NOT NULL,
-  `subcat` int(11) NOT NULL,
-  `topic` int(11) NOT NULL,
-  `post` int(11) NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cat` int(10) NOT NULL,
+  `subcat` int(10) NOT NULL,
+  `topic` int(10) NOT NULL,
+  `post` int(10) NOT NULL,
   `time` int(11) NOT NULL,
   `filename` text NOT NULL,
   `filetype` tinyint(4) NOT NULL,
-  `dlcount` int(11) NOT NULL,
+  `dlcount` int(10) NOT NULL,
   `del` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `cat` (`cat`),
@@ -197,7 +197,7 @@ CREATE TABLE `cms_forum_files` (
 --
 DROP TABLE IF EXISTS `cms_forum_rdm`;
 CREATE TABLE `cms_forum_rdm` (
-  `topic_id` int(11) NOT NULL DEFAULT '0',
+  `topic_id` int(11) unsigned NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`topic_id`,`user_id`),
@@ -209,7 +209,7 @@ CREATE TABLE `cms_forum_rdm` (
 --
 DROP TABLE IF EXISTS `cms_forum_vote`;
 CREATE TABLE `cms_forum_vote` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` int(2) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
   `topic` int(11) NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE `cms_forum_vote` (
 --
 DROP TABLE IF EXISTS `cms_forum_vote_users`;
 CREATE TABLE `cms_forum_vote_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user` int(11) NOT NULL DEFAULT '0',
   `topic` int(11) NOT NULL,
   `vote` int(11) NOT NULL,
@@ -234,20 +234,22 @@ CREATE TABLE `cms_forum_vote_users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
--- Структура таблицы `cms_guests`
+-- Структура таблицы `cms_sessions`
 --
-DROP TABLE IF EXISTS `cms_guests`;
-CREATE TABLE `cms_guests` (
-  `session_id` char(32) NOT NULL,
+DROP TABLE IF EXISTS `cms_sessions`;
+CREATE TABLE `cms_sessions` (
+  `session_id` char(32) NOT NULL DEFAULT '',
   `ip` bigint(11) NOT NULL DEFAULT '0',
-  `browser` tinytext NOT NULL,
-  `lastdate` int(11) NOT NULL,
-  `sestime` int(11) NOT NULL,
-  `movings` int(11) NOT NULL DEFAULT '0',
-  `place` varchar(30) NOT NULL,
+  `ip_via_proxy` bigint(11) NOT NULL DEFAULT '0',
+  `browser` varchar(255) NOT NULL DEFAULT '',
+  `lastdate` int(10) unsigned NOT NULL DEFAULT '0',
+  `sestime` int(10) unsigned NOT NULL DEFAULT '0',
+  `views` int(10) unsigned NOT NULL DEFAULT '0',
+  `movings` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `place` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`session_id`),
-  KEY `time` (`lastdate`),
-  KEY `place` (`place`)
+  KEY `lastdate` (`lastdate`),
+  KEY `place` (`place`(10))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -272,7 +274,7 @@ INSERT INTO `cms_settings` (`key`, `val`) VALUES
 ('admp', 'panel'),
 ('flsz', '4000'),
 ('gzip', '1'),
-('clean_time', '0'),
+('clean_time', '1'),
 ('mod_reg', '2'),
 ('mod_forum', '2'),
 ('mod_guest', '2'),
@@ -314,7 +316,8 @@ DROP TABLE IF EXISTS `cms_users_iphistory`;
 CREATE TABLE `cms_users_iphistory` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
-  `ip` bigint(11) NOT NULL,
+  `ip` bigint(11) NOT NULL DEFAULT '0',
+  `ip_via_proxy` bigint(11) NOT NULL DEFAULT '0',
   `time` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -326,7 +329,7 @@ CREATE TABLE `cms_users_iphistory` (
 --
 DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `refid` int(11) NOT NULL DEFAULT '0',
   `adres` text NOT NULL,
   `time` int(11) NOT NULL DEFAULT '0',
@@ -348,14 +351,15 @@ CREATE TABLE `download` (
 --
 DROP TABLE IF EXISTS `forum`;
 CREATE TABLE `forum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `refid` int(11) NOT NULL DEFAULT '0',
   `type` char(1) NOT NULL DEFAULT '',
   `time` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `from` varchar(25) NOT NULL DEFAULT '',
   `realid` int(3) NOT NULL DEFAULT '0',
-  `ip` text NOT NULL,
+  `ip` bigint(11) NOT NULL DEFAULT '0',
+  `ip_via_proxy` bigint(11) NOT NULL DEFAULT '0',
   `soft` text NOT NULL,
   `text` text NOT NULL,
   `close` tinyint(1) NOT NULL DEFAULT '0',
@@ -378,7 +382,7 @@ CREATE TABLE `forum` (
 --
 DROP TABLE IF EXISTS `gallery`;
 CREATE TABLE `gallery` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `refid` int(11) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
   `type` varchar(2) NOT NULL DEFAULT '',
@@ -400,7 +404,7 @@ CREATE TABLE `gallery` (
 --
 DROP TABLE IF EXISTS `guest`;
 CREATE TABLE `guest` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `adm` tinyint(1) NOT NULL DEFAULT '0',
   `time` int(15) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -425,7 +429,7 @@ CREATE TABLE `guest` (
 --
 DROP TABLE IF EXISTS `karma_users`;
 CREATE TABLE `karma_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `karma_user` int(11) NOT NULL,
@@ -444,11 +448,11 @@ CREATE TABLE `karma_users` (
 --
 DROP TABLE IF EXISTS `lib`;
 CREATE TABLE `lib` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `refid` int(11) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
   `type` varchar(4) NOT NULL DEFAULT '',
-  `name` varchar(50) NOT NULL DEFAULT '',
+  `name` tinytext NOT NULL,
   `announce` text NOT NULL,
   `avtor` varchar(25) NOT NULL DEFAULT '',
   `text` mediumtext NOT NULL,
@@ -460,7 +464,9 @@ CREATE TABLE `lib` (
   KEY `type` (`type`),
   KEY `moder` (`moder`),
   KEY `time` (`time`),
-  KEY `refid` (`refid`)
+  KEY `refid` (`refid`),
+  FULLTEXT KEY `name` (`name`),
+  FULLTEXT KEY `text` (`text`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
@@ -468,7 +474,7 @@ CREATE TABLE `lib` (
 --
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `time` int(11) NOT NULL DEFAULT '0',
   `avt` varchar(25) NOT NULL DEFAULT '',
   `name` text NOT NULL,
@@ -482,7 +488,7 @@ CREATE TABLE `news` (
 --
 DROP TABLE IF EXISTS `privat`;
 CREATE TABLE `privat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user` varchar(25) NOT NULL DEFAULT '',
   `text` text NOT NULL,
   `time` varchar(25) NOT NULL DEFAULT '',
@@ -505,7 +511,7 @@ CREATE TABLE `privat` (
 --
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL DEFAULT '',
   `name_lat` varchar(40) NOT NULL DEFAULT '',
   `password` varchar(32) NOT NULL DEFAULT '',
@@ -529,6 +535,7 @@ CREATE TABLE `users` (
   `mibile` varchar(50) NOT NULL DEFAULT '',
   `status` text NOT NULL,
   `ip` bigint(11) NOT NULL DEFAULT '0',
+  `ip_via_proxy` bigint(11) NOT NULL DEFAULT '0',
   `browser` text NOT NULL,
   `time` int(11) NOT NULL DEFAULT '0',
   `preg` tinyint(1) NOT NULL DEFAULT '0',

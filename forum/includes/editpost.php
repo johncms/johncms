@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
@@ -50,7 +47,7 @@ if (mysql_num_rows($req)) {
             $res_m = mysql_fetch_assoc($req_m);
             if ($res_m['user_id'] != $user_id)
                 $error = $lng_forum['error_edit_last'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
-            elseif ($res['time'] < $realtime - 300)
+            elseif ($res['time'] < time() - 300)
                 $error = $lng_forum['error_edit_timeout'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
         }
     }
@@ -72,6 +69,10 @@ if (!$error) {
                 mysql_query("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "'");
             }
             mysql_query("UPDATE `forum` SET `close` = '0', `close_who` = '$login' WHERE `id` = '$id'");
+            $req_f = mysql_query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+            if (mysql_num_rows($req_f)) {
+                mysql_query("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id' LIMIT 1");
+            }
             header('Location: ' . $link);
             break;
 
@@ -134,11 +135,11 @@ if (!$error) {
             -----------------------------------------------------------------
             */
             echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['delete_post'] . '</div>' .
-                '<div class="rmenu"><p>';
+                 '<div class="rmenu"><p>';
             if ($posts == 1)
                 echo $lng_forum['delete_last_post_warning'] . '<br />';
             echo $lng['delete_confirmation'] . '</p>' .
-                '<p><a href="' . $link . '">' . $lng['cancel'] . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . $lng['delete'] . '</a>';
+                 '<p><a href="' . $link . '">' . $lng['cancel'] . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . $lng['delete'] . '</a>';
             if ($rights == 9)
                 echo ' | <a href="index.php?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . $lng['hide'] . '</a>';
             echo '</p></div>';
@@ -151,35 +152,44 @@ if (!$error) {
             Редактирование поста
             -----------------------------------------------------------------
             */
+            $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+            if (isset($_POST['msgtrans']))
+                $msg = functions::trans($msg);
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
                     echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=editpost&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
-                $msg = mysql_real_escape_string(trim($_POST['msg']));
-                if ($_POST['msgtrans'] == 1) {
-                    $msg = functions::trans($msg);
-                }
                 mysql_query("UPDATE `forum` SET
-                    `tedit` = '$realtime',
+                    `tedit` = '" . time() . "',
                     `edit` = '$login',
                     `kedit` = '" . ($res['kedit'] + 1) . "',
-                    `text` = '$msg'
+                    `text` = '" . mysql_real_escape_string($msg) . "'
                     WHERE `id` = '$id'
                 ");
                 header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
             } else {
-                echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_message'] . '</div>' .
-                    '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
-                if(!$is_mobile)
-                    echo functions::auto_bb('form', 'msg');
-                echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea><br/>';
+                $msg_pre = functions::checkout($msg, 1, 1);
+                if ($set_user['smileys'])
+                    $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
+                $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+                echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_message'] . '</div>';
+                if ($msg && !isset($_POST['submit'])) {
+                    $user = mysql_fetch_assoc(mysql_query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1"));
+                    echo '<div class="list1">' . functions::display_user($user, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date($res['time']) . ')</span>', 'body' => $msg_pre)) . '</div>';
+                }
+                echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
+                if (!$is_mobile)
+                    echo bbcode::auto_bb('form', 'msg');
+                echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : functions::checkout($_POST['msg'])) . '</textarea><br/>';
                 if ($set_user['translit'])
-                    echo '<input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-                echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form></div>' .
-                    '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-                    '<p><a href="' . $link . '">' . $lng['back'] . '</a></p>';
+                    echo '<input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
+                echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
+                     ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                     '</p></form></div>' .
+                     '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+                     '<p><a href="' . $link . '">' . $lng['back'] . '</a></p>';
             }
     }
 } else {

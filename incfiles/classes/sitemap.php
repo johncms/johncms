@@ -53,11 +53,11 @@ class sitemap {
     -----------------------------------------------------------------
     */
     public function forum_contents() {
-        global $rootpath, $realtime, $set, $id, $lng;
+        global $rootpath, $set, $id, $lng;
         $file = $rootpath . 'files/cache/' . $this->cache_forum_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
         if (!$id)
             return functions::display_error($lng['error_wrong_data']);
-        if (file_exists($file) && filemtime($file) > ($realtime - $this->cache_forum_contents * 3600)) {
+        if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_contents * 3600)) {
             return file_get_contents($file);
         } else {
             $req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r'");
@@ -81,11 +81,11 @@ class sitemap {
     -----------------------------------------------------------------
     */
     public function library_contents() {
-        global $rootpath, $realtime, $set, $id, $lng;
+        global $rootpath, $set, $id, $lng;
         $file = $rootpath . 'files/cache/' . $this->cache_lib_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
         if (!$id)
             return functions::display_error($lng['error_wrong_data']);
-        if (file_exists($file) && filemtime($file) > ($realtime - $this->cache_lib_contents * 3600)) {
+        if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_contents * 3600)) {
             return file_get_contents($file);
         } else {
             $req = mysql_query("SELECT * FROM `lib` WHERE `id` = '$id' AND `type` = 'cat' AND `ip` = '0'");
@@ -109,9 +109,9 @@ class sitemap {
     -----------------------------------------------------------------
     */
     private function forum_map() {
-        global $rootpath, $realtime, $set;
+        global $rootpath, $set;
         $file = $rootpath . 'files/cache/' . $this->cache_forum_file . '.dat';
-        if (file_exists($file) && filemtime($file) > ($realtime - $this->cache_forum_map * 3600)) {
+        if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_map * 3600)) {
             return file_get_contents($file);
         } else {
             $req = mysql_query("SELECT * FROM `forum` WHERE `type` = 'r'");
@@ -144,9 +144,9 @@ class sitemap {
     -----------------------------------------------------------------
     */
     private function library_map() {
-        global $rootpath, $realtime, $set;
+        global $rootpath, $set;
         $file = $rootpath . 'files/cache/' . $this->cache_lib_file . '.dat';
-        if (file_exists($file) && filemtime($file) > ($realtime - $this->cache_lib_map * 3600)) {
+        if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_map * 3600)) {
             return file_get_contents($file);
         } else {
             $req = mysql_query("SELECT * FROM `lib` WHERE `type` = 'cat' AND `ip` = '0'");

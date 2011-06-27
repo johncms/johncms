@@ -1,18 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -26,7 +21,7 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights <
     if (isset ($_POST['submit'])) {
         // Проверка на флуд
         $flood = functions::antiflood();
-        if ($flood){
+        if ($flood) {
             require_once ('../incfiles/head.php');
             echo functions::display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="index.php?act=komm&amp;id=' . $id . '">Назад</a>');
             require_once ('../incfiles/end.php');
@@ -44,18 +39,18 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights <
         }
         $msg = mb_substr($msg, 0, 500);
         $agn = strtok($agn, ' ');
-        mysql_query("insert into `download` values(0,'$id','','$realtime','','komm','$login','" . long2ip($ip) . "','" . $agn . "','" . $msg . "','');");
+        mysql_query("insert into `download` values(0,'$id','','" . time() . "','','komm','$login','" . long2ip($ip) . "','" . $agn . "','" . $msg . "','');");
         $fpst = $datauser['komm'] + 1;
         mysql_query("UPDATE `users` SET
 		`komm`='" . $fpst . "',
-		`lastpost` = '" . $realtime . "'
+		`lastpost` = '" . time() . "'
 		WHERE `id`='" . $user_id . "'");
         header("Location: index.php?act=komm&id=$id");
     }
     else {
         require_once ("../incfiles/head.php");
         echo "Напишите комментарий<br/><br/><form action='?act=addkomm&amp;id=" . $id .
-        "' method='post'>
+             "' method='post'>
 Cообщение(max. 500)<br/>
 <textarea rows='3' title='Введите комментарий' name='msg' ></textarea><br/><br/>
 <input type='checkbox' name='msgtrans' value='1' title='Поставьте флажок для транслитерации сообщения' /> Транслит<br/>

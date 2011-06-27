@@ -24,7 +24,7 @@ if ($rights == 3 || $rights >= 6) {
         if (!empty($vote_name) && !empty($_POST[0]) && !empty($_POST[1]) && !empty($_POST['count_vote'])) {
             mysql_query("INSERT INTO `cms_forum_vote` SET
                 `name`='" . mysql_real_escape_string($vote_name) . "',
-                `time`='$realtime',
+                `time`='" . time() . "',
                 `type` = '1',
                 `topic`='$id'
             ");

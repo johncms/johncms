@@ -1,18 +1,16 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $textl = $lng['forum'] . ' | ' . $lng['unread'];
 $headmod = 'forumnew';
 require('../incfiles/head.php');
@@ -42,7 +40,7 @@ if ($user_id) {
                 mysql_query("INSERT INTO `cms_forum_rdm` SET
                     `topic_id` = '" . $res['id'] . "',
                     `user_id` = '$user_id',
-                    `time` = '$realtime'
+                    `time` = '" . time() . "'
                 ");
             }
             $req = mysql_query("SELECT `forum`.`id` AS `id`
@@ -51,7 +49,7 @@ if ($user_id) {
             AND `forum`.`time` > `cms_forum_rdm`.`time`");
             while ($res = mysql_fetch_array($req)) {
                 mysql_query("UPDATE `cms_forum_rdm` SET
-                    `time` = '$realtime'
+                    `time` = '" . time() . "'
                     WHERE `topic_id` = '" . $res['id'] . "' AND `user_id` = '$user_id'
                 ");
             }
@@ -83,7 +81,7 @@ if ($user_id) {
                 require('../incfiles/end.php');
                 exit;
             }
-            $vr1 = $realtime - $vr * 3600;
+            $vr1 = time() - $vr * 3600;
             if ($rights == 9) {
                 $req = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `time` > '$vr1'");
             } else {
@@ -150,7 +148,7 @@ if ($user_id) {
             Вывод непрочитанных тем (для зарегистрированных)
             -----------------------------------------------------------------
             */
-            $total = functions::forum_new();
+            $total = counters::forum_new();
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng['unread'] . '</div>';
             if ($total > $kmess)
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
@@ -189,7 +187,7 @@ if ($user_id) {
                     if ($cpg > 1)
                         echo '&#160;<a href="index.php?id=' . $res['id'] . (!$set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
                     echo '<div class="sub">' . $res['from'] . ($colmes1 > 1 ? '&#160;/&#160;' . $nick['from'] : '') .
-                        ' <span class="gray">(' . date("d.m.y / H:i", $nick['time']) . ')</span><br />' .
+                        ' <span class="gray">(' . functions::display_date($nick['time']) . ')</span><br />' .
                         '<a href="index.php?id=' . $frm['id'] . '">' . $frm['text'] . '</a>&#160;/&#160;<a href="index.php?id=' . $razd['id'] . '">' . $razd['text'] . '</a>' .
                         '</div></div>';
                     ++$i;

@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -79,15 +76,15 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
             $fname = "$_SESSION[pid].$fname";
         }
         if (file_exists("foto/$fname")) {
-            $fname = "$realtime.$fname";
+            $fname = time() . $fname;
         }
         if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "foto/$fname")) == true) {
             $ch = $fname;
             @chmod("$ch", 0777);
             @chmod("foto/$ch", 0777);
             echo "Фото загружено!<br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_album'] . "</a><br/>";
-            mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','ft','" . $login . "','" . $text . "','" . $ch . "','','','');");
-            mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
+            mysql_query("insert into `gallery` values(0,'" . $id . "','" . time() . "','ft','" . $login . "','" . $text . "','" . $ch . "','','','');");
+            mysql_query("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user_id . "'");
         } else {
             echo $lng_gal['error_uploading_photo'] . "<br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_album'] . "</a><br/>";
         }

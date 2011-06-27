@@ -24,7 +24,7 @@ if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
     require('../incfiles/end.php');
     exit;
 }
-$lng_pass = $core->load_lng('pass');
+$lng_pass = core::load_lng('pass');
 $textl = htmlspecialchars($user['name']) . ': ' . $lng_pass['change_password'];
 require('../incfiles/head.php');
 

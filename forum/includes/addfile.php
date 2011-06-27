@@ -1,18 +1,16 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require('../incfiles/head.php');
 if (!$id || !$user_id) {
     echo functions::display_error($lng['error_wrong_data']);
@@ -65,7 +63,7 @@ switch ($res['type']) {
                 // Список допустимых расширений файлов.
                 $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
                 $ext = explode(".", $fname);
-                $error = array ();
+                $error = array();
                 // Проверка на допустимый размер файла
                 if ($fsize > 1024 * $set['flsz'])
                     $error[] = $lng_forum['error_file_size'] . ' ' . $set['flsz'] . 'kb.';
@@ -79,11 +77,11 @@ switch ($res['type']) {
                 if (strlen($fname) > 30)
                     $error[] = $lng_forum['error_file_name_size'];
                 // Проверка на запрещенные символы
-                if(preg_match("/[^\da-z_\-.]+/", $fname))
+                if (preg_match("/[^\da-z_\-.]+/", $fname))
                     $error[] = $lng_forum['error_file_symbols'];
                 // Проверка наличия файла с таким же именем
                 if (file_exists("../files/forum/attach/$fname")) {
-                    $fname = $realtime . $fname;
+                    $fname = time() . $fname;
                 }
                 // Окончательная обработка
                 if (!$error && $do_file) {
@@ -168,14 +166,14 @@ switch ($res['type']) {
             -----------------------------------------------------------------
             */
             echo '<div class="phdr"><b>' . $lng_forum['add_file'] . '</b></div>' .
-                '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
+                 '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
             if (stristr($agn, 'Opera/8.01')) {
                 echo '<input name="fail1" value =""/>&#160;<br/><a href="op:fileselect">' . $lng_forum['select_file'] . '</a>';
             } else {
                 echo '<input type="file" name="fail"/>';
             }
             echo '</p><p><input type="submit" name="submit" value="' . $lng_forum['upload'] . '"/></p></form></div>' .
-                '<div class="phdr">' . $lng_forum['max_size'] . ': ' . $set['flsz'] . 'kb.</div>';
+                 '<div class="phdr">' . $lng_forum['max_size'] . ': ' . $set['flsz'] . 'kb.</div>';
         }
         break;
 

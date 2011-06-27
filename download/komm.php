@@ -1,18 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -70,8 +65,6 @@ while ($mass = mysql_fetch_array($mess)) {
         else {
             echo "$mass[avtor]";
         }
-        $vr = $mass['time'] + $set_user['sdvig'] * 3600;
-        $vr1 = date("d.m.Y / H:i", $vr);
         switch ($mass1[rights]) {
             case 7 :
                 echo ' Adm ';
@@ -88,13 +81,13 @@ while ($mass = mysql_fetch_array($mess)) {
         }
         $ontime = $mass1[lastdate];
         $ontime2 = $ontime + 300;
-        if ($realtime > $ontime2) {
+        if (time() > $ontime2) {
             echo " [Off]";
         }
         else {
             echo " [ON]";
         }
-        echo "($vr1)<br/>";
+        echo '(' . functions::display_date($mass['time']) . ')<br/>';
         $text = functions::checkout($mass['text'], 1, 1);
         if ($set_user['smileys'])
             $text = functions::smileys($text, $res['rights'] ? 1 : 0);

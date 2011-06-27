@@ -12,7 +12,7 @@
 define('_IN_JOHNCMS', 1);
 
 require('../incfiles/core.php');
-$lng_forum = $core->load_lng('forum');
+$lng_forum = core::load_lng('forum');
 if (isset($_SESSION['ref']))
     unset($_SESSION['ref']);
 
@@ -24,6 +24,7 @@ if (isset($_SESSION['ref']))
 $set_forum = $user_id && !empty($datauser['set_forum']) ? unserialize($datauser['set_forum']) : array(
     'farea' => 0,
     'upfp' => 0,
+    'preview' => 1,
     'postclip' => 1,
     'postcut' => 2
 );
@@ -135,7 +136,7 @@ if (empty($id)) {
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$array = array(
+$mods = array(
     'addfile',
     'addvote',
     'close',
@@ -162,8 +163,8 @@ $array = array(
     'vote',
     'who'
 );
-if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
-    require('includes/' . $array[$key] . '.php');
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
+    require('includes/' . $mods[$key] . '.php');
 } else {
     require('../incfiles/head.php');
 
@@ -172,8 +173,8 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     Если форум закрыт, то для Админов выводим напоминание
     -----------------------------------------------------------------
     */
-    if (!$set['mod_forum'])
-        echo '<div class="alarm">' . $lng_forum['forum_closed'] . '</div>';
+    if (!$set['mod_forum']) echo '<div class="alarm">' . $lng_forum['forum_closed'] . '</div>';
+    elseif ($set['mod_forum'] == 3) echo '<div class="rmenu">' . $lng['read_only'] . '</div>';
     if (!$user_id) {
         if (isset($_GET['newup']))
             $_SESSION['uppost'] = 1;
@@ -205,9 +206,9 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             if (mysql_num_rows($req_r)) {
                 $res_r = mysql_fetch_assoc($req_r);
                 if ($type1['time'] > $res_r['time'])
-                    mysql_query("UPDATE `cms_forum_rdm` SET `time` = '$realtime' WHERE `topic_id` = '$id' AND `user_id` = '$user_id' LIMIT 1");
+                    mysql_query("UPDATE `cms_forum_rdm` SET `time` = '" . time() . "' WHERE `topic_id` = '$id' AND `user_id` = '$user_id' LIMIT 1");
             } else {
-                mysql_query("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '$user_id', `time` = '$realtime'");
+                mysql_query("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '$user_id', `time` = '" . time() . "'");
             }
         }
 
@@ -258,9 +259,8 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         */
         $wholink = false;
         if ($user_id && $type1['type'] == 't') {
-            $onltime = $realtime - 300;
-            $online_u = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > $onltime AND `place` = 'forum,$id'"), 0);
-            $online_g = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_guests` WHERE `lastdate` > $onltime AND `place` = 'forum,$id'"), 0);
+            $online_u = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'"), 0);
+            $online_g = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'"), 0);
             $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . $lng_forum['who_here'] . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br/>';
         }
 
@@ -269,7 +269,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         Выводим верхнюю панель навигации
         -----------------------------------------------------------------
         */
-        echo '<p>' . functions::forum_new(1) . '</p>' .
+        echo '<p>' . counters::forum_new(1) . '</p>' .
              '<div class="phdr">' . functions::display_menu($tree) . '</div>' .
              '<div class="topmenu"><a href="search.php?id=' . $id . '">' . $lng['search'] . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
@@ -315,7 +315,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                 -----------------------------------------------------------------
                 */
                 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close`!='1'")), 0);
-                if ($user_id && !isset($ban['1']) && !isset($ban['11'])) {
+                if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $set['mod_forum'] != 3) || core::$user_rights) {
                     // Кнопка создания новой темы
                     echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . $lng_forum['new_topic'] . '" /></form></div>';
                 }
@@ -350,8 +350,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         if (!empty($nam['from'])) {
                             echo '&#160;/&#160;' . $nam['from'];
                         }
-                        $vrp = $res['time'] + $set_user['sdvig'] * 3600;
-                        echo ' <span class="gray">(' . date("d.m.y / H:i", $vrp) . ')</span></div></div>';
+                        echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span></div></div>';
                         ++$i;
                     }
                     unset($_SESSION['fsort_id']);
@@ -401,6 +400,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                 }
                 // Счетчик постов темы
                 $colmes = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0);
+                if($start > $colmes) $start = $colmes - $kmess;
                 // Выводим название топика
                 echo '<div class="phdr"><a name="up" id="up"></a><a href="#down"><img src="../theme/' . $set_user['skin'] . '/images/down.png" alt="Вниз" width="20" height="10" border="0"/></a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
                 if ($colmes > $kmess)
@@ -419,8 +419,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                 -----------------------------------------------------------------
                 */
                 if ($type1['realid']) {
-                    if (isset($_GET['clip']))
-                        $clip_forum = '&amp;clip';
+                    $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
                     $vote_user = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='$user_id' AND `topic`='$id'"), 0);
                     $topic_vote = mysql_fetch_assoc(mysql_query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id' LIMIT 1"));
                     echo '<div  class="gmenu"><b>' . functions::checkout($topic_vote['name']) . '</b><br />';
@@ -462,9 +461,9 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                     WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'" . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
                     ORDER BY `forum`.`id` LIMIT 1");
                     $postres = mysql_fetch_assoc($postreq);
-                    echo '<div class="clip">';
+                    echo '<div class="topmenu"><p>';
                     if ($postres['sex'])
-                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($postres['sex'] == 'm' ? 'm' : 'w') . ($postres['datereg'] > $realtime - 86400 ? '_new.png" width="14"' : '.png" width="10"') . ' height="10"/>&#160;';
+                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($postres['sex'] == 'm' ? 'm' : 'w') . ($postres['datereg'] > time() - 86400 ? '_new.png" width="14"' : '.png" width="10"') . ' height="10"/>&#160;';
                     else
                         echo '<img src="../images/del.png" width="10" height="10" alt=""/>&#160;';
                     if ($user_id && $user_id != $postres['user_id']) {
@@ -481,16 +480,16 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         7 => 'Adm',
                         8 => 'SV'
                     );
-                    echo $user_rights[$postres['rights']];
-                    echo ($realtime > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
-                    echo ' <span class="gray">(' . date("d.m.Y / H:i", $postres['time'] + $set_user['sdvig'] * 3600) . ')</span><br/>';
+                    echo @$user_rights[$postres['rights']];
+                    echo (time() > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
+                    echo ' <span class="gray">(' . functions::display_date($postres['time']) . ')</span><br/>';
                     if ($postres['close']) {
                         echo '<span class="red">' . $lng_forum['post_deleted'] . '</span><br/>';
                     }
                     echo functions::checkout(mb_substr($postres['text'], 0, 500), 0, 2);
                     if (mb_strlen($postres['text']) > 500)
                         echo '...<a href="index.php?act=post&amp;id=' . $postres['id'] . '">' . $lng_forum['read_all'] . '</a>';
-                    echo '</div>';
+                    echo '</p></div>';
                 }
                 if ($filter)
                     echo '<div class="rmenu">' . $lng_forum['filter_on'] . '</div>';
@@ -505,20 +504,20 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                 WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'"
                                    . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql ORDER BY `forum`.`id` $order LIMIT $start, $kmess");
                 // Верхнее поле "Написать"
-                if (($user_id && !$type1['edit'] && $set_forum['upfp']) || ($rights >= 7 && $set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $set['mod_forum'] != 3) || ($rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
-                        echo '<p>';
-                        if (!$is_mobile)
-                            echo functions::auto_bb('form1', 'msg');
-                        echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
-                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
-                        if ($set_user['translit'])
-                            echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-                        echo '</p>';
+                        echo '<p>' .
+                             (!$is_mobile ? bbcode::auto_bb('form1', 'msg') : '') .
+                             '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'] .
+                             ($set_user['translit'] ? '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'] : '') .
+                             '</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
+                             ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                             '</p></form></div>';
+                    } else {
+                        echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p></form></div>';
                     }
-                    echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p>' .
-                         '</form></div>';
                 }
                 if ($rights == 3 || $rights >= 6)
                     echo '<form action="index.php?act=massdel" method="post">';
@@ -537,7 +536,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         echo '</td><td>';
                     }
                     if ($res['sex'])
-                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > $realtime - 86400 ? '_new' : '') . '.png" width="16" height="16" align="middle" />&#160;';
+                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png" width="16" height="16" align="middle" />&#160;';
                     else
                         echo '<img src="../images/del.png" width="12" height="12" align="middle" alt=""/>&#160;';
                     // Ник юзера и ссылка на его анкету
@@ -553,16 +552,16 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         7 => '(Adm)',
                         9 => '(SV!)'
                     );
-                    echo $user_rights[$res['rights']];
+                    echo @$user_rights[$res['rights']];
                     // Метка Онлайн / Офлайн
-                    echo ($realtime > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
+                    echo (time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
                     // Ссылки на ответ и цитирование
                     if ($user_id && $user_id != $res['user_id']) {
                         echo '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . $lng_forum['reply_btn'] . '</a>&#160;' .
                              '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . $lng_forum['cytate_btn'] . '</a> ';
                     }
                     // Время поста
-                    echo ' <span class="gray">(' . date("d.m.Y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . ')</span><br />';
+                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />';
                     // Статус юзера
                     if (!empty($res['status']))
                         echo '<div class="status"><img src="../theme/' . $set_user['skin'] . '/images/label.png" alt="" align="middle"/>&#160;' . $res['status'] . '</div>';
@@ -594,7 +593,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                         if ($set_user['smileys'])
                             $text = functions::smileys($text, $res['rights'] ? 1 : 0);
-                        echo functions::notags($text) . '...<br /><a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+                        echo bbcode::notags($text) . '...<br /><a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
                     } else {
                         // Или, обрабатываем тэги и выводим весь текст
                         $text = functions::checkout($text, 1, 1);
@@ -604,8 +603,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                     }
                     if ($res['kedit']) {
                         // Если пост редактировался, показываем кем и когда
-                        $dizm = date("d.m /H:i", $res['tedit'] + $set_user['sdvig'] * 3600);
-                        echo '<br /><span class="gray"><small>' . $lng_forum['edited'] . ' <b>' . $res['edit'] . '</b> (' . $dizm . ') <b>[' . $res['kedit'] . ']</b></small></span>';
+                        echo '<br /><span class="gray"><small>' . $lng_forum['edited'] . ' <b>' . $res['edit'] . '</b> (' . functions::display_date($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
                     }
                     // Если есть прикрепленный файл, выводим его описание
                     $freq = mysql_query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
@@ -631,8 +629,8 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</span>';
                         $file_id = $fres['id'];
                     }
-                    if ((($rights == 3 || $rights >= 6) && $rights >= $res['rights']) || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > $realtime - 300)
-                        || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > $realtime - 300)) {
+                    if ((($rights == 3 || $rights >= 6) && $rights >= $res['rights']) || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
+                        || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)) {
                         // Ссылки на редактирование / удаление постов
                         $menu = array(
                             '<a href="index.php?act=editpost&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a>',
@@ -648,8 +646,15 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                         } elseif (!empty($res['close_who'])) {
                             echo '<div class="green">' . $lng_forum['who_restore_post'] . ': <b>' . $res['close_who'] . '</b></div>';
                         }
-                        if ($rights == 3 || $rights >= 6)
-                            echo '<div class="gray"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . ip2long($res['ip']) . '">' . $res['ip'] . '</a> - ' . $res['soft'] . '</div>';
+                        if ($rights == 3 || $rights >= 6) {
+                            if($res['ip_via_proxy']){
+                                echo '<div class="gray"><b class="red"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
+                                     '<a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
+                                     ' - ' . $res['soft'] . '</div>';
+                            } else {
+                                echo '<div class="gray"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['soft'] . '</div>';
+                            }
+                        }
                         echo '</div>';
                     }
                     echo '</div>';
@@ -660,20 +665,22 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
                     echo '</form>';
                 }
                 // Нижнее поле "Написать"
-                if (($user_id && !$type1['edit'] && !$set_forum['upfp']) || ($rights >= 7 && !$set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $set['mod_forum'] != 3) || ($rights >= 7 && !$set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
                         echo '<p>';
                         if (!$is_mobile)
-                            echo functions::auto_bb('form2', 'msg');
-                        echo '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea><br/></p>' .
+                            echo bbcode::auto_bb('form2', 'msg');
+                        echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br/></p>' .
                              '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
                         if ($set_user['translit'])
                             echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-                        echo '</p>';
+                        echo '</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
+                             ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                             '</p></form></div>';
+                    } else {
+                        echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p></form></div>';
                     }
-                    echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p>' .
-                         '</form></div>';
                 }
                 echo '<div class="phdr"><a name="down" id="down"></a><a href="#up">' .
                      '<img src="../theme/' . $set_user['skin'] . '/images/up.png" alt="' . $lng['up'] . '" width="20" height="10" border="0"/></a>' .
@@ -737,7 +744,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         -----------------------------------------------------------------
         */
         $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files`" . ($rights >= 7 ? '' : " WHERE `del` != '1'")), 0);
-        echo '<p>' . functions::forum_new(1) . '</p>' .
+        echo '<p>' . counters::forum_new(1) . '</p>' .
              '<div class="phdr"><b>' . $lng['forum'] . '</b></div>' .
              '<div class="topmenu"><a href="search.php">' . $lng['search'] . '</a> | <a href="index.php?act=files">' . $lng_forum['files_forum'] . '</a> <span class="red">(' . $count . ')</span></div>';
         $req = mysql_query("SELECT `id`, `text`, `soft` FROM `forum` WHERE `type`='f' ORDER BY `realid`");
@@ -751,9 +758,8 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             echo '</div>';
             ++$i;
         }
-        $onltime = $realtime - 300;
-        $online_u = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > $onltime AND `place` LIKE 'forum%'"), 0);
-        $online_g = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_guests` WHERE `lastdate` > $onltime AND `place` LIKE 'forum%'"), 0);
+        $online_u = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'"), 0);
+        $online_g = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'"), 0);
         echo '<div class="phdr">' . ($user_id ? '<a href="index.php?act=who">' . $lng_forum['who_in_forum'] . '</a>' : $lng_forum['who_in_forum']) . '&#160;(' . $online_u . '&#160;/&#160;' . $online_g . ')</div>';
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);

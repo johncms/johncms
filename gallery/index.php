@@ -1,21 +1,19 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
+
 require('../incfiles/core.php');
 $headmod = 'gallery';
-$lng_gal = $core->load_lng('gallery');
+$lng_gal = core::load_lng('gallery');
 $textl = $lng['gallery'];
 require('../incfiles/head.php');
 
@@ -32,7 +30,7 @@ if ($error) {
     exit;
 }
 
-$array = array (
+$array = array(
     'new',
     'edf',
     'delf',
@@ -74,10 +72,10 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
                 if ($total > $kmess) {
                     echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                         '<p><form action="index.php?id=' . $id . '" method="post">' .
+                         '<input type="text" name="page" size="2"/>' .
+                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                         '</form></p>';
                 }
                 if ($rights >= 6) {
                     echo "<a href='index.php?act=cral&amp;id=" . $id . "'>" . $lng_gal['create_album'] . "</a><br/>";
@@ -115,89 +113,87 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
                 while ($fot1 = mysql_fetch_array($req)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    if(file_exists('foto/' . $fot1['name'])){
-                    echo '<a href="index.php?id=' . $fot1['id'] . '">';
-                    $infile = "foto/$fot1[name]";
-                    if (!empty($_SESSION['frazm'])) {
-                        $razm = $_SESSION['frazm'];
-                    } else {
-                        $razm = 50;
-                    }
-                    $sizs = GetImageSize($infile);
-                    $width = $sizs[0];
-                    $height = $sizs[1];
-                    $quality = 80;
-                    $x_ratio = $razm / $width;
-                    $y_ratio = $razm / $height;
-                    if (($width <= $razm) && ($height <= $razm)) {
-                        $tn_width = $width;
-                        $tn_height = $height;
-                    } else if (($x_ratio * $height) < $razm) {
-                        $tn_height = ceil($x_ratio * $height);
-                        $tn_width = $razm;
-                    } else {
-                        $tn_width = ceil($y_ratio * $width);
-                        $tn_height = $razm;
-                    }
-                    $format = functions::format($infile);
-                    switch ($format) {
-                        case "gif":
-                            $im = ImageCreateFromGIF($infile);
-                            break;
+                    if (file_exists('foto/' . $fot1['name'])) {
+                        echo '<a href="index.php?id=' . $fot1['id'] . '">';
+                        $infile = "foto/$fot1[name]";
+                        if (!empty($_SESSION['frazm'])) {
+                            $razm = $_SESSION['frazm'];
+                        } else {
+                            $razm = 50;
+                        }
+                        $sizs = GetImageSize($infile);
+                        $width = $sizs[0];
+                        $height = $sizs[1];
+                        $quality = 80;
+                        $x_ratio = $razm / $width;
+                        $y_ratio = $razm / $height;
+                        if (($width <= $razm) && ($height <= $razm)) {
+                            $tn_width = $width;
+                            $tn_height = $height;
+                        } else if (($x_ratio * $height) < $razm) {
+                            $tn_height = ceil($x_ratio * $height);
+                            $tn_width = $razm;
+                        } else {
+                            $tn_width = ceil($y_ratio * $width);
+                            $tn_height = $razm;
+                        }
+                        $format = functions::format($infile);
+                        switch ($format) {
+                            case "gif":
+                                $im = ImageCreateFromGIF($infile);
+                                break;
 
-                        case "jpg":
-                            $im = ImageCreateFromJPEG($infile);
-                            break;
+                            case "jpg":
+                                $im = ImageCreateFromJPEG($infile);
+                                break;
 
-                        case "jpeg":
-                            $im = ImageCreateFromJPEG($infile);
-                            break;
+                            case "jpeg":
+                                $im = ImageCreateFromJPEG($infile);
+                                break;
 
-                        case "png":
-                            $im = ImageCreateFromPNG($infile);
-                            break;
-                    }
-                    $im1 = imagecreatetruecolor($tn_width, $tn_height);
-                    $namefile = "$fot1[name]";
-                    imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
-                    switch ($format) {
-                        case "gif":
-                            $imagnam = "temp/$namefile.temp.gif";
-                            ImageGif($im1, $imagnam, $quality);
-                            echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                            break;
+                            case "png":
+                                $im = ImageCreateFromPNG($infile);
+                                break;
+                        }
+                        $im1 = imagecreatetruecolor($tn_width, $tn_height);
+                        $namefile = "$fot1[name]";
+                        imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
+                        switch ($format) {
+                            case "gif":
+                                $imagnam = "temp/$namefile.temp.gif";
+                                ImageGif($im1, $imagnam, $quality);
+                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                                break;
 
-                        case "jpg":
-                            $imagnam = "temp/$namefile.temp.jpg";
-                            imageJpeg($im1, $imagnam, $quality);
-                            echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                            break;
+                            case "jpg":
+                                $imagnam = "temp/$namefile.temp.jpg";
+                                imageJpeg($im1, $imagnam, $quality);
+                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                                break;
 
-                        case "jpeg":
-                            $imagnam = "temp/$namefile.temp.jpg";
-                            imageJpeg($im1, $imagnam, $quality);
-                            echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                            case "jpeg":
+                                $imagnam = "temp/$namefile.temp.jpg";
+                                imageJpeg($im1, $imagnam, $quality);
+                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
-                            break;
+                                break;
 
-                        case "png":
-                            $imagnam = "temp/$namefile.temp.png";
-                            imagePng($im1, $imagnam, $quality);
-                            echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                            case "png":
+                                $imagnam = "temp/$namefile.temp.png";
+                                imagePng($im1, $imagnam, $quality);
+                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
-                            break;
-                    }
-                    imagedestroy($im);
-                    imagedestroy($im1);
-                    $fotsz = filesize("foto/$ms[name]");
-                    $vrf = $fot1['time'] + $set_user['sdvig'] * 3600;
-                    $vrf1 = date("d.m.y / H:i", $vrf);
-                    echo '</a>';
-                    if (!empty($fot1['text']))
-                        echo "$fot1[text]<br/>";
-                    if ($rights >= 6) {
-                        echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br/>";
-                    }
+                                break;
+                        }
+                        imagedestroy($im);
+                        imagedestroy($im1);
+                        $fotsz = filesize("foto/$ms[name]");
+                        echo '</a>';
+                        if (!empty($fot1['text']))
+                            echo "$fot1[text]<br/>";
+                        if ($rights >= 6) {
+                            echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br/>";
+                        }
                     } else {
                         echo $lng_gal['image_missing'] . '<br /><a href="index.php?act=delf&amp;id=' . $fot1['id'] . '">' . $lng['delete'] . '</a>';
                     }
@@ -207,10 +203,10 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
                 if ($total > $kmess) {
                     echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
-                        '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                        '</form></p>';
+                         '<p><form action="index.php?id=' . $id . '" method="post">' .
+                         '<input type="text" name="page" size="2"/>' .
+                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                         '</form></p>';
                 }
                 if (($user_id && $rz1['user'] == 1 && $ms['text'] == $login && !$ban['1'] && !$ban['14']) || $rights >= 6) {
                     echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br/>';
@@ -294,18 +290,16 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $sizs = GetImageSize("foto/$ms[name]");
                 $fwidth = $sizs[0];
                 $fheight = $sizs[1];
-                $vrf = $ms[time] + $set_user['sdvig'] * 3600;
-                $vrf1 = date("d.m.y / H:i", $vrf);
                 echo "<p>" . $lng['description'] . ": $ms[text]<br/>";
                 echo $lng_gal['dimensions'] . ": $fwidth*$fheight пкс.<br/>";
                 echo $lng_gal['weight'] . ": $fotsz кб.<br/>";
-                echo $lng['date'] . ": $vrf1<br/>";
+                echo $lng['date'] . ': ' . functions::display_date($ms['time']) . '<br/>';
                 echo $lng_gal['posted_by'] . ": $ms[avtor]<br/>";
                 echo "<a href='foto/$ms[name]'>" . $lng['download'] . "</a><br /><br />";
                 echo "<a href='index.php?id=" . $ms['refid'] . "'>" . $lng['back'] . "</a><br/>";
                 echo "<a href='index.php'>" . $lng_gal['to_gallery'] . "</a></p>";
                 break;
-                default :
+            default :
                 header("location: index.php");
                 break;
         }
@@ -315,7 +309,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
         Главная страница Галлереи
         -----------------------------------------------------------------
         */
-        echo '<p><a href="index.php?act=new">' . $lng_gal['new_photo'] . '</a> (' . functions::stat_gallery(1) . ')</p>';
+        echo '<p><a href="index.php?act=new">' . $lng_gal['new_photo'] . '</a> (' . counters::gallery(1) . ')</p>';
         echo '<div class="phdr"><b>' . $lng['gallery'] . '</b></div>';
         $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'rz'");
         $total = mysql_num_rows($req);

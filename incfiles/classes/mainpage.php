@@ -18,7 +18,6 @@ class mainpage {
     private $settings = array ();
     function __construct() {
         global $set;
-        global $realtime;
         $this->settings = unserialize($set['news']);
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();
@@ -26,9 +25,9 @@ class mainpage {
 
     // Запрос свежих новостей на Главную
     private function news() {
-        global $realtime, $lng;
+        global $lng;
         if ($this->settings['view'] > 0) {
-            $reqtime = $this->settings['days'] ? $realtime - ($this->settings['days'] * 86400) : 0;
+            $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
             $req = mysql_query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
             if (mysql_num_rows($req) > 0) {
                 $i = 0;
@@ -48,7 +47,7 @@ class mainpage {
                         $text = str_replace("\r\n", "<br/>", $text);
                     // Обрабатываем тэги
                     if ($this->settings['tags']) {
-                        $text = call_user_func('tags', $text);
+                        $text = bbcode::tags($text);
                     } else {
                         $text = functions::notags($text);
                     }
@@ -95,9 +94,7 @@ class mainpage {
 
     // Счетчик свежих новостей
     private function lastnewscount() {
-        global $realtime;
-        $ltime = $realtime - (86400 * 3);
-        $req = mysql_query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . $ltime . "'");
+        $req = mysql_query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'");
         $res = mysql_result($req, 0);
         return ($res > 0 ? '/<span class="red">+' . $res . '</span>' : false);
     }

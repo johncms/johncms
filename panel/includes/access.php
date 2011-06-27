@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 
-$color = array('red', 'yelow', 'green');
+$color = array('red', 'yelow', 'green', 'gray');
 echo '<form method="post" action="index.php?act=access">';
 
 /*
@@ -50,6 +50,7 @@ echo '<div class="menu"><p>' .
     '<div style="font-size: x-small">' .
     '<input type="radio" value="2" name="forum" ' . ($set['mod_forum'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng['access_enabled'] . '<br />' .
     '<input type="radio" value="1" name="forum" ' . ($set['mod_forum'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['access_authorised'] . '<br />' .
+    '<input type="radio" value="3" name="forum" ' . ($set['mod_forum'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng['read_only'] . '<br />' .
     '<input type="radio" value="0" name="forum" ' . (!$set['mod_forum'] ? 'checked="checked"' : '') . '/>&#160;' . $lng['access_disabled'] .
     '</div></p>';
 

@@ -1,18 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -38,7 +33,7 @@ if ($rights == 4 || $rights >= 6) {
         if ($mk == true) {
             chmod("$droot/$drn", 0777);
             echo "Папка создана<br/>";
-            mysql_query("insert into `download` values(0,'" . $cat . "','" . $droot . "','" . $realtime . "','" . $drn . "','cat','','','','" . $rusn . "','');");
+            mysql_query("insert into `download` values(0,'" . $cat . "','" . $droot . "','" . time() . "','" . $drn . "','cat','','','','" . $rusn . "','');");
             $categ = mysql_query("select * from `download` where type = 'cat' and name='$drn' and refid = '" . $cat . "';");
             $newcat = mysql_fetch_array($categ);
             echo "&#187;<a href='?cat=" . $newcat[id] . "'>В папку</a><br/>";

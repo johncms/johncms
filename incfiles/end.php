@@ -1,34 +1,23 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-
-// Рекламный блок MOBILEADS.RU
-$mad_siteid = 0;
-if ($mad_siteid) {
-    if (isset($_SESSION['mad_links']) && $_SESSION['mad_time'] > ($realtime - 60 * 15))
-        echo '<div class="gmenu">' . $_SESSION['mad_links'] . '</div>';
-    else
-        echo '<div class="gmenu">' . mobileads($mad_siteid) . '</div>';
-}
 
 // Рекламный блок сайта
 if (!empty($cms_ads[2]))
     echo '<div class="gmenu">' . $cms_ads[2] . '</div>';
+
 echo '</div><div class="fmenu">';
 if ($headmod != "mainpage" || ($headmod == 'mainpage' && $act))
-    echo '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a><br/>';
+    echo '<a href="' . $set['homeurl'] . '">' . $lng['homepage'] . '</a><br/>';
 
 // Меню быстрого перехода
 if ($set_user['quick_go']) {
@@ -46,31 +35,28 @@ if ($set_user['quick_go']) {
     echo '</div></form>';
 }
 // Счетчик посетителей онлайн
-echo '</div><div class="footer">' . functions::stat_online() . '</div>';
-
-////////////////////////////////////////////////////////////
-// Выводим информацию внизу страницы                      //
-////////////////////////////////////////////////////////////
+echo '</div><div class="footer">' . counters::online() . '</div>';
 echo '<div style="text-align:center">';
 echo '<p><b>' . $set['copyright'] . '</b></p>';
-if (!$user_id || ($user_id && $set_user['gzip']))
-    functions::stat_gzip();                    // Индикатор сжатия
-if (!$user_id || ($user_id && $set_user['online']))
-    functions::stat_timeonline();                  // Время, проведенное в онлайне
-if (!$user_id || ($user_id && $set_user['movings']))
-    echo $lng['transitions'] . ': ' . $movings; // Счетчик перемещений по сайту
-functions::display_counters();                        // Счетчики каталогов
+
+// Счетчики каталогов
+functions::display_counters();
 
 // Рекламный блок сайта
 if (!empty($cms_ads[3]))
     echo '<br />' . $cms_ads[3];
 
-////////////////////////////////////////////////////////////
-// ВНИМАНИЕ!!!                                            //
-// Данный копирайт нельзя убирать в течение 60 дней       //
-// с момента установки скриптов                           //
-////////////////////////////////////////////////////////////
-echo '<div><small><a href="http://johncms.com">JohnCMS</a></small></div>';
+/*
+-----------------------------------------------------------------
+ВНИМАНИЕ!!!
+Данный копирайт нельзя убирать в течение 60 дней с момента установки скриптов
+-----------------------------------------------------------------
+ATTENTION!!!
+The copyright could not be removed within 60 days of installation scripts
+-----------------------------------------------------------------
+*/
+echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>';
+
 echo '</div></body></html>';
 
 ?>

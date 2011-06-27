@@ -1,17 +1,12 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
+/**
+* @package     JohnCMS
+* @link        http://johncms.com
+* @copyright   Copyright (C) 2008-2011 JohnCMS Community
+* @license     LICENSE.txt (see attached file)
+* @version     VERSION.txt (see attached file)
+* @author      http://johncms.com/about
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
@@ -46,7 +41,7 @@ if ($rights == 4 || $rights >= 6) {
             if (copy($url, $import)) {
                 $ch = "$newn.$tipf";
                 echo "Файл успешно загружен<br/>";
-                mysql_query("insert into `download` values(0,'$cat','" . mysql_real_escape_string($loaddir) . "','$realtime','" . mysql_real_escape_string($ch) . "','file','','','','" . $opis . "','');");
+                mysql_query("insert into `download` values(0,'$cat','" . mysql_real_escape_string($loaddir) . "','" . time() . "','" . mysql_real_escape_string($ch) . "','file','','','','" . $opis . "','');");
             }
             else {
                 echo "Загрузка файла не удалась!<br/>";

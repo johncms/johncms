@@ -19,9 +19,10 @@ require('../incfiles/head.php');
 Выводим список пользователей
 -----------------------------------------------------------------
 */
+$total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users`"), 0);
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['users_list'] . '</div>';
-$req = mysql_query("SELECT COUNT(*) FROM `users`");
-$total = mysql_result($req, 0);
+if ($total > $kmess)
+echo '<div class="topmenu">' . functions::display_pagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</div>';
 $req = mysql_query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT $start, $kmess");
 $i = 0;
 while ($res = mysql_fetch_assoc($req)) {
@@ -31,12 +32,12 @@ while ($res = mysql_fetch_assoc($req)) {
 }
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 if ($total > $kmess) {
-    echo '<p>' . functions::display_pagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</p>' .
+    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php?act=userlist" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
         '</form></p>';
 }
-echo '<p><a href="index.php?act=search">' . $lng['search_user'] . '</a><br />' .
+echo '<p><a href="search.php">' . $lng['search_user'] . '</a><br />' .
     '<a href="index.php">' . $lng['back'] . '</a></p>';
 ?>

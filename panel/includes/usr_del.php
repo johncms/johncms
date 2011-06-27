@@ -115,11 +115,11 @@ if (!$error) {
                 mysql_query("DELETE FROM `guest` WHERE `user_id` = '" . $user['id'] . "'");
             }
             // Скрываем темы на форуме
-            if ($forumt_count && isset($_POST['forumt'])) {
+            if ($forumt_count && isset($_POST['forum'])) {
                 mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `type` = 't' AND `user_id` = '" . $user['id'] . "'");
             }
             // Скрываем посты на форуме
-            if (isset($_POST['forump'])) {
+            if (isset($_POST['forum'])) {
                 mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `type` = 'm' AND `user_id` = '" . $user['id'] . "'");
             }
             // Удаляем метки прочтения на Форуме

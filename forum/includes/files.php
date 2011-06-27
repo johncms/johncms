@@ -1,22 +1,20 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $headmod = 'forumfiles';
 require('../incfiles/head.php');
 
-$types = array (
+$types = array(
     1 => $lng_forum['files_type_win'],
     2 => $lng_forum['files_type_java'],
     3 => $lng_forum['files_type_sis'],
@@ -27,7 +25,7 @@ $types = array (
     8 => $lng_forum['files_type_audio'],
     9 => $lng_forum['files_type_other']
 );
-$new = $realtime - 86400; // Сколько времени файлы считать новыми?
+$new = time() - 86400; // Сколько времени файлы считать новыми?
 
 /*
 -----------------------------------------------------------------
@@ -81,16 +79,19 @@ if ($do || isset($_GET['new'])) {
     Выводим список файлов нужного раздела
     -----------------------------------------------------------------
     */
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE " . (isset($_GET['new']) ? " `time` > '$new'" : " `filetype` = '$do'") . $sql), 0);
+    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE " . (isset($_GET['new'])
+                                              ? " `time` > '$new'" : " `filetype` = '$do'") . $sql), 0);
     if ($total > 0) {
         // Заголовок раздела
-        echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . $lng['new_files'] : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
+        echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . $lng['new_files']
+                : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
         $req = mysql_query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
         FROM `cms_forum_files`
         LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
         LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
-        WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql .
-        "ORDER BY `time` DESC LIMIT $start,$kmess");
+        WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7
+                                   ? '' : " AND `del` != '1'") . $sql .
+                           "ORDER BY `time` DESC LIMIT $start,$kmess");
         while ($res = mysql_fetch_assoc($req)) {
             $req_u = mysql_query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
             $res_u = mysql_fetch_assoc($req_u);
@@ -99,7 +100,8 @@ if ($do || isset($_GET['new'])) {
             $text = mb_substr($res['text'], 0, 500);
             $text = functions::checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['post'] . "'"), 0) / $kmess);
+            $page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp']
+                                                          ? ">=" : "<=") . " '" . $res['post'] . "'"), 0) / $kmess);
             $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
             if (mb_strlen($res['text']) > 500)
                 $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
@@ -107,7 +109,7 @@ if ($do || isset($_GET['new'])) {
             $fls = @filesize('../files/forum/attach/' . $res['filename']);
             $fls = round($fls / 1024, 0);
             $att_ext = strtolower(functions::format('./files/forum/attach/' . $res['filename']));
-            $pic_ext = array (
+            $pic_ext = array(
                 'gif',
                 'jpg',
                 'jpeg',
@@ -119,11 +121,12 @@ if ($do || isset($_GET['new'])) {
                 $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . $lng_forum['click_to_view'] . '" /></a></div>';
             } else {
                 // Если обычный файл, выводим значок и ссылку
-                $file = ($res['del'] ? '<img src="../images/del.png" width="16" height="16" />' : '') . '<img src="../images/system/' . $res['filetype'] . '.png" width="16" height="16" />&#160;';
+                $file = ($res['del'] ? '<img src="../images/del.png" width="16" height="16" />'
+                        : '') . '<img src="../images/system/' . $res['filetype'] . '.png" width="16" height="16" />&#160;';
             }
             $file .= '<a href="index.php?act=file&amp;id=' . $res['id'] . '">' . htmlspecialchars($res['filename']) . '</a><br />';
             $file .= '<small><span class="gray">' . $lng_forum['size'] . ': ' . $fls . ' kb.<br />' . $lng_forum['downloaded'] . ': ' . $res['dlcount'] . ' ' . $lng_forum['time'] . '</span></small>';
-            $arg = array (
+            $arg = array(
                 'iphide' => 1,
                 'sub' => $file,
                 'body' => $text
@@ -135,11 +138,12 @@ if ($do || isset($_GET['new'])) {
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
             // Постраничная навигация
-            echo '<p>' . functions::display_pagination('index.php?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $kmess) . '</p>' .
-                '<p><form action="index.php" method="get">' .
-                '<input type="hidden" name="act" value="files"/>' .
-                '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            echo '<p>' . functions::display_pagination('index.php?act=files&amp;' . (isset($_GET['new']) ? 'new'
+                                       : 'do=' . $do) . $lnk . '&amp;', $start, $total, $kmess) . '</p>' .
+                 '<p><form action="index.php" method="get">' .
+                 '<input type="hidden" name="act" value="files"/>' .
+                 '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .
+                 '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
         }
     } else {
         echo '<div class="list1">' . $lng['list_empty'] . '</div>';
@@ -150,13 +154,17 @@ if ($do || isset($_GET['new'])) {
     Выводим список разделов, в которых есть файлы
     -----------------------------------------------------------------
     */
-    $countnew = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql), 0);
-    echo '<p>' . ($countnew > 0 ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . $lng['new_files'] . ' (' . $countnew . ')</a>' : $lng_forum['new_files_empty']) . '</p>';
+    $countnew = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7
+                                                 ? '' : " AND `del` != '1'") . $sql), 0);
+    echo '<p>' . ($countnew > 0
+            ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . $lng['new_files'] . ' (' . $countnew . ')</a>'
+            : $lng_forum['new_files_empty']) . '</p>';
     echo '<div class="phdr">' . $caption . '</div>';
-    $link = array ();
+    $link = array();
     $total = 0;
     for ($i = 1; $i < 10; $i++) {
-        $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql), 0);
+        $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($rights >= 7
+                                                  ? '' : " AND `del` != '1'") . $sql), 0);
         if ($count > 0) {
             $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="index.php?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
             $total = $total + $count;
@@ -168,5 +176,7 @@ if ($do || isset($_GET['new'])) {
     }
     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 }
-echo '<p>' . (($do || isset($_GET['new'])) ? '<a href="index.php?act=files' . $lnk . '">' . $lng_forum['section_list'] . '</a><br />' : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . $lng['forum'] . '</a></p>';
+echo '<p>' . (($do || isset($_GET['new']))
+        ? '<a href="index.php?act=files' . $lnk . '">' . $lng_forum['section_list'] . '</a><br />'
+        : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . $lng['forum'] . '</a></p>';
 ?>

@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -39,7 +36,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     require('../incfiles/lib/class.upload.php');
                     $handle = new upload($path . $res['img_name']);
                     // Обрабатываем основное изображение
-                    $handle->file_new_name_body = 'img_' . $realtime;
+                    $handle->file_new_name_body = 'img_' . time();
                     if ($rotate == 1 || $rotate == 2)
                         $handle->image_rotate = ($rotate == 2 ? 90 : 270);
                     if ($brightness > 0 && $brightness < 5) {
@@ -84,7 +81,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     $img_name = $handle->file_dst_name;
                     if ($handle->processed) {
                         // Обрабатываем превьюшку
-                        $handle->file_new_name_body = 'tmb_' . $realtime;
+                        $handle->file_new_name_body = 'tmb_' . time();
                         if ($rotate == 1 || $rotate == 2)
                             $handle->image_rotate = ($rotate == 2 ? 90 : 270);
                         if ($brightness > 0 && $brightness < 5) {
@@ -151,7 +148,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<p><h3>' . $lng_profile['image'] . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
                 '<p><h3>' . $lng['description'] . '</h3>' .
-                '<textarea name="description" cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br />' .
+                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br />' .
                 '<small>' . $lng['not_mandatory_field'] . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .

@@ -110,7 +110,8 @@ switch ($mod) {
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'"), 0);
         if ($total) {
             $req = mysql_query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT $start,$kmess");
-            while ($res = mysql_fetch_assoc($req)) {
+            $i = 0;
+            while (($res = mysql_fetch_assoc($req)) !== false) {
                 $link = array (
                     '<a href="index.php?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . $lng['approve'] . '</a>',
                     '<a href="index.php?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>',

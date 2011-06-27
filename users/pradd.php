@@ -14,7 +14,7 @@ define('_IN_JOHNCMS', 1);
 $textl = 'Mail';
 $headmod = 'pradd';
 require_once("../incfiles/core.php");
-$lng_pm = $core->load_lng('pm');
+$lng_pm = core::load_lng('pm');
 if ($user_id) {
     $msg = isset($_POST['msg']) ? functions::check($_POST['msg']) : false;
     if (isset($_POST['msgtrans'])) {
@@ -132,7 +132,7 @@ if ($user_id) {
                         }
                         // Проверка наличия файла с таким же именем
                         if (file_exists("../files/users/pm/$fname")) {
-                            $fname = $realtime . $fname;
+                            $fname = time() . $fname;
                         }
                         // Окончательная обработка
                         if ($do_file) {
@@ -165,12 +165,12 @@ if ($user_id) {
                             }
                         }
                     }
-                    mysql_query("insert into `privat` values(0,'" . $foruser . "','" . $msg . "','" . $realtime . "','" . $login . "','in','no','" . $tem . "','0','','','','" . mysql_real_escape_string($fname) . "');");
-                    mysql_query("insert into `privat` values(0,'" . $foruser . "','" . $msg . "','" . $realtime . "','" . $login . "','out','no','" . $tem . "','0','','','','" . mysql_real_escape_string($fname) . "');");
+                    mysql_query("insert into `privat` values(0,'" . $foruser . "','" . $msg . "','" . time() . "','" . $login . "','in','no','" . $tem . "','0','','','','" . mysql_real_escape_string($fname) . "');");
+                    mysql_query("insert into `privat` values(0,'" . $foruser . "','" . $msg . "','" . time() . "','" . $login . "','out','no','" . $tem . "','0','','','','" . mysql_real_escape_string($fname) . "');");
                     if (!empty($idm)) {
                         mysql_query("update `privat` set otvet='1' where id='" . $idm . "';");
                     }
-                    mysql_query("UPDATE `users` SET `lastpost` = '" . $realtime . "' WHERE `id` = '" . $user_id . "'");
+                    mysql_query("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user_id . "'");
                     echo '<p>' . $lng_pm['message_sent'] . '</p>';
                     if (!empty($_SESSION['refpr'])) {
                         echo "<a href='" . $_SESSION['refpr'] . "'>" . $lng_pm['back'] . "</a><br/>";
@@ -284,8 +284,8 @@ if ($user_id) {
                 '<input type="text" name="foruser" value="' . $adresat . '"/></p>' .
                 '<p><h3>' . $lng_pm['subject'] . '</h3>' .
                 '<input type="text" name="tem" value="' . $tema . '"/></p>' .
-                '<p><h3>' . $lng['message'] . '</h3>' . functions::auto_bb('form', 'msg') .
-                '<textarea cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+                '<p><h3>' . $lng['message'] . '</h3>' . bbcode::auto_bb('form', 'msg') .
+                '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
                 '<p><h3>' . $lng_pm['attach_file'] . '</h3>' .
                 '<input type="file" name="fail"/><br /><small>max.' . $set['flsz'] . 'kb</small></p>';
             if ($set_user['translit'])
@@ -337,6 +337,7 @@ if ($user_id) {
                 $req = mysql_query("SELECT * FROM `privat` WHERE `user` = '$login' AND `type` = 'in' ORDER BY `id` DESC LIMIT $start,$kmess");
                 echo '<div class="phdr"><b>' . $lng_pm['incoming'] . '</b></div>';
             }
+            if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=in&amp;', $start, $total, $kmess) . '</div>';
             echo '<form action="pradd.php?act=delch" method="post">';
             $i = 0;
             while ($res = mysql_fetch_assoc($req)) {
@@ -346,8 +347,7 @@ if ($user_id) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 }
                 echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/><a href="pradd.php?id=' . $res['id'] . '&amp;act=readmess">От: ' . $res['author'] . '</a>';
-                $vrp = $res['time'] + $set_user['sdvig'] * 3600;
-                echo '&#160;<span class="gray">(' . date("d.m.y H:i", $vrp) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
+                echo '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
                 if (!empty($res['attach'])) {
                     echo '+ ' . $lng_pm['attachment'] . '<br/>';
                 }
@@ -363,8 +363,8 @@ if ($user_id) {
             echo '</form>';
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('pradd.php?act=in&amp;', $start, $total, $kmess) . '</p>';
-                echo '<p><form action="pradd.php?act=in" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=in&amp;', $start, $total, $kmess) . '</div>' .
+                     '<p><form action="pradd.php?act=in" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
             if ($total > 0) {
                 echo "<a href='pradd.php?act=delread'>" . $lng_pm['delete_read'] . "</a><br/>";
@@ -426,12 +426,11 @@ if ($user_id) {
             }
             $mass = mysql_fetch_array(mysql_query("select * from `users` where `name`='" . $massiv1['author'] . "';"));
             $text = $massiv1['text'];
-            $text = tags($text);
+            $text = bbcode::tags($text);
             if ($set_user['smileys'])
                 $text = functions::smileys($text, 1);
             echo "<p>" . $lng_pm['msg_from'] . " <a href='profile.php?user=" . $mass['id'] . "'>$massiv1[author]</a><br/>";
-            $vrp = $massiv1['time'] + $set_user['sdvig'] * 3600;
-            echo "(" . date("d.m.y H:i", $vrp) . ")</p><p><div class='b'>" . $lng_pm['subject'] . ": $massiv1[temka]<br/></div>" . $lng['text'] . ": $text</p>";
+            echo "(" . functions::display_date($massiv1['time']) . ")</p><p><div class='b'>" . $lng_pm['subject'] . ": $massiv1[temka]<br/></div>" . $lng['text'] . ": $text</p>";
             if (!empty($massiv1['attach'])) {
                 echo "<p>" . $lng_pm['attachment'] . ": <a href='?act=load&amp;id=" . $id . "'>$massiv1[attach]</a></p>";
             }
@@ -483,6 +482,7 @@ if ($user_id) {
             $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `author` = '$login' AND `type` = 'out'"), 0);
             $req = mysql_query("SELECT * FROM `privat` WHERE `author` = '$login' AND `type` = 'out' ORDER BY `id` DESC LIMIT $start,$kmess");
             echo '<div class="phdr"><b>' . $lng_pm['sent'] . '</b></div>';
+            if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=out&amp;', $start, $total, $kmess) . '</div>';
             echo "<form action='pradd.php?act=delch' method='post'>";
             $i = 0;
             while ($res = mysql_fetch_assoc($req)) {
@@ -492,8 +492,7 @@ if ($user_id) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 }
                 echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>' . $lng_pm['msg_for'] . ': <a href="pradd.php?id=' . $res['id'] . '&amp;act=readout">' . $res['user'] . '</a>';
-                $vrp = $res['time'] + $set_user['sdvig'] * 3600;
-                echo '&#160;<span class="gray">(' . date("d.m.y H:i", $vrp) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
+                echo '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
                 if (!empty($res['attach'])) {
                     echo "+ " . $lng_pm['attachment'] . "<br/>";
                 }
@@ -506,8 +505,8 @@ if ($user_id) {
             echo '</form>';
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('pradd.php?act=out&amp;', $start, $total, $kmess) . '</p>';
-                echo '<p><form action="pradd.php?act=out" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=out&amp;', $start, $total, $kmess) . '</div>' .
+                     '<p><form action="pradd.php?act=out" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
             if ($total > 0) {
                 echo "<a href='pradd.php?act=delout'>" . $lng_pm['delete_all_sent'] . "</a><br/>";
@@ -523,12 +522,11 @@ if ($user_id) {
             $massiv1 = mysql_fetch_array($messages1);
             $mass = mysql_fetch_array(@mysql_query("select * from `users` where `name`='$massiv1[user]';"));
             $text = $massiv1['text'];
-            $text = tags($text);
+            $text = bbcode::tags($text);
             if ($set_user['smileys'])
                 $text = functions::smileys($text, ($massiv1['from'] == $nickadmina || $massiv1['from'] == $nickadmina2 || $massiv11['rights'] >= 1) ? 1 : 0);
             echo "<p>" . $lng_pm['msg_for'] . " <a href='profile.php?user=" . $mass['id'] . "'>$massiv1[user]</a><br/>";
-            $vrp = $massiv1['time'] + $set_user['sdvig'] * 3600;
-            echo "(" . date("d.m.y H:i", $vrp) . ")</p><p><div class='b'>" . $lng_pm['subject'] . ": $massiv1[temka]<br/></div>" . $lng['text'] . ": $text</p>";
+            echo "(" . functions::display_date($massiv1['time']) . ")</p><p><div class='b'>" . $lng_pm['subject'] . ": $massiv1[temka]<br/></div>" . $lng['text'] . ": $text</p>";
             if (!empty($massiv1['attach'])) {
                 echo "<p>" . $lng_pm['attachment'] . ": $massiv1[attach]</p>";
             }

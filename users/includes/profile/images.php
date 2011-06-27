@@ -14,7 +14,6 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$headmod = 'anketa';
 $textl = $lng_profile['profile_edit'];
 require('../incfiles/head.php');
 require('../incfiles/lib/class.upload.php');

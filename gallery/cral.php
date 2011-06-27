@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -29,7 +26,7 @@ if ($rights >= 6) {
     }
     if (isset($_POST['submit'])) {
         $text = functions::check($_POST['text']);
-        mysql_query("insert into `gallery` values(0,'" . $id . "','" . $realtime . "','al','','" . $text . "','','','','');");
+        mysql_query("insert into `gallery` values(0,'" . $id . "','" . time() . "','al','','" . $text . "','','','','');");
         header("location: index.php?id=$id");
     } else {
         echo $lng_gal['create_album'] . "<br/><form action='index.php?act=cral&amp;id=" . $id .

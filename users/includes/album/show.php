@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 if (!$al) {
@@ -80,7 +77,7 @@ if ($album['access'] == 1 && $user['id'] != $user_id && $rights < 6) {
 */
 if ($view) {
     $kmess = 1;
-    $start = isset($_GET['start']) ? abs(intval($_GET['start'])) : mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $al . "' AND `id` > '$img'"), 0);
+    $start = isset($_REQUEST['page']) ? $page - 1 : (mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al' AND `id` > '$img'"), 0));
     // Обрабатываем ссылку для возврата
     if (empty($_SESSION['ref']))
         $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
@@ -92,7 +89,8 @@ if ($total > $kmess)
     echo '<div class="topmenu">' . functions::display_pagination('album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($view ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>';
 if ($total) {
     $req = mysql_query("SELECT * FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "' AND `album_id` = '$al' ORDER BY `id` DESC LIMIT $start, $kmess");
-    while ($res = mysql_fetch_assoc($req)) {
+    $i = 0;
+    while (($res = mysql_fetch_assoc($req)) !== false) {
         echo ($i % 2 ? '<div class="list2">' : '<div class="list1">');
         if ($view) {
             /*
@@ -103,7 +101,7 @@ if ($total) {
             echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
             // Счетчик просмотров
             if (!mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '$user_id' AND `file_id` = '" . $res['id'] . "'"), 0)) {
-                mysql_query("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = '$realtime'");
+                mysql_query("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = '" . time() . "'");
                 $views = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'"), 0);
                 mysql_query("UPDATE `cms_album_files` SET `views` = '$views' WHERE `id` = '" . $res['id'] . "'");
             }
@@ -118,7 +116,7 @@ if ($total) {
         if (!empty($res['description']))
             echo '<div class="gray">' . functions::smileys(functions::checkout($res['description'], 1)) . '</div>';
         echo '<div class="sub">';
-        if ($user['id'] == $user_id || $rights >= 6) {
+        if ($user['id'] == $user_id || core::$user_rights >= 6) {
             echo functions::display_menu(array (
                 '<a href="album.php?act=image_edit&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a>',
                 '<a href="album.php?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['move'] . '</a>',
@@ -127,7 +125,7 @@ if ($total) {
         }
         echo vote_photo($res) .
             '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
-            '<div class="gray">' . $lng['date'] . ': ' . date("d.m.Y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . '</div>' .
+            '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .
             '<a href="album.php?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')<br />' .
             '<a href="album.php?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>' .
             '</div></div>';

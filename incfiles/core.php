@@ -13,7 +13,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 //Error_Reporting(E_ALL & ~E_NOTICE);
 @ini_set('session.use_trans_sid', '0');
 @ini_set('arg_separator.output', '&amp;');
-date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 $rootpath = isset($rootpath) ? $rootpath : '../';
 
@@ -36,32 +35,32 @@ function autoload($name) {
 -----------------------------------------------------------------
 */
 $core = new core() or die('Error: Core System');
+unset($core);
 
 /*
 -----------------------------------------------------------------
 Получаем системные переменные
 -----------------------------------------------------------------
 */
-$ip = $core->ip;                                // Адрес IP
-$agn = $core->user_agent;                       // User Agent
-$set = $core->system_settings;                  // Системные настройки
-$realtime = $core->system_time;                 // Системное время с учетом сдвига
-$lng = $core->load_lng();                       // Фразы выбранного языка
-$is_mobile = functions::mobile_detect();        // Определение мобильного браузера
-$home = $set['homeurl'];                        // Домашняя страница
+$ip = core::$ip;                                          // Адрес IP
+$agn = core::$user_agent;                                 // User Agent
+$set = core::$system_set;                                 // Системные настройки
+$lng = core::$lng;                                        // Фразы языка
+$is_mobile = core::$is_mobile;                            // Определение мобильного браузера
+$home = $set['homeurl'];                                  // Домашняя страница
 
 /*
 -----------------------------------------------------------------
 Получаем пользовательские переменные
 -----------------------------------------------------------------
 */
-$user_id = $core->user_id;                      // Идентификатор пользователя
-$rights = $core->user_rights;                   // Права доступа
-$datauser = $core->user_data;                   // Все данные пользователя
-$set_user = $core->user_set;               // Пользовательские настройки
-$ban = $core->user_ban;                         // Бан
+$user_id = core::$user_id;                                // Идентификатор пользователя
+$rights = core::$user_rights;                             // Права доступа
+$datauser = core::$user_data;                             // Все данные пользователя
+$set_user = core::$user_set;                              // Пользовательские настройки
+$ban = core::$user_ban;                                   // Бан
 $login = isset($datauser['name']) ? $datauser['name'] : false;
-$kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 99 ? $set_user['kmess'] : 10;
+$kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;
 
 /*
 -----------------------------------------------------------------
@@ -82,15 +81,8 @@ $headmod = isset($headmod) ? $headmod : '';
 Показываем Дайджест
 -----------------------------------------------------------------
 */
-if ($user_id && $datauser['lastdate'] < ($realtime - 3600) && $set_user['digest'] && $headmod == 'mainpage')
+if ($user_id && $datauser['lastdate'] < (time() - 3600) && $set_user['digest'] && $headmod == 'mainpage')
     header('Location: ' . $set['homeurl'] . '/index.php?act=digest&last=' . $datauser['lastdate']);
-
-/*
------------------------------------------------------------------
-Подключаем служебные файлы
------------------------------------------------------------------
-*/
-require($rootpath . 'incfiles/func.php');
 
 /*
 -----------------------------------------------------------------

@@ -104,7 +104,7 @@ if ($user['id'] == $user_id || $rights >= 7) {
         '<input type="text" name="name" value="' . functions::checkout($name) . '" maxlength="30" /><br />' .
         '<small>Min. 2, Max. 30</small></p>' .
         '<p><h3>' . $lng['description'] . '</h3>' .
-        '<textarea name="description" cols="' . $set_user['field_w'] . '" rows="' . $set_user['field_h'] . '">' . functions::checkout($description) . '</textarea><br />' .
+        '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($description) . '</textarea><br />' .
         '<small>' . $lng['not_mandatory_field'] . '<br />Max. 500</small></p>' .
         '<p><h3>' . $lng['password'] . '</h3>' .
         '<input type="text" name="password" value="' . functions::checkout($password) . '" maxlength="15" /><br />' .

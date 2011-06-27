@@ -39,7 +39,7 @@ echo '<div class="phdr"><b>' . $lng_profile['my_office'] . '</b></div>' .
     '<div><img src="../images/guestbook.gif" width="16" height="16"/>&#160;<a href="profile.php?act=guestbook">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 //echo '<div><img src="../images/pt.gif" width="16" height="16"/>&#160;<a href="">' . $lng['blog'] . '</a>&#160;(0)</div>';
 if ($rights >= 1) {
-    $guest = functions::stat_guestbook(2);
+    $guest = counters::guestbook(2);
     echo '</p><p>' .
         '<div><img src="../images/admin.png" width="16" height="16"/>&#160;<a href="../guestbook/index.php?act=ga&amp;do=set">' . $lng['admin_club'] . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }

@@ -1,13 +1,13 @@
 <?
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
@@ -36,7 +36,7 @@ switch ($mod) {
                 exit;
             }
         } else {
-            $res = array ('link' => 'http://');
+            $res = array('link' => 'http://');
         }
         if (isset($_POST['submit'])) {
             $link = isset($_POST['link']) ? mysql_real_escape_string(trim($_POST['link'])) : '';
@@ -54,7 +54,7 @@ switch ($mod) {
             $type = isset($_POST['type']) ? intval($_POST['type']) : 0;
             $mesto = isset($_POST['mesto']) ? abs(intval($_POST['mesto'])) : 0;
             $color = isset($_POST['color']) ? mb_substr(trim($_POST['color']), 0, 6) : '';
-            $error = array ();
+            $error = array();
             if (!$link || !$name)
                 $error[] = $lng['error_empty_fields'];
             if ($type > 3 || $type < 0)
@@ -113,55 +113,55 @@ switch ($mod) {
                     `layout` = '$layout',
                     `to` = '0',
                     `show` = '$show',
-                    `time` = '$realtime',
+                    `time` = '" . time() . "',
                     `bold` = '$bold',
                     `italic` = '$italic',
                     `underline` = '$underline'
                 ") or die (mysql_error());
             }
-            mysql_query("UPDATE `users` SET `lastpost` = '$realtime' WHERE `id` = '$user_id'");
+            mysql_query("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
             echo '<div class="menu"><p>' . ($id ? $lng['link_edit_ok'] : $lng['link_add_ok']) . '<br />' .
-                '<a href="index.php?act=ads&amp;sort=' . $type . '">' . $lng['continue'] . '</a></p></div>';
+                 '<a href="index.php?act=ads&amp;sort=' . $type . '">' . $lng['continue'] . '</a></p></div>';
         } else {
             // Форма добавления / изменения ссылки
             echo '<form action="index.php?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-                '<div class="menu"><p><h3>' . $lng['link'] . '</h3>' .
-                '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
-                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_direct'] . '<br />' .
-                '<small>' . $lng['link_direct_help'] . '</small></p>' .
-                '<p><h3>' . $lng['title'] . '</h3>' .
-                '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
-                '<small>' . $lng['link_add_name_help'] . '</small></p>' .
-                '<p><h3>' . $lng['color'] . '</h3>' .
-                '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br />' .
-                '<small>' . $lng['link_add_color_help'] . '</small></p>' .
-                '<p><h3>' . $lng['transitions'] . '</h3>' .
-                '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br />' .
-                '<small>' . $lng['link_add_trans_help'] . '</small></p>' .
-                '<p><h3>' . $lng['days'] . '</h3>' .
-                '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br />' .
-                '<small>' . $lng['link_add_days_help'] . '</small></p>' .
-                '</div><div class="gmenu">' .
-                '<p><h3>' . $lng['to_show'] . '</h3>' .
-                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_all'] . '<br />' .
-                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_guest'] . '<br />' .
-                '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_users'] . '</p>' .
-                '<p><h3>' . $lng['arrangement'] . '</h3>' .
-                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_logo'] . '<br />' .
-                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_usermenu'] . '<br />' .
-                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_counters'] . '<br />' .
-                '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_counters'] . '</p>' .
-                '<p><h3>' . $lng['placing'] . '</h3>' .
-                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_all'] . '<br />' .
-                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_front'] . '<br />' .
-                '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_child'] . '</p>' .
-                '<p><h3>' . $lng['links_allocation'] . '</h3>' .
-                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . $lng['font_bold'] . '</b><br />' .
-                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . $lng['font_italic'] . '</i><br />' .
-                '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . $lng['font_underline'] . '</u></p></div>' .
-                '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? $lng['edit'] : $lng['add']) . '" /></div></form>' .
-                '<p><a href="index.php?act=ads">' . $lng['advertisement'] . '</a><br />' .
-                '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+                 '<div class="menu"><p><h3>' . $lng['link'] . '</h3>' .
+                 '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
+                 '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_direct'] . '<br />' .
+                 '<small>' . $lng['link_direct_help'] . '</small></p>' .
+                 '<p><h3>' . $lng['title'] . '</h3>' .
+                 '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
+                 '<small>' . $lng['link_add_name_help'] . '</small></p>' .
+                 '<p><h3>' . $lng['color'] . '</h3>' .
+                 '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br />' .
+                 '<small>' . $lng['link_add_color_help'] . '</small></p>' .
+                 '<p><h3>' . $lng['transitions'] . '</h3>' .
+                 '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br />' .
+                 '<small>' . $lng['link_add_trans_help'] . '</small></p>' .
+                 '<p><h3>' . $lng['days'] . '</h3>' .
+                 '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br />' .
+                 '<small>' . $lng['link_add_days_help'] . '</small></p>' .
+                 '</div><div class="gmenu">' .
+                 '<p><h3>' . $lng['to_show'] . '</h3>' .
+                 '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_all'] . '<br />' .
+                 '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_guest'] . '<br />' .
+                 '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_users'] . '</p>' .
+                 '<p><h3>' . $lng['arrangement'] . '</h3>' .
+                 '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_logo'] . '<br />' .
+                 '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_usermenu'] . '<br />' .
+                 '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_counters'] . '<br />' .
+                 '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_counters'] . '</p>' .
+                 '<p><h3>' . $lng['placing'] . '</h3>' .
+                 '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_all'] . '<br />' .
+                 '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_front'] . '<br />' .
+                 '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_child'] . '</p>' .
+                 '<p><h3>' . $lng['links_allocation'] . '</h3>' .
+                 '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . $lng['font_bold'] . '</b><br />' .
+                 '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . $lng['font_italic'] . '</i><br />' .
+                 '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . $lng['font_underline'] . '</u></p></div>' .
+                 '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? $lng['edit'] : $lng['add']) . '" /></div></form>' .
+                 '<p><a href="index.php?act=ads">' . $lng['advertisement'] . '</a><br />' .
+                 '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
         }
         break;
 
@@ -225,12 +225,12 @@ switch ($mod) {
                 header('Location: ' . $_POST['ref']);
             } else {
                 echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['delete'] . '</div>' .
-                    '<div class="rmenu"><form action="index.php?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
-                    '<p>' . $lng['link_deletion_warning'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" /></p>' .
-                    '<input type="hidden" name="ref" value="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" />' .
-                    '</form></div>' .
-                    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . $lng['cancel'] . '</a></div>';
+                     '<div class="rmenu"><form action="index.php?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
+                     '<p>' . $lng['link_deletion_warning'] . '</p>' .
+                     '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" /></p>' .
+                     '<input type="hidden" name="ref" value="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" />' .
+                     '</form></div>' .
+                     '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . $lng['cancel'] . '</a></div>';
             }
         }
         break;
@@ -247,11 +247,11 @@ switch ($mod) {
             header('location: index.php?act=ads');
         } else {
             echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['links_delete_hidden'] . '</div>' .
-                '<div class="menu"><form method="post" action="index.php?act=ads&amp;mod=clear">' .
-                '<p>' . $lng['link_clear_warning'] . '</p>' .
-                '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
-                '</p></form></div>' .
-                '<div class="phdr"><a href="index.php?act=ads">' . $lng['cancel'] . '</a></div>';
+                 '<div class="menu"><form method="post" action="index.php?act=ads&amp;mod=clear">' .
+                 '<p>' . $lng['link_clear_warning'] . '</p>' .
+                 '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
+                 '</p></form></div>' .
+                 '<div class="phdr"><a href="index.php?act=ads">' . $lng['cancel'] . '</a></div>';
         }
         break;
 
@@ -278,24 +278,24 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['advertisement'] . '</div>';
-        $array_type = array (
+        $array_type = array(
             $lng['links_armt_over_logo'],
             $lng['links_armt_under_usermenu'],
             $lng['links_armt_over_counters'],
             $lng['links_armt_under_counters']
         );
-        $array_placing = array (
+        $array_placing = array(
             $lng['link_add_placing_all'],
             $lng['link_add_placing_front'],
             $lng['link_add_placing_child']
         );
-        $array_show = array (
+        $array_show = array(
             $lng['to_all'],
             $lng['to_guest'],
             $lng['to_users']
         );
         $type = isset($_GET['type']) ? intval($_GET['type']) : 0;
-        $array_menu = array (
+        $array_menu = array(
             (!$type ? $lng['links_armt_over_logo'] : '<a href="index.php?act=ads">' . $lng['links_armt_over_logo'] . '</a>'),
             ($type == 1 ? $lng['links_armt_under_usermenu'] : '<a href="index.php?act=ads&amp;type=1">' . $lng['links_armt_under_usermenu'] . '</a>'),
             ($type == 2 ? $lng['links_armt_over_counters'] : '<a href="index.php?act=ads&amp;type=2">' . $lng['links_armt_over_counters'] . '</a>'),
@@ -323,8 +323,8 @@ switch ($mod) {
                 // Выводим рекламмную ссылку с атрибутами                 //
                 ////////////////////////////////////////////////////////////
                 echo '<p><img src="../images/' . ($res['to'] ? 'red' : 'green') . '.gif" width="16" height="16" class="left"/>&#160;' .
-                    '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br />' . $name . '</p>';
-                $menu = array (
+                     '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br />' . $name . '</p>';
+                $menu = array(
                     '<a href="index.php?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a>',
                     '<a href="index.php?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a>',
                     '<a href="index.php?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a>',
@@ -332,13 +332,13 @@ switch ($mod) {
                     '<a href="index.php?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? $lng['to_show'] : $lng['hide']) . '</a>'
                 );
                 echo '<div class="sub">' .
-                    '<div>' . functions::display_menu($menu) . '</div>' .
-                    '<p><span class="gray">' . $lng['installation_date'] . ':</span> ' . date('d.m.y в H:i', $res['time'] + $sdvig) . '<br />' .
-                    '<span class="gray">' . $lng['placing'] . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br />' .
-                    '<span class="gray">' . $lng['to_show'] . ':</span>&nbsp;' . $array_show[$res['view']];
+                     '<div>' . functions::display_menu($menu) . '</div>' .
+                     '<p><span class="gray">' . $lng['installation_date'] . ':</span> ' . functions::display_date($res['time']) . '<br />' .
+                     '<span class="gray">' . $lng['placing'] . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br />' .
+                     '<span class="gray">' . $lng['to_show'] . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу
-                $agreement = array ();
-                $remains = array ();
+                $agreement = array();
+                $remains = array();
                 if (!empty($res['count_link'])) {
                     $agreement[] = $res['count_link'] . ' ' . $lng['transitions_n'];
                     $remains_count = $res['count_link'] - $res['count'];
@@ -347,7 +347,7 @@ switch ($mod) {
                 }
                 if (!empty($res['day'])) {
                     $agreement[] = functions::timecount($res['day'] * 86400);
-                    $remains_count = $res['day'] * 86400 - ($realtime - $res['time']);
+                    $remains_count = $res['day'] * 86400 - (time() - $res['time']);
                     if ($remains_count > 0)
                         $remains[] = functions::timecount($remains_count);
                 }
@@ -365,13 +365,13 @@ switch ($mod) {
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('index.php?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</p>' .
-                '<p><form action="index.php?act=ads&amp;type=' . $type . '" method="post">' .
-                '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            echo '<div class="topmenu">' . functions::display_pagination('index.php?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
+                 '<p><form action="index.php?act=ads&amp;type=' . $type . '" method="post">' .
+                 '<input type="text" name="page" size="2"/>' .
+                 '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
         }
         echo '<p><a href="index.php?act=ads&amp;mod=edit">' . $lng['link_add'] . '</a><br />' .
-            '<a href="index.php?act=ads&amp;mod=clear">' . $lng['links_delete_hidden'] . '</a><br />' .
-            '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+             '<a href="index.php?act=ads&amp;mod=clear">' . $lng['links_delete_hidden'] . '</a><br />' .
+             '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 }
 ?>

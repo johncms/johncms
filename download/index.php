@@ -1,21 +1,18 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 $headmod = 'load';
 require_once('../incfiles/core.php');
-$lng_dl = $core->load_lng('downloads');
+$lng_dl = core::load_lng('downloads');
 require_once('../incfiles/lib/mp3.php');
 require_once('../incfiles/lib/pclzip.lib.php');
 $textl = $lng['downloads'];
@@ -34,6 +31,18 @@ if ($error) {
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require_once("../incfiles/end.php");
     exit;
+}
+
+function provcat($catalog)
+{
+    $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $catalog . "';");
+    $cat2 = mysql_num_rows($cat1);
+    $adrdir = mysql_fetch_array($cat1);
+    if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]"))) {
+        echo 'ERROR<br/><a href="?">Back</a><br/>';
+        require_once('../incfiles/end.php');
+        exit;
+    }
 }
 
 $array = array (
@@ -68,14 +77,13 @@ if (in_array($act, $array)) {
     if (!$set['mod_down'])
         echo '<p><font color="#FF0000"><b>' . $lng_dl['downloads_closed'] . '</b></font></p>';
     // Ссылка на новые файлы
-    $old = $realtime - (3 * 24 * 3600);
-    echo '<p><a href="?act=new">' . $lng['new_files'] . '</a> (' . mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . $old . "' AND `type` = 'file'"), 0) . ')</p>';
+    echo '<p><a href="?act=new">' . $lng['new_files'] . '</a> (' . mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file'"), 0) . ')</p>';
+    $cat = isset($_GET['cat']) ? intval($_GET['cat']) : '';
     if (empty($_GET['cat'])) {
         // Заголовок начальной страницы загрузок
         echo '<div class="phdr">' . $lng['downloads'] . '</div>';
     } else {
         // Заголовок страниц категорий
-        $cat = intval($_GET['cat']);
         $req = mysql_query("SELECT * FROM `download` WHERE `type` = 'cat' AND `id` = '" . $cat . "' LIMIT 1");
         $res = mysql_fetch_array($req);
         if (mysql_num_rows($req) == 0 || !is_dir($res['adres'] . '/' . $res['name'])) {
@@ -124,8 +132,7 @@ if (in_array($act, $array)) {
                 $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%'");
                 $g = mysql_result($req, 0);
                 // Считаем новые файлы в подкаталогах
-                $old = $realtime - (3 * 24 * 3600);
-                $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%' AND `time` > '" . $old . "'");
+                $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%' AND `time` > '" . (time() - 259200) . "'");
                 $g1 = mysql_result($req, 0);
                 echo "($g";
                 if ($g1 != 0) {
@@ -164,8 +171,8 @@ if (in_array($act, $array)) {
                     case "png":
                         $imt = "png.png";
                         break;
-                        default :
-                    $imt = "file.gif";
+                    default :
+                        $imt = "file.gif";
                         break;
                 }
                 echo '<img src="' . $filesroot . '/img/' . $imt . '" alt=""/><a href="?act=view&amp;file=' . $zap2['id'] . '">' . htmlentities($zap2['name'], ENT_QUOTES, 'UTF-8') . '</a>';
@@ -180,7 +187,6 @@ if (in_array($act, $array)) {
                 }
                 echo '</div>';
             }
-            ++$i;
         }
     } else {
         echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';

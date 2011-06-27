@@ -1,20 +1,16 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once ("../incfiles/head.php");
 if ($rights == 4 || $rights >= 6) {
     if (empty ($_POST['cat'])) {
@@ -100,7 +96,7 @@ if ($rights == 4 || $rights >= 6) {
             @ chmod("$ch", 0777);
             @ chmod("$loaddir/$ch", 0777);
             echo "Файл загружен!<br/>";
-            mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . $realtime . "','" . $ch . "','file','','','','" . $opis . "','" . $ch1 . "');");
+            mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . time() . "','" . $ch . "','file','','','','" . $opis . "','" . $ch1 . "');");
         }
         else {
             echo "Ошибка при загрузке файла<br/>";
@@ -219,7 +215,7 @@ if ($rights == 4 || $rights >= 6) {
                 echo 'Файл загружен!<br/>';
 
                 $ch = "$newname.$ftip";
-                mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . $realtime . "','" . $ch . "','file','','','','" . $opis . "','" . $ch1 . "');");
+                mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . time() . "','" . $ch . "','file','','','','" . $opis . "','" . $ch1 . "');");
             }
             else {
                 echo 'Ошибка при загрузке файла<br/>';

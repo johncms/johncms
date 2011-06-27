@@ -10,16 +10,18 @@
  */
 
 define('_IN_JOHNCMS', 1);
-@ini_set("max_execution_time", "600");
+set_time_limit(600);
 
-define('INSTALL_VERSION', '4.2.0'); // Инсталлируемая версия
-define('UPDATE_VERSION', '3.2.2'); // Обновление с версии
+define('INSTALL_VERSION', '4.3.0'); // Инсталлируемая версия
+define('UPDATE_VERSION', '4.2.0'); // Обновление с версии
+
+//TODO: Добавить в таблицу настроек поле gzip
 
 // Задаем режим работы инсталлятора
 define('MODE', 'install');
-//define('MODE', 'update_322-420');
-//define('MODE', 'update_400-420');
-//define('MODE', 'update_410-420');
+//define('MODE', 'update_322-430');
+//define('MODE', 'update_400-430');
+//define('MODE', 'update_420-430');
 
 class install
 {
@@ -152,7 +154,7 @@ class install
                 }
             }
         } else {
-            $errors[] = 'Fatal error!';
+            $errors[] = 'ERROR: SQL file';
         }
         return $errors;
     }

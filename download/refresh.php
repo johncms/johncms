@@ -22,7 +22,7 @@ if ($rights == 4 || $rights >= 6) {
             }
             if (!in_array($file1, $drt)) {
                 if (is_dir("$loadroot/$file1")) {
-                    mysql_query("insert into `download` values(0,'','" . $loadroot . "','" . $realtime . "','" . $file1 . "','cat','','','','" . $file1 . "','');");
+                    mysql_query("insert into `download` values(0,'','" . $loadroot . "','" . time() . "','" . $file1 . "','cat','','','','" . $file1 . "','');");
                 }
             }
         }
@@ -41,10 +41,10 @@ if ($rights == 4 || $rights >= 6) {
                     }
                     if (!in_array($file, $fod)) {
                         if (is_dir("$dirop/$file")) {
-                            mysql_query("insert into `download` values(0,'" . $obn1[id] . "','" . $pap . "','" . $realtime . "','" . $file . "','cat','','','','" . $file . "','');");
+                            mysql_query("insert into `download` values(0,'" . $obn1[id] . "','" . $pap . "','" . time() . "','" . $file . "','cat','','','','" . $file . "','');");
                         }
                         if (is_file("$dirop/$file")) {
-                            mysql_query("insert into `download` values(0,'" . $obn1[id] . "','" . $pap . "','" . $realtime . "','" . $file . "','file','','','','','');");
+                            mysql_query("insert into `download` values(0,'" . $obn1[id] . "','" . $pap . "','" . time() . "','" . $file . "','file','','','','','');");
                         }
                     }
                     $fod = array (); ########## 7.02.08
@@ -52,9 +52,9 @@ if ($rights == 4 || $rights >= 6) {
             }
         }
     }
-    $dres = mysql_query("select * from `download` where type = 'cat' and time = '" . $realtime . "' ;");
+    $dres = mysql_query("select * from `download` where type = 'cat' and time = '" . time() . "' ;");
     $totald = mysql_num_rows($dres);
-    $fres = mysql_query("select * from `download` where type = 'file' and time = '" . $realtime . "' ;");
+    $fres = mysql_query("select * from `download` where type = 'file' and time = '" . time() . "' ;");
     $totalf = mysql_num_rows($fres);
     $deld = mysql_query("select * from `download` where type = 'cat' ;");
     $idd = 0;

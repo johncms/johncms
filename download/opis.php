@@ -41,7 +41,7 @@ if ($rights == 4 || $rights >= 6) {
     else {
         $str = str_replace("<br/>", "\r\n", $adrfile['text']);
         echo "<form action='?act=opis&amp;file=" . $file . "' method='post'>";
-        echo $lng['description'] . ':<br/><textarea cols="20" rows="4" name="newt">' . $str . '</textarea><br/>';
+        echo $lng['description'] . ':<br/><textarea rows="4" name="newt">' . $str . '</textarea><br/>';
         echo "<input type='submit' name='submit' value='Изменить'/></form><br/>";
     }
 }

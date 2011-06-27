@@ -40,11 +40,11 @@ foreach (glob('../incfiles/languages/*/_core.ini') as $val) {
 */
 if(isset($_GET['refresh'])){
     mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'lng_list'");
-    $core->lng_list = array();
+    core::$lng_list = array();
     echo '<div class="gmenu"><p>' . $lng['refresh_descriptions_ok'] . '</p></div>';
 }
-$lng_add = array_diff(array_keys($lng_list), $core->lng_list);
-$lng_del = array_diff($core->lng_list, array_keys($lng_list));
+$lng_add = array_diff(array_keys($lng_list), core::$lng_list);
+$lng_del = array_diff(core::$lng_list, array_keys($lng_list));
 if (!empty($lng_add) || !empty($lng_del)) {
     if (!empty($lng_del) && in_array($set['lng'], $lng_del)) {
         // Если удаленный язык был системный, то меняем на первый доступный

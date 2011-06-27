@@ -15,7 +15,7 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
 $search = $search_post ? $search_post : $search_get;
 if (isset($_GET['ip']))
-    $search = long2ip(intval($_GET['ip']));
+    $search = trim($_GET['ip']);
 $menu = array (
     (!$mod ? '<b>' . $lng['ip_actual'] . '</b>' : '<a href="index.php?act=search_ip&amp;search=' . rawurlencode($search) . '">' . $lng['ip_actual'] . '</a>'),
     ($mod == 'history' ? '<b>' . $lng['ip_history'] . '</b>' : '<a href="index.php?act=search_ip&amp;mod=history&amp;search=' . rawurlencode($search) . '">' . $lng['ip_history'] . '</a>')
@@ -35,12 +35,12 @@ if ($search) {
         */
         $array = explode('-', $search);
         $ip = trim($array[0]);
-        if (!$core->ip_valid($ip))
+        if (!core::ip_valid($ip))
             $error[] = $lng['error_firstip'];
         else
             $ip1 = ip2long($ip);
         $ip = trim($array[1]);
-        if (!$core->ip_valid($ip))
+        if (!core::ip_valid($ip))
             $error[] = $lng['error_secondip'];
         else
             $ip2 = ip2long($ip);
@@ -70,7 +70,7 @@ if ($search) {
         Обрабатываем одиночный адрес
         -----------------------------------------------------------------
         */
-        if (!$core->ip_valid($search)) {
+        if (!core::ip_valid($search)) {
             $error = $lng['error_address'];
         } else {
             $ip1 = ip2long($search);
@@ -86,21 +86,27 @@ if ($search && !$error) {
     */
     echo '<div class="phdr">' . $lng['search_results'] . '</div>';
     if ($mod == 'history')
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2"), 0);
+        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
     else
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2"), 0);
+        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
+    if ($total > $kmess) {
+        echo '<div class="topmenu">' . functions::display_pagination('index.php?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+    }
     if ($total) {
         if ($mod == 'history') {
-            $req = mysql_query("SELECT `cms_users_iphistory`.`ip`, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
+            $req = mysql_query("SELECT `cms_users_iphistory`.`ip`, `cms_users_iphistory`.`ip_via_proxy`, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
-                WHERE `cms_users_iphistory`.`ip` BETWEEN $ip1 AND $ip2
+                WHERE `cms_users_iphistory`.`ip` BETWEEN $ip1 AND $ip2 OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN $ip1 AND $ip2
+                GROUP BY `users`.`id`
                 ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess
             ");
         } else {
-            $req = mysql_query("SELECT * FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess");
+            $req = mysql_query("SELECT * FROM `users`
+            WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2
+            ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess");
         }
         $i = 0;
-        while ($res = mysql_fetch_assoc($req)) {
+        while (($res = mysql_fetch_assoc($req)) !== false) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             echo functions::display_user($res, array ('iphist' => 1));
             echo '</div>';
@@ -112,9 +118,10 @@ if ($search && !$error) {
     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
     if ($total > $kmess) {
         // Навигация по страницам
-        echo '<p>' . functions::display_pagination('index.php?act=search_ip&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . rawurlencode($search) . '&amp;', $start, $total, $kmess) . '</p>';
-        echo '<p><form action="index.php?act=search_ip" method="post"><input type="hidden" name="search" value="' . functions::checkout($search) .
-            '" /><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+        echo '<div class="topmenu">' . functions::display_pagination('index.php?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+             '<p><form action="index.php?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '" method="post">' .
+             '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+             '</form></p>';
     }
     echo '<p><a href="index.php?act=search_ip">' . $lng['search_new'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 } else {

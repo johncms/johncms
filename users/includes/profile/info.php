@@ -33,7 +33,7 @@ if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg'))
 echo '<li><span class="gray">' . $lng_profile['name'] . ':</span> ' . (empty($user['imname']) ? '' : $user['imname']) . '</li>' .
     '<li><span class="gray">' . $lng_profile['birt'] . ':</span> ' . (empty($user['dayb']) ? '' : sprintf("%02d", $user['dayb']) . '.' . sprintf("%02d", $user['monthb']) . '.' . $user['yearofbirth']) . '</li>' .
     '<li><span class="gray">' . $lng_profile['city'] . ':</span> ' . (empty($user['live']) ? '' : $user['live']) . '</li>' .
-    '<li><span class="gray">' . $lng_profile['about'] . ':</span> ' . (empty($user['about']) ? '' : '<br />' . functions::smileys(tags($user['about']))) . '</li>' .
+    '<li><span class="gray">' . $lng_profile['about'] . ':</span> ' . (empty($user['about']) ? '' : '<br />' . functions::smileys(bbcode::tags($user['about']))) . '</li>' .
     '</ul></p><p>' .
     '<h3><img src="../images/mail.png" width="16" height="16" class="left" />&#160;' . $lng_profile['communication'] . '</h3><ul>' .
     '<li><span class="gray">' . $lng_profile['phone_number'] . ':</span> ' . (empty($user['mibile']) ? '' : $user['mibile']) . '</li>' .
@@ -45,7 +45,7 @@ echo '</li>' .
     '<li><span class="gray">ICQ:</span> ' . (empty($user['icq']) ? '' : $user['icq']) . '</li>' .
     '<li><span class="gray">Skype:</span> ' . (empty($user['skype']) ? '' : $user['skype']) . '</li>' .
     '<li><span class="gray">Jabber:</span> ' . (empty($user['jabber']) ? '' : $user['jabber']) . '</li>' .
-    '<li><span class="gray">' . $lng_profile['site'] . ':</span> ' . (empty($user['www']) ? '' : tags($user['www'])) . '</li>' .
+    '<li><span class="gray">' . $lng_profile['site'] . ':</span> ' . (empty($user['www']) ? '' : bbcode::tags($user['www'])) . '</li>' .
     '</ul></p></div>' .
     '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a></div>';
 ?>

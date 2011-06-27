@@ -10,9 +10,9 @@
 */
 
 define('_IN_JOHNCMS', 1);
-$headmod = 'profile';
+
 require('../incfiles/core.php');
-$lng_profile = $core->load_lng('profile');
+$lng_profile = core::load_lng('profile');
 
 /*
 -----------------------------------------------------------------
@@ -68,6 +68,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     Анкета пользователя
     -----------------------------------------------------------------
     */
+    $headmod = 'profile,' . $user['id'];
     $textl = $lng['profile'] . ': ' . htmlspecialchars($user['name']);
     require('../incfiles/head.php');
     echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? $lng_profile['user_profile'] : $lng_profile['my_profile']) . '</b></div>';
@@ -82,7 +83,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     if (!empty($menu))
         echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
     //Уведомление о дне рожденья
-    if ($user['dayb'] == date('j', $realtime) && $user['monthb'] == date('n', $realtime)) {
+    if ($user['dayb'] == date('j', time()) && $user['monthb'] == date('n', time())) {
         echo '<div class="gmenu">' . $lng['birthday'] . '!!!</div>';
     }
     // Информация о юзере
@@ -91,6 +92,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         'iphist' => 1,
         'header' => '<b>ID:' . $user['id'] . '</b>'
     );
+    if($user['id'] != core::$user_id) $arg['footer'] = '<span class="gray">' . core::$lng['where'] . ':</span> ' . functions::display_place($user['id'], $user['place']);
     echo '<div class="user"><p>' . functions::display_user($user, $arg) . '</p></div>';
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
     if ($rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
@@ -117,13 +119,13 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         if ($user['id'] != $user_id) {
             if (!$datauser['karma_off'] && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $datauser['ip']) {
                 $sum = mysql_result(mysql_query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'"), 0);
-                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . ($realtime - 86400) . "'"), 0);
+                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'"), 0);
                 if (!$ban && $datauser['postforum'] >= $set_karma['forum'] && $datauser['total_on_site'] >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
                     echo '<br /><a href="profile.php?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . $lng['vote'] . '</a>';
                 }
             }
         } else {
-            $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400)), 0);
+            $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400)), 0);
             if ($total_karma > 0)
                 echo '<br /><a href="profile.php?act=karma&amp;mod=new">' . $lng['responses_new'] . '</a> (' . $total_karma . ')';
         }

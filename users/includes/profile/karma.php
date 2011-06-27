@@ -10,7 +10,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$lng_karma = $core->load_lng('karma');
+$lng_karma = core::load_lng('karma');
 $textl = $lng['karma'];
 require('../incfiles/head.php');
 if ($set_karma['on']) {
@@ -31,7 +31,7 @@ if ($set_karma['on']) {
                     $error[] = $lng_karma['error_terms_1'] . ' '
                         . ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . $lng['hours'] : ($set_karma['karma_time'] / 86400) . $lng['days']) . ' ' . $lng_karma['error_terms_2'] . ' ' . $set_karma['forum'] . ' '
                         . $lng_karma['posts'];
-                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . ($realtime - 86400) . "'"), 0);
+                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'"), 0);
                 if ($count)
                     $error[] = $lng_karma['error_terms_3'];
                 $sum = mysql_result(mysql_query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'"), 0);
@@ -52,7 +52,7 @@ if ($set_karma['on']) {
                             `karma_user` = '" . $user['id'] . "',
                             `points` = '$points',
                             `type` = '$type',
-                            `time` = '$realtime',
+                            `time` = '" . time() . "',
                             `text` = '$text'
                         ");
                         $sql = $type ? "`karma_plus` = '" . ($user['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user['karma_minus'] + $points) . "'";
@@ -139,14 +139,14 @@ if ($set_karma['on']) {
             -----------------------------------------------------------------
             */
             echo '<div class="phdr"><a href="profile.php?act=karma&amp;type=2"><b>' . $lng['karma'] . '</b></a> | ' . $lng_karma['new_responses'] . '</div>';
-            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400)), 0);
+            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400)), 0);
             if ($total) {
-                $req = mysql_query("SELECT * FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . ($realtime - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                $req = mysql_query("SELECT * FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
                 while ($res = mysql_fetch_assoc($req)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
-                    echo ' <span class="gray">(' . date("d.m.y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . ')</span>';
+                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
                     if (!empty($res['text']))
                         echo '<div class="sub">' . functions::checkout($res['text']) . '</div>';
                     echo '</div>';
@@ -171,7 +171,6 @@ if ($set_karma['on']) {
             Главная страница Кармы, список отзывов
             -----------------------------------------------------------------
             */
-            $exp = explode('|', $user['plus_minus']);
             $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
             $menu = array (
                 ($type == 2 ? '<b>' . $lng_karma['all'] . '</b>' : '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=2">' . $lng_karma['all'] . '</a>'),
@@ -205,7 +204,7 @@ if ($set_karma['on']) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
-                    echo ' <span class="gray">(' . date("d.m.y / H:i", $res['time'] + $set_user['sdvig'] * 3600) . ')</span>';
+                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
                     if ($rights == 9)
                         echo ' <span class="red"><a href="profile.php?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';
                     if (!empty($res['text']))

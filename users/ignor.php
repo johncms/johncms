@@ -1,21 +1,18 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 
 require_once("../incfiles/core.php");
-$lng_pm = $core->load_lng('pm');
+$lng_pm = core::load_lng('pm');
 $headmod = 'ignor';
 $textl = 'Block List';
 require_once('../incfiles/head.php');
@@ -63,7 +60,7 @@ if (!empty($_SESSION['uid'])) {
                 }
                 if ($adc1 == 0) {
                     if ($addc1 == 1) {
-                        mysql_query("insert into `privat` values(0,'" . $foruser . "','','" . $realtime . "','','','','','0','" . $login . "','','" . $nik . "','');");
+                        mysql_query("insert into `privat` values(0,'" . $foruser . "','','" . time() . "','','','','','0','" . $login . "','','" . $nik . "','');");
                         echo $lng_pm['block_added'] . "<br/>";
                     } else {
                         echo $lng['error_user_not_exist'] . "<br/>";
@@ -108,7 +105,7 @@ if (!empty($_SESSION['uid'])) {
                     echo '<div class="menu">' . $mass['ignor'];
                     $ontime = $mass1['lastdate'];
                     $ontime2 = $ontime + 300;
-                    if ($realtime > $ontime2) {
+                    if (time() > $ontime2) {
                         echo '<font color="#FF0000"> [Off]</font>';
                     } else {
                         echo '<font color="#00AA00"> [ON]</font>';

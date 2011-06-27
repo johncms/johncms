@@ -10,7 +10,7 @@
 */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
-$lng_ban = $core->load_lng('ban');
+$lng_ban = core::load_lng('ban');
 switch ($mod) {
     case 'amnesty':
         if ($rights < 9) {
@@ -25,12 +25,12 @@ switch ($mod) {
                     echo '<div class="gmenu"><p>' . $lng_ban['amnesty_clean_confirm'] . '</p></div>';
                 } else {
                     // Разбаниваем активные Баны
-                    $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . $realtime . "'");
+                    $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'");
                     while ($res = mysql_fetch_array($req)) {
-                        $ban_left = $res['ban_time'] - $realtime;
+                        $ban_left = $res['ban_time'] - time();
                         if ($ban_left < 2592000) {
                             $amnesty_msg = isset($lng_ban['amnesty']) ? mysql_real_escape_string($lng_ban['amnesty']) : 'Amnesty';
-                            mysql_query("UPDATE `cms_ban_users` SET `ban_time`='$realtime', `ban_raz`='--$amnesty_msg--' WHERE `id` = '" . $res['id'] . "'");
+                            mysql_query("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--$amnesty_msg--' WHERE `id` = '" . $res['id'] . "'");
                         }
                     }
                     echo '<div class="gmenu"><p>' . $lng_ban['amnesty_delban_confirm'] . '</p></div>';
@@ -69,7 +69,7 @@ switch ($mod) {
         LIMIT $start, $kmess");
         if (mysql_num_rows($req)) {
             while ($res = mysql_fetch_array($req)) {
-                echo '<div class="' . ($res['bantime'] > $realtime ? 'r' : '') . 'menu">';
+                echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
                 $arg = array (
                     'header' => '<br /><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../users/profile.php?act=ban&amp;user=' . $res['id'] . '">' . $lng_ban['infringements_history'] . '</a> [' . $res['bancount'] . ']</small>'
                 );
@@ -81,7 +81,7 @@ switch ($mod) {
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('index.php?act=ban_panel&amp;', $start, $total, $kmess) . '</p>';
+            echo '<div class="topmenu">' . functions::display_pagination('index.php?act=ban_panel&amp;', $start, $total, $kmess) . '</div>';
             echo '<p><form action="index.php?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
         }
         echo '<p>' . ($rights == 9 && $total ? '<a href="index.php?act=ban_panel&amp;mod=amnesty">' . $lng_ban['amnesty'] . '</a><br />' : '') . '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
