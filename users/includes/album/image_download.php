@@ -47,6 +47,7 @@ if (!$error) {
     // Отдаем файл
     header('location: ' . $set['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
+    require('../incfiles/head.php');
     echo functions::display_error($error, '<a href="album.php">' . $lng['back'] . '</a>');
 }
 ?>

@@ -36,7 +36,9 @@ switch ($act) {
         break;
 
     default:
-        echo str_replace('UPDATE_VERSION', UPDATE_VERSION, $lng['update_warning']);
+        $search = array('#UPDATE_VERSION#', '#MODE#');
+        $replace = array(UPDATE_VERSION, MODE);
+        echo str_replace($search, $replace, $lng['update_warning']);
         echo '<hr /><h3><a href="index.php?act=final">' . $lng['start_update'] . '</a></h3>';
 }
 ?>

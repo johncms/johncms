@@ -184,5 +184,3 @@ class counters
         return $total;
     }
 }
-
-?>

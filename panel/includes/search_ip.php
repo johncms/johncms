@@ -86,7 +86,7 @@ if ($search && !$error) {
     */
     echo '<div class="phdr">' . $lng['search_results'] . '</div>';
     if ($mod == 'history')
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
+        $total = mysql_result(mysql_query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
     else
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
     if ($total > $kmess) {
@@ -94,7 +94,7 @@ if ($search && !$error) {
     }
     if ($total) {
         if ($mod == 'history') {
-            $req = mysql_query("SELECT `cms_users_iphistory`.`ip`, `cms_users_iphistory`.`ip_via_proxy`, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
+            $req = mysql_query("SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
                 WHERE `cms_users_iphistory`.`ip` BETWEEN $ip1 AND $ip2 OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN $ip1 AND $ip2
                 GROUP BY `users`.`id`

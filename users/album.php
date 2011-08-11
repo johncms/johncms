@@ -10,11 +10,11 @@
 */
 
 define('_IN_JOHNCMS', 1);
+
 require('../incfiles/core.php');
 $lng_profile = core::load_lng('profile');
 $textl = $lng_profile['album'];
 $headmod = 'album';
-require('../incfiles/head.php');
 
 $max_album = 10;
 $max_photo = 200;
@@ -27,6 +27,7 @@ $img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : NULL;
 -----------------------------------------------------------------
 */
 if (!$user_id) {
+    require('../incfiles/head.php');
     echo functions::display_error($lng['access_guest_forbidden']);
     require('../incfiles/end.php');
     exit;
@@ -39,6 +40,7 @@ if (!$user_id) {
 */
 $user = functions::get_user($user);
 if (!$user) {
+    require('../incfiles/head.php');
     echo functions::display_error($lng['user_does_not_exist']);
     require('../incfiles/end.php');
     exit;
@@ -91,7 +93,7 @@ $array = array (
     'image_move' => 'includes/album',
     'image_upload' => 'includes/album',
     'list' => 'includes/album',
-    'new' => 'includes/album',
+    'new_comm' => 'includes/album',
     'show' => 'includes/album',
     'sort' => 'includes/album',
     'top' => 'includes/album',
@@ -102,12 +104,13 @@ $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
+    require('../incfiles/head.php');
     $albumcount = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`"), 0);
     $newcount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
     echo '<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
         '<div class="gmenu"><p>' .
         '<img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16"/>&#160;<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
-        //'<img src="' . $set['homeurl'] . '/images/guestbook.gif" width="16" height="16"/>&#160;' . $lng_profile['new_comments'] . '' .
+        '<img src="' . $set['homeurl'] . '/images/guestbook.gif" width="16" height="16"/>&#160;<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16" class="left" />&#160;' . $lng['albums'] . '</h3><ul>' .

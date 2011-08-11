@@ -621,5 +621,3 @@ class functions extends core
         return strtr($str, $replace);
     }
 }
-
-?>

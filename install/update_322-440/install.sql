@@ -54,7 +54,7 @@ DELETE FROM `cms_settings` WHERE `key` = 'gzip' LIMIT 1;
 UPDATE `cms_settings` SET `key` = 'email' WHERE `key` = 'emailadmina';
 UPDATE `cms_settings` SET `key` = 'timeshift' WHERE `key` = 'sdvigclock';
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
-('activity', '1'),
+('active', '1'),
 ('lng', 'en');
 
 --
@@ -112,6 +112,7 @@ CREATE TABLE `cms_album_files` (
   `vote_minus` int(11) NOT NULL,
   `views` int(10) unsigned NOT NULL DEFAULT '0',
   `downloads` int(10) unsigned NOT NULL DEFAULT '0',
+  `unread_comments` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `album_id` (`album_id`),
@@ -192,3 +193,4 @@ ALTER TABLE `lib` ADD FULLTEXT (`text`);
 ALTER TABLE `forum` CHANGE `ip` `ip_old` TEXT NOT NULL;
 ALTER TABLE `forum` ADD `ip` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `text`;
 ALTER TABLE `forum` ADD `ip_via_proxy` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `ip`;
+ALTER TABLE `forum` ADD `curators` text NOT NULL;

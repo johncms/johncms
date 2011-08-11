@@ -161,7 +161,8 @@ $mods = array(
     'users',
     'vip',
     'vote',
-    'who'
+    'who',
+    'curators'
 );
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
@@ -400,7 +401,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
                 // Счетчик постов темы
                 $colmes = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0);
-                if($start > $colmes) $start = $colmes - $kmess;
+                if ($start > $colmes) $start = $colmes - $kmess;
                 // Выводим название топика
                 echo '<div class="phdr"><a name="up" id="up"></a><a href="#down"><img src="../theme/' . $set_user['skin'] . '/images/down.png" alt="Вниз" width="20" height="10" border="0"/></a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
                 if ($colmes > $kmess)
@@ -449,6 +450,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         if ($user_id && $vote_user == 0)
                             echo '<div class="bmenu"><a href="index.php?id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . $lng['vote'] . '</a></div>';
                     }
+                }
+                $curators = !empty($type1['curators']) ? unserialize($type1['curators']) : array();
+                $curator = false;
+                if ($rights < 6 && $rights != 3 && $user_id) {
+                    if (array_key_exists($user_id, $curators)) $curator = true;
                 }
                 /*
                 -----------------------------------------------------------------
@@ -629,8 +635,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</span>';
                         $file_id = $fres['id'];
                     }
-                    if ((($rights == 3 || $rights >= 6) && $rights >= $res['rights']) || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
-                        || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)) {
+                    if ((($rights == 3 || $rights >= 6 || $curator) && $rights >= $res['rights']) || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300) || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)) {
                         // Ссылки на редактирование / удаление постов
                         $menu = array(
                             '<a href="index.php?act=editpost&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a>',
@@ -647,7 +652,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             echo '<div class="green">' . $lng_forum['who_restore_post'] . ': <b>' . $res['close_who'] . '</b></div>';
                         }
                         if ($rights == 3 || $rights >= 6) {
-                            if($res['ip_via_proxy']){
+                            if ($res['ip_via_proxy']) {
                                 echo '<div class="gray"><b class="red"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
                                      '<a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
                                      ' - ' . $res['soft'] . '</div>';
@@ -699,9 +704,18 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 Ссылки на модераторские функции
                 -----------------------------------------------------------------
                 */
+                if ($curators) {
+                    $array = array();
+                    foreach ($curators as $key => $value)
+                        $array[] = '<a href="../users/profile.php?user=' . $key . '">' . $value . '</a>';
+                    echo '<p><div class="func">' . $lng_forum['curators'] . ': ' . implode(', ', $array) . '</div></p>';
+                }
                 if ($rights == 3 || $rights >= 6) {
                     echo '<p><div class="func">';
-                    echo isset($topic_vote) && $topic_vote > 0 ? '<a href="index.php?act=editvote&amp;id=' . $id . '">' . $lng_forum['edit_vote'] . '</a><br/><a href="index.php?act=delvote&amp;id=' . $id . '">' . $lng_forum['delete_vote'] . '</a><br/>'
+                    if ($rights >= 7)
+                        echo '<a href="index.php?act=curators&amp;id=' . $id . '&amp;start=' . $start . '">' . $lng_forum['curators_of_the_topic'] . '</a><br />';
+                    echo isset($topic_vote) && $topic_vote > 0
+                            ? '<a href="index.php?act=editvote&amp;id=' . $id . '">' . $lng_forum['edit_vote'] . '</a><br/><a href="index.php?act=delvote&amp;id=' . $id . '">' . $lng_forum['delete_vote'] . '</a><br/>'
                             : '<a href="index.php?act=addvote&amp;id=' . $id . '">' . $lng_forum['add_vote'] . '</a><br/>';
                     echo '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng_forum['topic_rename'] . '</a><br/>';
                     // Закрыть - открыть тему

@@ -173,4 +173,3 @@ class sitemap {
         return false;
     }
 }
-?>

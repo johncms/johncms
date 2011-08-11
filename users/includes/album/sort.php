@@ -13,6 +13,7 @@
 */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 switch ($mod) {
     case 'up':
         /*

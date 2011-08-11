@@ -58,5 +58,3 @@ The copyright could not be removed within 60 days of installation scripts
 echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>';
 
 echo '</div></body></html>';
-
-?>

@@ -11,6 +11,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+require('../incfiles/head.php');
+
 /*
 -----------------------------------------------------------------
 Список альбомов юзера
@@ -50,6 +52,5 @@ if ($total) {
 } else {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 }
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .
-    '<p><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
+echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 ?>

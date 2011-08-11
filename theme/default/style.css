@@ -173,6 +173,7 @@ ul {
   border: 1px dotted #9FAEBB;
   margin-top: 4px;
   padding: 0 2px 0 2px;
+  overflow: auto;
 }
 
 .quote {
@@ -234,6 +235,10 @@ ul {
   border-bottom: 1px solid #A8B1BB;
   border-right: 1px solid #e1e4e8;
   border-left: 1px solid #e1e4e8;
+}
+
+.topmenu input{
+  font-size: x-small
 }
 
 .user {

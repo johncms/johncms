@@ -11,6 +11,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+require('../incfiles/head.php');
+
 /*
 -----------------------------------------------------------------
 Создать / изменить альбом

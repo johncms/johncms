@@ -3,8 +3,8 @@
 // | class.upload.php                                                       |
 // +------------------------------------------------------------------------+
 // | Copyright (c) Colin Verot 2003-2010. All rights reserved.              |
-// | Version       0.30                                                     |
-// | Last modified 05/09/2010                                               |
+// | Version       0.31                                                     |
+// | Last modified 11/04/2011                                               |
 // | Email         colin@verot.net                                          |
 // | Web           http://www.verot.net                                     |
 // +------------------------------------------------------------------------+
@@ -31,7 +31,7 @@
 /**
  * Class upload
  *
- * @version   0.30
+ * @version   0.31
  * @author    Colin Verot <colin@verot.net>
  * @license   http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright Colin Verot
@@ -151,16 +151,18 @@
  *
  * <b>Processing parameters</b> (reset after each process)
  * <ul>
- *  <li><b>{@link file_new_name_body}</b> replaces the name body (default: '')<br>
+ *  <li><b>{@link file_new_name_body}</b> replaces the name body (default: null)<br>
  *  <pre>$handle->file_new_name_body = 'new name';</pre></li>
- *  <li><b>{@link file_name_body_add}</b> appends to the name body (default: '')<br>
+ *  <li><b>{@link file_name_body_add}</b> appends to the name body (default: null)<br>
  *  <pre>$handle->file_name_body_add = '_uploaded';</pre></li>
- *  <li><b>{@link file_name_body_pre}</b> prepends to the name body (default: '')<br>
+ *  <li><b>{@link file_name_body_pre}</b> prepends to the name body (default: null)<br>
  *  <pre>$handle->file_name_body_pre = 'thumb_';</pre></li>
- *  <li><b>{@link file_new_name_ext}</b> replaces the file extension (default: '')<br>
+ *  <li><b>{@link file_new_name_ext}</b> replaces the file extension (default: null)<br>
  *  <pre>$handle->file_new_name_ext = 'txt';</pre></li>
  *  <li><b>{@link file_safe_name}</b> formats the filename (spaces changed to _) (default: true)<br>
  *  <pre>$handle->file_safe_name = true;</pre></li>
+ *  <li><b>{@link file_force_extension}</b> forces an extension if there is't any (default: true)<br>
+ *  <pre>$handle->file_force_extension = true;</pre></li>
  *  <li><b>{@link file_overwrite}</b> sets behaviour if file already exists (default: false)<br>
  *  <pre>$handle->file_overwrite = true;</pre></li>
  *  <li><b>{@link file_auto_rename}</b> automatically renames file if it already exists (default: true)<br>
@@ -177,9 +179,9 @@
  *  <pre>$handle->mime_check = true;</pre></li>
  *  <li><b>{@link no_script}</b> sets if the class turns scripts into text files (default: true)<br>
  *  <pre>$handle->no_script = false;</pre></li>
- *  <li><b>{@link allowed}</b> array of allowed mime-types. wildcard accepted, as in image/* (default: check {@link Init})<br>
+ *  <li><b>{@link allowed}</b> array of allowed mime-types (or one string). wildcard accepted, as in image/* (default: check {@link Init})<br>
  *  <pre>$handle->allowed = array('application/pdf','application/msword', 'image/*');</pre></li>
- *  <li><b>{@link forbidden}</b> array of forbidden mime-types. wildcard accepted, as in image/*  (default: check {@link Init})<br>
+ *  <li><b>{@link forbidden}</b> array of forbidden mime-types (or one string). wildcard accepted, as in image/*  (default: check {@link Init})<br>
  *  <pre>$handle->forbidden = array('application/*');</pre></li>
  * </ul>
  * <ul>
@@ -249,12 +251,14 @@
  *  <pre>$handle->image_brightness = 40;</pre></li>
  *  <li><b>{@link image_contrast}</b> if set, corrects the contrast. value between -127 and 127 (default: null)<br>
  *  <pre>$handle->image_contrast = 50;</pre></li>
+ *  <li><b>{@link image_opacity}</b> if set, changes the image opacity. value between 0 and 100 (default: null)<br>
+ *  <pre>$handle->image_opacity = 50;</pre></li>
  *  <li><b>{@link image_tint_color}</b> if set, will tint the image with a color, value as hexadecimal #FFFFFF (default: null)<br>
  *  <pre>$handle->image_tint_color = '#FF0000';</pre></li>
  *  <li><b>{@link image_overlay_color}</b> if set, will add a colored overlay, value as hexadecimal #FFFFFF (default: null)<br>
  *  <pre>$handle->image_overlay_color = '#FF0000';</pre></li>
- *  <li><b>{@link image_overlay_percent}</b> used when {@link image_overlay_color} is set, determines the opacity (default: 50)<br>
- *  <pre>$handle->image_overlay_percent = 20;</pre></li>
+ *  <li><b>{@link image_overlay_opacity}</b> used when {@link image_overlay_color} is set, determines the opacity (default: 50)<br>
+ *  <pre>$handle->image_overlay_opacity = 20;</pre></li>
  *  <li><b>{@link image_negative}</b> inverts the colors in the image (default: false)<br>
  *  <pre>$handle->image_negative = true;</pre></li>
  *  <li><b>{@link image_greyscale}</b> transforms an image into greyscale (default: false)<br>
@@ -277,12 +281,12 @@
  *  <pre>$handle->image_text_direction = 'v';</pre></li>
  *  <li><b>{@link image_text_color}</b> text color for the text label, in hexadecimal (default: #FFFFFF)<br>
  *  <pre>$handle->image_text_color = '#FF0000';</pre></li>
- *  <li><b>{@link image_text_percent}</b> text opacity on the text label, integer between 0 and 100 (default: 100)<br>
- *  <pre>$handle->image_text_percent = 50;</pre></li>
+ *  <li><b>{@link image_text_opacity}</b> text opacity on the text label, integer between 0 and 100 (default: 100)<br>
+ *  <pre>$handle->image_text_opacity = 50;</pre></li>
  *  <li><b>{@link image_text_background}</b> text label background color, in hexadecimal (default: null)<br>
  *  <pre>$handle->image_text_background = '#FFFFFF';</pre></li>
- *  <li><b>{@link image_text_background_percent}</b> text label background opacity, integer between 0 and 100 (default: 100)<br>
- *  <pre>$handle->image_text_background_percent = 50;</pre></li>
+ *  <li><b>{@link image_text_background_opacity}</b> text label background opacity, integer between 0 and 100 (default: 100)<br>
+ *  <pre>$handle->image_text_background_opacity = 50;</pre></li>
  *  <li><b>{@link image_text_font}</b> built-in font for the text label, from 1 to 5. 1 is the smallest (default: 5)<br>
  *  <pre>$handle->image_text_font = 4;</pre></li>
  *  <li><b>{@link image_text_x}</b> absolute text label position, in pixels from the left border. can be negative (default: null)<br>
@@ -323,10 +327,16 @@
  *  <pre>$handle->image_border = '3px'; OR '-20 20%' OR array(3,2)...</pre></li>
  *  <li><b>{@link image_border_color}</b> border color, in hexadecimal (default: #FFFFFF)<br>
  *  <pre>$handle->image_border_color = '#FFFFFF';</pre></li>
+ *  <li><b>{@link image_border_opacity}</b> border opacity, integer between 0 and 100 (default: 100)<br>
+ *  <pre>$handle->image_border_opacity = 50;</pre></li>
+ *  <li><b>{@link image_border_transparent}</b> adds a fading-to-transparent border to the image. accepts 4, 2 or 1 values as 'T R B L' or 'TB LR' or 'TBLR'. dimension can be 20, or 20px or 20% (default: null)<br>
+ *  <pre>$handle->image_border_transparent = '3px'; OR '-20 20%' OR array(3,2)...</pre></li>
  *  <li><b>{@link image_frame}</b> type of frame: 1=flat 2=crossed (default: null)<br>
  *  <pre>$handle->image_frame = 2;</pre></li>
  *  <li><b>{@link image_frame_colors}</b> list of hex colors, in an array or a space separated string (default: '#FFFFFF #999999 #666666 #000000')<br>
  *  <pre>$handle->image_frame_colors = array('#999999',  '#FF0000', '#666666', '#333333', '#000000');</pre></li>
+ *  <li><b>{@link image_frame_opacity}</b> frame opacity, integer between 0 and 100 (default: 100)<br>
+ *  <pre>$handle->image_frame_opacity = 50;</pre></li>
  * </ul>
  * <ul>
  *  <li><b>{@link image_watermark}</b> adds a watermark on the image, value is a local filename. accepted files are GIF, JPG, BMP, PNG and PNG alpha (default: null)<br>
@@ -396,6 +406,23 @@
  *
  * <b>Changelog</b>
  * <ul>
+ *  <li><b>v 0.31</b> 11/04/2011<br>
+ *   - added application/x-rar MIME type<br>
+ *   - make sure exec() and ini_get_all()function are not disabled if we want to use them<br>
+ *   - make sure that we don't divide by zero when calculating JPEG size<br>
+ *   - {@link allowed} and {@link forbidden} can now accept strings<br>
+ *   - try to guess the file extension from the MIME type if there is no file extension<br>
+ *   - better class properties when changing the file extension<br>
+ *   - added {@link file_force_extension} to allow extension-less files if needed<br>
+ *   - better file safe conversion of the filename<br>
+ *   - allow shorthand byte values, such as 1K, 2M, 3G for {@link file_max_size} and {@link jpeg_size}<br>
+ *   - added {@link image_opacity} to change picture opacity<br>
+ *   - added {@link image_border_opacity} to allow semi-transparent borders<br>
+ *   - added {@link image_frame_opacity} to allow semi-transparent frames<br>
+ *   - added {@link image_border_transparent} to allow borders fading to transparent<br>
+ *   - duplicated {@link image_overlay_percent} into {@link image_overlay_opacity}<br>
+ *   - duplicated {@link image_text_percent} into {@link image_text_opacity}<br>
+ *   - duplicated {@link image_text_background_percent} into {@link image_text_background_opacity}</li>
  *  <li><b>v 0.30</b> 05/09/2010<br>
  *   - implemented an unsharp mask, with alpha transparency support, activated if {@link image_unsharp} is true. added {@link image_unsharp_amount}, {@link image_unsharp_radius}, and {@link image_unsharp_threshold}<br>
  *   - added text/rtf MIME type, and no_script exception<br>
@@ -581,14 +608,6 @@ class upload {
      * @var string
      */
     var $file_src_name_ext;
-
-    /**
-     * Uploaded file name extension, original
-     *
-     * @access public
-     * @var string
-     */
-    var $file_src_name_ext_;
 
     /**
      * Uploaded file MIME type
@@ -838,6 +857,17 @@ class upload {
     var $file_safe_name;
 
     /**
+     * Forces an extension if the source file doesn't have one
+     *
+     * If the file is an image, then the correct extension will be added
+     * Otherwise, a .txt extension will be chosen
+     *
+     * @access public
+     * @var boolean
+     */
+    var $file_force_extension;
+
+    /**
      * Set this variable to false if you don't want to check the MIME against the allowed list
      *
      * This variable is set to true by default for security reason
@@ -975,6 +1005,9 @@ class upload {
      * Set this variable to change the maximum size in bytes for an uploaded file
      *
      * Default value is the value <i>upload_max_filesize</i> from php.ini
+     *
+     * Value in bytes (integer) or shorthand byte values (string) is allowed. 
+     * The available options are K (for Kilobytes), M (for Megabytes) and G (for Gigabytes)
      *
      * @access public
      * @var double
@@ -1221,8 +1254,11 @@ class upload {
     /**
      * Determines the quality of the JPG image to fit a desired file size
      *
-     * Value is in bytes. The JPG quality will be set between 1 and 100%
+     * The JPG quality will be set between 1 and 100%
      * The calculations are approximations.
+     *
+     * Value in bytes (integer) or shorthand byte values (string) is allowed. 
+     * The available options are K (for Kilobytes), M (for Megabytes) and G (for Gigabytes)
      *
      * Default value is null (no calculations)
      *
@@ -1326,6 +1362,18 @@ class upload {
     var $image_contrast;
 
     /**
+     * Changes the image opacity
+     *
+     * Value can range between 0 and 100
+     *
+     * Default value is null
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_opacity;
+
+    /**
      * Applies threshold filter
      *
      * Value can range between -127 and 127
@@ -1354,7 +1402,7 @@ class upload {
      *
      * Value is an hexadecimal color, such as #FFFFFF
      *
-     * To use with {@link image_overlay_percent}
+     * To use with {@link image_overlay_opacity}
      *
      * Default value is null
      *
@@ -1364,13 +1412,21 @@ class upload {
     var $image_overlay_color;
 
     /**
-     * Sets the percentage for the colored overlay
+     * Sets the opacity for the colored overlay
      *
-     * Value is a percentage, as an integer between 0 and 100
+     * Value is a percentage, as an integer between 0 (transparent) and 100 (opaque)
      *
      * Unless used with {@link image_overlay_color}, this setting has no effect
      *
      * Default value is 50
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_overlay_opacity;
+
+    /**
+     * Soon to be deprecated old form of {@link image_overlay_opacity}
      *
      * @access public
      * @var integer
@@ -1502,11 +1558,19 @@ class upload {
     var $image_text_color;
 
     /**
-     * Sets the text visibility in the text label
+     * Sets the text opacity in the text label
      *
-     * Value is a percentage, as an integer between 0 and 100
+     * Value is a percentage, as an integer between 0 (transparent) and 100 (opaque)
      *
      * Default value is 100
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_text_opacity;
+
+    /**
+     * Soon to be deprecated old form of {@link image_text_opacity}
      *
      * @access public
      * @var integer
@@ -1526,11 +1590,19 @@ class upload {
     var $image_text_background;
 
     /**
-     * Sets the text background visibility in the text label
+     * Sets the text background opacity in the text label
      *
-     * Value is a percentage, as an integer between 0 and 100
+     * Value is a percentage, as an integer between 0 (transparent) and 100 (opaque)
      *
      * Default value is 100
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_text_background_opacity;
+
+    /**
+     * Soon to be deprecated old form of {@link image_text_background_opacity}
      *
      * @access public
      * @var integer
@@ -1865,6 +1937,39 @@ class upload {
     var $image_border_color;
 
     /**
+     * Sets the opacity for the borders
+     *
+     * Value is a percentage, as an integer between 0 (transparent) and 100 (opaque)
+     *
+     * Unless used with {@link image_border}, this setting has no effect
+     *
+     * Default value is 100
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_border_opacity;
+
+    /**
+     * Adds a fading-to-transparent border on the image
+     *
+     * Values are four dimensions, or two, or one (CSS style)
+     * They represent the border thickness top, right, bottom and left.
+     * These values can either be in an array, or a space separated string.
+     * Each value can be in pixels (with or without 'px'), or percentage (of the source image)
+     *
+     * See {@link image_crop} for valid formats
+     *
+     * Note that the dimensions of the picture will not be increased by the borders' thickness
+     *
+     * Default value is null (no border)
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_border_transparent;
+
+    /**
      * Adds a multi-color frame on the outer of the image
      *
      * Value is an integer. Two values are possible for now:
@@ -1904,6 +2009,20 @@ class upload {
      * @var string OR array;
      */
     var $image_frame_colors;
+
+    /**
+     * Sets the opacity for the frame
+     *
+     * Value is a percentage, as an integer between 0 (transparent) and 100 (opaque)
+     *
+     * Unless used with {@link image_frame}, this setting has no effect
+     *
+     * Default value is 100
+     *
+     * @access public
+     * @var integer
+     */
+    var $image_frame_opacity;
 
     /**
      * Adds a watermark on the image
@@ -2000,14 +2119,23 @@ class upload {
     var $image_watermark_no_zoom_out;
 
     /**
+     * List of MIME types per extension
+     *
+     * @access private
+     * @var array
+     */
+    var $mime_types;
+
+    /**
      * Allowed MIME types
      *
      * Default is a selection of safe mime-types, but you might want to change it
      *
      * Simple wildcards are allowed, such as image/* or application/*
+     * If there is only one MIME type allowed, then it can be a string instead of an array
      *
      * @access public
-     * @var array
+     * @var array OR string
      */
     var $allowed;
 
@@ -2018,9 +2146,10 @@ class upload {
      * To only check for forbidden MIME types, and allow everything else, set {@link allowed} to array('* / *') without the spaces
      *
      * Simple wildcards are allowed, such as image/* or application/*
+     * If there is only one MIME type forbidden, then it can be a string instead of an array
      *
      * @access public
-     * @var array
+     * @var array OR string
      */
     var $forbidden;
 
@@ -2055,11 +2184,12 @@ class upload {
     function init() {
 
         // overiddable variables
-        $this->file_new_name_body       = '';       // replace the name body
-        $this->file_name_body_add       = '';       // append to the name body
-        $this->file_name_body_pre       = '';       // prepend to the name body
-        $this->file_new_name_ext        = '';       // replace the file extension
+        $this->file_new_name_body       = null;     // replace the name body
+        $this->file_name_body_add       = null;     // append to the name body
+        $this->file_name_body_pre       = null;     // prepend to the name body
+        $this->file_new_name_ext        = null;     // replace the file extension
         $this->file_safe_name           = true;     // format safely the filename
+        $this->file_force_extension     = true;     // forces extension if there isn't one
         $this->file_overwrite           = false;    // allows overwritting if the file already exists
         $this->file_auto_rename         = true;     // auto-rename if the file already exists
         $this->dir_auto_create          = true;     // auto-creates directory if missing
@@ -2076,18 +2206,9 @@ class upload {
         $this->mime_magic               = true;     // MIME detection with mime_magic (mime_content_type())
         $this->mime_getimagesize        = true;     // MIME detection with getimagesize()
 
-        $val = trim(ini_get('upload_max_filesize'));
-        $this->file_max_size_raw = $val;
-        $last = strtolower($val{strlen($val)-1});
-        switch($last) {
-            case 'g':
-                $val *= 1024;
-            case 'm':
-                $val *= 1024;
-            case 'k':
-                $val *= 1024;
-        }
-        $this->file_max_size = $val;
+        // get the default max size from php.ini
+        $this->file_max_size_raw = trim(ini_get('upload_max_filesize'));
+        $this->file_max_size = $this->getsize($this->file_max_size_raw);
 
         $this->image_resize             = false;    // resize the image
         $this->image_convert            = '';       // convert. values :''; 'png'; 'jpeg'; 'gif'; 'bmp'
@@ -2122,9 +2243,11 @@ class upload {
 
         $this->image_brightness         = null;
         $this->image_contrast           = null;
+        $this->image_opacity            = null;
         $this->image_threshold          = null;
         $this->image_tint_color         = null;
         $this->image_overlay_color      = null;
+        $this->image_overlay_opacity    = null;
         $this->image_overlay_percent    = null;
         $this->image_negative           = false;
         $this->image_greyscale          = false;
@@ -2136,8 +2259,10 @@ class upload {
         $this->image_text               = null;
         $this->image_text_direction     = null;
         $this->image_text_color         = '#FFFFFF';
+        $this->image_text_opacity       = 100;
         $this->image_text_percent       = 100;
         $this->image_text_background    = null;
+        $this->image_text_background_opacity = 100;
         $this->image_text_background_percent = 100;
         $this->image_text_font          = 5;
         $this->image_text_x             = null;
@@ -2171,93 +2296,184 @@ class upload {
         $this->image_bevel_color2       = '#000000';
         $this->image_border             = null;
         $this->image_border_color       = '#FFFFFF';
+        $this->image_border_opacity     = 100;
+        $this->image_border_transparent = null;
         $this->image_frame              = null;
         $this->image_frame_colors       = '#FFFFFF #999999 #666666 #000000';
+        $this->image_frame_opacity      = 100;
 
         $this->forbidden = array();
-        $this->allowed = array("application/arj",
-                               "application/excel",
-                               "application/gnutar",
-                               "application/mspowerpoint",
-                               "application/msword",
-                               "application/octet-stream",
-                               "application/onenote",
-                               "application/pdf",
-                               "application/plain",
-                               "application/postscript",
-                               "application/powerpoint",
-                               "application/rar",
-                               "application/rtf",
-                               "application/vnd.ms-excel",
-                               "application/vnd.ms-excel.addin.macroEnabled.12",
-                               "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-                               "application/vnd.ms-excel.sheet.macroEnabled.12",
-                               "application/vnd.ms-excel.template.macroEnabled.12",
-                               "application/vnd.ms-office",
-                               "application/vnd.ms-officetheme",
-                               "application/vnd.ms-powerpoint",
-                               "application/vnd.ms-powerpoint.addin.macroEnabled.12",
-                               "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-                               "application/vnd.ms-powerpoint.slide.macroEnabled.12",
-                               "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-                               "application/vnd.ms-powerpoint.template.macroEnabled.12",
-                               "application/vnd.ms-word",
-                               "application/vnd.ms-word.document.macroEnabled.12",
-                               "application/vnd.ms-word.template.macroEnabled.12",
-                               "application/vnd.oasis.opendocument.chart",
-                               "application/vnd.oasis.opendocument.database",
-                               "application/vnd.oasis.opendocument.formula",
-                               "application/vnd.oasis.opendocument.graphics",
-                               "application/vnd.oasis.opendocument.graphics-template",
-                               "application/vnd.oasis.opendocument.image",
-                               "application/vnd.oasis.opendocument.presentation",
-                               "application/vnd.oasis.opendocument.presentation-template",
-                               "application/vnd.oasis.opendocument.spreadsheet",
-                               "application/vnd.oasis.opendocument.spreadsheet-template",
-                               "application/vnd.oasis.opendocument.text",
-                               "application/vnd.oasis.opendocument.text-master",
-                               "application/vnd.oasis.opendocument.text-template",
-                               "application/vnd.oasis.opendocument.text-web",
-                               "application/vnd.openofficeorg.extension",
-                               "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                               "application/vnd.openxmlformats-officedocument.presentationml.slide",
-                               "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-                               "application/vnd.openxmlformats-officedocument.presentationml.template",
-                               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                               "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                               "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                               "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
-                               "application/vocaltec-media-file",
-                               "application/wordperfect",
-                               "application/x-bittorrent",
-                               "application/x-bzip",
-                               "application/x-bzip2",
-                               "application/x-compressed",
-                               "application/x-excel",
-                               "application/x-gzip",
-                               "application/x-latex",
-                               "application/x-midi",
-                               "application/xml",
-                               "application/x-msexcel",
-                               "application/x-rar-compressed",
-                               "application/x-rtf",
-                               "application/x-shockwave-flash",
-                               "application/x-sit",
-                               "application/x-stuffit",
-                               "application/x-troff-msvideo",
-                               "application/x-zip",
-                               "application/x-zip-compressed",
-                               "application/zip",
-                               "audio/*",
-                               "image/*",
-                               "multipart/x-gzip",
-                               "multipart/x-zip",
-                               "text/plain",
-                               "text/rtf",
-                               "text/richtext",
-                               "text/xml",
-                               "video/*");
+        $this->allowed = array(
+            'application/arj',
+            'application/excel',
+            'application/gnutar',
+            'application/mspowerpoint',
+            'application/msword',
+            'application/octet-stream',
+            'application/onenote',
+            'application/pdf',
+            'application/plain',
+            'application/postscript',
+            'application/powerpoint',
+            'application/rar',
+            'application/rtf',
+            'application/vnd.ms-excel',
+            'application/vnd.ms-excel.addin.macroEnabled.12',
+            'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+            'application/vnd.ms-excel.sheet.macroEnabled.12',
+            'application/vnd.ms-excel.template.macroEnabled.12',
+            'application/vnd.ms-office',
+            'application/vnd.ms-officetheme',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.ms-powerpoint.addin.macroEnabled.12',
+            'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
+            'application/vnd.ms-powerpoint.slide.macroEnabled.12',
+            'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
+            'application/vnd.ms-powerpoint.template.macroEnabled.12',
+            'application/vnd.ms-word',
+            'application/vnd.ms-word.document.macroEnabled.12',
+            'application/vnd.ms-word.template.macroEnabled.12',
+            'application/vnd.oasis.opendocument.chart',
+            'application/vnd.oasis.opendocument.database',
+            'application/vnd.oasis.opendocument.formula',
+            'application/vnd.oasis.opendocument.graphics',
+            'application/vnd.oasis.opendocument.graphics-template',
+            'application/vnd.oasis.opendocument.image',
+            'application/vnd.oasis.opendocument.presentation',
+            'application/vnd.oasis.opendocument.presentation-template',
+            'application/vnd.oasis.opendocument.spreadsheet',
+            'application/vnd.oasis.opendocument.spreadsheet-template',
+            'application/vnd.oasis.opendocument.text',
+            'application/vnd.oasis.opendocument.text-master',
+            'application/vnd.oasis.opendocument.text-template',
+            'application/vnd.oasis.opendocument.text-web',
+            'application/vnd.openofficeorg.extension',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/vnd.openxmlformats-officedocument.presentationml.slide',
+            'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+            'application/vnd.openxmlformats-officedocument.presentationml.template',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+            'application/vocaltec-media-file',
+            'application/wordperfect',
+            'application/x-bittorrent',
+            'application/x-bzip',
+            'application/x-bzip2',
+            'application/x-compressed',
+            'application/x-excel',
+            'application/x-gzip',
+            'application/x-latex',
+            'application/x-midi',
+            'application/xml',
+            'application/x-msexcel',
+            'application/x-rar',
+            'application/x-rar-compressed',
+            'application/x-rtf',
+            'application/x-shockwave-flash',
+            'application/x-sit',
+            'application/x-stuffit',
+            'application/x-troff-msvideo',
+            'application/x-zip',
+            'application/x-zip-compressed',
+            'application/zip',
+            'audio/*',
+            'image/*',
+            'multipart/x-gzip',
+            'multipart/x-zip',
+            'text/plain',
+            'text/rtf',
+            'text/richtext',
+            'text/xml',
+            'video/*'
+        );
+
+        $this->mime_types = array(
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpe' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'png' => 'image/png',
+            'bmp' => 'image/bmp',
+            'flv' => 'video/x-flv',
+            'js' => 'application/x-javascript',
+            'json' => 'application/json',
+            'tiff' => 'image/tiff',
+            'css' => 'text/css',
+            'xml' => 'application/xml',
+            'doc' => 'application/msword',
+            'docx' => 'application/msword',
+            'xls' => 'application/vnd.ms-excel',
+            'xlt' => 'application/vnd.ms-excel',
+            'xlm' => 'application/vnd.ms-excel',
+            'xld' => 'application/vnd.ms-excel',
+            'xla' => 'application/vnd.ms-excel',
+            'xlc' => 'application/vnd.ms-excel',
+            'xlw' => 'application/vnd.ms-excel',
+            'xll' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pps' => 'application/vnd.ms-powerpoint',
+            'rtf' => 'application/rtf',
+            'pdf' => 'application/pdf',
+            'html' => 'text/html',
+            'htm' => 'text/html',
+            'php' => 'text/html',
+            'txt' => 'text/plain',
+            'mpeg' => 'video/mpeg',
+            'mpg' => 'video/mpeg',
+            'mpe' => 'video/mpeg',
+            'mp3' => 'audio/mpeg3',
+            'wav' => 'audio/wav',
+            'aiff' => 'audio/aiff',
+            'aif' => 'audio/aiff',
+            'avi' => 'video/msvideo',
+            'wmv' => 'video/x-ms-wmv',
+            'mov' => 'video/quicktime',
+            'zip' => 'application/zip',
+            'tar' => 'application/x-tar',
+            'swf' => 'application/x-shockwave-flash',
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ott' => 'application/vnd.oasis.opendocument.text-template',
+            'oth' => 'application/vnd.oasis.opendocument.text-web',
+            'odm' => 'application/vnd.oasis.opendocument.text-master',
+            'odg' => 'application/vnd.oasis.opendocument.graphics',
+            'otg' => 'application/vnd.oasis.opendocument.graphics-template',
+            'odp' => 'application/vnd.oasis.opendocument.presentation',
+            'otp' => 'application/vnd.oasis.opendocument.presentation-template',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+            'ots' => 'application/vnd.oasis.opendocument.spreadsheet-template',
+            'odc' => 'application/vnd.oasis.opendocument.chart',
+            'odf' => 'application/vnd.oasis.opendocument.formula',
+            'odb' => 'application/vnd.oasis.opendocument.database',
+            'odi' => 'application/vnd.oasis.opendocument.image',
+            'oxt' => 'application/vnd.openofficeorg.extension',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'docm' => 'application/vnd.ms-word.document.macroEnabled.12',
+            'dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+            'dotm' => 'application/vnd.ms-word.template.macroEnabled.12',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'xlsm' => 'application/vnd.ms-excel.sheet.macroEnabled.12',
+            'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+            'xltm' => 'application/vnd.ms-excel.template.macroEnabled.12',
+            'xlsb' => 'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
+            'xlam' => 'application/vnd.ms-excel.addin.macroEnabled.12',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'pptm' => 'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
+            'ppsx' => 'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+            'ppsm' => 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
+            'potx' => 'application/vnd.openxmlformats-officedocument.presentationml.template',
+            'potm' => 'application/vnd.ms-powerpoint.template.macroEnabled.12',
+            'ppam' => 'application/vnd.ms-powerpoint.addin.macroEnabled.12',
+            'sldx' => 'application/vnd.openxmlformats-officedocument.presentationml.slide',
+            'sldm' => 'application/vnd.ms-powerpoint.slide.macroEnabled.12',
+            'thmx' => 'application/vnd.ms-officetheme',
+            'onetoc' => 'application/onenote',
+            'onetoc2' => 'application/onenote',
+            'onetmp' => 'application/onenote',
+            'onepkg' => 'application/onenote',
+        );
 
     }
 
@@ -2287,12 +2503,11 @@ class upload {
      */
     function upload($file, $lang = 'en_GB') {
 
-        $this->version            = '0.30';
+        $this->version            = '0.31';
 
         $this->file_src_name      = '';
         $this->file_src_name_body = '';
         $this->file_src_name_ext  = '';
-        $this->file_src_name_ext_ = '';
         $this->file_src_mime      = '';
         $this->file_src_size      = '';
         $this->file_src_error     = '';
@@ -2344,7 +2559,7 @@ class upload {
         $this->translation['incorrect_file']              = 'Incorrect type of file.';
         $this->translation['image_too_wide']              = 'Image too wide.';
         $this->translation['image_too_narrow']            = 'Image too narrow.';
-        $this->translation['image_too_high']              = 'Image too high.';
+        $this->translation['image_too_high']              = 'Image too tall.';
         $this->translation['image_too_short']             = 'Image too short.';
         $this->translation['ratio_too_high']              = 'Image ratio too high (image too wide).';
         $this->translation['ratio_too_low']               = 'Image ratio too low (image too high).';
@@ -2411,8 +2626,12 @@ class upload {
         // display some system information
         if (empty($this->log)) {
             $this->log .= '<b>system information</b><br />';
-            $inis = ini_get_all();
-            $open_basedir = (array_key_exists('open_basedir', $inis) && array_key_exists('local_value', $inis['open_basedir']) && !empty($inis['open_basedir']['local_value'])) ? $inis['open_basedir']['local_value'] : false;
+            if (function_exists('ini_get_all')) {
+                $inis = ini_get_all();
+                $open_basedir = (array_key_exists('open_basedir', $inis) && array_key_exists('local_value', $inis['open_basedir']) && !empty($inis['open_basedir']['local_value'])) ? $inis['open_basedir']['local_value'] : false;
+            } else {
+                $open_basedir = false;
+            }
             $gd           = $this->gdversion() ? $this->gdversion(true) : 'GD not present';
             $supported    = trim((in_array('png', $this->image_supported) ? 'png' : '') . ' ' . (in_array('jpg', $this->image_supported) ? 'jpg' : '') . ' ' . (in_array('gif', $this->image_supported) ? 'gif' : '') . ' ' . (in_array('bmp', $this->image_supported) ? 'bmp' : ''));
             $this->log .= '-&nbsp;class version           : ' . $this->version . '<br />';
@@ -2457,11 +2676,9 @@ class upload {
                     preg_match('/\.([^\.]*$)/', $this->file_src_name, $extension);
                     if (is_array($extension) && sizeof($extension) > 0) {
                         $this->file_src_name_ext      = strtolower($extension[1]);
-                        $this->file_src_name_ext_     = strtolower($extension[1]);
                         $this->file_src_name_body     = substr($this->file_src_name, 0, ((strlen($this->file_src_name) - strlen($this->file_src_name_ext)))-1);
                     } else {
                         $this->file_src_name_ext      = '';
-                        $this->file_src_name_ext_     = '';
                         $this->file_src_name_body     = $this->file_src_name;
                     }
                     $this->file_src_size = (file_exists($file) ? filesize($file) : 0);
@@ -2526,11 +2743,9 @@ class upload {
                 preg_match('/\.([^\.]*$)/', $this->file_src_name, $extension);
                 if (is_array($extension) && sizeof($extension) > 0) {
                     $this->file_src_name_ext      = strtolower($extension[1]);
-                    $this->file_src_name_ext_     = strtolower($extension[1]);
                     $this->file_src_name_body     = substr($this->file_src_name, 0, ((strlen($this->file_src_name) - strlen($this->file_src_name_ext)))-1);
                 } else {
                     $this->file_src_name_ext      = '';
-                    $this->file_src_name_ext_     = '';
                     $this->file_src_name_body     = $this->file_src_name;
                 }
                 $this->file_src_size = $file['size'];
@@ -2610,17 +2825,21 @@ class upload {
                 if ($this->mime_file) {
                     $this->log .= '- Checking MIME type with UNIX file() command<br />';
                     if (substr(PHP_OS, 0, 3) != 'WIN') {
-                        if (strlen($mime = @exec("file -bi ".escapeshellarg($this->file_src_pathname))) != 0) {
-                            $this->file_src_mime = trim($mime);
-                            $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;MIME type detected as ' . $this->file_src_mime . ' by UNIX file() command<br />';
-                            if (preg_match("/^([\.-\w]+)\/([\.-\w]+)(.*)$/i", $this->file_src_mime)) {
-                                $this->file_src_mime = preg_replace("/^([\.-\w]+)\/([\.-\w]+)(.*)$/i", '$1/$2', $this->file_src_mime);
-                                $this->log .= '-&nbsp;MIME validated as ' . $this->file_src_mime . '<br />';
+                        if (function_exists('exec')) {
+                            if (strlen($mime = @exec("file -bi ".escapeshellarg($this->file_src_pathname))) != 0) {
+                                $this->file_src_mime = trim($mime);
+                                $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;MIME type detected as ' . $this->file_src_mime . ' by UNIX file() command<br />';
+                                if (preg_match("/^([\.-\w]+)\/([\.-\w]+)(.*)$/i", $this->file_src_mime)) {
+                                    $this->file_src_mime = preg_replace("/^([\.-\w]+)\/([\.-\w]+)(.*)$/i", '$1/$2', $this->file_src_mime);
+                                    $this->log .= '-&nbsp;MIME validated as ' . $this->file_src_mime . '<br />';
+                                } else {
+                                    $this->file_src_mime = null;
+                                }
                             } else {
-                                $this->file_src_mime = null;
+                                $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;UNIX file() command failed<br />';
                             }
                         } else {
-                            $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;UNIX file() command failed<br />';
+                            $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;PHP exec() function is disabled<br />';
                         }
                     } else {
                         $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;UNIX file() command not availabled<br />';
@@ -2694,216 +2913,7 @@ class upload {
             if ($this->file_src_mime == 'application/octet-stream' || !$this->file_src_mime || !is_string($this->file_src_mime) || empty($this->file_src_mime) || strpos($this->file_src_mime, '/') === FALSE) {
                 if ($this->file_src_mime == 'application/octet-stream') $this->log .= '- Flash may be rewriting MIME as application/octet-stream<br />';
                 $this->log .= '- Try to guess MIME type from file extension (' . $this->file_src_name_ext . '): ';
-                switch($this->file_src_name_ext) {
-                    case 'jpg':
-                    case 'jpeg':
-                    case 'jpe':
-                        $this->file_src_mime = 'image/jpeg';
-                        break;
-                    case 'gif':
-                        $this->file_src_mime = 'image/gif';
-                        break;
-                    case 'png':
-                        $this->file_src_mime = 'image/png';
-                        break;
-                    case 'bmp':
-                        $this->file_src_mime = 'image/bmp';
-                        break;
-                    case 'flv':
-                        $this->file_src_mime = 'video/x-flv';
-                        break;
-                    case 'js' :
-                        $this->file_src_mime = 'application/x-javascript';
-                        break;
-                    case 'json' :
-                        $this->file_src_mime = 'application/json';
-                        break;
-                    case 'tiff' :
-                        $this->file_src_mime = 'image/tiff';
-                        break;
-                    case 'css' :
-                        $this->file_src_mime = 'text/css';
-                        break;
-                    case 'xml' :
-                        $this->file_src_mime = 'application/xml';
-                        break;
-                    case 'doc' :
-                    case 'docx' :
-                        $this->file_src_mime = 'application/msword';
-                        break;
-                    case 'xls' :
-                    case 'xlt' :
-                    case 'xlm' :
-                    case 'xld' :
-                    case 'xla' :
-                    case 'xlc' :
-                    case 'xlw' :
-                    case 'xll' :
-                        $this->file_src_mime = 'application/vnd.ms-excel';
-                        break;
-                    case 'ppt' :
-                    case 'pps' :
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint';
-                        break;
-                    case 'rtf' :
-                        $this->file_src_mime = 'application/rtf';
-                        break;
-                    case 'pdf' :
-                        $this->file_src_mime = 'application/pdf';
-                        break;
-                    case 'html' :
-                    case 'htm' :
-                    case 'php' :
-                        $this->file_src_mime = 'text/html';
-                        break;
-                    case 'txt' :
-                        $this->file_src_mime = 'text/plain';
-                        break;
-                    case 'mpeg' :
-                    case 'mpg' :
-                    case 'mpe' :
-                        $this->file_src_mime = 'video/mpeg';
-                        break;
-                    case 'mp3' :
-                        $this->file_src_mime = 'audio/mpeg3';
-                        break;
-                    case 'wav' :
-                        $this->file_src_mime = 'audio/wav';
-                        break;
-                    case 'aiff' :
-                    case 'aif' :
-                        $this->file_src_mime = 'audio/aiff';
-                        break;
-                    case 'avi' :
-                        $this->file_src_mime = 'video/msvideo';
-                        break;
-                    case 'wmv' :
-                        $this->file_src_mime = 'video/x-ms-wmv';
-                        break;
-                    case 'mov' :
-                        $this->file_src_mime = 'video/quicktime';
-                        break;
-                    case 'zip' :
-                        $this->file_src_mime = 'application/zip';
-                        break;
-                    case 'tar' :
-                        $this->file_src_mime = 'application/x-tar';
-                        break;
-                    case 'swf' :
-                        $this->file_src_mime = 'application/x-shockwave-flash';
-                        break;
-                    case 'odt':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.text';
-                        break;
-                    case 'ott':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.text-template';
-                        break;
-                    case 'oth':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.text-web';
-                        break;
-                    case 'odm':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.text-master';
-                        break;
-                    case 'odg':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.graphics';
-                        break;
-                    case 'otg':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.graphics-template';
-                        break;
-                    case 'odp':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.presentation';
-                        break;
-                    case 'otp':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.presentation-template';
-                        break;
-                    case 'ods':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.spreadsheet';
-                        break;
-                    case 'ots':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.spreadsheet-template';
-                        break;
-                    case 'odc':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.chart';
-                        break;
-                    case 'odf':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.formula';
-                        break;
-                    case 'odb':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.database';
-                        break;
-                    case 'odi':
-                        $this->file_src_mime = 'application/vnd.oasis.opendocument.image';
-                        break;
-                    case 'oxt':
-                        $this->file_src_mime = 'application/vnd.openofficeorg.extension';
-                        break;
-                    case 'docx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-                        break;
-                    case 'docm':
-                        $this->file_src_mime = 'application/vnd.ms-word.document.macroEnabled.12';
-                        break;
-                    case 'dotx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.wordprocessingml.template';
-                        break;
-                    case 'dotm':
-                        $this->file_src_mime = 'application/vnd.ms-word.template.macroEnabled.12';
-                        break;
-                    case 'xlsx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-                        break;
-                    case 'xlsm':
-                        $this->file_src_mime = 'application/vnd.ms-excel.sheet.macroEnabled.12';
-                        break;
-                    case 'xltx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.template';
-                        break;
-                    case 'xltm':
-                        $this->file_src_mime = 'application/vnd.ms-excel.template.macroEnabled.12';
-                        break;
-                    case 'xlsb':
-                        $this->file_src_mime = 'application/vnd.ms-excel.sheet.binary.macroEnabled.12';
-                        break;
-                    case 'xlam':
-                        $this->file_src_mime = 'application/vnd.ms-excel.addin.macroEnabled.12';
-                        break;
-                    case 'pptx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-                        break;
-                    case 'pptm':
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint.presentation.macroEnabled.12';
-                        break;
-                    case 'ppsx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.presentationml.slideshow';
-                        break;
-                    case 'ppsm':
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12';
-                        break;
-                    case 'potx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.presentationml.template';
-                        break;
-                    case 'potm':
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint.template.macroEnabled.12';
-                        break;
-                    case 'ppam':
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint.addin.macroEnabled.12';
-                        break;
-                    case 'sldx':
-                        $this->file_src_mime = 'application/vnd.openxmlformats-officedocument.presentationml.slide';
-                        break;
-                    case 'sldm':
-                        $this->file_src_mime = 'application/vnd.ms-powerpoint.slide.macroEnabled.12';
-                        break;
-                    case 'thmx':
-                        $this->file_src_mime = 'application/vnd.ms-officetheme';
-                        break;
-                    case 'onetoc':
-                    case 'onetoc2':
-                    case 'onetmp':
-                    case 'onepkg':
-                        $this->file_src_mime = 'application/onenote';
-                        break;
-                }
+                if (array_key_exists($this->file_src_name_ext, $this->mime_types)) $this->file_src_mime = $this->mime_types[$this->file_src_name_ext];
                 if ($this->file_src_mime == 'application/octet-stream') {
                     $this->log .= 'doesn\'t look like anything known<br />';
                 } else {
@@ -3003,7 +3013,6 @@ class upload {
         }
     }
 
-
     /**
      * Creates directories recursively
      *
@@ -3015,7 +3024,6 @@ class upload {
     function rmkdir($path, $mode = 0777) {
         return is_dir($path) || ( $this->rmkdir(dirname($path), $mode) && $this->_mkdir($path, $mode) );
     }
-
 
     /**
      * Creates directory
@@ -3031,7 +3039,6 @@ class upload {
         umask($old);
         return $res;
     }
-
 
     /**
      * Translate error messages
@@ -3060,6 +3067,70 @@ class upload {
         $green = (array_key_exists(1, $r) && is_numeric($r[1]) ? $r[1] : 0);
         $blue  = (array_key_exists(2, $r) && is_numeric($r[2]) ? $r[2] : 0);
         return array($red, $green, $blue);
+    }
+
+    /**
+     * Decodes sizes
+     *
+     * @access private
+     * @param  string  $size  Size in bytes, or shorthand byte options
+     * @return integer Size in bytes
+     */
+    function getsize($size) {
+        $last = strtolower($size{strlen($size)-1});
+        switch($last) {
+            case 'g':
+                $size *= 1024;
+            case 'm':
+                $size *= 1024;
+            case 'k':
+                $size *= 1024;
+        }
+        return $size;
+    }
+
+    /**
+     * Decodes offsets
+     *
+     * @access private
+     * @param  misc    $offsets  Offsets, as an integer, a string or an array
+     * @param  integer $x        Reference picture width
+     * @param  integer $y        Reference picture height
+     * @param  boolean $round    Round offsets before returning them
+     * @param  boolean $negative Allow negative offsets to be returned
+     * @return array Array of four offsets (TRBL)
+     */
+    function getoffsets($offsets, $x, $y, $round = true, $negative = true) {
+        if (!is_array($offsets)) $offsets = explode(' ', $offsets);
+        if (sizeof($offsets) == 4) {
+             $ct = $offsets[0]; $cr = $offsets[1]; $cb = $offsets[2]; $cl = $offsets[3];
+        } else if (sizeof($offsets) == 2) {
+            $ct = $offsets[0]; $cr = $offsets[1]; $cb = $offsets[0]; $cl = $offsets[1];
+        } else {
+            $ct = $offsets[0]; $cr = $offsets[0]; $cb = $offsets[0]; $cl = $offsets[0];
+        }
+        if (strpos($ct, '%')>0) $ct = $y * (str_replace('%','',$ct) / 100);
+        if (strpos($cr, '%')>0) $cr = $x * (str_replace('%','',$cr) / 100);
+        if (strpos($cb, '%')>0) $cb = $y * (str_replace('%','',$cb) / 100);
+        if (strpos($cl, '%')>0) $cl = $x * (str_replace('%','',$cl) / 100);
+        if (strpos($ct, 'px')>0) $ct = str_replace('px','',$ct);
+        if (strpos($cr, 'px')>0) $cr = str_replace('px','',$cr);
+        if (strpos($cb, 'px')>0) $cb = str_replace('px','',$cb);
+        if (strpos($cl, 'px')>0) $cl = str_replace('px','',$cl);
+        $ct = (int) $ct; $cr = (int) $cr; $cb = (int) $cb; $cl = (int) $cl;
+        if ($round) { 
+            $ct = round($ct); 
+            $cr = round($cr); 
+            $cb = round($cb); 
+            $cl = round($cl); 
+        }
+        if (!$negative) { 
+            if ($ct < 0) $ct = 0;
+            if ($cr < 0) $cr = 0;
+            if ($cb < 0) $cb = 0;
+            if ($cl < 0) $cl = 0;
+        }
+        return array($ct, $cr, $cb, $cl);
     }
 
     /**
@@ -3221,6 +3292,19 @@ class upload {
         $this->file_dst_name_body   = '';
         $this->file_dst_name_ext    = '';
 
+        // clean up some parameters
+        $this->file_max_size = $this->getsize($this->file_max_size);
+        $this->jpeg_size = $this->getsize($this->jpeg_size);
+        // some parameters are being deprecated, and replaced with others
+        if (is_null($this->image_overlay_opacity)) $this->image_overlay_opacity = $this->image_overlay_percent;
+        if ($this->image_text_opacity == 100) $this->image_text_opacity = $this->image_text_percent;
+        if ($this->image_text_background_opacity == 100) $this->image_text_background_opacity = $this->image_text_background_percent;
+
+        // copy some variables as we need to keep them clean
+        $file_src_name = $this->file_src_name;
+        $file_src_name_body = $this->file_src_name_body;
+        $file_src_name_ext = $this->file_src_name_ext;
+
         if (!$this->uploaded) {
             $this->error = $this->translate('file_not_uploaded');
             $this->processed = false;
@@ -3242,7 +3326,7 @@ class upload {
 
         if ($this->processed) {
             // checks file max size
-            if ($this->file_src_size > $this->file_max_size ) {
+            if ($this->file_src_size > $this->file_max_size) {
                 $this->processed = false;
                 $this->error = $this->translate('file_too_big');
             } else {
@@ -3252,14 +3336,26 @@ class upload {
 
         if ($this->processed) {
             // if we have an image without extension, set it
-            if ($this->file_is_image && !$this->file_src_name_ext_) $this->file_src_name_ext = $this->file_src_name_ext_ = $this->image_src_type;
+            if ($this->file_force_extension && $this->file_is_image && !$this->file_src_name_ext) $file_src_name_ext = $this->image_src_type;
             // turn dangerous scripts into text files
             if ($this->no_script) {
-                if ((((substr($this->file_src_mime, 0, 5) == 'text/' && $this->file_src_mime != 'text/rtf') || strpos($this->file_src_mime, 'javascript') !== false)  && (substr($this->file_src_name, -4) != '.txt'))
-                    || preg_match('/\.(php|pl|py|cgi|asp|js)$/i', $this->file_src_name) || empty($this->file_src_name_ext_)) {
+                // if the file has no extension, we try to guess it from the MIME type
+                if ($this->file_force_extension && empty($file_src_name_ext)) {
+                    if ($key = array_search($this->file_src_mime, $this->mime_types)) {
+                        $file_src_name_ext = $key;
+                        $file_src_name = $file_src_name_body . '.' . $file_src_name_ext;
+                        $this->log .= '- file renamed as ' . $file_src_name_body . '.' . $file_src_name_ext . '!<br />';
+                    }
+                }
+                // if the file is text based, or has a dangerous extension, we rename it as .txt
+                if ((((substr($this->file_src_mime, 0, 5) == 'text/' && $this->file_src_mime != 'text/rtf') || strpos($this->file_src_mime, 'javascript') !== false)  && (substr($file_src_name, -4) != '.txt'))
+                    || preg_match('/\.(php|pl|py|cgi|asp|js)$/i', $this->file_src_name)
+                    || $this->file_force_extension && empty($file_src_name_ext)) {
                     $this->file_src_mime = 'text/plain';
-                    $this->log .= '- script '  . $this->file_src_name . ' renamed as ' . $this->file_src_name . '.txt!<br />';
-                    $this->file_src_name_ext = $this->file_src_name_ext_ . (empty($this->file_src_name_ext_) ? 'txt' : '.txt');
+                    if ($this->file_src_name_ext) $file_src_name_body = $file_src_name_body . '.' . $this->file_src_name_ext;
+                    $file_src_name_ext = 'txt';
+                    $file_src_name = $file_src_name_body . '.' . $file_src_name_ext;
+                    $this->log .= '- script renamed as ' . $file_src_name_body . '.' . $file_src_name_ext . '!<br />';
                 }
             }
 
@@ -3270,6 +3366,7 @@ class upload {
                 list($m1, $m2) = explode('/', $this->file_src_mime);
                 $allowed = false;
                 // check wether the mime type is allowed
+                if (!is_array($this->allowed)) $this->allowed = array($this->allowed);
                 foreach($this->allowed as $k => $v) {
                     list($v1, $v2) = explode('/', $v);
                     if (($v1 == '*' && $v2 == '*') || ($v1 == $m1 && ($v2 == $m2 || $v2 == '*'))) {
@@ -3278,6 +3375,7 @@ class upload {
                     }
                 }
                 // check wether the mime type is forbidden
+                if (!is_array($this->forbidden)) $this->forbidden = array($this->forbidden);
                 foreach($this->forbidden as $k => $v) {
                     list($v1, $v2) = explode('/', $v);
                     if (($v1 == '*' && $v2 == '*') || ($v1 == $m1 && ($v2 == $m2 || $v2 == '*'))) {
@@ -3342,34 +3440,35 @@ class upload {
             $this->file_dst_path        = $server_path;
 
             // repopulate dst variables from src
-            $this->file_dst_name        = $this->file_src_name;
-            $this->file_dst_name_body   = $this->file_src_name_body;
-            $this->file_dst_name_ext    = $this->file_src_name_ext;
+            $this->file_dst_name        = $file_src_name;
+            $this->file_dst_name_body   = $file_src_name_body;
+            $this->file_dst_name_ext    = $file_src_name_ext;
             if ($this->file_overwrite) $this->file_auto_rename = false;
 
-            if ($this->image_convert != '') { // if we convert as an image
-                $this->file_dst_name_ext  = $this->image_convert;
+            if ($this->image_convert && $this->file_is_image) { // if we convert as an image
+                if ($this->file_src_name_ext) $this->file_dst_name_ext  = $this->image_convert;
                 $this->log .= '- new file name ext : ' . $this->image_convert . '<br />';
             }
-            if ($this->file_new_name_body != '') { // rename file body
+            if (!is_null($this->file_new_name_body)) { // rename file body
                 $this->file_dst_name_body = $this->file_new_name_body;
                 $this->log .= '- new file name body : ' . $this->file_new_name_body . '<br />';
             }
-            if ($this->file_new_name_ext != '') { // rename file ext
+            if (!is_null($this->file_new_name_ext)) { // rename file ext
                 $this->file_dst_name_ext  = $this->file_new_name_ext;
                 $this->log .= '- new file name ext : ' . $this->file_new_name_ext . '<br />';
             }
-            if ($this->file_name_body_add != '') { // append a string to the name
+            if (!is_null($this->file_name_body_add)) { // append a string to the name
                 $this->file_dst_name_body  = $this->file_dst_name_body . $this->file_name_body_add;
                 $this->log .= '- file name body append : ' . $this->file_name_body_add . '<br />';
             }
-            if ($this->file_name_body_pre != '') { // prepend a string to the name
+            if (!is_null($this->file_name_body_pre)) { // prepend a string to the name
                 $this->file_dst_name_body  = $this->file_name_body_pre . $this->file_dst_name_body;
                 $this->log .= '- file name body prepend : ' . $this->file_name_body_pre . '<br />';
             }
             if ($this->file_safe_name) { // formats the name
-                $this->file_dst_name_body = str_replace(array(' ', '-'), array('_','_'), $this->file_dst_name_body) ;
-                $this->file_dst_name_body = preg_replace('/[^A-Za-z0-9_]/', '', $this->file_dst_name_body) ;
+                $this->file_dst_name_body = strtr($this->file_dst_name_body, 'ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ', 'SZszYAAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy');
+                $this->file_dst_name_body = strtr($this->file_dst_name_body, array('Þ' => 'TH', 'þ' => 'th', 'Ð' => 'DH', 'ð' => 'dh', 'ß' => 'ss', 'Œ' => 'OE', 'œ' => 'oe', 'Æ' => 'AE', 'æ' => 'ae', 'µ' => 'u'));
+                $this->file_dst_name_body = preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), $this->file_dst_name_body);
                 $this->log .= '- file name safe format<br />';
             }
 
@@ -3388,6 +3487,7 @@ class upload {
                                  || $this->image_convert != ''
                                  || is_numeric($this->image_brightness)
                                  || is_numeric($this->image_contrast)
+                                 || is_numeric($this->image_opacity)
                                  || is_numeric($this->image_threshold)
                                  || !empty($this->image_tint_color)
                                  || !empty($this->image_overlay_color)
@@ -3402,22 +3502,13 @@ class upload {
                                  || !empty($this->image_crop)
                                  || !empty($this->image_precrop)
                                  || !empty($this->image_border)
+                                 || !empty($this->image_border_transparent)
                                  || $this->image_frame > 0
                                  || $this->image_bevel > 0
                                  || $this->image_reflection_height));
 
-            if ($image_manipulation) {
-                if ($this->image_convert=='') {
-                    $this->file_dst_name = $this->file_dst_name_body . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : '');
-                    $this->log .= '- image operation, keep extension<br />';
-                } else {
-                    $this->file_dst_name = $this->file_dst_name_body . '.' . $this->image_convert;
-                    $this->log .= '- image operation, change extension for conversion type<br />';
-                }
-            } else {
-                $this->file_dst_name = $this->file_dst_name_body . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : '');
-                $this->log .= '- no image operation, keep extension<br />';
-            }
+            // set the destination file name
+            $this->file_dst_name = $this->file_dst_name_body . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : '');
 
             if (!$return_mode) {
                 if (!$this->file_auto_rename) {
@@ -3426,10 +3517,18 @@ class upload {
                 } else {
                     $this->log .= '- checking for auto_rename<br />';
                     $this->file_dst_pathname = $this->file_dst_path . $this->file_dst_name;
-                    $body     = $this->file_dst_name_body;
+                    $body = $this->file_dst_name_body;
+                    $ext = '';
+                    // if we have changed the extension, then we add our increment before
+                    if ($file_src_name_ext != $this->file_src_name_ext) {
+                        if (substr($this->file_dst_name_body, -1 - strlen($this->file_src_name_ext)) == '.' . $this->file_src_name_ext) {
+                            $body = substr($this->file_dst_name_body, 0, strlen($this->file_dst_name_body) - 1 - strlen($this->file_src_name_ext));
+                            $ext = '.' . $this->file_src_name_ext;
+                        }
+                    }
                     $cpt = 1;
                     while (@file_exists($this->file_dst_pathname)) {
-                        $this->file_dst_name_body = $body . '_' . $cpt;
+                        $this->file_dst_name_body = $body . '_' . $cpt . $ext;
                         $this->file_dst_name = $this->file_dst_name_body . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : '');
                         $cpt++;
                         $this->file_dst_pathname = $this->file_dst_path . $this->file_dst_name;
@@ -3501,7 +3600,7 @@ class upload {
 
                 // checks if the destination directory is writeable, and attempt to make it writeable
                 $hash = md5($this->file_dst_name_body . rand(1, 1000));
-                if ($this->processed && !($f = @fopen($this->file_dst_path . $hash . '.' . $this->file_dst_name_ext, 'a+'))) {
+                if ($this->processed && !($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a+'))) {
                     if ($this->dir_auto_chmod) {
                         $this->log .= '- ' . $this->file_dst_path . ' is not writeable. Attempting chmod:';
                         if (!@chmod($this->file_dst_path, $this->dir_chmod)) {
@@ -3510,7 +3609,7 @@ class upload {
                             $this->error = $this->translate('destination_dir_write');
                         } else {
                             $this->log .= ' success<br />';
-                            if (!($f = @fopen($this->file_dst_path . $hash . '.' . $this->file_dst_name_ext, 'a+'))) { // we re-check
+                            if (!($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a+'))) { // we re-check
                                 $this->processed = false;
                                 $this->error = $this->translate('destination_dir_write');
                             } else {
@@ -3523,7 +3622,7 @@ class upload {
                     }
                 } else {
                     if ($this->processed) @fclose($f);
-                    @unlink($this->file_dst_path . $hash . '.' . $this->file_dst_name_ext);
+                    @unlink($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''));
                 }
 
 
@@ -3533,8 +3632,8 @@ class upload {
                 if (!$this->no_upload_check && empty($this->file_src_temp) && !@file_exists($this->file_src_pathname)) {
                     $this->log .= '- attempting to use a temp file:';
                     $hash = md5($this->file_dst_name_body . rand(1, 1000));
-                    if (move_uploaded_file($this->file_src_pathname, $this->file_dst_path . $hash . '.' . $this->file_dst_name_ext)) {
-                        $this->file_src_pathname = $this->file_dst_path . $hash . '.' . $this->file_dst_name_ext;
+                    if (move_uploaded_file($this->file_src_pathname, $this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''))) {
+                        $this->file_src_pathname = $this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : '');
                         $this->file_src_temp = $this->file_src_pathname;
                         $this->log .= ' file created<br />';
                         $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;temp file is: ' . $this->file_src_temp . '<br />';
@@ -3639,8 +3738,8 @@ class upload {
 
                     // we have to set image_convert if it is not already
                     if (empty($this->image_convert)) {
-                        $this->log .= '- setting destination file type to ' . $this->file_src_name_ext . '<br />';
-                        $this->image_convert = $this->file_src_name_ext;
+                        $this->log .= '- setting destination file type to ' . $this->image_src_type . '<br />';
+                        $this->image_convert = $this->image_src_type;
                     }
 
                     if (!in_array($this->image_convert, $this->image_supported)) {
@@ -3691,30 +3790,7 @@ class upload {
 
                     // pre-crop image, before resizing
                     if ((!empty($this->image_precrop))) {
-                        if (is_array($this->image_precrop)) {
-                            $vars = $this->image_precrop;
-                        } else {
-                            $vars = explode(' ', $this->image_precrop);
-                        }
-                        if (sizeof($vars) == 4) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[2]; $cl = $vars[3];
-                        } else if (sizeof($vars) == 2) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[0]; $cl = $vars[1];
-                        } else {
-                            $ct = $vars[0]; $cr = $vars[0]; $cb = $vars[0]; $cl = $vars[0];
-                        }
-                        if (strpos($ct, '%')>0) $ct = $this->image_src_y * (str_replace('%','',$ct) / 100);
-                        if (strpos($cr, '%')>0) $cr = $this->image_src_x * (str_replace('%','',$cr) / 100);
-                        if (strpos($cb, '%')>0) $cb = $this->image_src_y * (str_replace('%','',$cb) / 100);
-                        if (strpos($cl, '%')>0) $cl = $this->image_src_x * (str_replace('%','',$cl) / 100);
-                        if (strpos($ct, 'px')>0) $ct = str_replace('px','',$ct);
-                        if (strpos($cr, 'px')>0) $cr = str_replace('px','',$cr);
-                        if (strpos($cb, 'px')>0) $cb = str_replace('px','',$cb);
-                        if (strpos($cl, 'px')>0) $cl = str_replace('px','',$cl);
-                        $ct = (int) $ct;
-                        $cr = (int) $cr;
-                        $cb = (int) $cb;
-                        $cl = (int) $cl;
+                        list($ct, $cr, $cb, $cl) = $this->getoffsets($this->image_precrop, $this->image_src_x, $this->image_src_y, true, true);
                         $this->log .= '- pre-crop image : ' . $ct . ' ' . $cr . ' ' . $cb . ' ' . $cl . ' <br />';
                         $this->image_src_x = $this->image_src_x - $cl - $cr;
                         $this->image_src_y = $this->image_src_y - $ct - $cb;
@@ -3889,30 +3965,7 @@ class upload {
 
                     // crop image (and also crops if image_ratio_crop is used)
                     if ((!empty($this->image_crop) || !is_null($ratio_crop))) {
-                        if (is_array($this->image_crop)) {
-                            $vars = $this->image_crop;
-                        } else {
-                            $vars = explode(' ', $this->image_crop);
-                        }
-                        if (sizeof($vars) == 4) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[2]; $cl = $vars[3];
-                        } else if (sizeof($vars) == 2) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[0]; $cl = $vars[1];
-                        } else {
-                            $ct = $vars[0]; $cr = $vars[0]; $cb = $vars[0]; $cl = $vars[0];
-                        }
-                        if (strpos($ct, '%')>0) $ct = $this->image_dst_y * (str_replace('%','',$ct) / 100);
-                        if (strpos($cr, '%')>0) $cr = $this->image_dst_x * (str_replace('%','',$cr) / 100);
-                        if (strpos($cb, '%')>0) $cb = $this->image_dst_y * (str_replace('%','',$cb) / 100);
-                        if (strpos($cl, '%')>0) $cl = $this->image_dst_x * (str_replace('%','',$cl) / 100);
-                        if (strpos($ct, 'px')>0) $ct = str_replace('px','',$ct);
-                        if (strpos($cr, 'px')>0) $cr = str_replace('px','',$cr);
-                        if (strpos($cb, 'px')>0) $cb = str_replace('px','',$cb);
-                        if (strpos($cl, 'px')>0) $cl = str_replace('px','',$cl);
-                        $ct = (int) $ct;
-                        $cr = (int) $cr;
-                        $cb = (int) $cb;
-                        $cl = (int) $cl;
+                        list($ct, $cr, $cb, $cl) = $this->getoffsets($this->image_crop, $this->image_dst_x, $this->image_dst_y, true, true);
                         // we adjust the cropping if we use image_ratio_crop
                         if (!is_null($ratio_crop)) {
                             if (array_key_exists('t', $ratio_crop)) $ct += $ratio_crop['t'];
@@ -4068,13 +4121,13 @@ class upload {
                     }
 
                     // add color overlay
-                    if ($gd_version >= 2 && (is_numeric($this->image_overlay_percent) && $this->image_overlay_percent > 0 && !empty($this->image_overlay_color))) {
+                    if ($gd_version >= 2 && (is_numeric($this->image_overlay_opacity) && $this->image_overlay_opacity > 0 && !empty($this->image_overlay_color))) {
                         $this->log .= '- apply color overlay<br />';
                         list($red, $green, $blue) = $this->getcolors($this->image_overlay_color);
                         $filter = imagecreatetruecolor($this->image_dst_x, $this->image_dst_y);
                         $color = imagecolorallocate($filter, $red, $green, $blue);
                         imagefilledrectangle($filter, 0, 0, $this->image_dst_x, $this->image_dst_y, $color);
-                        $this->imagecopymergealpha($image_dst, $filter, 0, 0, 0, 0, $this->image_dst_x, $this->image_dst_y, $this->image_overlay_percent);
+                        $this->imagecopymergealpha($image_dst, $filter, 0, 0, 0, 0, $this->image_dst_x, $this->image_dst_y, $this->image_overlay_opacity);
                         imagedestroy($filter);
                     }
 
@@ -4082,7 +4135,7 @@ class upload {
                     if ($gd_version >= 2 && ($this->image_negative || $this->image_greyscale || is_numeric($this->image_threshold)|| is_numeric($this->image_brightness) || is_numeric($this->image_contrast) || !empty($this->image_tint_color))) {
                         $this->log .= '- apply tint, light, contrast correction, negative, greyscale and threshold<br />';
                         if (!empty($this->image_tint_color)) list($tint_red, $tint_green, $tint_blue) = $this->getcolors($this->image_tint_color);
-                        imagealphablending($image_dst, true);
+                        //imagealphablending($image_dst, true);
                         for($y=0; $y < $this->image_dst_y; $y++) {
                             for($x=0; $x < $this->image_dst_x; $x++) {
                                 if ($this->image_greyscale) {
@@ -4090,6 +4143,7 @@ class upload {
                                     $r = $g = $b = round((0.2125 * $pixel['red']) + (0.7154 * $pixel['green']) + (0.0721 * $pixel['blue']));
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                                 if (is_numeric($this->image_threshold)) {
                                     $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
@@ -4097,6 +4151,7 @@ class upload {
                                     $r = $g = $b = ($c > $this->image_threshold ? 255 : 0);
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                                 if (is_numeric($this->image_brightness)) {
                                     $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
@@ -4105,6 +4160,7 @@ class upload {
                                     $b = max(min(round($pixel['blue'] + (($this->image_brightness * 2))), 255), 0);
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                                 if (is_numeric($this->image_contrast)) {
                                     $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
@@ -4113,6 +4169,7 @@ class upload {
                                     $b = max(min(round(($this->image_contrast + 128) * $pixel['blue'] / 128), 255), 0);
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                                 if (!empty($this->image_tint_color)) {
                                     $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
@@ -4121,6 +4178,7 @@ class upload {
                                     $b = min(round($tint_blue * $pixel['blue'] / 169), 255);
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                                 if (!empty($this->image_negative)) {
                                     $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
@@ -4129,6 +4187,7 @@ class upload {
                                     $b = round(255 - $pixel['blue']);
                                     $color = imagecolorallocatealpha($image_dst, $r, $g, $b, $pixel['alpha']);
                                     imagesetpixel($image_dst, $x, $y, $color);
+                                    unset($color); unset($pixel);
                                 }
                             }
                         }
@@ -4136,38 +4195,15 @@ class upload {
 
                     // adds a border
                     if ($gd_version >= 2 && !empty($this->image_border)) {
-                        if (is_array($this->image_border)) {
-                            $vars = $this->image_border;
-                            $this->log .= '- add border : ' . implode(' ', $this->image_border) . '<br />';
-                        } else {
-                            $this->log .= '- add border : ' . $this->image_border . '<br />';
-                            $vars = explode(' ', $this->image_border);
-                        }
-                        if (sizeof($vars) == 4) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[2]; $cl = $vars[3];
-                        } else if (sizeof($vars) == 2) {
-                            $ct = $vars[0]; $cr = $vars[1]; $cb = $vars[0]; $cl = $vars[1];
-                        } else {
-                            $ct = $vars[0]; $cr = $vars[0]; $cb = $vars[0]; $cl = $vars[0];
-                        }
-                        if (strpos($ct, '%')>0) $ct = $this->image_dst_y * (str_replace('%','',$ct) / 100);
-                        if (strpos($cr, '%')>0) $cr = $this->image_dst_x * (str_replace('%','',$cr) / 100);
-                        if (strpos($cb, '%')>0) $cb = $this->image_dst_y * (str_replace('%','',$cb) / 100);
-                        if (strpos($cl, '%')>0) $cl = $this->image_dst_x * (str_replace('%','',$cl) / 100);
-                        if (strpos($ct, 'px')>0) $ct = str_replace('px','',$ct);
-                        if (strpos($cr, 'px')>0) $cr = str_replace('px','',$cr);
-                        if (strpos($cb, 'px')>0) $cb = str_replace('px','',$cb);
-                        if (strpos($cl, 'px')>0) $cl = str_replace('px','',$cl);
-                        $ct = (int) $ct;
-                        $cr = (int) $cr;
-                        $cb = (int) $cb;
-                        $cl = (int) $cl;
+                        list($ct, $cr, $cb, $cl) = $this->getoffsets($this->image_border, $this->image_dst_x, $this->image_dst_y, true, false);
+                        $this->log .= '- add border : ' . $ct . ' ' . $cr . ' ' . $cb . ' ' . $cl . '<br />';
                         $this->image_dst_x = $this->image_dst_x + $cl + $cr;
                         $this->image_dst_y = $this->image_dst_y + $ct + $cb;
-                        if (!empty($this->image_border_color)) list($red, $green, $blue) = $this->getcolors($this->image_border_color);
-                        // we now create an image, that we fill with the border color
-                        $tmp = $this->imagecreatenew($this->image_dst_x, $this->image_dst_y);
-                        $background = imagecolorallocatealpha($tmp, $red, $green, $blue, 0);
+                        if (!empty($this->image_border_color)) list($red, $green, $blue) = $this->getcolors($this->image_border_color);   
+                        $opacity = (is_numeric($this->image_border_opacity) ? (int) (127 - $this->image_border_opacity / 100 * 127): 0);                       
+                        // we now create an image, that we fill with the border color                                                                           
+                        $tmp = $this->imagecreatenew($this->image_dst_x, $this->image_dst_y);                                                                   
+                        $background = imagecolorallocatealpha($tmp, $red, $green, $blue, $opacity);
                         imagefilledrectangle($tmp, 0, 0, $this->image_dst_x, $this->image_dst_y, $background);
                         // we then copy the source image into the new image, without merging so that only the border is actually kept
                         imagecopy($tmp, $image_dst, $cl, $ct, 0, 0, $this->image_dst_x - $cr - $cl, $this->image_dst_y - $cb - $ct);
@@ -4175,8 +4211,84 @@ class upload {
                         $image_dst = $this->imagetransfer($tmp, $image_dst);
                     }
 
+                    // adds a fading-to-transparent border
+                    if ($gd_version >= 2 && !empty($this->image_border_transparent)) {
+                        list($ct, $cr, $cb, $cl) = $this->getoffsets($this->image_border_transparent, $this->image_dst_x, $this->image_dst_y, true, false);
+                        $this->log .= '- add transparent border : ' . $ct . ' ' . $cr . ' ' . $cb . ' ' . $cl . '<br />';
+                        // we now create an image, that we fill with the border color                                                                           
+                        $tmp = $this->imagecreatenew($this->image_dst_x, $this->image_dst_y);                                                                   
+                        // we then copy the source image into the new image, without the borders
+                        imagecopy($tmp, $image_dst, $cl, $ct, $cl, $ct, $this->image_dst_x - $cr - $cl, $this->image_dst_y - $cb - $ct);
+                        // we now add the top border
+                        $opacity = 100;
+                        for ($y = $ct - 1; $y >= 0; $y--) {
+                            $il = (int) ($ct > 0 ? ($cl * ($y / $ct)) : 0);
+                            $ir = (int) ($ct > 0 ? ($cr * ($y / $ct)) : 0);
+                            for ($x = $il; $x < $this->image_dst_x - $ir; $x++) {
+                                $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
+                                $alpha = (1 - ($pixel['alpha'] / 127)) * $opacity / 100;
+                                if ($alpha > 0) {
+                                    if ($alpha > 1) $alpha = 1;
+                                    $color = imagecolorallocatealpha($tmp, $pixel['red'] , $pixel['green'], $pixel['blue'],  round((1 - $alpha) * 127));
+                                    imagesetpixel($tmp, $x, $y, $color);
+                                }
+                            }
+                            if ($opacity > 0) $opacity = $opacity - (100 / $ct);
+                        }
+                        // we now add the right border
+                        $opacity = 100;
+                        for ($x = $this->image_dst_x - $cr; $x < $this->image_dst_x; $x++) {
+                            $it = (int) ($cr > 0 ? ($ct * (($this->image_dst_x - $x - 1) / $cr)) : 0);
+                            $ib = (int) ($cr > 0 ? ($cb * (($this->image_dst_x - $x - 1) / $cr)) : 0);
+                            for ($y = $it; $y < $this->image_dst_y - $ib; $y++) {
+                                $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
+                                $alpha = (1 - ($pixel['alpha'] / 127)) * $opacity / 100;
+                                if ($alpha > 0) {
+                                    if ($alpha > 1) $alpha = 1;
+                                    $color = imagecolorallocatealpha($tmp, $pixel['red'] , $pixel['green'], $pixel['blue'],  round((1 - $alpha) * 127));
+                                    imagesetpixel($tmp, $x, $y, $color);
+                                }
+                            }
+                            if ($opacity > 0) $opacity = $opacity - (100 / $cr);
+                        }
+                        // we now add the bottom border
+                        $opacity = 100;
+                        for ($y = $this->image_dst_y - $cb; $y < $this->image_dst_y; $y++) {
+                            $il = (int) ($cb > 0 ? ($cl * (($this->image_dst_y - $y - 1) / $cb)) : 0);
+                            $ir = (int) ($cb > 0 ? ($cr * (($this->image_dst_y - $y - 1) / $cb)) : 0);
+                            for ($x = $il; $x < $this->image_dst_x - $ir; $x++) {
+                                $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
+                                $alpha = (1 - ($pixel['alpha'] / 127)) * $opacity / 100;
+                                if ($alpha > 0) {
+                                    if ($alpha > 1) $alpha = 1;
+                                    $color = imagecolorallocatealpha($tmp, $pixel['red'] , $pixel['green'], $pixel['blue'],  round((1 - $alpha) * 127));
+                                    imagesetpixel($tmp, $x, $y, $color);
+                                }
+                            }
+                            if ($opacity > 0) $opacity = $opacity - (100 / $cb);
+                        }
+                        // we now add the left border
+                        $opacity = 100;
+                        for ($x = $cl - 1; $x >= 0; $x--) {
+                            $it = (int) ($cl > 0 ? ($ct * ($x / $cl)) : 0);
+                            $ib = (int) ($cl > 0 ? ($cb * ($x / $cl)) : 0);
+                            for ($y = $it; $y < $this->image_dst_y - $ib; $y++) {
+                                $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
+                                $alpha = (1 - ($pixel['alpha'] / 127)) * $opacity / 100;
+                                if ($alpha > 0) {
+                                    if ($alpha > 1) $alpha = 1;
+                                    $color = imagecolorallocatealpha($tmp, $pixel['red'] , $pixel['green'], $pixel['blue'],  round((1 - $alpha) * 127));
+                                    imagesetpixel($tmp, $x, $y, $color);
+                                }
+                            }
+                            if ($opacity > 0) $opacity = $opacity - (100 / $cl);
+                        }
+                        // we transfert tmp into image_dst
+                        $image_dst = $this->imagetransfer($tmp, $image_dst);
+                    }
+
                     // add frame border
-                    if (is_numeric($this->image_frame)) {
+                    if ($gd_version >= 2 && is_numeric($this->image_frame)) {
                         if (is_array($this->image_frame_colors)) {
                             $vars = $this->image_frame_colors;
                             $this->log .= '- add frame : ' . implode(' ', $this->image_frame_colors) . '<br />';
@@ -4189,9 +4301,10 @@ class upload {
                         $this->image_dst_y = $this->image_dst_y + ($nb * 2);
                         $tmp = $this->imagecreatenew($this->image_dst_x, $this->image_dst_y);
                         imagecopy($tmp, $image_dst, $nb, $nb, 0, 0, $this->image_dst_x - ($nb * 2), $this->image_dst_y - ($nb * 2));
+                        $opacity = (is_numeric($this->image_frame_opacity) ? (int) (127 - $this->image_frame_opacity / 100 * 127): 0);                       
                         for ($i=0; $i<$nb; $i++) {
                             list($red, $green, $blue) = $this->getcolors($vars[$i]);
-                            $c = imagecolorallocate($tmp, $red, $green, $blue);
+                            $c = imagecolorallocatealpha($tmp, $red, $green, $blue, $opacity);
                             if ($this->image_frame == 1) {
                                 imageline($tmp, $i, $i, $this->image_dst_x - $i -1, $i, $c);
                                 imageline($tmp, $this->image_dst_x - $i -1, $this->image_dst_y - $i -1, $this->image_dst_x - $i -1, $i, $c);
@@ -4209,7 +4322,7 @@ class upload {
                     }
 
                     // add bevel border
-                    if ($this->image_bevel > 0) {
+                    if ($gd_version >= 2 && $this->image_bevel > 0) {
                         if (empty($this->image_bevel_color1)) $this->image_bevel_color1 = '#FFFFFF';
                         if (empty($this->image_bevel_color2)) $this->image_bevel_color2 = '#000000';
                         list($red1, $green1, $blue1) = $this->getcolors($this->image_bevel_color1);
@@ -4492,11 +4605,11 @@ class upload {
                         // add a background, maybe transparent
                         if (!empty($this->image_text_background)) {
                             list($red, $green, $blue) = $this->getcolors($this->image_text_background);
-                            if ($gd_version >= 2 && (is_numeric($this->image_text_background_percent)) && $this->image_text_background_percent >= 0 && $this->image_text_background_percent <= 100) {
+                            if ($gd_version >= 2 && (is_numeric($this->image_text_background_opacity)) && $this->image_text_background_opacity >= 0 && $this->image_text_background_opacity <= 100) {
                                 $filter = imagecreatetruecolor($text_width, $text_height);
                                 $background_color = imagecolorallocate($filter, $red, $green, $blue);
                                 imagefilledrectangle($filter, 0, 0, $text_width, $text_height, $background_color);
-                                $this->imagecopymergealpha($image_dst, $filter, $text_x, $text_y, 0, 0, $text_width, $text_height, $this->image_text_background_percent);
+                                $this->imagecopymergealpha($image_dst, $filter, $text_x, $text_y, 0, 0, $text_width, $text_height, $this->image_text_background_opacity);
                                 imagedestroy($filter);
                             } else {
                                 $background_color = imagecolorallocate($image_dst ,$red, $green, $blue);
@@ -4511,7 +4624,7 @@ class upload {
                         list($red, $green, $blue) = $this->getcolors($this->image_text_color);
 
                         // add the text, maybe transparent
-                        if ($gd_version >= 2 && (is_numeric($this->image_text_percent)) && $this->image_text_percent >= 0 && $this->image_text_percent <= 100) {
+                        if ($gd_version >= 2 && (is_numeric($this->image_text_opacity)) && $this->image_text_opacity >= 0 && $this->image_text_opacity <= 100) {
                             if ($t_width < 0) $t_width = 0;
                             if ($t_height < 0) $t_height = 0;
                             $filter = $this->imagecreatenew($t_width, $t_height, false, true);
@@ -4534,7 +4647,7 @@ class upload {
                                                 $text_color);
                                 }
                             }
-                            $this->imagecopymergealpha($image_dst, $filter, $text_x, $text_y, 0, 0, $t_width, $t_height, $this->image_text_percent);
+                            $this->imagecopymergealpha($image_dst, $filter, $text_x, $text_y, 0, 0, $t_width, $t_height, $this->image_text_opacity);
                             imagedestroy($filter);
 
                         } else {
@@ -4616,6 +4729,26 @@ class upload {
                         $image_dst = $this->imagetransfer($tmp, $image_dst);
                     }
 
+                    // change opacity
+                    if ($gd_version >= 2 && is_numeric($this->image_opacity) && $this->image_opacity < 100) {
+                        $this->log .= '- change opacity<br />';
+                        // create the new destination image
+                        $tmp = $this->imagecreatenew($this->image_dst_x, $this->image_dst_y, true);
+                        for($y=0; $y < $this->image_dst_y; $y++) {
+                            for($x=0; $x < $this->image_dst_x; $x++) {
+                                $pixel = imagecolorsforindex($image_dst, imagecolorat($image_dst, $x, $y));
+                                $alpha = $pixel['alpha'] + round((127 - $pixel['alpha']) * (100 - $this->image_opacity) / 100);
+                                if ($alpha > 127) $alpha = 127;
+                                if ($alpha > 0) {
+                                    $color = imagecolorallocatealpha($tmp, $pixel['red'] , $pixel['green'], $pixel['blue'], $alpha);
+                                    imagesetpixel($tmp, $x, $y, $color);
+                                }
+                            }
+                        }
+                        // copy the resulting image into the destination image
+                        $image_dst = $this->imagetransfer($tmp, $image_dst);
+                    }
+                    
                     // reduce the JPEG image to a set desired size
                     if (is_numeric($this->jpeg_size) && $this->jpeg_size > 0 && ($this->image_convert == 'jpeg' || $this->image_convert == 'jpg')) {
                         // inspired by: JPEGReducer class version 1, 25 November 2004, Author: Huda M ElMatsani, justhuda at netscape dot net
@@ -4627,6 +4760,10 @@ class upload {
                         $size50 = strlen($buffer);
                         ob_start(); imagejpeg($image_dst,'',25);  $buffer = ob_get_contents(); ob_end_clean();
                         $size25 = strlen($buffer);
+
+                        // make sure we won't divide by 0
+                        if ($size50 == $size25) $size50++;
+                        if ($size75 == $size50 || $size75 == $size25) $size75++;
 
                         // calculate gradient of size reduction by quality
                         $mgrad1 = 25 / ($size50-$size25);

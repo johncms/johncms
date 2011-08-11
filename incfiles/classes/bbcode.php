@@ -78,7 +78,7 @@ class bbcode extends core
                 $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
                 $php = substr($php, 0, 2) != "<?" ? "<?php\n" . $php . "\n?>" : $php;
                 $php = highlight_string(stripslashes($php), true);
-                $php = strtr($php, array('slash_JOHNCMS' => '&#92;', ':' => '&#58;', '[' => '&#91;', '&nbsp;' => ' '));
+                $php = strtr($php, array('slash_JOHNCMS' => '&#92;', ':' => '&#58;', '[' => '&#91;'));
                 return '<div class="phpcode">' . $php . '</div>';
             }
         }
@@ -239,5 +239,3 @@ class bbcode extends core
         return $out . '<br />';
     }
 }
-
-?>

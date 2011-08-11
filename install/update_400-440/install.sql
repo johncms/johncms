@@ -1,3 +1,21 @@
+DROP TABLE IF EXISTS `cms_lng_list`;
+DROP TABLE IF EXISTS `cms_lng_phrases`;
+
+ALTER TABLE `users` DROP `set_language`;
+ALTER TABLE `users` DROP `postchat`;
+ALTER TABLE `users` DROP `otvetov`;
+ALTER TABLE `users` DROP `mailact`;
+ALTER TABLE `users` DROP `vrrat`;
+ALTER TABLE `users` DROP `cctx`;
+ALTER TABLE `users` DROP `alls`;
+ALTER TABLE `users` DROP `balans`;
+ALTER TABLE `users` DROP `set_chat`;
+ALTER TABLE `users` DROP `kod`;
+ALTER TABLE `users` ADD `smileys` text NOT NULL;
+
+DELETE FROM `cms_settings` WHERE `key` = 'lng_id' LIMIT 1;
+UPDATE `cms_settings` SET `key` = 'lng' WHERE `key` = 'lng_iso' LIMIT 1;
+
 ALTER TABLE `users` ADD `ip_via_proxy` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `ip`;
 
 TRUNCATE TABLE `cms_users_iphistory`;
@@ -28,6 +46,9 @@ ALTER TABLE `lib` CHANGE `name` `name` TINYTEXT NOT NULL;
 ALTER TABLE `lib` ADD FULLTEXT (`name`);
 ALTER TABLE `lib` ADD FULLTEXT (`text`);
 
+ALTER TABLE `cms_album_files` ADD `unread_comments` BOOLEAN NOT NULL DEFAULT '0';
+
 ALTER TABLE `forum` CHANGE `ip` `ip_old` TEXT NOT NULL;
 ALTER TABLE `forum` ADD `ip` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `text`;
 ALTER TABLE `forum` ADD `ip_via_proxy` BIGINT( 11 ) NOT NULL DEFAULT '0' AFTER `ip`;
+ALTER TABLE `forum` ADD `curators` text NOT NULL;

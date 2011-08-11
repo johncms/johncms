@@ -75,9 +75,8 @@ if (!mysql_num_rows($req_r)) {
     require('../incfiles/end.php');
     exit;
 }
-$th = isset($_POST['th']) ? trim($_POST['th']) : '';
+$th = isset($_POST['th']) ? functions::check(mb_substr(trim($_POST['th']), 0, 100)) : '';
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-$th = functions::check(mb_substr($th, 0, 100));
 if (isset($_POST['msgtrans'])) {
     $th = functions::trans($th);
     $msg = functions::trans($msg);
@@ -94,11 +93,6 @@ if (isset($_POST['submit'])) {
     if (mb_strlen($msg) < 4)
         $error[] = $lng['error_message_short'];
     if (!$error) {
-        $th = functions::check(mb_substr($th, 0, 100));
-        if ($_POST['msgtrans'] == 1) {
-            $th = functions::trans($th);
-            $msg = functions::trans($msg);
-        }
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
         // Прверяем, есть ли уже такая тема в текущем разделе?
         if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'"), 0) > 0)

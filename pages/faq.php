@@ -143,7 +143,7 @@ switch ($act) {
                 $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', basename($smileys[$i], 1));
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 if (!$is_mobile) echo (in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
-                echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . $lng['lng_or'] . ' :' . functions::trans($smile);
+                echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . $lng['lng_or'] . ' :' . functions::trans($smile) . ':';
                 echo '</div>';
             }
         if (!$is_mobile) echo '<div class="gmenu"><input type="submit" name="add" value=" ' . $lng['add'] . ' "/></div></form>';
@@ -221,7 +221,7 @@ switch ($act) {
         Список своих смайлов
         -----------------------------------------------------------------
         */
-        if ($is_mobile || $page != 1) {
+        if ($is_mobile) {
             echo functions::display_error($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
             require('../incfiles/end.php');
             exit;
@@ -258,7 +258,7 @@ switch ($act) {
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . ' / ' . $user_smileys . '</div>';
         if ($total > $kmess)
-            echo '<div class="topmenu"><p>' . functions::display_pagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</p></div>';
+            echo '<div class="topmenu">' . functions::display_pagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</div>';
         echo '<p>' . ($total ? '<a href="faq.php?act=set_my_sm&amp;clean">' . $lng['clear'] . '</a><br />'
                 : '') . '<a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a></p>';
         break;

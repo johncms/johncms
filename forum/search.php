@@ -101,8 +101,8 @@ if ($search && !$error) {
             $text = $search_t ? $res_p['text'] : $res['text'];
             foreach ($array as $srch) if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) break;
             if(!isset($pos) || $pos < 100) $pos = 100;
-            $text = functions::checkout(mb_substr($text, ($pos - 100), 400), 1);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
+            $text = functions::checkout(mb_substr($text, ($pos - 100), 400), 1);
             if (!$search_t) {
                 foreach($array as $val){
                     $text = ReplaceKeywords($val, $text);

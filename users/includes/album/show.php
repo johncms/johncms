@@ -10,6 +10,9 @@
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
+require('../incfiles/head.php');
+
 if (!$al) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
@@ -98,7 +101,18 @@ if ($total) {
             Предпросмотр отдельного изображения
             -----------------------------------------------------------------
             */
-            echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
+            if($user['id'] == $user_id && isset($_GET['profile'])) {
+            	copy(
+            		'../files/users/album/' . $user['id'] . '/' . $res['tmb_name'],
+            		'../files/users/photo/' . $user_id . '_small.jpg'
+            	);
+            	copy(
+            		'../files/users/album/' . $user['id'] . '/' . $res['img_name'],
+            		'../files/users/photo/' . $user_id . '.jpg'
+            	);
+				echo '<span class="green"><b>' . $lng_profile['photo_profile_ok'] . '</b></span><br />';
+            }
+			echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
             // Счетчик просмотров
             if (!mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '$user_id' AND `file_id` = '" . $res['id'] . "'"), 0)) {
                 mysql_query("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = '" . time() . "'");
@@ -122,7 +136,9 @@ if ($total) {
                 '<a href="album.php?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['move'] . '</a>',
                 '<a href="album.php?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . $lng['delete'] . '</a>'
             ));
-        }
+            if($user['id'] == $user_id && $view)
+            	echo ' | <a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;view&amp;img=' . $res['id'] . '&amp;profile">' . $lng_profile['photo_profile'] . '</a>';
+		}
         echo vote_photo($res) .
             '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
             '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .

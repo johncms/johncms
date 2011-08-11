@@ -13,6 +13,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 //Error_Reporting(E_ALL & ~E_NOTICE);
 @ini_set('session.use_trans_sid', '0');
 @ini_set('arg_separator.output', '&amp;');
+date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 $rootpath = isset($rootpath) ? $rootpath : '../';
 
@@ -89,10 +90,13 @@ if ($user_id && $datauser['lastdate'] < (time() - 3600) && $set_user['digest'] &
 Буфферизация вывода
 -----------------------------------------------------------------
 */
+if(!isset($set['gzip'])) {
+    mysql_query("INSERT INTO `cms_settings` SET `key` = 'gzip', `val` = '1'");
+    $set['gzip'] = 1;
+}
 if ($set['gzip'] && @extension_loaded('zlib')) {
     @ini_set('zlib.output_compression_level', 3);
     ob_start('ob_gzhandler');
 } else {
     ob_start();
 }
-?>

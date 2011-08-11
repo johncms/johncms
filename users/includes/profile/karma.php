@@ -45,7 +45,7 @@ if ($set_karma['on']) {
                         $type = intval($_POST['type']) ? 1 : 0;
                         $points = abs(intval($_POST['points']));
                         if (!$points || $points > ($set_karma['karma_points'] - $sum))
-                            $points = 0;
+                            $points = 1;
                         mysql_query("INSERT INTO `karma_users` SET
                             `user_id` = '$user_id',
                             `name` = '$login',
@@ -217,7 +217,7 @@ if ($set_karma['on']) {
             }
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</p>' .
+                echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
                     '<p><form action="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';

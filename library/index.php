@@ -187,73 +187,66 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 $simvol = 2000; // Число символов на страницу по умолчанию
             }
             // Счетчик прочтений
-            if (isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
+            if (!isset($_SESSION['lib']) || isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
                 $_SESSION['lib'] = $id;
                 $libcount = intval($zag['count']) + 1;
-                mysql_query("UPDATE `lib` SET  `count` = '" . $libcount . "' WHERE `id` = '" . $id . "'");
+                mysql_query("UPDATE `lib` SET  `count` = '$libcount' WHERE `id` = '$id'");
             }
-            // Заголовок статьи
-            echo '<p><b>' . htmlentities($zag['name'], ENT_QUOTES, 'UTF-8') . '</b></p>';
-            // Постраничная навигация читаемой статьи
-            // Используется модифицированный код от hintoz
-            $tx = $zag['text'];
-            $strrpos = mb_strrpos($tx, " ");
-            $pages = 1;
-            // Вычисляем номер страницы
-            if (isset($_GET['page'])) {
-                $page = abs(intval($_GET['page']));
-                if ($page == 0)
-                    $page = 1;
+            // Запрашиваем выбранную статью из базы
+            $symbols = core::$is_mobile ? 3000 : 7000;
+            $req = mysql_fetch_assoc(mysql_query("SELECT CHAR_LENGTH(`text`) / $symbols AS `count_pages` FROM `lib` WHERE `id`= '$id'"));
+            $count_pages = ceil($req['count_pages']);
+            $start_pos = $page == 1 ? 1 : $page * $symbols - $symbols;
+            $req = mysql_fetch_assoc(mysql_query("SELECT SUBSTRING(`text`, $start_pos, " . ($symbols + 100) . ") AS `text` FROM `lib` WHERE `id` = '$id'"));
+            if ($page == 1) {
+                $int_start = 0;
+            } else {
+                if (false === ($pos1 = mb_strpos($req['text'], "\r\n"))) $pos1 = 100;
+                if (false === ($pos2 = mb_strpos($req['text'], ' '))) $pos2 = 100;
+                $int_start = $pos1 >= $pos2 ? $pos2 : $pos1;
                 $start = $page - 1;
-            } else {
-                $page = $start + 1;
             }
-            $t_si = 0;
-            if ($strrpos) {
-                while ($t_si < $strrpos) {
-                    $string = mb_substr($tx, $t_si, $simvol);
-                    $t_ki = mb_strrpos($string, " ");
-                    $m_sim = $t_ki;
-                    $strings[$pages] = $string;
-                    $t_si = $t_ki + $t_si;
-                    if ($page == $pages) {
-                        $page_text = $strings[$pages];
-                    }
-                    if ($strings[$pages] == "") {
-                        $t_si = $strrpos++;
-                    } else {
-                        $pages++;
-                    }
-                }
-                if ($page >= $pages) {
-                    $page = $pages - 1;
-                    $page_text = $strings[$page];
-                }
-                $pages = $pages - 1;
-                if ($page != $pages) {
-                    $prb = mb_strrpos($page_text, " ");
-                    $page_text = mb_substr($page_text, 0, $prb);
-                }
+            if ($count_pages == 1 || $page == $count_pages) {
+                $int_lenght = $symbols;
             } else {
-                $page_text = $tx;
+                $tmp = mb_substr($req['text'], $symbols, 100);
+                if (($pos1 = mb_strpos($tmp, "\r\n")) === false) $pos1 = 100;
+                if (($pos2 = mb_strpos($tmp, ' ')) === false) $pos2 = 100;
+                $int_lenght = $symbols + ($pos1 >= $pos2 ? $pos2 : $pos1) - $int_start;
+            }
+
+            // Заголовок статьи
+            echo '<div class="phdr"><b>' . htmlentities($zag['name'], ENT_QUOTES, 'UTF-8') . '</b></div>';
+            if ($count_pages > 1) {
+                echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $count_pages, 1) . '</div>';
             }
             // Текст статьи
-            $page_text = htmlentities($page_text, ENT_QUOTES, 'UTF-8');
-            echo '<p>' . nl2br($page_text) . '</p>';
-            echo '<hr /><p>';
-            if ($pages > 1) {
-                echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $pages, 1) . '</p>';
-                echo '<p><form action="index.php" method="get"><input type="hidden" name="id" value="' . $id . '"/><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
-            }
-            if ($rights == 5 || $rights >= 6) {
-                echo '<p><a href="index.php?act=edit&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>';
-                echo '<a href="index.php?act=del&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
-            }
+            $text = functions::checkout(mb_substr($req['text'], $int_start, $int_lenght), 1, 1);
+            if ($set_user['smileys'])
+                $text = functions::smileys($text, $rights ? 1 : 0);
+            echo '<div class="list2">' . $text . '</div>';
+
             // Ссылка на комментарии
             if ($set['mod_lib_comm'] || $rights >= 7) {
                 $km = mysql_query("select `id` from `lib` where type = 'komm' and refid = '" . $id . "'");
                 $km1 = mysql_num_rows($km);
-                echo "<a href='index.php?act=komm&amp;id=" . $id . "'>" . $lng['comments'] . "</a> ($km1)<br />";
+                $comm_link = "<a href='index.php?act=komm&amp;id=" . $id . "'>" . $lng['comments'] . "</a> ($km1)";
+            } else {
+                $comm_link = '&#160;';
+            }
+            echo '<div class="phdr">' . $comm_link . '</div>';
+            if ($count_pages > 1) {
+                echo '<div class="topmenu">' .
+                     functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $count_pages, 1) .
+                     '</div><div class="topmenu">' .
+                     '<form action="index.php?id=' . $id . '" method="post">' .
+                     '<input type="text" name="page" size="2"/>' .
+                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                     '</form></div>';
+            }
+            if ($rights == 5 || $rights >= 6) {
+                echo '<p><a href="index.php?act=edit&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>';
+                echo '<a href="index.php?act=del&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
             }
             echo '<a href="index.php?act=java&amp;id=' . $id . '">' . $lng_lib['download_java'] . '</a><br /><br />';
             $dnam = mysql_query("select `id`, `refid`, `text` from `lib` where type = 'cat' and id = '" . $zag['refid'] . "'");
@@ -270,7 +263,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 $nadir = $dnamm1['refid'];
                 $catname = $dnamm3['text'];
             }
-            echo "<a href='index.php?'>" . $lng_lib['to_library'] . "</a></p>";
+            echo "<a href='index.php?'>" . $lng_lib['to_library'] . "</a>";
             break;
         default :
             header("location: index.php");

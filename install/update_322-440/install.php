@@ -198,7 +198,9 @@ switch ($act) {
         Проверка настроек PHP и прав доступа
         -----------------------------------------------------------------
         */
-        echo str_replace('UPDATE_VERSION', UPDATE_VERSION, $lng['update_warning']);
+        $search = array('#UPDATE_VERSION#', '#MODE#');
+        $replace = array(UPDATE_VERSION, MODE);
+        echo str_replace($search, $replace, $lng['update_warning']);
         echo '<p><h3 class="green">' . $lng['check_1'] . '</h3>';
         // Проверка критических ошибок PHP
         if (($php_errors = install::check_php_errors()) !== false) {

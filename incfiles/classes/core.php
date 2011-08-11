@@ -471,5 +471,3 @@ class core
         return false;
     }
 }
-
-?>

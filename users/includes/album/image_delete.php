@@ -14,6 +14,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+require('../incfiles/head.php');
+
 /*
 -----------------------------------------------------------------
 Удалить картинку

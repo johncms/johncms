@@ -30,7 +30,7 @@ if ($rights == 5 || $rights >= 6) {
             exit;
         }
         $text = functions::check($_POST['text']);
-        $user = intval($_POST['user']);
+        $user = isset($_POST['user']);
         $typs = intval($_POST['typs']);
         mysql_query("INSERT INTO `lib` SET
             `refid` = '$id',
@@ -43,9 +43,19 @@ if ($rights == 5 || $rights >= 6) {
         $cid = mysql_insert_id();
         echo $lng_lib['category_created'] . "<br/><a href='index.php?id=" . $cid . "'>" . $lng_lib['to_category'] . "</a><br/>";
     } else {
-        echo $lng_lib['create_category'] . "<br/><form action='index.php?act=mkcat&amp;id=" . $id .
-            "' method='post'>" . $lng['title'] . ":<br/><input type='text' name='text'/><p>" . $lng_lib['category_type'] . "<br/><select name='typs'><option value='1'>" . $lng_lib['categories'] . "</option><option value='0'>" . $lng_lib['articles'] . "</option></select></p><p><input type='checkbox' name='user' value='1'/>" . $lng_lib['if_articles'] . "</p><p><input type='submit' name='submit' value='" . $lng['save'] . "'/></p></form><p><a href ='index.php?id="
-            . $id . "'>" . $lng['back'] . "</a></p>";
+        echo $lng_lib['create_category'] . '<br/>' .
+             '<form action="index.php?act=mkcat&amp;id=' . $id . '" method="post">' .
+             $lng['title'] . ':<br/>' .
+             '<input type="text" name="text"/>' .
+             '<p>' . $lng_lib['category_type'] . '<br/>' .
+             '<select name="typs">' .
+             '<option value="1">' . $lng_lib['categories'] . '</option>' .
+             '<option value="0">' . $lng_lib['articles'] . '</option>' .
+             '</select></p>' .
+             '<p><input type="checkbox" name="user" value="1"/>' . $lng_lib['if_articles'] . '</p>' .
+             '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+             '</form>' .
+             '<p><a href ="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
     }
 } else {
     header("location: index.php");

@@ -225,6 +225,7 @@ ul {
   border: 1px dotted #9FAEBB;
   margin-top: 4px;
   padding: 0px 2px 0px 2px;
+  overflow: auto;
 }
 
 .quote {

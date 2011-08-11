@@ -36,6 +36,7 @@ class comments
 
     // Возвращаемые значения
     public $total = 0;                                    // Общее число комментариев объекта
+    public $added = false;                                // Метка добавления нового комментария
 
     /*
     -----------------------------------------------------------------
@@ -211,55 +212,44 @@ class comments
                 }
                 break;
 
-            case 'add_comment':
+            default:
+                if (!empty($arg['context_top']))
+                    echo $arg['context_top'];
+
                 /*
                 -----------------------------------------------------------------
-                Добавляем комментарий
+                Добавляем новый комментарий
+                -----------------------------------------------------------------
+                */
+                if(!$this->ban && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false){
+                    if (empty($message['error'])) {
+                        // Записываем комментарий в базу
+                        $this->add_comment($message['text']);
+                        $this->total = $this->msg_total(1);
+                        $_SESSION['code'] = $message['code'];
+                    } else {
+                        // Показываем ошибки, если есть
+                        echo functions::display_error($message['error']);
+                        $this->total = $this->msg_total();
+                    }
+                } else {
+                    $this->total = $this->msg_total();
+                }
+
+                /*
+                -----------------------------------------------------------------
+                Показываем форму ввода
                 -----------------------------------------------------------------
                 */
                 if (!$this->ban) {
-                    $message = $this->msg_check(1);
-                    if (empty($message['error'])) {
-                        // Формируем атрибуты сообщения
-                        $attributes = array(
-                            'author_name' => core::$user_data['name'],
-                            'author_ip' => core::$ip,
-                            'author_ip_via_proxy' => core::$ip_via_proxy,
-                            'author_browser' => core::$user_agent
-                        );
-
-                        // Записываем комментарий в базу
-                        mysql_query("INSERT INTO `" . $this->comments_table . "` SET
-                            `sub_id` = '" . intval($this->sub_id) . "',
-                            `user_id` = '" . $this->user_id . "',
-                            `text` = '" . mysql_real_escape_string($message['text']) . "',
-                            `time` = '" . time() . "',
-                            `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
-                        ");
-                        // Обновляем счетчик комментариев
-                        $this->msg_total(1);
-                        // Обновляем статистику пользователя
-                        mysql_query("UPDATE `users` SET `komm` = '" . (core::$user_data['komm'] + 1) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
-                        header('Location: ' . str_replace('&amp;', '&', $this->url));
-                    } else {
-                        echo functions::display_error($message['error'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
-                    }
+                    echo $this->msg_form();
                 }
-                break;
 
-            default:
                 /*
                 -----------------------------------------------------------------
                 Показываем список комментариев
                 -----------------------------------------------------------------
                 */
-                if (!empty($arg['context_top']))
-                    echo $arg['context_top'];
-                if (!$this->ban) {
-                    // Показываем форму ввода
-                    echo $this->msg_form('&amp;mod=add_comment');
-                }
-                $this->total = $this->msg_total();
                 echo '<div class="phdr"><b>' . $arg['title'] . '</b></div>';
                 if ($this->total > $kmess) echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
                 if ($this->total) {
@@ -323,23 +313,45 @@ class comments
 
     /*
     -----------------------------------------------------------------
+    Добавляем комментарий в базу
+    -----------------------------------------------------------------
+    */
+    private function add_comment($message)
+    {
+        // Формируем атрибуты сообщения
+        $attributes = array(
+            'author_name' => core::$user_data['name'],
+            'author_ip' => core::$ip,
+            'author_ip_via_proxy' => core::$ip_via_proxy,
+            'author_browser' => core::$user_agent
+        );
+        // Записываем комментарий в базу
+        mysql_query("INSERT INTO `" . $this->comments_table . "` SET
+            `sub_id` = '" . intval($this->sub_id) . "',
+            `user_id` = '" . $this->user_id . "',
+            `text` = '" . mysql_real_escape_string($message) . "',
+            `time` = '" . time() . "',
+            `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
+        ");
+        // Обновляем статистику пользователя
+        mysql_query("UPDATE `users` SET `komm` = '" . (++core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
+        $this->added = true;
+    }
+
+    /*
+    -----------------------------------------------------------------
     Форма ввода комментария
     -----------------------------------------------------------------
     */
     private function msg_form($submit_link = '', $text = '', $reply = '')
     {
-        $out = '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>';
-        if (!empty($text)) {
-            $out .= '<div class="quote">' . $text . '</div></p><p>';
-        }
-        $out .= '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />';
-        if (!core::$is_mobile)
-            $out .= '</p><p>' . bbcode::auto_bb('form', 'message');
-        $out .= '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>';
-        if (core::$user_set['translit'])
-            $out .= '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>';
-        $out .= '<input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
-        return $out;
+        return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
+               (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
+               '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
+               (!core::$is_mobile ? '</p><p>' . bbcode::auto_bb('form', 'message') : '') .
+               '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>' .
+               (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>' : '') .
+               '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
     }
 
     /*
@@ -353,7 +365,11 @@ class comments
     {
         $error = array();
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : false;
+        $code = isset($_POST['code']) ? intval($_POST['code']) : NULL;
+        $code_chk = isset($_SESSION['code']) ? $_SESSION['code'] : NULL;
         $translit = isset($_POST['translit']);
+        // Проверяем код
+        if($code == $code_chk) return false;
         // Проверяем на минимально допустимую длину
         if (mb_strlen($message) < $this->min_lenght) {
             $error[] = core::$lng['error_message_short'];
@@ -375,6 +391,7 @@ class comments
             $message = functions::trans($message);
         // Возвращаем результат
         return array(
+            'code' => $code,
             'text' => $message,
             'error' => $error
         );
@@ -395,5 +412,3 @@ class comments
         return $total;
     }
 }
-
-?>

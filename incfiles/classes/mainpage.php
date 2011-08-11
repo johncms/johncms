@@ -49,7 +49,7 @@ class mainpage {
                     if ($this->settings['tags']) {
                         $text = bbcode::tags($text);
                     } else {
-                        $text = functions::notags($text);
+                        $text = bbcode::notags($text);
                     }
                     // Обрабатываем смайлы
                     if ($this->settings['smileys']) {
@@ -99,5 +99,3 @@ class mainpage {
         return ($res > 0 ? '/<span class="red">+' . $res . '</span>' : false);
     }
 }
-
-?>

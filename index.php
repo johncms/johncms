@@ -56,12 +56,12 @@ switch ($act) {
             echo '<div class="menu"><p><h3>' . $lng['administrative_events'] . '</h3><ul>';
             if ($new_users_total > 0)
                 echo '<li><a href="users/index.php?act=userlist">' . $lng['users_new'] . '</a> (' . $new_users_total . ')</li>';
-            if ($reg_total > 0)
+            if ($reg_total > 0 && core::$user_rights >= 7)
                 echo '<li><a href="' . $set['admp'] . '/index.php?act=reg">' . $lng['users_on_reg'] . '</a> (' . $reg_total . ')</li>';
             if ($ban_total > 0)
                 echo '<li><a href="' . $set['admp'] . '/index.php?act=ban_panel">' . $lng['users_on_ban'] . '</a> (' . $ban_total . ')</li>';
             $total_libmod = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = 0"), 0);
-            if ($total_libmod > 0)
+            if ($total_libmod > 0 && core::$user_rights >= 6)
                 echo '<li><a href="library/index.php?act=moder">' . $lng['library_on_moderation'] . '</a> (' . $total_libmod . ')</li>';
             $total_admin = counters::guestbook(2);
             if ($total_admin > 0)
@@ -117,11 +117,13 @@ switch ($act) {
         Карта сайта
         -----------------------------------------------------------------
         */
-        $set_map = isset($set['sitemap']) ? unserialize($set['sitemap']) : array();
-        if (($set_map['forum'] || $set_map['lib']) && ($set_map['users'] || !$user_id) && ($set_map['browsers'] || !$is_mobile)) {
-            $map = new sitemap();
-            echo '<div class="sitemap">' . $map->site() . '</div>';
+        if (isset($set['sitemap'])) {
+            $set_map = unserialize($set['sitemap']);
+            if (($set_map['forum'] || $set_map['lib']) && ($set_map['users'] || !$user_id) && ($set_map['browsers'] || !$is_mobile)) {
+                $map = new sitemap();
+                echo '<div class="sitemap">' . $map->site() . '</div>';
+            }
         }
 }
+
 require('incfiles/end.php');
-?>

@@ -196,8 +196,10 @@ if (!empty($ban)) echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' .
 if ($user_id) {
     $list = array();
     $new_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `privat` WHERE `user` = '$login' AND `type` = 'in' AND `chit` = 'no'"), 0);
-    if ($new_mail) $list[] = '<a href="' . $set['homeurl'] . '/users/pradd.php?act=in&amp;new">' . $lng['mail'] . '</a>&#160;(' . $new_mail . ')';
-    if ($datauser['comm_count'] > $datauser['comm_old']) $list[] = '<a href="' . $set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+    if ($new_mail) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/pradd.php?act=in&amp;new">' . $lng['mail'] . '</a>&#160;(' . $new_mail . ')';
+    if ($datauser['comm_count'] > $datauser['comm_old']) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+    $new_album_comm = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . core::$user_id . "' AND `unread_comments` = 1"), 0);
+    if($new_album_comm) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
+
     if (!empty($list)) echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
 }
-?>
