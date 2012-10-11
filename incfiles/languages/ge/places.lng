@@ -1,4 +1,4 @@
-﻿admlist                       =   "<a href='#home#/users/index.php?act=admlist'>ადმინისტრაციის სია</a>"
+admlist                       =   "<a href='#home#/users/index.php?act=admlist'>ადმინისტრაციის სია</a>"
 album                         =   "<a href='#home#/users/album.php'>ფოტოალბომები</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>დაბადების დღეების სია</a>"
 downloads                     =   "<a href='#home#/download/index.php'>ჩამოტვირთვები</a>"

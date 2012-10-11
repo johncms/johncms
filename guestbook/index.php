@@ -42,9 +42,9 @@ switch ($act) {
                 header("Location: index.php");
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['delete_message'] . '</div>' .
-                     '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br/>' .
-                     '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | ' .
-                     '<a href="index.php">' . $lng['cancel'] . '</a></p></div>';
+                    '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br/>' .
+                    '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | ' .
+                    '<a href="index.php">' . $lng['cancel'] . '</a></p></div>';
             }
         }
         break;
@@ -105,11 +105,12 @@ switch ($act) {
             mysql_query("INSERT INTO `guest` SET
                 `adm` = '$admset',
                 `time` = '" . time() . "',
-                `user_id` = '$user_id',
+                `user_id` = '" . ($user_id ? $user_id : 0) . "',
                 `name` = '$from',
                 `text` = '" . mysql_real_escape_string($msg) . "',
                 `ip` = '" . core::$ip . "',
-                `browser` = '" . mysql_real_escape_string($agn) . "'
+                `browser` = '" . mysql_real_escape_string($agn) . "',
+                `otvet` = ''
             ");
             // Фиксируем время последнего поста (антиспам)
             if ($user_id) {
@@ -142,15 +143,15 @@ switch ($act) {
                 $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
                 $res = mysql_fetch_assoc($req);
                 echo '<div class="menu">' .
-                     '<div class="quote"><b>' . $res['name'] . '</b>' .
-                     '<br />' . functions::checkout($res['text']) . '</div>' .
-                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
-                     '<p><h3>' . $lng['reply'] . '</h3>' . bbcode::auto_bb('form', 'otv') .
-                     '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
-                     '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
-                     '</form></div>' .
-                     '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-                     '<p><a href="index.php">' . $lng['back'] . '</a></p>';
+                    '<div class="quote"><b>' . $res['name'] . '</b>' .
+                    '<br />' . functions::checkout($res['text']) . '</div>' .
+                    '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
+                    '<p><h3>' . $lng['reply'] . '</h3>' . bbcode::auto_bb('form', 'otv') .
+                    '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
+                    '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
+                    '</form></div>' .
+                    '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+                    '<p><a href="index.php">' . $lng['back'] . '</a></p>';
             }
         }
         break;
@@ -180,14 +181,14 @@ switch ($act) {
                 $res = mysql_fetch_assoc($req);
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
-                     '<div class="rmenu">' .
-                     '<form action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
-                     '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p>' .
-                     '<p><textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
-                     '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
-                     '</form></div>' .
-                     '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-                     '<p><a href="index.php">' . $lng['back'] . '</a></p>';
+                    '<div class="rmenu">' .
+                    '<form action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
+                    '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p>' .
+                    '<p><textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
+                    '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+                    '</form></div>' .
+                    '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+                    '<p><a href="index.php">' . $lng['back'] . '</a></p>';
             }
         }
         break;
@@ -225,15 +226,15 @@ switch ($act) {
             } else {
                 // Запрос параметров очистки
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['clear'] . '</div>' .
-                     '<div class="menu">' .
-                     '<form id="clean" method="post" action="index.php?act=clean">' .
-                     '<p><h3>' . $lng['clear_param'] . '</h3>' .
-                     '<input type="radio" name="cl" value="0" checked="checked" />' . $lng['clear_param_week'] . '<br />' .
-                     '<input type="radio" name="cl" value="1" />' . $lng['clear_param_day'] . '<br />' .
-                     '<input type="radio" name="cl" value="2" />' . $lng['clear_param_all'] . '</p>' .
-                     '<p><input type="submit" name="submit" value="' . $lng['clear'] . '" /></p>' .
-                     '</form></div>' .
-                     '<div class="phdr"><a href="index.php">' . $lng['cancel'] . '</a></div>';
+                    '<div class="menu">' .
+                    '<form id="clean" method="post" action="index.php?act=clean">' .
+                    '<p><h3>' . $lng['clear_param'] . '</h3>' .
+                    '<input type="radio" name="cl" value="0" checked="checked" />' . $lng['clear_param_week'] . '<br />' .
+                    '<input type="radio" name="cl" value="1" />' . $lng['clear_param_day'] . '<br />' .
+                    '<input type="radio" name="cl" value="2" />' . $lng['clear_param_all'] . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . $lng['clear'] . '" /></p>' .
+                    '</form></div>' .
+                    '<div class="phdr"><a href="index.php">' . $lng['cancel'] . '</a></div>';
             }
         }
         break;
@@ -314,9 +315,9 @@ switch ($act) {
             while (($res = mysql_fetch_assoc($req)) !== false) {
                 $text = '';
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                if (empty($res['id'])) {
+                if (!$res['id']) {
                     // Запрос по гостям
-                    $req_g = mysql_query("SELECT `lastdate` FROM `cms_guests` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1");
+                    $req_g = mysql_query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1");
                     $res_g = mysql_fetch_assoc($req_g);
                     $res['lastdate'] = $res_g['lastdate'];
                 }
@@ -345,14 +346,14 @@ switch ($act) {
                 }
                 if ($rights >= 6) {
                     $subtext = '<a href="index.php?act=otvet&amp;id=' . $res['gid'] . '">' . $lng['reply'] . '</a>' .
-                               ($rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . $lng['delete'] . '</a>' : '');
+                        ($rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . $lng['delete'] . '</a>' : '');
                 } else {
                     $subtext = '';
                 }
                 $arg = array(
                     'header' => $text,
-                    'body' => $post,
-                    'sub' => $subtext
+                    'body'   => $post,
+                    'sub'    => $subtext
                 );
                 echo functions::display_user($res, $arg);
                 echo '</div>';
@@ -364,11 +365,10 @@ switch ($act) {
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>' .
-                 '<p><form action="index.php" method="get"><input type="text" name="page" size="2"/>' .
-                 '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                '<p><form action="index.php" method="get"><input type="text" name="page" size="2"/>' .
+                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
         }
         break;
 }
 
 require('../incfiles/end.php');
-?>

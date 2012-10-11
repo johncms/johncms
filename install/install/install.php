@@ -148,11 +148,15 @@ switch ($act) {
                     `lastdate` = '" . time() . "',
                     `mail` = '" . mysql_real_escape_string($site_mail) . "',
                     `www` = '" . mysql_real_escape_string($site_url) . "',
+                    `about` = '',
+                    `set_user` = '',
+                    `set_forum` = '',
+                    `smileys` = '',
                     `rights` = '9',
                     `ip` = '" . ip2long($_SERVER["REMOTE_ADDR"]) . "',
                     `browser` = '" . mysql_real_escape_string(htmlentities($_SERVER["HTTP_USER_AGENT"])) . "',
                     `preg` = '1'
-                ") or die('ERROR: Administrator setup</body></html>');
+                ") or die('ERROR: Administrator setup<br/>' . mysql_error() . '</body></html>');
                 $user_id = mysql_insert_id();
                 // Устанавливаем сессию и COOKIE c данными администратора
                 $_SESSION['uid'] = $user_id;
@@ -259,7 +263,4 @@ switch ($act) {
         } else {
             echo '<h3><a href="index.php?act=set">' . $lng['install'] . '</a></h3>';
         }
-        break;
 }
-
-?>

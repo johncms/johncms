@@ -62,8 +62,7 @@ if ($user_id) {
                         $do_file = true;
                         $fname = strtolower($_FILES['fail']['name']);
                         $fsize = $_FILES['fail']['size'];
-                    }
-                        // Проверка загрузки с Opera Mini
+                    } // Проверка загрузки с Opera Mini
                     elseif (strlen($_POST['fail1']) > 0) {
                         $do_file_mini = true;
                         $array = explode('file=', $_POST['fail1']);
@@ -277,8 +276,8 @@ if ($user_id) {
             if (isset($_GET['bir'])) {
                 $tema = $lng['happy_birthday'];
             }
-            echo '<div class="phdr"><b>' . $lng_pm['write_message'] . '</b></div>';
-            echo '<form name="form" action="pradd.php?act=send" method="post" enctype="multipart/form-data">' .
+            echo'<div class="phdr"><b>' . $lng_pm['write_message'] . '</b></div>';
+            echo'<form name="form" action="pradd.php?act=send" method="post" enctype="multipart/form-data">' .
                 '<div class="menu">' .
                 '<p><h3>' . $lng_pm['to'] . '</h3>' .
                 '<input type="text" name="foruser" value="' . $adresat . '"/></p>' .
@@ -291,8 +290,8 @@ if ($user_id) {
             if ($set_user['translit'])
                 echo '<p><input type="checkbox" name="msgtrans" value="1" />&#160;' . $lng['translit'] . '</p>';
             echo "<input type='hidden' name='idm' value='" . $id . "'/><p><input type='submit' value='" . $lng['sent'] . "' /></p></div></form>";
-            echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-            '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>';
+            echo'<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
+                '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>';
             break;
 
         case 'delch':
@@ -338,38 +337,40 @@ if ($user_id) {
                 echo '<div class="phdr"><b>' . $lng_pm['incoming'] . '</b></div>';
             }
             if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=in&amp;', $start, $total, $kmess) . '</div>';
-            echo '<form action="pradd.php?act=delch" method="post">';
-            $i = 0;
-            while ($res = mysql_fetch_assoc($req)) {
-                if ($res['chit'] == "no") {
-                    echo '<div class="gmenu">';
-                } else {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            if ($total) {
+                echo '<form action="pradd.php?act=delch" method="post">';
+                for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
+                    if ($res['chit'] == "no") {
+                        echo '<div class="gmenu">';
+                    } else {
+                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                    }
+                    echo'<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/><a href="pradd.php?id=' . $res['id'] . '&amp;act=readmess">От: ' . $res['author'] . '</a>' .
+                        '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
+                    if (!empty($res['attach'])) {
+                        echo '+ ' . $lng_pm['attachment'] . '<br/>';
+                    }
+                    if ($res['otvet'] == 0) {
+                        echo $lng_pm['not_replyed'] . "<br/>";
+                    }
+                    echo '</div>';
                 }
-                echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/><a href="pradd.php?id=' . $res['id'] . '&amp;act=readmess">От: ' . $res['author'] . '</a>';
-                echo '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
-                if (!empty($res['attach'])) {
-                    echo '+ ' . $lng_pm['attachment'] . '<br/>';
-                }
-                if ($res['otvet'] == 0) {
-                    echo $lng_pm['not_replyed'] . "<br/>";
-                }
-                echo '</div>';
-                ++$i;
+                echo'<div class="rmenu"><input type="submit" value="' . $lng_pm['delete_selected'] . '"/></div>' .
+                    '</form>';
+            } else {
+                echo'<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
             }
-            if ($total > 0) {
-                echo '<div class="rmenu"><input type="submit" value="' . $lng_pm['delete_selected'] . '"/></div>';
-            }
-            echo '</form>';
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=in&amp;', $start, $total, $kmess) . '</div>' .
-                     '<p><form action="pradd.php?act=in" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                    '<p><form action="pradd.php?act=in" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
             if ($total > 0) {
                 echo "<a href='pradd.php?act=delread'>" . $lng_pm['delete_read'] . "</a><br/>";
                 echo "<a href='pradd.php?act=delin'>" . $lng_pm['delete_all'] . "</a><br/>";
             }
+            echo'<p><a href="pradd.php?act=out">' . $lng_pm['sent'] . '</a><br/>' .
+                '<a href="pradd.php?act=write"><b>' . $lng['write'] . '</b></a></p>';
             break;
 
         case 'delread':
@@ -377,18 +378,27 @@ if ($user_id) {
             // Удаление прочитанных писем                             //
             ////////////////////////////////////////////////////////////
             require_once('../incfiles/head.php');
-            $mess1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in' and chit='yes';");
-            while ($mas1 = mysql_fetch_array($mess1)) {
-                $delid = $mas1['id'];
-                $delfile = $mas1['attach'];
-                if (!empty($delfile)) {
-                    if (file_exists("../files/users/pm/$delfile")) {
-                        unlink("../files/users/pm/$delfile");
+            if (isset($_POST['submit'])) {
+                $mess1 = mysql_query("select * from `privat` where user='" . $login . "' and type='in' and chit='yes';");
+                while ($mas1 = mysql_fetch_array($mess1)) {
+                    $delid = $mas1['id'];
+                    $delfile = $mas1['attach'];
+                    if (!empty($delfile)) {
+                        if (file_exists("../files/users/pm/$delfile")) {
+                            unlink("../files/users/pm/$delfile");
+                        }
                     }
+                    mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
                 }
-                mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
+                echo  '<p>' . $lng_pm['read_deleted'] . '</p><p><a href="pradd.php?act=in">' . $lng['continue'] . '</a></p>';
+            } else {
+                echo'<div class="phdr"><a href="pradd.php?act=in"><b>' . $lng['mail'] . '</b></a> | ' . $lng_pm['delete_read'] . '</div>' .
+                    '<div class="rmenu"><p>' .
+                    $lng['delete_confirmation'] .
+                    '</p><p><form action="pradd.php?act=delread" method="post"><input type="submit" name="submit" value="' . $lng['delete'] . '"/></form></p>' .
+                    '</div>' .
+                    '<div class="phdr"><a href="pradd.php?act=in">' . $lng['cancel'] . '</a></div>';
             }
-            echo  $lng_pm['read_deleted'] . "<br/>";
             break;
 
         case 'delin':
@@ -396,17 +406,26 @@ if ($user_id) {
             // Удаление всех входящих писем                           //
             ////////////////////////////////////////////////////////////
             require_once('../incfiles/head.php');
-            $mess1 = mysql_query("select * from `privat` where user='$login' and type='in'");
-            while ($mas1 = mysql_fetch_array($mess1)) {
-                $delfile = $mas1['attach'];
-                if (!empty($delfile)) {
-                    if (file_exists("../files/users/pm/$delfile")) {
-                        unlink("../files/users/pm/$delfile");
+            if (isset($_POST['submit'])) {
+                $mess1 = mysql_query("select * from `privat` where user='$login' and type='in'");
+                while ($mas1 = mysql_fetch_array($mess1)) {
+                    $delfile = $mas1['attach'];
+                    if (!empty($delfile)) {
+                        if (file_exists("../files/users/pm/$delfile")) {
+                            unlink("../files/users/pm/$delfile");
+                        }
                     }
                 }
+                mysql_query("DELETE FROM `privat` WHERE `user` = '$login' AND `type` = 'in'");
+                echo  '<p>' . $lng_pm['incoming_deleted'] . '</p><p><a href="pradd.php?act=in">' . $lng['continue'] . '</a></p>';
+            } else {
+                echo'<div class="phdr"><a href="pradd.php?act=in"><b>' . $lng['mail'] . '</b></a> | ' . $lng_pm['delete_all'] . '</div>' .
+                    '<div class="rmenu"><p>' .
+                    $lng['delete_confirmation'] .
+                    '</p><p><form action="pradd.php?act=delin" method="post"><input type="submit" name="submit" value="' . $lng['delete'] . '"/></form></p>' .
+                    '</div>' .
+                    '<div class="phdr"><a href="pradd.php?act=in">' . $lng['cancel'] . '</a></div>';
             }
-            mysql_query("DELETE FROM `privat` WHERE `user` = '$login' AND `type` = 'in'");
-            echo $lng_pm['incoming_deleted'] . "<br/>";
             break;
 
         case 'readmess':
@@ -466,12 +485,21 @@ if ($user_id) {
             // Удаление отправленных писем                            //
             ////////////////////////////////////////////////////////////
             require_once('../incfiles/head.php');
-            $mess1 = mysql_query("select * from `privat` where author='$login' and type='out';");
-            while ($mas1 = mysql_fetch_array($mess1)) {
-                $delid = $mas1['id'];
-                mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
+            if (isset($_POST['submit'])) {
+                $mess1 = mysql_query("select * from `privat` where author='$login' and type='out';");
+                while ($mas1 = mysql_fetch_array($mess1)) {
+                    $delid = $mas1['id'];
+                    mysql_query("delete from `privat` where `id`='" . intval($delid) . "';");
+                }
+                echo  '<p>' . $lng_pm['sent_deleted'] . '</p><p><a href="pradd.php?act=out">' . $lng['continue'] . '</a></p>';
+            } else {
+                echo'<div class="phdr"><a href="pradd.php?act=out"><b>' . $lng['mail'] . '</b></a> | ' . $lng_pm['delete_all_sent'] . '</div>' .
+                    '<div class="rmenu"><p>' .
+                    $lng['delete_confirmation'] .
+                    '</p><p><form action="pradd.php?act=delout" method="post"><input type="submit" name="submit" value="' . $lng['delete'] . '"/></form></p>' .
+                    '</div>' .
+                    '<div class="phdr"><a href="pradd.php?act=out">' . $lng['cancel'] . '</a></div>';
             }
-            echo $lng_pm['sent_deleted'] . "<br/>";
             break;
 
         case 'out':
@@ -483,34 +511,36 @@ if ($user_id) {
             $req = mysql_query("SELECT * FROM `privat` WHERE `author` = '$login' AND `type` = 'out' ORDER BY `id` DESC LIMIT $start,$kmess");
             echo '<div class="phdr"><b>' . $lng_pm['sent'] . '</b></div>';
             if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=out&amp;', $start, $total, $kmess) . '</div>';
-            echo "<form action='pradd.php?act=delch' method='post'>";
-            $i = 0;
-            while ($res = mysql_fetch_assoc($req)) {
-                if ($res['chit'] == "no") {
-                    echo '<div class="gmenu">';
-                } else {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            if ($total) {
+                echo '<form action="pradd.php?act=delch" method="post">';
+                for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
+                    if ($res['chit'] == "no") {
+                        echo '<div class="gmenu">';
+                    } else {
+                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                    }
+                    echo'<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>' . $lng_pm['msg_for'] . ': <a href="pradd.php?id=' . $res['id'] . '&amp;act=readout">' . $res['user'] . '</a>' .
+                        '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
+                    if (!empty($res['attach'])) {
+                        echo "+ " . $lng_pm['attachment'] . "<br/>";
+                    }
+                    echo '</div>';
                 }
-                echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>' . $lng_pm['msg_for'] . ': <a href="pradd.php?id=' . $res['id'] . '&amp;act=readout">' . $res['user'] . '</a>';
-                echo '&#160;<span class="gray">(' . functions::display_date($res['time']) . ')<br/>' . $lng_pm['subject'] . ':</span> ' . $res['temka'] . '<br/>';
-                if (!empty($res['attach'])) {
-                    echo "+ " . $lng_pm['attachment'] . "<br/>";
-                }
-                echo '</div>';
-                ++$i;
+                echo'<div class="rmenu"><input type="submit" value="' . $lng_pm['delete_selected'] . '"/></div>' .
+                    '</form>';
+            } else {
+                echo'<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
             }
-            if ($total > 0) {
-                echo '<div class="rmenu"><input type="submit" value="' . $lng_pm['delete_selected'] . '"/></div>';
-            }
-            echo '</form>';
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('pradd.php?act=out&amp;', $start, $total, $kmess) . '</div>' .
-                     '<p><form action="pradd.php?act=out" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                    '<p><form action="pradd.php?act=out" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
-            if ($total > 0) {
+            if ($total) {
                 echo "<a href='pradd.php?act=delout'>" . $lng_pm['delete_all_sent'] . "</a><br/>";
             }
+            echo'<p><a href="pradd.php?act=in">' . $lng_pm['incoming'] . '</a><br/>' .
+                '<a href="pradd.php?act=write"><b>' . $lng['write'] . '</b></a></p>';
             break;
 
         case 'readout':
@@ -533,10 +563,6 @@ if ($user_id) {
             echo "<hr /><p><a href='pradd.php?act=delmess&amp;del=" . $massiv1['id'] . "'>" . $lng['delete'] . "</a></p>";
             break;
     }
-    echo "<p><a href='profile.php?act=office'>" . $lng['personal'] . "</a><br/>";
-    echo "<a href='pradd.php?act=write'>" . $lng['write'] . "</a></p>";
 }
 
 require_once('../incfiles/end.php');
-
-?>

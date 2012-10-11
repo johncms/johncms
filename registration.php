@@ -79,11 +79,14 @@ if (isset($_POST['submit'])) {
             `datereg` = '" . time() . "',
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
-            `preg` = '$preg'
-        ");
+            `preg` = '$preg',
+            `set_user` = '',
+            `set_forum` = '',
+            `smileys` = ''
+        ") or exit(__LINE__ . ': ' . mysql_error());
         $usid = mysql_insert_id();
-        echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>' .
-             '<p><h3>' . $lng_reg['your_link'] . '</h3><input type="text" value="' . $set['homeurl'] . '/login.php?id=' . $usid . '&amp;p=' . $reg_pass . '" /><br/>';
+        echo'<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>' .
+            '<p><h3>' . $lng_reg['your_link'] . '</h3><input type="text" value="' . $set['homeurl'] . '/login.php?id=' . $usid . '&amp;p=' . $reg_pass . '" /><br/>';
         if ($set['mod_reg'] == 1) {
             echo '<p><span class="red"><b>' . $lng_reg['moderation_note'] . '</b></span></p>';
         } else {
@@ -101,37 +104,36 @@ if (isset($_POST['submit'])) {
 -----------------------------------------------------------------
 */
 if ($set['mod_reg'] == 1) echo '<div class="rmenu"><p>' . $lng_reg['moderation_warning'] . '</p></div>';
-echo '<form action="registration.php" method="post"><div class="gmenu">' .
-     '<p><h3>' . $lng_reg['login'] . '</h3>' .
-     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />', $error['login']) . '</small></span><br />' : '') .
-     '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-     '<small>' . $lng_reg['login_help'] . '</small></p>' .
-     '<p><h3>' . $lng_reg['password'] . '</h3>' .
-     (isset($error['password']) ? '<span class="red"><small>' . implode('<br />', $error['password']) . '</small></span><br />' : '') .
-     '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
-     '<small>' . $lng_reg['password_help'] . '</small></p>' .
-     '<p><h3>' . $lng_reg['sex'] . '</h3>' .
-     (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .
-     '<select name="sex"' . (isset($error['sex']) ? ' style="background-color: #FFCCCC"' : '') . '>' .
-     '<option value="?">-?-</option>' .
-     '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_m'] . '</option>' .
-     '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_w'] . '</option>' .
-     '</select></p></div>' .
-     '<div class="menu">' .
-     '<p><h3>' . $lng_reg['name'] . '</h3>' .
-     '<input type="text" name="imname" maxlength="30" value="' . htmlspecialchars($reg_name) . '" /><br />' .
-     '<small>' . $lng_reg['name_help'] . '</small></p>' .
-     '<p><h3>' . $lng_reg['about'] . '</h3>' .
-     '<textarea rows="3" name="about">' . htmlspecialchars($reg_about) . '</textarea><br />' .
-     '<small>' . $lng_reg['about_help'] . '</small></p></div>' .
-     '<div class="gmenu"><p>' .
-     '<h3>' . $lng_reg['captcha'] . '</h3>' .
-     '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng_reg['captcha'] . '" border="1"/><br />' .
-     (isset($error['captcha']) ? '<span class="red"><small>' . $error['captcha'] . '</small></span><br />' : '') .
-     '<input type="text" size="5" maxlength="5"  name="captcha" ' . (isset($error['captcha']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-     '<small>' . $lng_reg['captcha_help'] . '</small></p>' .
-     '<p><input type="submit" name="submit" value="' . $lng_reg['registration'] . '"/></p></div></form>' .
-     '<div class="phdr"><small>' . $lng_reg['registration_terms'] . '</small></div>';
+echo'<form action="registration.php" method="post"><div class="gmenu">' .
+    '<p><h3>' . $lng_reg['login'] . '</h3>' .
+    (isset($error['login']) ? '<span class="red"><small>' . implode('<br />', $error['login']) . '</small></span><br />' : '') .
+    '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
+    '<small>' . $lng_reg['login_help'] . '</small></p>' .
+    '<p><h3>' . $lng_reg['password'] . '</h3>' .
+    (isset($error['password']) ? '<span class="red"><small>' . implode('<br />', $error['password']) . '</small></span><br />' : '') .
+    '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
+    '<small>' . $lng_reg['password_help'] . '</small></p>' .
+    '<p><h3>' . $lng_reg['sex'] . '</h3>' .
+    (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .
+    '<select name="sex"' . (isset($error['sex']) ? ' style="background-color: #FFCCCC"' : '') . '>' .
+    '<option value="?">-?-</option>' .
+    '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_m'] . '</option>' .
+    '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_w'] . '</option>' .
+    '</select></p></div>' .
+    '<div class="menu">' .
+    '<p><h3>' . $lng_reg['name'] . '</h3>' .
+    '<input type="text" name="imname" maxlength="30" value="' . htmlspecialchars($reg_name) . '" /><br />' .
+    '<small>' . $lng_reg['name_help'] . '</small></p>' .
+    '<p><h3>' . $lng_reg['about'] . '</h3>' .
+    '<textarea rows="3" name="about">' . htmlspecialchars($reg_about) . '</textarea><br />' .
+    '<small>' . $lng_reg['about_help'] . '</small></p></div>' .
+    '<div class="gmenu"><p>' .
+    '<h3>' . $lng_reg['captcha'] . '</h3>' .
+    '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng_reg['captcha'] . '" border="1"/><br />' .
+    (isset($error['captcha']) ? '<span class="red"><small>' . $error['captcha'] . '</small></span><br />' : '') .
+    '<input type="text" size="5" maxlength="5"  name="captcha" ' . (isset($error['captcha']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
+    '<small>' . $lng_reg['captcha_help'] . '</small></p>' .
+    '<p><input type="submit" name="submit" value="' . $lng_reg['registration'] . '"/></p></div></form>' .
+    '<div class="phdr"><small>' . $lng_reg['registration_terms'] . '</small></div>';
 
 require('incfiles/end.php');
-?>

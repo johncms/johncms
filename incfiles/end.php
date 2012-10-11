@@ -43,16 +43,17 @@ echo '<p><b>' . $set['copyright'] . '</b></p>';
 functions::display_counters();
 
 // Рекламный блок сайта
-if (!empty($cms_ads[3]))
+if (!empty($cms_ads[3])) {
     echo '<br />' . $cms_ads[3];
+}
 
 /*
 -----------------------------------------------------------------
 ВНИМАНИЕ!!!
-Данный копирайт нельзя убирать в течение 60 дней с момента установки скриптов
+Данный копирайт нельзя убирать в течение 90 дней с момента установки скриптов
 -----------------------------------------------------------------
 ATTENTION!!!
-The copyright could not be removed within 60 days of installation scripts
+The copyright could not be removed within 90 days of installation scripts
 -----------------------------------------------------------------
 */
 echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>';

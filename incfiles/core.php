@@ -63,6 +63,19 @@ $ban = core::$user_ban;                                   // Бан
 $login = isset($datauser['name']) ? $datauser['name'] : false;
 $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;
 
+function validate_referer() {
+    if($_SERVER['REQUEST_METHOD']!=='POST') return;
+    if(@!empty($_SERVER['HTTP_REFERER'])) {
+        $ref = parse_url(@$_SERVER['HTTP_REFERER']);
+        if($_SERVER['HTTP_HOST']===$ref['host']) return;
+    }
+    die('Invalid request');
+}
+
+if ($rights) {
+    validate_referer();
+}
+
 /*
 -----------------------------------------------------------------
 Получаем и фильтруем основные переменные для системы

@@ -19,7 +19,7 @@ $textl = isset($textl) ? $textl : $set['copyright'];
 Выводим HTML заголовки страницы, подключаем CSS файл
 -----------------------------------------------------------------
 */
-if(stristr(core::$user_agent, "msie") && stristr(core::$user_agent, "windows")){
+if (stristr(core::$user_agent, "msie") && stristr(core::$user_agent, "windows")) {
     // Выдаем заголовки для Internet Explorer
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header('Content-type: text/html; charset=UTF-8');
@@ -28,21 +28,21 @@ if(stristr(core::$user_agent, "msie") && stristr(core::$user_agent, "windows")){
     header("Cache-Control: public");
     header('Content-type: application/xhtml+xml; charset=UTF-8');
 }
-header("Expires: " . date("r",  time() + 60));
-echo '<?xml version="1.0" encoding="utf-8"?>' . "\n" .
-     "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">' .
-     "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">' .
-     "\n" . '<head>' .
-     "\n" . '<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>' .
-     "\n" . '<meta http-equiv="Content-Style-Type" content="text/css" />' .
-     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com" />' . // ВНИМАНИЕ!!! Данный копирайт удалять нельзя
-     (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '" />' : '') .
-     (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '" />' : '') .
-     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css" type="text/css" />' .
-     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico" />' .
-     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php" />' .
-     "\n" . '<title>' . $textl . '</title>' .
-     "\n" . '</head><body>' . core::display_core_errors();
+header("Expires: " . date("r", time() + 60));
+echo'<?xml version="1.0" encoding="utf-8"?>' . "\n" .
+    "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">' .
+    "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">' .
+    "\n" . '<head>' .
+    "\n" . '<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>' .
+    "\n" . '<meta http-equiv="Content-Style-Type" content="text/css" />' .
+    "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com" />' . // ВНИМАНИЕ!!! Данный копирайт удалять нельзя
+    (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '" />' : '') .
+    (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '" />' : '') .
+    "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css" type="text/css" />' .
+    "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico" />' .
+    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php" />' .
+    "\n" . '<title>' . $textl . '</title>' .
+    "\n" . '</head><body>' . core::display_core_errors();
 
 /*
 -----------------------------------------------------------------
@@ -55,14 +55,14 @@ if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
     $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
     $req = mysql_query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
     if (mysql_num_rows($req)) {
-        while (($res = mysql_fetch_assoc($req)) !== false) {
+        while (($res = mysql_fetch_assoc($req)) !== FALSE) {
             $name = explode("|", $res['name']);
             $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
             if (!empty($res['color'])) $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
             // Если было задано начертание шрифта, то применяем
-            $font = $res['bold'] ? 'font-weight: bold;' : false;
-            $font .= $res['italic'] ? ' font-style:italic;' : false;
-            $font .= $res['underline'] ? ' text-decoration:underline;' : false;
+            $font = $res['bold'] ? 'font-weight: bold;' : FALSE;
+            $font .= $res['italic'] ? ' font-style:italic;' : FALSE;
+            $font .= $res['underline'] ? ' text-decoration:underline;' : FALSE;
             if ($font) $name = '<span style="' . $font . '">' . $name . '</span>';
             @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br/>';
             if (($res['day'] != 0 && time() >= ($res['time'] + $res['day'] * 3600 * 24)) || ($res['count_link'] != 0 && $res['count'] >= $res['count_link']))
@@ -84,9 +84,9 @@ if (isset($cms_ads[0])) echo $cms_ads[0];
 -----------------------------------------------------------------
 */
 echo '<table style="width: 100%;"><tr>' .
-     '<td valign="bottom"><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></td>' .
-     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
-     '</tr></table>';
+    '<td valign="bottom"><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></td>' .
+    ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
+    '</tr></table>';
 
 /*
 -----------------------------------------------------------------
@@ -101,10 +101,10 @@ echo '<div class="header"> ' . $lng['hi'] . ', ' . ($user_id ? '<b>' . $login . 
 -----------------------------------------------------------------
 */
 echo '<div class="tmn">' .
-     (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a> | ' : '') .
-     ($user_id ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . $lng['personal'] . '</a> | ' : '') .
-     ($user_id ? '<a href="' . $set['homeurl'] . '/exit.php">' . $lng['exit'] . '</a>' : '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a> | <a href="' . $set['homeurl'] . '/registration.php">' . $lng['registration'] . '</a>') .
-     '</div><div class="maintxt">';
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a> | ' : '') .
+    ($user_id ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . $lng['personal'] . '</a> | ' : '') .
+    ($user_id ? '<a href="' . $set['homeurl'] . '/exit.php">' . $lng['exit'] . '</a>' : '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a> | <a href="' . $set['homeurl'] . '/registration.php">' . $lng['registration'] . '</a>') .
+    '</div><div class="maintxt">';
 
 /*
 -----------------------------------------------------------------
@@ -123,19 +123,19 @@ $set_karma = unserialize($set['karma']);
 if ($user_id) {
     // Фиксируем местоположение авторизованных
     if (!$datauser['karma_off'] && $set_karma['on'] && $datauser['karma_time'] <= (time() - 86400)) {
-        $sql = "`karma_time` = '" . time() . "', ";
+        $sql .= " `karma_time` = '" . time() . "', ";
     }
     $movings = $datauser['movings'];
     if ($datauser['lastdate'] < (time() - 300)) {
         $movings = 0;
-        $sql .= "`sestime` = '" . time() . "',";
+        $sql .= " `sestime` = '" . time() . "', ";
     }
     if ($datauser['place'] != $headmod) {
         ++$movings;
-        $sql .= "`place` = '$headmod',";
+        $sql .= " `place` = '" . mysql_real_escape_string($headmod) . "', ";
     }
     if ($datauser['browser'] != $agn)
-        $sql .= "`browser` = '" . mysql_real_escape_string($agn) . "',";
+        $sql .= " `browser` = '" . mysql_real_escape_string($agn) . "', ";
     $totalonsite = $datauser['total_on_site'];
     if ($datauser['lastdate'] > (time() - 300))
         $totalonsite = $totalonsite + time() - $datauser['lastdate'];
@@ -153,18 +153,17 @@ if ($user_id) {
     if (mysql_num_rows($req)) {
         // Если есть в базе, то обновляем данные
         $res = mysql_fetch_assoc($req);
-        $movings = $res['movings'];
+        $movings = ++$res['movings'];
         if ($res['sestime'] < (time() - 300)) {
-            $movings = 0;
-            $sql .= "`sestime` = '" . time() . "', `movings` = '0'";
+            $movings = 1;
+            $sql .= " `sestime` = '" . time() . "', ";
         }
         if ($res['place'] != $headmod) {
-            ++$movings;
-            $sql .= "`place` = '$headmod',";
+            $sql .= " `place` = '" . mysql_real_escape_string($headmod) . "', ";
         }
         mysql_query("UPDATE `cms_sessions` SET $sql
             `movings` = '$movings',
-            `lastdate` = '" .time()  . "'
+            `lastdate` = '" . time() . "'
             WHERE `session_id` = '$session'
         ");
     } else {
@@ -176,7 +175,7 @@ if ($user_id) {
             `browser` = '" . mysql_real_escape_string($agn) . "',
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
-            `place` = '$headmod'
+            `place` = '" . mysql_real_escape_string($headmod) . "'
         ");
     }
 }
@@ -199,7 +198,7 @@ if ($user_id) {
     if ($new_mail) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/pradd.php?act=in&amp;new">' . $lng['mail'] . '</a>&#160;(' . $new_mail . ')';
     if ($datauser['comm_count'] > $datauser['comm_old']) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
     $new_album_comm = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . core::$user_id . "' AND `unread_comments` = 1"), 0);
-    if($new_album_comm) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
+    if ($new_album_comm) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
 
     if (!empty($list)) echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
 }

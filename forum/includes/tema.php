@@ -12,6 +12,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 $delf = opendir('../files/forum/topics');
+$tm = array();
 while ($tt = readdir($delf)) {
     if ($tt != "." && $tt != ".." && $tt != 'index.php' && $tt != '.svn') {
         $tm[] = $tt;
@@ -120,11 +121,10 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
             break;
     }
 } else {
-    echo '<p>' . $lng_forum['download_topic_format'] . '<br/>' .
+    echo'<p>' . $lng_forum['download_topic_format'] . '<br/>' .
         '<form action="index.php?act=tema&amp;id=' . $id . '" method="post">' .
         '<select name="mod"><option value="1">.txt</option>' .
         '<option value="2">.htm</option></select>' .
         '<input type="submit" name="submit" value="' . $lng['download'] . '"/>' .
         '</form></p>';
 }
-?>

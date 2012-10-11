@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 
@@ -44,20 +44,20 @@ if (!$user) {
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$array = array (
-    'activity' => 'includes/profile',
-    'ban' => 'includes/profile',
-    'edit' => 'includes/profile',
-    'images' => 'includes/profile',
-    'info' => 'includes/profile',
-    'ip' => 'includes/profile',
+$array = array(
+    'activity'  => 'includes/profile',
+    'ban'       => 'includes/profile',
+    'edit'      => 'includes/profile',
+    'images'    => 'includes/profile',
+    'info'      => 'includes/profile',
+    'ip'        => 'includes/profile',
     'guestbook' => 'includes/profile',
-    'karma' => 'includes/profile',
-    'office' => 'includes/profile',
-    'password' => 'includes/profile',
-    'reset' => 'includes/profile',
-    'settings' => 'includes/profile',
-    'stat' => 'includes/profile'
+    'karma'     => 'includes/profile',
+    'office'    => 'includes/profile',
+    'password'  => 'includes/profile',
+    'reset'     => 'includes/profile',
+    'settings'  => 'includes/profile',
+    'stat'      => 'includes/profile'
 );
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
@@ -73,7 +73,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require('../incfiles/head.php');
     echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? $lng_profile['user_profile'] : $lng_profile['my_profile']) . '</b></div>';
     // Меню анкеты
-    $menu = array ();
+    $menu = array();
     if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights']))
         $menu[] = '<a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a>';
     if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights'])
@@ -87,12 +87,12 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         echo '<div class="gmenu">' . $lng['birthday'] . '!!!</div>';
     }
     // Информация о юзере
-    $arg = array (
+    $arg = array(
         'lastvisit' => 1,
-        'iphist' => 1,
-        'header' => '<b>ID:' . $user['id'] . '</b>'
+        'iphist'    => 1,
+        'header'    => '<b>ID:' . $user['id'] . '</b>'
     );
-    if($user['id'] != core::$user_id) $arg['footer'] = '<span class="gray">' . core::$lng['where'] . ':</span> ' . functions::display_place($user['id'], $user['place']);
+    if ($user['id'] != core::$user_id) $arg['footer'] = '<span class="gray">' . core::$lng['where'] . ':</span> ' . functions::display_place($user['id'], $user['place']);
     echo '<div class="user"><p>' . functions::display_user($user, $arg) . '</p></div>';
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
     if ($rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
@@ -145,7 +145,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div><img src="../images/guestbook.gif" width="16" height="16"/>&#160;<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
     //echo '<div><img src="../images/pt.gif" width="16" height="16"/>&#160;<a href="">' . $lng['blog'] . '</a>&#160;(0)</div>';
     if ($user['id'] != $user_id) {
-        echo '<br /><div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="">' . $lng['contacts_in'] . '</a></div>';
+        echo'<br /><div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="cont.php?act=edit&amp;id=' . $user['id'] . '&amp;add=1">' . $lng['contacts_in'] . '</a></div>';
         if (!isset($ban['1']) && !isset($ban['3']))
             echo '<div><img src="../images/write.gif" width="16" height="16"/>&#160;<a href="pradd.php?act=write&amp;adr=' . $user['id'] . '"><b>' . $lng['write'] . '</b></a></div>';
     }

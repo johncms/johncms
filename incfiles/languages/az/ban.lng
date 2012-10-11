@@ -1,6 +1,6 @@
 also_received                 =   "и получил"
 amnesty                       =   "Амнистия"
-amnesty_access_error          =   "Амнистия доступна только для Супервизоров"
+amnesty_access_error          =   "Амнистия доступна только для Супервайзоров"
 amnesty_clean_confirm         =   "Таблица Банов очищена.<br />Удалена вся история нарушений"
 amnesty_clean                 =   "Очистить базу"
 amnesty_delban                =   "Разбанить всех"

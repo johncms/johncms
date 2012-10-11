@@ -15,7 +15,7 @@ $rootpath = '';
 require('incfiles/core.php');
 
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
-$url = isset($_REQUEST['url']) ? strip_tags(html_entity_decode(base64_decode(trim($_REQUEST['url'])))) : false;
+$url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
 if (isset($_GET['lng'])) {
     /*
@@ -51,8 +51,8 @@ if (isset($_GET['lng'])) {
         require('incfiles/head.php');
         echo '<div class="phdr"><b>' . $lng['external_link'] . '</b></div>' .
              '<div class="rmenu">' .
-             '<form action="go.php?url=' . base64_encode($url) . '" method="post">' .
-             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . functions::checkout($url) . '</span></p>' .
+             '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
+             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
              '<p>' . $lng['redirect_2'] . '.<br />' .
              $lng['redirect_3'] . ' <span class="green">' . $set['homeurl'] . '</span> ' . $lng['redirect_4'] . '.</p>' .
              '<p><input type="submit" name="submit" value="' . $lng['redirect_5'] . '" /></p>' .

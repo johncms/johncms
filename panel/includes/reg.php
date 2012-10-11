@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
@@ -108,17 +108,18 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'"), 0);
+        if ($total > $kmess) echo'<div class="topmenu">' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>';
         if ($total) {
             $req = mysql_query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT $start,$kmess");
             $i = 0;
             while (($res = mysql_fetch_assoc($req)) !== false) {
-                $link = array (
+                $link = array(
                     '<a href="index.php?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . $lng['approve'] . '</a>',
                     '<a href="index.php?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>',
                     '<a href="index.php?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . $lng['reg_del_ip'] . '</a>'
                 );
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo functions::display_user($res, array (
+                echo functions::display_user($res, array(
                     'header' => '<b>ID:' . $res['id'] . '</b>',
                     'sub' => functions::display_menu($link)
                 ));
@@ -130,12 +131,14 @@ switch ($mod) {
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</p>';
-            echo '<p><form action="index.php?act=reg" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            echo'<div class="topmenu">' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>' .
+                '<p><form action="index.php?act=reg" method="post">' .
+                '<input type="text" name="page" size="2"/>' .
+                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                '</form></p>';
         }
         echo '<p>';
         if ($total)
             echo '<a href="index.php?act=reg&amp;mod=massapprove">' . $lng['reg_approve_all'] . '</a><br /><a href="index.php?act=reg&amp;mod=massdel">' . $lng['reg_del_all'] . '</a><br />';
         echo '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 }
-?>

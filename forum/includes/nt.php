@@ -41,14 +41,14 @@ function forum_link($m)
             if (mysql_num_rows($req) > 0) {
                 $res = mysql_fetch_array($req);
                 $name = strtr($res['text'], array(
-                                                 '&quot;' => '',
-                                                 '&amp;' => '',
-                                                 '&lt;' => '',
-                                                 '&gt;' => '',
-                                                 '&#039;' => '',
-                                                 '[' => '',
-                                                 ']' => ''
-                                            ));
+                    '&quot;' => '',
+                    '&amp;'  => '',
+                    '&lt;'   => '',
+                    '&gt;'   => '',
+                    '&#039;' => '',
+                    '['      => '',
+                    ']'      => ''
+                ));
                 if (mb_strlen($name) > 40)
                     $name = mb_substr($name, 0, 40) . '...';
                 return '[url=' . $m[3] . ']' . $name . '[/url]';
@@ -113,8 +113,11 @@ if (isset($_POST['submit'])) {
             `time` = '" . time() . "',
             `user_id` = '$user_id',
             `from` = '$login',
-            `text` = '$th'
-        ");
+            `text` = '$th',
+            `soft` = '',
+            `edit` = '',
+            `curators` = ''
+        ") or exit(__LINE__ . ': ' . mysql_error());
         $rid = mysql_insert_id();
         // Добавляем текст поста
         mysql_query("INSERT INTO `forum` SET
@@ -126,8 +129,10 @@ if (isset($_POST['submit'])) {
             `ip` = '" . core::$ip . "',
             `ip_via_proxy` = '" . core::$ip_via_proxy . "',
             `soft` = '" . mysql_real_escape_string($agn) . "',
-            `text` = '" . mysql_real_escape_string($msg) . "'
-        ");
+            `text` = '" . mysql_real_escape_string($msg) . "',
+            `edit` = '',
+            `curators` = ''
+        ") or exit(__LINE__ . ': ' . mysql_error());
         $postid = mysql_insert_id();
         // Записываем счетчик постов юзера
         $fpst = $datauser['postforum'] + 1;
@@ -174,25 +179,24 @@ if (isset($_POST['submit'])) {
     echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['new_topic'] . '</div>';
     if ($msg && $th && !isset($_POST['submit']))
         echo '<div class="list1"><img src="../theme/default/images/op.gif" border="0" alt="op" /> <span style="font-weight: bold">' . $th . '</span></div>' .
-             '<div class="list2">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
+            '<div class="list2">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
-         '<div class="gmenu">' .
-         '<p><h3>' . $lng['section'] . '</h3>' .
-         '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
-         '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
-         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
-         '<p><h3>' . $lng_forum['post'] . '</h3>';
+        '<div class="gmenu">' .
+        '<p><h3>' . $lng['section'] . '</h3>' .
+        '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
+        '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
+        '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
+        '<p><h3>' . $lng_forum['post'] . '</h3>';
     if (!$is_mobile)
         echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
-         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
+        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
     if ($set_user['translit'])
         echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
     echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
-         ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
-         '</p></div></form>' .
-         '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-         '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-         '<p><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
+        ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+        '</p></div></form>' .
+        '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
+        '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        '<p><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
 }
-?>

@@ -108,7 +108,7 @@ switch ($act) {
             echo '</div>';
             ++$i;
         }
-        echo '<div class="phdr"><a href="' . htmlspecialchars($_SESSION['ref']) . '">' . $lng['back'] . '</a></div>';
+        echo '<div class="phdr"><a href="' . $_SESSION['ref'] . '">' . $lng['back'] . '</a></div>';
         break;
 
     case 'smusr':
@@ -120,9 +120,9 @@ switch ($act) {
         $dir = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);
         foreach ($dir as $val) {
             $val = explode('/', $val);
-            $cat[] = array_pop($val);
+            $cat_list[] = array_pop($val);
         }
-        $cat = isset($_GET['cat']) && in_array(trim($_GET['cat']), $cat) ? trim($_GET['cat']) : $cat[0];
+        $cat = isset($_GET['cat']) && in_array(trim($_GET['cat']), $cat_list) ? trim($_GET['cat']) : $cat_list[0];
         $smileys = glob($rootpath . 'images/smileys/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE);
         $total = count($smileys);
         $end = $start + $kmess;
@@ -131,7 +131,7 @@ switch ($act) {
              (array_key_exists($cat, $lng_smileys) ? $lng_smileys[$cat] : ucfirst(htmlspecialchars($cat))) .
              '</div>';
         if ($total) {
-            if (!$is_mobile) {
+            if ($user_id && !$is_mobile) {
                 $user_sm = isset($datauser['smileys']) ? unserialize($datauser['smileys']) : '';
                 if (!is_array($user_sm)) $user_sm = array();
                 echo '<div class="topmenu">' .
@@ -142,11 +142,11 @@ switch ($act) {
             for ($i = $start; $i < $end; $i++) {
                 $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', basename($smileys[$i], 1));
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                if (!$is_mobile) echo (in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
+                if ($user_id && !$is_mobile) echo (in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
                 echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . $lng['lng_or'] . ' :' . functions::trans($smile) . ':';
                 echo '</div>';
             }
-        if (!$is_mobile) echo '<div class="gmenu"><input type="submit" name="add" value=" ' . $lng['add'] . ' "/></div></form>';
+        if ($user_id && !$is_mobile) echo '<div class="gmenu"><input type="submit" name="add" value=" ' . $lng['add'] . ' "/></div></form>';
         } else {
             echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
         }
@@ -391,4 +391,3 @@ switch ($act) {
 }
 
 require('../incfiles/end.php');
-?>

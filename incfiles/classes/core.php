@@ -15,7 +15,8 @@ class core
 {
     public static $root = '../';
     public static $ip;                                                         // Путь к корневой папке
-    public static $ip_via_proxy;                                               // IP адрес за прокси-сервером
+    public static $ip_via_proxy = 0;                                               // IP адрес за прокси-сервером
+    public static $ip_count = array();                                         // Счетчик обращений с IP адреса
     public static $user_agent;                                                 // User Agent
     public static $system_set;                                                 // Системные настройки
     public static $lng_iso = 'en';                                             // Двухбуквенный ISO код языка
@@ -31,7 +32,7 @@ class core
     public static $user_set = array();                                         // Пользовательские настройки
     public static $user_ban = array();                                         // Бан
 
-    private $flood_chk = 0;                                                    // Включение - выключение функции IP антифлуда
+    private $flood_chk = 1;                                                    // Включение - выключение функции IP антифлуда
     private $flood_interval = '120';                                           // Интервал времени в секундах
     private $flood_limit = '30';                                               // Число разрешенных запросов за интервал
 
@@ -39,8 +40,31 @@ class core
     {
         global $rootpath;
         if(isset($rootpath)) self::$root = $rootpath;                          // Задаем путь к корневой папке
-        $this->get_ip();                                                       // Получаем адрес IP
-        $this->get_ua();                                                       // Получаем UserAgent
+
+        // Получаем IP адреса
+        $ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
+        self::$ip = sprintf("%u", $ip);
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $vars)) {
+            foreach ($vars[0] AS $var)
+            {
+                $ip_via_proxy = ip2long($var);
+                if ($ip_via_proxy && $ip_via_proxy != $ip && !preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
+                    self::$ip_via_proxy = sprintf("%u", $ip_via_proxy);
+                    break;
+                }
+            }
+        }
+
+        // Получаем UserAgent
+        if (isset($_SERVER["HTTP_X_OPERAMINI_PHONE_UA"]) && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
+            self::$user_agent = 'Opera Mini: ' . htmlspecialchars(substr(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']), 0, 150));
+        } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
+            self::$user_agent = htmlspecialchars(substr(trim($_SERVER['HTTP_USER_AGENT']), 0, 150));
+        } else {
+            self::$user_agent = 'Not Recognised';
+        }
+
         $this->ip_flood();                                                     // Проверка адреса IP на флуд
         if (get_magic_quotes_gpc()) $this->del_slashes();                      // Удаляем слэши
         $this->db_connect();                                                   // Соединяемся с базой данных
@@ -56,21 +80,17 @@ class core
         if(self::$lng_iso != 'ru' && self::$lng_iso != 'uk') self::$user_set['translit'] = 0;
     }
 
-    function __destruct()
-    {
-    }
-
     /*
     -----------------------------------------------------------------
     Валидация IP адреса
     -----------------------------------------------------------------
     */
-    public static function ip_valid($ip = '')
+    public static function ip_valid($ip)
     {
-        if (empty($ip)) return false;
-        $d = explode('.', $ip);
-        for ($x = 0; $x < 4; $x++) if (!is_numeric($d[$x]) || ($d[$x] < 0) || ($d[$x] > 255)) return false;
-        return $ip;
+        if (preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)){
+            return true;
+        }
+        return false;
     }
 
     /*
@@ -82,8 +102,16 @@ class core
     {
         if(!is_dir(self::$root . 'incfiles/languages/' . self::$lng_iso)) self::$lng_iso = 'en';
         $lng_file = self::$root . 'incfiles/languages/' . self::$lng_iso . '/' . $module . '.lng';
+        $lng_file_edit = self::$root . 'files/lng_edit/' . self::$lng_iso . '_iso.lng';
         if (file_exists($lng_file)) {
             $out = parse_ini_file($lng_file) or die('ERROR: language file');
+            if (file_exists($lng_file_edit)) {
+                $lng_edit = parse_ini_file($lng_file_edit, true);
+                if (isset($lng_edit[$module])) {
+                    $lng_module = array_diff_key($out, $lng_edit[$module]);
+                    $out = $lng_module + $lng_edit[$module];
+                }
+            }
             return $out;
         }
         self::$core_errors[] = 'Language file <b>' . $module . '.lng</b> is missing';
@@ -118,35 +146,14 @@ class core
 
     /*
     -----------------------------------------------------------------
-    Получаем адрес IP
-    -----------------------------------------------------------------
-    */
-    private function get_ip()
-    {
-        self::$ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
-        self::$ip_via_proxy = isset($_SERVER['HTTP_X_FORWARDED_FOR']) && self::ip_valid($_SERVER['HTTP_X_FORWARDED_FOR']) ? ip2long($_SERVER['HTTP_X_FORWARDED_FOR']) : false;
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Получаем UserAgent
-    -----------------------------------------------------------------
-    */
-    private function get_ua()
-    {
-        self::$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? htmlentities(substr($_SERVER['HTTP_USER_AGENT'], 0, 200), ENT_QUOTES) : 'Not Recognised';
-    }
-
-    /*
-    -----------------------------------------------------------------
     Проверка адреса IP на флуд
     -----------------------------------------------------------------
     */
     private function ip_flood()
     {
         if ($this->flood_chk) {
-            if ($this->ip_whitelist(self::$ip))
-                return true;
+            //if ($this->ip_whitelist(self::$ip))
+            //    return true;
             $file = self::$root . 'files/cache/ip_flood.dat';
             $tmp = array();
             $requests = 1;
@@ -159,15 +166,16 @@ class core
                 if (($now - $arr['time']) > $this->flood_interval) continue;
                 if ($arr['ip'] == self::$ip) $requests++;
                 $tmp[] = $arr;
+                self::$ip_count[] = $arr['ip'];
             }
             fseek($in, 0);
             ftruncate($in, 0);
             for ($i = 0; $i < count($tmp); $i++) fwrite($in, pack('LL', $tmp[$i]['ip'], $tmp[$i]['time']));
             fwrite($in, pack('LL', self::$ip, $now));
             fclose($in);
-            if ($requests > $this->flood_limit){
-                die('FLOOD: exceeded limit of allowed requests');
-            }
+            //if ($requests > $this->flood_limit){
+            //    die('FLOOD: exceeded limit of allowed requests');
+            //}
         }
     }
 
@@ -401,7 +409,7 @@ class core
             'direct_url' => 0,                                                 // Внешние ссылки
             'field_h' => 3,                                                    // Высота текстового поля ввода
             'field_w' => (self::$is_mobile ? 20 : 40),                         // Ширина текстового поля ввода
-            'kmess' => 10,                                                     // Число сообщений на страницу
+            'kmess' => 20,                                                     // Число сообщений на страницу
             'quick_go' => 1,                                                   // Быстрый переход
             'timeshift' => 0,                                                  // Временной сдвиг
             'skin' => self::$system_set['skindef'],                            // Тема оформления

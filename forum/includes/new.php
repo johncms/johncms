@@ -62,11 +62,11 @@ if ($user_id) {
             Форма выбора диапазона времени
             -----------------------------------------------------------------
             */
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_show_for_period'] . '</div>';
-            echo '<div class="menu"><p><form action="index.php?act=new&amp;do=period" method="post">' . $lng_forum['unread_period'] . ':<br/>';
-            echo '<input type="text" maxlength="3" name="vr" value="24" size="3"/>';
-            echo '<input type="submit" name="submit" value="' . $lng['show'] . '"/></form></p></div>';
-            echo '<div class="phdr"><a href="index.php?act=new">' . $lng['back'] . '</a></div>';
+            echo'<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_show_for_period'] . '</div>' .
+                '<div class="menu"><p><form action="index.php?act=new&amp;do=period" method="post">' . $lng_forum['unread_period'] . ':<br/>' .
+                '<input type="text" maxlength="3" name="vr" value="24" size="3"/>' .
+                '<input type="submit" name="submit" value="' . $lng['show'] . '"/></form></p></div>' .
+                '<div class="phdr"><a href="index.php?act=new">' . $lng['back'] . '</a></div>';
             break;
 
         case 'period':
@@ -75,7 +75,7 @@ if ($user_id) {
             Показ новых тем за выбранный период
             -----------------------------------------------------------------
             */
-            $vr = isset($_REQUEST['vr']) ? abs(intval($_REQUEST['vr'])) : null;
+            $vr = isset($_REQUEST['vr']) ? abs(intval($_REQUEST['vr'])) : NULL;
             if (!$vr) {
                 echo $lng_forum['error_time_empty'] . '<br/><a href="index.php?act=new&amp;do=all">' . $lng['repeat'] . '</a><br/>';
                 require('../incfiles/end.php');
@@ -97,8 +97,7 @@ if ($user_id) {
                 } else {
                     $req = mysql_query("SELECT * FROM `forum` WHERE `type`='t' AND `time` > '" . $vr1 . "' AND `close` != '1' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
                 }
-                $i = 0;
-                while ($res = mysql_fetch_array($req)) {
+                for ($i = 0; $res = mysql_fetch_array($req); ++$i) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     $q3 = mysql_query("SELECT `id`, `refid`, `text` FROM `forum` WHERE `type`='r' AND `id`='" . $res['refid'] . "'");
                     $razd = mysql_fetch_array($q3);
@@ -111,8 +110,7 @@ if ($user_id) {
                     if ($res['edit'])
                         echo '<img src="../images/tz.gif" alt=""/>';
                     elseif ($res['close'])
-                        echo '<img src="../images/dl.gif" alt=""/>';
-                    else
+                        echo '<img src="../images/dl.gif" alt=""/>'; else
                         echo '<img src="../images/np.gif" alt=""/>';
                     if ($res['realid'] == 1)
                         echo '&#160;<img src="../images/rate.gif" alt=""/>';
@@ -127,7 +125,6 @@ if ($user_id) {
                     }
                     echo ' <span class="gray">' . date("d.m.y / H:i", $nick['time']) . '</span>';
                     echo '</div></div>';
-                    ++$i;
                 }
             } else {
                 echo '<div class="menu"><p>' . $lng_forum['unread_period_empty'] . '</p></div>';
@@ -160,8 +157,7 @@ if ($user_id) {
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)
                 ORDER BY `forum`.`time` DESC
                 LIMIT $start, $kmess");
-                $i = 0;
-                while ($res = mysql_fetch_assoc($req)) {
+                for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
                     if ($res['close'])
                         echo '<div class="rmenu">';
                     else
@@ -175,7 +171,7 @@ if ($user_id) {
                     $cpg = ceil($colmes1 / $kmess);
                     $nick = mysql_fetch_assoc($colmes);
                     // Значки
-                    $icons = array (
+                    $icons = array(
                         (isset($np) ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
                         ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
                         ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
@@ -190,7 +186,6 @@ if ($user_id) {
                         ' <span class="gray">(' . functions::display_date($nick['time']) . ')</span><br />' .
                         '<a href="index.php?id=' . $frm['id'] . '">' . $frm['text'] . '</a>&#160;/&#160;<a href="index.php?id=' . $razd['id'] . '">' . $razd['text'] . '</a>' .
                         '</div></div>';
-                    ++$i;
                 }
             } else {
                 echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
@@ -218,7 +213,7 @@ if ($user_id) {
     echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_last_10'] . '</div>';
     $req = mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `close` != '1' ORDER BY `time` DESC LIMIT 10");
     if (mysql_num_rows($req)) {
-        while ($res = mysql_fetch_assoc($req)) {
+        for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
             $q3 = mysql_query("select `id`, `refid`, `text` from `forum` where type='r' and id='" . $res['refid'] . "' LIMIT 1");
             $razd = mysql_fetch_assoc($q3);
             $q4 = mysql_query("select `id`, `refid`, `text` from `forum` where type='f' and id='" . $razd['refid'] . "' LIMIT 1");
@@ -229,8 +224,7 @@ if ($user_id) {
             $nam = mysql_fetch_assoc($nikuser);
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             // Значки
-            $icons = array (
-                ($np ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
+            $icons = array(
                 ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
                 ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
                 ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
@@ -246,11 +240,9 @@ if ($user_id) {
             }
             echo ' <span class="gray">' . date("d.m.y / H:i", $nam['time']) . '</span>';
             echo '</div></div>';
-            $i++;
         }
     } else {
         echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
     }
     echo '<div class="phdr"><a href="index.php">' . $lng['to_forum'] . '</a></div>';
 }
-?>

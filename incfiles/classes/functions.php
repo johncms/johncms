@@ -97,39 +97,39 @@ class functions extends core
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
         $str = nl2br($str);
         $str = strtr($str, array(
-                                chr(0) => '',
-                                chr(1) => '',
-                                chr(2) => '',
-                                chr(3) => '',
-                                chr(4) => '',
-                                chr(5) => '',
-                                chr(6) => '',
-                                chr(7) => '',
-                                chr(8) => '',
-                                chr(9) => '',
-                                chr(10) => '',
-                                chr(11) => '',
-                                chr(12) => '',
-                                chr(13) => '',
-                                chr(14) => '',
-                                chr(15) => '',
-                                chr(16) => '',
-                                chr(17) => '',
-                                chr(18) => '',
-                                chr(19) => '',
-                                chr(20) => '',
-                                chr(21) => '',
-                                chr(22) => '',
-                                chr(23) => '',
-                                chr(24) => '',
-                                chr(25) => '',
-                                chr(26) => '',
-                                chr(27) => '',
-                                chr(28) => '',
-                                chr(29) => '',
-                                chr(30) => '',
-                                chr(31) => ''
-                           ));
+            chr(0) => '',
+            chr(1) => '',
+            chr(2) => '',
+            chr(3) => '',
+            chr(4) => '',
+            chr(5) => '',
+            chr(6) => '',
+            chr(7) => '',
+            chr(8) => '',
+            chr(9) => '',
+            chr(10) => '',
+            chr(11) => '',
+            chr(12) => '',
+            chr(13) => '',
+            chr(14) => '',
+            chr(15) => '',
+            chr(16) => '',
+            chr(17) => '',
+            chr(18) => '',
+            chr(19) => '',
+            chr(20) => '',
+            chr(21) => '',
+            chr(22) => '',
+            chr(23) => '',
+            chr(24) => '',
+            chr(25) => '',
+            chr(26) => '',
+            chr(27) => '',
+            chr(28) => '',
+            chr(29) => '',
+            chr(30) => '',
+            chr(31) => ''
+        ));
         $str = str_replace("'", "&#39;", $str);
         $str = str_replace('\\', "&#92;", $str);
         $str = str_replace("|", "I", $str);
@@ -242,8 +242,8 @@ class functions extends core
     {
         if (!empty($error)) {
             return '<div class="rmenu"><p><b>' . self::$lng['error'] . '!</b><br />' .
-                   (is_array($error) ? implode('<br />', $error) : $error) . '</p>' .
-                   (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
+                (is_array($error) ? implode('<br />', $error) : $error) . '</p>' .
+                (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
         } else {
             return false;
         }
@@ -265,40 +265,41 @@ class functions extends core
     /*
     -----------------------------------------------------------------
     Постраничная навигация
-    За основу взята аналогичная функция от форума SMF2.0
+    -----------------------------------------------------------------
+    За основу взята доработанная функция от форума SMF 2.x.x
     -----------------------------------------------------------------
     */
-    public static function display_pagination($base_url, $start, $max_value, $num_per_page)
+    public static function display_pagination($url, $start, $total, $kmess)
     {
         $neighbors = 2;
-        if ($start >= $max_value)
-            $start = max(0, (int)$max_value - (((int)$max_value % (int)$num_per_page) == 0 ? $num_per_page : ((int)$max_value % (int)$num_per_page)));
+        if ($start >= $total)
+            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
         else
-            $start = max(0, (int)$start - ((int)$start % (int)$num_per_page));
-        $base_link = '<a class="pagenav" href="' . strtr($base_url, array('%' => '%%')) . 'page=%d' . '">%s</a>';
-        $out[] = $start == 0 ? '' : sprintf($base_link, $start / $num_per_page, '&lt;&lt;');
-        if ($start > $num_per_page * $neighbors)
+            $start = max(0, (int)$start - ((int)$start % (int)$kmess));
+        $base_link = '<a class="pagenav" href="' . strtr($url, array('%' => '%%')) . 'page=%d' . '">%s</a>';
+        $out[] = $start == 0 ? '' : sprintf($base_link, $start / $kmess, '&lt;&lt;');
+        if ($start > $kmess * $neighbors)
             $out[] = sprintf($base_link, 1, '1');
-        if ($start > $num_per_page * ($neighbors + 1))
+        if ($start > $kmess * ($neighbors + 1))
             $out[] = '<span style="font-weight: bold;">...</span>';
         for ($nCont = $neighbors; $nCont >= 1; $nCont--)
-            if ($start >= $num_per_page * $nCont) {
-                $tmpStart = $start - $num_per_page * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $num_per_page + 1, $tmpStart / $num_per_page + 1);
+            if ($start >= $kmess * $nCont) {
+                $tmpStart = $start - $kmess * $nCont;
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
-        $out[] = '<span class="currentpage"><b>' . ($start / $num_per_page + 1) . '</b></span>';
-        $tmpMaxPages = (int)(($max_value - 1) / $num_per_page) * $num_per_page;
+        $out[] = '<span class="currentpage"><b>' . ($start / $kmess + 1) . '</b></span>';
+        $tmpMaxPages = (int)(($total - 1) / $kmess) * $kmess;
         for ($nCont = 1; $nCont <= $neighbors; $nCont++)
-            if ($start + $num_per_page * $nCont <= $tmpMaxPages) {
-                $tmpStart = $start + $num_per_page * $nCont;
-                $out[] = sprintf($base_link, $tmpStart / $num_per_page + 1, $tmpStart / $num_per_page + 1);
+            if ($start + $kmess * $nCont <= $tmpMaxPages) {
+                $tmpStart = $start + $kmess * $nCont;
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
-        if ($start + $num_per_page * ($neighbors + 1) < $tmpMaxPages)
+        if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages)
             $out[] = '<span style="font-weight: bold;">...</span>';
-        if ($start + $num_per_page * $neighbors < $tmpMaxPages)
-            $out[] = sprintf($base_link, $tmpMaxPages / $num_per_page + 1, $tmpMaxPages / $num_per_page + 1);
-        if ($start + $num_per_page < $max_value) {
-            $display_page = ($start + $num_per_page) > $max_value ? $max_value : ($start / $num_per_page + 2);
+        if ($start + $kmess * $neighbors < $tmpMaxPages)
+            $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages / $kmess + 1);
+        if ($start + $kmess < $total) {
+            $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
             $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
         }
         return implode(' ', $out);
@@ -368,7 +369,7 @@ class functions extends core
             }
             if ($user['sex'])
                 $out .= '<img src="' . self::$system_set['homeurl'] . '/theme/' . self::$user_set['skin'] . '/images/' . ($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '')
-                        . '.png" width="16" height="16" align="middle" alt="' . ($user['sex'] == 'm' ? 'М' : 'Ж') . '" />&#160;';
+                    . '.png" width="16" height="16" align="middle" alt="' . ($user['sex'] == 'm' ? 'М' : 'Ж') . '" />&#160;';
             else
                 $out .= '<img src="' . self::$system_set['homeurl'] . '/images/del.png" width="12" height="12" align="middle" />&#160;';
             $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
@@ -405,14 +406,18 @@ class functions extends core
             $iphist = '';
             if ($ipinf) {
                 $out .= '<div><span class="gray">' . self::$lng['browser'] . ':</span> ' . $user['browser'] . '</div>' .
-                        '<div><span class="gray">' . self::$lng['ip_address'] . ':</span> ';
+                    '<div><span class="gray">' . self::$lng['ip_address'] . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
                 if (self::$user_rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
-                    $out .= '<b class="red"><a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b> / ';
+                    $out .= '<b class="red"><a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
+                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
+                    $out .= ' / ';
                     $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
+                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
                 } elseif (self::$user_rights) {
-                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
+                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip .'</a>';
+                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {
                     $out .= $ip . $iphist;
                 }
@@ -511,21 +516,20 @@ class functions extends core
     Обработка смайлов
     -----------------------------------------------------------------
     */
-    private static $smileys_cache = array();
-
     public static function smileys($str, $adm = false)
     {
         global $rootpath;
-        if (empty(self::$smileys_cache)) {
+        static $smileys_cache = array();
+        if (empty($smileys_cache)) {
             $file = $rootpath . 'files/cache/smileys.dat';
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
-                self::$smileys_cache = unserialize($smileys);
-                return strtr($str, ($adm ? array_merge(self::$smileys_cache['usr'], self::$smileys_cache['adm']) : self::$smileys_cache['usr']));
+                $smileys_cache = unserialize($smileys);
+                return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
             } else {
                 return $str;
             }
         } else {
-            return strtr($str, ($adm ? array_merge(self::$smileys_cache['usr'], self::$smileys_cache['adm']) : self::$smileys_cache['usr']));
+            return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
         }
     }
 

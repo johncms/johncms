@@ -12,16 +12,14 @@
 define('_IN_JOHNCMS', 1);
 set_time_limit(1200);
 
-define('INSTALL_VERSION', '4.4.0'); // Инсталлируемая версия
-define('UPDATE_VERSION', '4.3.0'); // Обновление с версии
-
-//TODO: Добавить в таблицу настроек поле gzip
+define('INSTALL_VERSION', '4.5.0'); // Инсталлируемая версия
+define('UPDATE_VERSION', '4.4.0');  // Обновление с версии
 
 // Задаем режим работы инсталлятора
 define('MODE', 'install');
-//define('MODE', 'update_322-440');
-//define('MODE', 'update_400-440');
-//define('MODE', 'update_430-440');
+//define('MODE', 'update_440-450');
+//define('MODE', 'update_400-450');
+//define('MODE', 'update_322-450');
 
 class install
 {
@@ -38,13 +36,15 @@ class install
         '/files/cache/',
         '/files/forum/attach/',
         '/files/library/',
+        '/files/lng_edit/',
         '/files/users/album/',
         '/files/users/avatar/',
         '/files/users/photo/',
         '/files/users/pm/',
         '/gallery/foto/',
         '/gallery/temp/',
-        '/incfiles/'
+        '/incfiles/',
+        '/library/temp/'
     );
 
     /*
@@ -212,7 +212,7 @@ if (is_dir(MODE) && file_exists(MODE . '/install.php')) {
              '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
              '<div><input type="radio" name="lng" value="en" ' . ($language == 'en' ? 'checked="checked"' : '') . ' />&#160;English</div>' .
              '<div><input type="radio" name="lng" value="ru" ' . ($language == 'ru' ? 'checked="checked"' : '') . ' />&#160;Русский</div>' .
-             '</p><p><input type="submit" name="submit" value="' . $lng['change'] . '" /></p>' .
+             '</p><p><input type="submit" name="submit" value="' . $lng['change'] . '" /></p></form>' .
              '<p>' . $lng['languages'] . '</p>' .
              '<hr />';
     }
@@ -221,5 +221,3 @@ if (is_dir(MODE) && file_exists(MODE . '/install.php')) {
 } else {
     echo "<h2>FATAL ERROR: can't begin installation</h2>";
 }
-
-?>

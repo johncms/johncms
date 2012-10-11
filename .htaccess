@@ -8,8 +8,8 @@ DirectoryIndex index.php
 RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 AddType application/x-httpd-php-source .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 
-#php_flag display_errors 0
-#php_value error_reporting 7
+php_flag display_errors 0
+php_value error_reporting 7
 php_value register_globals 0
 php_flag session.use_trans_sid off
 php_value magic_quotes_gpc 0
@@ -29,4 +29,5 @@ AddDefaultCharset UTF-8
 
 RewriteEngine On
 RewriteCond %{REQUEST_METHOD} ^TRACE
+RewriteCond %{HTTP:range} !(^bytes=[^,]+(,[^,]+){0,4}$|^$)
 RewriteRule .* - [F]

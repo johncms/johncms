@@ -29,38 +29,51 @@ if ($rights == 3 || $rights >= 6) {
         exit;
     }
     $res = mysql_fetch_assoc($req);
-    if (isset($_GET['yes']) && $rights == 9) {
-        // Удаляем прикрепленные файлы
-        $req1 = mysql_query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
-        if (mysql_num_rows($req1)) {
-            while ($res1 = mysql_fetch_array($req1)) {
-                unlink('files/' . $res1['filename']);
+    if (isset($_POST['submit'])) {
+        $del = isset($_POST['del']) ? intval($_POST['del']) : NULL;
+        if ($del == 2 && core::$user_rights == 9) {
+            /*
+            -----------------------------------------------------------------
+            Удаляем топик
+            -----------------------------------------------------------------
+            */
+            $req1 = mysql_query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
+            if (mysql_num_rows($req1)) {
+                while ($res1 = mysql_fetch_assoc($req1)) {
+                    unlink('../files/forum/attach/' . $res1['filename']);
+                }
+                mysql_query("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
+                mysql_query("OPTIMIZE TABLE `cms_forum_files`");
             }
-            mysql_query("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
-            mysql_query("OPTIMIZE TABLE `cms_forum_files`");
+            mysql_query("DELETE FROM `forum` WHERE `refid` = '$id'");
+            mysql_query("DELETE FROM `forum` WHERE `id`='$id'");
+        } elseif ($del = 1) {
+            /*
+            -----------------------------------------------------------------
+            Скрываем топик
+            -----------------------------------------------------------------
+            */
+            mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
+            mysql_query("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
         }
-        // Удаляем посты топика
-        mysql_query("DELETE FROM `forum` WHERE `refid` = '$id'");
-        // Удаляем топик
-        mysql_query("DELETE FROM `forum` WHERE `id`='$id'");
-        header('Location: ?id=' . $res['refid']);
-    } elseif (isset($_GET['hid']) || isset($_GET['yes']) && $rights < 9) {
-        // Скрываем топик
-        mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
-        // Скрываем прикрепленные файлы
-        mysql_query("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
-        header('Location: ?id=' . $res['refid']);
+        header('Location: index.php?id=' . $res['refid']);
+    } else {
+        /*
+        -----------------------------------------------------------------
+        Меню выбора режима удаления темы
+        -----------------------------------------------------------------
+        */
+        require('../incfiles/head.php');
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_delete'] . '</div>' .
+             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
+             '<p><h3>' . $lng['delete_confirmation'] . '</h3>' .
+             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . $lng['hide'] . '<br />' .
+             (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . $lng['delete'] . '</p>' : '') .
+             '<p><input type="submit" name="submit" value="' . $lng['do'] . '" /></p>' .
+             '<p><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a>' .
+             '</p></form></div>' .
+             '<div class="phdr">&#160;</div>';
     }
-    require('../incfiles/head.php');
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_delete'] . '</div>' .
-        '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '</p>' .
-        '<p><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a> | ' .
-        '<a href="index.php?act=deltema&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a>';
-    if ($rights == 9 && $res['close'] != 1)
-        echo ' | <a href="index.php?act=deltema&amp;id=' . $id . '&amp;hid">' . $lng['hide'] . '</a>';
-    echo '</p></div>';
-    echo '<div class="phdr">&#160;</div>';
 } else {
     echo functions::display_error($lng['access_forbidden']);
 }
-?>

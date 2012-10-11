@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 define('_IN_JOHNCMS', 1);
 
@@ -51,7 +51,8 @@ if (!$user) {
 Функция голосований за фотографии
 -----------------------------------------------------------------
 */
-function vote_photo($arg = null) {
+function vote_photo($arg = null)
+{
     global $lng, $datauser, $user_id, $ban;
 
     if ($arg) {
@@ -59,8 +60,7 @@ function vote_photo($arg = null) {
         if ($rating > 0)
             $color = 'C0FFC0';
         elseif ($rating < 0)
-            $color = 'F196A8';
-        else
+            $color = 'F196A8'; else
             $color = 'CCC';
         $out = '<div class="gray">' . $lng['rating'] . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
             '(' . $lng['vote_against'] . ': ' . $arg['vote_minus'] . ', ' . $lng['vote_for'] . ': ' . $arg['vote_plus'] . ')';
@@ -83,22 +83,22 @@ function vote_photo($arg = null) {
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$array = array (
-    'comments' => 'includes/album',
-    'delete' => 'includes/album',
-    'edit' => 'includes/album',
-    'image_delete' => 'includes/album',
+$array = array(
+    'comments'       => 'includes/album',
+    'delete'         => 'includes/album',
+    'edit'           => 'includes/album',
+    'image_delete'   => 'includes/album',
     'image_download' => 'includes/album',
-    'image_edit' => 'includes/album',
-    'image_move' => 'includes/album',
-    'image_upload' => 'includes/album',
-    'list' => 'includes/album',
-    'new_comm' => 'includes/album',
-    'show' => 'includes/album',
-    'sort' => 'includes/album',
-    'top' => 'includes/album',
-    'users' => 'includes/album',
-    'vote' => 'includes/album'
+    'image_edit'     => 'includes/album',
+    'image_move'     => 'includes/album',
+    'image_upload'   => 'includes/album',
+    'list'           => 'includes/album',
+    'new_comm'       => 'includes/album',
+    'show'           => 'includes/album',
+    'sort'           => 'includes/album',
+    'top'            => 'includes/album',
+    'users'          => 'includes/album',
+    'vote'           => 'includes/album'
 );
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
@@ -106,16 +106,30 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 } else {
     require('../incfiles/head.php');
     $albumcount = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`"), 0);
+    $total_mans = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`)
+      FROM `cms_album_files`
+      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
+      WHERE `users`.`sex` = 'm'
+    "), 0);
+    $total_womans = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`)
+      FROM `cms_album_files`
+      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
+      WHERE `users`.`sex` = 'zh'
+    "), 0);
     $newcount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
-    echo '<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
+    echo'<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
         '<div class="gmenu"><p>' .
         '<img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16"/>&#160;<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
         '<img src="' . $set['homeurl'] . '/images/guestbook.gif" width="16" height="16"/>&#160;<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16" class="left" />&#160;' . $lng['albums'] . '</h3><ul>' .
-        '<li><a href="album.php?act=users">' . $lng_profile['album_list'] . '</a> (' . $albumcount . ')</li>' .
-        '</ul></p>' .
+        '<li><a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a> (' . $total_mans . ')</li>' .
+        '<li><a href="album.php?act=users&amp;mod=girls">' . $lng['womans'] . '</a> (' . $total_womans . ')</li>';
+    if ($user_id) {
+        echo'<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
+    }
+    echo'</ul></p>' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/rate.gif" width="16" height="16" class="left" />&#160;' . $lng['rating'] . '</h3><ul>' .
         '<li><a href="album.php?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
         '<li><a href="album.php?act=top&amp;mod=downloads">' . $lng_profile['top_downloads'] . '</a></li>' .

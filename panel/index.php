@@ -31,6 +31,7 @@ $array = array(
     'news',
     'ads',
     'counters',
+    'ip_whois',
     'languages',
     'settings',
     'sitemap',
@@ -63,16 +64,16 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     */
     echo '<div class="user"><p><h3><img src="../images/users.png" width="16" height="16" class="left" />&#160;' . $lng['users'] . '</h3><ul>';
     if ($regtotal && core::$user_rights >= 6) echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
-    echo '<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
-         '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
-         ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
-         '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
-         (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' : '') .
-         (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . $lng['karma'] . '</a></li>' : '') .
-         '<br />' .
-         '<li><a href="../users/search.php">' . $lng['search_nick'] . '</a></li>' .
-         '<li><a href="index.php?act=search_ip">' . $lng['ip_search'] . '</a></li>' .
-         '</ul></p></div>';
+    echo'<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
+        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
+        ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
+        '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
+        (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' : '') .
+        (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . $lng['karma'] . '</a></li>' : '') .
+        '<br />' .
+        '<li><a href="../users/search.php">' . $lng['search_nick'] . '</a></li>' .
+        '<li><a href="index.php?act=search_ip">' . $lng['ip_search'] . '</a></li>' .
+        '</ul></p></div>';
     if ($rights >= 7) {
 
         /*
@@ -80,45 +81,44 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         Блок модулей
         -----------------------------------------------------------------
         */
-        echo '<div class="gmenu"><p>';
-        echo '<h3><img src="../images/modules.png" width="16" height="16" class="left" />&#160;' . $lng['modules'] . '</h3><ul>' .
-             '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>' .
-             '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li>' .
-             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
-             '</ul></p></div>';
+        echo'<div class="gmenu"><p>';
+        echo'<h3><img src="../images/modules.png" width="16" height="16" class="left" />&#160;' . $lng['modules'] . '</h3><ul>' .
+            '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
+            '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li><br/>' .
+            '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' : '') .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' : '') .
+            '</ul></p></div>';
 
         /*
         -----------------------------------------------------------------
         Блок системных настроек
         -----------------------------------------------------------------
         */
-        echo '<div class="menu"><p>' .
-             '<h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['system'] . '</h3>' .
-             '<ul>' .
-             (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
-             '<li><a href="index.php?act=smileys">' . $lng['refresh_smileys'] . '</a></li>' .
-             (core::$user_rights == 9 ? '<li><a href="index.php?act=languages">' . $lng['language_settings'] . '</a></li>' : '') .
-             '<li><a href="index.php?act=access">' . $lng['access_rights'] . '</a></li><br />' .
-             (core::$user_rights == 9 ? '<li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' : '') .
-             (core::$user_rights == 9 ? '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' : '') .
-             '</ul>' .
-             '</p></div>';
+        echo'<div class="menu"><p>' .
+            '<h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['system'] . '</h3>' .
+            '<ul>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
+            '<li><a href="index.php?act=smileys">' . $lng['refresh_smileys'] . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=languages">' . $lng['language_settings'] . '</a></li>' : '') .
+            '<li><a href="index.php?act=access">' . $lng['access_rights'] . '</a></li>' .
+            '</ul>' .
+            '</p></div>';
 
         /*
         -----------------------------------------------------------------
         Блок безопасности
         -----------------------------------------------------------------
         */
-        echo '<div class="rmenu"><p>' .
-             '<h3><img src="../images/admin.png" width="16" height="16" class="left" />&#160;' . $lng['security'] . '</h3>' .
-             '<ul>' .
-             '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
-             (core::$user_rights == 9 ? '<li><a href="index.php?act=ipban">' . $lng['ip_ban'] . '</a></li>' : '') .
-             '</ul>' .
-             '</p></div>';
+        echo'<div class="rmenu"><p>' .
+            '<h3><img src="../images/admin.png" width="16" height="16" class="left" />&#160;' . $lng['security'] . '</h3>' .
+            '<ul>' .
+            '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=ipban">' . $lng['ip_ban'] . '</a></li>' : '') .
+            '</ul>' .
+            '</p></div>';
     }
     echo '<div class="phdr">&#160;</div>';
 }
 
 require('../incfiles/end.php');
-?>

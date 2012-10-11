@@ -39,7 +39,7 @@ if ($user_id && !$ban['1'] && !$ban['10']) {
 }
 // Запрос списка комментариев
 $mess = mysql_query("SELECT * FROM `lib` WHERE `type` = 'komm' AND `refid` = '" . $id . "' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
-while ($mass = mysql_fetch_array($mess)) {
+for ($i = 0; $mass = mysql_fetch_array($mess); ++$i) {
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
     $uz = mysql_query("select * from `users` where name='" . functions::check($mass['avtor']) . "';");
     $mass1 = mysql_fetch_array($uz);
@@ -74,7 +74,7 @@ while ($mass = mysql_fetch_array($mess)) {
     }
     echo '(' . functions::display_date($mass['time']) . ')<br/>';
     if ($set_user['smileys']) {
-        $tekst = functions::smileys($mass['text'], ($mass['from'] == $nickadmina || $mass['from'] == $nickadmina2 || $mass1['rights'] >= 1) ? 1 : 0);
+        $tekst = functions::smileys($mass['text'], ($mass1['rights'] >= 1) ? 1 : 0);
     } else {
         $tekst = $mass['text'];
     }
@@ -92,6 +92,4 @@ if ($countm > $kmess) {
     echo '<p><form action="index.php" method="get"><input type="hidden" name="act" value="komm"/><input type="hidden" name="id" value="' . $id .
         '"/><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
-echo '<p><a href="?id=' . $id . '">' . $lng['to_article'] . '</a></p>';
-
-?>
+echo '<p><a href="?id=' . $id . '">' . $lng['back'] . '</a></p>';

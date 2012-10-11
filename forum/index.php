@@ -40,7 +40,8 @@ $ext_arch = array(
     'rar',
     '7z',
     'tar',
-    'gz'
+    'gz',
+    'apk'
 );
 // Звуковые файлы
 $ext_audio = array(
@@ -149,7 +150,6 @@ $mods = array(
     'filter',
     'loadtem',
     'massdel',
-    'moders',
     'new',
     'nt',
     'per',
@@ -391,29 +391,39 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
                     $sql .= ')';
                 }
-                if ($user_id && !$filter) {
-                    // Фиксация факта прочтения топика
-                }
-                if ($rights < 7 && $type1['close'] == 1) {
+
+                // Если тема помечена для удаления, разрешаем доступ только администрации
+                if ($rights < 6 && $type1['close'] == 1) {
                     echo '<div class="rmenu"><p>' . $lng_forum['topic_deleted'] . '<br/><a href="?id=' . $type1['refid'] . '">' . $lng_forum['to_section'] . '</a></p></div>';
                     require('../incfiles/end.php');
                     exit;
                 }
+
                 // Счетчик постов темы
                 $colmes = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0);
-                if ($start > $colmes) $start = $colmes - $kmess;
+                if ($start >= $colmes) {
+                    // Исправляем запрос на несуществующую страницу
+                    $start = max(0, $colmes - (($colmes % $kmess) == 0 ? $kmess : ($colmes % $kmess)));
+                }
+
                 // Выводим название топика
                 echo '<div class="phdr"><a name="up" id="up"></a><a href="#down"><img src="../theme/' . $set_user['skin'] . '/images/down.png" alt="Вниз" width="20" height="10" border="0"/></a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
-                if ($colmes > $kmess)
+                if ($colmes > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
-                // Метки удаления темы
-                if ($type1['close'])
+                }
+
+                // Метка удаления темы
+                if ($type1['close']) {
                     echo '<div class="rmenu">' . $lng_forum['topic_delete_who'] . ': <b>' . $type1['close_who'] . '</b></div>';
-                elseif (!empty($type1['close_who']) && $rights >= 7)
+                } elseif (!empty($type1['close_who']) && $rights >= 7) {
                     echo '<div class="gmenu"><small>' . $lng_forum['topic_delete_whocancel'] . ': <b>' . $type1['close_who'] . '</b></small></div>';
-                // Метки закрытия темы
-                if ($type1['edit'])
+                }
+
+                // Метка закрытия темы
+                if ($type1['edit']) {
                     echo '<div class="rmenu">' . $lng_forum['topic_closed'] . '</div>';
+                }
+
                 /*
                 -----------------------------------------------------------------
                 Блок голосований
@@ -782,8 +792,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     // Навигация внизу страницы
     echo '<p>' . ($id ? '<a href="index.php">' . $lng['to_forum'] . '</a><br />' : '');
     if (!$id) {
-        echo '<a href="../pages/faq.php?act=forum">' . $lng_forum['forum_rules'] . '</a><br/>';
-        echo '<a href="index.php?act=moders">' . $lng['moders'] . '</a>';
+        echo '<a href="../pages/faq.php?act=forum">' . $lng_forum['forum_rules'] . '</a>';
     }
     echo '</p>';
     if (!$user_id) {
@@ -796,5 +805,3 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 }
 
 require_once('../incfiles/end.php');
-
-?>

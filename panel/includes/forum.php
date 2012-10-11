@@ -24,12 +24,12 @@ $lng_forum = core::load_lng('forum');
 $set_forum = unserialize($datauser['set_forum']);
 if (!isset($set_forum) || empty($set_forum))
     $set_forum = array(
-        'farea' => 0,
-        'upfp' => 0,
-        'farea_w' => 20,
-        'farea_h' => 4,
+        'farea'    => 0,
+        'upfp'     => 0,
+        'farea_w'  => 20,
+        'farea_h'  => 4,
         'postclip' => 1,
-        'postcut' => 2
+        'postcut'  => 2
     );
 switch ($mod) {
     case 'del':
@@ -81,16 +81,16 @@ switch ($mod) {
                         echo '<div class="rmenu"><p><h3>' . $lng_forum['category_deleted'] . '</h3>' . $lng_forum['contents_moved_to'] . ' <a href="../forum/index.php?id=' . $category . '">' . $lng_forum['selected_category'] . '</a></p></div>';
                     } else {
                         echo '<form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
-                             '<div class="rmenu"><p>' . $lng['contents_move_warning'] . '</p>' .
-                             '<p><h3>' . $lng_forum['select_category'] . '</h3><select name="category" size="1">';
+                            '<div class="rmenu"><p>' . $lng['contents_move_warning'] . '</p>' .
+                            '<p><h3>' . $lng_forum['select_category'] . '</h3><select name="category" size="1">';
                         $req_c = mysql_query("SELECT * FROM `forum` WHERE `type` = 'f' AND `id` != '$id' ORDER BY `realid` ASC");
                         while ($res_c = mysql_fetch_assoc($req_c)) echo '<option value="' . $res_c['id'] . '">' . $res_c['text'] . '</option>';
                         echo '</select><br /><small>' . $lng_forum['contents_move_description'] . '</small></p>' .
-                             '<p><input type="submit" name="submit" value="' . $lng['move'] . '" /></p></div>';
+                            '<p><input type="submit" name="submit" value="' . $lng['move'] . '" /></p></div>';
                         if ($rights == 9) {
                             // Для супервайзоров запрос на полное удаление
                             echo '<div class="rmenu"><p><h3>' . $lng_forum['delete_full'] . '</h3>' . $lng_forum['delete_full_note'] . ' <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $id . '">' . $lng_forum['child_section'] . '</a></p>' .
-                                 '</div>';
+                                '</div>';
                         }
                         echo '</form>';
                     }
@@ -116,7 +116,7 @@ switch ($mod) {
                         mysql_query("UPDATE `cms_forum_files` SET `subcat` = '$subcat' WHERE `subcat` = '$id'");
                         mysql_query("DELETE FROM `forum` WHERE `id` = '$id'");
                         echo '<div class="rmenu"><p><h3>' . $lng_forum['section_deleted'] . '</h3>' . $lng_forum['themes_moved_to'] . ' <a href="../forum/index.php?id=' . $subcat . '">' . $lng_forum['selected_section'] . '</a>.' .
-                             '</p></div>';
+                            '</p></div>';
                     } elseif (isset($_POST['delete'])) {
                         if ($rights != 9) {
                             echo functions::display_error($lng['access_forbidden']);
@@ -144,10 +144,10 @@ switch ($mod) {
                         // Оптимизируем таблицы
                         mysql_query("OPTIMIZE TABLE `cms_forum_files` , `cms_forum_rdm` , `forum` , `cms_forum_vote` , `cms_forum_vote_users`");
                         echo '<div class="rmenu"><p>' . $lng_forum['section_themes_deleted'] . '<br />' .
-                             '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['refid'] . '">' . $lng_forum['to_category'] . '</a></p></div>';
+                            '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['refid'] . '">' . $lng_forum['to_category'] . '</a></p></div>';
                     } else {
                         echo '<form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST"><div class="rmenu">' .
-                             '<p>' . $lng_forum['section_move_warning'] . '</p>' . '<p><h3>' . $lng_forum['select_section'] . '</h3>';
+                            '<p>' . $lng_forum['section_move_warning'] . '</p>' . '<p><h3>' . $lng_forum['select_section'] . '</h3>';
                         $cat = isset($_GET['cat']) ? abs(intval($_GET['cat'])) : 0;
                         $ref = $cat ? $cat : $res['refid'];
                         $req_r = mysql_query("SELECT * FROM `forum` WHERE `refid` = '$ref' AND `id` != '$id' AND `type` = 'r' ORDER BY `realid` ASC");
@@ -160,7 +160,7 @@ switch ($mod) {
                             echo '<li><a href="index.php?act=forum&amp;mod=del&amp;id=' . $id . '&amp;cat=' . $res_c['id'] . '">' . $res_c['text'] . '</a></li>';
                         }
                         echo '</ul><small>' . $lng_forum['section_move_description'] . '</small></p>' .
-                             '<p><input type="submit" name="submit" value="' . $lng['move'] . '" /></p></div>';
+                            '<p><input type="submit" name="submit" value="' . $lng['move'] . '" /></p></div>';
                         if ($rights == 9) {
                             // Для супервайзоров запрос на полное удаление
                             echo '<div class="rmenu"><p><h3>' . $lng_forum['delete_full'] . '</h3>' . $lng_forum['delete_full_warning'];
@@ -178,9 +178,9 @@ switch ($mod) {
                     echo '<div class="rmenu"><p>' . ($res['type'] == 'r' ? $lng_forum['section_deleted'] : $lng_forum['category_deleted']) . '</p></div>';
                 } else {
                     echo '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '</p>' .
-                         '<p><form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
-                         '<input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
-                         '</form></p></div>';
+                        '<p><form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
+                        '<input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
+                        '</form></p></div>';
                 }
             }
             echo '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat">' . $lng['back'] . '</a></div>';
@@ -228,13 +228,19 @@ switch ($mod) {
                 } else {
                     $sort = 1;
                 }
-                mysql_query("INSERT INTO `forum` SET
-                `refid` = '" . ($id ? $id : '') . "',
+                if (mysql_query("INSERT INTO `forum` SET
+                `refid` = '" . ($id ? $id : 0) . "',
                 `type` = '" . ($id ? 'r' : 'f') . "',
                 `text` = '$name',
                 `soft` = '$desc',
-                `realid` = '$sort'");
-                header('Location: index.php?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
+                `edit` = '',
+                `curators` = '',
+                `realid` = '$sort'")
+                ) {
+                    header('Location: index.php?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
+                } else {
+                    echo mysql_error();
+                }
             } else {
                 // Выводим сообщение об ошибках
                 echo functions::display_error($error);
@@ -245,16 +251,16 @@ switch ($mod) {
             if ($id)
                 echo '<div class="bmenu"><b>' . $lng_forum['to_category'] . ':</b> ' . $cat_name . '</div>';
             echo '<form action="index.php?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-                 '<div class="gmenu">' .
-                 '<p><h3>' . $lng['title'] . '</h3>' .
-                 '<input type="text" name="name" />' .
-                 '<br /><small>' . $lng['minmax_2_30'] . '</small></p>' .
-                 '<p><h3>' . $lng['description'] . '</h3>' .
-                 '<textarea name="desc" rows="' . $set_user['field_h'] . '"></textarea>' .
-                 '<br /><small>' . $lng['not_mandatory_field'] . '<br />' . $lng['minmax_2_500'] . '</small></p>' .
-                 '<p><input type="submit" value="' . $lng['add'] . '" name="submit" />' .
-                 '</p></div></form>' .
-                 '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . $lng['back'] . '</a></div>';
+                '<div class="gmenu">' .
+                '<p><h3>' . $lng['title'] . '</h3>' .
+                '<input type="text" name="name" />' .
+                '<br /><small>' . $lng['minmax_2_30'] . '</small></p>' .
+                '<p><h3>' . $lng['description'] . '</h3>' .
+                '<textarea name="desc" rows="' . $set_user['field_h'] . '"></textarea>' .
+                '<br /><small>' . $lng['not_mandatory_field'] . '<br />' . $lng['minmax_2_500'] . '</small></p>' .
+                '<p><input type="submit" value="' . $lng['add'] . '" name="submit" />' .
+                '</p></div></form>' .
+                '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . $lng['back'] . '</a></div>';
         }
         break;
 
@@ -314,14 +320,14 @@ switch ($mod) {
                 } else {
                     // Форма ввода
                     echo '<div class="phdr"><b>' . ($res['type'] == 'r' ? $lng_forum['section_edit'] : $lng_forum['category_edit']) . '</b></div>' .
-                         '<form action="index.php?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
-                         '<div class="gmenu">' .
-                         '<p><h3>' . $lng['title'] . '</h3>' .
-                         '<input type="text" name="name" value="' . $res['text'] . '"/>' .
-                         '<br /><small>' . $lng['minmax_2_30'] . '</small></p>' .
-                         '<p><h3>' . $lng['description'] . '</h3>' .
-                         '<textarea name="desc" rows="' . $set_user['field_h'] . '">' . str_replace('<br />', "\r\n", $res['soft']) . '</textarea>' .
-                         '<br /><small>' . $lng['not_mandatory_field'] . '<br />' . $lng['minmax_2_500'] . '</small></p>';
+                        '<form action="index.php?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
+                        '<div class="gmenu">' .
+                        '<p><h3>' . $lng['title'] . '</h3>' .
+                        '<input type="text" name="name" value="' . $res['text'] . '"/>' .
+                        '<br /><small>' . $lng['minmax_2_30'] . '</small></p>' .
+                        '<p><h3>' . $lng['description'] . '</h3>' .
+                        '<textarea name="desc" rows="' . $set_user['field_h'] . '">' . str_replace('<br />', "\r\n", $res['soft']) . '</textarea>' .
+                        '<br /><small>' . $lng['not_mandatory_field'] . '<br />' . $lng['minmax_2_500'] . '</small></p>';
                     if ($res['type'] == 'r') {
                         echo '<p><h3>' . $lng_forum['category'] . '</h3><select name="category" size="1">';
                         $req_c = mysql_query("SELECT * FROM `forum` WHERE `type` = 'f' ORDER BY `realid` ASC");
@@ -331,8 +337,8 @@ switch ($mod) {
                         echo '</select></p>';
                     }
                     echo '<p><input type="submit" value="' . $lng['save'] . '" name="submit" />' .
-                         '</p></div></form>' .
-                         '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($res['type'] == 'r' ? '&amp;id=' . $res['refid'] : '') . '">' . $lng['back'] . '</a></div>';
+                        '</p></div></form>' .
+                        '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($res['type'] == 'r' ? '&amp;id=' . $res['refid'] : '') . '">' . $lng['back'] . '</a></div>';
                 }
             } else {
                 header('Location: index.php?act=forum&mod=cat');
@@ -407,15 +413,15 @@ switch ($mod) {
                 while ($res = mysql_fetch_assoc($req)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo '<b>' . $res['text'] . '</b>' .
-                         '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
+                        '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
                     if (!empty($res['soft']))
                         echo '<br /><span class="gray"><small>' . $res['soft'] . '</small></span><br />';
                     echo '<div class="sub">' .
-                         '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a> | ' .
-                         '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a> | ' .
-                         '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ' .
-                         '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>' .
-                         '</div></div>';
+                        '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a> | ' .
+                        '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a> | ' .
+                        '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ' .
+                        '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>' .
+                        '</div></div>';
                     ++$i;
                 }
             } else {
@@ -429,24 +435,24 @@ switch ($mod) {
             while ($res = mysql_fetch_assoc($req)) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['text'] . '</b></a> ' .
-                     '(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'r' AND `refid` = '" . $res['id'] . "'"), 0) . ')' .
-                     '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
+                    '(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'r' AND `refid` = '" . $res['id'] . "'"), 0) . ')' .
+                    '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
                 if (!empty($res['soft']))
                     echo '<br /><span class="gray"><small>' . $res['soft'] . '</small></span><br />';
                 echo '<div class="sub">' .
-                     '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a> | ' .
-                     '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a> | ' .
-                     '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ' .
-                     '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>' .
-                     '</div></div>';
+                    '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a> | ' .
+                    '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a> | ' .
+                    '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ' .
+                    '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>' .
+                    '</div></div>';
                 ++$i;
             }
         }
         echo '<div class="gmenu">' .
-             '<form action="index.php?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-             '<input type="submit" value="' . $lng['add'] . '" />' .
-             '</form></div>' .
-             '<div class="phdr">' . ($mod == 'cat' && $id ? '<a href="index.php?act=forum&amp;mod=cat">' . $lng_forum['category_list'] . '</a>' : '<a href="index.php?act=forum">' . $lng_forum['forum_management'] . '</a>') . '</div>';
+            '<form action="index.php?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
+            '<input type="submit" value="' . $lng['add'] . '" />' .
+            '</form></div>' .
+            '<div class="phdr">' . ($mod == 'cat' && $id ? '<a href="index.php?act=forum&amp;mod=cat">' . $lng_forum['category_list'] . '</a>' : '<a href="index.php?act=forum">' . $lng_forum['forum_management'] . '</a>') . '</div>';
         break;
 
     case 'htopics':
@@ -509,28 +515,28 @@ switch ($mod) {
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . $lng_forum['by_author'] . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo functions::display_user($res, array(
-                                                            'header' => $ttime,
-                                                            'body' => $text,
-                                                            'sub' => $subtext
-                                                       ));
+                        'header' => $ttime,
+                        'body'   => $text,
+                        'sub'    => $subtext
+                    ));
                     echo '</div>';
                     ++$i;
                 }
                 if ($rights == 9)
                     echo '<form action="index.php?act=forum&amp;mod=htopics' . $link . '" method="POST">' .
-                         '<div class="rmenu">' .
-                         '<input type="submit" name="deltopic" value="' . $lng['delete_all'] . '" />' .
-                         '</div></form>';
+                        '<div class="rmenu">' .
+                        '<input type="submit" name="deltopic" value="' . $lng['delete_all'] . '" />' .
+                        '</div></form>';
             } else {
                 echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
             }
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=forum&amp;mod=htopics&amp;', $start, $total, $kmess) . '</div>' .
-                     '<p><form action="index.php?act=forum&amp;mod=htopics" method="post">' .
-                     '<input type="text" name="page" size="2"/>' .
-                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                     '</form></p>';
+                    '<p><form action="index.php?act=forum&amp;mod=htopics" method="post">' .
+                    '<input type="text" name="page" size="2"/>' .
+                    '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                    '</form></p>';
             }
         }
         break;
@@ -594,10 +600,10 @@ switch ($mod) {
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . $lng_forum['by_author'] . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo functions::display_user($res, array(
-                                                            'header' => $posttime,
-                                                            'body' => $text,
-                                                            'sub' => $subtext
-                                                       ));
+                        'header' => $posttime,
+                        'body'   => $text,
+                        'sub'    => $subtext
+                    ));
                     echo '</div>';
                     ++$i;
                 }
@@ -609,84 +615,10 @@ switch ($mod) {
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=forum&amp;mod=hposts&amp;', $start, $total, $kmess) . '</div>' .
-                     '<p><form action="index.php?act=forum&amp;mod=hposts" method="post">' .
-                     '<input type="text" name="page" size="2"/>' .
-                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                     '</form></p>';
-            }
-        }
-        break;
-
-    case 'moders':
-        /*
-        -----------------------------------------------------------------
-        Управление модераторами разделов
-        -----------------------------------------------------------------
-        */
-        if (isset($_POST['submit'])) {
-            if (!$id) {
-                echo functions::display_error($lng['error_wrong_data'], '<a href="index.php?act=forum">' . $lng_forum['forum_management'] . '</a>');
-                require('../incfiles/end.php');
-                exit;
-            }
-            if (isset($_POST['moder'])) {
-                $q = mysql_query("SELECT * FROM `forum` WHERE `type` = 'a' AND `refid` = '$id'");
-                while ($q1 = mysql_fetch_array($q)) {
-                    if (!in_array($q1['from'], $_POST['moder'])) {
-                        mysql_query("delete from `forum` where `id`='" . $q1['id'] . "'");
-                    }
-                }
-                foreach ($_POST['moder'] as $v) {
-                    $v = functions::check($v);
-                    $q2 = mysql_query("SELECT * FROM `forum` WHERE `type` = 'a' AND `from` = '$v' AND `refid` = '$id'");
-                    $q3 = mysql_num_rows($q2);
-                    if ($q3 == 0) {
-                        mysql_query("INSERT INTO `forum` SET
-                        `refid` = '$id',
-                        `type` = 'a',
-                        `from` = '$v'");
-                    }
-                }
-            } else {
-                mysql_query("DELETE * FROM `forum` WHERE `type` = 'a' AND `refid` = '$id'");
-            }
-            header("Location: index.php?act=forum&mod=moders&id=$id");
-        } else {
-            echo '<div class="phdr"><a href="index.php?act=forum"><b>' . $lng_forum['forum_management'] . '</b></a> | ' . $lng_forum['moderators_appoint'] . '</div>';
-            if (!empty($_GET['id'])) {
-                $typ = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
-                $ms = mysql_fetch_array($typ);
-                if ($ms['type'] != "f") {
-                    echo functions::display_error($lng['error_wrong_data'], '<a href="index.php?act=forum">' . $lng_forum['forum_management'] . '</a>');
-                    require('../incfiles/end.php');
-                    exit;
-                }
-                echo '<div class="bmenu"><b>' . $lng_forum['category'] . ':</b> ' . $ms['text'] . '</div>';
-                echo '<form action="index.php?act=forum&amp;mod=moders&amp;id=' . $id . '" method="post">';
-                $q = mysql_query("SELECT * FROM `users` WHERE `rights` = '3'");
-                $i = 0;
-                while ($q1 = mysql_fetch_assoc($q)) {
-                    $q2 = mysql_query("SELECT * FROM `forum` WHERE `type` = 'a' AND `from` = '" . $q1['name'] . "' and `refid` = '$id'");
-                    $q3 = mysql_num_rows($q2);
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo '<input type="checkbox" name="moder[]" value="' . $q1['name'] . '"' . ($q3 ? ' checked="checked"' : '') . '/>' . $q1['name'] . '</div>';
-                    ++$i;
-                }
-                echo '<div class="gmenu">' .
-                     '<input type="submit" name="submit" value="' . $lng['save'] . '"/>' .
-                     '</div></form><div class="phdr">' .
-                     '<a href="index.php?act=forum&amp;mod=moders">' . $lng_forum['select_category'] . '</a>' .
-                     '</div>';
-            } else {
-                echo '<div class="bmenu">' . $lng_forum['select_category'] . '</div>';
-                $q = mysql_query("select * from `forum` where type='f' order by realid;");
-                $i = 0;
-                while ($q1 = mysql_fetch_array($q)) {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo '<a href="index.php?act=forum&amp;mod=moders&amp;id=' . $q1['id'] . '">' . $q1['text'] . '</a></div>';
-                    ++$i;
-                }
-                echo '<div class="phdr"><a href="index.php?act=forum">' . $lng_forum['forum_management'] . '</a></div>';
+                    '<p><form action="index.php?act=forum&amp;mod=hposts" method="post">' .
+                    '<input type="text" name="page" size="2"/>' .
+                    '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                    '</form></p>';
             }
         }
         break;
@@ -706,21 +638,19 @@ switch ($mod) {
         $total_files = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files`"), 0);
         $total_votes = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1'"), 0);
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng_forum['forum_management'] . '</div>' .
-             '<div class="gmenu"><p><h3><img src="../images/rate.gif" width="16" height="16" class="left" />&nbsp;' . $lng['statistics'] . '</h3><ul>' .
-             '<li>' . $lng['categories'] . ':&#160;' . $total_cat . '</li>' .
-             '<li>' . $lng['sections'] . ':&#160;' . $total_sub . '</li>' .
-             '<li>' . $lng['themes'] . ':&#160;' . $total_thm . '&#160;/&#160;<span class="red">' . $total_thm_del . '</span></li>' .
-             '<li>Посты:&#160;' . $total_msg . '&#160;/&#160;<span class="red">' . $total_msg_del . '</span></li>' .
-             '<li>' . $lng['files'] . ':&#160;' . $total_files . '</li>' .
-             '<li>' . $lng['votes'] . ':&#160;' . $total_votes . '</li>' .
-             '</ul></p></div>' .
-             '<div class="menu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['settings'] . '</h3><ul>' .
-             '<li><a href="index.php?act=forum&amp;mod=cat"><b>' . $lng_forum['forum_structure'] . '</b></a></li>' .
-             '<li><a href="index.php?act=forum&amp;mod=hposts">' . $lng_forum['hidden_posts'] . '</a> (' . $total_msg_del . ')</li>' .
-             '<li><a href="index.php?act=forum&amp;mod=htopics">' . $lng_forum['hidden_topics'] . '</a> (' . $total_thm_del . ')</li>' .
-             '<li><a href="index.php?act=forum&amp;mod=moders">' . $lng['moders'] . '</a></li>' .
-             '</ul></p></div>' .
-             '<div class="phdr"><a href="../forum/index.php">' . $lng_forum['to_forum'] . '</a></div>';
+            '<div class="gmenu"><p><h3><img src="../images/rate.gif" width="16" height="16" class="left" />&nbsp;' . $lng['statistics'] . '</h3><ul>' .
+            '<li>' . $lng['categories'] . ':&#160;' . $total_cat . '</li>' .
+            '<li>' . $lng['sections'] . ':&#160;' . $total_sub . '</li>' .
+            '<li>' . $lng['themes'] . ':&#160;' . $total_thm . '&#160;/&#160;<span class="red">' . $total_thm_del . '</span></li>' .
+            '<li>Посты:&#160;' . $total_msg . '&#160;/&#160;<span class="red">' . $total_msg_del . '</span></li>' .
+            '<li>' . $lng['files'] . ':&#160;' . $total_files . '</li>' .
+            '<li>' . $lng['votes'] . ':&#160;' . $total_votes . '</li>' .
+            '</ul></p></div>' .
+            '<div class="menu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['settings'] . '</h3><ul>' .
+            '<li><a href="index.php?act=forum&amp;mod=cat"><b>' . $lng_forum['forum_structure'] . '</b></a></li>' .
+            '<li><a href="index.php?act=forum&amp;mod=hposts">' . $lng_forum['hidden_posts'] . '</a> (' . $total_msg_del . ')</li>' .
+            '<li><a href="index.php?act=forum&amp;mod=htopics">' . $lng_forum['hidden_topics'] . '</a> (' . $total_thm_del . ')</li>' .
+            '</ul></p></div>' .
+            '<div class="phdr"><a href="../forum/index.php">' . $lng_forum['to_forum'] . '</a></div>';
 }
 echo '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>

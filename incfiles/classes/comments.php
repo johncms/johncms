@@ -19,6 +19,7 @@ class comments
     private $sub_id = false;                              // Идентификатор комментируемого объекта
     private $item;                                        // Локальный идентификатор
     private $user_id = false;                             // Идентификатор авторизованного пользователя
+    private $owner = false;
     private $rights = 0;                                  // Права доступа
     private $ban = false;                                 // Находится ли юзер в бане?
     private $url;                                         // URL формируемых ссылок
@@ -63,10 +64,13 @@ class comments
             $this->ban = core::$user_ban;
         }
         // Назначение пользовательских прав
-        if (core::$user_id && isset($arg['owner']) && $arg['owner'] == core::$user_id && !$this->ban) {
-            $this->access_delete = isset($arg['owner_delete']) ? $arg['owner_delete'] : false;
-            $this->access_reply = isset($arg['owner_reply']) ? $arg['owner_reply'] : false;
-            $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
+        if (isset($arg['owner'])) {
+            $this->owner = $arg['owner'];
+            if (core::$user_id && $arg['owner'] == core::$user_id && !$this->ban) {
+                $this->access_delete = isset($arg['owner_delete']) ? $arg['owner_delete'] : false;
+                $this->access_reply = isset($arg['owner_reply']) ? $arg['owner_reply'] : false;
+                $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
+            }
         }
         // Открываем доступ для Администрации
         if ($this->rights >= $this->access_level) {
@@ -335,6 +339,9 @@ class comments
         ");
         // Обновляем статистику пользователя
         mysql_query("UPDATE `users` SET `komm` = '" . (++core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
+        if($this->owner && $this->user_id == $this->owner){
+            mysql_query("UPDATE `users` SET `comm_old` = '" . (core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
+        }
         $this->added = true;
     }
 

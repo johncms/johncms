@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -22,7 +22,7 @@ if ($totalnew < $start + 10) {
     $end = $start + 10;
 }
 if ($totalnew != 0) {
-    while ($res = mysql_fetch_array($req)) {
+    for ($i = 0; $res = mysql_fetch_array($req); ++$i) {
         if ($i >= $start && $i < $end) {
             $d = $i / 2;
             $d1 = ceil($d);
@@ -50,11 +50,9 @@ if ($totalnew != 0) {
             $pat1 = mb_substr($pat, 0, $l - 1);
             echo '[<a href="index.php?id=' . $dirlink . '">' . $pat1 . '</a>]</div>';
         }
-        ++$i;
     }
     echo "<hr/><p>";
-    if ($totalnew > 10)
-    {
+    if ($totalnew > 10) {
         $ba = ceil($totalnew / 10);
         if ($start != 0) {
             echo '<a href="index.php?act=topread&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
@@ -76,7 +74,7 @@ if ($totalnew != 0) {
         } elseif ($page > 7) {
             echo ' <a href="index.php?act=topread&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=topread&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
         }
-        for ($i = $asd; $i < $asd2; ) {
+        for ($i = $asd; $i < $asd2;) {
             if ($i < $totalnew && $i >= 0) {
                 $ii = floor(1 + $i / 10);
                 if ($start == $i) {
@@ -106,5 +104,3 @@ if ($totalnew != 0) {
     echo "<p>" . $lng['list_empty'] . "<br/>";
 }
 echo "<a href='index.php?'>" . $lng_lib['to_library'] . "</a></p>";
-
-?>

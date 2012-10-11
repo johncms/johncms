@@ -17,7 +17,9 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = $lng_profile['profile_edit'];
 require('../incfiles/head.php');
 require('../incfiles/lib/class.upload.php');
-if ($user['rights'] > $datauser['rights']) {
+if (($user_id != $user['id'] && $rights < 7)
+    || $user['rights'] > $datauser['rights']
+) {
     // Если не хватает прав, выводим ошибку
     echo display_error($lng_profile['error_rights']);
     require('../incfiles/end.php');
@@ -37,7 +39,7 @@ switch ($mod) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
                 //$handle->mime_check = false;
-                $handle->allowed = array (
+                $handle->allowed = array(
                     'image/jpeg',
                     'image/gif',
                     'image/png'
@@ -59,7 +61,7 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' .
+            echo'<form enctype="multipart/form-data" method="post" action="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' .
                 '<div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
@@ -78,7 +80,7 @@ switch ($mod) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
                 //$handle->mime_check = false;
-                $handle->allowed = array (
+                $handle->allowed = array(
                     'image/jpeg',
                     'image/gif',
                     'image/png'
