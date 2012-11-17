@@ -1,16 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
@@ -64,6 +61,7 @@ switch ($do) {
         if ($total > 0) {
             echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['filter_on_author'] . '</div>' .
                 '<form action="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
+            $i = 0;
             while ($res = mysql_fetch_array($req)) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<input type="checkbox" name="users[]" value="' . $res['user_id'] . '"/>&#160;' .
@@ -78,5 +76,3 @@ switch ($do) {
         }
 }
 echo '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng_forum['return_to_topic'] . '</a></p>';
-
-?>

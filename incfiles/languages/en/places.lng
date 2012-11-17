@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>W
 pm                            =   "Private Messages"
 profile                       =   "Profile"
 profile_personal              =   "Personal Profile"
+registration                  =   "Registered on the site"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>List of users</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Watching Top 10 Users</a>"

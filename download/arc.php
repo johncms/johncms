@@ -45,11 +45,11 @@ if (($list = $zip->listContent()) == 0) {
 }
 for ($i = 0; $i < sizeof($list); $i++) {
     for (reset($list[$i]); $key = key($list[$i]); next($list[$i])) {
+        $listcontent = "[$i]--$key:" . $list[$i][$key] . "";
         $zfilesize = strstr($listcontent, "--size");
         $zfilesize = ereg_replace("--size:", "", $zfilesize);
         $zfilesize = @ ereg_replace("$zfilesize", "$zfilesize|", $zfilesize);
         $sizelist .= "$zfilesize";
-        $listcontent = "[$i]--$key:" . $list[$i][$key] . "";
         $zfile = strstr($listcontent, "--filename");
         $zfile = ereg_replace("--filename:", "", $zfile);
         $zfile = @ ereg_replace("$zfile", "$zfile|", $zfile);
@@ -86,5 +86,3 @@ if (!in_array($tfl, $df)) {
         header("location: $filesroot/arctemp/$fname");
     }
 }
-
-?>

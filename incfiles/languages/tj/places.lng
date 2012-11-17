@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>�
 pm                            =   "Махфи"
 profile                       =   "Дар Анкета"
 profile_personal              =   "Дар Анкетаи худаш"
+registration                  =   "Регистрируется на сайте"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Саҳифаи истифодабарандагон</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Истифодабарандагони беҳтаринро нигоҳ мекунад</a>"

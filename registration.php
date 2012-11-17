@@ -14,6 +14,7 @@ define('_IN_JOHNCMS', 1);
 $rootpath = '';
 require('incfiles/core.php');
 $textl = $lng['registration'];
+$headmod = 'registration';
 require('incfiles/head.php');
 $lng_reg = core::load_lng('registration');
 

@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>C
 pm                            =   "Privat"
 profile                       =   "Profil"
 profile_personal              =   "Profil"
+registration                  =   "Inregistrat pe site"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Listă de utilizatori</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Se pare Top utilizatori</a>"

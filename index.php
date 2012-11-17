@@ -11,10 +11,8 @@
 
 define('_IN_JOHNCMS', 1);
 
-$headmod = 'mainpage';
 $rootpath = ''; // Внимание! Если файл находится в корневой папке, нужно указать $rootpath = '';
 require('incfiles/core.php');
-require('incfiles/head.php');
 
 if (isset($_SESSION['ref']))
     unset($_SESSION['ref']);
@@ -28,6 +26,8 @@ switch ($act) {
         Сообщение об ошибке 404
         -----------------------------------------------------------------
         */
+        $headmod = 'error404';
+        require('incfiles/head.php');
         echo functions::display_error($lng['error_404']);
         break;
 
@@ -37,6 +37,8 @@ switch ($act) {
         Дайджест
         -----------------------------------------------------------------
         */
+        $headmod = 'digest';
+        require('incfiles/head.php');
         if (!$user_id) {
             echo functions::display_error($lng['access_guest_forbidden']);
             require_once('incfiles/end.php');
@@ -110,6 +112,8 @@ switch ($act) {
         */
         if (isset($_SESSION['ref']))
             unset($_SESSION['ref']);
+        $headmod = 'mainpage';
+        require('incfiles/head.php');
         include 'pages/mainmenu.php';
 
         /*

@@ -19,7 +19,7 @@ require('../incfiles/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
+    $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $home;
 }
 
 // Сколько смайлов разрешено выбрать пользователям?
@@ -48,7 +48,7 @@ switch ($act) {
              '<table cellpadding="3" cellspacing="0">' .
              '<tr><td align="right"><h3>BBcode</h3></td><td></td></tr>' .
              '<tr><td align="right">[php]...[/php]</td><td>' . $lng['tag_code'] . '</td></tr>' .
-             '<tr><td align="right"><a href="#">' . $lng['link'] . '</a></td><td>[url=http://site_url] .]<span style="color:blue">' . $lng_faq['tags_link_name'] . '</span>[/url]</td></tr>' .
+             '<tr><td align="right"><a href="#">' . $lng['link'] . '</a></td><td>[url=http://site_url]<span style="color:blue">' . $lng_faq['tags_link_name'] . '</span>[/url]</td></tr>' .
              '<tr><td align="right">[b]...[/b]</td><td><b>' . $lng['tag_bold'] . '</b></td></tr>' .
              '<tr><td align="right">[i]...[/i]</td><td><i>' . $lng['tag_italic'] . '</i></td></tr>' .
              '<tr><td align="right">[u]...[/u]</td><td><u>' . $lng['tag_underline'] . '</u></td></tr>' .

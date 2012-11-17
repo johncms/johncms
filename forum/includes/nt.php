@@ -42,12 +42,12 @@ function forum_link($m)
                 $res = mysql_fetch_array($req);
                 $name = strtr($res['text'], array(
                     '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
+                    '&amp;' => '',
+                    '&lt;' => '',
+                    '&gt;' => '',
                     '&#039;' => '',
-                    '['      => '',
-                    ']'      => ''
+                    '[' => '',
+                    ']' => ''
                 ));
                 if (mb_strlen($name) > 40)
                     $name = mb_substr($name, 0, 40) . '...';
@@ -76,13 +76,17 @@ if (!mysql_num_rows($req_r)) {
     exit;
 }
 $th = isset($_POST['th']) ? functions::check(mb_substr(trim($_POST['th']), 0, 100)) : '';
-$msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+$msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
 if (isset($_POST['msgtrans'])) {
     $th = functions::trans($th);
     $msg = functions::trans($msg);
 }
 $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])
+    && isset($_POST['token'])
+    && isset($_SESSION['token'])
+    && $_POST['token'] == $_SESSION['token']
+) {
     $error = array();
     if (empty($th))
         $error[] = $lng_forum['error_topic_name'];
@@ -106,6 +110,8 @@ if (isset($_POST['submit'])) {
         }
     }
     if (!$error) {
+        unset($_SESSION['token']);
+
         // Добавляем тему
         mysql_query("INSERT INTO `forum` SET
             `refid` = '$id',
@@ -191,10 +197,14 @@ if (isset($_POST['submit'])) {
         echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-    if ($set_user['translit'])
+    if ($set_user['translit']) {
         echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-    echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
+    }
+    $token = mt_rand(1000, 100000);
+    $_SESSION['token'] = $token;
+    echo'</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
         ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+        '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
         '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
         '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .

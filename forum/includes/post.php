@@ -17,7 +17,7 @@ if (empty($_GET['id'])) {
     require('../incfiles/end.php');
     exit;
 }
-$s = intval($_GET['s']);
+
 // Запрос сообщения
 $req = mysql_query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
@@ -74,5 +74,3 @@ echo $text . '</div>';
 $page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'"), 0) / $kmess);
 echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng_forum['back_to_topic'] . '</a></div>';
 echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';
-
-?>

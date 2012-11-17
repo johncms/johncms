@@ -1,21 +1,19 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once("../incfiles/head.php");
+
+$im = array();
 $delimag = opendir("$filesroot/graftemp");
 while ($imd = readdir($delimag)) {
     if ($imd != "." && $imd != ".." && $imd != "index.php") {
@@ -266,7 +264,7 @@ if (!empty($adrfile['soft'])) {
     $rat = $rating[0] / $rating[1];
     $rat = round($rat, 2);
     echo '<br /><span class="gray">' . $lng_dl['average_rating'] . ':</span> <b>' . $rat . '</b>' .
-    '<br /><span class="gray">' . $lng_dl['vote_count'] . ':</span> <b>' . $rating[1] . '</b>';
+        '<br /><span class="gray">' . $lng_dl['vote_count'] . ':</span> <b>' . $rating[1] . '</b>';
 }
 echo '</small></p>';
 // Рейтинг файла
@@ -292,5 +290,3 @@ if (($rights == 4 || $rights >= 6) && (!empty($_GET['file']))) {
     echo '<a href="index.php?act=dfile&amp;file=' . $file . '">' . $lng_dl['delete_file'] . '</a>';
     echo '</p>';
 }
-
-?>

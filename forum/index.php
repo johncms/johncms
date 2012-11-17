@@ -452,7 +452,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . $lng_forum['rating'] . ': ' . $count_vote . '%" /><br />';
                         }
                         echo '</small></div><div class="bmenu">' . $lng_forum['total_votes'] . ': ';
-                        if ($datauser['rights'] > 6)
+                        if ($user_id && core::$user_data['rights'] > 6)
                             echo '<a href="index.php?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
                         else
                             echo $topic_vote['count'];
@@ -523,14 +523,17 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $set['mod_forum'] != 3) || ($rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
-                        echo '<p>' .
-                             (!$is_mobile ? bbcode::auto_bb('form1', 'msg') : '') .
-                             '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
-                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'] .
-                             ($set_user['translit'] ? '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'] : '') .
-                             '</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
-                             ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                             '</p></form></div>';
+                        $token = mt_rand(1000, 100000);
+                        $_SESSION['token'] = $token;
+                        echo'<p>' .
+                            (!$is_mobile ? bbcode::auto_bb('form1', 'msg') : '') .
+                            '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'] .
+                            ($set_user['translit'] ? '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'] : '') .
+                            '</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
+                            ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                            '<input type="hidden" name="token" value="' . $token . '"/>' .
+                            '</p></form></div>';
                     } else {
                         echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p></form></div>';
                     }
@@ -683,6 +686,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $set['mod_forum'] != 3) || ($rights >= 7 && !$set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
                     if ($set_forum['farea']) {
+                        $token = mt_rand(1000, 100000);
+                        $_SESSION['token'] = $token;
                         echo '<p>';
                         if (!$is_mobile)
                             echo bbcode::auto_bb('form2', 'msg');
@@ -690,9 +695,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                              '<p><input type="checkbox" name="addfiles" value="1" /> ' . $lng_forum['add_file'];
                         if ($set_user['translit'])
                             echo '<br /><input type="checkbox" name="msgtrans" value="1" /> ' . $lng['translit'];
-                        echo '</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
-                             ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                             '</p></form></div>';
+                        echo'</p><p><input type="submit" name="submit" value="' . $lng['write'] . '" style="width: 107px; cursor: pointer;"/> ' .
+                            ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                            '<input type="hidden" name="token" value="' . $token . '"/>' .
+                            '</p></form></div>';
                     } else {
                         echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p></form></div>';
                     }

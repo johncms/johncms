@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>�
 pm                            =   "悄悄话"
 profile                       =   "资料"
 profile_personal              =   "个人资料"
+registration                  =   "在网站上注册"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>会员名单</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>会员Top 10</a>"

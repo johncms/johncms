@@ -42,12 +42,12 @@ function forum_link($m)
                 $res = mysql_fetch_array($req);
                 $name = strtr($res['text'], array(
                     '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
+                    '&amp;' => '',
+                    '&lt;' => '',
+                    '&gt;' => '',
                     '&#039;' => '',
-                    '['      => '',
-                    ']'      => ''
+                    '[' => '',
+                    ']' => ''
                 ));
                 if (mb_strlen($name) > 40)
                     $name = mb_substr($name, 0, 40) . '...';
@@ -64,7 +64,7 @@ function forum_link($m)
 $flood = functions::antiflood();
 if ($flood) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<a href="?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -87,12 +87,17 @@ switch ($type1['type']) {
             require('../incfiles/end.php');
             exit;
         }
-        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+        $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
         if (isset($_POST['msgtrans']))
             $msg = functions::trans($msg);
         //Обрабатываем ссылки
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
-        if (isset($_POST['submit']) && !empty($_POST['msg'])) {
+        if (isset($_POST['submit'])
+            && !empty($_POST['msg'])
+            && isset($_POST['token'])
+            && isset($_SESSION['token'])
+            && $_POST['token'] == $_SESSION['token']
+        ) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../incfiles/head.php');
@@ -106,7 +111,7 @@ switch ($type1['type']) {
                 $res = mysql_fetch_array($req);
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
-                    echo functions::display_error($lng['error_message_exists'], '<a href="?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -116,6 +121,9 @@ switch ($type1['type']) {
                 unset($_SESSION['fsort_id']);
                 unset($_SESSION['fsort_users']);
             }
+
+            unset($_SESSION['token']);
+
             // Добавляем сообщение в базу
             mysql_query("INSERT INTO `forum` SET
                 `refid` = '$id',
@@ -144,7 +152,7 @@ switch ($type1['type']) {
             ");
             // Вычисляем, на какую страницу попадает добавляемый пост
             $page = $set_forum['upfp'] ? 1 : ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0) / $kmess);
-            if ($_POST['addfiles'] == 1)
+            if (isset($_POST['addfiles']))
                 header("Location: index.php?id=$fadd&act=addfile");
             else
                 header("Location: index.php?id=$id&page=$page");
@@ -167,21 +175,27 @@ switch ($type1['type']) {
             echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $type1['text'] . '</div>';
             if ($msg && !isset($_POST['submit']))
                 echo '<div class="list1">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
-            echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
+            echo'<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . $lng_forum['post'] . '</h3>';
             if (!$is_mobile)
                 echo '</p><p>' . bbcode::auto_bb('form', 'msg');
-            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($msg)) . '</textarea></p>' .
+            echo'<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-            if ($set_user['translit'])
-                echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-            echo '</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer;"/> ' .
-                ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+            if ($set_user['translit']) {
+                echo'<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
+            }
+            $token = mt_rand(1000, 100000);
+            $_SESSION['token'] = $token;
+            echo'</p><p>' .
+                '<input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer"/> ' .
+                ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer"/>' : '') .
+                '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '</p></div></form>';
         }
-        echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
+
+        echo'<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
             '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-            '<p><a href="?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
         break;
 
     case 'm':
@@ -207,7 +221,7 @@ switch ($type1['type']) {
         }
         $shift = (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600;
         $vr = date("d.m.Y / H:i", $type1['time'] + $shift);
-        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+        $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
         $txt = isset($_POST['txt']) ? intval($_POST['txt']) : false;
         if (isset($_POST['msgtrans']))
             $msg = functions::trans($msg);
@@ -242,7 +256,11 @@ switch ($type1['type']) {
         }
         //Обрабатываем ссылки
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['submit'])
+            && isset($_POST['token'])
+            && isset($_SESSION['token'])
+            && $_POST['token'] == $_SESSION['token']
+        ) {
             if (empty($_POST['msg'])) {
                 require('../incfiles/head.php');
                 echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . $lng['repeat'] . '</a>');
@@ -272,6 +290,9 @@ switch ($type1['type']) {
                 unset($_SESSION['fsort_id']);
                 unset($_SESSION['fsort_users']);
             }
+
+            unset($_SESSION['token']);
+
             // Добавляем сообщение в базу
             mysql_query("INSERT INTO `forum` SET
                 `refid` = '$th',
@@ -300,8 +321,7 @@ switch ($type1['type']) {
             ");
             // Вычисляем, на какую страницу попадает добавляемый пост
             $page = $set_forum['upfp'] ? 1 : ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$th'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0) / $kmess);
-            $addfiles = intval($_POST['addfiles']);
-            if ($addfiles == 1) {
+            if (isset($_POST['addfiles'])) {
                 header("Location: index.php?id=$fadd&act=addfile");
             } else {
                 header("Location: index.php?id=$th&page=$page");
@@ -329,7 +349,7 @@ switch ($type1['type']) {
             $qt = functions::checkout($qt, 0, 2);
             if (!empty($_POST['msg']) && !isset($_POST['submit']))
                 echo '<div class="list1">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
-            echo '<form name="form" action="?act=say&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
+            echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
             if (isset($_GET['cyt'])) {
                 // Форма с цитатой
                 echo '<p><b>' . $type1['from'] . '</b> <span class="gray">(' . date("d.m.Y/H:i", $type1['time']) . ')</span></p>' .
@@ -350,20 +370,23 @@ switch ($type1['type']) {
                 echo '</p><p>' . bbcode::auto_bb('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-            if ($set_user['translit'])
+            if ($set_user['translit']) {
                 echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-            echo '</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer;"/> ' .
+            }
+            $token = mt_rand(1000, 100000);
+            $_SESSION['token'] = $token;
+            echo'</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer;"/> ' .
                 ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+                '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '</p></div></form>';
         }
         echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
             '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-            '<p><a href="?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="index.php?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
         break;
 
     default:
         require('../incfiles/head.php');
         echo functions::display_error($lng_forum['error_topic_deleted'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
         require('../incfiles/end.php');
-        break;
 }

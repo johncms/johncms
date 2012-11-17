@@ -1,22 +1,20 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
+/**
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once ("../incfiles/head.php");
+
 $delarc = opendir("$filesroot/arctemp");
+$mp = array();
 while ($zp = readdir($delarc)) {
     if ($zp != "." && $zp != ".." && $zp != "index.php") {
         $mp[] = $zp;
@@ -53,12 +51,12 @@ if (($list = $zip->listContent()) == 0) {
 }
 for ($i = 0; $i < sizeof($list); $i++) {
     for (reset($list[$i]); $key = key($list[$i]); next($list[$i])) {
+        $listcontent = "[$i]--$key:" . $list[$i][$key] . "";
         $zfilesize = strstr($listcontent, "--size");
         $zfilesize = ereg_replace("--size:", "", $zfilesize);
         $zfilesize = @ ereg_replace("$zfilesize", "$zfilesize|", $zfilesize);
         $sizelist .= "$zfilesize";
 
-        $listcontent = "[$i]--$key:" . $list[$i][$key] . "";
         $zfile = strstr($listcontent, "--filename");
         $zfile = ereg_replace("--filename:", "", $zfile);
         $zfile = @ ereg_replace("$zfile", "$zfile|", $zfile);
@@ -100,7 +98,7 @@ for ($i = $start; $i < $end; $i++) {
         echo "$zdir/$fname";
     }
     else {
-        echo $zdir . '/<a href="' . $PHP_SELF . '?act=arc&amp;file=' . $file . '&amp;f=' . $i . '&amp;start=' . $start . '">' . $fname . '</a>';
+        echo $zdir . '/<a href="' . $_SERVER['PHP_SELF'] . '?act=arc&amp;file=' . $file . '&amp;f=' . $i . '&amp;start=' . $start . '">' . $fname . '</a>';
     }
     if ($sizefiles[$i] != "0") {
         $sizekb = round($sizefiles[$i] / 1024, 2);
@@ -129,7 +127,7 @@ if ($count > 10) {
     $paa3 = $page + (floor($page2 / 3) * 2);
     if ($page > 13) {
         echo ' <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) .
-        '</a> .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+            '</a> .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
     }
     elseif ($page > 7) {
         echo ' <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
@@ -149,7 +147,7 @@ if ($count > 10) {
     }
     if ($page2 > 12) {
         echo ' .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) .
-        '</a> .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+            '</a> .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
     }
     elseif ($page2 > 6) {
         echo ' .. <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
@@ -161,9 +159,7 @@ if ($count > 10) {
         echo ' <a href="index.php?act=zip&amp;file=' . $file . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
     echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='act' value='zip'/><input type='hidden' name='file' value='" . $file .
-    "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+        "'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
 
 echo '<br/><br/><a href="?act=view&amp;file=' . $file . '">К файлу</a><br/>';
-
-?>

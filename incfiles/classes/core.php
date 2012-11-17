@@ -460,8 +460,8 @@ class core
         if (isset($_SESSION['is_mobile'])) {
             return $_SESSION['is_mobile'] == 1 ? true : false;
         }
-        $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-        $accept = strtolower($_SERVER['HTTP_ACCEPT']);
+        $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
+        $accept = isset($_SERVER['HTTP_ACCEPT']) ? strtolower($_SERVER['HTTP_ACCEPT']) : '';
         if ((strpos($accept, 'text/vnd.wap.wml') !== false) || (strpos($accept, 'application/vnd.wap.xhtml+xml') !== false)) {
             $_SESSION['is_mobile'] = 1;
             return true;

@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>�
 pm                            =   "Приват"
 profile                       =   "В Анкете"
 profile_personal              =   "В своей Анкете"
+registration                  =   "Регистрируется на сайте"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Қолданушылар тізімі</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Топ қолданушыларды көруде</a>"

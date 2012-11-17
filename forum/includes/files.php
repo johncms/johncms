@@ -86,13 +86,12 @@ if ($do || isset($_GET['new'])) {
         echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . $lng['new_files']
                 : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
         $req = mysql_query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
-        FROM `cms_forum_files`
-        LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
-        LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
-        WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7
-                                   ? '' : " AND `del` != '1'") . $sql .
-                           "ORDER BY `time` DESC LIMIT $start,$kmess");
-        while ($res = mysql_fetch_assoc($req)) {
+            FROM `cms_forum_files`
+            LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
+            LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
+            WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql .
+            "ORDER BY `time` DESC LIMIT $start,$kmess");
+        for($i = 0; $res = mysql_fetch_assoc($req); ++$i){
             $req_u = mysql_query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
             $res_u = mysql_fetch_assoc($req_u);
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -133,7 +132,6 @@ if ($do || isset($_GET['new'])) {
             );
             echo functions::display_user($res_u, $arg);
             echo '</div>';
-            ++$i;
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($total > $kmess) {

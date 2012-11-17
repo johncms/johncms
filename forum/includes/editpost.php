@@ -158,7 +158,7 @@ if (!$error) {
             Редактирование поста
             -----------------------------------------------------------------
             */
-            $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
+            $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
             if (isset($_POST['msgtrans']))
                 $msg = functions::trans($msg);
             if (isset($_POST['submit'])) {

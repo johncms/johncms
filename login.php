@@ -12,6 +12,7 @@
 define('_IN_JOHNCMS', 1);
 
 $rootpath = '';
+$headmod = 'login';
 require('incfiles/core.php');
 require('incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng['login'] . '</b></div>';
@@ -70,7 +71,7 @@ if (!$error && $user_pass && ($user_login || $id)) {
                     echo '<div class="rmenu"><p>' . $lng['registration_not_approved'] . '</p></div>';
                 } else {
                     // Если все проверки прошли удачно, подготавливаем вход на сайт
-                    if ($_POST['mem'] == 1) {
+                    if (isset($_POST['mem'])) {
                         // Установка данных COOKIE
                         $cuid = base64_encode($user['id']);
                         $cups = md5($user_pass);

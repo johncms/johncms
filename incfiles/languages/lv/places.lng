@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>K
 pm                            =   "PM"
 profile                       =   "Anketa"
 profile_personal              =   "Anketa"
+registration                  =   "Reģistrēta uz vietas"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Lietotāju saraksts</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Lietotāju TOPs</a>"

@@ -38,11 +38,11 @@ else
     $start = $_GET['start'];
 
 while ($array = mysql_fetch_array($psk)) {
-    if (stristr($array [name], $srh)) {
-        $res[] = $lng_dl['found_by_name'] . ":<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>";
+    if (stristr($array ['name'], $srh)) {
+        $res[] = $lng_dl['found_by_name'] . ":<br/><a href='?act=view&amp;file=" . $array ['id'] . "'>$array[name]</a><br/>";
     }
-    if (stristr($array [text], $srh)) {
-        $res[] = $lng_dl['found_by_description'] . ":<br/><a href='?act=view&amp;file=" . $array [id] . "'>$array[name]</a><br/>$array[text]<br/>";
+    if (stristr($array ['text'], $srh)) {
+        $res[] = $lng_dl['found_by_description'] . ":<br/><a href='?act=view&amp;file=" . $array ['id'] . "'>$array[name]</a><br/>$array[text]<br/>";
     }
 }
 $g = count($res);
@@ -138,5 +138,3 @@ if ($g != 0) {
     echo "<div class='phdr'>" . $lng['total'] . ": $g</div>";
 }
 echo '<p><a href="?">' . $lng['downloads'] . '</a></p>';
-
-?>

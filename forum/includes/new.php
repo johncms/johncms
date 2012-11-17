@@ -230,9 +230,9 @@ if ($user_id) {
                 ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
             );
             echo functions::display_menu($icons, '&#160;', '&#160;');
-            echo '<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $_SESSION['uppost'] ? '&amp;clip&amp;page=' . $cpg : '') . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';
+            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';
             if ($cpg > 1)
-                echo '&#160;<a href="index.php?id=' . $res['id'] . ($_SESSION['uppost'] ? '' : '&amp;clip&amp;page=' . $cpg) . '">&gt;&gt;</a>';
+                echo '&#160;<a href="index.php?id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';
             echo '<br/><div class="sub"><a href="index.php?id=' . $razd['id'] . '">' . $frm['text'] . '&#160;/&#160;' . $razd['text'] . '</a><br />';
             echo $res['from'];
             if (!empty($nam['from'])) {

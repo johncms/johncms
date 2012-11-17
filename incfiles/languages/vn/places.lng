@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>A
 pm                            =   "Tin nhắn cá nhân"
 profile                       =   "Hồ sơ"
 profile_personal              =   "Hồ sơ"
+registration                  =   "Đăng ký trên trang web"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Danh sách người dùng</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Xem Top 10 người dùng</a>"

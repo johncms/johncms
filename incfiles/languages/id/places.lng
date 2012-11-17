@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>S
 pm                            =   "Di pesan pribadi"
 profile                       =   "Di profil"
 profile_personal              =   "Di profil"
+registration                  =   "Terdaftar di situs"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>Di Daftar member</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>Tampak Top pengguna</a>"

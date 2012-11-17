@@ -16,13 +16,14 @@ $headmod = 'pradd';
 require_once("../incfiles/core.php");
 $lng_pm = core::load_lng('pm');
 if ($user_id) {
-    $msg = isset($_POST['msg']) ? functions::check($_POST['msg']) : false;
+    $msg = isset($_POST['msg']) ? functions::check($_POST['msg']) : FALSE;
     if (isset($_POST['msgtrans'])) {
         $msg = functions::trans($msg);
     }
-    $foruser = isset($_POST['foruser']) ? functions::check($_POST['foruser']) : false;
-    $tem = isset($_POST['tem']) ? functions::check($_POST['tem']) : false;
-    $idm = isset($_POST['idm']) ? intval($_POST['idm']) : false;
+    $foruser = isset($_POST['foruser']) ? functions::check($_POST['foruser']) : FALSE;
+    $tem = isset($_POST['tem']) ? functions::check($_POST['tem']) : FALSE;
+    $idm = isset($_POST['idm']) ? intval($_POST['idm']) : FALSE;
+    $fname = '';
     switch ($act) {
         case 'send':
             ////////////////////////////////////////////////////////////
@@ -47,7 +48,12 @@ if ($user_id) {
                 require_once('../incfiles/end.php');
                 exit;
             }
-            if (!empty($foruser) and !empty($msg)) {
+            if (!empty($foruser)
+                && !empty($msg)
+                && isset($_POST['token'])
+                && isset($_SESSION['token'])
+                && $_POST['token'] == $_SESSION['token']
+            ) {
                 $m = mysql_query("select * from `users` where name='" . $foruser . "';");
                 $count = mysql_num_rows($m);
                 if ($count == 1) {
@@ -55,23 +61,17 @@ if ($user_id) {
                     $us = mysql_fetch_array($messag);
                     $adres = $us['id'];
                     // Проверка, был ли выгружен файл и с какого браузера
-                    $do_file = false;
-                    $do_file_mini = false;
+                    $do_file = FALSE;
+
                     // Проверка загрузки с обычного браузера
                     if ($_FILES['fail']['size'] > 0) {
-                        $do_file = true;
+                        $do_file = TRUE;
                         $fname = strtolower($_FILES['fail']['name']);
                         $fsize = $_FILES['fail']['size'];
-                    } // Проверка загрузки с Opera Mini
-                    elseif (strlen($_POST['fail1']) > 0) {
-                        $do_file_mini = true;
-                        $array = explode('file=', $_POST['fail1']);
-                        $fname = strtolower($array[0]);
-                        $filebase64 = $array[1];
-                        $fsize = strlen(base64_decode($filebase64));
                     }
+
                     // Обработка файла (если есть)
-                    if ($do_file || $do_file_mini) {
+                    if ($do_file) {
                         // Список допустимых расширений файлов.
                         $al_ext = array(
                             'rar',
@@ -124,7 +124,7 @@ if ($user_id) {
                             exit;
                         }
                         // Проверка на запрещенные символы
-                        if (eregi("[^a-z0-9.()+_-]", $fname)) {
+                        if (preg_match("/[^\da-z_\-.]+/", $fname)) {
                             echo functions::display_error($lng_pm['error_file_symbols'], '<a href="pradd.php?act=write&amp;adr=' . $adres . '">' . $lng['repeat'] . '</a>');
                             require_once('../incfiles/end.php');
                             exit;
@@ -136,31 +136,12 @@ if ($user_id) {
                         // Окончательная обработка
                         if ($do_file) {
                             // Для обычного браузера
-                            if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../files/users/pm/$fname")) == true) {
+                            if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../files/users/pm/$fname")) == TRUE) {
                                 @chmod("$fname", 0777);
                                 @chmod("../files/users/pm/$fname", 0777);
                                 echo $lng_pm['file_attached'] . '<br/>';
                             } else {
                                 echo functions::display_error($lng_pm['error_file_attach']);
-                            }
-                        } elseif ($do_file_mini) {
-                            // Для Opera Mini
-                            if (strlen($filebase64) > 0) {
-                                $FileName = "../files/users/pm/$fname";
-                                $filedata = base64_decode($filebase64);
-                                $fid = @fopen($FileName, "wb");
-                                if ($fid) {
-                                    if (flock($fid, LOCK_EX)) {
-                                        fwrite($fid, $filedata);
-                                        flock($fid, LOCK_UN);
-                                    }
-                                    fclose($fid);
-                                }
-                                if (file_exists($FileName) && filesize($FileName) == strlen($filedata)) {
-                                    echo $lng_pm['file_attached'] . '<br/>';
-                                } else {
-                                    echo functions::display_error($lng_pm['error_file_attach']);
-                                }
                             }
                         }
                     }
@@ -179,7 +160,7 @@ if ($user_id) {
                     echo $lng['error_user_not_exist'] . '<br/>';
                 }
             } else {
-                echo  $lng['error_empty_fields'] . "<br/>";
+                echo  $lng['error_wrong_data'] . "<br/>";
             }
             break;
 
@@ -187,7 +168,6 @@ if ($user_id) {
             ////////////////////////////////////////////////////////////
             // Скачивание файла                                       //
             ////////////////////////////////////////////////////////////
-            $id = intval($_GET['id']);
             $fil = mysql_query("select * from `privat` where id='" . $id . "';");
             $mas = mysql_fetch_array($fil);
             $att = $mas['attach'];
@@ -234,7 +214,7 @@ if ($user_id) {
             // Проверка на спам
             $flood = functions::antiflood();
             if ($flood) {
-                echo functions::display_error($lng['error_flood'] . ' ' . $flood . '&#160;' . $lng['seconds'], '<a href="my_cabinet.php">' . $lng['back'] . '</a>');
+                echo functions::display_error($lng['error_flood'] . ' ' . $flood . '&#160;' . $lng['seconds'], '<a href="' . $home . '/users/profile.php?act=office">' . $lng['back'] . '</a>');
                 require_once('../incfiles/end.php');
                 exit;
             }
@@ -276,6 +256,8 @@ if ($user_id) {
             if (isset($_GET['bir'])) {
                 $tema = $lng['happy_birthday'];
             }
+            $token = mt_rand(1000, 100000);
+            $_SESSION['token'] = $token;
             echo'<div class="phdr"><b>' . $lng_pm['write_message'] . '</b></div>';
             echo'<form name="form" action="pradd.php?act=send" method="post" enctype="multipart/form-data">' .
                 '<div class="menu">' .
@@ -285,6 +267,7 @@ if ($user_id) {
                 '<input type="text" name="tem" value="' . $tema . '"/></p>' .
                 '<p><h3>' . $lng['message'] . '</h3>' . bbcode::auto_bb('form', 'msg') .
                 '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+                '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '<p><h3>' . $lng_pm['attach_file'] . '</h3>' .
                 '<input type="file" name="fail"/><br /><small>max.' . $set['flsz'] . 'kb</small></p>';
             if ($set_user['translit'])
@@ -548,13 +531,13 @@ if ($user_id) {
             // Читаем исходящие письма                                //
             ////////////////////////////////////////////////////////////
             require_once('../incfiles/head.php');
-            $messages1 = mysql_query("select * from `privat` where author='" . $login . "' and type='out' and id='" . $id . "';");
+            $messages1 = mysql_query("select * from `privat` where author='" . $login . "' and type='out' and id='" . $id . "'");
             $massiv1 = mysql_fetch_array($messages1);
-            $mass = mysql_fetch_array(@mysql_query("select * from `users` where `name`='$massiv1[user]';"));
+            $mass = mysql_fetch_array(@mysql_query("select * from `users` where `name`='" . $massiv1['user'] . "'"));
             $text = $massiv1['text'];
             $text = bbcode::tags($text);
             if ($set_user['smileys'])
-                $text = functions::smileys($text, ($massiv1['from'] == $nickadmina || $massiv1['from'] == $nickadmina2 || $massiv11['rights'] >= 1) ? 1 : 0);
+                $text = functions::smileys($text, ($massiv1['rights'] >= 1) ? 1 : 0);
             echo "<p>" . $lng_pm['msg_for'] . " <a href='profile.php?user=" . $mass['id'] . "'>$massiv1[user]</a><br/>";
             echo "(" . functions::display_date($massiv1['time']) . ")</p><p><div class='b'>" . $lng_pm['subject'] . ": $massiv1[temka]<br/></div>" . $lng['text'] . ": $text</p>";
             if (!empty($massiv1['attach'])) {

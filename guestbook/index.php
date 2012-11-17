@@ -57,8 +57,8 @@ switch ($act) {
         */
         $admset = isset($_SESSION['ga']) ? 1 : 0; // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
         // Принимаем и обрабатываем данные
-        $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 20) : '';
-        $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
+        $name = isset($_POST['name']) ? functions::checkin(mb_substr(trim($_POST['name']), 0, 20)) : '';
+        $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $from = $user_id ? $login : mysql_real_escape_string($name);
@@ -67,10 +67,13 @@ switch ($act) {
             $msg = functions::trans($msg);
         // Проверяем на ошибки
         $error = array();
-        $flood = false;
-        if (!$user_id && empty($_POST['name']))
+        $flood = FALSE;
+        if (!isset($_POST['token']) || !isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
+            $error[] = $lng['error_wrong_data'];
+        }
+        if (!$user_id && empty($name))
             $error[] = $lng['error_empty_name'];
-        if (empty($_POST['msg']))
+        if (empty($msg))
             $error[] = $lng['error_empty_message'];
         if ($ban['1'] || $ban['13'])
             $error[] = $lng['access_forbidden'];
@@ -130,10 +133,15 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         if ($rights >= 6 && $id) {
-            if (isset($_POST['submit'])) {
+            if (isset($_POST['submit'])
+                && isset($_POST['token'])
+                && isset($_SESSION['token'])
+                && $_POST['token'] == $_SESSION['token']
+            ) {
+                $reply = isset($_POST['otv']) ? functions::checkin(mb_substr(trim($_POST['otv']), 0, 5000)) : '';
                 mysql_query("UPDATE `guest` SET
                     `admin` = '$login',
-                    `otvet` = '" . mysql_real_escape_string(mb_substr($_POST['otv'], 0, 5000)) . "',
+                    `otvet` = '" . mysql_real_escape_string($reply) . "',
                     `otime` = '" . time() . "'
                     WHERE `id` = '$id'
                 ");
@@ -142,13 +150,16 @@ switch ($act) {
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['reply'] . '</div>';
                 $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
                 $res = mysql_fetch_assoc($req);
-                echo '<div class="menu">' .
+                $token = mt_rand(1000, 100000);
+                $_SESSION['token'] = $token;
+                echo'<div class="menu">' .
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . functions::checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . $lng['reply'] . '</h3>' . bbcode::auto_bb('form', 'otv') .
                     '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
+                    '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
                     '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
                     '<p><a href="index.php">' . $lng['back'] . '</a></p>';
@@ -163,11 +174,15 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         if ($rights >= 6 && $id) {
-            if (isset($_POST['submit'])) {
+            if (isset($_POST['submit'])
+                && isset($_POST['token'])
+                && isset($_SESSION['token'])
+                && $_POST['token'] == $_SESSION['token']
+            ) {
                 $req = mysql_query("SELECT `edit_count` FROM `guest` WHERE `id`='$id'");
                 $res = mysql_fetch_array($req);
                 $edit_count = $res['edit_count'] + 1;
-                $msg = mb_substr($_POST['msg'], 0, 5000);
+                $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
                 mysql_query("UPDATE `guest` SET
                     `text` = '" . mysql_real_escape_string($msg) . "',
                     `edit_who` = '$login',
@@ -177,15 +192,18 @@ switch ($act) {
                 ");
                 header("location: index.php");
             } else {
+                $token = mt_rand(1000, 100000);
+                $_SESSION['token'] = $token;
                 $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
                 $res = mysql_fetch_assoc($req);
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
+                echo'<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
                     '<div class="rmenu">' .
                     '<form action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
                     '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p>' .
                     '<p><textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+                    '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
                     '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
                     '<p><a href="index.php">' . $lng['back'] . '</a></p>';
@@ -272,6 +290,8 @@ switch ($act) {
         }
         // Форма ввода нового сообщения
         if (($user_id || $set['mod_guest'] == 2) && !isset($ban['1']) && !isset($ban['13'])) {
+            $token = mt_rand(1000, 100000);
+            $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
             if (!$user_id)
                 echo $lng['name'] . ' (max 25):<br/><input type="text" name="name" maxlength="25"/><br/>';
@@ -283,10 +303,11 @@ switch ($act) {
                 echo '<input type="checkbox" name="msgtrans" value="1" />&nbsp;' . $lng['translit'] . '<br/>';
             if (!$user_id) {
                 // CAPTCHA для гостей
-                echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['captcha'] . '"/><br />';
-                echo '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . $lng['captcha'] . '<br />';
+                echo'<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['captcha'] . '"/><br />' .
+                    '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . $lng['captcha'] . '<br />';
             }
-            echo '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>';
+            echo'<input type="hidden" name="token" value="' . $token . '"/>' .
+                '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>';
         } else {
             echo '<div class="rmenu">' . $lng['access_guest_forbidden'] . '</div>';
         }
@@ -312,7 +333,7 @@ switch ($act) {
                 WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT $start, $kmess");
             }
             $i = 0;
-            while (($res = mysql_fetch_assoc($req)) !== false) {
+            while (($res = mysql_fetch_assoc($req)) !== FALSE) {
                 $text = '';
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 if (!$res['id']) {

@@ -59,7 +59,7 @@ class functions extends core
         if ($flood > 0)
             return $flood;
         else
-            return false;
+            return FALSE;
     }
 
     /*
@@ -88,55 +88,28 @@ class functions extends core
     }
 
     /*
-    -----------------------------------------------------------------
-    Проверка переменных
-    -----------------------------------------------------------------
-    */
-    public static function check($str)
-    {
-        $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
+     * Фильтрация строк
+     */
+    public static function checkin($str){
+        if (function_exists('iconv')) {
+            $str = iconv("UTF-8", "UTF-8", $str);
+        }
+
+        // Удаляем лишние знаки препинания
+        $str = preg_replace('#(\.|\?|!|\(|\)){3,}#', '\1\1\1', $str);
+
+        // Фильтруем символы
         $str = nl2br($str);
-        $str = strtr($str, array(
-            chr(0) => '',
-            chr(1) => '',
-            chr(2) => '',
-            chr(3) => '',
-            chr(4) => '',
-            chr(5) => '',
-            chr(6) => '',
-            chr(7) => '',
-            chr(8) => '',
-            chr(9) => '',
-            chr(10) => '',
-            chr(11) => '',
-            chr(12) => '',
-            chr(13) => '',
-            chr(14) => '',
-            chr(15) => '',
-            chr(16) => '',
-            chr(17) => '',
-            chr(18) => '',
-            chr(19) => '',
-            chr(20) => '',
-            chr(21) => '',
-            chr(22) => '',
-            chr(23) => '',
-            chr(24) => '',
-            chr(25) => '',
-            chr(26) => '',
-            chr(27) => '',
-            chr(28) => '',
-            chr(29) => '',
-            chr(30) => '',
-            chr(31) => ''
-        ));
-        $str = str_replace("'", "&#39;", $str);
-        $str = str_replace('\\', "&#92;", $str);
-        $str = str_replace("|", "I", $str);
-        $str = str_replace("||", "I", $str);
-        $str = str_replace("/\\\$/", "&#36;", $str);
-        $str = mysql_real_escape_string($str);
-        return $str;
+        $str = preg_replace('!\p{C}!u', '', $str);
+        $str = str_replace('<br />', "\n", $str);
+
+        // Удаляем лишние пробелы
+        $str = preg_replace('# {2,}#', ' ', $str);
+
+        // Удаляем более 2-х переносов строк подряд
+        $str = preg_replace("/(\n)+(\n)/i", "\n\n", $str);
+
+        return trim($str);
     }
 
     /*
@@ -152,48 +125,19 @@ class functions extends core
     public static function checkout($str, $br = 0, $tags = 0)
     {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
-        if ($br == 1)
+        if ($br == 1) {
+            // Вставляем переносы строк
             $str = nl2br($str);
-        elseif ($br == 2)
+        } elseif ($br == 2) {
             $str = str_replace("\r\n", ' ', $str);
-        if ($tags == 1)
+        }
+        if ($tags == 1) {
             $str = bbcode::tags($str);
-        elseif ($tags == 2)
+        } elseif ($tags == 2) {
             $str = bbcode::notags($str);
-        $replace = array(
-            chr(0) => '',
-            chr(1) => '',
-            chr(2) => '',
-            chr(3) => '',
-            chr(4) => '',
-            chr(5) => '',
-            chr(6) => '',
-            chr(7) => '',
-            chr(8) => '',
-            chr(9) => '',
-            chr(11) => '',
-            chr(12) => '',
-            chr(13) => '',
-            chr(14) => '',
-            chr(15) => '',
-            chr(16) => '',
-            chr(17) => '',
-            chr(18) => '',
-            chr(19) => '',
-            chr(20) => '',
-            chr(21) => '',
-            chr(22) => '',
-            chr(23) => '',
-            chr(24) => '',
-            chr(25) => '',
-            chr(26) => '',
-            chr(27) => '',
-            chr(28) => '',
-            chr(29) => '',
-            chr(30) => '',
-            chr(31) => ''
-        );
-        return strtr($str, $replace);
+        }
+
+        return trim($str);
     }
 
     /*
@@ -206,7 +150,7 @@ class functions extends core
         global $headmod;
         $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
         if (mysql_num_rows($req) > 0) {
-            while (($res = mysql_fetch_array($req)) !== false) {
+            while (($res = mysql_fetch_array($req)) !== FALSE) {
                 $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
                 $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
                 $count = ($headmod == 'mainpage') ? $link1 : $link2;
@@ -245,7 +189,7 @@ class functions extends core
                 (is_array($error) ? implode('<br />', $error) : $error) . '</p>' .
                 (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -347,10 +291,10 @@ class functions extends core
        [footer]    (string)    Строка выводится внизу области "sub"
     -----------------------------------------------------------------
     */
-    public static function display_user($user = false, $arg = false)
+    public static function display_user($user = FALSE, $arg = FALSE)
     {
         global $rootpath, $mod;
-        $out = false;
+        $out = FALSE;
 
         if (!$user['id']) {
             $out = '<b>' . self::$lng['guest'] . '</b>';
@@ -396,7 +340,7 @@ class functions extends core
         if (isset($arg['body']))
             $out .= '<div>' . $arg['body'] . '</div>';
         $ipinf = !isset($arg['iphide']) && (self::$user_rights || ($user['id'] && $user['id'] == self::$user_id)) ? 1 : 0;
-        $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? self::display_date($user['lastdate']) : false;
+        $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? self::display_date($user['lastdate']) : FALSE;
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
             if (isset($arg['sub']))
@@ -452,14 +396,14 @@ class functions extends core
     Получаем данные пользователя
     -----------------------------------------------------------------
     */
-    public static function get_user($id = false)
+    public static function get_user($id = FALSE)
     {
         if ($id && $id != self::$user_id) {
             $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
             if (mysql_num_rows($req)) {
                 return mysql_fetch_assoc($req);
             } else {
-                return false;
+                return FALSE;
             }
         } else {
             return self::$user_data;
@@ -516,13 +460,13 @@ class functions extends core
     Обработка смайлов
     -----------------------------------------------------------------
     */
-    public static function smileys($str, $adm = false)
+    public static function smileys($str, $adm = FALSE)
     {
         global $rootpath;
         static $smileys_cache = array();
         if (empty($smileys_cache)) {
             $file = $rootpath . 'files/cache/smileys.dat';
-            if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
+            if (file_exists($file) && ($smileys = file_get_contents($file)) !== FALSE) {
                 $smileys_cache = unserialize($smileys);
                 return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
             } else {
@@ -623,5 +567,21 @@ class functions extends core
             'YA' => 'Я'
         );
         return strtr($str, $replace);
+    }
+
+    /*
+    -----------------------------------------------------------------
+    Старая функция проверки переменных.
+    В новых разработках не применять!
+    Вместо данной функции использовать checkin()
+    -----------------------------------------------------------------
+    */
+    public static function check($str)
+    {
+        $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
+        $str = self::checkin($str);
+        $str = nl2br($str);
+        $str = mysql_real_escape_string($str);
+        return $str;
     }
 }

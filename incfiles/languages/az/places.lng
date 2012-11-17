@@ -16,5 +16,6 @@ online                        =   "<a href='#home#/users/index.php?act=online'>K
 pm                            =   "Gizlidedir"
 profile                       =   "Anketdedir"
 profile_personal              =   "Anketdedir"
+registration                  =   "Saytda Kayıtlı"
 userlist                      =   "<a href='#home#/users/index.php?act=userlist'>İstifadeçi siyahısındadır</a>"
 userstop                      =   "<a href='#home#/users/index.php?act=top'>TOP istifadeçilere baxır</a>"
