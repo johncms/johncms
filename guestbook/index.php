@@ -152,7 +152,7 @@ switch ($act) {
                 $res = mysql_fetch_assoc($req);
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
-                echo'<div class="menu">' .
+                echo '<div class="menu">' .
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . functions::checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
@@ -197,11 +197,14 @@ switch ($act) {
                 $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
                 $res = mysql_fetch_assoc($req);
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-                echo'<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
+                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
                     '<div class="rmenu">' .
                     '<form action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
-                    '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p>' .
-                    '<p><textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
+                    '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p><p>';
+                if (!$is_mobile) {
+                    echo bbcode::auto_bb('form', 'msg');
+                }
+                echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -296,17 +299,18 @@ switch ($act) {
             if (!$user_id)
                 echo $lng['name'] . ' (max 25):<br/><input type="text" name="name" maxlength="25"/><br/>';
             echo '<b>' . $lng['message'] . '</b> <small>(max 5000)</small>:<br/>';
-            if (!$is_mobile)
+            if (!$is_mobile) {
                 echo bbcode::auto_bb('form', 'msg');
+            }
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br/>';
             if ($set_user['translit'])
                 echo '<input type="checkbox" name="msgtrans" value="1" />&nbsp;' . $lng['translit'] . '<br/>';
             if (!$user_id) {
                 // CAPTCHA для гостей
-                echo'<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['captcha'] . '"/><br />' .
+                echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['captcha'] . '"/><br />' .
                     '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . $lng['captcha'] . '<br />';
             }
-            echo'<input type="hidden" name="token" value="' . $token . '"/>' .
+            echo '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>';
         } else {
             echo '<div class="rmenu">' . $lng['access_guest_forbidden'] . '</div>';
@@ -325,15 +329,15 @@ switch ($act) {
                 echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = mysql_query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT $start, $kmess");
+                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
             } else {
                 // Запрос для обычной Гастивухи
                 $req = mysql_query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT $start, $kmess");
+                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
             }
-            $i = 0;
-            while (($res = mysql_fetch_assoc($req)) !== FALSE) {
+
+            for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
                 $text = '';
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 if (!$res['id']) {
@@ -378,7 +382,6 @@ switch ($act) {
                 );
                 echo functions::display_user($res, $arg);
                 echo '</div>';
-                ++$i;
             }
         } else {
             echo '<div class="menu"><p>' . $lng['guestbook_empty'] . '</p></div>';

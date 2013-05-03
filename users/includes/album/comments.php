@@ -26,7 +26,7 @@ if (mysql_num_rows($req_obj)) {
     unset($_SESSION['ref']);
     $req_a = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '" . $res_obj['album_id'] . "'");
     $res_a = mysql_fetch_assoc($req_a);
-    if ($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 6) {
+    if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 6) || ($res_a['access'] == 2 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']))) {
         // Если доступ закрыт
         require('../incfiles/head.php');
         echo functions::display_error($lng['access_forbidden']) .
@@ -95,4 +95,3 @@ if (mysql_num_rows($req_obj)) {
 } else {
     echo functions::display_error($lng['error_wrong_data']);
 }
-?>

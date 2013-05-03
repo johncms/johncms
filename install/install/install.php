@@ -117,8 +117,7 @@ switch ($act) {
                           '$db_host = ' . "'$db_host';\r\n" .
                           '$db_name = ' . "'$db_name';\r\n" .
                           '$db_user = ' . "'$db_user';\r\n" .
-                          '$db_pass = ' . "'$db_pass';\r\n\r\n" .
-                          '?>';
+                          '$db_pass = ' . "'$db_pass';";
                 if (!file_put_contents('../incfiles/db.php', $dbfile)) {
                     echo 'ERROR: Can not write db.php</body></html>';
                     exit;
@@ -151,6 +150,7 @@ switch ($act) {
                     `about` = '',
                     `set_user` = '',
                     `set_forum` = '',
+                    `set_mail` = '',
                     `smileys` = '',
                     `rights` = '9',
                     `ip` = '" . ip2long($_SERVER["REMOTE_ADDR"]) . "',
@@ -252,7 +252,7 @@ switch ($act) {
         if (!$php_errors && !$php_warnings && !$folders && !$files) {
             echo '<div class="pgl">' . $lng['configuration_successful'] . '</div>';
         }
-        echo '</p><hr />';
+        echo '</p>';
         if ($php_errors || $folders || $files) {
             echo '<h3 class="red">' . $lng['critical_errors'] . '</h3>' .
                  '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>';
@@ -261,6 +261,6 @@ switch ($act) {
                  '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>' .
                  '<a href="index.php?act=set">' . $lng['ignore_warnings'] . '</a>';
         } else {
-            echo '<h3><a href="index.php?act=set">' . $lng['install'] . '</a></h3>';
+            echo '<form action="index.php?act=set" method="post"><p><input type="submit" value="' . $lng['install'] . '"/></p></form>';
         }
 }

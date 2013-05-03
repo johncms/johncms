@@ -15,19 +15,15 @@ if ($rights >= 6) {
     if (isset($_POST['submit'])) {
         $user = 0;
         $text = functions::check($_POST['text']);
-        //TODO: Переделать запрос, убрать быдлокод
         mysql_query("insert into `gallery` values(0,'0','" . time() . "','rz','','" . $text . "','','" . $user . "','','');");
         header("location: index.php");
     } else {
-        echo 'Добавление раздела.<br/>
-        <form action="index.php?act=razd" method="post">
-        Введите название:<br/><input type="text" name="text"/><br/>
-        <input type="submit" name="submit" value="Ok!"/>
-        </form>
-        <br/><a href="index.php">В галерею</a><br/>';
+        echo '<div class="phdr"><b>' . $lng_gal['create_section'] . '</b></div>' .
+            '<form action="index.php?act=razd" method="post">' .
+            '<div class="gmenu">' .
+            '<p>' . $lng['name'] . ':<br/><input type="text" name="text"/></p>' .
+            '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+            '</div></form>' .
+            '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
     }
-} else {
-    header("location: index.php");
 }
-
-?>

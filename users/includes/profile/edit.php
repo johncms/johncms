@@ -127,6 +127,8 @@ if (isset($_GET['delavatar'])) {
     } else {
         echo functions::display_error($error);
     }
+    header('Location: profile.php?act=edit&user=' . $user['id']);
+    exit;
 }
 
 /*
@@ -170,7 +172,7 @@ echo '<small><a href="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user
     '<input type="text" value="' . $user['monthb'] . '" size="2" maxlength="2" name="monthb" />.' .
     '<input type="text" value="' . $user['yearofbirth'] . '" size="4" maxlength="4" name="yearofbirth" /></p>' .
     '<p>' . $lng_profile['city'] . ':<br /><input type="text" value="' . $user['live'] . '" name="live" /></p>' .
-    '<p>' . $lng_profile['about'] . ':<br /><textarea rows="' . $set_user['field_h'] . '" name="about">' . str_replace('<br />', "\r\n", $user['about']) . '</textarea></p>' .
+    '<p>' . $lng_profile['about'] . ':<br /><textarea rows="' . $set_user['field_h'] . '" name="about">' . $user['about'] . '</textarea></p>' .
     '<p><h3><img src="../images/mail.png" width="16" height="16" class="left" />&#160;' . $lng_profile['communication'] . '</h3>' .
     $lng_profile['phone_number'] . ':<br /><input type="text" value="' . $user['mibile'] . '" name="mibile" /><br />' .
     '</p><p>E-mail:<br /><small>' . $lng_profile['email_warning'] . '</small><br />' .

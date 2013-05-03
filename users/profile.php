@@ -57,7 +57,8 @@ $array = array(
     'password'  => 'includes/profile',
     'reset'     => 'includes/profile',
     'settings'  => 'includes/profile',
-    'stat'      => 'includes/profile'
+    'stat'      => 'includes/profile',
+    'friends'   => 'includes/profile'
 );
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
@@ -72,27 +73,38 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     $textl = $lng['profile'] . ': ' . htmlspecialchars($user['name']);
     require('../incfiles/head.php');
     echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? $lng_profile['user_profile'] : $lng_profile['my_profile']) . '</b></div>';
+
     // Меню анкеты
     $menu = array();
-    if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights']))
+    if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights'])) {
         $menu[] = '<a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a>';
-    if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights'])
+    }
+    if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
         $menu[] = '<a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . $lng['delete'] . '</a>';
-    if ($user['id'] != $user_id && $rights > $user['rights'])
+    }
+    if ($user['id'] != $user_id && $rights > $user['rights']) {
         $menu[] = '<a href="profile.php?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . $lng['ban_do'] . '</a>';
-    if (!empty($menu))
+    }
+    if (!empty($menu)) {
         echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+    }
+
     //Уведомление о дне рожденья
     if ($user['dayb'] == date('j', time()) && $user['monthb'] == date('n', time())) {
         echo '<div class="gmenu">' . $lng['birthday'] . '!!!</div>';
     }
+
     // Информация о юзере
     $arg = array(
         'lastvisit' => 1,
         'iphist'    => 1,
         'header'    => '<b>ID:' . $user['id'] . '</b>'
     );
-    if ($user['id'] != core::$user_id) $arg['footer'] = '<span class="gray">' . core::$lng['where'] . ':</span> ' . functions::display_place($user['id'], $user['place']);
+
+    if ($user['id'] != core::$user_id) {
+        $arg['footer'] = '<span class="gray">' . core::$lng['where'] . ':</span> ' . functions::display_place($user['id'], $user['place']);
+    }
+
     echo '<div class="user"><p>' . functions::display_user($user, $arg) . '</p></div>';
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
     if ($rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
@@ -126,8 +138,9 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
             }
         } else {
             $total_karma = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400)), 0);
-            if ($total_karma > 0)
+            if ($total_karma > 0) {
                 echo '<br /><a href="profile.php?act=karma&amp;mod=new">' . $lng['responses_new'] . '</a> (' . $total_karma . ')';
+            }
         }
         echo '</div></td></tr></table></div>';
     }
@@ -138,20 +151,58 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div><img src="../images/activity.gif" width="16" height="16"/>&#160;<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $lng_profile['activity'] . '</a></div>' .
         '<div><img src="../images/rate.gif" width="16" height="16"/>&#160;<a href="profile.php?act=stat&amp;user=' . $user['id'] . '">' . $lng['statistics'] . '</a></div>';
     $bancount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'"), 0);
-    if ($bancount)
+
+    if ($bancount) {
         echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . $lng['infringements'] . '</a> (' . $bancount . ')</div>';
+    }
+
+    $total_friends = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='{$user['id']}' AND `type`='2' AND `friends`='1'"), 0);
     echo '<br />' .
         '<div><img src="../images/photo.gif" width="16" height="16"/>&#160;<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['photo_album'] . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div><img src="../images/guestbook.gif" width="16" height="16"/>&#160;<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
-    //echo '<div><img src="../images/pt.gif" width="16" height="16"/>&#160;<a href="">' . $lng['blog'] . '</a>&#160;(0)</div>';
+        '<div><img src="../images/guestbook.gif" width="16" height="16"/>&#160;<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="profile.php?act=friends&amp;user=' . $user['id'] . '">' . $lng_profile['friends'] . '</a>&#160;(' . $total_friends . ')</div>' .
+        '</p></div>';
     if ($user['id'] != $user_id) {
-        echo'<br /><div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="cont.php?act=edit&amp;id=' . $user['id'] . '&amp;add=1">' . $lng['contacts_in'] . '</a></div>';
-        if (!isset($ban['1']) && !isset($ban['3']))
-            echo '<div><img src="../images/write.gif" width="16" height="16"/>&#160;<a href="pradd.php?act=write&amp;adr=' . $user['id'] . '"><b>' . $lng['write'] . '</b></a></div>';
+        echo '<div class="menu"><p>';
+        // Контакты
+        if (!functions::is_ignor($user['id']) && functions::is_contact($user['id']) != 2) {
+            if (!functions::is_friend($user['id'])) {
+                $fr_in = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `from_id`='$user_id' AND `user_id`='{$user['id']}'"), 0);
+                $fr_out = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `user_id`='$user_id' AND `from_id`='{$user['id']}'"), 0);
+                if ($fr_in == 1) {
+                    $friend = '<a class="underline" href="profile.php?act=friends&amp;do=ok&amp;id=' . $user['id'] . '">' . $lng_profile['confirm_friendship'] . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=no&amp;id=' . $user['id'] . '">' . $lng_profile['decline_friendship'] . '</a>';
+                } else if ($fr_out == 1) {
+                    $friend = '<a class="underline" href="profile.php?act=friends&amp;do=cancel&amp;id=' . $user['id'] . '">' . $lng_profile['canceled_demand_friend'] . '</a>';
+                } else {
+                    $friend = '<a href="profile.php?act=friends&amp;do=add&amp;id=' . $user['id'] . '">' . $lng_profile['in_friend'] . '</a>';
+                }
+            } else {
+                $friend = '<a href="profile.php?act=friends&amp;do=delete&amp;id=' . $user['id'] . '">' . $lng_profile['remov_friend'] . '</a>';
+            }
+            echo '<div><img src="../images/add.gif" width="16" height="16"/>&#160;' . $friend . '</div>';
+        }
+
+        if (functions::is_contact($user['id']) != 2) {
+            if (!functions::is_contact($user['id'])) {
+                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?id=' . $user['id'] . '">' . $lng_profile['add_contacts'] . '</a></div>';
+            } else {
+                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=deluser&amp;id=' . $user['id'] . '">' . $lng_profile['delete_contacts'] . '</a></div>';
+            }
+        }
+
+        if (functions::is_contact($user['id']) != 2) {
+            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . $lng_profile['add_ignor'] . '</a></div>';
+        } else {
+            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . $lng_profile['delete_ignor'] . '</a></div>';
+        }
+        echo '</p>';
+
+        if (!functions::is_ignor($user['id']) && functions::is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
+            echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . $lng['write'] . '" style="margin-left: 18px"/></form></p>';
+        }
+        echo '</div>';
     }
-    echo '</p></div>';
     echo '<div class="phdr"><a href="index.php">' . $lng['users'] . '</a></div>';
 }
 
 require_once('../incfiles/end.php');
-?>

@@ -83,9 +83,37 @@ if (isset($_POST['submit'])) {
             `preg` = '$preg',
             `set_user` = '',
             `set_forum` = '',
+            `set_mail` = '',
             `smileys` = ''
         ") or exit(__LINE__ . ': ' . mysql_error());
         $usid = mysql_insert_id();
+
+        // Отправка системного сообщения
+        $set_mail = unserialize($set['setting_mail']);
+        if (!isset($set_mail['message_include'])) {
+            $set_mail['message_include'] = 0;
+        }
+
+        if ($set_mail['message_include']) {
+            $array = array('{LOGIN}', '{TIME}');
+            $array_replace = array($reg_nick, '{TIME=' . time() . '}');
+
+            if (empty($set['them_message']))
+                $set['them_message'] = $lng_mail['them_message'];
+            if (empty($set['reg_message']))
+                $set['reg_message'] = $lng['hi'] . ", {LOGIN}\r\n" . $lng_mail['pleased_see_you'] . "\r\n" . $lng_mail['come_my_site'] . "\r\n" . $lng_mail['respectfully_yours'];
+            $theme = str_replace($array, $array_replace, $set['them_message']);
+            $system = str_replace($array, $array_replace, $set['reg_message']);
+            mysql_query("INSERT INTO `cms_mail` SET
+			    `user_id` = '0',
+			    `from_id` = '" . $usid . "',
+			    `text` = '" . mysql_real_escape_string($system) . "',
+			    `time` = '" . time() . "',
+			    `sys` = '1',
+			    `them` = '" . mysql_real_escape_string($theme) . "'
+			");
+        }
+
         echo'<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>' .
             '<p><h3>' . $lng_reg['your_link'] . '</h3><input type="text" value="' . $set['homeurl'] . '/login.php?id=' . $usid . '&amp;p=' . $reg_pass . '" /><br/>';
         if ($set['mod_reg'] == 1) {

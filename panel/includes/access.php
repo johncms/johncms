@@ -130,4 +130,3 @@ echo '<div class="gmenu"><h3><img src="../images/' . $color[$set['mod_reg']] . '
     '<div class="phdr"><small>' . $lng['access_help'] . '</small></div>' .
     '<p><input type="submit" name="submit" id="button" value="' . $lng['save'] . '" /></p>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p></form>';
-?>

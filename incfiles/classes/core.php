@@ -14,40 +14,39 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class core
 {
     public static $root = '../';
-    public static $ip;                                                         // Путь к корневой папке
-    public static $ip_via_proxy = 0;                                               // IP адрес за прокси-сервером
-    public static $ip_count = array();                                         // Счетчик обращений с IP адреса
-    public static $user_agent;                                                 // User Agent
-    public static $system_set;                                                 // Системные настройки
-    public static $lng_iso = 'en';                                             // Двухбуквенный ISO код языка
-    public static $lng_list = array();                                         // Список имеющихся языков
-    public static $lng = array();                                              // Массив с фразами языка
-    public static $deny_registration = false;                                  // Запрет регистрации пользователей
-    public static $is_mobile = false;                                          // Мобильный браузер
-    public static $core_errors = array();                                      // Ошибки ядра
+    public static $ip; // Путь к корневой папке
+    public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
+    public static $ip_count = array(); // Счетчик обращений с IP адреса
+    public static $user_agent; // User Agent
+    public static $system_set; // Системные настройки
+    public static $lng_iso = 'en'; // Двухбуквенный ISO код языка
+    public static $lng_list = array(); // Список имеющихся языков
+    public static $lng = array(); // Массив с фразами языка
+    public static $deny_registration = FALSE; // Запрет регистрации пользователей
+    public static $is_mobile = FALSE; // Мобильный браузер
+    public static $core_errors = array(); // Ошибки ядра
 
-    public static $user_id = false;                                            // Идентификатор пользователя
-    public static $user_rights = 0;                                            // Права доступа
-    public static $user_data = array();                                        // Все данные пользователя
-    public static $user_set = array();                                         // Пользовательские настройки
-    public static $user_ban = array();                                         // Бан
+    public static $user_id = FALSE; // Идентификатор пользователя
+    public static $user_rights = 0; // Права доступа
+    public static $user_data = array(); // Все данные пользователя
+    public static $user_set = array(); // Пользовательские настройки
+    public static $user_ban = array(); // Бан
 
-    private $flood_chk = 1;                                                    // Включение - выключение функции IP антифлуда
-    private $flood_interval = '120';                                           // Интервал времени в секундах
-    private $flood_limit = '30';                                               // Число разрешенных запросов за интервал
+    private $flood_chk = 1; // Включение - выключение функции IP антифлуда
+    private $flood_interval = '120'; // Интервал времени в секундах
+    private $flood_limit = '30'; // Число разрешенных запросов за интервал
 
     function __construct()
     {
         global $rootpath;
-        if(isset($rootpath)) self::$root = $rootpath;                          // Задаем путь к корневой папке
+        if (isset($rootpath)) self::$root = $rootpath; // Задаем путь к корневой папке
 
         // Получаем IP адреса
         $ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
         self::$ip = sprintf("%u", $ip);
 
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $vars)) {
-            foreach ($vars[0] AS $var)
-            {
+            foreach ($vars[0] AS $var) {
                 $ip_via_proxy = ip2long($var);
                 if ($ip_via_proxy && $ip_via_proxy != $ip && !preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
                     self::$ip_via_proxy = sprintf("%u", $ip_via_proxy);
@@ -65,19 +64,19 @@ class core
             self::$user_agent = 'Not Recognised';
         }
 
-        $this->ip_flood();                                                     // Проверка адреса IP на флуд
-        if (get_magic_quotes_gpc()) $this->del_slashes();                      // Удаляем слэши
-        $this->db_connect();                                                   // Соединяемся с базой данных
-        $this->ip_ban();                                                       // Проверяем адрес IP на бан
-        $this->session_start();                                                // Стартуем сессию
-        self::$is_mobile = $this->mobile_detect();                             // Определение мобильного браузера
-        $this->system_settings();                                              // Получаем системные настройки
-        $this->auto_clean();                                                   // Автоочистка системы
-        $this->authorize();                                                    // Авторизация пользователей
-        $this->lng_detect();                                                   // Определяем язык системы
-        self::$lng = self::load_lng();                                         // Загружаем язык
+        $this->ip_flood(); // Проверка адреса IP на флуд
+        if (get_magic_quotes_gpc()) $this->del_slashes(); // Удаляем слэши
+        $this->db_connect(); // Соединяемся с базой данных
+        $this->ip_ban(); // Проверяем адрес IP на бан
+        $this->session_start(); // Стартуем сессию
+        self::$is_mobile = $this->mobile_detect(); // Определение мобильного браузера
+        $this->system_settings(); // Получаем системные настройки
+        $this->auto_clean(); // Автоочистка системы
+        $this->authorize(); // Авторизация пользователей
+        $this->lng_detect(); // Определяем язык системы
+        self::$lng = self::load_lng(); // Загружаем язык
         // Оставляем транслит только для Русского
-        if(self::$lng_iso != 'ru' && self::$lng_iso != 'uk') self::$user_set['translit'] = 0;
+        if (self::$lng_iso != 'ru' && self::$lng_iso != 'uk') self::$user_set['translit'] = 0;
     }
 
     /*
@@ -87,10 +86,10 @@ class core
     */
     public static function ip_valid($ip)
     {
-        if (preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)){
-            return true;
+        if (preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
+            return TRUE;
         }
-        return false;
+        return FALSE;
     }
 
     /*
@@ -100,13 +99,13 @@ class core
     */
     public static function load_lng($module = '_core')
     {
-        if(!is_dir(self::$root . 'incfiles/languages/' . self::$lng_iso)) self::$lng_iso = 'en';
+        if (!is_dir(self::$root . 'incfiles/languages/' . self::$lng_iso)) self::$lng_iso = 'en';
         $lng_file = self::$root . 'incfiles/languages/' . self::$lng_iso . '/' . $module . '.lng';
         $lng_file_edit = self::$root . 'files/lng_edit/' . self::$lng_iso . '_iso.lng';
         if (file_exists($lng_file)) {
             $out = parse_ini_file($lng_file) or die('ERROR: language file');
             if (file_exists($lng_file_edit)) {
-                $lng_edit = parse_ini_file($lng_file_edit, true);
+                $lng_edit = parse_ini_file($lng_file_edit, TRUE);
                 if (isset($lng_edit[$module])) {
                     $lng_module = array_diff_key($out, $lng_edit[$module]);
                     $out = $lng_module + $lng_edit[$module];
@@ -115,7 +114,7 @@ class core
             return $out;
         }
         self::$core_errors[] = 'Language file <b>' . $module . '.lng</b> is missing';
-        return false;
+        return FALSE;
     }
 
     /*
@@ -123,7 +122,8 @@ class core
     Показываем ошибки ядра (если есть)
     -----------------------------------------------------------------
     */
-    public static function display_core_errors(){
+    public static function display_core_errors()
+    {
         return !empty(self::$core_errors) ? '<p style="color:#FF0000"><b>CORE ERROR</b>: ' . implode('<br />', self::$core_errors) . '</p>' : '';
     }
 
@@ -191,10 +191,10 @@ class core
             foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $val) {
                 $tmp = explode(':', $val);
                 if (!$tmp[1]) $tmp[1] = $tmp[0];
-                if ($ip >= $tmp[0] && $ip <= $tmp[1]) return true;
+                if ($ip >= $tmp[0] && $ip <= $tmp[1]) return TRUE;
             }
         }
-        return false;
+        return FALSE;
     }
 
     /*
@@ -209,13 +209,13 @@ class core
             &$_POST,
             &$_COOKIE
         );
-        while ((list($k, $v) = each($in)) !== false) {
+        while ((list($k, $v) = each($in)) !== FALSE) {
             foreach ($v as $key => $val) {
                 if (!is_array($val)) {
                     $in[$k][$key] = stripslashes($val);
                     continue;
                 }
-                $in[] = &$in[$k][$key];
+                $in[] = & $in[$k][$key];
             }
         }
         unset($in);
@@ -243,7 +243,7 @@ class core
                     exit;
                     break;
                 case 3:
-                    self::$deny_registration = true;
+                    self::$deny_registration = TRUE;
                     break;
                 default :
                     header("HTTP/1.0 404 Not Found");
@@ -272,9 +272,9 @@ class core
     {
         $set = array();
         $req = mysql_query("SELECT * FROM `cms_settings`");
-        while (($res = mysql_fetch_row($req)) !== false) $set[$res[0]] = $res[1];
+        while (($res = mysql_fetch_row($req)) !== FALSE) $set[$res[0]] = $res[1];
         if (isset($set['lng']) && !empty($set['lng'])) self::$lng_iso = $set['lng'];
-        if(isset($set['lng_list'])) self::$lng_list = unserialize($set['lng_list']);
+        if (isset($set['lng_list'])) self::$lng_list = unserialize($set['lng_list']);
         self::$system_set = $set;
     }
 
@@ -288,8 +288,7 @@ class core
         $setlng = isset($_POST['setlng']) ? substr(trim($_POST['setlng']), 0, 2) : '';
         if (!empty($setlng) && array_key_exists($setlng, self::$lng_list)) $_SESSION['lng'] = $setlng;
         if (isset($_SESSION['lng']) && array_key_exists($_SESSION['lng'], self::$lng_list)) self::$lng_iso = $_SESSION['lng'];
-        elseif (self::$user_id && isset(self::$user_set['lng']) && array_key_exists(self::$user_set['lng'], self::$lng_list)) self::$lng_iso = self::$user_set['lng'];
-        elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+        elseif (self::$user_id && isset(self::$user_set['lng']) && array_key_exists(self::$user_set['lng'], self::$lng_list)) self::$lng_iso = self::$user_set['lng']; elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             $accept = explode(',', strtolower(trim($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
             foreach ($accept as $var) {
                 $lng = substr($var, 0, 2);
@@ -308,8 +307,8 @@ class core
     */
     private function authorize()
     {
-        $user_id = false;
-        $user_ps = false;
+        $user_id = FALSE;
+        $user_ps = FALSE;
         if (isset($_SESSION['uid']) && isset($_SESSION['ups'])) {
             // Авторизация по сессии
             $user_id = abs(intval($_SESSION['uid']));
@@ -325,10 +324,10 @@ class core
             $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$user_id'");
             if (mysql_num_rows($req)) {
                 $user_data = mysql_fetch_assoc($req);
-                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == self::$user_agent ? true : false;
+                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == self::$user_agent ? TRUE : FALSE;
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно
-                    self::$user_id = $user_id;
+                    self::$user_id = $user_data['preg'] ? $user_id : FALSE;
                     self::$user_rights = $user_data['rights'];
                     self::$user_data = $user_data;
                     self::$user_set = !empty($user_data['set_user']) ? unserialize($user_data['set_user']) : $this->user_setings_default();
@@ -359,7 +358,7 @@ class core
         $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . self::$user_id . "' AND `ban_time` > '" . time() . "'");
         if (mysql_num_rows($req)) {
             self::$user_rights = 0;
-            while (($res = mysql_fetch_row($req)) !== false) self::$user_ban[$res[4]] = 1;
+            while (($res = mysql_fetch_row($req)) !== FALSE) self::$user_ban[$res[4]] = 1;
         }
     }
 
@@ -404,17 +403,17 @@ class core
     private function user_setings_default()
     {
         return array(
-            'avatar' => 1,                                                     // Показывать аватары
-            'digest' => 0,                                                     // Показывать Дайджест
-            'direct_url' => 0,                                                 // Внешние ссылки
-            'field_h' => 3,                                                    // Высота текстового поля ввода
-            'field_w' => (self::$is_mobile ? 20 : 40),                         // Ширина текстового поля ввода
-            'kmess' => 20,                                                     // Число сообщений на страницу
-            'quick_go' => 1,                                                   // Быстрый переход
-            'timeshift' => 0,                                                  // Временной сдвиг
-            'skin' => self::$system_set['skindef'],                            // Тема оформления
-            'smileys' => 1,                                                    // Включить(1) выключить(0) смайлы
-            'translit' => 0                                                    // Транслит
+            'avatar'     => 1, // Показывать аватары
+            'digest'     => 0, // Показывать Дайджест
+            'direct_url' => 0, // Внешние ссылки
+            'field_h'    => 3, // Высота текстового поля ввода
+            'field_w'    => (self::$is_mobile ? 20 : 40), // Ширина текстового поля ввода
+            'kmess'      => 20, // Число сообщений на страницу
+            'quick_go'   => 1, // Быстрый переход
+            'timeshift'  => 0, // Временной сдвиг
+            'skin'       => self::$system_set['skindef'], // Тема оформления
+            'smileys'    => 1, // Включить(1) выключить(0) смайлы
+            'translit'   => 0 // Транслит
         );
     }
 
@@ -425,7 +424,7 @@ class core
     */
     private function user_unset()
     {
-        self::$user_id = false;
+        self::$user_id = FALSE;
         self::$user_rights = 0;
         self::$user_set = $this->user_setings_default();
         self::$user_data = array();
@@ -446,7 +445,7 @@ class core
             mysql_query("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
             mysql_query("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
             mysql_query("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
-            mysql_query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`");
+            mysql_query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
         }
     }
 
@@ -458,24 +457,25 @@ class core
     private function mobile_detect()
     {
         if (isset($_SESSION['is_mobile'])) {
-            return $_SESSION['is_mobile'] == 1 ? true : false;
+            return $_SESSION['is_mobile'] == 1 ? TRUE : FALSE;
         }
         $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? strtolower($_SERVER['HTTP_USER_AGENT']) : '';
         $accept = isset($_SERVER['HTTP_ACCEPT']) ? strtolower($_SERVER['HTTP_ACCEPT']) : '';
-        if ((strpos($accept, 'text/vnd.wap.wml') !== false) || (strpos($accept, 'application/vnd.wap.xhtml+xml') !== false)) {
+        if ((strpos($accept, 'text/vnd.wap.wml') !== FALSE) || (strpos($accept, 'application/vnd.wap.xhtml+xml') !== FALSE)) {
             $_SESSION['is_mobile'] = 1;
-            return true;
+            return TRUE;
         }
         if (isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE'])) {
             $_SESSION['is_mobile'] = 1;
-            return true;
+            return TRUE;
         }
         if (preg_match('/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $user_agent)
-            || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($user_agent, 0, 4))) {
+            || preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i', substr($user_agent, 0, 4))
+        ) {
             $_SESSION['is_mobile'] = 1;
-            return true;
+            return TRUE;
         }
         $_SESSION['is_mobile'] = 2;
-        return false;
+        return FALSE;
     }
 }

@@ -22,9 +22,9 @@ class bbcode extends core
     {
         $var = self::parse_time($var);               // Обработка тэга времени
         $var = self::highlight_code($var);           // Подсветка кода
-        $var = self::highlight_bb($var);             // Обработка ссылок
         $var = self::highlight_url($var);            // Обработка ссылок
         $var = self::OLD_highlight_url($var);        // Обработка ссылок в BBcode
+        $var = self::highlight_bb($var);             // Обработка ссылок
         return $var;
     }
 

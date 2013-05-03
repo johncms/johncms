@@ -125,7 +125,7 @@ switch ($mod) {
         $title = $lng_profile['new_photo'];
         $select = "";
         $join = "";
-        $where = "`cms_album_files`.`time` > '" . (time() - 259200) . "'" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` > '1'");
+        $where = "`cms_album_files`.`time` > '" . (time() - 259200) . "'" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
         $order = "`cms_album_files`.`time` DESC";
         $link = '';
 }

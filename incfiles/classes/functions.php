@@ -13,25 +13,24 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class functions extends core
 {
-    /*
-    -----------------------------------------------------------------
-    Антифлуд
-    -----------------------------------------------------------------
-    Режимы работы:
-    1 - Адаптивный
-    2 - День / Ночь
-    3 - День
-    4 - Ночь
-    -----------------------------------------------------------------
-    */
+    /**
+     * Антифлуд
+     * Режимы работы:
+     *   1 - Адаптивный
+     *   2 - День / Ночь
+     *   3 - День
+     *   4 - Ночь
+     *
+     * @return int|bool
+     */
     public static function antiflood()
     {
         $default = array(
-            'mode' => 2,
-            'day' => 10,
-            'night' => 30,
+            'mode'    => 2,
+            'day'     => 10,
+            'night'   => 30,
             'dayfrom' => 10,
-            'dayto' => 22
+            'dayto'   => 22
         );
         $af = isset(self::$system_set['antiflood']) ? unserialize(self::$system_set['antiflood']) : $default;
         switch ($af['mode']) {
@@ -62,66 +61,68 @@ class functions extends core
             return FALSE;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Маскировка ссылок в тексте
-    -----------------------------------------------------------------
-    */
+    /**
+     * Маскировка ссылок в тексте
+     *
+     * @param $var
+     *
+     * @return string
+     */
     public static function antilink($var)
     {
         $var = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $var);
         $replace = array(
-            '.ru' => '***',
-            '.com' => '***',
-            '.biz' => '***',
-            '.cn' => '***',
-            '.in' => '***',
-            '.net' => '***',
-            '.org' => '***',
+            '.ru'   => '***',
+            '.com'  => '***',
+            '.biz'  => '***',
+            '.cn'   => '***',
+            '.in'   => '***',
+            '.net'  => '***',
+            '.org'  => '***',
             '.info' => '***',
             '.mobi' => '***',
-            '.wen' => '***',
-            '.kmx' => '***',
-            '.h2m' => '***'
+            '.wen'  => '***',
+            '.kmx'  => '***',
+            '.h2m'  => '***'
         );
+
         return strtr($var, $replace);
     }
 
-    /*
+    /**
      * Фильтрация строк
+     *
+     * @param string $str
+     *
+     * @return string
      */
-    public static function checkin($str){
+    public static function checkin($str)
+    {
         if (function_exists('iconv')) {
             $str = iconv("UTF-8", "UTF-8", $str);
         }
 
-        // Удаляем лишние знаки препинания
-        $str = preg_replace('#(\.|\?|!|\(|\)){3,}#', '\1\1\1', $str);
-
-        // Фильтруем символы
-        $str = nl2br($str);
-        $str = preg_replace('!\p{C}!u', '', $str);
-        $str = str_replace('<br />', "\n", $str);
-
-        // Удаляем лишние пробелы
-        $str = preg_replace('# {2,}#', ' ', $str);
-
-        // Удаляем более 2-х переносов строк подряд
-        $str = preg_replace("/(\n)+(\n)/i", "\n\n", $str);
+        // Фильтруем невидимые символы
+        $str = preg_replace('/[^\P{C}\n]+/u', '', $str);
 
         return trim($str);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обработка текстов перед выводом на экран
-    -----------------------------------------------------------------
-    $br=1           обработка переносов строк
-    $br=2           подстановка пробела, вместо переноса
-    $tags=1         обработка тэгов
-    $tags=2         вырезание тэгов
-    -----------------------------------------------------------------
-    */
+    /**
+     * Обработка текстов перед выводом на экран
+     *
+     * @param string $str
+     * @param int    $br   Параметр обработки переносов строк
+     *                     0 - не обрабатывать (по умолчанию)
+     *                     1 - обрабатывать
+     *                     2 - вместо переносов строки вставляются пробелы
+     * @param int    $tags Параметр обработки тэгов
+     *                     0 - не обрабатывать (по умолчанию)
+     *                     1 - обрабатывать
+     *                     2 - вырезать тэги
+     *
+     * @return string
+     */
     public static function checkout($str, $br = 0, $tags = 0)
     {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
@@ -140,11 +141,9 @@ class functions extends core
         return trim($str);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Показ различных счетчиков внизу страницы
-    -----------------------------------------------------------------
-    */
+    /**
+     * Показ различных счетчиков внизу страницы
+     */
     public static function display_counters()
     {
         global $headmod;
@@ -160,11 +159,13 @@ class functions extends core
         }
     }
 
-    /*
-    -----------------------------------------------------------------
-    Показываем дату с учетом сдвига времени
-    -----------------------------------------------------------------
-    */
+    /**
+     * Показываем дату с учетом сдвига времени
+     *
+     * @param int $var Время в Unix формате
+     *
+     * @return string Отформатированное время
+     */
     public static function display_date($var)
     {
         $shift = (self::$system_set['timeshift'] + self::$user_set['timeshift']) * 3600;
@@ -174,15 +175,19 @@ class functions extends core
             if (date('z', $var + $shift) == date('z', time() + $shift) - 1)
                 return self::$lng['yesterday'] . ', ' . date("H:i", $var + $shift);
         }
+
         return date("d.m.Y / H:i", $var + $shift);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Сообщения об ошибках
-    -----------------------------------------------------------------
-    */
-    public static function display_error($error = NULL, $link = NULL)
+    /**
+     * Сообщения об ошибках
+     *
+     * @param string|array $error Сообщение об ошибке (или массив с сообщениями)
+     * @param string       $link  Необязательная ссылка перехода
+     *
+     * @return bool|string
+     */
+    public static function display_error($error = '', $link = '')
     {
         if (!empty($error)) {
             return '<div class="rmenu"><p><b>' . self::$lng['error'] . '!</b><br />' .
@@ -193,26 +198,31 @@ class functions extends core
         }
     }
 
-    /*
-    -----------------------------------------------------------------
-    Отображение различных меню
-    -----------------------------------------------------------------
-    $delimiter - разделитель между пунктами
-    $end_space - выводится в конце
-    -----------------------------------------------------------------
-    */
+    /**
+     * Отображение различных меню
+     *
+     * @param array  $val
+     * @param string $delimiter Разделитель между пунктами
+     * @param string $end_space Выводится в конце
+     *
+     * @return string
+     */
     public static function display_menu($val = array(), $delimiter = ' | ', $end_space = '')
     {
         return implode($delimiter, array_diff($val, array(''))) . $end_space;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Постраничная навигация
-    -----------------------------------------------------------------
-    За основу взята доработанная функция от форума SMF 2.x.x
-    -----------------------------------------------------------------
-    */
+    /**
+     * Постраничная навигация
+     * За основу взята доработанная функция от форума SMF 2.x.x
+     *
+     * @param string $url
+     * @param int    $start
+     * @param int    $total
+     * @param int    $kmess
+     *
+     * @return string
+     */
     public static function display_pagination($url, $start, $total, $kmess)
     {
         $neighbors = 2;
@@ -246,15 +256,19 @@ class functions extends core
             $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
             $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
         }
+
         return implode(' ', $out);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Показываем местоположение пользователя
-    -----------------------------------------------------------------
-    */
-    public static function display_place($user_id = '', $place = '')
+    /**
+     * Показываем местоположение пользователя
+     *
+     * @param int    $user_id
+     * @param string $place
+     *
+     * @return mixed|string
+     */
+    public static function display_place($user_id = 0, $place = '')
     {
         global $headmod;
         $place = explode(",", $place);
@@ -265,33 +279,37 @@ class functions extends core
                     return '<a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
                 } else {
                     $user = self::get_user($place[1]);
+
                     return $placelist['profile'] . ': <a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '">' . $user['name'] . '</a>';
                 }
+            } elseif ($place[0] == 'online' && isset($headmod) && $headmod == 'online') {
+                return $placelist['here'];
+            } else {
+                return str_replace('#home#', self::$system_set['homeurl'], $placelist[$place[0]]);
             }
-            elseif ($place[0] == 'online' && isset($headmod) && $headmod == 'online') return $placelist['here'];
-            else return str_replace('#home#', self::$system_set['homeurl'], $placelist[$place[0]]);
         }
-        else return '<a href="' . self::$system_set['homeurl'] . '/index.php">' . $placelist['homepage'] . '</a>';
+
+        return '<a href="' . self::$system_set['homeurl'] . '/index.php">' . $placelist['homepage'] . '</a>';
     }
 
-    /*
-    -----------------------------------------------------------------
-    Отображения личных данных пользователя
-    -----------------------------------------------------------------
-    $user          (array)     массив запроса в таблицу `users`
-    $arg           (array)     Массив параметров отображения
-       [lastvisit] (boolean)   Дата и время последнего визита
-       [stshide]   (boolean)   Скрыть статус (если есть)
-       [iphide]    (boolean)   Скрыть (не показывать) IP и UserAgent
-       [iphist]    (boolean)   Показывать ссылку на историю IP
-
-       [header]    (string)    Текст в строке после Ника пользователя
-       [body]      (string)    Основной текст, под ником пользователя
-       [sub]       (string)    Строка выводится вверху области "sub"
-       [footer]    (string)    Строка выводится внизу области "sub"
-    -----------------------------------------------------------------
-    */
-    public static function display_user($user = FALSE, $arg = FALSE)
+    /**
+     * Отображения личных данных пользователя
+     *
+     * @param int   $user Массив запроса в таблицу `users`
+     * @param array $arg  Массив параметров отображения
+     *                    [lastvisit] (boolean)   Дата и время последнего визита
+     *                    [stshide]   (boolean)   Скрыть статус (если есть)
+     *                    [iphide]    (boolean)   Скрыть (не показывать) IP и UserAgent
+     *                    [iphist]    (boolean)   Показывать ссылку на историю IP
+     *
+     *                    [header]    (string)    Текст в строке после Ника пользователя
+     *                    [body]      (string)    Основной текст, под ником пользователя
+     *                    [sub]       (string)    Строка выводится вверху области "sub"
+     *                    [footer]    (string)    Строка выводится внизу области "sub"
+     *
+     * @return string
+     */
+    public static function display_user($user = 0, $arg = array())
     {
         global $rootpath, $mod;
         $out = FALSE;
@@ -339,14 +357,16 @@ class functions extends core
         }
         if (isset($arg['body']))
             $out .= '<div>' . $arg['body'] . '</div>';
-        $ipinf = !isset($arg['iphide']) && (self::$user_rights || ($user['id'] && $user['id'] == self::$user_id)) ? 1 : 0;
+        $ipinf = !isset($arg['iphide']) && self::$user_rights ? 1 : 0;
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? self::display_date($user['lastdate']) : FALSE;
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
-            if (isset($arg['sub']))
+            if (isset($arg['sub'])) {
                 $out .= '<div>' . $arg['sub'] . '</div>';
-            if ($lastvisit)
+            }
+            if ($lastvisit) {
                 $out .= '<div><span class="gray">' . self::$lng['last_visit'] . ':</span> ' . $lastvisit . '</div>';
+            }
             $iphist = '';
             if ($ipinf) {
                 $out .= '<div><span class="gray">' . self::$lng['browser'] . ':</span> ' . $user['browser'] . '</div>' .
@@ -360,7 +380,7 @@ class functions extends core
                     $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
                     $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
                 } elseif (self::$user_rights) {
-                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip .'</a>';
+                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
                     $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {
                     $out .= $ip . $iphist;
@@ -375,28 +395,34 @@ class functions extends core
                 $out .= $arg['footer'];
             $out .= '</div>';
         }
+
         return $out;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Форматирование имени файла
-    -----------------------------------------------------------------
-    */
+    /**
+     * Форматирование имени файла
+     *
+     * @param string $name
+     *
+     * @return string
+     */
     public static function format($name)
     {
         $f1 = strrpos($name, ".");
         $f2 = substr($name, $f1 + 1, 999);
         $fname = strtolower($f2);
+
         return $fname;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Получаем данные пользователя
-    -----------------------------------------------------------------
-    */
-    public static function get_user($id = FALSE)
+    /**
+     * Получаем данные пользователя
+     *
+     * @param int $id Идентификатор пользователя
+     *
+     * @return array|bool
+     */
+    public static function get_user($id = 0)
     {
         if ($id && $id != self::$user_id) {
             $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
@@ -408,6 +434,97 @@ class functions extends core
         } else {
             return self::$user_data;
         }
+    }
+
+    /**
+     * Является ли выбранный юзер другом?
+     *
+     * @param int $id   Идентификатор пользователя, которого проверяем
+     *
+     * @return bool
+     */
+    public static function is_friend($id = 0)
+    {
+        static $user_id = NULL;
+        static $return = FALSE;
+
+        if (!self::$user_id && !$id) {
+            return FALSE;
+        }
+
+        if (is_null($user_id) || $id != $user_id) {
+            $query = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `type` = '2' AND ((`from_id` = '$id' AND `user_id` = '" . self::$user_id . "') OR (`from_id` = '" . self::$user_id . "' AND `user_id` = '$id'))"), 0);
+            $return = $query == 2 ? TRUE : FALSE;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Находится ли выбранный пользователь в контактах и игноре?
+     *
+     * @param int $id Идентификатор пользователя, которого проверяем
+     *
+     * @return int Результат запроса:
+     *             0 - не в контактах
+     *             1 - в контактах
+     *             2 - в игноре у меня
+     */
+    public static function is_contact($id = 0)
+    {
+        static $user_id = NULL;
+        static $return = 0;
+
+        if (!self::$user_id && !$id) {
+            return 0;
+        }
+
+        if (is_null($user_id) || $id != $user_id) {
+            $user_id = $id;
+            $req_1 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . self::$user_id . "' AND `from_id` = '$id'");
+            if (mysql_num_rows($req_1)) {
+                $res_1 = mysql_fetch_assoc($req_1);
+                if ($res_1['ban'] == 1) {
+                    $return = 2;
+                } else {
+                    $return = 1;
+                }
+            } else {
+                $return = 0;
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Проверка на игнор у получателя
+     *
+     * @param $id
+     *
+     * @return bool
+     */
+    public static function is_ignor($id)
+    {
+        static $user_id = NULL;
+        static $return = FALSE;
+
+        if (!self::$user_id && !$id) {
+            return FALSE;
+        }
+
+        if (is_null($user_id) || $id != $user_id) {
+            $user_id = $id;
+            $req_2 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = '" . self::$user_id . "'");
+            if (mysql_num_rows($req_2)) {
+                $res_2 = mysql_fetch_assoc($req_2);
+                if ($res_2['ban'] == 1) {
+                    $return = TRUE;
+                }
+            }
+        }
+
+        return $return;
     }
 
     /*
@@ -452,6 +569,7 @@ class functions extends core
             'ю' => 'yu',
             'я' => 'ya'
         );
+
         return strtr($str, $replace);
     }
 
@@ -468,6 +586,7 @@ class functions extends core
             $file = $rootpath . 'files/cache/smileys.dat';
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== FALSE) {
                 $smileys_cache = unserialize($smileys);
+
                 return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
             } else {
                 return $str;
@@ -490,6 +609,7 @@ class functions extends core
         if ($var > 345600) return $day . ' ' . $lng['timecount_days'];
         if ($var >= 172800) return $day . ' ' . $lng['timecount_days_r'];
         if ($var >= 86400) return '1 ' . $lng['timecount_day'];
+
         return date("G:i:s", mktime(0, 0, $var));
     }
 
@@ -501,71 +621,72 @@ class functions extends core
     public static function trans($str)
     {
         $replace = array(
-            'a' => 'а',
-            'b' => 'б',
-            'v' => 'в',
-            'g' => 'г',
-            'd' => 'д',
-            'e' => 'е',
+            'a'  => 'а',
+            'b'  => 'б',
+            'v'  => 'в',
+            'g'  => 'г',
+            'd'  => 'д',
+            'e'  => 'е',
             'yo' => 'ё',
             'zh' => 'ж',
-            'z' => 'з',
-            'i' => 'и',
-            'j' => 'й',
-            'k' => 'к',
-            'l' => 'л',
-            'm' => 'м',
-            'n' => 'н',
-            'o' => 'о',
-            'p' => 'п',
-            'r' => 'р',
-            's' => 'с',
-            't' => 'т',
-            'u' => 'у',
-            'f' => 'ф',
-            'h' => 'х',
-            'c' => 'ц',
+            'z'  => 'з',
+            'i'  => 'и',
+            'j'  => 'й',
+            'k'  => 'к',
+            'l'  => 'л',
+            'm'  => 'м',
+            'n'  => 'н',
+            'o'  => 'о',
+            'p'  => 'п',
+            'r'  => 'р',
+            's'  => 'с',
+            't'  => 'т',
+            'u'  => 'у',
+            'f'  => 'ф',
+            'h'  => 'х',
+            'c'  => 'ц',
             'ch' => 'ч',
-            'w' => 'ш',
+            'w'  => 'ш',
             'sh' => 'щ',
-            'q' => 'ъ',
-            'y' => 'ы',
-            'x' => 'э',
+            'q'  => 'ъ',
+            'y'  => 'ы',
+            'x'  => 'э',
             'yu' => 'ю',
             'ya' => 'я',
-            'A' => 'А',
-            'B' => 'Б',
-            'V' => 'В',
-            'G' => 'Г',
-            'D' => 'Д',
-            'E' => 'Е',
+            'A'  => 'А',
+            'B'  => 'Б',
+            'V'  => 'В',
+            'G'  => 'Г',
+            'D'  => 'Д',
+            'E'  => 'Е',
             'YO' => 'Ё',
             'ZH' => 'Ж',
-            'Z' => 'З',
-            'I' => 'И',
-            'J' => 'Й',
-            'K' => 'К',
-            'L' => 'Л',
-            'M' => 'М',
-            'N' => 'Н',
-            'O' => 'О',
-            'P' => 'П',
-            'R' => 'Р',
-            'S' => 'С',
-            'T' => 'Т',
-            'U' => 'У',
-            'F' => 'Ф',
-            'H' => 'Х',
-            'C' => 'Ц',
+            'Z'  => 'З',
+            'I'  => 'И',
+            'J'  => 'Й',
+            'K'  => 'К',
+            'L'  => 'Л',
+            'M'  => 'М',
+            'N'  => 'Н',
+            'O'  => 'О',
+            'P'  => 'П',
+            'R'  => 'Р',
+            'S'  => 'С',
+            'T'  => 'Т',
+            'U'  => 'У',
+            'F'  => 'Ф',
+            'H'  => 'Х',
+            'C'  => 'Ц',
             'CH' => 'Ч',
-            'W' => 'Ш',
+            'W'  => 'Ш',
             'SH' => 'Щ',
-            'Q' => 'Ъ',
-            'Y' => 'Ы',
-            'X' => 'Э',
+            'Q'  => 'Ъ',
+            'Y'  => 'Ы',
+            'X'  => 'Э',
             'YU' => 'Ю',
             'YA' => 'Я'
         );
+
         return strtr($str, $replace);
     }
 
@@ -582,6 +703,7 @@ class functions extends core
         $str = self::checkin($str);
         $str = nl2br($str);
         $str = mysql_real_escape_string($str);
+
         return $str;
     }
 }

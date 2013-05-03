@@ -113,6 +113,7 @@ if ($user['id'] == $user_id || $rights >= 7) {
         '<small>' . $lng_profile['access_help'] . '<br />Min. 3, Max. 15</small></p>' .
         '<p><h3>Доступ</h3>' .
         '<input type="radio" name="access" value="4" ' . (!$access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_all'] . '<br />' .
+        '<input type="radio" name="access" value="3" ' . ($access == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_friends'] . '<br />' .
         '<input type="radio" name="access" value="2" ' . ($access == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_by_password'] . '<br />' .
         '<input type="radio" name="access" value="1" ' . ($access == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_closed'] . '</p>' .
         '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>' .

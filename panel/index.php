@@ -44,6 +44,7 @@ $array = array(
     'ban_panel',
     'karma',
     'reg',
+	'mail',
     'search_ip',
     'usr',
     'usr_adm',
@@ -81,6 +82,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         Блок модулей
         -----------------------------------------------------------------
         */
+        $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
         echo'<div class="gmenu"><p>';
         echo'<h3><img src="../images/modules.png" width="16" height="16" class="left" />&#160;' . $lng['modules'] . '</h3><ul>' .
             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
@@ -88,6 +90,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' : '') .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' : '') .
+			 '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>' .
             '</ul></p></div>';
 
         /*
@@ -118,7 +121,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '</ul>' .
             '</p></div>';
     }
-    echo '<div class="phdr">&#160;</div>';
+    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 5.0.0</b><br/>Build: xxx</div>';
 }
 
 require('../incfiles/end.php');
