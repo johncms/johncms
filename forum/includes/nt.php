@@ -42,15 +42,16 @@ function forum_link($m)
                 $res = mysql_fetch_array($req);
                 $name = strtr($res['text'], array(
                     '&quot;' => '',
-                    '&amp;' => '',
-                    '&lt;' => '',
-                    '&gt;' => '',
+                    '&amp;'  => '',
+                    '&lt;'   => '',
+                    '&gt;'   => '',
                     '&#039;' => '',
-                    '[' => '',
-                    ']' => ''
+                    '['      => '',
+                    ']'      => ''
                 ));
                 if (mb_strlen($name) > 40)
                     $name = mb_substr($name, 0, 40) . '...';
+
                 return '[url=' . $m[3] . ']' . $name . '[/url]';
             } else {
                 return $m[3];
@@ -68,6 +69,7 @@ if ($flood) {
     require('../incfiles/end.php');
     exit;
 }
+
 $req_r = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
 if (!mysql_num_rows($req_r)) {
     require('../incfiles/head.php');
@@ -75,6 +77,8 @@ if (!mysql_num_rows($req_r)) {
     require('../incfiles/end.php');
     exit;
 }
+$res_r = mysql_fetch_assoc($req_r);
+
 $th = isset($_POST['th']) ? functions::check(mb_substr(trim($_POST['th']), 0, 100)) : '';
 $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
 if (isset($_POST['msgtrans'])) {
@@ -112,6 +116,9 @@ if (isset($_POST['submit'])
     if (!$error) {
         unset($_SESSION['token']);
 
+        // Если задано в настройках, то назначаем топикстартера куратором
+        $curator = $res_r['edit'] == 1 ? serialize(array($user_id => $login)) : '';
+
         // Добавляем тему
         mysql_query("INSERT INTO `forum` SET
             `refid` = '$id',
@@ -122,9 +129,10 @@ if (isset($_POST['submit'])
             `text` = '$th',
             `soft` = '',
             `edit` = '',
-            `curators` = ''
-        ") or exit(__LINE__ . ': ' . mysql_error());
+            `curators` = '$curator'
+        ");
         $rid = mysql_insert_id();
+
         // Добавляем текст поста
         mysql_query("INSERT INTO `forum` SET
             `refid` = '$rid',
@@ -138,8 +146,10 @@ if (isset($_POST['submit'])
             `text` = '" . mysql_real_escape_string($msg) . "',
             `edit` = '',
             `curators` = ''
-        ") or exit(__LINE__ . ': ' . mysql_error());
+        ");
+
         $postid = mysql_insert_id();
+
         // Записываем счетчик постов юзера
         $fpst = $datauser['postforum'] + 1;
         mysql_query("UPDATE `users` SET
@@ -147,16 +157,19 @@ if (isset($_POST['submit'])
             `lastpost` = '" . time() . "'
             WHERE `id` = '$user_id'
         ");
+
         // Ставим метку о прочтении
         mysql_query("INSERT INTO `cms_forum_rdm` SET
             `topic_id`='$rid',
             `user_id`='$user_id',
             `time`='" . time() . "'
         ");
-        if ($_POST['addfiles'] == 1)
+
+        if ($_POST['addfiles'] == 1) {
             header("Location: index.php?id=$postid&act=addfile");
-        else
+        } else {
             header("Location: index.php?id=$rid");
+        }
     } else {
         // Выводим сообщение об ошибке
         require('../incfiles/head.php');
@@ -165,7 +178,6 @@ if (isset($_POST['submit'])
         exit;
     }
 } else {
-    $res_r = mysql_fetch_assoc($req_r);
     $req_c = mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'");
     $res_c = mysql_fetch_assoc($req_c);
     require('../incfiles/head.php');
@@ -193,8 +205,7 @@ if (isset($_POST['submit'])
         '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . $lng_forum['post'] . '</h3>';
-    if (!$is_mobile)
-        echo '</p><p>' . bbcode::auto_bb('form', 'msg');
+    echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
     if ($set_user['translit']) {
@@ -202,7 +213,7 @@ if (isset($_POST['submit'])
     }
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
-    echo'</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
+    echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
         ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .

@@ -116,18 +116,6 @@ ALTER TABLE `news` CHANGE `time` `time` INT UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE `news` CHANGE `kom` `kom` INT UNSIGNED NOT NULL DEFAULT '0';
 OPTIMIZE TABLE `news`;
 
-ALTER TABLE `privat` CHANGE `id` `id` INT UNSIGNED NOT NULL AUTO_INCREMENT;
-ALTER TABLE `privat` CHANGE `time` `time` INT UNSIGNED NOT NULL DEFAULT '0';
-ALTER TABLE `privat` CHANGE `otvet` `otvet` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '0';
-ALTER TABLE `privat` ADD INDEX ( `type` );
-ALTER TABLE `privat` ADD INDEX ( `chit` );
-OPTIMIZE TABLE `privat`;
-
-ALTER TABLE `users` DROP `set_language`;
-ALTER TABLE `users` DROP `time`;
-ALTER TABLE `users` DROP `vrrat`;
-ALTER TABLE `users` DROP `alls`;
-ALTER TABLE `users` DROP `kod`;
 ALTER TABLE `users` CHANGE `id` `id` INT UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE `users` CHANGE `failed_login` `failed_login` TINYINT UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE `users` CHANGE `imname` `imname` VARCHAR( 50 ) NOT NULL DEFAULT '';
@@ -206,7 +194,8 @@ CREATE TABLE IF NOT EXISTS `cms_mail` (
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
 ('them_message', ''),
 ('setting_mail', ''),
-('reg_message', '');
+('reg_message', ''),
+('site_access', '2');
 
 ALTER TABLE `users` ADD `set_mail` TINYTEXT NOT NULL AFTER `set_forum`;
 ALTER TABLE  `users` CHANGE  `karma_plus`  `karma_plus` INT NOT NULL DEFAULT  '0';

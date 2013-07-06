@@ -18,6 +18,8 @@ if (empty($_GET['id'])) {
     exit;
 }
 
+
+
 // Запрос сообщения
 $req = mysql_query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
@@ -25,7 +27,8 @@ WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($rights >= 7 ? "" : " AN
 $res = mysql_fetch_array($req);
 
 // Запрос темы
-$them = mysql_fetch_array(mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'"));
+$them = mysql_fetch_assoc(mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'"));
+
 echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $them['text'] . '</div><div class="menu">';
 // Значок пола
 if ($res['sex'])
@@ -69,7 +72,34 @@ $text = nl2br($text);
 $text = bbcode::tags($text);
 if ($set_user['smileys'])
     $text = functions::smileys($text, ($res['rights'] >= 1) ? 1 : 0);
-echo $text . '</div>';
+echo $text . '';
+
+// Если есть прикрепленный файл, выводим его описание
+$freq = mysql_query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
+if (mysql_num_rows($freq) > 0) {
+    $fres = mysql_fetch_assoc($freq);
+    $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
+    echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . $lng_forum['attached_file'] . ':';
+    // Предпросмотр изображений
+    $att_ext = strtolower(functions::format('./files/forum/attach/' . $fres['filename']));
+    $pic_ext = array(
+        'gif',
+        'jpg',
+        'jpeg',
+        'png'
+    );
+    if (in_array($att_ext, $pic_ext)) {
+        echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+        echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . $lng_forum['click_to_view'] . '" /></a></div>';
+    } else {
+        echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+    }
+    echo ' (' . $fls . ' кб.)<br/>';
+    echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</div>';
+    $file_id = $fres['id'];
+}
+echo '</div>';
+
 // Вычисляем, на какой странице сообщение?
 $page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'"), 0) / $kmess);
 echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng_forum['back_to_topic'] . '</a></div>';

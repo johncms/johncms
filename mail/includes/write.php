@@ -10,6 +10,7 @@
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $set_mail = unserialize($user['set_mail']);
 $out = '';
 $total = 0;
@@ -76,7 +77,7 @@ if (empty($_SESSION['error'])) {
 
 $out .= '<div class="phdr"><b>' . $lng['mail'] . '</b></div>';
 
-if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3'])  && !functions::is_ignor($id)) {
+if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !functions::is_ignor($id)) {
     if (!$id) {
         $name = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower(trim($_POST['nick']))) : '';
     }
@@ -352,27 +353,30 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3'])  && !functio
 }
 
 if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
+
     $out .= isset($_SESSION['error']) ? $_SESSION['error'] : '';
     $out .= '<div class="gmenu">' .
         '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? functions::check($_POST['nick']) : '') . '" placeholder="' . $lng_mail['to_whom'] . '?"/></p>') .
         '<p>';
-    if (!$is_mobile) {
-        $out .= bbcode::auto_bb('form', 'text');
-    }
+    $out .= bbcode::auto_bb('form', 'text');
     $out .= '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>';
     if ($set_user['translit'])
         $out .= '<input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'] . '<br />';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . $lng['sent'] . '"/></p>' .
         '</form></div>' .
-        '<div class="phdr"><b>' . ($id && isset($qs) ? $lng_mail['personal_correspondence'] . ' ' . $qs['name'] : $lng_mail['sending_the_message']) . '</b></div>';
+        '<div class="phdr"><b>' . ($id && isset($qs) ? $lng_mail['personal_correspondence'] . ' <a href="../users/profile.php?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : $lng_mail['sending_the_message']) . '</b></div>';
 }
 
 if ($id) {
+
     $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `sys`!='1' AND `delete`!='$user_id' AND `spam`='0'"), 0);
+
     if ($total) {
+
         if ($total > $kmess) $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+
         $req = mysql_query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
             FROM `cms_mail`
             LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`

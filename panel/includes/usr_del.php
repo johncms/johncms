@@ -56,7 +56,9 @@ if (!$error) {
         'lastvisit' => 1,
         'iphist' => 1
     )) . '</p></div>';
+
     switch ($mod) {
+
         case 'del':
             /*
             -----------------------------------------------------------------
@@ -82,9 +84,24 @@ if (!$error) {
             mysql_query("DELETE FROM `cms_album_downloads` WHERE `user_id` = '" . $user['id'] . "'");
             mysql_query("DELETE FROM `cms_album_views` WHERE `user_id` = '" . $user['id'] . "'");
             mysql_query("DELETE FROM `cms_album_votes` WHERE `user_id` = '" . $user['id'] . "'");
+
+            // Удаляем файлы юзера из почты
+            $req = mysql_query("SELECT * FROM `cms_mail` WHERE (`user_id` OR `from_id` = '" . $user['id'] . "') AND `file_name` != ''");
+            if (mysql_num_rows($req)) {
+                while ($res = mysql_fetch_assoc($req)) {
+                    // Удаляем файлы почты
+                    if ($res['file_name']) {
+                            if (file_exists('../files/mail/' . $res['file_name']) !== false)
+                                @unlink('../files/mail/' . $res['file_name']);
+                            }
+                    }
+                }
             // Удаляем почту
-            mysql_query("DELETE FROM `privat` WHERE `user` = '" . $user['name'] . "'");
-            mysql_query("DELETE FROM `privat` WHERE `author` = '" . $user['name'] . "' AND `type` = 'out' AND `chit` = 'no'");
+            mysql_query("DELETE FROM `cms_mail` WHERE `user_id` = '" . $user['id'] . "'");
+            mysql_query("DELETE FROM `cms_mail` WHERE `from_id` = '" . $user['id'] . "'");
+            mysql_query("DELETE FROM `cms_contact` WHERE `user_id` = '" . $user['id'] . "'");
+            mysql_query("DELETE FROM `cms_contact` WHERE `from_id` = '" . $user['id'] . "'");
+
             // Удаляем карму
             mysql_query("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'");
             // Удаляем комментарии

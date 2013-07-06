@@ -50,8 +50,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     */
     $textl = $lng['community'];
     require('../incfiles/head.php');
-    $shift = (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600;
-    $brth = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time() + $shift) . "' AND `monthb` = '" . date('n', time() + $shift) . "' AND `preg` = '1'"), 0);
+    $brth = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'"), 0);
     $count_adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0"), 0);
     echo '<div class="phdr"><b>' . $lng['community'] . '</b></div>' .
          '<div class="gmenu"><form action="search.php" method="post">' .
@@ -72,4 +71,3 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 }
 
 require_once('../incfiles/end.php');
-?>

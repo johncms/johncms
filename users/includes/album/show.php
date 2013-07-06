@@ -56,7 +56,7 @@ if ($album['access'] != 2) {
 }
 if ($album['access'] == 1
     && $user['id'] != $user_id
-    && $rights < 6
+    && $rights < 7
 ) {
     // Доступ закрыт
     echo functions::display_error($lng['access_forbidden'], '<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng_profile['album_list'] . '</a>');
@@ -64,7 +64,7 @@ if ($album['access'] == 1
     exit;
 } elseif ($album['access'] == 2
     && $user['id'] != $user_id
-    && $rights < 6
+    && $rights < 7
 ) {
     // Доступ через пароль
     if (isset($_POST['password'])) {

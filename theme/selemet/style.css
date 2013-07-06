@@ -1,0 +1,383 @@
+/*//////////////////////////////////////////////////
+/Designed by selemet , special for  johncms.com
+/////////////////////////////////////////////////*/
+body {
+  background:#F4F4FE url(images/bg.png);
+  color: #000000;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: small;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+a:active {
+  color: #666600;
+}
+
+a:hover {
+  color: #FF0000;
+  text-decoration: underline;
+}
+
+a:link, a:visited {
+  color: #29588B;
+  text-decoration: none;
+}
+form {
+  font-size: small;
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin: 0;
+  padding: 0 0 2px 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid gray;
+  margin: 0;
+}
+
+p {
+  margin-bottom: 6px;
+  margin-top: 6px;
+}
+
+textarea {
+  width: 99%;
+  max-width: 640px;
+  border:1px solid #ADB7BF;
+  padding:5px;
+  margin-bottom:3px;
+  border-radius: 2px;
+}
+
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+input ,select{
+  border:1px solid #ADB7BF;
+  padding: 3px;
+  border-radius: 2px;
+}
+input[type="submit"] {
+  background: #E3E8EA;
+  padding: 3px 5px;
+}
+.alarm {
+  background-color: #F23439;
+  border-bottom: 1px solid #CB1A1C;
+  color: #ffffff;
+  font-weight: bold;
+  padding:4px;
+}
+
+.bblist {
+  color: #4A5663;
+  background: transparent url(../../images/dot.gif) no-repeat left;
+  padding: 0px 0px 0px 10px;
+}
+
+.bmenu {
+  background-color: #D3D8DB;
+  border-bottom: 1px solid #bbb;
+  margin: 1px 0px;
+  padding: 2px 4px 4px 4px;
+}
+
+.end {
+  text-align: center;
+}
+
+.fmenu {
+  background-color: #E8E8FF;
+  border-top: 1px solid #D6D6F7;
+  border-left: 1px solid #D3D8DE;
+  border-right: 1px solid #D3D8DE;
+  color: #FFFFFF;
+  margin-top: 7px;
+  padding: 6px;
+}
+
+.footer {
+  background: #3A3A4E;
+  color: #fff;
+  margin: 0;
+  padding: 10px;
+}
+
+.func {
+  border-left: 4px solid #9acd32;
+  color: #757575;
+  font-size: x-small;
+  margin-left: 2px;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+.gmenu {
+  background-color: #EDF7E8;
+  margin: 1px 0px;
+  border-bottom: 1px solid #DBEDD3;
+  padding: 3px 4px 3px 4px;
+}
+
+.gray {
+  color: #586776;
+}
+
+.greply {
+  border-left: 4px solid #009900;
+  color: #009900;
+  padding: 2px 0 2px 4px;
+}
+
+.hdr {
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #595959;
+  font-weight: bold;
+  padding-left: 2px;
+}
+.logo {
+  background: #2E2E43;
+  padding:0px;
+}
+.header {
+  background: #404055;
+  color: #fff;
+  margin: 0;
+  padding: 7px;
+}
+
+.left {
+  float: left;
+}
+
+.list1 {
+  background-color: #F7F7F5;
+  border-bottom: 1px solid #D8DEE5;
+  text-shadow:0px 1px #fff;
+  margin: 1px 0px;
+  padding: 5px;
+  color: #222;
+}
+
+.list2 {
+  text-shadow:0px 1px #f0f0f0;
+  background-color: #F0F2F5;
+  border-bottom: 1px solid #D8DBE3;
+  margin: 1px 0px;
+  padding: 5px;
+  color: #222;
+}
+.list1 a:link ,.list1 a:visited ,.list2 a:link ,.list2 a:visited {
+  color:#393698;
+  text-decoration: underline;
+}
+.list1 a:hover ,.list2 a:hover {
+  color: #D15D34;
+  text-decoration: underline;
+}
+.spoilerhead {
+  background: #E8E8F2;
+  color: #211F67;
+  padding: 3px;
+  border: 1px  solid #9898AD;
+}
+.spoilerbody {
+  background: #FAFAFC;
+  border: 1px solid #AFAFC4;
+  border-top: none;
+  padding: 4px;
+  color:#333;
+  border-radius: 0px 0px 3px 3px;
+}
+.maintxt {
+  background: #fff;
+  font-weight: normal;
+  margin: -6px 0px -6px 0px;
+  padding: 0px;
+  border-left: 1px solid #D3D8DE;
+  border-right: 1px solid #D3D8DE;
+}
+.maintxt p a:link ,.maintxt p a:visited{
+  padding-left: 8px;
+}
+.menu {
+  color: #444;
+  background-color: #F7F7FF;
+  padding: 3px 8px;
+}
+.menu a:link ,.menu a:visited {
+  color:#273E6A;
+  text-decoration: none;
+}
+.news {
+  background-color: #EDEDF7;
+  border: 1px solid #ddd;
+  margin: 2px;
+  color: #2E2E43;
+  font-size: x-small;
+  padding: 3px 4px 4px 4px;
+}
+
+.phdr {
+  background-color: #C6CBD3;
+  border-top: 1px solid #BFC4CB;
+  border-bottom: 1px solid #B4B9C1;
+  text-shadow:0px 1px #E0E5EA;
+  padding: 6px 8px;
+  color: #24292E;
+}
+.phdr a:link ,.phdr a:visited { color: #3B4374; }
+.phpcode {
+  background-color: #E0E6E9;
+  border: 1px dotted #9FAEBB;
+  margin-top: 4px;
+  padding: 0 2px 0 2px;
+  /*overflow: auto;*/
+}
+
+.quote {
+  border-left: 4px solid #c0c0c0;
+  color: #878787;
+  font-size: x-small;
+  margin-left: 2px;
+  padding: 2px 0 2px 4px;
+}
+
+.reply {
+  border-left: 4px solid #EE0000;
+  color: #EE0000;
+  padding: 2px 0 2px 4px;
+}
+
+.rmenu {
+  background-color: #EAC4D3;
+  border-bottom: 1px solid #E3B9C9;
+  margin: 1px 0px;
+  padding:4px;
+  color: #172C34;
+}
+
+.sitemap {
+  background-color: #eeecd9;
+  margin: 0;
+  padding: 2px 4px 3px 4px;
+  font-size: xx-small;
+  height: 38px;
+  overflow: auto;
+}
+
+.status {
+  color: #CD853F;
+  font-size: x-small;
+  font-weight: bold;
+  padding-left: 0;
+}
+
+.sub {
+  border-top: 1px dotted #ccc;
+  font-size: x-small;
+  margin-top: 4px;
+}
+
+.tmn {
+  background-color: #E8E8FF;
+  border-bottom: 1px solid #D6D6F7;
+  border-left: 1px solid #D3D8DE;
+  border-right: 1px solid #D3D8DE;
+  color: #52432C;
+  margin-bottom: 6px;
+  padding: 5px;
+}
+
+.topmenu {
+  background-color: #EDEDF2;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+}
+
+.topmenu input{
+  font-size: x-small
+}
+
+.user {
+  background-color: #E3E5E8;
+  margin: 1px 0px;
+  border-bottom: 1px solid #C6CED3;
+  padding: 3px 4px 3px 4px;
+}
+.user .gray {
+  color: #2E2E31;
+}
+.alarm a:link, .alarm a:visited {
+  color: #FFFFFF;
+  font-size: x-small;
+}
+
+.clip a:link, .clip a:visited {
+  color: #424e59;
+}
+
+.footer a:link, .footer a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+.green, .green a:link, .green a:visited {
+  color: #008000;
+}
+
+.greply a:link, .greply a:visited {
+  color: #008800;
+}
+
+.red, .red a:link, .red a:visited {
+  color: #FF0000;
+}
+
+.reply a:link, .reply a:visited {
+  color: #DD0000;
+}
+
+.sub a:link, .sub a:visited {}
+
+.tmn a:link, .tmn a:visited, .fmenu a:link, .fmenu a:visited {
+  color: #444;
+  text-decoration: none;
+}
+.fmenu a:hover,.tmn a:hover ,.gmenu a:hover ,.bmenu a:hover ,.menu a:hover ,.tmn a:hover{
+  color: #0D1FE0;
+  text-decoration: underline;
+}
+.currentpage {
+    background-color: #fff;
+    border: 1px solid #ADB7BF;
+    border-radius: 2px;
+    padding: 1px 6px;
+}
+
+a.pagenav {
+    border: 1px solid #C1CBD3;
+    padding: 0px 3px 0px 3px;
+    text-decoration: none;
+    border-radius: 2px;
+    padding: 0px 5px;
+}
+
+a.pagenav:hover {
+    background-color: #F5F7F7;
+    border: 1px solid #A0AAB4;
+}
+/*//////////////////////////////////////////////////
+/Designed by selemet , special for johncms.com
+/////////////////////////////////////////////////*/

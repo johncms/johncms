@@ -16,29 +16,30 @@ $textl = $lng['mail'];
 require_once('../incfiles/head.php');
 
 if ($id) {
+
     //Проверяем наличие контакта в Вашем списке
     $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id';"), 0);
     if ($total) {
         if (isset($_POST['submit'])) { //Если кнопка "Удалить" нажата
             $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id';"), 0);
             if ($count_message) {
-                $req = mysql_query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT "
-                    . $count_message);
-					
-                while (($row = mysql_fetch_assoc($req)) !== false) {
+                $req = mysql_query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT " . $count_message);
+                while (($row = mysql_fetch_assoc($req)) !== FALSE) {
                     //Удаляем сообщения
                     if ($row['delete']) {
                         //Удаляем файлы
                         if ($row['file_name']) {
-                            if (file_exists('../files/mail/' . $row['file_name']) !== false)
+                            if (file_exists('../files/mail/' . $row['file_name']) !== FALSE) {
                                 @unlink('../files/mail/' . $row['file_name']);
+                            }
                         }
                         mysql_query("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                     } else {
                         if ($row['read'] == 0 && $row['user_id'] == $user_id) {
                             if ($row['file_name']) {
-                                if (file_exists('../files/mail/' . $row['file_name']) !== false)
+                                if (file_exists('../files/mail/' . $row['file_name']) !== FALSE) {
                                     @unlink('../files/mail/' . $row['file_name']);
+                                }
                             }
                             mysql_query("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                         } else {

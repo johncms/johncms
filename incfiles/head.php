@@ -83,7 +83,7 @@ if (isset($cms_ads[0])) echo $cms_ads[0];
 Выводим логотип и переключатель языков
 -----------------------------------------------------------------
 */
-echo '<table style="width: 100%;"><tr>' .
+echo '<table style="width: 100%;" class="logo"><tr>' .
     '<td valign="bottom"><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></td>' .
     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
     '</tr></table>';

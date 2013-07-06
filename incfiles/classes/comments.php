@@ -53,7 +53,6 @@ class comments
             $this->sub_id = $arg['sub_id'];
             $this->url = $arg['script'] . '&amp;' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
         } else {
-            //TODO: Доработать на режим без sub_id
             $this->url = $arg['script'];
         }
         $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
@@ -179,7 +178,6 @@ class comments
                 */
                 if ($this->item && $this->access_delete && !$this->ban) {
                     if (isset($_GET['yes'])) {
-                        //TODO: Продумать проверку на удаление постов администрации
                         $req = mysql_query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
                         if (mysql_num_rows($req)) {
                             $res = mysql_fetch_assoc($req);
@@ -355,7 +353,7 @@ class comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
                (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
                '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-               (!core::$is_mobile ? '</p><p>' . bbcode::auto_bb('form', 'message') : '') .
+               '</p><p>' . bbcode::auto_bb('form', 'message') .
                '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>' .
                (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>' : '') .
                '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';

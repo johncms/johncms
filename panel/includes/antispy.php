@@ -47,6 +47,7 @@ class scaner {
         '../.htaccess',
         '../login.php',
         '../captcha.php',
+        '../closed.php',
         '../exit.php',
         '../go.php',
         '../index.php',

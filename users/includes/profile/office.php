@@ -99,7 +99,6 @@ echo '</ul></p></div>';
 // Блок настроек
 echo '<div class="bmenu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng_profile['my_settings'] . '</h3><ul>' .
     '<li><a href="profile.php?act=settings">' . $lng['system_settings'] . '</a></li>' .
-    '<li><a href="profile.php?act=friends&amp;do=settings">' . $lng_profile['settings_mail'] . '</a></li>' .
     '<li><a href="profile.php?act=edit">' . $lng_profile['profile_edit'] . '</a></li>' .
     '<li><a href="profile.php?act=password">' . $lng['change_password'] . '</a></li>';
 if ($rights >= 1)
