@@ -193,13 +193,11 @@ switch ($mod) {
             '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['direct_url'] . '<br />' .
             '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['avatars'] . '<br/>' .
             '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['smileys'] . '<br/>' .
-            '<input name="digest" type="checkbox" value="1" ' . (core::$user_set['digest'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['digest'] .
             '</p><p><h3>' . $lng['text_input'] . '</h3>' .
             '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . $lng['field_height'] . ' (1-9)<br />';
         if (core::$lng_iso == 'ru' || core::$lng_iso == 'uk') echo '<input name="translit" type="checkbox" value="1" ' . (core::$user_set['translit'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['translit'];
         echo '</p><p><h3>' . $lng['apperance'] . '</h3>' .
-            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . $lng['lines_on_page'] . ' (5-99)<br />' .
-            '<input name="quick_go" type="checkbox" value="1" ' . (core::$user_set['quick_go'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['quick_jump'] .
+            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . $lng['lines_on_page'] . ' (5-99)' .
             '</p>';
 
         // Выбор темы оформления

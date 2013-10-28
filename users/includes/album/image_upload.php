@@ -18,7 +18,7 @@ require('../incfiles/head.php');
 Выгрузка фотографии
 -----------------------------------------------------------------
 */
-if ($al && $user['id'] == $user_id || $rights >= 7) {
+if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     $req_a = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
     if (!mysql_num_rows($req_a)) {
         // Если альбома не существует, завершаем скрипт
@@ -102,4 +102,3 @@ if ($al && $user['id'] == $user_id || $rights >= 7) {
              '<p><a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['back'] . '</a></p>';
     }
 }
-?>

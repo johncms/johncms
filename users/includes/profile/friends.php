@@ -465,7 +465,7 @@ if ($id && $id != $user_id && $do) {
                 }
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('profile.php?act=friends&amp;', $start, $total, $kmess) . '</p>';
+                    echo '<p>' . functions::display_pagination('profile.php?act=friends&amp;do=offers&amp;', $start, $total, $kmess) . '</p>';
                     echo '<p><form action="profile.php" method="get">
 						<input type="hidden" name="act" value="friends"/>
 						<input type="hidden" name="do" value="offers"/>

@@ -11,7 +11,6 @@
 
 define('_IN_JOHNCMS', 1);
 
-$rootpath = '';
 require('incfiles/core.php');
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
 

@@ -181,16 +181,19 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         // Файлы SIS
         $ext_sis = array(
             'sis',
-            'sisx'
+            'sisx',
+            'apk'
         );
         // Файлы документов и тексты
         $ext_doc = array(
             'txt',
             'pdf',
             'doc',
+            'docx',
             'rtf',
             'djvu',
-            'xls'
+            'xls',
+            'xlsx'
         );
         // Файлы картинок
         $ext_pic = array(

@@ -84,7 +84,7 @@ if (isset($cms_ads[0])) echo $cms_ads[0];
 -----------------------------------------------------------------
 */
 echo '<table style="width: 100%;" class="logo"><tr>' .
-    '<td valign="bottom"><a href="' . $set['homeurl'] . '"><img src="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/images/logo.gif" alt=""/></a></td>' .
+    '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . functions::image('logo.gif', array('class' => '')) . '</a></td>' .
     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
     '</tr></table>';
 
@@ -101,9 +101,9 @@ echo '<div class="header"> ' . $lng['hi'] . ', ' . ($user_id ? '<b>' . $login . 
 -----------------------------------------------------------------
 */
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . $lng['homepage'] . '</a> | ' : '') .
-    ($user_id ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . $lng['personal'] . '</a> | ' : '') .
-    ($user_id ? '<a href="' . $set['homeurl'] . '/exit.php">' . $lng['exit'] . '</a>' : '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a> | <a href="' . $set['homeurl'] . '/registration.php">' . $lng['registration'] . '</a>') .
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . $lng['homepage'] . '</a><br/>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . functions::image('menu_cabinet.png') . $lng['personal'] . '</a><br/>' : '') .
+    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a>' : '') .
     '</div><div class="maintxt">';
 
 /*

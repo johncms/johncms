@@ -34,13 +34,10 @@ class core
 
     private $flood_chk = 1; // Включение - выключение функции IP антифлуда
     private $flood_interval = '120'; // Интервал времени в секундах
-    private $flood_limit = '30'; // Число разрешенных запросов за интервал
+    private $flood_limit = '70'; // Число разрешенных запросов за интервал
 
     function __construct()
     {
-        global $rootpath;
-        if (isset($rootpath)) self::$root = $rootpath; // Задаем путь к корневой папке
-
         // Получаем IP адреса
         $ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
         self::$ip = sprintf("%u", $ip);
@@ -100,9 +97,9 @@ class core
     */
     public static function load_lng($module = '_core')
     {
-        if (!is_dir(self::$root . 'incfiles/languages/' . self::$lng_iso)) self::$lng_iso = 'en';
-        $lng_file = self::$root . 'incfiles/languages/' . self::$lng_iso . '/' . $module . '.lng';
-        $lng_file_edit = self::$root . 'files/lng_edit/' . self::$lng_iso . '_iso.lng';
+        if (!is_dir(ROOTPATH . 'incfiles/languages/' . self::$lng_iso)) self::$lng_iso = 'en';
+        $lng_file = ROOTPATH . 'incfiles/languages/' . self::$lng_iso . '/' . $module . '.lng';
+        $lng_file_edit = ROOTPATH . 'files/lng_edit/' . self::$lng_iso . '_iso.lng';
         if (file_exists($lng_file)) {
             $out = parse_ini_file($lng_file) or die('ERROR: language file');
             if (file_exists($lng_file_edit)) {
@@ -135,7 +132,7 @@ class core
     */
     private function db_connect()
     {
-        require(self::$root . 'incfiles/db.php');
+        require(ROOTPATH . 'incfiles/db.php');
         $db_host = isset($db_host) ? $db_host : 'localhost';
         $db_user = isset($db_user) ? $db_user : '';
         $db_pass = isset($db_pass) ? $db_pass : '';
@@ -155,7 +152,7 @@ class core
         if ($this->flood_chk) {
             //if ($this->ip_whitelist(self::$ip))
             //    return true;
-            $file = self::$root . 'files/cache/ip_flood.dat';
+            $file = ROOTPATH . 'files/cache/ip_flood.dat';
             $tmp = array();
             $requests = 1;
             if (!file_exists($file)) $in = fopen($file, "w+");
@@ -174,9 +171,9 @@ class core
             for ($i = 0; $i < count($tmp); $i++) fwrite($in, pack('LL', $tmp[$i]['ip'], $tmp[$i]['time']));
             fwrite($in, pack('LL', self::$ip, $now));
             fclose($in);
-            //if ($requests > $this->flood_limit){
-            //    die('FLOOD: exceeded limit of allowed requests');
-            //}
+            if ($requests > $this->flood_limit){
+                die('FLOOD: exceeded limit of allowed requests');
+            }
         }
     }
 
@@ -187,7 +184,7 @@ class core
     */
     private function ip_whitelist($ip)
     {
-        $file = self::$root . 'files/cache/ip_wlist.dat';
+        $file = ROOTPATH . 'files/cache/ip_wlist.dat';
         if (file_exists($file)) {
             foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $val) {
                 $tmp = explode(':', $val);

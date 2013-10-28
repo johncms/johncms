@@ -30,6 +30,10 @@ hr {
   margin: 5px 0;
 }
 
+img{
+    border: 0;
+}
+
 input, textarea, select {
   background: #fff;
   border: 1px solid #d8d8d8;
@@ -45,6 +49,11 @@ input[type="file"] {
 input[type="submit"] {
   background: url(images/input.gif) repeat-x bottom #fefefe;
   padding: 3px 8px;
+}
+
+.icon {
+    padding: 3px 6px 3px 1px;
+    vertical-align: middle;
 }
 
 p {

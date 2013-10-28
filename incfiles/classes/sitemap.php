@@ -53,8 +53,8 @@ class sitemap {
     -----------------------------------------------------------------
     */
     public function forum_contents() {
-        global $rootpath, $set, $id, $lng;
-        $file = $rootpath . 'files/cache/' . $this->cache_forum_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
+        global $set, $id, $lng;
+        $file = ROOTPATH . 'files/cache/' . $this->cache_forum_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
         if (!$id)
             return functions::display_error($lng['error_wrong_data']);
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_contents * 3600)) {
@@ -81,8 +81,8 @@ class sitemap {
     -----------------------------------------------------------------
     */
     public function library_contents() {
-        global $rootpath, $set, $id, $lng;
-        $file = $rootpath . 'files/cache/' . $this->cache_lib_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
+        global $set, $id, $lng;
+        $file = ROOTPATH . 'files/cache/' . $this->cache_lib_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
         if (!$id)
             return functions::display_error($lng['error_wrong_data']);
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_contents * 3600)) {
@@ -109,8 +109,8 @@ class sitemap {
     -----------------------------------------------------------------
     */
     private function forum_map() {
-        global $rootpath, $set;
-        $file = $rootpath . 'files/cache/' . $this->cache_forum_file . '.dat';
+        global $set;
+        $file = ROOTPATH . 'files/cache/' . $this->cache_forum_file . '.dat';
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_map * 3600)) {
             return file_get_contents($file);
         } else {
@@ -144,8 +144,8 @@ class sitemap {
     -----------------------------------------------------------------
     */
     private function library_map() {
-        global $rootpath, $set;
-        $file = $rootpath . 'files/cache/' . $this->cache_lib_file . '.dat';
+        global $set;
+        $file = ROOTPATH . 'files/cache/' . $this->cache_lib_file . '.dat';
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_map * 3600)) {
             return file_get_contents($file);
         } else {

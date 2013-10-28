@@ -12,8 +12,8 @@
 define('_IN_JOHNCMS', 1);
 set_time_limit(1200);
 
-define('INSTALL_VERSION', '5.1.0'); // Инсталлируемая версия
-define('UPDATE_VERSION', '4.4.0');  // Обновление с версии
+define('INSTALL_VERSION', '5.2.0'); // Инсталлируемая версия
+define('UPDATE_VERSION', '4.4.0'); // Обновление с версии
 
 // Задаем режим работы инсталлятора
 define('MODE', 'install');
@@ -79,10 +79,8 @@ class install
     */
     static function check_php_warnings()
     {
-        global $lng;
         $error = array();
         if (ini_get('register_globals')) $error[] = 'register_globals';
-        if (ini_get('arg_separator.output') != '&amp;') $error[] = 'arg_separator.output';
         return !empty($error) ? $error : false;
     }
 
@@ -184,36 +182,39 @@ if (is_dir(MODE) && file_exists(MODE . '/install.php')) {
     }
 
     ob_start();
-    echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' .
-         '<html xmlns="http://www.w3.org/1999/xhtml">' .
-         '<title>JohnCMS ' . INSTALL_VERSION . (MODE == 'install' ? '' : ' | ' . $lng['update_from'] . ' ' . UPDATE_VERSION) . '</title>' .
-         '<style type="text/css">' .
-         'a, a:link, a:visited{color: blue;}' .
-         'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
-         'h1{margin: 0; padding: 0; padding-bottom: 4px;}' .
-         'h2{margin: 0; padding: 0; padding-bottom: 4px;}' .
-         'h3{margin: 0; padding: 0; padding-bottom: 2px;}' .
-         'ul{margin:0; padding-left:20px; }' .
-         'li{padding-bottom: 6px; }' .
-         '.red{color: #FF0000;}' .
-         '.green{color: #009933;}' .
-         '.blue{color: #0000EE;}' .
-         '.gray{color: gray;}' .
-         '.pgl{padding-left: 8px}' .
-         '.select{color: blue; font-size: medium; font-weight: bold}' .
-         '.small{font-size: x-small}' .
-         '.st{color: gray; text-decoration: line-through}' .
-         '</style>' .
-         '</head><body>' .
-         '<h1 class="green">JohnCMS <span class="red">' . INSTALL_VERSION . '</span></h1>' . (MODE == 'install' ? '' : '<h3>' . $lng['update_from'] . ' ' . UPDATE_VERSION . '</h3>') . '<hr />';
+    echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n" .
+        '<html xmlns="http://www.w3.org/1999/xhtml">' . "\n" .
+        '<head>' . "\n" .
+        '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n" .
+        '<title>JohnCMS ' . INSTALL_VERSION . (MODE == 'install' ? '' : ' | ' . $lng['update_from'] . ' ' . UPDATE_VERSION) . '</title>' . "\n" .
+        '<style type="text/css">' .
+        'a, a:link, a:visited{color: blue;}' .
+        'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
+        'h1{margin: 0; padding: 0; padding-bottom: 4px;}' .
+        'h2{margin: 0; padding: 0; padding-bottom: 4px;}' .
+        'h3{margin: 0; padding: 0; padding-bottom: 2px;}' .
+        'ul{margin:0; padding-left:20px; }' .
+        'li{padding-bottom: 6px; }' .
+        '.red{color: #FF0000;}' .
+        '.green{color: #009933;}' .
+        '.blue{color: #0000EE;}' .
+        '.gray{color: gray;}' .
+        '.pgl{padding-left: 8px}' .
+        '.select{color: blue; font-size: medium; font-weight: bold}' .
+        '.small{font-size: x-small}' .
+        '.st{color: gray; text-decoration: line-through}' .
+        '</style>' . "\n" .
+        '</head>' . "\n" .
+        '<body>' . "\n" .
+        '<h1 class="green">JohnCMS <span class="red">' . INSTALL_VERSION . '</span></h1>' . (MODE == 'install' ? '' : '<h3>' . $lng['update_from'] . ' ' . UPDATE_VERSION . '</h3>') . '<hr />';
     if (!$act) {
         echo '<form action="index.php" method="post">' .
-             '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
-             '<div><input type="radio" name="lng" value="en" ' . ($language == 'en' ? 'checked="checked"' : '') . ' />&#160;English</div>' .
-             '<div><input type="radio" name="lng" value="ru" ' . ($language == 'ru' ? 'checked="checked"' : '') . ' />&#160;Русский</div>' .
-             '</p><p><input type="submit" name="submit" value="' . $lng['change'] . '" /></p></form>' .
-             '<p>' . $lng['languages'] . '</p>' .
-             '<hr />';
+            '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
+            '<div><input type="radio" name="lng" value="en" ' . ($language == 'en' ? 'checked="checked"' : '') . ' />&#160;English</div>' .
+            '<div><input type="radio" name="lng" value="ru" ' . ($language == 'ru' ? 'checked="checked"' : '') . ' />&#160;Русский</div>' .
+            '</p><p><input type="submit" name="submit" value="' . $lng['change'] . '" /></p></form>' .
+            '<p>' . $lng['languages'] . '</p>' .
+            '<hr />';
     }
     require(MODE . '/install.php');
     echo '<hr />&copy;&#160;Powered by <a href="http://johncms.com">JohnCMS</a></body></html>';

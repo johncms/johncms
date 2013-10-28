@@ -102,7 +102,7 @@ if ($total) {
 
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=input&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=output&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php" method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>

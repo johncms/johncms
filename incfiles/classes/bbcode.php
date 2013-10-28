@@ -23,8 +23,8 @@ class bbcode extends core
         $var = self::parse_time($var);               // Обработка тэга времени
         $var = self::highlight_code($var);           // Подсветка кода
         $var = self::highlight_url($var);            // Обработка ссылок
-        $var = self::OLD_highlight_url($var);        // Обработка ссылок в BBcode
         $var = self::highlight_bb($var);             // Обработка ссылок
+        $var = self::OLD_highlight_url($var);        // Обработка ссылок в BBcode
         return $var;
     }
 
@@ -175,7 +175,7 @@ class bbcode extends core
     {
         $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
-        $var = preg_replace('#\[spoiler=(.+?)\](.+?)\[/spoiler]#si', '$2', $var);
+        $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = array(
             '[small]' => '',
             '[/small]' => '',
@@ -236,11 +236,12 @@ class bbcode extends core
         if (!function_exists('process_url')) {
             function process_url($url)
             {
-                    $tmp = parse_url($url[1]);
-                    if ('http://' . $tmp['host'] == core::$system_set['homeurl'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
+                $home = parse_url(core::$system_set['homeurl']);
+                $tmp = parse_url($url[1]);
+                    if ($home['host'] == $tmp['host'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
                         return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
                     } else {
-                        return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . rawurlencode($url[1]) . '">' . $url[2] . '</a>';
+                        return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
                     }
             }
         }

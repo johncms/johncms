@@ -35,7 +35,7 @@ if ($user_id) {
             $req = mysql_query("SELECT `forum`.`id`
             FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '$user_id'
             WHERE `forum`.`type`='t'
-            AND `cms_forum_rdm`.`topic_id` Is Null");
+            AND `cms_forum_rdm`.`topic_id` IS Null");
             while ($res = mysql_fetch_assoc($req)) {
                 mysql_query("INSERT INTO `cms_forum_rdm` SET
                     `topic_id` = '" . $res['id'] . "',
@@ -56,31 +56,13 @@ if ($user_id) {
             echo '<div class="menu"><p>' . $lng_forum['unread_reset_done'] . '<br /><a href="index.php">' . $lng_forum['to_forum'] . '</a></p></div>';
             break;
 
-        case 'select':
-            /*
-            -----------------------------------------------------------------
-            Форма выбора диапазона времени
-            -----------------------------------------------------------------
-            */
-            echo'<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_show_for_period'] . '</div>' .
-                '<div class="menu"><p><form action="index.php?act=new&amp;do=period" method="post">' . $lng_forum['unread_period'] . ':<br/>' .
-                '<input type="text" maxlength="3" name="vr" value="24" size="3"/>' .
-                '<input type="submit" name="submit" value="' . $lng['show'] . '"/></form></p></div>' .
-                '<div class="phdr"><a href="index.php?act=new">' . $lng['back'] . '</a></div>';
-            break;
-
         case 'period':
             /*
             -----------------------------------------------------------------
             Показ новых тем за выбранный период
             -----------------------------------------------------------------
             */
-            $vr = isset($_REQUEST['vr']) ? abs(intval($_REQUEST['vr'])) : NULL;
-            if (!$vr) {
-                echo $lng_forum['error_time_empty'] . '<br/><a href="index.php?act=new&amp;do=all">' . $lng['repeat'] . '</a><br/>';
-                require('../incfiles/end.php');
-                exit;
-            }
+            $vr = isset($_REQUEST['vr']) ? abs(intval($_REQUEST['vr'])) : 24;
             $vr1 = time() - $vr * 3600;
             if ($rights == 9) {
                 $req = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `time` > '$vr1'");
@@ -88,9 +70,19 @@ if ($user_id) {
                 $req = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `time` > '$vr1' AND `close` != '1'");
             }
             $count = mysql_result($req, 0);
+
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_all_for_period'] . ' ' . $vr . ' ' . $lng_forum['hours'] . '</div>';
-            if ($count > $kmess)
+
+            // Форма выбора периода времени
+            echo '<div class="topmenu"><form action="index.php?act=new&amp;do=period" method="post">' .
+                '<input type="text" maxlength="3" name="vr" value="' . $vr . '" size="3"/>' .
+                '<input type="submit" name="submit" value="' . $lng['show_for_period'] . '"/>' .
+                '</form></div>';
+
+            if ($count > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>';
+            }
+
             if ($count > 0) {
                 if ($rights == 9) {
                     $req = mysql_query("SELECT * FROM `forum` WHERE `type`='t' AND `time` > '" . $vr1 . "' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
@@ -107,22 +99,32 @@ if ($user_id) {
                     $colmes1 = mysql_num_rows($colmes);
                     $cpg = ceil($colmes1 / $kmess);
                     $nick = mysql_fetch_array($colmes);
-                    if ($res['edit'])
-                        echo '<img src="../images/tz.gif" alt=""/>';
-                    elseif ($res['close'])
-                        echo '<img src="../images/dl.gif" alt=""/>'; else
-                        echo '<img src="../images/np.gif" alt=""/>';
-                    if ($res['realid'] == 1)
-                        echo '&#160;<img src="../images/rate.gif" alt=""/>';
+
+                    if ($res['edit']) {
+                        echo functions::image('tz.gif');
+                    } elseif ($res['close']) {
+                        echo functions::image('dl.gif');
+                    } else {
+                        echo functions::image('np.gif');
+                    }
+
+                    if ($res['realid'] == 1) {
+                        echo functions::image('rate.gif');
+                    }
+
                     echo '&#160;<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . $res['text'] .
                         '</a>&#160;[' . $colmes1 . ']';
-                    if ($cpg > 1)
+                    if ($cpg > 1) {
                         echo '<a href="index.php?id=' . $res['id'] . (!$set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
+                    }
+
                     echo '<br /><div class="sub"><a href="index.php?id=' . $razd['id'] . '">' . $frm['text'] . '&#160;/&#160;' . $razd['text'] . '</a><br />';
                     echo $res['from'];
+
                     if ($colmes1 > 1) {
                         echo '&#160;/&#160;' . $nick['from'];
                     }
+
                     echo ' <span class="gray">' . date("d.m.y / H:i", $nick['time']) . '</span>';
                     echo '</div></div>';
                 }
@@ -136,7 +138,6 @@ if ($user_id) {
                     <input type="text" name="page" size="2"/>
                     <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
-            echo '<p><a href="index.php?act=new">' . $lng['back'] . '</a></p>';
             break;
 
         default:
@@ -172,12 +173,12 @@ if ($user_id) {
                     $nick = mysql_fetch_assoc($colmes);
                     // Значки
                     $icons = array(
-                        (isset($np) ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
-                        ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
-                        ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
-                        ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
+                        (isset($np) ? (!$res['vip'] ? functions::image('op.gif') : '') : functions::image('np.gif')),
+                        ($res['vip'] ? functions::image('pt.gif') : ''),
+                        ($res['realid'] ? functions::image('rate.gif') : ''),
+                        ($res['edit'] ? functions::image('tz.gif') : '')
                     );
-                    echo functions::display_menu($icons, '&#160;', '&#160;');
+                    echo functions::display_menu($icons, '');
                     echo '<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . $res['text'] .
                         '</a>&#160;[' . $colmes1 . ']';
                     if ($cpg > 1)
@@ -199,10 +200,11 @@ if ($user_id) {
                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
                     '</form></p>';
             }
-            echo '<p>';
-            if ($total)
-                echo '<a href="index.php?act=new&amp;do=reset">' . $lng_forum['unread_reset'] . '</a><br/>';
-            echo '<a href="index.php?act=new&amp;do=select">' . $lng_forum['unread_show_for_period'] . '</a></p>';
+
+            if ($total) {
+                echo '<p><a href="index.php?act=new&amp;do=reset">' . $lng_forum['unread_reset'] . '</a></p>';
+            }
+
     }
 } else {
     /*
@@ -225,11 +227,11 @@ if ($user_id) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             // Значки
             $icons = array(
-                ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
-                ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
-                ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
+                ($res['vip'] ? functions::image('pt.gif') : ''),
+                ($res['realid'] ? functions::image('rate.gif') : ''),
+                ($res['edit'] ? functions::image('tz.gif') : '')
             );
-            echo functions::display_menu($icons, '&#160;', '&#160;');
+            echo functions::display_menu($icons, '');
             echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';
             if ($cpg > 1)
                 echo '&#160;<a href="index.php?id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';

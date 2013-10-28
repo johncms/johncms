@@ -196,7 +196,7 @@ if (isset($_POST['submit'])
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
     echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['new_topic'] . '</div>';
     if ($msg && $th && !isset($_POST['submit']))
-        echo '<div class="list1"><img src="../theme/default/images/op.gif" border="0" alt="op" /> <span style="font-weight: bold">' . $th . '</span></div>' .
+        echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
             '<div class="list2">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .

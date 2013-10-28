@@ -15,7 +15,9 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 @ini_set('arg_separator.output', '&amp;');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
-$rootpath = isset($rootpath) ? $rootpath : '../';
+
+// Корневая папка
+define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 
 /*
 -----------------------------------------------------------------
@@ -23,9 +25,9 @@ $rootpath = isset($rootpath) ? $rootpath : '../';
 -----------------------------------------------------------------
 */
 spl_autoload_register('autoload');
-function autoload($name) {
-    global $rootpath;
-    $file = $rootpath . 'incfiles/classes/' . $name . '.php';
+function autoload($name)
+{
+    $file = ROOTPATH . 'incfiles/classes/' . $name . '.php';
     if (file_exists($file))
         require_once($file);
 }
@@ -35,39 +37,40 @@ function autoload($name) {
 Инициализируем Ядро системы
 -----------------------------------------------------------------
 */
-$core = new core() or die('Error: Core System');
-unset($core);
+new core;
 
 /*
 -----------------------------------------------------------------
-Получаем системные переменные
+Получаем системные переменные для совместимости со старыми модулями
 -----------------------------------------------------------------
 */
-$ip = core::$ip;                                          // Адрес IP
-$agn = core::$user_agent;                                 // User Agent
-$set = core::$system_set;                                 // Системные настройки
-$lng = core::$lng;                                        // Фразы языка
-$is_mobile = core::$is_mobile;                            // Определение мобильного браузера
-$home = $set['homeurl'];                                  // Домашняя страница
+$rootpath = ROOTPATH;
+$ip = core::$ip; // Адрес IP
+$agn = core::$user_agent; // User Agent
+$set = core::$system_set; // Системные настройки
+$lng = core::$lng; // Фразы языка
+$is_mobile = core::$is_mobile; // Определение мобильного браузера
+$home = $set['homeurl']; // Домашняя страница
 
 /*
 -----------------------------------------------------------------
 Получаем пользовательские переменные
 -----------------------------------------------------------------
 */
-$user_id = core::$user_id;                                // Идентификатор пользователя
-$rights = core::$user_rights;                             // Права доступа
-$datauser = core::$user_data;                             // Все данные пользователя
-$set_user = core::$user_set;                              // Пользовательские настройки
-$ban = core::$user_ban;                                   // Бан
+$user_id = core::$user_id; // Идентификатор пользователя
+$rights = core::$user_rights; // Права доступа
+$datauser = core::$user_data; // Все данные пользователя
+$set_user = core::$user_set; // Пользовательские настройки
+$ban = core::$user_ban; // Бан
 $login = isset($datauser['name']) ? $datauser['name'] : false;
 $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;
 
-function validate_referer() {
-    if($_SERVER['REQUEST_METHOD']!=='POST') return;
-    if(@!empty($_SERVER['HTTP_REFERER'])) {
+function validate_referer()
+{
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+    if (@!empty($_SERVER['HTTP_REFERER'])) {
         $ref = parse_url(@$_SERVER['HTTP_REFERER']);
-        if($_SERVER['HTTP_HOST']===$ref['host']) return;
+        if ($_SERVER['HTTP_HOST'] === $ref['host']) return;
     }
     die('Invalid request');
 }
@@ -95,28 +98,15 @@ $headmod = isset($headmod) ? $headmod : '';
 Закрытие сайта / редирект гостей на страницу ожидания
 -----------------------------------------------------------------
 */
-if ((core::$system_set['site_access'] == 0 || core::$system_set['site_access'] == 1) && $headmod != 'login' && !core::$user_id)
-{
-    header('Location: '.core::$system_set['homeurl'].'/closed.php');
+if ((core::$system_set['site_access'] == 0 || core::$system_set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
+    header('Location: ' . core::$system_set['homeurl'] . '/closed.php');
 }
-
-/*
------------------------------------------------------------------
-Показываем Дайджест
------------------------------------------------------------------
-*/
-if ($user_id && $datauser['lastdate'] < (time() - 3600) && $set_user['digest'] && $headmod == 'mainpage')
-    header('Location: ' . $set['homeurl'] . '/index.php?act=digest&last=' . $datauser['lastdate']);
 
 /*
 -----------------------------------------------------------------
 Буфферизация вывода
 -----------------------------------------------------------------
 */
-if(!isset($set['gzip'])) {
-    mysql_query("INSERT INTO `cms_settings` SET `key` = 'gzip', `val` = '1'");
-    $set['gzip'] = 1;
-}
 if ($set['gzip'] && @extension_loaded('zlib')) {
     @ini_set('zlib.output_compression_level', 3);
     ob_start('ob_gzhandler');

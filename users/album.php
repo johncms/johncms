@@ -130,7 +130,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         echo'<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
     }
     echo'</ul></p>' .
-        '<p><h3><img src="' . $set['homeurl'] . '/images/rate.gif" width="16" height="16" class="left" />&#160;' . $lng['rating'] . '</h3><ul>' .
+        '<p><h3>' . functions::image('rate.gif') . $lng['rating'] . '</h3><ul>' .
         '<li><a href="album.php?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
         '<li><a href="album.php?act=top&amp;mod=downloads">' . $lng_profile['top_downloads'] . '</a></li>' .
         '<li><a href="album.php?act=top&amp;mod=views">' . $lng_profile['top_views'] . '</a></li>' .

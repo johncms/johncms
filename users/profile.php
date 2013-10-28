@@ -147,9 +147,9 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     // Меню выбора
     $total_photo = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'"), 0);
     echo '<div class="list2"><p>' .
-        '<div><img src="../images/contacts.png" width="16" height="16"/>&#160;<a href="profile.php?act=info&amp;user=' . $user['id'] . '">' . $lng['information'] . '</a></div>' .
-        '<div><img src="../images/activity.gif" width="16" height="16"/>&#160;<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $lng_profile['activity'] . '</a></div>' .
-        '<div><img src="../images/rate.gif" width="16" height="16"/>&#160;<a href="profile.php?act=stat&amp;user=' . $user['id'] . '">' . $lng['statistics'] . '</a></div>';
+        '<div>' . functions::image('contacts.png') . '<a href="profile.php?act=info&amp;user=' . $user['id'] . '">' . $lng['information'] . '</a></div>' .
+        '<div>' . functions::image('activity.gif') . '<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $lng_profile['activity'] . '</a></div>' .
+        '<div>' . functions::image('rate.gif') . '<a href="profile.php?act=stat&amp;user=' . $user['id'] . '">' . $lng['statistics'] . '</a></div>';
     $bancount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'"), 0);
 
     if ($bancount) {
@@ -158,9 +158,9 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 
     $total_friends = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='{$user['id']}' AND `type`='2' AND `friends`='1'"), 0);
     echo '<br />' .
-        '<div><img src="../images/photo.gif" width="16" height="16"/>&#160;<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['photo_album'] . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div><img src="../images/guestbook.gif" width="16" height="16"/>&#160;<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
-        '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="profile.php?act=friends&amp;user=' . $user['id'] . '">' . $lng_profile['friends'] . '</a>&#160;(' . $total_friends . ')</div>' .
+        '<div>' . functions::image('photo.gif') . '<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['photo_album'] . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div>' . functions::image('guestbook.gif') . '<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div>' . functions::image('users.png') . '<a href="profile.php?act=friends&amp;user=' . $user['id'] . '">' . $lng_profile['friends'] . '</a>&#160;(' . $total_friends . ')</div>' .
         '</p></div>';
     if ($user['id'] != $user_id) {
         echo '<div class="menu"><p>';
@@ -179,7 +179,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
             } else {
                 $friend = '<a href="profile.php?act=friends&amp;do=delete&amp;id=' . $user['id'] . '">' . $lng_profile['remov_friend'] . '</a>';
             }
-            echo '<div><img src="../images/add.gif" width="16" height="16"/>&#160;' . $friend . '</div>';
+            echo '<div>' . functions::image('add.gif') . $friend . '</div>';
         }
 
         if (functions::is_contact($user['id']) != 2) {

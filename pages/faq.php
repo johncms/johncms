@@ -89,8 +89,8 @@ switch ($act) {
             echo '<div class="topmenu"><a href="faq.php?act=my_smileys">' . $lng['my_smileys'] . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
         }
         if ($rights >= 1)
-            echo '<div class="gmenu"><a href="faq.php?act=smadm">' . $lng_faq['smileys_adm'] . '</a> (' . (int)count(glob($rootpath . 'images/smileys/admin/*.gif')) . ')</div>';
-        $dir = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);
+            echo '<div class="gmenu"><a href="faq.php?act=smadm">' . $lng_faq['smileys_adm'] . '</a> (' . (int)count(glob(ROOTPATH . 'images/smileys/admin/*.gif')) . ')</div>';
+        $dir = glob(ROOTPATH . 'images/smileys/user/*', GLOB_ONLYDIR);
         foreach ($dir as $val) {
             $cat = explode('/', $val);
             $cat = array_pop($cat);
@@ -105,7 +105,7 @@ switch ($act) {
         foreach ($smileys_cat as $key => $val) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             echo '<a href="faq.php?act=smusr&amp;cat=' . urlencode($key) . '">' . htmlspecialchars($val) . '</a>' .
-                ' (' . count(glob($rootpath . 'images/smileys/user/' . $key . '/*.{gif,jpg,png}', GLOB_BRACE)) . ')';
+                ' (' . count(glob(ROOTPATH . 'images/smileys/user/' . $key . '/*.{gif,jpg,png}', GLOB_BRACE)) . ')';
             echo '</div>';
             ++$i;
         }
@@ -118,13 +118,13 @@ switch ($act) {
         Каталог пользовательских Смайлов
         -----------------------------------------------------------------
         */
-        $dir = glob($rootpath . 'images/smileys/user/*', GLOB_ONLYDIR);
+        $dir = glob(ROOTPATH . 'images/smileys/user/*', GLOB_ONLYDIR);
         foreach ($dir as $val) {
             $val = explode('/', $val);
             $cat_list[] = array_pop($val);
         }
         $cat = isset($_GET['cat']) && in_array(trim($_GET['cat']), $cat_list) ? trim($_GET['cat']) : $cat_list[0];
-        $smileys = glob($rootpath . 'images/smileys/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE);
+        $smileys = glob(ROOTPATH . 'images/smileys/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE);
         $total = count($smileys);
         $end = $start + $kmess;
         if ($end > $total) $end = $total;
@@ -299,7 +299,7 @@ switch ($act) {
         Каталог пользовательских Аватаров
         -----------------------------------------------------------------
         */
-        if ($id && is_dir($rootpath . 'images/avatars/' . $id)) {
+        if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
             $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : FALSE;
             if ($user_id && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
                 if (isset($_POST['submit'])) {
@@ -320,19 +320,18 @@ switch ($act) {
                 }
             } else {
                 // Показываем список Аватаров
-                echo '<div class="phdr"><a href="faq.php?act=avatars"><b>' . $lng['avatars'] . '</b></a> | ' . htmlentities(file_get_contents($rootpath . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
-                $array = glob($rootpath . 'images/avatars/' . $id . '/*.png');
+                echo '<div class="phdr"><a href="faq.php?act=avatars"><b>' . $lng['avatars'] . '</b></a> | ' . htmlentities(file_get_contents(ROOTPATH . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
+                $array = glob(ROOTPATH . 'images/avatars/' . $id . '/*.png');
                 $total = count($array);
                 $end = $start + $kmess;
                 if ($end > $total)
                     $end = $total;
                 if ($total > 0) {
                     for ($i = $start; $i < $end; $i++) {
-                        $ava = preg_replace('#^' . $rootpath . 'images/avatars/' . $id . '/(.*?).png$#isU', '$1', $array[$i], 1);
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        echo '<img src="' . $array[$i] . '" alt="" />';
+                        echo '<img src="../images/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
                         if ($user_id)
-                            echo ' - <a href="faq.php?act=avatars&amp;id=' . $id . '&amp;avatar=' . $ava . '">' . $lng['select'] . '</a>';
+                            echo ' - <a href="faq.php?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) . '">' . $lng['select'] . '</a>';
                         echo '</div>';
                     }
                 } else {
@@ -352,14 +351,14 @@ switch ($act) {
         } else {
             // Показываем каталоги с Аватарами
             echo '<div class="phdr"><a href="faq.php"><b>F.A.Q.</b></a> | ' . $lng['avatars'] . '</div>';
-            $dir = glob($rootpath . 'images/avatars/*', GLOB_ONLYDIR);
+            $dir = glob(ROOTPATH . 'images/avatars/*', GLOB_ONLYDIR);
             $total = 0;
             $total_dir = count($dir);
             for ($i = 0; $i < $total_dir; $i++) {
                 $count = (int)count(glob($dir[$i] . '/*.png'));
                 $total = $total + $count;
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<a href="faq.php?act=avatars&amp;id=' . preg_replace('#^' . $rootpath . 'images/avatars/#isU', '', $dir[$i], 1) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.dat'), ENT_QUOTES, 'utf-8') .
+                echo '<a href="faq.php?act=avatars&amp;id=' . basename($dir[$i]) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.dat'), ENT_QUOTES, 'utf-8') .
                     '</a> (' . $count . ')</div>';
             }
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .

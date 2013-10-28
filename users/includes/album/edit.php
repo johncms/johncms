@@ -18,7 +18,7 @@ require('../incfiles/head.php');
 Создать / изменить альбом
 -----------------------------------------------------------------
 */
-if ($user['id'] == $user_id || $rights >= 7) {
+if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     if ($al) {
         $req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
         if (mysql_num_rows($req)) {
@@ -120,4 +120,3 @@ if ($user['id'] == $user_id || $rights >= 7) {
         '</form></div>' .
         '<div class="phdr"><a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></div>';
 }
-?>

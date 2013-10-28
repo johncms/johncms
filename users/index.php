@@ -65,7 +65,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
                  ? '<br /><img src="../images/award.png" width="16" height="16" />&#160;<a href="index.php?act=birth">' . $lng['birthday_men'] . '</a> (' . $brth . ')'
                  : '') .
          '</p><p><img src="../images/photo.gif" width="16" height="16" />&#160;<a href="album.php">' . $lng['photo_albums'] . '</a> (' . counters::album() . ')</p>' .
-         '<p><img src="../images/rate.gif" width="16" height="16" />&#160;<a href="index.php?act=top">' . $lng['users_top'] . '</a></p>' .
+         '<p>' . functions::image('rate.gif') . '<a href="index.php?act=top">' . $lng['users_top'] . '</a></p>' .
          '</div>' .
          '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
 }

@@ -652,7 +652,7 @@ switch ($mod) {
         $total_files = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files`"), 0);
         $total_votes = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1'"), 0);
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng_forum['forum_management'] . '</div>' .
-            '<div class="gmenu"><p><h3><img src="../images/rate.gif" width="16" height="16" class="left" />&nbsp;' . $lng['statistics'] . '</h3><ul>' .
+            '<div class="gmenu"><p><h3>' . functions::image('rate.gif') . $lng['statistics'] . '</h3><ul>' .
             '<li>' . $lng['categories'] . ':&#160;' . $total_cat . '</li>' .
             '<li>' . $lng['sections'] . ':&#160;' . $total_sub . '</li>' .
             '<li>' . $lng['themes'] . ':&#160;' . $total_thm . '&#160;/&#160;<span class="red">' . $total_thm_del . '</span></li>' .

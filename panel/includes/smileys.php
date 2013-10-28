@@ -17,7 +17,7 @@ $ext = array('gif', 'jpg', 'jpeg', 'png'); // Список разрешенны�
 $smileys = array();
 
 // Обрабатываем простые смайлы
-foreach(glob($rootpath . 'images/smileys/simply/*') as $var){
+foreach(glob(ROOTPATH . 'images/smileys/simply/*') as $var){
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -26,7 +26,7 @@ foreach(glob($rootpath . 'images/smileys/simply/*') as $var){
 }
 
 // Обрабатываем Админские смайлы
-foreach(glob($rootpath . 'images/smileys/admin/*') as $var){
+foreach(glob(ROOTPATH . 'images/smileys/admin/*') as $var){
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -36,7 +36,7 @@ foreach(glob($rootpath . 'images/smileys/admin/*') as $var){
 }
 
 // Обрабатываем смайлы каталога
-foreach(glob($rootpath . 'images/smileys/user/*/*') as $var){
+foreach(glob(ROOTPATH . 'images/smileys/user/*/*') as $var){
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -47,7 +47,7 @@ foreach(glob($rootpath . 'images/smileys/user/*/*') as $var){
 }
 
 // Записываем в файл Кэша
-if (file_put_contents($rootpath . 'files/cache/smileys.dat', serialize($smileys))) {
+if (file_put_contents(ROOTPATH . 'files/cache/smileys.dat', serialize($smileys))) {
     echo '<div class="gmenu"><p>' . $lng['smileys_updated'] . '</p></div>';
 } else {
     echo '<div class="rmenu"><p>' . $lng['smileys_error'] . '</p></div>';

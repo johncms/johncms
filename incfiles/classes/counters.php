@@ -20,8 +20,7 @@ class counters
     */
     static function album()
     {
-        global $rootpath;
-        $file = $rootpath . 'files/cache/count_album.dat';
+        $file = ROOTPATH . 'files/cache/count_album.dat';
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
             $album = $res['album'];
@@ -33,7 +32,7 @@ class counters
             $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
             file_put_contents($file, serialize(array('album' => $album, 'photo' => $photo, 'new' => $new)));
         }
-        return $album . '&#160;/&#160;' .$photo . ($new ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top">+' . $new . '</a></span>' : '');
+        return $album . '&#160;/&#160;' . $photo . ($new ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top">+' . $new . '</a></span>' : '');
     }
 
     /*
@@ -43,8 +42,7 @@ class counters
     */
     static function downloads()
     {
-        global $rootpath;
-        $file = $rootpath . 'files/cache/count_downloads.dat';
+        $file = ROOTPATH . 'files/cache/count_downloads.dat';
         if (file_exists($file) && filemtime($file) > (time() - 900)) {
             $res = unserialize(file_get_contents($file));
             $total = $res['total'];
@@ -65,8 +63,7 @@ class counters
     */
     static function forum()
     {
-        global $rootpath;
-        $file = $rootpath . 'files/cache/count_forum.dat';
+        $file = ROOTPATH . 'files/cache/count_forum.dat';
         $new = '';
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
@@ -100,15 +97,18 @@ class counters
                 AND (`cms_forum_rdm`.`topic_id` Is Null
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)");
             $total = mysql_result($req, 0);
-            if ($mod)
-                return '<a href="index.php?act=new">' . core::$lng['unread'] . '</a>&#160;' . ($total ? '<span class="red">(<b>' . $total . '</b>)</span>' : '');
-            else
+            if ($mod) {
+                return '<a href="index.php?act=new&amp;do=period">' . core::$lng['show_for_period'] . '</a>' .
+                ($total ? '<br/><a href="index.php?act=new">' . core::$lng['unread'] . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+            } else {
                 return $total;
+            }
         } else {
-            if ($mod)
+            if ($mod) {
                 return '<a href="index.php?act=new">' . core::$lng['last_activity'] . '</a>';
-            else
+            } else {
                 return false;
+            }
         }
     }
 
@@ -171,8 +171,7 @@ class counters
     */
     static function library()
     {
-        global $rootpath;
-        $file = $rootpath . 'files/cache/count_library.dat';
+        $file = ROOTPATH . 'files/cache/count_library.dat';
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
             $res = unserialize(file_get_contents($file));
             $total = $res['total'];
@@ -200,7 +199,7 @@ class counters
     {
         $users = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > '" . (time() - 300) . "'"), 0);
         $guests = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > '" . (time() - 300) . "'"), 0);
-        return (core::$user_id || core::$system_set['active'] ? '<a href="' . core::$system_set['homeurl'] . '/users/index.php?act=online">' . core::$lng['online'] . ': ' . $users . ' / ' . $guests . '</a>' : core::$lng['online'] . ': ' . $users . ' / ' . $guests);
+        return (core::$user_id || core::$system_set['active'] ? '<a href="' . core::$system_set['homeurl'] . '/users/index.php?act=online">' . functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>' : core::$lng['online'] . ': ' . $users . ' / ' . $guests);
     }
 
     /*
@@ -210,8 +209,7 @@ class counters
     */
     static function users()
     {
-        global $rootpath;
-        $file = $rootpath . 'files/cache/count_users.dat';
+        $file = ROOTPATH . 'files/cache/count_users.dat';
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
             $total = $res['total'];

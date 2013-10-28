@@ -21,7 +21,7 @@ require('../incfiles/head.php');
 echo'<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['statistics'] . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, array('iphide' => 1,)) . '</p></div>' .
     '<div class="list2">' .
-    '<p><h3><img src="../images/rate.gif" width="16" height="16" class="left" />&#160;' . $lng['statistics'] . '</h3><ul>';
+    '<p><h3>' . functions::image('rate.gif') . $lng['statistics'] . '</h3><ul>';
 if ($rights >= 7) {
     if (!$user['preg'] && empty($user['regadm']))
         echo '<li>' . $lng_profile['awaiting_registration'] . '</li>';
@@ -35,12 +35,12 @@ $lastvisit = time() > $user['lastdate'] + 300 ? date("d.m.Y (H:i)", $user['lastd
 if ($lastvisit)
     echo '<li><span class="gray">' . $lng['last_visit'] . ':</span> ' . $lastvisit . '</li>';
 echo'</ul></p><p>' .
-    '<h3><img src="../images/activity.gif" width="16" height="16" class="left" />&#160;' . $lng_profile['activity'] . '</h3><ul>' .
+    '<h3>' . functions::image('activity.gif') . $lng_profile['activity'] . '</h3><ul>' .
     '<li><span class="gray">' . $lng['forum'] . ':</span> <a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $user['postforum'] . '</a></li>' .
     '<li><span class="gray">' . $lng['guestbook'] . ':</span> <a href="profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . $user['postguest'] . '</a></li>' .
     '<li><span class="gray">' . $lng['comments'] . ':</span> ' . $user['komm'] . '</li>' .
     '</ul></p>' .
-    '<p><h3><img src="../images/award.png" width="16" height="16" class="left" />&#160;' . $lng_profile['achievements'] . '</h3>';
+    '<p><h3>' . functions::image('award.png') . $lng_profile['achievements'] . '</h3>';
 $num = array(
     50,
     100,
@@ -61,7 +61,7 @@ echo '<td></td></tr>';
 foreach ($query as $key => $val) {
     echo '<tr>';
     foreach ($num as $achieve) {
-        echo'<td align="center"><img src="../images/' . ($user[$key] >= $achieve ? 'green' : 'red') . '.gif" alt=""/></td>';
+        echo'<td align="center">' . functions::image(($user[$key] >= $achieve ? 'green' : 'red') . '.gif') . '</td>';
     }
     echo'<td><small><b>' . $val . '</b></small></td></tr>';
 }

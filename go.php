@@ -11,7 +11,6 @@
 
 define('_IN_JOHNCMS', 1);
 
-$rootpath = '';
 require('incfiles/core.php');
 
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
@@ -75,45 +74,4 @@ if (isset($_GET['lng'])) {
     } else {
         header("Location: http://johncms.com/index.php?act=404");
     }
-} else {
-    /*
-    -----------------------------------------------------------------
-    Редирект по "быстрому переходу"
-    -----------------------------------------------------------------
-    */
-    $adres = trim($_POST['adres']);
-    switch ($adres) {
-        case 'forum':
-            header('location: ' . core::$system_set['homeurl'] . '/forum/index.php');
-            break;
-
-        case 'lib':
-            header('location: ' . core::$system_set['homeurl'] . '/library/index.php');
-            break;
-
-        case 'down':
-            header('location: ' . core::$system_set['homeurl'] . '/download/index.php');
-            break;
-
-        case 'gallery':
-            header('location: ' . core::$system_set['homeurl'] . '/gallery/index.php');
-            break;
-
-        case 'news':
-            header('location: ' . core::$system_set['homeurl'] . '/news/index.php');
-            break;
-
-        case 'guest':
-            header('location: ' . core::$system_set['homeurl'] . '/guestbook/index.php');
-            break;
-
-        case 'gazen':
-            header('location: http://gazenwagen.com');
-            break;
-
-        default :
-            header('location: http://johncms.com');
-            break;
-    }
 }
-?>

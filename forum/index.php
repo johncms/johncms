@@ -53,14 +53,17 @@ $ext_doc = array(
     'txt',
     'pdf',
     'doc',
+    'docx',
     'rtf',
     'djvu',
-    'xls'
+    'xls',
+    'xlsx'
 );
 // Файлы Java
 $ext_java = array(
-    'jar',
-    'jad'
+    'sis',
+    'sisx',
+    'apk'
 );
 // Файлы картинок
 $ext_pic = array(
@@ -275,7 +278,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
         Выводим верхнюю панель навигации
         -----------------------------------------------------------------
         */
-        echo '<p>' . counters::forum_new(1) . '</p>' .
+        echo '<a id="up"></a><p>' . counters::forum_new(1) . '</p>' .
             '<div class="phdr">' . functions::display_menu($tree) . '</div>' .
             '<div class="topmenu"><a href="search.php?id=' . $id . '">' . $lng['search'] . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
@@ -341,12 +344,12 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                         $np = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id`='$user_id'"), 0);
                         // Значки
                         $icons = array(
-                            ($np ? (!$res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/op.gif" alt=""/>' : '') : '<img src="../theme/' . $set_user['skin'] . '/images/np.gif" alt=""/>'),
-                            ($res['vip'] ? '<img src="../theme/' . $set_user['skin'] . '/images/pt.gif" alt=""/>' : ''),
-                            ($res['realid'] ? '<img src="../theme/' . $set_user['skin'] . '/images/rate.gif" alt=""/>' : ''),
-                            ($res['edit'] ? '<img src="../theme/' . $set_user['skin'] . '/images/tz.gif" alt=""/>' : '')
+                            ($np ? (!$res['vip'] ? functions::image('op.gif') : '') : functions::image('np.gif')),
+                            ($res['vip'] ? functions::image('pt.gif') : ''),
+                            ($res['realid'] ? functions::image('rate.gif') : ''),
+                            ($res['edit'] ? functions::image('tz.gif') : '')
                         );
-                        echo functions::display_menu($icons, '&#160;', '&#160;');
+                        echo functions::display_menu($icons, '');
                         echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> [' . $colmes1 . ']';
                         if ($cpg > 1) {
                             echo '<a href="index.php?id=' . $res['id'] . '&amp;page=' . $cpg . '">&#160;&gt;&gt;</a>';
@@ -412,7 +415,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                 }
 
                 // Выводим название топика
-                echo '<div class="phdr"><a name="up" id="up"></a><a href="#down"><img src="../theme/' . $set_user['skin'] . '/images/down.png" alt="Вниз" width="20" height="10" border="0"/></a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
+                echo '<div class="phdr"><a href="#down">' . functions::image('down.png', array('class' => '')) . '</a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
                 if ($colmes > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
                 }
@@ -560,9 +563,9 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                         echo '</td><td>';
                     }
                     if ($res['sex'])
-                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png" width="16" height="16" align="middle" />&#160;';
+                        echo functions::image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', array('class' => 'icon-inline'));
                     else
-                        echo '<img src="../images/del.png" width="12" height="12" align="middle" alt=""/>&#160;';
+                        echo functions::image('del.png');
                     // Ник юзера и ссылка на его анкету
                     if ($user_id && $user_id != $res['user_id']) {
                         echo '<a href="../users/profile.php?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
@@ -589,7 +592,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                     echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />';
                     // Статус юзера
                     if (!empty($res['status']))
-                        echo '<div class="status"><img src="../theme/' . $set_user['skin'] . '/images/label.png" alt="" align="middle"/>&#160;' . $res['status'] . '</div>';
+                        echo '<div class="status">' . functions::image('label.png', array('class' => 'icon-inline')) . $res['status'] . '</div>';
                     if ($set_user['avatar'])
                         echo '</td></tr></table>';
                     /*
@@ -714,8 +717,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                         echo '<p><input type="submit" name="submit" value="' . $lng['write'] . '"/></p></form></div>';
                     }
                 }
-                echo '<div class="phdr"><a name="down" id="down"></a><a href="#up">' .
-                    '<img src="../theme/' . $set_user['skin'] . '/images/up.png" alt="' . $lng['up'] . '" width="20" height="10" border="0"/></a>' .
+                echo '<div class="phdr"><a id="down"></a><a href="#up">' . functions::image('up.png', array('class' => '')) . '</a>' .
                     '&#160;&#160;' . $lng['total'] . ': ' . $colmes . '</div>';
                 if ($colmes > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .

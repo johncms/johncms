@@ -50,7 +50,7 @@ if ($id) {
             }
             //Удаляем контакт
             mysql_query("DELETE FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id' LIMIT 1");
-            echo '<div class="gmenu"><p>' . $lng_mail['contact_delete'] . '</p></div>';
+            echo '<div class="gmenu"><p>' . $lng_mail['contact_delete'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
         } else {
             echo '<div class="phdr"><b>' . $lng['delete'] . '</b></div>
 			<div class="rmenu">
@@ -62,7 +62,7 @@ if ($id) {
             echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . $lng['back'] . '</a></div>';
         }
     } else {
-        echo '<div class="rmenu"><p>' . $lng_mail['contact_does_not_exist'] . '</p></div>';
+        echo '<div class="rmenu"><p>' . $lng_mail['contact_does_not_exist'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
     }
 } else {
     echo '<div class="rmenu"><p>' . $lng_mail['not_contact_is_chose'] . '</p></div>';

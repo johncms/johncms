@@ -63,7 +63,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     Блок пользователей
     -----------------------------------------------------------------
     */
-    echo '<div class="user"><p><h3><img src="../images/users.png" width="16" height="16" class="left" />&#160;' . $lng['users'] . '</h3><ul>';
+    echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
     if ($regtotal && core::$user_rights >= 6) echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
     echo'<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
         '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
@@ -84,7 +84,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         */
         $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
         echo'<div class="gmenu"><p>';
-        echo'<h3><img src="../images/modules.png" width="16" height="16" class="left" />&#160;' . $lng['modules'] . '</h3><ul>' .
+        echo'<h3>' . $lng['modules'] . '</h3><ul>' .
             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
             '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li><br/>' .
             '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>' .
@@ -99,7 +99,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         -----------------------------------------------------------------
         */
         echo'<div class="menu"><p>' .
-            '<h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['system'] . '</h3>' .
+            '<h3>' . $lng['system'] . '</h3>' .
             '<ul>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
             '<li><a href="index.php?act=smileys">' . $lng['refresh_smileys'] . '</a></li>' .
@@ -114,14 +114,14 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         -----------------------------------------------------------------
         */
         echo'<div class="rmenu"><p>' .
-            '<h3><img src="../images/admin.png" width="16" height="16" class="left" />&#160;' . $lng['security'] . '</h3>' .
+            '<h3>' . $lng['security'] . '</h3>' .
             '<ul>' .
             '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=ipban">' . $lng['ip_ban'] . '</a></li>' : '') .
             '</ul>' .
             '</p></div>';
     }
-    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 5.1.0</b></div>';
+    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 5.2.0</b></div>';
 }
 
 require('../incfiles/end.php');

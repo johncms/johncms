@@ -229,7 +229,6 @@ switch ($type1['type']) {
         if (isset($_POST['msgtrans'])) {
             $msg = functions::trans($msg);
         }
-        $to = $type1['from'];
         if (!empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
@@ -237,7 +236,7 @@ switch ($type1['type']) {
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date("d.m.Y H:i", $type1['time']);
-            $msg = '[c]' . $to . ' ([time]' . $tp . "[/time])\r\n" . $citata . '[/c]' . $msg;
+            $msg = '[c][url=' . $home . '/forum/index.php?act=post&id=' . $type1['id'] . ']#[/url] ' . $type1['from'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {

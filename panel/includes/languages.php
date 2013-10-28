@@ -174,7 +174,7 @@ switch ($mod) {
             $count = $start + $kmess > $total ? $total : $start + $kmess;
             for ($i = $start; $i < $count; $i++) {
                 echo is_integer($i / 2) ? '<div class="list1">' : '<div class="list2">';
-                $name_module = preg_replace('#^' . $rootpath . 'incfiles/languages/' . $language . '/(.*?).lng$#isU', '$1', $array_module[$i], 1);
+                $name_module = preg_replace('#^' . ROOTPATH . 'incfiles/languages/' . $language . '/(.*?).lng$#isU', '$1', $array_module[$i], 1);
                 $lng_module_standart = ini_file::parser($language, $name_module);
                 $lng_edit = ini_file::parser_edit($language);
                 $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);

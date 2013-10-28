@@ -84,16 +84,17 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
 					`from_id` = '" . $id . "',
 					`time` = '" . time() . "';");
                 }
-                echo '<div class="rmenu">' . $lng_mail['add_contact'] . '</div>';
+                echo '<div class="gmenu"><p>' . $lng_mail['add_contact'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
             } else {
-                echo '<div class="gmenu"><form action="index.php?id=' . $id . '&amp;add" method="post"><div>
-				' . $lng_mail['really_add_contact'] . '<br />
-				<input type="submit" name="submit" value="' . $lng['add'] . '"/>
-				</div></form></div>';
+                echo '<div class="menu">' .
+                    '<form action="index.php?id=' . $id . '&amp;add" method="post">' .
+                    '<div><p>' . $lng_mail['really_add_contact'] . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . $lng['add'] . '"/></p>' .
+                    '</div></form></div>';
             }
         }
     } else {
-        echo'<div class="topmenu"><b>' . $lng_mail['my_contacts'] . '</b> | <a href="index.php?act=ignor">' . $lng_mail['blocklist'] . '</a></div>';
+        echo '<div class="topmenu"><b>' . $lng_mail['my_contacts'] . '</b> | <a href="index.php?act=ignor">' . $lng_mail['blocklist'] . '</a></div>';
         //Получаем список контактов
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`!='1'"), 0);
         if ($total) {
@@ -113,7 +114,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                 $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id';"), 0);
                 $arg = array(
                     'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
-                    'sub'    => $subtext
+                    'sub' => $subtext
                 );
                 echo functions::display_user($row, $arg);
                 echo '</div>';
@@ -133,4 +134,4 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
     }
 }
 
-require_once('../incfiles/end.php');
+require_once(ROOTPATH . 'incfiles/end.php');

@@ -33,7 +33,7 @@ $view = isset($_GET['view']);
 -----------------------------------------------------------------
 */
 echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | <a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['personal_2'] . '</a></div>';
-if ($user['id'] == $user_id || $rights >= 7) {
+if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     echo '<div class="topmenu"><a href="album.php?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng_profile['image_add'] . '</a></div>';
 }
 echo '<div class="user"><p>' . functions::display_user($user) . '</p></div>' .
