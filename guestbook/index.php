@@ -161,8 +161,7 @@ switch ($act) {
                     '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-                    '<p><a href="index.php">' . $lng['back'] . '</a></p>';
+                    '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
             }
         }
         break;

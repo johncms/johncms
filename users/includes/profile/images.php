@@ -89,7 +89,9 @@ switch ($mod) {
                 $handle->file_overwrite = true;
                 $handle->image_resize = true;
                 $handle->image_x = 320;
-                $handle->image_ratio_y = true;
+                $handle->image_y = 240;
+                $handle->image_ratio_no_zoom_in = true;
+                //$handle->image_ratio_y = true;
                 $handle->image_convert = 'jpg';
                 $handle->process('../files/users/photo/');
                 if ($handle->processed) {

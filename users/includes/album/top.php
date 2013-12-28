@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -18,7 +18,7 @@ switch ($mod) {
         Непрочитанные комментарии в личных альбомах
         -----------------------------------------------------------------
         */
-        if(!core::$user_id || core::$user_id != $user['id']){
+        if (!core::$user_id || core::$user_id != $user['id']) {
             echo functions::display_error($lng['wrong_data']);
             require('../incfiles/end.php');
             exit;
@@ -138,16 +138,23 @@ switch ($mod) {
 unset($_SESSION['ref']);
 require('../incfiles/head.php');
 echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';
-if($mod == 'my_new_comm') $total = $new_album_comm;
-elseif(!isset($total)) $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE $where"), 0);
+
+if ($mod == 'my_new_comm') {
+    $total = $new_album_comm;
+} elseif (!isset($total)) {
+    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE $where"), 0);
+}
+
 if ($total) {
-    if ($total > $kmess)
+    if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('album.php?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>';
+    }
+
     $req = mysql_query("
       SELECT `cms_album_files`.*, `users`.`name` AS `user_name`, `cms_album_cat`.`name` AS `album_name` $select
       FROM `cms_album_files`
-      INNER JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
-      INNER JOIN `cms_album_cat` ON `cms_album_files`.`album_id` = `cms_album_cat`.`id`
+      LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
+      LEFT JOIN `cms_album_cat` ON `cms_album_files`.`album_id` = `cms_album_cat`.`id`
       $join
       WHERE $where
       ORDER BY $order
@@ -156,6 +163,7 @@ if ($total) {
     $i = 0;
     for ($i = 0; ($res = mysql_fetch_assoc($req)) !== false; ++$i) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+
         if ($res['access'] == 4 || core::$user_rights >= 7) {
             // Если доступ открыт всем, или смотрит Администратор
             echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
@@ -168,8 +176,10 @@ if ($total) {
             // Если доступ по паролю
             echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '"><img src="' . core::$system_set['homeurl'] . '/images/stop.gif" width="50" height="50"/></a>';
         }
+
         echo '<div class="sub">' .
-             '<a href="album.php?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . functions::checkout($res['album_name']) . '</a>';
+            '<a href="album.php?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . functions::checkout($res['album_name']) . '</a>';
+
         if ($res['access'] == 4 || core::$user_rights >= 6) {
             echo vote_photo($res) .
                 '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
@@ -177,12 +187,15 @@ if ($total) {
                 '<a href="album.php?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
                 '<br /><a href="album.php?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
         }
+
         echo '</div></div>';
     }
 } else {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 }
+
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('album.php?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="album.php?act=top' . $link . '" method="post">' .
@@ -190,4 +203,3 @@ if ($total > $kmess) {
         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
         '</form></p>';
 }
-?>

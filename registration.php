@@ -36,22 +36,44 @@ echo '<div class="phdr"><b>' . $lng['registration'] . '</b></div>';
 if (isset($_POST['submit'])) {
     // Принимаем переменные
     $error = array();
+
     // Проверка Логина
-    if (empty($reg_nick))
+    if (empty($reg_nick)) {
         $error['login'][] = $lng_reg['error_nick_empty'];
-    elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 15)
+    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 15) {
         $error['login'][] = $lng_reg['error_nick_lenght'];
-    if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick))
+    }
+
+    if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
         $error['login'][] = $lng['error_wrong_symbols'];
+    }
+
     // Проверка пароля
-    if (empty($reg_pass)) $error['password'][] = $lng['error_empty_password'];
-    elseif (mb_strlen($reg_pass) < 3 || mb_strlen($reg_pass) > 10) $error['password'][] = $lng['error_wrong_lenght'];
-    if (preg_match('/[^\dA-Za-z]+/', $reg_pass)) $error['password'][] = $lng['error_wrong_symbols'];
+    if (empty($reg_pass)) {
+        $error['password'][] = $lng['error_empty_password'];
+    } elseif (mb_strlen($reg_pass) < 3 || mb_strlen($reg_pass) > 10) {
+        $error['password'][] = $lng['error_wrong_lenght'];
+    }
+
+    if (preg_match('/[^\dA-Za-z]+/', $reg_pass)) {
+        $error['password'][] = $lng['error_wrong_symbols'];
+    }
+
     // Проверка пола
-    if ($reg_sex != 'm' && $reg_sex != 'zh') $error['sex'] = $lng_reg['error_sex'];
+    if ($reg_sex != 'm' && $reg_sex != 'zh') {
+        $error['sex'] = $lng_reg['error_sex'];
+    }
+
     // Проверка кода CAPTCHA
-    if (!$captcha || !isset($_SESSION['code']) || mb_strlen($captcha) < 4 || $captcha != $_SESSION['code']) $error['captcha'] = $lng['error_wrong_captcha'];
+    if (!$captcha
+        || !isset($_SESSION['code'])
+        || mb_strlen($captcha) < 4
+        || $captcha != $_SESSION['code']
+    ) {
+        $error['captcha'] = $lng['error_wrong_captcha'];
+    }
     unset($_SESSION['code']);
+
     // Проверка переменных
     if (empty($error)) {
         $pass = md5(md5($reg_pass));
@@ -89,6 +111,7 @@ if (isset($_POST['submit'])) {
 
         // Отправка системного сообщения
         $set_mail = unserialize($set['setting_mail']);
+
         if (!isset($set_mail['message_include'])) {
             $set_mail['message_include'] = 0;
         }
@@ -97,10 +120,14 @@ if (isset($_POST['submit'])) {
             $array = array('{LOGIN}', '{TIME}');
             $array_replace = array($reg_nick, '{TIME=' . time() . '}');
 
-            if (empty($set['them_message']))
+            if (empty($set['them_message'])) {
                 $set['them_message'] = $lng_mail['them_message'];
-            if (empty($set['reg_message']))
+            }
+
+            if (empty($set['reg_message'])) {
                 $set['reg_message'] = $lng['hi'] . ", {LOGIN}\r\n" . $lng_mail['pleased_see_you'] . "\r\n" . $lng_mail['come_my_site'] . "\r\n" . $lng_mail['respectfully_yours'];
+            }
+
             $theme = str_replace($array, $array_replace, $set['them_message']);
             $system = str_replace($array, $array_replace, $set['reg_message']);
             mysql_query("INSERT INTO `cms_mail` SET
@@ -113,7 +140,8 @@ if (isset($_POST['submit'])) {
 			");
         }
 
-        echo'<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>';
+        echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>';
+
         if ($set['mod_reg'] == 1) {
             echo '<p><span class="red"><b>' . $lng_reg['moderation_note'] . '</b></span></p>';
         } else {
@@ -121,6 +149,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['ups'] = md5(md5($reg_pass));
             echo '<p><a href="' . $home . '">' . $lng_reg['enter'] . '</a></p>';
         }
+
         echo '</div>';
         require('incfiles/end.php');
         exit;
@@ -133,7 +162,7 @@ if (isset($_POST['submit'])) {
 -----------------------------------------------------------------
 */
 if ($set['mod_reg'] == 1) echo '<div class="rmenu"><p>' . $lng_reg['moderation_warning'] . '</p></div>';
-echo'<form action="registration.php" method="post"><div class="gmenu">' .
+echo '<form action="registration.php" method="post"><div class="gmenu">' .
     '<p><h3>' . $lng_reg['login'] . '</h3>' .
     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />', $error['login']) . '</small></span><br />' : '') .
     '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .

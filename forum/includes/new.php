@@ -125,7 +125,7 @@ if ($user_id) {
                         echo '&#160;/&#160;' . $nick['from'];
                     }
 
-                    echo ' <span class="gray">' . date("d.m.y / H:i", $nick['time']) . '</span>';
+                    echo ' <span class="gray">' . functions::display_date($nick['time']) . '</span>';
                     echo '</div></div>';
                 }
             } else {

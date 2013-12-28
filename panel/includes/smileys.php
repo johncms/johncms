@@ -17,7 +17,7 @@ $ext = array('gif', 'jpg', 'jpeg', 'png'); // Список разрешенны�
 $smileys = array();
 
 // Обрабатываем простые смайлы
-foreach(glob(ROOTPATH . 'images/smileys/simply/*') as $var){
+foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'simply' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -26,7 +26,7 @@ foreach(glob(ROOTPATH . 'images/smileys/simply/*') as $var){
 }
 
 // Обрабатываем Админские смайлы
-foreach(glob(ROOTPATH . 'images/smileys/admin/*') as $var){
+foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -36,11 +36,11 @@ foreach(glob(ROOTPATH . 'images/smileys/admin/*') as $var){
 }
 
 // Обрабатываем смайлы каталога
-foreach(glob(ROOTPATH . 'images/smileys/user/*/*') as $var){
+foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'user' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
-        $path = str_replace('..', $set['homeurl'], dirname($var));
+        $path = $set['homeurl'] . '/images/smileys/user/' . basename(dirname($var));
         $smileys['usr'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
         $smileys['usr'][':' . $name[0] . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
     }
@@ -53,7 +53,5 @@ if (file_put_contents(ROOTPATH . 'files/cache/smileys.dat', serialize($smileys))
     echo '<div class="rmenu"><p>' . $lng['smileys_error'] . '</p></div>';
 }
 $total = count($smileys['adm']) + count($smileys['usr']);
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
-echo '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-
-?>
+echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .
+    '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';

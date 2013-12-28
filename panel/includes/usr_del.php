@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
@@ -52,10 +52,10 @@ if (!$error) {
     $forump_count = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'"), 0);
     echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['user_del'] . '</div>';
     // Выводим краткие данные
-    echo '<div class="user"><p>' . functions::display_user($user, array (
-        'lastvisit' => 1,
-        'iphist' => 1
-    )) . '</p></div>';
+    echo '<div class="user"><p>' . functions::display_user($user, array(
+            'lastvisit' => 1,
+            'iphist' => 1
+        )) . '</p></div>';
 
     switch ($mod) {
 
@@ -78,7 +78,9 @@ if (!$error) {
                     mysql_query("DELETE FROM `cms_album_comments` WHERE `sub_id` = '" . $res['id'] . "'");
                 }
             }
-            rmdir('../files/users/album/' . $user['id']);
+            if (is_dir('../files/users/album/' . $user['id'])) {
+                rmdir('../files/users/album/' . $user['id']);
+            }
             mysql_query("DELETE FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'");
             mysql_query("DELETE FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "'");
             mysql_query("DELETE FROM `cms_album_downloads` WHERE `user_id` = '" . $user['id'] . "'");
@@ -91,11 +93,11 @@ if (!$error) {
                 while ($res = mysql_fetch_assoc($req)) {
                     // Удаляем файлы почты
                     if ($res['file_name']) {
-                            if (file_exists('../files/mail/' . $res['file_name']) !== false)
-                                @unlink('../files/mail/' . $res['file_name']);
-                            }
+                        if (file_exists('../files/mail/' . $res['file_name']) !== false)
+                            @unlink('../files/mail/' . $res['file_name']);
                     }
                 }
+            }
             // Удаляем почту
             mysql_query("DELETE FROM `cms_mail` WHERE `user_id` = '" . $user['id'] . "'");
             mysql_query("DELETE FROM `cms_mail` WHERE `from_id` = '" . $user['id'] . "'");

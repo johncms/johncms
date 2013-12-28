@@ -16,11 +16,12 @@ echo '<div class="phdr">' . $lng['new_files'] . '</div>';
 
 $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file'");
 $total = mysql_result($req, 0);
-if ($total > 0) {
+
+if ($total) {
     ////////////////////////////////////////////////////////////
     // Выводим список новых файлов                            //
     ////////////////////////////////////////////////////////////
-    $req = mysql_query("SELECT * FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file' ORDER BY `time` DESC LIMIT $start,$kmess");
+    $req = mysql_query("SELECT * FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file' ORDER BY `time` DESC LIMIT $start, $kmess");
     while ($newf = mysql_fetch_array($req)) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         $fsz = filesize("$newf[adres]/$newf[name]");
@@ -78,7 +79,7 @@ if ($total > 0) {
         ++$i;
     }
     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
-    if ($total > 10) {
+    if ($total > $kmess) {
         echo '<p>' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</p>';
         echo '<p><form action="index.php" method="get"><input type="hidden" value="new" name="act" /><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
     }
@@ -87,5 +88,3 @@ else {
     echo '<p>' . $lng['list_empty'] . '</p>';
 }
 echo "<p><a href='index.php?'>" . $lng['back'] . "</a></p>";
-
-?>

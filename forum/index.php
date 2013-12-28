@@ -124,6 +124,8 @@ if (empty($id)) {
     $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '" . $id . "'");
     $res = mysql_fetch_assoc($req);
     $hdr = strtr($res['text'], array(
+        '&laquo;' => '',
+        '&raquo;' => '',
         '&quot;' => '',
         '&amp;'  => '',
         '&lt;'   => '',

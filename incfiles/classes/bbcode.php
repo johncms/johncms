@@ -355,7 +355,7 @@ class bbcode extends core
             <a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/underline.gif" alt="u" title="' . self::$lng['tag_underline'] . '" border="0"/></a>
             <a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/strike.gif" alt="s" title="' . self::$lng['tag_strike'] . '" border="0"/></a>
             <a href="javascript:tag(\'[*]\', \'[/*]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/list.gif" alt="s" title="' . self::$lng['tag_list'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="../images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
+            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
             <a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" border="0"/></a>
             <a href="javascript:tag(\'[php]\', \'[/php]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" alt="cod" title="' . self::$lng['tag_code'] . '" border="0"/></a>
             <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>

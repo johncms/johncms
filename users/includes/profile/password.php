@@ -63,12 +63,6 @@ switch ($mod) {
                 setcookie('cups', md5($newpass), time() + 3600 * 24 * 365);
             echo '<div class="gmenu"><p><b>' . $lng_pass['password_changed'] . '</b><br />' .
                 '<a href="' . ($user_id == $user['id'] ? '../login.php' : 'profile.php?user=' . $user['id']) . '">' . $lng['continue'] . '</a></p>';
-            if ($autologin) {
-                // Показываем ссылку на Автологин
-                echo '<p>' . $lng_pass['autologin_link'] . ':<br />' .
-                    '<input type="text" value="' . $set['homeurl'] . '/login.php?id=' . $user['id'] . '&amp;p=' . $newpass . '" /></p>' .
-                    '<p>' . $lng_pass['autologin_warning'] . '</p>';
-            }
             echo '</div>';
         } else {
             echo functions::display_error($error, '<a href="profile.php?act=password&amp;user=' . $user['id'] . '">' . $lng['repeat'] . '</a>');
@@ -88,8 +82,7 @@ switch ($mod) {
         echo '<div class="gmenu"><p>' . $lng_pass['input_new_password'] . ':<br />' .
             '<input type="password" name="newpass" /><br />' . $lng_pass['repeat_password'] . ':<br />' .
             '<input type="password" name="newconf" /></p>' .
-            '<p><input type="checkbox" value="1" name="autologin" />&#160;' . $lng_pass['show_autologin'] .
-            '</p><p><input type="submit" value="' . $lng['save'] . '" name="submit" />' .
+            '<p><input type="submit" value="' . $lng['save'] . '" name="submit" />' .
             '</p></div></form>' .
             '<div class="phdr"><small>' . $lng_pass['password_change_help'] . '</small></div>' .
             '<p><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';

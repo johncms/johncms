@@ -15,7 +15,7 @@ class counters
 {
     /*
     -----------------------------------------------------------------
-    Счетчик Фотоальбомов / фотографий юзеров
+    Счетчик Фотоальбомов для простых пользователей
     -----------------------------------------------------------------
     */
     static function album()
@@ -26,13 +26,24 @@ class counters
             $album = $res['album'];
             $photo = $res['photo'];
             $new = $res['new'];
+            $new_adm = $res['new_adm'];
         } else {
             $album = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`"), 0);
             $photo = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files`"), 0);
-            $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
-            file_put_contents($file, serialize(array('album' => $album, 'photo' => $photo, 'new' => $new)));
+            $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` = '4'"), 0);
+            $new_adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
+            file_put_contents($file, serialize(array('album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm)));
         }
-        return $album . '&#160;/&#160;' . $photo . ($new ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top">+' . $new . '</a></span>' : '');
+
+        $newcount = 0;
+        if (core::$user_rights >= 6 && $new_adm) {
+            $newcount = $new_adm;
+        } elseif ($new) {
+            $newcount = $new;
+        }
+
+        return $album . '&#160;/&#160;' . $photo .
+        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top">+' . $newcount . '</a></span>' : '');
     }
 
     /*

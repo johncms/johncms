@@ -12,7 +12,7 @@
 define('_IN_JOHNCMS', 1);
 set_time_limit(1200);
 
-define('INSTALL_VERSION', '5.2.0'); // Инсталлируемая версия
+define('INSTALL_VERSION', '5.2.1'); // Инсталлируемая версия
 define('UPDATE_VERSION', '4.4.0'); // Обновление с версии
 
 // Задаем режим работы инсталлятора
@@ -22,40 +22,6 @@ define('MODE', 'install');
 
 class install
 {
-    /*
-    -----------------------------------------------------------------
-    Список папок для проверки
-    -----------------------------------------------------------------
-    */
-    private static $folders = array(
-        '/download/arctemp/',
-        '/download/files/',
-        '/download/graftemp/',
-        '/download/screen/',
-        '/files/cache/',
-        '/files/forum/attach/',
-        '/files/library/',
-        '/files/lng_edit/',
-        '/files/users/album/',
-        '/files/users/avatar/',
-        '/files/users/photo/',
-        '/files/mail/',
-        '/gallery/foto/',
-        '/gallery/temp/',
-        '/incfiles/',
-        '/library/temp/'
-    );
-
-    /*
-    -----------------------------------------------------------------
-    Список файлов для проверки
-    -----------------------------------------------------------------
-    */
-    private static $files = array(
-        '/library/java/textfile.txt',
-        '/library/java/META-INF/MANIFEST.MF'
-    );
-
     /*
     -----------------------------------------------------------------
     Критические ошибки настройки PHP
@@ -84,27 +50,61 @@ class install
         return !empty($error) ? $error : false;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Проверяем права доступа к папкам
-    -----------------------------------------------------------------
-    */
+    /**
+     * Проверяем права доступа к папкам
+     *
+     * @return array|bool
+     */
     static function check_folders_rights()
     {
+        $folders = array(
+            '/download/arctemp/',
+            '/download/files/',
+            '/download/graftemp/',
+            '/download/screen/',
+            '/files/cache/',
+            '/files/forum/attach/',
+            '/files/library/',
+            '/files/lng_edit/',
+            '/files/users/album/',
+            '/files/users/avatar/',
+            '/files/users/photo/',
+            '/files/mail/',
+            '/gallery/foto/',
+            '/gallery/temp/',
+            '/incfiles/',
+            '/library/temp/'
+        );
         $error = array();
-        foreach (self::$folders as $val) if ((@decoct(@fileperms('..' . $val)) % 1000) < 777) $error[] = $val;
+
+        foreach ($folders as $val) {
+            if (!is_writable('..' . $val)) {
+                $error[] = $val;
+            }
+        }
+
         return !empty($error) ? $error : false;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Проверяем права доступа к файлам
-    -----------------------------------------------------------------
-    */
+    /**
+     * Проверяем права доступа к файлам
+     *
+     * @return array|bool
+     */
     static function check_files_rights()
     {
+        $files = array(
+            '/library/java/textfile.txt',
+            '/library/java/META-INF/MANIFEST.MF'
+        );
         $error = array();
-        foreach (self::$files as $val) if ((@decoct(@fileperms('..' . $val)) % 1000) < 666) $error[] = $val;
+
+        foreach ($files as $val) {
+            if (!is_writable('..' . $val)) {
+                $error[] = $val;
+            }
+        }
+
         return !empty($error) ? $error : false;
     }
 
