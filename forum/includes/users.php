@@ -12,7 +12,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 $topic_vote = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id'"), 0);
-if ($topic_vote == 0) {
+if ($topic_vote == 0 || core::$user_rights < 7) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
     exit;

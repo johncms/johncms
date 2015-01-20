@@ -11,20 +11,23 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require_once ("../incfiles/head.php");
-if ($_GET['id'] == "") {
+require_once("../incfiles/head.php");
+
+$fayl = mysql_query("SELECT * FROM `download` WHERE type='file' AND id='" . $id . "'");
+if (!mysql_num_rows($fayl)) {
     echo "ERROR<br/><a href='?'>Back</a><br/>";
-    require_once ('../incfiles/end.php');
+    require_once('../incfiles/end.php');
     exit;
 }
+
 if (!$set['mod_down_comm'] && $rights < 7) {
     echo '<p>ERROR<br/><a href="index.php">Back</a></p>';
-    require_once ('../incfiles/end.php');
+    require_once('../incfiles/end.php');
     exit;
 }
-$mess = mysql_query("select * from `download` where type='komm' and refid='" . $id . "' order by time desc ;");
+$mess = mysql_query("SELECT * FROM `download` WHERE type='komm' AND refid='" . $id . "' ORDER BY time DESC ;");
 $countm = mysql_num_rows($mess);
-$fayl = mysql_query("select * from `download` where type='file' and id='" . $id . "';");
+
 $fayl1 = mysql_fetch_array($fayl);
 echo '<p>' . $lng['comments'] . ": <span class='red'>$fayl1[name]</span></p>";
 if ($user_id && !$ban['1'] && !$ban['10']) {
@@ -32,15 +35,13 @@ if ($user_id && !$ban['1'] && !$ban['10']) {
 }
 if (empty ($_GET['page'])) {
     $page = 1;
-}
-else {
+} else {
     $page = intval($_GET['page']);
 }
 $start = $page * $kmess - $kmess;
 if ($countm < $start + $kmess) {
     $end = $countm;
-}
-else {
+} else {
     $end = $start + $kmess;
 }
 
@@ -52,17 +53,15 @@ while ($mass = mysql_fetch_array($mess)) {
         $d3 = ceil($d2);
         if ($d3 == 0) {
             $div = "<div class='list2'>";
-        }
-        else {
+        } else {
             $div = "<div class='list1'>";
         }
-        $uz = @ mysql_query("select * from `users` where name='" . functions::check($mass[avtor]) . "';");
+        $uz = @ mysql_query("SELECT * FROM `users` WHERE name='" . functions::check($mass[avtor]) . "';");
         $mass1 = @ mysql_fetch_array($uz);
         echo "$div";
         if ((!empty ($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1[id])) {
             echo "<a href='../users/profile.php?user=" . $mass1[id] . "'>$mass[avtor]</a>";
-        }
-        else {
+        } else {
             echo "$mass[avtor]";
         }
         switch ($mass1[rights]) {
@@ -83,8 +82,7 @@ while ($mass = mysql_fetch_array($mess)) {
         $ontime2 = $ontime + 300;
         if (time() > $ontime2) {
             echo " [Off]";
-        }
-        else {
+        } else {
             echo " [ON]";
         }
         echo '(' . functions::display_date($mass['time']) . ')<br/>';
@@ -120,9 +118,8 @@ if ($countm > $kmess) {
     $paa3 = $page + (floor($page2 / 3) * 2);
     if ($page > 13) {
         echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="?id=' . $id . '&amp;page='
-        . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-    }
-    elseif ($page > 7) {
+            . ($paa * 2) . '">' . ($paa * 2) . '</a> <a href="?id=' . $id . '&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
+    } elseif ($page > 7) {
         echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . $pa . '">' . $pa . '</a> <a href="?id=' . $id . '&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
     }
     for ($i = $asd; $i < $asd2;) {
@@ -131,8 +128,7 @@ if ($countm > $kmess) {
 
             if ($start == $i) {
                 echo " <b>$ii</b>";
-            }
-            else {
+            } else {
                 echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . $ii . '">' . $ii . '</a> ';
             }
         }
@@ -140,9 +136,8 @@ if ($countm > $kmess) {
     }
     if ($page2 > 12) {
         echo ' .. <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) .
-        '</a> .. <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-    }
-    elseif ($page2 > 6) {
+            '</a> .. <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa3) . '">' . ($paa3) . '</a> <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
+    } elseif ($page2 > 6) {
         echo ' .. <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
     }
     if ($asd2 < $countm) {
@@ -152,9 +147,7 @@ if ($countm > $kmess) {
         echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
     echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
-    "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+        "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
 echo "<br/>" . $lng['total'] . ": $countm";
 echo '<br/><a href="?act=view&amp;file=' . $id . '">' . $lng['back'] . '</a><br/>';
-
-?>

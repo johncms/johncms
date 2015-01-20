@@ -26,7 +26,7 @@ if (core::$user_rights >= 7) {
         WHERE `forum`.`refid`='$id' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum`.`from` ORDER BY `forum`.`from`");
     $total = mysql_num_rows($req);
     echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['curators'] . '</div>' .
-         '<div class="bmenu">' . $res['text'] . '</div>';
+         '<div class="bmenu">' . $topic['text'] . '</div>';
     $curators = array();
     $users = !empty($topic['curators']) ? unserialize($topic['curators']) : array();
     if (isset($_POST['submit'])) {

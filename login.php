@@ -118,13 +118,13 @@ if(core::$user_id){
 
         echo $info;
 
-        echo '<div class="gmenu"><p><form action="login.php" method="post"><p>' . $lng['login_name'] . ':<br/>' .
+        echo '<div class="gmenu"><form action="login.php" method="post"><p>' . $lng['login_name'] . ':<br/>' .
             '<input type="text" name="n" value="' . htmlentities($user_login, ENT_QUOTES, 'UTF-8') . '" maxlength="20"/>' .
             '<br/>' . $lng['password'] . ':<br/>' .
             '<input type="password" name="p" maxlength="20"/></p>' .
             '<p><input type="checkbox" name="mem" value="1" checked="checked"/>' . $lng['remember'] . '</p>' .
             '<p><input type="submit" value="' . $lng['login'] . '"/></p>' .
-            '</form></p></div>' .
+            '</form></div>' .
             '<div class="menu"><p>' . functions::image('user.png') . '<a href="registration.php">' . $lng['registration'] . '</a></p></div>' .
             '<div class="bmenu"><p>' . functions::image('lock.png') . '<a href="users/skl.php?continue">' . $lng['forgotten_password'] . '?</a></p></div>';
     }

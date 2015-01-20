@@ -462,7 +462,7 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
                             echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . $lng_forum['rating'] . ': ' . $count_vote . '%" /><br />';
                         }
                         echo '</small></div><div class="bmenu">' . $lng_forum['total_votes'] . ': ';
-                        if ($user_id && core::$user_data['rights'] > 6)
+                        if (core::$user_rights > 6)
                             echo '<a href="index.php?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
                         else
                             echo $topic_vote['count'];

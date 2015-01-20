@@ -13,7 +13,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once("../incfiles/head.php");
 
-$im = array();
+$im = [];
 $delimag = opendir("$filesroot/graftemp");
 while ($imd = readdir($delimag)) {
     if ($imd != "." && $imd != ".." && $imd != "index.php") {
@@ -70,11 +70,11 @@ echo '</div><div class="menu"><p>';
 echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br/>' .
     '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br/>';
 
-$graf = array (
+$graf = [
     "gif",
     "jpg",
     "png"
-);
+];
 $prg = strtolower(functions::format($adrfile['name']));
 if (in_array($prg, $graf)) {
     $sizsf = GetImageSize("$adrfile[adres]/$adrfile[name]");
@@ -138,13 +138,13 @@ if ($prg == "mp3") {
     $result = $id3->read("$adrfile[adres]/$adrfile[name]");
     $result = $id3->study();
     echo '<p>';
-    if(!empty($id3->artists))
+    if (!empty($id3->artists))
         echo '<div><b>' . $lng_dl['artist'] . ':</b> ' . $id3->artists . '</div>';
-    if(!empty($id3->album))
+    if (!empty($id3->album))
         echo '<div><b>' . $lng_dl['album'] . ':</b> ' . $id3->album . '</div>';
-    if(!empty($id3->year))
+    if (!empty($id3->year))
         echo '<div><b>' . $lng_dl['released'] . ':</b> ' . $id3->year . '</div>';
-    if(!empty($id3->name))
+    if (!empty($id3->name))
         echo '<div><b>' . $lng['title'] . ':</b> ' . $id3->name . '</div>';
     echo '</p>';
     if ($id3->getTag('bitrate')) {
@@ -259,14 +259,17 @@ if ($prg == "zip") {
     echo "<a href='?act=zip&amp;file=" . $file . "'>Открыть архив</a><br/>";
 }
 echo '<span class="gray">' . $lng_dl['downloads'] . ':</span> <b>' . $dl_count . '</b>';
+
 if (!empty($adrfile['soft'])) {
-    $rating = explode(",", $adrfile['soft']);
-    $rat = $rating[0] / $rating[1];
+    $rating = unserialize($adrfile['soft']);
+    $rat = $rating['vote'] / $rating['count'];
     $rat = round($rat, 2);
     echo '<br /><span class="gray">' . $lng_dl['average_rating'] . ':</span> <b>' . $rat . '</b>' .
         '<br /><span class="gray">' . $lng_dl['vote_count'] . ':</span> <b>' . $rating[1] . '</b>';
 }
+
 echo '</small></p>';
+
 // Рейтинг файла
 echo '<p><form action="index.php?act=rat&amp;id=' . $file . '" method="post"><select name="rat" style="font-size: x-small;">';
 for ($i = 10; $i >= 1; --$i) {

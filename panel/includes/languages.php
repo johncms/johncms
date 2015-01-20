@@ -569,18 +569,12 @@ switch ($mod) {
         echo '<div class="menu"><form action="index.php?act=languages&amp;mod=set" method="post"><p>';
         echo '<table><tr><td>&nbsp;</td><td style="padding-bottom:4px"><h3>' . $lng['language_system'] . '</h3></td></tr>';
         foreach ($lng_desc as $key => $val) {            
-            $lng_menu = array(
-                (!empty($val['author']) ? '<span class="gray">' . $lng['author'] . ':</span> ' . $val['author'] : ''),
-                (!empty($val['author_email']) ? '<span class="gray">E-mail:</span> ' . $val['author_email'] : ''),
-                (!empty($val['author_url']) ? '<span class="gray">URL:</span> ' . $val['author_url'] : ''),
-                (!empty($val['description']) ? '<span class="gray">' . $lng['description'] . ':</span> ' . $val['description'] : '')
-            );
             echo '<tr>' .
                  '<td valign="top"><input type="radio" value="' . $key . '" name="iso" ' . ($key == $set['lng'] ? 'checked="checked"' : '') . '/></td>' .
                  '<td style="padding-bottom:6px">' .
                  (file_exists('../images/flags/' . $key . '.gif') ? '<img src="../images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                  '<a href="index.php?act=languages&amp;mod=module&amp;language=' . $key . '"><b>' . $val['name'] . '</b></a>&#160;<span class="green">[' . $key . ']</span>' .
-                 '<div class="sub">' . functions::display_menu($lng_menu, '<br />') . '</div></td>' .
+                 '</td>' .
                  '</tr>';
         }
         echo '<tr><td>&nbsp;</td><td><input type="submit" name="submit" value="' . $lng['save'] . '" /></td></tr>' .
@@ -589,5 +583,3 @@ switch ($mod) {
              '<div class="phdr">' . $lng['total'] . ': <b>' . count($lng_desc) . '</b></div>' .
              '<p><a href="index.php?act=languages&amp;refresh">' . $lng['refresh_descriptions'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 }
-
-?>

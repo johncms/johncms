@@ -21,10 +21,9 @@ if ($_GET['id'] == "") {
     require_once('../incfiles/end.php');
     exit;
 }
-$id = intval(trim($_GET['id']));
-$typ = mysql_query("select * from `download` where id='" . $id . "';");
-$ms = mysql_fetch_array($typ);
-if ($ms[type] != "file") {
+$typ = mysql_query("SELECT * FROM `download` WHERE `id` = '" . $id . "'");
+$ms = mysql_fetch_assoc($typ);
+if ($ms['type'] != "file") {
     echo "ERROR<br/><a href='index.php?'>Back</a><br/>";
     require_once('../incfiles/end.php');
     exit;
@@ -34,16 +33,24 @@ if ($_SESSION['rat'] == $id) {
     require_once('../incfiles/end.php');
     exit;
 }
-$rat = intval(functions::check($_POST['rat']));
-if (!empty($ms[soft])) {
-    $rt = explode(",", $ms[soft]);
-    $rt1 = $rt[0] + $rat;
-    $rt2 = $rt[1] + 1;
-    $rat1 = "$rt1,$rt2";
-} else {
-    $rat1 = "$rat,1";
+
+if (isset($_POST['rat'])
+    && ctype_digit($_POST['rat'])
+    && $_POST['rat'] > 0
+    && $_POST['rat'] < 11
+) {
+    $rat = intval($_POST['rat']);
+    if (!empty($ms['soft'])) {
+        $tmp = unserialize($ms['soft']);
+        $rating['vote'] = $tmp['vote'] + $rat;
+        $rating['count'] = $tmp['count'] + 1;
+    } else {
+        $rating['vote'] = $rat;
+        $rating['count'] = 1;
+    }
+
+    $_SESSION['rat'] = $id;
+    mysql_query("UPDATE `download` SET `soft` = '" . mysql_real_escape_string(serialize($rating)) . "' WHERE `id` = '" . $id . "'");
 }
-$_SESSION['rat'] = $id;
-mysql_query("update `download` set soft = '" . $rat1 . "' where id = '" . $id . "';");
+
 echo $lng_dl['vote_adopted'] . "<br/><a href='index.php?act=view&amp;file=" . $id . "'>" . $lng['back'] . "</a><br/>";
-?>

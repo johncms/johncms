@@ -332,6 +332,7 @@ class comments
             `sub_id` = '" . intval($this->sub_id) . "',
             `user_id` = '" . $this->user_id . "',
             `text` = '" . mysql_real_escape_string($message) . "',
+            `reply` = '',
             `time` = '" . time() . "',
             `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
         ");

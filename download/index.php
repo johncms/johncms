@@ -224,7 +224,7 @@ if (in_array($act, $array)) {
     if (!empty($cat))
         echo '<p><a href="index.php">' . $lng['downloads'] . '</a></p>';
     echo '<p><a href="index.php?act=preview">' . $lng_dl['images_size'] . '</a></p>';
-    if (empty($cat)) {
+    if (empty($cat) && $user_id) {
         echo '<form action="index.php?act=search" method="post">';
         echo $lng_dl['search_file'] . ': <br/><input type="text" name="srh" size="20" maxlength="20" value=""/><br/>';
         echo '<input type="submit" value="' . $lng['search'] . '"/></form>';
@@ -232,4 +232,3 @@ if (in_array($act, $array)) {
 }
 
 require_once('../incfiles/end.php');
-?>

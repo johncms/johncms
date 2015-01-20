@@ -11,26 +11,27 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights < 7)) {
-    if ($_GET['id'] == "") {
-        require_once ("../incfiles/head.php");
+if ($id > 0 && $user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights < 7)) {
+    $file = mysql_query("SELECT * FROM `download` WHERE `type` = 'file' AND `id` = '" . $id . "'");
+    if (!mysql_num_rows($file)) {
+        require_once("../incfiles/head.php");
         echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
-        require_once ('../incfiles/end.php');
+        require_once('../incfiles/end.php');
         exit;
     }
     if (isset ($_POST['submit'])) {
         // Проверка на флуд
         $flood = functions::antiflood();
         if ($flood) {
-            require_once ('../incfiles/head.php');
+            require_once('../incfiles/head.php');
             echo functions::display_error('Вы не можете так часто добавлять сообщения<br />Пожалуйста, подождите ' . $flood . ' сек.', '<a href="index.php?act=komm&amp;id=' . $id . '">Назад</a>');
-            require_once ('../incfiles/end.php');
+            require_once('../incfiles/end.php');
             exit;
         }
         if ($_POST['msg'] == "") {
-            require_once ("../incfiles/head.php");
+            require_once("../incfiles/head.php");
             echo "Вы не ввели сообщение!<br/><a href='?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
-            require_once ('../incfiles/end.php');
+            require_once('../incfiles/end.php');
             exit;
         }
         $msg = functions::check($_POST['msg']);
@@ -46,23 +47,17 @@ if ($user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] || $rights <
 		`lastpost` = '" . time() . "'
 		WHERE `id`='" . $user_id . "'");
         header("Location: index.php?act=komm&id=$id");
+    } else {
+        require_once("../incfiles/head.php");
+        echo "<form action='?act=addkomm&amp;id=" . $id .
+            "' method='post'>
+" . $lng['message'] . " (max. 500)<br/>
+<textarea rows='3' name='msg' ></textarea><br/><br/>
+<input type='submit' name='submit' value='" . $lng['add'] . "' />
+  </form>";
     }
-    else {
-        require_once ("../incfiles/head.php");
-        echo "Напишите комментарий<br/><br/><form action='?act=addkomm&amp;id=" . $id .
-             "' method='post'>
-Cообщение(max. 500)<br/>
-<textarea rows='3' title='Введите комментарий' name='msg' ></textarea><br/><br/>
-<input type='checkbox' name='msgtrans' value='1' title='Поставьте флажок для транслитерации сообщения' /> Транслит<br/>
-<input type='submit' title='Нажмите для отправки' name='submit' value='добавить' />
-  </form><br/>";
-        echo '<a href="index.php?act=trans">Транслит</a><br /><a href="../str/smile.php">' . $lng['smileys'] . '</a><br/>';
-    }
-}
-else {
-    require_once ("../incfiles/head.php");
+} else {
+    require_once("../incfiles/head.php");
     echo "Вы не авторизованы!<br/>";
 }
-echo '<br/><br/><a href="?act=komm&amp;id=' . $id . '">К комментариям</a><br/><a href="?act=view&amp;file=' . $id . '">К файлу</a><br/>';
-
-?>
+echo '<br/><a href="?act=komm&amp;id=' . $id . '">' . $lng['comments'] . '</a><br/><a href="?act=view&amp;file=' . $id . '">' . $lng_dl['file'] . '</a><br/>';

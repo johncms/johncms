@@ -57,6 +57,7 @@ class scaner {
         '../download/arctemp/index.php',
         '../download/cut.php',
         '../download/delcat.php',
+        '../incfiles/classes/CleanUser.php',
         '../download/delmes.php',
         '../download/dfile.php',
         '../download/down.php',
