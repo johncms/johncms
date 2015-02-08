@@ -559,32 +559,69 @@ CREATE TABLE `karma_users` (
   DEFAULT CHARSET = utf8;
 
 --
--- Структура таблицы `lib`
+-- Структура таблицы `library_tags`
 --
-DROP TABLE IF EXISTS `lib`;
-CREATE TABLE `lib` (
-  `id`       INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `refid`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `time`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `type`     VARCHAR(4)       NOT NULL DEFAULT '',
-  `name`     TINYTEXT         NOT NULL,
-  `announce` TEXT             NOT NULL,
-  `avtor`    VARCHAR(25)      NOT NULL DEFAULT '',
-  `text`     MEDIUMTEXT       NOT NULL,
-  `ip`       INT(11)          NOT NULL DEFAULT '0',
-  `soft`     TEXT             NOT NULL,
-  `moder`    TINYINT(1)       NOT NULL DEFAULT '0',
-  `count`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `library_tags`;  
+CREATE TABLE `library_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lib_text_id` int(11) NOT NULL,
+  `tag_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `type` (`type`),
-  KEY `moder` (`moder`),
-  KEY `time` (`time`),
-  KEY `refid` (`refid`),
-  FULLTEXT KEY `name` (`name`),
-  FULLTEXT KEY `text` (`text`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  KEY `lib_text_id` (`lib_text_id`),
+  KEY `tag_name` (`tag_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Структура таблицы `cms_library_comments`
+--
+DROP TABLE IF EXISTS `cms_library_comments`;
+CREATE TABLE `cms_library_comments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sub_id` int(11) unsigned NOT NULL,
+  `time` int(11) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `text` text NOT NULL,
+  `reply` text,
+  `attributes` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_id` (`sub_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Структура таблицы `library_cats`
+--
+DROP TABLE IF EXISTS `library_cats`;
+CREATE TABLE `library_cats` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `description` text NOT NULL,
+  `dir` int(1) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `user_add` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Структура таблицы `library_texts`
+--
+DROP TABLE IF EXISTS `library_texts`;
+CREATE TABLE `library_texts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(11) NOT NULL,
+  `text` mediumtext NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `announce` text,
+  `author` varchar(255) NOT NULL,
+  `count_views` int(11) NOT NULL,
+  `premod` int(1) NOT NULL DEFAULT '0',
+  `comments` int(1) NOT NULL,
+  `count_comments` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `text` (`text`,`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;  
 
 --
 -- Структура таблицы `news`

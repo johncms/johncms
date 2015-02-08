@@ -189,14 +189,14 @@ class counters
             $new = $res['new'];
             $mod = $res['mod'];
         } else {
-            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = '1'"), 0);
-            $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'bk' AND `moder` = '1'"), 0);
-            $mod = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `type` = 'bk' AND `moder` = '0'"), 0);
+            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod` = '1'"), 0);
+            $new = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod` = '1'"), 0);
+            $mod = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod` = '0'"), 0);
             file_put_contents($file, serialize(array('total' => $total, 'new' => $new, 'mod' => $mod)));
         }
-        if ($new) $total .= '&#160;/&#160;<span class="red"><a href="/library/index.php?act=new">+' . $new . '</a></span>';
+        if ($new) $total .= '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/library/index.php?act=new">+' . $new . '</a></span>';
         if ((core::$user_rights == 5 || core::$user_rights >= 6) && $mod) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '//library/index.php?act=moder">M:' . $mod . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
         }
         return $total;
     }

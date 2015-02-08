@@ -60,6 +60,11 @@ class install
             '/files/cache/',
             '/files/forum/attach/',
             '/files/library/',
+            '/files/library/tmp',
+            '/files/library/images',
+            '/files/library/images/big',
+            '/files/library/images/orig',
+            '/files/library/images/small',
             '/files/lng_edit/',
             '/files/users/album/',
             '/files/users/avatar/',
@@ -67,8 +72,7 @@ class install
             '/files/mail/',
             '/gallery/foto/',
             '/gallery/temp/',
-            '/incfiles/',
-            '/library/temp/'
+            '/incfiles/'
         );
         $error = array();
 
@@ -89,8 +93,8 @@ class install
     static function check_files_rights()
     {
         $files = array(
-            '/library/java/textfile.txt',
-            '/library/java/META-INF/MANIFEST.MF'
+            #'/library/java/textfile.txt',
+            #'/library/java/META-INF/MANIFEST.MF'
         );
         $error = array();
 
