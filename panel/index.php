@@ -44,7 +44,7 @@ $array = array(
     'ban_panel',
     'karma',
     'reg',
-	'mail',
+    'mail',
     'search_ip',
     'usr',
     'usr_adm',
@@ -65,7 +65,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     */
     echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
     if ($regtotal && core::$user_rights >= 6) echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
-    echo'<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
+    echo '<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
         '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
         ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
         '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
@@ -83,22 +83,24 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         -----------------------------------------------------------------
         */
         $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
-        echo'<div class="gmenu"><p>';
-        echo'<h3>' . $lng['modules'] . '</h3><ul>' .
+        echo '<div class="gmenu"><p>';
+        echo '<h3>' . $lng['modules'] . '</h3><ul>' .
             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
-            '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li><br/>' .
-            '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>' .
-            (core::$user_rights == 9 ? '<li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' : '') .
-            (core::$user_rights == 9 ? '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' : '') .
-			 '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>' .
-            '</ul></p></div>';
+            '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li>' .
+            '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>';
+        if (core::$user_rights == 9) {
+            echo '<br/><li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' .
+                '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' .
+                '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>';
+        }
+        echo '</ul></p></div>';
 
         /*
         -----------------------------------------------------------------
         Блок системных настроек
         -----------------------------------------------------------------
         */
-        echo'<div class="menu"><p>' .
+        echo '<div class="menu"><p>' .
             '<h3>' . $lng['system'] . '</h3>' .
             '<ul>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
@@ -113,7 +115,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         Блок безопасности
         -----------------------------------------------------------------
         */
-        echo'<div class="rmenu"><p>' .
+        echo '<div class="rmenu"><p>' .
             '<h3>' . $lng['security'] . '</h3>' .
             '<ul>' .
             '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
