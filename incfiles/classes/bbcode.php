@@ -22,40 +22,41 @@ class bbcode extends core
     {
         $var = self::parse_time($var);               // Обработка тэга времени
         $var = self::highlight_code($var);           // Подсветка кода
-        $var = self::highlight_bb($var);             // Обработка ссылок
+        $var = self::highlight_bb($var);               // Обработка ссылок
         $var = self::highlight_url($var);            // Обработка ссылок
-        $var = self::OLD_highlight_url($var);        // Обработка ссылок в BBcode
+        $var = self::highlight_bbcode_url($var);       // Обработка ссылок в BBcode
         return $var;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обработка времени
-    -----------------------------------------------------------------
-    */
+    /**
+     * Обработка тэга [time]
+     *
+     * @param string $var
+     * @return string
+     */
     private static function parse_time($var)
     {
-        if (!function_exists('process_time')) {
-            function process_time($time)
-            {
+        return preg_replace_callback(
+            '#\[time\](.+?)\[\/time\]#s',
+            function ($matches) {
                 $shift = (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600;
-                if($out = strtotime($time)){
+                if (($out = strtotime($matches[1])) !== false) {
                     return date("d.m.Y / H:i", $out + $shift);
                 } else {
-                    return false;
+                    return $matches[1];
                 }
-            }
-        }
-        return preg_replace(array('#\[time\](.+?)\[\/time\]#se'), array("''.process_time('$1').''"), $var);
+            },
+            $var
+        );
     }
 
-    /*
-    -----------------------------------------------------------------
-    Парсинг ссылок
-    -----------------------------------------------------------------
-    За основу взята доработанная функция от форума phpBB 3.x.x
-    -----------------------------------------------------------------
-    */
+    /**
+     * Парсинг ссылок
+     * За основу взята доработанная функция от форума phpBB 3.x.x
+     *
+     * @param $text
+     * @return mixed
+     */
     public static function highlight_url($text)
     {
         if (!function_exists('url_callback')) {
@@ -90,8 +91,7 @@ class bbcode extends core
                     }
                 }
                 $last_char = ($relative_url) ? $relative_url[strlen($relative_url) - 1] : $url[strlen($url) - 1];
-                switch ($last_char)
-                {
+                switch ($last_char) {
                     case '.':
                     case '?':
                     case '!':
@@ -107,8 +107,7 @@ class bbcode extends core
                         break;
                 }
                 $short_url = (mb_strlen($url) > 40) ? mb_substr($url, 0, 30) . ' ... ' . mb_substr($url, -5) : $url;
-                switch ($type)
-                {
+                switch ($type) {
                     case 1:
                         $relative_url = preg_replace('/[&?]sid=[0-9a-f]{32}$/', '', preg_replace('/([&?])sid=[0-9a-f]{32}&/', '$1', $relative_url));
                         $url = $url . '/' . $relative_url;
@@ -125,14 +124,6 @@ class bbcode extends core
                         }
                         break;
 
-                    case 3:
-                        $url = 'http://' . $url;
-                        $text = $short_url;
-                        if (!isset(core::$user_set['direct_url']) || !core::$user_set['direct_url']) {
-                            $url = core::$system_set['homeurl'] . '/go.php?url=' . rawurlencode($url);
-                        }
-                        break;
-
                     case 4:
                         $text = $short_url;
                         $url = 'mailto:' . $url;
@@ -141,29 +132,30 @@ class bbcode extends core
                 $url = htmlspecialchars($url);
                 $text = htmlspecialchars($text);
                 $append = htmlspecialchars($append);
+
                 return $whitespace . '<a href="' . $url . '">' . $text . '</a>' . $append;
             }
         }
 
-        static $url_match;
-        static $url_replace;
+        // Обработка внутренних ссылок
+        $text = preg_replace_callback(
+            '#(^|[\n\t (>.])(' . preg_quote(core::$system_set['homeurl'], '#') . ')/((?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#iu',
+            function ($matches) {
+                return url_callback(1, $matches[1], $matches[2], $matches[3]);
+            },
+            $text
+        );
 
-        if (!is_array($url_match)) {
-            $url_match = $url_replace = array();
+        // Обработка обычных ссылок типа xxxx://aaaaa.bbb.cccc. ...
+        $text = preg_replace_callback(
+            '#(^|[\n\t (>.])([a-z][a-z\d+]*:/{2}(?:(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})+|[0-9.]+|\[[a-zа-яё0-9.]+:[a-zа-яё0-9.]+:[a-zа-яё0-9.:]+\])(?::\d*)?(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#iu',
+            function ($matches) {
+                return url_callback(2, $matches[1], $matches[2], '');
+            },
+            $text
+        );
 
-            // Обработка внутренние ссылки
-            $url_match[] = '#(^|[\n\t (>.])(' . preg_quote(core::$system_set['homeurl'], '#') . ')/((?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#ieu';
-            $url_replace[] = "url_callback(1, '\$1', '\$2', '\$3')";
-
-            // Обработка обычных ссылок типа xxxx://aaaaa.bbb.cccc. ...
-            $url_match[] = '#(^|[\n\t (>.])([a-z][a-z\d+]*:/{2}(?:(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})+|[0-9.]+|\[[a-zа-яё0-9.]+:[a-zа-яё0-9.]+:[a-zа-яё0-9.:]+\])(?::\d*)?(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#ieu';
-            $url_replace[] = "url_callback(2, '\$1', '\$2', '')";
-
-            // Обработка сокращенных ссылок, без указания протокола "www.xxxx.yyyy[/zzzz]"
-            $url_match[] = '#(^|[\n\t (>])(www\.(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})+(?::\d*)?(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#ieu';
-            $url_replace[] = "url_callback(3, '\$1', '\$2', '')";
-        }
-        return preg_replace($url_match, $url_replace, $text);
+        return $text;
     }
 
     /*
@@ -177,31 +169,32 @@ class bbcode extends core
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = array(
-            '[small]' => '',
+            '[small]'  => '',
             '[/small]' => '',
-            '[big]' => '',
-            '[/big]' => '',
-            '[green]' => '',
+            '[big]'    => '',
+            '[/big]'   => '',
+            '[green]'  => '',
             '[/green]' => '',
-            '[red]' => '',
-            '[/red]' => '',
-            '[blue]' => '',
-            '[/blue]' => '',
-            '[b]' => '',
-            '[/b]' => '',
-            '[i]' => '',
-            '[/i]' => '',
-            '[u]' => '',
-            '[/u]' => '',
-            '[s]' => '',
-            '[/s]' => '',
-            '[quote]' => '',
+            '[red]'    => '',
+            '[/red]'   => '',
+            '[blue]'   => '',
+            '[/blue]'  => '',
+            '[b]'      => '',
+            '[/b]'     => '',
+            '[i]'      => '',
+            '[/i]'     => '',
+            '[u]'      => '',
+            '[/u]'     => '',
+            '[s]'      => '',
+            '[/s]'     => '',
+            '[quote]'  => '',
             '[/quote]' => '',
-            '[c]' => '',
-            '[/c]' => '',
-            '[*]' => '',
-            '[/*]' => ''
+            '[c]'      => '',
+            '[/c]'     => '',
+            '[*]'      => '',
+            '[/*]'     => ''
         );
+
         return strtr($var, $replace);
     }
 
@@ -220,10 +213,18 @@ class bbcode extends core
                 $php = substr($php, 0, 2) != "<?" ? "<?php\n" . $php . "\n?>" : $php;
                 $php = highlight_string(stripslashes($php), true);
                 $php = strtr($php, array('slash_JOHNCMS' => '&#92;', ':' => '&#58;', '[' => '&#91;'));
-                return '<div class="phpcode">' . $php . '</div>';
+
+                return '<pre class="phpcode"><code>' . trim($php) . '</code></pre>';
             }
         }
-        return preg_replace(array('#\[php\](.+?)\[\/php\]#se'), array("''.process_code('$1').''"), str_replace("]\n", "]", $var));
+
+        return preg_replace_callback(
+            '#\[php\](.+?)\[\/php\]#s',
+            function ($matches) {
+                return process_code($matches[1]);
+            },
+            $var
+        );
     }
 
     /*
@@ -231,20 +232,21 @@ class bbcode extends core
     Обработка URL в тэгах BBcode
     -----------------------------------------------------------------
     */
-    private static function OLD_highlight_url($var)
+    private static function highlight_bbcode_url($var)
     {
         if (!function_exists('process_url')) {
             function process_url($url)
             {
                 $home = parse_url(core::$system_set['homeurl']);
                 $tmp = parse_url($url[1]);
-                    if ($home['host'] == $tmp['host'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
-                        return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
-                    } else {
-                        return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
-                    }
+                if ($home['host'] == $tmp['host'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
+                    return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
+                } else {
+                    return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
+                }
             }
         }
+
         return preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]~', 'process_url', $var);
     }
 
@@ -289,6 +291,7 @@ class bbcode extends core
             '<span class="bblist">$1</span>', // Список
             '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>' // Спойлер
         );
+
         return preg_replace($search, $replace, $var);
     }
 
@@ -361,14 +364,15 @@ class bbcode extends core
             <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>
             <a href="javascript:show_hide(\'color\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" border="0"/></a>
             <a href="javascript:show_hide(\'bg\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" border="0"/></a>';
-        
+
         if (self::$user_id) {
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" border="0"/></a><br />
                 <table id="sm" style="display:none"><tr><td>' . $bb_smileys . '</td></tr></table>
-                <div id="sm" style="display:none">'.$bb_smileys.'</div>';
-        }else $out .= '<br />';
-        $out .= '<div id="color" class="bbpopup" style="display:none;">Шрифт: '.$font_color.'</div>'.
-            '<div id="bg" class="bbpopup" style="display:none">Фон: '.$bg_color.'</div>';
+                <div id="sm" style="display:none">' . $bb_smileys . '</div>';
+        } else $out .= '<br />';
+        $out .= '<div id="color" class="bbpopup" style="display:none;">Шрифт: ' . $font_color . '</div>' .
+            '<div id="bg" class="bbpopup" style="display:none">Фон: ' . $bg_color . '</div>';
+
         return $out;
     }
 }
