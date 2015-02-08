@@ -72,11 +72,9 @@ switch ($mod) {
             $set_forum['upfp'] = isset($_POST['upfp']);
             $set_forum['preview'] = isset($_POST['preview']);
             $set_forum['postclip'] = isset($_POST['postclip']) ? intval($_POST['postclip']) : 1;
-            $set_forum['postcut'] = isset($_POST['postcut']) ? intval($_POST['postcut']) : 1;
-            if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2)
+            if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2) {
                 $set_forum['postclip'] = 1;
-            if ($set_forum['postcut'] < 0 || $set_forum['postcut'] > 3)
-                $set_forum['postcut'] = 1;
+            }
             mysql_query("UPDATE `users` SET `set_forum` = '" . mysql_real_escape_string(serialize($set_forum)) . "' WHERE `id` = '$user_id'");
             echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
         }
@@ -86,7 +84,6 @@ switch ($mod) {
             $set_forum['upfp'] = 0;
             $set_forum['preview'] = 1;
             $set_forum['postclip'] = 1;
-            $set_forum['postcut'] = 2;
             mysql_query("UPDATE `users` SET `set_forum` = '" . mysql_real_escape_string(serialize($set_forum)) . "' WHERE `id` = '$user_id'");
             echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
         }
@@ -99,11 +96,6 @@ switch ($mod) {
             '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['always'] . '<br />' .
             '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['in_not_read'] . '<br />' .
             '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['never'] .
-            '</p><p><h3>' . $lng_set['scrap_of_posts'] . '</h3>' .
-            '<input type="radio" value="1" name="postcut" ' . ($set_forum['postcut'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['500_symbols'] . '<br />' .
-            '<input type="radio" value="2" name="postcut" ' . ($set_forum['postcut'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['1000_symbols'] . '<br />' .
-            '<input type="radio" value="3" name="postcut" ' . ($set_forum['postcut'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['3000_symbols'] . '<br />' .
-            '<input type="radio" value="0" name="postcut" ' . (!$set_forum['postcut'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['not_to_cut_off'] . '<br />' .
             '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
             '<div class="phdr"><a href="profile.php?act=settings&amp;mod=forum&amp;reset">' . $lng['reset_settings'] . '</a></div>';
         break;
@@ -149,7 +141,7 @@ switch ($mod) {
             $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? functions::check($_POST['skin']) : $set['skindef'];
 
             // Устанавливаем язык
-            $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : FALSE;
+            $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
             if ($lng_select && array_key_exists($lng_select, core::$lng_list)) {
                 $set_user['lng'] = $lng_select;
                 unset($_SESSION['lng']);
@@ -226,4 +218,3 @@ switch ($mod) {
         echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
             '<div class="phdr"><a href="profile.php?act=settings&amp;reset">' . $lng['reset_settings'] . '</a></div>';
 }
-?>
