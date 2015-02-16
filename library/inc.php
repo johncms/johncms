@@ -11,7 +11,7 @@
 // config
 $sql = mysql_query("SELECT `id`, `pos` FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . " ORDER BY `pos` ASC");
 $y = 0;
-$arrsort = [];
+$arrsort = array();
 
 if (mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0')), 0)) {
     while ($row = mysql_fetch_assoc($sql)) {
@@ -44,7 +44,7 @@ function position($text, $chr)
 
 function trim_small($array)
 {
-    $newarray = [];
+    $newarray = array();
     foreach ($array as $value) {
         if (mb_strlen($value) > 3) {
             $newarray[] = $value;
@@ -62,9 +62,11 @@ function trim_small($array)
 */
 class Tree
 {
-    private $result = [];
-    private $cleaned = ['images' => 0, 'comments' => 0, 'tags' => 0];
+    private $result = array();
+    private $cleaned = array('images' => 0, 'comments' => 0, 'tags' => 0);
     private $start_id = false;
+    private $child;
+    private $parent;
 
     public function __construct($id)
     {
@@ -138,7 +140,7 @@ class Tree
                 $this->cleaned['images'] += 3;
             } 
         } else {
-            $data = array_map(array($this, 'clean_trash'), $data );
+            array_map(array($this, 'clean_trash'), $data);
         }
         
         return $this->cleaned;
@@ -146,7 +148,7 @@ class Tree
     /**
     * Удаляет ветку , возвращает количество удаленных каталогов, статей, тегов, коментариев и изображений в массиве
     * 
-    * @param viod
+    * @param void
     * @return array
     */
     public function clean_dir()
@@ -162,7 +164,7 @@ class Tree
         mysql_query("DELETE FROM `library_texts` WHERE `id` IN(" . implode(', ', $texts) . ")");
         $texts = mysql_affected_rows();
         
-        return array_merge(['dirs' => $dirs, 'texts' => $texts], $trash);
+        return array_merge(array('dirs' => $dirs, 'texts' => $texts), $trash);
     }
     /**
     * Рекурсивно проходит по ветке и собирает дочерние вложения
@@ -194,7 +196,7 @@ class Tree
         global $lng;
         $array = $this->result();
         $cnt = count($array);
-        $return = [];
+        $return = array();
         $x = 1;
         foreach ($array as $k => $v) {
             $return[] = $x == $cnt ? '<b>' . $v . '</b>' : '<a href="?do=dir&amp;id=' . $k . '">' . $v . '</a>';
@@ -226,11 +228,14 @@ class Link_view
 
     public function link_tags()
     {
-        $this->res = array_map(function ($n) {
-            return '<a href="' . $this->link_url . $n . '">#' . $n . '</a>';
-        }, $this->in);
+        $this->res = array_map(array($this, 'tpl_tag'), $this->in);
 
         return $this;
+    }
+    
+    public function tpl_tag($n) 
+    {
+        return '<a href="' . $this->link_url . $n . '">#' . $n . '</a>';
     }
 
     public function link_separator($sepatator = ' | ')
@@ -242,11 +247,14 @@ class Link_view
 
     public function link_stats()
     {
-        $this->res = array_map(function ($n) {
-            return '<a href="' . $this->link_text . $n['id'] . '">' . $n['name'] . '</a>';
-        }, $this->in);
+        $this->res = array_map(array($this, 'tpl_stat'), $this->in);
 
         return $this;
+    }
+    
+    public function tpl_stat($n) 
+    {
+        return '<a href="' . $this->link_text . $n['id'] . '">' . $n['name'] . '</a>';
     }
 
     public function result()
@@ -278,7 +286,7 @@ class Hashtags
     {
         $cnt = mysql_result(mysql_query("SELECT count(*) FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
         if ($cnt) {
-            $res = [];
+            $res = array();
             $sql = mysql_query("SELECT `lib_text_id` FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'");
             while ($row = mysql_fetch_assoc($sql)) {
                 $res[] = $row['lib_text_id'];
@@ -300,7 +308,7 @@ class Hashtags
     {
         $cnt = mysql_result(mysql_query("SELECT count(*) FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id), 0);
         if ($cnt) {
-            $res = [];
+            $res = array();
             $sql = mysql_query("SELECT `tag_name` FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id);
             while ($row = mysql_fetch_assoc($sql)) {
                 $res[] = $row['tag_name'];
@@ -322,7 +330,7 @@ class Hashtags
             return null;
         } else {
             $res = "INSERT INTO `" . $this->db_tags . "` (`lib_text_id`, `tag_name`) VALUES ";
-            $array_res = [];
+            $array_res = array();
             foreach ($tags as $tag) {
                 if (!$this->isset_tag($this->valid_tag($tag))) {
                     $array_res[] = '("' . $this->lib_id . '", "' . mysql_real_escape_string($this->valid_tag($tag)) . '")';
@@ -351,6 +359,6 @@ class Hashtags
 
     public function valid_tag($tag)
     {
-        return preg_replace(['/[^[:alnum:]]/ui', "/\_\_+/"], '_', preg_quote(mb_strtolower($tag)));
+        return preg_replace(array('/[^[:alnum:]]/ui', "/\_\_+/"), '_', preg_quote(mb_strtolower($tag)));
     }
 }

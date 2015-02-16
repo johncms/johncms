@@ -92,11 +92,11 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
       if ($handle->uploaded) {
         // Обрабатываем фото
         $handle->file_new_name_body = $cid;
-        $handle->allowed = [
+        $handle->allowed = array(
           'image/jpeg',
           'image/gif',
           'image/png'
-        ];
+        );
         $handle->file_max_size = 1024 * $set['flsz'];
         $handle->file_overwrite = true;
         $handle->image_x = $handle->image_src_x;

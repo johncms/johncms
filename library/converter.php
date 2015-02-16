@@ -30,15 +30,15 @@ if ($rights == 9 && !file_exists('converter_not_deleted')) {
     mysql_query("INSERT INTO `library_texts` SET `id`=" . $row['id'] . ", `cat_id`=" . $row['refid'] . ", `author`='" . $row['avtor'] . "', `text`='" . $row['text'] . "', `name`='" . $row['name'] . "', `premod`=" . $row['moder'] . ", `count_views`=" . $row['count'] . ", `time`='" . $row['time'] . "'");
   }
 
-  $array = [];
+  $array = array();
   $sql = mysql_query("SELECT `id`,`refid`, `avtor`, `text`, `ip`, `soft` FROM `lib` WHERE `type`='komm'");
   while ($row = mysql_fetch_assoc($sql)) {
-    $attributes = [
+    $attributes = array(
       'author_name' => $row['avtor'],
       'author_ip' => $row['ip'],
       'author_ip_via_proxy' => $row['ip'],
       'author_browser' => $row['soft']
-    ];
+    );
     $array[$row['refid']][] = $row['id'];
     mysql_query("INSERT INTO `cms_library_comments` SET `sub_id`=" . $row['refid'] . ", `time`='" . time() . "', `user_id`=" . (mysql_result(mysql_query("SELECT `id` FROM `users` WHERE `name`='" . $row['avtor'] . "' LIMIT 1") , 0)) . ", `text`='" . $row['text'] . "', `attributes`='" . mysql_real_escape_string(serialize($attributes)) . "'");
   }
