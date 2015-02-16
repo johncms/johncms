@@ -11,7 +11,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 ob_end_clean();
 ob_start();
-$type = isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2']) ? $_GET['type'] : redir404();
+$type = isset($_GET['type']) && in_array($_GET['type'], array('txt', 'fb2')) ? $_GET['type'] : redir404();
 $image_lib = file_exists('../files/library/images/orig/' . $id . '.png') ? chunk_split(base64_encode(file_get_contents('../files/library/images/orig/' . $id . '.png'))) : '';
 $out = '';
 switch ($type) {

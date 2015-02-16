@@ -11,7 +11,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
 
-$type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image']) ? $_GET['type'] : redir404();
+$type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article', 'image')) ? $_GET['type'] : redir404();
 $change = ($type == 'dir' ? mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1 : '');
 
 switch ($type) {

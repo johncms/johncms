@@ -14,7 +14,7 @@ $adm ?: redir404();
 $lng_gal = core::load_lng('gallery');
 
   $obj = new Hashtags($id);  
-  $type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article']) ? $_GET['type'] : redir404();
+  $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
   // $type = isset($_GET['type']) && $_GET['type'] == 'dir' ? 'dir' : 'article';
   if (isset($_POST['submit'])) {
     switch ($type) {
@@ -38,11 +38,11 @@ $lng_gal = core::load_lng('gallery');
       if ($handle->uploaded) {
         // Обрабатываем фото
         $handle->file_new_name_body = $id;
-        $handle->allowed = [
+        $handle->allowed = array(
           'image/jpeg',
           'image/gif',
           'image/png'
-        ];
+        );
         $handle->file_max_size = 1024 * $set['flsz'];
         $handle->file_overwrite = true;
         $handle->image_x = $handle->image_src_x;
