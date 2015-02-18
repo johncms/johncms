@@ -107,7 +107,8 @@ $array_includes = array(
     'premod',
     'search',
     'topread',
-    'tags'
+    'tags',
+    'tagcloud'
 );
 $i = 0;
 
@@ -116,10 +117,10 @@ if (in_array($act, $array_includes)) {
 } else {
     if (!$id) {
         echo '<div class="phdr"><b>' . $lng['library'] . '</b></div>';
-        echo '<div class="topmenu"><a href="?act=search">' . $lng['search'] . '</a></div>';
+        echo '<div class="topmenu"><a href="?act=search">' . $lng['search'] . '</a> | <a href="?act=tagcloud">' . $lng_lib['tagcloud'] . '</a></div>';
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
-            $res = mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `premod`=0"), 0);
+            $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0"), 0);
             if ($res > 0) {
                 echo '<div>' . $lng['on_moderation'] . ': <a href="?act=premod">' . $res . '</a></div>';
             }
@@ -130,26 +131,26 @@ if (in_array($act, $array_includes)) {
         echo '<div class="gmenu">';
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
-            $res = mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `premod`=0"), 0);
+            $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0"), 0);
             if ($res > 0) {
                 echo '<div>' . $lng['on_moderation'] . ': <a href="?act=premod">' . $res . '</a></div>';
             }
         }
-        $res = mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
+        $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
         if ($res) {
             echo '<div><a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')</div>';
         }
 
         echo '<div><a href="?act=topread">' . $lng_lib['most_readed'] . '</a></div></div>';
         $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
-        $kol = mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `parent`=0"), 0);
+        $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
         $y = 0;
         if ($kol) {
             while ($row = mysql_fetch_assoc($sql)) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                     . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $row['name'] . '</a> ('
-                    . mysql_result(mysql_query("SELECT count(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ') '
+                    . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ') '
                     . '<div class="sub"><span class="gray">' . $row['description'] . '</span>';
                 if ($adm) {
                     echo '<br/>' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng['up'] . '</a> | ' : $lng['up'] . ' | ') . ($y != $kol ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng['down'] . '</a>' : $lng['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a>';
@@ -160,7 +161,7 @@ if (in_array($act, $array_includes)) {
             echo '<div class="menu">' . $lng['list_empty'] . '</div>';
         }
 
-        echo '<div class="phdr">Всего: ' . $kol . '</div>';
+        echo '<div class="phdr">' . $lng['total'] . ': ' . $kol . '</div>';
         if ($adm) {
             echo '<div><a href="?act=mkdir&amp;id=0">' . $lng_lib['create_category'] . '</a></div>';
         }

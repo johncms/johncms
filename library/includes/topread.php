@@ -10,7 +10,7 @@
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 echo '<div class="phdr"><b>' . $lng_lib['top_read'] . '</b></div>';
-$total = mysql_result(mysql_query('SELECT count(*) FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT 50') , 0);
+$total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT 50') , 0);
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 if (!$total) {
@@ -35,7 +35,7 @@ else {
     . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . intval($row['count_comments']) . ')</div>' : '')
     . '</div>';
   }
-  echo '<div class="phdr">Всего: ' . intval($total) . '</div>';
+  echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
   echo $nav;
 }
 echo '<div><a href="?">' . $lng_lib['to_library'] . '</a></div>' . PHP_EOL;
