@@ -17,7 +17,7 @@ $change = ($type == 'dir' ? mysql_result(mysql_query("SELECT count(*) FROM `libr
 switch ($type) {
 case 'dir':
   if (mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `id`=" . $id) , 0) == 0) {
-    echo functions::display_error('Категории не существует');
+    echo functions::display_error($lng_lib['category_does_not_exist']);
   }
   elseif (!$change) {
     $mode = isset($_POST['mode']) ? $_POST['mode'] : (isset($do) ? $do : false);
@@ -25,7 +25,7 @@ case 'dir':
     switch($mode) {
         case 'moveaction':
             if (!isset($_GET['movedeny'])) {
-                echo '<div class="alarm"><div>Вы дейсвительно хотите переместить содержимое?</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' . intval($_POST['move']) . '">' . $lng['move'] . '</a> | <a href="?">' . $lng['cancel'] . '</a></div></div>';
+                echo '<div class="alarm"><div>' . $lng_lib['move_contents'] . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' . intval($_POST['move']) . '">' . $lng['move'] . '</a> | <a href="?">' . $lng['cancel'] . '</a></div></div>';
             } else {
                 $move = intval($_GET['move']);
                 if ($dirtype) {
@@ -37,7 +37,7 @@ case 'dir':
                 if (mysql_affected_rows()) {
                     mysql_query("DELETE FROM `library_cats` WHERE `id` = " . $id);
                     if (mysql_affected_rows()) {
-                        echo '<div class="gmenu">Успешно перенесено</div><div><a href="?do=dir&amp;id=' . $move . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+                        echo '<div class="gmenu">' . $lng_lib['successfully_transferred'] . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
                     }
                 }
             }        
@@ -61,26 +61,26 @@ case 'dir':
             . '</form>'
             . '</div>'; 
             } else {
-                echo '<div class="rmenu">Нет разделов для перемещения</div><div class="bmenu"><a href="?">' . $lng['back'] . '</a></div>';
+                echo '<div class="rmenu">' . $lng_lib['no_partitions_to_move'] . '</div><div class="bmenu"><a href="?">' . $lng['back'] . '</a></div>';
             }
         break;
         
         case 'delall':
             if (!isset($_GET['deldeny'])) {
-                echo '<div class="alarm"><div>Вы дейсвительно хотите удалить содержимое?</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' . $lng['delete'] . '</a> | <a href="?">' . $lng['cancel'] . '</a></div></div>';
+                echo '<div class="alarm"><div>' . $lng_lib['to_remove_content'] . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' . $lng['delete'] . '</a> | <a href="?">' . $lng['cancel'] . '</a></div></div>';
             } else {
                 $childs = new Tree($id);
                 $deleted = $childs->get_all_childs_id()->clean_dir();
-                echo '<div class="gmenu">Успешно удалено директорий (' . $deleted['dirs'] . ') , статей(' . $deleted['texts'] . '), тегов(' . $deleted['tags'] . '), коментариев(' . $deleted['comments'] . '), изображений(' . $deleted['images'] . ')</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+                echo '<div class="gmenu">' . $lng_lib['successfully_removed'] . ': ' . $lng_lib['dirs'] . ' (' . $deleted['dirs'] . ') , ' . $lng_lib['articles'] . '(' . $deleted['texts'] . '), ' . $lng_lib['tags'] . '(' . $deleted['tags'] . '), ' . $lng_lib['comments'] . '(' . $deleted['comments'] . '), ' . $lng_lib['images'] . '(' . $deleted['images'] . ')</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
             }
         break;
         
         default:
-            echo '<div class="alarm">Каталог не пустой</div>' 
-            . '<div class="menu"><h3>Выбрать действие</h3>'
+            echo '<div class="alarm">' . $lng_lib['сategory_is_not_empty'] . '</div>' 
+            . '<div class="menu"><h3>' . $lng_lib['select_action'] . '</h3>'
             . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
-            . '<div><input type="radio" name="mode" value="delmove" checked="checked" /> Удалить с перемещением</div>'
-            . '<div><input type="radio" name="mode" value="delall" /> <span style="color: red;">Удалить все вложенные каталоги и статьи</span></div>'
+            . '<div><input type="radio" name="mode" value="delmove" checked="checked" /> ' . $lng_lib['delete_with_movement'] . '</div>'
+            . '<div><input type="radio" name="mode" value="delall" /> <span style="color: red;"> ' . $lng_lib['remove_all'] . '</span></div>'
             . '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['do'] . '" /></div>'
             . '</form>'
             . '</div>';
@@ -97,7 +97,7 @@ case 'dir':
 
 case 'article':
   if (mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `id`=" . $id) , 0) == 0) {
-    echo functions::display_error('Статьи не существует');
+    echo functions::display_error($lng_lib['article_does_not_exist']);
   }
   else {
     $sql = "DELETE FROM `library_texts` WHERE `id`=" . $id;
@@ -126,6 +126,6 @@ if (isset($_GET['yes']) && $type == 'image') {
       unlink('../files/library/images/orig/' . $id . '.png');
       unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div>Удалено</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div>' . $lng_lib['deleted'] . '</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
   }
 }

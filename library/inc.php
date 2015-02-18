@@ -42,7 +42,23 @@ function position($text, $chr)
     return $result !== false ? $result : 100;
 }
 
-function trim_small($array)
+function cmprang($a, $b) 
+{
+    if ($a['rang'] == $b['rang']) {
+        return 0;
+    }
+    return ($a['rang'] > $b['rang']) ? -1 : 1;
+}
+
+function cmpalpha($a, $b) 
+{
+    if ($a['name'] == $b['name']) {
+        return 0;
+    }
+    return ($a['name'] < $b['name']) ? -1 : 1;
+}
+
+/*function trim_small($array)
 {
     $newarray = array();
     foreach ($array as $value) {
@@ -52,7 +68,7 @@ function trim_small($array)
     }
 
     return $newarray;
-}
+}*/
 
 //
 // classes //
@@ -226,9 +242,9 @@ class Link_view
         $this->in = $in;
     }
 
-    public function link_tags()
+    public function proccess($tpl)
     {
-        $this->res = array_map(array($this, 'tpl_tag'), $this->in);
+        $this->res = array_map(array($this, $tpl), $this->in);
 
         return $this;
     }
@@ -237,24 +253,17 @@ class Link_view
     {
         return '<a href="' . $this->link_url . $n . '">#' . $n . '</a>';
     }
+    
+    public function tpl_cloud($n) 
+    {
+        return '<a href="' . $this->link_url . $n['name'] . '"><span style="font-size: ' . $n['rang'] . 'em;">' . $n['name'] . '</span></a>';
+    }
 
     public function link_separator($sepatator = ' | ')
     {
         $this->res = implode($sepatator, $this->res ? $this->res : $this->in);
 
         return $this;
-    }
-
-    public function link_stats()
-    {
-        $this->res = array_map(array($this, 'tpl_stat'), $this->in);
-
-        return $this;
-    }
-    
-    public function tpl_stat($n) 
-    {
-        return '<a href="' . $this->link_text . $n['id'] . '">' . $n['name'] . '</a>';
     }
 
     public function result()
@@ -275,7 +284,7 @@ class Hashtags
     private $db_texts = false;
     private $lib_id = false;
 
-    public function __construct($id, $db = 'library_tags', $db_text = 'library_texts')
+    public function __construct($id = 0, $db = 'library_tags', $db_text = 'library_texts')
     {
         $this->lib_id = $id;
         $this->db_tags = $db;
@@ -284,7 +293,7 @@ class Hashtags
 
     public function get_all_tag_stats($tag)
     {
-        $cnt = mysql_result(mysql_query("SELECT count(*) FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
+        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
         if ($cnt) {
             $res = array();
             $sql = mysql_query("SELECT `lib_text_id` FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'");
@@ -293,12 +302,7 @@ class Hashtags
             }
 
             return $res;
-            /*
-            $sql = mysql_query("select `" . $this->db_tags . "`.`lib_text_id`, `" . $this->db_texts . "`.`name` from " . $this->db_tags . " join " . $this->db_texts . " on `" . $this->db_tags . "`.`tag_name` = '" . mysql_real_escape_string($tag) . "' and `" . $this->db_tags . "`.`lib_text_id` = `" . $this->db_texts . "`.`id`");
-                        $res[] = array('id' => $row['lib_text_id'], 'name' => $row['name']);
-                        $obj = new Link_view($res);
-                        return $obj->link_stats()->result();
-            */
+
         } else {
             return null;
         }
@@ -306,7 +310,7 @@ class Hashtags
 
     public function get_all_stat_tags($tpl = 0)
     {
-        $cnt = mysql_result(mysql_query("SELECT count(*) FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id), 0);
+        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id), 0);
         if ($cnt) {
             $res = array();
             $sql = mysql_query("SELECT `tag_name` FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id);
@@ -315,7 +319,7 @@ class Hashtags
             }
             $obj = new Link_view($res);
             if ($tpl == 1) {
-                return $obj->link_tags()->link_separator()->result();
+                return $obj->proccess('tpl_tag')->link_separator()->result();
             } else {
                 return $obj->link_separator(', ')->result();
             }
@@ -360,5 +364,43 @@ class Hashtags
     public function valid_tag($tag)
     {
         return preg_replace(array('/[^[:alnum:]]/ui', "/\_\_+/"), '_', preg_quote(mb_strtolower($tag)));
+    }
+    
+    public function array_cloudtags() 
+    {
+        $result = array();
+        $sql = mysql_query("SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;");
+        while($row = mysql_fetch_assoc($sql)) {
+            $result[$row['tag_name']] = $row['count'];
+        }
+        
+        return $result;
+    }
+    
+    public function tag_rang($array, $sort = 'cmpalpha') 
+    {
+        $return = array();
+        $max = max(array_values($array));
+        $min = min(array_values($array));
+        foreach ($array as $key => $value) {
+            if($value > ($max * 0.8)){
+                $tmp = 2.3;
+            } elseif($value < ($min * 1.2)){
+                $tmp = 0.8;
+            } else{
+                $tmp = round(($max + $value) / $max, 2);
+            }
+
+            $return[] = array('name' => $key, 'rang' => $tmp);
+        }
+        uasort($return, $sort);
+        
+        return $return;
+    }
+    
+    public function cloud($array) 
+    {
+        $obj = new Link_view($array);
+        return $obj->proccess('tpl_cloud')->link_separator(PHP_EOL)->result();        
     }
 }

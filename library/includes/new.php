@@ -30,6 +30,6 @@ if ($total) {
     . '</div>';
   }
 }
-echo '<div class="phdr">Всего: ' . intval($total) . '</div>';
+echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
 echo $nav;
 echo '<div><a href="?">' . $lng_lib['to_library'] . '</a></div>' . PHP_EOL;

@@ -23,7 +23,7 @@ $lng_gal = core::load_lng('gallery');
   if (isset($_GET['yes']) || isset($_GET['all'])) {
     mysql_query($sql);
   }
-  $total = mysql_result(mysql_query('SELECT count(*) FROM `library_texts` WHERE `premod`=0') , 0);
+  $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0') , 0);
   $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
   $start = $page == 1 ? 0 : ($page - 1) * $kmess;
   if ($total) { 
@@ -43,7 +43,7 @@ $lng_gal = core::load_lng('gallery');
         . '</div>';
     }
   }
-  echo '<div class="phdr">Всего: ' . intval($total) . '</div>';
+  echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
   echo ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=premod&amp;', $start, $total, $kmess) . '</div>' : '';
   echo $total ? '<div><a href="?act=premod&amp;all">' . $lng_lib['approve_all'] . '</a></div>' : '';
   echo '<div><a href="?">' . $lng_lib['to_library'] . '</a></div>' . PHP_EOL;
