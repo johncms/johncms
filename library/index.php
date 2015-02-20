@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -57,7 +57,7 @@ if ($do) {
             break;
     }
 
-    $hdr = $id > 0 ? htmlentities(mb_substr(mysql_result(mysql_query("select `name` from `$tab` where `id`=" . $id . " limit 1"), 0), 0, 30), ENT_QUOTES, 'UTF-8') : '';
+    $hdr = $id > 0 ? htmlentities(mb_substr(mysql_result(mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1"), 0), 0, 30), ENT_QUOTES, 'UTF-8') : '';
     if ($hdr) {
         $textl = mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr;
     }
@@ -177,18 +177,18 @@ if (in_array($act, $array_includes)) {
 
                 if ($actdir) {
                     $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
-                    $kol = mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
+                    $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
                     $y = 0;
                     if ($kol) {
                         while ($row = mysql_fetch_assoc($sql)) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $row['name'] . '</a>('
-                                . mysql_result(mysql_query("SELECT count(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ' '
+                                . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ' '
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
                                 . '<div class="sub"><span class="gray">' . $row['description'] . '</span></div>';
                             if ($adm) {
-                                echo '<div class="sub"><small>' . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">Вверх</a> | ' : 'Вверх | ') . ($y != $kol ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">Вниз</a>' : 'Вниз') . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
+                                echo '<div class="sub"><small>' . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up'] . '</a> | ' : '' . $lng_lib['up'] . ' | ') . ($y != $kol ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>' : $lng_lib['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
                             }
                             echo '</div>';
                         }
@@ -204,7 +204,7 @@ if (in_array($act, $array_includes)) {
                             . '<div><a href="?act=mkdir&amp;id=' . $id . '">' . $lng_lib['create_category'] . '</a></div>';
                     }
                 } else {
-                    $total = mysql_result(mysql_query('SELECT count(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
+                    $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
                     $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
                     $start = $page == 1 ? 0 : ($page - 1) * $kmess;
                     $sql2 = mysql_query("SELECT `id`, `name`, `time`, `author`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " LIMIT " . $start . "," . $kmess);
@@ -275,7 +275,7 @@ if (in_array($act, $array_includes)) {
                             ? '<div class="topmenu"><a href="../files/library/images/orig/' . $id . '.png"><img style="max-width : 100%;" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a></div>'
                             : '')
                         . ($page == 1 && $count_pages >= 1
-                            ? ($obj->get_all_stat_tags() ? '<div class="list1">Теги [ ' . $obj->get_all_stat_tags(1) . ' ]</div>' : '') : '')
+                            ? ($obj->get_all_stat_tags() ? '<div class="list1">' . $lng_lib['tags'] . ' [ ' . $obj->get_all_stat_tags(1) . ' ]</div>' : '') : '')
                         . $nav;
                     $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
                     if ($set_user['smileys']) {
@@ -287,7 +287,7 @@ if (in_array($act, $array_includes)) {
                             ? '<div class="phdr"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['count_comments'] . ')</div>'
                             : '')
                         . $nav
-                        . '<div>Скачать в <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
+                        . '<div>' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
                     if ($adm) {
                         echo '<div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'
                             . '<div><a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></div>';

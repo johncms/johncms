@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -12,11 +12,11 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
 
 $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article', 'image')) ? $_GET['type'] : redir404();
-$change = ($type == 'dir' ? mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1 : '');
+$change = ($type == 'dir' ? mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1 : '');
 
 switch ($type) {
 case 'dir':
-  if (mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `id`=" . $id) , 0) == 0) {
+  if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id) , 0) == 0) {
     echo functions::display_error($lng_lib['category_does_not_exist']);
   }
   elseif (!$change) {
@@ -46,7 +46,7 @@ case 'dir':
         case 'delmove':                 
             $child_dir = new Tree($id);
             $childrens = $child_dir->get_childs_dir()->result();
-            $list = mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` not in(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
+            $list = mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
             if (mysql_num_rows($list)) {
             echo '<div class="menu">' 
             . '<h3>' . $lng_lib['move_dir'] . '</h3>'
@@ -96,7 +96,7 @@ case 'dir':
   break;
 
 case 'article':
-  if (mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `id`=" . $id) , 0) == 0) {
+  if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id) , 0) == 0) {
     echo functions::display_error($lng_lib['article_does_not_exist']);
   }
   else {
@@ -118,7 +118,7 @@ if (isset($_GET['yes']) && $type == 'image') {
       unlink('../files/library/images/orig/' . $id . '.png');
       unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div class="">Удалено</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
   if (mysql_query($sql)) {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
@@ -126,6 +126,6 @@ if (isset($_GET['yes']) && $type == 'image') {
       unlink('../files/library/images/orig/' . $id . '.png');
       unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div>' . $lng_lib['deleted'] . '</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
   }
 }

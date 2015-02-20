@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -36,7 +36,7 @@ if (mysql_num_rows($req_obj)) {
     $context_top =
         '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $catalog['name'] . '</a></div>' .
         '<div class="menu">' .
-        '<p><strong><a href="?do=text&amp;id=' . $id . '">' . $res_obj['name'] . '</a></strong></p>' .
+        '<p><b><a href="?do=text&amp;id=' . $id . '">' . $res_obj['name'] . '</a></b></p>' .
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '') .

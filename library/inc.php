@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -13,7 +13,7 @@ $sql = mysql_query("SELECT `id`, `pos` FROM `library_cats` WHERE " . ($do == 'di
 $y = 0;
 $arrsort = array();
 
-if (mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0')), 0)) {
+if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0')), 0)) {
     while ($row = mysql_fetch_assoc($sql)) {
         $y++;
         $arrsort[$y] = $row['id'] . '|' . $row['pos'];
@@ -58,18 +58,6 @@ function cmpalpha($a, $b)
     return ($a['name'] < $b['name']) ? -1 : 1;
 }
 
-/*function trim_small($array)
-{
-    $newarray = array();
-    foreach ($array as $value) {
-        if (mb_strlen($value) > 3) {
-            $newarray[] = $value;
-        }
-    }
-
-    return $newarray;
-}*/
-
 //
 // classes //
 
@@ -89,7 +77,7 @@ class Tree
         $this->start_id = $id;
     }
     /**
-    * Рекурсивно проходит по дереву до корня, собирает массив с идами ми именами разделов
+    * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
     * 
     * @param integer $id
     * @return Tree
@@ -116,7 +104,7 @@ class Tree
     public function get_all_childs_id($id = 0)
     {
         $id = $id == 0 ? $this->start_id : $id;
-        $dirtype = mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `id` = " . $id), 0) ? mysql_result(mysql_query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1"), 0) : 0;
+        $dirtype = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `id` = " . $id), 0) ? mysql_result(mysql_query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1"), 0) : 0;
         if ($dirtype) {
             $sql = mysql_query("SELECT `id` FROM `library_cats` WHERE `parent`=" . $id);
             $this->result['dirs'][$id] = $id;
@@ -136,7 +124,7 @@ class Tree
         return $this;
     }
     /**
-    * Очистка статей, удаляет коментарии, картинки и теги от статей
+    * Очистка статей, удаляет комментарии, картинки и теги от статей
     * 
     * @param mixed $data
     * @return array
@@ -204,7 +192,7 @@ class Tree
     /**
     * Собирает ссылки в верхнюю панель навигации
     * 
-    * @param viod
+    * @param void
     * @return string
     */ 
     public function print_nav_panel()
@@ -244,9 +232,13 @@ class Link_view
 
     public function proccess($tpl)
     {
-        $this->res = array_map(array($this, $tpl), $this->in);
+        if ($this->in) {
+            $this->res = array_map(array($this, $tpl), $this->in);
 
-        return $this;
+            return $this;
+        } else {
+            return false;
+        }
     }
     
     public function tpl_tag($n) 
@@ -261,9 +253,13 @@ class Link_view
 
     public function link_separator($sepatator = ' | ')
     {
-        $this->res = implode($sepatator, $this->res ? $this->res : $this->in);
+        if ($this->in) {
+            $this->res = implode($sepatator, $this->res ? $this->res : $this->in);
 
-        return $this;
+            return $this;
+        } else {
+            return false;
+        }
     }
 
     public function result()
@@ -280,23 +276,19 @@ class Link_view
 
 class Hashtags
 {
-    private $db_tags = false;
-    private $db_texts = false;
     private $lib_id = false;
 
-    public function __construct($id = 0, $db = 'library_tags', $db_text = 'library_texts')
+    public function __construct($id = 0)
     {
         $this->lib_id = $id;
-        $this->db_tags = $db;
-        $this->db_texts = $db_text;
     }
 
     public function get_all_tag_stats($tag)
     {
-        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
+        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_tags` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
         if ($cnt) {
             $res = array();
-            $sql = mysql_query("SELECT `lib_text_id` FROM `" . $this->db_tags . "` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'");
+            $sql = mysql_query("SELECT `lib_text_id` FROM `library_tags` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'");
             while ($row = mysql_fetch_assoc($sql)) {
                 $res[] = $row['lib_text_id'];
             }
@@ -310,10 +302,10 @@ class Hashtags
 
     public function get_all_stat_tags($tpl = 0)
     {
-        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id), 0);
+        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id), 0);
         if ($cnt) {
             $res = array();
-            $sql = mysql_query("SELECT `tag_name` FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id);
+            $sql = mysql_query("SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id);
             while ($row = mysql_fetch_assoc($sql)) {
                 $res[] = $row['tag_name'];
             }
@@ -333,7 +325,7 @@ class Hashtags
         if (empty($tags)) {
             return null;
         } else {
-            $res = "INSERT INTO `" . $this->db_tags . "` (`lib_text_id`, `tag_name`) VALUES ";
+            $res = "INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES ";
             $array_res = array();
             foreach ($tags as $tag) {
                 if (!$this->isset_tag($this->valid_tag($tag))) {
@@ -352,13 +344,13 @@ class Hashtags
 
     public function del_tags()
     {
-        mysql_query("DELETE FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id);
+        mysql_query("DELETE FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id);
         return mysql_affected_rows();
     }
 
     public function isset_tag($tag)
     {
-        return $this->lib_id ? (mysql_num_rows(mysql_query("SELECT * FROM `" . $this->db_tags . "` WHERE `lib_text_id` = " . $this->lib_id . " AND `tag_name` = '" . mysql_real_escape_string($tag) . "'")) ? 1 : 0) : 0;
+        return $this->lib_id ? (mysql_num_rows(mysql_query("SELECT * FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id . " AND `tag_name` = '" . mysql_real_escape_string($tag) . "'")) ? 1 : 0) : 0;
     }
 
     public function valid_tag($tag)
@@ -370,37 +362,75 @@ class Hashtags
     {
         $result = array();
         $sql = mysql_query("SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;");
-        while($row = mysql_fetch_assoc($sql)) {
-            $result[$row['tag_name']] = $row['count'];
+        if (mysql_num_rows($sql)) {
+            while($row = mysql_fetch_assoc($sql)) {
+                $result[$row['tag_name']] = $row['count'];
+            }
+        return $result;            
+        } else {
+            return false;
         }
-        
-        return $result;
     }
     
-    public function tag_rang($array, $sort = 'cmpalpha') 
+    public function tag_rang($sort = 'cmpalpha') 
     {
-        $return = array();
-        $max = max(array_values($array));
-        $min = min(array_values($array));
-        foreach ($array as $key => $value) {
-            if($value > ($max * 0.8)){
-                $tmp = 2.3;
-            } elseif($value < ($min * 1.2)){
-                $tmp = 0.8;
-            } else{
-                $tmp = round(($max + $value) / $max, 2);
-            }
+        $array = $this->array_cloudtags();
+        if ($array) {
+            $return = array();
+            $max = max(array_values($array));
+            $min = min(array_values($array));
+            foreach ($array as $key => $value) {
+                if ($value > ($max * 0.8)) {
+                    $tmp = 2.3;
+                } elseif ($value < ($min * 1.2)) {
+                    $tmp = 0.8;
+                } else {
+                    $tmp = round(($max + $value) / $max, 2);
+                }
 
             $return[] = array('name' => $key, 'rang' => $tmp);
         }
         uasort($return, $sort);
         
         return $return;
+        
+        } else {
+            return false;
+        }
     }
     
     public function cloud($array) 
     {
-        $obj = new Link_view($array);
-        return $obj->proccess('tpl_cloud')->link_separator(PHP_EOL)->result();        
+        if (sizeof($array) > 0) {
+            $obj = new Link_view($array);
+            
+            return $obj->proccess('tpl_cloud')->link_separator(PHP_EOL)->result();        
+        } else {
+            return $this->get_cache();
+        }
+    }
+    
+    public function del_cache() {
+        file_exists('../files/cache/cmpranglibcloud.dat') ? unlink('../files/cache/cmpranglibcloud.dat') : false;
+        file_exists('../files/cache/cmpalphalibcloud.dat') ? unlink('../files/cache/cmpalphalibcloud.dat') : false;
+    }
+    
+    public function get_cache($sort = 'cmpalpha') {
+        if (file_exists('../files/cache/' . $sort . 'libcloud.dat')) {
+            return file_get_contents('../files/cache/' . $sort . 'libcloud.dat');
+        } else {
+            return $this->set_cache($sort);
+        }
+    }
+    
+    public function set_cache($sort = 'cmpalpha') {
+        global $lng;
+        
+        $obj = new self();
+        $tags = mysql_num_rows(mysql_query("SELECT `id` FROM `library_tags` LIMIT 1"));
+        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : $lng['list_empty']);
+        file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
+        
+        return $this->get_cache($sort);
     }
 }
