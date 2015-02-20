@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -10,7 +10,7 @@
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 echo '<div class="phdr"><b>' . $lng_lib['new_articles'] . '</b></div>';
-$total = mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1") , 0);
+$total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1") , 0);
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 $sql = mysql_query("SELECT `id`, `name`, `time`, `author`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);

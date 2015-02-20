@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -14,6 +14,7 @@ $obj = new Hashtags();
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'rel' ? 'cmprang' : 'cmpalpha';
 
-echo '<div class="phdr"><b><a href="?">' . $lng['library'] . '</a></b> | Облако тэгов</div>
-<div class="bmenu">Сортировка по <a href="?act=tagcloud&amp;sort=rel">релевантности</a> | <a href="?act=tagcloud&amp;sort=alpha">алфавиту</a></div>';
-echo '<div class="gmenu">' . $obj->cloud($obj->tag_rang($obj->array_cloudtags(), $sort)) . '</div>';
+echo '<div class="phdr"><b><a href="?">' . $lng['library'] . '</a></b> | ' . $lng_lib['cloud_of_tags'] . '</div>
+<div class="bmenu">' . $lng_lib['sort'] . ' <a href="?act=tagcloud&amp;sort=rel">' . $lng_lib['relevance'] . '</a> | <a href="?act=tagcloud&amp;sort=alpha">' . $lng_lib['alphabet'] . '</a></div>';
+echo '<div class="gmenu">' . $obj->get_cache($sort) . '</div>' 
+. '<div><a href="?">' . $lng_lib['to_library'] . '</a></div>' . PHP_EOL;

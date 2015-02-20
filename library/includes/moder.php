@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -15,7 +15,6 @@ $lng_gal = core::load_lng('gallery');
 
   $obj = new Hashtags($id);  
   $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
-  // $type = isset($_GET['type']) && $_GET['type'] == 'dir' ? 'dir' : 'article';
   if (isset($_POST['submit'])) {
     switch ($type) {
     case 'dir':
@@ -25,6 +24,7 @@ $lng_gal = core::load_lng('gallery');
     case 'article':
       $obj->del_tags();
       if (isset($_POST['tags'])) {
+        $obj->del_cache();  
         $tags = array_map('trim', explode(',', $_POST['tags']));
         if (sizeof($tags > 0)) {
             $obj->add_tags($tags);
@@ -76,19 +76,20 @@ $lng_gal = core::load_lng('gallery');
         }
         $handle->clean();
       }
-      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "', `author`='" . mysql_real_escape_string($_POST['author']) . "', `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . @intval($_POST['premod']) . ", `comments`=" . @intval($_POST['comments']) . "  WHERE `id`=" . $id;
+      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "', `author`='" . mysql_real_escape_string($_POST['author']) . "', `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . intval($_POST['comments']) . "  WHERE `id`=" . $id;
       break;
     }
     if (mysql_query($sql)) {
-      echo '<div>Изменено</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+      echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
     } 
   }
   else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->get_childs_dir()->result();
-    $sqlsel = mysql_query("select " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` from `library_cats` where `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'and `id` not in(' . implode(', ', $childrens) . ')' : ''));
+    $sqlsel = mysql_query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
     $row = mysql_fetch_assoc(mysql_query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id));
-    $empty = mysql_result(mysql_query("SELECT count(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT count(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1;
+    $empty = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1;
+    
     if (!$row) {
       redir404();
     }
@@ -116,10 +117,10 @@ $lng_gal = core::load_lng('gallery');
     ? '<h3>' . $lng['text'] . '</h3><div>' . bbcode::auto_bb('form', 'text') . '<textarea rows="5" cols="20" name="text">' . functions::checkout($row['text'])
     . '</textarea></div>'
     : ($type == 'article' && mb_strlen($row['text']) > 500000
-    ? '<div class="alarm">Текст статьи редактироваться не может, большой объем данных!!!</div><input type="hidden" name="text" value="do_not_change" /></div>'
+    ? '<div class="alarm">' . $lng_lib['large_text'] . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
     : ''))
     . ($type == 'article' 
-    ? '<h3>Хештеги</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
+    ? '<h3>' . $lng_lib['tags'] . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
     : '');
     if (mysql_num_rows($sqlsel) > 1) { 
         echo '<h3>' . $lng_lib['move_dir'] . '</h3>'
@@ -128,7 +129,7 @@ $lng_gal = core::load_lng('gallery');
         ? '<option ' . ($type == 'dir' && $row['parent'] == 0 
         ? 'selected="selected"'
         : '')
-        . ' value="0">В КОРЕНЬ</option>'
+        . ' value="0">' . $lng_lib['root'] . '</option>'
         : '');
         while ($res = mysql_fetch_assoc($sqlsel)) {
             if ($row['name'] != $res['name']) {
@@ -149,10 +150,10 @@ $lng_gal = core::load_lng('gallery');
     . '<div><input type="radio" name="dir" value="0" ' . ($row['dir'] == 0 ? 'checked="checked"' : '') . ' />' . $lng_lib['articles'] . '</div>' : '')
     . ($type == 'dir' && $row['dir'] == 0
     ? '<div>' . $lng_lib['allow_to_add'] . '</div><div><input type="radio" name="user_add" value="1" '
-    . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> Да</div><div><input type="radio" name="user_add" value="0" '
-    . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> Нет</div>' : '')
+    . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['_yes'] . '</div><div><input type="radio" name="user_add" value="0" '
+    . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['_no'] . '</div>' : '')
     . ($type == 'article' ? '<div class="' . ($row['premod'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="premod" value="1" ' . ($row['premod'] > 0 
-    ? 'checked="checked"' : '') . '/> Проверена</div>'
+    ? 'checked="checked"' : '') . '/> ' . $lng_lib['verified'] . '</div>'
     . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
     . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['comment_article'] . '</div>'
     . '<div class="rmenu"><h3>' . $lng['author'] . '</h3>'

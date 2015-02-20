@@ -2,7 +2,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -47,7 +47,7 @@ if ($rights == 9 && !file_exists('converter_not_deleted')) {
     mysql_query("UPDATE `library_texts` SET `count_comments`=" . count($cnt) . ", `comments`=1 WHERE `id`=" . $aid);
   }
 
-  echo '<div>Конвертация успешно произведена</div>';
+  echo '<div>Конвертация успешно произведена</div>';      // TODO: переводы в языковых пакетах
   file_put_contents('converter_not_deleted', date('d-m-Y H:i:s'));
 }
 else {

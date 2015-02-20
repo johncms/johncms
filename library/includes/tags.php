@@ -2,14 +2,14 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2008-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
  */
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$lng_gal = core::load_lng('gallery');
+
 $obj = new Hashtags(0);
 
 if (isset($_GET['tag'])) {
@@ -19,7 +19,7 @@ if (isset($_GET['tag'])) {
         $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
         $start = $page == 1 ? 0 : ($page - 1) * $kmess;    
 
-        echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | Теги</div>';
+        echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | ' . $lng_lib['tags'] . '</div>';
         
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';            
@@ -41,11 +41,12 @@ if (isset($_GET['tag'])) {
             . '</div>';
         }
         
-        echo '<div class="phdr">Всего: ' . intval($total) . '</div>';
+        echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
         
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';            
         }
+        echo '<div><a href="?">' . $lng_lib['to_library'] . '</a></div>' . PHP_EOL;
     }
 } else {
     redir404();
