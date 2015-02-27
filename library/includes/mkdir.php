@@ -31,18 +31,19 @@ $adm ?: redir404();
     }
   }
   else {
-    echo '<div>' . $lng_lib['create_category'] . '</div>' 
+    echo '<div class="phdr"><h3>' . $lng_lib['create_category'] . '</h3></div>' 
     . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">' 
-    . '<div>' . $lng['title'] . ':</div>' 
+    . '<div class="menu">'
+    . '<h3>' . $lng['title'] . ':</h3>' 
     . '<div><input type="text" name="name" /></div>' 
-    . '<div>' . $lng_lib['add_dir_descriptions'] . ':</div>' 
+    . '<h3>' . $lng_lib['add_dir_descriptions'] . ':</h3>' 
     . '<div><input type="text" name="description" /></div>' 
-    . '<div>' . $lng_lib['category_type'] . '<br/>' 
-    . '<select name="type">' 
+    . '<h3>' . $lng_lib['category_type'] . '</h3>' 
+    . '<div><select name="type">' 
     . '<option value="1">' . $lng_lib['categories'] . '</option>' 
     . '<option value="0">' . $lng_lib['articles'] . '</option>' 
     . '</select></div>' 
     . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
-    . '</form>' 
+    . '</div></form>' 
     . '<div><a href ="?">' . $lng['back'] . '</a></div>';
   }
