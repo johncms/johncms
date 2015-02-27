@@ -76,7 +76,7 @@ $lng_gal = core::load_lng('gallery');
         }
         $handle->clean();
       }
-      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "', `author`='" . mysql_real_escape_string($_POST['author']) . "', `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . intval($_POST['comments']) . "  WHERE `id`=" . $id;
+      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "', `author`='" . mysql_real_escape_string($_POST['author']) . "', `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) . "  WHERE `id`=" . $id;
       break;
     }
     if (mysql_query($sql)) {
