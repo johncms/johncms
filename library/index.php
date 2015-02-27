@@ -139,12 +139,12 @@ if (in_array($act, $array_includes)) {
         }
         $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
         if ($res) {
-            echo '<div><a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')</div>';
+            echo functions::image('guestbook.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
         }
 
-        echo '<div><a href="?act=topread">' . $lng_lib['most_readed'] . '</a></div>' 
-        . '<div><a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a></div>'
-        . '</p></div>';
+        echo functions::image('rate.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=topread">' . $lng_lib['most_readed'] . '</a><br/>' .
+            functions::image('talk.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a>' .
+            '</p></div>';
         $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
         $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
         $y = 0;
