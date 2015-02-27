@@ -48,7 +48,7 @@ ignore_warnings               =   "Игнорировать предупрежд
 install                       =   "Установка"
 install_demo                  =   "Установить ДЕМО данные"
 install_demo_help             =   "Будут установлены базовые настройки и некоторые тексты (на Русском)"
-install_note                  =   "<h3 class='green'>Добро пожаловать!</h3><ul><li>Список изменений находится в файле <a href='../VERSION.txt'>VERSION.txt</a></li><li>Дополнительную информацию Вы можете получить на официальном сайте <a href='http://johncms.com'>http://johncms.com</a></li><li>Установка и использование JohnCMS, означает полное согласие с условиями <a href='../LICENSE.txt'>лицензии</a></li></ul>"
+install_note                  =   "<h3 class='green'>Добро пожаловать!</h3><ul><li>Список изменений находится в файле <a href='../CHANGELOG.txt'>CHANGELOG.txt</a></li><li>Дополнительную информацию Вы можете получить на официальном сайте <a href='http://johncms.com'>http://johncms.com</a></li><li>Установка и использование JohnCMS, означает полное согласие с условиями <a href='../LICENSE.txt'>лицензии</a></li></ul>"
 installation_completed        =   "Установка успешно завершена<br />Теперь можно зайти в Админ панель и настроить свой Сайт"
 languages                     =   "Дополнительные языки вы сможете добавить после установки.<br />Скачать их можно с сайта <a href='http://johncms.com/download/index.php?cat=483'>JohnCMS</a>"
 not_recommended               =   "(не рекомендуется)"
