@@ -108,7 +108,8 @@ $array_includes = array(
     'search',
     'topread',
     'tags',
-    'tagcloud'
+    'tagcloud',
+    'lastcom'
 );
 $i = 0;
 
@@ -128,7 +129,7 @@ if (in_array($act, $array_includes)) {
 
         // Считаем новое в библиотеке
 
-        echo '<div class="gmenu">';
+        echo '<div class="gmenu"><p>';
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
             $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0"), 0);
@@ -141,7 +142,9 @@ if (in_array($act, $array_includes)) {
             echo '<div><a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')</div>';
         }
 
-        echo '<div><a href="?act=topread">' . $lng_lib['most_readed'] . '</a></div></div>';
+        echo '<div><a href="?act=topread">' . $lng_lib['most_readed'] . '</a></div>' 
+        . '<div><a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a></div>'
+        . '</p></div>';
         $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
         $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
         $y = 0;
