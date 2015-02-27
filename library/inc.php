@@ -203,7 +203,7 @@ class Tree
         $return = array();
         $x = 1;
         foreach ($array as $k => $v) {
-            $return[] = $x == $cnt ? '<b>' . $v . '</b>' : '<a href="?do=dir&amp;id=' . $k . '">' . $v . '</a>';
+            $return[] = $x == $cnt ? '<b>' . $v . '</b>' : '<a href="?do=dir&amp;id=' . $k . '">' . htmlspecialchars($v) . '</a>';
             $x++;
         }
 
@@ -243,12 +243,12 @@ class Link_view
     
     public function tpl_tag($n) 
     {
-        return '<a href="' . $this->link_url . $n . '">#' . $n . '</a>';
+        return '<a href="' . $this->link_url . $n . '">' . htmlspecialchars($n) . '</a>';
     }
     
     public function tpl_cloud($n) 
     {
-        return '<a href="' . $this->link_url . $n['name'] . '"><span style="font-size: ' . $n['rang'] . 'em;">' . $n['name'] . '</span></a>';
+        return '<a href="' . $this->link_url . htmlspecialchars($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . htmlspecialchars($n['name']) . '</span></a>';
     }
 
     public function link_separator($sepatator = ' | ')
