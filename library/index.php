@@ -294,12 +294,6 @@ if (in_array($act, $array_includes)) {
                         // Метки авторов
                         echo '<span class="gray">' . $lng_lib['added'] . ':</span> ' . $res['author'] . ' (' . functions::display_date($res['time']) . ')' .
                             '</p></div></div>';
-
-                        // Картинка статьи
-                        if (file_exists('../files/library/images/big/' . $id . '.png')) {
-                            $img_style = 'width: 50%; max-width: 240px; height: auto; float: left; margin: 10px';
-                            echo '<a href="../files/library/images/orig/' . $id . '.png"><img style="' . $img_style . '" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a>';
-                        }
                     }
 
                     $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
@@ -307,7 +301,19 @@ if (in_array($act, $array_includes)) {
                         $text = functions::smileys($text, $rights ? 1 : 0);
                     }
 
-                    echo '<div class="list2">' . $text . '</div>';
+                    echo '<div class="list2">';
+                    if ($page == 1) {
+                        // Картинка статьи
+                        if (file_exists('../files/library/images/big/' . $id . '.png')) {
+                            $img_style = 'width: 50%; max-width: 240px; height: auto; float: left; clear: both; margin: 10px';
+                            echo '<a href="../files/library/images/orig/' . $id . '.png"><img style="' . $img_style . '" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a>';
+                        }
+                    }
+                    // Выводим текст статьи
+                    echo $text .
+                        '<div style="clear: both"></div>' .
+                        '</div>';
+
                     echo ($res['comments']
                             ? '<div class="phdr"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['count_comments'] . ')</div>'
                             : '')
