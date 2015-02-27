@@ -3,7 +3,7 @@
 /**
  * @package     JohnCMS
  * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @copyright   Copyright (C) 2007-2015 JohnCMS Community
  * @license     LICENSE.txt (see attached file)
  * @version     VERSION.txt (see attached file)
  * @author      http://johncms.com/about
@@ -77,11 +77,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         '</ul></p></div>';
     if ($rights >= 7) {
 
-        /*
-        -----------------------------------------------------------------
-        Блок модулей
-        -----------------------------------------------------------------
-        */
+        // Блок модулей
         $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
         echo '<div class="gmenu"><p>';
         echo '<h3>' . $lng['modules'] . '</h3><ul>' .
@@ -95,11 +91,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         }
         echo '</ul></p></div>';
 
-        /*
-        -----------------------------------------------------------------
-        Блок системных настроек
-        -----------------------------------------------------------------
-        */
+        // Блок системных настроек
         echo '<div class="menu"><p>' .
             '<h3>' . $lng['system'] . '</h3>' .
             '<ul>' .
@@ -110,11 +102,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '</ul>' .
             '</p></div>';
 
-        /*
-        -----------------------------------------------------------------
-        Блок безопасности
-        -----------------------------------------------------------------
-        */
+        // Блок безопасности
         echo '<div class="rmenu"><p>' .
             '<h3>' . $lng['security'] . '</h3>' .
             '<ul>' .
@@ -123,7 +111,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '</ul>' .
             '</p></div>';
     }
-    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 5.3.1652</b></div>';
+    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 6.0.0</b></div>';
 }
 
 require('../incfiles/end.php');

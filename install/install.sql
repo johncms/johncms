@@ -346,35 +346,35 @@ CREATE TABLE `cms_settings` (
   DEFAULT CHARSET = utf8;
 
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
-('active', '1'),
-('admp', 'panel'),
-('antiflood', 'a:5:{s:4:"mode";i:2;s:3:"day";i:10;s:5:"night";i:30;s:7:"dayfrom";i:10;s:5:"dayto";i:22;}'),
-('clean_time', '1'),
-('copyright', 'Powered by JohnCMS'),
-('email', ''),
-('flsz', '4000'),
-('gzip', '1'),
-('homeurl', ''),
-('karma', 'a:6:{s:12:"karma_points";i:5;s:10:"karma_time";i:86400;s:5:"forum";i:20;s:4:"time";i:0;s:2:"on";i:1;s:3:"adm";i:0;}'),
-('lng', 'en'),
-('mod_reg', '2'),
-('mod_forum', '2'),
-('mod_guest', '2'),
-('mod_lib', '2'),
-('mod_gal', '2'),
-('mod_down_comm', '1'),
-('mod_down', '2'),
-('mod_lib_comm', '1'),
-('mod_gal_comm', '1'),
-('meta_desc', 'Powered by JohnCMS http://johncms.com'),
-('meta_key', 'johncms'),
-('news', 'a:8:{s:4:"view";i:1;s:4:"size";i:200;s:8:"quantity";i:5;s:4:"days";i:3;s:6:"breaks";i:1;s:7:"smileys";i:1;s:4:"tags";i:1;s:3:"kom";i:1;}'),
-('reg_message', ''),
-('setting_mail', ''),
-('skindef', 'default'),
-('them_message', ''),
-('timeshift', '0'),
-('site_access', '2');
+  ('active', '1'),
+  ('admp', 'panel'),
+  ('antiflood', 'a:5:{s:4:"mode";i:2;s:3:"day";i:10;s:5:"night";i:30;s:7:"dayfrom";i:10;s:5:"dayto";i:22;}'),
+  ('clean_time', '1'),
+  ('copyright', 'Powered by JohnCMS'),
+  ('email', ''),
+  ('flsz', '4000'),
+  ('gzip', '1'),
+  ('homeurl', ''),
+  ('karma', 'a:6:{s:12:"karma_points";i:5;s:10:"karma_time";i:86400;s:5:"forum";i:20;s:4:"time";i:0;s:2:"on";i:1;s:3:"adm";i:0;}'),
+  ('lng', 'en'),
+  ('mod_reg', '2'),
+  ('mod_forum', '2'),
+  ('mod_guest', '2'),
+  ('mod_lib', '2'),
+  ('mod_gal', '2'),
+  ('mod_down_comm', '1'),
+  ('mod_down', '2'),
+  ('mod_lib_comm', '1'),
+  ('mod_gal_comm', '1'),
+  ('meta_desc', 'Powered by JohnCMS http://johncms.com'),
+  ('meta_key', 'johncms'),
+  ('news', 'a:8:{s:4:"view";i:1;s:4:"size";i:200;s:8:"quantity";i:5;s:4:"days";i:3;s:6:"breaks";i:1;s:7:"smileys";i:1;s:4:"tags";i:1;s:3:"kom";i:1;}'),
+  ('reg_message', ''),
+  ('setting_mail', ''),
+  ('skindef', 'default'),
+  ('them_message', ''),
+  ('timeshift', '0'),
+  ('site_access', '2');
 
 --
 -- Структура таблицы `cms_users_data`
@@ -559,69 +559,77 @@ CREATE TABLE `karma_users` (
   DEFAULT CHARSET = utf8;
 
 --
--- Структура таблицы `library_tags`
---
-DROP TABLE IF EXISTS `library_tags`;  
-CREATE TABLE `library_tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `lib_text_id` int(11) NOT NULL,
-  `tag_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `lib_text_id` (`lib_text_id`),
-  KEY `tag_name` (`tag_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Структура таблицы `cms_library_comments`
---
-DROP TABLE IF EXISTS `cms_library_comments`;
-CREATE TABLE `cms_library_comments` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `sub_id` int(11) unsigned NOT NULL,
-  `time` int(11) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `text` text NOT NULL,
-  `reply` text,
-  `attributes` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sub_id` (`sub_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Структура таблицы `library_cats`
 --
 DROP TABLE IF EXISTS `library_cats`;
 CREATE TABLE `library_cats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  `dir` int(1) NOT NULL,
-  `pos` int(11) NOT NULL,
-  `user_add` int(1) NOT NULL DEFAULT '0',
+  `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `parent`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `name`        VARCHAR(200)     NOT NULL DEFAULT '',
+  `description` TEXT             NOT NULL,
+  `dir`         TINYINT(1)       NOT NULL DEFAULT '0',
+  `pos`         INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `user_add`    TINYINT(1)       NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+)
+  ENGINE = MyISAM
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `library_texts`
 --
 DROP TABLE IF EXISTS `library_texts`;
 CREATE TABLE `library_texts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cat_id` int(11) NOT NULL,
-  `text` mediumtext NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `announce` text,
-  `author` varchar(255) NOT NULL,
-  `count_views` int(11) NOT NULL,
-  `premod` int(1) NOT NULL DEFAULT '0',
-  `comments` int(1) NOT NULL,
-  `count_comments` int(11) NOT NULL DEFAULT '0',
-  `time` int(11) NOT NULL,
+  `id`             INT(10) UNSIGNED  NOT NULL AUTO_INCREMENT,
+  `cat_id`         INT(10)  UNSIGNED NOT NULL DEFAULT '0',
+  `text`           MEDIUMTEXT        NOT NULL,
+  `name`           VARCHAR(255)      NOT NULL DEFAULT '',
+  `announce`       TEXT,
+  `author`         VARCHAR(255)      NOT NULL DEFAULT '',
+  `count_views`    INT(10) UNSIGNED  NOT NULL DEFAULT '0',
+  `premod`         TINYINT(1)        NOT NULL DEFAULT '0',
+  `comments`       TINYINT(1)        NOT NULL DEFAULT '0',
+  `count_comments` INT(10)  UNSIGNED NOT NULL DEFAULT '0',
+  `time`           INT(10) UNSIGNED  NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `text` (`text`,`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;  
+  FULLTEXT KEY `text` (`text`, `name`)
+)
+  ENGINE = MyISAM
+  DEFAULT CHARSET = utf8;
+
+--
+-- Структура таблицы `library_tags`
+--
+DROP TABLE IF EXISTS `library_tags`;
+CREATE TABLE `library_tags` (
+  `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lib_text_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `tag_name`    VARCHAR(255)     NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `lib_text_id` (`lib_text_id`),
+  KEY `tag_name` (`tag_name`)
+)
+  ENGINE = MyISAM
+  DEFAULT CHARSET = utf8;
+
+--
+-- Структура таблицы `cms_library_comments`
+--
+DROP TABLE IF EXISTS `cms_library_comments`;
+CREATE TABLE `cms_library_comments` (
+  `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sub_id`     INT(11) UNSIGNED NOT NULL,
+  `time`       INT(11)          NOT NULL,
+  `user_id`    INT(11) UNSIGNED NOT NULL,
+  `text`       TEXT             NOT NULL,
+  `reply`      TEXT,
+  `attributes` TEXT             NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_id` (`sub_id`),
+  KEY `user_id` (`user_id`)
+)
+  ENGINE = MyISAM
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `news`
