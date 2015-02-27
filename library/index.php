@@ -186,10 +186,10 @@ if (in_array($act, $array_includes)) {
                         while ($row = mysql_fetch_assoc($sql)) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $row['name'] . '</a>('
+                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</a>('
                                 . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ' '
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
-                                . '<div class="sub"><span class="gray">' . $row['description'] . '</span></div>';
+                                . '<div class="sub"><span class="gray">' . htmlspecialchars($row['description']) . '</span></div>';
                             if ($adm) {
                                 echo '<div class="sub"><small>' . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up'] . '</a> | ' : '' . $lng_lib['up'] . ' | ') . ($y != $kol ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>' : $lng_lib['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
                             }
@@ -221,8 +221,8 @@ if (in_array($act, $array_includes)) {
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><strong><a href="?do=text&amp;id=' . $row['id'] . '">' . $row['name'] . '</a></strong>'
-                                . '<div><small>' . bbcode::notags($row['announce']) . '</small></div></div>'
+                                . '<div class="righttable"><strong><a href="?do=text&amp;id=' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</a></strong>'
+                                . '<div><small>' . htmlspecialchars(bbcode::notags($row['announce'])) . '</small></div></div>'
                                 . '<div class="sub">'
                                 . ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '')
                                 . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . $row['author'] . ' (' . functions::display_date($row['time']) . ')<br/>'
@@ -273,13 +273,35 @@ if (in_array($act, $array_includes)) {
                     $obj = new Hashtags($id);
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1"));
-                    echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $catalog['name'] . '</a> | ' . $res['name'] . '</div>'
-                        . ($page == 1 && $count_pages >= 1 && file_exists('../files/library/images/big/' . $id . '.png')
-                            ? '<div class="topmenu"><a href="../files/library/images/orig/' . $id . '.png"><img style="max-width : 100%;" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a></div>'
-                            : '')
-                        . ($page == 1 && $count_pages >= 1
-                            ? ($obj->get_all_stat_tags() ? '<div class="list1">' . $lng_lib['tags'] . ' [ ' . $obj->get_all_stat_tags(1) . ' ]</div>' : '') : '')
-                        . $nav;
+                    echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . htmlspecialchars($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . htmlspecialchars($res['name']) : '') . '</div>';
+
+                    // Верхняя постраничная навигация
+                    if ($count_pages > 1) {
+                        echo '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
+                    }
+
+                    if ($page == 1) {
+                        echo '<div class="list2">';
+                        // Заголовок статьи
+                        echo '<h2>' . htmlspecialchars($res['name']) . '</h2>' .
+                            '<div class="sub"><p>';
+
+                        // Тэги
+                        if ($obj->get_all_stat_tags()) {
+                            echo '<span class="gray">' . $lng_lib['tags'] . ':</span> ' . $obj->get_all_stat_tags(1) . '<br/>';
+                        }
+
+                        // Метки авторов
+                        echo '<span class="gray">' . $lng_lib['added'] . ':</span> ' . $res['author'] . ' (' . functions::display_date($res['time']) . ')' .
+                            '</p></div></div>';
+
+                        // Картинка статьи
+                        if (file_exists('../files/library/images/big/' . $id . '.png')) {
+                            $img_style = 'width: 50%; max-width: 240px; height: auto; float: left; margin: 10px';
+                            echo '<a href="../files/library/images/orig/' . $id . '.png"><img style="' . $img_style . '" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a>';
+                        }
+                    }
+
                     $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
                     if ($set_user['smileys']) {
                         $text = functions::smileys($text, $rights ? 1 : 0);
