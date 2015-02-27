@@ -437,9 +437,9 @@ class functions extends core
 
     public static function image($name, $args = array())
     {
-        if (is_file(ROOTPATH . 'theme' . DIRECTORY_SEPARATOR . core::$user_set['skin'] . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $name)) {
+        if (is_file(ROOTPATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
             $src = core::$system_set['homeurl'] . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
-        } elseif (is_file(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . $name)) {
+        } elseif (is_file(ROOTPATH . 'images/' . $name)) {
             $src = core::$system_set['homeurl'] . '/images/' . $name;
         } else {
             return false;

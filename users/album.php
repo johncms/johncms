@@ -18,8 +18,8 @@ $headmod = 'album';
 
 $max_album = 10;
 $max_photo = 200;
-$al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : NULL;
-$img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : NULL;
+$al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
+$img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
 
 /*
 -----------------------------------------------------------------
@@ -60,7 +60,8 @@ function vote_photo($arg = null)
         if ($rating > 0)
             $color = 'C0FFC0';
         elseif ($rating < 0)
-            $color = 'F196A8'; else
+            $color = 'F196A8';
+        else
             $color = 'CCC';
         $out = '<div class="gray">' . $lng['rating'] . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
             '(' . $lng['vote_against'] . ': ' . $arg['vote_minus'] . ', ' . $lng['vote_for'] . ': ' . $arg['vote_plus'] . ')';
@@ -72,6 +73,7 @@ function vote_photo($arg = null)
                     '<a href="album.php?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
         }
         $out .= '</div>';
+
         return $out;
     } else {
         return false;
@@ -117,19 +119,19 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
       WHERE `users`.`sex` = 'zh'
     "), 0);
     $newcount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
-    echo'<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
+    echo '<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
         '<div class="gmenu"><p>' .
-        '<img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16"/>&#160;<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
-        '<img src="' . $set['homeurl'] . '/images/guestbook.gif" width="16" height="16"/>&#160;<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
+        functions::image('users.png', array('width' => 16, 'height' => 16)) . '<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
+        functions::image('talk.gif', array('width' => 16, 'height' => 16)) . '<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16" class="left" />&#160;' . $lng['albums'] . '</h3><ul>' .
         '<li><a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a> (' . $total_mans . ')</li>' .
         '<li><a href="album.php?act=users&amp;mod=girls">' . $lng['womans'] . '</a> (' . $total_womans . ')</li>';
     if ($user_id) {
-        echo'<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
+        echo '<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
     }
-    echo'</ul></p>' .
+    echo '</ul></p>' .
         '<p><h3>' . functions::image('rate.gif') . $lng['rating'] . '</h3><ul>' .
         '<li><a href="album.php?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
         '<li><a href="album.php?act=top&amp;mod=downloads">' . $lng_profile['top_downloads'] . '</a></li>' .
