@@ -191,13 +191,13 @@ if (in_array($act, $array_includes)) {
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
                                 . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
                             if ($adm) {
-                                echo '<div class="sub"><small>' 
-                                . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up'] 
-                                . '</a> | ' : '' . $lng_lib['up'] . ' | ') 
-                                . ($y != $total 
-                                ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>' 
-                                : $lng_lib['down']) 
-                                . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
+                                echo '<div class="sub"><small>'
+                                    . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up']
+                                        . '</a> | ' : '' . $lng_lib['up'] . ' | ')
+                                    . ($y != $total
+                                        ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>'
+                                        : $lng_lib['down'])
+                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
                             }
                             echo '</div>';
                         }
@@ -231,8 +231,13 @@ if (in_array($act, $array_includes)) {
                                 . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>'
                                 . '<div class="sub">'
                                 . ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '')
-                                . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')<br/>'
-                                . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views']
+                                . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')<br/>';
+
+                            // Рейтинг
+                            $rate = new Rating($row['id']);
+                            echo $rate->view_rate() . '<br />';
+
+                            echo '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views']
                                 . ($row['comments'] ? '<br/><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . $row['count_comments'] . ')' : '')
                                 . '</div>'
                                 . '</div>';
@@ -296,7 +301,7 @@ if (in_array($act, $array_includes)) {
                         if ($obj->get_all_stat_tags()) {
                             echo '<span class="gray">' . $lng_lib['tags'] . ':</span> ' . $obj->get_all_stat_tags(1) . '<br />';
                         }
-                        
+
                         // Рейтинг
                         $rate = new Rating($id);
                         echo $rate->view_rate() . '<br />';
@@ -323,7 +328,7 @@ if (in_array($act, $array_includes)) {
                     echo $text .
                         '<div style="clear: both"></div>' .
                         '</div>';
-                        
+
                     echo ($res['comments']
                             ? '<div class="phdr"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['count_comments'] . ')</div>'
                             : '')
