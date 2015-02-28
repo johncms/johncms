@@ -106,7 +106,7 @@ $array_includes = array(
     'new',
     'premod',
     'search',
-    'topread',
+    'top',
     'tags',
     'tagcloud',
     'lastcom'
@@ -117,7 +117,7 @@ if (in_array($act, $array_includes)) {
     require_once('includes/' . $act . '.php');
 } else {
     if (!$id) {
-        echo '<div class="phdr"><b>' . $lng['library'] . '</b></div>';
+        echo '<div class="phdr"><strong>' . $lng['library'] . '</strong></div>';
         echo '<div class="topmenu"><a href="?act=search">' . $lng['search'] . '</a> | <a href="?act=tagcloud">' . $lng_lib['tagcloud'] . '</a></div>';
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
@@ -142,21 +142,21 @@ if (in_array($act, $array_includes)) {
             echo functions::image('guestbook.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
         }
 
-        echo functions::image('rate.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=topread">' . $lng_lib['most_readed'] . '</a><br/>' .
+        echo functions::image('rate.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br/>' .
             functions::image('talk.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a>' .
             '</p></div>';
         $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
-        $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
+        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
         $y = 0;
-        if ($kol) {
+        if ($total) {
             while ($row = mysql_fetch_assoc($sql)) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                    . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $row['name'] . '</a> ('
+                    . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a> ('
                     . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ') '
-                    . '<div class="sub"><span class="gray">' . $row['description'] . '</span>';
+                    . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span>';
                 if ($adm) {
-                    echo '<br/>' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng['up'] . '</a> | ' : $lng['up'] . ' | ') . ($y != $kol ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng['down'] . '</a>' : $lng['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a>';
+                    echo '<br/>' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng['up'] . '</a> | ' : $lng['up'] . ' | ') . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng['down'] . '</a>' : $lng['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a>';
                 }
                 echo '</div></div>';
             }
@@ -164,7 +164,7 @@ if (in_array($act, $array_includes)) {
             echo '<div class="menu">' . $lng['list_empty'] . '</div>';
         }
 
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $kol . '</div>';
+        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($adm) {
             echo '<div><a href="?act=mkdir&amp;id=0">' . $lng_lib['create_category'] . '</a></div>';
         }
@@ -180,18 +180,24 @@ if (in_array($act, $array_includes)) {
 
                 if ($actdir) {
                     $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
-                    $kol = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
+                    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
                     $y = 0;
-                    if ($kol) {
+                    if ($total) {
                         while ($row = mysql_fetch_assoc($sql)) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</a>('
+                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>('
                                 . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ' '
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
-                                . '<div class="sub"><span class="gray">' . htmlspecialchars($row['description']) . '</span></div>';
+                                . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
                             if ($adm) {
-                                echo '<div class="sub"><small>' . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up'] . '</a> | ' : '' . $lng_lib['up'] . ' | ') . ($y != $kol ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>' : $lng_lib['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
+                                echo '<div class="sub"><small>' 
+                                . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up'] 
+                                . '</a> | ' : '' . $lng_lib['up'] . ' | ') 
+                                . ($y != $total 
+                                ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>' 
+                                : $lng_lib['down']) 
+                                . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
                             }
                             echo '</div>';
                         }
@@ -199,7 +205,7 @@ if (in_array($act, $array_includes)) {
                         echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
                     }
 
-                    echo '<div class="phdr">' . $lng['total'] . ': ' . $kol . '</div>';
+                    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
                     if ($adm) {
                         echo '<div><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'
@@ -221,11 +227,11 @@ if (in_array($act, $array_includes)) {
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><strong><a href="?do=text&amp;id=' . $row['id'] . '">' . htmlspecialchars($row['name']) . '</a></strong>'
-                                . '<div><small>' . htmlspecialchars(bbcode::notags($row['announce'])) . '</small></div></div>'
+                                . '<div class="righttable"><strong><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></strong>'
+                                . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>'
                                 . '<div class="sub">'
                                 . ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '')
-                                . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . $row['author'] . ' (' . functions::display_date($row['time']) . ')<br/>'
+                                . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')<br/>'
                                 . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views']
                                 . ($row['comments'] ? '<br/><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . $row['count_comments'] . ')' : '')
                                 . '</div>'
@@ -273,7 +279,7 @@ if (in_array($act, $array_includes)) {
                     $obj = new Hashtags($id);
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1"));
-                    echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . htmlspecialchars($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . htmlspecialchars($res['name']) : '') . '</div>';
+                    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
@@ -283,16 +289,20 @@ if (in_array($act, $array_includes)) {
                     if ($page == 1) {
                         echo '<div class="list2">';
                         // Заголовок статьи
-                        echo '<h2>' . htmlspecialchars($res['name']) . '</h2>' .
+                        echo '<h2>' . functions::checkout($res['name']) . '</h2>' .
                             '<div class="sub"><p>';
 
                         // Тэги
                         if ($obj->get_all_stat_tags()) {
-                            echo '<span class="gray">' . $lng_lib['tags'] . ':</span> ' . $obj->get_all_stat_tags(1) . '<br/>';
+                            echo '<span class="gray">' . $lng_lib['tags'] . ':</span> ' . $obj->get_all_stat_tags(1) . '<br />';
                         }
+                        
+                        // Рейтинг
+                        $rate = new Rating($id);
+                        echo $rate->view_rate() . '<br />';
 
                         // Метки авторов
-                        echo '<span class="gray">' . $lng_lib['added'] . ':</span> ' . $res['author'] . ' (' . functions::display_date($res['time']) . ')' .
+                        echo '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author']) . ' (' . functions::display_date($res['time']) . ')' .
                             '</p></div></div>';
                     }
 
@@ -313,11 +323,12 @@ if (in_array($act, $array_includes)) {
                     echo $text .
                         '<div style="clear: both"></div>' .
                         '</div>';
-
+                        
                     echo ($res['comments']
                             ? '<div class="phdr"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['count_comments'] . ')</div>'
                             : '')
                         . $nav
+                        . ($user_id ? $rate->print_vote() : '')
                         . '<div>' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
                     if ($adm) {
                         echo '<div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'

@@ -632,6 +632,19 @@ CREATE TABLE `cms_library_comments` (
   DEFAULT CHARSET = utf8;
 
 --
+-- Структура таблицы `cms_library_rating`
+--
+DROP TABLE IF EXISTS `cms_library_rating`;  
+CREATE TABLE IF NOT EXISTS `cms_library_rating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `st_id` int(11) NOT NULL,
+  `point` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`,`st_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;  
+
+--
 -- Структура таблицы `news`
 --
 DROP TABLE IF EXISTS `news`;
