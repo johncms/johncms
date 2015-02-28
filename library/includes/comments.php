@@ -34,13 +34,13 @@ if (mysql_num_rows($req_obj)) {
     $obj = new Hashtags($id);
     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1"));
     $context_top =
-        '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $catalog['name'] . '</a></div>' .
+        '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
-        '<p><b><a href="?do=text&amp;id=' . $id . '">' . $res_obj['name'] . '</a></b></p>' .
+        '<p><b><a href="?do=text&amp;id=' . $id . '">' . functions::checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '') .
-        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="../users/profile.php?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> (' . functions::display_date($res_obj['time']) . ')<br/>' .
+        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="../users/profile.php?user=' . $owner['id'] . '"><b>' . functions::checkout($owner['name']) . '</b></a> (' . functions::display_date($res_obj['time']) . ')<br/>' .
         '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = array(

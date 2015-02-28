@@ -155,7 +155,7 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
     }
     }
   }
-    echo '<div class="phdr"><h3>' . $lng_lib['write_article'] . '</h3></div>'
+    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['write_article'] . '</div>'
     . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
     . '<div class="menu">'
     . '<h3>' . $lng['title'] . ' (max. 100):</h3>'
@@ -168,13 +168,13 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
     . '<div><input type="checkbox" name="comments" value="1" checked="checked" />' . $lng_lib['comment_article'] . '</div>'
     . '<h3>' . $lng_gal['upload_photo'] . '</h3>'
     . '<div><input type="file" name="image" accept="image/*" /></div>'
-    . '<div><b>' . $lng_lib['select_text_file'] . ', ' . mb_strtolower($lng_lib['ignor_input']) . '</b></div>'
+    . '<div><strong>' . $lng_lib['select_text_file'] . ', ' . mb_strtolower($lng_lib['ignor_input']) . '</strong></div>'
     . '<div><input type="file" name="textfile" accept="text/plain" /></div>'
-    . '<div><b>' . $lng_lib['input_tags'] . '</b></div>'
+    . '<div><strong>' . $lng_lib['input_tags'] . '</strong></div>'
     . '<div><input name="tags" type="text" value="' . $tag . '" /></div>'
     . '<div><input type="submit" name="submit" value="' . $lng['save'] . '" /></div>'
     . '</div></form>'
-    . '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+    . '<p><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
 }
 else {
   header('location: ?');

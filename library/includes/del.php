@@ -11,6 +11,8 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
 
+echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng['delete'] . '</div>';
+
 $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article', 'image')) ? $_GET['type'] : redir404();
 $change = ($type == 'dir' ? mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1 : '');
 
@@ -53,7 +55,7 @@ case 'dir':
             . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
             . '<div><select name="move">';
             while($rm = mysql_fetch_assoc($list)) {
-                echo '<option value="' . $rm['id'] . '">' . $rm['name'] . '</option>';
+                echo '<option value="' . $rm['id'] . '">' . functions::checkout($rm['name']) . '</option>';
             }
             echo '</select></div>'
             . '<div><input type="hidden" name="mode" value="moveaction" /></div>' 
@@ -126,6 +128,6 @@ if (isset($_GET['yes']) && $type == 'image') {
       @unlink('../files/library/images/orig/' . $id . '.png');
       @unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><p><a href="?">' . $lng['back'] . '</a></p>' . PHP_EOL;
   }
 }

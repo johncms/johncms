@@ -469,7 +469,7 @@ class Rating
     }
     
     public function view_rate() {
-        return functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article'));
+        return functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article')) . ' (<small>' . $this->get_rate() . '</small>)';
     }
     
     public function get_vote() {

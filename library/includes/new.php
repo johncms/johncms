@@ -9,7 +9,9 @@
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['new_articles'] . '</div>';
+
 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
@@ -24,7 +26,7 @@ if ($total) {
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
             . '<div class="righttable"><h4><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
-            . '<div><small>' . bbcode::notags($row['announce']) . '</small></div></div>';
+            . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
         // Описание к статье
         $obj = new Hashtags($id);

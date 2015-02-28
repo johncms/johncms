@@ -29,7 +29,7 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
 $search = $search_post ? $search_post : $search_get;
 $search_t = isset($_REQUEST['t']);
-echo '<div class="phdr"><a href="?"><b>' . $lng['library'] . '</b></a> | ' . $lng['search'] . '</div>'
+echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search'] . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
     . '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />'
     . '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br />'
@@ -57,14 +57,16 @@ if ($search && !$error) {
     $total = mysql_result(mysql_query("
         SELECT COUNT(*) FROM `library_texts`
         WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)"), 0);
-    echo '<div class="phdr">' . $lng['search_results'] . '</div>';
+        
+    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search_results'] . '</div>';
+    
     if ($total > $kmess)
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
     if ($total) {
         $req = mysql_query("
             SELECT *, MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE) AS `rel`
             FROM `library_texts`
-            WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('$query' IN BOOLEAN MODE)
+            WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)
             ORDER BY `rel` DESC
             LIMIT " . $start . ", " . $kmess
         );
@@ -90,8 +92,8 @@ if ($search && !$error) {
                     $text = ReplaceKeywords($val, $text);
                 }
             }
-            echo '<b><a href="?do=text&amp;id=' . $res['id'] . '">' . $name . '</a></b><br />' . $text
-                . ' <div class="sub"><span class="gray">' . $lng_lib['added'] . ':</span> ' . $res['author']
+            echo '<strong><a href="?do=text&amp;id=' . $res['id'] . '">' . functions::checkout($name) . '</a></strong><br />' . $text
+                . ' <div class="sub"><span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author'])
                 . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />'
                 . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res['count_views']
                 . '</div></div>';
@@ -114,5 +116,5 @@ if ($search && !$error) {
     }
     echo '<div class="phdr"><small>' . $lng['search_help'] . '</small></div>';
 }
-echo '<div>' . ($search ? '<a href="?act=search">' . $lng['search_new'] . '</a><br />' : '')
-    . '<a href="?">' . $lng['library'] . '</a></div>';
+echo '<p>' . ($search ? '<a href="?act=search">' . $lng['search_new'] . '</a><br />' : '')
+    . '<a href="?">' . $lng['library'] . '</a></p>';

@@ -323,7 +323,7 @@ if (in_array($act, $array_includes)) {
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                            . '<td>' . functions::checkout($res['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+                            . '<td>' . functions::checkout($res['author']) . ' (' . functions::display_date($res['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'

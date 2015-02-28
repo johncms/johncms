@@ -31,7 +31,7 @@ $adm ?: redir404();
     }
   }
   else {
-    echo '<div class="phdr"><h3>' . $lng_lib['create_category'] . '</h3></div>' 
+    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['create_category'] . '</div>'  
     . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">' 
     . '<div class="menu">'
     . '<h3>' . $lng['title'] . ':</h3>' 
@@ -45,5 +45,5 @@ $adm ?: redir404();
     . '</select></div>' 
     . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
     . '</div></form>' 
-    . '<div><a href ="?">' . $lng['back'] . '</a></div>';
+    . '<p><a href ="?">' . $lng['back'] . '</a></p>';
   }
