@@ -166,7 +166,7 @@ if (in_array($act, $array_includes)) {
 
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
         if ($adm) {
-            echo '<div><a href="?act=mkdir&amp;id=0">' . $lng_lib['create_category'] . '</a></div>';
+            echo '<p><a href="?act=mkdir&amp;id=0">' . $lng_lib['create_category'] . '</a></p>';
         }
     } else {
         $dir_nav = new Tree($id);
@@ -208,9 +208,9 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
                     if ($adm) {
-                        echo '<div><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'
-                            . '<div><a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a></div>'
-                            . '<div><a href="?act=mkdir&amp;id=' . $id . '">' . $lng_lib['create_category'] . '</a></div>';
+                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a><br/>'
+                            . '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng_lib['create_category'] . '</a></p>';
                     }
                 } else {
                     $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
@@ -222,25 +222,44 @@ if (in_array($act, $array_includes)) {
                         echo $nav;
 
                         while ($row = mysql_fetch_assoc($sql2)) {
-                            $obj = new Hashtags($row['id']);
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><strong><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></strong>'
-                                . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>'
-                                . '<div class="sub">'
-                                . ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '')
-                                . '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')<br/>';
+                                . '<div class="righttable"><h4><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
+                                . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
-                            // Рейтинг
+                            // Описание к статье
+                            $obj = new Hashtags($row['id']);
                             $rate = new Rating($row['id']);
-                            echo $rate->view_rate() . '<br />';
+                            echo '<table class="desc">'
+                                // Тэги
+                                . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+                                // Кто добавил?
+                                . '<tr>'
+                                . '<td class="caption">' . $lng_lib['added'] . ':</td>'
+                                . '<td>' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+                                . '</tr>'
+                                // Рейтинг
+                                . '<tr>'
+                                . '<td class="caption">' . $lng['rating'] . ':</td>'
+                                . '<td>' . $rate->view_rate() . '</td>'
+                                . '</tr>'
+                                // Прочтений
+                                . '<tr>'
+                                . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
+                                . '<td>' . $row['count_views'] . '</td>'
+                                . '</tr>'
+                                // Комментарии
+                                . '<tr>';
+                            if ($row['comments']) {
+                                echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
+                            } else {
+                                echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['closed'] . '</td>';
+                            }
+                            echo '</tr></table>';
 
-                            echo '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views']
-                                . ($row['comments'] ? '<br/><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . $row['count_comments'] . ')' : '')
-                                . '</div>'
-                                . '</div>';
+                            echo '</div>';
                         }
                     } else {
                         echo '<div class="menu">' . $lng['list_empty'] . '</div>';
@@ -250,9 +269,9 @@ if (in_array($act, $array_includes)) {
                     echo $nav;
 
                     if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id)) {
-                        echo '<div><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a></div>'
-                            . '<div><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'
-                            . '<div><a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a></div>';
+                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a><br/>'
+                            . '<a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }
                 }
 
@@ -281,7 +300,6 @@ if (in_array($act, $array_includes)) {
                         redir404();
                     }
 
-                    $obj = new Hashtags($id);
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1"));
                     echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
@@ -294,21 +312,40 @@ if (in_array($act, $array_includes)) {
                     if ($page == 1) {
                         echo '<div class="list2">';
                         // Заголовок статьи
-                        echo '<h2>' . functions::checkout($res['name']) . '</h2>' .
-                            '<div class="sub"><p>';
+                        echo '<h2>' . functions::checkout($res['name']) . '</h2>';
 
-                        // Тэги
-                        if ($obj->get_all_stat_tags()) {
-                            echo '<span class="gray">' . $lng_lib['tags'] . ':</span> ' . $obj->get_all_stat_tags(1) . '<br />';
+                        // Описание к статье
+                        $obj = new Hashtags($res['id']);
+                        $rate = new Rating($res['id']);
+                        echo '<table class="desc">'
+                            // Тэги
+                            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+                            // Кто добавил?
+                            . '<tr>'
+                            . '<td class="caption">' . $lng_lib['added'] . ':</td>'
+                            . '<td>' . functions::checkout($res['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+                            . '</tr>'
+                            // Рейтинг
+                            . '<tr>'
+                            . '<td class="caption">' . $lng['rating'] . ':</td>'
+                            . '<td><a href="#rating">' . $rate->view_rate() . '</a></td>'
+                            . '</tr>'
+                            // Прочтений
+                            . '<tr>'
+                            . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
+                            . '<td>' . $res['count_views'] . '</td>'
+                            . '</tr>'
+                            // Комментарии
+                            . '<tr>';
+                        if ($res['comments']) {
+                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $res['count_comments'] . '</td>';
+                        } else {
+                            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['closed'] . '</td>';
                         }
-
-                        // Рейтинг
-                        $rate = new Rating($id);
-                        echo $rate->view_rate() . '<br />';
+                        echo '</tr></table>';
 
                         // Метки авторов
-                        echo '<span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author']) . ' (' . functions::display_date($res['time']) . ')' .
-                            '</p></div></div>';
+                        echo '</div>';
                     }
 
                     $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
@@ -316,7 +353,7 @@ if (in_array($act, $array_includes)) {
                         $text = functions::smileys($text, $rights ? 1 : 0);
                     }
 
-                    echo '<div class="list2">';
+                    echo '<div class="list2" style="padding: 8px">';
                     if ($page == 1) {
                         // Картинка статьи
                         if (file_exists('../files/library/images/big/' . $id . '.png')) {
@@ -329,15 +366,13 @@ if (in_array($act, $array_includes)) {
                         '<div style="clear: both"></div>' .
                         '</div>';
 
-                    echo ($res['comments']
-                            ? '<div class="phdr"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['count_comments'] . ')</div>'
-                            : '')
-                        . $nav
-                        . ($user_id ? $rate->print_vote() : '')
-                        . '<div>' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
+                        echo '<div class="phdr">' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
+
+                    echo $nav
+                        . ($user_id ? $rate->print_vote() : '');
                     if ($adm) {
-                        echo '<div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a></div>'
-                            . '<div><a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></div>';
+                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                            . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }
                 } else {
                     redir404();

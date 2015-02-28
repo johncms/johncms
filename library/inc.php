@@ -428,7 +428,7 @@ class Hashtags
         
         $obj = new self();
         $tags = mysql_num_rows(mysql_query("SELECT `id` FROM `library_tags` LIMIT 1"));
-        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : $lng['list_empty']);
+        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : '<p>' . $lng['list_empty'] . '</p>');
         file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
         
         return $this->get_cache($sort);
@@ -485,7 +485,8 @@ class Rating
         
         $return = PHP_EOL;
         
-        $return .= '<form action="?do=text&amp;id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu">' . PHP_EOL;
+        $return .= '<form action="?do=text&amp;id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
+        $return .= '<a id="rating"></a>';
         for($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $this->get_vote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
         }
