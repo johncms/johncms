@@ -41,6 +41,7 @@ class scaner {
         '/rss',
         '/sitemap',
         '/theme',
+        '/update',
         '/users'
     );
     public $good_files = array (
@@ -184,6 +185,7 @@ class scaner {
         '../library/includes/comments.php',
         '../library/includes/del.php',
         '../library/includes/download.php',
+        '../library/includes/lastcom.php',
         '../library/includes/mkdir.php',
         '../library/includes/moder.php',
         '../library/includes/move.php',
@@ -192,7 +194,7 @@ class scaner {
         '../library/includes/search.php',
         '../library/includes/tagcloud.php',
         '../library/includes/tags.php',
-        '../library/includes/topread.php',
+        '../library/includes/top.php',
         '../library/index.php',
         '../mail/includes/delete.php',
         '../mail/includes/deluser.php',

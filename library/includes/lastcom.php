@@ -10,7 +10,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><b>' . $lng_lib['last_comments'] . '</b></div>';
+echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['last_comments'] . '</div>';
 
 if (mysql_result(mysql_query('SELECT COUNT(*) FROM `cms_library_comments`'), 0) > 0) {
 
@@ -27,7 +27,7 @@ $i = 0;
     . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>' 
     : '')
-    . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $row['name'] . '</a>'
+    . '<div class="righttable"><h4><a href="?act=comments&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
     . '<div>' . substr(bbcode::notags($row['text']), 0, 500) . '</div></div>'
     . '<div class="sub">' . $lng_lib['added'] . ': ' . mysql_result(mysql_query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id']), 0) . ' (' . functions::display_date($row['time']) . ')</div>'
     . '</div>';
