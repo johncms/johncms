@@ -114,17 +114,17 @@ case 'image':
 }
 if (isset($_GET['yes']) && $type == 'image') {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
-      unlink('../files/library/images/big/' . $id . '.png'); 
-      unlink('../files/library/images/orig/' . $id . '.png');
-      unlink('../files/library/images/small/' . $id . '.png');
+      @unlink('../files/library/images/big/' . $id . '.png');
+      @unlink('../files/library/images/orig/' . $id . '.png');
+      @unlink('../files/library/images/small/' . $id . '.png');
     }
     echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
   if (mysql_query($sql)) {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
-      unlink('../files/library/images/big/' . $id . '.png'); 
-      unlink('../files/library/images/orig/' . $id . '.png');
-      unlink('../files/library/images/small/' . $id . '.png');
+      @unlink('../files/library/images/big/' . $id . '.png');
+      @unlink('../files/library/images/orig/' . $id . '.png');
+      @unlink('../files/library/images/small/' . $id . '.png');
     }
     echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
   }
