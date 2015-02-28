@@ -203,11 +203,11 @@ class Tree
         $return = array();
         $x = 1;
         foreach ($array as $k => $v) {
-            $return[] = $x == $cnt ? '<b>' . $v . '</b>' : '<a href="?do=dir&amp;id=' . $k . '">' . htmlspecialchars($v) . '</a>';
+            $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . functions::checkout($v) . '</a>';
             $x++;
         }
 
-        return '<a href="?"><b>' . $lng['library'] . '</b></a> | ' . implode(' | ', $return);
+        return '<a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . implode(' | ', $return);
     }
 
     public function result()
@@ -243,12 +243,12 @@ class Link_view
     
     public function tpl_tag($n) 
     {
-        return '<a href="' . $this->link_url . $n . '">' . htmlspecialchars($n) . '</a>';
+        return '<a href="' . $this->link_url . $n . '">' . functions::checkout($n) . '</a>';
     }
     
     public function tpl_cloud($n) 
     {
-        return '<a href="' . $this->link_url . htmlspecialchars($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . htmlspecialchars($n['name']) . '</span></a>';
+        return '<a href="' . $this->link_url . functions::checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . functions::checkout($n['name']) . '</span></a>';
     }
 
     public function link_separator($sepatator = ' | ')
@@ -432,5 +432,66 @@ class Hashtags
         file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
         
         return $this->get_cache($sort);
+    }
+}
+
+class Rating
+{
+    private $lib_id = false;
+
+    public function __construct($id) {
+        $this->lib_id = $id;
+        $this->check();
+    }
+    
+    public function check() {
+        if (isset($_POST['rating_submit'])) {
+            $this->add_vote($_POST['vote']);
+        }    
+    }
+    
+    public function add_vote($point) {
+        global $user_id;
+                
+        $point = in_array($point, range(0, 5)) ? $point : 0;
+        if (mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0) {
+            mysql_query("UPDATE `cms_library_rating` SET `point` = " . $point . " WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id);
+        } elseif ($user_id && $this->lib_id > 0) {
+            mysql_query("INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (" . $user_id . ", " . $this->lib_id . ", " . $point . ")");
+        }
+        
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+    
+    public function get_rate() {
+        return floor(mysql_result(mysql_query("SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = " . $this->lib_id), 0) * 2) / 2;
+    }
+    
+    public function view_rate() {
+        return functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article'));
+    }
+    
+    public function get_vote() {
+        global $user_id;
+        
+        $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0 ? mysql_result(mysql_query("SELECT `point` FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id . " LIMIT 1"), 0) : -1;
+        
+        return $res;
+    }
+    
+    public function print_vote() {
+        global $lng_lib;
+        
+        $return = PHP_EOL;
+        
+        $return .= '<form action="?do=text&amp;id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu">' . PHP_EOL;
+        for($r = 0; $r < 6; $r++) {
+            $return .= ' <input type="radio" ' . ($r == $this->get_vote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
+        }
+        $return .= '<br /><input type="submit" name="rating_submit" value="' . $lng_lib['vote'] . '" />' . PHP_EOL;
+        $return .= '</div></form>' . PHP_EOL;
+        
+        return $return . PHP_EOL;
     }
 }
