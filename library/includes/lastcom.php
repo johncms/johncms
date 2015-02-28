@@ -27,13 +27,13 @@ $i = 0;
     . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>' 
     : '')
-    . '<div class="righttable"><h4><a href="?act=comments&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
-    . '<div>' . substr(bbcode::notags($row['text']), 0, 500) . '</div></div>'
-    . '<div class="sub">' . $lng_lib['added'] . ': ' . mysql_result(mysql_query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id']), 0) . ' (' . functions::display_date($row['time']) . ')</div>'
+    . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
+    . '<div>' . functions::checkout(substr(bbcode::notags($row['text']), 0, 500)) . '</div></div>'
+    . '<div class="sub">' . $lng_lib['added'] . ': ' . functions::checkout(mysql_result(mysql_query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id']), 0)) . ' (' . functions::display_date($row['time']) . ')</div>'
     . '</div>';
   }
 } else {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 }
 
-echo '<div class="phdr"><a href="?">' . $lng_lib['to_library'] . '</a></div>';
+echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>' . PHP_EOL;

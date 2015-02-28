@@ -94,7 +94,7 @@ $lng_gal = core::load_lng('gallery');
       redir404();
     }
     
-    echo '<div class="phdr"><h3>'
+    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | '
     . ($type == 'dir' ? $lng_lib['edit_category'] : $lng_lib['edit_article'])
     . '</h3></div>'
     . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
@@ -137,7 +137,7 @@ $lng_gal = core::load_lng('gallery');
                 . (($type == 'dir' && $row['parent'] == $res['id']) || ($type == 'article' && $row['cat_id'] == $res['id'])
                 ? 'selected="selected" '
                 : '')
-                . 'value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                . 'value="' . $res['id'] . '">' . functions::checkout($res['name']) . '</option>';
             }
         }
     echo '</select></div>';
@@ -162,5 +162,5 @@ $lng_gal = core::load_lng('gallery');
     . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '')
     . '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 
     . '</div></div></form>' . PHP_EOL 
-    . '<div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></p>' . PHP_EOL;
   }

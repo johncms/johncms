@@ -45,7 +45,7 @@ if (!$total) {
             . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
         // Описание к статье
-        $obj = new Hashtags($id);
+        $obj = new Hashtags($row['id']);
         $rate = new Rating($row['id']);
         echo '<table class="desc">'
             // Раздел
