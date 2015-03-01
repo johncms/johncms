@@ -9,12 +9,15 @@
  */
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$adm ?: redir404();
 
 $lng_gal = core::load_lng('gallery');
 
   $obj = new Hashtags($id);  
   $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
+  
+  $author = ($type == 'article' && mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) ? 1 : 0;
+  $adm || $author ?: redir404();
+  
   if (isset($_POST['submit'])) {
     switch ($type) {
     case 'dir':
@@ -76,12 +79,12 @@ $lng_gal = core::load_lng('gallery');
         }
         $handle->clean();
       }
-      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "', `author`='" . mysql_real_escape_string($_POST['author']) . "', `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) . "  WHERE `id`=" . $id;
+      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) . ', ' : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "' " . ($adm ? ", `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . " WHERE `id`=" . $id;
       break;
     }
     if (mysql_query($sql)) {
       echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
-    } 
+    }
   }
   else {
     $child_dir = new Tree($id);
@@ -96,7 +99,7 @@ $lng_gal = core::load_lng('gallery');
     
     echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | '
     . ($type == 'dir' ? $lng_lib['edit_category'] : $lng_lib['edit_article'])
-    . '</h3></div>'
+    . '</div>'
     . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
     . '<div class="menu">'
     . ($type == 'article' ? (file_exists('../files/library/images/big/' . $id . '.png') 
@@ -108,7 +111,7 @@ $lng_gal = core::load_lng('gallery');
     . '<h3>' . $lng['title'] . '</h3>' : '')
     . '<div><input type="text" name="name" value="' . functions::checkout($row['name']) . '" /></div>'
     . ($type == 'dir' ? '<h3>' . $lng_lib['add_dir_descriptions'] . '</h3>'
-    . '<div><input type="text" name="description" value="' . functions::checkout($row['description']) . '" /></div>' : '')
+    . '<div><textarea name="description" rows="4" cols="20">' . functions::checkout($row['description']) . '</textarea></div>' : '')
     . ($type == 'article'
     ? '<h3>' . $lng_lib['announce'] . '</h3><div><textarea rows="2" cols="20" name="announce">' . functions::checkout($row['announce'])
     . '</textarea></div>'
@@ -122,6 +125,7 @@ $lng_gal = core::load_lng('gallery');
     . ($type == 'article' 
     ? '<h3>' . $lng_lib['tags'] . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
     : '');
+    if ($adm) {
     if (mysql_num_rows($sqlsel) > 1) { 
         echo '<h3>' . $lng_lib['move_dir'] . '</h3>'
         . '<div><select name="move">'
@@ -156,11 +160,13 @@ $lng_gal = core::load_lng('gallery');
     ? 'checked="checked"' : '') . '/> ' . $lng_lib['verified'] . '</div>'
     . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
     . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['comment_article'] . '</div>'
-    . '<div class="rmenu"><h3>' . $lng['author'] . '</h3>'
-    . '<div><input type="text" name="author" value="' . functions::checkout($row['uploader']) . '" /></div>' . PHP_EOL 
+    . '<div class="rmenu">' 
+#    . '<h3>' . $lng['author'] . '</h3>'
+#    . '<div><input type="text" name="author" value="' . functions::checkout($row['uploader']) . '" /></div>' . PHP_EOL 
     . '<h3>' . $lng_lib['reads'] 
-    . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '')
-    . '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 
+    . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
+    }
+    echo '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 
     . '</div></div></form>' . PHP_EOL 
     . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></p>' . PHP_EOL;
   }

@@ -119,15 +119,6 @@ if (in_array($act, $array_includes)) {
     if (!$id) {
         echo '<div class="phdr"><strong>' . $lng['library'] . '</strong></div>';
         echo '<div class="topmenu"><a href="?act=search">' . $lng['search'] . '</a> | <a href="?act=tagcloud">' . $lng_lib['tagcloud'] . '</a></div>';
-        if ($adm) {
-            // Считаем число статей, ожидающих модерацию
-            $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0"), 0);
-            if ($res > 0) {
-                echo '<div>' . $lng['on_moderation'] . ': <a href="?act=premod">' . $res . '</a></div>';
-            }
-        }
-
-        // Считаем новое в библиотеке
 
         echo '<div class="gmenu"><p>';
         if ($adm) {
@@ -191,13 +182,13 @@ if (in_array($act, $array_includes)) {
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
                                 . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
                             if ($adm) {
-                                echo '<div class="sub"><small>'
+                                echo '<div class="sub">'
                                     . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up']
                                         . '</a> | ' : '' . $lng_lib['up'] . ' | ')
                                     . ($y != $total
                                         ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng_lib['down'] . '</a>'
                                         : $lng_lib['down'])
-                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></small></div>';
+                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></div>';
                             }
                             echo '</div>';
                         }
@@ -216,7 +207,7 @@ if (in_array($act, $array_includes)) {
                     $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
                     $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
                     $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-                    $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " LIMIT " . $start . "," . $kmess);
+                    $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
                     $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
                     if ($total) {
                         echo $nav;
@@ -243,7 +234,7 @@ if (in_array($act, $array_includes)) {
                                 // Рейтинг
                                 . '<tr>'
                                 . '<td class="caption">' . $lng['rating'] . ':</td>'
-                                . '<td>' . $rate->view_rate(1) . '</td>'
+                                . '<td>' . $rate->view_rate() . '</td>'
                                 . '</tr>'
                                 // Прочтений
                                 . '<tr>'
@@ -269,9 +260,10 @@ if (in_array($act, $array_includes)) {
                     echo $nav;
 
                     if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id)) {
-                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a><br/>'
-                            . '<a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
-                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
+                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a>'
+                             . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                             . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
+                             . '</p>';
                     }
                 }
 
@@ -340,7 +332,7 @@ if (in_array($act, $array_includes)) {
                         if ($res['comments']) {
                             echo '<td class="caption"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $res['count_comments'] . '</td>';
                         } else {
-                            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments'] . '</td>';
+                            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
                         }
                         echo '</tr></table>';
 
@@ -369,8 +361,9 @@ if (in_array($act, $array_includes)) {
                         echo '<div class="phdr">' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
                     echo $nav
-                        . ($user_id ? $rate->print_vote() : '');
-                    if ($adm) {
+                        . ($user_id ? $rate->print_vote() : '');       
+                        
+                    if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }

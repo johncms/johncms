@@ -27,7 +27,7 @@ $lng_gal = core::load_lng('gallery');
   $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
   $start = $page == 1 ? 0 : ($page - 1) * $kmess;
   if ($total) { 
-    $sql = mysql_query('SELECT `id`, `name`, `time`, `author`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $kmess);
+    $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $kmess);
     $i = 0;
     while ($row = mysql_fetch_assoc($sql)) {
         $dir_nav = new tree($row['cat_id']);

@@ -37,7 +37,7 @@ $adm ?: redir404();
     . '<h3>' . $lng['title'] . ':</h3>' 
     . '<div><input type="text" name="name" /></div>' 
     . '<h3>' . $lng_lib['add_dir_descriptions'] . ':</h3>' 
-    . '<div><input type="text" name="description" /></div>' 
+    . '<div><textarea name="description" rows="4" cols="20"></textarea></div>' 
     . '<h3>' . $lng_lib['category_type'] . '</h3>' 
     . '<div><select name="type">' 
     . '<option value="1">' . $lng_lib['categories'] . '</option>' 
