@@ -468,8 +468,10 @@ class Rating
         return floor(mysql_result(mysql_query("SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = " . $this->lib_id), 0) * 2) / 2;
     }
     
-    public function view_rate() {
-        return functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article')) . ' (<small>' . $this->get_rate() . '</small>)';
+    public function view_rate($anchor = 0) {
+        $res = (!$anchor ?: '<a href="#rating">') . functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article')) . (!$anchor ?: '</a>') . ' (' . mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = " . $this->lib_id), 0) . ')';
+        
+        return $res;
     }
     
     public function get_vote() {

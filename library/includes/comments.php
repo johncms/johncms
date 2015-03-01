@@ -22,8 +22,7 @@ if (mysql_num_rows($req_obj)) {
         exit;
     }
 
-    $author = mysql_result(mysql_query("SELECT `id` FROM `users` WHERE `name`='" . $res_obj['author'] . "' LIMIT 1"), 0);
-    $owner = functions::get_user($author);
+    $owner = functions::get_user($res_obj['uploader_id']);
 
     if (!$owner) {
         echo functions::display_error($lng['user_does_not_exist']);

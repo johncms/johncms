@@ -38,24 +38,35 @@ if ($rights == 9) {
             `pos`=" . $row['id'] . ",
             `name`='" . $row['text'] . "',
             `description` = ''
-        ") or die('41: ' . mysql_error());
+        ");
     }
 
-    $sql = mysql_query("SELECT `id`, `refid`, `text`, `avtor`, `name`, `moder`, `count`, `time` FROM `lib` WHERE `type`='bk'");
+    $sql = mysql_query("SELECT `id`, `refid`, `text`, `announce`, `avtor`, `name`, `moder`, `count`, `time` FROM `lib` WHERE `type`='bk'");
 
     while ($row = mysql_fetch_assoc($sql)) {
+        $req = mysql_query("SELECT `id` FROM `users` WHERE `name`='" . $row['avtor'] . "' LIMIT 1");
+
+        if(mysql_num_rows($req)){
+            $res = mysql_fetch_assoc($req);
+            $uploader_id = $res['id'];
+        } else {
+            $uploader_id = 0;
+        }
+
         mysql_query("
           INSERT INTO `library_texts`
           SET
             `id`=" . $row['id'] . ",
-            `cat_id`=" . $row['refid'] . ",
-            `author`='" . $row['avtor'] . "',
-            `text`='" . mysql_real_escape_string($row['text']) . "',
-            `name`='" . $row['name'] . "',
-            `premod`=" . $row['moder'] . ",
-            `count_views`=" . $row['count'] . ",
-            `time`='" . $row['time'] . "'
-        ") or die('58: ' . mysql_error());
+            `cat_id`      = " . $row['refid'] . ",
+            `name`        = '" . $row['name'] . "',
+            `announce`    = '" . mysql_real_escape_string($row['announce']) . "',
+            `text`        = '" . mysql_real_escape_string($row['text']) . "',
+            `uploader`    = '" . $row['avtor'] . "',
+            `uploader_id` = '" . $uploader_id . "',
+            `premod`      = " . $row['moder'] . ",
+            `count_views` = " . $row['count'] . ",
+            `time`        = '" . $row['time'] . "'
+        ");
     }
 
     $array = array();
@@ -74,7 +85,7 @@ if ($rights == 9) {
             mysql_query("INSERT INTO `cms_library_comments` SET `sub_id`=" . $row['refid'] . ", `time`='" . time() . "', `user_id`=" . $res['id'] . ", `text`='" . $row['text'] . "', `attributes`='" . mysql_real_escape_string(serialize($attributes)) . "'") or die('71: ' . mysql_error());
 
             foreach ($array as $aid => $cnt) {
-                mysql_query("UPDATE `library_texts` SET `count_comments`=" . count($cnt) . ", `comments`=1 WHERE `id`=" . $aid) or die(mysql_error());
+                mysql_query("UPDATE `library_texts` SET `count_comments`=" . count($cnt) . ", `comments`=1 WHERE `id`=" . $aid);
             }
         }
     }

@@ -216,8 +216,8 @@ if (in_array($act, $array_includes)) {
                     $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
                     $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
                     $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-                    $sql2 = mysql_query("SELECT `id`, `name`, `time`, `author`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " LIMIT " . $start . "," . $kmess);
-                    $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
+                    $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " LIMIT " . $start . "," . $kmess);
+                    $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
                     if ($total) {
                         echo $nav;
 
@@ -238,12 +238,12 @@ if (in_array($act, $array_includes)) {
                                 // Кто добавил?
                                 . '<tr>'
                                 . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                                . '<td>' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+                                . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
                                 . '</tr>'
                                 // Рейтинг
                                 . '<tr>'
                                 . '<td class="caption">' . $lng['rating'] . ':</td>'
-                                . '<td>' . $rate->view_rate() . '</td>'
+                                . '<td>' . $rate->view_rate(1) . '</td>'
                                 . '</tr>'
                                 // Прочтений
                                 . '<tr>'
@@ -278,7 +278,7 @@ if (in_array($act, $array_includes)) {
                 break;
 
             case 'text':
-                $res = mysql_fetch_assoc(mysql_query("SELECT `id`, `cat_id`, `name`, `time`, `premod`, `author`, `count_views`, `count_comments`, `comments` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1"));
+                $res = mysql_fetch_assoc(mysql_query("SELECT * FROM `library_texts` WHERE `id`=" . $id));
                 if ($res['premod'] || $adm) {
 
                     // Счетчик прочтений
@@ -323,12 +323,12 @@ if (in_array($act, $array_includes)) {
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                            . '<td>' . functions::checkout($res['author']) . ' (' . functions::display_date($res['time']) . ')</td>'
+                            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['uploader_id'] . '">' . functions::checkout($res['uploader']) . '</a> (' . functions::display_date($res['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'
                             . '<td class="caption">' . $lng['rating'] . ':</td>'
-                            . '<td><a href="#rating">' . $rate->view_rate() . '</a></td>'
+                            . '<td>' . $rate->view_rate(1) . '</td>'
                             . '</tr>'
                             // Прочтений
                             . '<tr>'
