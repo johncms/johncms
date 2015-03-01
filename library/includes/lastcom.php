@@ -36,4 +36,4 @@ $i = 0;
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 }
 
-echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>' . PHP_EOL;
+echo '<div class="phdr"><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;

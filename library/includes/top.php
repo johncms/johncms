@@ -25,7 +25,7 @@ if ($sort == 'read') {
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 if (!$total) {
-    echo '<div>' . $lng['list_empty'] . '</div>';
+    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 } else {
     if ($sort == 'read') {
         $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT ' . $start . ',' . $kmess);
@@ -33,8 +33,6 @@ if (!$total) {
         $sql = mysql_query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
     }
 
-    $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
-    echo $nav;
     $i = 0;
     while ($row = mysql_fetch_assoc($sql)) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
@@ -81,7 +79,6 @@ if (!$total) {
 
         echo '</div>';
     }
-    echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
-    echo $nav;
 }
-echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>';
+
+echo '<div class="phdr"><a href="?">' . $lng['back'] . '</a></div>';
