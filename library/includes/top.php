@@ -10,13 +10,18 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['rated_articles'] . '</div>'
-    . '<div class="topmenu">' . $lng_lib['sort'] . ': <a href="?act=top&amp;sort=read">' . $lng_lib['by_reading'] . '</a> | <a href="?act=top&amp;sort=rating">' . $lng_lib['by_rating'] . '</a></div>';
+$sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm': 'read');
 
-$sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : 'read';
+$menu[] = $sort == 'read' ? '<strong>' . $lng_lib['by_reading'] . '</strong>' : '<a href="?act=top&amp;sort=read">' . $lng_lib['by_reading'] . '</a> ';
+$menu[] = $sort == 'rating' ? '<strong>' . $lng_lib['by_rating'] . '</strong>' : '<a href="?act=top&amp;sort=rating">' . $lng_lib['by_rating'] . '</a> ';
+$menu[] = $sort == 'comm' ? '<strong>' . $lng_lib['by_comments'] . '</strong>' : '<a href="?act=top&amp;sort=comm">' . $lng_lib['by_comments'] . '</a>';
 
-if ($sort == 'read') {
-    $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `count_views` > 0 ORDER BY `count_views` DESC LIMIT 20'), 0);
+
+echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['rated_articles'] . '</div>' .
+     '<div class="topmenu">' . $lng_lib['sort'] . ': ' . functions::display_menu($menu) . '</div>';
+
+if ($sort == 'read' || $sort == 'comm') {
+    $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT 20'), 0);
 } else {
     $sql = mysql_query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20");
     $total = mysql_num_rows($sql);
@@ -27,8 +32,8 @@ $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 if (!$total) {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 } else {
-    if ($sort == 'read') {
-        $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT ' . $start . ',' . $kmess);
+    if ($sort == 'read' || $sort == 'comm') {
+        $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
     } else {
         $sql = mysql_query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
     }
