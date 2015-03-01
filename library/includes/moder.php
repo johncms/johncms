@@ -157,7 +157,7 @@ $lng_gal = core::load_lng('gallery');
     . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
     . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['comment_article'] . '</div>'
     . '<div class="rmenu"><h3>' . $lng['author'] . '</h3>'
-    . '<div><input type="text" name="author" value="' . functions::checkout($row['author']) . '" /></div>' . PHP_EOL 
+    . '<div><input type="text" name="author" value="' . functions::checkout($row['uploader']) . '" /></div>' . PHP_EOL 
     . '<h3>' . $lng_lib['reads'] 
     . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '')
     . '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 

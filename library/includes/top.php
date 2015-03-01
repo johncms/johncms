@@ -28,7 +28,7 @@ if (!$total) {
     echo '<div>' . $lng['list_empty'] . '</div>';
 } else {
     if ($sort == 'read') {
-        $sql = mysql_query('SELECT `id`, `name`, `time`, `author`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT ' . $start . ',' . $kmess);
+        $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE `count_views`>0 ORDER BY `count_views` DESC LIMIT ' . $start . ',' . $kmess);
     } else {
         $sql = mysql_query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
     }
@@ -58,12 +58,12 @@ if (!$total) {
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-            . '<td>' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'
             . '<td class="caption">' . $lng['rating'] . ':</td>'
-            . '<td>' . $rate->view_rate() . '</td>'
+            . '<td>' . $rate->view_rate(1) . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'

@@ -15,7 +15,7 @@ echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong>
 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-$sql = mysql_query("SELECT `id`, `name`, `time`, `author`, `count_views`, `comments`, `count_comments`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+$sql = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `count_comments`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
 $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
 echo $nav;
 if ($total) {
@@ -29,7 +29,7 @@ if ($total) {
             . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
         // Описание к статье
-        $obj = new Hashtags($id);
+        $obj = new Hashtags($row['id']);
         $rate = new Rating($row['id']);
         echo '<table class="desc">'
             // Раздел
@@ -42,7 +42,7 @@ if ($total) {
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-            . '<td>' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')</td>'
+            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'

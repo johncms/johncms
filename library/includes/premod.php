@@ -37,7 +37,7 @@ $lng_gal = core::load_lng('gallery');
         ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>' 
         : '') 
         . '<div class="righttable"><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></div>' 
-        . '<div class="sub">' . $lng_lib['added'] . ': ' . functions::checkout($row['author']) . ' (' . functions::display_date($row['time']) . ')</div>' 
+        . '<div class="sub">' . $lng_lib['added'] . ': ' . functions::checkout($row['uploader']) . ' (' . functions::display_date($row['time']) . ')</div>' 
         . '<div>' . $dir_nav->print_nav_panel() . '</div>' 
         . '<a href="?act=premod&amp;yes&amp;id=' . $row['id'] . '">' . $lng_lib['approve'] . '</a> | <a href="?act=del&amp;type=article&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a>' 
         . '</div>';
