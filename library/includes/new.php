@@ -59,7 +59,7 @@ if ($total) {
         if ($row['comments']) {
             echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
         } else {
-            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['closed'] . '</td>';
+            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
         }
         echo '</tr></table>';
 

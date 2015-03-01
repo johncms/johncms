@@ -255,7 +255,7 @@ if (in_array($act, $array_includes)) {
                             if ($row['comments']) {
                                 echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
                             } else {
-                                echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['closed'] . '</td>';
+                                echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
                             }
                             echo '</tr></table>';
 
@@ -340,7 +340,7 @@ if (in_array($act, $array_includes)) {
                         if ($res['comments']) {
                             echo '<td class="caption"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $res['count_comments'] . '</td>';
                         } else {
-                            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['closed'] . '</td>';
+                            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments'] . '</td>';
                         }
                         echo '</tr></table>';
 
