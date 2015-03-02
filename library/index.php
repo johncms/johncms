@@ -361,7 +361,7 @@ if (in_array($act, $array_includes)) {
                         echo '<div class="phdr">' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
                     echo $nav
-                        . ($user_id ? $rate->print_vote() : '');       
+                        . ($user_id && $page == 1 ? $rate->print_vote() : '');       
                         
                     if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
