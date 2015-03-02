@@ -144,12 +144,17 @@ if (in_array($act, $array_includes)) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                     . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a> ('
-                    . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ') '
-                    . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span>';
-                if ($adm) {
-                    echo '<br/>' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng['up'] . '</a> | ' : $lng['up'] . ' | ') . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng['down'] . '</a>' : $lng['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a>';
+                    . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ')';
+
+                if (!empty($row['description'])) {
+                    echo '<div style="font-size: x-small; padding-top: 2px"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
                 }
-                echo '</div></div>';
+
+                if ($adm) {
+                    echo '<div class="sub">' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng['up'] . '</a> | ' : $lng['up'] . ' | ') . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . $lng['down'] . '</a>' : $lng['down']) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></div>';
+                }
+
+                echo '</div>';
             }
         } else {
             echo '<div class="menu">' . $lng['list_empty'] . '</div>';
@@ -235,22 +240,8 @@ if (in_array($act, $array_includes)) {
                                 . '<tr>'
                                 . '<td class="caption">' . $lng['rating'] . ':</td>'
                                 . '<td>' . $rate->view_rate() . '</td>'
-                                . '</tr>'
-                                // Прочтений
-                                . '<tr>'
-                                . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
-                                . '<td>' . $row['count_views'] . '</td>'
-                                . '</tr>'
-                                // Комментарии
-                                . '<tr>';
-                            if ($row['comments']) {
-                                echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
-                            } else {
-                                echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
-                            }
-                            echo '</tr></table>';
-
-                            echo '</div>';
+                                . '</tr>';
+                            echo '</table></div>';
                         }
                     } else {
                         echo '<div class="menu">' . $lng['list_empty'] . '</div>';
@@ -261,9 +252,9 @@ if (in_array($act, $array_includes)) {
 
                     if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id)) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a>'
-                             . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
-                             . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
-                             . '</p>';
+                            . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                                . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
+                            . '</p>';
                     }
                 }
 
@@ -358,11 +349,11 @@ if (in_array($act, $array_includes)) {
                         '<div style="clear: both"></div>' .
                         '</div>';
 
-                        echo '<div class="phdr">' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
+                    echo '<div class="phdr">' . $lng['download'] . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
                     echo $nav
-                        . ($user_id && $page == 1 ? $rate->print_vote() : '');       
-                        
+                        . ($user_id && $page == 1 ? $rate->print_vote() : '');
+
                     if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
