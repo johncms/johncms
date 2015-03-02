@@ -22,14 +22,6 @@ if (mysql_num_rows($req_obj)) {
         exit;
     }
 
-    $owner = functions::get_user($res_obj['uploader_id']);
-
-    if (!$owner) {
-        echo functions::display_error($lng['user_does_not_exist']);
-        require('../incfiles/end.php');
-        exit;
-    }
-
     $obj = new Hashtags($id);
     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1"));
     $context_top =
@@ -39,7 +31,7 @@ if (mysql_num_rows($req_obj)) {
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '') .
-        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="../users/profile.php?user=' . $owner['id'] . '"><b>' . functions::checkout($owner['name']) . '</b></a> (' . functions::display_date($res_obj['time']) . ')<br/>' .
+        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br/>' .
         '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = array(
@@ -48,7 +40,7 @@ if (mysql_num_rows($req_obj)) {
         'script'         => '?act=comments',        // Имя скрипта (с параметрами вызова)
         'sub_id_name'    => 'id',                   // Имя идентификатора комментируемого объекта
         'sub_id'         => $id,                    // Идентификатор комментируемого объекта
-        'owner'          => $owner['id'],           // Владелец объекта
+        'owner'          => $res_obj['id'],         // Владелец объекта
         'owner_delete'   => true,                   // Возможность владельцу удалять комментарий
         'owner_reply'    => false,                  // Возможность владельцу отвечать на комментарий
         'owner_edit'     => false,                  // Возможность владельцу редактировать комментарий
