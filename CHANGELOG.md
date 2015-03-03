@@ -1,8 +1,9 @@
 # JohnCMS 6.0.0  
-`Release Date: 01.03.2015`
+`Release Date: 04.03.2015`
 
 ### Major Features
   * Лицензия изменена на GNU GPL v.3
+  * Вместо XHTML Mobile используется HTML5
   * Новая Библиотека от Koenig
   
 ### Features
