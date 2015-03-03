@@ -14,33 +14,21 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $headmod = isset($headmod) ? mysql_real_escape_string($headmod) : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
 
-/*
------------------------------------------------------------------
-Выводим HTML заголовки страницы, подключаем CSS файл
------------------------------------------------------------------
-*/
-if (stristr(core::$user_agent, "msie") && stristr(core::$user_agent, "windows")) {
-    // Выдаем заголовки для Internet Explorer
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header('Content-type: text/html; charset=UTF-8');
-} else {
-    // Выдаем заголовки для остальных браузеров
-    header("Cache-Control: public");
-    header('Content-type: application/xhtml+xml; charset=UTF-8');
-}
-header("Expires: " . date("r", time() + 60));
-echo'<?xml version="1.0" encoding="utf-8"?>' . "\n" .
-    "\n" . '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">' .
-    "\n" . '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">' .
+echo'<!DOCTYPE html>' .
+    "\n" . '<html lang="' . core::$lng_iso . '">' .
     "\n" . '<head>' .
-    "\n" . '<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>' .
-    "\n" . '<meta http-equiv="Content-Style-Type" content="text/css" />' .
-    "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com" />' . // ВНИМАНИЕ!!! Данный копирайт удалять нельзя
-    (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '" />' : '') .
-    (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '" />' : '') .
-    "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css" type="text/css" />' .
-    "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico" />' .
-    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php" />' .
+    "\n" . '<meta charset="utf-8">' .
+    "\n" . '<meta http-equiv="X-UA-Compatible" content="IE=edge">' .
+    "\n" . '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes">' .
+    "\n" . '<meta name="HandheldFriendly" content="true">' .
+    "\n" . '<meta name="MobileOptimized" content="width">' .
+    "\n" . '<meta content="yes" name="apple-mobile-web-app-capable">' .
+    "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com">' .
+    (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '">' : '') .
+    (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '">' : '') .
+    "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
+    "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
+    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
     "\n" . '</head><body>' . core::display_core_errors();
 
