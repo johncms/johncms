@@ -26,21 +26,23 @@ if ($rights == 9) {
     mysql_query("TRUNCATE `library_tags`");
     mysql_query("TRUNCATE `cms_library_comments`");
 
+    // Переносим структуру каталогов
     $sql = mysql_query("SELECT `id`, `refid`, `text`, `ip` FROM `lib` WHERE `type`='cat'");
 
     while ($row = mysql_fetch_assoc($sql)) {
         mysql_query("
           INSERT INTO `library_cats`
           SET
-            `id`=" . $row['id'] . ",
-            `parent`=" . $row['refid'] . ",
-            `dir`=" . $row['ip'] . ",
-            `pos`=" . $row['id'] . ",
-            `name`='" . $row['text'] . "',
+            `id`          = " . $row['id'] . ",
+            `parent`      = " . $row['refid'] . ",
+            `dir`         = " . $row['ip'] . ",
+            `pos`         = " . $row['id'] . ",
+            `name`        = '" . $row['text'] . "',
             `description` = ''
         ");
     }
 
+    // Переносим статьи
     $sql = mysql_query("SELECT `id`, `refid`, `text`, `announce`, `avtor`, `name`, `moder`, `count`, `time` FROM `lib` WHERE `type`='bk'");
 
     while ($row = mysql_fetch_assoc($sql)) {
@@ -56,7 +58,7 @@ if ($rights == 9) {
         mysql_query("
           INSERT INTO `library_texts`
           SET
-            `id`=" . $row['id'] . ",
+            `id`          = " . $row['id'] . ",
             `cat_id`      = " . $row['refid'] . ",
             `name`        = '" . $row['name'] . "',
             `announce`    = '" . mysql_real_escape_string($row['announce']) . "',
@@ -69,20 +71,31 @@ if ($rights == 9) {
         ");
     }
 
+    // Переносим комментарии
     $array = array();
-    $sql = mysql_query("SELECT `id`,`refid`, `avtor`, `text`, `ip`, `soft` FROM `lib` WHERE `type`='komm'");
+    $sql = mysql_query("SELECT `id`,`refid`, `avtor`, `text`, `ip`, `soft`, `time` FROM `lib` WHERE `type`='komm'");
+
     while ($row = mysql_fetch_assoc($sql)) {
         $attributes = array(
             'author_name'         => $row['avtor'],
             'author_ip'           => $row['ip'],
-            'author_ip_via_proxy' => $row['ip'],
+            'author_ip_via_proxy' => '',
             'author_browser'      => $row['soft']
         );
         $array[$row['refid']][] = $row['id'];
-        $req = mysql_query("SELECT `id` FROM `users` WHERE `name`='" . $row['avtor'] . "' LIMIT 1");
+
+        $req = mysql_query("SELECT `id` FROM `users` WHERE `name` = '" . $row['avtor'] . "' LIMIT 1");
+
         if(mysql_num_rows($req)){
             $res = mysql_fetch_assoc($req);
-            mysql_query("INSERT INTO `cms_library_comments` SET `sub_id`=" . $row['refid'] . ", `time`='" . time() . "', `user_id`=" . $res['id'] . ", `text`='" . $row['text'] . "', `attributes`='" . mysql_real_escape_string(serialize($attributes)) . "'") or die('71: ' . mysql_error());
+            mysql_query("
+              INSERT INTO `cms_library_comments`
+              SET
+                `sub_id`     = " . $row['refid'] . ",
+                `time`       = '" . $row['time'] . "',
+                `user_id`    = " . $res['id'] . ",
+                `text`       = '" . $row['text'] . "',
+                `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'") or die(mysql_error());
 
             foreach ($array as $aid => $cnt) {
                 mysql_query("UPDATE `library_texts` SET `count_comments`=" . count($cnt) . ", `comments`=1 WHERE `id`=" . $aid);
