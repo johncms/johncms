@@ -228,13 +228,14 @@ if (in_array($act, $array_includes)) {
                             // Описание к статье
                             $obj = new Hashtags($row['id']);
                             $rate = new Rating($row['id']);
+                            $uploader = $row['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
                             echo '<table class="desc">'
                                 // Тэги
                                 . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                                 // Кто добавил?
                                 . '<tr>'
                                 . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                                . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
+                                . '<td>' . $uploader . ' (' . functions::display_date($row['time']) . ')</td>'
                                 . '</tr>'
                                 // Рейтинг
                                 . '<tr>'
@@ -300,13 +301,14 @@ if (in_array($act, $array_includes)) {
                         // Описание к статье
                         $obj = new Hashtags($res['id']);
                         $rate = new Rating($res['id']);
+                        $uploader = $res['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['uploader_id'] . '">' . functions::checkout($res['uploader']) . '</a>' : functions::checkout($res['uploader']);
                         echo '<table class="desc">'
                             // Тэги
                             . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['uploader_id'] . '">' . functions::checkout($res['uploader']) . '</a> (' . functions::display_date($res['time']) . ')</td>'
+                            . '<td>' . $uploader . ' (' . functions::display_date($res['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'
