@@ -35,18 +35,17 @@ if (mysql_num_rows($req_obj)) {
         '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = array(
-        'comments_table' => 'cms_library_comments', // Таблица с комментариями
-        'object_table'   => 'library_texts',        // Таблица комментируемых объектов
-        'script'         => '?act=comments',        // Имя скрипта (с параметрами вызова)
-        'sub_id_name'    => 'id',                   // Имя идентификатора комментируемого объекта
-        'sub_id'         => $id,                    // Идентификатор комментируемого объекта
-        'owner'          => $res_obj['id'],         // Владелец объекта
-        'owner_delete'   => true,                   // Возможность владельцу удалять комментарий
-        'owner_reply'    => false,                  // Возможность владельцу отвечать на комментарий
-        'owner_edit'     => false,                  // Возможность владельцу редактировать комментарий
-        'title'          => $lng['comments'],       // Название раздела
-        'context_top'    => $context_top,           // Выводится вверху списка
-        // 'context_bottom' => ''                                                 // Выводится внизу списка
+        'comments_table' => 'cms_library_comments',  // Таблица с комментариями
+        'object_table'   => 'library_texts',         // Таблица комментируемых объектов
+        'script'         => '?act=comments',         // Имя скрипта (с параметрами вызова)
+        'sub_id_name'    => 'id',                    // Имя идентификатора комментируемого объекта
+        'sub_id'         => $id,                     // Идентификатор комментируемого объекта
+        'owner'          => $res_obj['uploader_id'], // Владелец объекта (ID того юзера, который может управлять каментами, если разрешено ниже)
+        'owner_delete'   => true,                    // Возможность владельцу удалять комментарий
+        'owner_reply'    => true,                    // Возможность владельцу отвечать на комментарий
+        'owner_edit'     => false,                   // Возможность владельцу редактировать комментарий
+        'title'          => $lng['comments'],        // Название раздела
+        'context_top'    => $context_top,            // Выводится вверху списка
     );
     $comm = new comments($arg);
 
