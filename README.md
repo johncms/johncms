@@ -1,4 +1,4 @@
-# [JohnCMS](http://johncms.com)
+# [JohnCMS 6.0.0](http://johncms.com)
 
 JohnCMS Content Management System is for the construction of the sites that will be looked through from mobiles.
 It fits  the specification XHTML Mobile Profile. 
@@ -36,7 +36,7 @@ It fits  the specification XHTML Mobile Profile.
 
 ---
 
-# [JohnCMS](http://johncms.com)
+# [JohnCMS 6.0.0](http://johncms.com)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
 Соответствует спецификации XHTML Mobile Profile.
