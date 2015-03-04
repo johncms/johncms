@@ -158,8 +158,8 @@ if($user['id'] == $user_id)
 echo $link . '</small></p>';
 echo '<p>' . $lng_profile['photo'] . ':<br />';
 $link = '';
-if (file_exists(('../files/users/photo/' . $user['id'] . '_small.jpg'))) {
-    echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br />';
+if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
+    echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br />';
     $link = ' | <a href="profile.php?act=edit&amp;user=' . $user['id'] . '&amp;delphoto">' . $lng['delete'] . '</a>';
 }
 echo '<small><a href="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>' . $link . '</small><br />' .

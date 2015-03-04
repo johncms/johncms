@@ -424,6 +424,7 @@ switch ($mod) {
             echo '<div class="bmenu"><a href="index.php?act=forum&amp;mod=cat"><b>' . $res['text'] . '</b></a> | ' . $lng_forum['section_list'] . '</div>';
             $req = mysql_query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 'r' ORDER BY `realid` ASC");
             if (mysql_num_rows($req)) {
+                $i = 0;
                 while ($res = mysql_fetch_assoc($req)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo '<b>' . $res['text'] . '</b>' .

@@ -358,3 +358,26 @@ a.pagenav:hover {
     background-color: #f7f7f7;
     border: 1px solid #dedede;
 }
+
+table.desc{
+    border-top: 1px dotted #c6c17f;
+    width: 100%;
+    overflow: auto;
+    font-size: x-small;
+    margin-top: 4px;
+}
+
+table.desc td{
+    font-size: x-small;
+}
+
+table.desc td.caption{
+    width: 1%;
+    text-align: right;
+    color: #6f6f6f;
+    white-space: nowrap;
+}
+
+h4{
+    margin: 6px 0 2px 0;
+}
