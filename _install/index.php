@@ -10,21 +10,20 @@
  */
 
 define('_IN_JOHNCMS', 1);
-set_time_limit(1200);
 
-define('INSTALL_VERSION', '6.0.0'); // Инсталлируемая версия
+define('VERSION', '6.0.0'); // Инсталлируемая версия
 
 class install
 {
-    /*
-    -----------------------------------------------------------------
-    Критические ошибки настройки PHP
-    -----------------------------------------------------------------
-    */
+    /**
+     * Критические ошибки настройки PHP
+     *
+     * @return array|bool
+     */
     static function check_php_errors()
     {
         $error = array();
-        if (version_compare(phpversion(), '5.1.0', '<')) $error[] = 'PHP ' . phpversion();
+        if (version_compare(phpversion(), '5.2.0', '<')) $error[] = 'PHP ' . phpversion();
         if (!extension_loaded('mysql')) $error[] = 'mysql';
         if (!extension_loaded('gd')) $error[] = 'gd';
         if (!extension_loaded('zlib')) $error[] = 'zlib';
@@ -33,11 +32,11 @@ class install
         return !empty($error) ? $error : false;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Некритические предупреждения настройки PHP
-    -----------------------------------------------------------------
-    */
+    /**
+     * Некритические предупреждения настройки PHP
+     *
+     * @return array|bool
+     */
     static function check_php_warnings()
     {
         $error = array();
@@ -200,11 +199,11 @@ if (file_exists($lng_file)) {
 }
 
 ob_start();
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . "\n" .
-    '<html xmlns="http://www.w3.org/1999/xhtml">' . "\n" .
+echo '<!DOCTYPE html>' . "\n" .
+    '<html lang="' . $language . '">' . "\n" .
     '<head>' . "\n" .
-    '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n" .
-    '<title>JohnCMS ' . INSTALL_VERSION . '</title>' . "\n" .
+    '<meta charset="utf-8">' . "\n" .
+    '<title>JohnCMS ' . VERSION . '</title>' . "\n" .
     '<style type="text/css">' .
     'a, a:link, a:visited{color: blue;}' .
     'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
@@ -224,7 +223,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www
     '</style>' . "\n" .
     '</head>' . "\n" .
     '<body>' . "\n" .
-    '<h1 class="green">JohnCMS <span class="red">' . INSTALL_VERSION . '</span></h1><hr />';
+    '<h1>JohnCMS <span class="red">' . VERSION . '</span></h1><hr />';
 if (!$act) {
     echo '<form action="index.php" method="post">' .
         '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
@@ -236,6 +235,24 @@ if (!$act) {
 }
 
 switch ($act) {
+    case 'changelog':
+        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        if (($changelog = file_get_contents('../CHANGELOG.md')) !== false) {
+            require_once('../incfiles/lib/Parsedown.php');
+            $parsedown = new Parsedown();
+            echo $parsedown->text($changelog);
+        }
+        break;
+
+    case 'license':
+        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        if (($changelog = file_get_contents('../LICENSE.md')) !== false) {
+            require_once('../incfiles/lib/Parsedown.php');
+            $parsedown = new Parsedown();
+            echo $parsedown->text($changelog);
+        }
+        break;
+
     case 'final':
         /*
         -----------------------------------------------------------------
