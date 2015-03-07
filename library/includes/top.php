@@ -44,7 +44,7 @@ if (!$total) {
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
-            . '<div class="righttable"><h4><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
+            . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
             . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
         // Описание к статье
