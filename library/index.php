@@ -33,28 +33,15 @@ if ($error) {
     exit;
 }
 
-// костыль перенаправления старых ссылок библиотеки, для поисковиков
-
-if ($id && !$do && !$act) {
-    mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id), 0)
-        ? header('Location: ' . core::$system_set['homeurl'] . '/library/?do=dir&id=' . $id)
-        : (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id), 0)
-        ? header('Location: ' . core::$system_set['homeurl'] . '/library/?do=text&id=' . $id)
-        : redir404());
-    exit;
-}
-
 // Заголовки библиотеки
-
 if ($do) {
     switch ($do) {
-        default:
+        case 'dir':
             $tab = 'library_cats';
             break;
 
-        case 'text':
+        default:
             $tab = 'library_texts';
-            break;
     }
 
     $hdr = $id > 0 ? htmlentities(mb_substr(mysql_result(mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1"), 0), 0, 30), ENT_QUOTES, 'UTF-8') : '';
@@ -168,7 +155,7 @@ if (in_array($act, $array_includes)) {
         $dir_nav = new Tree($id);
         $dir_nav->process_nav_panel();
         switch ($do) {
-            default:
+            case 'dir':
                 // dir
                 $actdir = mysql_fetch_assoc(mysql_query("SELECT `id`, `dir` FROM `library_cats` WHERE " . ($id !== null ? '`id`=' . $id : 1) . " LIMIT 1"));
                 $actdir = $actdir['id'] > 0 ? $actdir['dir'] : redir404();
@@ -222,7 +209,7 @@ if (in_array($act, $array_includes)) {
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><h4><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
+                                . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
                                 . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
 
                             // Описание к статье
@@ -261,7 +248,7 @@ if (in_array($act, $array_includes)) {
 
                 break;
 
-            case 'text':
+            default:
                 $res = mysql_fetch_assoc(mysql_query("SELECT * FROM `library_texts` WHERE `id`=" . $id));
                 if ($res['premod'] || $adm) {
 
@@ -284,13 +271,13 @@ if (in_array($act, $array_includes)) {
                         redir404();
                     }
 
-                    $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
+                    $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1"));
                     echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
-                        echo '<div class="topmenu">' . functions::display_pagination('?do=text&amp;id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
+                        echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
                     }
 
                     if ($page == 1) {
@@ -363,8 +350,6 @@ if (in_array($act, $array_includes)) {
                 } else {
                     redir404();
                 }
-
-                break;
         } // end switch
     } // end else !id
 } // end else $act

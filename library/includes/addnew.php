@@ -154,7 +154,7 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
 
                 echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
                 mysql_query("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
-                echo $md == 1 ? '<div><a href="?do=text&amp;id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
                 require_once('../incfiles/end.php');
                 exit;
             } else {

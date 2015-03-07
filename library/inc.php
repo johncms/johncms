@@ -223,7 +223,7 @@ class Link_view
     private $in;
     private $res;
 
-    public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = '?do=text&amp;id=')
+    public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = 'index.php?id=')
     {
         $this->link_url = $link_url;
         $this->link_text = $link_text;
@@ -487,7 +487,7 @@ class Rating
         
         $return = PHP_EOL;
         
-        $return .= '<form action="?do=text&amp;id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
+        $return .= '<form action="index.php?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
         $return .= '<a id="rating"></a>';
         for($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $this->get_vote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
