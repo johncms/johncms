@@ -355,7 +355,7 @@ class Hashtags
 
     public function valid_tag($tag)
     {
-        return preg_replace(array('/[^[:alnum:]]/ui', "/\_\_+/"), '_', preg_quote(mb_strtolower($tag)));
+        return preg_replace(array('/[^[:alnum:]]/ui', '/\s\s+/'), ' ', preg_quote(mb_strtolower($tag)));
     }
     
     public function array_cloudtags() 
