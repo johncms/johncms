@@ -1,4 +1,4 @@
-# [JohnCMS 6.0.0](http://johncms.com)
+# [JohnCMS 6.1.0](http://johncms.com)
 
 JohnCMS Content Management System is for the construction of the sites that will be looked through from mobiles.
 It fits  the specification XHTML Mobile Profile. 
@@ -23,7 +23,7 @@ It fits  the specification XHTML Mobile Profile.
 - and many other things...
 
 ## System Requirements
-- PHP version is not low than 5.1
+- PHP version is not low than 5.2
 - MySQL version is not slow than 4.1
 - .htaccess support
 
@@ -36,7 +36,7 @@ It fits  the specification XHTML Mobile Profile.
 
 ---
 
-# [JohnCMS 6.0.0](http://johncms.com)
+# [JohnCMS 6.1.0](http://johncms.com)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
 Соответствует спецификации XHTML Mobile Profile.
@@ -59,7 +59,7 @@ It fits  the specification XHTML Mobile Profile.
 - и многое другое...
 
 ## Системные требования
-- Версия PHP не ниже 5.1
+- Версия PHP не ниже 5.2
 - MySQL версии не ниже 4.1
 - Поддержка .htaccess
 
