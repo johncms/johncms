@@ -16,7 +16,7 @@ require_once('../incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng_mail['input_messages'] . '</b></div>';
 
 $total = mysql_result(mysql_query("
-	SELECT COUNT(*)
+	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)
 	FROM `cms_mail`
 	LEFT JOIN `cms_contact`
 	ON `cms_mail`.`user_id`=`cms_contact`.`from_id`
