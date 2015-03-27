@@ -21,7 +21,7 @@ if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($do
 }
 
 $adm = ($rights > 4) ? true : false;
-$kmess = 10; // количество на странице
+#$kmess = 10; // количество на странице
 $i = 0;
 
 
