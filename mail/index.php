@@ -99,7 +99,8 @@ if ($act && ($key = array_search($act, $mods)) !== FALSE && file_exists('include
         $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`!='1'"), 0);
         if ($total) {
             if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
-            $req = mysql_query("SELECT `users`.* FROM `cms_contact`
+            $req = mysql_query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
+                FROM `cms_contact`
 			    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
 			    WHERE `cms_contact`.`user_id`='" . $user_id . "'
 			    AND `cms_contact`.`ban`!='1'

@@ -32,7 +32,7 @@ if (isset($_GET['tag'])) {
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png') 
             ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
             : '')
-            . '<div class="righttable"><a href="?do=text&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
+            . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
             . '<div>' . functions::checkout(bbcode::notags(mysql_result(mysql_query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id']) , 0))) . '</div></div>'
             . '<div class="sub">' . $lng_lib['added'] . ': ' . '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
             . '<div><span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views'] . '</div>'

@@ -15,14 +15,16 @@ $textl = $lng['mail'];
 require_once('../incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng_mail['sent_messages'] . '</b></div>';
 
-$total = mysql_result(mysql_query("SELECT COUNT(*)
-  FROM (SELECT DISTINCT `cms_mail`.`from_id`
+$total = mysql_result(mysql_query("
+  SELECT COUNT(DISTINCT `cms_mail`.`from_id`)
   FROM `cms_mail`
   LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id`
+  AND `cms_contact`.`user_id`='$user_id'
   WHERE `cms_mail`.`user_id`='$user_id'
   AND `cms_mail`.`delete`!='$user_id'
   AND `cms_mail`.`sys`='0'
-  AND `cms_contact`.`ban`!='1') `tmp`"), 0);
+  AND `cms_contact`.`ban`!='1'
+"), 0);
 
 if ($total) {
     $req = mysql_query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
@@ -57,7 +59,7 @@ if ($total) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = functions::checkout($text, 1, 1);
             if ($set_user['smileys']) {
-                $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
             }
             $text = bbcode::notags($text);
             $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['continue'] . ' &gt;&gt;</a>';
@@ -65,7 +67,7 @@ if ($total) {
             // Или, обрабатываем тэги и выводим весь текст
             $text = functions::checkout($last_msg['text'], 1, 1);
             if ($set_user['smileys'])
-                $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
         }
 
         $arg = array(

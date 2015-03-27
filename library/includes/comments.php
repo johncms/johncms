@@ -27,7 +27,7 @@ if (mysql_num_rows($req_obj)) {
     $context_top =
         '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
-        '<p><b><a href="?do=text&amp;id=' . $id . '">' . functions::checkout($res_obj['name']) . '</a></b></p>' .
+        '<p><b><a href="index.php?id=' . $id . '">' . functions::checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '') .

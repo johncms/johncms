@@ -92,7 +92,7 @@ if ($search && !$error) {
                     $text = ReplaceKeywords($val, $text);
                 }
             }
-            echo '<strong><a href="?do=text&amp;id=' . $res['id'] . '">' . functions::checkout($name) . '</a></strong><br />' . $text
+            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . functions::checkout($name) . '</a></strong><br />' . $text
                 . ' <div class="sub"><span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author'])
                 . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />'
                 . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res['count_views']
