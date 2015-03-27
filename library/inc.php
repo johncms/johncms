@@ -21,7 +21,7 @@ if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($do
 }
 
 $adm = ($rights > 4) ? true : false;
-$kmess = 10; // количество на странице
+#$kmess = 10; // количество на странице
 $i = 0;
 
 
@@ -223,7 +223,7 @@ class Link_view
     private $in;
     private $res;
 
-    public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = '?do=text&amp;id=')
+    public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = 'index.php?id=')
     {
         $this->link_url = $link_url;
         $this->link_text = $link_text;
@@ -355,7 +355,7 @@ class Hashtags
 
     public function valid_tag($tag)
     {
-        return preg_replace(array('/[^[:alnum:]]/ui', "/\_\_+/"), '_', preg_quote(mb_strtolower($tag)));
+        return preg_replace(array('/[^[:alnum:]]/ui', '/\s\s+/'), ' ', preg_quote(mb_strtolower($tag)));
     }
     
     public function array_cloudtags() 
@@ -487,7 +487,7 @@ class Rating
         
         $return = PHP_EOL;
         
-        $return .= '<form action="?do=text&amp;id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
+        $return .= '<form action="index.php?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
         $return .= '<a id="rating"></a>';
         for($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $this->get_vote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;

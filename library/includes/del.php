@@ -104,7 +104,7 @@ case 'article':
   else {
     $sql = "DELETE FROM `library_texts` WHERE `id`=" . $id;
     if (!isset($_GET['yes'])) {
-      echo '<div class="alarm"><div>' . $lng['delete_confirmation'] . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | <a href="?do=text&amp;id=' . $id . '">' . $lng['cancel'] . '</a></div></div>';
+      echo '<div class="alarm"><div>' . $lng['delete_confirmation'] . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | <a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a></div></div>';
     }
   }
   break;

@@ -65,7 +65,11 @@ if ($id && $id != $user_id && $do) {
 						`user_id`='$id', `from_id`='$user_id', `time`='" . time() . "'");
                     }
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $user_id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . $home . '/users/profile.php?act=friends&do=no&id=' . $user_id . ']' . $lng_profile['decline'] . '[/url]';
+                    $user_set = unserialize($user['set_user']);
+                    $lng_set = isset($user_set['lng']) && in_array($user_set['lng'], core::$lng_list) ? $user_set['lng'] : core::$lng_iso;
+                    $lng_tmp = core::load_lng('profile', $lng_set);
+                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_tmp['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $user_id . ']' . $lng_tmp['confirm'] . '[/url] | [url=' . $home . '/users/profile.php?act=friends&do=no&id=' . $user_id . ']' . $lng_tmp['decline'] . '[/url]';
+
                     mysql_query("INSERT INTO `cms_mail` SET
 					`user_id` = '$user_id', 
 					`from_id` = '$id',
@@ -86,7 +90,7 @@ if ($id && $id != $user_id && $do) {
                     }
                     echo '<div class="rmenu">' . $lng_profile['demand_friends_sent'] . '</div>';
                 } else {
-                    if (!functions::is_ignor($id) && !$ban['1'] && !$ban['3']) {
+                    if (!functions::is_ignor($id) && !isset($ban['1']) && !isset($ban['3'])) {
                         echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=add&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_offer_friendship'] . '<br />
 					' . ($set_mail['cat_friends'] ? '<input type="radio" value="6" name="friends" />&#160;' . $lng_profile['relative'] . '<br />

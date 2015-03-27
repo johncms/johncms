@@ -11,8 +11,8 @@
 
 define('_IN_JOHNCMS', 1);
 
-define('VERSION', '6.0.0'); // Инсталлируемая версия
-define('UPDATE_VERSION', '5.3.0'); // Обновление с версии
+define('VERSION', '6.1.0'); // Инсталлируемая версия
+define('UPDATE_VERSION', '5.x.x'); // Обновление с версии
 
 class install
 {
@@ -286,7 +286,7 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         if (!isset($_SESSION['updated'])) {
-            install::parse_sql('update.5.3.0.sql');
+            install::parse_sql('update.5.x.x.sql');
 
             // Переносим структуру каталогов
             $sql = mysql_query("SELECT `id`, `refid`, `text`, `ip` FROM `lib` WHERE `type`='cat'");

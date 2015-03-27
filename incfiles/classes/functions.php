@@ -345,7 +345,8 @@ class functions extends core
                 7 => '(Adm)',
                 9 => '(SV!)'
             );
-            $out .= ' ' . $rank[$user['rights']];
+            $rights = isset($user['rights']) ? $user['rights'] : 0;
+            $out .= ' ' . $rank[$rights];
             $out .= (time() > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
             if (!empty($arg['header']))
                 $out .= ' ' . $arg['header'];

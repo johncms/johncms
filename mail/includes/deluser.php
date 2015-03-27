@@ -16,7 +16,6 @@ $textl = $lng['mail'];
 require_once('../incfiles/head.php');
 
 if ($id) {
-
     //Проверяем наличие контакта в Вашем списке
     $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id';"), 0);
     if ($total) {
