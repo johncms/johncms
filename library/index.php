@@ -117,7 +117,7 @@ if (in_array($act, $array_includes)) {
         }
         $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
         if ($res) {
-            echo functions::image('guestbook.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
+            echo functions::image('new.png', array('width' => 16, 'height' => 16)) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
         }
 
         echo functions::image('rate.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br/>' .
@@ -162,10 +162,14 @@ if (in_array($act, $array_includes)) {
                 echo '<div class="phdr">' . $dir_nav->print_nav_panel() . '</div>';
 
                 if ($actdir) {
-                    $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
                     $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
                     $y = 0;
+
                     if ($total) {
+                        $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $kmess);
+                        $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
+                        echo $nav;
+
                         while ($row = mysql_fetch_assoc($sql)) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
@@ -189,6 +193,7 @@ if (in_array($act, $array_includes)) {
                     }
 
                     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+                    echo $nav;
 
                     if ($adm) {
                         echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
@@ -197,11 +202,10 @@ if (in_array($act, $array_includes)) {
                     }
                 } else {
                     $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
-                    $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-                    $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-                    $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
-                    $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
+
                     if ($total) {
+                        $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
+                        $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
                         echo $nav;
 
                         while ($row = mysql_fetch_assoc($sql2)) {
