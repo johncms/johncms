@@ -29,16 +29,16 @@ if ($_GET['f'] == "") {
     exit;
 }
 $file = intval(trim($_GET['file']));
-$file1 = mysql_query("select * from `download` where type = 'file' and id = '" . $file . "';");
+$file1 = mysql_query("select * from `download` where `type` = 'file' and `id` = '" . $file . "'");
 $file2 = mysql_num_rows($file1);
 $adrfile = mysql_fetch_array($file1);
-if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
+if (($file2 == 0) || (!is_file($adrfile['adres'] . '/' . $adrfile['name']))) {
     require_once ("../incfiles/head.php");
     echo "Ошибка при выборе файла<br/><a href='?'>К категориям</a><br/>";
     require_once ('../incfiles/end.php');
     exit;
 }
-$zip = new PclZip("$adrfile[adres]/$adrfile[name]");
+$zip = new PclZip($adrfile['adres'] . '/' . $adrfile['name']);
 
 if (($list = $zip->listContent()) == 0) {
     die("Ошибка: " . $zip->errorInfo(true));

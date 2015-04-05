@@ -26,16 +26,16 @@ if ($rights == 4 || $rights >= 6) {
     $file1 = mysql_query("select * from `download` where type = 'file' and id = '" . $file . "';");
     $file2 = mysql_num_rows($file1);
     $adrfile = mysql_fetch_array($file1);
-    if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
+    if (($file1 == 0) || (!is_file($adrfile['adres'] . '/' . $adrfile['name']))) {
         echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
         require_once('../incfiles/end.php');
         exit;
     }
-    $refd = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile[refid] . "'");
+    $refd = mysql_query("select * from `download` where type = 'cat' and `id` = '" . $adrfile['refid'] . "'");
     $refd1 = mysql_fetch_array($refd);
     if (isset($_POST['submit'])) {
-        unlink("$adrfile[adres]/$adrfile[name]");
-        mysql_query("delete from `download` where id='" . $adrfile[id] . "' LIMIT 1;");
+        unlink($adrfile['adres'] . '/' . $adrfile['name']);
+        mysql_query("delete from `download` where `id` = '" . $adrfile['id'] . "' LIMIT 1;");
         echo '<p>' . $lng_dl['file_deleted'] . '</p>';
     } else {
         echo '<p>' . $lng['delete_confirmation'] . '</p>' .
@@ -44,5 +44,4 @@ if ($rights == 4 || $rights >= 6) {
             '</form><p><a href="index.php?act=view&amp;file=' . $file . '">' . $lng['cancel'] . '</a></p>';
     }
 }
-echo "<p><a href='?cat=" . $refd1[id] . "'>" . $lng['back'] . "</a></p>";
-?>
+echo "<p><a href='?cat=" . $refd1['id'] . "'>" . $lng['back'] . "</a></p>";

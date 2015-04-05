@@ -106,37 +106,6 @@ if (mysql_num_rows($freq) > 0) {
     $file_id = $fres['id'];
 }
 
-if (
-    (($rights == 3 || $rights >= 6 || $curator) && $rights >= $res['rights'])
-    || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
-    || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
-    || ($i == 1 && $allow == 2 && $res['user_id'] == $user_id)
-) {
-    // Ссылки на редактирование / удаление постов
-    $menu = array(
-        '<a href="index.php?act=editpost&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a>',
-        ($rights >= 7 && $res['close'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . $lng_forum['restore'] . '</a>' : ''),
-        ($res['close'] == 1 ? '' : '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>')
-    );
-    echo '<div class="sub">';
-    echo functions::display_menu($menu);
-    if ($res['close']) {
-        echo '<div class="red">' . $lng_forum['who_delete_post'] . ': <b>' . $res['close_who'] . '</b></div>';
-    } elseif (!empty($res['close_who'])) {
-        echo '<div class="green">' . $lng_forum['who_restore_post'] . ': <b>' . $res['close_who'] . '</b></div>';
-    }
-    if ($rights == 3 || $rights >= 6) {
-        if ($res['ip_via_proxy']) {
-            echo '<div class="gray"><b class="red"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
-                '<a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
-                ' - ' . $res['soft'] . '</div>';
-        } else {
-            echo '<div class="gray"><a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['soft'] . '</div>';
-        }
-    }
-    echo '</div>';
-}
-
 echo '</div>';
 
 // Вычисляем, на какой странице сообщение?

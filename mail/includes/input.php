@@ -57,7 +57,7 @@ if ($total) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = functions::checkout($text, 1, 1);
             if ($set_user['smileys']) {
-                $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
             }
             $text = bbcode::notags($text);
             $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['continue'] . ' &gt;&gt;</a>';
