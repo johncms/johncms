@@ -265,7 +265,7 @@ if (!empty($adrfile['soft'])) {
     $rat = $rating['vote'] / $rating['count'];
     $rat = round($rat, 2);
     echo '<br /><span class="gray">' . $lng_dl['average_rating'] . ':</span> <b>' . $rat . '</b>' .
-        '<br /><span class="gray">' . $lng_dl['vote_count'] . ':</span> <b>' . $rating[1] . '</b>';
+        '<br /><span class="gray">' . $lng_dl['vote_count'] . ':</span> <b>' . $rating['count'] . '</b>';
 }
 
 echo '</small></p>';
