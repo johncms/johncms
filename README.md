@@ -1,11 +1,13 @@
-# [JohnCMS 6.1.0](http://johncms.com)
+# [JohnCMS 6.1.1](http://johncms.com)
+
+[![SemVer](http://img.shields.io/badge/semver-✓-brightgreen.svg?style=plastic)](http://semver.org)
+[![License](https://img.shields.io/badge/license-GPL%20v.3-blue.svg?style=plastic)](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
 
 JohnCMS Content Management System is for the construction of the sites that will be looked through from mobiles.
-It fits  the specification XHTML Mobile Profile. 
 
 ## The main possibilities of the system:
 - multilingual, the possibility to install / delete the languages of the interface.
-- a high level of safety
+- a high level of security
 - quick in work, built on MySQL
 - advanced system of differentiation of rights for administrators/moderators
 - forum with the possibility to open / close themes, to create voting, possibility to 
@@ -24,7 +26,7 @@ It fits  the specification XHTML Mobile Profile.
 
 ## System Requirements
 - PHP version is not low than 5.2
-- MySQL version is not slow than 4.1
+- MySQL version is not low than 4.1
 - .htaccess support
 
 ## Installation
@@ -36,10 +38,9 @@ It fits  the specification XHTML Mobile Profile.
 
 ---
 
-# [JohnCMS 6.1.0](http://johncms.com)
+# [JohnCMS 6.1.1](http://johncms.com)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
-Соответствует спецификации XHTML Mobile Profile.
 
 ## Основные возможности системы:
 - мультиязычность, возможность устанавливать / удалять языки интерфейса
