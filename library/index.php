@@ -244,7 +244,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                     echo $nav;
 
-                    if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id)) {
+                    if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id) && $user_id) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a>'
                             . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
@@ -349,7 +349,7 @@ if (in_array($act, $array_includes)) {
                     echo $nav
                         . ($user_id && $page == 1 ? $rate->print_vote() : '');
 
-                    if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) {
+                    if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id && $user_id) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }
