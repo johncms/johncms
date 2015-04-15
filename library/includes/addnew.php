@@ -11,7 +11,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $lng_gal = core::load_lng('gallery');
 
-if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0) && isset($id))) {
+if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
     $flood = functions::antiflood();
     if ($flood) {
