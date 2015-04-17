@@ -1,7 +1,7 @@
 *english version below*
 ____________________________________________________________
 ## ВНИМАНИЕ!
-Данный пакет предназначен для обновления JohnCMS с версии 5.x.x (c любого релиза 5-й ветки) до версии 6.1.0, с более старыми версиями несовместим!  
+Данный пакет предназначен для обновления JohnCMS с версии 5.x.x (c любого релиза 5-й ветки) до версии 6.1.1, с более старыми версиями несовместим!  
 Если Вы использовали на своем сайте какие-либо моды, затрагивающие файлы
 которые входят в данный пакет, то возможность обновления и саму процедуру
 согласовывайте с авторами модов.
@@ -22,7 +22,7 @@ ____________________________________________________________
 
 ____________________________________________________________
 ## ATTENTION!
-This package is designed to update JohnCMS with version 5.x.x (from any release of the 5th branch) to version 6.1.0, not compatible with older versions!  
+This package is designed to update JohnCMS with version 5.x.x (from any release of the 5th branch) to version 6.1.1, not compatible with older versions!  
 If you used on your site any mods that affect files within this package,
 the ability to update and the process itself coordinate with the authors of the mods.
 
