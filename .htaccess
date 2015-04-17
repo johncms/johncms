@@ -8,6 +8,7 @@ DirectoryIndex index.php
 RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 AddType application/x-httpd-php-source .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
 
+php_flag display_errors 0
 AddDefaultCharset UTF-8
 
 <IfModule mod_expires.c>
