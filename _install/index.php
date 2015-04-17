@@ -11,7 +11,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-define('VERSION', '6.1.0'); // Инсталлируемая версия
+define('VERSION', '6.1.1'); // Инсталлируемая версия
 
 class install
 {
@@ -223,7 +223,7 @@ echo '<!DOCTYPE html>' . "\n" .
     '</style>' . "\n" .
     '</head>' . "\n" .
     '<body>' . "\n" .
-    '<h1>JohnCMS <span class="red">' . VERSION . '</span></h1><hr />';
+    '<h1>JohnCMS ' . VERSION . '</h1><hr />';
 if (!$act) {
     echo '<form action="index.php" method="post">' .
         '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
