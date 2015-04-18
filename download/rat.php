@@ -28,7 +28,7 @@ if ($ms['type'] != "file") {
     require_once('../incfiles/end.php');
     exit;
 }
-if ($_SESSION['rat'] == $id) {
+if (isset($_SESSION['rat']) && $_SESSION['rat'] == $id) {
     echo $lng_dl['already_rated'] . "<br/><a href='index.php?act=view&amp;file=" . $id . "'>" . $lng['back'] . "</a><br/>";
     require_once('../incfiles/end.php');
     exit;

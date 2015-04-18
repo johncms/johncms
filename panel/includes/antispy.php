@@ -126,6 +126,7 @@ class scaner {
         '../forum/includes/vote.php',
         '../forum/includes/who.php',
         '../forum/contents.php',
+        '../incfiles/lib/Parsedown.php',
         '../forum/index.php',
         '../forum/search.php',
         '../forum/thumbinal.php',

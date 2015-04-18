@@ -10,6 +10,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+if (!$user_id) {
+    echo functions::display_error($lng['access_guest_forbidden']);
+    require_once('../incfiles/end.php');
+    exit;
+}
+
 // Проверяем наличие комментируемого объекта
 $req_obj = mysql_query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
 

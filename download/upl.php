@@ -33,6 +33,7 @@ if ($rights == 4 || $rights >= 6) {
     $scheight = $scsize[1];
     $ftip = functions::format($fname);
     $ffot = strtolower($scrname);
+    $formfot = functions::format($ffot);
     $dopras = array("gif", "jpg", "png");
     if ($fname != "") {
         if (empty ($_POST['newname'])) {
@@ -42,7 +43,6 @@ if ($rights == 4 || $rights >= 6) {
             $newname = functions::check($_POST['newname']);
         }
         if ($scrname != "") {
-            $formfot = functions::format($ffot);
             if (!in_array($formfot, $dopras)) {
                 echo "Ошибка при загрузке скриншота.<br/><a href='?act=select&amp;cat=" . $cat . "'>Повторить</a><br/>";
                 require_once ('../incfiles/end.php');
@@ -65,14 +65,14 @@ if ($rights == 4 || $rights >= 6) {
             require_once ('../incfiles/end.php');
             exit;
         }
-        if (preg_match("/[^\da-z_\-.]+/", $fname)) {
+        if (preg_match("/[^\dA-Za-z_\-.]+/", $fname)) {
             echo
             "В названии файла <b>$fname</b> присутствуют недопустимые символы<br/>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br /><a href='?act=select&amp;cat="
             . $cat . "'>Повторить</a><br/>";
             require_once ('../incfiles/end.php');
             exit;
         }
-        if (preg_match("/[^\da-z_\-.]+/", $newname)) {
+        if (preg_match("/[^\dA-Za-z_\-.]+/", $newname)) {
             echo
             "В новом названии файла <b>$newname</b> присутствуют недопустимые символы<br/>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br /><a href='?act=select&amp;cat="
             . $cat . "'>Повторить</a><br/>";
@@ -84,8 +84,8 @@ if ($rights == 4 || $rights >= 6) {
             require_once ('../incfiles/end.php');
             exit;
         }
+        $ch1 = "$newname.$ftip.$formfot";
         if ((move_uploaded_file($_FILES["screens"]["tmp_name"], "$screenroot/$newname.$ftip.$formfot")) == true) {
-            $ch1 = "$newname.$ftip.$formfot";
             @ chmod("$ch1", 0777);
             @ chmod("$screenroot/$ch1", 0777);
             echo "Скриншот загружен!<br/>";
@@ -96,7 +96,7 @@ if ($rights == 4 || $rights >= 6) {
             @ chmod("$ch", 0777);
             @ chmod("$loaddir/$ch", 0777);
             echo "Файл загружен!<br/>";
-            mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . time() . "','" . $ch . "','file','','','','" . $opis . "','" . $ch1 . "');");
+            mysql_query("insert into `download` values(0,'" . $cat . "','" . $loaddir . "','" . time() . "','" . $ch . "','file','','','','" . $opis . "','" . (isset($ch1) ? $ch1 : '') . "');");
         }
         else {
             echo "Ошибка при загрузке файла<br/>";
