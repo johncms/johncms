@@ -32,5 +32,3 @@ if ($rights == 3 || $rights >= 6) {
         exit;
     }
 }
-
-?>

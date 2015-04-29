@@ -16,4 +16,3 @@ require('../incfiles/head.php');
 $map = new sitemap();
 echo $map->forum_contents();
 require('../incfiles/end.php');
-?>

@@ -31,5 +31,3 @@ if (mysql_num_rows($req)) {
 } else {
     header('Location: index.php');
 }
-
-?>

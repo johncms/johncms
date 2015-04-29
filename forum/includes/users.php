@@ -43,4 +43,3 @@ if ($topic_vote == 0 || core::$user_rights < 7) {
 }
 
 require('../incfiles/end.php');
-?>

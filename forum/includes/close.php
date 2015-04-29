@@ -26,5 +26,3 @@ if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AN
 }
 
 header("Location: index.php?id=$id");
-
-?>
