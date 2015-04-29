@@ -91,5 +91,3 @@ $color6 = imagecolorallocate($vote_img, 0, 0, 0);
 
 imageString($vote_img, 1, 78, 2, "$vote%", $color6);
 ImageGIF($vote_img);
-
-?>

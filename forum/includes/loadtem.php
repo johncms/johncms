@@ -44,5 +44,3 @@ for ($i = 0; $i < $tt; $i++) {
         header("Location: ../files/forum/topics/$n.$tf");
     }
 }
-
-?>

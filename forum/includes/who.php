@@ -158,4 +158,3 @@ if ($id) {
     }
     echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';
 }
-?>

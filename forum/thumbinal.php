@@ -132,4 +132,3 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
 		}
     }
 }
-?>

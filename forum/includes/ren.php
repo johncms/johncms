@@ -65,4 +65,3 @@ if ($rights == 3 || $rights >= 6) {
     require('../incfiles/head.php');
     echo functions::display_error($lng['access_forbidden']);
 }
-?>

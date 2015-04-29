@@ -32,5 +32,3 @@ if ($user_id) {
 } else {
     echo functions::display_error($lng['access_guest_forbidden']);
 }
-
-?>
