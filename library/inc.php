@@ -30,7 +30,7 @@ $i = 0;
 function redir404()
 {
     global $set;
-    header('Status: 404 Not Found');
+    ob_get_level() and ob_end_clean();
     header('Location: ' . $set['homeurl'] . '/?err');
     exit;
 }
