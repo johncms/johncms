@@ -1,6 +1,9 @@
 # JohnCMS 6.1.2  
 `Release Date: under construction`
 
+### Features
+  * Заменена система IP WHOIS
+
 ### Bug Fixes
   * Исправлена ошибка в панели управления рекламой
   * Исправлены замеченные ошибки в библиотеке
