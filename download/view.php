@@ -13,7 +13,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once("../incfiles/head.php");
 
-$im = [];
+$im = array();
 $delimag = opendir("$filesroot/graftemp");
 while ($imd = readdir($delimag)) {
     if ($imd != "." && $imd != ".." && $imd != "index.php") {
