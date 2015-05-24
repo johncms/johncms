@@ -18,8 +18,13 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></
 function whoisQuery($whoisserver, $domain)
 {
     $port = 43;
-    $timeout = 10;
-    $fp = @fsockopen($whoisserver, $port, $errno, $errstr, $timeout) or die("Socket Error " . $errno . " - " . $errstr);
+    $timeout = 5;
+    $fp = @fsockopen($whoisserver, $port, $errno, $errstr, $timeout);
+
+    if(!$fp){
+        return false;
+    }
+
     fputs($fp, $domain . "\r\n");
     $out = '';
 
