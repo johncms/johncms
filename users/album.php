@@ -16,8 +16,8 @@ $lng_profile = core::load_lng('profile');
 $textl = $lng_profile['album'];
 $headmod = 'album';
 
-$max_album = 10;
-$max_photo = 200;
+$max_album = 20;
+$max_photo = 400;
 $al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
 $img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
 
