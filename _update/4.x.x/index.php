@@ -11,7 +11,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-define('VERSION', '6.1.1'); // Инсталлируемая версия
+define('VERSION', '6.1.2'); // Инсталлируемая версия
 define('UPDATE_VERSION', '4.x.x'); // Обновление с версии
 
 class install
@@ -24,7 +24,7 @@ class install
     static function check_php_errors()
     {
         $error = array();
-        if (version_compare(phpversion(), '5.2.0', '<')) $error[] = 'PHP ' . phpversion();
+        if (version_compare(phpversion(), '5.3.0', '<')) $error[] = 'PHP ' . phpversion();
         if (!extension_loaded('mysql')) $error[] = 'mysql';
         if (!extension_loaded('gd')) $error[] = 'gd';
         if (!extension_loaded('zlib')) $error[] = 'zlib';
