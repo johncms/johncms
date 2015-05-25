@@ -1,5 +1,5 @@
 # JohnCMS 6.1.2  
-`Release Date: under construction`
+`Release Date: 25.05.2015`
 
 ### Features
   * Заменена система IP WHOIS
