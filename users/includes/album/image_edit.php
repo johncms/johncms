@@ -125,8 +125,8 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                             }
                         }
                         $handle->image_resize = true;
-                        $handle->image_x = 80;
-                        $handle->image_y = 80;
+                        $handle->image_x = 100;
+                        $handle->image_y = 100;
                         $handle->image_ratio_no_zoom_in = true;
                         $handle->process($path);
                         $tmb_name = $handle->file_dst_name;

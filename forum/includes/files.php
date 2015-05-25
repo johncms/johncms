@@ -177,4 +177,3 @@ if ($do || isset($_GET['new'])) {
 echo '<p>' . (($do || isset($_GET['new']))
         ? '<a href="index.php?act=files' . $lnk . '">' . $lng_forum['section_list'] . '</a><br />'
         : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . $lng['forum'] . '</a></p>';
-?>

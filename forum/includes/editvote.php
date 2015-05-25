@@ -105,4 +105,3 @@ if ($rights == 3 || $rights >= 6) {
             '<div class="phdr"><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a></div>';
     }
 }
-?>

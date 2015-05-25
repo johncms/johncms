@@ -15,7 +15,7 @@ $lng_gal = core::load_lng('gallery');
   $obj = new Hashtags($id);  
   $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
   
-  $author = ($type == 'article' && mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id) ? 1 : 0;
+  $author = ($type == 'article' && mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id && $user_id) ? 1 : 0;
   $adm || $author ?: redir404();
   
   if (isset($_POST['submit'])) {

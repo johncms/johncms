@@ -46,4 +46,3 @@ if ($rights == 3 || $rights >= 6) {
             '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p>';
     }
 }
-?>

@@ -87,4 +87,3 @@ if ($rights == 3 || $rights >= 6) {
         echo '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
     }
 }
-?>

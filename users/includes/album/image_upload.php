@@ -41,8 +41,8 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
             );
             $handle->file_max_size = 1024 * $set['flsz'];
             $handle->image_resize = true;
-            $handle->image_x = 640;
-            $handle->image_y = 480;
+            $handle->image_x = 1920;
+            $handle->image_y = 1024;
             $handle->image_ratio_no_zoom_in = true;
             $handle->image_convert = 'jpg';
             // Поставить в зависимость от настроек в Админке
@@ -59,8 +59,8 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                 // Обрабатываем превьюшку
                 $handle->file_new_name_body = 'tmb_' . time();
                 $handle->image_resize = true;
-                $handle->image_x = 80;
-                $handle->image_y = 80;
+                $handle->image_x = 100;
+                $handle->image_y = 100;
                 $handle->image_ratio_no_zoom_in = true;
                 $handle->image_convert = 'jpg';
                 $handle->process('../files/users/album/' . $user['id'] . '/');
