@@ -70,11 +70,12 @@ echo '</div><div class="menu"><p>';
 echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br/>' .
     '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br/>';
 
-$graf = [
+$graf = array
+(
     "gif",
     "jpg",
     "png"
-];
+);
 $prg = strtolower(functions::format($adrfile['name']));
 if (in_array($prg, $graf)) {
     $sizsf = GetImageSize("$adrfile[adres]/$adrfile[name]");
