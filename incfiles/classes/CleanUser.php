@@ -128,7 +128,7 @@ class CleanUser
             // Удаляем из Галреи
             mysql_query("DELETE FROM `gallery` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'km'");
             // Удаляем из Библиотеки
-            mysql_query("DELETE FROM `lib` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
+            mysql_query("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем из Загрузок
             mysql_query("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
             // Удаляем комментарии из личных гостевых
