@@ -81,7 +81,7 @@ if ($search && !$error) {
             if (!isset($pos) || $pos < 100) {
                 $pos = 100;
             }
-            $name = $res['name'];
+            $name = functions::checkout($res['name']);
             $text = functions::checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
             if ($search_t) {
                 foreach ($array as $val) {
@@ -92,7 +92,7 @@ if ($search && !$error) {
                     $text = ReplaceKeywords($val, $text);
                 }
             }
-            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . functions::checkout($name) . '</a></strong><br />' . $text
+            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br />' . $text
                 . ' <div class="sub"><span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author'])
                 . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />'
                 . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res['count_views']
