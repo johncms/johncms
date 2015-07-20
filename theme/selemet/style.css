@@ -77,6 +77,11 @@ input[type="submit"] {
     vertical-align: middle;
 }
 
+.icon-inline {
+    padding-right: 6px;
+    vertical-align: middle;
+}
+
 img{
     border: 0;
 }
