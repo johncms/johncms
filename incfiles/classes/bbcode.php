@@ -78,16 +78,18 @@ class bbcode extends core
                 if ($split !== false) {
                     $url = substr($url, 0, $split);
                     $relative_url = '';
-                } else if ($relative_url) {
-                    $split = false;
-                    foreach ($chars as $char) {
-                        $next_split = strpos($relative_url, $char);
-                        if ($next_split !== false) {
-                            $split = ($split !== false) ? min($split, $next_split) : $next_split;
+                } else {
+                    if ($relative_url) {
+                        $split = false;
+                        foreach ($chars as $char) {
+                            $next_split = strpos($relative_url, $char);
+                            if ($next_split !== false) {
+                                $split = ($split !== false) ? min($split, $next_split) : $next_split;
+                            }
                         }
-                    }
-                    if ($split !== false) {
-                        $relative_url = substr($relative_url, 0, $split);
+                        if ($split !== false) {
+                            $relative_url = substr($relative_url, 0, $split);
+                        }
                     }
                 }
                 $last_char = ($relative_url) ? $relative_url[strlen($relative_url) - 1] : $url[strlen($url) - 1];
@@ -98,8 +100,11 @@ class bbcode extends core
                     case ':':
                     case ',':
                         $append = $last_char;
-                        if ($relative_url) $relative_url = substr($relative_url, 0, -1);
-                        else $url = substr($url, 0, -1);
+                        if ($relative_url) {
+                            $relative_url = substr($relative_url, 0, -1);
+                        } else {
+                            $url = substr($url, 0, -1);
+                        }
                         break;
 
                     default:
@@ -139,7 +144,8 @@ class bbcode extends core
 
         // Обработка внутренних ссылок
         $text = preg_replace_callback(
-            '#(^|[\n\t (>.])(' . preg_quote(core::$system_set['homeurl'], '#') . ')/((?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#iu',
+            '#(^|[\n\t (>.])(' . preg_quote(core::$system_set['homeurl'],
+                '#') . ')/((?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#iu',
             function ($matches) {
                 return url_callback(1, $matches[1], $matches[2], $matches[3]);
             },
@@ -208,13 +214,19 @@ class bbcode extends core
         if (!function_exists('process_code')) {
             function process_code($php)
             {
-                $php = strtr($php, array('<br />' => '', '\\' => 'slash_JOHNCMS'));
+                $php = strtr($php, array('<br />' => ''));
                 $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
-                $php = substr($php, 0, 2) != "<?" ? "<?php\n" . $php . "\n?>" : $php;
-                $php = highlight_string(stripslashes($php), true);
-                $php = strtr($php, array('slash_JOHNCMS' => '&#92;', ':' => '&#58;', '[' => '&#91;'));
 
-                return '<pre class="phpcode"><code>' . trim($php) . '</code></pre>';
+                require_once 'geshi.php';
+                $geshi = new \GeSHi;
+                $geshi->set_language('php');
+                //$geshi->set_header_type(GESHI_HEADER_PRE);
+                //$geshi->enable_keyword_links(false);
+                $geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
+                $geshi->set_link_target('_blank');
+                $geshi->set_source($php);
+
+                return '<div class="phpcode">' . $geshi->parse_code() . '</div>';
             }
         }
 
@@ -276,20 +288,34 @@ class bbcode extends core
         );
         // Список замены
         $replace = array(
-            '<span style="font-weight: bold">$1</span>', // Жирный
-            '<span style="font-style:italic">$1</span>', // Курсив
-            '<span style="text-decoration:underline">$1</span>', // Подчеркнутый
-            '<span style="text-decoration:line-through">$1</span>', // Зачеркнутый
-            '<span style="font-size:x-small">$1</span>', // Маленький шрифт
-            '<span style="font-size:large">$1</span>', // Большой шрифт
-            '<span style="color:red">$1</span>', // Красный
-            '<span style="color:green">$1</span>', // Зеленый
-            '<span style="color:blue">$1</span>', // Синий
-            '<span style="color:$1">$2</span>', // Цвет шрифта
-            '<span style="background-color:$1">$2</span>', // Цвет фона
-            '<span class="quote" style="display:block">$2</span>', // Цитата
-            '<span class="bblist">$1</span>', // Список
-            '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>' // Спойлер
+            '<span style="font-weight: bold">$1</span>',
+            // Жирный
+            '<span style="font-style:italic">$1</span>',
+            // Курсив
+            '<span style="text-decoration:underline">$1</span>',
+            // Подчеркнутый
+            '<span style="text-decoration:line-through">$1</span>',
+            // Зачеркнутый
+            '<span style="font-size:x-small">$1</span>',
+            // Маленький шрифт
+            '<span style="font-size:large">$1</span>',
+            // Большой шрифт
+            '<span style="color:red">$1</span>',
+            // Красный
+            '<span style="color:green">$1</span>',
+            // Зеленый
+            '<span style="color:blue">$1</span>',
+            // Синий
+            '<span style="color:$1">$2</span>',
+            // Цвет шрифта
+            '<span style="background-color:$1">$2</span>',
+            // Цвет фона
+            '<span class="quote" style="display:block">$2</span>',
+            // Цитата
+            '<span class="bblist">$1</span>',
+            // Список
+            '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
+            // Спойлер
         );
 
         return preg_replace($search, $replace, $var);
@@ -303,13 +329,41 @@ class bbcode extends core
     public static function auto_bb($form, $field)
     {
         $colors = array(
-            'ffffff', 'bcbcbc', '708090', '6c6c6c', '454545',
-            'fcc9c9', 'fe8c8c', 'fe5e5e', 'fd5b36', 'f82e00',
-            'ffe1c6', 'ffc998', 'fcad66', 'ff9331', 'ff810f',
-            'd8ffe0', '92f9a7', '34ff5d', 'b2fb82', '89f641',
-            'b7e9ec', '56e5ed', '21cad3', '03939b', '039b80',
-            'cac8e9', '9690ea', '6a60ec', '4866e7', '173bd3',
-            'f3cafb', 'e287f4', 'c238dd', 'a476af', 'b53dd2'
+            'ffffff',
+            'bcbcbc',
+            '708090',
+            '6c6c6c',
+            '454545',
+            'fcc9c9',
+            'fe8c8c',
+            'fe5e5e',
+            'fd5b36',
+            'f82e00',
+            'ffe1c6',
+            'ffc998',
+            'fcad66',
+            'ff9331',
+            'ff810f',
+            'd8ffe0',
+            '92f9a7',
+            '34ff5d',
+            'b2fb82',
+            '89f641',
+            'b7e9ec',
+            '56e5ed',
+            '21cad3',
+            '03939b',
+            '039b80',
+            'cac8e9',
+            '9690ea',
+            '6a60ec',
+            '4866e7',
+            '173bd3',
+            'f3cafb',
+            'e287f4',
+            'c238dd',
+            'a476af',
+            'b53dd2'
         );
         $i = 1;
         $font_color = '';
@@ -322,8 +376,9 @@ class bbcode extends core
         if (!empty($smileys)) {
             $res_sm = '';
             $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/pages/faq.php?act=my_smileys">' . self::$lng['edit_list'] . '</a></small><br />';
-            foreach ($smileys as $value)
+            foreach ($smileys as $value) {
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
+            }
             $bb_smileys .= functions::smileys($res_sm, self::$user_data['rights'] >= 1 ? 1 : 0);
         } else {
             $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/pages/faq.php?act=smileys">' . self::$lng['add_smileys'] . '</a></small>';
@@ -369,7 +424,9 @@ class bbcode extends core
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" border="0"/></a><br />
                 <table id="sm" style="display:none"><tr><td>' . $bb_smileys . '</td></tr></table>
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
-        } else $out .= '<br />';
+        } else {
+            $out .= '<br />';
+        }
         $out .= '<div id="color" class="bbpopup" style="display:none;">Шрифт: ' . $font_color . '</div>' .
             '<div id="bg" class="bbpopup" style="display:none">Фон: ' . $bg_color . '</div>';
 
