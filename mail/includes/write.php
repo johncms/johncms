@@ -95,8 +95,6 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         $error[] = $lng_mail['indicate_login_grantee'];
     if (empty($text))
         $error[] = $lng_mail['message_not_empty'];
-    elseif (mb_strlen($text) < 2 || mb_strlen($text) > 5000)
-        $error[] = $lng_mail['error_long_message'];
     if (($id && $id == $user_id) || !$id && $datauser['name_lat'] == $name)
         $error[] = $lng_mail['impossible_add_message'];
     $flood = functions::antiflood();
