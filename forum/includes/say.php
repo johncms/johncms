@@ -158,6 +158,7 @@ switch ($type1['type']) {
             } else {
                 header("Location: index.php?id=$id&page=$page");
             }
+            exit;
         } else {
             require('../incfiles/head.php');
             if ($datauser['postforum'] == 0) {
@@ -329,6 +330,7 @@ switch ($type1['type']) {
             } else {
                 header("Location: index.php?id=$th&page=$page");
             }
+            exit;
         } else {
             $textl = $lng['forum'];
             require('../incfiles/head.php');
