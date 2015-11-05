@@ -175,30 +175,30 @@ class bbcode extends core
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = array(
-            '[small]'  => '',
+            '[small]' => '',
             '[/small]' => '',
-            '[big]'    => '',
-            '[/big]'   => '',
-            '[green]'  => '',
+            '[big]' => '',
+            '[/big]' => '',
+            '[green]' => '',
             '[/green]' => '',
-            '[red]'    => '',
-            '[/red]'   => '',
-            '[blue]'   => '',
-            '[/blue]'  => '',
-            '[b]'      => '',
-            '[/b]'     => '',
-            '[i]'      => '',
-            '[/i]'     => '',
-            '[u]'      => '',
-            '[/u]'     => '',
-            '[s]'      => '',
-            '[/s]'     => '',
-            '[quote]'  => '',
+            '[red]' => '',
+            '[/red]' => '',
+            '[blue]' => '',
+            '[/blue]' => '',
+            '[b]' => '',
+            '[/b]' => '',
+            '[i]' => '',
+            '[/i]' => '',
+            '[u]' => '',
+            '[/u]' => '',
+            '[s]' => '',
+            '[/s]' => '',
+            '[quote]' => '',
             '[/quote]' => '',
-            '[c]'      => '',
-            '[/c]'     => '',
-            '[*]'      => '',
-            '[/*]'     => ''
+            '[c]' => '',
+            '[/c]' => '',
+            '[*]' => '',
+            '[/*]' => ''
         );
 
         return strtr($var, $replace);
@@ -211,32 +211,26 @@ class bbcode extends core
     */
     private static function highlight_code($var)
     {
-        if (!function_exists('process_code')) {
-            function process_code($php)
-            {
-                $php = strtr($php, array('<br />' => ''));
-                $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
+        return preg_replace_callback('#\[php\](.+?)\[\/php\]#s', 'self::codeCallback', $var);
+    }
 
-                require_once 'geshi.php';
-                $geshi = new \GeSHi;
-                $geshi->set_language('php');
-                //$geshi->set_header_type(GESHI_HEADER_PRE);
-                //$geshi->enable_keyword_links(false);
-                $geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
-                $geshi->set_link_target('_blank');
-                $geshi->set_source($php);
+    private static $geshi;
 
-                return '<div class="phpcode">' . $geshi->parse_code() . '</div>';
-            }
+    private static function codeCallback($code)
+    {
+        if (null === self::$geshi) {
+            require_once 'geshi.php';
+            self::$geshi = new \GeSHi;
+            self::$geshi->set_language('php');
+            self::$geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
+            self::$geshi->set_link_target('_blank');
         }
 
-        return preg_replace_callback(
-            '#\[php\](.+?)\[\/php\]#s',
-            function ($matches) {
-                return process_code($matches[1]);
-            },
-            $var
-        );
+        $php = strtr($code[1], array('<br />' => ''));
+        $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
+        self::$geshi->set_source($php);
+
+        return '<div class="phpcode">' . self::$geshi->parse_code() . '</div>';
     }
 
     /*
