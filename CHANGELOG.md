@@ -1,4 +1,4 @@
-# JohnCMS 6.1.3  
+# JohnCMS 6.2.0  
 `Release Date: under development`
 
 ### Features
