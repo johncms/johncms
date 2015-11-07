@@ -1,4 +1,4 @@
-# [JohnCMS 6.1.3](http://johncms.com)
+# [JohnCMS 6.2.0](http://johncms.com)
 
 [![SemVer](http://img.shields.io/badge/semver-✓-brightgreen.svg?style=plastic)](http://semver.org)
 [![License](https://img.shields.io/badge/license-GPL%20v.3-blue.svg?style=plastic)](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
@@ -38,7 +38,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ---
 
-# [JohnCMS 6.1.3](http://johncms.com)
+# [JohnCMS 6.2.0](http://johncms.com)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
 
