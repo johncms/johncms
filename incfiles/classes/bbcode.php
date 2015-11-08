@@ -172,6 +172,7 @@ class bbcode extends core
     static function notags($var = '')
     {
         $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
+        $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = array(
@@ -212,7 +213,7 @@ class bbcode extends core
     private static function highlight_code($var)
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', 'self::phpCodeCallback', $var);
-        $var = preg_replace_callback('#\[code=(.+?)](.+?)\[/code]#is', 'self::codeCallback', $var);
+        $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', 'self::codeCallback', $var);
 
         return $var;
     }
@@ -242,6 +243,9 @@ class bbcode extends core
             self::$geshi = new \GeSHi;
             self::$geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
             self::$geshi->set_link_target('_blank');
+            self::$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
+            self::$geshi->set_line_style('background: rgba(255, 255, 255, 0.5)', 'background: rgba(255, 255, 255, 0.35)', false);
+            self::$geshi->set_code_style('padding-left: 6px;');
         }
 
         self::$geshi->set_language($parser);
