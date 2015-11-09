@@ -245,7 +245,7 @@ class bbcode extends core
             self::$geshi->set_link_target('_blank');
             self::$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
             self::$geshi->set_line_style('background: rgba(255, 255, 255, 0.5)', 'background: rgba(255, 255, 255, 0.35)', false);
-            self::$geshi->set_code_style('padding-left: 6px;');
+            self::$geshi->set_code_style('padding-left: 6px; white-space: pre-wrap');
         }
 
         self::$geshi->set_language($parser);
@@ -253,7 +253,7 @@ class bbcode extends core
         $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
         self::$geshi->set_source($php);
 
-        return '<div class="phpcode">' . self::$geshi->parse_code() . '</div>';
+        return '<div class="phpcode" style="overflow-x: auto">' . self::$geshi->parse_code() . '</div>';
     }
 
     /*
