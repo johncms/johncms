@@ -1,3 +1,6 @@
 /.idea
 /files/cache/*.dat
 /incfiles/db.php
+/dist
+/distributive
+/node_modules
