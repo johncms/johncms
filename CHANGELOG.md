@@ -1,5 +1,5 @@
 # JohnCMS 6.2.0  
-`Release Date: under development`
+`Release Date: 18.11.2015`
 
 ### Features
   * Для подсветки исходного кода в сообщениях используется GeSHi
