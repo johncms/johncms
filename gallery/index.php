@@ -119,7 +119,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         if (!empty($_SESSION['frazm'])) {
                             $razm = $_SESSION['frazm'];
                         } else {
-                            $razm = 50;
+                            $razm = 100;
                         }
                         $sizs = GetImageSize($infile);
                         $width = $sizs[0];
@@ -144,9 +144,6 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                                 break;
 
                             case "jpg":
-                                $im = ImageCreateFromJPEG($infile);
-                                break;
-
                             case "jpeg":
                                 $im = ImageCreateFromJPEG($infile);
                                 break;
@@ -158,29 +155,24 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         $im1 = imagecreatetruecolor($tn_width, $tn_height);
                         $namefile = "$fot1[name]";
                         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
+                        imagesavealpha($im1, true);
                         switch ($format) {
                             case "gif":
                                 $imagnam = "temp/$namefile.temp.gif";
-                                ImageGif($im1, $imagnam, $quality);
+                                ImageGif($im1, $imagnam);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
                                 break;
 
                             case "jpg":
-                                $imagnam = "temp/$namefile.temp.jpg";
-                                imageJpeg($im1, $imagnam, $quality);
-                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                                break;
-
                             case "jpeg":
                                 $imagnam = "temp/$namefile.temp.jpg";
-                                imageJpeg($im1, $imagnam, $quality);
+                                imageJpeg($im1, $imagnam, 75);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
-
                                 break;
 
                             case "png":
                                 $imagnam = "temp/$namefile.temp.png";
-                                imagePng($im1, $imagnam, $quality);
+                                imagePng($im1, $imagnam, 5);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                                 break;
@@ -234,7 +226,6 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $sizs = GetImageSize($infile);
                 $width = $sizs[0];
                 $height = $sizs[1];
-                $quality = 85;
                 $format = functions::format($infile);
                 switch ($format) {
                     case "gif":
@@ -259,26 +250,20 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 switch ($format) {
                     case "gif":
                         $imagnam = "temp/$namefile.gif";
-                        ImageGif($im1, $imagnam, $quality);
+                        imagegif($im1, $imagnam);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
                         break;
 
                     case "jpg":
-                        $imagnam = "temp/$namefile.jpg";
-                        imageJpeg($im1, $imagnam, $quality);
-                        echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                        break;
-
                     case "jpeg":
                         $imagnam = "temp/$namefile.jpg";
-                        imageJpeg($im1, $imagnam, $quality);
+                        imagejpeg($im1, $imagnam, 75);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
-
                         break;
 
                     case "png":
                         $imagnam = "temp/$namefile.png";
-                        imagePng($im1, $imagnam, $quality);
+                        imagePng($im1, $imagnam, 5);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                         break;
