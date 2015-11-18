@@ -36,7 +36,7 @@ if (!$error) {
     // Считаем комментарии в галерее
     $comm_gal = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'km'"), 0);
     // Считаем комментарии в библиотеке
-    $comm_lib = mysql_result(mysql_query("SELECT COUNT(*) FROM `lib` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'komm'"), 0);
+    $comm_lib = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'"), 0);
     // Считаем комментарии к загрузкам
     $comm_dl = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'komm'"), 0);
     // Считаем посты в личных гостевых
@@ -121,4 +121,3 @@ if (!$error) {
     echo functions::display_error($error);
 }
 echo '<p><a href="index.php?act=users">' . $lng['users_list'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>

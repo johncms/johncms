@@ -34,7 +34,7 @@ $lng_gal = core::load_lng('gallery');
         }
       }
     
-      $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
+      $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
       require ('../incfiles/lib/class.upload.php');
 
       $handle = new upload($image);

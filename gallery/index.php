@@ -19,15 +19,31 @@ require('../incfiles/head.php');
 
 // Ограничиваем доступ к Галерее
 $error = '';
-if (!$set['mod_gal'] && $rights < 7)
+if (!$set['mod_gal'] && $rights < 7) {
     $error = $lng_gal['gallery_closed'];
-elseif ($set['mod_gal'] == 1 && !$user_id)
+} elseif ($set['mod_gal'] == 1 && !$user_id) {
     $error = $lng['access_guest_forbidden'];
+}
 if ($error) {
     require_once('../incfiles/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require_once('../incfiles/end.php');
     exit;
+}
+
+function setTransparency($new_image, $image_source)
+{
+    $transparencyIndex = imagecolortransparent($image_source);
+    $transparencyColor = array('red' => 255, 'green' => 255, 'blue' => 255);
+
+    if ($transparencyIndex >= 0) {
+        $transparencyColor = imagecolorsforindex($image_source, $transparencyIndex);
+    }
+
+    $transparencyIndex = imagecolorallocate($new_image, $transparencyColor['red'], $transparencyColor['green'],
+        $transparencyColor['blue']);
+    imagefill($new_image, 0, 0, $transparencyIndex);
+    imagecolortransparent($new_image, $transparencyIndex);
 }
 
 $array = array(
@@ -41,11 +57,13 @@ $array = array(
     'cral',
     'razd'
 );
+
 if (in_array($act, $array) && file_exists($act . '.php')) {
     require_once($act . '.php');
 } else {
-    if (!$set['mod_gal'])
+    if (!$set['mod_gal']) {
         echo '<p><font color="#FF0000"><b>' . $lng_gal['gallery_closed'] . '</b></font></p>';
+    }
     if ($id) {
         $type = mysql_query("SELECT * FROM `gallery` WHERE `id` = '$id' LIMIT 1");
         $ms = mysql_fetch_assoc($type);
@@ -57,12 +75,14 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 -----------------------------------------------------------------
                 */
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | ' . $ms['text'] . '</div>';
-                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id'"), 0);
+                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id'"),
+                    0);
                 if ($total) {
                     $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
                     while ($res = mysql_fetch_assoc($req)) {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        $total_f = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '" . $res['id'] . "'"), 0);
+                        $total_f = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '" . $res['id'] . "'"),
+                            0);
                         echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> (' . $total_f . ')</div>';
                         ++$i;
                     }
@@ -71,11 +91,12 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 }
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
-                         '<p><form action="index.php?id=' . $id . '" method="post">' .
-                         '<input type="text" name="page" size="2"/>' .
-                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                         '</form></p>';
+                    echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total,
+                            $kmess) . '</p>' .
+                        '<p><form action="index.php?id=' . $id . '" method="post">' .
+                        '<input type="text" name="page" size="2"/>' .
+                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                        '</form></p>';
                 }
                 if ($rights >= 6) {
                     echo "<a href='index.php?act=cral&amp;id=" . $id . "'>" . $lng_gal['create_album'] . "</a><br/>";
@@ -106,10 +127,12 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                     if ($filtime[$imi] < $ftime1) {
                     }
                 }
-                $rz = mysql_query("select * from `gallery` where type='rz' and  id='" . $ms['refid'] . "';");
+
+                $rz = mysql_query("SELECT * FROM `gallery` WHERE type='rz' AND  id='" . $ms['refid'] . "';");
                 $rz1 = mysql_fetch_array($rz);
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | <a href="index.php?id=' . $ms['refid'] . '">' . $rz1['text'] . '</a> | ' . $ms['text'] . '</div>';
-                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id'"), 0);
+                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id'"),
+                    0);
                 $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
                 while ($fot1 = mysql_fetch_array($req)) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -119,7 +142,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         if (!empty($_SESSION['frazm'])) {
                             $razm = $_SESSION['frazm'];
                         } else {
-                            $razm = 50;
+                            $razm = 100;
                         }
                         $sizs = GetImageSize($infile);
                         $width = $sizs[0];
@@ -130,12 +153,14 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         if (($width <= $razm) && ($height <= $razm)) {
                             $tn_width = $width;
                             $tn_height = $height;
-                        } else if (($x_ratio * $height) < $razm) {
-                            $tn_height = ceil($x_ratio * $height);
-                            $tn_width = $razm;
                         } else {
-                            $tn_width = ceil($y_ratio * $width);
-                            $tn_height = $razm;
+                            if (($x_ratio * $height) < $razm) {
+                                $tn_height = ceil($x_ratio * $height);
+                                $tn_width = $razm;
+                            } else {
+                                $tn_width = ceil($y_ratio * $width);
+                                $tn_height = $razm;
+                            }
                         }
                         $format = functions::format($infile);
                         switch ($format) {
@@ -144,9 +169,6 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                                 break;
 
                             case "jpg":
-                                $im = ImageCreateFromJPEG($infile);
-                                break;
-
                             case "jpeg":
                                 $im = ImageCreateFromJPEG($infile);
                                 break;
@@ -156,31 +178,26 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                                 break;
                         }
                         $im1 = imagecreatetruecolor($tn_width, $tn_height);
+                        setTransparency($im1, $im);
                         $namefile = "$fot1[name]";
                         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
                         switch ($format) {
                             case "gif":
                                 $imagnam = "temp/$namefile.temp.gif";
-                                ImageGif($im1, $imagnam, $quality);
+                                ImageGif($im1, $imagnam);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
                                 break;
 
                             case "jpg":
-                                $imagnam = "temp/$namefile.temp.jpg";
-                                imageJpeg($im1, $imagnam, $quality);
-                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                                break;
-
                             case "jpeg":
                                 $imagnam = "temp/$namefile.temp.jpg";
-                                imageJpeg($im1, $imagnam, $quality);
+                                imageJpeg($im1, $imagnam, 75);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
-
                                 break;
 
                             case "png":
                                 $imagnam = "temp/$namefile.temp.png";
-                                imagePng($im1, $imagnam, $quality);
+                                imagePng($im1, $imagnam, 5);
                                 echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                                 break;
@@ -189,8 +206,9 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         imagedestroy($im1);
                         $fotsz = filesize("foto/$ms[name]");
                         echo '</a>';
-                        if (!empty($fot1['text']))
+                        if (!empty($fot1['text'])) {
                             echo "$fot1[text]<br/>";
+                        }
                         if ($rights >= 6) {
                             echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br/>";
                         }
@@ -202,11 +220,12 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 }
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
-                         '<p><form action="index.php?id=' . $id . '" method="post">' .
-                         '<input type="text" name="page" size="2"/>' .
-                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
-                         '</form></p>';
+                    echo '<p>' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total,
+                            $kmess) . '</p>' .
+                        '<p><form action="index.php?id=' . $id . '" method="post">' .
+                        '<input type="text" name="page" size="2"/>' .
+                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                        '</form></p>';
                 }
                 if (($user_id && $rz1['user'] == 1 && $ms['text'] == $login && !$ban['1'] && !$ban['14']) || $rights >= 6) {
                     echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br/>';
@@ -234,7 +253,6 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $sizs = GetImageSize($infile);
                 $width = $sizs[0];
                 $height = $sizs[1];
-                $quality = 85;
                 $format = functions::format($infile);
                 switch ($format) {
                     case "gif":
@@ -254,31 +272,26 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         break;
                 }
                 $im1 = imagecreatetruecolor($width, $height);
+                setTransparency($im1, $im);
                 $namefile = "$ms[name]";
                 imagecopy($im1, $im, 0, 0, 0, 0, $width, $height);
                 switch ($format) {
                     case "gif":
                         $imagnam = "temp/$namefile.gif";
-                        ImageGif($im1, $imagnam, $quality);
+                        imagegif($im1, $imagnam);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
                         break;
 
                     case "jpg":
-                        $imagnam = "temp/$namefile.jpg";
-                        imageJpeg($im1, $imagnam, $quality);
-                        echo "<img src='" . $imagnam . "' alt=''/><br/>";
-                        break;
-
                     case "jpeg":
                         $imagnam = "temp/$namefile.jpg";
-                        imageJpeg($im1, $imagnam, $quality);
+                        imagejpeg($im1, $imagnam, 75);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
-
                         break;
 
                     case "png":
                         $imagnam = "temp/$namefile.png";
-                        imagePng($im1, $imagnam, $quality);
+                        imagePng($im1, $imagnam, 5);
                         echo "<img src='" . $imagnam . "' alt=''/><br/>";
 
                         break;
@@ -315,7 +328,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
         $total = mysql_num_rows($req);
         while ($res = mysql_fetch_assoc($req)) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $al = mysql_query("select * from `gallery` where type='al' and  refid='" . $res['id'] . "'");
+            $al = mysql_query("SELECT * FROM `gallery` WHERE type='al' AND  refid='" . $res['id'] . "'");
             $countal = mysql_num_rows($al);
             echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> (' . $countal . ')</div>';
             ++$i;
