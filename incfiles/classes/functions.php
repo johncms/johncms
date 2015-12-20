@@ -408,11 +408,7 @@ class functions extends core
      */
     public static function format($name)
     {
-        $f1 = strrpos($name, ".");
-        $f2 = substr($name, $f1 + 1, 999);
-        $fname = strtolower($f2);
-
-        return $fname;
+        return pathinfo($name, PATHINFO_EXTENSION);
     }
 
     /**
