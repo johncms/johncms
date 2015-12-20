@@ -160,7 +160,7 @@ if (!function_exists('stripos')) {
          * @ignore
          */
         function stripos($haystack, $needle, $offset = null) {
-            if (!is_null($offset)) {
+            if ($offset !== null) {
                 $haystack = substr($haystack, $offset);
             }
             if (preg_match('/'. preg_quote($needle, '/') . '/', $haystack, $match, PREG_OFFSET_CAPTURE)) {
@@ -2458,7 +2458,7 @@ class GeSHi {
             $part = $parts[$key][1];
 
             $highlight_part = true;
-            if ($this->strict_mode && !is_null($parts[$key][0])) {
+            if ($this->strict_mode && ($parts[$key][0] !== null)) {
                 // get the class key for this block of code
                 $script_key = $parts[$key][0];
                 $highlight_part = $this->language_data['HIGHLIGHT_STRICT_BLOCK'][$script_key];
