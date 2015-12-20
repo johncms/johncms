@@ -34,8 +34,11 @@ if (isset($_POST['submit'])) {
     mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['meta_desc']) . "' WHERE `key` = 'meta_desc'");
     $req = mysql_query("SELECT * FROM `cms_settings`");
     $set = array ();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    while ($res = mysql_fetch_row($req))
+    {
+        $set[$res[0]] = $res[1];
+    }
+    echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
 }
 /*
 -----------------------------------------------------------------
