@@ -179,6 +179,18 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_kg: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'incfiles/languages/kg/*',
+                            'images/flags/kg.gif'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
             lng_kz: {
                 files: [
                     {
@@ -429,6 +441,20 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_kg: {
+                options: {
+                    archive: 'dist/languages/kg.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
             lng_kz: {
                 options: {
                     archive: 'dist/languages/kz.zip'
@@ -635,6 +661,10 @@ module.exports = function (grunt) {
 
         'copy:lng_id',
         'compress:lng_id',
+        'clean:distributive',
+
+        'copy:lng_kg',
+        'compress:lng_kg',
         'clean:distributive',
 
         'copy:lng_kz',
