@@ -1,3 +1,17 @@
+# JohnCMS 7.0.0  
+`Release Date: under development`
+
+### Major Features
+  * 
+  
+### Features
+  * Папки языков переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+  * Добавлен Киргизский язык
+
+### Bug Fixes
+  * Исправлены замеченные ошибки
+
+____________________________________________________________
 # JohnCMS 6.2.0  
 `Release Date: 18.11.2015`
 
