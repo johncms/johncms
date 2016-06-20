@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 simboli"
+
+msgid "1000 characters"
+msgstr "1000 simboli"
+
+msgid "3000 characters"
+msgstr "3000 simboli"
+
+msgid "Always"
+msgstr "vienmēr"
+
+msgid "Stick 1-st post"
+msgstr "Nostiprināt 1-o postu"
+
+msgid "Use textarea"
+msgstr "Ieslēgt ievades lauku"
+
+msgid "Unread"
+msgstr "nelasītajās"
+
+msgid "Basic settings"
+msgstr "Pamata iestatījumi"
+
+msgid "Enter message"
+msgstr "Ziņas ievade"
+
+msgid "My settings"
+msgstr "Mani iestatījumi"
+
+msgid "never"
+msgstr "nekad"
+
+msgid "not cut"
+msgstr "neapgriezt"
+
+msgid "Or enter yours"
+msgstr "Vai norādiet savu"
+
+msgid "Cropping posts"
+msgstr "Postu apgriezšana"
+
+msgid "Contacts"
+msgstr "Pretēja kārtošana"
+

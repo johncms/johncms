@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Kategorie zu subsumieren"
+
+msgid "Add file"
+msgstr "Datei zu subsumieren"
+
+msgid "Add answer"
+msgstr "Antwort zu subsumieren"
+
+msgid "Add section"
+msgstr "Abteilung zu subsumieren"
+
+msgid "Add a poll"
+msgstr "Befragung zu subsumieren"
+
+msgid "Accept"
+msgstr "Einverstandener"
+
+msgid "Other category"
+msgstr "Andere Kategorie"
+
+msgid "Answer"
+msgstr "Antwort"
+
+msgid "Assign"
+msgstr "Zuweisen"
+
+msgid "Attachment"
+msgstr "Festgeklammerter Datei"
+
+msgid "Back to topic"
+msgstr "In Thema zu zuruckkehren"
+
+msgid "by author"
+msgstr "nach Autor"
+
+msgid "by section"
+msgstr "nach Abteilung"
+
+msgid "by topic"
+msgstr "nach Thema"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Category deleted"
+msgstr "Kategorie entfernt"
+
+msgid "Edit category"
+msgstr "cutten Kategorie"
+
+msgid "Categories list"
+msgstr "Liste der Kategorieen"
+
+msgid "subsections"
+msgstr "botmassige Abteilungen"
+
+msgid "Click to view image"
+msgstr "Nazhmite fur Einsehen Darstellungen"
+
+msgid "Subsections and files has been moved to"
+msgstr "Botmassige Abteilungen und Datei ist deportiert in"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Alle Abteilungen, Themen und Datei sind deportiert in gewahlte Kategorie.<br>Noaday Kategorie ist entfernt"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>ACHTUNG!</h3>Sind botmassige Abteilungen. <br> Sie es ist notwendig, in andere Kategorie zu deportieren"
+
+msgid "Curators"
+msgstr "Kuratoren"
+
+msgid "Curators of the Topic"
+msgstr "Kuratoren des Themas"
+
+msgid "Quote"
+msgstr "Belegstelle"
+
+msgid "[q]"
+msgstr "[b]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Akzeptabel maks. 200 Zeichen, alle uberflussiger Text verschneidet sich."
+
+msgid "Delete categories"
+msgstr "Entfernen Kategorie"
+
+msgid "Complete removal"
+msgstr "Beleibte Abkehr"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Falls belieben, alle Information zu vernichten, an dem Anfang entfernen"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ACHTUNG! Ist entfernt alle Information"
+
+msgid "Delete last"
+msgstr "Allerletzter zu entfernen"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "ACHTUNG!<br>Das allerletzter Posten des Themas. Samt nib ist entfernt (oder latenter) und selbst Thema"
+
+msgid "Delete message"
+msgstr "Ansage zu entfernen"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "In Gelegenheit der Abkehr, aus Zahler der Posten forum ist subtrahiert eins Grad"
+
+msgid "Delete section"
+msgstr "Entfernen Abteilung"
+
+msgid "Delete poll"
+msgstr "Befragung zu entfernen"
+
+msgid "Download Topic"
+msgstr "Download Thema"
+
+msgid "Select a format"
+msgstr "Wahle Format"
+
+msgid "Link active 5 minutes"
+msgstr "Hinweis ist aktiv 5 Minuten"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Gegebenes Thema war zu schaukeln aus forum Standort"
+
+msgid "Downloaded"
+msgstr "es ist erledigt"
+
+msgid "Downloads"
+msgstr "es ist erledigt"
+
+msgid "Edit message"
+msgstr "Ansage zu verraten"
+
+msgid "Edit poll"
+msgstr "Befragung zu verraten"
+
+msgid "Edited"
+msgstr "verraten"
+
+msgid "You have not selected any author"
+msgstr "Ihr nicht wahlten keinen Autor"
+
+msgid "Category is not chosen"
+msgstr "Ist nicht gewahlt Kategorie"
+
+msgid "You are trying to change another\"s post"
+msgstr "Ihr befleissen, fremden Posten zu verraten"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Euer Posten bereits nicht allerletzter und Sie nicht konnen ihn tauschen"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Aus Moment der Schopfung des Postens durchmachte bolee 5 Minuten und Sie nicht konnen ihn cutten"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Verbotenes Baumuster Datei! <br> Zu Abtransport freistehen allein Datei, das folgender Ausbreitungen habend ist"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Zu Abtransport freistehen allein Datei habender Namen und eins Ausbreitung (<b>name.ext</b>). Ist verboten Datei nicht habender Namen, Ausbreitung, oder mit doppelter Ausbreitung."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Lange des Dateinamens nicht muss uberwiegen 30 Zeichen"
+
+msgid "File size exceed"
+msgstr "Gewicht Datei uberwiegt"
+
+msgid "File name contains invalid characters"
+msgstr "In Benennung Datei dasind unzulassige Zeichen"
+
+msgid "File is already uploaded"
+msgstr "Datei bereits ist belastet"
+
+msgid "You did not choose something to delete"
+msgstr "Ihr nichts nicht wahlten fur Abkehr"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Posten nicht daist, oder war entfernt"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Lange der Anfrage: 4min., 64maks."
+
+msgid "You have not entered time"
+msgstr "Ihr nicht einfuhrten Zeit"
+
+msgid "You cannot write in a closed topic"
+msgstr "Ihr nicht konnen fabulieren in geschlossenes Thema"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Thema ist entfernt, oder nicht daist"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Thema mit derart Benennung bereits ist in dieser Abteilung"
+
+msgid "You have not entered topic name"
+msgstr "Ihr nicht einfuhrten Benennung des Themas"
+
+msgid "Topic name too short"
+msgstr "Benennung des Themas ist allzu kurz"
+
+msgid "Error uploading file"
+msgstr "Fehler der Abladung Datei"
+
+msgid "File attached"
+msgstr "Datei ist festgeklammert"
+
+msgid "Files"
+msgstr "forum Datei"
+
+msgid "Category files"
+msgstr "Dateien der Kategorie"
+
+msgid "Section files"
+msgstr "Dateien der Abteilung"
+
+msgid "Topic files"
+msgstr "Dateien Themen"
+
+msgid "Archive"
+msgstr ""
+
+msgid "Java applications"
+msgstr "Anbiegungen Java"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "Anderer"
+
+msgid "Pictures"
+msgstr "Bildchene"
+
+msgid "SIS"
+msgstr "Anbiegungen SIS"
+
+msgid "txt"
+msgstr "Texte Dateie"
+
+msgid "WIN applications"
+msgstr "Anbiegungen WIN"
+
+msgid "Videos"
+msgstr "Video"
+
+msgid "Cancel filter"
+msgstr "Filterung zu aufheben"
+
+msgid "Topic includes filtering by authors"
+msgstr "In Thema ist angeschaltet Filterung po Autoren der Posten"
+
+msgid "Filter by author"
+msgstr "Sieb nach Autor"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Filterung erlaubt, Posten allein ab gewahlten Autoren zu widergeben"
+
+msgid "Filter by section"
+msgstr "Sieb nach Abteilung"
+
+msgid "Filter by topic"
+msgstr "Sieb nach Thema"
+
+msgid "Filter"
+msgstr "Zu filtern"
+
+msgid "Forum is closed"
+msgstr "Forum ist geschlossen"
+
+msgid "Forum Management"
+msgstr "Leitung Forum"
+
+msgid "Forum rules"
+msgstr "Regeln forum"
+
+msgid "Forum search"
+msgstr "Suchen nach Forum"
+
+msgid "Forum structure"
+msgstr "Gliederung forum"
+
+msgid "Hidden posts"
+msgstr "Latente Posten"
+
+msgid "Hidden topic"
+msgstr "Latente Themen"
+
+msgid "Hours"
+msgstr "Uhren"
+
+msgid "Max. Size"
+msgstr "Maks. Abmass"
+
+msgid "Marked posts are deleted"
+msgstr "Bemerkte Posten ist entfernt"
+
+msgid "Appointment of moderators"
+msgstr "Aussetzung moderator"
+
+msgid "New files in the last 24 hours"
+msgstr "Neuer Dateien vor allerletzter 24 Stunde"
+
+msgid "No new files"
+msgstr "Neuer Dateier ist"
+
+msgid "New at the bottom"
+msgstr "Neuer unten"
+
+msgid "New at the top"
+msgstr "Neuer oben"
+
+msgid "New topic"
+msgstr "Thema zu offnen"
+
+msgid "Title(max. 100)"
+msgstr "Benennung(max. 100)"
+
+msgid "Disagree"
+msgstr "Nicht einverstandener"
+
+msgid "Other categories"
+msgstr "Andere Kategorieen"
+
+msgid "Answers in the topic"
+msgstr "Antwortet in Thema"
+
+msgid "In the category"
+msgstr "In Kategorie"
+
+msgid "Looking forum files"
+msgstr "Anblickt Datei Forum"
+
+msgid "Here, in the list"
+msgstr "hier, in Liste"
+
+msgid "In the forum main"
+msgstr "zu Hause Forum"
+
+msgid "In the unreads"
+msgstr "Anblickt undurchgelesener"
+
+msgid "Forum search"
+msgstr "Suchen nach Forum"
+
+msgid "In the section"
+msgstr "In Abteilung"
+
+msgid "In the topic"
+msgstr "In Theme"
+
+msgid "Writes in the topic"
+msgstr "Fabuliert in Thema"
+
+msgid "Message"
+msgstr "Ansang"
+
+msgid "Post deleted"
+msgstr "Posten entfernte"
+
+msgid "Read more"
+msgstr "Alle zu hinweglesen"
+
+msgid "reference"
+msgstr "Anrede"
+
+msgid "[r]"
+msgstr "[a]"
+
+msgid "Rating"
+msgstr "Reyting"
+
+msgid "I am glad to answer you"
+msgstr "ich mit Freude dir antwortet"
+
+msgid "to your post"
+msgstr "auf deinen Posten"
+
+msgid "answer"
+msgstr "antwortet"
+
+msgid "You are right! You are very smart!"
+msgstr "entgeh aus Thema derweil nicht spat!"
+
+msgid "Restore"
+msgstr "Zu wiederherstellen"
+
+msgid "Results"
+msgstr "Ergebnisse"
+
+msgid "Back to topic"
+msgstr "In Thema zu zuruckkehren"
+
+msgid "Forum search"
+msgstr "Suchen nach Forum"
+
+msgid "Search in the topic names"
+msgstr "In Benennungen derjenige zu suchen"
+
+msgid "Section deleted"
+msgstr "Abteilung ist entfernt"
+
+msgid "Section with topics and files are removed"
+msgstr "Abteilung samt Themen und Dateien, entfernter"
+
+msgid "Editing section"
+msgstr "Cutten Abteilung"
+
+msgid "List of sections"
+msgstr "Liste der Abteilungen"
+
+msgid "There are no sections in this category"
+msgstr "In gegebener Kategorie Abteilungen ist"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Alle Themen und Dateie sind deportiert in gewahlte Abteilung <br> Alte Abteilung ist entfernt"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>ACHTUNG!</h3>In Abteilung sind Themen. <br> Sie es ist notwendig, in andere Abteilung zu deportieren"
+
+msgid "Select category"
+msgstr "Wahle Kategorie"
+
+msgid "Select file"
+msgstr "Datei zu wahlen"
+
+msgid "Select section"
+msgstr "Wahle Abteilung"
+
+msgid "Selected category"
+msgstr "gewahlte Kategorie"
+
+msgid "Selected section"
+msgstr "gewahle Abteilung"
+
+msgid "Size"
+msgstr "Abmass"
+
+msgid "Topics moved to"
+msgstr "Botmassige Themen ist deportiert in"
+
+msgid "Time"
+msgstr "Mal"
+
+msgid "Go to category"
+msgstr "In Kategorie"
+
+msgid "Go to forum"
+msgstr "In Forum"
+
+msgid "To message"
+msgstr "In Ansang"
+
+msgid "Go to topic"
+msgstr "In Thema"
+
+msgid "Go to section"
+msgstr "In Abteilung"
+
+msgid "Topic"
+msgstr "Thema"
+
+msgid "Close topic"
+msgstr "Thema zu zumacht"
+
+msgid "Topic closed"
+msgstr "Thema zu zumachen"
+
+msgid "Delete topic"
+msgstr "Thema zu entfernen"
+
+msgid "Topic deleted"
+msgstr "Thema ist entfernt"
+
+msgid "Topic deleted by"
+msgstr "Thema entfernte"
+
+msgid "Undelete topic"
+msgstr "Aufhob Abkehr des Themas"
+
+msgid "Fix topic"
+msgstr "Thema zu befestigen"
+
+msgid "No topics in this section"
+msgstr "In gegebener Abteilung ist kein Thema"
+
+msgid "Move topic"
+msgstr "Thema zu deportieren"
+
+msgid "Topic name"
+msgstr "Benennung des Themas"
+
+msgid "New topic"
+msgstr "Thema zu offnen"
+
+msgid "Rename topic"
+msgstr "Thema zu umbenennen"
+
+msgid "Restore topic"
+msgstr "Thema zu wiederherstellen"
+
+msgid "Unfix topic"
+msgstr "Thema zu losmachen"
+
+msgid "Total votes"
+msgstr "im ganzen Stimmen"
+
+msgid "All for period"
+msgstr "Alle vor Abschnitt"
+
+msgid "Last 10"
+msgstr "Allerletzter 10 derjenige"
+
+msgid "Period (in hours)"
+msgstr "Abschnitt (in Uhren)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "Vor gewahlten Abschnitt neuer an Forum es ist"
+
+msgid "Mark as read"
+msgstr "Als durchgelesener zu bemerken"
+
+msgid "All topics marked as read"
+msgstr "Alle Themen ist bemerkt als durchgelesener"
+
+msgid "Upload"
+msgstr "Zu versenden"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Die Zeit für die Datei zugeteilt Upload abgelaufen"
+
+msgid "Post deleted"
+msgstr "Posten entfernte"
+
+msgid "Who is here"
+msgstr "Wer hier"
+
+msgid "Who in forum"
+msgstr "Wer in Forum"
+
+msgid "Who in topic"
+msgstr "Wer in Thema"
+
+msgid "Post restored by"
+msgstr "Posten wiederherstellte"
+
+msgid "Vote accepted"
+msgstr "Euere Stimme ist angenommen"
+
+msgid "Poll (max. 150)"
+msgstr "Befragung (max. 150)"
+
+msgid "Poll added"
+msgstr "Befragung ist subsumiert"
+
+msgid "Poll changed"
+msgstr "Befragung ist verraten"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Ihr gultig belieben, Befragung zu entfernen?"
+
+msgid "Poll deleted"
+msgstr "Befragung ist entfernt"
+
+msgid "Who voted in the poll"
+msgstr "Benutzer, die in Befragung einlassen sich"
+
+msgid "No one has voted in this poll yet"
+msgstr "In dieser Befragung derweil niemand davonblieb"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Ihr gultig belieben, Variante der Antwort zu entfernen?"
+

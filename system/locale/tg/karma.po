@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "All"
+msgstr "Ҳамааш"
+
+msgid "Comment"
+msgstr "Суханҳо"
+
+msgid "Do you really want to delete all reviews about user"
+msgstr "Шумо дар ҳақиқат ҳамаи суханҳоро дар ин истифодабаранда тоза карданиед"
+
+msgid "Do you really want to delete comment"
+msgstr "Шумо дар ҳақиқат суханро тоза карданиед"
+
+msgid "Limit votes for today. New voices will be added"
+msgstr "Охирнокии овозҳо тамом шуд. Овозҳои нав ҳисоб карда мешаванд"
+
+msgid "It is forbidden to vote for administration"
+msgstr "Ба Администраторҳо овоз додан мумкин нест"
+
+msgid "You are not allowed to vote for users"
+msgstr "Шумо ҳуқуқи овоз доданро надоред"
+
+msgid "Cheating karma is forbidden"
+msgstr "Худсози мумкин нест"
+
+msgid "Users can take part in voting if they have stayed on a site not less "
+msgstr "Ба овоздиҳи танҳо истифодабарандагоне иштирок карда метавонанд, ки дар сомона истодаанд на камтар аз"
+
+msgid "and their score on the forum"
+msgstr "Ва холҳои гирифтаашон дар форум"
+
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Ба як истифодабаранда дар давоми 24 соат танҳо як бор овоз додан мумкин аст"
+
+msgid "Done"
+msgstr "Иҷро шуд"
+
+msgid "Negative"
+msgstr "Муқобилҳо"
+
+msgid "Negative"
+msgstr "Муқобилҳо"
+
+msgid "New responses"
+msgstr "Суханҳои нав"
+
+msgid "Positive"
+msgstr "Тарафдорҳо"
+
+msgid "Positive"
+msgstr "Тарафдорҳо"
+
+msgid "Reset karma"
+msgstr "Холикунии умуми"
+
+msgid "Votes quantity"
+msgstr "Шумораи овозҳо"
+
+msgid "Vote for"
+msgstr "Овоз медиҳем ба"
+
+msgid "Type of vote"
+msgstr "Намуди овоз"
+

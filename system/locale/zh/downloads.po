@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "添加"
+
+msgid "Album"
+msgstr "相册"
+
+msgid "You have already rated this file"
+msgstr "您已经给这个文件评分"
+
+msgid "Artist"
+msgstr "画家"
+
+msgid "Average rating"
+msgstr "平均分数"
+
+msgid "Bitrate"
+msgstr "比特率"
+
+msgid "Change"
+msgstr "更改"
+
+msgid "Change Description"
+msgstr "更改描述"
+
+msgid "Change Screenshot"
+msgstr "更改截图"
+
+msgid "Delete File"
+msgstr "删除文件"
+
+msgid "Delete Folder"
+msgstr "删除文件夹"
+
+msgid "Deleted"
+msgstr "删除"
+
+msgid "Description changed"
+msgstr "描述修改为"
+
+msgid "Downloads"
+msgstr "下载"
+
+msgid "Downloads are closed"
+msgstr "下载关闭"
+
+msgid "Duration"
+msgstr "持续时间"
+
+msgid "File deleted"
+msgstr "文件删除"
+
+msgid "No file selected"
+msgstr "没有文件"
+
+msgid "Error when selecting a file"
+msgstr "选择一个文件时出现错误"
+
+msgid "File"
+msgstr "文件"
+
+msgid "Files"
+msgstr "文件"
+
+msgid "Folder deleted"
+msgstr "文件夹删除"
+
+msgid "Folder does not exist"
+msgstr "文件夹不存在"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "文件夹名称<br><small>只有小写字母，没有空格</small>"
+
+msgid "The name for the list"
+msgstr "列表中的名称"
+
+msgid "Folders"
+msgstr "文件夹"
+
+msgid "Found by Description"
+msgstr "建立描述"
+
+msgid "Found by Name"
+msgstr "建立名称"
+
+msgid "Image size"
+msgstr "图像大小"
+
+msgid "File Import"
+msgstr "文件导入"
+
+msgid "Make folder"
+msgstr "文件夹"
+
+msgid "Name changed"
+msgstr "名称改为"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "预览图片"
+
+msgid "Rate"
+msgstr "评估"
+
+msgid "Continue the cycle"
+msgstr "继续循环"
+
+msgid "Refresh Downloads"
+msgstr "刷新下载"
+
+msgid "Database updated"
+msgstr "数据库更新"
+
+msgid "Released"
+msgstr "发表"
+
+msgid "Rename Folder"
+msgstr "重新命名文件夹"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "另存为<br><small>小写字母，没有空格。<br>文件扩展名不需要输入</small>"
+
+msgid "Screenshot"
+msgstr "截图"
+
+msgid "The name of the image contains invalid characters"
+msgstr "图像的名称包含无效字符"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "图像大小不应超过320×320像素"
+
+msgid "Error occured while unloading screenshot"
+msgstr "上传图片时发生错误"
+
+msgid "Screenshot uploaded"
+msgstr "截图上传"
+
+msgid "Select the size of pictures for preview"
+msgstr "选择图片预览大小"
+
+msgid "Find file"
+msgstr "查找文件"
+
+msgid "You have not entered a search term"
+msgstr "您没有输入一个搜索词"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Upload File"
+msgstr "上传文件"
+
+msgid "Upload Screenshot"
+msgstr "上传截图"
+
+msgid "Uploaded"
+msgstr "上传"
+
+msgid "Thanks, your vote accepted"
+msgstr "谢谢，您的投票接受"
+
+msgid "Total Votes"
+msgstr "总投票"
+

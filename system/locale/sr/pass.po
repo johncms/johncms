@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr ""
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr ""
+
+msgid "Verification code"
+msgstr "Verifikacioni kod"
+
+msgid "Change password"
+msgstr "Promeni lozinku"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Lozinka promenjena"
+
+msgid "Enter code"
+msgstr "Unesi kos"
+
+msgid "Incorrect code"
+msgstr "Pogresan kod"
+
+msgid "Invalid E-mail address"
+msgstr "Pogresna E-mail adresa"
+
+msgid "Error sending E-mail"
+msgstr "Greska pro slanju na E-mail"
+
+msgid "Password recovery is impossible"
+msgstr "Vracanje lozinka neuspesno"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Popunite sva pplka"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Lozinka mora biti min. 3, max. 10 karaktera"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Lozinke se ne poklapaju"
+
+msgid "Incorrect entered old password"
+msgstr "Pogresna stara lozinkq"
+
+msgid "You cannot change password of higher administration"
+msgstr ""
+
+msgid "Time allotted for the password recovery has passed"
+msgstr ""
+
+msgid "Enter new password"
+msgstr "Unesite novu lozinku"
+
+msgid "Enter old password"
+msgstr "Unesite staru lozinku"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Velicina lozinke min. 3, max. 10 slova i brojeva."
+
+msgid "Password successfully changed"
+msgstr "Lozinka izmenjena"
+
+msgid "Password recovery"
+msgstr "Vracanje lozinke"
+
+msgid "Repeat password"
+msgstr "Ponovi lozinku"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr ""
+
+msgid "Hello"
+msgstr "Cao"
+
+msgid "You start process of password recovery on the site"
+msgstr "Pocinjete proces vracanja vase lozinke"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Da bi ste vratili lozinku, morate kliknuti na link"
+
+msgid "Link valid for 1 hour"
+msgstr "Link pogresan 1sat"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Ako dobijete ovaj mail greskom, ignorisite ga"
+
+msgid "Check your e-mail for further information"
+msgstr "Proverite vas E-mail za dalja uputstva"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Nakon prijave, mozete da promenite novu lozinku."
+
+msgid "You have changed your password on the site"
+msgstr "Promenili ste lozinku"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Lozinka moze da se vraca jednom dnevno"
+
+msgid "Send"
+msgstr "Posalji"
+
+msgid "Show autologin link"
+msgstr "Prikazi autologin link"
+
+msgid "Your E-mail"
+msgstr "Vas E-mail"
+
+msgid "Username"
+msgstr "Nadimak"
+
+msgid "Your new password"
+msgstr "Vasa nova lozinka "
+

@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+""
+
+msgid "to authorised"
+msgstr "za registrovane"
+
+msgid "Access denied"
+msgstr "Pristup zabranjen"
+
+msgid "Access opened"
+msgstr "Odobren pristup"
+
+msgid "guests can write in the guestbook"
+msgstr "Gosti mogu da pisu u knjizi utisaka"
+
+msgid "Administration can access to all closed modules and comments"
+msgstr "Administraticija moze da pristupi svim zatvorenim modulima i komentarima"
+
+msgid "Permissions"
+msgstr "Privilegije"
+
+msgid "mith moderation"
+msgstr "Na proveru"
+
+msgid "Adaptive"
+msgstr "Adaptivno"
+
+msgid "Advertisement"
+msgstr "Reklama"
+
+msgid "Agreement"
+msgstr "Dogovor"
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr ""
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Automatski promeni iz dana u nocni mod, prema satu podeseno"
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Ako je jedan administrator online (na sajtu), sistem ce raditi &quot;day&quot; modu, a ako je offline, promeni na &quot;night&quot;"
+
+msgid "Antiflood setting"
+msgstr "Antiflood podesavanja"
+
+msgid "Min. 4, max. 300 seconds"
+msgstr "Min. 4, max. 300 sekundi"
+
+msgid "Anti-Spyware"
+msgstr ""
+
+msgid "Scanning distributive"
+msgstr ""
+
+msgid "Files identification which are not included in the original distributive"
+msgstr ""
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr ""
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr ""
+
+msgid "Scanner menu"
+msgstr ""
+
+msgid "Files image is not created"
+msgstr "Slika fajla nije kreirana"
+
+msgid "Rescan"
+msgstr ""
+
+msgid "Scan mode"
+msgstr ""
+
+msgid "Creating a snapshot"
+msgstr ""
+
+msgid "Snapshot successfully created"
+msgstr ""
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr ""
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr ""
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr ""
+
+msgid "Scanning snapshot"
+msgstr ""
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr ""
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr ""
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr ""
+
+msgid "Ban has been successfully removed"
+msgstr "Ban obrisan"
+
+msgid "Are you sure to remove ban?"
+msgstr "Da li ste sigurni da zelite da obrisetr ban?"
+
+msgid "Ban details"
+msgstr "Ban detalji"
+
+msgid "Ban panel"
+msgstr ""
+
+msgid "Browsers"
+msgstr "Pretrazivaci"
+
+msgid "Counter successfully added"
+msgstr "Brojac dodat"
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "Upozorenje!<br>Proverite da li ste uneli dobro kod. Mora da bude standardan XML <br> Ako kliknete &quot;View&quot; i XHTML greske bice prikazane, zatim kliknite &quot;Back&quot; , i ispravite greske."
+
+msgid "Delete counter"
+msgstr "Izbrisi"
+
+msgid "Counter successfully changed!"
+msgstr "Brojac izmenjen!"
+
+msgid "On all pages showing option 1"
+msgstr "Na svim stranama pokazuje opciju 1"
+
+msgid "On all pages showing option 2"
+msgstr "Na svim stranama pokazuje opciju 2"
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "Na pocetnoj pokazuje opciju 1, na drugim stranama opciju 2"
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr "Na pocetnoj pokazuje opciju 1, na drugim stranama opciju 2 <br> Ako &quot;option 2&quot; nije ispunjena, brojac ce se prikazati na pocetnoj"
+
+msgid "Option 1"
+msgstr "Opcija 1"
+
+msgid "Code for main page"
+msgstr "Kod za pocetnu stranu"
+
+msgid "Option 2"
+msgstr "Opcija 2"
+
+msgid "Code for other pages"
+msgstr "Kod za druge strane"
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr "Ako je brojac prikazan lepo i bez gresaka, Kliknite &quot;Save&quot;.<br>Ako ima gresaka idite nazad."
+
+msgid "Counter"
+msgstr "Brojac"
+
+msgid "Begining day"
+msgstr "Pocetak dana"
+
+msgid "End of day"
+msgstr "Kraj dana"
+
+msgid "Night mode"
+msgstr "Nocni mod"
+
+msgid "Inactive profiles"
+msgstr "Neaktivni profili"
+
+msgid "Inactive profiles deleted"
+msgstr "Neaktivni profili obrisani"
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "Ova kategorija sadrzi profile, koji postoje 6 meseci, koji nisu usli 5meseci.<br>Mozete ih obrisati."
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr "Niste lepo popunili &quot;color&quot;"
+
+msgid "First address is entered incorrectly"
+msgstr "Prva adresa je pogresna"
+
+msgid "Second address is entered incorrectly"
+msgstr "Druga adresa je pogresna"
+
+msgid "You cannot delete higher administration"
+msgstr "Ne mozete da brisete nekog ko ima veca prava od vas"
+
+msgid "Title + Text"
+msgstr "Naslov + Tekst"
+
+msgid "Include in a map"
+msgstr "Sadrzi u mapi"
+
+msgid "Date set"
+msgstr "Datum postavljen"
+
+msgid "Ban by IP"
+msgstr "Banuj IP"
+
+msgid "Unban all IP"
+msgstr "Unbanuj sve IP-ove"
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr "IP ban tabla ociscena.<br>Unbanuj sve adrese"
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr "<b>UPOZORENJE!</b> Ban IP tabla bice obrisana.<br>Da li ste sigurni da zelite da obrisete?"
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Ban nemogic. Vasa IP adresa se poklapa sa tom"
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr "Adresa vec postoji"
+
+msgid "Ban deleted"
+msgstr "Ban izbrisan"
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Primer:<br><span class=\"red\">10.5.7.1</span> - Ban jedne adrese<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban vise adresa.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+
+msgid "IP Ban"
+msgstr ""
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr ""
+
+msgid "Ban range address"
+msgstr ""
+
+msgid "Ban on the subnet mask"
+msgstr ""
+
+msgid "Ban IP address"
+msgstr ""
+
+msgid "Search IP"
+msgstr ""
+
+msgid "This address not in the database"
+msgstr ""
+
+msgid "Forbid to vote for the administration"
+msgstr "Zabrani glas za administraciju"
+
+msgid "Are you sure you want to drop karma?"
+msgstr "Da li ste sigurni da zelite da izbacite glasove?"
+
+msgid "Karma is dropped"
+msgstr "Glasovi izbaceni"
+
+msgid "Drop karma"
+msgstr "Izbaci glasove"
+
+msgid "Restriction for vote"
+msgstr "Potrebno za glas"
+
+msgid "Voices per day"
+msgstr "Koliko glasova"
+
+msgid "Default language"
+msgstr "Sistemski jezik"
+
+msgid "You cannot delete language established for system by default"
+msgstr ""
+
+msgid "Are you sure you want to delete language?"
+msgstr ""
+
+msgid "Failed select language"
+msgstr ""
+
+msgid "Language Settings"
+msgstr "Podesavanje jezika"
+
+msgid "System Language"
+msgstr "Sistemski jezik"
+
+msgid "Lines"
+msgstr "Linije"
+
+msgid "Add link"
+msgstr "Dodaj limk"
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "U formatu FFFFFF, ako ne zelite da koristite boju linka, ne popunjavajte polje"
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Broj dana koliko da stoji link<br>0 - Neograniceno"
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr ""
+
+msgid "All pages"
+msgstr "Sve strane"
+
+msgid "On all but the main"
+msgstr "Na sve strane osim pocetne"
+
+msgid "Only main page"
+msgstr "Samo na pocetnoj"
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Broj klikova da stoji link<br>0 - Neograniceno"
+
+msgid "Link successfully added"
+msgstr "Link dodat"
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Da li ste sigurni da zelite da obrisete sve neaktivne linkove?"
+
+msgid "Are you sure want to delete link?"
+msgstr "Da li ste sigurni da zelite da obrisete link?"
+
+msgid "Direct Link"
+msgstr "Direktan Link"
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr "Klik statistika nece biti racunata, Ako je diretkan link ukljucen"
+
+msgid "Edit link"
+msgstr "Izmeni link"
+
+msgid "Link successfully changed!"
+msgstr "Link izmenjen!"
+
+msgid "Are you sure you want to hide this link?"
+msgstr "Da li ste sigurni da zelite da sarijete link?"
+
+msgid "Are you sure you want to restore this link?"
+msgstr ""
+
+msgid "Active links"
+msgstr "Aktivni linkovi"
+
+msgid "Styling links"
+msgstr "Mesto linka"
+
+msgid "Over the counter"
+msgstr "Ispod FP Linkova"
+
+msgid "Above logo"
+msgstr "Iznad logoa"
+
+msgid "Under counter"
+msgstr "Ispod brojaca"
+
+msgid "Under menu"
+msgstr "Iznad M-Chata"
+
+msgid "Delete inactive links"
+msgstr "Izbrisi neaktivne linkove"
+
+msgid "This place is occupied"
+msgstr "Ovo mesto je napunjeno"
+
+msgid "META tags"
+msgstr "META tagovi"
+
+msgid "Keywords"
+msgstr "Kljucne reci"
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "Option module not specified, will use default module"
+msgstr ""
+
+msgid "Include module"
+msgstr ""
+
+msgid "Modules"
+msgstr "Moduli"
+
+msgid "News count"
+msgstr "Brojac novosti"
+
+msgid "How many days to show?"
+msgstr "Koliko dana da prikazuje?"
+
+msgid "News on the mainpage"
+msgstr "Novosti na pocetnoj"
+
+msgid "Operation mode"
+msgstr "Operacioni mod"
+
+msgid "Layout"
+msgstr "Pozadina"
+
+msgid "Redirect"
+msgstr "Redirekt"
+
+msgid "Redicect URL"
+msgstr ""
+
+msgid "Update Description"
+msgstr "Osvezi opis"
+
+msgid "Descriptions updated"
+msgstr "Opis osvezen"
+
+msgid "Update smileys"
+msgstr "Osvezi smajlice"
+
+msgid "Registration confirmation"
+msgstr "Potvrda registracije"
+
+msgid "Registration is confirmed"
+msgstr "Registracija potvrdjena"
+
+msgid "Confirm all"
+msgstr "Prihvati sve"
+
+msgid "Delete all"
+msgstr "Izbrisi sve"
+
+msgid "All unconfirmed registrations were removed"
+msgstr "Izbrisano"
+
+msgid "Remove IP"
+msgstr "Izbrisi IP"
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr ""
+
+msgid "Search by nick"
+msgstr "Pretraga po niku"
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr ""
+
+msgid "Server Time"
+msgstr "Vreme servera"
+
+msgid "Show all"
+msgstr "Prikazi sve"
+
+msgid "Only computers"
+msgstr "Samo kompjuteri"
+
+msgid "Only guests"
+msgstr "Samo gosti"
+
+msgid "site closed, except administration"
+msgstr ""
+
+msgid "site closed, except SV!"
+msgstr ""
+
+msgid "Site Map"
+msgstr "Mapa sajta"
+
+msgid "Web site address without the slash at the end"
+msgstr ""
+
+msgid "Site copyright"
+msgstr "Ime sajta"
+
+msgid "Site E-mail"
+msgstr "E-mail sajta"
+
+msgid "System settings"
+msgstr "Sistemska podesavanja"
+
+msgid "Error updating cache"
+msgstr "Greska"
+
+msgid "Cache successfully updated!"
+msgstr "Uspesno!"
+
+msgid "Super Moderators"
+msgstr "Super Moderatori"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Everyone"
+msgstr "Svi"
+
+msgid "Guests"
+msgstr "Gosti"
+
+msgid "Users"
+msgstr "Korisnici"
+
+msgid "Administration"
+msgstr "Administracija"
+
+msgid "Delete user"
+msgstr "Izbrisi korisnika"
+
+msgid "Are you sure that you want to delete this user?"
+msgstr "Da li ste sigurni?"
+
+msgid "Cleaning activities"
+msgstr "Ciscenje aktivnosti"
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr "Kada se brisu postovi i poruke u forumu bice &quot;hidden&quot;"
+
+msgid "User deleted"
+msgstr "Korisnik izbrisan"
+
+msgid "Database cleanup"
+msgstr "Database ciscenje"
+
+msgid "On registration"
+msgstr "Na registraciji"
+

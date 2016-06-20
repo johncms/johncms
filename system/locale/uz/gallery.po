@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Ruxsat etilgan turlar"
+
+msgid "Create an album"
+msgstr "Albom tuzish"
+
+msgid "Create a section"
+msgstr "Bolim tuzish"
+
+msgid "Gallery closed"
+msgstr "Galereya yopiq"
+
+msgid "Delete Album"
+msgstr "Albomni ochirish"
+
+msgid "Delete section"
+msgstr "Bolimni ochirish"
+
+msgid "Dimensions"
+msgstr "Hajmlar"
+
+msgid "Edit Album"
+msgstr "Albomni ozgartirish"
+
+msgid "Edit description"
+msgstr "Tarifni ozgartirish"
+
+msgid "Edit Section"
+msgstr "Bolimni ozgartirish"
+
+msgid "Error uploading photo"
+msgstr "Foto yuklashda hatolik"
+
+msgid "Picture is missing"
+msgstr "Rasm yoq"
+
+msgid "Image size"
+msgstr "Rasmlar hajmi"
+
+msgid "Maximum weight"
+msgstr "Maksimal hajm"
+
+msgid "New photos"
+msgstr "Yangi rasmlar"
+
+msgid "Posted by"
+msgstr "Jaylashtirdi"
+
+msgid "Select Photo"
+msgstr "Fotoni tanlang"
+
+msgid "To Album"
+msgstr "Albomga"
+
+msgid "To Gallery"
+msgstr "Galereyaga"
+
+msgid "To Section"
+msgstr "Bolimga"
+
+msgid "Upload Photo"
+msgstr "Fotoni yuklash"
+
+msgid "Weight"
+msgstr "Ogirligi"
+

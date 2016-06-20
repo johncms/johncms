@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "公告已添加"
+
+msgid "News changed"
+msgstr "公告已修改"
+
+msgid "News deleted"
+msgstr "公告已删除"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "Delete all news"
+msgstr "删除所有公告"
+
+msgid "Older than 1 month"
+msgstr "一个月前"
+
+msgid "Delete all news older than 1 month"
+msgstr "删除一个月前的公告"
+
+msgid "Older than 1 week"
+msgstr "一周前"
+
+msgid "Delete all news older than 1 week"
+msgstr "删除一周前的公告"
+
+msgid "Discussion"
+msgstr "讨论"
+
+msgid "Discuss in forum"
+msgstr "在论坛讨论"
+
+msgid "Do not discuss"
+msgstr "禁止讨论"
+
+msgid "You have not entered news title"
+msgstr "没有输入公告标题"
+
+msgid "You have not entered news text"
+msgstr "没有输入公告内容"
+
+msgid "Back to news"
+msgstr "返回公告"
+

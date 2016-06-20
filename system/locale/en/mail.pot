@@ -1,0 +1,236 @@
+msgid ""
+msgstr ""
+
+msgid "User has been added to your contact list"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "Block"
+msgstr ""
+
+msgid "Blocklist"
+msgstr ""
+
+msgid "Contact deleted"
+msgstr ""
+
+msgid "Contact does not exist"
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Deleting messages"
+msgstr ""
+
+msgid "Unblock"
+msgstr ""
+
+msgid "Incoming messages from"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Such file does not exist!"
+msgstr ""
+
+msgid "No file selected!"
+msgstr ""
+
+msgid "You cannot add yourself as a contact"
+msgstr ""
+
+msgid "To Cabinet"
+msgstr ""
+
+msgid "Incoming"
+msgstr ""
+
+msgid "Incoming messages"
+msgstr ""
+
+msgid "Message deleted"
+msgstr ""
+
+msgid "Message does not exist"
+msgstr ""
+
+msgid "My Contacts"
+msgstr ""
+
+msgid "New Messages"
+msgstr ""
+
+msgid "Contact isn\"t chosen"
+msgstr ""
+
+msgid "Contact for removal isn\"t chosen"
+msgstr ""
+
+msgid "The message for removal isn\"t chosen"
+msgstr ""
+
+msgid "You really want to add contact?"
+msgstr ""
+
+msgid "You really want to block contact?"
+msgstr ""
+
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr ""
+
+msgid "You really want to remove the message?"
+msgstr ""
+
+msgid "You really want to unblock contact?"
+msgstr ""
+
+msgid "Send a message"
+msgstr ""
+
+msgid "User is blocked"
+msgstr ""
+
+msgid "User is unblocked"
+msgstr ""
+
+msgid "This user can not be blocked"
+msgstr ""
+
+msgid "User not blocked"
+msgstr ""
+
+msgid "No new message"
+msgstr ""
+
+msgid "The sent messages for"
+msgstr ""
+
+msgid "Sent messages"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "System messages"
+msgstr ""
+
+msgid "To Whom"
+msgstr ""
+
+msgid "Min. 2, Max. 5000 symbols"
+msgstr ""
+
+msgid "Maximum size"
+msgstr ""
+
+msgid "Select file"
+msgstr ""
+
+msgid "Account Blocked! You can not send messages."
+msgstr ""
+
+msgid "Clear messages"
+msgstr ""
+
+msgid "Message sent"
+msgstr ""
+
+msgid "Messages are deleted"
+msgstr ""
+
+msgid "Confirm the deletion of messages"
+msgstr ""
+
+msgid "Personal correspondence with"
+msgstr ""
+
+msgid "Send a message"
+msgstr ""
+
+msgid "Specify the recipient\"s login"
+msgstr ""
+
+msgid "Message cannot be empty"
+msgstr ""
+
+msgid "Invalid message length. (Min. 2, Max. 5000 symbols)"
+msgstr ""
+
+msgid "You cannot send messages to yourself"
+msgstr ""
+
+msgid "Error uploading file!"
+msgstr ""
+
+msgid "It is forbidden to upload files without a name!"
+msgstr ""
+
+msgid "It is forbidden to upload files without expansion!"
+msgstr ""
+
+msgid "The size of the file exceeds the maximum allowable upload!"
+msgstr ""
+
+msgid "In the file name contains invalid characters."
+msgstr ""
+
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr ""
+
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr ""
+
+msgid "The user added you in the ignore list. Sending the message isn\"t possible."
+msgstr ""
+
+msgid "System message upon registration"
+msgstr ""
+
+msgid "Tags"
+msgstr ""
+
+msgid "recipient login"
+msgstr ""
+
+msgid "current time"
+msgstr ""
+
+msgid "Subject of the system message"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Function in development"
+msgstr ""
+
+msgid "Sending messages"
+msgstr ""
+
+msgid "To this user can write only contacts"
+msgstr ""
+
+msgid "To this user can write only friends"
+msgstr ""
+
+msgid "Come more often and here it will be pleasant to you."
+msgstr ""
+
+msgid "Yours faithfully, Administrator."
+msgstr ""
+
+msgid "We are glad to see you on our site."
+msgstr ""
+
+msgid "Welcome!"
+msgstr ""
+
+msgid "Friends category"
+msgstr ""

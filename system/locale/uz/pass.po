@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "Avtokirishga link"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>Diqqat!</b><br>Saqlanish bo\"yicha, avtokirishni ko\"pchilik bor joyda ishlatmang (internet-kafe, o\"zga kompyuterlar va ...)"
+
+msgid "Verification code"
+msgstr "Tekshiruvchi kod"
+
+msgid "Change password"
+msgstr "Parolni o\"zgartiramiz"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Parol o\"zgartirildi.<br>Yangi parol e-mailingizga yuborildi"
+
+msgid "Enter code"
+msgstr "Kodni yozing"
+
+msgid "Incorrect code"
+msgstr "Tekshiruvchi kod no\"tog\"ri yozilgan"
+
+msgid "Invalid E-mail address"
+msgstr "E-mail pochta nato\"gri ko\"rsatilgan"
+
+msgid "Error sending E-mail"
+msgstr "E-mail yuborishda xato"
+
+msgid "Password recovery is impossible"
+msgstr "Parolni tiklash mumkin emas"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Formani hamma joyini to\"ldiring"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Parol uzunligi minimum 3  va maxsimum 10 bo\"lishi kerak"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Yangi parol tasdiqlashi nato\"gri yozildi"
+
+msgid "Incorrect entered old password"
+msgstr "Eski parol nato\"g\"ri yozildi"
+
+msgid "You cannot change password of higher administration"
+msgstr "Siz o\"zingizdan katta odamning parolini o\"zgartira olmaysiz"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Parolni tiklash vaqti o\"tib ketdi"
+
+msgid "Enter new password"
+msgstr "yangi parolni yozing"
+
+msgid "Enter old password"
+msgstr "Eski parolni yozing"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Parol uzunligi min. 3, maks. 10 belgi, lotin alifbosi va sonlar yozish mumkin."
+
+msgid "Password successfully changed"
+msgstr "Parol o\"zgartirildi"
+
+msgid "Password recovery"
+msgstr "Parolni tiklash"
+
+msgid "Repeat password"
+msgstr "Parolni qaytaring"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Parol E-mail pochtaga boradi, agar anketada ko\"rsatilgan bo\"lsa.<br>DIQQAT! Agar anketada E-mail pochta ko\"rsatilmagan bo\"lsa parol tiklab bo\"lmaydi"
+
+msgid "Hello"
+msgstr "Salom"
+
+msgid "You start process of password recovery on the site"
+msgstr "Siz saytda parolni tiklashni boshladingiz"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Parolni tiklash uchun linkdan o\"tishingiz kerak"
+
+msgid "Link valid for 1 hour"
+msgstr "Link 1 soat ishlaydi"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Agar bu xat sizga xato bilan kelib qolgan bo\"lsa va siz parolni tiklashni hohlamasangiz, xatga ahamiyat bermang"
+
+msgid "Check your e-mail for further information"
+msgstr "Parolni tiklash bo\"yicha ish E-mailingizga yuborildi"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Saytga kirganingizdan keyin, parolni almashtirishingiz mumkin."
+
+msgid "You have changed your password on the site"
+msgstr "Siz saytda parolni o\"zgartirdingiz"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Parolni 1kunda 1 martta tiklash mumkin"
+
+msgid "Send"
+msgstr "Yuborish"
+
+msgid "Show autologin link"
+msgstr "Avto login ssilkasini ko\"rsating"
+
+msgid "Your E-mail"
+msgstr "E-mailingiz"
+
+msgid "Username"
+msgstr "Sizning loginingiz"
+
+msgid "Your new password"
+msgstr "Sizning yangi parolingiz"
+

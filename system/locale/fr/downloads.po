@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Posté"
+
+msgid "Album"
+msgstr ""
+
+msgid "You have already rated this file"
+msgstr "Vous avez déjà noté ce fichier"
+
+msgid "Artist"
+msgstr "Artiste"
+
+msgid "Average rating"
+msgstr "Note moyenne de"
+
+msgid "Bitrate"
+msgstr "Le débit binaire"
+
+msgid "Change"
+msgstr "Modifier"
+
+msgid "Change Description"
+msgstr "Modifier la description de"
+
+msgid "Change Screenshot"
+msgstr "Modifier la capture d\"écran"
+
+msgid "Delete File"
+msgstr "Supprimer le fichier"
+
+msgid "Delete Folder"
+msgstr "Supprimer le dossier"
+
+msgid "Deleted"
+msgstr "Supprimé"
+
+msgid "Description changed"
+msgstr "Description changé"
+
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgid "Downloads are closed"
+msgstr "Téléchargements sont fermés"
+
+msgid "Duration"
+msgstr "La durée de la"
+
+msgid "File deleted"
+msgstr "Le fichier a été supprimé"
+
+msgid "No file selected"
+msgstr "Aucun fichier sélectionné"
+
+msgid "Error when selecting a file"
+msgstr "Erreur lors de la sélection d\"un fichier"
+
+msgid "File"
+msgstr "Le fichier"
+
+msgid "Files"
+msgstr "Fichiers"
+
+msgid "Folder deleted"
+msgstr "Dossier supprimé"
+
+msgid "Folder does not exist"
+msgstr "Le dossier n\"existe pas"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Le nom du dossier<br><small>Seulement de petites, caractères Latins majuscules, sans espaces</small>"
+
+msgid "The name for the list"
+msgstr "Un nom pour la liste"
+
+msgid "Folders"
+msgstr "Dossiers"
+
+msgid "Found by Description"
+msgstr "Trouvé sur la description de"
+
+msgid "Found by Name"
+msgstr "Trouvé sur le titre"
+
+msgid "Image size"
+msgstr "La taille de l\"image"
+
+msgid "File Import"
+msgstr "Importation d\"un fichier"
+
+msgid "Make folder"
+msgstr "Créer un dossier"
+
+msgid "Name changed"
+msgstr "Le nom a changé"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "Au cours de la session, adopté la taille de l\"image lors de la visualisation"
+
+msgid "Rate"
+msgstr "Taux de"
+
+msgid "Continue the cycle"
+msgstr "Continuer le cycle"
+
+msgid "Refresh Downloads"
+msgstr "Mettre à jour le télécharger"
+
+msgid "Database updated"
+msgstr "La base est à jour"
+
+msgid "Released"
+msgstr "Année de sortie"
+
+msgid "Rename Folder"
+msgstr "Renommer le dossier"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Enregistrer en tant que<br><small>Le nom de fichier, de petites, caractères Latins majuscules, sans espaces.<br>L\"extension de fichier vous ne voulez pas entrer</small>"
+
+msgid "Screenshot"
+msgstr "Capture d\"écran"
+
+msgid "The name of the image contains invalid characters"
+msgstr "Dans le titre de l\"image contient des caractères non valides"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "La taille de l\"image ne doit pas dépasser la résolution 320*320 px"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Erreur lors du déchargement d\"une capture d\"écran"
+
+msgid "Screenshot uploaded"
+msgstr "Capture d\"écran d\"un chargé"
+
+msgid "Select the size of pictures for preview"
+msgstr "Choisissez les dimensions des images de prévisualisation"
+
+msgid "Find file"
+msgstr "Recherche d\"un fichier"
+
+msgid "You have not entered a search term"
+msgstr "Vous n\"avez pas saisi la condition de recherche"
+
+msgid "Size"
+msgstr "Taille"
+
+msgid "Upload"
+msgstr "Décharger"
+
+msgid "Upload File"
+msgstr "Décharger le fichier"
+
+msgid "Upload Screenshot"
+msgstr "Décharger la capture d\"écran"
+
+msgid "Uploaded"
+msgstr "Chargé"
+
+msgid "Thanks, your vote accepted"
+msgstr "Merci de Votre note adoptée"
+
+msgid "Total Votes"
+msgstr "Total des évaluations"
+

@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Ditambahkan"
+
+msgid "All articles added"
+msgstr "Semua artikel yang ditambahkan"
+
+msgid "added to the database"
+msgstr "ditambahkan ke database"
+
+msgid "Allow users to add their articles"
+msgstr "Memungkinkan pengguna untuk menambahkan mereka artikel"
+
+msgid "Announcement"
+msgstr "Pengumuman"
+
+msgid "The announcement will be created automatically"
+msgstr "Jika dibiarkan kosong, pengumuman akan dibuat secara otomatis"
+
+msgid "Accept"
+msgstr "Mengambil"
+
+msgid "Accept all"
+msgstr "Mengambil semua"
+
+msgid "Article added"
+msgstr "Artikel yang ditambahkan"
+
+msgid "Thank you!</p><p>After moderator checking, your article will be published in the library."
+msgstr "Terima kasih atas apa yang kita tulis.</p><p>Setelah memeriksa dimoderasi, artikel Anda akan dipublikasikan di perpustakaan."
+
+msgid "Article"
+msgstr "Artikel"
+
+msgid "Articles"
+msgstr "Artikel"
+
+msgid "Articles Moderation"
+msgstr "Moderasi Artikel"
+
+msgid "By Name"
+msgstr "Menurut judul"
+
+msgid "By Text"
+msgstr "Pada teks"
+
+msgid "Categories"
+msgstr "Kategori"
+
+msgid "Category was created successfully"
+msgstr "Mengatur Kategori"
+
+msgid "Category type"
+msgstr "Kategori jenis"
+
+msgid "Comments"
+msgstr ""
+
+msgid "Comment added successfully"
+msgstr "Komentar ditambahkan berhasil"
+
+msgid "Comment Article"
+msgstr "Paling komentar artikel"
+
+msgid "Create Category"
+msgstr "Membuat Kategori"
+
+msgid "Delete Category"
+msgstr "Menghapus kategori"
+
+msgid "Deleted"
+msgstr ""
+
+msgid "Download Java Book"
+msgstr "Download Java buku"
+
+msgid "On this page you can download the Java (MIDP-2) book with the desired article."
+msgstr "Pada Halaman ini Anda dapat men-download Java (MIDP 2) buku dengan artikel Anda."
+
+msgid "Edit Article"
+msgstr "Mengedit artikel"
+
+msgid "Edit Category"
+msgstr "Perubahan Kategori"
+
+msgid "Category type (in order to avoid errors, clear the category before changing the type)"
+msgstr "Kategori jenis (untuk menghindari kesalahan sebelum mengubah jenis kategori bersih)"
+
+msgid "Error uploading"
+msgstr "Uploading Error"
+
+msgid "First remove enclosed categories"
+msgstr "Pertama menghapus bersarang Kategori"
+
+msgid "Allow users to write articles"
+msgstr "Memungkinkan pengguna untuk menulis artikel"
+
+msgid "The Library is closed"
+msgstr "Perpustakaan ditutup"
+
+msgid "Most read"
+msgstr "Kebanyakan Baca"
+
+msgid "New articles"
+msgstr "Artikel Baru"
+
+msgid "Reads"
+msgstr "Membaca"
+
+msgid "Search in titles of articles"
+msgstr "Cari di judul artikel"
+
+msgid "Select the text file"
+msgstr "Pilih file teks"
+
+msgid "Supported encodings"
+msgstr "Didukung pengkodean"
+
+msgid "Tags"
+msgstr ""
+
+msgid "To article"
+msgstr "Untuk artikel"
+
+msgid "To Category"
+msgstr "Dalam Kategori"
+
+msgid "To Comments"
+msgstr "Untuk komentar"
+
+msgid "To Library"
+msgstr "Perpustakaan"
+
+msgid "50 most read articles"
+msgstr "50 berita terbanyak dibaca"
+
+msgid "Upload Article"
+msgstr "Membongkar artikel"
+
+msgid "Write Article"
+msgstr "Menulis artikel"
+
+msgid "Write Comment"
+msgstr "Beri Komentar"
+
+msgid "Description of categories"
+msgstr "Kategori deskripsi"
+
+msgid "Move to category"
+msgstr "Pindah ke kategori"
+
+msgid "The text input field will be ignored"
+msgstr "Sebuah kolom input teks akan diabaikan"
+
+msgid "Images"
+msgstr ""
+
+msgid "Specify the tag to the article , separated by commas"
+msgstr "Tentukan tag untuk artikel, dipisahkan dengan koma"
+
+msgid "Tag cloud"
+msgstr ""
+
+msgid "Category does not exist"
+msgstr ""
+
+msgid "Really you want to move the contents?"
+msgstr ""
+
+msgid "Successfully transferred"
+msgstr ""
+
+msgid "No partitions to move"
+msgstr ""
+
+msgid "Are you sure you want to remove content?"
+msgstr ""
+
+msgid "Successfully removed"
+msgstr ""
+
+msgid "Dirs"
+msgstr ""
+
+msgid "Category is not empty"
+msgstr ""
+
+msgid "Select action"
+msgstr ""
+
+msgid "Delete with movement"
+msgstr ""
+
+msgid "Remove all subdirectories and articles"
+msgstr ""
+
+msgid "Article does not exist"
+msgstr ""
+
+msgid "Invalid file encoding , preferably UTF-8"
+msgstr ""
+
+msgid "Invalid file format acceptable * .txt"
+msgstr ""
+
+msgid "The text of the article can not be edited , a large amount of data !!!"
+msgstr ""
+
+msgid "In ROOT"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Verified"
+msgstr ""
+
+msgid "Cloud of tags"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "Relevance"
+msgstr ""
+
+msgid "Alphabet"
+msgstr ""
+
+msgid "Changed"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "The author\"s name"
+msgstr ""
+
+msgid "The author\"s last name"
+msgstr ""
+
+msgid "Book name"
+msgstr ""
+
+msgid "Last comments"
+msgstr ""
+
+msgid "Rated articles"
+msgstr ""
+
+msgid "Reading"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Vote"
+msgstr ""
+

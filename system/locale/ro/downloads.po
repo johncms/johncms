@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Adăugat"
+
+msgid "Album"
+msgstr "Albumul"
+
+msgid "You have already rated this file"
+msgstr "Aveţi deja au evaluat acest fişier"
+
+msgid "Artist"
+msgstr ""
+
+msgid "Average rating"
+msgstr "Evaluare medie"
+
+msgid "Bitrate"
+msgstr ""
+
+msgid "Change"
+msgstr "Modificare"
+
+msgid "Change Description"
+msgstr "Editaţi Descriere"
+
+msgid "Change Screenshot"
+msgstr "Editaţi screenshot"
+
+msgid "Delete File"
+msgstr "Ştergeţi fişier"
+
+msgid "Delete Folder"
+msgstr "Ştergeţi Folder"
+
+msgid "Deleted"
+msgstr "Şterse"
+
+msgid "Description changed"
+msgstr "Descriere a schimbat"
+
+msgid "Downloads"
+msgstr "Descărcări"
+
+msgid "Downloads are closed"
+msgstr "Descarca închis"
+
+msgid "Duration"
+msgstr "Durata"
+
+msgid "File deleted"
+msgstr "Fişier şters"
+
+msgid "No file selected"
+msgstr "Nici un fişier selectat"
+
+msgid "Error when selecting a file"
+msgstr "De eroare atunci când selectarea unui fişier"
+
+msgid "File"
+msgstr "Fişier"
+
+msgid "Files"
+msgstr "Fişiere"
+
+msgid "Folder deleted"
+msgstr "Folder se elimină"
+
+msgid "Folder does not exist"
+msgstr "Dosar nu există"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Nume de dosar<br><small>Numai un mic litere latine, fara spatii</small>"
+
+msgid "The name for the list"
+msgstr "Titlul pentru lista"
+
+msgid "Folders"
+msgstr "Folderele"
+
+msgid "Found by Description"
+msgstr "Găsit de descriere"
+
+msgid "Found by Name"
+msgstr "Găsi de titlu"
+
+msgid "Image size"
+msgstr "Dimensiunea imaginii"
+
+msgid "File Import"
+msgstr "Import fişier"
+
+msgid "Make folder"
+msgstr "Creaţi un folder"
+
+msgid "Name changed"
+msgstr "Numele schimbat"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "În timpul această sesiune, dimensiunea imaginilor atunci când navigarea"
+
+msgid "Rate"
+msgstr "Evaluarea"
+
+msgid "Continue the cycle"
+msgstr "Continua buclă"
+
+msgid "Refresh Downloads"
+msgstr "Descărcare actualizare"
+
+msgid "Database updated"
+msgstr "Baza de date actualizate"
+
+msgid "Released"
+msgstr "An lansare"
+
+msgid "Rename Folder"
+msgstr "Redenumiţi folderul"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Salvaţi ca<br><small>Nume fişier de litere mici, fără spaţii.<br>Extensia de fişier nu este nevoie să introduceţi</small>"
+
+msgid "Screenshot"
+msgstr ""
+
+msgid "The name of the image contains invalid characters"
+msgstr "În numele de imagine sunt caractere invalide"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "Imaginea nu poate depăşi permisiunile 320 x 320 px"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Eroare în timpul descărcării de un screenshot"
+
+msgid "Screenshot uploaded"
+msgstr "Screenshot de încărcat"
+
+msgid "Select the size of pictures for preview"
+msgstr "Selectaţi dimensiunea imaginilor pentru previzualizare"
+
+msgid "Find file"
+msgstr "Cauta un fişier"
+
+msgid "You have not entered a search term"
+msgstr "Nu aţi introdus criteriile de căutare"
+
+msgid "Size"
+msgstr "Dimensiunea"
+
+msgid "Upload"
+msgstr "Descarca"
+
+msgid "Upload File"
+msgstr "Descărca fişierul"
+
+msgid "Upload Screenshot"
+msgstr "Încărcaţi un screenshot"
+
+msgid "Uploaded"
+msgstr "Descărcat"
+
+msgid "Thanks, your vote accepted"
+msgstr "Vă mulţumim pentru evaluare dumneavoastră acceptate"
+
+msgid "Total Votes"
+msgstr "Conta de vot"
+

@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+""
+
+msgid "User has been added to your contact list"
+msgstr "L\"utilisateur est ajouté à la liste de contacts"
+
+msgid "Block user"
+msgstr "Dans ignor"
+
+msgid "Block"
+msgstr "Bloquer"
+
+msgid "Blocklist"
+msgstr "Bloqués"
+
+msgid "Contact deleted"
+msgstr "Le contact est supprimé"
+
+msgid "Contact does not exist"
+msgstr "Le contact n\"existe pas"
+
+msgid "Contacts"
+msgstr ""
+
+msgid "Correspondence"
+msgstr "Salutations"
+
+msgid "Deleting messages"
+msgstr "La suppression messages"
+
+msgid "Unblock"
+msgstr "Débloquer"
+
+msgid "Incoming messages from"
+msgstr "Les messages entrants de"
+
+msgid "File"
+msgstr "Le fichier"
+
+msgid "Such file does not exist!"
+msgstr "Ce le fichier n\"existe pas!"
+
+msgid "No file selected!"
+msgstr "Le fichier n\"est sélectionné!"
+
+msgid "You cannot add yourself as a contact"
+msgstr "Lui-même ne peut pas être ajouter au contact"
+
+msgid "To Cabinet"
+msgstr "Dans le cabinet de"
+
+msgid "Incoming"
+msgstr "Boîte de réception"
+
+msgid "Incoming messages"
+msgstr "Les messages entrants"
+
+msgid "Message deleted"
+msgstr "Le message a été supprimé"
+
+msgid "Message does not exist"
+msgstr "Ce message n\"existe pas"
+
+msgid "My Contacts"
+msgstr "Mes contacts"
+
+msgid "New Messages"
+msgstr "Les nouveaux messages"
+
+msgid "Contact isn\"t chosen"
+msgstr "N\"est pas sélectionnée contact"
+
+msgid "Contact for removal isn\"t chosen"
+msgstr "N\"est pas sélectionnée contact pour supprimer"
+
+msgid "The message for removal isn\"t chosen"
+msgstr "Ne sélectionnez le message à supprimer"
+
+msgid "You really want to add contact?"
+msgstr "Voulez-vous vraiment ajouter un contact?"
+
+msgid "You really want to block contact?"
+msgstr "Voulez-vous vraiment bloquer un contact?"
+
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "Lorsque vous supprimez un contact est supprimé et l\"ensemble de la correspondance avec lui.<br>Voulez-vous vraiment supprimer?"
+
+msgid "You really want to remove the message?"
+msgstr "Voulez-vous vraiment supprimer ce message?"
+
+msgid "You really want to unblock contact?"
+msgstr "Voulez-vous vraiment le débloquer?"
+
+msgid "Send a message"
+msgstr "Envoi messages"
+
+msgid "User is blocked"
+msgstr "L\"utilisateur est bloqué"
+
+msgid "User is unblocked"
+msgstr "L\"utilisateur débloqué"
+
+msgid "This user can not be blocked"
+msgstr "Cet utilisateur vous ne pouvez pas bloquer"
+
+msgid "User not blocked"
+msgstr "L\"utilisateur n\"est pas bloqué"
+
+msgid "No new message"
+msgstr "De nouveaux pas de message"
+
+msgid "The sent messages for"
+msgstr "Envoyés message pour"
+
+msgid "Sent messages"
+msgstr "Envoyés messages"
+
+msgid "Sent"
+msgstr "Envoyés"
+
+msgid "System messages"
+msgstr "Système messages"
+
+msgid "To Whom"
+msgstr "Quelqu"
+
+msgid "Min. 2, Max. 5000 symbols"
+msgstr "Min. 2 Maxi. 5000 caractères"
+
+msgid "Maximum size"
+msgstr "La taille maximale"
+
+msgid "Select file"
+msgstr "Sélectionner le fichier"
+
+msgid "Account Blocked! You can not send messages."
+msgstr "Compte graveur bloqué! Vous ne pouvez pas envoyer de messages."
+
+msgid "Clear messages"
+msgstr "Nettoyer messages"
+
+msgid "Message sent"
+msgstr "Le message a été envoyé"
+
+msgid "Messages are deleted"
+msgstr "Messages supprimés"
+
+msgid "Confirm the deletion of messages"
+msgstr "Confirmez la suppression de messages"
+
+msgid "Personal correspondence with"
+msgstr "Personnelle salutations avec"
+
+msgid "Send a message"
+msgstr "Envoi messages"
+
+msgid "Specify the recipient\"s login"
+msgstr "Indiquez le nom d\"utilisateur du destinataire"
+
+msgid "Message cannot be empty"
+msgstr "Note à l\"intention ne peut pas être vide"
+
+msgid "Invalid message length. (Min. 2, Max. 5000 symbols)"
+msgstr "Non valide pour la longueur du message. (Min. 2 Maxi. 5000 caractères)"
+
+msgid "You cannot send messages to yourself"
+msgstr "Lui-même vous ne pouvez pas envoyer un message"
+
+msgid "Error uploading file!"
+msgstr "Erreur lors du déchargement d\"un fichier!"
+
+msgid "It is forbidden to upload files without a name!"
+msgstr "Interdit de télécharger des fichiers sans nom!"
+
+msgid "It is forbidden to upload files without expansion!"
+msgstr "Interdit de télécharger des fichiers sans extension!"
+
+msgid "The size of the file exceeds the maximum allowable upload!"
+msgstr "La taille du téléchargement d\"un fichier dépasse la taille maximale autorisée!"
+
+msgid "In the file name contains invalid characters."
+msgstr "Dans le nom du fichier contient des caractères non valides.<br>Les animaux caractères latins uniquement, chiffres et quelques signes ( .()+_- )<br>Les espaces sont interdits."
+
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "Type de fichier interdit! À l\"envoi seuls les fichiers ayant l\"extension suivante"
+
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "L\"utilisateur que Vous avez dans игноре. Envoi d\"un message n\"est pas possible."
+
+msgid "The user added you in the ignore list. Sending the message isn\"t possible."
+msgstr "L\"utilisateur ajouté Vous ignorer. Envoi d\"un message n\"est pas possible."
+
+msgid "System message upon registration"
+msgstr "Un message du système lors de l\"inscription"
+
+msgid "Tags"
+msgstr ""
+
+msgid "recipient login"
+msgstr "le nom d\"utilisateur du destinataire"
+
+msgid "current time"
+msgstr "l\"heure actuelle"
+
+msgid "Subject of the system message"
+msgstr "Sujet du message système"
+
+msgid "Spam"
+msgstr "Le spam"
+
+msgid "Function in development"
+msgstr "Fonction dans le développement"
+
+msgid "Sending messages"
+msgstr "Les messages de diffusion"
+
+msgid "To this user can write only contacts"
+msgstr "Cet utilisateur peuvent écrire des contacts"
+
+msgid "To this user can write only friends"
+msgstr "Cet utilisateur peuvent écrire que des amis"
+
+msgid "Come more often and here it will be pleasant to you."
+msgstr "Visitez le plus souvent, et ici Vous plaira."
+
+msgid "Yours faithfully, Administrator."
+msgstr "Cordialement, l\"Administration."
+
+msgid "We are glad to see you on our site."
+msgstr "Nous sommes heureux de Vous voir sur notre site."
+
+msgid "Welcome!"
+msgstr "Bienvenue!"
+
+msgid "Friends category"
+msgstr "La catégorie amis"
+

@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "禁止访问"
+
+msgid "For registered users only"
+msgstr "仅注册用户"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Add File"
+msgstr "添加文件"
+
+msgid "Add Smileys"
+msgstr "添加表情"
+
+msgid "Administration"
+msgstr "管理"
+
+msgid "Administrators"
+msgstr "管理员"
+
+msgid "Admin-Club"
+msgstr "管理团队"
+
+msgid "Admin Panel"
+msgstr "管理面板"
+
+msgid "Smiles for Administration"
+msgstr "管理笑容"
+
+msgid "Administrators events"
+msgstr "管理员动向"
+
+msgid "Albums"
+msgstr "相册"
+
+msgid "New comments in albums"
+msgstr "在相册的新评论"
+
+msgid "All"
+msgstr "全部"
+
+msgid "Appearance"
+msgstr "外观"
+
+msgid "Apply"
+msgstr "应用"
+
+msgid "Confirm"
+msgstr "审核"
+
+msgid "Location"
+msgstr "安排"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Authorized"
+msgstr "授权"
+
+msgid "Authorization failed"
+msgstr "授权失败"
+
+msgid "Avatar has been successfully installed"
+msgstr "头像成功安装"
+
+msgid "Avatar successfully uploaded"
+msgstr "头像上传成功"
+
+msgid "Avatar"
+msgstr "头像"
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "难道你真的想给自己定下这个头像？"
+
+msgid "Avatars"
+msgstr "头像"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Balance"
+msgstr "资产"
+
+msgid "Ban"
+msgstr "禁止"
+
+msgid "Banish"
+msgstr "黑名单"
+
+msgid "Ban type"
+msgstr "禁止类型"
+
+msgid "Banish"
+msgstr "黑名单"
+
+msgid "Tags (BBcode)"
+msgstr "（UBB代码）"
+
+msgid "Birthday"
+msgstr "生日"
+
+msgid "Birthdays"
+msgstr "生日"
+
+msgid "Block"
+msgstr "黑名单"
+
+msgid "Blog"
+msgstr "博客"
+
+msgid "Blogs"
+msgstr "博客"
+
+msgid "Browser"
+msgstr "浏览器"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Symbols on the picture"
+msgstr "验证码"
+
+msgid "Catalog"
+msgstr "目录"
+
+msgid "Category"
+msgstr "分类"
+
+msgid "Categories"
+msgstr "类型"
+
+msgid "Change password"
+msgstr "更改密码"
+
+msgid "Chat"
+msgstr "聊天"
+
+msgid "Please, check up correctness of the input data"
+msgstr "请检查输入的数据是否正确"
+
+msgid "Clear"
+msgstr "删除"
+
+msgid "Clear all"
+msgstr "删除全部"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "所有超过1天的消息已被删除"
+
+msgid "Full clearing is finished"
+msgstr "删除完毕"
+
+msgid "Clearing parameters"
+msgstr "删除选项"
+
+msgid "Clear all"
+msgstr "删除全部"
+
+msgid "Older than 1 day"
+msgstr "超过1天的"
+
+msgid "Older than 1 week"
+msgstr "超过1周的"
+
+msgid "Clear all messages from this user"
+msgstr "删除此用户的全部信息"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "所有超过1周以上的信息已被删除"
+
+msgid "Color"
+msgstr "颜色"
+
+msgid "Text Color"
+msgstr "文字颜色"
+
+msgid "Background Color"
+msgstr "背景颜色"
+
+msgid "Comments"
+msgstr "评论"
+
+msgid "Comments are closed"
+msgstr "评论被关闭"
+
+msgid "General list"
+msgstr "总清单"
+
+msgid "Community"
+msgstr "社团"
+
+msgid "Contacts"
+msgstr "联系人"
+
+msgid "In contacts"
+msgstr "在“联系人”"
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "Downloads"
+msgstr "下载"
+
+msgid "Views"
+msgstr "点击"
+
+msgid "Clock setting"
+msgstr "时钟设置"
+
+msgid "General setting"
+msgstr "一般设定"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Day"
+msgstr "日"
+
+msgid "Days"
+msgstr "天"
+
+msgid "Default"
+msgstr "默认"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Delete message"
+msgstr "删除信息"
+
+msgid "Delete all"
+msgstr "全部删除"
+
+msgid "Do you really want to delete?"
+msgstr "你确定要删除吗？"
+
+msgid "Description"
+msgstr "说明"
+
+msgid "Design"
+msgstr "风格设计"
+
+msgid "Communication"
+msgstr "对话"
+
+msgid "Digest"
+msgstr "精华"
+
+msgid "Direct URL"
+msgstr "直接URL"
+
+msgid "Discuss"
+msgstr "讨论"
+
+msgid "Display mode"
+msgstr "显示模式"
+
+msgid "Perform"
+msgstr "执行"
+
+msgid "Hide"
+msgstr "隐藏"
+
+msgid "Down"
+msgstr "下降"
+
+msgid "Download"
+msgstr "下载"
+
+msgid "Downloads"
+msgstr "下载"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Edit List"
+msgstr "编辑列表"
+
+msgid "Edited"
+msgstr "编辑"
+
+msgid "Enter verification code"
+msgstr "输入验证码"
+
+msgid "Enter site"
+msgstr "进入网站"
+
+msgid "ERROR"
+msgstr "错误"
+
+msgid "The requested page does not exists"
+msgstr "请求的页面不存在"
+
+msgid "Invalid address"
+msgstr "地址无效"
+
+msgid "Avatar select failed"
+msgstr "头像选择无效"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "说明应至少有2个字符长度"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "您不能设置的更高的管理职位"
+
+msgid "The required fields are not filled"
+msgstr "没有填写必填字段"
+
+msgid "You have not entered the message"
+msgstr "您还没有输入信息"
+
+msgid "You have not entered a name"
+msgstr "您还没有输入名称"
+
+msgid "You have not entered password"
+msgstr "您还没有输入密码"
+
+msgid "You have not entered text"
+msgstr "您还没有输入文本"
+
+msgid "You have not entered Title"
+msgstr "您还没有输入标题"
+
+msgid "File does not exist"
+msgstr "文件不存在"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "您不能频繁添加信息<br>请等待"
+
+msgid "You have not entered login"
+msgstr "喂！你还没有输入啊"
+
+msgid "Message already exists"
+msgstr "信息已存在"
+
+msgid "Text is too short"
+msgstr "文本太短"
+
+msgid "Administrator already replied to this message"
+msgstr "管理员已经回复了这个信息"
+
+msgid "User does not exists"
+msgstr "用户不存在"
+
+msgid "The security code is not correct"
+msgstr "验证码错误！"
+
+msgid "Bad data"
+msgstr "数据错误"
+
+msgid "Invalid length"
+msgstr "长度无效"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "字段的值超出了允许的限度"
+
+msgid "Incorrect Password"
+msgstr "无效的密码"
+
+msgid "Invalid characters"
+msgstr "无效的字符"
+
+msgid "No new events"
+msgstr "没有新的事件"
+
+msgid "Logout"
+msgstr "退出"
+
+msgid "External Link"
+msgstr "外部链接"
+
+msgid "Height of field"
+msgstr "高度"
+
+msgid "Width of field"
+msgstr "宽度"
+
+msgid "Max. File size"
+msgstr "最大文件"
+
+msgid "Files"
+msgstr "文件"
+
+msgid "Bold"
+msgstr "粗体"
+
+msgid "Italic"
+msgstr "斜体"
+
+msgid "Underline"
+msgstr "下划线"
+
+msgid "Forgot password"
+msgstr "忘记密码"
+
+msgid "Forum"
+msgstr "论坛"
+
+msgid "Forum post"
+msgstr "论坛发帖"
+
+msgid "Gallery"
+msgstr "相册"
+
+msgid "Guest"
+msgstr "访客"
+
+msgid "Guests"
+msgstr "访客"
+
+msgid "Gzip compression"
+msgstr "Gzip压缩"
+
+msgid "Guestbook"
+msgstr "留言板"
+
+msgid "The guestbook is closed"
+msgstr "留言板关闭"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "留言板是空的。<br><b>快来抢第一</b>"
+
+msgid "Happy birthday!!!"
+msgstr "祝你生日快乐！"
+
+msgid "Heading"
+msgstr "标题"
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Hi"
+msgstr ""
+
+msgid "Hide"
+msgstr "隐藏"
+
+msgid "History"
+msgstr "历史"
+
+msgid "Home"
+msgstr "首页"
+
+msgid "Hours"
+msgstr "时间"
+
+msgid "Ignore"
+msgstr "忽略"
+
+msgid "Details"
+msgstr "详情"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "訪問該網站的那一刻，只允許SV!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "訪問該網站的那一刻，只允許管理網站"
+
+msgid "Information"
+msgstr "信息"
+
+msgid "Info, FAQ"
+msgstr "帮助-常见问题"
+
+msgid "Offenses"
+msgstr "违规记录"
+
+msgid "IP Activity"
+msgstr "IP活动"
+
+msgid "Actual addresses"
+msgstr "实际地址"
+
+msgid "IP address"
+msgstr "IP地址"
+
+msgid "IP history"
+msgstr "IP记录"
+
+msgid "Karma"
+msgstr "人缘"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Select language"
+msgstr "选择语言"
+
+msgid "System language set"
+msgstr "系统语言设置"
+
+msgid "Last activity"
+msgstr "最后活动"
+
+msgid "Last IP"
+msgstr "最后IP"
+
+msgid "Last visit"
+msgstr "最后访问"
+
+msgid "Library"
+msgstr "书城"
+
+msgid "Mod. Library"
+msgstr "书城缓存"
+
+msgid "Lines per page"
+msgstr "行每页"
+
+msgid "Link"
+msgstr "链接"
+
+msgid "List"
+msgstr "列表"
+
+msgid "Empty list"
+msgstr "空列表"
+
+msgid "OFF"
+msgstr "关"
+
+msgid "ON"
+msgstr "开"
+
+msgid "or"
+msgstr "或"
+
+msgid "Login"
+msgstr "登录"
+
+msgid "Username"
+msgstr "用户名"
+
+msgid "General settings"
+msgstr "常规设置"
+
+msgid "Mail"
+msgstr "信息"
+
+msgid "New message"
+msgstr "新信息"
+
+msgid "Guys"
+msgstr "人"
+
+msgid "Message"
+msgstr "信息"
+
+msgid "Messages"
+msgstr "信息"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "大于2、小于30个字符"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "大于2，小于500个字符"
+
+msgid "Moderators"
+msgstr "版主"
+
+msgid "Move"
+msgstr "移动"
+
+msgid "My Smileys"
+msgstr "我的表情"
+
+msgid "Name"
+msgstr "姓名"
+
+msgid "New Files"
+msgstr "新文件"
+
+msgid "New reviews"
+msgstr "新评论"
+
+msgid "News"
+msgstr "公告"
+
+msgid "Archive news"
+msgstr "网站公告"
+
+msgid "Next"
+msgstr "下一步"
+
+msgid "Nick"
+msgstr "会员"
+
+msgid "Night"
+msgstr "夜"
+
+msgid "Nothing found for this request"
+msgstr "没有发现此请求"
+
+msgid "Not specified"
+msgstr "未指定"
+
+msgid "Optional field"
+msgstr "可选字段"
+
+msgid "Moderation"
+msgstr "适度"
+
+msgid "Online"
+msgstr "在线"
+
+msgid "Personal"
+msgstr "个人"
+
+msgid "Personal"
+msgstr "个人"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Photo Album"
+msgstr "相册"
+
+msgid "Photo Albums"
+msgstr "相册"
+
+msgid "poins"
+msgstr "分数"
+
+msgid "posts"
+msgstr "邮件"
+
+msgid "Preview"
+msgstr "预览"
+
+msgid "Private"
+msgstr "私人"
+
+msgid "Profile"
+msgstr "资料"
+
+msgid "Quiz"
+msgstr "测验"
+
+msgid "Quick jump"
+msgstr "快速通道"
+
+msgid "Rating"
+msgstr "等级"
+
+msgid "Read Only"
+msgstr "只读"
+
+msgid "Reason"
+msgstr "原因"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>注意！</h3>你将要离开本网站去其他网站"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "我们不负责外部网站的安全！"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "建议别泄露您的信息，有关"
+
+msgid "(Login, Password), on third party sites"
+msgstr "（用户名，密码），在第三方网站"
+
+msgid "Go to link"
+msgstr "转到链接"
+
+msgid "Registration"
+msgstr "注册"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "很抱歉，但你的注册申请还没有审核<br> 请耐心等待"
+
+msgid "Remains"
+msgstr "逗留"
+
+msgid "Remember"
+msgstr "记住"
+
+msgid "Repeat"
+msgstr "重复"
+
+msgid "Reply"
+msgstr "回复"
+
+msgid "Reset setting"
+msgstr "重置设置"
+
+msgid "New reviews"
+msgstr "新评论"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "搜索不区分大小写<br>结果按相关程度排序"
+
+msgid "Search History"
+msgstr "搜索历史"
+
+msgid "Do you really want to clear the search history?"
+msgstr "你真的要清除搜索历史记录？"
+
+msgid "New search"
+msgstr "新的搜索"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "搜索昵称时不区分大小写字母。例如 <b>UsEr</b>和<b>user</b> 是相同的"
+
+msgid "Query results"
+msgstr "搜索结果"
+
+msgid "Your search did not match any results"
+msgstr "没有任何结果匹配"
+
+msgid "Find a user"
+msgstr "查找用户"
+
+msgid "Sec."
+msgstr "秒"
+
+msgid "seconds"
+msgstr "秒"
+
+msgid "Section"
+msgstr "版块"
+
+msgid "Sections"
+msgstr "版块"
+
+msgid "Security"
+msgstr "安全"
+
+msgid "Select"
+msgstr "选择"
+
+msgid "Send"
+msgstr "发送"
+
+msgid "Set to Profile"
+msgstr "设置在配置文件"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Time settings"
+msgstr "时间设置"
+
+msgid "Shifting time"
+msgstr "改变时间"
+
+msgid "Options set to default"
+msgstr "设置为默认选项"
+
+msgid "Setting saved"
+msgstr "保存设置"
+
+msgid "Show"
+msgstr "显示"
+
+msgid "Show period"
+msgstr "显示时间"
+
+msgid "Site access"
+msgstr "訪問網站"
+
+msgid "New on the site"
+msgstr "该网站上的公告"
+
+msgid "Site News"
+msgstr "网站新闻"
+
+msgid "Stay on site"
+msgstr "在网站上"
+
+msgid "Smileys"
+msgstr "表情"
+
+msgid "Sort"
+msgstr "排序"
+
+msgid "Spoiler"
+msgstr "扰流板"
+
+msgid "Statistic"
+msgstr "统计"
+
+msgid "My Statistic"
+msgstr "我的统计"
+
+msgid "User Statistic"
+msgstr "用户统计"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Supervisors"
+msgstr "超级管理员"
+
+msgid "System Functions"
+msgstr "系统功能"
+
+msgid "System Language"
+msgstr "系统语言"
+
+msgid "System Time"
+msgstr "系统时间"
+
+msgid "System Settings"
+msgstr "系统设置"
+
+msgid "Blue"
+msgstr "蓝色"
+
+msgid "Bold"
+msgstr "粗体"
+
+msgid "PHP code"
+msgstr "PHP代码"
+
+msgid "Green"
+msgstr "绿色"
+
+msgid "Italic"
+msgstr "斜体"
+
+msgid "URL"
+msgstr "网址"
+
+msgid "Bulleted list"
+msgstr "符号列表"
+
+msgid "Quote"
+msgstr "引用"
+
+msgid "Red"
+msgstr "红色"
+
+msgid "Strike"
+msgstr "罢工"
+
+msgid "Underline"
+msgstr "下划线"
+
+msgid "Term"
+msgstr "术语"
+
+msgid "Text"
+msgstr "文本"
+
+msgid "Input text"
+msgstr "输入文本"
+
+msgid "Text size"
+msgstr "文本大小"
+
+msgid "Themes"
+msgstr "主题"
+
+msgid "Time"
+msgstr "时间"
+
+msgid "Day"
+msgstr "日"
+
+msgid "Days"
+msgstr "天"
+
+msgid "Days"
+msgstr "天"
+
+msgid "Time limit"
+msgstr "时间限制"
+
+msgid "Shifting time"
+msgstr "改变时间"
+
+msgid "Title"
+msgstr "标题"
+
+msgid "In Chat"
+msgstr "返回聊天室"
+
+msgid "To the profile"
+msgstr "返回资料"
+
+msgid "In forum"
+msgstr "返回论坛"
+
+msgid "Back to news"
+msgstr "返回公告"
+
+msgid "Go to page"
+msgstr "转到页面"
+
+msgid "Show"
+msgstr "显示"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Top 10 activity"
+msgstr "Top 10 活跃"
+
+msgid "Most commenting"
+msgstr "最多评论"
+
+msgid "Most active in Forum"
+msgstr "论坛最活跃"
+
+msgid "Most active in Guestbook"
+msgstr "留言板最活跃"
+
+msgid "Best Karma"
+msgstr "人缘最好"
+
+msgid "Total"
+msgstr "共有"
+
+msgid "Hits"
+msgstr "点击"
+
+msgid "hits"
+msgstr "点击"
+
+msgid "Translit"
+msgstr "翻译"
+
+msgid "Unread"
+msgstr "未读"
+
+msgid "Format address http://url.com"
+msgstr "地址的格式http://url.com"
+
+msgid "Up"
+msgstr "向上"
+
+msgid "This user does not exists"
+msgstr "此用户不存在"
+
+msgid "Useful"
+msgstr "实用"
+
+msgid "Users"
+msgstr "会员"
+
+msgid "Clean Users"
+msgstr "清洁用户"
+
+msgid "Users list"
+msgstr "用户列表"
+
+msgid "New users"
+msgstr "新用户"
+
+msgid "Banned users"
+msgstr "禁止的用户"
+
+msgid "Waiting confirmation"
+msgstr "等待确认"
+
+msgid "Top Activity"
+msgstr "活跃"
+
+msgid "Verification code"
+msgstr "验证码"
+
+msgid "Viewing"
+msgstr "查看"
+
+msgid "Display mode"
+msgstr "显示模式"
+
+msgid "Vote"
+msgstr "投票"
+
+msgid "Against"
+msgstr "反对"
+
+msgid "For"
+msgstr "同意"
+
+msgid "Polls"
+msgstr "投票"
+
+msgid "Welcome to"
+msgstr "欢迎光临"
+
+msgid "Where?"
+msgstr "在哪里？"
+
+msgid "Who is online?"
+msgstr "看看谁在这"
+
+msgid "No limits"
+msgstr "没有限制"
+
+msgid "Girls"
+msgstr "女孩"
+
+msgid "Write"
+msgstr "编写"
+
+msgid "Yesterday"
+msgstr "昨天"
+

@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "О\"zi haqida"
+
+msgid "Max. 500 characters"
+msgstr "Маks. 500 simvol"
+
+msgid "Verification code"
+msgstr "tekshiruvchi kod"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Agar sizga rasm ko\"rinmayotgan bolsa u holda brauzeringizdan rasmni yoqing"
+
+msgid "Enter"
+msgstr "KIRISH"
+
+msgid "You have not entered nick"
+msgstr "logini kiriting"
+
+msgid "Too long nick"
+msgstr "login judayam uzun"
+
+msgid "This nick already in use"
+msgstr "bu nik band"
+
+msgid "Too long password"
+msgstr "parol judayam uzun"
+
+msgid "You have not selected genger"
+msgstr "jins tanlanmadi"
+
+msgid "Login"
+msgstr "LOGIN"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Мin. 2, mаks. 15 simvol.<br>rus va lotin alifbosidagi harflar, sonlar va belgilar - = @ ! ? ~ _ ( ) [ ] * (0 dan tashqari)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "admin registratsiyani tasdiqlaguncha kuting"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "registratsiya tasdiqlangandan song siz saytdan bemalol foydalanishingiz mumkin.<br>tasdiqlash 1-2 kunda amalga oshiriladi"
+
+msgid "Name"
+msgstr "Ismingiz"
+
+msgid "Max. 30 characters"
+msgstr "Маks. 30 simvol"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Мin. 3, макс. 10 simvol.<br>sonlar va lotin alfavitidagi harflar ruxsatlangan"
+
+msgid "Registration"
+msgstr "ROYHATLANISH"
+
+msgid "Registration temporarily closed"
+msgstr "Registratsiya yopiq"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Jinni g\"inni niklani registratsiyadan otkazmang. Ula barbr ochiriladi<br>proksi orqali royhatdan otgan profilar ham ochiriladi"
+
+msgid "Gender"
+msgstr "JINS"
+
+msgid "Male"
+msgstr "ERKAK"
+
+msgid "Female"
+msgstr "AYOL"
+
+msgid "Your registratiton data"
+msgstr "Siz royhatdan o\"tdingiz"
+
+msgid "Your ID"
+msgstr "Sizning ID"
+
+msgid "Your username"
+msgstr "Loginingiz"
+
+msgid "Your password"
+msgstr "Parolingiz"
+
+msgid "Link to autologin"
+msgstr "avtokirish uchun silka"
+

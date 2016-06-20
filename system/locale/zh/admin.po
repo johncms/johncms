@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+""
+
+msgid "to authorised"
+msgstr "授权"
+
+msgid "Access denied"
+msgstr "访问被拒绝"
+
+msgid "Access opened"
+msgstr "访问开启"
+
+msgid "guests can write in the guestbook"
+msgstr "游客可以在留言本留言"
+
+msgid "Administration can access to all closed modules and comments"
+msgstr "管理员可以进入全封闭模式和意见"
+
+msgid "Permissions"
+msgstr "权限"
+
+msgid "mith moderation"
+msgstr "适度"
+
+msgid "Adaptive"
+msgstr "自适应"
+
+msgid "Advertisement"
+msgstr "广告"
+
+msgid "Agreement"
+msgstr "协议"
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr "防注入"
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "昼夜模式自动切换及设置指定时间"
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "如果有一位管理员在线〔在网站〕，请切换白天模式！如果没有管理员在线，请切换夜晚模式！"
+
+msgid "Antiflood setting"
+msgstr "防注入设置"
+
+msgid "Min. 4, max. 300 seconds"
+msgstr "最小4秒，最大300秒"
+
+msgid "Anti-Spyware"
+msgstr "反间谍软件"
+
+msgid "Scanning distributive"
+msgstr "扫描分配"
+
+msgid "Files identification which are not included in the original distributive"
+msgstr "文件鉴定是不包括在原有得分配"
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr "分配包含互补性文件 <br> <small> 警告!如果下面列出的文件不属于你的附加模块，你又不能保证它们的安全，请将其删除！它们可能对您的网站造成危险！</small>"
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>非常好!!!</h3>文件列表对应得分配"
+
+msgid "Scanner menu"
+msgstr "扫描菜单"
+
+msgid "Files image is not created"
+msgstr "图像文件不能创建"
+
+msgid "Rescan"
+msgstr "重新扫描"
+
+msgid "Scan mode"
+msgstr "扫描模式"
+
+msgid "Creating a snapshot"
+msgstr "创建快照"
+
+msgid "Snapshot successfully created"
+msgstr "快照创建成功"
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr "从网站的所有脚本文件中建立快照，统计他们并检验然后储存到数据库中"
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr "此过程创建一个列表中的所有脚本文件到您的网站，计算校验和写入数据库，以供日后比较！"
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr "<b>警告!!!</b><br>在继续之前，确保所有文件已在扫描模式被确定是可靠的，不包含任何未经授权的修改！"
+
+msgid "Scanning snapshot"
+msgstr "扫描快照"
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr "快照不一致<br><small>警告！你需要注意列表中的所有文件，它们已经被添加或修改，因为图像创建！</small>"
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr "与之前提出的方式比较文件和校验清单！<br>可以让您识别不明的文件，以及未授权的更改！"
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr "正常! <br>与先前做出的形象相比，所有有文件是一致的！"
+
+msgid "Ban has been successfully removed"
+msgstr "禁令已成功删除！"
+
+msgid "Are you sure to remove ban?"
+msgstr "您一定要删除禁令吗？"
+
+msgid "Ban details"
+msgstr "禁止细节"
+
+msgid "Ban panel"
+msgstr "禁止面板"
+
+msgid "Browsers"
+msgstr "浏览器"
+
+msgid "Counter successfully added"
+msgstr "计数器成功添加"
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "警告！<br>确保您已正确输入代码，它必须符合XML的标准<br>如果您单击&quot;查看&quot;或者当XHTML错误发生时,按一下在您的浏览器的&quot;返回&quot;按键，返回这种形式，并纠正错误."
+
+msgid "Delete counter"
+msgstr "删除计数器"
+
+msgid "Counter successfully changed!"
+msgstr "计数器成功改变!"
+
+msgid "On all pages showing option 1"
+msgstr "所有网页显示选项 1"
+
+msgid "On all pages showing option 2"
+msgstr "所有网页显示选项 2"
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "在主页面显示选项1，在其他页面显示选项2"
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr "在主页面显示选项1，在其他页面显示选项2<br>如果&quot;选项2&quot;没有填写, 计数器只会出现在主页上"
+
+msgid "Option 1"
+msgstr "选项1"
+
+msgid "Code for main page"
+msgstr "主页的代码"
+
+msgid "Option 2"
+msgstr "选项2"
+
+msgid "Code for other pages"
+msgstr "其他页面的代码"
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr "如果计数器显示正确，没有错误，单击&quot;保存&quot;按键.<br>否则请单击后退按键，纠正错误"
+
+msgid "Counter"
+msgstr "计数器"
+
+msgid "Begining day"
+msgstr "开启白天模式"
+
+msgid "End of day"
+msgstr "结束白天模式"
+
+msgid "Night mode"
+msgstr "夜间模式"
+
+msgid "Inactive profiles"
+msgstr "无效的配置"
+
+msgid "Inactive profiles deleted"
+msgstr "删除无效的配置"
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "此类别包括概况，记录超过6个月和最后一次访问日期在5个月前或未访问的活动。<br>可以安全的删除它们."
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr "没有填写正确的 &quot;颜色&quot;"
+
+msgid "First address is entered incorrectly"
+msgstr "第一个地址输入错误"
+
+msgid "Second address is entered incorrectly"
+msgstr "第二个地址输入错误"
+
+msgid "You cannot delete higher administration"
+msgstr "您无法删除比您高级的管理"
+
+msgid "Title + Text"
+msgstr "标题 + 文本"
+
+msgid "Include in a map"
+msgstr "包括在地图上"
+
+msgid "Date set"
+msgstr "日期设置"
+
+msgid "Ban by IP"
+msgstr "禁止IP"
+
+msgid "Unban all IP"
+msgstr "解除所有禁止IP"
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr "IP 禁止表成功清除.<br>解除所有禁止地址"
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr "<b>警告!</b> IP 禁止表将被清除<br>确定解除禁止的IP吗?"
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "不能禁止自己的IP范围"
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr "您输入的地址与数据库中的冲突"
+
+msgid "Ban deleted"
+msgstr "删除禁止"
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "例如:<br><span class=\"red\">10.5.7.1</span> - 禁止一个地址<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - 禁止这一范围的地址.<br><span class=\"red\">10.5.*.*</span> - 禁止一个掩码. 将从子网禁止由0开始到 255结束的地址"
+
+msgid "IP Ban"
+msgstr "禁止IP"
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "输入一个单一的地址，不允许掩码和范围"
+
+msgid "Ban range address"
+msgstr "禁止范围地址"
+
+msgid "Ban on the subnet mask"
+msgstr "禁止子网掩码"
+
+msgid "Ban IP address"
+msgstr "禁止IP地址"
+
+msgid "Search IP"
+msgstr "搜索IP"
+
+msgid "This address not in the database"
+msgstr "这不是数据库中的地址"
+
+msgid "Forbid to vote for the administration"
+msgstr "禁止管理投票"
+
+msgid "Are you sure you want to drop karma?"
+msgstr "你确定要删除人缘?"
+
+msgid "Karma is dropped"
+msgstr "人缘下降"
+
+msgid "Drop karma"
+msgstr "下降人缘"
+
+msgid "Restriction for vote"
+msgstr "限制投票"
+
+msgid "Voices per day"
+msgstr "每天的票数"
+
+msgid "Default language"
+msgstr "预设语言"
+
+msgid "You cannot delete language established for system by default"
+msgstr "不能删除系统默认语言"
+
+msgid "Are you sure you want to delete language?"
+msgstr "你确定要删除语言吗?"
+
+msgid "Failed select language"
+msgstr "无法选择语言"
+
+msgid "Language Settings"
+msgstr "语言设置"
+
+msgid "System Language"
+msgstr "系统语言"
+
+msgid "Lines"
+msgstr "行"
+
+msgid "Add link"
+msgstr "添加链接"
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "格式FFFFFF, 如果你不想使用链接的颜色，不需要填此项"
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "链接存在天数将自动从页面中删除<br>0 - 无限"
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "在更改名称、更新页面时，必须填写名称 |"
+
+msgid "All pages"
+msgstr "所有页面"
+
+msgid "On all but the main"
+msgstr "在所有页面"
+
+msgid "Only main page"
+msgstr "只在首页"
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "链接点击次数将自动从页面中删除<br>0 - 无限"
+
+msgid "Link successfully added"
+msgstr "链接添加成功"
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "确定要删除所有不活动的链接吗?"
+
+msgid "Are you sure want to delete link?"
+msgstr "确定删除链接?"
+
+msgid "Direct Link"
+msgstr "直接链接"
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr "如果直接链接打开，点击次数统计信息将不被计算"
+
+msgid "Edit link"
+msgstr "编辑链接"
+
+msgid "Link successfully changed!"
+msgstr "链接修改成功!"
+
+msgid "Are you sure you want to hide this link?"
+msgstr "确定要隐藏这个链接吗?"
+
+msgid "Are you sure you want to restore this link?"
+msgstr "确定要还原这个链接吗?"
+
+msgid "Active links"
+msgstr "活动链接"
+
+msgid "Styling links"
+msgstr "样式化链接"
+
+msgid "Over the counter"
+msgstr "在计数器"
+
+msgid "Above logo"
+msgstr "关于logo"
+
+msgid "Under counter"
+msgstr "根据计数器"
+
+msgid "Under menu"
+msgstr "根据菜单"
+
+msgid "Delete inactive links"
+msgstr "删除不活动链接"
+
+msgid "This place is occupied"
+msgstr "这个地方被占用"
+
+msgid "META tags"
+msgstr "META标签"
+
+msgid "Keywords"
+msgstr "关键词"
+
+msgid "Description"
+msgstr "说明"
+
+msgid "Option module not specified, will use default module"
+msgstr "选择的模块没有指定，将使用默认模块"
+
+msgid "Include module"
+msgstr "包括模块"
+
+msgid "Modules"
+msgstr "模块"
+
+msgid "News count"
+msgstr "新闻统计"
+
+msgid "How many days to show?"
+msgstr "显示多少天？"
+
+msgid "News on the mainpage"
+msgstr "新闻在首页"
+
+msgid "Operation mode"
+msgstr "操作模式"
+
+msgid "Layout"
+msgstr "布局"
+
+msgid "Redirect"
+msgstr "重定向"
+
+msgid "Redicect URL"
+msgstr "重定向URL"
+
+msgid "Update Description"
+msgstr "更新说明"
+
+msgid "Descriptions updated"
+msgstr "说明已更新"
+
+msgid "Update smileys"
+msgstr "更新表情"
+
+msgid "Registration confirmation"
+msgstr "注册审核"
+
+msgid "Registration is confirmed"
+msgstr "注册审核成功"
+
+msgid "Confirm all"
+msgstr "审核全部"
+
+msgid "Delete all"
+msgstr "删除全部"
+
+msgid "All unconfirmed registrations were removed"
+msgstr "所有未经审核的注册将被移除"
+
+msgid "Remove IP"
+msgstr "移除IP"
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "所有未经审核的注册选定IP删除"
+
+msgid "Search by nick"
+msgstr "搜索会员"
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr "<small><b>查询示例:</b><br><span class=\"red\">10.5.7.1</span> - 为一个单一的地址搜索<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - 为一个范围的地址搜索(禁止使用掩码符号*)<br><span class=\"red\">10.5.*.*</span> - 掩码搜索. 将搜索从0开始到255结束的所有子网地址</small>"
+
+msgid "Server Time"
+msgstr "服务器时间"
+
+msgid "Show all"
+msgstr "全部显示"
+
+msgid "Only computers"
+msgstr "只显示电脑"
+
+msgid "Only guests"
+msgstr "只显示游客"
+
+msgid "site closed, except administration"
+msgstr "關閉所有，但管理"
+
+msgid "site closed, except SV!"
+msgstr "關閉所有，但SV！"
+
+msgid "Site Map"
+msgstr "网站地图"
+
+msgid "Web site address without the slash at the end"
+msgstr "电脑网站网址在结尾没有斜线"
+
+msgid "Site copyright"
+msgstr "网站版权"
+
+msgid "Site E-mail"
+msgstr "网站E-mail"
+
+msgid "System settings"
+msgstr "系统设置"
+
+msgid "Error updating cache"
+msgstr "更新缓存失败"
+
+msgid "Cache successfully updated!"
+msgstr "更新缓存成功"
+
+msgid "Super Moderators"
+msgstr "超级版主"
+
+msgid "System"
+msgstr "系统"
+
+msgid "Everyone"
+msgstr "每个人"
+
+msgid "Guests"
+msgstr "游客"
+
+msgid "Users"
+msgstr "会员"
+
+msgid "Administration"
+msgstr "管理员"
+
+msgid "Delete user"
+msgstr "删除会员"
+
+msgid "Are you sure that you want to delete this user?"
+msgstr "确定要删除这个会员吗?"
+
+msgid "Cleaning activities"
+msgstr "清除活动"
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr "当清除帖子时，发表在论坛上的将被&quot;隐藏&quot;"
+
+msgid "User deleted"
+msgstr "会员已删除"
+
+msgid "Database cleanup"
+msgstr "数据库清理"
+
+msgid "On registration"
+msgstr "关于注册"
+

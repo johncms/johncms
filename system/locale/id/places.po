@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Administrasi daftar</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Tampak Album</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Daftar ulang tahun</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">Dibaca FAQ</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Lihat siapa yang di Forum?</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr "<a href=\"#home#/guestbook/index.php\">Buku tamu</a>"
+
+msgid "Here, in the list"
+msgstr "Di sini, dalam daftar"
+
+msgid "On the Homepage"
+msgstr "Di halaman depan"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Di perpustakaan</a>"
+
+msgid "Personal correspondence"
+msgstr "Korespondensi pribadi"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Membaca berita</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Siapa yang online?</a>"
+
+msgid "Profile"
+msgstr "Di profil"
+
+msgid "Personal Profile"
+msgstr "Di profil"
+
+msgid "Registered on the site"
+msgstr "Terdaftar di situs"
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">Di Daftar member</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">Tampak Top pengguna</a>"
+

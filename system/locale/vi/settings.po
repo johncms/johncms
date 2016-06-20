@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 ký tự"
+
+msgid "1000 characters"
+msgstr "1000 ký tự"
+
+msgid "3000 characters"
+msgstr "3000 ký tự"
+
+msgid "Always"
+msgstr "luôn"
+
+msgid "Stick 1-st post"
+msgstr "Khóa 1-st bài"
+
+msgid "Use textarea"
+msgstr "Sử dụng"
+
+msgid "Unread"
+msgstr "chưa đọc"
+
+msgid "Basic settings"
+msgstr "cơ bản cài đặt"
+
+msgid "Enter message"
+msgstr "Tin nhắn"
+
+msgid "My settings"
+msgstr "Cài đặt của tôi"
+
+msgid "never"
+msgstr "Không bao giờ"
+
+msgid "not cut"
+msgstr "Không cắt"
+
+msgid "Or enter yours"
+msgstr "Hoặc nhập của bạn"
+
+msgid "Cropping posts"
+msgstr "thu hoạch bài"
+
+msgid "Contacts"
+msgstr "Danh bạ"
+

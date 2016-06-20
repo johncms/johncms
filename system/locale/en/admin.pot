@@ -1,0 +1,524 @@
+msgid ""
+msgstr ""
+
+msgid "to authorised"
+msgstr ""
+
+msgid "Access denied"
+msgstr ""
+
+msgid "Access opened"
+msgstr ""
+
+msgid "guests can write in the guestbook"
+msgstr ""
+
+msgid "Administration can access to all closed modules and comments"
+msgstr ""
+
+msgid "Permissions"
+msgstr ""
+
+msgid "mith moderation"
+msgstr ""
+
+msgid "Adaptive"
+msgstr ""
+
+msgid "Advertisement"
+msgstr ""
+
+msgid "Agreement"
+msgstr ""
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr ""
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr ""
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr ""
+
+msgid "Antiflood setting"
+msgstr ""
+
+msgid "Min. 4, max. 300 seconds"
+msgstr ""
+
+msgid "Anti-Spyware"
+msgstr ""
+
+msgid "Scanning distributive"
+msgstr ""
+
+msgid "Files identification which are not included in the original distributive"
+msgstr ""
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr ""
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr ""
+
+msgid "Scanner menu"
+msgstr ""
+
+msgid "Files image is not created"
+msgstr ""
+
+msgid "Rescan"
+msgstr ""
+
+msgid "Scan mode"
+msgstr ""
+
+msgid "Creating a snapshot"
+msgstr ""
+
+msgid "Snapshot successfully created"
+msgstr ""
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr ""
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr ""
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr ""
+
+msgid "Scanning snapshot"
+msgstr ""
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr ""
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr ""
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr ""
+
+msgid "Ban has been successfully removed"
+msgstr ""
+
+msgid "Are you sure to remove ban?"
+msgstr ""
+
+msgid "Ban details"
+msgstr ""
+
+msgid "Ban panel"
+msgstr ""
+
+msgid "Browsers"
+msgstr ""
+
+msgid "Counter successfully added"
+msgstr ""
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr ""
+
+msgid "Delete counter"
+msgstr ""
+
+msgid "Counter successfully changed!"
+msgstr ""
+
+msgid "On all pages showing option 1"
+msgstr ""
+
+msgid "On all pages showing option 2"
+msgstr ""
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr ""
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr ""
+
+msgid "Option 1"
+msgstr ""
+
+msgid "Code for main page"
+msgstr ""
+
+msgid "Option 2"
+msgstr ""
+
+msgid "Code for other pages"
+msgstr ""
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr ""
+
+msgid "Counter"
+msgstr ""
+
+msgid "Begining day"
+msgstr ""
+
+msgid "End of day"
+msgstr ""
+
+msgid "Night mode"
+msgstr ""
+
+msgid "Inactive profiles"
+msgstr ""
+
+msgid "Inactive profiles deleted"
+msgstr ""
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr ""
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr ""
+
+msgid "First address is entered incorrectly"
+msgstr ""
+
+msgid "Second address is entered incorrectly"
+msgstr ""
+
+msgid "You cannot delete higher administration"
+msgstr ""
+
+msgid "Title + Text"
+msgstr ""
+
+msgid "Include in a map"
+msgstr ""
+
+msgid "Date set"
+msgstr ""
+
+msgid "Ban by IP"
+msgstr ""
+
+msgid "Unban all IP"
+msgstr ""
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr ""
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr ""
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr ""
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr ""
+
+msgid "Ban deleted"
+msgstr ""
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr ""
+
+msgid "IP Ban"
+msgstr ""
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr ""
+
+msgid "Ban range address"
+msgstr ""
+
+msgid "Ban on the subnet mask"
+msgstr ""
+
+msgid "Ban IP address"
+msgstr ""
+
+msgid "Search IP"
+msgstr ""
+
+msgid "This address not in the database"
+msgstr ""
+
+msgid "Forbid to vote for the administration"
+msgstr ""
+
+msgid "Are you sure you want to drop karma?"
+msgstr ""
+
+msgid "Karma is dropped"
+msgstr ""
+
+msgid "Drop karma"
+msgstr ""
+
+msgid "Restriction for vote"
+msgstr ""
+
+msgid "Voices per day"
+msgstr ""
+
+msgid "Default language"
+msgstr ""
+
+msgid "You cannot delete language established for system by default"
+msgstr ""
+
+msgid "Are you sure you want to delete language?"
+msgstr ""
+
+msgid "Failed select language"
+msgstr ""
+
+msgid "Language Settings"
+msgstr ""
+
+msgid "System Language"
+msgstr ""
+
+msgid "Lines"
+msgstr ""
+
+msgid "Add link"
+msgstr ""
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr ""
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr ""
+
+msgid "All pages"
+msgstr ""
+
+msgid "On all but the main"
+msgstr ""
+
+msgid "Only main page"
+msgstr ""
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+msgid "Link successfully added"
+msgstr ""
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr ""
+
+msgid "Are you sure want to delete link?"
+msgstr ""
+
+msgid "Direct Link"
+msgstr ""
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr ""
+
+msgid "Edit link"
+msgstr ""
+
+msgid "Link successfully changed!"
+msgstr ""
+
+msgid "Are you sure you want to hide this link?"
+msgstr ""
+
+msgid "Are you sure you want to restore this link?"
+msgstr ""
+
+msgid "Active links"
+msgstr ""
+
+msgid "Styling links"
+msgstr ""
+
+msgid "Over the counter"
+msgstr ""
+
+msgid "Above logo"
+msgstr ""
+
+msgid "Under counter"
+msgstr ""
+
+msgid "Under menu"
+msgstr ""
+
+msgid "Delete inactive links"
+msgstr ""
+
+msgid "This place is occupied"
+msgstr ""
+
+msgid "META tags"
+msgstr ""
+
+msgid "Keywords"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Option module not specified, will use default module"
+msgstr ""
+
+msgid "Include module"
+msgstr ""
+
+msgid "Modules"
+msgstr ""
+
+msgid "News count"
+msgstr ""
+
+msgid "How many days to show?"
+msgstr ""
+
+msgid "News on the mainpage"
+msgstr ""
+
+msgid "Operation mode"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+msgid "Redirect"
+msgstr ""
+
+msgid "Redicect URL"
+msgstr ""
+
+msgid "Update Description"
+msgstr ""
+
+msgid "Descriptions updated"
+msgstr ""
+
+msgid "Update smileys"
+msgstr ""
+
+msgid "Registration confirmation"
+msgstr ""
+
+msgid "Registration is confirmed"
+msgstr ""
+
+msgid "Confirm all"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "All unconfirmed registrations were removed"
+msgstr ""
+
+msgid "Remove IP"
+msgstr ""
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr ""
+
+msgid "Search by nick"
+msgstr ""
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr ""
+
+msgid "Server Time"
+msgstr ""
+
+msgid "Show all"
+msgstr ""
+
+msgid "Only computers"
+msgstr ""
+
+msgid "Only guests"
+msgstr ""
+
+msgid "site closed, except administration"
+msgstr ""
+
+msgid "site closed, except SV!"
+msgstr ""
+
+msgid "Site Map"
+msgstr ""
+
+msgid "Web site address without the slash at the end"
+msgstr ""
+
+msgid "Site copyright"
+msgstr ""
+
+msgid "Site E-mail"
+msgstr ""
+
+msgid "System settings"
+msgstr ""
+
+msgid "Error updating cache"
+msgstr ""
+
+msgid "Cache successfully updated!"
+msgstr ""
+
+msgid "Super Moderators"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "Everyone"
+msgstr ""
+
+msgid "Guests"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Delete user"
+msgstr ""
+
+msgid "Are you sure that you want to delete this user?"
+msgstr ""
+
+msgid "Cleaning activities"
+msgstr ""
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr ""
+
+msgid "User deleted"
+msgstr ""
+
+msgid "Database cleanup"
+msgstr ""
+
+msgid "On registration"
+msgstr ""

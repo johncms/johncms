@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "All"
+msgstr "Semua"
+
+msgid "Comment"
+msgstr "Komentar"
+
+msgid "Do you really want to delete all reviews about user"
+msgstr "Apakah Anda benar-benar ingin menghapus semua Pengguna"
+
+msgid "Do you really want to delete comment"
+msgstr "Apakah Anda yakin ingin menghapus ini"
+
+msgid "Limit votes for today. New voices will be added"
+msgstr "Batas suara untuk hari ini. suara baru akan dinilai"
+
+msgid "It is forbidden to vote for administration"
+msgstr "Untuk administrasi diperbolehkan memilih"
+
+msgid "You are not allowed to vote for users"
+msgstr "Anda tidak diperbolehkan untuk memilih sebagai imbalan bagi pengguna"
+
+msgid "Cheating karma is forbidden"
+msgstr "Cheat karma dilarang"
+
+msgid "Users can take part in voting if they have stayed on a site not less "
+msgstr "Dalam pemungutan suara dapat mengambil bagian, hanya pengguna yang telah bertahan di situs tidak kurang"
+
+msgid "and their score on the forum"
+msgstr "Dan mendapat poin di forum"
+
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Untuk satu pengguna yang dapat mengambil polling sekali setiap 24 jam"
+
+msgid "Done"
+msgstr "Ya"
+
+msgid "Negative"
+msgstr "Negatif"
+
+msgid "Negative"
+msgstr "Negatif"
+
+msgid "New responses"
+msgstr "Respon baru"
+
+msgid "Positive"
+msgstr "Positif"
+
+msgid "Positive"
+msgstr "Positif"
+
+msgid "Reset karma"
+msgstr ""
+
+msgid "Votes quantity"
+msgstr "Jumlah suara"
+
+msgid "Vote for"
+msgstr "Memilih"
+
+msgid "Type of vote"
+msgstr "Jenis suara"
+

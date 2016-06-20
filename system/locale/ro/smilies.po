@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Emotions"
+msgstr "Emoţii"
+
+msgid "Love"
+msgstr "Dragoste"
+
+msgid "Music, Dancing"
+msgstr "Muzica, dans"
+
+msgid "Food, Alcohol"
+msgstr "Alimente, alcool"
+
+msgid "Animals"
+msgstr "Animale"
+
+msgid "Flowers"
+msgstr "Flori"
+
+msgid "Brawl, Weapons"
+msgstr "luptă, armă"
+
+msgid "Gestures"
+msgstr "Gesturi"
+
+msgid "Holidays"
+msgstr "Sărbători"
+
+msgid "Sports"
+msgstr "Sport"
+
+msgid "Technology"
+msgstr "Tehnologie"
+
+msgid "Miscellaneous"
+msgstr "Diverse"
+

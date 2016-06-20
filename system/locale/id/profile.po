@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Tentang saya"
+
+msgid "Everyone"
+msgstr "Semua"
+
+msgid "With Password"
+msgstr "By sandi"
+
+msgid "Closed"
+msgstr "Tertutup"
+
+msgid "Friends only"
+msgstr "Hanya untuk teman-teman"
+
+msgid "This field is required if the password access is activated"
+msgstr "Jika Anda mengaktifkan akses dengan password, maka bidang ini harus"
+
+msgid "Achievements"
+msgstr "Prestasi"
+
+msgid "Activity"
+msgstr "Kegiatan"
+
+msgid "Album"
+msgstr ""
+
+msgid "Album successfully changed"
+msgstr "Album berhasil diubah"
+
+msgid "Create Album"
+msgstr "Buat album"
+
+msgid "Album successfully created"
+msgstr "Album telah berhasil dibuat"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Apakah Anda benar-benar ingin menghapus album?<br>Jika ada foto, mereka juga akan dihapus"
+
+msgid "Album Deleted"
+msgstr "Album dihapus"
+
+msgid "Edit Album"
+msgstr "Mengedit album"
+
+msgid "Album List"
+msgstr "Daftar Album"
+
+msgid "You must type a password to view this album"
+msgstr "Untuk mengakses album ini, Anda harus memasukkan sandi Anda"
+
+msgid "Select Album"
+msgstr "Pilih album"
+
+msgid "Pending confirmation"
+msgstr "Menunggu konfirmasi pendaftaran"
+
+msgid "Delete avatar"
+msgstr "Hapus avatar"
+
+msgid "Upload avatar"
+msgstr ""
+
+msgid "Blocked"
+msgstr "Diblokir"
+
+msgid "Birthday"
+msgstr "Tanggal lahir"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Tanggal Lahir (d.m.g)"
+
+msgid "City"
+msgstr "Kota"
+
+msgid "Contacts"
+msgstr "Kontak"
+
+msgid "Data saved"
+msgstr "Data di simpan"
+
+msgid "Prohibit karma"
+msgstr "menyangkal karma"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Peringatan!! Harap mengisi alamat email Anda <br> karena hal itu berguna jika anda lupa kata sandi."
+
+msgid "The album already exists"
+msgstr "Album ini sudah"
+
+msgid "Invalid format date of birth"
+msgstr "Format Tanggal lahir salah"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "nomor ICQ harus minimal 5 digit dan maksimal 10"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Panjang julukan minimum - 2, maks 20 karakter"
+
+msgid "Nick contains invalid characters"
+msgstr "Karakter tidak valid dalam julukan"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Anda tidak dapat mengedit profil pada posting Anda yang sudah lama"
+
+msgid "Friends only"
+msgstr "Hanya untuk teman-teman"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Daftar ini kosong.<br>Pesan bahwa pengguna akan dihapus secara otomatis setelah pembersihan dijadwalkan Tamu"
+
+msgid "hidden"
+msgstr "tersembunyi"
+
+msgid "Image"
+msgstr "Pilih gambar"
+
+msgid "Add image"
+msgstr "Tambahkan Foto"
+
+msgid "Delete image"
+msgstr "Hapus foto"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Apakah Anda benar-benar ingin menghapus gambar?"
+
+msgid "Edit image"
+msgstr "Ubah Gambar"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "Perlu diketahui bahwa perubahan pada kecerahan, kontras dan rotasi, kualitas gambar hilang.<br>Jangan gunakan fungsi-fungsi ini tanpa perlu."
+
+msgid "Image successfully changed"
+msgstr "Gambar berubah"
+
+msgid "Move the image"
+msgstr "Memindahkan foto"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Untuk memindahkan gambar, Anda harus telah membuat album lain"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Foto pindah ke album yang dipilih"
+
+msgid "Rotate"
+msgstr "Giliran"
+
+msgid "do not rotate"
+msgstr "Не поворачивать"
+
+msgid "counterclockwise"
+msgstr "berlawanan"
+
+msgid "clockwise"
+msgstr "searah jarum jam"
+
+msgid "My Album"
+msgstr "My album"
+
+msgid "My activity"
+msgstr "Aset saya"
+
+msgid "My Mailbox"
+msgstr "Surat saya"
+
+msgid "My Account"
+msgstr "Kabinet pribadi"
+
+msgid "My Profile"
+msgstr "Profil"
+
+msgid "My settings"
+msgstr "Setelan"
+
+msgid "My statistic"
+msgstr "Statistik saya"
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "Recent comments"
+msgstr "Komentar terbaru"
+
+msgid "New photos"
+msgstr "Baru foto"
+
+msgid "Min.2, Max. 20"
+msgstr ""
+
+msgid "Personal info"
+msgstr "Data pribadi"
+
+msgid "Contact number"
+msgstr "nomber telepon"
+
+msgid "Photo"
+msgstr ""
+
+msgid "Add to Profile"
+msgstr "Terletak di profil"
+
+msgid "Photo added to the profile"
+msgstr "Foto ditambahkan ke profil"
+
+msgid "Photos"
+msgstr "Foto"
+
+msgid "Photo deleted"
+msgstr "Hapus photo"
+
+msgid "Photo uploaded"
+msgstr "Upload photo"
+
+msgid "Edit Profile"
+msgstr "Ubah profil"
+
+msgid "Functionary on the site"
+msgstr "Jabatan di situs"
+
+msgid "User"
+msgstr ""
+
+msgid "Moder chat"
+msgstr ""
+
+msgid "Forum Moderator"
+msgstr "Moder forum"
+
+msgid "Download Moderator"
+msgstr "Moder download"
+
+msgid "Library Moderator"
+msgstr "Moder Perpustakaan"
+
+msgid "Super Modererator"
+msgstr "Super Moder"
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Supervisor"
+msgstr ""
+
+msgid "Received"
+msgstr "Inbox"
+
+msgid "Registration confirmed"
+msgstr "Pendaftaran dikonfirmasi"
+
+msgid "Free registration"
+msgstr "Pendaftaran tanpa konfirmasi"
+
+msgid "Registered"
+msgstr "Terdaftar"
+
+msgid "Registered"
+msgstr "Terdaftar"
+
+msgid "For user"
+msgstr "Untuk Pengguna"
+
+msgid "default settings were set"
+msgstr "menetapkan pengaturan default"
+
+msgid "Image"
+msgstr "Pilih gambar"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Untuk meng-upload gambar diperbolehkan file JPG, JPEG, PNG, GIF<br>Ukuran File tidak boleh melebihi"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Terlepas dari resolusi file asli Anda, itu akan dikonversi ke ukuran 32x32"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Gambar baru akan menggantikan yang lama (apakah itu)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "Untuk hasil terbaik, gambar asli harus sama dengan rasio aspek"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Terlepas dari resolusi file sumber, itu akan dikonversi ke dalam ukuran tidak melebihi 640x480"
+
+msgid "Sent"
+msgstr ""
+
+msgid "Male"
+msgstr "Laki-laki"
+
+msgid "Female"
+msgstr "Wanita"
+
+msgid "Back to profile"
+msgstr "Kembali ke profil"
+
+msgid "Site"
+msgstr "Situs"
+
+msgid "Select gender"
+msgstr "Tentukan jenis kelamin"
+
+msgid "Max. 50"
+msgstr ""
+
+msgid "He stay on the site"
+msgstr "Tinggal di situs"
+
+msgid "She stay on the site"
+msgstr "Tinggal di situs"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Top Comments"
+msgstr "TOP komentar"
+
+msgid "Top Downloads"
+msgstr "TOP mingguan"
+
+msgid "AntiTop"
+msgstr "TOP terburuk"
+
+msgid "Top Views "
+msgstr "Top Dilihat"
+
+msgid "Top Votes"
+msgstr "Top suara"
+
+msgid "Unread Comments"
+msgstr "Unread komentar"
+
+msgid "Upload"
+msgstr ""
+
+msgid "Upload avatar"
+msgstr ""
+
+msgid "Upload a picture"
+msgstr "Upload photo"
+
+msgid "User Profile"
+msgstr "Profil Pengguna"
+
+msgid "Add to Contacts"
+msgstr ""
+
+msgid "Add to Friends"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "You have already submitted a request"
+msgstr ""
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr ""
+
+msgid "Unlock user"
+msgstr ""
+
+msgid "Remove from contacts"
+msgstr ""
+
+msgid "Friends"
+msgstr ""
+
+msgid "My Friends"
+msgstr ""
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr ""
+
+msgid "offers friendship"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Request to be friends sent!"
+msgstr ""
+
+msgid "Do you really want to become friends?"
+msgstr ""
+
+msgid "Friendship"
+msgstr ""
+
+msgid "User is already your friend"
+msgstr ""
+
+msgid "Applications for friendship does not exist"
+msgstr ""
+
+msgid "Application for friendship canceled"
+msgstr ""
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr ""
+
+msgid "There is no invitation to be friends"
+msgstr ""
+
+msgid "agreed with you friends"
+msgstr ""
+
+msgid "You confirmed friendship. Now the user"
+msgstr ""
+
+msgid "Your friend"
+msgstr ""
+
+msgid "Do you really want to confirm the friendship"
+msgstr ""
+
+msgid "deleted you from friends"
+msgstr ""
+
+msgid "You remove the user from friends."
+msgstr ""
+
+msgid "Do you really want to remove from your friends?"
+msgstr ""
+
+msgid "Removal is not possible! User is not your friend."
+msgstr ""
+
+msgid "declined your offer to make friends."
+msgstr ""
+
+msgid "Request to be friends rejected."
+msgstr ""
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr ""
+
+msgid "The page does not exist!"
+msgstr ""
+
+msgid "My requests"
+msgstr ""
+
+msgid "Cancel Request"
+msgstr ""
+
+msgid "My Offers"
+msgstr ""
+
+msgid "Confirm friendship"
+msgstr ""
+
+msgid "Reject friendship"
+msgstr ""
+
+msgid "Remove from friends"
+msgstr ""
+
+msgid "Add to friends"
+msgstr ""
+
+msgid "Cancel a request to be friends"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr ""
+
+msgid "Fellow Student"
+msgstr ""
+
+msgid "Best friend"
+msgstr ""
+
+msgid "Colleague"
+msgstr ""
+
+msgid "Classmate"
+msgstr ""
+
+msgid "Friend"
+msgstr ""
+
+msgid "Mail settings"
+msgstr ""
+
+msgid "You can write messages"
+msgstr ""
+
+msgid "Can write all"
+msgstr ""
+
+msgid "Can write only contacts"
+msgstr ""
+
+msgid "Can write only friends"
+msgstr ""
+
+msgid "pointing out that you best friends with him"
+msgstr ""
+
+msgid "pointed out that you have with him relatives"
+msgstr ""
+
+msgid "pointed out that you have with him classmates"
+msgstr ""
+
+msgid "pointing out that you were colleagues"
+msgstr ""
+
+msgid "pointing out that you were classmates"
+msgstr ""
+
+msgid "pointed out that you\"re friends"
+msgstr ""
+
+msgid "You indicated that you are best friends with"
+msgstr ""
+
+msgid "You indicated that the relatives with"
+msgstr ""
+
+msgid "You indicated that mates with"
+msgstr ""
+
+msgid "You indicated that the colleagues with"
+msgstr ""
+
+msgid "You indicated that you classmates with"
+msgstr ""
+
+msgid "You indicated that you are friends with"
+msgstr ""
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "The feature is disabled, contact your administrator"
+msgstr ""
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr ""
+

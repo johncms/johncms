@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Pievienot kategoriju"
+
+msgid "Add file"
+msgstr "Pievienot failu"
+
+msgid "Add answer"
+msgstr "Pievienot atbildi"
+
+msgid "Add section"
+msgstr "Pievienot sadaļu"
+
+msgid "Add a poll"
+msgstr "Pievienot aptauju"
+
+msgid "Accept"
+msgstr "PIEKRĪTU"
+
+msgid "Other category"
+msgstr "Cita kategorija"
+
+msgid "Answer"
+msgstr "Atbilde"
+
+msgid "Assign"
+msgstr "Piešķirt"
+
+msgid "Attachment"
+msgstr "Pievienotais fails"
+
+msgid "Back to topic"
+msgstr "Atgriezties pie topika"
+
+msgid "by author"
+msgstr "pēc autora"
+
+msgid "by section"
+msgstr "pēc sadaļas"
+
+msgid "by topic"
+msgstr "pēc tēmas"
+
+msgid "Category"
+msgstr "Kategorija"
+
+msgid "Category deleted"
+msgstr "Kategorija dzēsta"
+
+msgid "Edit category"
+msgstr "Rediģēt kategoriju"
+
+msgid "Categories list"
+msgstr "Kategoriju saraksts"
+
+msgid "subsections"
+msgstr "pakļautās sadaļas"
+
+msgid "Click to view image"
+msgstr "Nospied, lai apskatītu attēlu"
+
+msgid "Subsections and files has been moved to"
+msgstr "Pakļautās sadaļas un pārvietotie faili tiks pārvietoti uz"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Visas sadaļas, tēmas un tiks pārvietoti uz izvēlēto sadaļu.<br>Vecā kategorija tiks dzēsta"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>UZMANĪBU!</h3>Ir pakļautās sadaļas.<br>Viņas vajag pārvietot uz citu sadaļu!"
+
+msgid "Curators"
+msgstr "Kuratori"
+
+msgid "Curators of the Topic"
+msgstr "Tēmas kuratori"
+
+msgid "Quote"
+msgstr "Citāts"
+
+msgid "[q]"
+msgstr "[c]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Pieļaujams max. 200 simbol, liekais teksts tiks apgriezts."
+
+msgid "Delete categories"
+msgstr "Dzēšam kategoriju"
+
+msgid "Complete removal"
+msgstr "Pilnīga dzēšana"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Ja Jūs gribat dzēst visu, sākumā dzēsiet"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "UZMANĪBU! Tiks dzēsta visa informācija!"
+
+msgid "Delete last"
+msgstr "Dzēst pēdējo"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "UZMANĪBU!<br>Šis ir pēdējais posts tēmā. Kopā ar viņu tiks dzēsta (vai slēpta)  pati tēma."
+
+msgid "Delete message"
+msgstr "Dzēst postu"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Dzešanas gadījumā, no skaitītājiem tiks noņemta viena vienība"
+
+msgid "Delete section"
+msgstr "Dzēst sadaļu"
+
+msgid "Delete poll"
+msgstr "Dzēst aptauju"
+
+msgid "Download Topic"
+msgstr "Lejuplādēt tēmu"
+
+msgid "Select a format"
+msgstr "Izvēlieties formātu"
+
+msgid "Link active 5 minutes"
+msgstr "Saite būs aktīva 5 minūtes"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Tēma tika lejuplādēta"
+
+msgid "Downloaded"
+msgstr "Lejuplādēts"
+
+msgid "Downloads"
+msgstr "Lejuplādes"
+
+msgid "Edit message"
+msgstr "Rediģēt ziņu"
+
+msgid "Edit poll"
+msgstr "Rediģēt aptauju"
+
+msgid "Edited"
+msgstr "Red."
+
+msgid "You have not selected any author"
+msgstr "Kļūda! Jūs nēsat izvēlējies nevienu autoru"
+
+msgid "Category is not chosen"
+msgstr "Kļūda! Nav izvēlēta kategorija"
+
+msgid "You are trying to change another\"s post"
+msgstr "Kļūda! Jūs mēģinat rediģēt cita postu"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Kļūda! Jūsu posts vairs nav pēdējais un Jūs to vairs nevarat mainīt"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Kopš posta ievietošanas ir pagājis vairāk kā 5 minūtes un Jūs to vairāk nevar rediģēt"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Kļūda! Aizliegts faila tips!<br>Jūs varat sūtit failus, ar sekojošiem formātiem"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Kļūda! Sūtīt ir atļauts tikai failus, kas satur nosaukumu un vienu formātu (<b>name.ext</b>). Nevar augšuplādēt tos failus, kuriem nav vārda, formāta, vai arī tādi, kuriem ir dubultais formāts."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Kļūda! Faila nosaukums nevar pārsniegt vairāk par 30 simboliem"
+
+msgid "File size exceed"
+msgstr "Kļūda! Faila svars pārsniedz atļautās normas"
+
+msgid "File name contains invalid characters"
+msgstr "Kļūda! Faila nosaukums satur neatļautus simbolus"
+
+msgid "File is already uploaded"
+msgstr "Kļūda! Fails jau ir ticis augšuplādēts"
+
+msgid "You did not choose something to delete"
+msgstr "Kļūda! Jūs neesat izvēlējies nekā, ko varētu dzēst"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Kļūda! Šāds posts neeksistē, vai arī ir ticis dzēsts"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Kļūda! Atslēgas vārds var saturēt min. 4, max 64 simb."
+
+msgid "You have not entered time"
+msgstr "Kļūda! Jūs neesat ievadījis laiku"
+
+msgid "You cannot write in a closed topic"
+msgstr "Kļūda! Jūs nevarat rakstīt aizvērtā tēmā"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Kļūda! Tēma dzēsta, vai ari neeksistē"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Kļūda! Tēma ar šādu nosaukumu jau eksistē šajā forumā"
+
+msgid "You have not entered topic name"
+msgstr "Kļūda! Jūs neievadījāt topika nosaukumu"
+
+msgid "Topic name too short"
+msgstr "Kļūda! Topika nosaukums ir pārāk īss"
+
+msgid "Error uploading file"
+msgstr "Kļūda augšuplādējot failu"
+
+msgid "File attached"
+msgstr "Fails augšuplādēts"
+
+msgid "Files"
+msgstr "Foruma faili"
+
+msgid "Category files"
+msgstr "Failu kategorijas"
+
+msgid "Section files"
+msgstr "Sadaļas faili"
+
+msgid "Topic files"
+msgstr "Topika faili"
+
+msgid "Archive"
+msgstr "Arhīvi"
+
+msgid "Java applications"
+msgstr "Java aplikācijas"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "Citi"
+
+msgid "Pictures"
+msgstr "Attēli"
+
+msgid "SIS"
+msgstr "SIS aplikācijas"
+
+msgid "txt"
+msgstr "Teksta faili"
+
+msgid "WIN applications"
+msgstr "WIN aplikācijas"
+
+msgid "Videos"
+msgstr "Video"
+
+msgid "Cancel filter"
+msgstr "Noņemt filtrāciju"
+
+msgid "Topic includes filtering by authors"
+msgstr "Tēmā ir ieslēgta filtrācija, kas atlasa autora postus"
+
+msgid "Filter by author"
+msgstr "Filtrs pēc autora"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Filtrācija atļauj parādīt postus tikai no izvēlētajiem autoriem"
+
+msgid "Filter by section"
+msgstr "Sadaļas filtrēšana"
+
+msgid "Filter by topic"
+msgstr "Tēmas filtrēšana"
+
+msgid "Filter"
+msgstr "Filtrēt"
+
+msgid "Forum is closed"
+msgstr "Forums slēgts"
+
+msgid "Forum Management"
+msgstr "Foruma pārvaldīšana"
+
+msgid "Forum rules"
+msgstr "Foruma noteikumi"
+
+msgid "Forum search"
+msgstr "Foruma meklētājs"
+
+msgid "Forum structure"
+msgstr "Foruma struktūra"
+
+msgid "Hidden posts"
+msgstr "Slēptie posti"
+
+msgid "Hidden topic"
+msgstr "Slēptie topiki"
+
+msgid "Hours"
+msgstr "stundas"
+
+msgid "Max. Size"
+msgstr "MAX izmērs"
+
+msgid "Marked posts are deleted"
+msgstr "Atzīmētie posti tika dzēsti"
+
+msgid "Appointment of moderators"
+msgstr "Moderātori"
+
+msgid "New files in the last 24 hours"
+msgstr "Jaunie faili 24 stundu laikā"
+
+msgid "No new files"
+msgstr "Jaunu failu nav"
+
+msgid "New at the bottom"
+msgstr "Jaunie apakšā"
+
+msgid "New at the top"
+msgstr "Jaunie augšā"
+
+msgid "New topic"
+msgstr "Atvērt tēmu"
+
+msgid "Title(max. 100)"
+msgstr "Nosaukums (max. 100)"
+
+msgid "Disagree"
+msgstr "NEPIEKRĪTU"
+
+msgid "Other categories"
+msgstr "Citas kategorijas"
+
+msgid "Answers in the topic"
+msgstr "Atbild tēmā"
+
+msgid "In the category"
+msgstr "Kategorijā"
+
+msgid "Looking forum files"
+msgstr "Skatīties foruma failus"
+
+msgid "Here, in the list"
+msgstr "Tur, sarakstā"
+
+msgid "In the forum main"
+msgstr "Foruma galvenā"
+
+msgid "In the unreads"
+msgstr "Skatīties nelasītas"
+
+msgid "Forum search"
+msgstr "Foruma meklētājs"
+
+msgid "In the section"
+msgstr "Sadaļā"
+
+msgid "In the topic"
+msgstr "Tēmā"
+
+msgid "Writes in the topic"
+msgstr "Raksta tēmā"
+
+msgid "Message"
+msgstr "Ziņa"
+
+msgid "Post deleted"
+msgstr "Postu dzēsa"
+
+msgid "Read more"
+msgstr "Lasīt visas"
+
+msgid "reference"
+msgstr "Atsauces"
+
+msgid "[r]"
+msgstr "[a]"
+
+msgid "Rating"
+msgstr "Reitings"
+
+msgid "I am glad to answer you"
+msgstr "ar prieku atbildēšu tev"
+
+msgid "to your post"
+msgstr "uz tavu postu"
+
+msgid "answer"
+msgstr "atbildu"
+
+msgid "You are right! You are very smart!"
+msgstr "nu kā tad tā? Kapēc tādi te atrodas?!"
+
+msgid "Restore"
+msgstr "Atgriezt"
+
+msgid "Results"
+msgstr "Rezultāts"
+
+msgid "Back to topic"
+msgstr "Atgriezties pie topika"
+
+msgid "Forum search"
+msgstr "Foruma meklētājs"
+
+msgid "Search in the topic names"
+msgstr "Meklēt topiku nosaukumos"
+
+msgid "Section deleted"
+msgstr "Sadaļa tika dzēsta"
+
+msgid "Section with topics and files are removed"
+msgstr "Sadaļa ar tēmām un failiem tika dzēsta"
+
+msgid "Editing section"
+msgstr "Sadaļas rediģēšana"
+
+msgid "List of sections"
+msgstr "Sadaļu saraksts"
+
+msgid "There are no sections in this category"
+msgstr "Kļūda! Šajā kategorijā nav sadaļu"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Visas tēmas un faili tiks pārvieti uz izvēlēto sadaļu<br>Vecā sadaļa tiks dzēsta"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>UZMANĪBU!</h3>Sadaļā ir tēmas.<br>Tās ir jāpārvieto uz citu kategoriju"
+
+msgid "Select category"
+msgstr "Izvēlēties kategoriju"
+
+msgid "Select file"
+msgstr "Izvēlēties failu"
+
+msgid "Select section"
+msgstr "Izvēlēties sadaļu"
+
+msgid "Selected category"
+msgstr "uz izvēlēto kategoriju"
+
+msgid "Selected section"
+msgstr "izvēlētā sadaļa"
+
+msgid "Size"
+msgstr "Izmērs"
+
+msgid "Topics moved to"
+msgstr "Pakļautās tēmas tika pārvietotas uz"
+
+msgid "Time"
+msgstr "reizes"
+
+msgid "Go to category"
+msgstr "Uz kategoriju"
+
+msgid "Go to forum"
+msgstr "Uz forumu"
+
+msgid "To message"
+msgstr "Uz postu"
+
+msgid "Go to topic"
+msgstr "Uz tēmu"
+
+msgid "Go to section"
+msgstr "Uz sadaļu"
+
+msgid "Topic"
+msgstr "Tēma"
+
+msgid "Close topic"
+msgstr "Slēgt tēmu"
+
+msgid "Topic closed"
+msgstr "Tēma slēgta"
+
+msgid "Delete topic"
+msgstr "Dzēst tēmu"
+
+msgid "Topic deleted"
+msgstr "Tēma dzēsta"
+
+msgid "Topic deleted by"
+msgstr "Tēmu dzēsa"
+
+msgid "Undelete topic"
+msgstr "Pārtrauca tēmas dzēšanu"
+
+msgid "Fix topic"
+msgstr "Stiprināt tēmu"
+
+msgid "No topics in this section"
+msgstr "Šajā sadaļā nav nevienas tēmas"
+
+msgid "Move topic"
+msgstr "Pārvietot tēmu"
+
+msgid "Topic name"
+msgstr "Tēmas nosaukums"
+
+msgid "New topic"
+msgstr "Atvērt tēmu"
+
+msgid "Rename topic"
+msgstr "Pārsaukt tēmu"
+
+msgid "Restore topic"
+msgstr "Atjaunot tēmu"
+
+msgid "Unfix topic"
+msgstr "Atstiprināt tēmu"
+
+msgid "Total votes"
+msgstr "Kopā balsu"
+
+msgid "All for period"
+msgstr "Visa laikā"
+
+msgid "Last 10"
+msgstr "Pēdējās 10 tēmas"
+
+msgid "Period (in hours)"
+msgstr "Periods (stundās)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "Izvēlētajā periodā nav jaunu postu"
+
+msgid "Mark as read"
+msgstr "Atzīmēt kā lasītas"
+
+msgid "All topics marked as read"
+msgstr "Visas tēmas atzīmētas kā lasītas"
+
+msgid "Upload"
+msgstr "Sūtīt"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Laiks atvēlēts failu augšupielādes ir beidzies"
+
+msgid "Post deleted"
+msgstr "Postu dzēsa"
+
+msgid "Who is here"
+msgstr "Kas šeit"
+
+msgid "Who in forum"
+msgstr "Kas forumā"
+
+msgid "Who in topic"
+msgstr "Kas tēmā"
+
+msgid "Post restored by"
+msgstr "Postu atjaunoja"
+
+msgid "Vote accepted"
+msgstr "Jūsu balss pieņemta"
+
+msgid "Poll (max. 150)"
+msgstr "Jautājums (max. 150)"
+
+msgid "Poll added"
+msgstr "Aptauja pievienota"
+
+msgid "Poll changed"
+msgstr "Aptauja rediģēta"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Jūs tiešām vēlaties dzēst aptauju?"
+
+msgid "Poll deleted"
+msgstr "Aptauja dzēsta"
+
+msgid "Who voted in the poll"
+msgstr "Lietotāji, kuri ir piedalījušies aptaujā"
+
+msgid "No one has voted in this poll yet"
+msgstr "Šajā aptaujā nav neviens piedalījies"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Jūs tiešām vēlaties dzēst aptaujas atbilžu variantu?"
+

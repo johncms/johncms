@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "Liên kết đăng nhập tự động"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>Chú ý !!</b><br>Vì sự an toàn của bạn, đừng bao giờ sử dụng trong các địa điểm không an toàn (quán cà phê internet, các máy tính, vv.)"
+
+msgid "Verification code"
+msgstr "Mã xác minh"
+
+msgid "Change password"
+msgstr "Thay đổi mật khẩu"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Mật khẩu thay đổi thành công.<br>Mật khẩu mới đã gửi đến địa chỉ E-mail của bạn"
+
+msgid "Enter code"
+msgstr "Nhập mã"
+
+msgid "Incorrect code"
+msgstr "Không chính xác mã xác minh"
+
+msgid "Invalid E-mail address"
+msgstr "E-mail không hợp lệ địa chỉ"
+
+msgid "Error sending E-mail"
+msgstr "Lỗi gửi E-mail"
+
+msgid "Password recovery is impossible"
+msgstr "Khôi phục mật khẩu là không thể"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Nó là cần thiết để điền vào tất cả các lĩnh vực"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Mật khẩu được tối thiểu 3 và tối đa 10 ký tự"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "mật khẩu mới không trùng khớp nhau"
+
+msgid "Incorrect entered old password"
+msgstr "không chinh xác mật khẩu cũ"
+
+msgid "You cannot change password of higher administration"
+msgstr "Bạn không thể thay đổi mật khẩu trên bài viết của bạn cũ hơn"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Thời gian tất cả các mật khẩu thông qua"
+
+msgid "Enter new password"
+msgstr "Nhập mật khẩu mới"
+
+msgid "Enter old password"
+msgstr "Nhập mật khẩu cũ"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Mật khẩu dài min. 3, tối đa. 10 ký tự được phép chữ cái và số."
+
+msgid "Password successfully changed"
+msgstr "Mật khẩu thay đổi thành công"
+
+msgid "Password recovery"
+msgstr "Khôi phục mật khẩu"
+
+msgid "Repeat password"
+msgstr "Nhập lại mật khẩu"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Mật khẩu sẽ gửi đến địa chỉ E-mail quy định trong ứng dụng của bạn.<br>CẢNH BÁO! Nếu những câu hỏi không quy định rõ địa chỉ E-mail, bạn sẽ không thể phục hồi mật khẩu của bạn."
+
+msgid "Hello"
+msgstr "Xin chào"
+
+msgid "You start process of password recovery on the site"
+msgstr "Bạn bắt đầu thủ tục khôi phục mật khẩu trên trang web"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Để khôi phục mật khẩu, bạn phải nhấp vào liên kết"
+
+msgid "Link valid for 1 hour"
+msgstr "Liên kết hợp lệ trong 1 giờ"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Nếu lỗi này thư hoặc bạn chưa phục hồi, bạn có thể bỏ qua bức thư này"
+
+msgid "Check your e-mail for further information"
+msgstr "Link thủ tục phục hồi mật khẩu được gửi đến địa chỉ e-mail"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Sau khi đăng nhập, bạn có thể thay đổi mật khẩu của bạn với những gì bạn muốn."
+
+msgid "You have changed your password on the site"
+msgstr "Bạn có thay đổi mật khẩu trên trang web"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Mật khẩu có thể phục hồi không quá 1 lần mỗi ngày"
+
+msgid "Send"
+msgstr "Gửi"
+
+msgid "Show autologin link"
+msgstr "Hiển thị liên kết tự động đăng nhập"
+
+msgid "Your E-mail"
+msgstr "E-mail của bạn "
+
+msgid "Username"
+msgstr "Tên tài khoản"
+
+msgid "Your new password"
+msgstr "Của bạn mật khẩu mới"
+

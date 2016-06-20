@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "Giriş Qadağandır"
+
+msgid "For registered users only"
+msgstr "Yalniz qeydiyyatli istifadeçiler üçün nezerde tutulub"
+
+msgid "Add"
+msgstr "Elave Et"
+
+msgid "Add File"
+msgstr "Faylı eklemeniz"
+
+msgid "Add Smileys"
+msgstr ""
+
+msgid "Administration"
+msgstr "Adminstrasiya"
+
+msgid "Administrators"
+msgstr "Adminler"
+
+msgid "Admin-Club"
+msgstr "Admin-Klub"
+
+msgid "Admin Panel"
+msgstr ""
+
+msgid "Smiles for Administration"
+msgstr "Belediye Smiles"
+
+msgid "Administrators events"
+msgstr "Admin olaylari"
+
+msgid "Albums"
+msgstr "Albomlar"
+
+msgid "New comments in albums"
+msgstr "Albümler Yeni şərhlər"
+
+msgid "All"
+msgstr "Hamisi"
+
+msgid "Appearance"
+msgstr "Xarici Görünüş"
+
+msgid "Apply"
+msgstr ""
+
+msgid "Confirm"
+msgstr "Tesdiq Et"
+
+msgid "Location"
+msgstr "Yerleşme"
+
+msgid "Author"
+msgstr "Müellif"
+
+msgid "Authorized"
+msgstr "Giriş Edenler"
+
+msgid "Authorization failed"
+msgstr "Giriş baş tutmadı"
+
+msgid "Avatar has been successfully installed"
+msgstr "Avatar uğurla seçildi"
+
+msgid "Avatar successfully uploaded"
+msgstr "Avatar uğurla yüklendi"
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "Həqiqətən özümü bu avatar qurmaq istəyirsiniz?"
+
+msgid "Avatars"
+msgstr "Avatarlar"
+
+msgid "Back"
+msgstr "Geri"
+
+msgid "Balance"
+msgstr "Balans"
+
+msgid "Ban"
+msgstr "BAN"
+
+msgid "Banish"
+msgstr "Ban etdi"
+
+msgid "Ban type"
+msgstr "Ban Növü"
+
+msgid "Banish"
+msgstr "Ban etdi"
+
+msgid "Tags (BBcode)"
+msgstr "Teqler (BBcode)"
+
+msgid "Birthday"
+msgstr "Doğum Tarixi"
+
+msgid "Birthdays"
+msgstr "Ad Günü Olanlar"
+
+msgid "Block"
+msgstr "Blok Olunma"
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blogs"
+msgstr "Bloglar"
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cancel"
+msgstr "İmtina"
+
+msgid "Symbols on the picture"
+msgstr "Şekildeki Kod"
+
+msgid "Catalog"
+msgstr "Bölme"
+
+msgid "Category"
+msgstr "Kateqoriya"
+
+msgid "Categories"
+msgstr "Kateqoriyalar"
+
+msgid "Change password"
+msgstr "Şifreni Deyiş"
+
+msgid "Chat"
+msgstr "Çat"
+
+msgid "Please, check up correctness of the input data"
+msgstr "Xahiş edirik, daxil etdiyiniz melumatların deqiqliyini yoxlayın."
+
+msgid "Clear"
+msgstr "Temizle"
+
+msgid "Clear all"
+msgstr "Her Şeyi Temizle"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "Bütün köhne yazılar silindi (1 günden artiq)"
+
+msgid "Full clearing is finished"
+msgstr "Tam temizleme sona çatdı"
+
+msgid "Clearing parameters"
+msgstr "Temizlik Ayarları"
+
+msgid "Clear all"
+msgstr "Her Şeyi Temizle"
+
+msgid "Older than 1 day"
+msgstr "1 günden çox olan"
+
+msgid "Older than 1 week"
+msgstr "1 hefteden çox olan"
+
+msgid "Clear all messages from this user"
+msgstr "Bu istifadeçiden gelen bütün mektublari sil"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "1 hefteden çox qalan mektublar silindi"
+
+msgid "Color"
+msgstr "Reng"
+
+msgid "Text Color"
+msgstr ""
+
+msgid "Background Color"
+msgstr ""
+
+msgid "Comments"
+msgstr "Fikirler"
+
+msgid "Comments are closed"
+msgstr "Fikirler bağlidir"
+
+msgid "General list"
+msgstr "Ümumi Siyahı"
+
+msgid "Community"
+msgstr "Saytin Aktivi"
+
+msgid "Contacts"
+msgstr "Elaqeler"
+
+msgid "In contacts"
+msgstr "Elaqelere Keç"
+
+msgid "Continue"
+msgstr "Davam Et"
+
+msgid "Downloads"
+msgstr "Yüklemeler"
+
+msgid "Views"
+msgstr "Baxiş"
+
+msgid "Clock setting"
+msgstr "Saat Qurğuları"
+
+msgid "General setting"
+msgstr "Ümumi Qurğular"
+
+msgid "Date"
+msgstr "Tarix"
+
+msgid "Day"
+msgstr "gün"
+
+msgid "Days"
+msgstr "gün"
+
+msgid "Default"
+msgstr "Standart"
+
+msgid "Delete"
+msgstr "Sil"
+
+msgid "Delete message"
+msgstr "Mesaji sil"
+
+msgid "Delete all"
+msgstr "Hamısını Sil"
+
+msgid "Do you really want to delete?"
+msgstr "Heqiqeten silmek isteyirsiz?"
+
+msgid "Description"
+msgstr "Melumat"
+
+msgid "Design"
+msgstr "Sayt Mövzusu"
+
+msgid "Communication"
+msgstr "Ünsiyyet"
+
+msgid "Digest"
+msgstr "Daydjest"
+
+msgid "Direct URL"
+msgstr ""
+
+msgid "Discuss"
+msgstr "Müzakire et"
+
+msgid "Display mode"
+msgstr "Görüntü növü"
+
+msgid "Perform"
+msgstr "Yerine Yetir"
+
+msgid "Hide"
+msgstr "Gizlet"
+
+msgid "Down"
+msgstr "Aşağı"
+
+msgid "Download"
+msgstr "Yükle"
+
+msgid "Downloads"
+msgstr "Yüklemeler"
+
+msgid "Edit"
+msgstr "Deyiş"
+
+msgid "Edit List"
+msgstr ""
+
+msgid "Edited"
+msgstr "Deyişildi"
+
+msgid "Enter verification code"
+msgstr "Tehlükesizlik kodunu daxil edin"
+
+msgid "Enter site"
+msgstr "Giriş"
+
+msgid "ERROR"
+msgstr "Sehv"
+
+msgid "The requested page does not exists"
+msgstr "Bele sehife mövcud deyil!"
+
+msgid "Invalid address"
+msgstr "Ünvan yanliş daxil edilib"
+
+msgid "Avatar select failed"
+msgstr "Avatar seçiminde sehv baş verdi"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Sehv. Melumat en az 2 herifden ibaret olmalıdır"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "Sizin selahiyyetinizden üstün olan istifadeçinin mesajını deyişmek hüququnuz yoxdur"
+
+msgid "The required fields are not filled"
+msgstr "Lazimi bölmeler qeyd olunmayib"
+
+msgid "You have not entered the message"
+msgstr "Mesaj metni daxil olunmayıb"
+
+msgid "You have not entered a name"
+msgstr "Ad daxil olunmayıb"
+
+msgid "You have not entered password"
+msgstr "Şifre daxil olunmayıb"
+
+msgid "You have not entered text"
+msgstr "Metn daxil olunmayıb"
+
+msgid "You have not entered Title"
+msgstr "Ad daxil olunmayıb"
+
+msgid "File does not exist"
+msgstr "Bele fayl mövcud deyil"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Siz tez-tez mesaj daxil ede bilmezsiniz<br>Xahiş edirik, gözleyin"
+
+msgid "You have not entered login"
+msgstr "Nik daxil edilmeyib"
+
+msgid "Message already exists"
+msgstr "Bele mesaj artiq mövcuddur"
+
+msgid "Text is too short"
+msgstr "Metn çox qısadır"
+
+msgid "Administrator already replied to this message"
+msgstr "Bu mesaja Admin artıq cavab verib"
+
+msgid "User does not exists"
+msgstr "Bele istifadeçi mövcud deyil"
+
+msgid "The security code is not correct"
+msgstr "Tehlükesizlik kodu düzgün daxil olunmayıb"
+
+msgid "Bad data"
+msgstr "Yanlış melumatlardı"
+
+msgid "Invalid length"
+msgstr "Qadağan olunmuş uzunluq"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "Bölmelerin mahiyyeti qebul olunmuş limiti keçir"
+
+msgid "Incorrect Password"
+msgstr "Şifre yanlişdır"
+
+msgid "Invalid characters"
+msgstr "Qadağan olunmuş işareler"
+
+msgid "No new events"
+msgstr "Yeni xeber yoxdur"
+
+msgid "Logout"
+msgstr "Çixiş"
+
+msgid "External Link"
+msgstr ""
+
+msgid "Height of field"
+msgstr "Bölme uzunluğu"
+
+msgid "Width of field"
+msgstr "Bölme eni"
+
+msgid "Max. File size"
+msgstr "Maks. fayl ölçüsü"
+
+msgid "Files"
+msgstr "Fayllar"
+
+msgid "Bold"
+msgstr "Qalin"
+
+msgid "Italic"
+msgstr "Eyri"
+
+msgid "Underline"
+msgstr "Xetli"
+
+msgid "Forgot password"
+msgstr "Şifreni Unutdum"
+
+msgid "Forum"
+msgstr ""
+
+msgid "Forum post"
+msgstr "Forumda Yazı"
+
+msgid "Gallery"
+msgstr "Qalareya"
+
+msgid "Guest"
+msgstr "Qonaq"
+
+msgid "Guests"
+msgstr "Qonaqlar"
+
+msgid "Gzip compression"
+msgstr "Gzip Sixliq"
+
+msgid "Guestbook"
+msgstr "Qonaq Otaği"
+
+msgid "The guestbook is closed"
+msgstr "Qonaq otaği bağlıdır"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "Qonaq otağinda yazı yoxdur...<br><b> 1ci yaz 1ci ol! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "Ad Günün Mübarek!!!"
+
+msgid "Heading"
+msgstr "Başlıq"
+
+msgid "Help"
+msgstr "Melumat"
+
+msgid "Hi"
+msgstr "Salam"
+
+msgid "Hide"
+msgstr "Gizlet"
+
+msgid "History"
+msgstr "Tarix"
+
+msgid "Home"
+msgstr "Baş Sehife"
+
+msgid "Hours"
+msgstr "Saat"
+
+msgid "Ignore"
+msgstr "İgnor Et"
+
+msgid "Details"
+msgstr "Etraflı"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "Hazırda sayta giriş yalnız SV icazə verilir!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "Hazırda sayta giriş yalnız İdarə Site icazə verilir"
+
+msgid "Information"
+msgstr "İnformasiya"
+
+msgid "Info, FAQ"
+msgstr "Melumat Merkezi"
+
+msgid "Offenses"
+msgstr "Qayda Pozuntusu"
+
+msgid "IP Activity"
+msgstr "IP Aktivlik"
+
+msgid "Actual addresses"
+msgstr "Aktual ünvan"
+
+msgid "IP address"
+msgstr "İP Ünvan"
+
+msgid "IP history"
+msgstr "İP Tarixi"
+
+msgid "Karma"
+msgstr ""
+
+msgid "Language"
+msgstr "Dil"
+
+msgid "Select language"
+msgstr "Dil Seçin"
+
+msgid "System language set"
+msgstr "Sistemde mövcud diller"
+
+msgid "Last activity"
+msgstr "Son Aktivlik"
+
+msgid "Last IP"
+msgstr "Sonuncu İP"
+
+msgid "Last visit"
+msgstr "Sonuncu Girişi"
+
+msgid "Library"
+msgstr "Kitabxana"
+
+msgid "Mod. Library"
+msgstr "KX Moderi"
+
+msgid "Lines per page"
+msgstr "Sehifede setir"
+
+msgid "Link"
+msgstr ""
+
+msgid "List"
+msgstr "Siyahı"
+
+msgid "Empty list"
+msgstr "Siyahı boşdur"
+
+msgid "OFF"
+msgstr "Deaktiv"
+
+msgid "ON"
+msgstr "Aktiv"
+
+msgid "or"
+msgstr "ve ya"
+
+msgid "Login"
+msgstr "Giriş"
+
+msgid "Username"
+msgstr "Nik"
+
+msgid "General settings"
+msgstr "Qurğular"
+
+msgid "Mail"
+msgstr "Mektub"
+
+msgid "New message"
+msgstr "Size mektub gelib"
+
+msgid "Guys"
+msgstr "Oğlanlar"
+
+msgid "Message"
+msgstr "Mektub"
+
+msgid "Messages"
+msgstr "Mektublar"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Maks. 30 işare"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Maks. 500 işare"
+
+msgid "Moderators"
+msgstr "Moderler"
+
+msgid "Move"
+msgstr "Yerini Deyiş"
+
+msgid "My Smileys"
+msgstr ""
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "New Files"
+msgstr "Yeni Fayllar"
+
+msgid "New reviews"
+msgstr "Yeni fikirler"
+
+msgid "News"
+msgstr "Xeberler"
+
+msgid "Archive news"
+msgstr "Xeberler"
+
+msgid "Next"
+msgstr "İreli"
+
+msgid "Nick"
+msgstr "Nik"
+
+msgid "Night"
+msgstr "Gece"
+
+msgid "Nothing found for this request"
+msgstr "Sizin axtarış bir netice vermedi"
+
+msgid "Not specified"
+msgstr "Qeyd olunmayıb"
+
+msgid "Optional field"
+msgstr "Vacib olmayan bölme"
+
+msgid "Moderation"
+msgstr "Moder tesdiqi gözleyir"
+
+msgid "Online"
+msgstr "Onlayn"
+
+msgid "Personal"
+msgstr "Şexsi"
+
+msgid "Personal"
+msgstr "Şexsi"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Photo Album"
+msgstr "Albom"
+
+msgid "Photo Albums"
+msgstr "Albomlar"
+
+msgid "poins"
+msgstr "xal"
+
+msgid "posts"
+msgstr "post"
+
+msgid "Preview"
+msgstr "İlkin Baxış"
+
+msgid "Private"
+msgstr "Gizli"
+
+msgid "Profile"
+msgstr "Anket"
+
+msgid "Quiz"
+msgstr "Sual-Cavab"
+
+msgid "Quick jump"
+msgstr "Keçidler"
+
+msgid "Rating"
+msgstr "Reytinq"
+
+msgid "Read Only"
+msgstr ""
+
+msgid "Reason"
+msgstr "Sebeb"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>Diqqet!</h3>Siz Sayti Terk Ederek Bu Linke Daxil Olmag Istiyirsiz"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Rehberlik Bizim Saytdan Diger Sayta Kecmeyinize Gore Mesuliyet Daşimir"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "Meslehet Goruruk Siz Oz Melumatlarinizi Qeyd Etmiyesiz Esasen"
+
+msgid "(Login, Password), on third party sites"
+msgstr "Login, Parol - Diger saytlarda"
+
+msgid "Go to link"
+msgstr "Linke Keç"
+
+msgid "Registration"
+msgstr "Qeydiyyat"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "Üzr isteyirik! Sizin qeydiyyatiniz hele yoxlanmayıb<br>Xahiş edirik, bir qeder gözleyin"
+
+msgid "Remains"
+msgstr "Qaldi"
+
+msgid "Remember"
+msgstr "Xatirla"
+
+msgid "Repeat"
+msgstr "Tekrar et"
+
+msgid "Reply"
+msgstr "Cavab"
+
+msgid "Reset setting"
+msgstr "Standart Ayarlar"
+
+msgid "New reviews"
+msgstr "Yeni fikirler"
+
+msgid "Save"
+msgstr "Yadda Saxla"
+
+msgid "Search"
+msgstr "Axtarış"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "Sorğu müddeti: 4deq., 64maks.<br>Netice texmini uyğunluq olduqda bele üze çıxır"
+
+msgid "Search History"
+msgstr "Axtarış tarixi"
+
+msgid "Do you really want to clear the search history?"
+msgstr "Həqiqətən axtarış tarixi təmizlənməsi üçün istəyirsiniz?"
+
+msgid "New search"
+msgstr "Yeni Axtarış"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "Axtariş Login Uzre Gedir (Login) ve qeyd heriflerine hessas deyil. Yani , <b>UsEr</b> ve <b>user</b> axtariş ucun beraberdiler.<br>Axtariş translit olunur yani eger sizi Хулиган loginini axtarirsizsa Xuliqan da yazib axtara bilersiz ferq etmez."
+
+msgid "Query results"
+msgstr "Axtarış Neticesi"
+
+msgid "Your search did not match any results"
+msgstr "Sizin axtarışınız bir netice vermedi"
+
+msgid "Find a user"
+msgstr "İstifadeçi axtarışı"
+
+msgid "Sec."
+msgstr "san."
+
+msgid "seconds"
+msgstr "saniye"
+
+msgid "Section"
+msgstr "Bölme"
+
+msgid "Sections"
+msgstr "Bölmeler"
+
+msgid "Security"
+msgstr "Tehlükesizlik"
+
+msgid "Select"
+msgstr "Seç"
+
+msgid "Send"
+msgstr "Gönder"
+
+msgid "Set to Profile"
+msgstr "Profil seçin"
+
+msgid "Settings"
+msgstr "Qurğular"
+
+msgid "Time settings"
+msgstr "Saat Ayarları"
+
+msgid "Shifting time"
+msgstr "Saat Deyişmesi"
+
+msgid "Options set to default"
+msgstr "Standart ayarlar aktiv olundu"
+
+msgid "Setting saved"
+msgstr "Ayarlar uğurla qeyd olundu"
+
+msgid "Show"
+msgstr "Göster"
+
+msgid "Show period"
+msgstr "Vaxt erzinde baxiş"
+
+msgid "Site access"
+msgstr "Saytına giriş"
+
+msgid "New on the site"
+msgstr "Yenilik"
+
+msgid "Site News"
+msgstr "Xeberler"
+
+msgid "Stay on site"
+msgstr "Sayda keçirdiyi vaxt"
+
+msgid "Smileys"
+msgstr "Gülmeceler"
+
+msgid "Sort"
+msgstr "Ardıcıllıq"
+
+msgid "Spoiler"
+msgstr ""
+
+msgid "Statistic"
+msgstr "Göstericiler"
+
+msgid "My Statistic"
+msgstr "Menim Göstericilerim"
+
+msgid "User Statistic"
+msgstr "İstifadeçi göstericileri"
+
+msgid "Status"
+msgstr ""
+
+msgid "Supervisors"
+msgstr "SuperVayzer"
+
+msgid "System Functions"
+msgstr "Sistem funksiyaları"
+
+msgid "System Language"
+msgstr "Sistem Dili"
+
+msgid "System Time"
+msgstr "Sistem Saatı"
+
+msgid "System Settings"
+msgstr "Sistem Ayarları"
+
+msgid "Blue"
+msgstr ""
+
+msgid "Bold"
+msgstr "Qalin"
+
+msgid "PHP code"
+msgstr ""
+
+msgid "Green"
+msgstr ""
+
+msgid "Italic"
+msgstr "Eyri"
+
+msgid "URL"
+msgstr ""
+
+msgid "Bulleted list"
+msgstr ""
+
+msgid "Quote"
+msgstr ""
+
+msgid "Red"
+msgstr ""
+
+msgid "Strike"
+msgstr ""
+
+msgid "Underline"
+msgstr "Xetli"
+
+msgid "Term"
+msgstr "Müddet"
+
+msgid "Text"
+msgstr "Metn"
+
+msgid "Input text"
+msgstr "Metn Yaz"
+
+msgid "Text size"
+msgstr "Metn Ölçüsü"
+
+msgid "Themes"
+msgstr "Mövzular"
+
+msgid "Time"
+msgstr "Saat"
+
+msgid "Day"
+msgstr "gün"
+
+msgid "Days"
+msgstr "gün"
+
+msgid "Days"
+msgstr "gün"
+
+msgid "Time limit"
+msgstr "Zaman limiti"
+
+msgid "Shifting time"
+msgstr "Saat Deyişmesi"
+
+msgid "Title"
+msgstr "Ad"
+
+msgid "In Chat"
+msgstr "Çata Keç"
+
+msgid "To the profile"
+msgstr "Ankete Keç"
+
+msgid "In forum"
+msgstr "Foruma Keç"
+
+msgid "Back to news"
+msgstr "Xeberlere Keç"
+
+msgid "Go to page"
+msgstr "Sehifeye Keç"
+
+msgid "Show"
+msgstr "Göster"
+
+msgid "Today"
+msgstr "Bu gün"
+
+msgid "Top 10 activity"
+msgstr "TOP 10 Aktivlik"
+
+msgid "Most commenting"
+msgstr "Çox Fikir Yazarlar"
+
+msgid "Most active in Forum"
+msgstr "En Aktiv Forumçular"
+
+msgid "Most active in Guestbook"
+msgstr "En Aktiv Qonaqlar"
+
+msgid "Best Karma"
+msgstr "En Yaxşı Karma"
+
+msgid "Total"
+msgstr "Cemi"
+
+msgid "Hits"
+msgstr "Keçidler"
+
+msgid "hits"
+msgstr "keçid"
+
+msgid "Translit"
+msgstr ""
+
+msgid "Unread"
+msgstr "Oxunmamışlar"
+
+msgid "Format address http://url.com"
+msgstr "Ünvani bu http://url.com formatda daxil edin"
+
+msgid "Up"
+msgstr "Yuxarı"
+
+msgid "This user does not exists"
+msgstr "Bele istifadeçi mövcud deyil"
+
+msgid "Useful"
+msgstr "Xeyirli"
+
+msgid "Users"
+msgstr "İstifadeçiler"
+
+msgid "Clean Users"
+msgstr ""
+
+msgid "Users list"
+msgstr "İstifadeçi Siyahısı"
+
+msgid "New users"
+msgstr "Yeni İstifadeçiler"
+
+msgid "Banned users"
+msgstr "Ban Alanlar"
+
+msgid "Waiting confirmation"
+msgstr "Qeydiyyatda gözleyenler"
+
+msgid "Top Activity"
+msgstr "Top Aktivlik"
+
+msgid "Verification code"
+msgstr "Şekildeki Kod"
+
+msgid "Viewing"
+msgstr "Baxış"
+
+msgid "Display mode"
+msgstr "Görüntü növü"
+
+msgid "Vote"
+msgstr "Ses ver"
+
+msgid "Against"
+msgstr "Elehine"
+
+msgid "For"
+msgstr "Lehine"
+
+msgid "Polls"
+msgstr "Ses verme"
+
+msgid "Welcome to"
+msgstr "Xoş gelmisiz! Sizi hemişe xoş qarşılayan :"
+
+msgid "Where?"
+msgstr "Harada?"
+
+msgid "Who is online?"
+msgstr "Kim var saytda bölmesindedir?"
+
+msgid "No limits"
+msgstr "Limitsiz"
+
+msgid "Girls"
+msgstr "Qızlar"
+
+msgid "Write"
+msgstr "Yaz"
+
+msgid "Yesterday"
+msgstr "Dünən"
+

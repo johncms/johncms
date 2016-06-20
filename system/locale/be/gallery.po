@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Дазволеныя тыпы"
+
+msgid "Create an album"
+msgstr "Стварыць альбом"
+
+msgid "Create a section"
+msgstr "Стварыць профіль"
+
+msgid "Gallery closed"
+msgstr "Галерэя зачыненая"
+
+msgid "Delete Album"
+msgstr "Выдаліць альбом"
+
+msgid "Delete section"
+msgstr "Выдаліць профіль"
+
+msgid "Dimensions"
+msgstr "Памеры"
+
+msgid "Edit Album"
+msgstr "Змяніць альбом"
+
+msgid "Edit description"
+msgstr "Змяніць апісанне"
+
+msgid "Edit Section"
+msgstr "Змяніць профіль"
+
+msgid "Error uploading photo"
+msgstr "Памылка пры загрузцы фота"
+
+msgid "Picture is missing"
+msgstr "Малюнак адсутнічае"
+
+msgid "Image size"
+msgstr "Памеры малюнкаў"
+
+msgid "Maximum weight"
+msgstr "Максімальны вага"
+
+msgid "New photos"
+msgstr "Новыя фота"
+
+msgid "Posted by"
+msgstr "Размясціў"
+
+msgid "Select Photo"
+msgstr "Выбраць фота"
+
+msgid "To Album"
+msgstr "альбом"
+
+msgid "To Gallery"
+msgstr "У галерэю"
+
+msgid "To Section"
+msgstr "section"
+
+msgid "Upload Photo"
+msgstr "Выгрузіць фота"
+
+msgid "Weight"
+msgstr "Вага"
+

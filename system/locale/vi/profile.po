@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Giới thiệu"
+
+msgid "Everyone"
+msgstr "Tất cả mọi người"
+
+msgid "With Password"
+msgstr "Bởi mật khẩu"
+
+msgid "Closed"
+msgstr "Đóng cửa"
+
+msgid "Friends only"
+msgstr "Chỉ cho bạn bè"
+
+msgid "This field is required if the password access is activated"
+msgstr "Trường này là bắt buộc nếu truy cập các mật khẩu được kích hoạt"
+
+msgid "Achievements"
+msgstr "Thành tích đạt được"
+
+msgid "Activity"
+msgstr "Hoạt động"
+
+msgid "Album"
+msgstr ""
+
+msgid "Album successfully changed"
+msgstr "Album thay đổi thành công"
+
+msgid "Create Album"
+msgstr "Tạo Album"
+
+msgid "Album successfully created"
+msgstr "Album tạo thành công"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Bạn có chắc chắn muốn xóa album này? Nếu nó có chứa hình ảnh, họ cũng sẽ bị xóa."
+
+msgid "Album Deleted"
+msgstr "Album bị xóa"
+
+msgid "Edit Album"
+msgstr "Chỉnh sửa Album"
+
+msgid "Album List"
+msgstr "Danh sách Album"
+
+msgid "You must type a password to view this album"
+msgstr "Bạn phải nhập một mật khẩu để xem album này"
+
+msgid "Select Album"
+msgstr "Chọn Album"
+
+msgid "Pending confirmation"
+msgstr "Trong khi chờ xác nhận đăng ký"
+
+msgid "Delete avatar"
+msgstr "Xóa avatar"
+
+msgid "Upload avatar"
+msgstr ""
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Birthday"
+msgstr "Sinh Nhật"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Ngày sinh (ngày .tháng .năm)"
+
+msgid "City"
+msgstr "Thành phố"
+
+msgid "Contacts"
+msgstr "Danh bạ"
+
+msgid "Data saved"
+msgstr "Dữ liệu lưu thành công"
+
+msgid "Prohibit karma"
+msgstr "Từ chối nghiệp"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Cảnh báo!! Sửa thông tin e-mail của bạn<br> Điều đó nó sẽ gửi mật khẩu của bạn."
+
+msgid "The album already exists"
+msgstr "Album này đã tồn tại"
+
+msgid "Invalid format date of birth"
+msgstr "Định dạng không hợp lệ ngày sinh"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "ICQ số phải có ít nhất 5 chữ số và tối đa 10"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Độ dài tối thiểu nick 2, tối đa 20 ký tự"
+
+msgid "Nick contains invalid characters"
+msgstr "Nick nhân vật không hợp lệ"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Bạn không thể chỉnh sửa hồ sơ trên của bạn trở lên"
+
+msgid "Friends only"
+msgstr "Chỉ cho bạn bè"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Danh sách này có sản phẩm nào.<br>ất cả các tin nhắn của người sử dụng lựa chọn trong kế hoạch đã được xóa sạch. "
+
+msgid "hidden"
+msgstr "ẩn"
+
+msgid "Image"
+msgstr "Chọn hình ảnh"
+
+msgid "Add image"
+msgstr "Thêm một hình ảnh"
+
+msgid "Delete image"
+msgstr "Xóa hình ảnh"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Bạn có chắc chắn muốn xóa hình ảnh này?"
+
+msgid "Edit image"
+msgstr "Chỉnh sửa hình ảnh"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "ưu ý, bạn có thể mất đi chất lượng hình ảnh nếu bạn thay đổi độ sáng, độ tương phản và xoay nó nhiều lần. Không thực hiện bất kỳ thay đổi mà không cần."
+
+msgid "Image successfully changed"
+msgstr "Hình ảnh thay đổi thành công"
+
+msgid "Move the image"
+msgstr "Di chuyển các hình ảnh"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Bạn phải tạo ít nhất một album nữa để di chuyển hình ảnh"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Hình ảnh thành công chuyển đến album chọn"
+
+msgid "Rotate"
+msgstr "xoay"
+
+msgid "do not rotate"
+msgstr "không xoay"
+
+msgid "counterclockwise"
+msgstr "ngược chiều kim đồng"
+
+msgid "clockwise"
+msgstr "chiều kim đồng hồ"
+
+msgid "My Album"
+msgstr "Album của tôi"
+
+msgid "My activity"
+msgstr "Tổng tài sản"
+
+msgid "My Mailbox"
+msgstr "Hộp thư của tôi"
+
+msgid "My Account"
+msgstr "Tài khoản của tôi"
+
+msgid "My Profile"
+msgstr "Hồ sơ của tôi"
+
+msgid "My settings"
+msgstr "Thiết lập của tôi"
+
+msgid "My statistic"
+msgstr "Thống kê của tôi"
+
+msgid "Name"
+msgstr "Họ tên"
+
+msgid "Recent comments"
+msgstr "Ý kiến gần đây"
+
+msgid "New photos"
+msgstr "Ảnh mới"
+
+msgid "Min.2, Max. 20"
+msgstr "ít nhất.2, nhiều nhất. 20"
+
+msgid "Personal info"
+msgstr "Thông tin cá nhân"
+
+msgid "Contact number"
+msgstr "Liên hệ số"
+
+msgid "Photo"
+msgstr "Ảnh "
+
+msgid "Add to Profile"
+msgstr "Thêm vào hồ sơ cá nhân"
+
+msgid "Photo added to the profile"
+msgstr "Hình ảnh tìm thấy trong bảng câu hỏi"
+
+msgid "Photos"
+msgstr "Ảnh "
+
+msgid "Photo deleted"
+msgstr "Ảnh xóa"
+
+msgid "Photo uploaded"
+msgstr "Ảnh tải lên"
+
+msgid "Edit Profile"
+msgstr "Chỉnh sửa hồ sơ"
+
+msgid "Functionary on the site"
+msgstr "vào trang web"
+
+msgid "User"
+msgstr "Thành viên"
+
+msgid "Moder chat"
+msgstr ""
+
+msgid "Forum Moderator"
+msgstr "Moder forum"
+
+msgid "Download Moderator"
+msgstr "Moder download"
+
+msgid "Library Moderator"
+msgstr "Moder library"
+
+msgid "Super Modererator"
+msgstr "Super Moder"
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Supervisor"
+msgstr "Người sáng lập"
+
+msgid "Received"
+msgstr "Hộp thư đến"
+
+msgid "Registration confirmed"
+msgstr "Đăng ký xác nhận"
+
+msgid "Free registration"
+msgstr "Miễn phí đăng ký"
+
+msgid "Registered"
+msgstr "Con gái đăng ký"
+
+msgid "Registered"
+msgstr "Con gái đăng ký"
+
+msgid "For user"
+msgstr "Đối với người dùng"
+
+msgid "default settings were set"
+msgstr "thiết lập mặc định đã được thiết lập"
+
+msgid "Image"
+msgstr "Chọn hình ảnh"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Cho phép định dạng hình ảnh JPG, JPEG, PNG, GIF<br>Kích thước nên được vượt quá"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Bất kể độ phân giải file gốc sẽ được chuyển đổi sang kích thước 32x32"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Mới được hình ảnh trên sẽ thay thế cũ (nếu nó đã được)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "Đối với kết quả tốt nhất, bản gốc hình ảnh phải có một tỷ lệ bằng nhau"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Bất kể độ phân giải gốc tập tin, nó sẽ được chuyển thành kích thước không quá 640x480"
+
+msgid "Sent"
+msgstr "Hộp thư đã gửi"
+
+msgid "Male"
+msgstr "Con trai"
+
+msgid "Female"
+msgstr "Con gái"
+
+msgid "Back to profile"
+msgstr "Trở lại hồ sơ"
+
+msgid "Site"
+msgstr "Website"
+
+msgid "Select gender"
+msgstr "Chọn giới tính"
+
+msgid "Max. 50"
+msgstr "Nhiều nhất. 50"
+
+msgid "He stay on the site"
+msgstr "thời gian trên trang web"
+
+msgid "She stay on the site"
+msgstr "thời gian trên trang web"
+
+msgid "System"
+msgstr ""
+
+msgid "Top Comments"
+msgstr "Top bình luận"
+
+msgid "Top Downloads"
+msgstr ""
+
+msgid "AntiTop"
+msgstr ""
+
+msgid "Top Views "
+msgstr "Top Lượt xem "
+
+msgid "Top Votes"
+msgstr "Top bình chọn "
+
+msgid "Unread Comments"
+msgstr "Bình luận mới"
+
+msgid "Upload"
+msgstr ""
+
+msgid "Upload avatar"
+msgstr ""
+
+msgid "Upload a picture"
+msgstr "Upload hình ảnh"
+
+msgid "User Profile"
+msgstr "Thông tin thành viên"
+
+msgid "Add to Contacts"
+msgstr ""
+
+msgid "Add to Friends"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "You have already submitted a request"
+msgstr ""
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr ""
+
+msgid "Unlock user"
+msgstr ""
+
+msgid "Remove from contacts"
+msgstr ""
+
+msgid "Friends"
+msgstr ""
+
+msgid "My Friends"
+msgstr ""
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr ""
+
+msgid "offers friendship"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Request to be friends sent!"
+msgstr ""
+
+msgid "Do you really want to become friends?"
+msgstr ""
+
+msgid "Friendship"
+msgstr ""
+
+msgid "User is already your friend"
+msgstr ""
+
+msgid "Applications for friendship does not exist"
+msgstr ""
+
+msgid "Application for friendship canceled"
+msgstr ""
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr ""
+
+msgid "There is no invitation to be friends"
+msgstr ""
+
+msgid "agreed with you friends"
+msgstr ""
+
+msgid "You confirmed friendship. Now the user"
+msgstr ""
+
+msgid "Your friend"
+msgstr ""
+
+msgid "Do you really want to confirm the friendship"
+msgstr ""
+
+msgid "deleted you from friends"
+msgstr ""
+
+msgid "You remove the user from friends."
+msgstr ""
+
+msgid "Do you really want to remove from your friends?"
+msgstr ""
+
+msgid "Removal is not possible! User is not your friend."
+msgstr ""
+
+msgid "declined your offer to make friends."
+msgstr ""
+
+msgid "Request to be friends rejected."
+msgstr ""
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr ""
+
+msgid "The page does not exist!"
+msgstr ""
+
+msgid "My requests"
+msgstr ""
+
+msgid "Cancel Request"
+msgstr ""
+
+msgid "My Offers"
+msgstr ""
+
+msgid "Confirm friendship"
+msgstr ""
+
+msgid "Reject friendship"
+msgstr ""
+
+msgid "Remove from friends"
+msgstr ""
+
+msgid "Add to friends"
+msgstr ""
+
+msgid "Cancel a request to be friends"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr ""
+
+msgid "Fellow Student"
+msgstr ""
+
+msgid "Best friend"
+msgstr ""
+
+msgid "Colleague"
+msgstr ""
+
+msgid "Classmate"
+msgstr ""
+
+msgid "Friend"
+msgstr ""
+
+msgid "Mail settings"
+msgstr ""
+
+msgid "You can write messages"
+msgstr ""
+
+msgid "Can write all"
+msgstr ""
+
+msgid "Can write only contacts"
+msgstr ""
+
+msgid "Can write only friends"
+msgstr ""
+
+msgid "pointing out that you best friends with him"
+msgstr ""
+
+msgid "pointed out that you have with him relatives"
+msgstr ""
+
+msgid "pointed out that you have with him classmates"
+msgstr ""
+
+msgid "pointing out that you were colleagues"
+msgstr ""
+
+msgid "pointing out that you were classmates"
+msgstr ""
+
+msgid "pointed out that you\"re friends"
+msgstr ""
+
+msgid "You indicated that you are best friends with"
+msgstr ""
+
+msgid "You indicated that the relatives with"
+msgstr ""
+
+msgid "You indicated that mates with"
+msgstr ""
+
+msgid "You indicated that the colleagues with"
+msgstr ""
+
+msgid "You indicated that you classmates with"
+msgstr ""
+
+msgid "You indicated that you are friends with"
+msgstr ""
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "The feature is disabled, contact your administrator"
+msgstr ""
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr ""
+

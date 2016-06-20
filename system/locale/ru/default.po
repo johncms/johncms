@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Add File"
+msgstr "Добавить файл"
+
+msgid "Add Smileys"
+msgstr "Добавить смайлы"
+
+msgid "Administration"
+msgstr "Администрация"
+
+msgid "Administrators"
+msgstr "Администраторы"
+
+msgid "Admin-Club"
+msgstr "Админ-клуб"
+
+msgid "Admin Panel"
+msgstr "Админ панель"
+
+msgid "Smiles for Administration"
+msgstr "Смайлы для Администрации"
+
+msgid "Administrators events"
+msgstr "События Администратора"
+
+msgid "Albums"
+msgstr "Альбомы"
+
+msgid "New comments in albums"
+msgstr "Новые комментарии в Альбомах"
+
+msgid "All"
+msgstr "Все"
+
+msgid "Appearance"
+msgstr "Внешний вид"
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Location"
+msgstr "Расположение"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Authorized"
+msgstr "Авторизованные"
+
+msgid "Authorization failed"
+msgstr "Авторизация не прошла"
+
+msgid "Avatar has been successfully installed"
+msgstr "Аватар успешно установлен"
+
+msgid "Avatar successfully uploaded"
+msgstr "Аватар успешно загружен"
+
+msgid "Avatar"
+msgstr "Аватар"
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "Вы действительно хотите установить себе этот аватар?"
+
+msgid "Avatars"
+msgstr "Аватары"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Balance"
+msgstr "Баланс"
+
+msgid "Ban"
+msgstr "БАН"
+
+msgid "Banish"
+msgstr "Банил"
+
+msgid "Ban type"
+msgstr "Тип бана"
+
+msgid "Banish"
+msgstr "Банил"
+
+msgid "Tags (BBcode)"
+msgstr "Тэги (BBcode)"
+
+msgid "Birthday"
+msgstr "День рожденья"
+
+msgid "Birthdays"
+msgstr "Именинники"
+
+msgid "Block"
+msgstr "Блокировка"
+
+msgid "Blog"
+msgstr "Блог"
+
+msgid "Blogs"
+msgstr "Блоги"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Symbols on the picture"
+msgstr "Код с картинки"
+
+msgid "Catalog"
+msgstr "Каталог"
+
+msgid "Category"
+msgstr "Категория"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Change password"
+msgstr "Сменить пароль"
+
+msgid "Chat"
+msgstr "Чат"
+
+msgid "Please, check up correctness of the input data"
+msgstr "Пожалуйста, проверьте правильность ввода данных"
+
+msgid "Clear"
+msgstr "Очистить"
+
+msgid "Clear all"
+msgstr "Очищаем все"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "Удалены все сообщения, старше 1 дня"
+
+msgid "Full clearing is finished"
+msgstr "Проведена полная очистка"
+
+msgid "Clearing parameters"
+msgstr "Параметры очистки"
+
+msgid "Clear all"
+msgstr "Очищаем все"
+
+msgid "Older than 1 day"
+msgstr "Старше 1 дня"
+
+msgid "Older than 1 week"
+msgstr "Старше 1 недели"
+
+msgid "Clear all messages from this user"
+msgstr "Очистить все сообщения от данного пользователя"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "Удалены все сообщения, старше 1 недели"
+
+msgid "Color"
+msgstr "Цвет"
+
+msgid "Text Color"
+msgstr "Цвет фона"
+
+msgid "Background Color"
+msgstr "Цвет текста"
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Comments are closed"
+msgstr "Комментарии закрыты"
+
+msgid "General list"
+msgstr "Общий список"
+
+msgid "Community"
+msgstr "Актив сайта"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "In contacts"
+msgstr "В контакты"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Downloads"
+msgstr "Загрузки"
+
+msgid "Views"
+msgstr "Просмотров"
+
+msgid "Clock setting"
+msgstr "Настройка часов"
+
+msgid "General setting"
+msgstr "Общие настройки"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Day"
+msgstr "день"
+
+msgid "Days"
+msgstr "дня"
+
+msgid "Default"
+msgstr "По умолчанию"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+msgid "Delete all"
+msgstr "Удалить все"
+
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Design"
+msgstr "Тема оформления"
+
+msgid "Communication"
+msgstr "Общение"
+
+msgid "Digest"
+msgstr "Дайджест"
+
+msgid "Direct URL"
+msgstr "Прямые ссылки"
+
+msgid "Discuss"
+msgstr "Обсудить"
+
+msgid "Display mode"
+msgstr "Режим отображения"
+
+msgid "Perform"
+msgstr "Выполнить"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "Down"
+msgstr "Вниз"
+
+msgid "Download"
+msgstr "Скачать"
+
+msgid "Downloads"
+msgstr "Загрузки"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Edit List"
+msgstr "Изменить список"
+
+msgid "Edited"
+msgstr "Изменен"
+
+msgid "Enter verification code"
+msgstr "Введите проверочный код"
+
+msgid "Enter site"
+msgstr "Войти на сайт"
+
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+msgid "The requested page does not exists"
+msgstr "Запрошенная Вами страница отсутствует"
+
+msgid "Invalid address"
+msgstr "Адрес введен неверно"
+
+msgid "Avatar select failed"
+msgstr "Ошибка выбора Аватара"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Длина описания должна быть не менее 2-х символов"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "Вы не можете редактировать сообщение старшего Вас по должности"
+
+msgid "The required fields are not filled"
+msgstr "Не заполнены обязательные поля"
+
+msgid "You have not entered the message"
+msgstr "Вы не ввели сообщение"
+
+msgid "You have not entered a name"
+msgstr "Вы не ввели имя"
+
+msgid "You have not entered password"
+msgstr "Вы не ввели Пароль"
+
+msgid "You have not entered text"
+msgstr "Вы не ввели текст"
+
+msgid "You have not entered Title"
+msgstr "Вы не ввели название"
+
+msgid "File does not exist"
+msgstr "Файла не существует"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Вы не можете так часто добавлять сообщения<br>Пожалуйста, подождите"
+
+msgid "You have not entered login"
+msgstr "Вы не ввели Логин"
+
+msgid "Message already exists"
+msgstr "Такое сообщение уже было"
+
+msgid "Text is too short"
+msgstr "Слишком короткий текст"
+
+msgid "Administrator already replied to this message"
+msgstr "На это сообщение уже ответил Администратор"
+
+msgid "User does not exists"
+msgstr "Такого пользователя не существует"
+
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+msgid "Bad data"
+msgstr "Неверные данные"
+
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "Значения полей выходят за допустимые пределы"
+
+msgid "Incorrect Password"
+msgstr "Пароль неверный"
+
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+msgid "No new events"
+msgstr "Новых событий нет"
+
+msgid "Logout"
+msgstr "Выход"
+
+msgid "External Link"
+msgstr "Внешняя ссылка"
+
+msgid "Height of field"
+msgstr "Высота поля"
+
+msgid "Width of field"
+msgstr "Ширина поля"
+
+msgid "Max. File size"
+msgstr "Макс. размер файла"
+
+msgid "Files"
+msgstr "Файлы"
+
+msgid "Bold"
+msgstr "Жирный"
+
+msgid "Italic"
+msgstr "Наклонный"
+
+msgid "Underline"
+msgstr "Подчеркнутый"
+
+msgid "Forgot password"
+msgstr "Забыли пароль"
+
+msgid "Forum"
+msgstr "Форум"
+
+msgid "Forum post"
+msgstr "Постов на форуме"
+
+msgid "Gallery"
+msgstr "Галерея"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "Guests"
+msgstr "Гости"
+
+msgid "Gzip compression"
+msgstr "Gzip сжатие"
+
+msgid "Guestbook"
+msgstr "Гостевая"
+
+msgid "The guestbook is closed"
+msgstr "Гостевая закрыта"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "В Гостевой сообщений нет<br><b>Будь первым! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "С днем рожденья!!!"
+
+msgid "Heading"
+msgstr "Заголовок"
+
+msgid "Help"
+msgstr "Справка"
+
+msgid "Hi"
+msgstr "Привет"
+
+msgid "Hide"
+msgstr "Скрыть"
+
+msgid "History"
+msgstr "История"
+
+msgid "Home"
+msgstr "На главную"
+
+msgid "Hours"
+msgstr "Часов"
+
+msgid "Ignore"
+msgstr "Игнорировать"
+
+msgid "Details"
+msgstr "Подробно"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "В данный момент доступ к сайту разрешен только для SV!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "В данный момент доступ к сайту разрешен только для Администрации сайта"
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Info, FAQ"
+msgstr "Информация, FAQ"
+
+msgid "Offenses"
+msgstr "Нарушения"
+
+msgid "IP Activity"
+msgstr "IP Активность"
+
+msgid "Actual addresses"
+msgstr "Актуальные адреса"
+
+msgid "IP address"
+msgstr "Адрес IP"
+
+msgid "IP history"
+msgstr "История IP"
+
+msgid "Karma"
+msgstr "Карма"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Select language"
+msgstr "Выберите язык"
+
+msgid "System language set"
+msgstr "Для системы установлен язык"
+
+msgid "Last activity"
+msgstr "Последняя активность"
+
+msgid "Last IP"
+msgstr "Последний IP"
+
+msgid "Last visit"
+msgstr "Последний визит"
+
+msgid "Library"
+msgstr "Библиотека"
+
+msgid "Mod. Library"
+msgstr "Мод. Библиотеки"
+
+msgid "Lines per page"
+msgstr "Строк на страницу"
+
+msgid "Link"
+msgstr "Ссылка"
+
+msgid "List"
+msgstr "Список"
+
+msgid "Empty list"
+msgstr "Список пуст"
+
+msgid "OFF"
+msgstr "Выключить"
+
+msgid "ON"
+msgstr "Включить"
+
+msgid "or"
+msgstr "или"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Username"
+msgstr "Логин"
+
+msgid "General settings"
+msgstr "Общие настройки"
+
+msgid "Mail"
+msgstr "Почта"
+
+msgid "New message"
+msgstr "Вам письмо"
+
+msgid "Guys"
+msgstr "Парни"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Messages"
+msgstr "Сообщения"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мин. 2, макс. 30 символов"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мин. 2, макс. 500 символов"
+
+msgid "Moderators"
+msgstr "Модераторы"
+
+msgid "Move"
+msgstr "Переместить"
+
+msgid "My Smileys"
+msgstr "Мои смайлы"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "New Files"
+msgstr "Новые файлы"
+
+msgid "New reviews"
+msgstr "Новые отзывы"
+
+msgid "News"
+msgstr "Новости"
+
+msgid "Archive news"
+msgstr "Архив новостей"
+
+msgid "Next"
+msgstr "Дальше"
+
+msgid "Nick"
+msgstr "Ник"
+
+msgid "Night"
+msgstr "Ночь"
+
+msgid "Nothing found for this request"
+msgstr "По Вашему запросу ничего не найдено"
+
+msgid "Not specified"
+msgstr "Не указана"
+
+msgid "Optional field"
+msgstr "Необязательное поле"
+
+msgid "Moderation"
+msgstr "На модерации"
+
+msgid "Online"
+msgstr "Онлайн"
+
+msgid "Personal"
+msgstr "Персональные"
+
+msgid "Personal"
+msgstr "Персональные"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Photo Album"
+msgstr "Фотоальбом"
+
+msgid "Photo Albums"
+msgstr "Фотоальбомы"
+
+msgid "poins"
+msgstr "очков"
+
+msgid "posts"
+msgstr "постов"
+
+msgid "Preview"
+msgstr "Предпросмотр"
+
+msgid "Private"
+msgstr "Приват"
+
+msgid "Profile"
+msgstr "Анкета"
+
+msgid "Quiz"
+msgstr "Викторина"
+
+msgid "Quick jump"
+msgstr "Быстрый переход"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Read Only"
+msgstr "Только для чтения"
+
+msgid "Reason"
+msgstr "Причина"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>ВНИМАНИЕ!</h3>Вы собираетесь покинуть сайт и перейти по внешней ссылке"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Администрация нашего ресурса не несёт ответственности за контент постороннего сайта"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "Рекомендуется не указывать ваши данные, имеющие отношение к"
+
+msgid "(Login, Password), on third party sites"
+msgstr "(имя пользователя, пароль), на сторонних сайтах"
+
+msgid "Go to link"
+msgstr "Перейти по ссылке"
+
+msgid "Registration"
+msgstr "Регистрация"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "Приносим извинения, но Ваша заявка на регистрацию ещё не рассмотрена<br>Пожалуйста, ожидайте"
+
+msgid "Remains"
+msgstr "Осталось"
+
+msgid "Remember"
+msgstr "Запомнить"
+
+msgid "Repeat"
+msgstr "Повторить"
+
+msgid "Reply"
+msgstr "Ответить"
+
+msgid "Reset setting"
+msgstr "Сброс настроек"
+
+msgid "New reviews"
+msgstr "Новые отзывы"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "Длина запроса: 4 мин., 64 макс.<br>Поиск нечувствителен к регистру букв<br>Результаты выводятся с сортировкой по релевантности"
+
+msgid "Search History"
+msgstr "История поисковых запросов"
+
+msgid "Do you really want to clear the search history?"
+msgstr "Вы действительно хотите очистить историю поиска?"
+
+msgid "New search"
+msgstr "Новый поиск"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "Поиск идет по Нику пользователя (NickName) и нечувствителен к регистру букв. То есть, <b>UsEr</b> и <b>user</b> для поиска равноценны.<br>Запрос на поиск транслитерируется, то есть, чтоб найти, к примеру, ник ДИМА, Вы можете в запросе написать dima, результат будет один и тот же."
+
+msgid "Query results"
+msgstr "Результаты запроса"
+
+msgid "Your search did not match any results"
+msgstr "По Вашему запросу ничего не найдено"
+
+msgid "Find a user"
+msgstr "Поиск пользователя"
+
+msgid "Sec."
+msgstr "сек."
+
+msgid "seconds"
+msgstr "секунд"
+
+msgid "Section"
+msgstr "Раздел"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "Security"
+msgstr "Безопасность"
+
+msgid "Select"
+msgstr "Выбрать"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "Set to Profile"
+msgstr "Установить в анкету"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Time settings"
+msgstr "Настройка часов"
+
+msgid "Shifting time"
+msgstr "Сдвиг времени"
+
+msgid "Options set to default"
+msgstr "Установлены настройки по умолчанию"
+
+msgid "Setting saved"
+msgstr "Настройки сохранены"
+
+msgid "Show"
+msgstr "Показывать"
+
+msgid "Show period"
+msgstr "Показать за период"
+
+msgid "Site access"
+msgstr "Доступ к сайту"
+
+msgid "New on the site"
+msgstr "Новое на сайте"
+
+msgid "Site News"
+msgstr "Новости ресурса"
+
+msgid "Stay on site"
+msgstr "Провел на сайте"
+
+msgid "Smileys"
+msgstr "Смайлы"
+
+msgid "Sort"
+msgstr "Сортировка"
+
+msgid "Spoiler"
+msgstr "Спойлер"
+
+msgid "Statistic"
+msgstr "Статистика"
+
+msgid "My Statistic"
+msgstr "Моя статистика"
+
+msgid "User Statistic"
+msgstr "Статистика пользователя"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Supervisors"
+msgstr "Супервайзоры"
+
+msgid "System Functions"
+msgstr "Функции системы"
+
+msgid "System Language"
+msgstr "Язык системы"
+
+msgid "System Time"
+msgstr "Системное время"
+
+msgid "System Settings"
+msgstr "Настройки системы"
+
+msgid "Blue"
+msgstr "Синий"
+
+msgid "Bold"
+msgstr "Жирный"
+
+msgid "PHP code"
+msgstr "PHP код"
+
+msgid "Green"
+msgstr "Зеленый"
+
+msgid "Italic"
+msgstr "Наклонный"
+
+msgid "URL"
+msgstr "Ссылка"
+
+msgid "Bulleted list"
+msgstr "Маркированный список"
+
+msgid "Quote"
+msgstr "Цитата"
+
+msgid "Red"
+msgstr "Красный"
+
+msgid "Strike"
+msgstr "Зачеркнутый"
+
+msgid "Underline"
+msgstr "Подчеркнутый"
+
+msgid "Term"
+msgstr "Срок"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Input text"
+msgstr "Ввод текста"
+
+msgid "Text size"
+msgstr "Размер текста"
+
+msgid "Themes"
+msgstr "Темы"
+
+msgid "Time"
+msgstr "Время"
+
+msgid "Day"
+msgstr "день"
+
+msgid "Days"
+msgstr "дня"
+
+msgid "Days"
+msgstr "дня"
+
+msgid "Time limit"
+msgstr "Лимит времени"
+
+msgid "Shifting time"
+msgstr "Сдвиг времени"
+
+msgid "Title"
+msgstr "Название"
+
+msgid "In Chat"
+msgstr "В Чат"
+
+msgid "To the profile"
+msgstr "В анкету"
+
+msgid "In forum"
+msgstr "В Форум"
+
+msgid "Back to news"
+msgstr "К новостям"
+
+msgid "Go to page"
+msgstr "К странице"
+
+msgid "Show"
+msgstr "Показывать"
+
+msgid "Today"
+msgstr "Сегодня"
+
+msgid "Top 10 activity"
+msgstr "Топ 10 активности"
+
+msgid "Most commenting"
+msgstr "Больше всего комментировали"
+
+msgid "Most active in Forum"
+msgstr "Самые активные на Форуме"
+
+msgid "Most active in Guestbook"
+msgstr "Самые активные в Гостевой"
+
+msgid "Best Karma"
+msgstr "Лучшая Карма"
+
+msgid "Total"
+msgstr "Всего"
+
+msgid "Hits"
+msgstr "Переходы"
+
+msgid "hits"
+msgstr "переходов"
+
+msgid "Translit"
+msgstr "Транслит"
+
+msgid "Unread"
+msgstr "Непрочитанное"
+
+msgid "Format address http://url.com"
+msgstr "Адрес вводите в формате http://url.com"
+
+msgid "Up"
+msgstr "Вверх"
+
+msgid "This user does not exists"
+msgstr "Такого пользователя не существует"
+
+msgid "Useful"
+msgstr "Полезное"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Clean Users"
+msgstr "Очистка базы"
+
+msgid "Users list"
+msgstr "Список пользователей"
+
+msgid "New users"
+msgstr "Новые пользователи"
+
+msgid "Banned users"
+msgstr "Имеют Бан"
+
+msgid "Waiting confirmation"
+msgstr "На регистрации"
+
+msgid "Top Activity"
+msgstr "Топ активности"
+
+msgid "Verification code"
+msgstr "Проверочный код"
+
+msgid "Viewing"
+msgstr "Просмотр"
+
+msgid "Display mode"
+msgstr "Режим отображения"
+
+msgid "Vote"
+msgstr "Голосовать"
+
+msgid "Against"
+msgstr "Против"
+
+msgid "For"
+msgstr "За"
+
+msgid "Polls"
+msgstr "Голосования"
+
+msgid "Welcome to"
+msgstr "Добро пожаловать на"
+
+msgid "Where?"
+msgstr "Где?"
+
+msgid "Who is online?"
+msgstr "Кто на сайте"
+
+msgid "No limits"
+msgstr "Без ограничений"
+
+msgid "Girls"
+msgstr "Девушки"
+
+msgid "Write"
+msgstr "Написать"
+
+msgid "Yesterday"
+msgstr "Вчера"
+

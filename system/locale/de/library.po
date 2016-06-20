@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Hinzugefügt"
+
+msgid "All articles added"
+msgstr "Alle Artikel, die hinzugefügt"
+
+msgid "added to the database"
+msgstr "der Datenbank hinzugefügt"
+
+msgid "Allow users to add their articles"
+msgstr "Benutzern erlauben, ihre Artikel hinzufügen"
+
+msgid "Announcement"
+msgstr "Ankündigung"
+
+msgid "The announcement will be created automatically"
+msgstr "Wenn das Feld leer ist, wird die Ankündigung automatisch erstellt werden"
+
+msgid "Accept"
+msgstr "Nehmen"
+
+msgid "Accept all"
+msgstr "Nehmen Sie alle"
+
+msgid "Article added"
+msgstr "Artikel hinzugefügt"
+
+msgid "Thank you!</p><p>After moderator checking, your article will be published in the library."
+msgstr "Vielen Dank für was wir schrieb.</p><p>Nach der Überprüfung der Moderator, wird Ihr Artikel veröffentlicht in der Bibliothek."
+
+msgid "Article"
+msgstr "Artikel"
+
+msgid "Articles"
+msgstr "Artikel"
+
+msgid "Articles Moderation"
+msgstr "Moderation Artikeln"
+
+msgid "By Name"
+msgstr "Mit Namen"
+
+msgid "By Text"
+msgstr "Im Text"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Category was created successfully"
+msgstr "Kategorie einrichten"
+
+msgid "Category type"
+msgstr "Kategorietyp"
+
+msgid "Comments"
+msgstr ""
+
+msgid "Comment added successfully"
+msgstr "Kommentar hinzugefügt erfolgreich"
+
+msgid "Comment Article"
+msgstr "Kommentar zum Artikel"
+
+msgid "Create Category"
+msgstr "Kategorie erstellen"
+
+msgid "Delete Category"
+msgstr "Kategorie löschen"
+
+msgid "Deleted"
+msgstr ""
+
+msgid "Download Java Book"
+msgstr "Download der Java-Buch"
+
+msgid "On this page you can download the Java (MIDP-2) book with the desired article."
+msgstr "Auf dieser Seite können Sie sich die Java (MIDP-2), ein Buch mit dem gewünschten Artikel."
+
+msgid "Edit Article"
+msgstr "Seite bearbeiten"
+
+msgid "Edit Category"
+msgstr "Kategorie wechseln"
+
+msgid "Category type (in order to avoid errors, clear the category before changing the type)"
+msgstr "Kategorie Typ (um Fehler vor dem Wechsel der Art Kategorie sauberer vermeiden)"
+
+msgid "Error uploading"
+msgstr "Fehler beim Laden"
+
+msgid "First remove enclosed categories"
+msgstr "Löschen Sie zuerst die Unterkategorie"
+
+msgid "Allow users to write articles"
+msgstr "Benutzern erlauben, Artikel zu schreiben"
+
+msgid "The Library is closed"
+msgstr "Bibliothek geschlossen"
+
+msgid "Most read"
+msgstr "Meist gelesen"
+
+msgid "New articles"
+msgstr "Neue Artikel"
+
+msgid "Reads"
+msgstr "Liest"
+
+msgid "Search in titles of articles"
+msgstr "Suche im Titel von Artikeln"
+
+msgid "Select the text file"
+msgstr "Wählen Sie die Textdatei"
+
+msgid "Supported encodings"
+msgstr "Unterstützte Kodierungen"
+
+msgid "Tags"
+msgstr "Schlagworte"
+
+msgid "To article"
+msgstr "Zum Artikel"
+
+msgid "To Category"
+msgstr "In der Kategorie"
+
+msgid "To Comments"
+msgstr "Zur Kommentare"
+
+msgid "To Library"
+msgstr "Die Bibliothek"
+
+msgid "50 most read articles"
+msgstr "50 meist gelesene Artikel"
+
+msgid "Upload Article"
+msgstr "Upload Artikel"
+
+msgid "Write Article"
+msgstr "Schreiben Sie einen Artikel"
+
+msgid "Write Comment"
+msgstr "Schreiben Sie einen Kommentar"
+
+msgid "Description of categories"
+msgstr "Kategorie Beschreibung"
+
+msgid "Move to category"
+msgstr "Bewegen Sie zur Kategorie"
+
+msgid "The text input field will be ignored"
+msgstr "Ein Texteingabefeld wird ignoriert"
+
+msgid "Images"
+msgstr ""
+
+msgid "Specify the tag to the article , separated by commas"
+msgstr "Geben Sie den Tag, um den Artikel durch Kommas getrennt"
+
+msgid "Tag cloud"
+msgstr ""
+
+msgid "Category does not exist"
+msgstr ""
+
+msgid "Really you want to move the contents?"
+msgstr ""
+
+msgid "Successfully transferred"
+msgstr ""
+
+msgid "No partitions to move"
+msgstr ""
+
+msgid "Are you sure you want to remove content?"
+msgstr ""
+
+msgid "Successfully removed"
+msgstr ""
+
+msgid "Dirs"
+msgstr ""
+
+msgid "Category is not empty"
+msgstr ""
+
+msgid "Select action"
+msgstr ""
+
+msgid "Delete with movement"
+msgstr ""
+
+msgid "Remove all subdirectories and articles"
+msgstr ""
+
+msgid "Article does not exist"
+msgstr ""
+
+msgid "Invalid file encoding , preferably UTF-8"
+msgstr ""
+
+msgid "Invalid file format acceptable * .txt"
+msgstr ""
+
+msgid "The text of the article can not be edited , a large amount of data !!!"
+msgstr ""
+
+msgid "In ROOT"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Verified"
+msgstr ""
+
+msgid "Cloud of tags"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "Relevance"
+msgstr ""
+
+msgid "Alphabet"
+msgstr ""
+
+msgid "Changed"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "The author\"s name"
+msgstr ""
+
+msgid "The author\"s last name"
+msgstr ""
+
+msgid "Book name"
+msgstr ""
+
+msgid "Last comments"
+msgstr ""
+
+msgid "Rated articles"
+msgstr ""
+
+msgid "Reading"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Vote"
+msgstr ""
+

@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Пра сябе"
+
+msgid "Max. 500 characters"
+msgstr "Макс. 500 знакаў"
+
+msgid "Verification code"
+msgstr ""
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Калі Вы не бачыце малюнак з кодам, уключыце падтрымку графікі ў наладах браўзэра і абновіце старонку"
+
+msgid "Enter"
+msgstr "УВАХОД"
+
+msgid "You have not entered nick"
+msgstr "Не ўведзены лагін"
+
+msgid "Too long nick"
+msgstr "Недапушчальная даўжыня Лагіна"
+
+msgid "This nick already in use"
+msgstr "Гэтая мянушка ўжо заняты"
+
+msgid "Too long password"
+msgstr "Недапушчальная даўжыня пароля"
+
+msgid "You have not selected genger"
+msgstr "Укажыце пол"
+
+msgid "Login"
+msgstr "Лагін"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Мін. 2, макс. 15 знакаў.<br>Дазволены літары Рускага і Лацінскага алфавіту, лічбы і знакі- = @ ! ? ~ _ ( ) [ ] * (акрамя нуля)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "калі Ласка, чакайце пацверджання Вашай рэгістрацыі адміністратарам"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Вы зможаце атрымаць аўтарызаваны доступ да раздзелах сайта пасля пацверджання Вашай рэгістрацыі.<br>Пацверджанне праводзіцца 1-2 разы ў суткі"
+
+msgid "Name"
+msgstr "Імя"
+
+msgid "Max. 30 characters"
+msgstr "Макс. 30 знакаў"
+
+msgid "Password"
+msgstr ""
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Мін. 3, макс. 10 знакаў.<br>Дазволены літары Лацінскага алфавіту і лічбы"
+
+msgid "Registration"
+msgstr "Зарэгістравацца"
+
+msgid "Registration temporarily closed"
+msgstr "Рэгістрацыя зачынена"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Просьба не рэгістраваць нікі тыпу 111, ггг, uuuu і ім падобныя, яны будуць адразу ж выдалены.<br>Таксама будуць выдаленыя УСЕ профілі, якія рэгістраваліся праз Проксі-серверы"
+
+msgid "Gender"
+msgstr ""
+
+msgid "Male"
+msgstr "Мужчынскі"
+
+msgid "Female"
+msgstr "Жаночы"
+
+msgid "Your registratiton data"
+msgstr "Вы зарэгістраваныя"
+
+msgid "Your ID"
+msgstr ""
+
+msgid "Your username"
+msgstr "Ваш Лагін"
+
+msgid "Your password"
+msgstr ""
+
+msgid "Link to autologin"
+msgstr "Спасылка для автовхода"
+

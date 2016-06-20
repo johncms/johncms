@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "Ва гирифт"
+
+msgid "Amnesty"
+msgstr ""
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Амнистия танҳо барои Супервайзорҳо иҷозат аст"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Саҳифаи махкамҳо тоза карда шуд.<br>Ҳама таърихи хатогиҳо тоза карда шуд"
+
+msgid "Clear base"
+msgstr "Тозакунии БАЗА"
+
+msgid "Unban all"
+msgstr "Ҳамаро махкам мекунед"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Ҳама истифодабарандагони нолозим махкам шуданд (Ғайр аз &quot;То манъкуни&quot;)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Ҳамаро махкам мекунед&quot; - Ҳама корҳои нолозимро махкам мекунад<br>&quot;Тозакунии БАЗА&quot; - Ҳама корҳои нолозимро махкам мекунад ВА ҳама таърихи хатогиҳоро тоза мекунад"
+
+msgid "Blocked"
+msgstr "Махкамкуни"
+
+msgid "Private"
+msgstr "Махфи"
+
+msgid "Comment"
+msgstr "Суханҳо"
+
+msgid "Forum"
+msgstr "Дар форум"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Guestbook"
+msgstr "Меҳмонхона"
+
+msgid "Gallery"
+msgstr ""
+
+msgid "Library"
+msgstr "Китобхона"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Ҳаматарафа манъ карда шудааст. Мактубҳоро қабул кардан мумкин аст, аммо равон кардан не"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Махфи навистан номумкин аст (Муқобили спам)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Дар ҳама модулҳо сухан гуфтан манъ аст"
+
+msgid "Forbidden write in Forum"
+msgstr "Дар форум навистан манъ аст"
+
+msgid "Deny access to Chat"
+msgstr "Ба ЧАТ даромадан манъ аст"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Дар меҳмонхона навистан манъ аст"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Дар галерея расм гузоштан ва сухан гуфтан манъ аст"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Дар китобхона навистан ва ё сухан гуфтан манъ аст"
+
+msgid "Ban termination"
+msgstr "Хомушкунии Махкамкунак"
+
+msgid "Unban"
+msgstr "Кушодан"
+
+msgid "User unbanned"
+msgstr "Истифодабаранда кушода шуд"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "Махкамкуни манъ карда мешавад, аммо дар таърихи хатогиҳо нигох дошта мешавад"
+
+msgid "Delete ban"
+msgstr "Тозакунии Махкамкунак"
+
+msgid "Delete"
+msgstr "Тозакунии Махкамкунак"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Махкамкунак бо таърихи хатогиҳо тоза карда мешавад"
+
+msgid "Ban deleted"
+msgstr "Махкамкунак гирифта шуд"
+
+msgid "Ban user"
+msgstr "Махкамкунии истифодабаранда"
+
+msgid "Ban Panel"
+msgstr "Саҳифаи махкамкунак"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Шумо ҳуқуқи махкам кардани истифодабарандаро надоред"
+
+msgid "Ban times"
+msgstr "Вақти Махкамкунак"
+
+msgid "Till cancel"
+msgstr "То манъкуни"
+
+msgid "Day (30 max.)"
+msgstr "Руз (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Соат (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Дақиқа (60 max.)"
+
+msgid "Ban type"
+msgstr "Намуди Махкамкунак"
+
+msgid "Banishment"
+msgstr "Махкам кард"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Шумо бовари дред ки тамоми таърихи хатогиҳояшро тоза мекунед?"
+
+msgid "Clear history"
+msgstr "Тозакунии таърих"
+
+msgid "Ban already active"
+msgstr "Чунини махкамкуни алакай ҳаст"
+
+msgid "Ban not active"
+msgstr "Махкамкуни нолозим аст"
+
+msgid "There is no required data"
+msgstr "Чизҳои лозима вуҷуд надорад"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Таърихи хатогиҳоро танҳо Супервайзорҳо тоза карда метавонанд"
+
+msgid "You have no rights to ban in this section"
+msgstr "Шумо дар инҷо ҳуқуқи махкам карданро надоред"
+
+msgid "Offenses history cleared"
+msgstr "Таърихи хатогиҳо тоза карда шуд"
+
+msgid "Forum"
+msgstr "Дар форум"
+
+msgid "Offense"
+msgstr "Хатоги"
+
+msgid "Offenses history"
+msgstr "Таърихи хатогиҳо"
+
+msgid "Offenses list"
+msgstr "Ҳисоботи хатогиҳо"
+
+msgid "My offenses"
+msgstr "Хатогиҳои ман"
+
+msgid "Private (antispam)"
+msgstr "Махфи (Муқобили спам)"
+
+msgid "Reason not specified"
+msgstr "Сабаб надорад"
+
+msgid "System"
+msgstr ""
+
+msgid "To karma"
+msgstr "Одами хуб"
+
+msgid "User banned"
+msgstr "Истифодабаранда махкам карда шуд"
+

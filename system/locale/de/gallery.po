@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Zugelassene Typen"
+
+msgid "Create an album"
+msgstr "Neues Album"
+
+msgid "Create a section"
+msgstr "Erstellen Sie einen Abschnitt"
+
+msgid "Gallery closed"
+msgstr "Galerie geschlossen"
+
+msgid "Delete Album"
+msgstr "Album löschen"
+
+msgid "Delete section"
+msgstr "Abschnitt löschen"
+
+msgid "Dimensions"
+msgstr "Abmessungen"
+
+msgid "Edit Album"
+msgstr "Album bearbeiten"
+
+msgid "Edit description"
+msgstr "Beschreibung bearbeiten"
+
+msgid "Edit Section"
+msgstr "Amend Abschnitt"
+
+msgid "Error uploading photo"
+msgstr "Fehler beim Laden des Bildes"
+
+msgid "Picture is missing"
+msgstr "Kein Bild"
+
+msgid "Image size"
+msgstr "Bildgrößen"
+
+msgid "Maximum weight"
+msgstr "Maximales Gewicht"
+
+msgid "New photos"
+msgstr "Neue Photos"
+
+msgid "Posted by"
+msgstr "Autor"
+
+msgid "Select Photo"
+msgstr "Wählen Sie ein Bild"
+
+msgid "To Album"
+msgstr "Zur Album"
+
+msgid "To Gallery"
+msgstr "Zur Galerie"
+
+msgid "To Section"
+msgstr "Im Abschnitt"
+
+msgid "Upload Photo"
+msgstr ""
+
+msgid "Weight"
+msgstr "Gewicht"
+

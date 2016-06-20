@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "Link do autologinu"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>UWAGA!!</b><br>Dla Twojego bezpieczeństwa, nigdy nie używaj automatycznego logowania w niebezpiecznych miejscach (kafejka internetowa, inny komputer, inny telefon, etc.)"
+
+msgid "Verification code"
+msgstr "Kod weryfikacyjny"
+
+msgid "Change password"
+msgstr "Znień hasło"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Hasło zostało zmienione pomyślnie.<br>Nowe hasło wysłano na Twój adres e-mail"
+
+msgid "Enter code"
+msgstr "Wpisz kod"
+
+msgid "Incorrect code"
+msgstr "Błędny kod"
+
+msgid "Invalid E-mail address"
+msgstr "Nieprawidłowy adres e-mail"
+
+msgid "Error sending E-mail"
+msgstr "Błąd podczas wysyłania e-mail"
+
+msgid "Password recovery is impossible"
+msgstr "Odzyskanie hasła jest niemożliwe"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Konieczne jest wypełnienie wszystkich pól"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Hasło musi mieć min. 3, max. 10 znaków"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Potwierdzone przez Ciebie hasło jest błędne"
+
+msgid "Incorrect entered old password"
+msgstr "Nieprawidłowo wpisano stare hasło"
+
+msgid "You cannot change password of higher administration"
+msgstr "Nie można zmienić hasła administracji"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Twój czas na odzyskanie hasła minęł"
+
+msgid "Enter new password"
+msgstr "Wprowadź nowe hasło"
+
+msgid "Enter old password"
+msgstr "Wpisz stare hasło"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Min długość hasła. 3, max. 10 znaków, litery i cyfry są dozwolone."
+
+msgid "Password successfully changed"
+msgstr "Hasło zostało zmienione"
+
+msgid "Password recovery"
+msgstr "Odzyskiwanie hasła"
+
+msgid "Repeat password"
+msgstr "Powtórz hasło"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Hasło zostanie wysłane na adres e-mail podany w twoim profilu.<br>UWAGA!! Jeśli adres e-mail nie został podany w profilu, nie będziesz w stanie odzyskać hasło."
+
+msgid "Hello"
+msgstr "Cześć"
+
+msgid "You start process of password recovery on the site"
+msgstr "Aby rozpocząć proces odzyskiwania hasła na stronie"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Aby odzyskać hasło, należy kliknąć na link"
+
+msgid "Link valid for 1 hour"
+msgstr "Link jest ważny przez 1 godzinę"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Jeśli otrzymałeś tę wiadomość przez pomyłkę, zignoruj ten list"
+
+msgid "Check your e-mail for further information"
+msgstr "Sprawdź pocztę w celu uzyskania dalszych informacji"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Po zalogowaniu możesz zmienić hasło na nowe."
+
+msgid "You have changed your password on the site"
+msgstr "Po zmianie hasła na stronie"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Hasło można odzyskać 1 raz dziennie"
+
+msgid "Send"
+msgstr "Wyslij"
+
+msgid "Show autologin link"
+msgstr "Pokaż link autologowania"
+
+msgid "Your E-mail"
+msgstr "Twój E-mail"
+
+msgid "Username"
+msgstr "Login"
+
+msgid "Your new password"
+msgstr "Twoje nowe hasło"
+

@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "va qucholadi"
+
+msgid "Amnesty"
+msgstr "Аmnisiya"
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Аmnitsiya faqat supervayserlarga mumkin"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Banlar jadvali tozalandi.<br>Qodiabuzarliklar tozalandi"
+
+msgid "Clear base"
+msgstr "Bazani tozalash"
+
+msgid "Unban all"
+msgstr "Xammani banini olish"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Banlari aktiv bogan userlarni banlari olindi(&quot;Rad etilgnalardan&quot; tashqari)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Banlarni ochish&quot; - User banlarini ochadi<br>&quot;Bazani tozalash&quot; - Xamma banlar ishini toxtadadi va bazadagi qoidabuzarliklarni tozalaydi"
+
+msgid "Blocked"
+msgstr "Blokirovka"
+
+msgid "Private"
+msgstr "Shaxsiy"
+
+msgid "Comment"
+msgstr "Fikrlar"
+
+msgid "Forum"
+msgstr "forumda"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Guestbook"
+msgstr "Mehmonhona"
+
+msgid "Gallery"
+msgstr "Galereya"
+
+msgid "Library"
+msgstr "Kutubxona"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Saytdagi aktivlik butunlay toxtatildi.Xabarlarni olish mumkin lekin jontib bolmaydi"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Shaxsiy xabar yuborish servisi yopiq(antispam)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Har yerda fikr qoldirish taqiqlangan"
+
+msgid "Forbidden write in Forum"
+msgstr "Forumga yozish taqiqlangan"
+
+msgid "Deny access to Chat"
+msgstr "Chat siz uchun yopiq"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Mehmonhonaga yozish taqiqlangan"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Galereyaga rasm qoyish va fikr bildirish taqiqlangan"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Kutubxonaga maqola qoshish va fikr bildirish taqiqlangan"
+
+msgid "Ban termination"
+msgstr "Banni toxtatish"
+
+msgid "Unban"
+msgstr "Banni ochish"
+
+msgid "User unbanned"
+msgstr "Foydalanuvchi bani ochildi"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "Ban ochildi lekin qoidabuzarlik tarixi bazada saqlandi"
+
+msgid "Delete ban"
+msgstr "Banni ochirish"
+
+msgid "Delete"
+msgstr "Banni ochirish"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Ban qoidabuzarlik tarixi bilan birga ochiriladi"
+
+msgid "Ban deleted"
+msgstr "Ban ochirildi"
+
+msgid "Ban user"
+msgstr "Foydalanuvchini banlaymiz"
+
+msgid "Ban Panel"
+msgstr "Ban panel"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Sizni lavozimiz bu userni banlashga kamlik qiladi"
+
+msgid "Ban times"
+msgstr "Ban muddati"
+
+msgid "Till cancel"
+msgstr "Rad etishgacha"
+
+msgid "Day (30 max.)"
+msgstr "Kun (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Soat (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Minut (60 max.)"
+
+msgid "Ban type"
+msgstr "Ban turi"
+
+msgid "Banishment"
+msgstr "Banladi"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Ushbu userni barcha qoidabuzarlik tarixini tozalamoqchimisiz?"
+
+msgid "Clear history"
+msgstr "Tarixni tozalash"
+
+msgid "Ban already active"
+msgstr "Bunday ban mavjud"
+
+msgid "Ban not active"
+msgstr "Ban passiv"
+
+msgid "There is no required data"
+msgstr "Kerakli malumotlar yoq"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Tarixni faqat supervayserlar tozalay oladi"
+
+msgid "You have no rights to ban in this section"
+msgstr "Siz ozingizni bolimdan boshqa bolimdagilarni banlolmaysiz"
+
+msgid "Offenses history cleared"
+msgstr "Qoidabuzarliklar tarixi tozalandi"
+
+msgid "Forum"
+msgstr "forumda"
+
+msgid "Offense"
+msgstr "Qoidabuzarlik"
+
+msgid "Offenses history"
+msgstr "Qoidabuzarlik tarixi"
+
+msgid "Offenses list"
+msgstr "Qoidabuzarlik royhati"
+
+msgid "My offenses"
+msgstr "mening Qoidabuzarlik"
+
+msgid "Private (antispam)"
+msgstr "Shaxsiy xabar (antispam)"
+
+msgid "Reason not specified"
+msgstr "Sabab korsatilmadi"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "To karma"
+msgstr "Karmaga"
+
+msgid "User banned"
+msgstr "Foydalanuvchi banlangan"
+

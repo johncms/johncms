@@ -1,0 +1,1010 @@
+msgid ""
+msgstr ""
+
+msgid "Access forbidden"
+msgstr ""
+
+msgid "For registered users only"
+msgstr ""
+
+msgid "Add"
+msgstr ""
+
+msgid "Add File"
+msgstr ""
+
+msgid "Add Smileys"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Administrators"
+msgstr ""
+
+msgid "Admin-Club"
+msgstr ""
+
+msgid "Admin Panel"
+msgstr ""
+
+msgid "Smiles for Administration"
+msgstr ""
+
+msgid "Administrators events"
+msgstr ""
+
+msgid "Albums"
+msgstr ""
+
+msgid "New comments in albums"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "Authorized"
+msgstr ""
+
+msgid "Authorization failed"
+msgstr ""
+
+msgid "Avatar has been successfully installed"
+msgstr ""
+
+msgid "Avatar successfully uploaded"
+msgstr ""
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Do you really want to set myself this avatar?"
+msgstr ""
+
+msgid "Avatars"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Ban"
+msgstr ""
+
+msgid "Banish"
+msgstr ""
+
+msgid "Ban type"
+msgstr ""
+
+msgid "Banish"
+msgstr ""
+
+msgid "Tags (BBcode)"
+msgstr ""
+
+msgid "Birthday"
+msgstr ""
+
+msgid "Birthdays"
+msgstr ""
+
+msgid "Block"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blogs"
+msgstr ""
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Symbols on the picture"
+msgstr ""
+
+msgid "Catalog"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
+msgid "Chat"
+msgstr ""
+
+msgid "Please, check up correctness of the input data"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Clear all"
+msgstr ""
+
+msgid "All messages older than 1 day were deleted"
+msgstr ""
+
+msgid "Full clearing is finished"
+msgstr ""
+
+msgid "Clearing parameters"
+msgstr ""
+
+msgid "Clear all"
+msgstr ""
+
+msgid "Older than 1 day"
+msgstr ""
+
+msgid "Older than 1 week"
+msgstr ""
+
+msgid "Clear all messages from this user"
+msgstr ""
+
+msgid "All messages older than 1 week were deleted"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Text Color"
+msgstr ""
+
+msgid "Background Color"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Comments are closed"
+msgstr ""
+
+msgid "General list"
+msgstr ""
+
+msgid "Community"
+msgstr ""
+
+msgid "Contacts"
+msgstr ""
+
+msgid "In contacts"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Views"
+msgstr ""
+
+msgid "Clock setting"
+msgstr ""
+
+msgid "General setting"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete message"
+msgstr ""
+
+msgid "Delete all"
+msgstr ""
+
+msgid "Do you really want to delete?"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Design"
+msgstr ""
+
+msgid "Communication"
+msgstr ""
+
+msgid "Digest"
+msgstr ""
+
+msgid "Direct URL"
+msgstr ""
+
+msgid "Discuss"
+msgstr ""
+
+msgid "Display mode"
+msgstr ""
+
+msgid "Perform"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit List"
+msgstr ""
+
+msgid "Edited"
+msgstr ""
+
+msgid "Enter verification code"
+msgstr ""
+
+msgid "Enter site"
+msgstr ""
+
+msgid "ERROR"
+msgstr ""
+
+msgid "The requested page does not exists"
+msgstr ""
+
+msgid "Invalid address"
+msgstr ""
+
+msgid "Avatar select failed"
+msgstr ""
+
+msgid "Description should be at least 2 characters in length"
+msgstr ""
+
+msgid "You cannot edit posts of higher administration"
+msgstr ""
+
+msgid "The required fields are not filled"
+msgstr ""
+
+msgid "You have not entered the message"
+msgstr ""
+
+msgid "You have not entered a name"
+msgstr ""
+
+msgid "You have not entered password"
+msgstr ""
+
+msgid "You have not entered text"
+msgstr ""
+
+msgid "You have not entered Title"
+msgstr ""
+
+msgid "File does not exist"
+msgstr ""
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr ""
+
+msgid "You have not entered login"
+msgstr ""
+
+msgid "Message already exists"
+msgstr ""
+
+msgid "Text is too short"
+msgstr ""
+
+msgid "Administrator already replied to this message"
+msgstr ""
+
+msgid "User does not exists"
+msgstr ""
+
+msgid "The security code is not correct"
+msgstr ""
+
+msgid "Bad data"
+msgstr ""
+
+msgid "Invalid length"
+msgstr ""
+
+msgid "Fields values beyond the permissible limits"
+msgstr ""
+
+msgid "Incorrect Password"
+msgstr ""
+
+msgid "Invalid characters"
+msgstr ""
+
+msgid "No new events"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "External Link"
+msgstr ""
+
+msgid "Height of field"
+msgstr ""
+
+msgid "Width of field"
+msgstr ""
+
+msgid "Max. File size"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Bold"
+msgstr ""
+
+msgid "Italic"
+msgstr ""
+
+msgid "Underline"
+msgstr ""
+
+msgid "Forgot password"
+msgstr ""
+
+msgid "Forum"
+msgstr ""
+
+msgid "Forum post"
+msgstr ""
+
+msgid "Gallery"
+msgstr ""
+
+msgid "Guest"
+msgstr ""
+
+msgid "Guests"
+msgstr ""
+
+msgid "Gzip compression"
+msgstr ""
+
+msgid "Guestbook"
+msgstr ""
+
+msgid "The guestbook is closed"
+msgstr ""
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr ""
+
+msgid "Happy birthday!!!"
+msgstr ""
+
+msgid "Heading"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "Hi"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "History"
+msgstr ""
+
+msgid "Home"
+msgstr ""
+
+msgid "Hours"
+msgstr ""
+
+msgid "Ignore"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr ""
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr ""
+
+msgid "Information"
+msgstr ""
+
+msgid "Info, FAQ"
+msgstr ""
+
+msgid "Offenses"
+msgstr ""
+
+msgid "IP Activity"
+msgstr ""
+
+msgid "Actual addresses"
+msgstr ""
+
+msgid "IP address"
+msgstr ""
+
+msgid "IP history"
+msgstr ""
+
+msgid "Karma"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Select language"
+msgstr ""
+
+msgid "System language set"
+msgstr ""
+
+msgid "Last activity"
+msgstr ""
+
+msgid "Last IP"
+msgstr ""
+
+msgid "Last visit"
+msgstr ""
+
+msgid "Library"
+msgstr ""
+
+msgid "Mod. Library"
+msgstr ""
+
+msgid "Lines per page"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "List"
+msgstr ""
+
+msgid "Empty list"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "General settings"
+msgstr ""
+
+msgid "Mail"
+msgstr ""
+
+msgid "New message"
+msgstr ""
+
+msgid "Guys"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Messages"
+msgstr ""
+
+msgid "Min. 2, Max. 30 characters"
+msgstr ""
+
+msgid "Min. 2, Max. 500 characters"
+msgstr ""
+
+msgid "Moderators"
+msgstr ""
+
+msgid "Move"
+msgstr ""
+
+msgid "My Smileys"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "New Files"
+msgstr ""
+
+msgid "New reviews"
+msgstr ""
+
+msgid "News"
+msgstr ""
+
+msgid "Archive news"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Nick"
+msgstr ""
+
+msgid "Night"
+msgstr ""
+
+msgid "Nothing found for this request"
+msgstr ""
+
+msgid "Not specified"
+msgstr ""
+
+msgid "Optional field"
+msgstr ""
+
+msgid "Moderation"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Personal"
+msgstr ""
+
+msgid "Personal"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Photo Album"
+msgstr ""
+
+msgid "Photo Albums"
+msgstr ""
+
+msgid "poins"
+msgstr ""
+
+msgid "posts"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
+msgid "Private"
+msgstr ""
+
+msgid "Profile"
+msgstr ""
+
+msgid "Quiz"
+msgstr ""
+
+msgid "Quick jump"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Read Only"
+msgstr ""
+
+msgid "Reason"
+msgstr ""
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr ""
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr ""
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr ""
+
+msgid "(Login, Password), on third party sites"
+msgstr ""
+
+msgid "Go to link"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr ""
+
+msgid "Remains"
+msgstr ""
+
+msgid "Remember"
+msgstr ""
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Reset setting"
+msgstr ""
+
+msgid "New reviews"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr ""
+
+msgid "Search History"
+msgstr ""
+
+msgid "Do you really want to clear the search history?"
+msgstr ""
+
+msgid "New search"
+msgstr ""
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr ""
+
+msgid "Query results"
+msgstr ""
+
+msgid "Your search did not match any results"
+msgstr ""
+
+msgid "Find a user"
+msgstr ""
+
+msgid "Sec."
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "Section"
+msgstr ""
+
+msgid "Sections"
+msgstr ""
+
+msgid "Security"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Set to Profile"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Time settings"
+msgstr ""
+
+msgid "Shifting time"
+msgstr ""
+
+msgid "Options set to default"
+msgstr ""
+
+msgid "Setting saved"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Show period"
+msgstr ""
+
+msgid "Site access"
+msgstr ""
+
+msgid "New on the site"
+msgstr ""
+
+msgid "Site News"
+msgstr ""
+
+msgid "Stay on site"
+msgstr ""
+
+msgid "Smileys"
+msgstr ""
+
+msgid "Sort"
+msgstr ""
+
+msgid "Spoiler"
+msgstr ""
+
+msgid "Statistic"
+msgstr ""
+
+msgid "My Statistic"
+msgstr ""
+
+msgid "User Statistic"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Supervisors"
+msgstr ""
+
+msgid "System Functions"
+msgstr ""
+
+msgid "System Language"
+msgstr ""
+
+msgid "System Time"
+msgstr ""
+
+msgid "System Settings"
+msgstr ""
+
+msgid "Blue"
+msgstr ""
+
+msgid "Bold"
+msgstr ""
+
+msgid "PHP code"
+msgstr ""
+
+msgid "Green"
+msgstr ""
+
+msgid "Italic"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "Bulleted list"
+msgstr ""
+
+msgid "Quote"
+msgstr ""
+
+msgid "Red"
+msgstr ""
+
+msgid "Strike"
+msgstr ""
+
+msgid "Underline"
+msgstr ""
+
+msgid "Term"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Input text"
+msgstr ""
+
+msgid "Text size"
+msgstr ""
+
+msgid "Themes"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Time limit"
+msgstr ""
+
+msgid "Shifting time"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "In Chat"
+msgstr ""
+
+msgid "To the profile"
+msgstr ""
+
+msgid "In forum"
+msgstr ""
+
+msgid "Back to news"
+msgstr ""
+
+msgid "Go to page"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Top 10 activity"
+msgstr ""
+
+msgid "Most commenting"
+msgstr ""
+
+msgid "Most active in Forum"
+msgstr ""
+
+msgid "Most active in Guestbook"
+msgstr ""
+
+msgid "Best Karma"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Hits"
+msgstr ""
+
+msgid "hits"
+msgstr ""
+
+msgid "Translit"
+msgstr ""
+
+msgid "Unread"
+msgstr ""
+
+msgid "Format address http://url.com"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "This user does not exists"
+msgstr ""
+
+msgid "Useful"
+msgstr ""
+
+msgid "Users"
+msgstr ""
+
+msgid "Clean Users"
+msgstr ""
+
+msgid "Users list"
+msgstr ""
+
+msgid "New users"
+msgstr ""
+
+msgid "Banned users"
+msgstr ""
+
+msgid "Waiting confirmation"
+msgstr ""
+
+msgid "Top Activity"
+msgstr ""
+
+msgid "Verification code"
+msgstr ""
+
+msgid "Viewing"
+msgstr ""
+
+msgid "Display mode"
+msgstr ""
+
+msgid "Vote"
+msgstr ""
+
+msgid "Against"
+msgstr ""
+
+msgid "For"
+msgstr ""
+
+msgid "Polls"
+msgstr ""
+
+msgid "Welcome to"
+msgstr ""
+
+msgid "Where?"
+msgstr ""
+
+msgid "Who is online?"
+msgstr ""
+
+msgid "No limits"
+msgstr ""
+
+msgid "Girls"
+msgstr ""
+
+msgid "Write"
+msgstr ""
+
+msgid "Yesterday"
+msgstr ""

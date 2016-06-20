@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Tambah Kategori"
+
+msgid "Add file"
+msgstr "Tambahkan file"
+
+msgid "Add answer"
+msgstr "Tambahkan Balasan"
+
+msgid "Add section"
+msgstr "Tambahkan Kategori"
+
+msgid "Add a poll"
+msgstr "Tambahkan polling"
+
+msgid "Accept"
+msgstr "Setuju"
+
+msgid "Other category"
+msgstr "Kategori lain"
+
+msgid "Answer"
+msgstr "Balasan"
+
+msgid "Assign"
+msgstr "Menetapkan"
+
+msgid "Attachment"
+msgstr "Lampiran file"
+
+msgid "Back to topic"
+msgstr "Kembali ke topik"
+
+msgid "by author"
+msgstr "pada penulis"
+
+msgid "by section"
+msgstr "pada bagian"
+
+msgid "by topic"
+msgstr "pada topik"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Category deleted"
+msgstr "Hapus kategori"
+
+msgid "Edit category"
+msgstr "Ubah kategori"
+
+msgid "Categories list"
+msgstr "Daftar kategori"
+
+msgid "subsections"
+msgstr "bagian bawah"
+
+msgid "Click to view image"
+msgstr "Klik untuk melihat gambar"
+
+msgid "Subsections and files has been moved to"
+msgstr "bagian subforum dan file pindah ke"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Semua kategori, topik, dan file akan dipindahkan ke kategori yang dipilih. <br> Kategori Lama akan dihapus"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>PEMBERITAHUAN!</h3>Ada bagian bawahan <br> Mereka harus pindah ke kategori lain."
+
+msgid "Curators"
+msgstr "Kurator"
+
+msgid "Curators of the Topic"
+msgstr "Kurator Topik"
+
+msgid "Quote"
+msgstr "Kutipan"
+
+msgid "[q]"
+msgstr "[c]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Diizinkan maks. 200 karakter, jika lebih teks tambahan akan terpotong."
+
+msgid "Delete categories"
+msgstr "Hapus kategori"
+
+msgid "Complete removal"
+msgstr "Penghapusan lengkap"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Jika Anda ingin menghapus semua informasi, pertama hapus"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "PERHATIAN Ini akan menghapus semua informasi"
+
+msgid "Delete last"
+msgstr "Hapus post terakhir"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "PERINGATAN! <br> Ini adalah posting terakhir dari topik. Bersama dengan NHI akan dihapus (atau disembunyikan) dan tema sendiri"
+
+msgid "Delete message"
+msgstr "Hapus pesan"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Dalam hal penghapusan counter posting forum akan dikurangi satu titik"
+
+msgid "Delete section"
+msgstr "Hapus bagian"
+
+msgid "Delete poll"
+msgstr "Hapus polling"
+
+msgid "Download Topic"
+msgstr "Download topik"
+
+msgid "Select a format"
+msgstr "Memilih format"
+
+msgid "Link active 5 minutes"
+msgstr "Link aktif 5 menit"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Tema ini adalah download dari forum website"
+
+msgid "Downloaded"
+msgstr "Download"
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Edit message"
+msgstr "Ubah posting"
+
+msgid "Edit poll"
+msgstr "Ubah polling"
+
+msgid "Edited"
+msgstr "Di ubah."
+
+msgid "You have not selected any author"
+msgstr "Anda belum memilih penulis"
+
+msgid "Category is not chosen"
+msgstr "Tidak memilih kategori"
+
+msgid "You are trying to change another\"s post"
+msgstr "Anda mencoba mengubah posting lain"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Posting Anda sudah terlewati dan Anda tidak dapat mengubahnya"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Sejak pengoperasian posting diterbitkan lebih dari 5 menit dan Anda tidak dapat mengubahnya"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Dilarang jenis file! <br> Diperbolehkan untuk mengirim file hanya dengan ekstensi berikut"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Dengan mengirimkan file hanya diperbolehkan dengan nama dan satu ekstensi <b> (name.ext </b>). file usang tidak memiliki nama, ekstensi, atau dengan ekstensi ganda."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Nama file tidak boleh melebihi 30 karakter"
+
+msgid "File size exceed"
+msgstr "Berat file melebihi"
+
+msgid "File name contains invalid characters"
+msgstr "Pada nama file mengandung karakter tidak valid"
+
+msgid "File is already uploaded"
+msgstr "File sudah diambil"
+
+msgid "You did not choose something to delete"
+msgstr "Anda tidak memilih pesang yang akan menghapus"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Post tidak ada atau telah dihapus"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Panjang teks pencarian: 4min., 64maks."
+
+msgid "You have not entered time"
+msgstr "Anda belum memasukkan waktu"
+
+msgid "You cannot write in a closed topic"
+msgstr "Anda tidak dapat menulis ke topik ditutup"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Topik telah dihapus, atau tidak ada"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Nama topik ini sudah ada di bagian ini"
+
+msgid "You have not entered topic name"
+msgstr "Anda tidak memasukkan nama topik"
+
+msgid "Topic name too short"
+msgstr "Nama Topik terlalu pendek"
+
+msgid "Error uploading file"
+msgstr "Kesalahan Mengupload File"
+
+msgid "File attached"
+msgstr "File terlampir"
+
+msgid "Files"
+msgstr "File forum"
+
+msgid "Category files"
+msgstr "File dikategori"
+
+msgid "Section files"
+msgstr "File bagian"
+
+msgid "Topic files"
+msgstr "File topik"
+
+msgid "Archive"
+msgstr "File Arsip"
+
+msgid "Java applications"
+msgstr "File Java"
+
+msgid "MP3"
+msgstr "File MP3"
+
+msgid "Other"
+msgstr "Lainnya"
+
+msgid "Pictures"
+msgstr "File gambar"
+
+msgid "SIS"
+msgstr "file SIS"
+
+msgid "txt"
+msgstr "File Teks"
+
+msgid "WIN applications"
+msgstr "file WIN"
+
+msgid "Videos"
+msgstr "File Video"
+
+msgid "Cancel filter"
+msgstr "Batalkan penyaringan"
+
+msgid "Topic includes filtering by authors"
+msgstr "Topik mencakup penyaringan oleh penulis posting"
+
+msgid "Filter by author"
+msgstr "Filter menurut penulis"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Penyaringan dapat menampilkan posting hanya dari penulis yang dipilih"
+
+msgid "Filter by section"
+msgstr "Filter bagian"
+
+msgid "Filter by topic"
+msgstr "Filter berdasarkan topik"
+
+msgid "Filter"
+msgstr ""
+
+msgid "Forum is closed"
+msgstr "Forum terkunci"
+
+msgid "Forum Management"
+msgstr "Manajemen Forum"
+
+msgid "Forum rules"
+msgstr "Aturan Forum"
+
+msgid "Forum search"
+msgstr "Cari Forum"
+
+msgid "Forum structure"
+msgstr "Struktur Moder"
+
+msgid "Hidden posts"
+msgstr "Sembunyikan posting"
+
+msgid "Hidden topic"
+msgstr "Sembunyikan topik"
+
+msgid "Hours"
+msgstr "jam"
+
+msgid "Max. Size"
+msgstr "Max. ukuran"
+
+msgid "Marked posts are deleted"
+msgstr "Posting telah dihapus"
+
+msgid "Appointment of moderators"
+msgstr "Penunjukan moderator"
+
+msgid "New files in the last 24 hours"
+msgstr "New file dalam 24 jam terakhir"
+
+msgid "No new files"
+msgstr "file baru tidak ada"
+
+msgid "New at the bottom"
+msgstr "Posting Baru dibawah"
+
+msgid "New at the top"
+msgstr "Posting Baru diatas"
+
+msgid "New topic"
+msgstr "Buka topik"
+
+msgid "Title(max. 100)"
+msgstr "Judul(max. 100)"
+
+msgid "Disagree"
+msgstr "Tidak setuju"
+
+msgid "Other categories"
+msgstr "Kategori lainnya"
+
+msgid "Answers in the topic"
+msgstr "Dalam subyek"
+
+msgid "In the category"
+msgstr "Di kategori"
+
+msgid "Looking forum files"
+msgstr "Di file forum"
+
+msgid "Here, in the list"
+msgstr "disini, di list online"
+
+msgid "In the forum main"
+msgstr "Di forum utama"
+
+msgid "In the unreads"
+msgstr "Di belum dibaca"
+
+msgid "Forum search"
+msgstr "Cari Forum"
+
+msgid "In the section"
+msgstr "Di Bagian"
+
+msgid "In the topic"
+msgstr "Di topik"
+
+msgid "Writes in the topic"
+msgstr "Menulis untuk topik ini"
+
+msgid "Message"
+msgstr "Pesan"
+
+msgid "Post deleted"
+msgstr "Posting dihapus"
+
+msgid "Read more"
+msgstr "Selengkapnya"
+
+msgid "reference"
+msgstr "referensi"
+
+msgid "[r]"
+msgstr "[b]"
+
+msgid "Rating"
+msgstr "Penilaian"
+
+msgid "I am glad to answer you"
+msgstr "senang hati menjawab Anda"
+
+msgid "to your post"
+msgstr "untuk posting Anda"
+
+msgid "answer"
+msgstr "jawaban"
+
+msgid "You are right! You are very smart!"
+msgstr "Anda benar! Anda sangat pintar!"
+
+msgid "Restore"
+msgstr "memulihkan"
+
+msgid "Results"
+msgstr "Hasil"
+
+msgid "Back to topic"
+msgstr "Kembali ke topik"
+
+msgid "Forum search"
+msgstr "Cari Forum"
+
+msgid "Search in the topic names"
+msgstr "Cari di judul topik"
+
+msgid "Section deleted"
+msgstr "Bagian dihapus"
+
+msgid "Section with topics and files are removed"
+msgstr "Bagian topik dan file terpilih dihapus"
+
+msgid "Editing section"
+msgstr "ubah bagian"
+
+msgid "List of sections"
+msgstr "Daftar bagian"
+
+msgid "There are no sections in this category"
+msgstr "Dalam kategori ini tidak ada partisi"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Semua tema dan file akan dipindahkan ke bagian yang dipilih<br>Bagian lama akan dihapus"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>PERHATIAN</h3>Di bawah topik <br>. Mereka harus pindah ke bagian yang lain"
+
+msgid "Select category"
+msgstr "Pilih kategori"
+
+msgid "Select file"
+msgstr "Pilih File"
+
+msgid "Select section"
+msgstr "Pilih bagian"
+
+msgid "Selected category"
+msgstr "Kategori dipilih"
+
+msgid "Selected section"
+msgstr "Bagian dipilih"
+
+msgid "Size"
+msgstr "Ukuran"
+
+msgid "Topics moved to"
+msgstr "subjek topik pindah ke"
+
+msgid "Time"
+msgstr "waktu"
+
+msgid "Go to category"
+msgstr "Ke kategori"
+
+msgid "Go to forum"
+msgstr "Ke forum"
+
+msgid "To message"
+msgstr "Ke posting"
+
+msgid "Go to topic"
+msgstr "Ke topik"
+
+msgid "Go to section"
+msgstr "Ke bagian"
+
+msgid "Topic"
+msgstr "Topik"
+
+msgid "Close topic"
+msgstr "Topik di tutup"
+
+msgid "Topic closed"
+msgstr "Topik Terkunci"
+
+msgid "Delete topic"
+msgstr "Topik dihapus"
+
+msgid "Topic deleted"
+msgstr "Topik dihapus"
+
+msgid "Topic deleted by"
+msgstr "Topik dihapus oleh"
+
+msgid "Undelete topic"
+msgstr "Topik dihapus batal"
+
+msgid "Fix topic"
+msgstr "Kunci topik"
+
+msgid "No topics in this section"
+msgstr "Pada bagian ini, tidak ada topik"
+
+msgid "Move topic"
+msgstr "Pindahkan Topik"
+
+msgid "Topic name"
+msgstr "Judul Topik"
+
+msgid "New topic"
+msgstr "Buka topik"
+
+msgid "Rename topic"
+msgstr "Ubah judul topik"
+
+msgid "Restore topic"
+msgstr "Pulihkan topik"
+
+msgid "Unfix topic"
+msgstr "Lepaskan topik"
+
+msgid "Total votes"
+msgstr "Total polling"
+
+msgid "All for period"
+msgstr "Semua untuk periode"
+
+msgid "Last 10"
+msgstr "10 topik terakhir"
+
+msgid "Period (in hours)"
+msgstr "Periode (dalam jam)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "Untuk jangka waktu yang dipilih tidak ada yang baru di forum"
+
+msgid "Mark as read"
+msgstr "Tanpa dibaca"
+
+msgid "All topics marked as read"
+msgstr "Semua topik ditandai sebagai telah dibaca"
+
+msgid "Upload"
+msgstr "Mengirim"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Waktu yang diberikan untuk file upload telah berakhir"
+
+msgid "Post deleted"
+msgstr "Posting dihapus"
+
+msgid "Who is here"
+msgstr "Siapa disini?"
+
+msgid "Who in forum"
+msgstr "Siapa di forum"
+
+msgid "Who in topic"
+msgstr "Siapa di topik"
+
+msgid "Post restored by"
+msgstr "Posting dipulihkan"
+
+msgid "Vote accepted"
+msgstr "Anda memilih"
+
+msgid "Poll (max. 150)"
+msgstr "polling (max. 150)"
+
+msgid "Poll added"
+msgstr "Polling ditambahkan"
+
+msgid "Poll changed"
+msgstr "Poll direvisi"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Apakah Anda yakin ingin menghapus polling?"
+
+msgid "Poll deleted"
+msgstr "Polling dihapus"
+
+msgid "Who voted in the poll"
+msgstr "member yang berpartisipasi dalam polling"
+
+msgid "No one has voted in this poll yet"
+msgstr "Dalam polling ini, tak seorang pun telah berpartisipasi"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Apakah Anda yakin ingin menghapus jawabannya?"
+

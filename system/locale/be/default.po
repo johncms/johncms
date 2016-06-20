@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "Доступ забаронены"
+
+msgid "For registered users only"
+msgstr "Толькі для зарэгістраваных наведвальнікаў"
+
+msgid "Add"
+msgstr "Дадаць"
+
+msgid "Add File"
+msgstr "Дадаць файл"
+
+msgid "Add Smileys"
+msgstr "Дадаць смайлы"
+
+msgid "Administration"
+msgstr "Адміністрацыя"
+
+msgid "Administrators"
+msgstr "Адміністратары"
+
+msgid "Admin-Club"
+msgstr "Адмін-клуб"
+
+msgid "Admin Panel"
+msgstr "Адмін панэль"
+
+msgid "Smiles for Administration"
+msgstr "Смайлы для Адміністрацыі"
+
+msgid "Administrators events"
+msgstr "Падзеі Адміністратара"
+
+msgid "Albums"
+msgstr ""
+
+msgid "New comments in albums"
+msgstr "Новыя каментары ў Альбомах"
+
+msgid "All"
+msgstr "Усе"
+
+msgid "Appearance"
+msgstr "Знешні выгляд"
+
+msgid "Apply"
+msgstr "Ужыць"
+
+msgid "Confirm"
+msgstr "Пацвердзіць"
+
+msgid "Location"
+msgstr "Размяшчэнне"
+
+msgid "Author"
+msgstr "Аўтар"
+
+msgid "Authorized"
+msgstr "Аўтарызаваныя"
+
+msgid "Authorization failed"
+msgstr "Аўтарызацыя не адбылася"
+
+msgid "Avatar has been successfully installed"
+msgstr "Аватар паспяхова ўсталяваны"
+
+msgid "Avatar successfully uploaded"
+msgstr "Аватар паспяхова загружаны"
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "Вы сапраўды хочаце ўсталяваць сабе гэты аватар?"
+
+msgid "Avatars"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Ban"
+msgstr ""
+
+msgid "Banish"
+msgstr "Баніць"
+
+msgid "Ban type"
+msgstr "Тып бана"
+
+msgid "Banish"
+msgstr "Баніць"
+
+msgid "Tags (BBcode)"
+msgstr "Тэгі (BBcode)"
+
+msgid "Birthday"
+msgstr "Дзень нараджэння"
+
+msgid "Birthdays"
+msgstr ""
+
+msgid "Block"
+msgstr "Блакаванне"
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blogs"
+msgstr "Блогі"
+
+msgid "Browser"
+msgstr "Браўзэр"
+
+msgid "Cancel"
+msgstr "Адмена"
+
+msgid "Symbols on the picture"
+msgstr "Код з малюнка"
+
+msgid "Catalog"
+msgstr "Тэчка"
+
+msgid "Category"
+msgstr "Катэгорыя"
+
+msgid "Categories"
+msgstr "Катэгорыі"
+
+msgid "Change password"
+msgstr "Змяніць пароль"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Please, check up correctness of the input data"
+msgstr "калі Ласка, праверце правільнасць ўводу дадзеных"
+
+msgid "Clear"
+msgstr "Ачысьціць"
+
+msgid "Clear all"
+msgstr "Чысцім усе"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "Выдаленыя ўсе паведамленні, старэйшыя за 1 дня"
+
+msgid "Full clearing is finished"
+msgstr "Праведзена поўная ачыстка"
+
+msgid "Clearing parameters"
+msgstr "Параметры ачысткі"
+
+msgid "Clear all"
+msgstr "Чысцім усе"
+
+msgid "Older than 1 day"
+msgstr "Старэйшы 1 дня"
+
+msgid "Older than 1 week"
+msgstr "Старэйшы за 1 тыдня"
+
+msgid "Clear all messages from this user"
+msgstr "Ачысціць усе паведамленні ад гэтага карыстальніка"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "Выдаленыя ўсе паведамленні, старэйшыя за 1 тыдня"
+
+msgid "Color"
+msgstr "Колер"
+
+msgid "Text Color"
+msgstr "Колер фону"
+
+msgid "Background Color"
+msgstr "Колер тэксту"
+
+msgid "Comments"
+msgstr "Каментары"
+
+msgid "Comments are closed"
+msgstr "Каментары зачыненыя"
+
+msgid "General list"
+msgstr "Агульны спіс"
+
+msgid "Community"
+msgstr "Актыў сайта"
+
+msgid "Contacts"
+msgstr "Кантакты"
+
+msgid "In contacts"
+msgstr "кантакты"
+
+msgid "Continue"
+msgstr "Працягнуць"
+
+msgid "Downloads"
+msgstr "Запампоўкі"
+
+msgid "Views"
+msgstr "Hits"
+
+msgid "Clock setting"
+msgstr "Налада гадзін"
+
+msgid "General setting"
+msgstr "Агульныя налады"
+
+msgid "Date"
+msgstr ""
+
+msgid "Day"
+msgstr "дзень"
+
+msgid "Days"
+msgstr "дзен"
+
+msgid "Default"
+msgstr "Па змаўчанні"
+
+msgid "Delete"
+msgstr "Выдаліць"
+
+msgid "Delete message"
+msgstr "Выдаліць паведамленне"
+
+msgid "Delete all"
+msgstr "Выдаліць усе"
+
+msgid "Do you really want to delete?"
+msgstr "Сапраўды жадаеце выдаліць?"
+
+msgid "Description"
+msgstr "Апісанне"
+
+msgid "Design"
+msgstr "Тэма афармлення"
+
+msgid "Communication"
+msgstr "Зносіны"
+
+msgid "Digest"
+msgstr "Дайджэст"
+
+msgid "Direct URL"
+msgstr "Прамыя спасылкі"
+
+msgid "Discuss"
+msgstr "Абмеркаваць"
+
+msgid "Display mode"
+msgstr "Рэжым прагляду"
+
+msgid "Perform"
+msgstr "Выканаць"
+
+msgid "Hide"
+msgstr "Схаваць"
+
+msgid "Down"
+msgstr "Уніз"
+
+msgid "Download"
+msgstr ""
+
+msgid "Downloads"
+msgstr "Запампоўкі"
+
+msgid "Edit"
+msgstr "Змяніць"
+
+msgid "Edit List"
+msgstr "Змяніць спіс"
+
+msgid "Edited"
+msgstr "Зменены"
+
+msgid "Enter verification code"
+msgstr "калі ласка, Увядзіце проверочный код"
+
+msgid "Enter site"
+msgstr "Ўвайсці на сайт"
+
+msgid "ERROR"
+msgstr "ПАМЫЛКА"
+
+msgid "The requested page does not exists"
+msgstr "Запытаная Вамі старонка адсутнічае"
+
+msgid "Invalid address"
+msgstr "Адрас уведзены няслушна"
+
+msgid "Avatar select failed"
+msgstr "Памылка выбару Аватара"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Даўжыня апісання павінна быць не менш за 2-х знакаў"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "Вы не можаце рэдагаваць паведамленне старэйшага Вас па пасадзе"
+
+msgid "The required fields are not filled"
+msgstr "Не запоўненыя абавязковыя палі"
+
+msgid "You have not entered the message"
+msgstr "Вы не ўвялі паведамленне"
+
+msgid "You have not entered a name"
+msgstr "Вы не ўвялі імя"
+
+msgid "You have not entered password"
+msgstr "Вы не ўвялі Пароль"
+
+msgid "You have not entered text"
+msgstr "Вы не ўвялі тэкст"
+
+msgid "You have not entered Title"
+msgstr "Вы не ўвялі назву"
+
+msgid "File does not exist"
+msgstr "Файл не існуе"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Вы не можаце так часта дадаваць паведамленні<br>Калі ласка, пачакайце"
+
+msgid "You have not entered login"
+msgstr "Вы не ўвялі Лагін"
+
+msgid "Message already exists"
+msgstr "Такое паведамленне ўжо было"
+
+msgid "Text is too short"
+msgstr "Занадта кароткі тэкст"
+
+msgid "Administrator already replied to this message"
+msgstr "На гэта паведамленне ўжо адказаў Адміністратар"
+
+msgid "User does not exists"
+msgstr "Такога карыстальніка не існуе"
+
+msgid "The security code is not correct"
+msgstr "Проверочный код уведзены няправільна"
+
+msgid "Bad data"
+msgstr "Няслушныя дадзеныя"
+
+msgid "Invalid length"
+msgstr "Недапушчальная даўжыня"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "Значэння палеў выходзяць за дапушчальныя межы"
+
+msgid "Incorrect Password"
+msgstr "Пароль няправільны"
+
+msgid "Invalid characters"
+msgstr "Нядзейныя сымбалі"
+
+msgid "No new events"
+msgstr "Новых падзей няма"
+
+msgid "Logout"
+msgstr "Выхад"
+
+msgid "External Link"
+msgstr "Знешняя спасылка"
+
+msgid "Height of field"
+msgstr "Вышыня поля"
+
+msgid "Width of field"
+msgstr "Шырыня поля"
+
+msgid "Max. File size"
+msgstr "Макс. памер файла"
+
+msgid "Files"
+msgstr ""
+
+msgid "Bold"
+msgstr "Тоўсты"
+
+msgid "Italic"
+msgstr "Нахілены"
+
+msgid "Underline"
+msgstr "Падкрэслены"
+
+msgid "Forgot password"
+msgstr "Забыліся пароль"
+
+msgid "Forum"
+msgstr ""
+
+msgid "Forum post"
+msgstr "Пастоў на форуме"
+
+msgid "Gallery"
+msgstr "Галерэя"
+
+msgid "Guest"
+msgstr "Госць"
+
+msgid "Guests"
+msgstr "Госці"
+
+msgid "Gzip compression"
+msgstr "Gzip сціск"
+
+msgid "Guestbook"
+msgstr "Гасцявая"
+
+msgid "The guestbook is closed"
+msgstr "Гасцявая зачынена"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "Гасцявы паведамленняў няма<br><b>Будзь першым! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "З днем нараджэння!!!"
+
+msgid "Heading"
+msgstr "Загаловак"
+
+msgid "Help"
+msgstr "Даведка"
+
+msgid "Hi"
+msgstr "Прывітанне"
+
+msgid "Hide"
+msgstr "Схаваць"
+
+msgid "History"
+msgstr "Гісторыя"
+
+msgid "Home"
+msgstr "На галоўную"
+
+msgid "Hours"
+msgstr "Гадзін"
+
+msgid "Ignore"
+msgstr "Ігнараваць"
+
+msgid "Details"
+msgstr "Падрабязна"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "У дадзены момант доступ да сайту дазволены толькі для SV!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "У дадзены момант доступ да сайту дазволены толькі для Адміністрацыі сайта."
+
+msgid "Information"
+msgstr "Інфармацыя"
+
+msgid "Info, FAQ"
+msgstr "Інфармацыя, FAQ"
+
+msgid "Offenses"
+msgstr "Парушэнні"
+
+msgid "IP Activity"
+msgstr "IP Актыўнасць"
+
+msgid "Actual addresses"
+msgstr "Актуальныя адрасы"
+
+msgid "IP address"
+msgstr "IP-Адрас"
+
+msgid "IP history"
+msgstr "Гісторыя IP"
+
+msgid "Karma"
+msgstr ""
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Select language"
+msgstr "Вылучыце мову"
+
+msgid "System language set"
+msgstr "Для сістэмы усталяваны мову"
+
+msgid "Last activity"
+msgstr "Апошняя актыўнасць"
+
+msgid "Last IP"
+msgstr "Апошні IP"
+
+msgid "Last visit"
+msgstr "Апошні візіт"
+
+msgid "Library"
+msgstr "Бібліятэка"
+
+msgid "Mod. Library"
+msgstr "Мод. Бібліятэкі"
+
+msgid "Lines per page"
+msgstr "Радкоў на старонку"
+
+msgid "Link"
+msgstr "Спасылка"
+
+msgid "List"
+msgstr "Спіс"
+
+msgid "Empty list"
+msgstr "Спіс пусты"
+
+msgid "OFF"
+msgstr "Выключыць"
+
+msgid "ON"
+msgstr "Ўключыць"
+
+msgid "or"
+msgstr "або"
+
+msgid "Login"
+msgstr "Уваход"
+
+msgid "Username"
+msgstr "Лагін"
+
+msgid "General settings"
+msgstr "Агульныя налады"
+
+msgid "Mail"
+msgstr "Пошта"
+
+msgid "New message"
+msgstr "Вам ліст"
+
+msgid "Guys"
+msgstr "Хлопцы"
+
+msgid "Message"
+msgstr "Паведамленне"
+
+msgid "Messages"
+msgstr "Паведамленні"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мін. 2, макс. 30 сімвалаў"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мін. 2, макс. 500 знакаў"
+
+msgid "Moderators"
+msgstr "Мадэратары"
+
+msgid "Move"
+msgstr "Перамясціць"
+
+msgid "My Smileys"
+msgstr "Мае смайлы"
+
+msgid "Name"
+msgstr "Імя"
+
+msgid "New Files"
+msgstr "Новыя файлы"
+
+msgid "New reviews"
+msgstr "Новыя водгукі"
+
+msgid "News"
+msgstr "Навіны"
+
+msgid "Archive news"
+msgstr "Архіў навінаў"
+
+msgid "Next"
+msgstr "Далей"
+
+msgid "Nick"
+msgstr "Нік"
+
+msgid "Night"
+msgstr "Ноч"
+
+msgid "Nothing found for this request"
+msgstr "Па Вашаму запыту нічога не знойдзена"
+
+msgid "Not specified"
+msgstr "Не пазначана"
+
+msgid "Optional field"
+msgstr "Неабавязковае поле"
+
+msgid "Moderation"
+msgstr "На мадэрацыі"
+
+msgid "Online"
+msgstr "Анлайн"
+
+msgid "Personal"
+msgstr "Персанальныя"
+
+msgid "Personal"
+msgstr "Персанальныя"
+
+msgid "Password"
+msgstr ""
+
+msgid "Photo Album"
+msgstr "Фотаальбом"
+
+msgid "Photo Albums"
+msgstr "Фотаальбомы"
+
+msgid "poins"
+msgstr "ачкоў"
+
+msgid "posts"
+msgstr "пастоў"
+
+msgid "Preview"
+msgstr "Прадпрагляд"
+
+msgid "Private"
+msgstr "Прыват"
+
+msgid "Profile"
+msgstr ""
+
+msgid "Quiz"
+msgstr "Віктарына"
+
+msgid "Quick jump"
+msgstr "Хуткі пераход"
+
+msgid "Rating"
+msgstr "Рэйтынг"
+
+msgid "Read Only"
+msgstr "Толькі для чытання"
+
+msgid "Reason"
+msgstr "Прычына"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>УВАГА!</h3>Вы збіраецеся пакінуць сайт і перайсці па знешняй спасылцы"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Адміністрацыя нашага рэсурсу не нясе адказнасці за кантэнт старонняга сайта."
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "Рэкамендуецца не паказваць вашы дадзеныя, якія маюць дачыненне да"
+
+msgid "(Login, Password), on third party sites"
+msgstr "(імя карыстальніка, пароль), на іншых сайтах"
+
+msgid "Go to link"
+msgstr "Перайсьці па спасылцы"
+
+msgid "Registration"
+msgstr "Рэгістрацыя"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "Прыносім выбачэнні, але Ваша заяўка на рэгістрацыю яшчэ не разгледжаная<br>калі Ласка, чакайце"
+
+msgid "Remains"
+msgstr "Засталося"
+
+msgid "Remember"
+msgstr "Запомніць"
+
+msgid "Repeat"
+msgstr "Паўтарыць"
+
+msgid "Reply"
+msgstr "Адказаць"
+
+msgid "Reset setting"
+msgstr "Скід налад"
+
+msgid "New reviews"
+msgstr "Новыя водгукі"
+
+msgid "Save"
+msgstr "Захаваць"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "Даўжыня запыту: 4 мін., 64 макс.<br>Пошук нечувствителен да рэгістра літар<br>Вынікі выводзяцца з сартаваннем па рэлевантнасці"
+
+msgid "Search History"
+msgstr "Гісторыя пошукавых запытаў"
+
+msgid "Do you really want to clear the search history?"
+msgstr "Вы сапраўды хочаце ачысціць гісторыю пошуку?"
+
+msgid "New search"
+msgstr "Новы пошук"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "Пошук ідзе па Ніку карыстальніка (NickName) і нечувствителен да рэгістра літар. Гэта значыць, <b>UsEr</b> і <b>user</b> для пошуку раўнацэнныя.<br>Запыт на пошук транслитерируется, то есць, каб знайсці, да прыкладу, нік ДЗІМА, Вы можаце ў запыце напісаць dima, вынік будзе адзін і той жа."
+
+msgid "Query results"
+msgstr "Вынікі запыту"
+
+msgid "Your search did not match any results"
+msgstr "Па Вашаму запыту нічога не знойдзена"
+
+msgid "Find a user"
+msgstr "Пошук карыстальніка"
+
+msgid "Sec."
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "Section"
+msgstr "Профіль"
+
+msgid "Sections"
+msgstr "Раздзелы"
+
+msgid "Security"
+msgstr "Бясьпека"
+
+msgid "Select"
+msgstr "Выбраць"
+
+msgid "Send"
+msgstr "Даслаць"
+
+msgid "Set to Profile"
+msgstr "Усталяваць ў анкету"
+
+msgid "Settings"
+msgstr "Налады"
+
+msgid "Time settings"
+msgstr "Настройка гадзін"
+
+msgid "Shifting time"
+msgstr "Зрух часу"
+
+msgid "Options set to default"
+msgstr "Усталяваны налады па змаўчанні"
+
+msgid "Setting saved"
+msgstr "Налады захаваны"
+
+msgid "Show"
+msgstr "Паказваць"
+
+msgid "Show period"
+msgstr "Паказаць за перыяд"
+
+msgid "Site access"
+msgstr "Доступ да сайту"
+
+msgid "New on the site"
+msgstr "Новае на сайце"
+
+msgid "Site News"
+msgstr "Навіны рэсурсу"
+
+msgid "Stay on site"
+msgstr "Правеў на сайце"
+
+msgid "Smileys"
+msgstr ""
+
+msgid "Sort"
+msgstr "Сартаванне"
+
+msgid "Spoiler"
+msgstr ""
+
+msgid "Statistic"
+msgstr "Статыстыка"
+
+msgid "My Statistic"
+msgstr "Мая статыстыка"
+
+msgid "User Statistic"
+msgstr "Статыстыка карыстальніка"
+
+msgid "Status"
+msgstr ""
+
+msgid "Supervisors"
+msgstr ""
+
+msgid "System Functions"
+msgstr "Функцыі сістэмы"
+
+msgid "System Language"
+msgstr "Мова сыстэмы"
+
+msgid "System Time"
+msgstr "Сістэмны час"
+
+msgid "System Settings"
+msgstr "Налады сістэмы"
+
+msgid "Blue"
+msgstr "Сіні"
+
+msgid "Bold"
+msgstr "Тоўсты"
+
+msgid "PHP code"
+msgstr ""
+
+msgid "Green"
+msgstr "Зялены"
+
+msgid "Italic"
+msgstr "Нахілены"
+
+msgid "URL"
+msgstr "Спасылка"
+
+msgid "Bulleted list"
+msgstr "Маркіраваны спіс"
+
+msgid "Quote"
+msgstr "Цытата"
+
+msgid "Red"
+msgstr "Чырвоны"
+
+msgid "Strike"
+msgstr "Закрэсьлены"
+
+msgid "Underline"
+msgstr "Падкрэслены"
+
+msgid "Term"
+msgstr "Тэрмін"
+
+msgid "Text"
+msgstr "Тэкст"
+
+msgid "Input text"
+msgstr "Увод тэксту"
+
+msgid "Text size"
+msgstr "Памер тэксту"
+
+msgid "Themes"
+msgstr "Тэмы"
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Day"
+msgstr "дзень"
+
+msgid "Days"
+msgstr "дзен"
+
+msgid "Days"
+msgstr "дзен"
+
+msgid "Time limit"
+msgstr "Ліміт часу"
+
+msgid "Shifting time"
+msgstr "Зрух часу"
+
+msgid "Title"
+msgstr "Назва"
+
+msgid "In Chat"
+msgstr "Чат"
+
+msgid "To the profile"
+msgstr "анкету"
+
+msgid "In forum"
+msgstr "Форум"
+
+msgid "Back to news"
+msgstr "Да навінам"
+
+msgid "Go to page"
+msgstr "Да старонкі"
+
+msgid "Show"
+msgstr "Паказваць"
+
+msgid "Today"
+msgstr "Сення"
+
+msgid "Top 10 activity"
+msgstr "Топ 10 актыўнасці"
+
+msgid "Most commenting"
+msgstr "Больш за ўсе каментавалі"
+
+msgid "Most active in Forum"
+msgstr "Самыя актыўныя на Форуме"
+
+msgid "Most active in Guestbook"
+msgstr "Самыя актыўныя ў Гасцявы"
+
+msgid "Best Karma"
+msgstr "Лепшая Карма"
+
+msgid "Total"
+msgstr "Усяго"
+
+msgid "Hits"
+msgstr "Пераходы"
+
+msgid "hits"
+msgstr "пераходаў"
+
+msgid "Translit"
+msgstr "Трансліт"
+
+msgid "Unread"
+msgstr "Непрачытанае"
+
+msgid "Format address http://url.com"
+msgstr "ўводзіце Адрас у фармаце http://url.com"
+
+msgid "Up"
+msgstr "Ўверх"
+
+msgid "This user does not exists"
+msgstr "Такога карыстальніка не існуе"
+
+msgid "Useful"
+msgstr "Карыснае"
+
+msgid "Users"
+msgstr "Карыстальнікі"
+
+msgid "Clean Users"
+msgstr "Чыстка базы"
+
+msgid "Users list"
+msgstr "Спіс карыстальнікаў"
+
+msgid "New users"
+msgstr "Новыя карыстальнікі"
+
+msgid "Banned users"
+msgstr "Маюць Бан"
+
+msgid "Waiting confirmation"
+msgstr "рэгістрацыі"
+
+msgid "Top Activity"
+msgstr "Топ актыўнасці"
+
+msgid "Verification code"
+msgstr ""
+
+msgid "Viewing"
+msgstr "Прагляд"
+
+msgid "Display mode"
+msgstr "Рэжым прагляду"
+
+msgid "Vote"
+msgstr "Галасаваць"
+
+msgid "Against"
+msgstr "Супраць"
+
+msgid "For"
+msgstr ""
+
+msgid "Polls"
+msgstr "Галасавання"
+
+msgid "Welcome to"
+msgstr "Сардэчна запрашаем на"
+
+msgid "Where?"
+msgstr "Дзе?"
+
+msgid "Who is online?"
+msgstr "Хто на сайце"
+
+msgid "No limits"
+msgstr "Без абмежаванняў"
+
+msgid "Girls"
+msgstr "Дзяўчаты"
+
+msgid "Write"
+msgstr "Напісаць"
+
+msgid "Yesterday"
+msgstr "Учора"
+

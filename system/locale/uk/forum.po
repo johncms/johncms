@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Додати категорію"
+
+msgid "Add file"
+msgstr "Додати файл"
+
+msgid "Add answer"
+msgstr "Додати відповідь"
+
+msgid "Add section"
+msgstr "Додати розділ"
+
+msgid "Add a poll"
+msgstr "Додати опитування"
+
+msgid "Accept"
+msgstr "Згоден"
+
+msgid "Other category"
+msgstr "Інша категорія"
+
+msgid "Answer"
+msgstr "Відповідь"
+
+msgid "Assign"
+msgstr "Призначити"
+
+msgid "Attachment"
+msgstr "Прикріплений файл"
+
+msgid "Back to topic"
+msgstr "Повернутися в тему"
+
+msgid "by author"
+msgstr "по авторові"
+
+msgid "by section"
+msgstr "по розділу"
+
+msgid "by topic"
+msgstr "по темі"
+
+msgid "Category"
+msgstr "Категорія"
+
+msgid "Category deleted"
+msgstr "Категорія видалена"
+
+msgid "Edit category"
+msgstr "Редагуємо категорію"
+
+msgid "Categories list"
+msgstr "Список категорій"
+
+msgid "subsections"
+msgstr "підлеглі розділи"
+
+msgid "Click to view image"
+msgstr "Для перегляду натисніть на зображення"
+
+msgid "Subsections and files has been moved to"
+msgstr "Підлеглі розділи і файли переміщені в"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Всі розділи, теми і файли будуть переміщені у вибрану категорію.<br>Стара категорія буде видалена"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>УВАГА!</h3>Є підлеглі розділи.<br>Їх необхідно перемістити в іншу категорію"
+
+msgid "Curators"
+msgstr "Куратори"
+
+msgid "Curators of the Topic"
+msgstr "Куратори теми"
+
+msgid "Quote"
+msgstr "Цитата"
+
+msgid "[q]"
+msgstr "[ц]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Допустимо макс. 200 символів, весь зайвий текст обрізається."
+
+msgid "Delete categories"
+msgstr "Видаляємо категорію"
+
+msgid "Complete removal"
+msgstr "Повне видалення"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Якщо хочете знищити всю інформацію, спочатку видаліть"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "УВАГА! Буде видалена вся інформація"
+
+msgid "Delete last"
+msgstr "Видалити останнє"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "УВАГА!<br>Це останній пост теми. Разом з ним буде видалена (або прихована) і сама тема"
+
+msgid "Delete message"
+msgstr "Видалити повідомлення"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "У разі видалення, з лічильника постів форуму зніметься один бал"
+
+msgid "Delete section"
+msgstr "Видаляємо розділ"
+
+msgid "Delete poll"
+msgstr "Видалити опитування"
+
+msgid "Download Topic"
+msgstr "Завантажити тему"
+
+msgid "Select a format"
+msgstr "Виберіть формат"
+
+msgid "Link active 5 minutes"
+msgstr "Посилання активне 5 хвилин"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Дана тема завантажена з форуму сайту"
+
+msgid "Downloaded"
+msgstr "Завантажений"
+
+msgid "Downloads"
+msgstr "Завантажено"
+
+msgid "Edit message"
+msgstr "Змінити повідомлення"
+
+msgid "Edit poll"
+msgstr "Змінити опитування"
+
+msgid "Edited"
+msgstr "Ред."
+
+msgid "You have not selected any author"
+msgstr "Ви не вибрали жодного автора"
+
+msgid "Category is not chosen"
+msgstr "Не вибрана категорія"
+
+msgid "You are trying to change another\"s post"
+msgstr "Ви намагаєтеся змінити чужий пост"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Ваше повідомлення вже не останнє і Ви не можете його редагувати"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "З моменту створення повідомлення пройшло більше 5 хвилин і Ви не можете його редагувати"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Заборонений тип файлу!<br>Дозволені типи:"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "До відправки дозволені тільки файли що мають ім\"я і одне розширення (<b>name.ext</b>). Заборонені файли що не мають імені, розширення, або з подвійним розширенням."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Довжина імені файлу не повинна перевищувати 30 символів"
+
+msgid "File size exceed"
+msgstr "Вага файлу перевищує"
+
+msgid "File name contains invalid characters"
+msgstr "У назві файлу присутні неприпустимі символи"
+
+msgid "File is already uploaded"
+msgstr "Файл вже завантажений"
+
+msgid "You did not choose something to delete"
+msgstr "Ви нічого не вибрали для видалення"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Пост не існує, або був видалений"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Довжина запиту: 4мін., 64макс."
+
+msgid "You have not entered time"
+msgstr "Ви не ввели час"
+
+msgid "You cannot write in a closed topic"
+msgstr "Ви не можете писати в закриту тему"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема видалена, або не існує"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Тема з такою назвою вже є в цьому розділі"
+
+msgid "You have not entered topic name"
+msgstr "Ви не ввели назву теми"
+
+msgid "Topic name too short"
+msgstr "Назва теми дуже коротка"
+
+msgid "Error uploading file"
+msgstr "Помилка додавання файлу"
+
+msgid "File attached"
+msgstr "Файл прикріплено"
+
+msgid "Files"
+msgstr "Файли форуму"
+
+msgid "Category files"
+msgstr "Файли категорії"
+
+msgid "Section files"
+msgstr "Файли розділу"
+
+msgid "Topic files"
+msgstr "Файли топіку"
+
+msgid "Archive"
+msgstr "Архіви"
+
+msgid "Java applications"
+msgstr "Додатки Java"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "Інше"
+
+msgid "Pictures"
+msgstr "Картинки"
+
+msgid "SIS"
+msgstr "Додатки SIS"
+
+msgid "txt"
+msgstr "Текстові файли"
+
+msgid "WIN applications"
+msgstr "Додатки WIN"
+
+msgid "Videos"
+msgstr "Відео"
+
+msgid "Cancel filter"
+msgstr "Відмінити фільтрацію"
+
+msgid "Topic includes filtering by authors"
+msgstr "У темі включена фільтрація по авторах постів"
+
+msgid "Filter by author"
+msgstr "Фільтр по авторові"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Фільтрація дозволить відображати пости тільки від вибраних авторів"
+
+msgid "Filter by section"
+msgstr "Фільтр по розділу"
+
+msgid "Filter by topic"
+msgstr "Фільтр по темі"
+
+msgid "Filter"
+msgstr "Фільтрувати"
+
+msgid "Forum is closed"
+msgstr "Форум закритий"
+
+msgid "Forum Management"
+msgstr "Управління Форумом"
+
+msgid "Forum rules"
+msgstr "Правила форуму"
+
+msgid "Forum search"
+msgstr "Пошук форуму"
+
+msgid "Forum structure"
+msgstr "Структура форуму"
+
+msgid "Hidden posts"
+msgstr "Приховані пости"
+
+msgid "Hidden topic"
+msgstr "Приховані теми"
+
+msgid "Hours"
+msgstr "годин"
+
+msgid "Max. Size"
+msgstr "Макс. розмір"
+
+msgid "Marked posts are deleted"
+msgstr "Відмічені пости видалені"
+
+msgid "Appointment of moderators"
+msgstr "Призначення модераторів"
+
+msgid "New files in the last 24 hours"
+msgstr "Нові файли за останні 24 години"
+
+msgid "No new files"
+msgstr "Нових файлів немає"
+
+msgid "New at the bottom"
+msgstr "Нові внизу"
+
+msgid "New at the top"
+msgstr "Нові вгорі"
+
+msgid "New topic"
+msgstr "Відкрити тему"
+
+msgid "Title(max. 100)"
+msgstr "Назва(max. 100)"
+
+msgid "Disagree"
+msgstr "Не згоден"
+
+msgid "Other categories"
+msgstr "Інші категорії"
+
+msgid "Answers in the topic"
+msgstr "Відповідає в темі"
+
+msgid "In the category"
+msgstr "У категорії"
+
+msgid "Looking forum files"
+msgstr "Дивиться файли форуму"
+
+msgid "Here, in the list"
+msgstr "Тут, в списку"
+
+msgid "In the forum main"
+msgstr "На головній форуму"
+
+msgid "In the unreads"
+msgstr "Дивиться непрочитане"
+
+msgid "Forum search"
+msgstr "Пошук форуму"
+
+msgid "In the section"
+msgstr "У розділі"
+
+msgid "In the topic"
+msgstr "У темі"
+
+msgid "Writes in the topic"
+msgstr "Пише в тему"
+
+msgid "Message"
+msgstr "Повідомлення"
+
+msgid "Post deleted"
+msgstr "Пост видалив"
+
+msgid "Read more"
+msgstr "Читати все"
+
+msgid "reference"
+msgstr "Звернення"
+
+msgid "[r]"
+msgstr "[в]"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "I am glad to answer you"
+msgstr "із задоволенням тобі відповім"
+
+msgid "to your post"
+msgstr "на твій пост"
+
+msgid "answer"
+msgstr "відповім"
+
+msgid "You are right! You are very smart!"
+msgstr "тікай звідси! Моргали виколю, рога повідшибаю!"
+
+msgid "Restore"
+msgstr "Відновити"
+
+msgid "Results"
+msgstr "Результати"
+
+msgid "Back to topic"
+msgstr "Повернутися в тему"
+
+msgid "Forum search"
+msgstr "Пошук форуму"
+
+msgid "Search in the topic names"
+msgstr "Шукати в назвах тем"
+
+msgid "Section deleted"
+msgstr "Розділ видалено"
+
+msgid "Section with topics and files are removed"
+msgstr "Розділ разом з темами і файлами, видалений"
+
+msgid "Editing section"
+msgstr "Редагуємо розділ"
+
+msgid "List of sections"
+msgstr "Список розділів"
+
+msgid "There are no sections in this category"
+msgstr "У даній категорії розділів немає"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Всі теми і файли будуть переміщені у вибраний розділ<br>Старий розділ буде видалений"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>УВАГА!</h3>У розділі є теми.<br>Їх необхідно перемістити в інший розділ"
+
+msgid "Select category"
+msgstr "Обрати категорію"
+
+msgid "Select file"
+msgstr "Обрати файл"
+
+msgid "Select section"
+msgstr "Обрати розділ"
+
+msgid "Selected category"
+msgstr "Обрану категорію"
+
+msgid "Selected section"
+msgstr "Обраний розділ"
+
+msgid "Size"
+msgstr "Розмір"
+
+msgid "Topics moved to"
+msgstr "Підлеглі теми переміщені в"
+
+msgid "Time"
+msgstr "разів"
+
+msgid "Go to category"
+msgstr "У категорію"
+
+msgid "Go to forum"
+msgstr "У Форум"
+
+msgid "To message"
+msgstr "До повідомлення"
+
+msgid "Go to topic"
+msgstr "У тему"
+
+msgid "Go to section"
+msgstr "У розділ"
+
+msgid "Topic"
+msgstr "Тема"
+
+msgid "Close topic"
+msgstr "Закрити тему"
+
+msgid "Topic closed"
+msgstr "Тема закрита"
+
+msgid "Delete topic"
+msgstr "Видалити тему"
+
+msgid "Topic deleted"
+msgstr "Тема видалена"
+
+msgid "Topic deleted by"
+msgstr "Тему видалив"
+
+msgid "Undelete topic"
+msgstr "Відмінив видалення теми"
+
+msgid "Fix topic"
+msgstr "Закріпити тему"
+
+msgid "No topics in this section"
+msgstr "У даному розділі немає жодної теми"
+
+msgid "Move topic"
+msgstr "Перемістити тему"
+
+msgid "Topic name"
+msgstr "Назва теми"
+
+msgid "New topic"
+msgstr "Відкрити тему"
+
+msgid "Rename topic"
+msgstr "Перейменувати тему"
+
+msgid "Restore topic"
+msgstr "Відновити тему"
+
+msgid "Unfix topic"
+msgstr "Відкріпити тему"
+
+msgid "Total votes"
+msgstr "Всього голосів"
+
+msgid "All for period"
+msgstr "Всі за період"
+
+msgid "Last 10"
+msgstr "Останні 10 тем"
+
+msgid "Period (in hours)"
+msgstr "Період (у годинах)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "За вибраний період нового на форумі немає"
+
+msgid "Mark as read"
+msgstr "Відзначити як прочитане"
+
+msgid "All topics marked as read"
+msgstr "Всі теми відмічені як прочитані"
+
+msgid "Upload"
+msgstr "Відправити"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Час відведений для вивантаження файлу минув"
+
+msgid "Post deleted"
+msgstr "Пост видалив"
+
+msgid "Who is here"
+msgstr "Хто тут"
+
+msgid "Who in forum"
+msgstr "Хто у форумі"
+
+msgid "Who in topic"
+msgstr "Хто в темі"
+
+msgid "Post restored by"
+msgstr "Пост відновив"
+
+msgid "Vote accepted"
+msgstr "Ваш голос прийнятий"
+
+msgid "Poll (max. 150)"
+msgstr "Опитування (max. 150)"
+
+msgid "Poll added"
+msgstr "Опитування додано"
+
+msgid "Poll changed"
+msgstr "Опитування змінено"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Ви дійсно хочете видалити опитування?"
+
+msgid "Poll deleted"
+msgstr "Опитування видалено"
+
+msgid "Who voted in the poll"
+msgstr "Користувачі, що взяли участь в опитуванні"
+
+msgid "No one has voted in this poll yet"
+msgstr "У цьому опитуванні ніхто не брав участь"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Ви дійсно хочете видалити варіант відповіді?"
+

@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 caractères"
+
+msgid "1000 characters"
+msgstr "1000 caractères"
+
+msgid "3000 characters"
+msgstr "3000 caractères"
+
+msgid "Always"
+msgstr "toujours"
+
+msgid "Stick 1-st post"
+msgstr "Attacher le 1er post"
+
+msgid "Use textarea"
+msgstr "Activer le champ de saisie"
+
+msgid "Unread"
+msgstr "non lus"
+
+msgid "Basic settings"
+msgstr "Les réglages de base"
+
+msgid "Enter message"
+msgstr "Entrez un message"
+
+msgid "My settings"
+msgstr "Mes paramètres"
+
+msgid "never"
+msgstr "jamais"
+
+msgid "not cut"
+msgstr "ne pas couper"
+
+msgid "Or enter yours"
+msgstr "Ou indiquez votre"
+
+msgid "Cropping posts"
+msgstr "Élagage messages"
+
+msgid "Contacts"
+msgstr "Inverse le tri"
+

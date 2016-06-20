@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "жана алды"
+
+msgid "Amnesty"
+msgstr ""
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Амнистия бир гана Супервизорлорго гана уруксат"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Бандын таблицасы тазаланды.<br>Бардык бузучулук таблицасы тазаланды"
+
+msgid "Clear base"
+msgstr "Базаны тазалоо"
+
+msgid "Unban all"
+msgstr ""
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr ""
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr ""
+
+msgid "Blocked"
+msgstr "Блокто"
+
+msgid "Private"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Forum"
+msgstr "Форумда"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Guestbook"
+msgstr "Китепче"
+
+msgid "Gallery"
+msgstr ""
+
+msgid "Library"
+msgstr "Китепкана"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Сайт толук  жабылды. каттар кабылдоого болот, бирок жиберүгө болбойт"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Каттарды жиберүүгө тыйым салынган (антиспам)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Ички системадагы бардык модульдерди түшүндүрүгө тыйым салынган"
+
+msgid "Forbidden write in Forum"
+msgstr "Форумда жазууга тыйым салынган"
+
+msgid "Deny access to Chat"
+msgstr "Чат-ка уруксат жок"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Китепчеде жазууга тыйым салынган"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Галереяда сүрөттөрүңүздү коюга жана сыпаттоого болбойт"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Китепканада макалаларды жарыялууга тыйым салынган"
+
+msgid "Ban termination"
+msgstr "Бандын күчү жоюлат"
+
+msgid "Unban"
+msgstr ""
+
+msgid "User unbanned"
+msgstr ""
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr ""
+
+msgid "Delete ban"
+msgstr "Бан-ды өчүрүү"
+
+msgid "Delete"
+msgstr "Бан-ды өчүрүү"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Бан бузучулук тарыхы менен бирге өчүрүүлөт"
+
+msgid "Ban deleted"
+msgstr "Бан өчүрүлдү"
+
+msgid "Ban user"
+msgstr "Колдонучуга бан"
+
+msgid "Ban Panel"
+msgstr ""
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Бул колдонучунун өчүрүү үчүн сиздин укугуңуз жеткиликсиз"
+
+msgid "Ban times"
+msgstr "Бан мөөнөтүү"
+
+msgid "Till cancel"
+msgstr "Баш тартууга чейин"
+
+msgid "Day (30 max.)"
+msgstr "күн (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Саат (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Мүнөт (60 max.)"
+
+msgid "Ban type"
+msgstr "Бан түрү"
+
+msgid "Banishment"
+msgstr "Бан берген"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Сиз колдонучунун эреже бузучулук тарыхын чындыгында тазалагыңыз келе би?"
+
+msgid "Clear history"
+msgstr "Тарыхты тазалоо"
+
+msgid "Ban already active"
+msgstr "Мындай бан бар"
+
+msgid "Ban not active"
+msgstr "Эми бан белгилүү эмес"
+
+msgid "There is no required data"
+msgstr "Керектүү маалыматтар жетишпейт"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Бузучулук тарыхын Супервизорлор бир гана тазалай алат"
+
+msgid "You have no rights to ban in this section"
+msgstr "Сиз өз бөлүмүңүздөн тыш жерде бан бере албайсыз"
+
+msgid "Offenses history cleared"
+msgstr "Эреже бузучулук тарыхы тазаланды"
+
+msgid "Forum"
+msgstr "Форумда"
+
+msgid "Offense"
+msgstr "Бузучулук"
+
+msgid "Offenses history"
+msgstr "Бузучулук тарыхы"
+
+msgid "Offenses list"
+msgstr "Бузучулук түзүмү"
+
+msgid "My offenses"
+msgstr "Менин бузучулугум"
+
+msgid "Private (antispam)"
+msgstr ""
+
+msgid "Reason not specified"
+msgstr "Себеби көрсөтүлбөдү"
+
+msgid "System"
+msgstr ""
+
+msgid "To karma"
+msgstr "Кармага"
+
+msgid "User banned"
+msgstr "Колдонучу блоктолгон"
+

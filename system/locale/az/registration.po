@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Haqqınızda"
+
+msgid "Max. 500 characters"
+msgstr "Maks. 500 herif"
+
+msgid "Verification code"
+msgstr "Şekildeki Kod"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Eger siz şekildeki kodu görmürsünüzse onda brouzerinizde şekilleri aktiv edin ve daha sonra sehifeni yenileyin"
+
+msgid "Enter"
+msgstr "Giriş"
+
+msgid "You have not entered nick"
+msgstr "Nik daxil olunmayıb"
+
+msgid "Too long nick"
+msgstr "Nik çox uzundur"
+
+msgid "This nick already in use"
+msgstr "Bu nik artıq istifade olunub"
+
+msgid "Too long password"
+msgstr "Şifreni uzunluğu yanlışdır"
+
+msgid "You have not selected genger"
+msgstr "Cinsinizi seçmemisiniz"
+
+msgid "Login"
+msgstr "Nik"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, maks. 15 herif.<br>Latin, rus ve reqemlerden istifade etmeye icaze verilir ve bu - = @ ! ? ~ _ ( ) [ ] * kimi işareler (0dan başqa)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "Xahiş edirik, qeydiyyatınızın Admin terefinden tesdiq olunmasını gözleyin"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Qeydiyyatınız tesdiq olunduqdan sonra siz saytin bütün funksiyalarından rahat istifade ede bileceksiniz.<br>Tesdiq olunma 1 saatdan az vaxt teleb edir"
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "Max. 30 characters"
+msgstr "Maks. 30 işare"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Min. 3, maks. 10 işare.<br>Yalnız latın heriflerinden ve reqemlerden istifade ede bilersiniz"
+
+msgid "Registration"
+msgstr "Qeydiyyat"
+
+msgid "Registration temporarily closed"
+msgstr "Qeydiyyat bağlıdır"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Xahiş edirik 111, ггг, uuuu ve s. buna benzer nikler qeydiyyat etmeyin. Bele nikler avtomatik silinecek.<br>Hemçinin de proksi server ile qeydiyyat eden bütün nikler silinecek"
+
+msgid "Gender"
+msgstr "Cins"
+
+msgid "Male"
+msgstr "Kişi"
+
+msgid "Female"
+msgstr "Qadın"
+
+msgid "Your registratiton data"
+msgstr "Siz qeydiyyatdan uğurla keçdiniz"
+
+msgid "Your ID"
+msgstr "Sizin İD"
+
+msgid "Your username"
+msgstr "Sizin Nik"
+
+msgid "Your password"
+msgstr "Sizin Şifre"
+
+msgid "Link to autologin"
+msgstr "AvtoGiriş üçün link"
+

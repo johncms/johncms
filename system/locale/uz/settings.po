@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 belgi"
+
+msgid "1000 characters"
+msgstr "1000 belgi"
+
+msgid "3000 characters"
+msgstr "3000 belgi"
+
+msgid "Always"
+msgstr "doimo"
+
+msgid "Stick 1-st post"
+msgstr "1-postni biriktirish"
+
+msgid "Use textarea"
+msgstr "kiritish maydonini yoqish"
+
+msgid "Unread"
+msgstr "o\"qilmaganlarda"
+
+msgid "Basic settings"
+msgstr "Asosiy sozlamalar"
+
+msgid "Enter message"
+msgstr "Xabar kiritish"
+
+msgid "My settings"
+msgstr "Мening sozlovlarim"
+
+msgid "never"
+msgstr "xech qachon"
+
+msgid "not cut"
+msgstr "kesmaslik"
+
+msgid "Or enter yours"
+msgstr "yoki ozingiznikini kiriting"
+
+msgid "Cropping posts"
+msgstr "Postlarni qirqish"
+
+msgid "Contacts"
+msgstr "qayta tartiblash"
+

@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Admin Siyahısındadır</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Fotolara baxır</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Ad Günü Olanlar</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr "<a href=\"#home#/download/index.php\">Yüklemelerdedir</a>"
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">Qaydalari Oxuyur</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr "<a href=\"#home#/forum/index.php\">Forumdadır</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=files\">Forum fayllarindadır</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Kim-Hardadır?</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr "<a href=\"#home#/gallery/index.php\">Qalareyadadır</a>"
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr "<a href=\"#home#/guestbook/index.php\">Qonaq Otağındadır</a>"
+
+msgid "Here, in the list"
+msgstr "Burda siyahıya baxır"
+
+msgid "On the Homepage"
+msgstr "Baş Sehifededir"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Kitabxanada kitab oxuyur</a>"
+
+msgid "Personal correspondence"
+msgstr "Şəxsi yazışma"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Xeber oxuyur</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Kim var saytda bölmesindedir?</a>"
+
+msgid "Profile"
+msgstr "Anketdedir"
+
+msgid "Personal Profile"
+msgstr "Anketdedir"
+
+msgid "Registered on the site"
+msgstr "Saytda Kayıtlı"
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">İstifadeçi siyahısındadır</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">TOP istifadeçilere baxır</a>"
+

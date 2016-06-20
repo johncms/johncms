@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Коюлду"
+
+msgid "Album"
+msgstr ""
+
+msgid "You have already rated this file"
+msgstr "Сиз бул файлды баалап койгонсуз"
+
+msgid "Artist"
+msgstr "Ырчы"
+
+msgid "Average rating"
+msgstr "Орточо баа"
+
+msgid "Bitrate"
+msgstr ""
+
+msgid "Change"
+msgstr "Өзгөртүү"
+
+msgid "Change Description"
+msgstr "Сыпаттамысын өзгөртүү"
+
+msgid "Change Screenshot"
+msgstr "Скриншотун өзгөртүү"
+
+msgid "Delete File"
+msgstr "Файлды өчүрүү"
+
+msgid "Delete Folder"
+msgstr "Папканы өчүрүү"
+
+msgid "Deleted"
+msgstr "Өчүрүлгөн"
+
+msgid "Description changed"
+msgstr "Сыпаттамасы өзгөртүлдүү"
+
+msgid "Downloads"
+msgstr "Көчүрүлдүү"
+
+msgid "Downloads are closed"
+msgstr "Жүктөөлөр жабык"
+
+msgid "Duration"
+msgstr "Узактыгы"
+
+msgid "File deleted"
+msgstr "Файл өчүрүлгөн"
+
+msgid "No file selected"
+msgstr "Файл тандалбады"
+
+msgid "Error when selecting a file"
+msgstr "Файлды тандоодо ката"
+
+msgid "File"
+msgstr ""
+
+msgid "Files"
+msgstr "Файлдар"
+
+msgid "Folder deleted"
+msgstr "Папка өчүрүлгөн"
+
+msgid "Folder does not exist"
+msgstr "Мындай папка жок"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Папкага ат кою<br><small>Тек кичинекей, Латын алфавитинде</small>"
+
+msgid "The name for the list"
+msgstr "Тизмеге үчүн ат кою"
+
+msgid "Folders"
+msgstr "Папка саны"
+
+msgid "Found by Description"
+msgstr "Сыпаттамасы боюнча табылган файлдар"
+
+msgid "Found by Name"
+msgstr "Аты боюнча табылды"
+
+msgid "Image size"
+msgstr "Сүрөттөр өлчөмү"
+
+msgid "File Import"
+msgstr "Файлды импорттоо"
+
+msgid "Make folder"
+msgstr "Папка кою"
+
+msgid "Name changed"
+msgstr "Аты өзгөртүлдү"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "Ошо агымдагы убакыт сессияда, сүреттөрдү көрү өлчөмү"
+
+msgid "Rate"
+msgstr "Баа берүү"
+
+msgid "Continue the cycle"
+msgstr "Циклди улантуу"
+
+msgid "Refresh Downloads"
+msgstr "Жүктөөлөрдү жаңыртуу"
+
+msgid "Database updated"
+msgstr "База жаңарды"
+
+msgid "Released"
+msgstr "Жасалган жылы"
+
+msgid "Rename Folder"
+msgstr "Папканые атын өзгөртүү"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Кандай сактайбыз<br><small>Файл атын кичинекей, Латын алфавити менен, бош орунсуз.<br>Файл кеңейтилимин жазуу керек эмес</small>"
+
+msgid "Screenshot"
+msgstr ""
+
+msgid "The name of the image contains invalid characters"
+msgstr "Файл атоодо уруксат берилбеген символдор табылды"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "Сүрөт 320*320 px өлчөмүнөн ашпоо кажет"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Скриншотту жүктөөдөгү ката"
+
+msgid "Screenshot uploaded"
+msgstr "Скриншот жүктөөлдү"
+
+msgid "Select the size of pictures for preview"
+msgstr "Сүрөттөрдүү көрү үчүн өлчүмүн таңдаңыз"
+
+msgid "Find file"
+msgstr "Файлды издөө"
+
+msgid "You have not entered a search term"
+msgstr "Сиз издөө шартын белгилеген жоксуз"
+
+msgid "Size"
+msgstr "Өлчөмүү"
+
+msgid "Upload"
+msgstr "Жүктөө"
+
+msgid "Upload File"
+msgstr "Файлды жүктөө"
+
+msgid "Upload Screenshot"
+msgstr "Скриншотту жүктөө"
+
+msgid "Uploaded"
+msgstr "Жүктөлдүү"
+
+msgid "Thanks, your vote accepted"
+msgstr "Рахмат! Сиздин бааңыз кабыл алынды"
+
+msgid "Total Votes"
+msgstr "Бардык баа"
+

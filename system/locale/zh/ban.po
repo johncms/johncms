@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "并获得"
+
+msgid "Amnesty"
+msgstr "特赦"
+
+msgid "Amnesty is available for supervisors only"
+msgstr "特赦仅超级管理员可以操作"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "禁止表已清除.<br>违规记录已清除"
+
+msgid "Clear base"
+msgstr "基本清除"
+
+msgid "Unban all"
+msgstr "解除所有禁止"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "所有禁止活动的用户被解除禁止(&quot;直到取消为止&quot;的禁止除外)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;解除所有禁止&quot; - 终止所有活动的禁令<br>&quot;清除数据库&quot; - 终止所有禁令并清除违规记录"
+
+msgid "Blocked"
+msgstr "被阻止"
+
+msgid "Private"
+msgstr "私人的"
+
+msgid "Comment"
+msgstr "评论"
+
+msgid "Forum"
+msgstr "论坛"
+
+msgid "Chat"
+msgstr "聊天"
+
+msgid "Guestbook"
+msgstr "留言"
+
+msgid "Gallery"
+msgstr "相册"
+
+msgid "Library"
+msgstr "书屋"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "网站上的所有活动是完全被禁止的！你可以接收信息但不能发送信息"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "禁止发送个人信息(反垃圾信息)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "禁止所有子系统模块上的评论"
+
+msgid "Forbidden write in Forum"
+msgstr "禁止发表、回复帖子"
+
+msgid "Deny access to Chat"
+msgstr "拒绝访问聊天"
+
+msgid "Forbidden write message in guestbook"
+msgstr "禁止留言"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "禁止在相册发布和评论照片"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "禁止在书库发布和评论作品"
+
+msgid "Ban termination"
+msgstr "禁令终止"
+
+msgid "Unban"
+msgstr "解除禁止"
+
+msgid "User unbanned"
+msgstr "用户被解禁"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "禁止时间将结束，违规记录将被保存"
+
+msgid "Delete ban"
+msgstr "删除禁止"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "删除禁止及违规记录"
+
+msgid "Ban deleted"
+msgstr "禁止已删除"
+
+msgid "Ban user"
+msgstr "禁止用户"
+
+msgid "Ban Panel"
+msgstr "禁止面板"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "您没有足够的权限禁止此用户"
+
+msgid "Ban times"
+msgstr "禁止时间"
+
+msgid "Till cancel"
+msgstr "直到取消"
+
+msgid "Day (30 max.)"
+msgstr "天 (最大30)"
+
+msgid "Hours (24 max.)"
+msgstr "小时 (最大24)"
+
+msgid "Minutes (60 max.)"
+msgstr "分钟(最大60)"
+
+msgid "Ban type"
+msgstr "禁止类型"
+
+msgid "Banishment"
+msgstr "流放"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "确定要清除用户的全部违规记录吗?"
+
+msgid "Clear history"
+msgstr "清除记录"
+
+msgid "Ban already active"
+msgstr "禁止已经活跃"
+
+msgid "Ban not active"
+msgstr "禁止未能活跃"
+
+msgid "There is no required data"
+msgstr "没有需要的数据"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "违规记录只能被超级管理员清除"
+
+msgid "You have no rights to ban in this section"
+msgstr "在此版块您没有权限禁止"
+
+msgid "Offenses history cleared"
+msgstr "违规记录已清除"
+
+msgid "Forum"
+msgstr "论坛"
+
+msgid "Offense"
+msgstr "违规"
+
+msgid "Offenses history"
+msgstr "违规记录"
+
+msgid "Offenses list"
+msgstr "违规列表"
+
+msgid "My offenses"
+msgstr "我的违规"
+
+msgid "Private (antispam)"
+msgstr "私人(反垃圾信息)"
+
+msgid "Reason not specified"
+msgstr "没有理由"
+
+msgid "System"
+msgstr "系统"
+
+msgid "To karma"
+msgstr ""
+
+msgid "User banned"
+msgstr "用户被禁止"
+

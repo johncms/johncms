@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+
+msgid "About me"
+msgstr ""
+
+msgid "Max. 500 characters"
+msgstr ""
+
+msgid "Verification code"
+msgstr ""
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr ""
+
+msgid "Enter"
+msgstr ""
+
+msgid "You have not entered nick"
+msgstr ""
+
+msgid "Too long nick"
+msgstr ""
+
+msgid "This nick already in use"
+msgstr ""
+
+msgid "Too long password"
+msgstr ""
+
+msgid "You have not selected genger"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr ""
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr ""
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Max. 30 characters"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Registration temporarily closed"
+msgstr ""
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr ""
+
+msgid "Gender"
+msgstr ""
+
+msgid "Male"
+msgstr ""
+
+msgid "Female"
+msgstr ""
+
+msgid "Your registratiton data"
+msgstr ""
+
+msgid "Your ID"
+msgstr ""
+
+msgid "Your username"
+msgstr ""
+
+msgid "Your password"
+msgstr ""
+
+msgid "Link to autologin"
+msgstr ""

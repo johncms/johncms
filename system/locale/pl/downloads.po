@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Dodano"
+
+msgid "Album"
+msgstr ""
+
+msgid "You have already rated this file"
+msgstr "Już oceniłeś ten plik"
+
+msgid "Artist"
+msgstr "Artysta"
+
+msgid "Average rating"
+msgstr "Średnia ocena"
+
+msgid "Bitrate"
+msgstr ""
+
+msgid "Change"
+msgstr "Zmień"
+
+msgid "Change Description"
+msgstr "Zmień opis"
+
+msgid "Change Screenshot"
+msgstr "Zmień screenshot"
+
+msgid "Delete File"
+msgstr "Usuń plik"
+
+msgid "Delete Folder"
+msgstr "Usuń folder"
+
+msgid "Deleted"
+msgstr "Usunięto"
+
+msgid "Description changed"
+msgstr "Opis zmieniony"
+
+msgid "Downloads"
+msgstr "Pobrano"
+
+msgid "Downloads are closed"
+msgstr "Pliki do pobrania są zamknięte"
+
+msgid "Duration"
+msgstr "Czas trwania"
+
+msgid "File deleted"
+msgstr "Plik został usunięty"
+
+msgid "No file selected"
+msgstr "Nie wybrano pliku"
+
+msgid "Error when selecting a file"
+msgstr "Błąd przy wyborze pliku"
+
+msgid "File"
+msgstr "Plik"
+
+msgid "Files"
+msgstr "pliki"
+
+msgid "Folder deleted"
+msgstr "Folder usunięty"
+
+msgid "Folder does not exist"
+msgstr "Folder nie istnieje"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Nazwa folderu<br><small>Tylko małe litery, bez spacji</small>"
+
+msgid "The name for the list"
+msgstr "Nazwa dla listy"
+
+msgid "Folders"
+msgstr "foldery"
+
+msgid "Found by Description"
+msgstr "Znalezione przez opis"
+
+msgid "Found by Name"
+msgstr "Znalezione poprzez nazwę"
+
+msgid "Image size"
+msgstr "Rozmiar obrazu"
+
+msgid "File Import"
+msgstr "Importuj plik"
+
+msgid "Make folder"
+msgstr "Utwórz folder"
+
+msgid "Name changed"
+msgstr "Nazwa zmieniona"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "Rozmiar zdjęcia jest akceptowany do oglądania, w trakcie bieżącej sesji"
+
+msgid "Rate"
+msgstr "Oceń"
+
+msgid "Continue the cycle"
+msgstr "Kontynuuj cykl"
+
+msgid "Refresh Downloads"
+msgstr "Odśwież downloads"
+
+msgid "Database updated"
+msgstr "Baza danych zaktualizowana"
+
+msgid "Released"
+msgstr "Wydany"
+
+msgid "Rename Folder"
+msgstr "Zmień nazwę folderu"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Zapisz jako<br><small>Opcjonalnie, w przypadku zmiany rozszerzenia użyj małych liter bez spacji</small>"
+
+msgid "Screenshot"
+msgstr "Dołącz obraz <small>(opcjonalnie, max. 320x320 pix.)</small>"
+
+msgid "The name of the image contains invalid characters"
+msgstr "Nazwa obrazu zawiera niedozwolone znaki"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "Rozmiar obrazu nie powinien przekraczać 320 x 320 px"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Wystąpił błąd podczas wypakowywania zdjęcia"
+
+msgid "Screenshot uploaded"
+msgstr "Screenshot przesłany"
+
+msgid "Select the size of pictures for preview"
+msgstr "Wybierz rozmiar zdjęcia do podglądu"
+
+msgid "Find file"
+msgstr "Znajdź plik"
+
+msgid "You have not entered a search term"
+msgstr "Nie wpisałeś szukanej frazy"
+
+msgid "Size"
+msgstr "Rozmiar"
+
+msgid "Upload"
+msgstr "Prześlij"
+
+msgid "Upload File"
+msgstr "Prześlij plik"
+
+msgid "Upload Screenshot"
+msgstr "Prześlij screenshot"
+
+msgid "Uploaded"
+msgstr "Przesłano"
+
+msgid "Thanks, your vote accepted"
+msgstr "Dzięki! Twój głos został dodany!"
+
+msgid "Total Votes"
+msgstr "Wszystkich głosów"
+

@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Vrei să mă seta acest avatar?"
+
+msgid "Forum rules"
+msgstr "Regulile Forumului"
+
+msgid "<b>1) FORBIDDEN:</b><br><br><b>1.1</b> Advertising messages.<br><b>1.2</b> The messages containing direct propagation of racial, national and religious animosity.<br><b>1.3</b> Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws.<br><b>1.4</b> The messages obviously offending someone, espcially forum users.<br><b>1.5</b> Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade.<br><b>1.6</b> Post the same message several times in the same or different forum topics.<br><b>1.7</b> Publishing deleted by moderator messages repeatedly.<br><b>1.8</b> Post messages not related to the topic.<br><b>1.9</b> Continuing topics that have been closed by moderator.<br><br><b>2) ABSOLUTELY FORBIDDEN:</b><br><br><b>2.1</b> Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose.<br><b>2.2</b> Register the nicknames having offensive tone for other users.<br><br><b>3) UNACCEPTABLE:</b><br><br><b>3.1</b> Quote full messages of the previous user and quote the messages already containing other quotes.<br><b>3.2</b> Post messages only contains external link. <br><b>3.3</b> Post messages written in translite.<br><b>3.4</b> Posting of purposeless messages: consisting of smileys only or posts like \"Ok\",\"What?\",\"Who is there?\", etc. <br><br>Message posted despite the above warnings will be changed or deleted.<br>This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "<b>1) INTERZICEREA PE ACEST FORUM:</b><br><br><b>1.1</b> Posturi de publicitate.<br><b>1.2</b> Mesajele care conţin propagandă directă a urii rasiale, etnice şi religioase.<br><b>1.3</b>Mesajele care conţin profanare şi/sau hărţuire sexuală.<br><b>1.4</b> Mesajele care jignesc pe cineva, dar mai ales membrii al forumului.<br><b>1.5</b> Distorsionate în mod deliberat de ortografie a lucrătorilor altor participanţi un forum pentru a da mesaj ofensator ton.<br><b>1.6</b> Post acelaşi mesaj de mai multe ori în aceleaşi teme sau diferite de pe forum..<br><b>1.7</b> Re-publica mesajele şterse de moderatori.<br><b>1.8</b> Posta mesaje care nu se referă la acest subiect a declarat.<br><b>1.9</b> Continuând tema, închis de moderatori.<br><br><b>2) NICIODATA:</b><br><br><b>2.1</b> Spune-i pe teme nemulţumirea publică acţiunile inadecvate ale membrilor forum si moderatori pentru a discuta despre acţiune. Acest lucru este privat mail.<br><b>2.2</b> Folosiţi, atunci când înregistrarea cu porecle abuziv altor utilizatori de natura.<br><br><b>3) FOARTE NEDORITE:</b><br><br><b>3.1</b> Citat vizitator mesajul anterior şi să citez întregul mesaj care conţine deja mesajele citate anterior .<br><b>3.2</b> Scrie mesaje, constând doar un link spre un alt site. <br><b>3.3</b> Postează un text scris în grafia latină (utilizaţi translitul).<br><b>3.4</b> Pentru a scrie mesaje cu nici un semn de discuţie:, constând doar în emoticon-uri şi / sau fraze, cum ar fi \"Ei bine, ei bine,\" \"şi Cho?\", \"Cine-i acolo?\" şi similare. <br><br>Mesajele postate în ciuda avertismentelor de mai sus vor fi modificate sau eliminate <br> pentru încălcări repetate ale acestor reguli se pot aplica sancţiuni admiristratsiya vinovat pana la stergerea contului.."
+
+msgid "Set in the Profile"
+msgstr "Instalaţi în profilul"
+
+msgid "For administration"
+msgstr "Pentru administraţie"
+
+msgid "bbCode Tags"
+msgstr "FAQ pentru taguri"
+
+msgid "Link name"
+msgstr "Link nume"
+
+msgid ""
+msgstr ""
+""
+
+msgid ""
+msgstr ""
+""
+

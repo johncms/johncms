@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Haqqinizda"
+
+msgid "Everyone"
+msgstr "Hamı"
+
+msgid "With Password"
+msgstr "Şifre ile"
+
+msgid "Closed"
+msgstr "Bağla"
+
+msgid "Friends only"
+msgstr "Yalnız dost"
+
+msgid "This field is required if the password access is activated"
+msgstr "Eger baxış şifre ile mümkün olacaqsa bu bölme zeruridir"
+
+msgid "Achievements"
+msgstr "Nailiyyet"
+
+msgid "Activity"
+msgstr "Aktivlik"
+
+msgid "Album"
+msgstr "Albom"
+
+msgid "Album successfully changed"
+msgstr "Albom uğurla deyişildi"
+
+msgid "Create Album"
+msgstr "Albom yarat"
+
+msgid "Album successfully created"
+msgstr "Albom uğurla yaradıldı"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Siz eminsizki, albomu silmek isteyirsiz?<br>Eger albomun daxilinde foto varsa onlar da silinecek"
+
+msgid "Album Deleted"
+msgstr "Albom uğurla silindi"
+
+msgid "Edit Album"
+msgstr "Albomu deyiş"
+
+msgid "Album List"
+msgstr "Albom siyahısı"
+
+msgid "You must type a password to view this album"
+msgstr "Bu alboma giriş üçün şifre teleb olunur"
+
+msgid "Select Album"
+msgstr "Albom seçin"
+
+msgid "Pending confirmation"
+msgstr "Qeydiyyat tesdiq gözleyir"
+
+msgid "Delete avatar"
+msgstr "Avatar silindi"
+
+msgid "Upload avatar"
+msgstr "Avatar yüklü"
+
+msgid "Blocked"
+msgstr "Blok Edilmiş"
+
+msgid "Birthday"
+msgstr "Doğum Tarixi"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Doğum Tarixi (gun.ay.il)"
+
+msgid "City"
+msgstr "Şeher"
+
+msgid "Contacts"
+msgstr "Elaqe"
+
+msgid "Data saved"
+msgstr "Melumatlar qeyd olundu"
+
+msgid "Prohibit karma"
+msgstr "Karmaya Qadağa"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Diqqet! Email ünvaninizi düzgün qeyd edin!<br>Mehz email vasitesile gelecekde şifrenizi berpa ede bileceksiniz"
+
+msgid "The album already exists"
+msgstr "Bele albom artıq mövcuddur"
+
+msgid "Invalid format date of birth"
+msgstr "Doğum tarixi yanlış qeyd olunub"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "İCQ nömreniz maks 5 ve min 10 reqemden ibaret olmalıdır"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Nik min - 2, maks 20 herif olmalıdır"
+
+msgid "Nick contains invalid characters"
+msgstr "Nikde qadağan olunmuş işarelerden istifade olunub"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Sizden yuxarı selahiyyete malik istifadeçinin anketini deyişe bilmezsiniz"
+
+msgid "Friends only"
+msgstr "Yalnız dost"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Siyahı boşdur.<br>Bu istifadeçinin mesajlari sistem terefinden temizleme işleri aparılarken avtomatik silinib"
+
+msgid "hidden"
+msgstr "gizlet"
+
+msgid "Image"
+msgstr "Şekil"
+
+msgid "Add image"
+msgstr "Foto Yerleşdir"
+
+msgid "Delete image"
+msgstr "Fotonu Sil"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Siz heqiqeten de şeklinizi silmek isteyirsiniz?"
+
+msgid "Edit image"
+msgstr "Şekili deyiş"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "Yerleşdirilecek şekilin keyfiyyeti sizin çekdiyiniz şekilin keyfiyyeti ile eyni olacaq."
+
+msgid "Image successfully changed"
+msgstr "Şekil deyişdirildi"
+
+msgid "Move the image"
+msgstr "Fotonun yerini deyiş"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Şekilin yerini deyişlem üçün sizin elave albomunuz olmaıdır"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Foto yeni alboma köçürüldü"
+
+msgid "Rotate"
+msgstr "Dönder"
+
+msgid "do not rotate"
+msgstr "Döndermemek"
+
+msgid "counterclockwise"
+msgstr "Saat eqrebi eksine"
+
+msgid "clockwise"
+msgstr "Saat eqrebi istiqametinde"
+
+msgid "My Album"
+msgstr "Mənim albom"
+
+msgid "My activity"
+msgstr "Aktivlerim"
+
+msgid "My Mailbox"
+msgstr "Mektublarim"
+
+msgid "My Account"
+msgstr "Şexsi Otaq"
+
+msgid "My Profile"
+msgstr "Anketim"
+
+msgid "My settings"
+msgstr "Qurğularim"
+
+msgid "My statistic"
+msgstr "Göstericilerim"
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "Recent comments"
+msgstr "Som Fikirler"
+
+msgid "New photos"
+msgstr "Yeni Şekiller"
+
+msgid "Min.2, Max. 20"
+msgstr "min.2, maks. 20"
+
+msgid "Personal info"
+msgstr "Şexi Melumat"
+
+msgid "Contact number"
+msgstr "Tel Nömresi"
+
+msgid "Photo"
+msgstr "Şekil"
+
+msgid "Add to Profile"
+msgstr "Sorğu"
+
+msgid "Photo added to the profile"
+msgstr "Sorğu aşkar Photos"
+
+msgid "Photos"
+msgstr "Şekiller"
+
+msgid "Photo deleted"
+msgstr "Foto silindi"
+
+msgid "Photo uploaded"
+msgstr "Şekil yüklendi"
+
+msgid "Edit Profile"
+msgstr "Anketi deyiş"
+
+msgid "Functionary on the site"
+msgstr "Saytda Vezifesi"
+
+msgid "User"
+msgstr "Adi İstifadeçi"
+
+msgid "Moder chat"
+msgstr "Çat Moderi"
+
+msgid "Forum Moderator"
+msgstr "Forum Moderi"
+
+msgid "Download Moderator"
+msgstr "Yükleme Moderi"
+
+msgid "Library Moderator"
+msgstr "KX Moderi"
+
+msgid "Super Modererator"
+msgstr "Super Moder"
+
+msgid "Administrator"
+msgstr "Admin"
+
+msgid "Supervisor"
+msgstr "SuperVayzer"
+
+msgid "Received"
+msgstr "Gelenler"
+
+msgid "Registration confirmed"
+msgstr "Qedyiyyati tesdiq etdi"
+
+msgid "Free registration"
+msgstr "Azad qeydiyyat"
+
+msgid "Registered"
+msgstr "Qeydiyyatlı"
+
+msgid "Registered"
+msgstr "Qeydiyyatlı"
+
+msgid "For user"
+msgstr "İstifadeçiler üçün"
+
+msgid "default settings were set"
+msgstr "standart qurğular seçilib"
+
+msgid "Image"
+msgstr "Şekil"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Yalnız bu formatlar desteklenir: JPG, JPEG, PNG, GIF<br>Faylin hecminde limit "
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Yüklenecek şekilin öz ölçülerinden asılı olmayaraq o avtomatik 32х32 ölçüsünde olacaq"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Yeni şekili köhne ile deyişmek (eger var idise)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "Yaxşı keyfiyyet elde etmek üçün yaxşı olardıkı şekilin terefleri beraber olsun"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Yüklenecek şekilin öz ölçülerinden asılı olmayaraq o avtomatik 640x480 ölçüsünde olacaq"
+
+msgid "Sent"
+msgstr "Gönderilenler"
+
+msgid "Male"
+msgstr "Kişi"
+
+msgid "Female"
+msgstr "Qadın"
+
+msgid "Back to profile"
+msgstr "Anketde göster"
+
+msgid "Site"
+msgstr "Sayt"
+
+msgid "Select gender"
+msgstr "Cinsinizi seçin"
+
+msgid "Max. 50"
+msgstr "maks 50"
+
+msgid "He stay on the site"
+msgstr "Saytda olub"
+
+msgid "She stay on the site"
+msgstr "Saytda olub"
+
+msgid "System"
+msgstr "Sistemli"
+
+msgid "Top Comments"
+msgstr "Top Fikirler"
+
+msgid "Top Downloads"
+msgstr "Top Yükleme"
+
+msgid "AntiTop"
+msgstr "KQ/AM"
+
+msgid "Top Views "
+msgstr "Top Baxış"
+
+msgid "Top Votes"
+msgstr "Top Ses"
+
+msgid "Unread Comments"
+msgstr "Okunmayan Comments"
+
+msgid "Upload"
+msgstr "Yükle"
+
+msgid "Upload avatar"
+msgstr "Avatar yüklü"
+
+msgid "Upload a picture"
+msgstr "Foto yükle"
+
+msgid "User Profile"
+msgstr "İstifadeçi Anketi"
+
+msgid "Add to Contacts"
+msgstr "Kantaktlara elave et"
+
+msgid "Add to Friends"
+msgstr "Dost Ol"
+
+msgid "Block user"
+msgstr "İqnor Et"
+
+msgid "You have already submitted a request"
+msgstr "Siz Artig Bildiriş Gondermisiz"
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr "User Artig Sizin Doztunuzdur . Bildiriwi Legv Elemek olur. Eger Siz istfadecini dostlugdan silmek istiyirsense . Uygun bolmeni Seçin"
+
+msgid "Unlock user"
+msgstr "İqnordan Cixarin"
+
+msgid "Remove from contacts"
+msgstr "Kontaklardan sil"
+
+msgid "Friends"
+msgstr "Dostlar"
+
+msgid "My Friends"
+msgstr "Menim Dostlarim"
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr "User Artig Size dostlug gonderib Qebul etmek istesez Uygun bolmeye daxil Olsun."
+
+msgid "offers friendship"
+msgstr "size dostlug teklifini gonerib"
+
+msgid "Confirm"
+msgstr "Testiqle"
+
+msgid "Reject"
+msgstr "Redd Et"
+
+msgid "Request to be friends sent!"
+msgstr "Dostlug teklifi Gonderildi!"
+
+msgid "Do you really want to become friends?"
+msgstr "Siz Dostlug teklifini gondermeyde qerarrisiz ?"
+
+msgid "Friendship"
+msgstr "Dostlug"
+
+msgid "User is already your friend"
+msgstr "User Artig sizin dostunuzdur"
+
+msgid "Applications for friendship does not exist"
+msgstr "Dostlug Teklifleri Yoxdur"
+
+msgid "Application for friendship canceled"
+msgstr "Dostlug Teklifi Legv Edildi"
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr "Siz Eminsizki Dostlug Teklifinizi Legv Etmek İstiyirsiz?"
+
+msgid "There is no invitation to be friends"
+msgstr "Devet edir dost olmaga movcut deyil"
+
+msgid "agreed with you friends"
+msgstr "Dostlug teklifinizi qebul etdi"
+
+msgid "You confirmed friendship. Now the user"
+msgstr "Siz Dostlug teklifini qebul ettiz. İndi User"
+
+msgid "Your friend"
+msgstr "Dostunuz"
+
+msgid "Do you really want to confirm the friendship"
+msgstr "Siz dostlug teklifini qebul etmeye eminsiz ?"
+
+msgid "deleted you from friends"
+msgstr "Sizi Dostlugdan Sildi"
+
+msgid "You remove the user from friends."
+msgstr "Siz Useri dostlugdan sildiniz."
+
+msgid "Do you really want to remove from your friends?"
+msgstr "Siz eminsizki Useri dostlugdan cixartmag istiyirsiz ?"
+
+msgid "Removal is not possible! User is not your friend."
+msgstr "Silmek Mumkun deyil! User Sizin dostunuz deyil."
+
+msgid "declined your offer to make friends."
+msgstr "Sizin dostlug teklifinizi red etdi."
+
+msgid "Request to be friends rejected."
+msgstr "Dostlug sorgusu legv edildi."
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr "Siz Heqiqeten Dostlug teklifini sorgusu red edirsiz?"
+
+msgid "The page does not exist!"
+msgstr "Seyfe Movcut Deyil!"
+
+msgid "My requests"
+msgstr "Menim Sorgularim"
+
+msgid "Cancel Request"
+msgstr "Sorgunu legv et"
+
+msgid "My Offers"
+msgstr "Dostlug teklifleri"
+
+msgid "Confirm friendship"
+msgstr "dostlugu qebul et"
+
+msgid "Reject friendship"
+msgstr "dostlugu red et"
+
+msgid "Remove from friends"
+msgstr "Dostlugdan Sil"
+
+msgid "Add to friends"
+msgstr "Dost Ol"
+
+msgid "Cancel a request to be friends"
+msgstr "Dostlug sorgusunu legv et"
+
+msgid "Correspondence"
+msgstr "Yazişma"
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr "Qohum"
+
+msgid "Fellow Student"
+msgstr "Hem Kurslu"
+
+msgid "Best friend"
+msgstr "En Yaxwi Dost"
+
+msgid "Colleague"
+msgstr "Hemkar"
+
+msgid "Classmate"
+msgstr "Sinif Yoldaşi"
+
+msgid "Friend"
+msgstr "Dost"
+
+msgid "Mail settings"
+msgstr "Poçt qurgulari"
+
+msgid "You can write messages"
+msgstr "Mektub yaza biler"
+
+msgid "Can write all"
+msgstr "Her Kes"
+
+msgid "Can write only contacts"
+msgstr "Kantaktlarim"
+
+msgid "Can write only friends"
+msgstr "Dostlarim"
+
+msgid "pointing out that you best friends with him"
+msgstr "qeyd etdi, ki siz en yaxin dostsuz"
+
+msgid "pointed out that you have with him relatives"
+msgstr "qeyd etdi, ki siz qohumsuz"
+
+msgid "pointed out that you have with him classmates"
+msgstr "qeyd etdi , ki siz hem kurslusuz"
+
+msgid "pointing out that you were colleagues"
+msgstr "qeyd etdi, ki siz  hemkarsiz"
+
+msgid "pointing out that you were classmates"
+msgstr "qeyd etdi , ki siz sinif yoldaşisiz"
+
+msgid "pointed out that you\"re friends"
+msgstr "qeyd etdi , ki siz dostsuz"
+
+msgid "You indicated that you are best friends with"
+msgstr "siz qeyd etdiniz, ki siz en yaxin dostsuz"
+
+msgid "You indicated that the relatives with"
+msgstr "siz qeyd etdiniz, ki siz qohumsuz"
+
+msgid "You indicated that mates with"
+msgstr "siz qeyd etdiniz , ki siz hem kurslusuz"
+
+msgid "You indicated that the colleagues with"
+msgstr "siz qeyd etdiniz, ki siz hemkarsiz"
+
+msgid "You indicated that you classmates with"
+msgstr "siz qeyd etdiniz , ki siz sinif yoldaşisiz"
+
+msgid "You indicated that you are friends with"
+msgstr "siz qeyd etdiniz , ki siz dostsuz"
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr "Siz heqiqeten qeyd etmek istiyirsizki User Sizin "
+
+msgid "Show"
+msgstr "Goster"
+
+msgid "The feature is disabled, contact your administrator"
+msgstr "Funksiya İwlek Deyil, Rehberliye muraciyet edin"
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr "Siz Oqnordasiz. Siz Ona Dostlug Teklifini Ede Bilmezsiz."
+

@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "All"
+msgstr "Tất cả"
+
+msgid "Comment"
+msgstr "Bình luận"
+
+msgid "Do you really want to delete all reviews about user"
+msgstr "Bạn có thực sự muốn xóa tất cả người dùng đánh giá"
+
+msgid "Do you really want to delete comment"
+msgstr "Bạn có thực sự muốn loại bỏ"
+
+msgid "Limit votes for today. New voices will be added"
+msgstr "Giới hạn bình chọn cho ngày hôm nay. Thoại mới sẽ được đánh giá"
+
+msgid "It is forbidden to vote for administration"
+msgstr "Chỉ cho phép chính quyền"
+
+msgid "You are not allowed to vote for users"
+msgstr "Bạn không được phép bỏ phiếu trở lại cho người sử dụng"
+
+msgid "Cheating karma is forbidden"
+msgstr "Gian lận tiếng nói bị cấm"
+
+msgid "Users can take part in voting if they have stayed on a site not less "
+msgstr "Trong cuộc bầu chọn có thể tham gia, chỉ có người dùng nào đã bị giam giữ tại trang web ít nhất"
+
+msgid "and their score on the forum"
+msgstr "Hệ số trên diễn đàn"
+
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Đối với một người dùng có thể đi thăm dò ý kiến một lần mỗi 24 giờ"
+
+msgid "Done"
+msgstr "Hoàn thành"
+
+msgid "Negative"
+msgstr "Phủ định"
+
+msgid "Negative"
+msgstr "Phủ định"
+
+msgid "New responses"
+msgstr "Mới trả lời"
+
+msgid "Positive"
+msgstr "Tích cực"
+
+msgid "Positive"
+msgstr "Tích cực"
+
+msgid "Reset karma"
+msgstr "Thiết lập lại bằng giọng nói"
+
+msgid "Votes quantity"
+msgstr "Số phiếu bầu"
+
+msgid "Vote for"
+msgstr "Bình chọn cho"
+
+msgid "Type of vote"
+msgstr "Loại bình luận"
+

@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Uber mich"
+
+msgid "Max. 500 characters"
+msgstr "Maks. 500 Zeichen"
+
+msgid "Verification code"
+msgstr "Versuchscode"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Falls Sie nicht sehen Zeichnung mit Code, anschalten Aufrechterhaltung der Graphik in Abstimmungen brauzer und erneuern Seite"
+
+msgid "Enter"
+msgstr "EINGANG"
+
+msgid "You have not entered nick"
+msgstr "Ist nicht eingefuhrt login"
+
+msgid "Too long nick"
+msgstr "Unzulassige Lange Login"
+
+msgid "This nick already in use"
+msgstr "Dieser Nickname bereits ist besetzt"
+
+msgid "Too long password"
+msgstr "Unzulassige Lange des Kennwortes"
+
+msgid "You have not selected genger"
+msgstr "Nicht namlicher Boden"
+
+msgid "Login"
+msgstr ""
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, maks. 15 Zeichen.<br>Freistehen Buchstaben des Russischen und Lateinischer Alphabets, Ziffern und Zeichen - = @ ! ? ~ _ ( ) [ ] . * (abgerechnet 0)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "Bitte erwarte Bestarkung Euer registriert Administrator"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Ihr zu ubernehmen autorisierten Zutritt zu Abteilungen Standort nach Bestarkung Euer registriert.<br>Bestarkung durchfuhrt 1-2 Mal in Tag und Nacht"
+
+msgid "Name"
+msgstr ""
+
+msgid "Max. 30 characters"
+msgstr "Maks. 30 Zeichen"
+
+msgid "Password"
+msgstr "Passwort"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Min. 3, maks. 10 Zeichen.<br>Freistehen Buchstaben des Lateinischen Alphabets und Ziffer"
+
+msgid "Registration"
+msgstr "Zu registrieren sich"
+
+msgid "Registration temporarily closed"
+msgstr "Registriert ist geschlossen"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Ansuchen nicht zu registrieren Nickname Baumuster 111, ggg, by-ga-ga, uuuu und ihnen derartiger, sie sind aber entfernt.<br>Gleichfalls sind entfernt ALLE Profils, die durch Proksi servery eintrugen sich"
+
+msgid "Gender"
+msgstr "Geschlecht"
+
+msgid "Male"
+msgstr "Mannlicher"
+
+msgid "Female"
+msgstr "Weiblicher"
+
+msgid "Your registratiton data"
+msgstr "Ihr ist registriert"
+
+msgid "Your ID"
+msgstr "Euer ID"
+
+msgid "Your username"
+msgstr "Euer Login"
+
+msgid "Your password"
+msgstr "Euer Kennwort"
+
+msgid "Link to autologin"
+msgstr "Hinweis fur avtovkhod"
+

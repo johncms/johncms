@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "All"
+msgstr "Visi"
+
+msgid "Comment"
+msgstr "Komentārs"
+
+msgid "Do you really want to delete all reviews about user"
+msgstr "Jūs tiešām vēlaties dzēst visas atsauksmes par lietotāju?"
+
+msgid "Do you really want to delete comment"
+msgstr "Jūs tiešām vēlaties dzēst atsauksmi par lietotāju?"
+
+msgid "Limit votes for today. New voices will be added"
+msgstr "Kļūda! Balsu limits, kas tika atvēlēts uz šo dienu ir ticis iztērēts."
+
+msgid "It is forbidden to vote for administration"
+msgstr "Kļūda! Par administrāciju ir AIZLIEGTS balsot"
+
+msgid "You are not allowed to vote for users"
+msgstr "Kļūda! Jums liegts atdot balsi par šo lietotāju"
+
+msgid "Cheating karma is forbidden"
+msgstr "Kļūda! Karmas uzskrūvēšana ir AIZLIEGTA"
+
+msgid "Users can take part in voting if they have stayed on a site not less "
+msgstr "Balsojumā var balsot tikai tie, kas ir pabijuši ne mazāk kā par"
+
+msgid "and their score on the forum"
+msgstr "un savākuši forumā"
+
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Par vienu lietotāju var atdot balsi reizi 24 stundās"
+
+msgid "Done"
+msgstr "Izdarīts"
+
+msgid "Negative"
+msgstr "Negatīvie"
+
+msgid "Negative"
+msgstr "Negatīvie"
+
+msgid "New responses"
+msgstr "Jaunas atsauksmes"
+
+msgid "Positive"
+msgstr "Pozitīvie"
+
+msgid "Positive"
+msgstr "Pozitīvie"
+
+msgid "Reset karma"
+msgstr "Nomest karmu"
+
+msgid "Votes quantity"
+msgstr "Balsu skaits"
+
+msgid "Vote for"
+msgstr "Balsojam par"
+
+msgid "Type of vote"
+msgstr "Vērtējuma tips"
+
