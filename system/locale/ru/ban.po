@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "и получил"
+
+msgid "Amnesty"
+msgstr "Амнистия"
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Амнистия доступна только для Супервайзоров"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Таблица Банов очищена.<br>Удалена вся история нарушений"
+
+msgid "Clear base"
+msgstr "Очистить базу"
+
+msgid "Unban all"
+msgstr "Разбанить всех"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Разбанены все пользователи, которые имели активные Баны (кроме банов &quot;До отмены&quot;)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Разбанить всех&quot; - прекращает действие всех активных Банов<br>&quot;Очистить базу&quot; - прекращает действие всех банов и очищает всю историю нарушений"
+
+msgid "Blocked"
+msgstr "Блокировка"
+
+msgid "Private"
+msgstr "Приват"
+
+msgid "Comment"
+msgstr "Комментарии"
+
+msgid "Forum"
+msgstr "на форуме"
+
+msgid "Chat"
+msgstr "Чат"
+
+msgid "Guestbook"
+msgstr "Гостевая"
+
+msgid "Gallery"
+msgstr "Галерея"
+
+msgid "Library"
+msgstr "Библиотека"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Полностью запрещена активность на сайте. Письма можно получать, но нельзя отправлять"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Запрет на отправку писем в приват (антиспам)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Запрещено комментировать во всех модулях подсистемы"
+
+msgid "Forbidden write in Forum"
+msgstr "Запрещено писать на Форуме"
+
+msgid "Deny access to Chat"
+msgstr "Закрыт доступ в Чат"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Запрещено писать в Гостевой"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Запрещено выкладывать и комментировать фотографии в Галерее"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Запрещено выкладывать и комментировать статьи в Библиотеке"
+
+msgid "Ban termination"
+msgstr "Прекращение действия Бана"
+
+msgid "Unban"
+msgstr "Разбанить"
+
+msgid "User unbanned"
+msgstr "Пользователь разбанен"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "Прекращается действие активного бана с сохранением записи в истории нарушений"
+
+msgid "Delete ban"
+msgstr "Удаление Бана"
+
+msgid "Delete"
+msgstr "Удалить бан"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Удаляется бан вместе с записью в истории нарушений"
+
+msgid "Ban deleted"
+msgstr "Бан удален"
+
+msgid "Ban user"
+msgstr "Баним пользователя"
+
+msgid "Ban Panel"
+msgstr "Бан панель"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "У Вас не хватает прав, чтоб банить данного пользователя"
+
+msgid "Ban times"
+msgstr "Срок бана"
+
+msgid "Till cancel"
+msgstr "До отмены"
+
+msgid "Day (30 max.)"
+msgstr "Дней (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Часов (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Минут (60 max.)"
+
+msgid "Ban type"
+msgstr "Тип бана"
+
+msgid "Banishment"
+msgstr "Банил"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Вы действительно хотите очистить всю историю нарушений данного пользователя?"
+
+msgid "Clear history"
+msgstr "Очистить историю"
+
+msgid "Ban already active"
+msgstr "Такой бан уже есть"
+
+msgid "Ban not active"
+msgstr "Бан уже не активен"
+
+msgid "There is no required data"
+msgstr "Отсутствуют необходимые данные"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Очищать историю нарушений могут только Супервайзоры"
+
+msgid "You have no rights to ban in this section"
+msgstr "Вы не имеете права банить не в своем разделе"
+
+msgid "Offenses history cleared"
+msgstr "История нарушений очищена"
+
+msgid "Forum"
+msgstr "на форуме"
+
+msgid "Offense"
+msgstr "Нарушение"
+
+msgid "Offenses history"
+msgstr "История нарушений"
+
+msgid "Offenses list"
+msgstr "Список нарушений"
+
+msgid "My offenses"
+msgstr "Мои нарушения"
+
+msgid "Private (antispam)"
+msgstr "Приват (антиспам)"
+
+msgid "Reason not specified"
+msgstr "Причина не указана"
+
+msgid "System"
+msgstr "Система"
+
+msgid "To karma"
+msgstr "к карме"
+
+msgid "User banned"
+msgstr "Пользователь забанен"
+

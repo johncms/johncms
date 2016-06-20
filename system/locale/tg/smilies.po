@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Emotions"
+msgstr "Ҳолатҳо"
+
+msgid "Love"
+msgstr "Муҳаббат"
+
+msgid "Music, Dancing"
+msgstr "Мусиқи, рақс"
+
+msgid "Food, Alcohol"
+msgstr "Хурок, нушоки"
+
+msgid "Animals"
+msgstr "Ҳайвонот"
+
+msgid "Flowers"
+msgstr "Гулҳо"
+
+msgid "Brawl, Weapons"
+msgstr "Ҷанг, яроқ"
+
+msgid "Gestures"
+msgstr "Гандаҳо"
+
+msgid "Holidays"
+msgstr "Идҳо"
+
+msgid "Sports"
+msgstr "Варзиш"
+
+msgid "Technology"
+msgstr ""
+
+msgid "Miscellaneous"
+msgstr "Дигарон"
+

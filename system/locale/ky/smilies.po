@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Emotions"
+msgstr "Эмоция"
+
+msgid "Love"
+msgstr "Сүйүү"
+
+msgid "Music, Dancing"
+msgstr "Ыр, бийлөө"
+
+msgid "Food, Alcohol"
+msgstr "Тамак, ичимдик"
+
+msgid "Animals"
+msgstr "Жаныбарлар"
+
+msgid "Flowers"
+msgstr "Гүлдөр"
+
+msgid "Brawl, Weapons"
+msgstr "Тебелеш, мушташ"
+
+msgid "Gestures"
+msgstr "Жесттер"
+
+msgid "Holidays"
+msgstr "Майрамдар"
+
+msgid "Sports"
+msgstr ""
+
+msgid "Technology"
+msgstr ""
+
+msgid "Miscellaneous"
+msgstr "Ар түрлүү"
+

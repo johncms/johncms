@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Список Адміністрації</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Дивиться Фотоальбоми</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Список іменинників</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr "<a href=\"#home#/download/index.php\">Завантаження</a>"
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">Читає FAQ</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr "<a href=\"#home#/forum/index.php\">Форум</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=files\">Файли форуму</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Дивиться, хто у форумі?</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr "<a href=\"#home#/gallery/index.php\">Галерея</a>"
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr "<a href=\"#home#/guestbook/index.php\">У Гостьовій</a>"
+
+msgid "Here, in the list"
+msgstr "Тут, в списку"
+
+msgid "On the Homepage"
+msgstr "На Головній"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Читає в Бібліотеці</a>"
+
+msgid "Personal correspondence"
+msgstr "Особиста кореспонденція"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Читає новини</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Хто на сайті?</a>"
+
+msgid "Profile"
+msgstr "В Анкеті"
+
+msgid "Personal Profile"
+msgstr "В своії Анкеті"
+
+msgid "Registered on the site"
+msgstr "Реєструється на сайті"
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">Список користувачів</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">Дивиться ТОП користувачів</a>"
+

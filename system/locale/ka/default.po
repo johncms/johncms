@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "წვდომა აკრძალულია"
+
+msgid "For registered users only"
+msgstr "მხოლოდ დარეგისტრირებულთათვის"
+
+msgid "Add"
+msgstr "დამატება"
+
+msgid "Add File"
+msgstr "სანიშნეს ფაილი"
+
+msgid "Add Smileys"
+msgstr "სიცილაკების დამატება"
+
+msgid "Administration"
+msgstr "ადმინისტრაცია"
+
+msgid "Administrators"
+msgstr "ადმინისტრატორები"
+
+msgid "Admin-Club"
+msgstr "ადმინ-კლუბი"
+
+msgid "Admin Panel"
+msgstr "ადმინ-პანელი"
+
+msgid "Smiles for Administration"
+msgstr ""
+
+msgid "Administrators events"
+msgstr "ადმინისტრატორის ღონისძიებები"
+
+msgid "Albums"
+msgstr "ალბომები"
+
+msgid "New comments in albums"
+msgstr "ახალი კომენტარები ალბომებში"
+
+msgid "All"
+msgstr "ყველა"
+
+msgid "Appearance"
+msgstr "გარე სახე"
+
+msgid "Apply"
+msgstr "მიღება"
+
+msgid "Confirm"
+msgstr "დადასტურება"
+
+msgid "Location"
+msgstr "განლაგება"
+
+msgid "Author"
+msgstr "ავტორი"
+
+msgid "Authorized"
+msgstr "ავტორიზებულნი"
+
+msgid "Authorization failed"
+msgstr "ავტორიზაცია არ მოხდა"
+
+msgid "Avatar has been successfully installed"
+msgstr "ავატარი წარმატებით დაყენდა"
+
+msgid "Avatar successfully uploaded"
+msgstr "ავატარი წარმატებით აიტვირთა"
+
+msgid "Avatar"
+msgstr "ავატარი"
+
+msgid "Do you really want to set myself this avatar?"
+msgstr ""
+
+msgid "Avatars"
+msgstr "ავატარები"
+
+msgid "Back"
+msgstr "უკან"
+
+msgid "Balance"
+msgstr "ბალანსი"
+
+msgid "Ban"
+msgstr "ბანი"
+
+msgid "Banish"
+msgstr "ბანი დაადო"
+
+msgid "Ban type"
+msgstr "ბანის ტიპი"
+
+msgid "Banish"
+msgstr "ბანი დაადო"
+
+msgid "Tags (BBcode)"
+msgstr "ტეგები (BBcode)"
+
+msgid "Birthday"
+msgstr "დაბადების დღე"
+
+msgid "Birthdays"
+msgstr "დაბადების დღეები"
+
+msgid "Block"
+msgstr "ბლოკირება"
+
+msgid "Blog"
+msgstr "ბლოგი"
+
+msgid "Blogs"
+msgstr "ბლოგები"
+
+msgid "Browser"
+msgstr "ბრაუზერი"
+
+msgid "Cancel"
+msgstr "უარყოფა"
+
+msgid "Symbols on the picture"
+msgstr "კოდი სურათიდან"
+
+msgid "Catalog"
+msgstr "კატალოგი"
+
+msgid "Category"
+msgstr "კატეგორია"
+
+msgid "Categories"
+msgstr "კატეგორიები"
+
+msgid "Change password"
+msgstr "პაროლის შეცვლა"
+
+msgid "Chat"
+msgstr "ჩატი"
+
+msgid "Please, check up correctness of the input data"
+msgstr "გთხოვთ, შეამოწმოთ შეყვანილი მონაცემების სისწორე"
+
+msgid "Clear"
+msgstr "გასუფთავება"
+
+msgid "Clear all"
+msgstr "ყველაფრის გასუფთავება"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "წაშლილია შეტყობინებები, რომლებიც იყო 1 დღეზე მეტი ხნის"
+
+msgid "Full clearing is finished"
+msgstr "გატარებულია სრული წმენდა"
+
+msgid "Clearing parameters"
+msgstr "წმენდის პარამეტრები"
+
+msgid "Clear all"
+msgstr "ყველაფრის გასუფთავება"
+
+msgid "Older than 1 day"
+msgstr "1 დღეზე მეტი ხნის"
+
+msgid "Older than 1 week"
+msgstr "1 კვირაზე მეტი ხნის"
+
+msgid "Clear all messages from this user"
+msgstr "მოცემული მომხმარებლის ყველა შეტყობინების გასუფთავება"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "1 კვირაზე მეტი ხნის შეტყობინებების წაშლა"
+
+msgid "Color"
+msgstr "ფერი"
+
+msgid "Text Color"
+msgstr "ფონის ფერი"
+
+msgid "Background Color"
+msgstr "ტექსტის ფერი"
+
+msgid "Comments"
+msgstr "კომენტარები"
+
+msgid "Comments are closed"
+msgstr "კომენტარები დახურულია"
+
+msgid "General list"
+msgstr "საერთო სია"
+
+msgid "Community"
+msgstr "საიტის აქტივი"
+
+msgid "Contacts"
+msgstr "კონტაქტები"
+
+msgid "In contacts"
+msgstr "კონტაქტებში"
+
+msgid "Continue"
+msgstr "გაგრძელება"
+
+msgid "Downloads"
+msgstr "ჩამოტვირთვები"
+
+msgid "Views"
+msgstr "დათვალიერება"
+
+msgid "Clock setting"
+msgstr "საათის პარამეტრები"
+
+msgid "General setting"
+msgstr "საერთო პარამეტრები"
+
+msgid "Date"
+msgstr "თარიღი"
+
+msgid "Day"
+msgstr "დღე"
+
+msgid "Days"
+msgstr "დღე"
+
+msgid "Default"
+msgstr "ნაგულისხმები"
+
+msgid "Delete"
+msgstr "წაშლა"
+
+msgid "Delete message"
+msgstr "შეტყობინების წაშლა"
+
+msgid "Delete all"
+msgstr "ყველაფრის წაშლა"
+
+msgid "Do you really want to delete?"
+msgstr "ნამდვილად გნებავთ წაშლა?"
+
+msgid "Description"
+msgstr "აღწერა"
+
+msgid "Design"
+msgstr "გაფორმების თემა"
+
+msgid "Communication"
+msgstr "ურთიერთობა"
+
+msgid "Digest"
+msgstr "დაიჯესტი"
+
+msgid "Direct URL"
+msgstr "პირდაპირი ბმულები"
+
+msgid "Discuss"
+msgstr "განხილვა"
+
+msgid "Display mode"
+msgstr "ჩვენების რეჟიმი"
+
+msgid "Perform"
+msgstr "შესრულება"
+
+msgid "Hide"
+msgstr "დამალვა"
+
+msgid "Down"
+msgstr "ქვევით"
+
+msgid "Download"
+msgstr "ჩამოტვირთვა"
+
+msgid "Downloads"
+msgstr "ჩამოტვირთვები"
+
+msgid "Edit"
+msgstr "შეცვლა"
+
+msgid "Edit List"
+msgstr "სიის შეცვლა"
+
+msgid "Edited"
+msgstr "შეცვლილია"
+
+msgid "Enter verification code"
+msgstr "შეიყვანეთ შემოწმების კოდი"
+
+msgid "Enter site"
+msgstr "საიტზე შესვლა"
+
+msgid "ERROR"
+msgstr "შეცდომა"
+
+msgid "The requested page does not exists"
+msgstr "თქვენს მიერ მოთხოვნილი გვერდი არ არსებობს"
+
+msgid "Invalid address"
+msgstr "მისამართი არასწორად არის შეყვანილი"
+
+msgid "Avatar select failed"
+msgstr "ავატარის არჩევისას დაფიქსირდა შეცდომა"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "აღწერის სიგრძე არ უნდა იყოს 2 სიმბოლოზე ნაკლები"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "თქვენ არ შეგიძლიათ თქვენზე უფლებამოსილის პოსტების რედაქტირება"
+
+msgid "The required fields are not filled"
+msgstr "აუცილებელი ველები არ არის შევსებული"
+
+msgid "You have not entered the message"
+msgstr "თქვენ არ შეგიყვანიათ შეტყობინება"
+
+msgid "You have not entered a name"
+msgstr "თქვენ არ შეგიყვანიათ სახელი"
+
+msgid "You have not entered password"
+msgstr "თქვენ არ შეგიყვანიათ პაროლი"
+
+msgid "You have not entered text"
+msgstr "თქვენ არ შეგიყვანიათ ტექსტი"
+
+msgid "You have not entered Title"
+msgstr "თქვენ არ შეგიყვანიათ დასახელება"
+
+msgid "File does not exist"
+msgstr "ფაილი არ არსებობს"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "თქვენ არ შეგიძლიათ შეტყობინების ასე ხშირად დამატება<br>გთხოვთ მოითმინოთ"
+
+msgid "You have not entered login"
+msgstr "თქვენ არ შეგიყვანიათ მეტსახელი"
+
+msgid "Message already exists"
+msgstr "ასეთი შეტყობინება უკვე იყო"
+
+msgid "Text is too short"
+msgstr "ტექსტი ძალიან მოკლეა"
+
+msgid "Administrator already replied to this message"
+msgstr "ამ შეტყობინებაზე ადმინისტრაციამ უკვე უპასუხა"
+
+msgid "User does not exists"
+msgstr "ასეთი მომხმარებელი არ არსებობს"
+
+msgid "The security code is not correct"
+msgstr "შემოწმების კოდი არასწორად არის შეყვანილი"
+
+msgid "Bad data"
+msgstr "მონაცემები არასწორია"
+
+msgid "Invalid length"
+msgstr "სიგრძე დაუშვებელია"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "ველების მნიშვნელობა დაწესებულ ლიმიტებს სცილდება"
+
+msgid "Incorrect Password"
+msgstr "პაროლი არასწორია"
+
+msgid "Invalid characters"
+msgstr "ასეთი სიმბოლოები დაუშვებელია"
+
+msgid "No new events"
+msgstr "ახალი მოვლენები არ არის"
+
+msgid "Logout"
+msgstr "გამოსვლა"
+
+msgid "External Link"
+msgstr "გარე ბმული"
+
+msgid "Height of field"
+msgstr "ველის სიმაღლე"
+
+msgid "Width of field"
+msgstr "ველის სიგანე"
+
+msgid "Max. File size"
+msgstr "ფაილის მაქს. ზომა"
+
+msgid "Files"
+msgstr "ფაილები"
+
+msgid "Bold"
+msgstr "მსუქანი"
+
+msgid "Italic"
+msgstr "დახრილი"
+
+msgid "Underline"
+msgstr "ხაზგასმული"
+
+msgid "Forgot password"
+msgstr "პაროლი დაგავიწყდათ"
+
+msgid "Forum"
+msgstr "ფორუმი"
+
+msgid "Forum post"
+msgstr "პოსტების რაოდენობა ფორუმში"
+
+msgid "Gallery"
+msgstr "გალერეა"
+
+msgid "Guest"
+msgstr "სტუმარი"
+
+msgid "Guests"
+msgstr "სტუმრები"
+
+msgid "Gzip compression"
+msgstr "Gzip კუმშვა"
+
+msgid "Guestbook"
+msgstr "სასტუმრო"
+
+msgid "The guestbook is closed"
+msgstr "სასტუმრო დახურულია"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "სასტუმროში შეტყობინებები არ არის<br><b>იყავი პირველი! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "გილოცავ დაბადების დღეს!!!"
+
+msgid "Heading"
+msgstr "სათაური"
+
+msgid "Help"
+msgstr "დახმარება"
+
+msgid "Hi"
+msgstr "გამარჯობა"
+
+msgid "Hide"
+msgstr "დამალვა"
+
+msgid "History"
+msgstr "ისტორია"
+
+msgid "Home"
+msgstr "მთავარი გვერდი"
+
+msgid "Hours"
+msgstr "საათი"
+
+msgid "Ignore"
+msgstr "უგულებელყოფა"
+
+msgid "Details"
+msgstr "დაწვრილებით"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "ამ დროისათვის ხელმისაწვდომობის საიტი ნებადართულია მხოლოდ SV!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "ამ დროისათვის ხელმისაწვდომობის საიტი შეიძლება მხოლოდ ადმინისტრაციის საიტის"
+
+msgid "Information"
+msgstr "ინფორმაცია"
+
+msgid "Info, FAQ"
+msgstr "ინფორმაცია, FAQ"
+
+msgid "Offenses"
+msgstr "დარღვევა"
+
+msgid "IP Activity"
+msgstr "IP აქტიურობა"
+
+msgid "Actual addresses"
+msgstr "აქტუალური მისამართები"
+
+msgid "IP address"
+msgstr "IP მისამართი"
+
+msgid "IP history"
+msgstr "IP ისტორია"
+
+msgid "Karma"
+msgstr "კარმა"
+
+msgid "Language"
+msgstr "ენა"
+
+msgid "Select language"
+msgstr "აირჩიეთ ენა"
+
+msgid "System language set"
+msgstr "სისტემისთვის დაყენებულია ენა"
+
+msgid "Last activity"
+msgstr "უკანასკნელი აქტივობა"
+
+msgid "Last IP"
+msgstr "უკანასკნელი IP"
+
+msgid "Last visit"
+msgstr "უკანასკნელი ვიზიტი"
+
+msgid "Library"
+msgstr "ბიბლიოთეკა"
+
+msgid "Mod. Library"
+msgstr "ბიბლიოთეკის მოდერაცია"
+
+msgid "Lines per page"
+msgstr "სტრიქონები გვერდებზე"
+
+msgid "Link"
+msgstr "ბმული"
+
+msgid "List"
+msgstr "სია"
+
+msgid "Empty list"
+msgstr "სია ცარიელია"
+
+msgid "OFF"
+msgstr "გამორთვა"
+
+msgid "ON"
+msgstr "ჩართვა"
+
+msgid "or"
+msgstr "ან"
+
+msgid "Login"
+msgstr "შესვლა"
+
+msgid "Username"
+msgstr "მეტსახელი"
+
+msgid "General settings"
+msgstr "საერთო პარამეტრები"
+
+msgid "Mail"
+msgstr "ფოსტა"
+
+msgid "New message"
+msgstr "თქვენთვის წერილია"
+
+msgid "Guys"
+msgstr "ბიჭები"
+
+msgid "Message"
+msgstr "შეტყობინება"
+
+msgid "Messages"
+msgstr "შეტყობინებები"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "მინ. 2 მაქს. 30 სიმბოლო"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "მინ. 2 მაქს. 500 სიმბოლო"
+
+msgid "Moderators"
+msgstr "მოდერატორები"
+
+msgid "Move"
+msgstr "გადაადგილება"
+
+msgid "My Smileys"
+msgstr "ჩემი სიცილაკები"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "New Files"
+msgstr "ახალი ფაილები"
+
+msgid "New reviews"
+msgstr "ახალი გამოხმაურებები"
+
+msgid "News"
+msgstr "სიახლეები"
+
+msgid "Archive news"
+msgstr "სიახლეების არქივი"
+
+msgid "Next"
+msgstr "შემდეგ"
+
+msgid "Nick"
+msgstr "მეტსახელი"
+
+msgid "Night"
+msgstr "ღამე"
+
+msgid "Nothing found for this request"
+msgstr "თქვენი მოთხოვნის შესაბამისი არ მოიძებნა"
+
+msgid "Not specified"
+msgstr "არ მითითებულა"
+
+msgid "Optional field"
+msgstr "არააუცილებელი ველი"
+
+msgid "Moderation"
+msgstr "მოდერაციაზეა"
+
+msgid "Online"
+msgstr "საიტზეა"
+
+msgid "Personal"
+msgstr "პერსონალური"
+
+msgid "Personal"
+msgstr "პერსონალური"
+
+msgid "Password"
+msgstr "პაროლი"
+
+msgid "Photo Album"
+msgstr "ფოტოალბომი"
+
+msgid "Photo Albums"
+msgstr "ფოტოალბომები"
+
+msgid "poins"
+msgstr "ქულა"
+
+msgid "posts"
+msgstr "პოსტი"
+
+msgid "Preview"
+msgstr "წინასწარ ნახვა"
+
+msgid "Private"
+msgstr "პრივატი"
+
+msgid "Profile"
+msgstr "ანკეტა"
+
+msgid "Quiz"
+msgstr "ვიქტორინა"
+
+msgid "Quick jump"
+msgstr "სწრაფი გადასვლა"
+
+msgid "Rating"
+msgstr "რეიტინგი"
+
+msgid "Read Only"
+msgstr "მხოლოდ წაკითხვისთვის"
+
+msgid "Reason"
+msgstr "მიზეზი"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>ყურადღება!</h3>თქვენ ცდილობთ დატოვოთ საიტი და გადახვიდეთ გარე ბმულზე"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "საიტის ადმინისტრაცია იხსნის პასუხისმგებლობას უცხო საიტის შემცველობაზე"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "არ არის რეკომენდებული მიუთითოთ თქვენი მონაცემები, რომლებიც კავშირშია"
+
+msgid "(Login, Password), on third party sites"
+msgstr "(მომხმარებლის სახელთან, პაროლთან), უცხო საიტებთან"
+
+msgid "Go to link"
+msgstr "ბმულზე გადასვლა"
+
+msgid "Registration"
+msgstr "რეგისტრაცია"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "ბოდიშს გიხდით, მაგრამ თქვენი განცხადება რეგისტრაციაზე ჯერ არ განხილულა<br>გთხოვთ მოითმინოთ"
+
+msgid "Remains"
+msgstr "დარჩა"
+
+msgid "Remember"
+msgstr "დამახსოვრება"
+
+msgid "Repeat"
+msgstr "გამეორება"
+
+msgid "Reply"
+msgstr "პასუხი"
+
+msgid "Reset setting"
+msgstr "პარამეტრების განულება"
+
+msgid "New reviews"
+msgstr "ახალი გამოხმაურებები"
+
+msgid "Save"
+msgstr "შენახვა"
+
+msgid "Search"
+msgstr "ძებნა"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "მოთხოვნის სიგრძე მინ. 4, მაქს. 64<br>ძებნა არ არის მგრძნობიარე ასოების რეგისტრის მიმართ<br>შედეგები დალაგდება რელევანტობის მიხედვით"
+
+msgid "Search History"
+msgstr "ძებნა ისტორია"
+
+msgid "Do you really want to clear the search history?"
+msgstr "ნამდვილად გსურთ გარკვევა ძებნა ისტორიაში?"
+
+msgid "New search"
+msgstr "ახალი ძებნა"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "ძებნა მიმდინარეობს მომხმარებლის მეტსახელის მიხედვით და არ არის მგრძნობიარე ასოების რეგისტრის მიმართ. ანუ, <b>UsEr</b> და <b>user</b> ძებნის დროს ერთი და იგივეა.<br>ძებნის დროს ხდება ტრანსლირება, ანუ, თუ გნებავთ მოძებნოთ მეტსახელი ГИОРГИ, თქვენ შეგიძლიათ ძებნაში ჩაწეროთ giorgi, შედეგი მაინც ერთი და იგივე იქნება."
+
+msgid "Query results"
+msgstr "ძებნის შედეგები"
+
+msgid "Your search did not match any results"
+msgstr "თქვენი მოთხოვნის შესაბამისი არაფერი არ მოიძებნა"
+
+msgid "Find a user"
+msgstr "მომხმარებლის ძებნა"
+
+msgid "Sec."
+msgstr "წამი"
+
+msgid "seconds"
+msgstr "წამი"
+
+msgid "Section"
+msgstr "განყოფილება"
+
+msgid "Sections"
+msgstr "განყოფილებები"
+
+msgid "Security"
+msgstr "უსაფრთხოება"
+
+msgid "Select"
+msgstr "არჩევა"
+
+msgid "Send"
+msgstr "გაგზავნა"
+
+msgid "Set to Profile"
+msgstr "უცნობია პროფილში"
+
+msgid "Settings"
+msgstr "პარამეტრები"
+
+msgid "Time settings"
+msgstr "საათის პარამეტრები"
+
+msgid "Shifting time"
+msgstr "დროის გადაწევა"
+
+msgid "Options set to default"
+msgstr "დაყენებულია ნაგულისხმები პარამეტრები"
+
+msgid "Setting saved"
+msgstr "პარამეტრები შენახულია"
+
+msgid "Show"
+msgstr "ჩვენება"
+
+msgid "Show period"
+msgstr "პერიოდით ჩვენება"
+
+msgid "Site access"
+msgstr "ხელმისაწვდომობა საიტი"
+
+msgid "New on the site"
+msgstr "ახლები საიტზე"
+
+msgid "Site News"
+msgstr "საიტის სიახლეები"
+
+msgid "Stay on site"
+msgstr "საიტზე გაატარა"
+
+msgid "Smileys"
+msgstr "სიცილაკები"
+
+msgid "Sort"
+msgstr "სორტირება"
+
+msgid "Spoiler"
+msgstr "სპოილერი"
+
+msgid "Statistic"
+msgstr "სტატისტიკა"
+
+msgid "My Statistic"
+msgstr "ჩემი სტატისტიკა"
+
+msgid "User Statistic"
+msgstr "მომხმარებლის სტატისტიკა"
+
+msgid "Status"
+msgstr "სტატუსი"
+
+msgid "Supervisors"
+msgstr "სუპერვაიზერები"
+
+msgid "System Functions"
+msgstr "სისტემის ფუნქციები"
+
+msgid "System Language"
+msgstr "სისტემის ენა"
+
+msgid "System Time"
+msgstr "სისტემის დრო"
+
+msgid "System Settings"
+msgstr "სისტემის პარამეტრები"
+
+msgid "Blue"
+msgstr "ლურჯი"
+
+msgid "Bold"
+msgstr "მსუქანი"
+
+msgid "PHP code"
+msgstr "PHP კოდი"
+
+msgid "Green"
+msgstr "მწვანე"
+
+msgid "Italic"
+msgstr "დახრილი"
+
+msgid "URL"
+msgstr "ბმული"
+
+msgid "Bulleted list"
+msgstr "მარკირებული სია"
+
+msgid "Quote"
+msgstr "ციტატა"
+
+msgid "Red"
+msgstr "წითელი"
+
+msgid "Strike"
+msgstr "გადახაზული"
+
+msgid "Underline"
+msgstr "ხაზგასმული"
+
+msgid "Term"
+msgstr "ვადა"
+
+msgid "Text"
+msgstr "ტექსტი"
+
+msgid "Input text"
+msgstr "ტექსტის შეყვანა"
+
+msgid "Text size"
+msgstr "ტექსტის ზომა"
+
+msgid "Themes"
+msgstr "თემები"
+
+msgid "Time"
+msgstr "დრო"
+
+msgid "Day"
+msgstr "დღე"
+
+msgid "Days"
+msgstr "დღე"
+
+msgid "Days"
+msgstr "დღე"
+
+msgid "Time limit"
+msgstr "დროის ლიმიტი"
+
+msgid "Shifting time"
+msgstr "დროის გადაწევა"
+
+msgid "Title"
+msgstr "დასახელება"
+
+msgid "In Chat"
+msgstr "ჩატში"
+
+msgid "To the profile"
+msgstr "ანკეტაში"
+
+msgid "In forum"
+msgstr "ფორუმში"
+
+msgid "Back to news"
+msgstr "სიახლეებში"
+
+msgid "Go to page"
+msgstr "გვერდზე"
+
+msgid "Show"
+msgstr "ჩვენება"
+
+msgid "Today"
+msgstr "დღეს"
+
+msgid "Top 10 activity"
+msgstr "აქტივობის TOP 10"
+
+msgid "Most commenting"
+msgstr "ყველაზე მეტად დააკომენტარეს"
+
+msgid "Most active in Forum"
+msgstr "ყველაზე აქტიურები ფორუმში"
+
+msgid "Most active in Guestbook"
+msgstr "ყველაზე აქტიურები სასტუმროში"
+
+msgid "Best Karma"
+msgstr "საუკეთესო კარმა"
+
+msgid "Total"
+msgstr "სულ"
+
+msgid "Hits"
+msgstr "გადასვლები"
+
+msgid "hits"
+msgstr "გადასვლა"
+
+msgid "Translit"
+msgstr "ტრანსლიტი"
+
+msgid "Unread"
+msgstr "წაუკითხავი"
+
+msgid "Format address http://url.com"
+msgstr "მისამართი შეიყვანეთ ასეთ ფორმატში http://url.com"
+
+msgid "Up"
+msgstr "ზევით"
+
+msgid "This user does not exists"
+msgstr "ასეთი მომხმარებელი არ არსებობს"
+
+msgid "Useful"
+msgstr "სასარგებლო"
+
+msgid "Users"
+msgstr "მომხმარებლები"
+
+msgid "Clean Users"
+msgstr "ბაზის გასუფთავება"
+
+msgid "Users list"
+msgstr "მომხმარებლების სია"
+
+msgid "New users"
+msgstr "ახალი მომხმარებლები"
+
+msgid "Banned users"
+msgstr "ბანი დადებული აქვთ"
+
+msgid "Waiting confirmation"
+msgstr "რეგისტრაციაზეა"
+
+msgid "Top Activity"
+msgstr "აქტივობის TOP"
+
+msgid "Verification code"
+msgstr "შემოწმების კოდი"
+
+msgid "Viewing"
+msgstr "დათვალიერება"
+
+msgid "Display mode"
+msgstr "ჩვენების რეჟიმი"
+
+msgid "Vote"
+msgstr "ხმის მიცემა"
+
+msgid "Against"
+msgstr "წინააღმდეგი"
+
+msgid "For"
+msgstr "მომხრე"
+
+msgid "Polls"
+msgstr "ხმის მიცემა"
+
+msgid "Welcome to"
+msgstr "კეთილი იყოს თქვენი მობრძანება"
+
+msgid "Where?"
+msgstr "სად?"
+
+msgid "Who is online?"
+msgstr "ვინ არის საიტზე"
+
+msgid "No limits"
+msgstr "შეზღუდვის გარეშე"
+
+msgid "Girls"
+msgstr "გოგოები"
+
+msgid "Write"
+msgstr "მიწერა"
+
+msgid "Yesterday"
+msgstr "გუშინ"
+

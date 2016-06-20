@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "Спасылка на Автологин"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>Увага!</b><br>У мэтах бяспекі, ніколі не выкарыстоўвайце Автологин у ненадзейных месцах (інтэрнэт-кафэ, чужыя кампутары і інш)"
+
+msgid "Verification code"
+msgstr ""
+
+msgid "Change password"
+msgstr "Мяняем пароль"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Пароль пасьпяхова зьменены.<br>Новы пароль адпраўлены на ваш адрас E-mail"
+
+msgid "Enter code"
+msgstr "калі ласка, Увядзіце код"
+
+msgid "Incorrect code"
+msgstr "Проверочный код уведзены няправільна"
+
+msgid "Invalid E-mail address"
+msgstr "E-mail адрас паказаны няправільна"
+
+msgid "Error sending E-mail"
+msgstr "Памылка адпраўкі E-mail"
+
+msgid "Password recovery is impossible"
+msgstr "Аднаўленне пароля немагчыма"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Трэба запоўніць усе палі формы"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Даўжыня пароля павінна быць мінімум 3 і максімум 10 знакаў"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Пацверджанне новага пароля ўведзена няправільна"
+
+msgid "Incorrect entered old password"
+msgstr "Стары пароль уведзены няслушна"
+
+msgid "You cannot change password of higher administration"
+msgstr "Вы не можаце мяняць пароль старэйшага Вас па пасадзе"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Час, адведзены на для аднаўлення пароля, прайшло"
+
+msgid "Enter new password"
+msgstr "калі ласка, Увядзіце новы пароль"
+
+msgid "Enter old password"
+msgstr "калі ласка, Увядзіце стары пароль"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Даўжыня пароля мін. 3, макс. 10 сімвалаў, дазволены літары Лацінскага алфавіту і лічбы."
+
+msgid "Password successfully changed"
+msgstr "Пароль паспяхова зменены"
+
+msgid "Password recovery"
+msgstr "Аднаўленне пароля"
+
+msgid "Repeat password"
+msgstr "Паўтарыце пароль"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Пароль будзе высланы на E-mail Адрас, пазначаны ў Вашай анкеце.<br>ВНИМЕНИЕ! Калі ў анкеце не быў паказаны E-mail адрас, то Вы не зможаце аднавіць пароль"
+
+msgid "Hello"
+msgstr "Добры дзень"
+
+msgid "You start process of password recovery on the site"
+msgstr "Вы пачалі працэдуру аднаўлення пароля на сайце"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Для таго, каб аднавіць пароль, вам неабходна перайсці па спасылцы"
+
+msgid "Link valid for 1 hour"
+msgstr "Спасылка сапраўдная на працягу 1 гадзіны"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Калі гэта ліст трапіў да вас па памылку ці вы не збіраецеся аднаўляць пароль, то проста праігнаруйце яго"
+
+msgid "Check your e-mail for further information"
+msgstr "Інструкцыі па аднаўлення пароля высланыя на паказаны Вамі адрас E-mail"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Пасля ўваходу на сайт, Вы зможаце змяніць пароль на іншы, якой пажадаеце."
+
+msgid "You have changed your password on the site"
+msgstr "Вы зьмянілі пароль на сайце"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Пароль можна аднаўляць не часцей 1 разу ў суткі"
+
+msgid "Send"
+msgstr "Даслаць"
+
+msgid "Show autologin link"
+msgstr "Паказаць спасылку на Автологин"
+
+msgid "Your E-mail"
+msgstr ""
+
+msgid "Username"
+msgstr "Ваш лагін"
+
+msgid "Your new password"
+msgstr "Ваш новы пароль"
+

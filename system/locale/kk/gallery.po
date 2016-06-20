@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Рұқсат етілген типтер"
+
+msgid "Create an album"
+msgstr "Альбом жасау"
+
+msgid "Create a section"
+msgstr "Бөлім жасау"
+
+msgid "Gallery closed"
+msgstr "Галерея жабық"
+
+msgid "Delete Album"
+msgstr "Альбомды өшіру"
+
+msgid "Delete section"
+msgstr "Бөлімді өшіру"
+
+msgid "Dimensions"
+msgstr "Өлшемдер"
+
+msgid "Edit Album"
+msgstr "Альбомды өзгенрту"
+
+msgid "Edit description"
+msgstr "Сипаттамасын өзгерту"
+
+msgid "Edit Section"
+msgstr "Бөлімді өзгерту"
+
+msgid "Error uploading photo"
+msgstr "Фотоны жіберудегі қате"
+
+msgid "Picture is missing"
+msgstr "Сурет қойылмады"
+
+msgid "Image size"
+msgstr "Сурет өлшемдері"
+
+msgid "Maximum weight"
+msgstr "Максимальды өлшемі"
+
+msgid "New photos"
+msgstr "Жаңа фотолар"
+
+msgid "Posted by"
+msgstr "Енгізген"
+
+msgid "Select Photo"
+msgstr "Фотоны таңдаңыз"
+
+msgid "To Album"
+msgstr "Альбомға"
+
+msgid "To Gallery"
+msgstr "Галереяға"
+
+msgid "To Section"
+msgstr "Бөлімге"
+
+msgid "Upload Photo"
+msgstr "Фото қою"
+
+msgid "Weight"
+msgstr "Өлшемі"
+

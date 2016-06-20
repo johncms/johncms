@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "Jaunums pievienots"
+
+msgid "News changed"
+msgstr "Jaunums rediģēts"
+
+msgid "News deleted"
+msgstr "Jaunums dzēsts"
+
+msgid "Title"
+msgstr "Nosaukums"
+
+msgid "Delete all news"
+msgstr "Dzēsti visi jaunumi"
+
+msgid "Older than 1 month"
+msgstr "Vecāki jaunumi par 1 mēnesi"
+
+msgid "Delete all news older than 1 month"
+msgstr "Tika dzesti visi jaunumi, kas ir vecāki par 1 mēnesi"
+
+msgid "Older than 1 week"
+msgstr "Vecāki jaunumi par 1 nedēļu"
+
+msgid "Delete all news older than 1 week"
+msgstr "Dzēsti visi jaunumi, vecāki par 1 nedēļu"
+
+msgid "Discussion"
+msgstr "Diskusija"
+
+msgid "Discuss in forum"
+msgstr "Diskutēt forumā"
+
+msgid "Do not discuss"
+msgstr "Nediskutēt"
+
+msgid "You have not entered news title"
+msgstr "Kļūda! Jūs neievadījāt jaunuma nosaukumu"
+
+msgid "You have not entered news text"
+msgstr "Kļūda! Jūs neievadījāt jaunuma tekstu"
+
+msgid "Back to news"
+msgstr "Jaunumi"
+

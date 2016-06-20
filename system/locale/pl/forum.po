@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Dodaj kategorię"
+
+msgid "Add file"
+msgstr "Dodaj plik"
+
+msgid "Add answer"
+msgstr "Dodaj odpowiedź"
+
+msgid "Add section"
+msgstr "Dodaj punkt"
+
+msgid "Add a poll"
+msgstr "Dodaj ankietę"
+
+msgid "Accept"
+msgstr "Zgadzam się"
+
+msgid "Other category"
+msgstr "Inne kategorie"
+
+msgid "Answer"
+msgstr "Odpowiedź"
+
+msgid "Assign"
+msgstr "Przypisywanie"
+
+msgid "Attachment"
+msgstr "Załącznik"
+
+msgid "Back to topic"
+msgstr "Powrót do tematu"
+
+msgid "by author"
+msgstr "według autora"
+
+msgid "by section"
+msgstr "według sekcji"
+
+msgid "by topic"
+msgstr "według tematu"
+
+msgid "Category"
+msgstr "Kategoria"
+
+msgid "Category deleted"
+msgstr "Kategoria usunięta"
+
+msgid "Edit category"
+msgstr "Edytuj kategorię"
+
+msgid "Categories list"
+msgstr "Lista kategorii"
+
+msgid "subsections"
+msgstr "podrozdziały"
+
+msgid "Click to view image"
+msgstr "Kliknij aby zobaczyć zdjęcie"
+
+msgid "Subsections and files has been moved to"
+msgstr "Podrozdziały i pliki został przeniesiony do"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Wszystkie kategorie, tematy i pliki zostaną przeniesione do wybranej kategorii. <br> Stare kategorie zostaną usunięte"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>OSTRZEŻENIE!</h3>Istniejące podrozdziały <br> zostanę przeniesione do innej kategori."
+
+msgid "Curators"
+msgstr "Moderatorzy"
+
+msgid "Curators of the Topic"
+msgstr "Moderatorzy tematu"
+
+msgid "Quote"
+msgstr "Cytuję"
+
+msgid "[q]"
+msgstr "[c]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Dozwolone tylko 200 znaków, pozostały tekst zostanie przycięty"
+
+msgid "Delete categories"
+msgstr "Usuń kategorie"
+
+msgid "Complete removal"
+msgstr "Usuń wszystko"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Jeśli chcesz, usunąć wszystkie informacje, najpierw usuń"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "OSTRZEŻENIE! Wszystkie informacje zostaną usunięte"
+
+msgid "Delete last"
+msgstr "Usuń ostatnie"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "OSTRZEŻENIE!<br>To jest ostatni post w temacie. Usuwając go, cały temat zostanie usunięty (lub ukryty) za"
+
+msgid "Delete message"
+msgstr "Usuń wiadomość"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Po usunięciu, jeden punkt zostanie odjęty od liczby postów"
+
+msgid "Delete section"
+msgstr "Usuń sekcję"
+
+msgid "Delete poll"
+msgstr "Usuń ankietę"
+
+msgid "Download Topic"
+msgstr "Pobierz temat"
+
+msgid "Select a format"
+msgstr "Wybierz format"
+
+msgid "Link active 5 minutes"
+msgstr "Link będzie aktywny przez 5 minut"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Temat ten został pobrany ze strony forum"
+
+msgid "Downloaded"
+msgstr "Pobrane"
+
+msgid "Downloads"
+msgstr "Pobrano"
+
+msgid "Edit message"
+msgstr "Edytuj wiadomość"
+
+msgid "Edit poll"
+msgstr "Edytuj ankietę"
+
+msgid "Edited"
+msgstr "Edytowano"
+
+msgid "You have not selected any author"
+msgstr "Nie wybrałeś żadnego autora"
+
+msgid "Category is not chosen"
+msgstr "Kategoria nie został wybrana"
+
+msgid "You are trying to change another\"s post"
+msgstr "Próbujesz zmienić następny post"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Twoja wiadomość nie jest już ostatnia, nie można jej zmienić"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Nie możesz edytować swoich postów po upływie 5 minut"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Zabroniony format pliku.<br>Można przesyłać pliki o następujących rozszerzeniach"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Możesz przesłać tylko pliki z dodaną nazwą i o odpowiednim rozszerzeniu <b> (nazwa.ext </b>). Pliki bez nazwy i rozszerzenia lub z podwójnym rozszerzeniem są zabronione."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Długość nazwy pliku nie może przekraczać 30 znaków"
+
+msgid "File size exceed"
+msgstr "Rozmiar pliku przekroczył"
+
+msgid "File name contains invalid characters"
+msgstr "Nazwa pliku zawiera niedozwolone znaki"
+
+msgid "File is already uploaded"
+msgstr "Plik został już przesłany"
+
+msgid "You did not choose something to delete"
+msgstr "Nie wybrałeś niczego do usunięcia"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Wiadomość nie istnieje lub została usunięta"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Długość zapytania: 4min., 64max.."
+
+msgid "You have not entered time"
+msgstr "Nie podałeś czasu"
+
+msgid "You cannot write in a closed topic"
+msgstr "Nie możesz pisać w zamkniętym temacie"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Wątek został usunięty, lub nie istnieje"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Temat o tej samej nazwie już istnieje w tej sekcji"
+
+msgid "You have not entered topic name"
+msgstr "Nie podałeś nazwy tematu"
+
+msgid "Topic name too short"
+msgstr "Nazwa strony jest zbyt krótka"
+
+msgid "Error uploading file"
+msgstr "Błąd podczas przesyłania pliku"
+
+msgid "File attached"
+msgstr "Plik pobrany"
+
+msgid "Files"
+msgstr "Pliki"
+
+msgid "Category files"
+msgstr "Kategorie plików"
+
+msgid "Section files"
+msgstr "Sekcja plików"
+
+msgid "Topic files"
+msgstr "Tematy plików"
+
+msgid "Archive"
+msgstr "Archiwum"
+
+msgid "Java applications"
+msgstr "Aplikacje Java"
+
+msgid "MP3"
+msgstr "Mp3"
+
+msgid "Other"
+msgstr "Inny"
+
+msgid "Pictures"
+msgstr "Obraz"
+
+msgid "SIS"
+msgstr "Sis"
+
+msgid "txt"
+msgstr "Txt"
+
+msgid "WIN applications"
+msgstr "Aplikacja Win"
+
+msgid "Videos"
+msgstr "Wideo"
+
+msgid "Cancel filter"
+msgstr "Anuluj filtr"
+
+msgid "Topic includes filtering by authors"
+msgstr "Temat obejmuje filtrowanie poprzez autorów"
+
+msgid "Filter by author"
+msgstr "Sortuj według autora"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Filtr wyświetla tylko wybranych autorów"
+
+msgid "Filter by section"
+msgstr "Sortuj według sekcji"
+
+msgid "Filter by topic"
+msgstr "Sortuj według tematu"
+
+msgid "Filter"
+msgstr "Filtr"
+
+msgid "Forum is closed"
+msgstr "Forum jest zamknięte"
+
+msgid "Forum Management"
+msgstr "Zarzadzanie forum"
+
+msgid "Forum rules"
+msgstr "Regulamin forum"
+
+msgid "Forum search"
+msgstr "Przeszukaj forum"
+
+msgid "Forum structure"
+msgstr "Struktura forum"
+
+msgid "Hidden posts"
+msgstr "Ukryj posty"
+
+msgid "Hidden topic"
+msgstr "Ukryj tematy"
+
+msgid "Hours"
+msgstr "Godziny"
+
+msgid "Max. Size"
+msgstr "Max. rozmiar"
+
+msgid "Marked posts are deleted"
+msgstr "Oznaczone posty są usuwane"
+
+msgid "Appointment of moderators"
+msgstr "Spotkanie moderatorów"
+
+msgid "New files in the last 24 hours"
+msgstr "Nowe pliki w ciągu ostatnich 24 godzin"
+
+msgid "No new files"
+msgstr "Brak nowych plików"
+
+msgid "New at the bottom"
+msgstr "Nowy na dole"
+
+msgid "New at the top"
+msgstr "Nowy na górze"
+
+msgid "New topic"
+msgstr "Nowy temat"
+
+msgid "Title(max. 100)"
+msgstr "Tytuł (max. 100)"
+
+msgid "Disagree"
+msgstr "Nie zgadzam się"
+
+msgid "Other categories"
+msgstr "Inne kategorie"
+
+msgid "Answers in the topic"
+msgstr "Odpowiedzi w temacie"
+
+msgid "In the category"
+msgstr "W kategorii"
+
+msgid "Looking forum files"
+msgstr "Zerkam na pliki"
+
+msgid "Here, in the list"
+msgstr "Tutaj, na liście"
+
+msgid "In the forum main"
+msgstr "Na forum głównym"
+
+msgid "In the unreads"
+msgstr "W niegotowy"
+
+msgid "Forum search"
+msgstr "Przeszukaj forum"
+
+msgid "In the section"
+msgstr "W sekcji"
+
+msgid "In the topic"
+msgstr "W temacie"
+
+msgid "Writes in the topic"
+msgstr "Pisze w temacie"
+
+msgid "Message"
+msgstr "Wiadomość"
+
+msgid "Post deleted"
+msgstr "Post został usunięty"
+
+msgid "Read more"
+msgstr "Czytaj więcej"
+
+msgid "reference"
+msgstr "Odniesienie"
+
+msgid "[r]"
+msgstr "[o]"
+
+msgid "Rating"
+msgstr "Ocena"
+
+msgid "I am glad to answer you"
+msgstr "Będzie mi miło, mogąc Ci odpowiedzieć"
+
+msgid "to your post"
+msgstr "Na Twój ostatni post"
+
+msgid "answer"
+msgstr "odpowiadam"
+
+msgid "You are right! You are very smart!"
+msgstr "Masz rację! Jesteś bardzo inteligentny!"
+
+msgid "Restore"
+msgstr "Przywróć"
+
+msgid "Results"
+msgstr "Wyniki"
+
+msgid "Back to topic"
+msgstr "Powrót do tematu"
+
+msgid "Forum search"
+msgstr "Przeszukaj forum"
+
+msgid "Search in the topic names"
+msgstr "Szukaj w nazwach tematu"
+
+msgid "Section deleted"
+msgstr "Sekcja usunięta"
+
+msgid "Section with topics and files are removed"
+msgstr "Sekcja z tematami i plikami została usunięta"
+
+msgid "Editing section"
+msgstr "Edycja sekcji"
+
+msgid "List of sections"
+msgstr "Spis sekcji"
+
+msgid "There are no sections in this category"
+msgstr "Brak sekcji w tej kategorii"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Wszystkie tematy i pliki zostaną przeniesione do wybranej sekcji<br>Stare sekcje zostaną usunięte"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>OSTRZEŻENIE!</h3>Istnieją tematy, w sekcji.<br>Należy je przenieść do innej sekcji"
+
+msgid "Select category"
+msgstr "Wybierz kategorię"
+
+msgid "Select file"
+msgstr "Wybierz plik"
+
+msgid "Select section"
+msgstr "Wybierz sekcję"
+
+msgid "Selected category"
+msgstr "Wybrano kategorię"
+
+msgid "Selected section"
+msgstr "Wybrano sekcję"
+
+msgid "Size"
+msgstr "Rozmiar"
+
+msgid "Topics moved to"
+msgstr "Tematy przeniesiono do"
+
+msgid "Time"
+msgstr "razy"
+
+msgid "Go to category"
+msgstr "Przejdź do kategorii"
+
+msgid "Go to forum"
+msgstr "Idź do forum"
+
+msgid "To message"
+msgstr "Idź do wiadomości"
+
+msgid "Go to topic"
+msgstr "Idź do tematu"
+
+msgid "Go to section"
+msgstr "Idż do sekcji"
+
+msgid "Topic"
+msgstr "Temat"
+
+msgid "Close topic"
+msgstr "Zamknij temat"
+
+msgid "Topic closed"
+msgstr "Temat zamknięty"
+
+msgid "Delete topic"
+msgstr "Usuń temat"
+
+msgid "Topic deleted"
+msgstr "Temat usunięty"
+
+msgid "Topic deleted by"
+msgstr "Temat usunięty przez"
+
+msgid "Undelete topic"
+msgstr "Przywróć temat"
+
+msgid "Fix topic"
+msgstr "Przyklej temat"
+
+msgid "No topics in this section"
+msgstr "Brak tematów w tej sekcji"
+
+msgid "Move topic"
+msgstr "Przenieś temat"
+
+msgid "Topic name"
+msgstr "Nazwa tematu"
+
+msgid "New topic"
+msgstr "Nowy temat"
+
+msgid "Rename topic"
+msgstr "Zmień nazwę tematu"
+
+msgid "Restore topic"
+msgstr "Przywróć temat"
+
+msgid "Unfix topic"
+msgstr "Odklej temat"
+
+msgid "Total votes"
+msgstr "Liczba głosów"
+
+msgid "All for period"
+msgstr "Wszystko za okres"
+
+msgid "Last 10"
+msgstr "Ostatnie 10"
+
+msgid "Period (in hours)"
+msgstr "Okres (w godzinach)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "Nie ma nic nowego na tym forum za wybranego okresu"
+
+msgid "Mark as read"
+msgstr "Zaznacz jako przeczytane"
+
+msgid "All topics marked as read"
+msgstr "Wszystkie tematy oznaczono jako przeczytane"
+
+msgid "Upload"
+msgstr "Prześlij"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Czas przeznaczony na przesyłania pliku wygasła"
+
+msgid "Post deleted"
+msgstr "Post został usunięty"
+
+msgid "Who is here"
+msgstr "Obecni tutaj"
+
+msgid "Who in forum"
+msgstr "Kto na forum"
+
+msgid "Who in topic"
+msgstr "Kto w temacie"
+
+msgid "Post restored by"
+msgstr "Wiadomość przywrócona"
+
+msgid "Vote accepted"
+msgstr "Głos został dodany"
+
+msgid "Poll (max. 150)"
+msgstr "Ankieta (max. 150)"
+
+msgid "Poll added"
+msgstr "Ankieta dodana"
+
+msgid "Poll changed"
+msgstr "Ankieta została zmieniona"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Na pewno chcesz usunąć ankietę?"
+
+msgid "Poll deleted"
+msgstr "Ankieta usunięta"
+
+msgid "Who voted in the poll"
+msgstr "Kto głosował w ankiecie"
+
+msgid "No one has voted in this poll yet"
+msgstr "Nikt jeszcze nie oddał głosu w tej ankiecie"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Na pewno chcesz usunąć odpowiedź?"
+

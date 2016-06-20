@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "Ахборот гузошта шуд"
+
+msgid "News changed"
+msgstr "Ахборот иваз карда шуд"
+
+msgid "News deleted"
+msgstr "Ахборот тоза карда шуд"
+
+msgid "Title"
+msgstr "Номгуй"
+
+msgid "Delete all news"
+msgstr "Ҳама ахборот тоза карда шуд"
+
+msgid "Older than 1 month"
+msgstr "Зиёда аз 1 моҳ"
+
+msgid "Delete all news older than 1 month"
+msgstr "Ҳама ахбороти зиёда аз 1 моҳ гузашта тоза карда шуданд"
+
+msgid "Older than 1 week"
+msgstr "Зиёда аз 1 ҳафта"
+
+msgid "Delete all news older than 1 week"
+msgstr "Ҳама ахбороти зиёда аз 1 ҳафта гузашта тоза карда шуданд"
+
+msgid "Discussion"
+msgstr "Сухангуи"
+
+msgid "Discuss in forum"
+msgstr "Сухангуи дар форум"
+
+msgid "Do not discuss"
+msgstr "Манъкунии сухангуи"
+
+msgid "You have not entered news title"
+msgstr "Шумо номгуи мақоларо нанавистед"
+
+msgid "You have not entered news text"
+msgstr "Шумо тексти мақоларо нанавистед"
+
+msgid "Back to news"
+msgstr "Ба ахборот"
+

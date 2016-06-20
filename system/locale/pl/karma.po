@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "All"
+msgstr "Wszystko"
+
+msgid "Comment"
+msgstr "Komentarz"
+
+msgid "Do you really want to delete all reviews about user"
+msgstr "Na pewno chcesz usunąć wszystkie opinie o użytkowniku"
+
+msgid "Do you really want to delete comment"
+msgstr "Na pewno chcesz usunąć komentarz"
+
+msgid "Limit votes for today. New voices will be added"
+msgstr "Limit głosów na dziś. Nowe głosy zostaną dodane"
+
+msgid "It is forbidden to vote for administration"
+msgstr "Zabronione jest głosowanie na administrację"
+
+msgid "You are not allowed to vote for users"
+msgstr "Nie masz prawa do głosowania na użytkowników"
+
+msgid "Cheating karma is forbidden"
+msgstr "Oszukiwanie karmy jest zabronione"
+
+msgid "Users can take part in voting if they have stayed on a site not less "
+msgstr "Użytkownik może brać udziału w głosowaniu, jeśli przebywa na stronie nie mniej "
+
+msgid "and their score on the forum"
+msgstr "a ich wynik na forum"
+
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Można głosować na jednego użytkownika tylko raz na 24 godziny"
+
+msgid "Done"
+msgstr "Przekazano karmę!"
+
+msgid "Negative"
+msgstr "Negatywna"
+
+msgid "Negative"
+msgstr "Negatywna"
+
+msgid "New responses"
+msgstr "Nowe odpowiedzi"
+
+msgid "Positive"
+msgstr "Pozytywna"
+
+msgid "Positive"
+msgstr "Pozytywna"
+
+msgid "Reset karma"
+msgstr "Resetuj karmę"
+
+msgid "Votes quantity"
+msgstr "Liczba głosów"
+
+msgid "Vote for"
+msgstr "Głosów za"
+
+msgid "Type of vote"
+msgstr "Rodzaj głosowania"
+

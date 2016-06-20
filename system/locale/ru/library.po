@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Добавил"
+
+msgid "All articles added"
+msgstr "Все статьи добавлены в базу"
+
+msgid "added to the database"
+msgstr "добавлена в базу данных"
+
+msgid "Allow users to add their articles"
+msgstr "Разрешить пользователям добавлять свои статьи"
+
+msgid "Announcement"
+msgstr "Анонс"
+
+msgid "The announcement will be created automatically"
+msgstr "Анонс будет создан автоматически"
+
+msgid "Accept"
+msgstr "Принять"
+
+msgid "Accept all"
+msgstr "Принять все"
+
+msgid "Article added"
+msgstr "Статья добавлена"
+
+msgid "Thank you!</p><p>After moderator checking, your article will be published in the library."
+msgstr "Спасибо за то, что нам написали.</p><p>После проверки Модератором, Ваша статья будет опубликована в библиотеке."
+
+msgid "Article"
+msgstr "Статья"
+
+msgid "Articles"
+msgstr "Статьи"
+
+msgid "Articles Moderation"
+msgstr "Модерация статей"
+
+msgid "By Name"
+msgstr "По названию"
+
+msgid "By Text"
+msgstr "По тексту"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Category was created successfully"
+msgstr "Категория создана"
+
+msgid "Category type"
+msgstr "Тип категории"
+
+msgid "Comments"
+msgstr "Комментариям"
+
+msgid "Comment added successfully"
+msgstr "Комментарий успешно добавлен"
+
+msgid "Comment Article"
+msgstr "Комментируем статью"
+
+msgid "Create Category"
+msgstr "Создать категорию"
+
+msgid "Delete Category"
+msgstr "Удалить категорию"
+
+msgid "Deleted"
+msgstr "Удалено"
+
+msgid "Download Java Book"
+msgstr "Скачать Java книгу"
+
+msgid "On this page you can download the Java (MIDP-2) book with the desired article."
+msgstr "На этой странице Вы можете скачать Java (MIDP-2) книгу с нужной вам статьей."
+
+msgid "Edit Article"
+msgstr "Редактируем статью"
+
+msgid "Edit Category"
+msgstr "Изменить категорию"
+
+msgid "Category type (in order to avoid errors, clear the category before changing the type)"
+msgstr "Тип категории (во избежание ошибок, перед изменением типа очистите категорию)"
+
+msgid "Error uploading"
+msgstr "Ошибка при загрузке"
+
+msgid "First remove enclosed categories"
+msgstr "Сначала удалите вложенные категории"
+
+msgid "Allow users to write articles"
+msgstr "Разрешить пользователям писать статьи"
+
+msgid "The Library is closed"
+msgstr "Библиотека закрыта"
+
+msgid "Most read"
+msgstr "Самые читаемые"
+
+msgid "New articles"
+msgstr "Новые статьи"
+
+msgid "Reads"
+msgstr "Прочтений"
+
+msgid "Search in titles of articles"
+msgstr "Искать в заголовках статей"
+
+msgid "Select the text file"
+msgstr "Выберите текстовый файл"
+
+msgid "Supported encodings"
+msgstr "Поддерживаются кодировки"
+
+msgid "Tags"
+msgstr "Тэги"
+
+msgid "To article"
+msgstr "К статье"
+
+msgid "To Category"
+msgstr "В категорию"
+
+msgid "To Comments"
+msgstr "К комментариям"
+
+msgid "To Library"
+msgstr "В библиотеку"
+
+msgid "50 most read articles"
+msgstr "50 самых читаемых статей"
+
+msgid "Upload Article"
+msgstr "Выгрузить статью"
+
+msgid "Write Article"
+msgstr "Написать статью"
+
+msgid "Write Comment"
+msgstr "Напишите комментарий"
+
+msgid "Description of categories"
+msgstr "Описание категории"
+
+msgid "Move to category"
+msgstr "Переместить в категорию"
+
+msgid "The text input field will be ignored"
+msgstr "Поле ввода текста будет проигнорированно"
+
+msgid "Images"
+msgstr "Изображений"
+
+msgid "Specify the tag to the article , separated by commas"
+msgstr "Укажите теги к статье, через запятую"
+
+msgid "Tag cloud"
+msgstr "Облако тегов"
+
+msgid "Category does not exist"
+msgstr "Категории не существует"
+
+msgid "Really you want to move the contents?"
+msgstr "Вы действительно хотите переместить содержимое?"
+
+msgid "Successfully transferred"
+msgstr "Успешно перенесено"
+
+msgid "No partitions to move"
+msgstr "Нет разделов для перемещения"
+
+msgid "Are you sure you want to remove content?"
+msgstr "Вы действительно хотите удалить содержимое?"
+
+msgid "Successfully removed"
+msgstr "Успешно удалено"
+
+msgid "Dirs"
+msgstr "Директорий"
+
+msgid "Category is not empty"
+msgstr ""
+
+msgid "Select action"
+msgstr "Выбрать действие"
+
+msgid "Delete with movement"
+msgstr "Удалить с перемещением"
+
+msgid "Remove all subdirectories and articles"
+msgstr "Удалить все вложенные каталоги и статьи"
+
+msgid "Article does not exist"
+msgstr "Статьи не существует"
+
+msgid "Invalid file encoding , preferably UTF-8"
+msgstr "Файл недопустимой кодировки, предпочтительно UTF-8"
+
+msgid "Invalid file format acceptable * .txt"
+msgstr "Неверный формат файла, допустимы *.txt"
+
+msgid "The text of the article can not be edited , a large amount of data !!!"
+msgstr "Текст статьи редактироваться не может, большой объем данных!!!"
+
+msgid "In ROOT"
+msgstr "В КОРЕНЬ"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Verified"
+msgstr "Проверена"
+
+msgid "Cloud of tags"
+msgstr "Облако тэгов"
+
+msgid "Sort by"
+msgstr "Сортировка по"
+
+msgid "Relevance"
+msgstr "Релевантности"
+
+msgid "Alphabet"
+msgstr "Алфавиту"
+
+msgid "Changed"
+msgstr "Изменено"
+
+msgid "Up"
+msgstr "Вверх"
+
+msgid "Down"
+msgstr "Вниз"
+
+msgid "The author\"s name"
+msgstr "Имя автора"
+
+msgid "The author\"s last name"
+msgstr "Фамилия автора"
+
+msgid "Book name"
+msgstr "Имя книги"
+
+msgid "Last comments"
+msgstr "Последние комментарии"
+
+msgid "Rated articles"
+msgstr "Рейтинг статей"
+
+msgid "Reading"
+msgstr "Прочтениям"
+
+msgid "Rating"
+msgstr "Рейтингу"
+
+msgid "Comments"
+msgstr "Комментариям"
+
+msgid "Vote"
+msgstr "Голосовать"
+

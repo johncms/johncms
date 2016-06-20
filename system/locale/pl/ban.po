@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "i otrzymał"
+
+msgid "Amnesty"
+msgstr "Amnestia"
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Amnestia jest dostępna tylko dla administracji"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Tabela zbanowanych<br> została wyczyszczona"
+
+msgid "Clear base"
+msgstr "Wyczyść bazę"
+
+msgid "Unban all"
+msgstr "Odblokuj wszystkich"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Wszyscy użytkownicy z aktywnymi zakazami zostali zbanowani (Z wyjątkiem zakazu &quot;till anuluj&quot;)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Odblokuj wszystkich&quot; - zakończ wszystkie aktywne bany<br>&quot;Wyczyść bazę&quot; - kończy wszystkie zakazy i czyści historię przewinień"
+
+msgid "Blocked"
+msgstr "Blokada na stałe"
+
+msgid "Private"
+msgstr "Blokada na wiadomości"
+
+msgid "Comment"
+msgstr "Blokada na komentarze"
+
+msgid "Forum"
+msgstr "Blokada na forum"
+
+msgid "Chat"
+msgstr "Blokada na czat"
+
+msgid "Guestbook"
+msgstr "Blokada na guestbook"
+
+msgid "Gallery"
+msgstr "Blokada na galerię"
+
+msgid "Library"
+msgstr "Blokada na bibliotekę"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Aktywność na stronie jest całkowicie zabroniona. Możesz odbierać pocztę, ale nie możesz jej wysyłać"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Ban na wysyłanie wiadomości (zabezpieczenie przed spamem)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Zakazane dodawania komentarzy, we wszystkich modułach systemu"
+
+msgid "Forbidden write in Forum"
+msgstr "Zakaz pisania na forum"
+
+msgid "Deny access to Chat"
+msgstr "Odmowa dostępu do czatu"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Zakaz wpisów do księgi gości"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Nie można dodawać i komentować zdjęci w galerii"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Nie wolno umieszczać i komentować artykułów w bibliotece"
+
+msgid "Ban termination"
+msgstr "Zakończenie banu"
+
+msgid "Unban"
+msgstr "Odblokuj"
+
+msgid "User unbanned"
+msgstr "Użytkownik odblokowany"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "Zakończy aktywny zakaz i zapisać przewinienie w historii naruszeń?"
+
+msgid "Delete ban"
+msgstr "Usuń zakaz"
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Usuwanie zakazu wraz z rekordem w historii zakazu"
+
+msgid "Ban deleted"
+msgstr "Ban usunięty"
+
+msgid "Ban user"
+msgstr "Ban użytkownika"
+
+msgid "Ban Panel"
+msgstr "Panel banu"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Nie masz wystarczających uprawnień do zbanowania tego użytkownika"
+
+msgid "Ban times"
+msgstr "Czas banu"
+
+msgid "Till cancel"
+msgstr "Do odwołania"
+
+msgid "Day (30 max.)"
+msgstr "Dni (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Godzin (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Minut (60 max.)"
+
+msgid "Ban type"
+msgstr "Typ banu"
+
+msgid "Banishment"
+msgstr "Zbanował"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Na pewno chcesz wyczyścić całą historię przewinień użytkownika?"
+
+msgid "Clear history"
+msgstr "Wyczyść historię"
+
+msgid "Ban already active"
+msgstr "Ban jest już aktywny"
+
+msgid "Ban not active"
+msgstr "Ban nie jest aktywny"
+
+msgid "There is no required data"
+msgstr "Nie ma wymaganych danych"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Historia przewinień może zostać skasowana tylko przez uprawnioną osobę"
+
+msgid "You have no rights to ban in this section"
+msgstr "Nie masz uprawnień, aby banować w tej sekcji"
+
+msgid "Offenses history cleared"
+msgstr "Historia przewinień wyczyszczona"
+
+msgid "Forum"
+msgstr "Blokada na forum"
+
+msgid "Offense"
+msgstr "Przewinień"
+
+msgid "Offenses history"
+msgstr "Historia przewinień"
+
+msgid "Offenses list"
+msgstr "Lista przewinień"
+
+msgid "My offenses"
+msgstr "Moje przewinienia"
+
+msgid "Private (antispam)"
+msgstr "Prywatne (antyspam)"
+
+msgid "Reason not specified"
+msgstr "Nie podano powodu"
+
+msgid "System"
+msgstr ""
+
+msgid "To karma"
+msgstr "do karmy!"
+
+msgid "User banned"
+msgstr "Użytkownik zbanowany"
+

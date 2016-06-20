@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "允许的类型"
+
+msgid "Create an album"
+msgstr "创建相册"
+
+msgid "Create a section"
+msgstr "创建版块"
+
+msgid "Gallery closed"
+msgstr "画廊关闭"
+
+msgid "Delete Album"
+msgstr "删除相册"
+
+msgid "Delete section"
+msgstr "删除版块"
+
+msgid "Dimensions"
+msgstr "尺寸"
+
+msgid "Edit Album"
+msgstr "编辑相册"
+
+msgid "Edit description"
+msgstr "编辑说明"
+
+msgid "Edit Section"
+msgstr "编辑版块"
+
+msgid "Error uploading photo"
+msgstr "上传照片错误"
+
+msgid "Picture is missing"
+msgstr "图片丢失"
+
+msgid "Image size"
+msgstr "图像大小"
+
+msgid "Maximum weight"
+msgstr "最大"
+
+msgid "New photos"
+msgstr "新照片"
+
+msgid "Posted by"
+msgstr "发表于"
+
+msgid "Select Photo"
+msgstr "选择图片"
+
+msgid "To Album"
+msgstr "相册"
+
+msgid "To Gallery"
+msgstr "画廊"
+
+msgid "To Section"
+msgstr "版块"
+
+msgid "Upload Photo"
+msgstr "上传照片"
+
+msgid "Weight"
+msgstr "大小"
+

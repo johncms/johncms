@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Tentang saya"
+
+msgid "Max. 500 characters"
+msgstr "Max. 500 Karakter"
+
+msgid "Verification code"
+msgstr "Kode verifikasi"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Jika Anda tidak melihat gambar dengan kode, Aktifkan dukungan grafis di pengaturan browser Anda dan refresh halaman ini"
+
+msgid "Enter"
+msgstr "Masuk"
+
+msgid "You have not entered nick"
+msgstr "Anda belum memasukan julukan"
+
+msgid "Too long nick"
+msgstr "Karakter julukan terlalu panjang"
+
+msgid "This nick already in use"
+msgstr "Julukan ini sudah digunakan"
+
+msgid "Too long password"
+msgstr "Kata sandi terlalu panjang"
+
+msgid "You have not selected genger"
+msgstr "Anda belum menentukan jenis kelamin"
+
+msgid "Login"
+msgstr ""
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Max. 15 karakter.<br>Diperbolehkan karakter Rusia dan huruf Latin dari alfabet, angka dan tanda - = @ ! ? ~ _ ( ) [ ] . * (kecuali kosong)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "Harap menunggu konfirmasi pendaftaran Anda oleh administrator"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Anda bisa mendapatkan akses ke situs resmi setelah pendaftaran anda dikonfirmasi.<br>Konfirmasi dilakukan 1-2 kali sehari."
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "Max. 30 characters"
+msgstr "Max. 30 Karakter"
+
+msgid "Password"
+msgstr "Kata sandi"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Min. 3, Max. 10 Karakter.<br>Diperbolehkan huruf dan angka"
+
+msgid "Registration"
+msgstr "Pendaftaran"
+
+msgid "Registration temporarily closed"
+msgstr "Pendaftaran ditutup"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Harap jangan mendaftar julukan seperti 111, shhhhh, uuuu, dan lain-lain, jika seperti itu akan segera dihapus <br>. Juga akan menghapus semua profil, yang terdaftar melalui server proxy"
+
+msgid "Gender"
+msgstr "Jenis kelamin"
+
+msgid "Male"
+msgstr "Laki-laki"
+
+msgid "Female"
+msgstr "Wanita"
+
+msgid "Your registratiton data"
+msgstr "Data diri anda"
+
+msgid "Your ID"
+msgstr "ID anda"
+
+msgid "Your username"
+msgstr "Julukan anda"
+
+msgid "Your password"
+msgstr "Kata sandi anda"
+
+msgid "Link to autologin"
+msgstr "Link masuk cepat"
+

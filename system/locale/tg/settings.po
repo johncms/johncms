@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 нишона"
+
+msgid "1000 characters"
+msgstr "1000 нишона"
+
+msgid "3000 characters"
+msgstr "3000 нишона"
+
+msgid "Always"
+msgstr "ҳамеша"
+
+msgid "Stick 1-st post"
+msgstr "Гузоштани 1-ум сухан"
+
+msgid "Use textarea"
+msgstr "Даргирондани ҷои воридкуни"
+
+msgid "Unread"
+msgstr "Ба нохондаҳо"
+
+msgid "Basic settings"
+msgstr "Тағйироти умуми"
+
+msgid "Enter message"
+msgstr "Воридкунии мактуб"
+
+msgid "My settings"
+msgstr "Тағйироти ман"
+
+msgid "never"
+msgstr "ҳеҷгоҳ"
+
+msgid "not cut"
+msgstr "Набурад"
+
+msgid "Or enter yours"
+msgstr "Ё аз худро гузоред"
+
+msgid "Cropping posts"
+msgstr "Буриши суханҳо"
+
+msgid "Contacts"
+msgstr "Ҷойгиркунии баръакс"
+

@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "Novost dodata"
+
+msgid "News changed"
+msgstr "Novost izmenjena"
+
+msgid "News deleted"
+msgstr "Novost izbrisana"
+
+msgid "Title"
+msgstr "Naslov"
+
+msgid "Delete all news"
+msgstr "Izbrisi sve novosti"
+
+msgid "Older than 1 month"
+msgstr "Starije od 1 meseca"
+
+msgid "Delete all news older than 1 month"
+msgstr "Izbrisi sve novosti starije od 1 meseca"
+
+msgid "Older than 1 week"
+msgstr "Starije od 1 nedelje"
+
+msgid "Delete all news older than 1 week"
+msgstr "Izbrisi sve novosti starije od 1 nedelje"
+
+msgid "Discussion"
+msgstr "Komentari"
+
+msgid "Discuss in forum"
+msgstr "Komentari"
+
+msgid "Do not discuss"
+msgstr "Bez komentara"
+
+msgid "You have not entered news title"
+msgstr "Niste uneli naslov"
+
+msgid "You have not entered news text"
+msgstr "Niste unelo tekst"
+
+msgid "Back to news"
+msgstr "Nazad na novosti"
+

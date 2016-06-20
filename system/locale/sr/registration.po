@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "O meni"
+
+msgid "Max. 500 characters"
+msgstr "Max. 500 karaktera"
+
+msgid "Verification code"
+msgstr "Verifikacioni kod"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Ako ne vidite sliku, omogucite slike u vasem pretrazivacu i osvezite stranu"
+
+msgid "Enter"
+msgstr "Nastavi"
+
+msgid "You have not entered nick"
+msgstr "Niste uneli madimak"
+
+msgid "Too long nick"
+msgstr "Predugacak nadimak"
+
+msgid "This nick already in use"
+msgstr "Nadimak vec postoji"
+
+msgid "Too long password"
+msgstr "Predugacka lozinka"
+
+msgid "You have not selected genger"
+msgstr "Niste izabrali pol"
+
+msgid "Login"
+msgstr "Nadimak"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Max. 15 Karaktera.<br>Dozovljeni znaci - = @ ! ? ~ _ ( ) [ ] . *"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "Molimo sacekajte dok administracija potvrdi vasu registraciju"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Mozete se prijaviti nakon potvrde vase registracije."
+
+msgid "Name"
+msgstr "Ime"
+
+msgid "Max. 30 characters"
+msgstr "Max. 30 karaktera"
+
+msgid "Password"
+msgstr "Lozinka"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Min. 3, Max. 10 karaktera.<br>Samo slova (a-z) i brojevi (1-9) su dozvoljeni"
+
+msgid "Registration"
+msgstr "Registracija"
+
+msgid "Registration temporarily closed"
+msgstr "Registracija je trenutno zatvorena"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Molimo, ne registrujte nikove poput 111, shhhh, uuuu, itd. Bice obrisani. <br> Svi profili koji se registruju preko proxy bice izbrisani"
+
+msgid "Gender"
+msgstr "Pol"
+
+msgid "Male"
+msgstr "Musko"
+
+msgid "Female"
+msgstr "Zensko"
+
+msgid "Your registratiton data"
+msgstr "Vasi podaci"
+
+msgid "Your ID"
+msgstr "Vas ID"
+
+msgid "Your username"
+msgstr "Vas nadimak"
+
+msgid "Your password"
+msgstr "Vasa lozinka"
+
+msgid "Link to autologin"
+msgstr "Link za autologin"
+

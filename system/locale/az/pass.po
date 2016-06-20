@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "AvtoGiriş Linki"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>Diqqet!</b><br>AvtoGiriş xidmetinden tehlükeli yerlerde istifade etmeyin. (internet-kafe, özge kompüter ve s.)"
+
+msgid "Verification code"
+msgstr "Yoxlama Kodu"
+
+msgid "Change password"
+msgstr "Şifreni Deyiş"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Şifre uğurla deyişdirildi.<br>Yeni şifre sizin email ünvaniniza gönderildi. "
+
+msgid "Enter code"
+msgstr "Şekildeki Kod"
+
+msgid "Incorrect code"
+msgstr "Şekildeki kod yanlışdır"
+
+msgid "Invalid E-mail address"
+msgstr "E-mail ünvani yanlış qeyd olunub"
+
+msgid "Error sending E-mail"
+msgstr "E-mail gönderme zamanı sehv baş verdi"
+
+msgid "Password recovery is impossible"
+msgstr "Şifrenin berpası mümkün deyil"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Bütün bölmeleri qeyd etmek lazımdır"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Şifrenin uzunluğu min. 3 ve maks. 10 herifden ibaret olmalıdır"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Yeni şifrenin tekrarı yanlış qeyd olunmuşdur"
+
+msgid "Incorrect entered old password"
+msgstr "Köhne şifre yanlış qeyd olunub"
+
+msgid "You cannot change password of higher administration"
+msgstr "Siz selahiyyeti sizden üstün olan istifadeçinin şifresini deyişe bilmezsiniz"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Berpa üçün nezerde tutulan vaxt bitdi"
+
+msgid "Enter new password"
+msgstr "Yeni şifreni daxil edin"
+
+msgid "Enter old password"
+msgstr "Köhne şifreni daxil edin"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Şifrenin uzunluğu min. 3 ve maks. 10 herifden ibaret olmalıdır. Yalniz latin heriflerinden ve reqemlerden istifade etmeye icaze verilir."
+
+msgid "Password successfully changed"
+msgstr "Şifre uğurla yenilendi"
+
+msgid "Password recovery"
+msgstr "Şifrenin Berpası"
+
+msgid "Repeat password"
+msgstr "Şifreni tekrar edin"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Şifre anketinizde qeyd olunan email ünvanına gönderilecek.<br>Diqqet! Eger anketde email ünvani qeyd olunmayıbsa, o zaman siz şifreni berpa ede bilmeyeceksiniz"
+
+msgid "Hello"
+msgstr "Salam"
+
+msgid "You start process of password recovery on the site"
+msgstr "Siz saytda shifrenin berpasina xidmet gosteren funksiyaya start vermisiniz"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Shifreni berpa etmek uchun mektub metninde qeyd olunan linke daxil olmaq lazimdir"
+
+msgid "Link valid for 1 hour"
+msgstr "Link 1 saat erzinde quvvededir"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Eger bu mektub size sehven daxil olubsa onda sadece bu mektubu silin ve unudun..."
+
+msgid "Check your e-mail for further information"
+msgstr "Şifrenin berpası üçün lazım olan melumatlar sizin email ünvanınıza gönderildi"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "Sayta daxil olduqdan sonra şifreni deyişe bilersiniz."
+
+msgid "You have changed your password on the site"
+msgstr "Siz saytda giriş üçün istifade olunan şifrenizi deyişdiniz"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Şifreni günde yalniz 1 defe deyişe bilersiniz"
+
+msgid "Send"
+msgstr "Gönder"
+
+msgid "Show autologin link"
+msgstr "AvtoGiriş linkini göster"
+
+msgid "Your E-mail"
+msgstr "Sizin Email"
+
+msgid "Username"
+msgstr "Sizin Nikiniz"
+
+msgid "Your new password"
+msgstr "Sizin yeni şifreniz"
+

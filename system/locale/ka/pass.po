@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "ბმული ავტომატური შესვლისთვის"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>ყურადღება!</b><br>უსაფრთხოების მიზნით არასოდეს გამოიყენოთ ავტომატური შესვლა არასანდო ადგილებში (ინტერნეტ-კაფე, უცხო კომპიუტერი და ა.შ.)"
+
+msgid "Verification code"
+msgstr "შემოწმების კოდი"
+
+msgid "Change password"
+msgstr "პაროლის შეცვლა"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "პაროლი წარმატებით შეიცვალა.<br>ახალი პაროლი გამოგზავნილია თქვენს ელ. ფოსტაზე"
+
+msgid "Enter code"
+msgstr "შეიყვანეთ კოდი"
+
+msgid "Incorrect code"
+msgstr "შემოწმების კოდი არასწორად არის შეყვანილი"
+
+msgid "Invalid E-mail address"
+msgstr "ელ. ფოსტა შეცდომით არის მითითებული"
+
+msgid "Error sending E-mail"
+msgstr "შედომა ელ. ფოსტის გაგზავნის დროს"
+
+msgid "Password recovery is impossible"
+msgstr "პაროლის აღდგენა შეუძლებელია"
+
+msgid "It is necessary to fill in all fields"
+msgstr "სავალდებულოა ყველა ველის შევსება"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "პაროლის სიგრძე უნდა იყოს არანაკლებ 3 და არაუმეტეს 10 სიმბოლოსი"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "ახალი პაროლის დასტური შეყვანილია შეცდომით"
+
+msgid "Incorrect entered old password"
+msgstr "ძველი პაროლი შეყვანილია შეცდომით"
+
+msgid "You cannot change password of higher administration"
+msgstr "თქვენ არ შეგიძლიათ თქვენზე უფლებამოსილის პაროლის შეცვლა"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "პაროლის აღსადგენად გამოყოფილი დრო გასულია"
+
+msgid "Enter new password"
+msgstr "შეიყვანეთ ახალი პაროლი"
+
+msgid "Enter old password"
+msgstr "შეიყვანეთ ძველი პაროლი"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "პაროლის სიგრძე არანაკლებ 3 და არაუმეტეს 10 სიმბოლოსი, დაშვებულია მხოლოდ ლათინური ასოები და ციფრები."
+
+msgid "Password successfully changed"
+msgstr "პაროლი წარმატებით შეიცვალა"
+
+msgid "Password recovery"
+msgstr "პაროლის აღდგენა"
+
+msgid "Repeat password"
+msgstr "გაიმეორეთ პაროლი"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "პაროლი გამოიგზავნება იმ ელ. ფოსტაზე, რომელიც მიუთითეთ პროფილში.<br>ყურადღება! თუ ანკეტაში არ გაქვთ მითითებული ელ. ფოსტა, მაშინ პაროლის აღდგენას ვერ შეძლებთ"
+
+msgid "Hello"
+msgstr "გამარჯობა"
+
+msgid "You start process of password recovery on the site"
+msgstr "თქვენ დაიწყეთ პაროლის აღდგენის პროცედურა"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "იმისათვის, რომ აღადგინოთ პაროლი, უნდა გადახვიდეთ ბმულზე"
+
+msgid "Link valid for 1 hour"
+msgstr "ბმულის მოქმედების ვადაა 1 საათი"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "თუ ეს წერილი თქვენთან შეცდომით მოხვდა და არ აპირებთ პაროლის აღდგენას, მაშინ მას ყურადღება არ მიაქციოთ"
+
+msgid "Check your e-mail for further information"
+msgstr "ინსტრუქციები პაროლის აღსადგენად გამოგზავნილია თქვენს მიერ მითითებულ მისამართზე"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "საიტზე შესვლის შემდეგ თქვენ შეგიძლიათ შეცვალოთ პაროლი თქვენივე სურვილის მიხედვით."
+
+msgid "You have changed your password on the site"
+msgstr "თქვენ შეცვალეთ პაროლი"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "პაროლის აღდგენა დღე-ღამის განმავლობაში მხოლოდ 1-ჯერ არის შესაძლებელი"
+
+msgid "Send"
+msgstr "გაგზავნა"
+
+msgid "Show autologin link"
+msgstr "ავტომატური შესვლის ბმულის ჩვენება"
+
+msgid "Your E-mail"
+msgstr "თქვენი ელ. ფოსტა"
+
+msgid "Username"
+msgstr "თქვენი მეტსახელი"
+
+msgid "Your new password"
+msgstr "თქვენი ახალი პაროლი"
+

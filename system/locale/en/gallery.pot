@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+
+msgid "Allowed Types"
+msgstr ""
+
+msgid "Create an album"
+msgstr ""
+
+msgid "Create a section"
+msgstr ""
+
+msgid "Gallery closed"
+msgstr ""
+
+msgid "Delete Album"
+msgstr ""
+
+msgid "Delete section"
+msgstr ""
+
+msgid "Dimensions"
+msgstr ""
+
+msgid "Edit Album"
+msgstr ""
+
+msgid "Edit description"
+msgstr ""
+
+msgid "Edit Section"
+msgstr ""
+
+msgid "Error uploading photo"
+msgstr ""
+
+msgid "Picture is missing"
+msgstr ""
+
+msgid "Image size"
+msgstr ""
+
+msgid "Maximum weight"
+msgstr ""
+
+msgid "New photos"
+msgstr ""
+
+msgid "Posted by"
+msgstr ""
+
+msgid "Select Photo"
+msgstr ""
+
+msgid "To Album"
+msgstr ""
+
+msgid "To Gallery"
+msgstr ""
+
+msgid "To Section"
+msgstr ""
+
+msgid "Upload Photo"
+msgstr ""
+
+msgid "Weight"
+msgstr ""

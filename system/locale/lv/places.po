@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Administrācijas saraksts</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Skatās foto albūmus</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Skatās dzimšanas dienas gaviļniekus</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr "<a href=\"#home#/download/index.php\">Lejuplādes</a>"
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">Lasa FAQ</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr "<a href=\"#home#/forum/index.php\">Forums</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=files\">Foruma faili</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Skatās, kas forumā?</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr "<a href=\"#home#/gallery/index.php\">Galerija</a>"
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr "<a href=\"#home#/guestbook/index.php\">Viesenē</a>"
+
+msgid "Here, in the list"
+msgstr "Šeku, skatās sarakstu"
+
+msgid "On the Homepage"
+msgstr "Sākumā"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Bibliotēkā</a>"
+
+msgid "Personal correspondence"
+msgstr "Asmens susirašinėjimas"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Lasa ziņas</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Kas ir saitā?</a>"
+
+msgid "Profile"
+msgstr "Anketa"
+
+msgid "Personal Profile"
+msgstr "Anketa"
+
+msgid "Registered on the site"
+msgstr "Reģistrēta uz vietas"
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">Lietotāju saraksts</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">Lietotāju TOPs</a>"
+

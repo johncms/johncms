@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 знакаў"
+
+msgid "1000 characters"
+msgstr "1000 сімвалаў"
+
+msgid "3000 characters"
+msgstr "3000 знакаў"
+
+msgid "Always"
+msgstr "заўседы"
+
+msgid "Stick 1-st post"
+msgstr "Замацоўваць 1-й пост"
+
+msgid "Use textarea"
+msgstr "Уключыць полі ўводу"
+
+msgid "Unread"
+msgstr "у непрачытаных"
+
+msgid "Basic settings"
+msgstr "Асноўныя налады"
+
+msgid "Enter message"
+msgstr "Увод паведамленні"
+
+msgid "My settings"
+msgstr "Мае налады"
+
+msgid "never"
+msgstr "ніколі"
+
+msgid "not cut"
+msgstr "не абрэзаць"
+
+msgid "Or enter yours"
+msgstr "Або пакажыце свае"
+
+msgid "Cropping posts"
+msgstr "Абразанне пастоў"
+
+msgid "Contacts"
+msgstr "Зваротная сартаванне"
+

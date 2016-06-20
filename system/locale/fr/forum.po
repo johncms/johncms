@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Ajouter une catégorie"
+
+msgid "Add file"
+msgstr "Ajouter un fichier"
+
+msgid "Add answer"
+msgstr "Ajouter une réponse"
+
+msgid "Add section"
+msgstr "Ajouter une partition"
+
+msgid "Add a poll"
+msgstr "Ajouter un sondage"
+
+msgid "Accept"
+msgstr "D\"accord"
+
+msgid "Other category"
+msgstr "Une autre catégorie de"
+
+msgid "Answer"
+msgstr "Réponse"
+
+msgid "Assign"
+msgstr "Attribuer"
+
+msgid "Attachment"
+msgstr "Le fichier ci-joint"
+
+msgid "Back to topic"
+msgstr "Retour à la rubrique"
+
+msgid "by author"
+msgstr "par auteur"
+
+msgid "by section"
+msgstr "de la section"
+
+msgid "by topic"
+msgstr "sur le thème de la"
+
+msgid "Category"
+msgstr "Catégories"
+
+msgid "Category deleted"
+msgstr "Catégories supprimé"
+
+msgid "Edit category"
+msgstr "Modifier la catégorie"
+
+msgid "Categories list"
+msgstr "La liste des catégories"
+
+msgid "subsections"
+msgstr "subordonnés sections"
+
+msgid "Click to view image"
+msgstr "Cliquez pour voir l\"image"
+
+msgid "Subsections and files has been moved to"
+msgstr "Subordonnés des partitions et des fichiers déplacés dans"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "Tous les sections, sujets et les fichiers seront déplacés dans la catégorie sélectionnée.<br>L\"ancienne catégorie sera supprimé"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>ATTENTION!</h3>Possèdent des sous-sections.<br>Vous devez les déplacer dans une autre catégorie"
+
+msgid "Curators"
+msgstr "Les conservateurs de"
+
+msgid "Curators of the Topic"
+msgstr "Les conservateurs de thèmes"
+
+msgid "Quote"
+msgstr "Citation"
+
+msgid "[q]"
+msgstr "[ts]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Admissible maxi de 200 caractères, de tous les excès texte est tronqué."
+
+msgid "Delete categories"
+msgstr "Supprimons la catégorie"
+
+msgid "Complete removal"
+msgstr "La suppression complète de la"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Si vous voulez effacer toutes les informations, supprimez d\"abord"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ATTENTION! Sera supprimé toutes les informations"
+
+msgid "Delete last"
+msgstr "Supprimer la dernière"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "ATTENTION!<br>C\"est le dernier post d\"un thème. Avec elle sera supprimée (ou est caché) le thème lui-même"
+
+msgid "Delete message"
+msgstr "Supprimer le message"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Dans le cas de la suppression, à partir du compteur de postes forum sera déduit un point"
+
+msgid "Delete section"
+msgstr "Supprimons la section"
+
+msgid "Delete poll"
+msgstr "Supprimer le sondage"
+
+msgid "Download Topic"
+msgstr "Télécharger le thème"
+
+msgid "Select a format"
+msgstr "Sélectionnez un format de"
+
+msgid "Link active 5 minutes"
+msgstr "Le lien est actif 5 minutes"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Ce thème a été téléchargé avec le forum du site"
+
+msgid "Downloaded"
+msgstr "Télécharger"
+
+msgid "Downloads"
+msgstr "Téléchargement"
+
+msgid "Edit message"
+msgstr "Modifier le message"
+
+msgid "Edit poll"
+msgstr "Modifier le sondage"
+
+msgid "Edited"
+msgstr "L\"ism."
+
+msgid "You have not selected any author"
+msgstr "Vous n\"avez sélectionné aucun de l\"auteur"
+
+msgid "Category is not chosen"
+msgstr "Ne la catégorie sélectionnée"
+
+msgid "You are trying to change another\"s post"
+msgstr "Vous essayez de changer quelqu\"un d\"autre poste"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Votre post est déjà pas le dernier et Vous ne pouvez pas changer"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Depuis la création de la poste a passé plus de 5 minutes et Vous ne pouvez pas modifier"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Type de fichier interdit!<br>À l\"envoi seuls les fichiers ayant la prochaine extension"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "À l\"envoi seuls les fichiers ayant un nom et une extension (<b>name.ext</b>). Sont interdits les fichiers n\"ayant pas de nom, une extension, ou avec une double extension."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "La longueur du nom de fichier ne doit pas dépasser 30 caractères"
+
+msgid "File size exceed"
+msgstr "Le poids du fichier dépasse"
+
+msgid "File name contains invalid characters"
+msgstr "Dans le nom du fichier contient des caractères non valides"
+
+msgid "File is already uploaded"
+msgstr "Le fichier est déjà chargé"
+
+msgid "You did not choose something to delete"
+msgstr "Vous n\"avez rien choisi pour supprimer"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Le poste n\"existe pas, ou a été supprimé"
+
+msgid "Length of query: 4min., 64max."
+msgstr "La longueur de la requête: 4min., 64макс."
+
+msgid "You have not entered time"
+msgstr "Vous n\"avez pas saisi le moment"
+
+msgid "You cannot write in a closed topic"
+msgstr "Vous ne pouvez pas écrire dans un sujet"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "L\"objet a été retiré, ou n\"existe pas"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Le thème de ce nom existe déjà dans cette section"
+
+msgid "You have not entered topic name"
+msgstr "Vous n\"avez pas saisi le titre du sujet"
+
+msgid "Topic name too short"
+msgstr "Le titre du sujet est trop court"
+
+msgid "Error uploading file"
+msgstr "Erreur de chargement du fichier"
+
+msgid "File attached"
+msgstr "Le fichier attaché"
+
+msgid "Files"
+msgstr "Les fichiers du forum"
+
+msgid "Category files"
+msgstr "Des fichiers de la catégorie"
+
+msgid "Section files"
+msgstr "Les fichiers de la partition"
+
+msgid "Topic files"
+msgstr "Les fichiers du topic"
+
+msgid "Archive"
+msgstr "Archives"
+
+msgid "Java applications"
+msgstr "Les Applications Java"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "Autre"
+
+msgid "Pictures"
+msgstr "Les images"
+
+msgid "SIS"
+msgstr "Application SIS"
+
+msgid "txt"
+msgstr "Les fichiers texte"
+
+msgid "WIN applications"
+msgstr "Une application WIN"
+
+msgid "Videos"
+msgstr "Vidéo"
+
+msgid "Cancel filter"
+msgstr "Annuler le filtre"
+
+msgid "Topic includes filtering by authors"
+msgstr "Dans le sujet, activer le filtrage par les auteurs de postes"
+
+msgid "Filter by author"
+msgstr "Filtre par auteur"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Le filtrage permet l\"affichage des messages uniquement par les auteurs"
+
+msgid "Filter by section"
+msgstr "Le filtre de la section"
+
+msgid "Filter by topic"
+msgstr "Filtre sur le sujet"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Forum is closed"
+msgstr "Le forum est fermé"
+
+msgid "Forum Management"
+msgstr "La Gestion Du Forum"
+
+msgid "Forum rules"
+msgstr "Les règles de ce forum"
+
+msgid "Forum search"
+msgstr "La recherche du forum"
+
+msgid "Forum structure"
+msgstr "La structure du forum"
+
+msgid "Hidden posts"
+msgstr "Cachés postes"
+
+msgid "Hidden topic"
+msgstr "Thèmes cachés"
+
+msgid "Hours"
+msgstr "heures"
+
+msgid "Max. Size"
+msgstr "Max. taille"
+
+msgid "Marked posts are deleted"
+msgstr "Marqués postes supprimés"
+
+msgid "Appointment of moderators"
+msgstr "La nomination des modérateurs"
+
+msgid "New files in the last 24 hours"
+msgstr "De nouveaux fichiers pour les dernières 24 heures"
+
+msgid "No new files"
+msgstr "Les nouveaux fichiers ne sont pas"
+
+msgid "New at the bottom"
+msgstr "De nouveaux en bas"
+
+msgid "New at the top"
+msgstr "De nouveaux en haut"
+
+msgid "New topic"
+msgstr "Ouvrir un sujet"
+
+msgid "Title(max. 100)"
+msgstr "Le nom de (max. 100)"
+
+msgid "Disagree"
+msgstr "N\"est pas d\"accord"
+
+msgid "Other categories"
+msgstr "Autres catégories"
+
+msgid "Answers in the topic"
+msgstr "Répond dans le sujet"
+
+msgid "In the category"
+msgstr "Dans la catégorie"
+
+msgid "Looking forum files"
+msgstr "Regarde les fichiers du forum"
+
+msgid "Here, in the list"
+msgstr "Ici, dans la liste"
+
+msgid "In the forum main"
+msgstr "Sur le forum principal"
+
+msgid "In the unreads"
+msgstr "Regarde le message non lu"
+
+msgid "Forum search"
+msgstr "La recherche du forum"
+
+msgid "In the section"
+msgstr "Dans la section"
+
+msgid "In the topic"
+msgstr "Dans le sujet"
+
+msgid "Writes in the topic"
+msgstr "Écrit dans le sujet"
+
+msgid "Message"
+msgstr ""
+
+msgid "Post deleted"
+msgstr "Post supprimé"
+
+msgid "Read more"
+msgstr "Lire tous les"
+
+msgid "reference"
+msgstr "Contacter"
+
+msgid "[r]"
+msgstr "[sur]"
+
+msgid "Rating"
+msgstr "La cote"
+
+msgid "I am glad to answer you"
+msgstr "heureux de te répondrai"
+
+msgid "to your post"
+msgstr "sur ton post"
+
+msgid "answer"
+msgstr "je répondrai"
+
+msgid "You are right! You are very smart!"
+msgstr "kanai de là, radis! Margaly vykalû, la corne de pootšibaû!"
+
+msgid "Restore"
+msgstr "Restaurer"
+
+msgid "Results"
+msgstr "Les résultats"
+
+msgid "Back to topic"
+msgstr "Retour à la rubrique"
+
+msgid "Forum search"
+msgstr "La recherche du forum"
+
+msgid "Search in the topic names"
+msgstr "Rechercher dans les titres de sujets"
+
+msgid "Section deleted"
+msgstr "L\"article est supprimé"
+
+msgid "Section with topics and files are removed"
+msgstr "La section avec les thèmes et les fichiers supprimé"
+
+msgid "Editing section"
+msgstr "Modifier la section"
+
+msgid "List of sections"
+msgstr "La liste des partitions"
+
+msgid "There are no sections in this category"
+msgstr "Dans cette catégorie, pas de partitions"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "Tous les thèmes et les fichiers sont déplacés dans la section sélectionnée<br>L\"ancien article sera supprimé"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>ATTENTION!</h3>Dans la section il ya des thèmes.<br>Vous devez les déplacer vers une autre partition"
+
+msgid "Select category"
+msgstr "Sélectionner une catégorie"
+
+msgid "Select file"
+msgstr "Sélectionner le fichier"
+
+msgid "Select section"
+msgstr "Choisir la section"
+
+msgid "Selected category"
+msgstr "la catégorie sélectionnée"
+
+msgid "Selected section"
+msgstr "la section sélectionnée"
+
+msgid "Size"
+msgstr "Taille"
+
+msgid "Topics moved to"
+msgstr "Subordonnés sujets déplacés dans"
+
+msgid "Time"
+msgstr "fois"
+
+msgid "Go to category"
+msgstr "Dans la catégorie"
+
+msgid "Go to forum"
+msgstr "Dans Le Forum"
+
+msgid "To message"
+msgstr "Au message"
+
+msgid "Go to topic"
+msgstr "Dans le thème"
+
+msgid "Go to section"
+msgstr "Dans la section"
+
+msgid "Topic"
+msgstr "Le thème de la"
+
+msgid "Close topic"
+msgstr "Fermer le sujet"
+
+msgid "Topic closed"
+msgstr "Sujet fermé"
+
+msgid "Delete topic"
+msgstr "Supprimer le sujet"
+
+msgid "Topic deleted"
+msgstr "L\"objet a été retiré"
+
+msgid "Topic deleted by"
+msgstr "Rubrique supprimée"
+
+msgid "Undelete topic"
+msgstr "A annulé la suppression de thèmes"
+
+msgid "Fix topic"
+msgstr "Fixer le thème"
+
+msgid "No topics in this section"
+msgstr "Dans cette section n\"est pas aucun sujet"
+
+msgid "Move topic"
+msgstr "Déplacer le sujet"
+
+msgid "Topic name"
+msgstr "Le titre du sujet"
+
+msgid "New topic"
+msgstr "Ouvrir un sujet"
+
+msgid "Rename topic"
+msgstr "Renommer le sujet"
+
+msgid "Restore topic"
+msgstr "Rétablir le thème"
+
+msgid "Unfix topic"
+msgstr "Détacher le sujet"
+
+msgid "Total votes"
+msgstr "Total des votes"
+
+msgid "All for period"
+msgstr "Le tout pour une période de"
+
+msgid "Last 10"
+msgstr "Les 10 derniers sujets"
+
+msgid "Period (in hours)"
+msgstr "Période (en heures)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "Pour la période sélectionnée nouveau sur le forum  il n\""
+
+msgid "Mark as read"
+msgstr "Marquer comme lu"
+
+msgid "All topics marked as read"
+msgstr "Tous les sujets sont marqués comme lus"
+
+msgid "Upload"
+msgstr "Envoyer"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Le temps imparti pour le chargement du fichier est écoulé"
+
+msgid "Post deleted"
+msgstr "Post supprimé"
+
+msgid "Who is here"
+msgstr "Quelqu\"un ici"
+
+msgid "Who in forum"
+msgstr "Qui dans nos forums"
+
+msgid "Who in topic"
+msgstr "Qui dans le sujet"
+
+msgid "Post restored by"
+msgstr "Poste restauré"
+
+msgid "Vote accepted"
+msgstr "Votre voix est adopté"
+
+msgid "Poll (max. 150)"
+msgstr "Le sondage (max. 150)"
+
+msgid "Poll added"
+msgstr "Sondage ajouté"
+
+msgid "Poll changed"
+msgstr "Le sondage modifié"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Voulez-vous vraiment supprimer le sondage?"
+
+msgid "Poll deleted"
+msgstr "Questionnaire a été supprimé"
+
+msgid "Who voted in the poll"
+msgstr "Les utilisateurs qui ont répondu au sondage"
+
+msgid "No one has voted in this poll yet"
+msgstr "Dans cette enquête jusqu\"à ce que la personne n\"a pas participé"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Voulez-vous vraiment supprimer l\"option de réponse?"
+

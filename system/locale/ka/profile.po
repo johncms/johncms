@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "ჩემს შესახებ"
+
+msgid "Everyone"
+msgstr "ყველას"
+
+msgid "With Password"
+msgstr "პაროლის მიხედვით"
+
+msgid "Closed"
+msgstr "დახურულია"
+
+msgid "Friends only"
+msgstr "მხოლოდ მეგობრებს"
+
+msgid "This field is required if the password access is activated"
+msgstr "თუ ჩართულია პაროლით დაშვება, მაშინ ეს ველი აუცილებელია"
+
+msgid "Achievements"
+msgstr "მიღწევა"
+
+msgid "Activity"
+msgstr "აქტივობა"
+
+msgid "Album"
+msgstr "ალბომი"
+
+msgid "Album successfully changed"
+msgstr "ალბომი წარმატებით შეიცვალა"
+
+msgid "Create Album"
+msgstr "ალბომის შექმნა"
+
+msgid "Album successfully created"
+msgstr "ალბომი წარმატებით შეიქმნა"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "ნამდვილად გსურთ ალბომის წაშლა?<br>თუ მასში არის ფოტოები ისინიც წაიშლება"
+
+msgid "Album Deleted"
+msgstr "ალბომი წაშლილია"
+
+msgid "Edit Album"
+msgstr "ალბომის რედაქტირება"
+
+msgid "Album List"
+msgstr "ალბომების სია"
+
+msgid "You must type a password to view this album"
+msgstr "ამ ალბომში შესასვლელად აუცილებელია პაროლის შეყვანა"
+
+msgid "Select Album"
+msgstr "აირჩიეთ ალბომი"
+
+msgid "Pending confirmation"
+msgstr "ელოდება რეგისტრაციის დადასტურებას"
+
+msgid "Delete avatar"
+msgstr "ავატარი წაშლილია"
+
+msgid "Upload avatar"
+msgstr "ავატარის ატვირთვა"
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Birthday"
+msgstr "დაბადების თარიღი"
+
+msgid "Date of birth (d.m.y)"
+msgstr "დაბადების თარიღი (დღე.თვე.წელი)"
+
+msgid "City"
+msgstr "ქალაქი"
+
+msgid "Contacts"
+msgstr "კავშირი"
+
+msgid "Data saved"
+msgstr "მინაცემები შენახულია"
+
+msgid "Prohibit karma"
+msgstr "კარმის შეზღუდვა"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "ყურადღება! სწორად მიუთითეთ თქვენი ელ. ფოსტა!<br>მხოლოდ მასზე გამოიგზავნება თქვენი პაროლი"
+
+msgid "The album already exists"
+msgstr "ასეთი ალბომი უკვე არსებობს"
+
+msgid "Invalid format date of birth"
+msgstr "დაბადების თარიღი მითითებულია არასწორად"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "ICQ ნომერი უნდა შედგებოდეს არანაკლებ 5 და არაუმეტეს 10 ციფრისგან"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "მეტსახელის მინიმალური სიგრძე 2 და მაქსიმალური 20 სიმბოლო"
+
+msgid "Nick contains invalid characters"
+msgstr "მეტსახელში დაუშვებელი სიმბოლოებია"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "თქვენ არ შეგიძლიათ თქვენზე უფლებამოსილის ანკეტის შეცვლა"
+
+msgid "Friends only"
+msgstr "მხოლოდ მეგობრებს"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "სია ცარიელია.<br>მოცემული მომხმარებლის შეტყობინებები ავტომატურად წაიშლება სასტუმროს წმენდის დროს"
+
+msgid "hidden"
+msgstr "დაფარულია"
+
+msgid "Image"
+msgstr "სურათი"
+
+msgid "Add image"
+msgstr "ფოტოს დამატება"
+
+msgid "Delete image"
+msgstr "ფოტოს წაშლა"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "ნამდვილად გსურთ ამ სურათის წაშლა?"
+
+msgid "Edit image"
+msgstr "სურათის შეცვლა"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "გაითვალისწინეთ, რომ სურათის ხშირი რედაქტირების დროს ქვეითდება მისი ხარისხი.<br>ნუ გამოიყენებთ ამ ფუნქციას საჭიროების გარეშე."
+
+msgid "Image successfully changed"
+msgstr "სურათი შეცვლილია"
+
+msgid "Move the image"
+msgstr "ფოტოს გადატანა"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "იმისათვის, რომ გადაიტანოთ ფოტოები, საჭიროა გქონდეთ მეორე ალბომი"
+
+msgid "Image successfully moved to the selected album"
+msgstr "ფოტოსურათი გადატანილია მითითებულ ალბომში"
+
+msgid "Rotate"
+msgstr "შეტრიალება"
+
+msgid "do not rotate"
+msgstr "არ შევატრიალოთ"
+
+msgid "counterclockwise"
+msgstr "საათის ისრის საწინააღმდეგოდ"
+
+msgid "clockwise"
+msgstr "საათის ისრის მიმართულებით"
+
+msgid "My Album"
+msgstr "ჩემი ალბომი"
+
+msgid "My activity"
+msgstr "ჩემი აქტივები"
+
+msgid "My Mailbox"
+msgstr "ჩემი ფოსტა"
+
+msgid "My Account"
+msgstr "ჩემი კაბინეტი"
+
+msgid "My Profile"
+msgstr "ჩემი ანკეტა"
+
+msgid "My settings"
+msgstr "ჩემი პარამეტრები"
+
+msgid "My statistic"
+msgstr "ჩემი სტატისტიკა"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "Recent comments"
+msgstr "ბოლო კომენტარები"
+
+msgid "New photos"
+msgstr "ახალი ფოტოები"
+
+msgid "Min.2, Max. 20"
+msgstr "მინ. 2, მაქს. 20 სიმბოლო"
+
+msgid "Personal info"
+msgstr "პირადი მონაცემები"
+
+msgid "Contact number"
+msgstr "ტელეფონის ნომერი"
+
+msgid "Photo"
+msgstr "ფოტოსურათი"
+
+msgid "Add to Profile"
+msgstr "ანკეტაში"
+
+msgid "Photo added to the profile"
+msgstr "ფოტო დყენებულია ანკეტაში"
+
+msgid "Photos"
+msgstr "ფოტოსურათები"
+
+msgid "Photo deleted"
+msgstr "ფოტოსურათი წაშლილია"
+
+msgid "Photo uploaded"
+msgstr "ფოტოსურათი ატვირთულია"
+
+msgid "Edit Profile"
+msgstr "ანკეტის შეცვლა"
+
+msgid "Functionary on the site"
+msgstr "თანამდებობა საიტზე"
+
+msgid "User"
+msgstr "უბრალო მომხმარებელი"
+
+msgid "Moder chat"
+msgstr "ჩატის მოდერატორი"
+
+msgid "Forum Moderator"
+msgstr "ფორუმის მოდერატორი"
+
+msgid "Download Moderator"
+msgstr "ჩატვირთვების მოდერატორი"
+
+msgid "Library Moderator"
+msgstr "ბიბლიოთეკის მოდერატორი"
+
+msgid "Super Modererator"
+msgstr "სუპერმოდერატორი"
+
+msgid "Administrator"
+msgstr "ადმინისტრატორი"
+
+msgid "Supervisor"
+msgstr "სუპერვაიზერი"
+
+msgid "Received"
+msgstr "შემოსულები"
+
+msgid "Registration confirmed"
+msgstr "რეგისტრაცია დაადასტურა"
+
+msgid "Free registration"
+msgstr "თავისუფალი რეგისტრაცია"
+
+msgid "Registered"
+msgstr "დარეგისტრირებულია"
+
+msgid "Registered"
+msgstr "დარეგისტრირებულია"
+
+msgid "For user"
+msgstr "მომხმარებლისთვის"
+
+msgid "default settings were set"
+msgstr "დაყენებულია ნაგულისხმები პარამეტრები"
+
+msgid "Image"
+msgstr "სურათი"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "ასატვირთად დაშვებულია შემდეგი ფაილები: JPG, JPEG, PNG, GIF<br>ფაილის ზომა არ უნდა აღემატებოდეს"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "მიუხედავად გარჩევადობისა, ფაილი მოექცევა 32x32 ზომაში"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "ახალი გამოსახულება შეცვლის ძველს (თუ არსებობდა)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "საუკეთესო შედეგისათვის სურათს უნდა ჰქონდეს გვერდების თანაფარი შეფარდება"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "მიუხედავად გარჩევადობისა, ფაილი მოექცევა 640х480 ზომებში"
+
+msgid "Sent"
+msgstr "გაგზავნილები"
+
+msgid "Male"
+msgstr "მამრობითი"
+
+msgid "Female"
+msgstr "მდედრობითი"
+
+msgid "Back to profile"
+msgstr "ანკეტაში ჩვენება"
+
+msgid "Site"
+msgstr "საიტი"
+
+msgid "Select gender"
+msgstr "მიუთითეთ სქესი"
+
+msgid "Max. 50"
+msgstr "მაქს. 50 სიმბოლო"
+
+msgid "He stay on the site"
+msgstr "საიტზე გაატარა"
+
+msgid "She stay on the site"
+msgstr "საიტზე გაატარა"
+
+msgid "System"
+msgstr ""
+
+msgid "Top Comments"
+msgstr "TOP კომენტარები"
+
+msgid "Top Downloads"
+msgstr "TOP ჩატვირთვები"
+
+msgid "AntiTop"
+msgstr "ანტი TOP"
+
+msgid "Top Views "
+msgstr "TOP ნახვები"
+
+msgid "Top Votes"
+msgstr "TOP ხმები"
+
+msgid "Unread Comments"
+msgstr "წაუკითხავი კომენტარები"
+
+msgid "Upload"
+msgstr "ატვირთვა"
+
+msgid "Upload avatar"
+msgstr "ავატარის ატვირთვა"
+
+msgid "Upload a picture"
+msgstr "ფოტოს ატვირთვა"
+
+msgid "User Profile"
+msgstr "მომხმარებლის ანკეტა"
+
+msgid "Add to Contacts"
+msgstr ""
+
+msgid "Add to Friends"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "You have already submitted a request"
+msgstr ""
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr ""
+
+msgid "Unlock user"
+msgstr ""
+
+msgid "Remove from contacts"
+msgstr ""
+
+msgid "Friends"
+msgstr ""
+
+msgid "My Friends"
+msgstr ""
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr ""
+
+msgid "offers friendship"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Request to be friends sent!"
+msgstr ""
+
+msgid "Do you really want to become friends?"
+msgstr ""
+
+msgid "Friendship"
+msgstr ""
+
+msgid "User is already your friend"
+msgstr ""
+
+msgid "Applications for friendship does not exist"
+msgstr ""
+
+msgid "Application for friendship canceled"
+msgstr ""
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr ""
+
+msgid "There is no invitation to be friends"
+msgstr ""
+
+msgid "agreed with you friends"
+msgstr ""
+
+msgid "You confirmed friendship. Now the user"
+msgstr ""
+
+msgid "Your friend"
+msgstr ""
+
+msgid "Do you really want to confirm the friendship"
+msgstr ""
+
+msgid "deleted you from friends"
+msgstr ""
+
+msgid "You remove the user from friends."
+msgstr ""
+
+msgid "Do you really want to remove from your friends?"
+msgstr ""
+
+msgid "Removal is not possible! User is not your friend."
+msgstr ""
+
+msgid "declined your offer to make friends."
+msgstr ""
+
+msgid "Request to be friends rejected."
+msgstr ""
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr ""
+
+msgid "The page does not exist!"
+msgstr ""
+
+msgid "My requests"
+msgstr ""
+
+msgid "Cancel Request"
+msgstr ""
+
+msgid "My Offers"
+msgstr ""
+
+msgid "Confirm friendship"
+msgstr ""
+
+msgid "Reject friendship"
+msgstr ""
+
+msgid "Remove from friends"
+msgstr ""
+
+msgid "Add to friends"
+msgstr ""
+
+msgid "Cancel a request to be friends"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr ""
+
+msgid "Fellow Student"
+msgstr ""
+
+msgid "Best friend"
+msgstr ""
+
+msgid "Colleague"
+msgstr ""
+
+msgid "Classmate"
+msgstr ""
+
+msgid "Friend"
+msgstr ""
+
+msgid "Mail settings"
+msgstr ""
+
+msgid "You can write messages"
+msgstr ""
+
+msgid "Can write all"
+msgstr ""
+
+msgid "Can write only contacts"
+msgstr ""
+
+msgid "Can write only friends"
+msgstr ""
+
+msgid "pointing out that you best friends with him"
+msgstr ""
+
+msgid "pointed out that you have with him relatives"
+msgstr ""
+
+msgid "pointed out that you have with him classmates"
+msgstr ""
+
+msgid "pointing out that you were colleagues"
+msgstr ""
+
+msgid "pointing out that you were classmates"
+msgstr ""
+
+msgid "pointed out that you\"re friends"
+msgstr ""
+
+msgid "You indicated that you are best friends with"
+msgstr ""
+
+msgid "You indicated that the relatives with"
+msgstr ""
+
+msgid "You indicated that mates with"
+msgstr ""
+
+msgid "You indicated that the colleagues with"
+msgstr ""
+
+msgid "You indicated that you classmates with"
+msgstr ""
+
+msgid "You indicated that you are friends with"
+msgstr ""
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "The feature is disabled, contact your administrator"
+msgstr ""
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr ""
+

@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Nhập"
+
+msgid "Album"
+msgstr ""
+
+msgid "You have already rated this file"
+msgstr "Bạn đã đánh giá cao tập tin này"
+
+msgid "Artist"
+msgstr "Nghệ sĩ"
+
+msgid "Average rating"
+msgstr "Đánh giá trung bình"
+
+msgid "Bitrate"
+msgstr ""
+
+msgid "Change"
+msgstr "Thay đổi"
+
+msgid "Change Description"
+msgstr "Thay đổi mô tả"
+
+msgid "Change Screenshot"
+msgstr "Thay đổi ảnh màn hình"
+
+msgid "Delete File"
+msgstr "Xóa tập tin"
+
+msgid "Delete Folder"
+msgstr "Xóa thư mục"
+
+msgid "Deleted"
+msgstr "Xóa thành công"
+
+msgid "Description changed"
+msgstr "Mô tả thay đổi thành công"
+
+msgid "Downloads"
+msgstr ""
+
+msgid "Downloads are closed"
+msgstr "Downloads tạm thời đóng cửa"
+
+msgid "Duration"
+msgstr "Thời lượng"
+
+msgid "File deleted"
+msgstr "Tập tin này đã bị xóa"
+
+msgid "No file selected"
+msgstr "Chưa chọn một tập tin nào"
+
+msgid "Error when selecting a file"
+msgstr "Lỗi khi lựa chọn một tập tin"
+
+msgid "File"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+msgid "Folder deleted"
+msgstr "Thư mục đã bị xóa"
+
+msgid "Folder does not exist"
+msgstr "Thư mục không tồn tại"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Tên thư mục<br><small>Chỉ có chữ nhỏ, không có không gian</small>"
+
+msgid "The name for the list"
+msgstr "Tên cho danh sách"
+
+msgid "Folders"
+msgstr "Thư mục"
+
+msgid "Found by Description"
+msgstr "Tìm thấy bằng cách mô tả"
+
+msgid "Found by Name"
+msgstr "Tìm thấy theo Tên"
+
+msgid "Image size"
+msgstr "Kích thước hình ảnh"
+
+msgid "File Import"
+msgstr "Tập tin nhập khẩu"
+
+msgid "Make folder"
+msgstr "Hãy thư mục"
+
+msgid "Name changed"
+msgstr "Tên thay đổi"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "Trong phiên này, kích thước của hình ảnh khi duyệt web"
+
+msgid "Rate"
+msgstr "Đánh giá"
+
+msgid "Continue the cycle"
+msgstr "Tiếp tục chu kỳ"
+
+msgid "Refresh Downloads"
+msgstr "Làm mới tải về"
+
+msgid "Database updated"
+msgstr "Cập nhật cơ sở dữ liệu"
+
+msgid "Released"
+msgstr "Phát hành"
+
+msgid "Rename Folder"
+msgstr "Đổi tên thư mục"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Lưu dưới dạng<br><small>Chữ nhỏ, không có không gian.<br>Tập tin mở rộng không cần phải nhập</small>"
+
+msgid "Screenshot"
+msgstr "Ảnh chụp màn hình"
+
+msgid "The name of the image contains invalid characters"
+msgstr "Tiêu đề của hình ảnh chứa các ký tự không hợp lệ"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "Hình ảnh kích thước không được vượt quá độ phân giải tới 320 x 320 px"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Lỗi trong khi dỡ ảnh chụp màn hình"
+
+msgid "Screenshot uploaded"
+msgstr "Ảnh chụp màn hình tải lên"
+
+msgid "Select the size of pictures for preview"
+msgstr "Chọn kích thước của hình ảnh cho xem trước"
+
+msgid "Find file"
+msgstr "Tìm tập tin"
+
+msgid "You have not entered a search term"
+msgstr "Bạn đã không nhập từ khóa tìm kiếm"
+
+msgid "Size"
+msgstr "Kích thước"
+
+msgid "Upload"
+msgstr "Tải lên"
+
+msgid "Upload File"
+msgstr "Tải lên Tập tin"
+
+msgid "Upload Screenshot"
+msgstr "Tải lên Ảnh chụp màn hình"
+
+msgid "Uploaded"
+msgstr "Tải lên"
+
+msgid "Thanks, your vote accepted"
+msgstr "Thanks"
+
+msgid "Total Votes"
+msgstr "Tổng số phiếu"
+

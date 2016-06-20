@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "დაამატა"
+
+msgid "All articles added"
+msgstr "ყველა სტატია დამატებულია ბაზაში"
+
+msgid "added to the database"
+msgstr "დამატებულია მონაცემთა ბაზაში"
+
+msgid "Allow users to add their articles"
+msgstr "უფლება მივცეთ მომხმარებლებს დაამატონ საკუთარი სტატიები"
+
+msgid "Announcement"
+msgstr "ანონსი"
+
+msgid "The announcement will be created automatically"
+msgstr "თუ ველი დარჩება შეუვსებელი, ანონსი შეიქმნება ავტომატურად"
+
+msgid "Accept"
+msgstr "მიღება"
+
+msgid "Accept all"
+msgstr "ყველაფრის მიღება"
+
+msgid "Article added"
+msgstr "სტატია დამატებულია"
+
+msgid "Thank you!</p><p>After moderator checking, your article will be published in the library."
+msgstr "გმადლობთ, რომ დაწერეთ.</p><p>მოდერატორის გადამოწმების შემდეგ თქვენი სტატია გამოქვეყნდება ბიბლიოთეკაში."
+
+msgid "Article"
+msgstr "სტატია"
+
+msgid "Articles"
+msgstr "სტატიები"
+
+msgid "Articles Moderation"
+msgstr "სტატიების მოდერაცია"
+
+msgid "By Name"
+msgstr "სათაურის მიხედვით"
+
+msgid "By Text"
+msgstr "ტექსტის მიხედვით"
+
+msgid "Categories"
+msgstr "კატეგორიები"
+
+msgid "Category was created successfully"
+msgstr "კატეგორია შექმნილია"
+
+msgid "Category type"
+msgstr "კატეგორიის ტიპი"
+
+msgid "Comments"
+msgstr ""
+
+msgid "Comment added successfully"
+msgstr "კომენტარი წარმატებით დაემატა"
+
+msgid "Comment Article"
+msgstr "სტატიის დაკომენტარება"
+
+msgid "Create Category"
+msgstr "კატეგორიის შექმნა"
+
+msgid "Delete Category"
+msgstr "კატეგორიის წაშლა"
+
+msgid "Deleted"
+msgstr ""
+
+msgid "Download Java Book"
+msgstr "Java წიგნის გადმოწერა"
+
+msgid "On this page you can download the Java (MIDP-2) book with the desired article."
+msgstr "ამ გვერდზე თქვენ შეგიძლიათ გადმოწეროთ Java (MIDP-2) წიგნი თქვენთვის სასურველი სტატიით."
+
+msgid "Edit Article"
+msgstr "სტატიის რედაქტირება"
+
+msgid "Edit Category"
+msgstr "კატეგორიის შეცვლა"
+
+msgid "Category type (in order to avoid errors, clear the category before changing the type)"
+msgstr "კატეგორიის ტიპი (შეცდომების თავიდან ასაცილებლად, ტიპის ცვლილებამდე, აუცილებლად გაასუფთავეთ კატეგორია)"
+
+msgid "Error uploading"
+msgstr "შეცდომა ატვირთვის დროს"
+
+msgid "First remove enclosed categories"
+msgstr "პირველ რიგში წაშალეთ კატეგორიები"
+
+msgid "Allow users to write articles"
+msgstr "მომხმარებლებს მივცეთ სტატიების წერის უფლება"
+
+msgid "The Library is closed"
+msgstr "ბიბლიოთეკა დახურულია"
+
+msgid "Most read"
+msgstr "ყველაზე წაკითხვადი"
+
+msgid "New articles"
+msgstr "ახალი სტატიები"
+
+msgid "Reads"
+msgstr "წაკითხული"
+
+msgid "Search in titles of articles"
+msgstr "სტატიის სათაურებში ძებნა"
+
+msgid "Select the text file"
+msgstr "აირჩიეთ ტექსტური ფაილი"
+
+msgid "Supported encodings"
+msgstr "კოდირების მხარდაჭერა აქვს"
+
+msgid "Tags"
+msgstr ""
+
+msgid "To article"
+msgstr "სტატიაში"
+
+msgid "To Category"
+msgstr "კატეგორიაში"
+
+msgid "To Comments"
+msgstr "კომენტარებში"
+
+msgid "To Library"
+msgstr "ბიბლიოთეკაში"
+
+msgid "50 most read articles"
+msgstr "50 ყველაზე წაკითხვადი სტატია"
+
+msgid "Upload Article"
+msgstr "სტატიის ატვირთვა"
+
+msgid "Write Article"
+msgstr "სტატიის დაწერა"
+
+msgid "Write Comment"
+msgstr "დაწერეთ კომენტარი"
+
+msgid "Description of categories"
+msgstr "კატეგორია აღწერა"
+
+msgid "Move to category"
+msgstr "გადავა მიხედვით"
+
+msgid "The text input field will be ignored"
+msgstr "ტექსტის ველში იქნება იგნორირებული"
+
+msgid "Images"
+msgstr ""
+
+msgid "Specify the tag to the article , separated by commas"
+msgstr "დააკონკრეტა tag სტატიაში, მძიმით"
+
+msgid "Tag cloud"
+msgstr ""
+
+msgid "Category does not exist"
+msgstr ""
+
+msgid "Really you want to move the contents?"
+msgstr ""
+
+msgid "Successfully transferred"
+msgstr ""
+
+msgid "No partitions to move"
+msgstr ""
+
+msgid "Are you sure you want to remove content?"
+msgstr ""
+
+msgid "Successfully removed"
+msgstr ""
+
+msgid "Dirs"
+msgstr ""
+
+msgid "Category is not empty"
+msgstr ""
+
+msgid "Select action"
+msgstr ""
+
+msgid "Delete with movement"
+msgstr ""
+
+msgid "Remove all subdirectories and articles"
+msgstr ""
+
+msgid "Article does not exist"
+msgstr ""
+
+msgid "Invalid file encoding , preferably UTF-8"
+msgstr ""
+
+msgid "Invalid file format acceptable * .txt"
+msgstr ""
+
+msgid "The text of the article can not be edited , a large amount of data !!!"
+msgstr ""
+
+msgid "In ROOT"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Verified"
+msgstr ""
+
+msgid "Cloud of tags"
+msgstr ""
+
+msgid "Sort by"
+msgstr ""
+
+msgid "Relevance"
+msgstr ""
+
+msgid "Alphabet"
+msgstr ""
+
+msgid "Changed"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "The author\"s name"
+msgstr ""
+
+msgid "The author\"s last name"
+msgstr ""
+
+msgid "Book name"
+msgstr ""
+
+msgid "Last comments"
+msgstr ""
+
+msgid "Rated articles"
+msgstr ""
+
+msgid "Reading"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Vote"
+msgstr ""
+

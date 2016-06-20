@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+""
+
+msgid "to authorised"
+msgstr "autorizētiem"
+
+msgid "Access denied"
+msgstr "pieeja slēgta"
+
+msgid "Access opened"
+msgstr "pieeja atvērta"
+
+msgid "guests can write in the guestbook"
+msgstr "var rakstīt viesi"
+
+msgid "Administration can access to all closed modules and comments"
+msgstr "Saita Administrātoriem vienmēr ir piekļuve visiem saita resursiem!"
+
+msgid "Permissions"
+msgstr "Piekļuves tiesības"
+
+msgid "mith moderation"
+msgstr "ar moderāciju"
+
+msgid "Adaptive"
+msgstr "Adaptīvs"
+
+msgid "Advertisement"
+msgstr "Reklāma"
+
+msgid "Agreement"
+msgstr "Piekrišana"
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr "AntiFloods"
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Automātiska pāriešana no dienas uz nakts rēžīmu notiek pēc sistēmas iestatītā laika"
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Ja saitā atrodas kāds no administrācijas, sistēma darbojas &quot;dienas&quot; režīmā, savādāk tā pāriet &quot;nakts&quot;"
+
+msgid "Antiflood setting"
+msgstr "AntiFlooda iestatījumi"
+
+msgid "Min. 4, max. 300 seconds"
+msgstr "MIN. 4, MAX. 300 sekundes"
+
+msgid "Anti-Spyware"
+msgstr "AntiSpiegs"
+
+msgid "Scanning distributive"
+msgstr "Distribitīva skanēšana saitā"
+
+msgid "Files identification which are not included in the original distributive"
+msgstr "Notiks &quot;personīgu&quot; failu meklēšana, kuri nav iekļauti orģinālajā skriptā"
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr "Neorģinālie distributīvi<br><small>UZMANĪBU! Ja faili, kas tika saskaitļoti šajā sarakstā, nav saistīti ar Jūsu personīgi ievietotajiem distributīviem, un Jūs neesat par tiem pārliecināts, dzēsiet tos ārā, šie faili var apdraudēt saita drošību un tādējādi arī tā darbību</small>"
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>LIELISKI!</h3>Vienību saraksts atbilst distributīvu vienību sarakstam"
+
+msgid "Scanner menu"
+msgstr "AntiSpiega izvēlne"
+
+msgid "Files image is not created"
+msgstr "Vienību saraksts vēl nav ticis veidots, ieteicams to izveidot un pārbaudīt saita drošību"
+
+msgid "Rescan"
+msgstr "Skanēt vēlreiz"
+
+msgid "Scan mode"
+msgstr "Skanēšanas režīms"
+
+msgid "Creating a snapshot"
+msgstr "Saraksta izveidošana"
+
+msgid "Snapshot successfully created"
+msgstr "Vienību saraksts veiksmīgi izveidots!"
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr "Tiek izveidots vienību &quot;saraksts&quot;, tiek izveidots visu vienību skaits, kas pieder CMS, tiek skaitļotas to kontroles summas, kas tiek saglabātas saita datu bāzē"
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr "Ši procedūra izveido sarakstu ar pilnīgi visām skripta vienībām, kas pieder skriptam.  Izskaitļojot to kontrolsummas, dati tiek saglabāti saita datu bāzē, priekš vēlākas datu salīdzināšanas"
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr "<b>UZMANĪBU!!!</b><br>Pirms turpini, pārliecinies, ka visas vienības, kuras tiks skanētas distributīvos nesatur modificētu kodu"
+
+msgid "Scanning snapshot"
+msgstr "Skanēt sarakstu"
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr "Neatbilstoši sarakstam<br><small>UZMANĪBU! Jums būtu jāpievērš uzmanība uz visām, no saraksta esošām vienībām. Tie tika pievienoti vai rediģēti kopš saraksta izveidošanas brīža</small>"
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr "Sarakstu salīdzināšana ar iepriekš veidotiem vienību sarakstiem, kuru kontrolsummas tiek izskaitļotas un salīdzinātas<br>Palīdz atklāt nezināmas un svešas vienību izmaiņas"
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr "LIELISKI!<br>Visas vienības atbilst iepriekš izveidotajam vienību sarakstam"
+
+msgid "Ban has been successfully removed"
+msgstr "Bans tika veiksmīgi dzēsts"
+
+msgid "Are you sure to remove ban?"
+msgstr "Vai dzēst banu?"
+
+msgid "Ban details"
+msgstr "Bana detaļas"
+
+msgid "Ban panel"
+msgstr "Banošanas panelis"
+
+msgid "Browsers"
+msgstr "Pārlūki"
+
+msgid "Counter successfully added"
+msgstr "Skaitītājs tika veiksmīgi izveidots"
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "UZMANĪBU!<br>Sekojiet ievadītā koda sintaksei. Kodam jābūt XML standartā.<br>Ja pēc pogas &quot;Apskate&quot; notiek kādas xHTML kļūdas, tad savā pārlūkā spiediet &quot;Atpakaļ&quot;, atgriezies iepriekšēja lapā un koriģējat pieļautās koda kļūdas"
+
+msgid "Delete counter"
+msgstr "Skaitītājs tika veiksmīgi dzēsts"
+
+msgid "Counter successfully changed!"
+msgstr "Skaitītājs tika veiksmīgi rediģēts"
+
+msgid "On all pages showing option 1"
+msgstr "Visās lapās tiks parādīts Variants-1"
+
+msgid "On all pages showing option 2"
+msgstr "Visās lapās tiks parādīts Variants-2"
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "Uz galvenās lapas tiks radīts Variants-1, uz citām lapām, Variants-2"
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr "Galvenajā parādās, Variants-1, pārējās lapās, Variants-2<br>Ja ievades laukums &quot;Variants-2&quot; nav aizpildīts, tad skaitītājs tiks rādīts tikai galvenajā lapā"
+
+msgid "Option 1"
+msgstr "Variants-1"
+
+msgid "Code for main page"
+msgstr "Skaitītāja kods priekš galvenās lapas"
+
+msgid "Option 2"
+msgstr "Variants-2"
+
+msgid "Code for other pages"
+msgstr "Skaitītāja kods priekš pārējām lapām"
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr "Ja skaitītāji tiek rādīti pareizi un bez nekādām kļūdām, spiediet &quot;Atcerēties&quot;.<br>Pretējā gadījumā, Jūs savā pārlūka spiediet &quot;Atpakaļ&quot; un koriģējiet skaitītāja kodu"
+
+msgid "Counter"
+msgstr "Skaitītāji"
+
+msgid "Begining day"
+msgstr "Dienas sākums"
+
+msgid "End of day"
+msgstr "Dienas beigas"
+
+msgid "Night mode"
+msgstr "Dienas režīms"
+
+msgid "Inactive profiles"
+msgstr "Neaktīvo profili"
+
+msgid "Inactive profiles deleted"
+msgstr "Neaktīvs profilus, dzēst"
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "Šajā kategorijā ietilpst profili, kas reģistrēti vairāk nekā 6 mēnešus atpakaļ, pēdējā dienā apmeklēt vairāk nekā 5 mēnešus atpakaļ un nulles aktivitātes.<br>Var droši izņemt tos."
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr "Kļūda! Ievades laukā ir tikusi kļūdaini norādīta &quot;krāsa&quot;"
+
+msgid "First address is entered incorrectly"
+msgstr "Kļūda! Pirmā adrese nav pareizi ievadīta"
+
+msgid "Second address is entered incorrectly"
+msgstr "Kļūda! Otrā adrese nav pareizi ievadīta"
+
+msgid "You cannot delete higher administration"
+msgstr "Kļūda! Jūs nevarat dzēst augstāk stāvošu par Jums"
+
+msgid "Title + Text"
+msgstr "Nosaukums + teksts"
+
+msgid "Include in a map"
+msgstr "Ieslēgt kartē"
+
+msgid "Date set"
+msgstr "Uzstādīšanas datums"
+
+msgid "Ban by IP"
+msgstr "Bans pēc IP"
+
+msgid "Unban all IP"
+msgstr "Atbanot visus pēc IP"
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr "IP banu tabula veiksmīgi attīrīta.<br>Atbanotas visas IP adreses"
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr "<b>UZMANĪBU!</b> IP banu tabula tiks attīrīta.<br>Jūs tiešām vēlaties atbanot visus pēc IP?"
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Kļūda! Bans nav iespējams. Jūsu paša IP adrese nonāk šajā lokā"
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr "Kļūda! IP adrese, ko Jūs ievadījāt, konfliktē ar esošajām, kas jau ir datu bāzē"
+
+msgid "Ban deleted"
+msgstr "Dzēst banu"
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Piemērs:<br><span class=\"red\">10.5.7.1</span> - Tiek banota viena IP adrese<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Banojam vairāku IP adrešu diapazonu.<br><span class=\"red\">10.5.*.*</span> - Banojam pēc maskas. Tiks bloķēti visi, sākoties adresei ar 0 un beidzoties ar 255"
+
+msgid "IP Ban"
+msgstr "Banot IP"
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "Ievadiet konkrētu IP adresi, maska un diapazons netiek atbalstīts"
+
+msgid "Ban range address"
+msgstr "Banojam IP adresi ar diapazonu"
+
+msgid "Ban on the subnet mask"
+msgstr "Banojam IP adresi pēc maskas"
+
+msgid "Ban IP address"
+msgstr "Banojam konkrētu IP adresi"
+
+msgid "Search IP"
+msgstr "Meklēt IP adresi"
+
+msgid "This address not in the database"
+msgstr "Kļūda! Šādas IP adreses datu bāzē nav"
+
+msgid "Forbid to vote for the administration"
+msgstr "Kļūda! Aizliegts balsot par saita administrāciju"
+
+msgid "Are you sure you want to drop karma?"
+msgstr "Vai Jūs tiešam gribat atjaunot Karmu?"
+
+msgid "Karma is dropped"
+msgstr "Karma tika attīrīta"
+
+msgid "Drop karma"
+msgstr "Nomest karmu"
+
+msgid "Restriction for vote"
+msgstr "Balsojuma ierobežojumi"
+
+msgid "Voices per day"
+msgstr "Dienas balsojumi"
+
+msgid "Default language"
+msgstr "Saita noklusējuma valoda"
+
+msgid "You cannot delete language established for system by default"
+msgstr "Kļūda! Nevar dzēst valodu, kura ir uzstādīta kā sistēmas noklusējuma valoda"
+
+msgid "Are you sure you want to delete language?"
+msgstr "Vai Jūs tiešām vēlaties dzēst valodu"
+
+msgid "Failed select language"
+msgstr "Kļūda! Valoda nav izvēlēta"
+
+msgid "Language Settings"
+msgstr "Valodas iestatījumi"
+
+msgid "System Language"
+msgstr "Sistēmas valoda"
+
+msgid "Lines"
+msgstr "Līniju pārnešana"
+
+msgid "Add link"
+msgstr "Pievienot linku"
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "Formātā FFFFFF, ja negribat izcelt saiti ar krāsu, tad vienkārši varat neaizpildat šo teksta lauku"
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Daudzums kopš ievietots links, pēc kura tas tiks automātiski tiks dzēsts<br>0 - bez ierobežojumiem"
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "Linka nosaukuma visu rakstat aiz šā simbola |"
+
+msgid "All pages"
+msgstr "Uz visām lapām"
+
+msgid "On all but the main"
+msgstr "Uz visam, izņemot galveno"
+
+msgid "Only main page"
+msgstr "Tikai uz galvenās"
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Pārgājienu daudzums, pēc kura links automātiski tiks aizvākts<br>0 - bez iemesliem"
+
+msgid "Link successfully added"
+msgstr "Links veiksmīgi ievietots"
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Jūs tiešām vēlaties dzēst visas neaktīvas saites?"
+
+msgid "Are you sure want to delete link?"
+msgstr "Jūs tiešām vēlaties dzēst saiti?"
+
+msgid "Direct Link"
+msgstr "Tiešā saite"
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr "Ja ir ieslēgta &quot;Tiešā saite&quot;, tad statistika netiks skaitīta"
+
+msgid "Edit link"
+msgstr "Rediģēt saiti"
+
+msgid "Link successfully changed!"
+msgstr "Saite veiksmīgi rediģēta"
+
+msgid "Are you sure you want to hide this link?"
+msgstr "Jūs tiešām vēlaties slēpt saiti?"
+
+msgid "Are you sure you want to restore this link?"
+msgstr "Jūs tiešām vēlaties aktivizēt saiti?"
+
+msgid "Active links"
+msgstr "Aktīvās saites"
+
+msgid "Styling links"
+msgstr "Atrašanās"
+
+msgid "Over the counter"
+msgstr "Virs skaitītājiem"
+
+msgid "Above logo"
+msgstr "Virs logotipa"
+
+msgid "Under counter"
+msgstr "Zem skaitītājiem"
+
+msgid "Under menu"
+msgstr "Zem izvelnes"
+
+msgid "Delete inactive links"
+msgstr "Dzēst neaktīvās"
+
+msgid "This place is occupied"
+msgstr "Šī vieta ir aizņemta"
+
+msgid "META tags"
+msgstr "META tegi"
+
+msgid "Keywords"
+msgstr "Atslēgas vārdi"
+
+msgid "Description"
+msgstr "Apraksts"
+
+msgid "Option module not specified, will use default module"
+msgstr "Iestatījumi moduļiem nav veikti, tiks izmantoti noklusējuma iestatījumi"
+
+msgid "Include module"
+msgstr "Ieslēgt moduli"
+
+msgid "Modules"
+msgstr "Moduļi"
+
+msgid "News count"
+msgstr "Vienumi jaunumos"
+
+msgid "How many days to show?"
+msgstr "Cik dienas jaunums ir jauns?"
+
+msgid "News on the mainpage"
+msgstr "Jaunumu skaits uz galvenās"
+
+msgid "Operation mode"
+msgstr "Darbības režīms"
+
+msgid "Layout"
+msgstr "Atrašanās"
+
+msgid "Redirect"
+msgstr "Pāradresācija"
+
+msgid "Redicect URL"
+msgstr "URL paradresācija"
+
+msgid "Update Description"
+msgstr "Atjaunināt apraksts"
+
+msgid "Descriptions updated"
+msgstr "Apraksts, kas ir atjaunināts"
+
+msgid "Update smileys"
+msgstr "Atjaunot smaidiņus"
+
+msgid "Registration confirmation"
+msgstr "Reģistrācijas apstiprināšana"
+
+msgid "Registration is confirmed"
+msgstr "Reģistrācija apstiprināta"
+
+msgid "Confirm all"
+msgstr "Apstiprināt visus"
+
+msgid "Delete all"
+msgstr "Dzēst visus"
+
+msgid "All unconfirmed registrations were removed"
+msgstr "Visas neapstiprinātās reģistrācijas tika dzēstas"
+
+msgid "Remove IP"
+msgstr "Dzēst IP"
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "Izdzēstas visas neapstiprinātās reģistrācijas ar IP adresi"
+
+msgid "Search by nick"
+msgstr "Meklēt pēc nika"
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr "<small><b>Piemēri:</b><br><span class=\"red\">10.5.7.1</span> - Meklēt vienu adresi<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Meklēt pēc diapazona (maskas zīmi * nevar izmantot)<br><span class=\"red\">10.5.*.*</span> - Meklēt pēc maskas. Tiks atrastas visas IP, sākot no 0 un beidzot ar 255</small>"
+
+msgid "Server Time"
+msgstr "Servera laiks"
+
+msgid "Show all"
+msgstr "Rādīt visiem"
+
+msgid "Only computers"
+msgstr "Tikai datoriem"
+
+msgid "Only guests"
+msgstr "Tikai viesiem"
+
+msgid "site closed, except administration"
+msgstr "slēgts uz visiem, bet administrācijai"
+
+msgid "site closed, except SV!"
+msgstr "slēgts uz visiem, bet SV!"
+
+msgid "Site Map"
+msgstr "Saita karte"
+
+msgid "Web site address without the slash at the end"
+msgstr "Saita adrese bez slīpsvītras(/) beigās"
+
+msgid "Site copyright"
+msgstr "Saita autortiesības"
+
+msgid "Site E-mail"
+msgstr "Saita e-pasts"
+
+msgid "System settings"
+msgstr "Saita iestatījumi"
+
+msgid "Error updating cache"
+msgstr "Kļūda atverot smaidiņu kešu"
+
+msgid "Cache successfully updated!"
+msgstr "Smaidiņu kešs tika veiksmīgi atjaunots"
+
+msgid "Super Moderators"
+msgstr "Vecākie moderātori"
+
+msgid "System"
+msgstr "Sistēma"
+
+msgid "Everyone"
+msgstr "Visiem"
+
+msgid "Guests"
+msgstr "Viesiem"
+
+msgid "Users"
+msgstr "Lietotājiem"
+
+msgid "Administration"
+msgstr "Administrācija"
+
+msgid "Delete user"
+msgstr "Lietotāja dzēšana"
+
+msgid "Are you sure that you want to delete this user?"
+msgstr "Jūs tiešām vēlaties dzēst šo lietotāju?"
+
+msgid "Cleaning activities"
+msgstr "Aktivitātes dzēšana"
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr "Foruma tīrišanas laikā, tēmas un posti pāriet režīmā &quot;slēptie&quot;"
+
+msgid "User deleted"
+msgstr "Lietotājs dzēsts"
+
+msgid "Database cleanup"
+msgstr "Datu bāzes tīrīšana"
+
+msgid "On registration"
+msgstr "Reģistrācijā"
+

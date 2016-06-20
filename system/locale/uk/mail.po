@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+""
+
+msgid "User has been added to your contact list"
+msgstr "Пользователь добавлен в список контактов"
+
+msgid "Block user"
+msgstr "В игнор"
+
+msgid "Block"
+msgstr "Заблокировать"
+
+msgid "Blocklist"
+msgstr "Заблокированные"
+
+msgid "Contact deleted"
+msgstr "Контакт удален"
+
+msgid "Contact does not exist"
+msgstr "Контакта не существует"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "Correspondence"
+msgstr "Переписка"
+
+msgid "Deleting messages"
+msgstr "Удаление сообщений"
+
+msgid "Unblock"
+msgstr "Разблокировать"
+
+msgid "Incoming messages from"
+msgstr "Входящие сообщения от"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Such file does not exist!"
+msgstr "Такого файла не существует!"
+
+msgid "No file selected!"
+msgstr "Файл не выбран!"
+
+msgid "You cannot add yourself as a contact"
+msgstr "Самого себя нельзя добавить в контакт"
+
+msgid "To Cabinet"
+msgstr "В кабинет"
+
+msgid "Incoming"
+msgstr "Входящие"
+
+msgid "Incoming messages"
+msgstr "Входящие сообщения"
+
+msgid "Message deleted"
+msgstr "Сообщение удалено"
+
+msgid "Message does not exist"
+msgstr "Такого сообщения не существует"
+
+msgid "My Contacts"
+msgstr "Мои контакты"
+
+msgid "New Messages"
+msgstr "Новые сообщения"
+
+msgid "Contact isn\"t chosen"
+msgstr "Не выбран контакт"
+
+msgid "Contact for removal isn\"t chosen"
+msgstr "Не выбран контакт для удаления"
+
+msgid "The message for removal isn\"t chosen"
+msgstr "Не выбрано сообщение для удаления"
+
+msgid "You really want to add contact?"
+msgstr "Вы действительно хотите добавить контакт?"
+
+msgid "You really want to block contact?"
+msgstr "Вы действительно хотите заблокировать контакт?"
+
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "Подтвердите удаление контакта"
+
+msgid "You really want to remove the message?"
+msgstr "Вы действительно хотите удалить сообщение?"
+
+msgid "You really want to unblock contact?"
+msgstr "Вы действительно хотите разблокировать контакт?"
+
+msgid "Send a message"
+msgstr "Отправка сообщения"
+
+msgid "User is blocked"
+msgstr "Пользователь заблокирован"
+
+msgid "User is unblocked"
+msgstr "Пользователь разблокирован"
+
+msgid "This user can not be blocked"
+msgstr "Данного пользователя нельзя заблокировать"
+
+msgid "User not blocked"
+msgstr "Пользователь не заблокирован"
+
+msgid "No new message"
+msgstr "Новых сообщений нет"
+
+msgid "The sent messages for"
+msgstr "Отправленные сообщения для"
+
+msgid "Sent messages"
+msgstr "Отправленные сообщения"
+
+msgid "Sent"
+msgstr "Отправленные"
+
+msgid "System messages"
+msgstr "Системные сообщения"
+
+msgid "To Whom"
+msgstr "Кому"
+
+msgid "Min. 2, Max. 5000 symbols"
+msgstr "Мин. 2 Мах. 5000 символов"
+
+msgid "Maximum size"
+msgstr "Максимальный размер"
+
+msgid "Select file"
+msgstr "Выбрать файл"
+
+msgid "Account Blocked! You can not send messages."
+msgstr "Учетная запись заблокированна! Вы не можете отправлять сообщения."
+
+msgid "Clear messages"
+msgstr "Очистить сообщения"
+
+msgid "Message sent"
+msgstr "Сообщение отправлено"
+
+msgid "Messages are deleted"
+msgstr "Сообщения удалены"
+
+msgid "Confirm the deletion of messages"
+msgstr "Подтвердите удаление сообщений"
+
+msgid "Personal correspondence with"
+msgstr "Личная переписка с"
+
+msgid "Send a message"
+msgstr "Отправка сообщения"
+
+msgid "Specify the recipient\"s login"
+msgstr "Укажите логин получателя"
+
+msgid "Message cannot be empty"
+msgstr "Собщение не может быть пустым"
+
+msgid "Invalid message length. (Min. 2, Max. 5000 symbols)"
+msgstr "Недопустимая длина сообщения. (Мин. 2 Мах. 5000 символов)"
+
+msgid "You cannot send messages to yourself"
+msgstr "Самому себе нельзя отправлять сообщения"
+
+msgid "Error uploading file!"
+msgstr "Ошибка при выгрузке файла!"
+
+msgid "It is forbidden to upload files without a name!"
+msgstr "Запрещается выгружать файлы без имени!"
+
+msgid "It is forbidden to upload files without expansion!"
+msgstr "Запрещается выгружать файлы без расширения!"
+
+msgid "The size of the file exceeds the maximum allowable upload!"
+msgstr "Размер выгружаемого файла превышает максимально допустимый!"
+
+msgid "In the file name contains invalid characters."
+msgstr "В названии файла присутствуют недопустимые символы.<br>Разрешены только латинские символы, цифры и некоторые знаки ( .()+_- )<br>Запрещены пробелы."
+
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "Запрещенный тип файла! К отправке разрешены только файлы, имеющие следующее расширение"
+
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "Пользователь у Вас в игноре. Отправка сообщения не возможна."
+
+msgid "The user added you in the ignore list. Sending the message isn\"t possible."
+msgstr "Пользователь добаил Вас в игнор. Отправка сообщения не возможна."
+
+msgid "System message upon registration"
+msgstr "Системное сообщение при регистрации"
+
+msgid "Tags"
+msgstr "Метки"
+
+msgid "recipient login"
+msgstr "логин получателя"
+
+msgid "current time"
+msgstr "текущее время"
+
+msgid "Subject of the system message"
+msgstr "Тема системного сообщени"
+
+msgid "Spam"
+msgstr "Спам"
+
+msgid "Function in development"
+msgstr "Функция в разработке"
+
+msgid "Sending messages"
+msgstr "Рассылка сообщений"
+
+msgid "To this user can write only contacts"
+msgstr "Данному пользователю могут писать только контакты"
+
+msgid "To this user can write only friends"
+msgstr "Данному пользователю могут писать только друзья"
+
+msgid "Come more often and here it will be pleasant to you."
+msgstr "Заходите чаще и Вам тут понравится."
+
+msgid "Yours faithfully, Administrator."
+msgstr "С уважением, Администрация."
+
+msgid "We are glad to see you on our site."
+msgstr "Мы рады видеть Вас на нашем сайте."
+
+msgid "Welcome!"
+msgstr "Добро пожаловать!"
+
+msgid "Friends category"
+msgstr "Категории друзей"
+

@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "Жаңылык коюлду"
+
+msgid "News changed"
+msgstr "Жаңылык өзгөртүлдү"
+
+msgid "News deleted"
+msgstr "Жаңылык өчүрүлдү"
+
+msgid "Title"
+msgstr "Мазмуун"
+
+msgid "Delete all news"
+msgstr "Бардык жаңылыктар өчүрүлдү"
+
+msgid "Older than 1 month"
+msgstr "1 айдан өткөн"
+
+msgid "Delete all news older than 1 month"
+msgstr "1 айдан өткөн бардык жаңылыктар өчүрүлдү"
+
+msgid "Older than 1 week"
+msgstr "1 апта өткен"
+
+msgid "Delete all news older than 1 week"
+msgstr "1 жумадан өткөн бардык жаңылыктар өчүрүлдү"
+
+msgid "Discussion"
+msgstr "Талкуулоо"
+
+msgid "Discuss in forum"
+msgstr "Форумда талкуулоо"
+
+msgid "Do not discuss"
+msgstr "Талкуулообой эле кою "
+
+msgid "You have not entered news title"
+msgstr "Сиз макаланын мазмуусун жазбадыңыз"
+
+msgid "You have not entered news text"
+msgstr "Сиз макаланын текстин жазбадыңыз"
+
+msgid "Back to news"
+msgstr "Жаңылыктарга"
+

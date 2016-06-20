@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+""
+
+msgid "AutoLogin Link"
+msgstr "Ссылка на Автологин"
+
+msgid "<b>ATTENTION !!</b><br>For your safety, never use your autologin in unsafe locations (internet cafe, other computer, etc.)"
+msgstr "<b>Внимание!</b><br>В целях безопасности, никогда не используйте Автологин в ненадежных местах (интернет-кафе, чужие компьютеры и др.)"
+
+msgid "Verification code"
+msgstr "Проверочный код"
+
+msgid "Change password"
+msgstr "Меняем пароль"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address"
+msgstr "Пароль успешно изменен.<br>Новый пароль выслан на ваш адрес E-mail"
+
+msgid "Enter code"
+msgstr "Введите код"
+
+msgid "Incorrect code"
+msgstr "Проверочный код введен неверно"
+
+msgid "Invalid E-mail address"
+msgstr "E-mail адрес указан неверно"
+
+msgid "Error sending E-mail"
+msgstr "Ошибка отправки E-mail"
+
+msgid "Password recovery is impossible"
+msgstr "Восстановление пароля невозможно"
+
+msgid "It is necessary to fill in all fields"
+msgstr "Нужно заполнить все поля формы"
+
+msgid "Password must be min. 3, max. 10 characters"
+msgstr "Длина пароля должна быть минимум 3 и максимум 10 символов"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Подтверждение нового пароля введено неверно"
+
+msgid "Incorrect entered old password"
+msgstr "Старый пароль введен неверно"
+
+msgid "You cannot change password of higher administration"
+msgstr "Вы не можете менять пароль старшего Вас по должности"
+
+msgid "Time allotted for the password recovery has passed"
+msgstr "Время, отведенное на восстановления пароля, прошло"
+
+msgid "Enter new password"
+msgstr "Введите новый пароль"
+
+msgid "Enter old password"
+msgstr "Введите старый пароль"
+
+msgid "Password length min. 3, max. 10 characters, letters and numbers are allowed."
+msgstr "Длина пароля мин. 3, макс. 10 символов, разрешены буквы Латинского алфавита и цифры."
+
+msgid "Password successfully changed"
+msgstr "Пароль успешно изменен"
+
+msgid "Password recovery"
+msgstr "Восстановление пароля"
+
+msgid "Repeat password"
+msgstr "Повторите пароль"
+
+msgid "Password will be send to E-mail address specified in your profile.<br>WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Пароль будет выслан на E-mail Адрес, указанный в Вашей анкете.<br>ВНИМЕНИЕ! Если в анкете не был указан E-mail адрес, то Вы не сможете восстановить пароль"
+
+msgid "Hello"
+msgstr "Здравствуйте"
+
+msgid "You start process of password recovery on the site"
+msgstr "Вы начали процедуру по восстановлению пароля на сайте"
+
+msgid "In order to recover your password, you must click on the link"
+msgstr "Для того, чтобы восстановить пароль, вам необходимо перейти по ссылке"
+
+msgid "Link valid for 1 hour"
+msgstr "Ссылка действительна в течение 1 часа"
+
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr "Если это письмо попало к вам по ошибке или вы не собираетесь восстанавливать пароль, то просто проигнорируйте его"
+
+msgid "Check your e-mail for further information"
+msgstr "Инструкции по восстановлению пароля высланы на указанный Вами адрес E-mail"
+
+msgid "After logging in, you can change your password to new one."
+msgstr "После входа на сайт, Вы сможете сменить пароль на другой, какой пожелаете."
+
+msgid "You have changed your password on the site"
+msgstr "Вы изменили пароль на сайте"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Пароль можно восстанавливать не чаще 1 раза в сутки"
+
+msgid "Send"
+msgstr "Отправить"
+
+msgid "Show autologin link"
+msgstr "Показать ссылку на Автологин"
+
+msgid "Your E-mail"
+msgstr "Ваш e-mail"
+
+msgid "Username"
+msgstr "Ваш логин"
+
+msgid "Your new password"
+msgstr "Ваш новый пароль"
+

@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "500 characters"
+msgstr "500 символ"
+
+msgid "1000 characters"
+msgstr "1000 символ"
+
+msgid "3000 characters"
+msgstr "3000 символ"
+
+msgid "Always"
+msgstr "ардайым"
+
+msgid "Stick 1-st post"
+msgstr "1-чи постту бекитүү"
+
+msgid "Use textarea"
+msgstr "Киргизүү талааны кошуу"
+
+msgid "Unread"
+msgstr "окулбагандар"
+
+msgid "Basic settings"
+msgstr "Негизги оңдоолор"
+
+msgid "Enter message"
+msgstr "Жазууну киргизүү"
+
+msgid "My settings"
+msgstr "Менин оңдоолорум"
+
+msgid "never"
+msgstr "Эчкачан"
+
+msgid "not cut"
+msgstr "кеспөө"
+
+msgid "Or enter yours"
+msgstr "Же өзүңүз көрсөтүңүз"
+
+msgid "Cropping posts"
+msgstr "Постторду кесүү"
+
+msgid "Contacts"
+msgstr "Кайта сортоо"
+

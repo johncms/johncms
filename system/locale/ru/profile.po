@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "О себе"
+
+msgid "Everyone"
+msgstr "Всем"
+
+msgid "With Password"
+msgstr "По паролю"
+
+msgid "Closed"
+msgstr "Закрыт"
+
+msgid "Friends only"
+msgstr "Только для друзей"
+
+msgid "This field is required if the password access is activated"
+msgstr "Если включен доступ по паролю, то данное поле обязательно"
+
+msgid "Achievements"
+msgstr "Достижения"
+
+msgid "Activity"
+msgstr "Активность"
+
+msgid "Album"
+msgstr "Альбом"
+
+msgid "Album successfully changed"
+msgstr "Альбом успешно изменен"
+
+msgid "Create Album"
+msgstr "Создать альбом"
+
+msgid "Album successfully created"
+msgstr "Альбом успешно создан"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Вы действительно хотите удалить альбом?<br>Если в нем есть фотографии, они тоже будут удалены"
+
+msgid "Album Deleted"
+msgstr "Альбом удален"
+
+msgid "Edit Album"
+msgstr "Изменить альбом"
+
+msgid "Album List"
+msgstr "Список альбомов"
+
+msgid "You must type a password to view this album"
+msgstr "Для доступа к данному альбому, необходимо ввести пароль"
+
+msgid "Select Album"
+msgstr "Выберите альбом"
+
+msgid "Pending confirmation"
+msgstr "Ожидает подтверждения регистрации"
+
+msgid "Delete avatar"
+msgstr "Аватар удален"
+
+msgid "Upload avatar"
+msgstr "Выгружаем аватар"
+
+msgid "Blocked"
+msgstr "Заблокированные"
+
+msgid "Birthday"
+msgstr "Дата рожденья"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Дата рождения (д.м.г)"
+
+msgid "City"
+msgstr "Город"
+
+msgid "Contacts"
+msgstr "Связь"
+
+msgid "Data saved"
+msgstr "Данные сохранены"
+
+msgid "Prohibit karma"
+msgstr "Запретить карму"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Внимание! Правильно указывайте свой адрес электронной почты!<br>Именно на него будет высылаться Ваш пароль"
+
+msgid "The album already exists"
+msgstr "Такой альбом уже есть"
+
+msgid "Invalid format date of birth"
+msgstr "Дата рождения указана неверно"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "Номер ICQ должен состоять минимум из 5 цифр и максимум из 10"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Минимальная длина Ника - 2, максимальная 30 символов"
+
+msgid "Nick contains invalid characters"
+msgstr "Недопустимые символы в Нике"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Вы не можете редактировать анкету старшего Вас по должности"
+
+msgid "Friends only"
+msgstr "Только для друзей"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Список пуст.<br>Сообщения данного пользователя автоматически удалились после запланированной чистки Гостевой"
+
+msgid "hidden"
+msgstr "скрыт"
+
+msgid "Image"
+msgstr "Картинка"
+
+msgid "Add image"
+msgstr "Добавить фото"
+
+msgid "Delete image"
+msgstr "Удалить фото"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Вы действительно хотите удалить изображение?"
+
+msgid "Edit image"
+msgstr "Изменить картинку"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "Учтите, что при частом изменении яркости, контрастности и повороте, теряется качество изображения.<br>Не пользуйтесь этими функциями без необходимости."
+
+msgid "Image successfully changed"
+msgstr "Картинка изменена"
+
+msgid "Move the image"
+msgstr "Переместить фото"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Для того, чтобы перемещать фотографии, у Вас должен быть создан еще один альбом"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Фотография перемещена в выбранный альбом"
+
+msgid "Rotate"
+msgstr "Повернуть"
+
+msgid "do not rotate"
+msgstr "не поворачивать"
+
+msgid "counterclockwise"
+msgstr "против часовой стрелки"
+
+msgid "clockwise"
+msgstr "по часовой стрелке"
+
+msgid "My Album"
+msgstr "Мой альбом"
+
+msgid "My activity"
+msgstr "Мои активы"
+
+msgid "My Mailbox"
+msgstr "Моя почта"
+
+msgid "My Account"
+msgstr "Личный кабинет"
+
+msgid "My Profile"
+msgstr "Моя анкета"
+
+msgid "My settings"
+msgstr "Мои настройки"
+
+msgid "My statistic"
+msgstr "Моя Статистика"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Recent comments"
+msgstr "Последние комментарии"
+
+msgid "New photos"
+msgstr "Новые фотографии"
+
+msgid "Min.2, Max. 20"
+msgstr "мин.2, макс. 20"
+
+msgid "Personal info"
+msgstr "Личные данные"
+
+msgid "Contact number"
+msgstr "Тел. номер"
+
+msgid "Photo"
+msgstr "Фотография"
+
+msgid "Add to Profile"
+msgstr "В анкету"
+
+msgid "Photo added to the profile"
+msgstr "Фото установлено в анкету"
+
+msgid "Photos"
+msgstr "Фотографии"
+
+msgid "Photo deleted"
+msgstr "Фотография удалена"
+
+msgid "Photo uploaded"
+msgstr "Фотография загружена"
+
+msgid "Edit Profile"
+msgstr "Изменить Анкету"
+
+msgid "Functionary on the site"
+msgstr "Должность на сайте"
+
+msgid "User"
+msgstr "Обычный юзер"
+
+msgid "Moder chat"
+msgstr "Модер чата"
+
+msgid "Forum Moderator"
+msgstr "Модер форума"
+
+msgid "Download Moderator"
+msgstr "Модер по загрузкам"
+
+msgid "Library Moderator"
+msgstr "Модер библиотеки"
+
+msgid "Super Modererator"
+msgstr "Супермодератор"
+
+msgid "Administrator"
+msgstr "Администратор"
+
+msgid "Supervisor"
+msgstr "Супервайзор"
+
+msgid "Received"
+msgstr "Входящие"
+
+msgid "Registration confirmed"
+msgstr "Регистрацию подтвердил"
+
+msgid "Free registration"
+msgstr "Свободная регистрация"
+
+msgid "Registered"
+msgstr "Зарегистрирована"
+
+msgid "Registered"
+msgstr "Зарегистрирована"
+
+msgid "For user"
+msgstr "Для пользователя"
+
+msgid "default settings were set"
+msgstr "установлены настройки по умолчанию"
+
+msgid "Image"
+msgstr "Картинка"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Для выгрузки разрешены файлы JPG, JPEG, PNG, GIF<br>Размер файла не должен превышать"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Вне зависимости от разрешения исходного файла, он будет преобразован в размер 32х32"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Новое изображение заменит старое (если оно было)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "Для лучшего результата, исходное изображение должно иметь равное соотношение сторон"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Вне зависимости от разрешения исходного файла, он будет преобразован в размеры не превышающие 640х480"
+
+msgid "Sent"
+msgstr "Отправленные"
+
+msgid "Male"
+msgstr "Мужской"
+
+msgid "Female"
+msgstr "Женский"
+
+msgid "Back to profile"
+msgstr "Показывать в Анкете"
+
+msgid "Site"
+msgstr "Сайт"
+
+msgid "Select gender"
+msgstr "Укажите пол"
+
+msgid "Max. 50"
+msgstr "макс. 50"
+
+msgid "He stay on the site"
+msgstr "Пробыл на сайте"
+
+msgid "She stay on the site"
+msgstr "Пробыла на сайте"
+
+msgid "System"
+msgstr "Системные"
+
+msgid "Top Comments"
+msgstr "ТОП комментариев"
+
+msgid "Top Downloads"
+msgstr "ТОП загрузок"
+
+msgid "AntiTop"
+msgstr "КГ/АМ"
+
+msgid "Top Views "
+msgstr "ТОП просмотров"
+
+msgid "Top Votes"
+msgstr "ТОП голосов"
+
+msgid "Unread Comments"
+msgstr "Непрочитанные комментарии"
+
+msgid "Upload"
+msgstr "Выгрузить"
+
+msgid "Upload avatar"
+msgstr "Выгружаем аватар"
+
+msgid "Upload a picture"
+msgstr "Выгружаем фото"
+
+msgid "User Profile"
+msgstr "Анкета пользователя"
+
+msgid "Add to Contacts"
+msgstr "Добавить в контакты"
+
+msgid "Add to Friends"
+msgstr "Добавить в друзья"
+
+msgid "Block user"
+msgstr "Добавить в игнор"
+
+msgid "You have already submitted a request"
+msgstr "Вы уже отправили заявку"
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr "Пользователь уже Ваш друг, заявку отменить невозможно. Если вы хотите удалить пользователя из друзей, выберите соответствующий пункт."
+
+msgid "Unlock user"
+msgstr "Удалить из игнора"
+
+msgid "Remove from contacts"
+msgstr "Удалить из контактов"
+
+msgid "Friends"
+msgstr "Друзья"
+
+msgid "My Friends"
+msgstr "Мои друзья"
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr "Пользователь уже предложил вам дружить. Если Вы этого хотите подтвердите его заявку выберите соответствующий пункт."
+
+msgid "offers friendship"
+msgstr "предлагает вам дружить"
+
+msgid "Confirm"
+msgstr "Подтвердить"
+
+msgid "Reject"
+msgstr "Отклонить"
+
+msgid "Request to be friends sent!"
+msgstr "Заявка дружить отправлена!"
+
+msgid "Do you really want to become friends?"
+msgstr "Вы действительно хотите предложить дружбу?"
+
+msgid "Friendship"
+msgstr "Дружба"
+
+msgid "User is already your friend"
+msgstr "Пользователь уже Ваш друг"
+
+msgid "Applications for friendship does not exist"
+msgstr "Заявки на дружбу не существует"
+
+msgid "Application for friendship canceled"
+msgstr "Заявка на дружбу отменена"
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr "Вы действительно хотите отменить предложение дружить?"
+
+msgid "There is no invitation to be friends"
+msgstr "Приглашения дружить не существует"
+
+msgid "agreed with you friends"
+msgstr "согласился с Вами дружить"
+
+msgid "You confirmed friendship. Now the user"
+msgstr "Вы подтвердили дружбу. Теперь пользователь"
+
+msgid "Your friend"
+msgstr "Ваш друг"
+
+msgid "Do you really want to confirm the friendship"
+msgstr "Вы действительно хотите подтвердить дружбу"
+
+msgid "deleted you from friends"
+msgstr "удалил Вас из друзей"
+
+msgid "You remove the user from friends."
+msgstr "Вы удалили пользователя из друзей."
+
+msgid "Do you really want to remove from your friends?"
+msgstr "Вы действительно хотите удалить пользователя из друзей?"
+
+msgid "Removal is not possible! User is not your friend."
+msgstr "Удаление не возможно! Пользователь не является Вашим другом."
+
+msgid "declined your offer to make friends."
+msgstr "отклонил Ваше предложение дружить."
+
+msgid "Request to be friends rejected."
+msgstr "Заявка дружить отклонена."
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr "Вы действительно хотите отклонить предложение дружить"
+
+msgid "The page does not exist!"
+msgstr "Страницы не существует!"
+
+msgid "My requests"
+msgstr "Мои заявки"
+
+msgid "Cancel Request"
+msgstr "Отменить заявку"
+
+msgid "My Offers"
+msgstr "Предложения дружить"
+
+msgid "Confirm friendship"
+msgstr "Подтвердить дружбу"
+
+msgid "Reject friendship"
+msgstr "Отклонить дружбу"
+
+msgid "Remove from friends"
+msgstr "Удалить из друзей"
+
+msgid "Add to friends"
+msgstr "Добавить в друзья"
+
+msgid "Cancel a request to be friends"
+msgstr "Отменить заявку дружить"
+
+msgid "Correspondence"
+msgstr "Переписка"
+
+msgid "Spam"
+msgstr "Спам"
+
+msgid "Relative"
+msgstr "Родственник"
+
+msgid "Fellow Student"
+msgstr "Однокурсник"
+
+msgid "Best friend"
+msgstr "Лучший друг"
+
+msgid "Colleague"
+msgstr "Коллега"
+
+msgid "Classmate"
+msgstr "Одноклассник"
+
+msgid "Friend"
+msgstr "Друг"
+
+msgid "Mail settings"
+msgstr "Настройки почты"
+
+msgid "You can write messages"
+msgstr "Можно писать сообщения"
+
+msgid "Can write all"
+msgstr "Могут писать все"
+
+msgid "Can write only contacts"
+msgstr "Могут писать только контакты"
+
+msgid "Can write only friends"
+msgstr "Могут писать только друзья"
+
+msgid "pointing out that you best friends with him"
+msgstr "указал, что вы с ним лучшие друзья"
+
+msgid "pointed out that you have with him relatives"
+msgstr "указал, что вы с ним родственники"
+
+msgid "pointed out that you have with him classmates"
+msgstr "указал, что вы с ним однокурсники"
+
+msgid "pointing out that you were colleagues"
+msgstr "указал, что вы с ним коллеги"
+
+msgid "pointing out that you were classmates"
+msgstr "указал, что вы с ним одноклассники"
+
+msgid "pointed out that you\"re friends"
+msgstr "указал, что вы с ним друзья"
+
+msgid "You indicated that you are best friends with"
+msgstr "Вы указали, что лучшие друзья с"
+
+msgid "You indicated that the relatives with"
+msgstr "Вы указали, что родственники с"
+
+msgid "You indicated that mates with"
+msgstr "Вы указали, что однокурсники с"
+
+msgid "You indicated that the colleagues with"
+msgstr "Вы указали, что коллеги с"
+
+msgid "You indicated that you classmates with"
+msgstr "Вы указали, что одноклассники с"
+
+msgid "You indicated that you are friends with"
+msgstr "Вы указали, что друзья с"
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr "Вы действительно хотите указать, что пользователь Ваш "
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "The feature is disabled, contact your administrator"
+msgstr "Функция отключена, обратитесь к администратору"
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr "Вы у пользователя в игноре. Вы не можете предлагать ему дружбу."
+

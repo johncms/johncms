@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+""
+
+msgid "and received"
+msgstr "şi a primit"
+
+msgid "Amnesty"
+msgstr "Amnistia"
+
+msgid "Amnesty is available for supervisors only"
+msgstr "Amnistia este disponibil numai pentru autorităţile de SupraVizor"
+
+msgid "Table ban cleared.<br>Offenses cleared"
+msgstr "Tabelul bani închise.<br>Eliminat întreaga istorie a încălcărilor"
+
+msgid "Clear base"
+msgstr "Clare de bază"
+
+msgid "Unban all"
+msgstr "Deblocaţi toate"
+
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "UNBAN tuturor utilizatorilor care au avut bani activă (cu excepţia &quot;Pîna la anula&quot;)"
+
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;UNBAN pe toţi&quot; - încetează toate bani active<br>&quot;Clare de bază&quot; - încetează toate interdicţiile şi curăţă istoria încălcări"
+
+msgid "Blocked"
+msgstr "Blocarea"
+
+msgid "Private"
+msgstr "Privat"
+
+msgid "Comment"
+msgstr "Comentarii"
+
+msgid "Forum"
+msgstr "pe forum"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Guestbook"
+msgstr "Camera de oaspeti"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "Library"
+msgstr "Bibliotecă"
+
+msgid "Activity on a site is completely forbidden. You can receive the mail, but can\"t send"
+msgstr "Interzise complet de activitate pe site-ul. Scrisori pot primi, dar nu trimite"
+
+msgid "Ban for sending private messages (antispam)"
+msgstr "Interdicţia privind expedierea de mesaje în privat (antispam)"
+
+msgid "Forbidden to comment on all moduls subsystem"
+msgstr "Nu pentru a comenta pe toate modulele a subsistemului"
+
+msgid "Forbidden write in Forum"
+msgstr "Interzise pentru a scrie la Forum"
+
+msgid "Deny access to Chat"
+msgstr "Interzice accesul la chat"
+
+msgid "Forbidden write message in guestbook"
+msgstr "Interzis pentru a scrie în camera de oaspeţi"
+
+msgid "Not allowed to post and comment on the photos in the gallery"
+msgstr "Nu este permis să posteze şi să comenteze pe fotografii din Galerie"
+
+msgid "Not allowed post and comment on article in the library"
+msgstr "Nu este permis să posteze şi comentarii cu privire la articolul în Bibliotecă"
+
+msgid "Ban termination"
+msgstr "Rezilierea Bana"
+
+msgid "Unban"
+msgstr "UNBAN"
+
+msgid "User unbanned"
+msgstr "Utilizator deblocat"
+
+msgid "Ban time is going to the end. Offense will be saved in the bans history"
+msgstr "Termină bani activă să menţină înregistrări în istoria de încălcări"
+
+msgid "Delete ban"
+msgstr "Scoaterea Ban"
+
+msgid "Delete"
+msgstr "Scoateţi Ban"
+
+msgid "Removing ban along with a record in the bans history"
+msgstr "Scoaterea unui Ban, împreună cu un record în istoria de încălcări"
+
+msgid "Ban deleted"
+msgstr "Ban eliminat"
+
+msgid "Ban user"
+msgstr "Ban pe utlizator"
+
+msgid "Ban Panel"
+msgstr ""
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Nu aveti drepturi, de a interzice utilizatorului"
+
+msgid "Ban times"
+msgstr "Timp de ban"
+
+msgid "Till cancel"
+msgstr "Pîna la anula"
+
+msgid "Day (30 max.)"
+msgstr "Zile (30 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Ore (24 max.)"
+
+msgid "Minutes (60 max.)"
+msgstr "Minute (60 max.)"
+
+msgid "Ban type"
+msgstr "Tip de Ban"
+
+msgid "Banishment"
+msgstr "A dat ban"
+
+msgid "Are you sure want to clean entire history of user offenses?"
+msgstr "Sigur doriţi să curăţaţi întreaga istorie de încălcări ale utilizatorului?"
+
+msgid "Clear history"
+msgstr "Ştergere istoriei"
+
+msgid "Ban already active"
+msgstr "Această blocare este deja"
+
+msgid "Ban not active"
+msgstr "Ban deja nu este activ"
+
+msgid "There is no required data"
+msgstr "Lipseşte datele solicitate"
+
+msgid "Offenses history can be cleared by supervisor only"
+msgstr "Şterge istorie de încălcări poate doar Supravizor"
+
+msgid "You have no rights to ban in this section"
+msgstr "Nu ai nici dreptul de a nu interzice în secţiunea sa"
+
+msgid "Offenses history cleared"
+msgstr "Istoria încălcări închise"
+
+msgid "Forum"
+msgstr "pe forum"
+
+msgid "Offense"
+msgstr "Încălcare"
+
+msgid "Offenses history"
+msgstr "Istoria încălcări"
+
+msgid "Offenses list"
+msgstr "Lista de încălcări"
+
+msgid "My offenses"
+msgstr "Încălcări mea"
+
+msgid "Private (antispam)"
+msgstr "Privat (antispam)"
+
+msgid "Reason not specified"
+msgstr "Motivul nu este listat"
+
+msgid "System"
+msgstr "Sistemă"
+
+msgid "To karma"
+msgstr "la karma"
+
+msgid "User banned"
+msgstr "Utilizator are ban"
+

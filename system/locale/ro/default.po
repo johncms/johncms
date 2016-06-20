@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "Acces refuzat"
+
+msgid "For registered users only"
+msgstr "Numai pentru utilizatorii înregistraţi"
+
+msgid "Add"
+msgstr "Adăuga"
+
+msgid "Add File"
+msgstr "Adăugați dosar"
+
+msgid "Add Smileys"
+msgstr ""
+
+msgid "Administration"
+msgstr "Administrare"
+
+msgid "Administrators"
+msgstr "Administratorii"
+
+msgid "Admin-Club"
+msgstr "Admin Club"
+
+msgid "Admin Panel"
+msgstr ""
+
+msgid "Smiles for Administration"
+msgstr "Smiles pentru Administrația"
+
+msgid "Administrators events"
+msgstr "Evenimente Administratorului"
+
+msgid "Albums"
+msgstr "Albume"
+
+msgid "New comments in albums"
+msgstr "Comentarii noi în albume"
+
+msgid "All"
+msgstr "Toate"
+
+msgid "Appearance"
+msgstr "Aparenţă"
+
+msgid "Apply"
+msgstr ""
+
+msgid "Confirm"
+msgstr "Confirma"
+
+msgid "Location"
+msgstr "Locaţie"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Authorized"
+msgstr "Autorizate"
+
+msgid "Authorization failed"
+msgstr "Autorizarea nu a reuşit"
+
+msgid "Avatar has been successfully installed"
+msgstr "Avatarul a fost instalat cu succes"
+
+msgid "Avatar successfully uploaded"
+msgstr "Avatarul încărcate cu succes"
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "Chiar vrei să mă setați acest avatar?"
+
+msgid "Avatars"
+msgstr "Avatare"
+
+msgid "Back"
+msgstr "Înapoi"
+
+msgid "Balance"
+msgstr "Balanţa"
+
+msgid "Ban"
+msgstr "BAN"
+
+msgid "Banish"
+msgstr "A dat BAN"
+
+msgid "Ban type"
+msgstr "Tipul de BAN"
+
+msgid "Banish"
+msgstr "A dat BAN"
+
+msgid "Tags (BBcode)"
+msgstr ""
+
+msgid "Birthday"
+msgstr "Data nasterii"
+
+msgid "Birthdays"
+msgstr "Nameday"
+
+msgid "Block"
+msgstr "Blocarea"
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blogs"
+msgstr ""
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cancel"
+msgstr "Anulare"
+
+msgid "Symbols on the picture"
+msgstr "Codul din imagine"
+
+msgid "Catalog"
+msgstr "Listă"
+
+msgid "Category"
+msgstr "Categorie"
+
+msgid "Categories"
+msgstr "Categorii"
+
+msgid "Change password"
+msgstr "Schimbare parolei"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Please, check up correctness of the input data"
+msgstr "Vă rugăm să verificaţi datele introduse"
+
+msgid "Clear"
+msgstr "şterge"
+
+msgid "Clear all"
+msgstr "Clar toate"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "Şterge toate mesajele mai vechi de o zi"
+
+msgid "Full clearing is finished"
+msgstr "Efectuate de curăţare"
+
+msgid "Clearing parameters"
+msgstr "Curăţire Opţiuni"
+
+msgid "Clear all"
+msgstr "Clar toate"
+
+msgid "Older than 1 day"
+msgstr "Mai mari de 1 zi"
+
+msgid "Older than 1 week"
+msgstr "Mai mari de 1 săptămâni"
+
+msgid "Clear all messages from this user"
+msgstr "Clar toate mesajele de la acest utilizator"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "Şterge toate mesajele mai vechi de 1 săptămână"
+
+msgid "Color"
+msgstr "Culoare"
+
+msgid "Text Color"
+msgstr ""
+
+msgid "Background Color"
+msgstr ""
+
+msgid "Comments"
+msgstr "Comentarii"
+
+msgid "Comments are closed"
+msgstr "Comentarii sunt închise"
+
+msgid "General list"
+msgstr "Listă"
+
+msgid "Community"
+msgstr "Activ site-lui"
+
+msgid "Contacts"
+msgstr "Contacte"
+
+msgid "In contacts"
+msgstr "În contacte"
+
+msgid "Continue"
+msgstr ""
+
+msgid "Downloads"
+msgstr "Download-uri"
+
+msgid "Views"
+msgstr "Vizualizari"
+
+msgid "Clock setting"
+msgstr "Setarea ceasului"
+
+msgid "General setting"
+msgstr "Setări generale"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Day"
+msgstr "ziua"
+
+msgid "Days"
+msgstr "zi"
+
+msgid "Default"
+msgstr "În mod implicit"
+
+msgid "Delete"
+msgstr "Şterge"
+
+msgid "Delete message"
+msgstr "Şterge mesajul"
+
+msgid "Delete all"
+msgstr "Şterge totul"
+
+msgid "Do you really want to delete?"
+msgstr "Sigur doriţi să ştergeţi?"
+
+msgid "Description"
+msgstr "Descriere"
+
+msgid "Design"
+msgstr "Skin"
+
+msgid "Communication"
+msgstr "Comunicare"
+
+msgid "Digest"
+msgstr "Ce este nou"
+
+msgid "Direct URL"
+msgstr "Link-uri directe"
+
+msgid "Discuss"
+msgstr "Discuta"
+
+msgid "Display mode"
+msgstr "Mod de afişare"
+
+msgid "Perform"
+msgstr "Alerga"
+
+msgid "Hide"
+msgstr "Ascunde"
+
+msgid "Down"
+msgstr "Jos"
+
+msgid "Download"
+msgstr ""
+
+msgid "Downloads"
+msgstr "Download-uri"
+
+msgid "Edit"
+msgstr "Edita"
+
+msgid "Edit List"
+msgstr ""
+
+msgid "Edited"
+msgstr "Schimbat"
+
+msgid "Enter verification code"
+msgstr "Introduceti codul de verificare"
+
+msgid "Enter site"
+msgstr "Log In"
+
+msgid "ERROR"
+msgstr "EROARE"
+
+msgid "The requested page does not exists"
+msgstr "Pagina nu există"
+
+msgid "Invalid address"
+msgstr "Adresa incorecte"
+
+msgid "Avatar select failed"
+msgstr "Selecţie eroare Avatar"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Lungimea descrieri trebuie să fie de cel puţin 2 caractere"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "Nu puteţi edita tău post mai vechi pe un post"
+
+msgid "The required fields are not filled"
+msgstr "Nu completat campurile obligatorii"
+
+msgid "You have not entered the message"
+msgstr "Nu aţi introdus mesajul"
+
+msgid "You have not entered a name"
+msgstr "Nu aţi introdus un nume"
+
+msgid "You have not entered password"
+msgstr "Nu aţi introdus parola"
+
+msgid "You have not entered text"
+msgstr "Nu aţi introdus text"
+
+msgid "You have not entered Title"
+msgstr "Nu introduceţi un nume"
+
+msgid "File does not exist"
+msgstr "Fisierul nu exista"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Nu puteţi adăuga mesaje ori de câte ori<br>Vă rugăm să aşteptaţi"
+
+msgid "You have not entered login"
+msgstr "Nu aţi introdus Login"
+
+msgid "Message already exists"
+msgstr "Acest mesaj a fost"
+
+msgid "Text is too short"
+msgstr "Prea scurt text"
+
+msgid "Administrator already replied to this message"
+msgstr "Pentru acest post deja răspuns Administrator"
+
+msgid "User does not exists"
+msgstr "Acest utilizator nu exista"
+
+msgid "The security code is not correct"
+msgstr "Cod de verificare incorect"
+
+msgid "Bad data"
+msgstr "Informaţia falsă"
+
+msgid "Invalid length"
+msgstr "Lungime nevalidă"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "Câmpurile sunt dincolo de limitele admise"
+
+msgid "Incorrect Password"
+msgstr "Parola este incorectă"
+
+msgid "Invalid characters"
+msgstr "Incorecte simboluri"
+
+msgid "No new events"
+msgstr "Nu noi evoluţii"
+
+msgid "Logout"
+msgstr "Ieşire"
+
+msgid "External Link"
+msgstr "Externe Link"
+
+msgid "Height of field"
+msgstr "Înălţime domeniul"
+
+msgid "Width of field"
+msgstr "Lăţimea domeniul"
+
+msgid "Max. File size"
+msgstr "Max. dimensiune fişierei"
+
+msgid "Files"
+msgstr "Fişiere"
+
+msgid "Bold"
+msgstr ""
+
+msgid "Italic"
+msgstr "Cursiv"
+
+msgid "Underline"
+msgstr "Subliniat"
+
+msgid "Forgot password"
+msgstr "Am uitat parola"
+
+msgid "Forum"
+msgstr ""
+
+msgid "Forum post"
+msgstr "Mesajuri pe forum"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "Guest"
+msgstr "Oaspete"
+
+msgid "Guests"
+msgstr "Vizitatori"
+
+msgid "Gzip compression"
+msgstr "Gzip comprimare"
+
+msgid "Guestbook"
+msgstr "Camera de oaspeti"
+
+msgid "The guestbook is closed"
+msgstr "Camera de oaspeti este închisă"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "Nici un mesaj în camera de oaspeti<br><b>Fii primul! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "La mulţi ani!!!"
+
+msgid "Heading"
+msgstr "Titlu"
+
+msgid "Help"
+msgstr "Referinţă"
+
+msgid "Hi"
+msgstr "Salut,"
+
+msgid "Hide"
+msgstr "Ascunde"
+
+msgid "History"
+msgstr "Istorie"
+
+msgid "Home"
+msgstr "Acasă"
+
+msgid "Hours"
+msgstr "oră"
+
+msgid "Ignore"
+msgstr "Ignora"
+
+msgid "Details"
+msgstr "Detalii"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "În momentul de față, accesul la site-ul este permis doar pentru SV!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "În momentul de față, este permis accesul la site-ul doar pentru locul de administrare"
+
+msgid "Information"
+msgstr "Info"
+
+msgid "Info, FAQ"
+msgstr ""
+
+msgid "Offenses"
+msgstr "BANuri"
+
+msgid "IP Activity"
+msgstr "IP Activitate"
+
+msgid "Actual addresses"
+msgstr "Adresa actuală"
+
+msgid "IP address"
+msgstr "Adresa IP"
+
+msgid "IP history"
+msgstr "IP Istorie"
+
+msgid "Karma"
+msgstr ""
+
+msgid "Language"
+msgstr "Limba"
+
+msgid "Select language"
+msgstr "Selectaţi limba"
+
+msgid "System language set"
+msgstr "Pentru sistema este setată limba"
+
+msgid "Last activity"
+msgstr "Ultima activitate"
+
+msgid "Last IP"
+msgstr "Ultimul IP"
+
+msgid "Last visit"
+msgstr "Ultima vizita"
+
+msgid "Library"
+msgstr "Bibliotecă"
+
+msgid "Mod. Library"
+msgstr "Mod. Biblioteci"
+
+msgid "Lines per page"
+msgstr "Rânduri pe pagină"
+
+msgid "Link"
+msgstr ""
+
+msgid "List"
+msgstr "Referinte"
+
+msgid "Empty list"
+msgstr "Lista este vidă"
+
+msgid "OFF"
+msgstr "Opriţi"
+
+msgid "ON"
+msgstr "Include"
+
+msgid "or"
+msgstr "sau"
+
+msgid "Login"
+msgstr ""
+
+msgid "Username"
+msgstr "Login"
+
+msgid "General settings"
+msgstr "Setări generale"
+
+msgid "Mail"
+msgstr ""
+
+msgid "New message"
+msgstr "Mesaj nou"
+
+msgid "Guys"
+msgstr "Băieţi"
+
+msgid "Message"
+msgstr "Mesajul"
+
+msgid "Messages"
+msgstr "Mesaje"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, max. 30 de caractere"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, max. 500 de caractere"
+
+msgid "Moderators"
+msgstr "Moderatori"
+
+msgid "Move"
+msgstr "Muta"
+
+msgid "My Smileys"
+msgstr ""
+
+msgid "Name"
+msgstr "Prenume"
+
+msgid "New Files"
+msgstr "Noi fişiere"
+
+msgid "New reviews"
+msgstr "Noi comentarii"
+
+msgid "News"
+msgstr "Ştiri"
+
+msgid "Archive news"
+msgstr "Noutăţi"
+
+msgid "Next"
+msgstr "Mai departe"
+
+msgid "Nick"
+msgstr ""
+
+msgid "Night"
+msgstr "Noapte"
+
+msgid "Nothing found for this request"
+msgstr "Căutarea dvs. nu a precise"
+
+msgid "Not specified"
+msgstr "Nespecificat"
+
+msgid "Optional field"
+msgstr "Opţional domeniul"
+
+msgid "Moderation"
+msgstr ""
+
+msgid "Online"
+msgstr ""
+
+msgid "Personal"
+msgstr ""
+
+msgid "Personal"
+msgstr ""
+
+msgid "Password"
+msgstr "Parolă"
+
+msgid "Photo Album"
+msgstr "Album foto"
+
+msgid "Photo Albums"
+msgstr "Albume foto"
+
+msgid "poins"
+msgstr "puncte"
+
+msgid "posts"
+msgstr "mesaje"
+
+msgid "Preview"
+msgstr ""
+
+msgid "Private"
+msgstr "Privat"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Quiz"
+msgstr "Ghicitul"
+
+msgid "Quick jump"
+msgstr "Tranziţie rapidă"
+
+msgid "Rating"
+msgstr ""
+
+msgid "Read Only"
+msgstr "Doar-în-citire"
+
+msgid "Reason"
+msgstr "Cauza"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>ATENTIE!</h3>Aveţi de gând să părăsească site-ul nostru şi du-te la un link extern"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Administrarea de site-ul nostru nu este responsabil pentru conţinutul site-urilor externe"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "Este recomandat să nu se specifica datele dumneavoastră, referitoare la"
+
+msgid "(Login, Password), on third party sites"
+msgstr "(Login, Parola), pe site-uri terţă parte"
+
+msgid "Go to link"
+msgstr "Du-te"
+
+msgid "Registration"
+msgstr "Înregistrare"
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "Ne pare rău, dar cererea dumneavoastră de înregistrare nu a revizuit încă <br> Vă rugăm să aşteptaţi"
+
+msgid "Remains"
+msgstr "A rămas"
+
+msgid "Remember"
+msgstr "Amintiţi-vă"
+
+msgid "Repeat"
+msgstr "Repeta"
+
+msgid "Reply"
+msgstr "Raspunde"
+
+msgid "Reset setting"
+msgstr "Reset"
+
+msgid "New reviews"
+msgstr "Noi comentarii"
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Search"
+msgstr "Căutare"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "Lungimea interogare: 4min., 64 max.<br>Caută insensibil la majuscule<br>Rezultatele sunt sortate după relevanţă"
+
+msgid "Search History"
+msgstr "Istoricul căutărilor"
+
+msgid "Do you really want to clear the search history?"
+msgstr "Vrei într-adevăr să ștergeți istoricul de căutare?"
+
+msgid "New search"
+msgstr "Cautare noua"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "Caută merge pe Niku utilizator (nickname) şi litere majuscule. Asta este, <b>utilizator</b> şi a <b>utilizatorului</b> pentru a găsi echivalente. <br> Caută cererea este tradus, care este, pentru a găsi, de exemplu, Nick Dima, puteţi scrie o interogare Dima, rezultatul va fi acelaşi."
+
+msgid "Query results"
+msgstr "Solicitare rezultate"
+
+msgid "Your search did not match any results"
+msgstr "Căutarea dvs. nu a precise"
+
+msgid "Find a user"
+msgstr "Cauta utilizator"
+
+msgid "Sec."
+msgstr "sec."
+
+msgid "seconds"
+msgstr "secunde"
+
+msgid "Section"
+msgstr "Secţiune"
+
+msgid "Sections"
+msgstr "Secţiune"
+
+msgid "Security"
+msgstr "Securitate"
+
+msgid "Select"
+msgstr "Alege"
+
+msgid "Send"
+msgstr "Trimite"
+
+msgid "Set to Profile"
+msgstr "Amplasat în profil"
+
+msgid "Settings"
+msgstr "Setări"
+
+msgid "Time settings"
+msgstr "Setarea ceasului"
+
+msgid "Shifting time"
+msgstr "Timp de schimbare"
+
+msgid "Options set to default"
+msgstr "Opţiuni setat pe implicit"
+
+msgid "Setting saved"
+msgstr "Setări rezervat"
+
+msgid "Show"
+msgstr "Arată"
+
+msgid "Show period"
+msgstr "Arată după perioada"
+
+msgid "Site access"
+msgstr "Accesul la site"
+
+msgid "New on the site"
+msgstr "Noi pe site-ul"
+
+msgid "Site News"
+msgstr "Ştiri Resurse"
+
+msgid "Stay on site"
+msgstr "Conductie site-ul"
+
+msgid "Smileys"
+msgstr "Zâmbetele"
+
+msgid "Sort"
+msgstr "Triere"
+
+msgid "Spoiler"
+msgstr ""
+
+msgid "Statistic"
+msgstr "Statistică"
+
+msgid "My Statistic"
+msgstr "Statistică mea"
+
+msgid "User Statistic"
+msgstr "Statistici utilizator"
+
+msgid "Status"
+msgstr ""
+
+msgid "Supervisors"
+msgstr "Supravizori"
+
+msgid "System Functions"
+msgstr "Funcţii ale sistemei"
+
+msgid "System Language"
+msgstr "Limba Sistemei"
+
+msgid "System Time"
+msgstr "Ceasul sistemei"
+
+msgid "System Settings"
+msgstr "Setări sistemei"
+
+msgid "Blue"
+msgstr ""
+
+msgid "Bold"
+msgstr ""
+
+msgid "PHP code"
+msgstr ""
+
+msgid "Green"
+msgstr ""
+
+msgid "Italic"
+msgstr "Cursiv"
+
+msgid "URL"
+msgstr ""
+
+msgid "Bulleted list"
+msgstr "Listă cu marcatori"
+
+msgid "Quote"
+msgstr ""
+
+msgid "Red"
+msgstr ""
+
+msgid "Strike"
+msgstr ""
+
+msgid "Underline"
+msgstr "Subliniat"
+
+msgid "Term"
+msgstr "Termen"
+
+msgid "Text"
+msgstr ""
+
+msgid "Input text"
+msgstr "Introducerea textului"
+
+msgid "Text size"
+msgstr "Dimensiune textului"
+
+msgid "Themes"
+msgstr "Temele"
+
+msgid "Time"
+msgstr "Timp"
+
+msgid "Day"
+msgstr "ziua"
+
+msgid "Days"
+msgstr "zi"
+
+msgid "Days"
+msgstr "zi"
+
+msgid "Time limit"
+msgstr "Termen"
+
+msgid "Shifting time"
+msgstr "Timp de schimbare"
+
+msgid "Title"
+msgstr "Titlu"
+
+msgid "In Chat"
+msgstr "În Chat"
+
+msgid "To the profile"
+msgstr "În Profil"
+
+msgid "In forum"
+msgstr "În Forum"
+
+msgid "Back to news"
+msgstr "La Noutati"
+
+msgid "Go to page"
+msgstr "La pagina"
+
+msgid "Show"
+msgstr "Arată"
+
+msgid "Today"
+msgstr "Astăzi"
+
+msgid "Top 10 activity"
+msgstr "Top 10 active"
+
+msgid "Most commenting"
+msgstr "Cele mai comentate"
+
+msgid "Most active in Forum"
+msgstr "Cel mai activ în cadrul Forumului"
+
+msgid "Most active in Guestbook"
+msgstr "Cel mai activ în clienţi"
+
+msgid "Best Karma"
+msgstr "Mai bine Karma"
+
+msgid "Total"
+msgstr ""
+
+msgid "Hits"
+msgstr "Treceri"
+
+msgid "hits"
+msgstr "treceri"
+
+msgid "Translit"
+msgstr ""
+
+msgid "Unread"
+msgstr "Necitit"
+
+msgid "Format address http://url.com"
+msgstr "Adresa în formatul http://url.com"
+
+msgid "Up"
+msgstr "În sus"
+
+msgid "This user does not exists"
+msgstr "Acest utilizator nu exista"
+
+msgid "Useful"
+msgstr "Info utilă"
+
+msgid "Users"
+msgstr "utilizatori"
+
+msgid "Clean Users"
+msgstr ""
+
+msgid "Users list"
+msgstr "Listă de utilizatori"
+
+msgid "New users"
+msgstr "Utilizatori Noi"
+
+msgid "Banned users"
+msgstr "Au BAN"
+
+msgid "Waiting confirmation"
+msgstr "La înregistrare"
+
+msgid "Top Activity"
+msgstr "Activitatea de top"
+
+msgid "Verification code"
+msgstr "Cod de verificare"
+
+msgid "Viewing"
+msgstr "Revizuire"
+
+msgid "Display mode"
+msgstr "Mod de afişare"
+
+msgid "Vote"
+msgstr "Vota"
+
+msgid "Against"
+msgstr "Împotriva"
+
+msgid "For"
+msgstr "Pentru"
+
+msgid "Polls"
+msgstr "Sondaje"
+
+msgid "Welcome to"
+msgstr "Bine aţi venit la"
+
+msgid "Where?"
+msgstr "Loc"
+
+msgid "Who is online?"
+msgstr "Cine este online?"
+
+msgid "No limits"
+msgstr "Nelimitat"
+
+msgid "Girls"
+msgstr "Fete"
+
+msgid "Write"
+msgstr "Scrie"
+
+msgid "Yesterday"
+msgstr "Ieri"
+

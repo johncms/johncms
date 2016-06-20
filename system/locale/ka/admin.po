@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+""
+
+msgid "to authorised"
+msgstr "ავტორიზებულთათვის"
+
+msgid "Access denied"
+msgstr "წვდომა შეზღუდულია"
+
+msgid "Access opened"
+msgstr "წვდომა ნებადართულია"
+
+msgid "guests can write in the guestbook"
+msgstr "სტუმრებს შეუძლიათ წერონ"
+
+msgid "Administration can access to all closed modules and comments"
+msgstr "ადმინისტრატორს ყოველთვის რჩება წვდომის უფლება ყველა დახურულ მოდულსა თუ კომენტარზე"
+
+msgid "Permissions"
+msgstr "წვდომის ნებართვა"
+
+msgid "mith moderation"
+msgstr "მოდერაციით"
+
+msgid "Adaptive"
+msgstr "ადაპტაციური"
+
+msgid "Advertisement"
+msgstr "რეკლამა"
+
+msgid "Agreement"
+msgstr "მოლაპარაკება"
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr "ანტიფლუდი"
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "დღის რეჟიმიდან ღამის რეჟიმზე გადასვლა, დროის პარამეტრების თანახმად"
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "თუ საიტზე იმყოფება ადმინისტრაციის რომელიმე წევრი, სისტემა მუშაობს &quot;დღის&quot; რეჟიმში, სხვა შემთხვევაში გადადის &quot;ღამის&quot; რეჟიმზე"
+
+msgid "Antiflood setting"
+msgstr "ანტიფლუდის პარამეტრები"
+
+msgid "Min. 4, max. 300 seconds"
+msgstr "მინიმუმ 4, მაქსიმუმ 300 წამი"
+
+msgid "Anti-Spyware"
+msgstr "ანტიჯაშუში"
+
+msgid "Scanning distributive"
+msgstr "დისტრიბუტივში სკანირება"
+
+msgid "Files identification which are not included in the original distributive"
+msgstr "&quot;ზედმეტი&quot; ფაილების დიაგნოსტიკა, რომლებიც არ შედიან ორიგინალ დისტრიბუტივში"
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr "დისტრიბუტივთან შეუსაბამობა<br><small>ყურადღება! თუ ფაილებს, რომლებიც არიან სიაში ჩამოთვლილი, არ აქვთ შეხება თქვენს მიერ დამატებულ მოდულებთან და არ ხართ დარწმუნებული მის საიმედოობაში, წშალეთ, რადგან ისინი წარმოადგენენ საფრთხეს თქვენი სისტემისთვის</small>"
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>შესანიშნავია!</h3>ფაილების სია დისტრიბუტივს შეესაბამება"
+
+msgid "Scanner menu"
+msgstr "სკანერის მენიუ"
+
+msgid "Files image is not created"
+msgstr "ფაილების სახე ჯერ არ შექმნილა"
+
+msgid "Rescan"
+msgstr "თავიდან სკანირება"
+
+msgid "Scan mode"
+msgstr "სკანირების რეჟიმი"
+
+msgid "Creating a snapshot"
+msgstr "ფოტოსურათის შექმნა"
+
+msgid "Snapshot successfully created"
+msgstr "ფაილების ფოტოსურათი წარმატებით შეიქმნა"
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr "იქმნება საიტის ყველა ფაილის &quot;ფოტოსურათი&quot; , გამოითვლება მისი საკონტროლო ჯამი და ინახება ბაზაში"
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr "ეს პროცედურა ქმნის თქვენი საიტის ყველა სკრიპტული ფაილის სიას, ითვლის მის საკონტროლო ჯამს და ინახავს ბაზაში შემდეგი შედარებისთვის"
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr "<b>ყურადღება!!!</b><br>სანამ გააგრძელებთ დარწმუნდით, რომ ყველა ფაილი, რომელიც გამომჟღავნებული იყო დისტრიბუტივის სკანირებისას, სანდოა და არ შეიცავს არასანქცირებულ მოდიფიკაციებს"
+
+msgid "Scanning snapshot"
+msgstr "ფოტოსურათის მიხედვით სკანირება"
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr "სურათთან შეუსაბამობა<br><small>ყურადღება!!! თქვენ ყურადღება უნდა მიაქციოთ ყველა ფაილს მოცემული სიიდან. ისინი დამატებულია ან მოდიფიცირებულია სურათის შექმნისთანავე</small>"
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr "სიისა და ფაილების საკონტროლო ჯამის შედარება უკვე შექმნილ სურათთან<br>საშუალებას გვაძლევს გამოვავლინოთ უცნობი ფაილები და არასანქცირებული ცვლილებები"
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr "შესანიშნავია!<br>შექმნილ სურათს ყველა ფაილი შეესაბამება"
+
+msgid "Ban has been successfully removed"
+msgstr "ბანი წარმატებით წაიშალა"
+
+msgid "Are you sure to remove ban?"
+msgstr "წავშალოთ ბანი?"
+
+msgid "Ban details"
+msgstr "ბანის დეტალები"
+
+msgid "Ban panel"
+msgstr "ბან-პანელი"
+
+msgid "Browsers"
+msgstr "ბრაუზერები"
+
+msgid "Counter successfully added"
+msgstr "მრიცხველი წარმატებით დაემატა"
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "ყურადღება!<br>თვალყური ადევნეთ შეყვანილი კოდის სისწორეს. ის უნდა შეესაბამებოდეს XML სტანდარტებს.<br>თუ ღილაკის &quot;დათვალიერება&quot; დაჭერის შემდეგ გამოჩნდება XHTML შეცდომები, მაშინ თქვენსავე ბრაუზერში დააჭირეთ ღილაკს &quot;უკან&quot;, დაბრუნდით მოცემულ ფორმაში და შეასწორეთ შეცდომა"
+
+msgid "Delete counter"
+msgstr "მრიცხველი წაშლილია"
+
+msgid "Counter successfully changed!"
+msgstr "მრიცხველი წარმატებით შეიცვალა"
+
+msgid "On all pages showing option 1"
+msgstr "ყველა გვერდზე ჩანს ვარიანტი 1"
+
+msgid "On all pages showing option 2"
+msgstr "ყველა გვერდზე ჩანს ვარიანტი 2"
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "მთავარ გვერდზე ჩანს ვარიანტი 1, ხოლო დანარჩენ გვერდებზე ვარიანტი 2"
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr "მთავარ გვერდზე ჩანს ვარიანტი 1, ხოლო დანარჩენ გვერდებზე ვარიანტი 2<br>თუ ველი &quot;ვარიანტი 2&quot; არ არის შევსებული, მაშინ მრიცხველი მხოლოდ მთავარ გვერდზე გამოჩნდება"
+
+msgid "Option 1"
+msgstr "ვარიანტი 1"
+
+msgid "Code for main page"
+msgstr "კოდი მთავარი გვერდისთვის"
+
+msgid "Option 2"
+msgstr "ვარიანტი 2"
+
+msgid "Code for other pages"
+msgstr "კოდი დანარჩენი გვერდებისთვის"
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr "თუ მრიცხველები სწორედ და უშეცდომოდ ჩანს, დააჭირეთ ღილაკს &quot;დამახსოვრება&quot;.<br>წინააღმდეგ შემთხვევაში ბრაუზერში დააჭირეთ &quot;უკან&quot; და გაასწორეთ შეცდომები"
+
+msgid "Counter"
+msgstr "მრიცხველები"
+
+msgid "Begining day"
+msgstr "დღის დასაწყისი"
+
+msgid "End of day"
+msgstr "დღის დასასრული"
+
+msgid "Night mode"
+msgstr "დღის რეჟიმი"
+
+msgid "Inactive profiles"
+msgstr "მკვდარი პროფილები"
+
+msgid "Inactive profiles deleted"
+msgstr "არააქტიური პროფილები წაშლილია"
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "ამ კატეგორიას მიეკუთვნებიან პროფილები, რომლებიც დარეგისტრირებულნი არიან 6 თვის უკან, რომლებსაც ნაჩვენები აქვთ 0 აქტივობა ბოლო 5 თვის განმავლობაში.<br>შეგიძლიათ თამამად წაშალოთ."
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr "ველი &quot;ფერი&quot; არასწორად არის შევსებული"
+
+msgid "First address is entered incorrectly"
+msgstr "პირველი მისამართი არასწორად არის შეყვანილი"
+
+msgid "Second address is entered incorrectly"
+msgstr "მეორე მისამართი არასწორად არის შეყვანილი"
+
+msgid "You cannot delete higher administration"
+msgstr "თქვენ არ შეგიძლიათ წაშალოთ თქვენზე მაღალი პოზიცია"
+
+msgid "Title + Text"
+msgstr "სათაური + ტექსტი"
+
+msgid "Include in a map"
+msgstr "რუკაში შეყვანა"
+
+msgid "Date set"
+msgstr "დაყენების თარიღი"
+
+msgid "Ban by IP"
+msgstr "IP ბანი"
+
+msgid "Unban all IP"
+msgstr "ყველა IP-ზე ბანის მოხსნა"
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr "IP ბანების ცხრილი წარმატებით გასუფთავდა.<br>ყველა მისამართს მოეხსნა ბანი"
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr "<b>ყურადღება!</b> IP ბანების ცხრილი გასუფთავდება.<br>ნამდვილად გსურთ ყველა IP-ზე ბანის მოხსნა?"
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "ბანი შეუძლებელია. თქვენი IP მისამართი ექცევა დიაპაზონში"
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr "თქვენს მიერ შეყვანილი მისამართი კონფლიქტში შედის სხვებთან, რომლებიც იმყოფებიან ბაზაში"
+
+msgid "Ban deleted"
+msgstr "ბანის წაშლა"
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "მაგალითი:<br><span class=\"red\">10.5.7.1</span> - ბანს ვადებთ ერთ მისამართს<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - ბანს ვადებთ მისამართების დიაპაზონს.<br><span class=\"red\">10.5.*.*</span> - ბანს ვადებთ ნიღბით. ბანი დაედება მთლიან ქვექსელს, დაწყებული 0-ით და დამთავრებული 255-ით"
+
+msgid "IP Ban"
+msgstr "ბანი დავადოთ IP-ს"
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "შეიყვანეთ ერთჯერადი მისამართი, ნიღაბი და დიაპაზონი დაუშვებელია"
+
+msgid "Ban range address"
+msgstr "ბანს ვადებთ მისამართების დიაპაზონს"
+
+msgid "Ban on the subnet mask"
+msgstr "ბანს ვადებთ ქვექსელის ნიღბით"
+
+msgid "Ban IP address"
+msgstr "ბანს ვადებთ IP მისამართს"
+
+msgid "Search IP"
+msgstr "ძებნა IP-ის მეშვეობით"
+
+msgid "This address not in the database"
+msgstr "ასეთი მისამართი ბაზაში არ არის"
+
+msgid "Forbid to vote for the administration"
+msgstr "ადმინისტრაციისთვის ხმის მიცემის აკრძალვა"
+
+msgid "Are you sure you want to drop karma?"
+msgstr "ნამდვილად გსურთ კარმის განულება?"
+
+msgid "Karma is dropped"
+msgstr "კარმა განულებულია"
+
+msgid "Drop karma"
+msgstr "კარმის განულება"
+
+msgid "Restriction for vote"
+msgstr "ხმის მიცემის შეზღუდვა"
+
+msgid "Voices per day"
+msgstr "ხმა დღე-ღამეში"
+
+msgid "Default language"
+msgstr "ნაგულისხმები ენა"
+
+msgid "You cannot delete language established for system by default"
+msgstr "იმ ენის წაშლა, რომელიც ნაგულისხმებია სისტემისთვის, არ შეიძლება"
+
+msgid "Are you sure you want to delete language?"
+msgstr "ნამდვილად გსურთ ენის წაშლა?"
+
+msgid "Failed select language"
+msgstr "ენის შერჩევაში შეცდომაა"
+
+msgid "Language Settings"
+msgstr "ენის პარამეტრები"
+
+msgid "System Language"
+msgstr "სისტემის ენა"
+
+msgid "Lines"
+msgstr "სტრიქონების გადატანა"
+
+msgid "Add link"
+msgstr "ბმულის დამატება"
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "თუ არ გსურთ ლინკის FFFFFF ფორმატის ფერით გამოყოფა, მაშინ უბრალოდ არ შეავსოთ"
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "დღეების რაოდენობა ბმულის დაყენების მომენტიდან, რომლის გასვლის შემდეგაც ბმული ავტომატურად წაიშლება<br>0 - შეზღუდვის გარეშე"
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "გვერდის განახლების დროს სახელის შესაცვლელად გამოყავით ყველა სახელი ნიშნით |"
+
+msgid "All pages"
+msgstr "ყველა გვერდზე"
+
+msgid "On all but the main"
+msgstr "ყველაზე, გარდა მთავარი გვერდისა"
+
+msgid "Only main page"
+msgstr "მხოლოდ მთავარ გვერდზე"
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "გადასვლების რაოდენობა, რომლის შემდეგაც ბმული ავტომატურად წაიშლება<br>0 - შეზღუდვის გარეშე"
+
+msgid "Link successfully added"
+msgstr "ბმული წარმატებით დაემატა"
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "ნამდვილად გსურთ ყველა არასასურველი ბმულის წაშლა?"
+
+msgid "Are you sure want to delete link?"
+msgstr "ნამდვილად გსურთ ბმულის წაშლა?"
+
+msgid "Direct Link"
+msgstr "პირდაპირი ბმული"
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr "თუ ჩართულია &quot;პირდაპირი ბმული&quot;, მაშინ გადასვლების სტატისტიკა არ იწარმოება"
+
+msgid "Edit link"
+msgstr "ბმულის რედაქტირება"
+
+msgid "Link successfully changed!"
+msgstr "ბმული წარმატებით შეიცვალა"
+
+msgid "Are you sure you want to hide this link?"
+msgstr "ნამდვილად გსურთ ბმულის დამალვა?"
+
+msgid "Are you sure you want to restore this link?"
+msgstr "ნამდვილად გსურთ ბმულის აღდგენა?"
+
+msgid "Active links"
+msgstr "აქტიური ბმულები"
+
+msgid "Styling links"
+msgstr "გამოყოფა"
+
+msgid "Over the counter"
+msgstr "მრიცხველებს ზევით"
+
+msgid "Above logo"
+msgstr "ლოგოტიპის ზევით"
+
+msgid "Under counter"
+msgstr "მრიცხველებს ქვევით"
+
+msgid "Under menu"
+msgstr "მენიუს ქვევით"
+
+msgid "Delete inactive links"
+msgstr "არააქტიურების წაშლა"
+
+msgid "This place is occupied"
+msgstr "მოცემული ადგილი დაკავებულია"
+
+msgid "META tags"
+msgstr "META ტეგები"
+
+msgid "Keywords"
+msgstr "საკვანძო სიტყვა"
+
+msgid "Description"
+msgstr "აღწერა"
+
+msgid "Option module not specified, will use default module"
+msgstr "მოდულის პარამეტრები არ არის მინიჭებული, გამოყენებული იქნება მნიშვნელობა &quot;ნაგულისხმები&quot;"
+
+msgid "Include module"
+msgstr "მოდულის ჩართვა"
+
+msgid "Modules"
+msgstr "მოდულები"
+
+msgid "News count"
+msgstr "სიახლეების რაოდენობა"
+
+msgid "How many days to show?"
+msgstr "რამდენი დღე ჩანდეს?"
+
+msgid "News on the mainpage"
+msgstr "სიახლეები მთავარ გვერდზე"
+
+msgid "Operation mode"
+msgstr "მუშაობის რეჟიმი"
+
+msgid "Layout"
+msgstr "განლაგება"
+
+msgid "Redirect"
+msgstr "გადამისამართება"
+
+msgid "Redicect URL"
+msgstr "გადამისამართების URL"
+
+msgid "Update Description"
+msgstr "აღწერის განახლება"
+
+msgid "Descriptions updated"
+msgstr "აღწერა განახლებულია"
+
+msgid "Update smileys"
+msgstr "სიცილაკების განახლება"
+
+msgid "Registration confirmation"
+msgstr "რეგისტრაციის დადასტურება"
+
+msgid "Registration is confirmed"
+msgstr "რეგისტრაცია დადასტურებულია"
+
+msgid "Confirm all"
+msgstr "ყველას დადასტურება"
+
+msgid "Delete all"
+msgstr "ყველას წაშლა"
+
+msgid "All unconfirmed registrations were removed"
+msgstr "ყველა დაუდასტურებელი რეგისტრაცია წაშლილია"
+
+msgid "Remove IP"
+msgstr "IP-ს წაშლა"
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "ყველა დაუდასტურებელი რეგისტრაცია IP მისამართით წაშლილია"
+
+msgid "Search by nick"
+msgstr "მეტსახელის მიხედვით ძებნა"
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr "<small><b>გამოძახების მაგალითები:</b><br><span class=\"red\">10.5.7.1</span> - ერთი მისამართის ძებნა<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - მისამართების დიაპაზონის ძებნა (ნიღბის * ნიშნის გამოყენება არ შეიძლება)<br><span class=\"red\">10.5.*.*</span> - ნიღბით მოძებნა. ნაპოვნი იქნება მთელი ქვექსელი, დაწყებული 0-ით და დამთავრებული 255-ით</small>"
+
+msgid "Server Time"
+msgstr "სერვერის დრო"
+
+msgid "Show all"
+msgstr "ყველაფრის ჩვენება"
+
+msgid "Only computers"
+msgstr "მხოლოდ კომპიუტერებს"
+
+msgid "Only guests"
+msgstr "მხოლოდ სტუმრებს"
+
+msgid "site closed, except administration"
+msgstr "ჩაიკეტა ყველასათვის, გარდა ადმინისტრაციის"
+
+msgid "site closed, except SV!"
+msgstr "ჩაიკეტა ყველასათვის, SV!"
+
+msgid "Site Map"
+msgstr "საიტის რუკა"
+
+msgid "Web site address without the slash at the end"
+msgstr "საიტის მისამართი, ბოლოში სლეშის (დახრილი ხაზის) გარეშე"
+
+msgid "Site copyright"
+msgstr "საიტის საავტორო უფლება"
+
+msgid "Site E-mail"
+msgstr "საიტის ელ. ფოსტა"
+
+msgid "System settings"
+msgstr "საიტის პარამეტრები"
+
+msgid "Error updating cache"
+msgstr "სიცილაკების ქეშთან წვდომის დროს შეცდომაა"
+
+msgid "Cache successfully updated!"
+msgstr "სიცილაკების ქეში წარმატებით განახლდა"
+
+msgid "Super Moderators"
+msgstr "უფროსი მოდერატორები"
+
+msgid "System"
+msgstr "სისტემა"
+
+msgid "Everyone"
+msgstr "ყველას"
+
+msgid "Guests"
+msgstr "სტუმრებს"
+
+msgid "Users"
+msgstr "მომხმარებლებს"
+
+msgid "Administration"
+msgstr "ადმინისტრაცია"
+
+msgid "Delete user"
+msgstr "მომხმარებლის წაშლა"
+
+msgid "Are you sure that you want to delete this user?"
+msgstr "ნამდვილად გსურთ ამ მომხმარებლის წაშლა?"
+
+msgid "Cleaning activities"
+msgstr "აქტივობის გასუფთავება"
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr "ფორუმის გასუფთავების დროს, თემები და პოსტები გადადიან რეჟიმში &quot;დამალულები&quot;"
+
+msgid "User deleted"
+msgstr "მომხმარებელი წაშლილია"
+
+msgid "Database cleanup"
+msgstr "ბაზის გასუფთავება"
+
+msgid "On registration"
+msgstr "რეგისტრაციაზე"
+

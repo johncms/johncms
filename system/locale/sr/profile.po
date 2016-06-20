@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "O meni"
+
+msgid "Everyone"
+msgstr "Svi"
+
+msgid "With Password"
+msgstr "Sa lozinkom"
+
+msgid "Closed"
+msgstr "Zavoreno"
+
+msgid "Friends only"
+msgstr "Samo prijatelji"
+
+msgid "This field is required if the password access is activated"
+msgstr "Ovo polje je potrebno ako ste stavili pristup sa lozinkom"
+
+msgid "Achievements"
+msgstr "Dostignuca"
+
+msgid "Activity"
+msgstr "Aktivnost"
+
+msgid "Album"
+msgstr ""
+
+msgid "Album successfully changed"
+msgstr "Album izmenjen"
+
+msgid "Create Album"
+msgstr "Kreiraj album"
+
+msgid "Album successfully created"
+msgstr "Album kreiran"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Da li ste sigurni da zelite da izbrisete album? Ako sadrzi slike bice obrisane."
+
+msgid "Album Deleted"
+msgstr "Album izbrisan"
+
+msgid "Edit Album"
+msgstr "Izmeni album"
+
+msgid "Album List"
+msgstr "Lista Albuma"
+
+msgid "You must type a password to view this album"
+msgstr "Morate uneti lozinku da bi ste videli album"
+
+msgid "Select Album"
+msgstr "Izaberi album"
+
+msgid "Pending confirmation"
+msgstr "Ceka Potvrdu"
+
+msgid "Delete avatar"
+msgstr "Izbrisi avatar"
+
+msgid "Upload avatar"
+msgstr "Uploaduj avatar"
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Birthday"
+msgstr "Rodjendan"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Datum rodjenja (d.m.g)"
+
+msgid "City"
+msgstr "Grad"
+
+msgid "Contacts"
+msgstr "Kontakt"
+
+msgid "Data saved"
+msgstr "Sacuvano"
+
+msgid "Prohibit karma"
+msgstr "Zabrani da glasaju za ovog clana"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Upozorenje! Upisite postojeci E-mail <br> Vasa lozinka ce biti poslata."
+
+msgid "The album already exists"
+msgstr "Album vec postoji"
+
+msgid "Invalid format date of birth"
+msgstr "Pogresan format datuma rodjenja"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "ICQ broj mora biti 5 digits i max. 10"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Min. duzina nika 2, max. 20 karaktera"
+
+msgid "Nick contains invalid characters"
+msgstr "Nik ima nedzovoljene karaktere"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Ne mozete da izmenjujete profil nekog ko ima veca prava od vas"
+
+msgid "Friends only"
+msgstr "Samo prijatelji"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Lista je prazna.<br>Sve poruke su izbrisane zbog ciscenja. "
+
+msgid "hidden"
+msgstr "sakriven"
+
+msgid "Image"
+msgstr "Slika"
+
+msgid "Add image"
+msgstr "Dodaj sliku"
+
+msgid "Delete image"
+msgstr "Izbrisi sliku"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Da li ste sigurni da zelite da izbrisete ovu sliku?"
+
+msgid "Edit image"
+msgstr "Izmeni sliku"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr ""
+
+msgid "Image successfully changed"
+msgstr "Slika izmenjena"
+
+msgid "Move the image"
+msgstr "Premesti sliku"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Treba da imate bar jedan album da bi ste mogli da premestite sliku"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Slika premestena"
+
+msgid "Rotate"
+msgstr "Rotiraj"
+
+msgid "do not rotate"
+msgstr "ne rotiraj"
+
+msgid "counterclockwise"
+msgstr "obrnuto od kazaljke na satu"
+
+msgid "clockwise"
+msgstr "po satu"
+
+msgid "My Album"
+msgstr "Moj Album"
+
+msgid "My activity"
+msgstr "Moja Aktivnost"
+
+msgid "My Mailbox"
+msgstr "Moje postansko sanducs"
+
+msgid "My Account"
+msgstr "Moj Profil"
+
+msgid "My Profile"
+msgstr "Moj Profil"
+
+msgid "My settings"
+msgstr "Moja Podesavanja"
+
+msgid "My statistic"
+msgstr "Moja Statistika"
+
+msgid "Name"
+msgstr "Ime"
+
+msgid "Recent comments"
+msgstr "Komentari"
+
+msgid "New photos"
+msgstr "Nove slike"
+
+msgid "Min.2, Max. 20"
+msgstr ""
+
+msgid "Personal info"
+msgstr "Info"
+
+msgid "Contact number"
+msgstr "Broj kontakt"
+
+msgid "Photo"
+msgstr "Slika"
+
+msgid "Add to Profile"
+msgstr "Dodaj na profil"
+
+msgid "Photo added to the profile"
+msgstr "Slika dodata"
+
+msgid "Photos"
+msgstr "Slike"
+
+msgid "Photo deleted"
+msgstr "Slika izbrisana"
+
+msgid "Photo uploaded"
+msgstr "Slika uploadovana"
+
+msgid "Edit Profile"
+msgstr "Izmeni profil"
+
+msgid "Functionary on the site"
+msgstr "Privilegije"
+
+msgid "User"
+msgstr "Korisnik"
+
+msgid "Moder chat"
+msgstr "Moderator Chata"
+
+msgid "Forum Moderator"
+msgstr ""
+
+msgid "Download Moderator"
+msgstr "Downloads Moderator"
+
+msgid "Library Moderator"
+msgstr "Moderator Biblioteke"
+
+msgid "Super Modererator"
+msgstr ""
+
+msgid "Administrator"
+msgstr "Admin"
+
+msgid "Supervisor"
+msgstr "VLASNIK"
+
+msgid "Received"
+msgstr "Primljene"
+
+msgid "Registration confirmed"
+msgstr "Registracija potvrdjena"
+
+msgid "Free registration"
+msgstr "Otvorena registracija"
+
+msgid "Registered"
+msgstr "Registrovana"
+
+msgid "Registered"
+msgstr "Registrovana"
+
+msgid "For user"
+msgstr "Za korisnika"
+
+msgid "default settings were set"
+msgstr "fabricka podesavanja postavljena"
+
+msgid "Image"
+msgstr "Slika"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Dozvoljeni formati JPG, JPEG, PNG, GIF"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Slika ce automatski biti konvertovaa u 32x32"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Nova slika ce zameniti staru"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr ""
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Slika ce biti konvertovana u 640x480"
+
+msgid "Sent"
+msgstr "Poslato"
+
+msgid "Male"
+msgstr "Musko"
+
+msgid "Female"
+msgstr "Zensko"
+
+msgid "Back to profile"
+msgstr "Nazad na profil"
+
+msgid "Site"
+msgstr "Sajt"
+
+msgid "Select gender"
+msgstr "Izaberi pol"
+
+msgid "Max. 50"
+msgstr ""
+
+msgid "He stay on the site"
+msgstr "Na sajtu boravio"
+
+msgid "She stay on the site"
+msgstr "Na sajtu boravila"
+
+msgid "System"
+msgstr ""
+
+msgid "Top Comments"
+msgstr "Najvise komentara"
+
+msgid "Top Downloads"
+msgstr "Najvise preuzimanja"
+
+msgid "AntiTop"
+msgstr "ANTITOP"
+
+msgid "Top Views "
+msgstr "Najvise pregleda "
+
+msgid "Top Votes"
+msgstr "Najvise glasova"
+
+msgid "Unread Comments"
+msgstr "Komentadi"
+
+msgid "Upload"
+msgstr "Uploaduj"
+
+msgid "Upload avatar"
+msgstr "Uploaduj avatar"
+
+msgid "Upload a picture"
+msgstr "Uploaduj sliku"
+
+msgid "User Profile"
+msgstr "Profil Korisnika"
+
+msgid "Add to Contacts"
+msgstr ""
+
+msgid "Add to Friends"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "You have already submitted a request"
+msgstr ""
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr ""
+
+msgid "Unlock user"
+msgstr ""
+
+msgid "Remove from contacts"
+msgstr ""
+
+msgid "Friends"
+msgstr ""
+
+msgid "My Friends"
+msgstr ""
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr ""
+
+msgid "offers friendship"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Request to be friends sent!"
+msgstr ""
+
+msgid "Do you really want to become friends?"
+msgstr ""
+
+msgid "Friendship"
+msgstr ""
+
+msgid "User is already your friend"
+msgstr ""
+
+msgid "Applications for friendship does not exist"
+msgstr ""
+
+msgid "Application for friendship canceled"
+msgstr ""
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr ""
+
+msgid "There is no invitation to be friends"
+msgstr ""
+
+msgid "agreed with you friends"
+msgstr ""
+
+msgid "You confirmed friendship. Now the user"
+msgstr ""
+
+msgid "Your friend"
+msgstr ""
+
+msgid "Do you really want to confirm the friendship"
+msgstr ""
+
+msgid "deleted you from friends"
+msgstr ""
+
+msgid "You remove the user from friends."
+msgstr ""
+
+msgid "Do you really want to remove from your friends?"
+msgstr ""
+
+msgid "Removal is not possible! User is not your friend."
+msgstr ""
+
+msgid "declined your offer to make friends."
+msgstr ""
+
+msgid "Request to be friends rejected."
+msgstr ""
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr ""
+
+msgid "The page does not exist!"
+msgstr ""
+
+msgid "My requests"
+msgstr ""
+
+msgid "Cancel Request"
+msgstr ""
+
+msgid "My Offers"
+msgstr ""
+
+msgid "Confirm friendship"
+msgstr ""
+
+msgid "Reject friendship"
+msgstr ""
+
+msgid "Remove from friends"
+msgstr ""
+
+msgid "Add to friends"
+msgstr ""
+
+msgid "Cancel a request to be friends"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr ""
+
+msgid "Fellow Student"
+msgstr ""
+
+msgid "Best friend"
+msgstr ""
+
+msgid "Colleague"
+msgstr ""
+
+msgid "Classmate"
+msgstr ""
+
+msgid "Friend"
+msgstr ""
+
+msgid "Mail settings"
+msgstr ""
+
+msgid "You can write messages"
+msgstr ""
+
+msgid "Can write all"
+msgstr ""
+
+msgid "Can write only contacts"
+msgstr ""
+
+msgid "Can write only friends"
+msgstr ""
+
+msgid "pointing out that you best friends with him"
+msgstr ""
+
+msgid "pointed out that you have with him relatives"
+msgstr ""
+
+msgid "pointed out that you have with him classmates"
+msgstr ""
+
+msgid "pointing out that you were colleagues"
+msgstr ""
+
+msgid "pointing out that you were classmates"
+msgstr ""
+
+msgid "pointed out that you\"re friends"
+msgstr ""
+
+msgid "You indicated that you are best friends with"
+msgstr ""
+
+msgid "You indicated that the relatives with"
+msgstr ""
+
+msgid "You indicated that mates with"
+msgstr ""
+
+msgid "You indicated that the colleagues with"
+msgstr ""
+
+msgid "You indicated that you classmates with"
+msgstr ""
+
+msgid "You indicated that you are friends with"
+msgstr ""
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "The feature is disabled, contact your administrator"
+msgstr ""
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr ""
+

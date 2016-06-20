@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+
+msgid "News added"
+msgstr ""
+
+msgid "News changed"
+msgstr ""
+
+msgid "News deleted"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Delete all news"
+msgstr ""
+
+msgid "Older than 1 month"
+msgstr ""
+
+msgid "Delete all news older than 1 month"
+msgstr ""
+
+msgid "Older than 1 week"
+msgstr ""
+
+msgid "Delete all news older than 1 week"
+msgstr ""
+
+msgid "Discussion"
+msgstr ""
+
+msgid "Discuss in forum"
+msgstr ""
+
+msgid "Do not discuss"
+msgstr ""
+
+msgid "You have not entered news title"
+msgstr ""
+
+msgid "You have not entered news text"
+msgstr ""
+
+msgid "Back to news"
+msgstr ""

@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Mümkün fayl tipi"
+
+msgid "Create an album"
+msgstr "Albom yarat"
+
+msgid "Create a section"
+msgstr "Bölme yarat"
+
+msgid "Gallery closed"
+msgstr "Qalareya Bağlıdır"
+
+msgid "Delete Album"
+msgstr "Albomu sil"
+
+msgid "Delete section"
+msgstr "Bölmeni sil"
+
+msgid "Dimensions"
+msgstr "Ölçüler"
+
+msgid "Edit Album"
+msgstr "Albomu deyiş"
+
+msgid "Edit description"
+msgstr "Melumatı Deyiş"
+
+msgid "Edit Section"
+msgstr "Bölmeni Deyiş"
+
+msgid "Error uploading photo"
+msgstr "Emeliyyat zamanı sehv baş verdi"
+
+msgid "Picture is missing"
+msgstr "Şekil yoxdur"
+
+msgid "Image size"
+msgstr "Şekil ölçüsü"
+
+msgid "Maximum weight"
+msgstr "Maks Hecm"
+
+msgid "New photos"
+msgstr "Yeni Foto"
+
+msgid "Posted by"
+msgstr "Yerleşdirdi"
+
+msgid "Select Photo"
+msgstr "Foto Seçin"
+
+msgid "To Album"
+msgstr "Alboma Keç"
+
+msgid "To Gallery"
+msgstr "Qalareyaya Keç"
+
+msgid "To Section"
+msgstr "Bölmeye Keç"
+
+msgid "Upload Photo"
+msgstr "Şekil Yükle"
+
+msgid "Weight"
+msgstr "Hecm"
+

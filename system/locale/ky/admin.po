@@ -1,0 +1,526 @@
+msgid ""
+msgstr ""
+""
+
+msgid "to authorised"
+msgstr "авторизацияланган"
+
+msgid "Access denied"
+msgstr "Уруксат жок"
+
+msgid "Access opened"
+msgstr "Уруксат ачык"
+
+msgid "guests can write in the guestbook"
+msgstr "Коноктор жаза алат"
+
+msgid "Administration can access to all closed modules and comments"
+msgstr "Администраторго бардык жабык модульдор менен комментарийлерге дайыма ачык"
+
+msgid "Permissions"
+msgstr "Мүмкүндүкө укуктуу"
+
+msgid "mith moderation"
+msgstr "модерация менен"
+
+msgid "Adaptive"
+msgstr "Адаптивдүү"
+
+msgid "Advertisement"
+msgstr "Жарнама"
+
+msgid "Agreement"
+msgstr "Келишим"
+
+msgid "Appoint topicstarters as curators"
+msgstr ""
+
+msgid "Allow topicstarters to edit 1st post"
+msgstr ""
+
+msgid "Only for Administration"
+msgstr ""
+
+msgid "Normal access"
+msgstr ""
+
+msgid "Read only"
+msgstr ""
+
+msgid "Antiflood"
+msgstr ""
+
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Оңдоолор берилген, автоматту түрдө күндүзгү режиминен түнкү режимге өтүү"
+
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Эгерде сайтта Администраторлор бар болсо, система автоматту түрдө &quot;күндүзгү&quot; режимде жумуш жасайт, же &quot;түнкү&quot; режимге өтөт"
+
+msgid "Antiflood setting"
+msgstr "Антифлуд оңдоолору"
+
+msgid "Min. 4, max. 300 seconds"
+msgstr "Минималдуу 4, максималдуу 300 секунда"
+
+msgid "Anti-Spyware"
+msgstr ""
+
+msgid "Scanning distributive"
+msgstr "Дистрибутив боюнча сүзүп чыгуу"
+
+msgid "Files identification which are not included in the original distributive"
+msgstr "Выявление &quot;лишних&quot; файлов, тех, что не входят в оригинальный дистрибутив"
+
+msgid "Distributive contains complementary files <br> <small> Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.</small>"
+msgstr "Несоответствие дистрибутиву<br><small>Внимание! Если файлы, перечисленные в списке не относятся к вашим дополнительным модулям и вы не уверены в их надежности, удалите их, так, как они представляют угрозу для безопасности Вашего сайта</small>"
+
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>Отлично!</h3>Список файлов соот ветствует дистрибутиву"
+
+msgid "Scanner menu"
+msgstr "Сканер менюсу"
+
+msgid "Files image is not created"
+msgstr "Файл образдары дагы эле курулбады"
+
+msgid "Rescan"
+msgstr "Кайта сканерлөө"
+
+msgid "Scan mode"
+msgstr "Сканер режими"
+
+msgid "Creating a snapshot"
+msgstr ""
+
+msgid "Snapshot successfully created"
+msgstr ""
+
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database"
+msgstr "Делается &quot;снимок&quot; всех скриптовых файлов сайта, вычисляется их контрольные суммы и запоминается в базе"
+
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison"
+msgstr ""
+
+msgid "<b>WARNING!!!</b><br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications"
+msgstr "<b>ВНИМАНИЕ!!!</b><br>Перед продолжением, убедитесь, что все файлы, которые были выявлены в режиме сканирования Дистрибутив надежны и не содержат несанкционированных модификаций"
+
+msgid "Scanning snapshot"
+msgstr ""
+
+msgid "Snapshot Inconsistency<br><small>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created</small>"
+msgstr "Несоответствие снимку<br><small>Внимание!!! Вам необходимо обратить внимание на все файлы из данного списка. Они были добавлены, или модифицированы с момента создания образа</small>"
+
+msgid "Compare the list of files and checksums with pre-made way <br> Allows you to identify unknow files, and unauthorized changes"
+msgstr ""
+
+msgid "Excellent! <br> All files are consistent with previously made image"
+msgstr ""
+
+msgid "Ban has been successfully removed"
+msgstr "Бан ийгиликтүү өчүрүүлдүү"
+
+msgid "Are you sure to remove ban?"
+msgstr "Банды өчүрүү кажет пи?"
+
+msgid "Ban details"
+msgstr "Бан деталы"
+
+msgid "Ban panel"
+msgstr ""
+
+msgid "Browsers"
+msgstr "Браузерлер"
+
+msgid "Counter successfully added"
+msgstr "Счетчик ийгиликтүү коюлду"
+
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "ЭСКЕРТҮҮ!<br>Кодтун туура жазылуусун караңыз. Ал XML стандарттарына шайкеш келүүсү керек.<br>Эгер &quot;Көрүү&quot; кнопкасын баскандан кеийин XHTML каталар болсо, анда браузерден кайта деген кнопкасын басып, каталарды жөндөңүз"
+
+msgid "Delete counter"
+msgstr "Счетчик өчүрүүлдүү"
+
+msgid "Counter successfully changed!"
+msgstr "Счетчик ийгиликтүү өзгөртүлдүү"
+
+msgid "On all pages showing option 1"
+msgstr "Бардык беттерде 1-Вариант көрсөтүлөт"
+
+msgid "On all pages showing option 2"
+msgstr "Бардык беттерде 2-Вариант көрсөтүлөт"
+
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "Башкы бетте 1-Вариант, ал Калган беттерде 2-Вариант көрсөтүлөт"
+
+msgid "On the main showing option 1, on the other pages option 2 <br> If &quot;option 2&quot; not filled, counter would only appear on the main page"
+msgstr "Башкы бетте 1-Вариант, ал Калган беттерде 2-Вариант көрсөтүлөт<br>Эгер &quot;Вариант-2&quot; талаасы толтурулбаса, анда счетчик башкы бетте көрсөтүлөт."
+
+msgid "Option 1"
+msgstr ""
+
+msgid "Code for main page"
+msgstr "Башкы бет коду"
+
+msgid "Option 2"
+msgstr ""
+
+msgid "Code for other pages"
+msgstr "Калган беттер коду"
+
+msgid "If the counter are displayed correctly and without errors, Click &quot;Save&quot;.<br>Otherwise, click back button and correct errors"
+msgstr "Эгер счетчик катасыз туура көрсөтүлсө, &quot;Сактоо&quot; кнопкасын басыңыз.<br>Эгер болбосо браузер аркулу кнопкасын кайтып, каталарды жөндөңүз"
+
+msgid "Counter"
+msgstr "Счетчиктер"
+
+msgid "Begining day"
+msgstr "Башталган күнү"
+
+msgid "End of day"
+msgstr "Аяктаган күнү"
+
+msgid "Night mode"
+msgstr "Күндүзгү режим"
+
+msgid "Inactive profiles"
+msgstr ""
+
+msgid "Inactive profiles deleted"
+msgstr ""
+
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr ""
+
+msgid "Not filled correctly &quot;color&quot;"
+msgstr "&quot;Түстун&quot; талаасы туура эмес толтурулду"
+
+msgid "First address is entered incorrectly"
+msgstr "Биринчи адрес туура эмес терилди"
+
+msgid "Second address is entered incorrectly"
+msgstr "Экинчи адрес туура эмес терилди"
+
+msgid "You cannot delete higher administration"
+msgstr "Өзүңүздөн улуу кызматтагы Юзерди өчүрөө албайсыз"
+
+msgid "Title + Text"
+msgstr "Мазмуун + текст"
+
+msgid "Include in a map"
+msgstr "Картага кошуу"
+
+msgid "Date set"
+msgstr "Коюлган күнү"
+
+msgid "Ban by IP"
+msgstr "IP боюнча бан"
+
+msgid "Unban all IP"
+msgstr "Бардык IP-лерди алып таштоо"
+
+msgid "IP ban table successfully cleared.<br>Unban all address"
+msgstr "IP бан тізімі сәтті өшірілді және тазартылды"
+
+msgid "<b>WARNING!</b> Tabel ban IP will be cleared.<br>Are you sure you wan to unban an IP?"
+msgstr "<b>ЭСКЕРТҮҮ!</b> IP бандын таблицасы тазаланат.<br>Сиз чынында эле IP разбан кылгыңыз келе би?"
+
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Бан мүмкүн эмес. Сиздин IP адресиңиз диапазонго түшүп калат."
+
+msgid "Address you entered conflicts with other who in the database"
+msgstr ""
+
+msgid "Ban deleted"
+msgstr "Бан-ды өчүрүү"
+
+msgid "Example:<br><span class=\"red\">10.5.7.1</span> - Ban one address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\"red\">10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Мисалы:<br><span class=\"red\">10.5.7.1</span> - Бир адрести бан<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Диапазон адрестерине бан.<br><span class=\"red\">10.5.*.*</span> - Маска боюнча бан. 0-дөн баштап 255-ке чейин аралыкта бан берилет"
+
+msgid "IP Ban"
+msgstr "IP-ге бан"
+
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "Жеке адрести териңиз, маска жана диапазон жиберилбейт"
+
+msgid "Ban range address"
+msgstr "Диапазон боюнча бан"
+
+msgid "Ban on the subnet mask"
+msgstr "Маска боюнча бан"
+
+msgid "Ban IP address"
+msgstr ""
+
+msgid "Search IP"
+msgstr "IP боюнча издөө"
+
+msgid "This address not in the database"
+msgstr "Мындай адрес базада жок"
+
+msgid "Forbid to vote for the administration"
+msgstr "Администрацияга добуш берүүгө тыйым салуу"
+
+msgid "Are you sure you want to drop karma?"
+msgstr "Сиз чынында карманы тазалагыңыз келе би?"
+
+msgid "Karma is dropped"
+msgstr "Карма тазаланды"
+
+msgid "Drop karma"
+msgstr "Карманы тазалоо"
+
+msgid "Restriction for vote"
+msgstr "Добуш берүү чеги"
+
+msgid "Voices per day"
+msgstr "Күндүк добуш берүү саны"
+
+msgid "Default language"
+msgstr "Стандарттуу тил"
+
+msgid "You cannot delete language established for system by default"
+msgstr "Башкыга коюлганан стандартту тилди өчүрүгө болбойт"
+
+msgid "Are you sure you want to delete language?"
+msgstr "Сиз тилди өчүргүңүз келе би?"
+
+msgid "Failed select language"
+msgstr "Тилди тандоодогу ката"
+
+msgid "Language Settings"
+msgstr "Тил боюнча оңдоолор"
+
+msgid "System Language"
+msgstr "Системанын тили"
+
+msgid "Lines"
+msgstr "Сапты ташымалдоо"
+
+msgid "Add link"
+msgstr "Шилтемени кошуу"
+
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "Эгер шилтемени FFFFFF форматында боегуңуз келбесе, анда бул талааны толтурбай коюңуз"
+
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Шилтеме канча убакыт туру тийиш? Убакыт бүткөндөн кийин шилтеме автоматту түрдө өчүрүлөт<br>0 - чексиз"
+
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "Шилтеме ысмын беттерди жүктөгөн кезде өзгөртүү үчүн, арасын бул символ менен бөлүңүз |"
+
+msgid "All pages"
+msgstr "Бардык беттерге"
+
+msgid "On all but the main"
+msgstr "Башкы беттен башка, калган беттерге"
+
+msgid "Only main page"
+msgstr "Бир гана башкы бетте"
+
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Колличество переходов, после котого ссылка автоматически уберется<br>0 - шексіз"
+
+msgid "Link successfully added"
+msgstr "Шилтеме ийгиликтүү коюлдуу"
+
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Сиз бардык белсендүү эмес шилтемелерди өчүргүңүз келе би?"
+
+msgid "Are you sure want to delete link?"
+msgstr "Сиз шилтемени өчүргүңүз келе би?"
+
+msgid "Direct Link"
+msgstr "Тике шилтеме"
+
+msgid "Click statistics won\"t be counted, If the direct link is turned on"
+msgstr ""
+
+msgid "Edit link"
+msgstr "Шилтемени өзгөртүү"
+
+msgid "Link successfully changed!"
+msgstr "Шилтеме ийгиликтүү өзгөрттүңүз"
+
+msgid "Are you sure you want to hide this link?"
+msgstr "Сиз силтемени жашыргыңыз келе би??"
+
+msgid "Are you sure you want to restore this link?"
+msgstr "Сиз шилтемени кайта калыбына келтиргиңиз келе би??"
+
+msgid "Active links"
+msgstr "Активдүү шилтемелер"
+
+msgid "Styling links"
+msgstr "Выделяйтетүү"
+
+msgid "Over the counter"
+msgstr "Счетчик үстүндө"
+
+msgid "Above logo"
+msgstr "Логотип үстүндө"
+
+msgid "Under counter"
+msgstr "Счетчик астында"
+
+msgid "Under menu"
+msgstr "Меню астында"
+
+msgid "Delete inactive links"
+msgstr "Активдүү эместерди алып таштоо"
+
+msgid "This place is occupied"
+msgstr "Бул орун бош эмес"
+
+msgid "META tags"
+msgstr "META тэгтер"
+
+msgid "Keywords"
+msgstr "Сөздөр ключтөрү"
+
+msgid "Description"
+msgstr "Сыпаттамасы"
+
+msgid "Option module not specified, will use default module"
+msgstr "Модуль оңдоолор берилбеди, стандартту оңдоолор  иштей берет"
+
+msgid "Include module"
+msgstr "Модульду кошуу"
+
+msgid "Modules"
+msgstr "Модульдер"
+
+msgid "News count"
+msgstr "Жаңылык саны"
+
+msgid "How many days to show?"
+msgstr "Канча күн көрсөтүү кажет?"
+
+msgid "News on the mainpage"
+msgstr "Башкы беттеги жаңылыктар"
+
+msgid "Operation mode"
+msgstr "Жумуш режими"
+
+msgid "Layout"
+msgstr "Орноштуруу"
+
+msgid "Redirect"
+msgstr ""
+
+msgid "Redicect URL"
+msgstr ""
+
+msgid "Update Description"
+msgstr "Баяндоонуу жаңыртуу"
+
+msgid "Descriptions updated"
+msgstr "Баяндоонуу жаңыртылды"
+
+msgid "Update smileys"
+msgstr "Смайлдарды кайта жүктөө"
+
+msgid "Registration confirmation"
+msgstr "Катталуунун ырастамасы"
+
+msgid "Registration is confirmed"
+msgstr "Катталуу ырасталды!"
+
+msgid "Confirm all"
+msgstr "Бардыгын ырастоо"
+
+msgid "Delete all"
+msgstr "Бардыгын өчүрүү"
+
+msgid "All unconfirmed registrations were removed"
+msgstr ""
+
+msgid "Remove IP"
+msgstr "IP-ди өчүрүү"
+
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr ""
+
+msgid "Search by nick"
+msgstr "Ник боюнча издөө"
+
+msgid "<small><b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255</small>"
+msgstr "<small><b>Сураныч мисалдары:</b><br><span class=\"red\">10.5.7.1</span> - 1 адрести издөө<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Адрести диапазон боюнча издөө (маска белгисин * колдонуга болбойт)<br><span class=\"red\">10.5.*.*</span> - Маска боюнча издөө. 0-дөн баштап 255-ке чейин адрестер табылат</small>"
+
+msgid "Server Time"
+msgstr "Сервер убакыты"
+
+msgid "Show all"
+msgstr "Бардыгына көрсөтүү"
+
+msgid "Only computers"
+msgstr "Тек компьютерлерге"
+
+msgid "Only guests"
+msgstr "Бир гана конокторго"
+
+msgid "site closed, except administration"
+msgstr "Бардыгына жабык, бир гана администрацияга"
+
+msgid "site closed, except SV!"
+msgstr "Бардыгына жабык, бир гана SV!"
+
+msgid "Site Map"
+msgstr "Сайт картасы"
+
+msgid "Web site address without the slash at the end"
+msgstr "Сайт адреси, соңунда слэшсиз"
+
+msgid "Site copyright"
+msgstr "Сайт копирайты"
+
+msgid "Site E-mail"
+msgstr "Сайт E-mail-ы"
+
+msgid "System settings"
+msgstr "Сайт боюнча оңдоолор"
+
+msgid "Error updating cache"
+msgstr "Смайл кэшиндеги уруксат катасы"
+
+msgid "Cache successfully updated!"
+msgstr "Смайл кэши ийгиликтүү кайта жүктөлдүү"
+
+msgid "Super Moderators"
+msgstr "Улуу модераторлор"
+
+msgid "System"
+msgstr ""
+
+msgid "Everyone"
+msgstr "Бардыгына"
+
+msgid "Guests"
+msgstr "Конокторго"
+
+msgid "Users"
+msgstr "Колдонучуга"
+
+msgid "Administration"
+msgstr ""
+
+msgid "Delete user"
+msgstr "Колдонучуну өчүрүү"
+
+msgid "Are you sure that you want to delete this user?"
+msgstr "Сиз чын эле башкы колдонучуну өчүргүңүз келе би?"
+
+msgid "Cleaning activities"
+msgstr "Активистерди тазалоо"
+
+msgid "When cleaning topic and post in the forum will be &quot;hidden&quot;"
+msgstr "Форумду тазалоо кезинде, посттор менен темалар &quot;жашырылат&quot;"
+
+msgid "User deleted"
+msgstr "Колдонучу өчүрүлгөн"
+
+msgid "Database cleanup"
+msgstr "Базаны тазалоо"
+
+msgid "On registration"
+msgstr "Катталууда"
+

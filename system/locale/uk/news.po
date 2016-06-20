@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "Новину додано"
+
+msgid "News changed"
+msgstr "Новину змінено"
+
+msgid "News deleted"
+msgstr "Новину видалено"
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Delete all news"
+msgstr "Видалені всі новини"
+
+msgid "Older than 1 month"
+msgstr "Старші за 1 місяць"
+
+msgid "Delete all news older than 1 month"
+msgstr "Видалені всі новини, старші за 1 місяць"
+
+msgid "Older than 1 week"
+msgstr "Старші за 1 тиждень"
+
+msgid "Delete all news older than 1 week"
+msgstr "Видалені всі новини, старші за 1 тиждень"
+
+msgid "Discussion"
+msgstr "Обговорення"
+
+msgid "Discuss in forum"
+msgstr "Обговорити на форумі"
+
+msgid "Do not discuss"
+msgstr "Не обговорювати"
+
+msgid "You have not entered news title"
+msgstr "Ви не ввели заголовок статті"
+
+msgid "You have not entered news text"
+msgstr "Ви не ввели текст статті"
+
+msgid "Back to news"
+msgstr "До новин"
+

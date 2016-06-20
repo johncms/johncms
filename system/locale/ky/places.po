@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Администраторлор тизмеси</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Фотоальбомдорду көрүүдө</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Туулган күн ээлери</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr "<a href=\"#home#/download/index.php\">Жүктөөлөр</a>"
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">FAQ окуп жатат</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=files\">Форум файлдары</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Форумда ким бар экенин көрүүдө</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr "<a href=\"#home#/guestbook/index.php\">Конокчо бетте</a>"
+
+msgid "Here, in the list"
+msgstr "Бул, тизмеде"
+
+msgid "On the Homepage"
+msgstr "Башкы бетте"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Китепканада окууп жатат</a>"
+
+msgid "Personal correspondence"
+msgstr "Өздүк катнаштар"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Жаңылыктар окууп жатат</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Сайтта ким бар?</a>"
+
+msgid "Profile"
+msgstr "Анкета көрүүдө"
+
+msgid "Personal Profile"
+msgstr "Өз анкетасында"
+
+msgid "Registered on the site"
+msgstr ""
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">Колдонучулар тизмеси</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">Топ колдонучуларды көрүүдө</a>"
+

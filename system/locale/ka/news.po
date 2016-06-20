@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+""
+
+msgid "News added"
+msgstr "სიახლე დამატებულია"
+
+msgid "News changed"
+msgstr "სიახლე შეცვლილია"
+
+msgid "News deleted"
+msgstr "სიახლე წაშლილია"
+
+msgid "Title"
+msgstr "სათაური"
+
+msgid "Delete all news"
+msgstr "ყველა სიახლე წაშლილია"
+
+msgid "Older than 1 month"
+msgstr "1 თვეზე ძველი"
+
+msgid "Delete all news older than 1 month"
+msgstr "წაშლილია 1 თვეზე ძველი ყველა სიახლე"
+
+msgid "Older than 1 week"
+msgstr "1 კვირაზე ძველი"
+
+msgid "Delete all news older than 1 week"
+msgstr "წაშლილია 1 კვირაზე ძველი ყველა სიახლე"
+
+msgid "Discussion"
+msgstr "განხილვა"
+
+msgid "Discuss in forum"
+msgstr "ფორუმზე განხილვა"
+
+msgid "Do not discuss"
+msgstr "არ განიხილოს"
+
+msgid "You have not entered news title"
+msgstr "თქვენ არ შეგიყვანიათ სათაური"
+
+msgid "You have not entered news text"
+msgstr "თქვენ არ შეგიყვანიათ ტექსტი"
+
+msgid "Back to news"
+msgstr "სიახლეებში"
+

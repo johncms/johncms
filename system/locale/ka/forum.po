@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "კატეგორიის დამატება"
+
+msgid "Add file"
+msgstr "ფაილის დამატება"
+
+msgid "Add answer"
+msgstr "პასუხის დამატება"
+
+msgid "Add section"
+msgstr "განყოფილების დამატება"
+
+msgid "Add a poll"
+msgstr "გამოკითხვის დამატება"
+
+msgid "Accept"
+msgstr "თანახმა ვარ"
+
+msgid "Other category"
+msgstr "სხვა კატეგორია"
+
+msgid "Answer"
+msgstr "პასუხი"
+
+msgid "Assign"
+msgstr "დანიშნვა"
+
+msgid "Attachment"
+msgstr "მიმაგრებული ფაილი"
+
+msgid "Back to topic"
+msgstr "თემაში დაბრუნება"
+
+msgid "by author"
+msgstr "ავტორის მიხედვით"
+
+msgid "by section"
+msgstr "განყოფილების მიხედვით"
+
+msgid "by topic"
+msgstr "თემის მიხედვით"
+
+msgid "Category"
+msgstr "კატეგორია"
+
+msgid "Category deleted"
+msgstr "კატეგორია წაშლილია"
+
+msgid "Edit category"
+msgstr "კატეგორიის რედაქტირება"
+
+msgid "Categories list"
+msgstr "კატეგორიების სია"
+
+msgid "subsections"
+msgstr "დაქვემდებარებული განყოფილებები"
+
+msgid "Click to view image"
+msgstr "დააჭირეთ სურათის სანახავად"
+
+msgid "Subsections and files has been moved to"
+msgstr "დაქვემდებარებული განყოფილებები და ფაილები გადატანილია"
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr "ყველა განყოფილება, თემა და ფაილი გადატანილი იქნება არჩეულ კატეგორიაში.<br>ძველი კატეგორია წაიშლება"
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr "<h3>ყურადღება!</h3>არსებობს დაქვემდებარებული განყოფილებები.<br>აუცილებელია მათი სხვა კატეგორიაში გადატანა"
+
+msgid "Curators"
+msgstr "კურატორები"
+
+msgid "Curators of the Topic"
+msgstr "თემის კურატორები"
+
+msgid "Quote"
+msgstr "ციტატა"
+
+msgid "[q]"
+msgstr "[ც]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "დაშვებულია მაქს. 200 სიმბოლო, დანარჩენი ტექსტი ჩამოიჭრება."
+
+msgid "Delete categories"
+msgstr "კატეგორიის წაშლა"
+
+msgid "Complete removal"
+msgstr "სრული წაშლა"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "თუ გსურთ მთლიანი ინფორმაციის განადგურება, ჯერ წაშალეთ"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ყურადღება! წაიშლება მთლიანი ინფორმაცია"
+
+msgid "Delete last"
+msgstr "უკანასკნელის წაშლა"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "ყურადღება!<br>ეს არის თემის ბოლო პოსტი. მასთან ერთად წაიშლება (ან დაიმალება) მთლიანი თემა"
+
+msgid "Delete message"
+msgstr "შეტყობინების წაშლა"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "წაშლის შემთხვევაში ფორუმის პოსტების მრიცხველი დაქვეითდება ერთი ერთეულით"
+
+msgid "Delete section"
+msgstr "განყოფილების წაშლა"
+
+msgid "Delete poll"
+msgstr "გამოკითხვის წაშლა"
+
+msgid "Download Topic"
+msgstr "თემის გადმოწერა"
+
+msgid "Select a format"
+msgstr "აირჩიეთ ფორმატი"
+
+msgid "Link active 5 minutes"
+msgstr "ბმული აქტიურია 5 წუთის განმავლობაში"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "მოცემული თემა ჩამოტვირთულია საიტის ფორუმიდან"
+
+msgid "Downloaded"
+msgstr "ჩამოტვირთულია"
+
+msgid "Downloads"
+msgstr "ჩამოტვირთულია"
+
+msgid "Edit message"
+msgstr "შეტყობინების შეცვლა"
+
+msgid "Edit poll"
+msgstr "გამოკითხვის შეცვლა"
+
+msgid "Edited"
+msgstr "შეცვ."
+
+msgid "You have not selected any author"
+msgstr "თქვენ არ აგირჩევიათ ავტორი"
+
+msgid "Category is not chosen"
+msgstr "კატეგორია არ არჩეულა"
+
+msgid "You are trying to change another\"s post"
+msgstr "თქვენ ცდილობთ შეცვალოთ სხვისი პოსტი"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "თქვენი პოსტი უკვე აღარ არის ბოლო და მას ვერ შეცვლით"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "პოსტის შექმნის შემდეგ უკვე გავიდა 5 წუთი და თქვენ მას ვეღარ შეცვლით"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "ფაილის ტიპი დაუშვებელია!<br>გაგზავნისთვის დაშვებულია მხოლოდ შემდეგი გაფართოების მქონე ფაილები"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "გაგზავნისთვის დაშვებულია ფაილები, რომლებსაც აქვთ ერთი სახელი და ერთი გაფართოება (<b>name.ext</b>). დაუშვებელია ისეთი ფაილები, რომლებსაც არ აქვთ სახელი, გაფართოება ან აქვთ ორმაგი გაფართოება."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "ფაილის სახელის სიგრძე არ უნდა აღემატებოდეს 30 სიმბოლოს"
+
+msgid "File size exceed"
+msgstr "ფაილის წონა აჭარბებს"
+
+msgid "File name contains invalid characters"
+msgstr "ფაილის სახელში დაუშვებელი სიმბოლოებია"
+
+msgid "File is already uploaded"
+msgstr "ფაილი უკვე ატვირთულია"
+
+msgid "You did not choose something to delete"
+msgstr "თქვენ არაფერი არ აგირჩევიათ წასაშლელად"
+
+msgid "Message does not exists or has been deleted"
+msgstr "პოსტი არ არსებობს, ან წაშლილია"
+
+msgid "Length of query: 4min., 64max."
+msgstr "სიგრძე მინ. 4, მაქს. 64 სიმბოლო"
+
+msgid "You have not entered time"
+msgstr "თქვენ არ შეგიყვანიათ დრო"
+
+msgid "You cannot write in a closed topic"
+msgstr "თქვენ არ შეგიძლიათ დახურულ თემაში წერა"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "თემა წაშლილია ან არ არსებობს"
+
+msgid "Topic with same name already exists in this section"
+msgstr "ასეთი სახელის თემა განყოფილებაში უკვე არსებობს"
+
+msgid "You have not entered topic name"
+msgstr "თქვენ არ შეგიყვანიათ თემის სახელი"
+
+msgid "Topic name too short"
+msgstr "თემის სახელი ძალიან მოკლეა"
+
+msgid "Error uploading file"
+msgstr "შეცდომა ფაილის ატვირთვის დროს"
+
+msgid "File attached"
+msgstr "ფაილი მიმაგრებულია"
+
+msgid "Files"
+msgstr "ფორუმის ფაილები"
+
+msgid "Category files"
+msgstr "კატეგორიის ფაილები"
+
+msgid "Section files"
+msgstr "განყოფილების ფაილები"
+
+msgid "Topic files"
+msgstr "თემის ფაილები"
+
+msgid "Archive"
+msgstr "არქივები"
+
+msgid "Java applications"
+msgstr "Java პროგრამები"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "სხვა"
+
+msgid "Pictures"
+msgstr "სურათები"
+
+msgid "SIS"
+msgstr "SIS პროგრამები"
+
+msgid "txt"
+msgstr "ტექსტური ფაილები"
+
+msgid "WIN applications"
+msgstr "WIN პროგრამები"
+
+msgid "Videos"
+msgstr "ვიდეოები"
+
+msgid "Cancel filter"
+msgstr "ფილტრაციის გაუქმება"
+
+msgid "Topic includes filtering by authors"
+msgstr "თემაში ჩართულია ფილტრაცია პოსტების ავტორთა მიხედვით"
+
+msgid "Filter by author"
+msgstr "ფილტრი ავტორის მიხედვით"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "ფილტრაციის მეშვეობით პოსტები გამოჩნდება მხოლოდ არჩეული ავტორების მიხედვით"
+
+msgid "Filter by section"
+msgstr "ფილტრაცია განყოფილების მიხედვით"
+
+msgid "Filter by topic"
+msgstr "ფილტრაცია თემის მიხედვით"
+
+msgid "Filter"
+msgstr "გაფილტრვა"
+
+msgid "Forum is closed"
+msgstr "ფორუმი დახურულია"
+
+msgid "Forum Management"
+msgstr "ფორუმის მართვა"
+
+msgid "Forum rules"
+msgstr "ფორუმის წესები"
+
+msgid "Forum search"
+msgstr "ფორუმის ძებნა"
+
+msgid "Forum structure"
+msgstr "ფორუმის სტრუქტურა"
+
+msgid "Hidden posts"
+msgstr "დაფარული პოსტები"
+
+msgid "Hidden topic"
+msgstr "დაფარული თემები"
+
+msgid "Hours"
+msgstr "საათი"
+
+msgid "Max. Size"
+msgstr "მაქს. ზომა"
+
+msgid "Marked posts are deleted"
+msgstr "მონიშნული პოსტები წაშლილია"
+
+msgid "Appointment of moderators"
+msgstr "მოდერატორის დანიშნვა"
+
+msgid "New files in the last 24 hours"
+msgstr "ახალი ფაილები ბოლო 24 საათში"
+
+msgid "No new files"
+msgstr "ახალი ფაილები არ არის"
+
+msgid "New at the bottom"
+msgstr "ახლები ქვევით"
+
+msgid "New at the top"
+msgstr "ახლები ზევით"
+
+msgid "New topic"
+msgstr "თემის გახსნა"
+
+msgid "Title(max. 100)"
+msgstr "სათაური (მაქს. 100 სიმბოლო)"
+
+msgid "Disagree"
+msgstr "არ ვეთანხმები"
+
+msgid "Other categories"
+msgstr "სხვა კატეგორიები"
+
+msgid "Answers in the topic"
+msgstr "პასუხობს თემაში"
+
+msgid "In the category"
+msgstr "კატეგორიაში"
+
+msgid "Looking forum files"
+msgstr "ნახულობს ფორუმის ფაილებს"
+
+msgid "Here, in the list"
+msgstr "აქ, სიაში"
+
+msgid "In the forum main"
+msgstr "ფორუმის მთავარ გვერდზე"
+
+msgid "In the unreads"
+msgstr "ნახულობს წაუკითხავებს"
+
+msgid "Forum search"
+msgstr "ფორუმის ძებნა"
+
+msgid "In the section"
+msgstr "განყოფილებაში"
+
+msgid "In the topic"
+msgstr "თემაში"
+
+msgid "Writes in the topic"
+msgstr "წერს თემაში"
+
+msgid "Message"
+msgstr "შეტყობინება"
+
+msgid "Post deleted"
+msgstr "პოსტი წაშალა"
+
+msgid "Read more"
+msgstr "ყველაფრის წაკითხვა"
+
+msgid "reference"
+msgstr "მიმართვა"
+
+msgid "[r]"
+msgstr "[პ]"
+
+msgid "Rating"
+msgstr "რეიტინგი"
+
+msgid "I am glad to answer you"
+msgstr "სიამოვნებით გიპასუხებ"
+
+msgid "to your post"
+msgstr "შენს პოსტზე"
+
+msgid "answer"
+msgstr "გიპასუხებ"
+
+msgid "You are right! You are very smart!"
+msgstr "დაგკრამ, დაგმანჭამ, გადაგპარჭყამ ღობეზე!"
+
+msgid "Restore"
+msgstr "აღდგენა"
+
+msgid "Results"
+msgstr "შედეგები"
+
+msgid "Back to topic"
+msgstr "თემაში დაბრუნება"
+
+msgid "Forum search"
+msgstr "ფორუმის ძებნა"
+
+msgid "Search in the topic names"
+msgstr "თემის სათაურებში ძებნა"
+
+msgid "Section deleted"
+msgstr "განყოფილება წაშლილია"
+
+msgid "Section with topics and files are removed"
+msgstr "განყოფილება თემებთან და ფაილებთან ერთად წაშლილია"
+
+msgid "Editing section"
+msgstr "განყოფილების რედაქტირება"
+
+msgid "List of sections"
+msgstr "განყოფილებების სია"
+
+msgid "There are no sections in this category"
+msgstr "მოცემულ კატეგორიაში განყოფილებები არ არის"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr "ყველა თემა და ფაილი გადატანილი იქნება არჩეულ განყოფილებაში<br>ძველი განყოფილება წაიშლება"
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr "<h3>ყურადღება!</h3>განყოფილებაში არის თემები.<br>აუცილებელია მათი სხვა განყოფილებაში გადატანა"
+
+msgid "Select category"
+msgstr "კატეგორიის არჩევა"
+
+msgid "Select file"
+msgstr "ფაილის არჩევა"
+
+msgid "Select section"
+msgstr "განყოფილების არჩევა"
+
+msgid "Selected category"
+msgstr "არჩეულ კატეგორიაში"
+
+msgid "Selected section"
+msgstr "არჩეულ განყოფილებაში"
+
+msgid "Size"
+msgstr "ზომა"
+
+msgid "Topics moved to"
+msgstr "დაქვემდებარებული თემები გადატანილია"
+
+msgid "Time"
+msgstr "ჯერ"
+
+msgid "Go to category"
+msgstr "კატეგორიაში"
+
+msgid "Go to forum"
+msgstr "ფორუმში"
+
+msgid "To message"
+msgstr "შეტყობინებაში"
+
+msgid "Go to topic"
+msgstr "თემაში"
+
+msgid "Go to section"
+msgstr "განყოფილებაში"
+
+msgid "Topic"
+msgstr "თემა"
+
+msgid "Close topic"
+msgstr "თემის დახურვა"
+
+msgid "Topic closed"
+msgstr "თემა დახურულია"
+
+msgid "Delete topic"
+msgstr "თემის წაშლა"
+
+msgid "Topic deleted"
+msgstr "თემა წაშლილია"
+
+msgid "Topic deleted by"
+msgstr "თემა წაშალა"
+
+msgid "Undelete topic"
+msgstr "თემის წაშლა გააუქმა"
+
+msgid "Fix topic"
+msgstr "თემის ფიქსაცია"
+
+msgid "No topics in this section"
+msgstr "მოცემულ განყოფილებაში თემები არ არის"
+
+msgid "Move topic"
+msgstr "თემის გადატანა"
+
+msgid "Topic name"
+msgstr "თემის სათაური"
+
+msgid "New topic"
+msgstr "თემის გახსნა"
+
+msgid "Rename topic"
+msgstr "თემის სათაურის შეცვლა"
+
+msgid "Restore topic"
+msgstr "თემის აღდგენა"
+
+msgid "Unfix topic"
+msgstr "თემის ფიქსაციის მოხსნა"
+
+msgid "Total votes"
+msgstr "სულ ხმები"
+
+msgid "All for period"
+msgstr "სულ პერიოდის განმავლობაში"
+
+msgid "Last 10"
+msgstr "უკანასკნელი 10 თემა"
+
+msgid "Period (in hours)"
+msgstr "პერიოდი (საათებში)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "არჩეული პერიოდის განმავლობაში ფორუმში ახალი არაფერია"
+
+msgid "Mark as read"
+msgstr "მოვნიშნოთ, როგორც წაკითხული"
+
+msgid "All topics marked as read"
+msgstr "ყველა თემა მონიშნულია, როგორც წაკითხული"
+
+msgid "Upload"
+msgstr "გაგზავნა"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "დრო გამოყოფილი ფაილის ატვირთვის ვადა გაუვიდა"
+
+msgid "Post deleted"
+msgstr "პოსტი წაშალა"
+
+msgid "Who is here"
+msgstr "ვინ არის აქ"
+
+msgid "Who in forum"
+msgstr "ვინ არის ფორუმში"
+
+msgid "Who in topic"
+msgstr "ვინ არის თემაში"
+
+msgid "Post restored by"
+msgstr "პოსტი აღადგინა"
+
+msgid "Vote accepted"
+msgstr "თქვენი ხმა მიღებულია"
+
+msgid "Poll (max. 150)"
+msgstr "გამოკითხვა (მაქს. 150)"
+
+msgid "Poll added"
+msgstr "გამოკითხვა დამატებულია"
+
+msgid "Poll changed"
+msgstr "გამოკითხვა შეცვლილია"
+
+msgid "Do you really want to delete a poll?"
+msgstr "ნამდვილად გსურთ გამოკითხვის წაშლა?"
+
+msgid "Poll deleted"
+msgstr "გამოკითხვა წაშლილია"
+
+msgid "Who voted in the poll"
+msgstr "მომხმარებლები, რომლებმაც მონაწილეობა მიიღეს გამოკითხვაში"
+
+msgid "No one has voted in this poll yet"
+msgstr "ამ გამოკითხვაში ჯერჯერობით არავის მიუღია მონაწილეობა"
+
+msgid "Do you really want to delete the answer?"
+msgstr "ნამდვილად გსურთ პასუხის ვარიანტის წაშლა?"
+

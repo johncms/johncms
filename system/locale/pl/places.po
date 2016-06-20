@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+""
+
+msgid "<a href=\"#home#/users/index.php?act=admlist\">List of Admins</a>"
+msgstr "<a href=\"#home#/users/index.php?act=admlist\">Lista Adminów</a>"
+
+msgid "<a href=\"#home#/users/album.php\">Watching the photo album</a>"
+msgstr "<a href=\"#home#/users/album.php\">Ogląda albumu zdjęć</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=birth\">List of birthdays</a>"
+msgstr "<a href=\"#home#/users/index.php?act=birth\">Lista urodzin</a>"
+
+msgid "<a href=\"#home#/download/index.php\">Downloads</a>"
+msgstr "<a href=\"#home#/download/index.php\">Pobieralnia</a>"
+
+msgid "<a href=\"#home#/pages/faq.php\">Reading the FAQ</a>"
+msgstr "<a href=\"#home#/pages/faq.php\">Czyta FAQ</a>"
+
+msgid "<a href=\"#home#/forum/index.php\">Forum</a>&#160;/&#160;<a href=\"#home#/forum/index.php?act=who\">&gt;&gt;</a>"
+msgstr ""
+
+msgid "<a href=\"#home#/forum/index.php?act=files\">Forum Files</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=files\">Pliki forum</a>"
+
+msgid "<a href=\"#home#/forum/index.php?act=who\">Looking, who in Forum?</a>"
+msgstr "<a href=\"#home#/forum/index.php?act=who\">Zerka, kto jest na forum</a>"
+
+msgid "<a href=\"#home#/gallery/index.php\">Gallery</a>"
+msgstr "<a href=\"#home#/gallery/index.php\">Galeria</a>"
+
+msgid "<a href=\"#home#/guestbook/index.php\">Guestbook</a>"
+msgstr ""
+
+msgid "Here, in the list"
+msgstr "Jesteś, tutaj na liście"
+
+msgid "On the Homepage"
+msgstr "Na stronie głównej"
+
+msgid "<a href=\"#home#/library/index.php\">Library</a>"
+msgstr "<a href=\"#home#/library/index.php\">Biblioteka</a>"
+
+msgid "Personal correspondence"
+msgstr "Prywatnej korespondencji"
+
+msgid "<a href=\"#home#/news/index.php\">Reading the news</a>"
+msgstr "<a href=\"#home#/news/index.php\">Czyta aktualności</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=online\">Who is online?</a>"
+msgstr "<a href=\"#home#/users/index.php?act=online\">Zerka, kto jest online</a>"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Personal Profile"
+msgstr "Wasny profil"
+
+msgid "Registered on the site"
+msgstr "Zarejestrowany na stronie"
+
+msgid "<a href=\"#home#/users/index.php?act=userlist\">List of users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=userlist\">Lista użytkowników</a>"
+
+msgid "<a href=\"#home#/users/index.php?act=top\">Watching Top 10 Users</a>"
+msgstr "<a href=\"#home#/users/index.php?act=top\">Ogląda Top 10</a>"
+

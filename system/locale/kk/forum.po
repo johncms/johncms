@@ -1,0 +1,577 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Add category"
+msgstr "Категория қою"
+
+msgid "Add file"
+msgstr "Файлды қою"
+
+msgid "Add answer"
+msgstr "Жауап беру"
+
+msgid "Add section"
+msgstr "Бөлім қою"
+
+msgid "Add a poll"
+msgstr "Дауыс беруді қою"
+
+msgid "Accept"
+msgstr "Келісемін"
+
+msgid "Other category"
+msgstr "Басқа категория"
+
+msgid "Answer"
+msgstr "Жауап"
+
+msgid "Assign"
+msgstr "Тағайындау"
+
+msgid "Attachment"
+msgstr "Бекітілген файл"
+
+msgid "Back to topic"
+msgstr "Темаға қайта оралу"
+
+msgid "by author"
+msgstr "автормен"
+
+msgid "by section"
+msgstr "бөліммен"
+
+msgid "by topic"
+msgstr "темамен"
+
+msgid "Category"
+msgstr ""
+
+msgid "Category deleted"
+msgstr "Категория өшірілген"
+
+msgid "Edit category"
+msgstr "Категорияны өзгерту"
+
+msgid "Categories list"
+msgstr "Категория тізімі"
+
+msgid "subsections"
+msgstr ""
+
+msgid "Click to view image"
+msgstr "суретті көру үшін басыңыз"
+
+msgid "Subsections and files has been moved to"
+msgstr ""
+
+msgid "All categories, topics, and files will be moved into selected category. <br> Old category will be removed"
+msgstr ""
+
+msgid "<h3>WARNING!</h3>There are subsections <br> Move them to another category."
+msgstr ""
+
+msgid "Curators"
+msgstr "Тәлімгер"
+
+msgid "Curators of the Topic"
+msgstr "Тема кураторы"
+
+msgid "Quote"
+msgstr "Пікір"
+
+msgid "[q]"
+msgstr "[п]"
+
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "200 символ рұқсат етілген, қажетсіз мәтін кесіліп алынады."
+
+msgid "Delete categories"
+msgstr "Категорияны өшіру"
+
+msgid "Complete removal"
+msgstr "Толық өшіру"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Егер барлық ақпаратты өшіргіңіз келсе, алдымен өшіріңіз"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ЕСКЕРТУ! Барлық ақпараттар өшіріледі"
+
+msgid "Delete last"
+msgstr "Соңғысын өшіру"
+
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "Ескерту!<br>Бұл теманың соңғы жазуы. Егер өшірсеңіз темада өшіріледі"
+
+msgid "Delete message"
+msgstr "Жазуды өшіру"
+
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr ""
+
+msgid "Delete section"
+msgstr ""
+
+msgid "Delete poll"
+msgstr "Дауыс беруді өшіру"
+
+msgid "Download Topic"
+msgstr "Теманы тартып алу"
+
+msgid "Select a format"
+msgstr "Форматын таңдаңыз"
+
+msgid "Link active 5 minutes"
+msgstr "Сілтеме 5 мин жарамды"
+
+msgid "This theme was downloaded from the forum site"
+msgstr "Бұл тема мына сайт форумынан тартылды"
+
+msgid "Downloaded"
+msgstr "Тартылды"
+
+msgid "Downloads"
+msgstr "Тартылды"
+
+msgid "Edit message"
+msgstr "Жазуды өзгерту"
+
+msgid "Edit poll"
+msgstr "Дауыс беруді өзгерту"
+
+msgid "Edited"
+msgstr "Өзг."
+
+msgid "You have not selected any author"
+msgstr "Сіз ешқандай авторларды таңдамадыңыз"
+
+msgid "Category is not chosen"
+msgstr "Категория таңдалмады"
+
+msgid "You are trying to change another\"s post"
+msgstr "Сіз біреудің жазуын өшірмексіз"
+
+msgid "Your message not already latest, you cannot change it"
+msgstr "Сіз жазуыңыз соңғысы емес және оны өзгерте алмайсыз"
+
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Жазудың уақытына 5 мин болды. Сіз оны өзгерте алмайсыз"
+
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Тыйым салынған файл типі!<br>Жіберу үшін мына файлдар типі жатады"
+
+msgid "You may upload only files with a name and one extension <b> (name.ext </b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Файлдарды жіберу үшін оның атауы мен типі болуы тиіс (<b>name.ext</b>). Типтері мен атауы жоқ файлдарға тыйым салынады."
+
+msgid "File name length must not exceed 30 characters"
+msgstr "Файл атауы 30 символдан аспауы керек"
+
+msgid "File size exceed"
+msgstr "Файл көлемі артылып кетті"
+
+msgid "File name contains invalid characters"
+msgstr "Файл атауында тыйым салынған символдар бар"
+
+msgid "File is already uploaded"
+msgstr "Файл жіберіліп қойылды"
+
+msgid "You did not choose something to delete"
+msgstr "Сіз өшіру үшін ештеңе таңдамадыңыз"
+
+msgid "Message does not exists or has been deleted"
+msgstr "Пост өшірілген немесе жоқ"
+
+msgid "Length of query: 4min., 64max."
+msgstr "Сұраныс ұзындығы: 4мин., 64макс."
+
+msgid "You have not entered time"
+msgstr "Сіз уақытты таңдамадыңыз"
+
+msgid "You cannot write in a closed topic"
+msgstr "Сіз жабық темаға жаза алмайсыз"
+
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема өшірілген немесе жоқ"
+
+msgid "Topic with same name already exists in this section"
+msgstr "Мұндай тема бұл бөлімде бар"
+
+msgid "You have not entered topic name"
+msgstr "Сіз тема атауын жазбадыңыз"
+
+msgid "Topic name too short"
+msgstr "Тема атауы тым қысқа"
+
+msgid "Error uploading file"
+msgstr "Файлды жіберудегі қате"
+
+msgid "File attached"
+msgstr "Файл бекітілді"
+
+msgid "Files"
+msgstr "Форум файлдары"
+
+msgid "Category files"
+msgstr "Категория файлдары"
+
+msgid "Section files"
+msgstr "Бөлім файлдары"
+
+msgid "Topic files"
+msgstr ""
+
+msgid "Archive"
+msgstr "Архивтер"
+
+msgid "Java applications"
+msgstr "Java бағдарламасы"
+
+msgid "MP3"
+msgstr ""
+
+msgid "Other"
+msgstr "Басқа"
+
+msgid "Pictures"
+msgstr "Суреттер"
+
+msgid "SIS"
+msgstr "SIS бағдарламасы"
+
+msgid "txt"
+msgstr "Тексттік файлдар"
+
+msgid "WIN applications"
+msgstr "WIN бағдарламасы"
+
+msgid "Videos"
+msgstr ""
+
+msgid "Cancel filter"
+msgstr "Фильтрациядан бас тарту"
+
+msgid "Topic includes filtering by authors"
+msgstr "Темада автор посттары бойынша фильтрация қосылған"
+
+msgid "Filter by author"
+msgstr "Автор бойынша фильтр"
+
+msgid "Filter will be display posts from selected authors only"
+msgstr "Фильтрация таңдалған автордың жазуларын көрсетеді"
+
+msgid "Filter by section"
+msgstr "Бөлім бойынша фильтр"
+
+msgid "Filter by topic"
+msgstr "Тема бойынша фильтр"
+
+msgid "Filter"
+msgstr "Фильтрлеу"
+
+msgid "Forum is closed"
+msgstr "Форум жабық"
+
+msgid "Forum Management"
+msgstr "Форумды басқару"
+
+msgid "Forum rules"
+msgstr "Форум ережесі"
+
+msgid "Forum search"
+msgstr "Форумда іздеу"
+
+msgid "Forum structure"
+msgstr "Форум структурасы"
+
+msgid "Hidden posts"
+msgstr "Жасырын посттар"
+
+msgid "Hidden topic"
+msgstr "Жасырын темалар"
+
+msgid "Hours"
+msgstr "сағат"
+
+msgid "Max. Size"
+msgstr "Макс. өлшем"
+
+msgid "Marked posts are deleted"
+msgstr "Таңдалған посттар өшірілді"
+
+msgid "Appointment of moderators"
+msgstr "Модераторлар таңдау"
+
+msgid "New files in the last 24 hours"
+msgstr "Соңғы 24 сағ файлдар"
+
+msgid "No new files"
+msgstr "Жаңа файлдар жоқ"
+
+msgid "New at the bottom"
+msgstr "Жаңалар төменге"
+
+msgid "New at the top"
+msgstr "Жаңалар жоғарыға"
+
+msgid "New topic"
+msgstr "Теманы ашу"
+
+msgid "Title(max. 100)"
+msgstr "Атауы (max. 100)"
+
+msgid "Disagree"
+msgstr "Келіспеймін"
+
+msgid "Other categories"
+msgstr "Басқа категориялар"
+
+msgid "Answers in the topic"
+msgstr "Темада жауап беруде"
+
+msgid "In the category"
+msgstr "Категорияда"
+
+msgid "Looking forum files"
+msgstr "Форум файлдарын көруде"
+
+msgid "Here, in the list"
+msgstr "Осында"
+
+msgid "In the forum main"
+msgstr "Форумның бас бетінде"
+
+msgid "In the unreads"
+msgstr "Оқылмаған жазуларды көруде"
+
+msgid "Forum search"
+msgstr "Форумда іздеу"
+
+msgid "In the section"
+msgstr "Бөлімде"
+
+msgid "In the topic"
+msgstr "Темада"
+
+msgid "Writes in the topic"
+msgstr "Темада жазып жатыр"
+
+msgid "Message"
+msgstr "Хабарлама"
+
+msgid "Post deleted"
+msgstr "Постты өшірген"
+
+msgid "Read more"
+msgstr "Барлығын оқу"
+
+msgid "reference"
+msgstr "Үндеу"
+
+msgid "[r]"
+msgstr "[ж]"
+
+msgid "Rating"
+msgstr ""
+
+msgid "I am glad to answer you"
+msgstr "Қуана жауап берейін"
+
+msgid "to your post"
+msgstr "Сенің постыңа"
+
+msgid "answer"
+msgstr "жауап берейін"
+
+msgid "You are right! You are very smart!"
+msgstr "Кет бұл жер есібас, миқұлақ неме!"
+
+msgid "Restore"
+msgstr "Қайта қалпына келтіру"
+
+msgid "Results"
+msgstr "Нәтижелері"
+
+msgid "Back to topic"
+msgstr "Темаға қайта оралу"
+
+msgid "Forum search"
+msgstr "Форумда іздеу"
+
+msgid "Search in the topic names"
+msgstr "Тема атаулары бойынша іздеу"
+
+msgid "Section deleted"
+msgstr "Бөлім өшірілген"
+
+msgid "Section with topics and files are removed"
+msgstr "Бөлім темалары мен файлдары бірге өшірілді"
+
+msgid "Editing section"
+msgstr "Бөлімді өзгертеміз"
+
+msgid "List of sections"
+msgstr "Бөлім тізімі"
+
+msgid "There are no sections in this category"
+msgstr "Бұл категорияларда бөлімдер жоқ"
+
+msgid "All the topics and files will be moved to selected section<br>Old section will be deleted"
+msgstr ""
+
+msgid "<h3>WARNING!</h3>There are topics in the section.<br>You must move them to another section"
+msgstr ""
+
+msgid "Select category"
+msgstr ""
+
+msgid "Select file"
+msgstr "Файлды таңдау"
+
+msgid "Select section"
+msgstr "Бөлімді таңдау"
+
+msgid "Selected category"
+msgstr "таңдалған категорияны"
+
+msgid "Selected section"
+msgstr "таңдалған бөлімді"
+
+msgid "Size"
+msgstr "Өлшемі"
+
+msgid "Topics moved to"
+msgstr ""
+
+msgid "Time"
+msgstr "рет"
+
+msgid "Go to category"
+msgstr "Категорияға"
+
+msgid "Go to forum"
+msgstr "Форумға"
+
+msgid "To message"
+msgstr "Жазуға"
+
+msgid "Go to topic"
+msgstr "Темаға"
+
+msgid "Go to section"
+msgstr "Бөлімге"
+
+msgid "Topic"
+msgstr ""
+
+msgid "Close topic"
+msgstr "Теманы жабу"
+
+msgid "Topic closed"
+msgstr "Тема жабық"
+
+msgid "Delete topic"
+msgstr "Теманы өшіру"
+
+msgid "Topic deleted"
+msgstr "Тема өшірілген"
+
+msgid "Topic deleted by"
+msgstr "Теманы өшірген"
+
+msgid "Undelete topic"
+msgstr "Теманы өшіруден бас таррты"
+
+msgid "Fix topic"
+msgstr ""
+
+msgid "No topics in this section"
+msgstr "Бұл бөлімде темалар жоқ"
+
+msgid "Move topic"
+msgstr "Тема орнын ауыстыру"
+
+msgid "Topic name"
+msgstr "Тема атауы"
+
+msgid "New topic"
+msgstr "Теманы ашу"
+
+msgid "Rename topic"
+msgstr "Тема атауын өзгерту"
+
+msgid "Restore topic"
+msgstr "Теманы қалпына келтіру"
+
+msgid "Unfix topic"
+msgstr ""
+
+msgid "Total votes"
+msgstr "Барлық дауыс бергендер"
+
+msgid "All for period"
+msgstr "Барлық мерзімде"
+
+msgid "Last 10"
+msgstr "Соңғы 10 тема"
+
+msgid "Period (in hours)"
+msgstr "Мерзім (сағат)"
+
+msgid "There is nothing new in this forum for selected period"
+msgstr "таңдалған мерзім бойынша жаңалықтар жоқ"
+
+msgid "Mark as read"
+msgstr "Оқылған сияқты атап өту"
+
+msgid "All topics marked as read"
+msgstr "Барлық темалар оқылған сияқты болды"
+
+msgid "Upload"
+msgstr "Жіберу"
+
+msgid "The time allotted for the file upload has expired"
+msgstr "Файл жүктеуге берілген уақыт өтіп кетті"
+
+msgid "Post deleted"
+msgstr "Постты өшірген"
+
+msgid "Who is here"
+msgstr "Кім мұнда"
+
+msgid "Who in forum"
+msgstr "Форумда кім бар"
+
+msgid "Who in topic"
+msgstr "Темада кім бар"
+
+msgid "Post restored by"
+msgstr "Постты қалпына келтірген"
+
+msgid "Vote accepted"
+msgstr "Сіздің даусыңыз қабылданды"
+
+msgid "Poll (max. 150)"
+msgstr "Дауыс беру (max. 150)"
+
+msgid "Poll added"
+msgstr "Дауыс беру қойылды"
+
+msgid "Poll changed"
+msgstr "Дауыс беру өзгертілді"
+
+msgid "Do you really want to delete a poll?"
+msgstr "Дауыс беруді өшіргіңіз келе ме??"
+
+msgid "Poll deleted"
+msgstr "Дауыс беру өшірілді"
+
+msgid "Who voted in the poll"
+msgstr "дауыс беруде қатысқан қолданушылар"
+
+msgid "No one has voted in this poll yet"
+msgstr "Бұл дауыс беруде ешкім қатысқан жоқ"
+
+msgid "Do you really want to delete the answer?"
+msgstr "Сіз дауыс беру вариантын өшіргіңіз келе ме?"
+

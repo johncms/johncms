@@ -1,0 +1,556 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "Дар бораи худ"
+
+msgid "Everyone"
+msgstr "Барои ҳама"
+
+msgid "With Password"
+msgstr "Бо парол"
+
+msgid "Closed"
+msgstr "Махкам"
+
+msgid "Friends only"
+msgstr "Барои дустон"
+
+msgid "This field is required if the password access is activated"
+msgstr "Агор бо парол гузошта бошед, пас ин ҷойҳоро бояд пур кунед"
+
+msgid "Achievements"
+msgstr "Дастовардҳо"
+
+msgid "Activity"
+msgstr "Суханҳо"
+
+msgid "Album"
+msgstr "Албом"
+
+msgid "Album successfully changed"
+msgstr "Албом иваз шуд"
+
+msgid "Create Album"
+msgstr "Сохтани Албом"
+
+msgid "Album successfully created"
+msgstr "Албом сохта шуд"
+
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Шумо дар ҳақиқат Албомро тоза карданиед?<br>Агар дар дохилаш суратҳо бошанд, пас онҳо низ тоза мешаванд"
+
+msgid "Album Deleted"
+msgstr "Албом тоза карда шуд"
+
+msgid "Edit Album"
+msgstr "Тағйироти албом"
+
+msgid "Album List"
+msgstr "Саҳифаи албомҳо"
+
+msgid "You must type a password to view this album"
+msgstr "Барои ворид шудан ба ин албом, бояд паролро ворид созед"
+
+msgid "Select Album"
+msgstr "Албомро интихоб кунед"
+
+msgid "Pending confirmation"
+msgstr "Интизори иҷозатдиҳист, барои бақайдгири"
+
+msgid "Delete avatar"
+msgstr "Аватар Тоза карда шуд"
+
+msgid "Upload avatar"
+msgstr "Гирифтани аватар"
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Birthday"
+msgstr "Рузи тавалуд"
+
+msgid "Date of birth (d.m.y)"
+msgstr "Рузи таваллуд (руз, моҳ, сол)"
+
+msgid "City"
+msgstr "Шаҳр"
+
+msgid "Contacts"
+msgstr "Алоқаҳо"
+
+msgid "Data saved"
+msgstr "Сабт карда шуданд"
+
+msgid "Prohibit karma"
+msgstr "Овоздиҳиро манъ мекунед"
+
+msgid "Warning! Write your e-mail correctly <br> Your password will be sent to the email address on record for this account."
+msgstr "Диққат! E-mail-и худро дуруст нависед!<br>Танҳо ба у пароли шумо равона карда мешавад"
+
+msgid "The album already exists"
+msgstr "Чунин албом аллакай ҳаст"
+
+msgid "Invalid format date of birth"
+msgstr "Рузи тавалуд нодуруст аст"
+
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "Рақами ICQ бояд аз 5 то 10 рақам бошад"
+
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Дарозии НИК бояд аз 2 то 20 нишона бошад"
+
+msgid "Nick contains invalid characters"
+msgstr "Нишонаҳои номумкин дар НИК"
+
+msgid "You cannot edit profile of higher administration"
+msgstr "Шумо ҳуқуқи тағйирот даровардан ба анкетаи  нафари вазифааш баландтарро надоред"
+
+msgid "Friends only"
+msgstr "Барои дустон"
+
+msgid "The list is empty.<br>All messages from this user were deleted during planned Guestbook clean-up. "
+msgstr "Саҳифа холист.<br>Мактубҳои ин истифодабаранда ба тарзи автомати тоза шуданд, баъд аз тозакунии меҳмонхона"
+
+msgid "hidden"
+msgstr "Русткуни"
+
+msgid "Image"
+msgstr "Сурат"
+
+msgid "Add image"
+msgstr "Гузоштани сурат"
+
+msgid "Delete image"
+msgstr "Тозакунии сурат"
+
+msgid "Are you sure you want to delete this image?"
+msgstr "Шумо дар ҳақиқат суратро тоза карданиед?"
+
+msgid "Edit image"
+msgstr "Тағйироти сурат"
+
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "Бояд донед, ки ҳангоми бисёр тағйирот даровардан ба сурат, онгоҳ сифати пештараи сурат гум мешавад.<br>Танҳо дар ҳолати зарури истифода баред."
+
+msgid "Image successfully changed"
+msgstr "Сурат тағйир дода шуд"
+
+msgid "Move the image"
+msgstr "Ҷойивазкунии сурат"
+
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Барои он ки ҷойи суратро иваз кунед, шумо бояд як албоми дигар дошта бошед"
+
+msgid "Image successfully moved to the selected album"
+msgstr "Сурат ба албоми интихобшуда гузаронида шуд"
+
+msgid "Rotate"
+msgstr "Тобдиҳи"
+
+msgid "do not rotate"
+msgstr "Тоб намедиҳед"
+
+msgid "counterclockwise"
+msgstr "Муқобили соат"
+
+msgid "clockwise"
+msgstr "Бо гардиши соат"
+
+msgid "My Album"
+msgstr ""
+
+msgid "My activity"
+msgstr "Суханҳои ман"
+
+msgid "My Mailbox"
+msgstr "Почтаи ман"
+
+msgid "My Account"
+msgstr "Утоқи шахси"
+
+msgid "My Profile"
+msgstr "Анкетаи ман"
+
+msgid "My settings"
+msgstr "Тағйиротҳои ман"
+
+msgid "My statistic"
+msgstr "Натиҷаҳои ман"
+
+msgid "Name"
+msgstr "Ном"
+
+msgid "Recent comments"
+msgstr "Суханҳои охирин"
+
+msgid "New photos"
+msgstr "Суратҳои нав"
+
+msgid "Min.2, Max. 20"
+msgstr "Аз 2 то 20"
+
+msgid "Personal info"
+msgstr "Чизҳои шахси"
+
+msgid "Contact number"
+msgstr "Рақами тел."
+
+msgid "Photo"
+msgstr "Сурат"
+
+msgid "Add to Profile"
+msgstr "Ба анкета"
+
+msgid "Photo added to the profile"
+msgstr "Сурат дар анкета гузошта шуд"
+
+msgid "Photos"
+msgstr "Суратҳо"
+
+msgid "Photo deleted"
+msgstr "Сурат тоза карда шуд"
+
+msgid "Photo uploaded"
+msgstr "Сурат гирифта шуд"
+
+msgid "Edit Profile"
+msgstr "Тағйироти анкета"
+
+msgid "Functionary on the site"
+msgstr "Вазифаҳо дар сомона"
+
+msgid "User"
+msgstr "Нафари одди"
+
+msgid "Moder chat"
+msgstr "Модератори ЧАТ"
+
+msgid "Forum Moderator"
+msgstr "Модератори форум"
+
+msgid "Download Moderator"
+msgstr "Модератори файлҳо"
+
+msgid "Library Moderator"
+msgstr "Модератори китобхона"
+
+msgid "Super Modererator"
+msgstr "Модератори беҳтарин"
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Supervisor"
+msgstr ""
+
+msgid "Received"
+msgstr "Воридшудаҳо"
+
+msgid "Registration confirmed"
+msgstr "Бақайдгириро иҷозат доданд"
+
+msgid "Free registration"
+msgstr "Бақайдгирии кушода"
+
+msgid "Registered"
+msgstr "Ба қайд гирифта шуд"
+
+msgid "Registered"
+msgstr "Ба қайд гирифта шуд"
+
+msgid "For user"
+msgstr "Барои истифодабаранда"
+
+msgid "default settings were set"
+msgstr "Тағйироти одди гузошта шудааст"
+
+msgid "Image"
+msgstr "Сурат"
+
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed"
+msgstr "Барои гирифтани расм ба сомона, намудҳои JPG, JPEG, PNG, GIF лозиманд<br>Ҳаҷмаш бояд колон набошад"
+
+msgid "Irrespective of the size original file will be converted to 32x32"
+msgstr "Новобаста ба ҳаҷми сурат у ба намуди 32х32 гузаронида мешавад"
+
+msgid "The new uploaded image will replace the old image"
+msgstr "Сурати нав пештараашро иваз мекунад (агар бошад)"
+
+msgid "For best results, original image must have an equal ratio"
+msgstr "Барои натиҷаи беҳтарин, сурат бояд ҳаматарафа дуруст бошад"
+
+msgid "Irrespective of the size original file, it will be converted to 640x480"
+msgstr "Новобаста ба ҳаҷми сурат у ба намуди 640х480 гузаронида мешавад "
+
+msgid "Sent"
+msgstr "Равонашудаҳо"
+
+msgid "Male"
+msgstr "Мардона"
+
+msgid "Female"
+msgstr "Занона"
+
+msgid "Back to profile"
+msgstr "Дар анкета нишон медиҳед"
+
+msgid "Site"
+msgstr "Сомона"
+
+msgid "Select gender"
+msgstr "Ҷинсро интихоб кунед"
+
+msgid "Max. 50"
+msgstr "То 50 н."
+
+msgid "He stay on the site"
+msgstr "Дар сомона гузарондааст"
+
+msgid "She stay on the site"
+msgstr "Дар сомона гузарондааст"
+
+msgid "System"
+msgstr ""
+
+msgid "Top Comments"
+msgstr "ТОП суханҳо"
+
+msgid "Top Downloads"
+msgstr "ТОП файлҳо"
+
+msgid "AntiTop"
+msgstr ""
+
+msgid "Top Views "
+msgstr "ТОП тамошоҳо"
+
+msgid "Top Votes"
+msgstr "ТОП овозҳо"
+
+msgid "Unread Comments"
+msgstr "Суханҳои нохонда"
+
+msgid "Upload"
+msgstr "Гирифтан ба сомона"
+
+msgid "Upload avatar"
+msgstr "Гирифтани аватар"
+
+msgid "Upload a picture"
+msgstr "Гирифтани сурат"
+
+msgid "User Profile"
+msgstr "Анкетаи истифодабаранда"
+
+msgid "Add to Contacts"
+msgstr ""
+
+msgid "Add to Friends"
+msgstr ""
+
+msgid "Block user"
+msgstr ""
+
+msgid "You have already submitted a request"
+msgstr ""
+
+msgid "User is already your friend! Application can not be undone. If you want to remove this user from friends, select the appropriate option."
+msgstr ""
+
+msgid "Unlock user"
+msgstr ""
+
+msgid "Remove from contacts"
+msgstr ""
+
+msgid "Friends"
+msgstr ""
+
+msgid "My Friends"
+msgstr ""
+
+msgid "User already offered you friendship. If you want it to confirm the request, select the appropriate option."
+msgstr ""
+
+msgid "offers friendship"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Reject"
+msgstr ""
+
+msgid "Request to be friends sent!"
+msgstr ""
+
+msgid "Do you really want to become friends?"
+msgstr ""
+
+msgid "Friendship"
+msgstr ""
+
+msgid "User is already your friend"
+msgstr ""
+
+msgid "Applications for friendship does not exist"
+msgstr ""
+
+msgid "Application for friendship canceled"
+msgstr ""
+
+msgid "Are you sure you want to offer to be friends?"
+msgstr ""
+
+msgid "There is no invitation to be friends"
+msgstr ""
+
+msgid "agreed with you friends"
+msgstr ""
+
+msgid "You confirmed friendship. Now the user"
+msgstr ""
+
+msgid "Your friend"
+msgstr ""
+
+msgid "Do you really want to confirm the friendship"
+msgstr ""
+
+msgid "deleted you from friends"
+msgstr ""
+
+msgid "You remove the user from friends."
+msgstr ""
+
+msgid "Do you really want to remove from your friends?"
+msgstr ""
+
+msgid "Removal is not possible! User is not your friend."
+msgstr ""
+
+msgid "declined your offer to make friends."
+msgstr ""
+
+msgid "Request to be friends rejected."
+msgstr ""
+
+msgid "Are you sure you want to reject an offer to be friends"
+msgstr ""
+
+msgid "The page does not exist!"
+msgstr ""
+
+msgid "My requests"
+msgstr ""
+
+msgid "Cancel Request"
+msgstr ""
+
+msgid "My Offers"
+msgstr ""
+
+msgid "Confirm friendship"
+msgstr ""
+
+msgid "Reject friendship"
+msgstr ""
+
+msgid "Remove from friends"
+msgstr ""
+
+msgid "Add to friends"
+msgstr ""
+
+msgid "Cancel a request to be friends"
+msgstr ""
+
+msgid "Correspondence"
+msgstr ""
+
+msgid "Spam"
+msgstr ""
+
+msgid "Relative"
+msgstr ""
+
+msgid "Fellow Student"
+msgstr ""
+
+msgid "Best friend"
+msgstr ""
+
+msgid "Colleague"
+msgstr ""
+
+msgid "Classmate"
+msgstr ""
+
+msgid "Friend"
+msgstr ""
+
+msgid "Mail settings"
+msgstr ""
+
+msgid "You can write messages"
+msgstr ""
+
+msgid "Can write all"
+msgstr ""
+
+msgid "Can write only contacts"
+msgstr ""
+
+msgid "Can write only friends"
+msgstr ""
+
+msgid "pointing out that you best friends with him"
+msgstr ""
+
+msgid "pointed out that you have with him relatives"
+msgstr ""
+
+msgid "pointed out that you have with him classmates"
+msgstr ""
+
+msgid "pointing out that you were colleagues"
+msgstr ""
+
+msgid "pointing out that you were classmates"
+msgstr ""
+
+msgid "pointed out that you\"re friends"
+msgstr ""
+
+msgid "You indicated that you are best friends with"
+msgstr ""
+
+msgid "You indicated that the relatives with"
+msgstr ""
+
+msgid "You indicated that mates with"
+msgstr ""
+
+msgid "You indicated that the colleagues with"
+msgstr ""
+
+msgid "You indicated that you classmates with"
+msgstr ""
+
+msgid "You indicated that you are friends with"
+msgstr ""
+
+msgid "Do you really want to indicate that the user of Your "
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "The feature is disabled, contact your administrator"
+msgstr ""
+
+msgid "You in user\"s ignorlist. You can not offer him the friendship of."
+msgstr ""
+

@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+
+msgid "Emotions"
+msgstr "Emosi"
+
+msgid "Love"
+msgstr "Cinta"
+
+msgid "Music, Dancing"
+msgstr "Musik, tari"
+
+msgid "Food, Alcohol"
+msgstr "Makanan, alkohol"
+
+msgid "Animals"
+msgstr "Hewan"
+
+msgid "Flowers"
+msgstr "Bunga"
+
+msgid "Brawl, Weapons"
+msgstr "Perkelahian, Senjata"
+
+msgid "Gestures"
+msgstr "Gerakan"
+
+msgid "Holidays"
+msgstr "Wisata"
+
+msgid "Sports"
+msgstr "Olahraga"
+
+msgid "Technology"
+msgstr "Teknik"
+
+msgid "Miscellaneous"
+msgstr "Bermacam-macam"

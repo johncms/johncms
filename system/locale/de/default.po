@@ -1,0 +1,1012 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Access forbidden"
+msgstr "Zutritt ist verboten"
+
+msgid "For registered users only"
+msgstr "Allein fur registrierte Besucher"
+
+msgid "Add"
+msgstr "Subsumiert"
+
+msgid "Add File"
+msgstr "Datei hinzufügen"
+
+msgid "Add Smileys"
+msgstr "Schreibe Smileys"
+
+msgid "Administration"
+msgstr ""
+
+msgid "Administrators"
+msgstr "Administrationen"
+
+msgid "Admin-Club"
+msgstr "Admin-Klub"
+
+msgid "Admin Panel"
+msgstr "Admin-panel"
+
+msgid "Smiles for Administration"
+msgstr "Smiles für Verwaltung"
+
+msgid "Administrators events"
+msgstr "Begebenheiten des Administrators"
+
+msgid "Albums"
+msgstr "Alben"
+
+msgid "New comments in albums"
+msgstr "Neue Kommentare in Alben"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Appearance"
+msgstr "Aussenseite"
+
+msgid "Apply"
+msgstr "Anwenden"
+
+msgid "Confirm"
+msgstr "Zu bejahen"
+
+msgid "Location"
+msgstr "Anordnung"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Authorized"
+msgstr "Autorisierter"
+
+msgid "Authorization failed"
+msgstr "Autorisiert nicht durchmachte"
+
+msgid "Avatar has been successfully installed"
+msgstr "Avatar erfolgreich angesetzter"
+
+msgid "Avatar successfully uploaded"
+msgstr "Avatar erfolgreich belasteter"
+
+msgid "Avatar"
+msgstr ""
+
+msgid "Do you really want to set myself this avatar?"
+msgstr "Wollen Sie wirklich um mir dieses Avatar?"
+
+msgid "Avatars"
+msgstr "Avataren"
+
+msgid "Back"
+msgstr "Ruckwarts"
+
+msgid "Balance"
+msgstr "Bilanz"
+
+msgid "Ban"
+msgstr "Sperrung"
+
+msgid "Banish"
+msgstr "sperrunges"
+
+msgid "Ban type"
+msgstr "Baumuster Sperrung"
+
+msgid "Banish"
+msgstr "sperrunges"
+
+msgid "Tags (BBcode)"
+msgstr "Tegi (BBcode)"
+
+msgid "Birthday"
+msgstr "Geburtstag"
+
+msgid "Birthdays"
+msgstr "Geburtstager"
+
+msgid "Block"
+msgstr "Blockung"
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blogs"
+msgstr ""
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cancel"
+msgstr "Aufhebung"
+
+msgid "Symbols on the picture"
+msgstr "Code vom Bild"
+
+msgid "Catalog"
+msgstr "Katalog"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Change password"
+msgstr "Wechseln Kennwort"
+
+msgid "Chat"
+msgstr ""
+
+msgid "Please, check up correctness of the input data"
+msgstr "Bitte durchsuche Richtigkeit der Einfuhrung der Angaben"
+
+msgid "Clear"
+msgstr "abbursten"
+
+msgid "Clear all"
+msgstr "Reinigen Sie alle"
+
+msgid "All messages older than 1 day were deleted"
+msgstr "Löschen Sie alle Nachrichten, die älter als 1 Tag"
+
+msgid "Full clearing is finished"
+msgstr "Eine vollständige Reinigung"
+
+msgid "Clearing parameters"
+msgstr "Optionen löschen"
+
+msgid "Clear all"
+msgstr "Reinigen Sie alle"
+
+msgid "Older than 1 day"
+msgstr "Älter als 1 Tag"
+
+msgid "Older than 1 week"
+msgstr "Älter als 1 Woche"
+
+msgid "Clear all messages from this user"
+msgstr "Löschen Sie alle Nachrichten von diesem Benutzer"
+
+msgid "All messages older than 1 week were deleted"
+msgstr "Löschen Sie alle Nachrichten, die älter als 1 Woche"
+
+msgid "Color"
+msgstr "Farbe"
+
+msgid "Text Color"
+msgstr ""
+
+msgid "Background Color"
+msgstr ""
+
+msgid "Comments"
+msgstr "Kommentare"
+
+msgid "Comments are closed"
+msgstr "Kommentare sind geschlossen"
+
+msgid "General list"
+msgstr "Gemeinsame Liste"
+
+msgid "Community"
+msgstr "Aktive Standort"
+
+msgid "Contacts"
+msgstr "Beruhrungen"
+
+msgid "In contacts"
+msgstr "In Beruhrungen"
+
+msgid "Continue"
+msgstr "Zu fortfuhren"
+
+msgid "Downloads"
+msgstr "Ladungen"
+
+msgid "Views"
+msgstr "Ansichten"
+
+msgid "Clock setting"
+msgstr "Abstimmung der Uhren"
+
+msgid "General setting"
+msgstr "Gemeinsame Abstimmungen"
+
+msgid "Date"
+msgstr "Datum"
+
+msgid "Day"
+msgstr "Tag"
+
+msgid "Days"
+msgstr "Tag"
+
+msgid "Default"
+msgstr "Standards"
+
+msgid "Delete"
+msgstr "Entfern"
+
+msgid "Delete message"
+msgstr "Ansang ist entfernt"
+
+msgid "Delete all"
+msgstr "Entfernen zu alle"
+
+msgid "Do you really want to delete?"
+msgstr "Gultig belieben, zu entfernen?"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Design"
+msgstr "Thema der Aufmachung"
+
+msgid "Communication"
+msgstr "Verkehr"
+
+msgid "Digest"
+msgstr "verdauen"
+
+msgid "Direct URL"
+msgstr "Direktlinks"
+
+msgid "Discuss"
+msgstr "Zu besprechen"
+
+msgid "Display mode"
+msgstr "Regime der Abspiegelung"
+
+msgid "Perform"
+msgstr "Zu aufarbeiten"
+
+msgid "Hide"
+msgstr "Zu unterschlagen"
+
+msgid "Down"
+msgstr "Ab"
+
+msgid "Download"
+msgstr "zu belasten"
+
+msgid "Downloads"
+msgstr "Ladungen"
+
+msgid "Edit"
+msgstr "verraten"
+
+msgid "Edit List"
+msgstr "Liste bearbeiten"
+
+msgid "Edited"
+msgstr "Geändert"
+
+msgid "Enter verification code"
+msgstr "Einfuhre Versuchscode"
+
+msgid "Enter site"
+msgstr "Auf Standort zu hineingehen"
+
+msgid "ERROR"
+msgstr "FEHLER"
+
+msgid "The requested page does not exists"
+msgstr "Die Sie gefragte Seite otsutstvuet"
+
+msgid "Invalid address"
+msgstr "Adresse ist eingefuhrt falsch"
+
+msgid "Avatar select failed"
+msgstr "Auswahl Fehler Avatar"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Lange der Beschreibung muss sein nicht weniger 2 Zeichen"
+
+msgid "You cannot edit posts of higher administration"
+msgstr "Sie können Nachrichten nicht bearbeiten, die Sie auf Senior buchen"
+
+msgid "The required fields are not filled"
+msgstr "Ist nicht ausgefullt obligatorische Acker"
+
+msgid "You have not entered the message"
+msgstr "Sie haben keine Nachricht eingegeben"
+
+msgid "You have not entered a name"
+msgstr "Sie haben keinen Namen eingegeben"
+
+msgid "You have not entered password"
+msgstr "Ihr nicht einfuhrten Kennwort"
+
+msgid "You have not entered text"
+msgstr "Sie haben keinen Text eingegeben"
+
+msgid "You have not entered Title"
+msgstr "Ihr nicht einfuhrten Benennung"
+
+msgid "File does not exist"
+msgstr "Die Datei existiert nicht"
+
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Sie können keine Nachrichten so oft<br>Bitte warten"
+
+msgid "You have not entered login"
+msgstr "Ihr nicht einfuhrten Login"
+
+msgid "Message already exists"
+msgstr "Diese Nachricht wurde bereits"
+
+msgid "Text is too short"
+msgstr "Zu kurz text"
+
+msgid "Administrator already replied to this message"
+msgstr "Auf diesen Beitrag bereits beantwortet Administrator"
+
+msgid "User does not exists"
+msgstr "Derart Benutzer nicht daist"
+
+msgid "The security code is not correct"
+msgstr "Validierungscode ist falsch eingegeben"
+
+msgid "Bad data"
+msgstr "Unrichtige Angaben"
+
+msgid "Invalid length"
+msgstr "Ungültige Länge"
+
+msgid "Fields values beyond the permissible limits"
+msgstr "Bedeutungen der Acker vykhodyat vor akzeptable Rahmen"
+
+msgid "Incorrect Password"
+msgstr "Das Passwort ist falsch"
+
+msgid "Invalid characters"
+msgstr "Unzulassige Zeichen"
+
+msgid "No new events"
+msgstr "Neue Begebenheiten ist"
+
+msgid "Logout"
+msgstr "Austritt"
+
+msgid "External Link"
+msgstr "Externer Link"
+
+msgid "Height of field"
+msgstr "Hohe des Ackers"
+
+msgid "Width of field"
+msgstr "Breite des Ackers"
+
+msgid "Max. File size"
+msgstr "Maks. Dateigrosse"
+
+msgid "Files"
+msgstr "Dateien"
+
+msgid "Bold"
+msgstr "Fetter"
+
+msgid "Italic"
+msgstr "Kursivschrift"
+
+msgid "Underline"
+msgstr "Angestrichener"
+
+msgid "Forgot password"
+msgstr "Vergassen Kennwort"
+
+msgid "Forum"
+msgstr ""
+
+msgid "Forum post"
+msgstr "Posten an forum"
+
+msgid "Gallery"
+msgstr "Galerie"
+
+msgid "Guest"
+msgstr "Gast"
+
+msgid "Guests"
+msgstr "Gasten"
+
+msgid "Gzip compression"
+msgstr "Gzip ballt"
+
+msgid "Guestbook"
+msgstr "Gaste"
+
+msgid "The guestbook is closed"
+msgstr "Gästebuch geschlossen"
+
+msgid "The guestbook is empty.<br><b>Be the first! :)</b>"
+msgstr "In Guest Beiträge Keine<br><b>Seien Sie der Erste! :)</b>"
+
+msgid "Happy birthday!!!"
+msgstr "Mit Geburtstag!!!"
+
+msgid "Heading"
+msgstr "Zagolovok"
+
+msgid "Help"
+msgstr "Auskunft"
+
+msgid "Hi"
+msgstr "Empfehlung"
+
+msgid "Hide"
+msgstr "Zu unterschlagen"
+
+msgid "History"
+msgstr "Geschichte"
+
+msgid "Home"
+msgstr "zu Hause"
+
+msgid "Hours"
+msgstr "Uhren"
+
+msgid "Ignore"
+msgstr "Zu ignorieren"
+
+msgid "Details"
+msgstr "Genau"
+
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "Im Moment wird der Zugriff auf die Website nur für den SV erlaubt!"
+
+msgid "At the moment, access to the site is allowed only for Administration of site"
+msgstr "Im Moment wird der Zugriff auf die Website nur auf die Administrations-Site erlaubt"
+
+msgid "Information"
+msgstr ""
+
+msgid "Info, FAQ"
+msgstr "Information, FAQ"
+
+msgid "Offenses"
+msgstr "Verletzungen"
+
+msgid "IP Activity"
+msgstr "IP Aktivität"
+
+msgid "Actual addresses"
+msgstr "Aktuelle Adresse"
+
+msgid "IP address"
+msgstr "Adresse IP"
+
+msgid "IP history"
+msgstr "Geschichte IP"
+
+msgid "Karma"
+msgstr ""
+
+msgid "Language"
+msgstr "Sprache"
+
+msgid "Select language"
+msgstr "Wahle Sprache"
+
+msgid "System language set"
+msgstr "Fur Gebaude ist angesetzt Sprache"
+
+msgid "Last activity"
+msgstr "Allerletzter Aktivismus"
+
+msgid "Last IP"
+msgstr "Allerletzter IP"
+
+msgid "Last visit"
+msgstr "Allerletzter Besuch"
+
+msgid "Library"
+msgstr "Bibliotheke"
+
+msgid "Mod. Library"
+msgstr "Mod. Bibliotheken"
+
+msgid "Lines per page"
+msgstr "Zeilen auf Seite"
+
+msgid "Link"
+msgstr "Hinweis"
+
+msgid "List"
+msgstr "Liste"
+
+msgid "Empty list"
+msgstr "Die Liste ist leer"
+
+msgid "OFF"
+msgstr "Zu auschalten"
+
+msgid "ON"
+msgstr "Zu anschalten"
+
+msgid "or"
+msgstr "oder"
+
+msgid "Login"
+msgstr "Eingang"
+
+msgid "Username"
+msgstr "Login"
+
+msgid "General settings"
+msgstr "Gemeinsame Abstimmungen"
+
+msgid "Mail"
+msgstr ""
+
+msgid "New message"
+msgstr "Ihr Brief"
+
+msgid "Guys"
+msgstr "Jungs"
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Messages"
+msgstr "Nachrichten"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, maks. 30 Zeichen"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, maks. 500 Zeichen"
+
+msgid "Moderators"
+msgstr "Moderatoren"
+
+msgid "Move"
+msgstr "Zu deportieren"
+
+msgid "My Smileys"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "New Files"
+msgstr "neuer Datei"
+
+msgid "New reviews"
+msgstr "Neue Ausserungen"
+
+msgid "News"
+msgstr "Neuigkeiten"
+
+msgid "Archive news"
+msgstr "Archiv der Neuigkeiten"
+
+msgid "Next"
+msgstr "Weiter"
+
+msgid "Nick"
+msgstr "Nickname"
+
+msgid "Night"
+msgstr "Nicht"
+
+msgid "Nothing found for this request"
+msgstr "Po Euere Anfrage nichts ist nicht gefunden"
+
+msgid "Not specified"
+msgstr "Nicht namlicher"
+
+msgid "Optional field"
+msgstr "Unverbindlicher Acker"
+
+msgid "Moderation"
+msgstr "Mäßigung"
+
+msgid "Online"
+msgstr "Am Standort"
+
+msgid "Personal"
+msgstr "Persönliche"
+
+msgid "Personal"
+msgstr "Persönliche"
+
+msgid "Password"
+msgstr "Kennwort"
+
+msgid "Photo Album"
+msgstr "Photo-Alben"
+
+msgid "Photo Albums"
+msgstr "Photo-Alben"
+
+msgid "poins"
+msgstr "Augenglaser"
+
+msgid "posts"
+msgstr "Posten"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "Private"
+msgstr "Privat"
+
+msgid "Profile"
+msgstr "Enquette"
+
+msgid "Quiz"
+msgstr ""
+
+msgid "Quick jump"
+msgstr "Schneller Ubergang"
+
+msgid "Rating"
+msgstr "Bewertung"
+
+msgid "Read Only"
+msgstr ""
+
+msgid "Reason"
+msgstr "Anlass"
+
+msgid "<h3>ATTENTION!</h3>You are going to leave our site and go to an external link"
+msgstr "<h3>ACHTUNG!</h3>Sie werden auf unserer Website zu verlassen und auf einen externen Link"
+
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Administration unserer Website ist nicht verantwortlich für die Inhalte externer Websites"
+
+msgid "It is recommended not to specify your data, relating to"
+msgstr "Es wird empfohlen, nicht auf Ihre Daten angeben, über die"
+
+msgid "(Login, Password), on third party sites"
+msgstr "(Login, Passwort), auf websites dritter"
+
+msgid "Go to link"
+msgstr "Zur Link"
+
+msgid "Registration"
+msgstr ""
+
+msgid "Sorry, but your request for registration is not considered yet<br> Please, be patient"
+msgstr "Bringen Entschuldigungen, aber Euere Buchung auf registriert ist noch nicht begutachtet <br> Bitte erwarte"
+
+msgid "Remains"
+msgstr "Blieb"
+
+msgid "Remember"
+msgstr "Zu behalten"
+
+msgid "Repeat"
+msgstr "Zu rekapitulieren"
+
+msgid "Reply"
+msgstr "Antwort"
+
+msgid "Reset setting"
+msgstr "Sbros der Abstimmungen"
+
+msgid "New reviews"
+msgstr "Neue Ausserungen"
+
+msgid "Save"
+msgstr "zu behalten"
+
+msgid "Search"
+msgstr "Suchen"
+
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance"
+msgstr "Lange der Anfrage: 4min., 64maks. <br> Suche ist unempfindlich zu registru der Buchstaben <br> Ergebnisse Ausgang mit sortiert nach relevanten"
+
+msgid "Search History"
+msgstr "Suchverlauf"
+
+msgid "Do you really want to clear the search history?"
+msgstr "Wollen Sie wirklich, um den Suchverlauf löschen?"
+
+msgid "New search"
+msgstr "Neue Suchen"
+
+msgid "Search by nick (NickName) and case insensitive letters. For example <b>UsEr</b> and <b>user</b> are identical."
+msgstr "Suche geht nach Nickname Benutzer (Nickname) und unempfindlicher zu registru der Buchstaben, <b> User </b> und <b> use r</b> fur Suche gleichwertiger. <br> Anfrage auf Suche transliter, zu finden, beispielsweise, Nickname ДИМА, Sie konnen in Anfrage aufschreiben dima, Ergebnis ist eins und selber."
+
+msgid "Query results"
+msgstr "Ergebnisse der Anfrage"
+
+msgid "Your search did not match any results"
+msgstr "nach Euere Anfrage nichts ist nicht gefunden"
+
+msgid "Find a user"
+msgstr "Suche des Benutzers"
+
+msgid "Sec."
+msgstr "Sekunde"
+
+msgid "seconds"
+msgstr "Sekunden"
+
+msgid "Section"
+msgstr "Abteilung"
+
+msgid "Sections"
+msgstr "Abteilungen"
+
+msgid "Security"
+msgstr "Sicherheit"
+
+msgid "Select"
+msgstr "Zu wahlen"
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "Set to Profile"
+msgstr "Stellen Sie im Profil"
+
+msgid "Settings"
+msgstr "Abstimmungen"
+
+msgid "Time settings"
+msgstr "Abstimmung der Uhren"
+
+msgid "Shifting time"
+msgstr "Bergrutsch der Zeit"
+
+msgid "Options set to default"
+msgstr "Ist angesetzt Standardsabstimmungen"
+
+msgid "Setting saved"
+msgstr "Abstimmungen ist behalten"
+
+msgid "Show"
+msgstr "Zu aufweisen"
+
+msgid "Show period"
+msgstr "Vor Abschnitt zu aufweisen"
+
+msgid "Site access"
+msgstr "Zugriff auf die site"
+
+msgid "New on the site"
+msgstr "Neuer an Standorte"
+
+msgid "Site News"
+msgstr "Neuigkeiten der Ressource"
+
+msgid "Stay on site"
+msgstr "Durchfuhrte an Standorte"
+
+msgid "Smileys"
+msgstr "Smeley"
+
+msgid "Sort"
+msgstr "Sonderung"
+
+msgid "Spoiler"
+msgstr ""
+
+msgid "Statistic"
+msgstr "Statistik"
+
+msgid "My Statistic"
+msgstr "Meine Statistik"
+
+msgid "User Statistic"
+msgstr "Statistik des Benutzers"
+
+msgid "Status"
+msgstr ""
+
+msgid "Supervisors"
+msgstr "SV"
+
+msgid "System Functions"
+msgstr "Funktionen des Gebaudes"
+
+msgid "System Language"
+msgstr "Sprache des Gebaudes"
+
+msgid "System Time"
+msgstr "Systemische Zeit"
+
+msgid "System Settings"
+msgstr "Abstimmungen des Gebaudes"
+
+msgid "Blue"
+msgstr ""
+
+msgid "Bold"
+msgstr "Fetter"
+
+msgid "PHP code"
+msgstr ""
+
+msgid "Green"
+msgstr ""
+
+msgid "Italic"
+msgstr "Kursivschrift"
+
+msgid "URL"
+msgstr ""
+
+msgid "Bulleted list"
+msgstr "Aufzählung"
+
+msgid "Quote"
+msgstr ""
+
+msgid "Red"
+msgstr ""
+
+msgid "Strike"
+msgstr ""
+
+msgid "Underline"
+msgstr "Angestrichener"
+
+msgid "Term"
+msgstr "Fachausdruck"
+
+msgid "Text"
+msgstr ""
+
+msgid "Input text"
+msgstr "Einfuhrung des Textes"
+
+msgid "Text size"
+msgstr "Abmass des Textes"
+
+msgid "Themes"
+msgstr "Themen"
+
+msgid "Time"
+msgstr "Zeit"
+
+msgid "Day"
+msgstr "Tag"
+
+msgid "Days"
+msgstr "Tag"
+
+msgid "Days"
+msgstr "Tag"
+
+msgid "Time limit"
+msgstr "Limit der Zeit"
+
+msgid "Shifting time"
+msgstr "Bergrutsch der Zeit"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "In Chat"
+msgstr ""
+
+msgid "To the profile"
+msgstr "In Enquette"
+
+msgid "In forum"
+msgstr "In Forum"
+
+msgid "Back to news"
+msgstr "Zu Neuigkeiten"
+
+msgid "Go to page"
+msgstr "Zu Seite"
+
+msgid "Show"
+msgstr "Zu aufweisen"
+
+msgid "Today"
+msgstr "Heute"
+
+msgid "Top 10 activity"
+msgstr "Top-10-Aktivität"
+
+msgid "Most commenting"
+msgstr "Die am meisten kommentierten"
+
+msgid "Most active in Forum"
+msgstr "Am meisten aktiv im Forum"
+
+msgid "Most active in Guestbook"
+msgstr "Die meisten aktiven Guest"
+
+msgid "Best Karma"
+msgstr "Beste Karma"
+
+msgid "Total"
+msgstr "Im ganzen"
+
+msgid "Hits"
+msgstr "Ubergange"
+
+msgid "hits"
+msgstr "Ubergange"
+
+msgid "Translit"
+msgstr ""
+
+msgid "Unread"
+msgstr "Undurchgelesener"
+
+msgid "Format address http://url.com"
+msgstr "Adresse einfuhren in Format http://url.com"
+
+msgid "Up"
+msgstr "Nach oben"
+
+msgid "This user does not exists"
+msgstr "Derart Benutzer nicht daist"
+
+msgid "Useful"
+msgstr "Behilflicher"
+
+msgid "Users"
+msgstr "Benutzer"
+
+msgid "Clean Users"
+msgstr "Datenbanksäuberung"
+
+msgid "Users list"
+msgstr "Liste der Benutzer"
+
+msgid "New users"
+msgstr "Neue Benutzer"
+
+msgid "Banned users"
+msgstr "Haben Ban"
+
+msgid "Waiting confirmation"
+msgstr "An registration"
+
+msgid "Top Activity"
+msgstr "Top des Aktivismus"
+
+msgid "Verification code"
+msgstr "Versuchscode"
+
+msgid "Viewing"
+msgstr "Einsehen"
+
+msgid "Display mode"
+msgstr "Regime der Abspiegelung"
+
+msgid "Vote"
+msgstr "Zu abstimmen"
+
+msgid "Against"
+msgstr "Wider"
+
+msgid "For"
+msgstr "Hinter"
+
+msgid "Polls"
+msgstr "Abstimmungen"
+
+msgid "Welcome to"
+msgstr "Willkommener an"
+
+msgid "Where?"
+msgstr "Wo?"
+
+msgid "Who is online?"
+msgstr "Sieht, wer online ist?"
+
+msgid "No limits"
+msgstr "Ohne Einschrankungen"
+
+msgid "Girls"
+msgstr "Mädchen"
+
+msgid "Write"
+msgstr "Zu aufschreiben"
+
+msgid "Yesterday"
+msgstr "Gestern"
+

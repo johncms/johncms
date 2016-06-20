@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Allowed Types"
+msgstr "Tipuri de permise"
+
+msgid "Create an album"
+msgstr "Creaţi un album"
+
+msgid "Create a section"
+msgstr "Creaţi o secţiune"
+
+msgid "Gallery closed"
+msgstr "Galeria închis"
+
+msgid "Delete Album"
+msgstr "Ştergeţi albumul"
+
+msgid "Delete section"
+msgstr "Ştergeţi o secţiune"
+
+msgid "Dimensions"
+msgstr "Dimensiuni"
+
+msgid "Edit Album"
+msgstr "Editare album"
+
+msgid "Edit description"
+msgstr "Editaţi descrierea"
+
+msgid "Edit Section"
+msgstr "Se modifică Secţiunea"
+
+msgid "Error uploading photo"
+msgstr "Eroare la încărcarea imaginii"
+
+msgid "Picture is missing"
+msgstr "Imaginea este lipsă"
+
+msgid "Image size"
+msgstr "Dimensiunea imaginii"
+
+msgid "Maximum weight"
+msgstr "Greutatea maximă"
+
+msgid "New photos"
+msgstr "Noi fotografii"
+
+msgid "Posted by"
+msgstr "Autor"
+
+msgid "Select Photo"
+msgstr "Selectaţi o imagine"
+
+msgid "To Album"
+msgstr "În Album"
+
+msgid "To Gallery"
+msgstr "În Galerie"
+
+msgid "To Section"
+msgstr "În Secţiunea"
+
+msgid "Upload Photo"
+msgstr "Descărca fotografii"
+
+msgid "Weight"
+msgstr "Greutate"
+

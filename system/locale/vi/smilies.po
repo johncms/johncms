@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Emotions"
+msgstr "Cảm xúc"
+
+msgid "Love"
+msgstr "Yêu"
+
+msgid "Music, Dancing"
+msgstr "Âm nhạc, khiêu vũ"
+
+msgid "Food, Alcohol"
+msgstr "Thực phẩm, rượu"
+
+msgid "Animals"
+msgstr "Động vật"
+
+msgid "Flowers"
+msgstr "Hoa"
+
+msgid "Brawl, Weapons"
+msgstr "Chiến đấu, vũ khí"
+
+msgid "Gestures"
+msgstr "Cử chỉ"
+
+msgid "Holidays"
+msgstr "Ngày nghỉ"
+
+msgid "Sports"
+msgstr "Thể thao"
+
+msgid "Technology"
+msgstr "Công nghệ"
+
+msgid "Miscellaneous"
+msgstr "Linh tinh"
+

@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "À propos de moi"
+
+msgid "Max. 500 characters"
+msgstr "Max. 500 caractères"
+
+msgid "Verification code"
+msgstr "Code de vérification"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Si Vous ne voyez pas l\"image, avec le code, activez la prise en charge des graphiques dans les paramètres de votre navigateur et actualisez la page"
+
+msgid "Enter"
+msgstr "ENTRÉE"
+
+msgid "You have not entered nick"
+msgstr "Vous n\"avez pas saisi le nom d\"utilisateur"
+
+msgid "Too long nick"
+msgstr "Longueur non valide le nom d\"utilisateur"
+
+msgid "This nick already in use"
+msgstr "Ce pseudo est déjà occupé"
+
+msgid "Too long password"
+msgstr "Longueur non valide mot de passe"
+
+msgid "You have not selected genger"
+msgstr "Ne spécifiez pas de marbre"
+
+msgid "Login"
+msgstr "Le nom de l\"utilisateur"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, maximum de 15 caractères.<br>Les animaux de la lettre de Russe et de l\"alphabet, les chiffres et les signes - = @ ! ? ~ _ ( ) [ ] * (sauf zéro)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "Veuillez attendre la confirmation de Votre inscription par l\"administrateur"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Vous serez en mesure d\"obtenir un accès autorisé aux sections du site après la confirmation de Votre inscription.<br>La confirmation a lieu 1 à 2 fois par jour"
+
+msgid "Name"
+msgstr "Le nom de"
+
+msgid "Max. 30 characters"
+msgstr "Max. 30 caractères"
+
+msgid "Password"
+msgstr "Le mot de passe"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "Min. 3, maximum 10 caractères.<br>Les animaux les lettres de l\"alphabet et les chiffres"
+
+msgid "Registration"
+msgstr "Inscrivez-vous"
+
+msgid "Registration temporarily closed"
+msgstr "Inscription fermé"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Veuillez ne pas inscrire les pseudos du type 111, ggg, uuuu et d\"autres semblables, ils seront immédiatement supprimés.<br>Seront également supprimés TOUS les profils enregistrés à travers les serveurs Proxy"
+
+msgid "Gender"
+msgstr "Paul"
+
+msgid "Male"
+msgstr "Androïde"
+
+msgid "Female"
+msgstr "Journée de la femme"
+
+msgid "Your registratiton data"
+msgstr "Vous vous êtes inscrit"
+
+msgid "Your ID"
+msgstr "Votre ID"
+
+msgid "Your username"
+msgstr "Votre Nom D\"Utilisateur"
+
+msgid "Your password"
+msgstr "Votre Mot De Passe"
+
+msgid "Link to autologin"
+msgstr "Le lien pour l\"entrée automatique"
+

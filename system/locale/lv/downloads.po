@@ -1,0 +1,169 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Added"
+msgstr "Pievienots"
+
+msgid "Album"
+msgstr "Albūms"
+
+msgid "You have already rated this file"
+msgstr "Kļūda! Jūs jau esat novērtējis šo failu"
+
+msgid "Artist"
+msgstr "Izpildītājs"
+
+msgid "Average rating"
+msgstr "Vidējais vērtējums"
+
+msgid "Bitrate"
+msgstr "Bitreits"
+
+msgid "Change"
+msgstr "Rediģēt"
+
+msgid "Change Description"
+msgstr "Rediģēt aprakstu"
+
+msgid "Change Screenshot"
+msgstr "Rediģēt priekšskatu"
+
+msgid "Delete File"
+msgstr "Dzēst failu"
+
+msgid "Delete Folder"
+msgstr "Dzēst mapi"
+
+msgid "Deleted"
+msgstr "Dzēsts"
+
+msgid "Description changed"
+msgstr "Apraksts rediģēts"
+
+msgid "Downloads"
+msgstr "Novilkts"
+
+msgid "Downloads are closed"
+msgstr "Ielādes slēgtas"
+
+msgid "Duration"
+msgstr "Garums"
+
+msgid "File deleted"
+msgstr "Fails dzēsts"
+
+msgid "No file selected"
+msgstr "Nav izvēlēts fails"
+
+msgid "Error when selecting a file"
+msgstr "Kļūda izvēloties failu"
+
+msgid "File"
+msgstr "Fails"
+
+msgid "Files"
+msgstr "Faili"
+
+msgid "Folder deleted"
+msgstr "Mape dzēsta"
+
+msgid "Folder does not exist"
+msgstr "Mape neeksistē"
+
+msgid "Folder Name<br><small>Only small letters, no spaces</small>"
+msgstr "Mapes nosaukums<br><small>Tikai maziem Latīņu burtiem, bez atstarpēm</small>"
+
+msgid "The name for the list"
+msgstr "Nosaukums sarakstam"
+
+msgid "Folders"
+msgstr "Mapes"
+
+msgid "Found by Description"
+msgstr "Atrasts pēc apraksta"
+
+msgid "Found by Name"
+msgstr "Atrasts pēc apraksta"
+
+msgid "Image size"
+msgstr "Bildes izmērs"
+
+msgid "File Import"
+msgstr "Faila imports"
+
+msgid "Make folder"
+msgstr "Izveidot mapi"
+
+msgid "Name changed"
+msgstr "Nosaukums mainīts"
+
+msgid "The size of images is accepted for viewing, during current session"
+msgstr "Pašreizējas sesijas laikā, pieņemts šāds priekšskata izmērs"
+
+msgid "Rate"
+msgstr "Vērtēt"
+
+msgid "Continue the cycle"
+msgstr "Turpināt"
+
+msgid "Refresh Downloads"
+msgstr "Atjaunot ielādes"
+
+msgid "Database updated"
+msgstr "Datu bāze atjaunota"
+
+msgid "Released"
+msgstr "Gads"
+
+msgid "Rename Folder"
+msgstr "Pārsaukt mapi"
+
+msgid "Save As<br><small>Small letters, no spaces.<br>File extension do not need to enter</small>"
+msgstr "Saglabāt kā<br><small>Faila nosaukums ar maziem Latīņu burtiem, bez atstarpēm.<br>Formāts nav nepieciešams</small>"
+
+msgid "Screenshot"
+msgstr "Priekšskats"
+
+msgid "The name of the image contains invalid characters"
+msgstr "Kļūda! Priekšskata nosaukumā ir nepieļaujami simboli"
+
+msgid "Image size should not exceed 320 x 320 px"
+msgstr "Kļūda! Priekšskata izmērs nevar pārsniegt 320*320 px izmēru"
+
+msgid "Error occured while unloading screenshot"
+msgstr "Kļūda augšuplādējot priekšskatu"
+
+msgid "Screenshot uploaded"
+msgstr "Priekšskats augšuplādēts"
+
+msgid "Select the size of pictures for preview"
+msgstr "Izvēlieties priekšskata izmērus"
+
+msgid "Find file"
+msgstr "Meklēt failu"
+
+msgid "You have not entered a search term"
+msgstr "Kļūda! Jūs nēsat ievadījis atslēgas vārdu"
+
+msgid "Size"
+msgstr "Svars"
+
+msgid "Upload"
+msgstr "Augšuplādēt"
+
+msgid "Upload File"
+msgstr "Augšuplādēt failu"
+
+msgid "Upload Screenshot"
+msgstr "Augšuplādēt priekšskatu"
+
+msgid "Uploaded"
+msgstr "Augšuplādēts"
+
+msgid "Thanks, your vote accepted"
+msgstr "Paldies, Jūsu vērtējums pieņemts"
+
+msgid "Total Votes"
+msgstr "Kopā vērtējumu"
+

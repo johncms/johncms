@@ -1,0 +1,40 @@
+msgid ""
+msgstr ""
+""
+
+msgid "Emotions"
+msgstr "ემოციები"
+
+msgid "Love"
+msgstr "სიყვარული"
+
+msgid "Music, Dancing"
+msgstr "მუსიკა, ცეკვა"
+
+msgid "Food, Alcohol"
+msgstr "საჭმელი, ალკოჰოლი"
+
+msgid "Animals"
+msgstr "ცხოველები"
+
+msgid "Flowers"
+msgstr "ყვავილები"
+
+msgid "Brawl, Weapons"
+msgstr "ჩხუბი, იარაღი"
+
+msgid "Gestures"
+msgstr "ჟესტები"
+
+msgid "Holidays"
+msgstr "დღესასწაულები"
+
+msgid "Sports"
+msgstr "სპორტი"
+
+msgid "Technology"
+msgstr "ტექნიკა"
+
+msgid "Miscellaneous"
+msgstr "სხვადასხვა"
+

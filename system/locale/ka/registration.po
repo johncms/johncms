@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+""
+
+msgid "About me"
+msgstr "ჩემს შესახებ"
+
+msgid "Max. 500 characters"
+msgstr "მაქს. 500 სიმბოლო"
+
+msgid "Verification code"
+msgstr "შემოწმების კოდი"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "თუ თქვენ ვერ ხედავთ სურათს კოდით, მაშინ ჩართეთ სურათების მხარდაჭერა თქვენს ბრაუზერში და განაახლეთ გვერდი"
+
+msgid "Enter"
+msgstr "შესვლა"
+
+msgid "You have not entered nick"
+msgstr "მეტსახელი არ არის შეყვანილი"
+
+msgid "Too long nick"
+msgstr "მეტსახელის სიგრძე დაუშვებელია"
+
+msgid "This nick already in use"
+msgstr "ეს მეტსახელი უკვე დაკავებულია"
+
+msgid "Too long password"
+msgstr "პაროლის სიგრძე დაუშვებელია"
+
+msgid "You have not selected genger"
+msgstr "არ მითითებულა სქესი"
+
+msgid "Login"
+msgstr "მეტსახელი"
+
+msgid "Min. 2, Max. 15 Characters.<br>Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "მინ. 2, მაქს. 15 სიმბოლო.<br>დაშვებულია ლათინური ანბანის ასოები და სიმბოლოები - = @ ! ? ~ _ ( ) [ ] * (ნოლის გარდა)"
+
+msgid "Please, wait until a moderator approves yor registration"
+msgstr "გთხოვთ მოითმინოთ, თქვენი მოთხოვნა რეგისტრაციაზე განიხილება ადმინისტრაციის მიერ"
+
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "ადმინისტრაციის დასტურის შემდეგ თქვენ მიიღებთ ავტორიზებული წვდომას საიტის განყოფილებებში.<br>რეგისტრაციის დადასტურება დღე-ღამეში 1 ან 2-ჯერ ხდება"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "Max. 30 characters"
+msgstr "მაქს. 30 სიმბოლო"
+
+msgid "Password"
+msgstr "პაროლი"
+
+msgid "Min. 3, Max. 10 character.<br>Only letters (a-z) and numbers (1-9) are allowed"
+msgstr "მინ. 3, მაქს. 10 სიმბოლო.<br>დაშვებულია მხოლოდ ლათინური ანბანის ასოები და ციფრები"
+
+msgid "Registration"
+msgstr "რეგისტრაცია"
+
+msgid "Registration temporarily closed"
+msgstr "რეგისტრაცია დახურულია"
+
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br> Also all the profiles registered via proxy servers will be deleted"
+msgstr "თუ შეიძლება არ დაარეგისტრიროთ შემდეგი შინაარსის მეტსახელები: 1111, aaaa, v54u6e54 და ასე შემდეგ, რადგან ისინი მაშინვე წაიშლება.<br>ასევე წაიშლება უკლებლივ ყველა პროფილი, რომელიც დარეგისტრირებულია Proxy სერვერის გამოყენებით"
+
+msgid "Gender"
+msgstr "სქესი"
+
+msgid "Male"
+msgstr "მამრობითი"
+
+msgid "Female"
+msgstr "მდედრობითი"
+
+msgid "Your registratiton data"
+msgstr "თქვენ დარეგისტრირდით"
+
+msgid "Your ID"
+msgstr "თქვენი ID"
+
+msgid "Your username"
+msgstr "თქვენი მეტსახელი"
+
+msgid "Your password"
+msgstr "თქვენი პაროლი"
+
+msgid "Link to autologin"
+msgstr "ბმული ავტომატური შესვლისთვის"
+
