@@ -2,7 +2,7 @@
 `Release Date: under development`
 
 ### Major Features
-  * 
+  * Для локализации (переводов) используется формат GNU Gettext
   
 ### Features
   * Папки языков переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
