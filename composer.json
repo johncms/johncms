@@ -1,0 +1,23 @@
+{
+  "name": "john-cms/johncms",
+  "description": "Mobile Content Management System",
+  "homepage": "http://johncms.com/",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "JohnCMS Community",
+      "homepage": "https://johncms.com/about/"
+    }
+  ],
+  "config": {
+    "vendor-dir": "system/vendor"
+  },
+  "require": {
+    "php": "^5.5 || ^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Johncms\\": "system/core/"
+    }
+  }
+}

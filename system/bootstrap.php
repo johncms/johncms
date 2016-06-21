@@ -19,4 +19,4 @@ define('START_TIME', microtime(true));
 define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('CONFIG_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
 
-//require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
