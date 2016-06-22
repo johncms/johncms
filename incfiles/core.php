@@ -1,24 +1,24 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * mobiCMS Content Management System (http://mobicms.net)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-//Error_Reporting(E_ALL & ~E_NOTICE);
-ini_set('session.use_trans_sid', '0');
-ini_set('arg_separator.output', '&amp;');
-ini_set('display_errors', 'Off');
-date_default_timezone_set('UTC');
-mb_internal_encoding('UTF-8');
+error_reporting(E_ALL & ~E_NOTICE);
+//ini_set('display_errors', 'Off');
 
 // Корневая папка
 define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
+
+// Подключаем новую систему
+require ROOTPATH . 'system/bootstrap.php';
 
 /*
 -----------------------------------------------------------------
@@ -29,8 +29,9 @@ spl_autoload_register('autoload');
 function autoload($name)
 {
     $file = ROOTPATH . 'incfiles/classes/' . $name . '.php';
-    if (file_exists($file))
+    if (file_exists($file)) {
         require_once($file);
+    }
 }
 
 /*
