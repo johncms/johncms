@@ -14,6 +14,11 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 error_reporting(E_ALL & ~E_NOTICE);
 //ini_set('display_errors', 'Off');
 
+// Проверяем версию PHP
+if (version_compare(PHP_VERSION, '7', '>=')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Compatibility Pack can not work with PHP 7</div>');
+}
+
 // Корневая папка
 define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 
