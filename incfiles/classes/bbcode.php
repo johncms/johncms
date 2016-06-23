@@ -241,7 +241,6 @@ class bbcode extends core
         $parser = isset($code[1]) && isset($parsers[$code[1]]) ? $parsers[$code[1]] : 'php';
 
         if (null === self::$geshi) {
-            require_once 'geshi.php';
             self::$geshi = new \GeSHi;
             self::$geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
             self::$geshi->set_link_target('_blank');
