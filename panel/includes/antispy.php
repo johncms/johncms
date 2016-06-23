@@ -172,7 +172,6 @@ class scaner {
         '../incfiles/func.php',
         '../incfiles/head.php',
         '../incfiles/index.php',
-        '../incfiles/lib/class.upload.php',
         '../incfiles/lib/mp3.php',
         '../incfiles/lib/pclerror.lib.php',
         '../incfiles/lib/pcltar.lib.php',

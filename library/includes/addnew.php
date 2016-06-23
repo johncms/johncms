@@ -96,7 +96,6 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
 
             if (mysql_query($sql)) {
                 $cid = mysql_insert_id();
-                require('../incfiles/lib/class.upload.php');
 
                 $handle = new upload($_FILES['image']);
                 if ($handle->uploaded) {
