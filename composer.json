@@ -14,6 +14,7 @@
   },
   "require": {
     "php": "^5.5 || ^7.0",
+    "verot/class.upload.php": "dev-master",
     "geshi/geshi": "dev-master"
   },
   "autoload": {

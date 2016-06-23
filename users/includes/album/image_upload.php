@@ -27,7 +27,6 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
         exit;
     }
     $res_a = mysql_fetch_assoc($req_a);
-    require('../incfiles/lib/class.upload.php');
     echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
     if (isset($_POST['submit'])) {
         $handle = new upload($_FILES['imagefile']);

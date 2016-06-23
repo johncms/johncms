@@ -35,7 +35,6 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 $description = mb_substr($description, 0, 500);
                 if ($rotate == 1 || $rotate == 2 || ($brightness > 0 && $brightness < 5) || ($contrast > 0 && $contrast < 5)) {
                     $path = '../files/users/album/' . $user['id'] . '/';
-                    require('../incfiles/lib/class.upload.php');
                     $handle = new upload($path . $res['img_name']);
                     // Обрабатываем основное изображение
                     $handle->file_new_name_body = 'img_' . time();
