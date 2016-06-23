@@ -15,7 +15,8 @@
   "require": {
     "php": "^5.5 || ^7.0",
     "verot/class.upload.php": "dev-master",
-    "geshi/geshi": "dev-master"
+    "geshi/geshi": "dev-master",
+    "erusev/parsedown": "^1.6"
   },
   "autoload": {
     "psr-4": {
