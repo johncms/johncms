@@ -23,6 +23,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\Config;
+use Zend\Stdlib\ArrayUtils;
+use Zend\Stdlib\Glob;
 
 class App
 {
@@ -35,6 +37,11 @@ class App
     {
         if (null === self::$container) {
             $config = [];
+
+            // Read configuration
+            foreach (Glob::glob(CONFIG_PATH . '{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
+                $config = ArrayUtils::merge($config, include $file);
+            }
 
             self::$container = new ServiceManager;
             (new Config($config['dependencies']))->configureServiceManager(self::$container);

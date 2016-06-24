@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'pdo' => [
+        'db_host' => 'localhost',
+        'db_name' => 'johncms',
+        'db_user' => 'root',
+        'db_pass' => '',
+    ],
+];
