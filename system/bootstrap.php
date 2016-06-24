@@ -20,3 +20,27 @@ define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('CONFIG_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
 
 require __DIR__ . '/vendor/autoload.php';
+
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\Config;
+
+class App
+{
+    private static $container;
+
+    /**
+     * @return ServiceManager
+     */
+    public static function getContainer()
+    {
+        if (null === self::$container) {
+            $config = [];
+
+            self::$container = new ServiceManager;
+            (new Config($config['dependencies']))->configureServiceManager(self::$container);
+            self::$container->setService('config', $config);
+        }
+
+        return self::$container;
+    }
+}
