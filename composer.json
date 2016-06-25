@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Johncms\\": "system/core/"
+      "Johncms\\": "system/johncms/"
     }
   }
 }
