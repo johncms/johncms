@@ -78,7 +78,11 @@ class core
         // Получаем объект PDO
         $this->db = $this->container->get(PDO::class);
 
-        $this->db_connect(); // Соединяемся с базой данных
+        //TODO: после полного перехода на новое ядро, проверку версии PHP удалить
+        if (version_compare(PHP_VERSION, '7', '<')) {
+            $this->db_connect(); // Соединяемся с базой данных
+        }
+
         $this->ip_ban(); // Проверяем адрес IP на бан
         $this->session_start(); // Стартуем сессию
         self::$is_mobile = $this->mobile_detect(); // Определение мобильного браузера
