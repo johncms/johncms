@@ -30,7 +30,7 @@ echo'<!DOCTYPE html>' .
     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
-    "\n" . '</head><body>' . core::display_core_errors();
+    "\n" . '</head><body>';
 
 /*
 -----------------------------------------------------------------

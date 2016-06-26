@@ -13,7 +13,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class core
 {
-    public static $root = '../';
     public static $ip; // Путь к корневой папке
     public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
     public static $ip_count = []; // Счетчик обращений с IP адреса
@@ -69,40 +68,59 @@ class core
             self::$user_agent = 'Not Recognised';
         }
 
-        $this->ip_flood(); // Проверка адреса IP на флуд
+        // Проверка адреса IP на флуд
+        $this->ip_flood();
 
         // Получаем объект контейнера
         $this->container = App::getContainer();
+
         // Получаем глобальную конфигурацию
         $this->config = $this->container->get('config');
+
         // Получаем объект PDO
         $this->db = $this->container->get(PDO::class);
 
         //TODO: после полного перехода на новое ядро, проверку версии PHP удалить
         if (version_compare(PHP_VERSION, '7', '<')) {
-            $this->db_connect(); // Соединяемся с базой данных
+            // Соединяемся с базой данных mysql (старый метод)
+            $this->db_connect();
         }
 
-        $this->ip_ban(); // Проверяем адрес IP на бан
-        $this->session_start(); // Стартуем сессию
-        self::$is_mobile = $this->mobile_detect(); // Определение мобильного браузера
-        $this->system_settings(); // Получаем системные настройки
-        $this->auto_clean(); // Автоочистка системы
-        $this->authorize(); // Авторизация пользователей
-        $this->site_access(); // Доступ к сайту
-        $this->lng_detect(); // Определяем язык системы
-        self::$lng = self::load_lng(); // Загружаем язык
-        // Оставляем транслит только для Русского
-        if (self::$lng_iso != 'ru' && self::$lng_iso != 'uk') {
-            self::$user_set['translit'] = 0;
-        }
+        // Проверяем адрес IP на бан
+        $this->ip_ban();
+
+        // Стартуем сессию
+        $this->session_start();
+
+        // Определение мобильного браузера
+        self::$is_mobile = $this->mobile_detect();
+
+        // Получаем системные настройки
+        $this->system_settings();
+
+        // Автоочистка системы
+        //TODO: перенести после авторизации и добавить чистку данных пользователей
+        $this->auto_clean();
+
+        // Авторизация пользователей
+        $this->authorize();
+
+        // Доступ к сайту
+        $this->site_access();
+
+        // Определяем язык системы
+        $this->lng_detect();
+
+        // Загружаем язык
+        self::$lng = self::load_lng();
     }
 
-    /*
-    -----------------------------------------------------------------
-    Валидация IP адреса
-    -----------------------------------------------------------------
-    */
+    /**
+     * Валидация IP адреса
+     *
+     * @param string $ip
+     * @return bool
+     */
     public static function ip_valid($ip)
     {
         if (preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
@@ -112,11 +130,13 @@ class core
         return false;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Загружаем фразы языка из файла
-    -----------------------------------------------------------------
-    */
+    /**
+     * Загружаем фразы языка из файла
+     *
+     * @param string      $module
+     * @param null|string $lng
+     * @return array|bool
+     */
     public static function load_lng($module = '_core', $lng = null)
     {
         $lng_set = $lng !== null && in_array($lng, self::$lng_list) ? $lng : self::$lng_iso;
@@ -146,21 +166,9 @@ class core
         return false;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Показываем ошибки ядра (если есть)
-    -----------------------------------------------------------------
-    */
-    public static function display_core_errors()
-    {
-        return !empty(self::$core_errors) ? '<p style="color:#FF0000"><b>CORE ERROR</b>: ' . implode('<br />', self::$core_errors) . '</p>' : '';
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Подключаемся к базе данных
-    -----------------------------------------------------------------
-    */
+    /**
+     * Подключаемся к базе данных (старый метод)
+     */
     private function db_connect()
     {
         $db_host = isset($this->config['pdo']['db_host']) ? $this->config['pdo']['db_host'] : 'localhost';
