@@ -87,10 +87,11 @@ class core
         }
 
         // Проверяем адрес IP на бан
-        $this->ip_ban();
+        $this->checkIpBan();
 
         // Стартуем сессию
-        $this->session_start();
+        session_name('SESID');
+        session_start();
 
         // Определение мобильного браузера
         self::$is_mobile = $this->mobile_detect();
@@ -180,11 +181,9 @@ class core
         @mysql_query("SET NAMES 'utf8'", $connect);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Проверка адреса IP на флуд
-    -----------------------------------------------------------------
-    */
+    /**
+     * Проверка адреса IP на флуд
+     */
     private function ip_flood()
     {
         if ($this->flood_chk) {
@@ -224,72 +223,19 @@ class core
         }
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обрабатываем "белый" список IP адресов
-    -----------------------------------------------------------------
-    */
-    private function ip_whitelist($ip)
+    /**
+     * Проверяем адрес IP на Бан
+     */
+    private function checkIpBan()
     {
-        $file = ROOTPATH . 'files/cache/ip_wlist.dat';
-        if (file_exists($file)) {
-            foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $val) {
-                $tmp = explode(':', $val);
-                if (!$tmp[1]) {
-                    $tmp[1] = $tmp[0];
-                }
-                if ($ip >= $tmp[0] && $ip <= $tmp[1]) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Удаляем слэши из глобальных переменных
-    -----------------------------------------------------------------
-    */
-    private function del_slashes()
-    {
-        $in = [
-            &$_GET,
-            &$_POST,
-            &$_COOKIE,
-        ];
-        while ((list($k, $v) = each($in)) !== false) {
-            foreach ($v as $key => $val) {
-                if (!is_array($val)) {
-                    $in[$k][$key] = stripslashes($val);
-                    continue;
-                }
-                $in[] = &$in[$k][$key];
-            }
-        }
-        unset($in);
-        if (!empty($_FILES)) {
-            foreach ($_FILES as $k => $v) {
-                $_FILES[$k]['name'] = stripslashes((string)$v['name']);
-            }
-        }
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Проверяем адрес IP на Бан
-    -----------------------------------------------------------------
-    */
-    private function ip_ban()
-    {
-        $req = mysql_query("SELECT `ban_type`, `link` FROM `cms_ban_ip`
+        $req = $this->db->query("SELECT `ban_type`, `link` FROM `cms_ban_ip`
             WHERE '" . self::$ip . "' BETWEEN `ip1` AND `ip2`
             " . (self::$ip_via_proxy ? " OR '" . self::$ip_via_proxy . "' BETWEEN `ip1` AND `ip2`" : "") . "
             LIMIT 1
         ") or die('Error: table "cms_ban_ip"');
-        if (mysql_num_rows($req)) {
-            $res = mysql_fetch_array($req);
+
+        if ($req->rowCount()) {
+            $res = $req->fetch();
             switch ($res['ban_type']) {
                 case 2:
                     if (!empty($res['link'])) {
@@ -307,17 +253,6 @@ class core
                     exit;
             }
         }
-    }
-
-    /*
-    -----------------------------------------------------------------
-    Стартуем Сессию
-    -----------------------------------------------------------------
-    */
-    private function session_start()
-    {
-        session_name('SESID');
-        session_start();
     }
 
     /*
