@@ -15,6 +15,7 @@ class functions extends core
 {
     /**
      * Антифлуд
+     *
      * Режимы работы:
      *   1 - Адаптивный
      *   2 - День / Ночь
@@ -25,66 +26,69 @@ class functions extends core
      */
     public static function antiflood()
     {
-        $default = array(
-            'mode' => 2,
-            'day' => 10,
-            'night' => 30,
+        $default = [
+            'mode'    => 2,
+            'day'     => 10,
+            'night'   => 30,
             'dayfrom' => 10,
-            'dayto' => 22
-        );
+            'dayto'   => 22,
+        ];
         $af = isset(self::$system_set['antiflood']) ? unserialize(self::$system_set['antiflood']) : $default;
         switch ($af['mode']) {
-            case 1:
-                // Адаптивный режим
-                $adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > " . (time() - 300)), 0);
+            case 1: // Адаптивный режим
+                /** @var PDO $db */
+                $db = App::getContainer()->get(PDO::class);
+
+                $adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > ' . (time() - 300))->fetchColumn();
                 $limit = $adm > 0 ? $af['day'] : $af['night'];
                 break;
-            case 3:
-                // День
+
+            case 3: // День
                 $limit = $af['day'];
                 break;
-            case 4:
-                // Ночь
+
+            case 4: // Ночь
                 $limit = $af['night'];
                 break;
-            default:
-                // По умолчанию день / ночь
+
+            default: // По умолчанию день / ночь
                 $c_time = date('G', time());
                 $limit = $c_time > $af['day'] && $c_time < $af['night'] ? $af['day'] : $af['night'];
         }
-        if (self::$user_rights > 0)
-            $limit = 4; // Для Администрации задаем лимит в 4 секунды
+        if (self::$user_rights > 0) {
+            $limit = 4;
+        } // Для Администрации задаем лимит в 4 секунды
         $flood = self::$user_data['lastpost'] + $limit - time();
-        if ($flood > 0)
+        if ($flood > 0) {
             return $flood;
-        else
-            return FALSE;
+        } else {
+            return false;
+        }
     }
 
     /**
      * Маскировка ссылок в тексте
      *
-     * @param $var
-     *
+     * @param string $var
      * @return string
      */
     public static function antilink($var)
     {
         $var = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $var);
-        $replace = array(
-            '.ru' => '***',
-            '.com' => '***',
-            '.biz' => '***',
-            '.cn' => '***',
-            '.in' => '***',
-            '.net' => '***',
-            '.org' => '***',
+        $replace = [
+            '.ru'   => '***',
+            '.com'  => '***',
+            '.biz'  => '***',
+            '.cn'   => '***',
+            '.in'   => '***',
+            '.net'  => '***',
+            '.org'  => '***',
             '.info' => '***',
             '.mobi' => '***',
-            '.wen' => '***',
-            '.kmx' => '***',
-            '.h2m' => '***'
-        );
+            '.wen'  => '***',
+            '.kmx'  => '***',
+            '.h2m'  => '***',
+        ];
 
         return strtr($var, $replace);
     }
@@ -93,7 +97,6 @@ class functions extends core
      * Фильтрация строк
      *
      * @param string $str
-     *
      * @return string
      */
     public static function checkin($str)
@@ -112,11 +115,11 @@ class functions extends core
      * Обработка текстов перед выводом на экран
      *
      * @param string $str
-     * @param int $br   Параметр обработки переносов строк
+     * @param int    $br   Параметр обработки переносов строк
      *                     0 - не обрабатывать (по умолчанию)
      *                     1 - обрабатывать
      *                     2 - вместо переносов строки вставляются пробелы
-     * @param int $tags Параметр обработки тэгов
+     * @param int    $tags Параметр обработки тэгов
      *                     0 - не обрабатывать (по умолчанию)
      *                     1 - обрабатывать
      *                     2 - вырезать тэги
@@ -147,14 +150,20 @@ class functions extends core
     public static function display_counters()
     {
         global $headmod;
-        $req = mysql_query("SELECT * FROM `cms_counters` WHERE `switch` = '1' ORDER BY `sort` ASC");
-        if (mysql_num_rows($req) > 0) {
-            while (($res = mysql_fetch_array($req)) !== FALSE) {
+
+        /** @var PDO $db */
+        $db = App::getContainer()->get(PDO::class);
+        $req = $db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort` ASC');
+
+        if ($req->rowCount()) {
+            while ($res = $req->fetch()) {
                 $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
                 $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
                 $count = ($headmod == 'mainpage') ? $link1 : $link2;
-                if (!empty($count))
+
+                if (!empty($count)) {
                     echo $count;
+                }
             }
         }
     }
@@ -163,17 +172,18 @@ class functions extends core
      * Показываем дату с учетом сдвига времени
      *
      * @param int $var Время в Unix формате
-     *
      * @return string Отформатированное время
      */
     public static function display_date($var)
     {
         $shift = (self::$system_set['timeshift'] + self::$user_set['timeshift']) * 3600;
         if (date('Y', $var) == date('Y', time())) {
-            if (date('z', $var + $shift) == date('z', time() + $shift))
+            if (date('z', $var + $shift) == date('z', time() + $shift)) {
                 return self::$lng['today'] . ', ' . date("H:i", $var + $shift);
-            if (date('z', $var + $shift) == date('z', time() + $shift) - 1)
+            }
+            if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
                 return self::$lng['yesterday'] . ', ' . date("H:i", $var + $shift);
+            }
         }
 
         return date("d.m.Y / H:i", $var + $shift);
@@ -183,8 +193,7 @@ class functions extends core
      * Сообщения об ошибках
      *
      * @param string|array $error Сообщение об ошибке (или массив с сообщениями)
-     * @param string $link  Необязательная ссылка перехода
-     *
+     * @param string       $link  Необязательная ссылка перехода
      * @return bool|string
      */
     public static function display_error($error = '', $link = '')
@@ -194,22 +203,21 @@ class functions extends core
             (is_array($error) ? implode('<br />', $error) : $error) . '</p>' .
             (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
         } else {
-            return FALSE;
+            return false;
         }
     }
 
     /**
      * Отображение различных меню
      *
-     * @param array $val
+     * @param array  $val
      * @param string $delimiter Разделитель между пунктами
      * @param string $end_space Выводится в конце
-     *
      * @return string
      */
-    public static function display_menu($val = array(), $delimiter = ' | ', $end_space = '')
+    public static function display_menu($val = [], $delimiter = ' | ', $end_space = '')
     {
-        return implode($delimiter, array_diff($val, array(''))) . $end_space;
+        return implode($delimiter, array_diff($val, [''])) . $end_space;
     }
 
     /**
@@ -217,41 +225,47 @@ class functions extends core
      * За основу взята доработанная функция от форума SMF 2.x.x
      *
      * @param string $url
-     * @param int $start
-     * @param int $total
-     * @param int $kmess
-     *
+     * @param int    $start
+     * @param int    $total
+     * @param int    $kmess
      * @return string
      */
     public static function display_pagination($url, $start, $total, $kmess)
     {
         $neighbors = 2;
-        if ($start >= $total)
+        if ($start >= $total) {
             $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
-        else
+        } else {
             $start = max(0, (int)$start - ((int)$start % (int)$kmess));
-        $base_link = '<a class="pagenav" href="' . strtr($url, array('%' => '%%')) . 'page=%d' . '">%s</a>';
+        }
+        $base_link = '<a class="pagenav" href="' . strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a>';
         $out[] = $start == 0 ? '' : sprintf($base_link, $start / $kmess, '&lt;&lt;');
-        if ($start > $kmess * $neighbors)
+        if ($start > $kmess * $neighbors) {
             $out[] = sprintf($base_link, 1, '1');
-        if ($start > $kmess * ($neighbors + 1))
+        }
+        if ($start > $kmess * ($neighbors + 1)) {
             $out[] = '<span style="font-weight: bold;">...</span>';
-        for ($nCont = $neighbors; $nCont >= 1; $nCont--)
+        }
+        for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
             if ($start >= $kmess * $nCont) {
                 $tmpStart = $start - $kmess * $nCont;
                 $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
+        }
         $out[] = '<span class="currentpage"><b>' . ($start / $kmess + 1) . '</b></span>';
         $tmpMaxPages = (int)(($total - 1) / $kmess) * $kmess;
-        for ($nCont = 1; $nCont <= $neighbors; $nCont++)
+        for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
             if ($start + $kmess * $nCont <= $tmpMaxPages) {
                 $tmpStart = $start + $kmess * $nCont;
                 $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
             }
-        if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages)
+        }
+        if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages) {
             $out[] = '<span style="font-weight: bold;">...</span>';
-        if ($start + $kmess * $neighbors < $tmpMaxPages)
+        }
+        if ($start + $kmess * $neighbors < $tmpMaxPages) {
             $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages / $kmess + 1);
+        }
         if ($start + $kmess < $total) {
             $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
             $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
@@ -263,9 +277,8 @@ class functions extends core
     /**
      * Показываем местоположение пользователя
      *
-     * @param int $user_id
+     * @param int    $user_id
      * @param string $place
-     *
      * @return mixed|string
      */
     public static function display_place($user_id = 0, $place = '')
@@ -295,7 +308,7 @@ class functions extends core
     /**
      * Отображения личных данных пользователя
      *
-     * @param int $user Массив запроса в таблицу `users`
+     * @param int   $user Массив запроса в таблицу `users`
      * @param array $arg  Массив параметров отображения
      *                    [lastvisit] (boolean)   Дата и время последнего визита
      *                    [stshide]   (boolean)   Скрыть статус (если есть)
@@ -309,32 +322,42 @@ class functions extends core
      *
      * @return string
      */
-    public static function display_user($user = 0, $arg = array())
+    public static function display_user($user = 0, $arg = [])
     {
         global $mod;
-        $out = FALSE;
+        $out = false;
 
         if (!$user['id']) {
             $out = '<b>' . self::$lng['guest'] . '</b>';
-            if (!empty($user['name']))
+
+            if (!empty($user['name'])) {
                 $out .= ': ' . $user['name'];
-            if (!empty($arg['header']))
+            }
+
+            if (!empty($arg['header'])) {
                 $out .= ' ' . $arg['header'];
+            }
         } else {
             if (self::$user_set['avatar']) {
                 $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
-                if (file_exists((ROOTPATH . 'files/users/avatar/' . $user['id'] . '.png')))
+
+                if (file_exists((ROOTPATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
                     $out .= '<img src="' . self::$system_set['homeurl'] . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
-                else
+                } else {
                     $out .= '<img src="' . self::$system_set['homeurl'] . '/images/empty.png" width="32" height="32" alt="" />&#160;';
+                }
+
                 $out .= '</td><td>';
             }
-            if ($user['sex'])
-                $out .= functions::image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', array('class' => 'icon-inline'));
-            else
+
+            if ($user['sex']) {
+                $out .= functions::image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+            } else {
                 $out .= functions::image('del.png');
+            }
+
             $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
-            $rank = array(
+            $rank = [
                 0 => '',
                 1 => '(GMod)',
                 2 => '(CMod)',
@@ -343,36 +366,51 @@ class functions extends core
                 5 => '(LMod)',
                 6 => '(Smd)',
                 7 => '(Adm)',
-                9 => '(SV!)'
-            );
+                9 => '(SV!)',
+            ];
             $rights = isset($user['rights']) ? $user['rights'] : 0;
             $out .= ' ' . $rank[$rights];
             $out .= (time() > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
-            if (!empty($arg['header']))
+
+            if (!empty($arg['header'])) {
                 $out .= ' ' . $arg['header'];
-            if (!isset($arg['stshide']) && !empty($user['status']))
-                $out .= '<div class="status">' . functions::image('label.png', array('class' => 'icon-inline')) . $user['status'] . '</div>';
-            if (self::$user_set['avatar'])
+            }
+
+            if (!isset($arg['stshide']) && !empty($user['status'])) {
+                $out .= '<div class="status">' . functions::image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
+            }
+
+            if (self::$user_set['avatar']) {
                 $out .= '</td></tr></table>';
+            }
         }
-        if (isset($arg['body']))
+
+        if (isset($arg['body'])) {
             $out .= '<div>' . $arg['body'] . '</div>';
+        }
+
         $ipinf = !isset($arg['iphide']) && self::$user_rights ? 1 : 0;
-        $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? self::display_date($user['lastdate']) : FALSE;
+        $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? self::display_date($user['lastdate']) : false;
+
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
+
             if (isset($arg['sub'])) {
                 $out .= '<div>' . $arg['sub'] . '</div>';
             }
+
             if ($lastvisit) {
                 $out .= '<div><span class="gray">' . self::$lng['last_visit'] . ':</span> ' . $lastvisit . '</div>';
             }
+
             $iphist = '';
+
             if ($ipinf) {
                 $out .= '<div><span class="gray">' . self::$lng['browser'] . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
                     '<div><span class="gray">' . self::$lng['ip_address'] . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
+
                 if (self::$user_rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
                     $out .= '<b class="red"><a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
                     $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
@@ -385,14 +423,20 @@ class functions extends core
                 } else {
                     $out .= $ip . $iphist;
                 }
+
                 if (isset($arg['iphist'])) {
-                    $iptotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+                    /** @var PDO $db */
+                    $db = App::getContainer()->get(PDO::class);
+                    $iptotal = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
                     $out .= '<div><span class="gray">' . self::$lng['ip_history'] . ':</span> <a href="' . self::$system_set['homeurl'] . '/users/profile.php?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
                 }
+
                 $out .= '</div>';
             }
-            if (isset($arg['footer']))
+
+            if (isset($arg['footer'])) {
                 $out .= $arg['footer'];
+            }
             $out .= '</div>';
         }
 
@@ -403,7 +447,6 @@ class functions extends core
      * Форматирование имени файла
      *
      * @param string $name
-     *
      * @return string
      */
     public static function format($name)
@@ -419,24 +462,26 @@ class functions extends core
      * Получаем данные пользователя
      *
      * @param int $id Идентификатор пользователя
-     *
      * @return array|bool
      */
     public static function get_user($id = 0)
     {
         if ($id && $id != self::$user_id) {
-            $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
-                return mysql_fetch_assoc($req);
+            /** @var PDO $db */
+            $db = App::getContainer()->get(PDO::class);
+            $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
+
+            if ($req->rowCount()) {
+                return $req->fetch();
             } else {
-                return FALSE;
+                return false;
             }
         } else {
             return self::$user_data;
         }
     }
 
-    public static function image($name, $args = array())
+    public static function image($name, $args = [])
     {
         if (is_file(ROOTPATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
             $src = core::$system_set['homeurl'] . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
@@ -455,22 +500,23 @@ class functions extends core
     /**
      * Является ли выбранный юзер другом?
      *
-     * @param int $id   Идентификатор пользователя, которого проверяем
-     *
+     * @param int $id Идентификатор пользователя, которого проверяем
      * @return bool
      */
     public static function is_friend($id = 0)
     {
-        static $user_id = NULL;
-        static $return = FALSE;
+        static $user_id = null;
+        static $return = false;
 
         if (!self::$user_id && !$id) {
-            return FALSE;
+            return false;
         }
 
         if (is_null($user_id) || $id != $user_id) {
-            $query = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `type` = '2' AND ((`from_id` = '$id' AND `user_id` = '" . self::$user_id . "') OR (`from_id` = '" . self::$user_id . "' AND `user_id` = '$id'))"), 0);
-            $return = $query == 2 ? TRUE : FALSE;
+            /** @var PDO $db */
+            $db = App::getContainer()->get(PDO::class);
+            $query = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type` = '2' AND ((`from_id` = '$id' AND `user_id` = '" . self::$user_id . "') OR (`from_id` = '" . self::$user_id . "' AND `user_id` = '$id'))")->fetchColumn();
+            $return = $query == 2 ? true : false;
         }
 
         return $return;
@@ -480,15 +526,14 @@ class functions extends core
      * Находится ли выбранный пользователь в контактах и игноре?
      *
      * @param int $id Идентификатор пользователя, которого проверяем
-     *
      * @return int Результат запроса:
-     *             0 - не в контактах
-     *             1 - в контактах
-     *             2 - в игноре у меня
+     *                0 - не в контактах
+     *                1 - в контактах
+     *                2 - в игноре у меня
      */
     public static function is_contact($id = 0)
     {
-        static $user_id = NULL;
+        static $user_id = null;
         static $return = 0;
 
         if (!self::$user_id && !$id) {
@@ -496,11 +541,14 @@ class functions extends core
         }
 
         if (is_null($user_id) || $id != $user_id) {
+            /** @var PDO $db */
+            $db = App::getContainer()->get(PDO::class);
             $user_id = $id;
-            $req_1 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . self::$user_id . "' AND `from_id` = '$id'");
-            if (mysql_num_rows($req_1)) {
-                $res_1 = mysql_fetch_assoc($req_1);
-                if ($res_1['ban'] == 1) {
+            $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . self::$user_id . "' AND `from_id` = '$id'");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                if ($res['ban'] == 1) {
                     $return = 2;
                 } else {
                     $return = 1;
@@ -517,25 +565,27 @@ class functions extends core
      * Проверка на игнор у получателя
      *
      * @param $id
-     *
      * @return bool
      */
     public static function is_ignor($id)
     {
-        static $user_id = NULL;
-        static $return = FALSE;
+        static $user_id = null;
+        static $return = false;
 
         if (!self::$user_id && !$id) {
-            return FALSE;
+            return false;
         }
 
         if (is_null($user_id) || $id != $user_id) {
+            /** @var PDO $db */
+            $db = App::getContainer()->get(PDO::class);
             $user_id = $id;
-            $req_2 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = '" . self::$user_id . "'");
-            if (mysql_num_rows($req_2)) {
-                $res_2 = mysql_fetch_assoc($req_2);
-                if ($res_2['ban'] == 1) {
-                    $return = TRUE;
+            $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = '" . self::$user_id . "'");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                if ($res['ban'] == 1) {
+                    $return = true;
                 }
             }
         }
@@ -543,14 +593,15 @@ class functions extends core
         return $return;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Транслитерация с Русского в латиницу
-    -----------------------------------------------------------------
-    */
+    /**
+     * Транслитерация с Русского в латиницу
+     *
+     * @param string $str
+     * @return string
+     */
     public static function rus_lat($str)
     {
-        $replace = array(
+        $replace = [
             'а' => 'a',
             'б' => 'b',
             'в' => 'v',
@@ -583,23 +634,25 @@ class functions extends core
             'ь' => "",
             'э' => 'ye',
             'ю' => 'yu',
-            'я' => 'ya'
-        );
+            'я' => 'ya',
+        ];
 
         return strtr($str, $replace);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обработка смайлов
-    -----------------------------------------------------------------
-    */
-    public static function smileys($str, $adm = FALSE)
+    /**
+     * Обработка смайлов
+     *
+     * @param string $str
+     * @param bool   $adm
+     * @return string
+     */
+    public static function smileys($str, $adm = false)
     {
-        static $smileys_cache = array();
+        static $smileys_cache = [];
         if (empty($smileys_cache)) {
             $file = ROOTPATH . 'files/cache/smileys.dat';
-            if (file_exists($file) && ($smileys = file_get_contents($file)) !== FALSE) {
+            if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
                 $smileys_cache = unserialize($smileys);
 
                 return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
@@ -611,96 +664,101 @@ class functions extends core
         }
     }
 
-    /*
-    -----------------------------------------------------------------
-    Функция пересчета на дни, или часы
-    -----------------------------------------------------------------
-    */
+    /**
+     * Функция пересчета на дни, или часы
+     *
+     * @param int $var
+     * @return bool|string
+     */
     public static function timecount($var)
     {
         global $lng;
-        if ($var < 0) $var = 0;
+        if ($var < 0) {
+            $var = 0;
+        }
         $day = ceil($var / 86400);
-        if ($var > 345600) return $day . ' ' . $lng['timecount_days'];
-        if ($var >= 172800) return $day . ' ' . $lng['timecount_days_r'];
-        if ($var >= 86400) return '1 ' . $lng['timecount_day'];
+        if ($var > 345600) {
+            return $day . ' ' . $lng['timecount_days'];
+        }
+        if ($var >= 172800) {
+            return $day . ' ' . $lng['timecount_days_r'];
+        }
+        if ($var >= 86400) {
+            return '1 ' . $lng['timecount_day'];
+        }
 
         return date("G:i:s", mktime(0, 0, $var));
     }
 
-    /*
-    -----------------------------------------------------------------
-    Транслитерация текста
-    -----------------------------------------------------------------
-    */
-    public static function trans($str)
+    // Транслитерация текста
+    public static function trans($str)//TODO: Удалить
     {
-        $replace = array(
-            'a' => 'а',
-            'b' => 'б',
-            'v' => 'в',
-            'g' => 'г',
-            'd' => 'д',
-            'e' => 'е',
+        $replace = [
+            'a'  => 'а',
+            'b'  => 'б',
+            'v'  => 'в',
+            'g'  => 'г',
+            'd'  => 'д',
+            'e'  => 'е',
             'yo' => 'ё',
             'zh' => 'ж',
-            'z' => 'з',
-            'i' => 'и',
-            'j' => 'й',
-            'k' => 'к',
-            'l' => 'л',
-            'm' => 'м',
-            'n' => 'н',
-            'o' => 'о',
-            'p' => 'п',
-            'r' => 'р',
-            's' => 'с',
-            't' => 'т',
-            'u' => 'у',
-            'f' => 'ф',
-            'h' => 'х',
-            'c' => 'ц',
+            'z'  => 'з',
+            'i'  => 'и',
+            'j'  => 'й',
+            'k'  => 'к',
+            'l'  => 'л',
+            'm'  => 'м',
+            'n'  => 'н',
+            'o'  => 'о',
+            'p'  => 'п',
+            'r'  => 'р',
+            's'  => 'с',
+            't'  => 'т',
+            'u'  => 'у',
+            'f'  => 'ф',
+            'h'  => 'х',
+            'c'  => 'ц',
             'ch' => 'ч',
-            'w' => 'ш',
+            'w'  => 'ш',
             'sh' => 'щ',
-            'q' => 'ъ',
-            'y' => 'ы',
-            'x' => 'э',
+            'q'  => 'ъ',
+            'y'  => 'ы',
+            'x'  => 'э',
             'yu' => 'ю',
             'ya' => 'я',
-            'A' => 'А',
-            'B' => 'Б',
-            'V' => 'В',
-            'G' => 'Г',
-            'D' => 'Д',
-            'E' => 'Е',
+            'A'  => 'А',
+            'B'  => 'Б',
+            'V'  => 'В',
+            'G'  => 'Г',
+            'D'  => 'Д',
+            'E'  => 'Е',
             'YO' => 'Ё',
             'ZH' => 'Ж',
-            'Z' => 'З',
-            'I' => 'И',
-            'J' => 'Й',
-            'K' => 'К',
-            'L' => 'Л',
-            'M' => 'М',
-            'N' => 'Н',
-            'O' => 'О',
-            'P' => 'П',
-            'R' => 'Р',
-            'S' => 'С',
-            'T' => 'Т',
-            'U' => 'У',
-            'F' => 'Ф',
-            'H' => 'Х',
-            'C' => 'Ц',
+            'Z'  => 'З',
+            'I'  => 'И',
+            'J'  => 'Й',
+            'K'  => 'К',
+            'L'  => 'Л',
+            'M'  => 'М',
+            'N'  => 'Н',
+            'O'  => 'О',
+            'P'  => 'П',
+            'R'  => 'Р',
+            'S'  => 'С',
+            'T'  => 'Т',
+            'U'  => 'У',
+            'F'  => 'Ф',
+            'H'  => 'Х',
+            'C'  => 'Ц',
             'CH' => 'Ч',
-            'W' => 'Ш',
+            'W'  => 'Ш',
             'SH' => 'Щ',
-            'Q' => 'Ъ',
-            'Y' => 'Ы',
-            'X' => 'Э',
+            'Q'  => 'Ъ',
+            'Y'  => 'Ы',
+            'X'  => 'Э',
             'YU' => 'Ю',
-            'YA' => 'Я'
-        );
+            'YA' => 'Я',
+        ];
 
         return strtr($str, $replace);
     }
@@ -712,12 +770,15 @@ class functions extends core
     Вместо данной функции использовать checkin()
     -----------------------------------------------------------------
     */
-    public static function check($str)
+    public static function check($str)//TODO: на удаление
     {
+        /** @var PDO $db */
+        $db = App::getContainer()->get(PDO::class);
+
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
         $str = self::checkin($str);
         $str = nl2br($str);
-        $str = mysql_real_escape_string($str);
+        $str = $db->quote($str);
 
         return $str;
     }
