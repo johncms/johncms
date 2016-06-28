@@ -11,10 +11,13 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$headmod = isset($headmod) ? mysql_real_escape_string($headmod) : '';
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
+$headmod = isset($headmod) ? $headmod : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
 
-echo'<!DOCTYPE html>' .
+echo '<!DOCTYPE html>' .
     "\n" . '<html lang="' . core::$lng_iso . '">' .
     "\n" . '<head>' .
     "\n" . '<meta charset="utf-8">' .
@@ -37,24 +40,37 @@ echo'<!DOCTYPE html>' .
 Рекламный модуль
 -----------------------------------------------------------------
 */
-$cms_ads = array();
+$cms_ads = [];
 if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
     $view = $user_id ? 2 : 1;
     $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
-    $req = mysql_query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
-    if (mysql_num_rows($req)) {
-        while (($res = mysql_fetch_assoc($req)) !== FALSE) {
+    $req = $db->query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
+
+    if ($req->rowCount()) {
+        while ($res = $req->fetch()) {
             $name = explode("|", $res['name']);
             $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
-            if (!empty($res['color'])) $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
+
+            if (!empty($res['color'])) {
+                $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
+            }
+
             // Если было задано начертание шрифта, то применяем
-            $font = $res['bold'] ? 'font-weight: bold;' : FALSE;
-            $font .= $res['italic'] ? ' font-style:italic;' : FALSE;
-            $font .= $res['underline'] ? ' text-decoration:underline;' : FALSE;
-            if ($font) $name = '<span style="' . $font . '">' . $name . '</span>';
+            $font = $res['bold'] ? 'font-weight: bold;' : false;
+            $font .= $res['italic'] ? ' font-style:italic;' : false;
+            $font .= $res['underline'] ? ' text-decoration:underline;' : false;
+
+            if ($font) {
+                $name = '<span style="' . $font . '">' . $name . '</span>';
+            }
+
             @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br/>';
-            if (($res['day'] != 0 && time() >= ($res['time'] + $res['day'] * 3600 * 24)) || ($res['count_link'] != 0 && $res['count'] >= $res['count_link']))
-                mysql_query("UPDATE `cms_ads` SET `to` = '1'  WHERE `id` = '" . $res['id'] . "'");
+
+            if (($res['day'] != 0 && time() >= ($res['time'] + $res['day'] * 3600 * 24))
+                || ($res['count_link'] != 0 && $res['count'] >= $res['count_link'])
+            ) {
+                $db->exec('UPDATE `cms_ads` SET `to` = 1  WHERE `id` = ' . $res['id']);
+            }
         }
     }
 }
@@ -64,7 +80,9 @@ if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
 Рекламный блок сайта
 -----------------------------------------------------------------
 */
-if (isset($cms_ads[0])) echo $cms_ads[0];
+if (isset($cms_ads[0])) {
+    echo $cms_ads[0];
+}
 
 /*
 -----------------------------------------------------------------
@@ -72,7 +90,7 @@ if (isset($cms_ads[0])) echo $cms_ads[0];
 -----------------------------------------------------------------
 */
 echo '<table style="width: 100%;" class="logo"><tr>' .
-    '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . functions::image('logo.gif', array('class' => '')) . '</a></td>' .
+    '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . functions::image('logo.gif', ['class' => '']) . '</a></td>' .
     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
     '</tr></table>';
 
@@ -99,7 +117,9 @@ echo '<div class="tmn">' .
 Рекламный блок сайта
 -----------------------------------------------------------------
 */
-if (!empty($cms_ads[1])) echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
+if (!empty($cms_ads[1])) {
+    echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
+}
 
 /*
 -----------------------------------------------------------------
@@ -108,26 +128,36 @@ if (!empty($cms_ads[1])) echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
 */
 $sql = '';
 $set_karma = unserialize($set['karma']);
+
 if ($user_id) {
     // Фиксируем местоположение авторизованных
     if (!$datauser['karma_off'] && $set_karma['on'] && $datauser['karma_time'] <= (time() - 86400)) {
-        $sql .= " `karma_time` = '" . time() . "', ";
+        $sql .= " `karma_time` = " . time() . ", ";
     }
+
     $movings = $datauser['movings'];
+
     if ($datauser['lastdate'] < (time() - 300)) {
         $movings = 0;
-        $sql .= " `sestime` = '" . time() . "', ";
+        $sql .= " `sestime` = " . time() . ", ";
     }
+
     if ($datauser['place'] != $headmod) {
         ++$movings;
-        $sql .= " `place` = '" . mysql_real_escape_string($headmod) . "', ";
+        $sql .= " `place` = " . $db->quote($headmod) . ", ";
     }
-    if ($datauser['browser'] != $agn)
-        $sql .= " `browser` = '" . mysql_real_escape_string($agn) . "', ";
+
+    if ($datauser['browser'] != $agn) {
+        $sql .= " `browser` = " . $db->quote($agn) . ", ";
+    }
+
     $totalonsite = $datauser['total_on_site'];
-    if ($datauser['lastdate'] > (time() - 300))
+
+    if ($datauser['lastdate'] > (time() - 300)) {
         $totalonsite = $totalonsite + time() - $datauser['lastdate'];
-    mysql_query("UPDATE `users` SET $sql
+    }
+
+    $db->query("UPDATE `users` SET $sql
         `movings` = '$movings',
         `total_on_site` = '$totalonsite',
         `lastdate` = '" . time() . "'
@@ -137,33 +167,37 @@ if ($user_id) {
     // Фиксируем местоположение гостей
     $movings = 0;
     $session = md5(core::$ip . core::$ip_via_proxy . core::$user_agent);
-    $req = mysql_query("SELECT * FROM `cms_sessions` WHERE `session_id` = '$session' LIMIT 1");
-    if (mysql_num_rows($req)) {
+    $req = $db->query("SELECT * FROM `cms_sessions` WHERE `session_id` = " . $db->quote($session) . " LIMIT 1");
+
+    if ($req->rowCount()) {
         // Если есть в базе, то обновляем данные
-        $res = mysql_fetch_assoc($req);
+        $res = $req->fetch();
         $movings = ++$res['movings'];
+
         if ($res['sestime'] < (time() - 300)) {
             $movings = 1;
             $sql .= " `sestime` = '" . time() . "', ";
         }
+
         if ($res['place'] != $headmod) {
-            $sql .= " `place` = '" . mysql_real_escape_string($headmod) . "', ";
+            $sql .= " `place` = " . $db->quote($headmod) . ", ";
         }
-        mysql_query("UPDATE `cms_sessions` SET $sql
+
+        $db->exec("UPDATE `cms_sessions` SET $sql
             `movings` = '$movings',
             `lastdate` = '" . time() . "'
-            WHERE `session_id` = '$session'
+            WHERE `session_id` = " . $db->quote($session) . "
         ");
     } else {
         // Если еще небыло в базе, то добавляем запись
-        mysql_query("INSERT INTO `cms_sessions` SET
+        $db->exec("INSERT INTO `cms_sessions` SET
             `session_id` = '" . $session . "',
             `ip` = '" . core::$ip . "',
             `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `browser` = '" . mysql_real_escape_string($agn) . "',
+            `browser` = " . $db->quote($agn) . ",
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
-            `place` = '" . mysql_real_escape_string($headmod) . "'
+            `place` = " . $db->quote($headmod) . "
         ");
     }
 }
@@ -173,7 +207,9 @@ if ($user_id) {
 Выводим сообщение о Бане
 -----------------------------------------------------------------
 */
-if (!empty($ban)) echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . $lng['in_detail'] . '</a></div>';
+if (!empty($ban)) {
+    echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . $lng['in_detail'] . '</a></div>';
+}
 
 /*
 -----------------------------------------------------------------
@@ -181,14 +217,37 @@ if (!empty($ban)) echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' .
 -----------------------------------------------------------------
 */
 if ($user_id) {
-    $list = array();
-    $new_sys_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `sys`='1' AND `delete`!='$user_id';"), 0);
-	if ($new_sys_mail) $list[] = '<a href="' . $home . '/mail/index.php?act=systems">Система</a> (+' . $new_sys_mail . ')';
-	$new_mail = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id' WHERE `cms_mail`.`from_id`='$user_id' AND `cms_mail`.`sys`='0' AND `cms_mail`.`read`='0' AND `cms_mail`.`delete`!='$user_id' AND `cms_contact`.`ban`!='1' AND `cms_mail`.`spam`='0'"), 0);
-	if ($new_mail) $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . $lng['mail'] . '</a> (+' . $new_mail . ')';
-    if ($datauser['comm_count'] > $datauser['comm_old']) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
-    $new_album_comm = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . core::$user_id . "' AND `unread_comments` = 1"), 0);
-    if ($new_album_comm) $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
+    $list = [];
+    $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `sys`='1' AND `delete`!='$user_id'")->fetchColumn();
 
-    if (!empty($list)) echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
+    if ($new_sys_mail) {
+        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">Система</a> (+' . $new_sys_mail . ')';
+    }
+
+    $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id'
+                            WHERE `cms_mail`.`from_id`='$user_id'
+                            AND `cms_mail`.`sys`='0'
+                            AND `cms_mail`.`read`='0'
+                            AND `cms_mail`.`delete`!='$user_id'
+                            AND `cms_contact`.`ban`!='1'
+                            AND `cms_mail`.`spam`='0'")->fetchColumn();
+
+    if ($new_mail) {
+        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . $lng['mail'] . '</a> (+' . $new_mail . ')';
+    }
+
+    if ($datauser['comm_count'] > $datauser['comm_old']) {
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+    }
+
+    $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();
+
+    if ($new_album_comm) {
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
+    }
+
+    if (!empty($list)) {
+        echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
+    }
 }
