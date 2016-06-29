@@ -16,7 +16,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 // Проверяем версию PHP
 if (version_compare(PHP_VERSION, '7', '>=')) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Compatibility Pack can not work with PHP 7</div>');
+    //TODO: после полного перевода на новое ядро, раскоментировать
+    //die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Compatibility Pack can not work with PHP 7</div>');
 }
 
 // Корневая папка
