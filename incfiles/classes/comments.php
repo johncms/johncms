@@ -392,9 +392,7 @@ class comments
             if (mb_strtolower($message) == mb_strtolower($res['text']))
                 $error[] = core::$lng['error_message_exists'];
         }
-        // Транслит сообщения
-        if (!$error && $translit)
-            $message = functions::trans($message);
+
         // Возвращаем результат
         return array(
             'code' => $code,
