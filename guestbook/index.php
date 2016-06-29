@@ -62,9 +62,6 @@ switch ($act) {
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $from = $user_id ? $login : mysql_real_escape_string($name);
-        // Транслит сообщения
-        if ($trans)
-            $msg = functions::trans($msg);
         // Проверяем на ошибки
         $error = array();
         $flood = FALSE;

@@ -173,8 +173,7 @@ if (!$error) {
             -----------------------------------------------------------------
             */
             $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
-            if (isset($_POST['msgtrans']))
-                $msg = functions::trans($msg);
+
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
                     echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=editpost&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');

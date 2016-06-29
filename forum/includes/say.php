@@ -89,8 +89,6 @@ switch ($type1['type']) {
             exit;
         }
         $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
-        if (isset($_POST['msgtrans']))
-            $msg = functions::trans($msg);
         //Обрабатываем ссылки
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
         if (isset($_POST['submit'])
@@ -227,9 +225,7 @@ switch ($type1['type']) {
         $vr = date("d.m.Y / H:i", $type1['time'] + $shift);
         $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
         $txt = isset($_POST['txt']) ? intval($_POST['txt']) : FALSE;
-        if (isset($_POST['msgtrans'])) {
-            $msg = functions::trans($msg);
-        }
+
         if (!empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';

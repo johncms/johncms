@@ -35,9 +35,7 @@ if ($id > 0 && $user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] |
             exit;
         }
         $msg = functions::check($_POST['msg']);
-        if ($_POST[msgtrans] == 1) {
-            $msg = functions::trans($msg);
-        }
+
         $msg = mb_substr($msg, 0, 500);
         $agn = strtok($agn, ' ');
         mysql_query("insert into `download` values(0,'$id','','" . time() . "','','komm','$login','" . long2ip($ip) . "','" . $agn . "','" . $msg . "','');");
