@@ -2,12 +2,14 @@
 `Release Date: under development`
 
 ### Major Features
+  * Для работы с базой данных используется PDO
   * Для локализации (переводов) используется формат GNU Gettext
   
 ### Features
-  * Папки языков переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+  * Папки локалей переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
   * Добавлен Киргизский язык
   * Удален валидатор Referer
+  * Удален транслит
 
 ### Bug Fixes
   * В Библиотеке исправлена скачка книг в формате FB
