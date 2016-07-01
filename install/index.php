@@ -110,7 +110,7 @@ class install
     public static function check_files_rights()
     {
         $files = [
-            '/system/config/database.local.php',
+            //'/system/config/database.local.php',
         ];
         $error = [];
 
@@ -412,13 +412,13 @@ switch ($act) {
 
                 $dbfile = "<?php\n\n" .
                     'return ' . var_export($pdoattr, true) . ';';
-                if (!file_put_contents('../database.local.php', $dbfile)) {
+                if (!file_put_contents('../system/config/database.local.php', $dbfile)) {
                     echo 'ERROR: Can not write db.php</body></html>';
                     exit;
                 }
 
                 // Заливаем базу данных
-                $sql = install::parse_sql('install.sql', $pdo);
+                $sql = install::parse_sql(__DIR__ . '/sql/install.sql', $pdo);
                 if (!empty($sql)) {
                     foreach ($sql as $val) {
                         echo $val . '<br />';
@@ -470,7 +470,7 @@ switch ($act) {
 
                 // Установка ДЕМО данных
                 if ($demo) {
-                    $demo_data = install::parse_sql('demo.sql', $pdo);
+                    $demo_data = install::parse_sql(__DIR__ . '/sql/demo.sql', $pdo);
                 }
 
                 // Установка завершена
