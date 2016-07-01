@@ -109,15 +109,10 @@ class install
      */
     public static function check_files_rights()
     {
-        $files = [
-            //'/system/config/database.local.php',
-        ];
         $error = [];
 
-        foreach ($files as $val) {
-            if (!is_writable('..' . $val)) {
-                $error[] = $val;
-            }
+        if (is_file('../system/config/database.local.php') && !is_writable('../system/config/database.local.php')) {
+            $error[] = '/system/config/database.local.php';
         }
 
         return !empty($error) ? $error : false;
@@ -410,15 +405,16 @@ switch ($act) {
                     ],
                 ];
 
-                $dbfile = "<?php\n\n" .
-                    'return ' . var_export($pdoattr, true) . ';';
+                $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ';';
+
                 if (!file_put_contents('../system/config/database.local.php', $dbfile)) {
-                    echo 'ERROR: Can not write db.php</body></html>';
+                    echo 'ERROR: Can not write config database.local.php</body></html>';
                     exit;
                 }
 
                 // Заливаем базу данных
                 $sql = install::parse_sql(__DIR__ . '/sql/install.sql', $pdo);
+
                 if (!empty($sql)) {
                     foreach ($sql as $val) {
                         echo $val . '<br />';
