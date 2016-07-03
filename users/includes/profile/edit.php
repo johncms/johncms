@@ -1,14 +1,5 @@
 <?php
 
-/**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['profile_edit'];
@@ -25,18 +16,23 @@ if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
     exit;
 }
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 /*
 -----------------------------------------------------------------
 Сброс настроек
 -----------------------------------------------------------------
 */
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
-    mysql_query("UPDATE `users` SET `set_user` = '', `set_forum` = '', `set_chat` = '' WHERE `id` = '" . $user['id'] . "'");
+    $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . $lng['settings_default'] . '<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></p></div>';
     require('../incfiles/end.php');
     exit;
 }
+
 echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
+
 if (isset($_GET['delavatar'])) {
     /*
     -----------------------------------------------------------------
@@ -60,7 +56,7 @@ if (isset($_GET['delavatar'])) {
     Принимаем данные из формы, проверяем и записываем в базу
     -----------------------------------------------------------------
     */
-    $error = array ();
+    $error = [];
     $user['imname'] = isset($_POST['imname']) ? functions::check(mb_substr($_POST['imname'], 0, 25)) : '';
     $user['live'] = isset($_POST['live']) ? functions::check(mb_substr($_POST['live'], 0, 50)) : '';
     $user['dayb'] = isset($_POST['dayb']) ? intval($_POST['dayb']) : 0;
@@ -80,53 +76,93 @@ if (isset($_GET['delavatar'])) {
     $user['karma_off'] = isset($_POST['karma_off']) ? 1 : 0;
     $user['sex'] = isset($_POST['sex']) && $_POST['sex'] == 'm' ? 'm' : 'zh';
     $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : $user['rights'];
+
     // Проводим необходимые проверки
-    if($user['rights'] > $rights || $user['rights'] > 9 || $user['rights'] < 0)
+    if ($user['rights'] > $rights || $user['rights'] > 9 || $user['rights'] < 0) {
         $user['rights'] = 0;
+    }
+
     if ($rights >= 7) {
-        if (mb_strlen($user['name']) < 2 || mb_strlen($user['name']) > 20)
+        if (mb_strlen($user['name']) < 2 || mb_strlen($user['name']) > 20) {
             $error[] = $lng_profile['error_nick_lenght'];
+        }
+
         $lat_nick = functions::rus_lat(mb_strtolower($user['name']));
-        if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick))
+
+        if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick)) {
             $error[] = $lng_profile['error_nick_symbols'];
+        }
     }
     if ($user['dayb'] || $user['monthb'] || $user['yearofbirth']) {
-        if ($user['dayb'] < 1 || $user['dayb'] > 31 || $user['monthb'] < 1 || $user['monthb'] > 12)
+        if ($user['dayb'] < 1 || $user['dayb'] > 31 || $user['monthb'] < 1 || $user['monthb'] > 12) {
             $error[] = $lng_profile['error_birth'];
-    }
-    if ($user['icq'] && ($user['icq'] < 10000 || $user['icq'] > 999999999))
-        $error[] = $lng_profile['error_icq'];
-    if (!$error) {
-        mysql_query("UPDATE `users` SET
-            `imname` = '" . $user['imname'] . "',
-            `live` = '" . $user['live'] . "',
-            `dayb` = '" . $user['dayb'] . "',
-            `monthb` = '" . $user['monthb'] . "',
-            `yearofbirth` = '" . $user['yearofbirth'] . "',
-            `about` = '" . $user['about'] . "',
-            `mibile` = '" . $user['mibile'] . "',
-            `mail` = '" . $user['mail'] . "',
-            `mailvis` = '" . $user['mailvis'] . "',
-            `icq` = '" . $user['icq'] . "',
-            `skype` = '" . $user['skype'] . "',
-            `jabber` = '" . $user['jabber'] . "',
-            `www` = '" . $user['www'] . "'
-            WHERE `id` = '" . $user['id'] . "'
-        ");
-        if ($rights >= 7) {
-            mysql_query("UPDATE `users` SET
-                `name` = '" . $user['name'] . "',
-                `status` = '" . $user['status'] . "',
-                `karma_off` = '" . $user['karma_off'] . "',
-                `sex` = '" . $user['sex'] . "',
-                `rights` = '" . $user['rights'] . "'
-                WHERE `id` = '" . $user['id'] . "'
-            ");
         }
+    }
+
+    if ($user['icq'] && ($user['icq'] < 10000 || $user['icq'] > 999999999)) {
+        $error[] = $lng_profile['error_icq'];
+    }
+
+    if (!$error) {
+        $stmt = $db->prepare('UPDATE `users` SET
+          `imname` = ?,
+          `live` = ?,
+          `dayb` = ?,
+          `monthb` = ?,
+          `yearofbirth` = ?,
+          `about` = ?,
+          `mibile` = ?,
+          `mail` = ?,
+          `mailvis` = ?,
+          `icq` = ?,
+          `skype` = ?,
+          `jabber` = ?,
+          `www` = ?
+          WHERE `id` = ?
+        ');
+
+        $stmt->execute([
+            $user['imname'],
+            $user['live'],
+            $user['dayb'],
+            $user['monthb'],
+            $user['yearofbirth'],
+            $user['about'],
+            $user['mibile'],
+            $user['mail'],
+            $user['mailvis'],
+            $user['icq'],
+            $user['skype'],
+            $user['jabber'],
+            $user['www'],
+            $user['id'],
+        ]);
+
+        if ($rights >= 7) {
+            $stmt = $db->prepare('UPDATE `users` SET
+              `name` = ?,
+              `status` = ?,
+              `karma_off` = ?,
+              `sex` = ?,
+              `rights` = ?
+              WHERE `id` = ?
+            ');
+
+            $stmt->execute([
+                $user['name'],
+                $user['status'],
+                $user['karma_off'],
+                $user['sex'],
+                $user['rights'],
+                $user['id'],
+            ]);
+        }
+
         echo '<div class="gmenu">' . $lng_profile['data_saved'] . '</div>';
     } else {
         echo functions::display_error($error);
     }
+
     header('Location: profile.php?act=edit&user=' . $user['id']);
     exit;
 }
@@ -139,6 +175,7 @@ if (isset($_GET['delavatar'])) {
 echo '<form action="profile.php?act=edit&amp;user=' . $user['id'] . '" method="post">' .
     '<div class="gmenu"><p>' .
     $lng['login_name'] . ': <b>' . $user['name_lat'] . '</b><br />';
+
 if ($rights >= 7) {
     echo $lng['nick'] . ': (' . $lng_profile['nick_lenght'] . ')<br /><input type="text" value="' . $user['name'] . '" name="name" /><br />' .
         $lng['status'] . ': (' . $lng_profile['status_lenght'] . ')<br /><input type="text" value="' . $user['status'] . '" name="status" /><br />';
@@ -146,22 +183,30 @@ if ($rights >= 7) {
     echo '<span class="gray">' . $lng['nick'] . ':</span> <b>' . $user['name'] . '</b><br />' .
         '<span class="gray">' . $lng['status'] . ':</span> ' . $user['status'] . '<br />';
 }
+
 echo '</p><p>' . $lng['avatar'] . ':<br />';
 $link = '';
+
 if (file_exists(('../files/users/avatar/' . $user['id'] . '.png'))) {
     echo '<img src="../files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /><br />';
     $link = ' | <a href="profile.php?act=edit&amp;user=' . $user['id'] . '&amp;delavatar">' . $lng['delete'] . '</a>';
 }
+
 echo '<small><a href="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>';
-if($user['id'] == $user_id)
+
+if ($user['id'] == $user_id) {
     echo ' | <a href="../pages/faq.php?act=avatars">' . $lng['select'] . '</a>';
+}
+
 echo $link . '</small></p>';
 echo '<p>' . $lng_profile['photo'] . ':<br />';
 $link = '';
+
 if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
     echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br />';
     $link = ' | <a href="profile.php?act=edit&amp;user=' . $user['id'] . '&amp;delphoto">' . $lng['delete'] . '</a>';
 }
+
 echo '<small><a href="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>' . $link . '</small><br />' .
     '</p></div>' .
     '<div class="menu">' .
@@ -183,6 +228,7 @@ echo '<small><a href="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user
     '<p>Jabber:<br /><input type="text" value="' . $user['jabber'] . '" name="jabber" /></p>' .
     '<p>' . $lng_profile['site'] . ':<br /><input type="text" value="' . $user['www'] . '" name="www" /></p>' .
     '</div>';
+
 // Административные функции
 if ($rights >= 7) {
     echo '<div class="rmenu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . $lng['settings'] . '</h3><ul>';
@@ -190,8 +236,9 @@ if ($rights >= 7) {
         echo '<li><input name="karma_off" type="checkbox" value="1" ' . ($user['karma_off'] ? 'checked="checked"' : '') . ' />&#160;<span class="red"><b>' . $lng_profile['deny_karma'] . '</b></span></li>';
     }
     echo '<li><a href="profile.php?act=password&amp;user=' . $user['id'] . '">' . $lng['change_password'] . '</a></li>';
-    if($rights > $user['rights'])
+    if ($rights > $user['rights']) {
         echo '<li><a href="profile.php?act=reset&amp;user=' . $user['id'] . '">' . $lng['reset_settings'] . '</a></li>';
+    }
     echo '<li>' . $lng_profile['specify_sex'] . ':<br />' .
         '<input type="radio" value="m" name="sex" ' . ($user['sex'] == 'm' ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['sex_m'] . '<br />' .
         '<input type="radio" value="zh" name="sex" ' . ($user['sex'] == 'zh' ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['sex_w'] . '</li>' .
@@ -211,7 +258,7 @@ if ($rights >= 7) {
     }
     echo '</div>';
 }
+
 echo '<div class="gmenu"><input type="submit" value="' . $lng['save'] . '" name="submit" /></div>' .
     '</form>' .
     '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';
-?>
