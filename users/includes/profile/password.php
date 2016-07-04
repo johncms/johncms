@@ -56,8 +56,12 @@ switch ($mod) {
         if (!$error && (strlen($newpass) < 3 || strlen($newpass) > 10))
             $error[] = $lng_pass['error_lenght'];
         if (!$error) {
+            /** @var PDO $db */
+            $db = App::getContainer()->get(PDO::class);
+
             // Записываем в базу
-            mysql_query("UPDATE `users` SET `password` = '" . mysql_real_escape_string(md5(md5($newpass))) . "' WHERE `id` = '" . $user['id'] . "'");
+            $db->prepare('UPDATE `users` SET `password` = ? WHERE `id` = ?')->execute([md5(md5($newpass)), $user['id']]);
+
             // Проверяем и записываем COOKIES
             if (isset($_COOKIE['cuid']) && isset($_COOKIE['cups']))
                 setcookie('cups', md5($newpass), time() + 3600 * 24 * 365);
@@ -87,4 +91,3 @@ switch ($mod) {
             '<div class="phdr"><small>' . $lng_pass['password_change_help'] . '</small></div>' .
             '<p><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
 }
-?>
