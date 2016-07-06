@@ -25,11 +25,14 @@ if ($user['id'] != $user_id) {
     exit;
 }
 
-$menu = array(
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
+$menu = [
     (!$mod ? '<b>' . $lng['common_settings'] . '</b>' : '<a href="profile.php?act=settings">' . $lng['common_settings'] . '</a>'),
     ($mod == 'forum' ? '<b>' . $lng['forum'] . '</b>' : '<a href="profile.php?act=settings&amp;mod=forum">' . $lng['forum'] . '</a>'),
     ($mod == 'mail' ? '<b>' . $lng['mail'] . '</b>' : '<a href="profile.php?act=settings&amp;mod=mail">' . $lng['mail'] . '</a>'),
-);
+];
 
 /*
 -----------------------------------------------------------------
@@ -44,7 +47,7 @@ switch ($mod) {
         $set_mail_user = unserialize($datauser['set_mail']);
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
-            mysql_query("UPDATE `users` SET `set_mail` = '" . mysql_real_escape_string(serialize($set_mail_user)) . "' WHERE `id` = '$user_id'");
+            $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([serialize($set_mail_user), $user_id]);
         }
 
         echo '<form method="post" action="profile.php?act=settings&amp;mod=mail">' .
@@ -65,26 +68,28 @@ switch ($mod) {
         */
         echo '<div class="phdr"><b>' . $lng['settings'] . '</b> | ' . $lng['forum'] . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
-        $set_forum = array();
+        $set_forum = [];
         $set_forum = unserialize($datauser['set_forum']);
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);
             $set_forum['upfp'] = isset($_POST['upfp']);
             $set_forum['preview'] = isset($_POST['preview']);
             $set_forum['postclip'] = isset($_POST['postclip']) ? intval($_POST['postclip']) : 1;
+
             if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2) {
                 $set_forum['postclip'] = 1;
             }
-            mysql_query("UPDATE `users` SET `set_forum` = '" . mysql_real_escape_string(serialize($set_forum)) . "' WHERE `id` = '$user_id'");
+
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([serialize($set_forum), $user_id]);
             echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
         }
         if (isset($_GET['reset']) || empty($set_forum)) {
-            $set_forum = array();
+            $set_forum = [];
             $set_forum['farea'] = 0;
             $set_forum['upfp'] = 0;
             $set_forum['preview'] = 1;
             $set_forum['postclip'] = 1;
-            mysql_query("UPDATE `users` SET `set_forum` = '" . mysql_real_escape_string(serialize($set_forum)) . "' WHERE `id` = '$user_id'");
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([serialize($set_forum), $user_id]);
             echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
         }
         echo '<form action="profile.php?act=settings&amp;mod=forum" method="post">' .
@@ -118,26 +123,31 @@ switch ($mod) {
             $set_user['field_h'] = isset($_POST['field_h']) ? abs(intval($_POST['field_h'])) : 3;
             $set_user['kmess'] = isset($_POST['kmess']) ? abs(intval($_POST['kmess'])) : 10;
             $set_user['quick_go'] = isset($_POST['quick_go']);
-            if ($set_user['timeshift'] < -12)
+            if ($set_user['timeshift'] < -12) {
                 $set_user['timeshift'] = -12;
-            elseif ($set_user['timeshift'] > 12)
+            } elseif ($set_user['timeshift'] > 12) {
                 $set_user['timeshift'] = 12;
-            if ($set_user['kmess'] < 5)
+            }
+            if ($set_user['kmess'] < 5) {
                 $set_user['kmess'] = 5;
-            elseif ($set_user['kmess'] > 99)
+            } elseif ($set_user['kmess'] > 99) {
                 $set_user['kmess'] = 99;
-            if ($set_user['field_w'] < 10)
+            }
+            if ($set_user['field_w'] < 10) {
                 $set_user['field_w'] = 10;
-            elseif ($set_user['field_w'] > 80)
+            } elseif ($set_user['field_w'] > 80) {
                 $set_user['field_w'] = 80;
-            if ($set_user['field_h'] < 1)
+            }
+            if ($set_user['field_h'] < 1) {
                 $set_user['field_h'] = 1;
-            elseif ($set_user['field_h'] > 9)
+            } elseif ($set_user['field_h'] > 9) {
                 $set_user['field_h'] = 9;
+            }
 
             // Устанавливаем скин
-            foreach (glob('../theme/*/*.css') as $val)
+            foreach (glob('../theme/*/*.css') as $val) {
                 $theme_list[] = array_pop(explode('/', dirname($val)));
+            }
             $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? functions::check($_POST['skin']) : $set['skindef'];
 
             // Устанавливаем язык
@@ -148,7 +158,7 @@ switch ($mod) {
             }
 
             // Записываем настройки
-            mysql_query("UPDATE `users` SET `set_user` = '" . mysql_real_escape_string(serialize($set_user)) . "' WHERE `id` = '$user_id'");
+            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $user_id]);
             $_SESSION['set_ok'] = 1;
             header('Location: profile.php?act=settings');
             exit;
@@ -158,7 +168,7 @@ switch ($mod) {
             Задаем настройки по-умолчанию
             -----------------------------------------------------------------
             */
-            mysql_query("UPDATE `users` SET `set_user` = '' WHERE `id` = '$user_id'");
+            $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = '$user_id'");
             $_SESSION['reset_ok'] = 1;
             header('Location: profile.php?act=settings');
             exit;
@@ -187,7 +197,9 @@ switch ($mod) {
             '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['smileys'] . '<br/>' .
             '</p><p><h3>' . $lng['text_input'] . '</h3>' .
             '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . $lng['field_height'] . ' (1-9)<br />';
-        if (core::$lng_iso == 'ru' || core::$lng_iso == 'uk') echo '<input name="translit" type="checkbox" value="1" ' . (core::$user_set['translit'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['translit'];
+        if (core::$lng_iso == 'ru' || core::$lng_iso == 'uk') {
+            echo '<input name="translit" type="checkbox" value="1" ' . (core::$user_set['translit'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['translit'];
+        }
         echo '</p><p><h3>' . $lng['apperance'] . '</h3>' .
             '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . $lng['lines_on_page'] . ' (5-99)' .
             '</p>';
