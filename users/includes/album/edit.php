@@ -1,13 +1,13 @@
 <?php
 
 /**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
+ * @package     JohnCMS
+ * @link        http://johncms.com
+ * @copyright   Copyright (C) 2008-2011 JohnCMS Community
+ * @license     LICENSE.txt (see attached file)
+ * @version     VERSION.txt (see attached file)
+ * @author      http://johncms.com/about
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
@@ -19,11 +19,15 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
     if ($al) {
-        $req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
-        if (mysql_num_rows($req)) {
+        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
+
+        if ($req->rowCount()) {
             echo '<div class="phdr"><b>' . $lng_profile['album_edit'] . '</b></div>';
-            $res = mysql_fetch_assoc($req);
+            $res = $req->fetch();
             $name = htmlspecialchars($res['name']);
             $description = htmlspecialchars($res['description']);
             $password = htmlspecialchars($res['password']);
@@ -40,66 +44,100 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
         $password = '';
         $access = 0;
     }
-    $error = array ();
+
+    $error = [];
+
     if (isset($_POST['submit'])) {
         // Принимаем данные
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $description = isset($_POST['description']) ? trim($_POST['description']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-        $access = isset($_POST['access']) ? abs(intval($_POST['access'])) : NULL;
+        $access = isset($_POST['access']) ? abs(intval($_POST['access'])) : null;
+
         // Проверяем на ошибки
-        if (empty($name))
+        if (empty($name)) {
             $error[] = $lng['error_empty_title'];
-        elseif (mb_strlen($name) < 2 || mb_strlen($name) > 50)
+        } elseif (mb_strlen($name) < 2 || mb_strlen($name) > 50) {
             $error[] = $lng['title'] . ': ' . $lng['error_wrong_lenght'];
+        }
+
         $description = mb_substr($description, 0, 500);
-        if ($access == 2 && empty($password))
+
+        if ($access == 2 && empty($password)) {
             $error[] = $lng['error_empty_password'];
-        elseif ($access == 2 && mb_strlen($password) < 3 || mb_strlen($password) > 15)
+        } elseif ($access == 2 && mb_strlen($password) < 3 || mb_strlen($password) > 15) {
             $error[] = $lng['password'] . ': ' . $lng['error_wrong_lenght'];
-        if ($access < 1 || $access > 4)
+        }
+
+        if ($access < 1 || $access > 4) {
             $error[] = $lng['error_wrong_data'];
+        }
+
         // Проверяем, есть ли уже альбом с таким же именем?
-        if (!$al && mysql_num_rows(mysql_query("SELECT * FROM `cms_album_cat` WHERE `name` = '" . mysql_real_escape_string($name) . "' AND `user_id` = '" . $user['id'] . "' LIMIT 1")))
+        if (!$al && $db->query("SELECT * FROM `cms_album_cat` WHERE `name` = " . $db->quote($name) . " AND `user_id` = '" . $user['id'] . "' LIMIT 1")->rowCount()) {
             $error[] = $lng_profile['error_album_exists'];
+        }
+
         if (!$error) {
             if ($al) {
                 // Изменяем данные в базе
-                mysql_query("UPDATE `cms_album_files` SET `access` = '$access' WHERE `album_id` = '$al' AND `user_id` = '" . $user['id'] . "'");
-                mysql_query("UPDATE `cms_album_cat` SET
-                    `name` = '" . mysql_real_escape_string($name) . "',
-                    `description` = '" . mysql_real_escape_string($description) . "',
-                    `password` = '" . mysql_real_escape_string($password) . "',
-                    `access` = '$access'
-                    WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'
-                ");
+                $db->exec("UPDATE `cms_album_files` SET `access` = '$access' WHERE `album_id` = '$al' AND `user_id` = " . $user['id']);
+                $db->prepare('
+                  UPDATE `cms_album_cat` SET
+                  `name` = ?,
+                  `description` = ?,
+                  `password` = ?,
+                  `access` = ?
+                  WHERE `id` = ? AND `user_id` = ?
+                ')->execute([
+                    $name,
+                    $description,
+                    $password,
+                    $access,
+                    $al,
+                    $user['id'],
+                ]);
             } else {
                 // Вычисляем сортировку
-                $req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `sort` DESC LIMIT 1");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `sort` DESC LIMIT 1");
+
+                if ($req->rowCount()) {
+                    $res = $req->fetch();
                     $sort = $res['sort'] + 1;
                 } else {
                     $sort = 1;
                 }
+
                 // Заносим данные в базу
-                mysql_query("INSERT INTO `cms_album_cat` SET
-                    `user_id` = '" . $user['id'] . "',
-                    `name` = '" . mysql_real_escape_string($name) . "',
-                    `description` = '" . mysql_real_escape_string($description) . "',
-                    `password` = '" . mysql_real_escape_string($password) . "',
-                    `access` = '$access',
-                    `sort` = '$sort'
-                ");
+                $db->prepare('
+                  INSERT INTO `cms_album_cat` SET
+                  `user_id` = ?,
+                  `name` = ?,
+                  `description` = ?,
+                  `password` = ?,
+                  `access` = ?,
+                  `sort` = ?
+                ')->execute([
+                    $user['id'],
+                    $name,
+                    $description,
+                    $password,
+                    $access,
+                    $sort,
+                ]);
             }
+
             echo '<div class="gmenu"><p>' . ($al ? $lng_profile['album_changed'] : $lng_profile['album_created']) . '<br />' .
                 '<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
             require('../incfiles/end.php');
             exit;
         }
     }
-    if ($error)
+
+    if ($error) {
         echo functions::display_error($error);
+    }
+
     echo '<div class="menu">' .
         '<form action="album.php?act=edit&amp;user=' . $user['id'] . '&amp;al=' . $al . '" method="post">' .
         '<p><h3>' . $lng['title'] . '</h3>' .
