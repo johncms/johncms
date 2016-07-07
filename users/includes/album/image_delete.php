@@ -22,9 +22,12 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 if ($img && $user['id'] == $user_id || $rights >= 6) {
-    $req = mysql_query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
+    if ($req->rowCount()) {
+        $res = $req->fetch();
         $album = $res['album_id'];
         echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_delete'] . '</div>';
         //TODO: Сделать проверку, чтоб администрация не могла удалять фотки старших по должности
@@ -32,12 +35,12 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
             // Удаляем файлы картинок
             @unlink('../files/users/album/' . $user['id'] . '/' . $res['img_name']);
             @unlink('../files/users/album/' . $user['id'] . '/' . $res['tmb_name']);
+
             // Удаляем записи из таблиц
-            mysql_query("DELETE FROM `cms_album_files` WHERE `id` = '$img'");
-            mysql_query("DELETE FROM `cms_album_votes` WHERE `file_id` = '$img'");
-            mysql_query("OPTIMIZE TABLE `cms_album_votes`");
-            mysql_query("DELETE FROM `cms_album_comments` WHERE `sub_id` = '$img'");
-            mysql_query("OPTIMIZE TABLE `cms_album_comments`");
+            $db->exec("DELETE FROM `cms_album_files` WHERE `id` = '$img'");
+            $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '$img'");
+            $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '$img'");
+
             header('Location: album.php?act=show&al=' . $album . '&user=' . $user['id']);
         } else {
             echo '<div class="rmenu"><form action="album.php?act=image_delete&amp;img=' . $img . '&amp;user=' . $user['id'] . '" method="post">' .
@@ -50,4 +53,3 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
         echo functions::display_error($lng['error_wrong_data']);
     }
 }
-?>
