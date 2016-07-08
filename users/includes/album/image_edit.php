@@ -19,11 +19,16 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 if ($img && $user['id'] == $user_id || $rights >= 6) {
-    $req = mysql_query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
+
+    if ($req->rowCount()) {
+        $res = $req->fetch();
         $album = $res['album_id'];
         echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_edit'] . '</div>';
+
         if (isset($_POST['submit'])) {
             if (!isset($_SESSION['post'])) {
                 $_SESSION['post'] = true;
@@ -38,8 +43,11 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     $handle = new upload($path . $res['img_name']);
                     // Обрабатываем основное изображение
                     $handle->file_new_name_body = 'img_' . time();
-                    if ($rotate == 1 || $rotate == 2)
+
+                    if ($rotate == 1 || $rotate == 2) {
                         $handle->image_rotate = ($rotate == 2 ? 90 : 270);
+                    }
+
                     if ($brightness > 0 && $brightness < 5) {
                         switch ($brightness) {
                             case 1:
@@ -59,6 +67,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                                 break;
                         }
                     }
+
                     if ($contrast > 0 && $contrast < 5) {
                         switch ($contrast) {
                             case 1:
@@ -78,13 +87,18 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                                 break;
                         }
                     }
+
                     $handle->process($path);
                     $img_name = $handle->file_dst_name;
+
                     if ($handle->processed) {
                         // Обрабатываем превьюшку
                         $handle->file_new_name_body = 'tmb_' . time();
-                        if ($rotate == 1 || $rotate == 2)
+
+                        if ($rotate == 1 || $rotate == 2) {
                             $handle->image_rotate = ($rotate == 2 ? 90 : 270);
+                        }
+
                         if ($brightness > 0 && $brightness < 5) {
                             switch ($brightness) {
                                 case 1:
@@ -104,6 +118,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                                     break;
                             }
                         }
+
                         if ($contrast > 0 && $contrast < 5) {
                             switch ($contrast) {
                                 case 1:
@@ -123,6 +138,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                                     break;
                             }
                         }
+
                         $handle->image_resize = true;
                         $handle->image_x = 100;
                         $handle->image_y = 100;
@@ -130,16 +146,19 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                         $handle->process($path);
                         $tmb_name = $handle->file_dst_name;
                     }
+
                     $handle->clean();
                     @unlink('../files/users/album/' . $user['id'] . '/' . $res['img_name']);
                     @unlink('../files/users/album/' . $user['id'] . '/' . $res['tmb_name']);
-                    $sql = "`img_name` = '" . mysql_real_escape_string($img_name) . "', `tmb_name` = '" . mysql_real_escape_string($tmb_name) . "',";
+                    $sql = "`img_name` = " . $db->quote($img_name) . ", `tmb_name` = " . $db->quote($tmb_name) . ",";
                 }
-                mysql_query("UPDATE `cms_album_files` SET $sql
-                    `description` = '" . mysql_real_escape_string($description) . "'
+
+                $db->exec("UPDATE `cms_album_files` SET $sql
+                    `description` = " . $db->quote($description) . "
                     WHERE `id` = '$img'
                 ");
             }
+
             echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br />' .
                 '<a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
         } else {
@@ -193,4 +212,3 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
         echo functions::display_error($lng['error_wrong_data']);
     }
 }
-?>
