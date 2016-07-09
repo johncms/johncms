@@ -14,6 +14,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 require('../incfiles/head.php');
 
 /*
@@ -32,6 +35,7 @@ switch ($mod) {
     default:
         $sql = "WHERE `users`.`sex` != ''";
 }
+
 $menu = array(
     (!$mod ? '<b>' . $lng['all'] . '</b>' : '<a href="album.php?act=users">' . $lng['all'] . '</a>'),
     ($mod == 'boys' ? '<b>' . $lng['mans'] . '</b>' : '<a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a>'),
@@ -39,18 +43,21 @@ $menu = array(
 );
 echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $lng['list'] . '</div>' .
      '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
-$total = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`)
+
+$total = $db->query("SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
     LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` $sql
-"), 0);
+")->fetchColumn();
+
 if ($total) {
-    $req = mysql_query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
+    $req = $db->query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
         FROM `cms_album_files`
         LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` $sql
         GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT $start, $kmess
     ");
     $i = 0;
-    while ($res = mysql_fetch_assoc($req)) {
+
+    while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         echo '<a href="album.php?act=list&amp;user=' . $res['uid'] . '">' . $res['nick'] . '</a> (' . $res['count'] . ')</div>';
         ++$i;
@@ -66,4 +73,3 @@ if ($total > $kmess) {
          '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
          '</form></p>';
 }
-?>
