@@ -11,6 +11,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 switch ($mod) {
     case 'my_new_comm':
         /*
@@ -37,7 +40,7 @@ switch ($mod) {
         Последние комментарии по всем альбомам
         -----------------------------------------------------------------
         */
-        $total = mysql_result(mysql_query("SELECT COUNT(DISTINCT `sub_id`) FROM `cms_album_comments` WHERE `time` >" . (time() - 86400)), 0);
+        $total = $db->query("SELECT COUNT(DISTINCT `sub_id`) FROM `cms_album_comments` WHERE `time` >" . (time() - 86400))->fetchColumn();
         $title = $lng_profile['new_comments'];
         $select = "";
         $join = "INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`";
@@ -142,7 +145,7 @@ echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b><
 if ($mod == 'my_new_comm') {
     $total = $new_album_comm;
 } elseif (!isset($total)) {
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE $where"), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE $where")->fetchColumn();
 }
 
 if ($total) {
@@ -150,7 +153,7 @@ if ($total) {
         echo '<div class="topmenu">' . functions::display_pagination('album.php?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
-    $req = mysql_query("
+    $req = $db->query("
       SELECT `cms_album_files`.*, `users`.`name` AS `user_name`, `cms_album_cat`.`name` AS `album_name` $select
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
@@ -160,8 +163,8 @@ if ($total) {
       ORDER BY $order
       LIMIT $start, $kmess
     ");
-    $i = 0;
-    for ($i = 0; ($res = mysql_fetch_assoc($req)) !== false; ++$i) {
+
+    for ($i = 0; $res = $req->fetch(); ++$i) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
 
         if ($res['access'] == 4 || core::$user_rights >= 7) {
