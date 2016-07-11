@@ -1,21 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $headmod = 'userstop';
 $textl = $lng['users_top'];
 require('../incfiles/head.php');
+
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
 
 /*
 -----------------------------------------------------------------
@@ -23,11 +15,14 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 function get_top($order = 'postforum') {
-    $req = mysql_query("SELECT * FROM `users` WHERE `$order` > 0 ORDER BY `$order` DESC LIMIT 9");
+    global $db;
+    $req = $db->query("SELECT * FROM `users` WHERE `$order` > 0 ORDER BY `$order` DESC LIMIT 9");
 
     if (mysql_num_rows($req)) {
         $out = '';
-        while ($res = mysql_fetch_assoc($req)) {
+        $i = 0;
+
+        while ($res = $req->fetch()) {
             $out .= $i % 2 ? '<div class="list2">' : '<div class="list1">';
             $out .= functions::display_user($res, array ('header' => ('<b>' . $res[$order]) . '</b>')) . '</div>';
             ++$i;
@@ -84,9 +79,10 @@ switch ($mod) {
         if ($set_karma['on']) {
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['top_karma'] . '</div>';
             echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
-            $req = mysql_query("SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9");
-            if (mysql_num_rows($req)) {
-                while ($res = mysql_fetch_assoc($req)) {
+            $req = $db->query("SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9");
+
+            if ($req->rowCount()) {
+                while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo functions::display_user($res, array ('header' => ('<b>' . $res['karma']) . '</b>')) . '</div>';
                     ++$i;
@@ -109,5 +105,5 @@ switch ($mod) {
         echo get_top('postforum');
         echo '<div class="phdr"><a href="../forum/index.php">' . $lng['forum'] . '</a></div>';
 }
+
 echo '<p><a href="index.php">' . $lng['back'] . '</a></p>';
-?>
