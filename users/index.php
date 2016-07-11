@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 define('_IN_JOHNCMS', 1);
 
 $headmod = 'users';
@@ -43,15 +34,14 @@ $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
-    /*
-    -----------------------------------------------------------------
-    Актив сайта
-    -----------------------------------------------------------------
-    */
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
+    // Актив сайта
     $textl = $lng['community'];
     require('../incfiles/head.php');
-    $brth = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'"), 0);
-    $count_adm = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0"), 0);
+    $brth = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
+    $count_adm = $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['community'] . '</b></div>' .
         '<div class="gmenu"><form action="search.php" method="post">' .
         '<p><h3><img src="../images/search.png" width="16" height="16" class="left" />&#160;' . $lng['search'] . '</h3>' .
