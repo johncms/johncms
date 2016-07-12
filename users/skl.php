@@ -16,12 +16,17 @@ $lng_pass = core::load_lng('pass');
 $textl = $lng_pass['password_restore'];
 require('../incfiles/head.php');
 
-function passgen($length) {
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
+function passgen($length)
+{
     $vals = "abcdefghijklmnopqrstuvwxyz0123456789";
     $result = '';
     for ($i = 1; $i <= $length; $i++) {
         $result .= $vals{rand(0, strlen($vals))};
     }
+
     return $result;
 }
 
@@ -32,29 +37,39 @@ switch ($act) {
         Отправляем E-mail с инструкциями по восстановлению пароля
         -----------------------------------------------------------------
         */
-        $nick = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower(functions::check($_POST['nick']))) : '';
+        $nick = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower($_POST['nick'])) : '';
         $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $check_code = md5(rand(1000, 9999));
         $error = false;
-        if (!$nick || !$email || !$code)
+
+        if (!$nick || !$email || !$code) {
             $error = $lng['error_empty_fields'];
-        elseif (!isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code'])
+        } elseif (!isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code']) {
             $error = $lng_pass['error_code'];
+        }
+
         unset($_SESSION['code']);
+
         if (!$error) {
             // Проверяем данные по базе
-            $req = mysql_query("SELECT * FROM `users` WHERE `name_lat` = '$nick' LIMIT 1");
-            if (mysql_num_rows($req) == 1) {
-                $res = mysql_fetch_array($req);
-                if (empty($res['mail']) || $res['mail'] != $email)
+            $req = $db->query("SELECT * FROM `users` WHERE `name_lat` = " . $db->quote($nick) . " LIMIT 1");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+
+                if (empty($res['mail']) || $res['mail'] != $email) {
                     $error = $lng_pass['error_email'];
-                if ($res['rest_time'] > time() - 86400)
+                }
+
+                if ($res['rest_time'] > time() - 86400) {
                     $error = $lng_pass['restore_timelimit'];
+                }
             } else {
                 $error = $lng['error_user_not_exist'];
             }
         }
+
         if (!$error) {
             // Высылаем инструкции на E-mail
             $subject = $lng_pass['password_restore'];
@@ -64,8 +79,9 @@ switch ($act) {
             $mail .= $lng_pass['restore_help5'];
             $adds = "From: <" . $set['email'] . ">\r\n";
             $adds .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                mysql_query("UPDATE `users` SET `rest_code` = '" . $check_code . "', `rest_time` = '" . time() . "' WHERE `id` = '" . $res['id'] . "'");
+                $db->exec("UPDATE `users` SET `rest_code` = " . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
                 echo '<div class="gmenu"><p>' . $lng_pass['restore_help6'] . '</p></div>';
             } else {
                 echo '<div class="rmenu"><p>' . $lng_pass['error_email_sent'] . '</p></div>';
@@ -84,21 +100,28 @@ switch ($act) {
         */
         $code = isset($_GET['code']) ? trim($_GET['code']) : '';
         $error = false;
-        if (!$id || !$code)
+
+        if (!$id || !$code) {
             $error = $lng['error_wrong_data'];
-        $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
-        if (mysql_num_rows($req)) {
-            $res = mysql_fetch_assoc($req);
+        }
+
+        $req = $db->query("SELECT * FROM `users` WHERE `id` = " . $id);
+
+        if ($req->rowCount()) {
+            $res = $req->fetch();
+
             if (empty($res['rest_code']) || empty($res['rest_time'])) {
                 $error = $lng_pass['error_fatal'];
             }
+
             if (!$error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
                 $error = $lng_pass['error_timelimit'];
-                mysql_query("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = '$id'");
+                $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
             }
         } else {
             $error = $lng['error_user_not_exist'];
         }
+
         if (!$error) {
             // Высылаем пароль на E-mail
             $pass = passgen(4);
@@ -108,8 +131,9 @@ switch ($act) {
             $mail .= $lng_pass['restore_help7'];
             $adds = "From: <" . $set['email'] . ">\n";
             $adds .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                mysql_query("UPDATE `users` SET `rest_code` = '', `password` = '" . md5(md5($pass)) . "' WHERE `id` = '$id'");
+                $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . " WHERE `id` = " . $id);
                 echo '<div class="phdr">' . $lng_pass['change_password'] . '</div>';
                 echo '<div class="gmenu"><p>' . $lng_pass['change_password_conf'] . '</p></div>';
             } else {
@@ -139,4 +163,3 @@ switch ($act) {
 }
 
 require('../incfiles/end.php');
-?>
