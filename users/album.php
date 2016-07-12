@@ -46,6 +46,9 @@ if (!$user) {
     exit;
 }
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 /*
 -----------------------------------------------------------------
 Функция голосований за фотографии
@@ -53,24 +56,26 @@ if (!$user) {
 */
 function vote_photo($arg = null)
 {
-    global $lng, $datauser, $user_id, $ban;
+    global $lng, $datauser, $user_id, $ban, $db;
 
     if ($arg) {
         $rating = $arg['vote_plus'] - $arg['vote_minus'];
-        if ($rating > 0)
+        if ($rating > 0) {
             $color = 'C0FFC0';
-        elseif ($rating < 0)
+        } elseif ($rating < 0) {
             $color = 'F196A8';
-        else
+        } else {
             $color = 'CCC';
+        }
         $out = '<div class="gray">' . $lng['rating'] . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
             '(' . $lng['vote_against'] . ': ' . $arg['vote_minus'] . ', ' . $lng['vote_for'] . ': ' . $arg['vote_plus'] . ')';
         if ($user_id != $arg['user_id'] && !$ban && $datauser['postforum'] > 10 && $datauser['total_on_site'] > 1200) {
             // Проверяем, имеет ли юзер право голоса
-            $req = mysql_query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
-            if (!mysql_num_rows($req))
+            $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
+            if ($req->rowCount()) {
                 $out .= '<br />' . $lng['vote'] . ': <a href="album.php?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | ' .
                     '<a href="album.php?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
+            }
         }
         $out .= '</div>';
 
@@ -85,7 +90,7 @@ function vote_photo($arg = null)
 Переключаем режимы работы
 -----------------------------------------------------------------
 */
-$array = array(
+$array = [
     'comments'       => 'includes/album',
     'delete'         => 'includes/album',
     'edit'           => 'includes/album',
@@ -100,37 +105,39 @@ $array = array(
     'sort'           => 'includes/album',
     'top'            => 'includes/album',
     'users'          => 'includes/album',
-    'vote'           => 'includes/album'
-);
+    'vote'           => 'includes/album',
+];
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
     require('../incfiles/head.php');
-    $albumcount = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`"), 0);
-    $total_mans = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`)
+    $albumcount = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`")->fetchColumn();
+    $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
       WHERE `users`.`sex` = 'm'
-    "), 0);
-    $total_womans = mysql_result(mysql_query("SELECT COUNT(DISTINCT `user_id`)
+    ")->fetchColumn();
+    $total_womans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
       WHERE `users`.`sex` = 'zh'
-    "), 0);
-    $newcount = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'"), 0);
+    ")->fetchColumn();
+    $newcount = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
         '<div class="gmenu"><p>' .
-        functions::image('users.png', array('width' => 16, 'height' => 16)) . '<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
-        functions::image('talk.gif', array('width' => 16, 'height' => 16)) . '<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
+        functions::image('users.png', ['width' => 16, 'height' => 16]) . '<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
+        functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16" class="left" />&#160;' . $lng['albums'] . '</h3><ul>' .
         '<li><a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a> (' . $total_mans . ')</li>' .
         '<li><a href="album.php?act=users&amp;mod=girls">' . $lng['womans'] . '</a> (' . $total_womans . ')</li>';
+
     if ($user_id) {
         echo '<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
     }
+
     echo '</ul></p>' .
         '<p><h3>' . functions::image('rate.gif') . $lng['rating'] . '</h3><ul>' .
         '<li><a href="album.php?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
@@ -143,4 +150,3 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . $lng['users'] . '</a></div>';
 }
 require('../incfiles/end.php');
-?>
