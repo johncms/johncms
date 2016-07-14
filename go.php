@@ -51,16 +51,16 @@ if (isset($_GET['lng'])) {
         require('incfiles/end.php');
     }
 } elseif ($id) {
-    /*
-    -----------------------------------------------------------------
-    Редирект по рекламной ссылке
-    -----------------------------------------------------------------
-    */
-    $req = mysql_query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
+    // Редирект по рекламной ссылке
+    $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
+
+    if ($req->rowCount()) {
+        $res = $req->fetch();
         $count_link = $res['count'] + 1;
-        mysql_query("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
+        $db->exec("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
         header('Location: ' . $res['link']);
     } else {
         header("Location: http://johncms.com/index.php?act=404");
