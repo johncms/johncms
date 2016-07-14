@@ -1,24 +1,11 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Загрузка выбранного файла и обработка счетчика скачиваний
------------------------------------------------------------------
-*/
+// Загрузка выбранного файла и обработка счетчика скачиваний
 $error = array ();
 $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
 

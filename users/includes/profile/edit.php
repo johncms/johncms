@@ -5,11 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['profile_edit'];
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Проверяем права доступа для редактирования Профиля
------------------------------------------------------------------
-*/
+// Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
     echo functions::display_error($lng_profile['error_rights']);
     require('../incfiles/end.php');
@@ -19,11 +15,7 @@ if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Сброс настроек
------------------------------------------------------------------
-*/
+// Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . $lng['settings_default'] . '<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></p></div>';
@@ -34,28 +26,16 @@ if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
 echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
 
 if (isset($_GET['delavatar'])) {
-    /*
-    -----------------------------------------------------------------
-    Удаляем аватар
-    -----------------------------------------------------------------
-    */
+    // Удаляем аватар
     @unlink('../files/users/avatar/' . $user['id'] . '.png');
     echo '<div class="rmenu">' . $lng_profile['avatar_deleted'] . '</div>';
 } elseif (isset($_GET['delphoto'])) {
-    /*
-    -----------------------------------------------------------------
-    Удаляем фото
-    -----------------------------------------------------------------
-    */
+    // Удаляем фото
     @unlink('../files/users/photo/' . $user['id'] . '.jpg');
     @unlink('../files/users/photo/' . $user['id'] . '_small.jpg');
     echo '<div class="rmenu">' . $lng_profile['photo_deleted'] . '</div>';
 } elseif (isset($_POST['submit'])) {
-    /*
-    -----------------------------------------------------------------
-    Принимаем данные из формы, проверяем и записываем в базу
-    -----------------------------------------------------------------
-    */
+    // Принимаем данные из формы, проверяем и записываем в базу
     $error = [];
     $user['imname'] = isset($_POST['imname']) ? functions::check(mb_substr($_POST['imname'], 0, 25)) : '';
     $user['live'] = isset($_POST['live']) ? functions::check(mb_substr($_POST['live'], 0, 50)) : '';
@@ -167,11 +147,7 @@ if (isset($_GET['delavatar'])) {
     exit;
 }
 
-/*
------------------------------------------------------------------
-Форма редактирования анкеты пользователя
------------------------------------------------------------------
-*/
+// Форма редактирования анкеты пользователя
 echo '<form action="profile.php?act=edit&amp;user=' . $user['id'] . '" method="post">' .
     '<div class="gmenu"><p>' .
     $lng['login_name'] . ': <b>' . $user['name_lat'] . '</b><br />';

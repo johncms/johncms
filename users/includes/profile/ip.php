@@ -5,22 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = htmlspecialchars($user['name']) . ': ' . $lng['ip_history'];
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Проверяем права доступа
------------------------------------------------------------------
-*/
+// Проверяем права доступа
 if (!$rights && $user_id != $user['id']) {
     echo functions::display_error($lng['access_forbidden']);
     require('../incfiles/end.php');
     exit;
 }
 
-/*
------------------------------------------------------------------
-История IP адресов
------------------------------------------------------------------
-*/
+// История IP адресов
 echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['ip_history'] . '</div>';
 echo '<div class="user"><p>';
 $arg = array (

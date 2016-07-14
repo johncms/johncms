@@ -1,19 +1,8 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 //TODO: Поставить настраиваемый по вызову (через ссылку) размер изображений
-function format($name) {
+function format($name)
+{
     $f1 = strrpos($name, ".");
     $f2 = substr($name, $f1 + 1, 999);
     $fname = strtolower($f2);
@@ -22,14 +11,16 @@ function format($name) {
 
 $u = isset($_GET['u']) ? abs(intval($_GET['u'])) : NULL;
 $file = isset($_GET['f']) ? htmlspecialchars(urldecode($_GET['f'])) : NULL;
+
 if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
     $att_ext = strtolower(format('../files/users/album/' . $u . '/' . $file));
-    $pic_ext = array (
+    $pic_ext = array(
         'gif',
         'jpg',
         'jpeg',
         'png'
     );
+
     if (in_array($att_ext, $pic_ext)) {
         $sizs = GetImageSize('../files/users/album/' . $u . '/' . $file);
         $razm = 230;
@@ -37,6 +28,7 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         $height = $sizs[1];
         $x_ratio = $razm / $width;
         $y_ratio = $razm / $height;
+
         if (($width <= $razm) && ($height <= $razm)) {
             $tn_width = $width;
             $tn_height = $height;
@@ -47,6 +39,7 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
             $tn_width = ceil($y_ratio * $width);
             $tn_height = $razm;
         }
+
         switch ($att_ext) {
             case "gif":
                 $im = ImageCreateFromGIF('../files/users/album/' . $u . '/' . $file);
@@ -64,6 +57,7 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
                 $im = ImageCreateFromPNG('../files/users/album/' . $u . '/' . $file);
                 break;
         }
+
         $im1 = imagecreatetruecolor($tn_width, $tn_height);
         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
         // Передача изображения в Браузер
@@ -77,5 +71,3 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         ob_end_flush();
     }
 }
-
-?>

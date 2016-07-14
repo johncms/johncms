@@ -1,24 +1,11 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $headmod = 'office';
 $textl = $lng_profile['my_office'];
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Проверяем права доступа
------------------------------------------------------------------
-*/
+// Проверяем права доступа
 if ($user['id'] != $user_id) {
     echo functions::display_error($lng['access_forbidden']);
     require('../incfiles/end.php');
@@ -28,32 +15,26 @@ if ($user['id'] != $user_id) {
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Личный кабинет пользователя
------------------------------------------------------------------
-*/
-
+// Личный кабинет пользователя
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();
 $total_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='1'")->fetchColumn();
 $new_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0'")->fetchColumn();
 $online_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id` WHERE `cms_contact`.`user_id`='$user_id' AND `cms_contact`.`type`='2' AND `cms_contact`.`friends`='1' AND `lastdate` > " . (time() - 300))->fetchColumn();
+
 echo '' .
     '<div class="gmenu"><p><h3>' . $lng_profile['my_actives'] . '</h3>' .
     '<div>' . functions::image('contacts.png') . '<a href="profile.php">' . $lng_profile['my_profile'] . '</a></div>' .
     '<div>' . functions::image('rate.gif') . '<a href="profile.php?act=stat">' . $lng['statistics'] . '</a></div>' .
     '<div>' . functions::image('photo.gif') . '<a href="album.php?act=list">' . $lng['photo_album'] . '</a>&#160;(' . $total_photo . ')</div>' .
     '<div>' . functions::image('guestbook.gif') . '<a href="profile.php?act=guestbook">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
+
 if ($rights >= 1) {
     $guest = counters::guestbook(2);
     echo '<div>' . functions::image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . $lng['admin_club'] . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
 echo '</p></div>';
-/*
------------------------------------------------------------------
-Блок почты
------------------------------------------------------------------
-*/
+
+// Блок почты
 echo '<div class="list2"><p><h3>' . $lng_profile['my_mail'] . '</h3>';
 
 //Входящие сообщения

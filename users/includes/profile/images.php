@@ -15,11 +15,7 @@ if (($user_id != $user['id'] && $rights < 7)
 }
 switch ($mod) {
     case 'avatar':
-        /*
-        -----------------------------------------------------------------
-        Выгружаем аватар
-        -----------------------------------------------------------------
-        */
+        // Выгружаем аватар
         echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_avatar'] . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);

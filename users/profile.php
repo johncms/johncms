@@ -1,24 +1,11 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 define('_IN_JOHNCMS', 1);
 
 require('../incfiles/core.php');
 $lng_profile = core::load_lng('profile');
 
-/*
------------------------------------------------------------------
-Закрываем от неавторизованных юзеров
------------------------------------------------------------------
-*/
+// Закрываем от неавторизованных юзеров
 if (!$user_id) {
     require('../incfiles/head.php');
     echo functions::display_error($lng['access_guest_forbidden']);
@@ -26,11 +13,7 @@ if (!$user_id) {
     exit;
 }
 
-/*
------------------------------------------------------------------
-Получаем данные пользователя
------------------------------------------------------------------
-*/
+// Получаем данные пользователя
 $user = functions::get_user($user);
 if (!$user) {
     require('../incfiles/head.php');
@@ -39,11 +22,7 @@ if (!$user) {
     exit;
 }
 
-/*
------------------------------------------------------------------
-Переключаем режимы работы
------------------------------------------------------------------
-*/
+// Переключаем режимы работы
 $array = array(
     'activity'  => 'includes/profile',
     'ban'       => 'includes/profile',
@@ -61,17 +40,14 @@ $array = array(
     'friends'   => 'includes/profile'
 );
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
+
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    /*
-    -----------------------------------------------------------------
-    Анкета пользователя
-    -----------------------------------------------------------------
-    */
+    // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
     $textl = $lng['profile'] . ': ' . htmlspecialchars($user['name']);
     require('../incfiles/head.php');

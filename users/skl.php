@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 define('_IN_JOHNCMS', 1);
 
 require('../incfiles/core.php');
@@ -32,11 +23,7 @@ function passgen($length)
 
 switch ($act) {
     case 'sent':
-        /*
-        -----------------------------------------------------------------
-        Отправляем E-mail с инструкциями по восстановлению пароля
-        -----------------------------------------------------------------
-        */
+        // Отправляем E-mail с инструкциями по восстановлению пароля
         $nick = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower($_POST['nick'])) : '';
         $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
@@ -93,11 +80,7 @@ switch ($act) {
         break;
 
     case 'set':
-        /*
-        -----------------------------------------------------------------
-        Устанавливаем новый пароль
-        -----------------------------------------------------------------
-        */
+        // Устанавливаем новый пароль
         $code = isset($_GET['code']) ? trim($_GET['code']) : '';
         $error = false;
 
@@ -146,11 +129,7 @@ switch ($act) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        Форма для восстановления пароля
-        -----------------------------------------------------------------
-        */
+        // Форма для восстановления пароля
         echo '<div class="phdr"><b>' . $lng_pass['password_restore'] . '</b></div>';
         echo '<div class="menu"><form action="skl.php?act=sent" method="post">';
         echo '<p>' . $lng_pass['your_login'] . ':<br/><input type="text" name="nick" /><br/>';

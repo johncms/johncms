@@ -9,11 +9,7 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Показываем список Online
------------------------------------------------------------------
-*/
+// Показываем список Online
 $menu[] = !$mod ? '<b>' . $lng['users'] . '</b>' : '<a href="index.php?act=online">' . $lng['users'] . '</a>';
 $menu[] = $mod == 'history' ? '<b>' . $lng['history'] . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . $lng['history'] . '</a> ';
 if (core::$user_rights) {

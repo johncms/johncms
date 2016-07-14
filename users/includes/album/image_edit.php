@@ -1,23 +1,10 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Редактировать картинку
------------------------------------------------------------------
-*/
+// Редактировать картинку
 if ($img && $user['id'] == $user_id || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);

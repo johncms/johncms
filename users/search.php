@@ -7,11 +7,7 @@ require('../incfiles/core.php');
 $textl = $lng['search_user'];
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Принимаем данные, выводим форму поиска
------------------------------------------------------------------
-*/
+// Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
@@ -22,11 +18,7 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a>
     '<input type="submit" value="' . $lng['search'] . '" name="submit" />' .
     '</p></div></form>';
 
-/*
------------------------------------------------------------------
-Проверям на ошибки
------------------------------------------------------------------
-*/
+// Проверям на ошибки
 $error = [];
 
 if (!empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
@@ -41,11 +33,7 @@ if ($search && !$error) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    /*
-    -----------------------------------------------------------------
-    Выводим результаты поиска
-    -----------------------------------------------------------------
-    */
+    // Выводим результаты поиска
     $search_db = functions::rus_lat(mb_strtolower($search));
     $search_db = strtr($search_db, [
         '_' => '\\_',
@@ -88,6 +76,7 @@ if ($search && !$error) {
     }
     echo '<div class="phdr"><small>' . $lng['search_nick_help'] . '</small></div>';
 }
+
 echo '<p>' . ($search && !$error ? '<a href="search.php">' . $lng['search_new'] . '</a><br />' : '') .
     '<a href="index.php">' . $lng['back'] . '</a></p>';
 

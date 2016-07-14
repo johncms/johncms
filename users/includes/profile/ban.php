@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'userban';
@@ -206,11 +197,7 @@ switch ($mod) {
         break;
 
     case 'cancel':
-        /*
-        -----------------------------------------------------------------
-        Разбаниваем пользователя (с сохранением истории)
-        -----------------------------------------------------------------
-        */
+        // Разбаниваем пользователя (с сохранением истории)
         if (!$ban || $user['id'] == $user_id || $rights < 7) {
             echo functions::display_error($lng['error_wrong_data']);
         } else {
@@ -248,11 +235,7 @@ switch ($mod) {
         break;
 
     case 'delete':
-        /*
-        -----------------------------------------------------------------
-        Удаляем бан (с удалением записи из истории)
-        -----------------------------------------------------------------
-        */
+        // Удаляем бан (с удалением записи из истории)
         if (!$ban || $rights < 9) {
             echo functions::display_error($lng['error_wrong_data']);
         } else {
@@ -285,11 +268,7 @@ switch ($mod) {
         break;
 
     case 'delhist':
-        /*
-        -----------------------------------------------------------------
-        Очищаем историю нарушений юзера
-        -----------------------------------------------------------------
-        */
+        // Очищаем историю нарушений юзера
         if ($rights == 9) {
             echo '<div class="phdr"><b>' . $lng_ban['infringements_history'] . '</b></div>' .
                 '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
@@ -316,11 +295,7 @@ switch ($mod) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        История нарушений
-        -----------------------------------------------------------------
-        */
+        // История нарушений
         echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_ban['infringements_history'] . '</div>';
         // Меню
         $menu = [];

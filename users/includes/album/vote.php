@@ -1,18 +1,8 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @license     http://johncms.com/license/
- * @author      http://johncms.com/about/
- * @version     VERSION.txt (see attached file)
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/**
- * Голосуем за фотографию
- */
+// Голосуем за фотографию
 if (!$img) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
