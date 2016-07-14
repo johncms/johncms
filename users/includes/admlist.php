@@ -9,11 +9,7 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Выводим список администрации
------------------------------------------------------------------
-*/
+// Выводим список администрации
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['administration'] . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= 1")->fetchColumn();
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT $start, $kmess");

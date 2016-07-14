@@ -9,11 +9,7 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Функция отображения списков
------------------------------------------------------------------
-*/
+// Функция отображения списков
 function get_top($order = 'postforum') {
     global $db;
     $req = $db->query("SELECT * FROM `users` WHERE `$order` > 0 ORDER BY `$order` DESC LIMIT 9");
@@ -33,11 +29,7 @@ function get_top($order = 'postforum') {
     }
 }
 
-/*
------------------------------------------------------------------
-Меню выбора
------------------------------------------------------------------
-*/
+// Меню выбора
 $menu = array (
     (!$mod ? '<b>' . $lng['forum'] . '</b>' : '<a href="index.php?act=top">' . $lng['forum'] . '</a>'),
     ($mod == 'guest' ? '<b>' . $lng['guestbook'] . '</b>' : '<a href="index.php?act=top&amp;mod=guest">' . $lng['guestbook'] . '</a>'),
@@ -47,11 +39,7 @@ if ($set_karma['on'])
     $menu[] = $mod == 'karma' ? '<b>' . $lng['karma'] . '</b>' : '<a href="index.php?act=top&amp;mod=karma">' . $lng['karma'] . '</a>';
 switch ($mod) {
     case 'guest':
-        /*
-        -----------------------------------------------------------------
-        Топ Гостевой
-        -----------------------------------------------------------------
-        */
+        // Топ Гостевой
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['top_guest'] . '</div>';
         echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         echo get_top('postguest');
@@ -59,11 +47,7 @@ switch ($mod) {
         break;
 
     case 'comm':
-        /*
-        -----------------------------------------------------------------
-        Топ комментариев
-        -----------------------------------------------------------------
-        */
+        // Топ комментариев
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['top_comm'] . '</div>';
         echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         echo get_top('komm');
@@ -71,11 +55,7 @@ switch ($mod) {
         break;
 
     case 'karma':
-        /*
-        -----------------------------------------------------------------
-        Топ Кармы
-        -----------------------------------------------------------------
-        */
+        // Топ Кармы
         if ($set_karma['on']) {
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['top_karma'] . '</div>';
             echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
@@ -95,11 +75,7 @@ switch ($mod) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        Топ Форума
-        -----------------------------------------------------------------
-        */
+        // Топ Форума
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['top_forum'] . '</div>';
         echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         echo get_top('postforum');

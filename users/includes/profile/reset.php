@@ -6,11 +6,7 @@ if ($rights >= 7 && $rights > $user['rights']) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    /*
-    -----------------------------------------------------------------
-    Сброс настроек пользователя
-    -----------------------------------------------------------------
-    */
+    // Сброс настроек пользователя
     $textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['profile_edit'];
     require('../incfiles/head.php');
 

@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
@@ -24,7 +15,7 @@ if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
     exit;
 }
 
-$captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : NULL;
+$captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : null;
 $reg_nick = isset($_POST['nick']) ? trim($_POST['nick']) : '';
 $lat_nick = functions::rus_lat(mb_strtolower($reg_nick));
 $reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
@@ -33,9 +24,10 @@ $reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
 $reg_sex = isset($_POST['sex']) ? functions::check(mb_substr(trim($_POST['sex']), 0, 2)) : '';
 
 echo '<div class="phdr"><b>' . $lng['registration'] . '</b></div>';
+
 if (isset($_POST['submit'])) {
     // Принимаем переменные
-    $error = array();
+    $error = [];
 
     // Проверка Логина
     if (empty($reg_nick)) {
@@ -85,6 +77,7 @@ if (isset($_POST['submit'])) {
             $error['login'][] = $lng_reg['error_nick_occupied'];
         }
     }
+
     if (empty($error)) {
         $preg = $set['mod_reg'] > 1 ? 1 : 0;
         mysql_query("INSERT INTO `users` SET
@@ -117,8 +110,8 @@ if (isset($_POST['submit'])) {
         }
 
         if ($set_mail['message_include']) {
-            $array = array('{LOGIN}', '{TIME}');
-            $array_replace = array($reg_nick, '{TIME=' . time() . '}');
+            $array = ['{LOGIN}', '{TIME}'];
+            $array_replace = [$reg_nick, '{TIME=' . time() . '}'];
 
             if (empty($set['them_message'])) {
                 $set['them_message'] = $lng_mail['them_message'];
@@ -156,19 +149,20 @@ if (isset($_POST['submit'])) {
     }
 }
 
-/*
------------------------------------------------------------------
-Форма регистрации
------------------------------------------------------------------
-*/
-if ($set['mod_reg'] == 1) echo '<div class="rmenu"><p>' . $lng_reg['moderation_warning'] . '</p></div>';
+// Форма регистрации
+if ($set['mod_reg'] == 1) {
+    echo '<div class="rmenu"><p>' . $lng_reg['moderation_warning'] . '</p></div>';
+}
+
 echo '<form action="registration.php" method="post"><div class="gmenu">' .
     '<p><h3>' . $lng_reg['login'] . '</h3>' .
-    (isset($error['login']) ? '<span class="red"><small>' . implode('<br />', $error['login']) . '</small></span><br />' : '') .
+    (isset($error['login']) ? '<span class="red"><small>' . implode('<br />',
+            $error['login']) . '</small></span><br />' : '') .
     '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
     '<small>' . $lng_reg['login_help'] . '</small></p>' .
     '<p><h3>' . $lng_reg['password'] . '</h3>' .
-    (isset($error['password']) ? '<span class="red"><small>' . implode('<br />', $error['password']) . '</small></span><br />' : '') .
+    (isset($error['password']) ? '<span class="red"><small>' . implode('<br />',
+            $error['password']) . '</small></span><br />' : '') .
     '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
     '<small>' . $lng_reg['password_help'] . '</small></p>' .
     '<p><h3>' . $lng_reg['sex'] . '</h3>' .

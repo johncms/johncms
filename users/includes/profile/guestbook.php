@@ -1,17 +1,5 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = $lng['profile'] . ' | ' . $lng['guestbook'];
@@ -23,11 +11,7 @@ require('../incfiles/head.php');
 $context_top = '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['guestbook'] . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, array ('iphide' => 1,)) . '</p></div>';
 
-/*
------------------------------------------------------------------
-Параметры Гостевой
------------------------------------------------------------------
-*/
+// Параметры Гостевой
 $arg = array (
     'comments_table' => 'cms_users_guestbook', // Таблица Гостевой
     'object_table' => 'users',                 // Таблица комментируемых объектов
@@ -41,18 +25,10 @@ $arg = array (
     'context_top' => $context_top              // Выводится вверху списка
 );
 
-/*
------------------------------------------------------------------
-Показываем комментарии
------------------------------------------------------------------
-*/
+// Показываем комментарии
 $comm = new comments($arg);
 
-/*
------------------------------------------------------------------
-Обновляем счетчик непрочитанного
------------------------------------------------------------------
-*/
+// Обновляем счетчик непрочитанного
 if(!$mod && $user['id'] == $user_id && $user['comm_count'] != $user['comm_old']){
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);

@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $lng_karma = core::load_lng('karma');
 $textl = $lng['karma'];
@@ -21,11 +12,7 @@ if ($set_karma['on']) {
 
     switch ($mod) {
         case 'vote':
-            /*
-            -----------------------------------------------------------------
-            Отдаем голос за пользователя
-            -----------------------------------------------------------------
-            */
+            // Отдаем голос за пользователя
             if (!$datauser['karma_off'] && !$ban) {
                 $error = [];
 
@@ -117,11 +104,7 @@ if ($set_karma['on']) {
             break;
 
         case 'delete':
-            /*
-            -----------------------------------------------------------------
-            Удаляем отдельный голос
-            -----------------------------------------------------------------
-            */
+            // Удаляем отдельный голос
             if ($rights == 9) {
                 $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : null;
                 $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user['id'] . "'");
@@ -151,11 +134,7 @@ if ($set_karma['on']) {
             break;
 
         case 'clean':
-            /*
-            -----------------------------------------------------------------
-            Очищаем все голоса за пользователя
-            -----------------------------------------------------------------
-            */
+            // Очищаем все голоса за пользователя
             if ($rights == 9) {
                 if (isset($_GET['yes'])) {
                     $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = " . $user['id']);
@@ -172,11 +151,7 @@ if ($set_karma['on']) {
             break;
 
         case 'new':
-            /*
-            -----------------------------------------------------------------
-            Список новых отзывов (комментариев)
-            -----------------------------------------------------------------
-            */
+            // Список новых отзывов (комментариев)
             echo '<div class="phdr"><a href="profile.php?act=karma&amp;type=2"><b>' . $lng['karma'] . '</b></a> | ' . $lng_karma['new_responses'] . '</div>';
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
 
@@ -210,11 +185,7 @@ if ($set_karma['on']) {
             break;
 
         default:
-            /*
-            -----------------------------------------------------------------
-            Главная страница Кармы, список отзывов
-            -----------------------------------------------------------------
-            */
+            // Главная страница Кармы, список отзывов
             $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
             $menu = [
                 ($type == 2 ? '<b>' . $lng_karma['all'] . '</b>' : '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=2">' . $lng_karma['all'] . '</a>'),

@@ -9,11 +9,7 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-/*
------------------------------------------------------------------
-Выводим список именинников
------------------------------------------------------------------
-*/
+// Выводим список именинников
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['birthday_men'] . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
 

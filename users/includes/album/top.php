@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
@@ -16,16 +7,13 @@ $db = App::getContainer()->get(PDO::class);
 
 switch ($mod) {
     case 'my_new_comm':
-        /*
-        -----------------------------------------------------------------
-        Непрочитанные комментарии в личных альбомах
-        -----------------------------------------------------------------
-        */
+        // Непрочитанные комментарии в личных альбомах
         if (!core::$user_id || core::$user_id != $user['id']) {
             echo functions::display_error($lng['wrong_data']);
             require('../incfiles/end.php');
             exit;
         }
+
         $title = $lng_profile['unread_comments'];
         $select = "";
         $join = "INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`";
@@ -35,11 +23,7 @@ switch ($mod) {
         break;
 
     case 'last_comm':
-        /*
-        -----------------------------------------------------------------
-        Последние комментарии по всем альбомам
-        -----------------------------------------------------------------
-        */
+        // Последние комментарии по всем альбомам
         $total = $db->query("SELECT COUNT(DISTINCT `sub_id`) FROM `cms_album_comments` WHERE `time` >" . (time() - 86400))->fetchColumn();
         $title = $lng_profile['new_comments'];
         $select = "";
@@ -50,11 +34,7 @@ switch ($mod) {
         break;
 
     case 'views':
-        /*
-        -----------------------------------------------------------------
-        ТОП просмотров
-        -----------------------------------------------------------------
-        */
+        // ТОП просмотров
         $title = $lng_profile['top_views'];
         $select = "";
         $join = "";
@@ -64,11 +44,7 @@ switch ($mod) {
         break;
 
     case 'downloads':
-        /*
-        -----------------------------------------------------------------
-        ТОП скачиваний
-        -----------------------------------------------------------------
-        */
+        // ТОП скачиваний
         $title = $lng_profile['top_downloads'];
         $select = "";
         $join = "";
@@ -78,11 +54,7 @@ switch ($mod) {
         break;
 
     case 'comments':
-        /*
-        -----------------------------------------------------------------
-        ТОП комментариев
-        -----------------------------------------------------------------
-        */
+        // ТОП комментариев
         $title = $lng_profile['top_comments'];
         $select = "";
         $join = "";
@@ -92,11 +64,7 @@ switch ($mod) {
         break;
 
     case 'votes':
-        /*
-        -----------------------------------------------------------------
-        ТОП положительных голосов
-        -----------------------------------------------------------------
-        */
+        // ТОП положительных голосов
         $title = $lng_profile['top_votes'];
         $select = ", (`vote_plus` - `vote_minus`) AS `rating`";
         $join = "";
@@ -106,11 +74,7 @@ switch ($mod) {
         break;
 
     case 'trash':
-        /*
-        -----------------------------------------------------------------
-        ТОП отрицательных голосов
-        -----------------------------------------------------------------
-        */
+        // ТОП отрицательных голосов
         $title = $lng_profile['top_trash'];
         $select = ", (`vote_plus` - `vote_minus`) AS `rating`";
         $join = "";
@@ -120,11 +84,7 @@ switch ($mod) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        Новые изображения
-        -----------------------------------------------------------------
-        */
+        // Новые изображения
         $title = $lng_profile['new_photo'];
         $select = "";
         $join = "";
@@ -133,11 +93,7 @@ switch ($mod) {
         $link = '';
 }
 
-/*
------------------------------------------------------------------
-Показываем список фотографий, отсортированных по рейтингу
------------------------------------------------------------------
-*/
+// Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
 require('../incfiles/head.php');
 echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';

@@ -2,11 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/*
------------------------------------------------------------------
-История активности
------------------------------------------------------------------
-*/
+// История активности
 $textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['activity'];
 require('../incfiles/head.php');
 
@@ -24,11 +20,7 @@ echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
 
 switch ($mod) {
     case 'comments':
-        /*
-        -----------------------------------------------------------------
-        Список сообщений в Гостевой
-        -----------------------------------------------------------------
-        */
+        // Список сообщений в Гостевой
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
         echo '<div class="phdr"><b>' . $lng['comments'] . '</b></div>';
 
@@ -52,11 +44,7 @@ switch ($mod) {
         break;
 
     case 'topic':
-        /*
-        -----------------------------------------------------------------
-        Список тем Форума
-        -----------------------------------------------------------------
-        */
+        // Список тем Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
         echo '<div class="phdr"><b>' . $lng['forum'] . '</b>: ' . $lng['themes'] . '</div>';
 
@@ -91,11 +79,7 @@ switch ($mod) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        Список постов Форума
-        -----------------------------------------------------------------
-        */
+        // Список постов Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
         echo '<div class="phdr"><b>' . $lng['forum'] . '</b>: ' . $lng['messages'] . '</div>';
 

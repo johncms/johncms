@@ -1,23 +1,10 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../incfiles/head.php');
 
-/*
------------------------------------------------------------------
-Выгрузка фотографии
------------------------------------------------------------------
-*/
+// Выгрузка фотографии
 if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);

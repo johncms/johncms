@@ -1,17 +1,5 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
@@ -19,11 +7,7 @@ $db = App::getContainer()->get(PDO::class);
 
 switch ($mod) {
     case 'up':
-        /*
-        -----------------------------------------------------------------
-        Передвигаем альбом на позицию вверх
-        -----------------------------------------------------------------
-        */
+        // Передвигаем альбом на позицию вверх
         if ($al && $user['id'] == $user_id || $rights >= 7) {
             $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
             if ($req->rowCount()) {
@@ -42,11 +26,7 @@ switch ($mod) {
         break;
 
     case 'down':
-        /*
-        -----------------------------------------------------------------
-        Передвигаем альбом на позицию вниз
-        -----------------------------------------------------------------
-        */
+        // Передвигаем альбом на позицию вниз
         if ($al && $user['id'] == $user_id || $rights >= 7) {
             $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
             if ($req->rowCount()) {
