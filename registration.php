@@ -21,11 +21,14 @@ $lat_nick = functions::rus_lat(mb_strtolower($reg_nick));
 $reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
 $reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
 $reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
-$reg_sex = isset($_POST['sex']) ? functions::check(mb_substr(trim($_POST['sex']), 0, 2)) : '';
+$reg_sex = isset($_POST['sex']) ? trim($_POST['sex']) : '';
 
 echo '<div class="phdr"><b>' . $lng['registration'] . '</b></div>';
 
 if (isset($_POST['submit'])) {
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
     // Принимаем переменные
     $error = [];
 
@@ -72,35 +75,54 @@ if (isset($_POST['submit'])) {
         $reg_name = functions::check(mb_substr($reg_name, 0, 20));
         $reg_about = functions::check(mb_substr($reg_about, 0, 500));
         // Проверка, занят ли ник
-        $req = mysql_query("SELECT * FROM `users` WHERE `name_lat`='" . mysql_real_escape_string($lat_nick) . "'");
-        if (mysql_num_rows($req) != 0) {
+        $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ?');
+        $stmt->execute([$lat_nick]);
+
+        if ($stmt->rowCount()) {
             $error['login'][] = $lng_reg['error_nick_occupied'];
         }
     }
 
     if (empty($error)) {
         $preg = $set['mod_reg'] > 1 ? 1 : 0;
-        mysql_query("INSERT INTO `users` SET
-            `name` = '" . mysql_real_escape_string($reg_nick) . "',
-            `name_lat` = '" . mysql_real_escape_string($lat_nick) . "',
-            `password` = '" . mysql_real_escape_string($pass) . "',
-            `imname` = '$reg_name',
-            `about` = '$reg_about',
-            `sex` = '$reg_sex',
-            `rights` = '0',
-            `ip` = '" . core::$ip . "',
-            `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `browser` = '" . mysql_real_escape_string($agn) . "',
-            `datereg` = '" . time() . "',
-            `lastdate` = '" . time() . "',
-            `sestime` = '" . time() . "',
-            `preg` = '$preg',
-            `set_user` = '',
-            `set_forum` = '',
-            `set_mail` = '',
-            `smileys` = ''
-        ") or exit(__LINE__ . ': ' . mysql_error());
-        $usid = mysql_insert_id();
+
+        $db->prepare('
+          INSERT INTO `users` SET
+          `name` = ?,
+          `name_lat` = ?,
+          `password` = ?,
+          `imname` = ?,
+          `about` = ?,
+          `sex` = ?,
+          `rights` = 0,
+          `ip` = ?,
+          `ip_via_proxy` = ?,
+          `browser` = ?,
+          `datereg` = ?,
+          `lastdate` = ?,
+          `sestime` = ?,
+          `preg` = ?,
+          `set_user` = \'\',
+          `set_forum` = \'\',
+          `set_mail` = \'\',
+          `smileys` = \'\'
+        ')->execute([
+            $reg_nick,
+            $lat_nick,
+            $pass,
+            $reg_name,
+            $reg_about,
+            $reg_sex,
+            core::$ip,
+            core::$ip_via_proxy,
+            $agn,
+            time(),
+            time(),
+            time(),
+            $preg,
+        ]);
+
+        $usid = $db->lastInsertId();
 
         // Отправка системного сообщения
         $set_mail = unserialize($set['setting_mail']);
@@ -123,14 +145,21 @@ if (isset($_POST['submit'])) {
 
             $theme = str_replace($array, $array_replace, $set['them_message']);
             $system = str_replace($array, $array_replace, $set['reg_message']);
-            mysql_query("INSERT INTO `cms_mail` SET
-			    `user_id` = '0',
-			    `from_id` = '" . $usid . "',
-			    `text` = '" . mysql_real_escape_string($system) . "',
-			    `time` = '" . time() . "',
-			    `sys` = '1',
-			    `them` = '" . mysql_real_escape_string($theme) . "'
-			");
+
+            $db->prepare('
+              INSERT INTO `cms_mail` SET
+              `user_id` = 0,
+              `from_id` = ?,
+              `text` = ?,
+              `time` = ?,
+              `sys` = 1,
+              `them` = ?
+            ')->execute([
+                $usid,
+                $system,
+                time(),
+                $theme,
+            ]);
         }
 
         echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>';
