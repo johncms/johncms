@@ -432,6 +432,7 @@ switch ($act) {
                 // Создаем Администратора
                 $stmt = $pdo->prepare("INSERT INTO `users` SET
                       `name`     = ?,
+                      `name_lat` = ?,
                       `password` = ?,
                       `sex` = 'm',
                       `datereg` = '" . time() . "',
@@ -450,6 +451,7 @@ switch ($act) {
                       ");
                 $stmt->execute([
                     $admin_user,
+                    mb_strtolower($admin_user),
                     md5(md5($admin_pass)),
                     $site_mail,
                     $site_url,
