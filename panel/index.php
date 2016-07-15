@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2007-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 @ini_set("max_execution_time", "600");
 define('_IN_JOHNCMS', 1);
 define('_IN_JOHNADM', 1);
@@ -26,7 +17,7 @@ if (core::$user_rights < 1) {
 $headmod = 'admin';
 $textl = $lng['admin_panel'];
 require('../incfiles/head.php');
-$array = array(
+$array = [
     'forum',
     'news',
     'ads',
@@ -49,13 +40,17 @@ $array = array(
     'usr',
     'usr_adm',
     'usr_clean',
-    'usr_del'
-);
+    'usr_del',
+];
+
 if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
     require('includes/' . $array[$key] . '.php');
 } else {
-    $regtotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'"), 0);
-    $bantotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'"), 0);
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+
+    $regtotal = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
+    $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['admin_panel'] . '</b></div>';
 
     /*
@@ -64,9 +59,13 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     -----------------------------------------------------------------
     */
     echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
-    if ($regtotal && core::$user_rights >= 6) echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
+
+    if ($regtotal && core::$user_rights >= 6) {
+        echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
+    }
+
     echo '<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
-        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
+        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn() . ')</li>' .
         ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
         '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' : '') .
@@ -75,20 +74,23 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         '<li><a href="../users/search.php">' . $lng['search_nick'] . '</a></li>' .
         '<li><a href="index.php?act=search_ip">' . $lng['ip_search'] . '</a></li>' .
         '</ul></p></div>';
-    if ($rights >= 7) {
 
+    if ($rights >= 7) {
         // Блок модулей
-        $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
+        $spam = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';")->fetchColumn();
+
         echo '<div class="gmenu"><p>';
         echo '<h3>' . $lng['modules'] . '</h3><ul>' .
             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
             '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li>' .
             '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>';
+
         if (core::$user_rights == 9) {
             echo '<br/><li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' .
                 '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' .
                 '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>';
         }
+
         echo '</ul></p></div>';
 
         // Блок системных настроек
