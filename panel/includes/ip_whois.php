@@ -1,18 +1,8 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
-
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | IP WHOIS</div>';
 
 function whoisQuery($whoisserver, $domain)
@@ -67,6 +57,7 @@ if ($ip) {
     }
 
     $res = "RESULTS FOUND: " . count($results);
+
     foreach($results as $whoisserver=>$result) {
         $res .= "\n\n-------------\nLookup results for " . $ip . " from " . $whoisserver . " server:\n\n" . $result;
     }
@@ -108,5 +99,6 @@ if ($ip) {
 } else {
     $ipwhois = $lng['error_wrong_data'];
 }
+
 echo '<div class="menu"><small>' . nl2br($ipwhois) . '</small></div>' .
     '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . $lng['back'] . '</a></div>';
