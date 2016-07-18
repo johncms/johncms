@@ -32,14 +32,14 @@ if ($req->rowCount()) {
 }
 
 // Библиотека
-$req = $db->query("select * from `lib` where `type`='bk' and `moder`='1' order by `time` desc LIMIT 15;");
+$req = $db->query("select * from `library_texts` where `premod`=1 limit 15;");
 
 if ($req->rowCount()) {
     while ($res = $req->fetch()) {
         echo '<item>' .
              '<title>Library: ' . htmlspecialchars($res['name']) . '</title>' .
              '<link>' . $set['homeurl'] . '/library/index.php?id=' . $res['id'] . '</link>' .
-             '<author>' . htmlspecialchars($res['avtor']) . '</author>' .
+             '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
              '<description>' . htmlspecialchars($res['announce']) .
              '</description>' .
              '<pubDate>' . date('r', $res['time']) . '</pubDate>' .
