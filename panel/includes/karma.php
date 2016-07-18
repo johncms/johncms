@@ -1,14 +1,5 @@
 <?php
 
-/**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
-
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
@@ -17,12 +8,15 @@ if ($rights < 7) {
     exit;
 }
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 if ($rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
-        mysql_query("TRUNCATE TABLE `karma_users`");
-        mysql_query("OPTIMIZE TABLE `karma_users`");
-        mysql_query("UPDATE `users` SET `karma`='0', `plus_minus`='0|0'");
-        mysql_query("OPTIMIZE TABLE `users`");
+        $db->query("TRUNCATE TABLE `karma_users`");
+        $db->query("OPTIMIZE TABLE `karma_users`");
+        $db->exec("UPDATE `users` SET `karma`='0', `plus_minus`='0|0'");
+        $db->query("OPTIMIZE TABLE `users`");
         echo '<div class="gmenu">' . $lng['karma_cleared'] . '</div>';
     } else {
         echo '<div class="rmenu"><p>' . $lng['karma_clear_confirmation'] . '<br/>' .
@@ -30,8 +24,10 @@ if ($rights == 9 && $do == 'clean') {
             '<a href="index.php?act=karma">' . $lng['cancel'] . '</a></p></div>';
     }
 }
+
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['karma'] . '</div>';
 $settings = unserialize($set['karma']);
+
 if (isset($_POST['submit'])) {
     $settings['karma_points'] = isset($_POST['karma_points']) ? abs(intval($_POST['karma_points'])) : 0;
     $settings['karma_time'] = isset($_POST['karma_time']) ? abs(intval($_POST['karma_time'])) : 0;
@@ -40,9 +36,10 @@ if (isset($_POST['submit'])) {
     $settings['on'] = isset($_POST['on']) ? 1 : 0;
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
     $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
-    mysql_query("UPDATE `cms_settings` SET `val` = '" . mysql_real_escape_string(serialize($settings)) . "' WHERE `key` = 'karma'");
+    $db->query("UPDATE `cms_settings` SET `val` = " . $db->quote(serialize($settings)) . " WHERE `key` = 'karma'");
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
+
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
 echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
     '<p><h3>' . $lng['karma_votes_per_day'] . '</h3>' .
@@ -58,4 +55,3 @@ echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
     '<p><input type="submit" value="' . $lng['save'] . '" name="submit" /></p></div>' .
     '</form><div class="phdr">' . ($rights == 9 ? '<a href="index.php?act=karma&amp;do=clean">' . $lng['karma_reset'] . '</a>' : '<br />') . '</div>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>
