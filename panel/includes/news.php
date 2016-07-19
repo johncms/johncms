@@ -1,14 +1,5 @@
 <?php
 
-/**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*/
-
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
@@ -16,13 +7,13 @@ if ($rights < 7) {
     header('Location: http://johncms.com/?err');
     exit;
 }
+
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['news_on_frontpage'] . '</div>';
 
-/*
------------------------------------------------------------------
-Настройки Новостей
------------------------------------------------------------------
-*/
+// Настройки Новостей
 if (!isset($set['news']) || isset($_GET['reset'])) {
     // Задаем настройки по умолчанию
     $settings = array (
@@ -35,10 +26,10 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
         'tags' => '1',
         'kom' => '1'
     );
-    @mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'news'");
-    mysql_query("INSERT INTO `cms_settings` SET
+    @$db->exec("DELETE FROM `cms_settings` WHERE `key` = 'news'");
+    $db->exec("INSERT INTO `cms_settings` SET
         `key` = 'news',
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+        `val` = " . $db->quote(serialize($settings)) . "
     ");
     echo '<div class="rmenu"><p>' . $lng['settings_default'] . '</p></div>';
 } elseif (isset($_POST['submit'])) {
@@ -51,8 +42,8 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
     $settings['smileys'] = isset($_POST['smileys']);
     $settings['tags'] = isset($_POST['tags']);
     $settings['kom'] = isset($_POST['kom']);
-    mysql_query("UPDATE `cms_settings` SET
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+    $db->exec("UPDATE `cms_settings` SET
+        `val` = " . $db->quote(serialize($settings)) . "
         WHERE `key` = 'news'
     ");
     echo '<div class="gmenu"><p>' . $lng['settings_saved'] . '</p></div>';
@@ -61,11 +52,7 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
     $settings = unserialize($set['news']);
 }
 
-/*
------------------------------------------------------------------
-Форма ввода настроек
------------------------------------------------------------------
-*/
+// Форма ввода настроек
 echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
     '<h3>' . $lng['apperance'] . '</h3>' .
     '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['heading_and_text'] . '<br />' .
@@ -87,4 +74,3 @@ echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
     '</div></form>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a><br />' .
     '<a href="../news/index.php">' . $lng['to_news'] . '</a></p>';
-?>
