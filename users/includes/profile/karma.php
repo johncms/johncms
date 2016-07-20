@@ -138,7 +138,7 @@ if ($set_karma['on']) {
             if ($rights == 9) {
                 if (isset($_GET['yes'])) {
                     $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = " . $user['id']);
-                    $db->exec('OPTIMIZE TABLE `karma_users`');
+                    $db->query('OPTIMIZE TABLE `karma_users`');
                     $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user['id']);
                     header('Location: profile.php?user=' . $user['id']);
                 } else {
