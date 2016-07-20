@@ -462,11 +462,7 @@ class core
             $this->db->exec("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
             $this->db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
             $this->db->exec("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
-
-            //TODO: при очистке возникаетошибка
-            // SQLSTATE[HY000]: General error: 2014 Cannot execute queries while other unbuffered queries are active
-            // D:\Vhosts\johncms\johncms\incfiles\classes\core.php:344
-            //$this->db->exec("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
+            $this->db->query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
         }
     }
 
