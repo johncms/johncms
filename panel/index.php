@@ -26,7 +26,7 @@ $array = [
     'languages',
     'settings',
     'sitemap',
-    'smileys',
+    'smilies',
     'access',
     'antispy',
     'httpaf',
@@ -98,7 +98,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '<h3>' . $lng['system'] . '</h3>' .
             '<ul>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
-            '<li><a href="index.php?act=smileys">' . $lng['refresh_smileys'] . '</a></li>' .
+            '<li><a href="index.php?act=smilies">' . $lng['refresh_smileys'] . '</a></li>' .
             (core::$user_rights == 9 ? '<li><a href="index.php?act=languages">' . $lng['language_settings'] . '</a></li>' : '') .
             '<li><a href="index.php?act=access">' . $lng['access_rights'] . '</a></li>' .
             '</ul>' .
