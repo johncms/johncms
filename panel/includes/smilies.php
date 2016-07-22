@@ -1,20 +1,11 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['smileys'] . '</div>';
 
-$ext = array('gif', 'jpg', 'jpeg', 'png'); // Список разрешенных расширений
-$smileys = array();
+$ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных расширений
+$smileys = [];
 
 // Обрабатываем простые смайлы
 foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'simply' . DIRECTORY_SEPARATOR . '*') as $var) {
