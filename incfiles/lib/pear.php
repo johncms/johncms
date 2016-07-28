@@ -2,16 +2,16 @@
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
-// Îôèöèàëüíûé ñàéò ñàéò ïðîåêòà:      http://johncms.com                     //
-// Äîïîëíèòåëüíûé ñàéò ïîääåðæêè:      http://gazenwagen.com                  //
+// ÃŽÃ´Ã¨Ã¶Ã¨Ã Ã«Ã¼Ã­Ã»Ã© Ã±Ã Ã©Ã² Ã±Ã Ã©Ã² Ã¯Ã°Ã®Ã¥ÃªÃ²Ã :      http://johncms.com                     //
+// Ã„Ã®Ã¯Ã®Ã«Ã­Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã»Ã© Ã±Ã Ã©Ã² Ã¯Ã®Ã¤Ã¤Ã¥Ã°Ã¦ÃªÃ¨:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Åâãåíèé Ðÿáèíèí aka john77          john77@gazenwagen.com                  //
-// Îëåã Êàñüÿíîâ aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Ã…Ã¢Ã£Ã¥Ã­Ã¨Ã© ÃÃ¿Ã¡Ã¨Ã­Ã¨Ã­ aka john77          john77@gazenwagen.com                  //
+// ÃŽÃ«Ã¥Ã£ ÃŠÃ Ã±Ã¼Ã¿Ã­Ã®Ã¢ aka AlkatraZ          alkatraz@gazenwagen.com                //
 //                                                                            //
-// Èíôîðìàöèþ î âåðñèÿõ ñìîòðèòå â ïðèëàãàåìîì ôàéëå version.txt              //
+// ÃˆÃ­Ã´Ã®Ã°Ã¬Ã Ã¶Ã¨Ã¾ Ã® Ã¢Ã¥Ã°Ã±Ã¨Ã¿Ãµ Ã±Ã¬Ã®Ã²Ã°Ã¨Ã²Ã¥ Ã¢ Ã¯Ã°Ã¨Ã«Ã Ã£Ã Ã¥Ã¬Ã®Ã¬ Ã´Ã Ã©Ã«Ã¥ version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
-// Áèáëèîòåêà PEAR  http://pear.php.net
+// ÃÃ¨Ã¡Ã«Ã¨Ã®Ã²Ã¥ÃªÃ  PEAR  http://pear.php.net
 */
 
 defined('_IN_JOHNCMS') or die('Error:restricted access');
@@ -107,7 +107,7 @@ class PEAR {
 
     function isError($data, $code = null) {
         if (is_a($data, 'PEAR_Error')) {
-            if (is_null($code)) {
+            if ($code === null) {
                 return true;
             }
             elseif (is_string($code)) {
@@ -466,7 +466,7 @@ class PEAR_Error {
             $this->callback = null;
         }
         if ($this->mode & PEAR_ERROR_PRINT) {
-            if (is_null($options) || is_int($options)) {
+            if (($options === null) || is_int($options)) {
                 $format = "%s";
             }
             else {
@@ -479,7 +479,7 @@ class PEAR_Error {
         }
         if ($this->mode & PEAR_ERROR_DIE) {
             $msg = $this->getMessage();
-            if (is_null($options) || is_int($options)) {
+            if (($options === null) || is_int($options)) {
                 $format = "%s";
                 if (substr($msg, - 1) != "\n") {
                     $msg .= "\n";

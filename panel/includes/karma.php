@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
     $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
     mysql_query("UPDATE `cms_settings` SET `val` = '" . mysql_real_escape_string(serialize($settings)) . "' WHERE `key` = 'karma'");
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
 }
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
 echo '<form action="index.php?act=karma" method="post"><div class="menu">' .

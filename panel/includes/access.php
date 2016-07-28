@@ -33,9 +33,12 @@ if (isset($_POST['submit'])) {
     mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['access']) ? intval($_POST['access']) : 0) . "', `key`='site_access'");
     $req = mysql_query("SELECT * FROM `cms_settings`");
     $set = array();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
+    while ($res = mysql_fetch_row($req))
+    {
+        $set[$res[0]] = $res[1];
+    }
     mysql_free_result($req);
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
 }
 
 $color = array('red', 'yelow', 'green', 'gray');

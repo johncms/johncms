@@ -45,6 +45,7 @@ switch ($mod) {
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
             mysql_query("UPDATE `users` SET `set_mail` = '" . mysql_real_escape_string(serialize($set_mail_user)) . "' WHERE `id` = '$user_id'");
+            echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
         }
 
         echo '<form method="post" action="profile.php?act=settings&amp;mod=mail">' .
@@ -170,7 +171,7 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if (isset($_SESSION['set_ok'])) {
-            echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+            echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
             unset($_SESSION['set_ok']);
         }
         if (isset($_SESSION['reset_ok'])) {

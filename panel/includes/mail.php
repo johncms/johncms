@@ -32,9 +32,12 @@ if (isset($_POST['submit'])) {
     mysql_query("UPDATE `cms_settings` SET `val`='" . (isset($_POST['message_include']) && $_POST['message_include'] == 1 ? 1 : 0) . "' WHERE `key` = 'setting_mail'");
 	mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string(serialize($set_mail)) . "' WHERE `key` = 'setting_mail'");
 	$req = mysql_query("SELECT * FROM `cms_settings`");
-    $set = array ();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    $set = array();
+    while ($res = mysql_fetch_row($req))
+    {
+    	$set[$res[0]] = $res[1];
+    }
+    echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
 }
 $set_mail = unserialize($set['setting_mail']);
 if(!isset($set_mail['cat_friends']))

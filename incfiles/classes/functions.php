@@ -408,11 +408,7 @@ class functions extends core
      */
     public static function format($name)
     {
-        $f1 = strrpos($name, ".");
-        $f2 = substr($name, $f1 + 1, 999);
-        $fname = strtolower($f2);
-
-        return $fname;
+        return pathinfo($name, PATHINFO_EXTENSION);
     }
 
     /**
@@ -468,7 +464,7 @@ class functions extends core
             return FALSE;
         }
 
-        if (is_null($user_id) || $id != $user_id) {
+        if (($user_id === null) || $id != $user_id) {
             $query = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `type` = '2' AND ((`from_id` = '$id' AND `user_id` = '" . self::$user_id . "') OR (`from_id` = '" . self::$user_id . "' AND `user_id` = '$id'))"), 0);
             $return = $query == 2 ? TRUE : FALSE;
         }
@@ -495,7 +491,7 @@ class functions extends core
             return 0;
         }
 
-        if (is_null($user_id) || $id != $user_id) {
+        if (($user_id === null) || $id != $user_id) {
             $user_id = $id;
             $req_1 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . self::$user_id . "' AND `from_id` = '$id'");
             if (mysql_num_rows($req_1)) {
@@ -529,7 +525,7 @@ class functions extends core
             return FALSE;
         }
 
-        if (is_null($user_id) || $id != $user_id) {
+        if (($user_id === null) || $id != $user_id) {
             $user_id = $id;
             $req_2 = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = '" . self::$user_id . "'");
             if (mysql_num_rows($req_2)) {

@@ -111,7 +111,7 @@ $headmod = $id ? 'forum,' . $id : 'forum';
 
 // Заголовки страниц форума
 if (empty($id)) {
-    $textl = '' . $lng['forum'] . '';
+    $textl = $lng['forum'];
 } else {
     $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '" . $id . "'");
     $res = mysql_fetch_assoc($req);

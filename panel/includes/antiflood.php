@@ -44,7 +44,7 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
     if ($set_af['dayto'] > 23)
         $set_af['dayto'] = 23;
     mysql_query("UPDATE `cms_settings` SET `val` = '" . serialize($set_af) . "' WHERE `key` = 'antiflood' LIMIT 1");
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
 } elseif (empty($set_af) || isset($_GET['reset'])) {
     // Устанавливаем настройки по умолчанию (если не заданы в системе)
     echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';

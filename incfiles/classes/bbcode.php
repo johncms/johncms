@@ -468,7 +468,7 @@ text-decoration: none;
             <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
             <a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" border="0"/></a>
             <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>
-            <a href="javascript:show_hide(\'code\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" title="' . Code . '" border="0"/></a>
+            <a href="javascript:show_hide(\'code\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" title="php" border="0"/></a>
             <a href="javascript:show_hide(\'color\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" border="0"/></a>
             <a href="javascript:show_hide(\'bg\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" border="0"/></a>';
 
