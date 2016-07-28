@@ -1,17 +1,5 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
@@ -20,39 +8,51 @@ if ($rights >= 6) {
         require_once('../incfiles/end.php');
         exit;
     }
-    $typ = mysql_query("select * from `gallery` where id='" . $id . "';");
-    $ms = mysql_fetch_array($typ);
+
+    /** @var PDO $db */
+    $db = App::getContainer()->get(PDO::class);
+    $ms = $db->query("SELECT * FROM `gallery` WHERE id = " . $id)->fetch();
+
     if (isset($_GET['yes'])) {
         switch ($ms['type']) {
             case "al":
-                $ft = mysql_query("select * from `gallery` where `type`='ft' and `refid`='" . $id . "';");
-                while ($ft1 = mysql_fetch_array($ft)) {
-                    $km = mysql_query("select * from `gallery` where type='km' and refid='" . $ft1['id'] . "';");
-                    while ($km1 = mysql_fetch_array($km)) {
-                        mysql_query("delete from `gallery` where `id`='" . $km1['id'] . "';");
+                $ft = $db->query("SELECT * FROM `gallery` WHERE `type`='ft' AND `refid`='" . $id . "'");
+
+                while ($ft1 = $ft->fetch()) {
+                    $km = $db->query("SELECT * FROM `gallery` WHERE type='km' AND refid='" . $ft1['id'] . "'");
+
+                    while ($km1 = $km->fetch()) {
+                        $db->exec("DELETE FROM `gallery` WHERE `id`='" . $km1['id'] . "'");
                     }
+
                     unlink("foto/$ft1[name]");
-                    mysql_query("delete from `gallery` where `id`='" . $ft1['id'] . "';");
+                    $db->query("DELETE FROM `gallery` WHERE `id`='" . $ft1['id'] . "'");
                 }
-                mysql_query("delete from `gallery` where `id`='" . $id . "';");
+
+                $db->query("DELETE FROM `gallery` WHERE `id`='" . $id . "'");
                 header("location: index.php?id=$ms[refid]");
                 break;
 
             case "rz":
-                $al = mysql_query("select * from `gallery` where type='al' and refid='" . $id . "';");
-                while ($al1 = mysql_fetch_array($al)) {
-                    $ft = mysql_query("select * from `gallery` where type='ft' and refid='" . $al1['id'] . "';");
-                    while ($ft1 = mysql_fetch_array($ft)) {
-                        $km = mysql_query("select * from `gallery` where type='km' and refid='" . $ft1['id'] . "';");
-                        while ($km1 = mysql_fetch_array($km)) {
-                            mysql_query("delete from `gallery` where `id`='" . $km1['id'] . "';");
+                $al = $db->query("SELECT * FROM `gallery` WHERE type='al' AND refid='" . $id . "'");
+
+                while ($al1 = $al->fetch()) {
+                    $ft = $db->query("SELECT * FROM `gallery` WHERE type='ft' AND refid='" . $al1['id'] . "'");
+
+                    while ($ft1 = $ft->fetch()) {
+                        $km = $db->query("SELECT * FROM `gallery` WHERE type='km' AND refid='" . $ft1['id'] . "'");
+
+                        while ($km1 = $km->fetch()) {
+                            $db->exec("DELETE FROM `gallery` WHERE `id`='" . $km1['id'] . "'");
                         }
                         unlink("foto/$ft1[name]");
-                        mysql_query("delete from `gallery` where `id`='" . $ft1['id'] . "';");
+                        $db->exec("DELETE FROM `gallery` WHERE `id`='" . $ft1['id'] . "'");
                     }
-                    mysql_query("delete from `gallery` where `id`='" . $al1['id'] . "';");
+
+                    $db->exec("DELETE FROM `gallery` WHERE `id`='" . $al1['id'] . "'");
                 }
-                mysql_query("delete from `gallery` where `id`='" . $id . "';");
+
+                $db->exec("DELETE FROM `gallery` WHERE `id`='" . $id . "'");
                 header("location: index.php");
                 break;
 
@@ -83,5 +83,3 @@ if ($rights >= 6) {
 } else {
     header("location: index.php");
 }
-
-?>
