@@ -1,21 +1,14 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
     if (isset($_POST['submit'])) {
+        /** @var PDO $db */
+        $db = App::getContainer()->get(PDO::class);
         $user = 0;
-        $text = functions::check($_POST['text']);
-        mysql_query("insert into `gallery` values(0,'0','" . time() . "','rz','','" . $text . "','','" . $user . "','','');");
+        $text = isset($_POST['text']) ? trim($_POST['text']) : '';
+        $db->query("INSERT INTO `gallery` VALUES(0,'0','" . time() . "','rz',''," . $db->quote($text) . ",'','" . $user . "','','');");
         header("location: index.php");
     } else {
         echo '<div class="phdr"><b>' . $lng_gal['create_section'] . '</b></div>' .
