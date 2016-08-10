@@ -1,23 +1,10 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Restricted access');
 
 class bbcode extends core
 {
-    /*
-    -----------------------------------------------------------------
-    Обработка тэгов и ссылок
-    -----------------------------------------------------------------
-    */
+    // Обработка тэгов и ссылок
     public static function tags($var)
     {
         $var = self::parse_time($var);               // Обработка тэга времени
@@ -67,7 +54,7 @@ class bbcode extends core
                 $url = htmlspecialchars_decode($url);
                 $relative_url = htmlspecialchars_decode($relative_url);
                 $text = '';
-                $chars = array('<', '>', '"');
+                $chars = ['<', '>', '"'];
                 $split = false;
                 foreach ($chars as $char) {
                     $next_split = strpos($url, $char);
@@ -164,54 +151,56 @@ class bbcode extends core
         return $text;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Удаление bbCode из текста
-    -----------------------------------------------------------------
-    */
+    /**
+     * Удаление bbCode из текста
+     *
+     * @param string $var
+     * @return string
+     */
     static function notags($var = '')
     {
         $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
-        $replace = array(
-            '[small]' => '',
+        $replace = [
+            '[small]'  => '',
             '[/small]' => '',
-            '[big]' => '',
-            '[/big]' => '',
-            '[green]' => '',
+            '[big]'    => '',
+            '[/big]'   => '',
+            '[green]'  => '',
             '[/green]' => '',
-            '[red]' => '',
-            '[/red]' => '',
-            '[blue]' => '',
-            '[/blue]' => '',
-            '[b]' => '',
-            '[/b]' => '',
-            '[i]' => '',
-            '[/i]' => '',
-            '[u]' => '',
-            '[/u]' => '',
-            '[s]' => '',
-            '[/s]' => '',
-            '[quote]' => '',
+            '[red]'    => '',
+            '[/red]'   => '',
+            '[blue]'   => '',
+            '[/blue]'  => '',
+            '[b]'      => '',
+            '[/b]'     => '',
+            '[i]'      => '',
+            '[/i]'     => '',
+            '[u]'      => '',
+            '[/u]'     => '',
+            '[s]'      => '',
+            '[/s]'     => '',
+            '[quote]'  => '',
             '[/quote]' => '',
-            '[php]' => '',
-            '[/php]' => '',
-            '[c]' => '',
-            '[/c]' => '',
-            '[*]' => '',
-            '[/*]' => ''
-        );
+            '[php]'    => '',
+            '[/php]'   => '',
+            '[c]'      => '',
+            '[/c]'     => '',
+            '[*]'      => '',
+            '[/*]'     => '',
+        ];
 
         return strtr($var, $replace);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Подсветка кода
-    -----------------------------------------------------------------
-    */
+    /**
+     * Подсветка кода
+     *
+     * @param string $var
+     * @return mixed
+     */
     private static function highlight_code($var)
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', 'self::phpCodeCallback', $var);
@@ -224,19 +213,19 @@ class bbcode extends core
 
     private static function phpCodeCallback($code)
     {
-        return self::codeCallback(array(1 => 'php', 2 => $code[1]));
+        return self::codeCallback([1 => 'php', 2 => $code[1]]);
     }
 
     private static function codeCallback($code)
     {
-        $parsers = array(
+        $parsers = [
             'php'  => 'php',
             'css'  => 'css',
             'html' => 'html5',
             'js'   => 'javascript',
             'sql'  => 'sql',
             'xml'  => 'xml',
-        );
+        ];
 
         $parser = isset($code[1]) && isset($parsers[$code[1]]) ? $parsers[$code[1]] : 'php';
 
@@ -250,18 +239,19 @@ class bbcode extends core
         }
 
         self::$geshi->set_language($parser);
-        $php = strtr($code[2], array('<br />' => ''));
+        $php = strtr($code[2], ['<br />' => '']);
         $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
         self::$geshi->set_source($php);
 
         return '<div class="phpcode" style="overflow-x: auto">' . self::$geshi->parse_code() . '</div>';
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обработка URL в тэгах BBcode
-    -----------------------------------------------------------------
-    */
+    /**
+     * Обработка URL в тэгах BBcode
+     *
+     * @param $var
+     * @return mixed
+     */
     private static function highlight_bbcode_url($var)
     {
         if (!function_exists('process_url')) {
@@ -280,15 +270,16 @@ class bbcode extends core
         return preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]~', 'process_url', $var);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Обработка bbCode
-    -----------------------------------------------------------------
-    */
+    /**
+     * Обработка bbCode
+     *
+     * @param string $var
+     * @return string
+     */
     private static function highlight_bb($var)
     {
         // Список поиска
-        $search = array(
+        $search = [
             '#\[b](.+?)\[/b]#is', // Жирный
             '#\[i](.+?)\[/i]#is', // Курсив
             '#\[u](.+?)\[/u]#is', // Подчеркнутый
@@ -303,9 +294,9 @@ class bbcode extends core
             '#\[(quote|c)](.+?)\[/(quote|c)]#is', // Цитата
             '#\[\*](.+?)\[/\*]#is', // Список
             '#\[spoiler=(.+?)](.+?)\[/spoiler]#is' // Спойлер
-        );
+        ];
         // Список замены
-        $replace = array(
+        $replace = [
             '<span style="font-weight: bold">$1</span>',
             // Жирный
             '<span style="font-style:italic">$1</span>',
@@ -334,19 +325,21 @@ class bbcode extends core
             // Список
             '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
             // Спойлер
-        );
+        ];
 
         return preg_replace($search, $replace, $var);
     }
 
-    /*
-    -----------------------------------------------------------------
-    Панель кнопок bbCode (для компьютеров)
-    -----------------------------------------------------------------
-    */
+    /**
+     * Панель кнопок bbCode (для компьютеров)
+     *
+     * @param string $form
+     * @param string $field
+     * @return string
+     */
     public static function auto_bb($form, $field)
     {
-        $colors = array(
+        $colors = [
             'ffffff',
             'bcbcbc',
             '708090',
@@ -381,8 +374,8 @@ class bbcode extends core
             'e287f4',
             'c238dd',
             'a476af',
-            'b53dd2'
-        );
+            'b53dd2',
+        ];
         $font_color = '';
         $bg_color = '';
 
@@ -406,14 +399,14 @@ class bbcode extends core
         }
 
         // Код
-        $code = array(
+        $code = [
             'php',
             'css',
             'js',
             'html',
             'sql',
             'xml',
-        );
+        ];
 
         $codebtn = '';
         foreach ($code as $val) {
