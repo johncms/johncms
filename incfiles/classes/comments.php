@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Restricted access');
 
 class comments
@@ -23,6 +14,11 @@ class comments
     private $rights = 0;                                  // Права доступа
     private $ban = false;                                 // Находится ли юзер в бане?
     private $url;                                         // URL формируемых ссылок
+
+    /**
+     * @var PDO
+     */
+    private $db;
 
     // Права доступа
     private $access_reply = false;                        // Возможность отвечать на комментарий
@@ -39,29 +35,30 @@ class comments
     public $total = 0;                                    // Общее число комментариев объекта
     public $added = false;                                // Метка добавления нового комментария
 
-    /*
-    -----------------------------------------------------------------
-    Конструктор класса
-    -----------------------------------------------------------------
-    */
-    function __construct($arg = array())
+    function __construct($arg = [])
     {
         global $mod, $start, $kmess;
+
+        $this->db = App::getContainer()->get(PDO::class);
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
+
         if (!empty($arg['sub_id_name']) && !empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];
             $this->url = $arg['script'] . '&amp;' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
         } else {
             $this->url = $arg['script'];
         }
+
         $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
+
         // Получаем данные пользователя
         if (core::$user_id) {
             $this->user_id = core::$user_id;
             $this->rights = core::$user_rights;
             $this->ban = core::$user_ban;
         }
+
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {
             $this->owner = $arg['owner'];
@@ -71,6 +68,7 @@ class comments
                 $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
             }
         }
+
         // Открываем доступ для Администрации
         if ($this->rights >= $this->access_level) {
             $this->access_reply = true;
@@ -80,42 +78,48 @@ class comments
 
         switch ($mod) {
             case 'reply':
-                /*
-                -----------------------------------------------------------------
-                Отвечаем на комментарий
-                -----------------------------------------------------------------
-                */
+                // Отвечаем на комментарий
                 if ($this->item && $this->access_reply && !$this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['reply'] . '</div>';
-                    $req = mysql_query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
-                    if (mysql_num_rows($req)) {
-                        $res = mysql_fetch_assoc($req);
+                    $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+
+                    if ($req->rowCount()) {
+                        $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
+
                         if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
                             echo functions::display_error(core::$lng['error_reply_rights'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
+
                             if (empty($message['error'])) {
                                 $attributes['reply_id'] = $this->user_id;
                                 $attributes['reply_rights'] = $this->rights;
                                 $attributes['reply_name'] = core::$user_data['name'];
                                 $attributes['reply_time'] = time();
-                                mysql_query("UPDATE `" . $this->comments_table . "` SET
-                                    `reply` = '" . mysql_real_escape_string($message['text']) . "',
-                                    `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
-                                    WHERE `id` = '" . $this->item . "'
-                                ");
+
+                                $this->db->prepare('
+                                  UPDATE `' . $this->comments_table . '` SET
+                                  `reply` = ?,
+                                  `attributes` = ?
+                                  WHERE `id` = ?
+                                ')->execute([
+                                    $message['text'],
+                                    serialize($attributes),
+                                    $this->item,
+                                ]);
+
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
                                 echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
                             }
                         } else {
                             $text = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                    ' (' . functions::display_date($res['time']) . ')<br />' .
-                                    functions::checkout($res['text']);
+                                ' (' . functions::display_date($res['time']) . ')<br />' .
+                                functions::checkout($res['text']);
                             $reply = functions::checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
-                                 '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
+                                '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
                         }
                     } else {
                         echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
@@ -124,35 +128,43 @@ class comments
                 break;
 
             case 'edit':
-                /*
-                -----------------------------------------------------------------
-                Редактируем комментарий
-                -----------------------------------------------------------------
-                */
+                // Редактируем комментарий
                 if ($this->item && $this->access_edit && !$this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['edit'] . '</div>';
-                    $req = mysql_query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
-                    if (mysql_num_rows($req)) {
-                        $res = mysql_fetch_assoc($req);
+                    $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+
+                    if ($req->rowCount()) {
+                        $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
                         $user = functions::get_user($res['user_id']);
+
                         if ($user['rights'] > core::$user_rights) {
                             echo functions::display_error(core::$lng['error_edit_rights'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
+
                             if (empty($message['error'])) {
                                 $attributes['edit_id'] = $this->user_id;
                                 $attributes['edit_name'] = core::$user_data['name'];
                                 $attributes['edit_time'] = time();
-                                if (isset($attributes['edit_count']))
+
+                                if (isset($attributes['edit_count'])) {
                                     ++$attributes['edit_count'];
-                                else
+                                } else {
                                     $attributes['edit_count'] = 1;
-                                mysql_query("UPDATE `" . $this->comments_table . "` SET
-                                    `text` = '" . mysql_real_escape_string($message['text']) . "',
-                                    `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
-                                    WHERE `id` = '" . $this->item . "'
-                                ");
+                                }
+
+                                $this->db->prepare('
+                                  UPDATE `' . $this->comments_table . '` SET
+                                  `text` = ?,
+                                  `attributes` = ?
+                                  WHERE `id` = ?
+                                ')->execute([
+                                    $message['text'],
+                                    serialize($attributes),
+                                    $this->item,
+                                ]);
+
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
                                 echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
@@ -166,64 +178,63 @@ class comments
                     } else {
                         echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
                     }
+
                     echo '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
                 }
                 break;
 
             case 'del':
-                /*
-                -----------------------------------------------------------------
-                Удаляем комментарий
-                -----------------------------------------------------------------
-                */
+                // Удаляем комментарий
                 if ($this->item && $this->access_delete && !$this->ban) {
                     if (isset($_GET['yes'])) {
-                        $req = mysql_query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
-                        if (mysql_num_rows($req)) {
-                            $res = mysql_fetch_assoc($req);
+                        $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+
+                        if ($req->rowCount()) {
+                            $res = $req->fetch();
+
                             if (isset($_GET['all'])) {
                                 // Удаляем все комментарии выбранного пользователя
-                                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'"), 0);
-                                mysql_query("DELETE FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'");
+                                $count = $this->db->query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'")->fetchColumn();
+                                $this->db->exec("DELETE FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'");
                             } else {
                                 // Удаляем отдельный комментарий
                                 $count = 1;
-                                mysql_query("DELETE FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "'");
+                                $this->db->exec("DELETE FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "'");
                             }
+
                             // Вычитаем баллы из статистики пользователя
-                            $req_u = mysql_query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
-                            if (mysql_num_rows($req_u)) {
-                                $res_u = mysql_fetch_assoc($req_u);
+                            $req_u = $this->db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
+
+                            if ($req_u->rowCount()) {
+                                $res_u = $req_u->fetch();
                                 $count = $res_u['komm'] > $count ? $res_u['komm'] - $count : 0;
-                                mysql_query("UPDATE `users` SET `komm` = '$count' WHERE `id` = '" . $res['user_id'] . "'");
+                                $this->db->exec("UPDATE `users` SET `komm` = '$count' WHERE `id` = '" . $res['user_id'] . "'");
                             }
+
                             // Обновляем счетчик комментариев
                             $this->msg_total(1);
                         }
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
                         echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['delete'] . '</div>' .
-                             '<div class="rmenu"><p>' . core::$lng['delete_confirmation'] . '<br />' .
-                             '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . core::$lng['delete'] . '</a> | ' .
-                             '<a href="' . $this->url . '">' . core::$lng['cancel'] . '</a><br />' .
-                             '<div class="sub">' . core::$lng['clear_user_msg'] . '<br />' .
-                             '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . core::$lng['clear'] . '</a></span>' .
-                             '</div></p></div>' .
-                             '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
+                            '<div class="rmenu"><p>' . core::$lng['delete_confirmation'] . '<br />' .
+                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . core::$lng['delete'] . '</a> | ' .
+                            '<a href="' . $this->url . '">' . core::$lng['cancel'] . '</a><br />' .
+                            '<div class="sub">' . core::$lng['clear_user_msg'] . '<br />' .
+                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . core::$lng['clear'] . '</a></span>' .
+                            '</div></p></div>' .
+                            '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
                     }
                 }
                 break;
 
             default:
-                if (!empty($arg['context_top']))
+                if (!empty($arg['context_top'])) {
                     echo $arg['context_top'];
+                }
 
-                /*
-                -----------------------------------------------------------------
-                Добавляем новый комментарий
-                -----------------------------------------------------------------
-                */
-                if(!$this->ban  && !functions::is_ignor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false){
+                // Добавляем новый комментарий
+                if (!$this->ban && !functions::is_ignor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->add_comment($message['text']);
@@ -238,61 +249,65 @@ class comments
                     $this->total = $this->msg_total();
                 }
 
-                /*
-                -----------------------------------------------------------------
-                Показываем форму ввода
-                -----------------------------------------------------------------
-                */
+                // Показываем форму ввода
                 if (!$this->ban && !functions::is_ignor($this->owner)) {
                     echo $this->msg_form();
                 }
 
-                /*
-                -----------------------------------------------------------------
-                Показываем список комментариев
-                -----------------------------------------------------------------
-                */
+                // Показываем список комментариев
                 echo '<div class="phdr"><b>' . $arg['title'] . '</b></div>';
-                if ($this->total > $kmess) echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
+
+                if ($this->total > $kmess) {
+                    echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
+                }
+
                 if ($this->total) {
-                    $req = mysql_query("SELECT `" . $this->comments_table . "`.*, `" . $this->comments_table . "`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                    $req = $this->db->query("SELECT `" . $this->comments_table . "`.*, `" . $this->comments_table . "`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                     FROM `" . $this->comments_table . "` LEFT JOIN `users` ON `" . $this->comments_table . "`.`user_id` = `users`.`id`
                     WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT $start, $kmess");
                     $i = 0;
-                    while (($res = mysql_fetch_assoc($req)) !== false) {
+
+                    while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes']);
                         $res['name'] = $attributes['author_name'];
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = isset($attributes['author_ip_via_proxy']) ? $attributes['author_ip_via_proxy'] : 0;
                         $res['browser'] = $attributes['author_browser'];
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        $menu = array(
+                        $menu = [
                             $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . core::$lng['reply'] . '</a>' : '',
                             $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . core::$lng['edit'] . '</a>' : '',
-                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . core::$lng['delete'] . '</a>' : ''
-                        );
+                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . core::$lng['delete'] . '</a>' : '',
+                        ];
                         $text = functions::checkout($res['text'], 1, 1);
-                        if (core::$user_set['smileys'])
+
+                        if (core::$user_set['smileys']) {
                             $text = functions::smileys($text, $res['rights'] >= 1 ? 1 : 0);
+                        }
+
                         if (isset($attributes['edit_count'])) {
                             $text .= '<br /><span class="gray"><small>' . core::$lng['edited'] . ': <b>' . $attributes['edit_name'] . '</b>' .
-                                     ' (' . functions::display_date($attributes['edit_time']) . ') <b>' .
-                                     '[' . $attributes['edit_count'] . ']</b></small></span>';
+                                ' (' . functions::display_date($attributes['edit_time']) . ') <b>' .
+                                '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
+
                         if (!empty($res['reply'])) {
                             $reply = functions::checkout($res['reply'], 1, 1);
-                            if (core::$user_set['smileys'])
+
+                            if (core::$user_set['smileys']) {
                                 $reply = functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
+                            }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
-                                     '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                     ' (' . functions::display_date($attributes['reply_time']) . ')</small><br/>' . $reply . '</div>';
+                                '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
+                                ' (' . functions::display_date($attributes['reply_time']) . ')</small><br/>' . $reply . '</div>';
                         }
-                        $user_arg = array(
+
+                        $user_arg = [
                             'header' => ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>',
-                            'body' => $text,
-                            'sub' => functions::display_menu($menu),
-                            'iphide' => (core::$user_rights ? false : true)
-                        );
+                            'body'   => $text,
+                            'sub'    => functions::display_menu($menu),
+                            'iphide' => (core::$user_rights ? false : true),
+                        ];
                         echo functions::display_user($res, $user_arg);
                         echo '</div>';
                         ++$i;
@@ -300,119 +315,127 @@ class comments
                 } else {
                     echo '<div class="menu"><p>' . core::$lng['list_empty'] . '</p></div>';
                 }
+
                 echo '<div class="phdr">' . core::$lng['total'] . ': ' . $this->total . '</div>';
+
                 if ($this->total > $kmess) {
                     echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
-                         '<p><form action="' . $this->url . '" method="post">' .
-                         '<input type="text" name="page" size="2"/>' .
-                         '<input type="submit" value="' . core::$lng['to_page'] . ' &gt;&gt;"/>' .
-                         '</form></p>';
+                        '<p><form action="' . $this->url . '" method="post">' .
+                        '<input type="text" name="page" size="2"/>' .
+                        '<input type="submit" value="' . core::$lng['to_page'] . ' &gt;&gt;"/>' .
+                        '</form></p>';
                 }
-                if (!empty($arg['context_bottom']))
+
+                if (!empty($arg['context_bottom'])) {
                     echo $arg['context_bottom'];
+                }
         }
     }
 
-    /*
-    -----------------------------------------------------------------
-    Добавляем комментарий в базу
-    -----------------------------------------------------------------
-    */
+    // Добавляем комментарий в базу
     private function add_comment($message)
     {
         // Формируем атрибуты сообщения
-        $attributes = array(
-            'author_name' => core::$user_data['name'],
-            'author_ip' => core::$ip,
+        $attributes = [
+            'author_name'         => core::$user_data['name'],
+            'author_ip'           => core::$ip,
             'author_ip_via_proxy' => core::$ip_via_proxy,
-            'author_browser' => core::$user_agent
-        );
+            'author_browser'      => core::$user_agent,
+        ];
+
         // Записываем комментарий в базу
-        mysql_query("INSERT INTO `" . $this->comments_table . "` SET
-            `sub_id` = '" . intval($this->sub_id) . "',
-            `user_id` = '" . $this->user_id . "',
-            `text` = '" . mysql_real_escape_string($message) . "',
-            `reply` = '',
-            `time` = '" . time() . "',
-            `attributes` = '" . mysql_real_escape_string(serialize($attributes)) . "'
-        ");
+        $this->db->prepare('
+          INSERT INTO `' . $this->comments_table . '` SET
+          `sub_id` = ?,
+          `user_id` = ?,
+          `text` = ?,
+          `reply` = \'\',
+          `time` = ?,
+          `attributes` = ?
+        ')->execute([
+            intval($this->sub_id),
+            $this->user_id,
+            $message,
+            time(),
+            serialize($attributes),
+        ]);
+
         // Обновляем статистику пользователя
-        mysql_query("UPDATE `users` SET `komm` = '" . (++core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
-        if($this->owner && $this->user_id == $this->owner){
-            mysql_query("UPDATE `users` SET `comm_old` = '" . (core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
+        $this->db->exec("UPDATE `users` SET `komm` = '" . (++core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
+
+        if ($this->owner && $this->user_id == $this->owner) {
+            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
         }
+
         $this->added = true;
     }
 
-    /*
-    -----------------------------------------------------------------
-    Форма ввода комментария
-    -----------------------------------------------------------------
-    */
+    // Форма ввода комментария
     private function msg_form($submit_link = '', $text = '', $reply = '')
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
-               (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
-               '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-               '</p><p>' . bbcode::auto_bb('form', 'message') .
-               '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>' .
-               (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>' : '') .
-               '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
+        (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
+        '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
+        '</p><p>' . bbcode::auto_bb('form', 'message') .
+        '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>' .
+        (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>' : '') .
+        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
     }
 
-    /*
-    -----------------------------------------------------------------
-    Проверка текста сообщения
-    -----------------------------------------------------------------
-    $rpt_check (boolean)    проверка на повтор сообщений
-    -----------------------------------------------------------------
-    */
+    // Проверка текста сообщения
+    // $rpt_check (boolean)    проверка на повтор сообщений
     private function msg_check($rpt_check = false)
     {
-        $error = array();
+        $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : false;
-        $code = isset($_POST['code']) ? intval($_POST['code']) : NULL;
-        $code_chk = isset($_SESSION['code']) ? $_SESSION['code'] : NULL;
+        $code = isset($_POST['code']) ? intval($_POST['code']) : null;
+        $code_chk = isset($_SESSION['code']) ? $_SESSION['code'] : null;
         $translit = isset($_POST['translit']);
+
         // Проверяем код
-        if($code == $code_chk) return false;
+        if ($code == $code_chk) {
+            return false;
+        }
+
         // Проверяем на минимально допустимую длину
         if (mb_strlen($message) < $this->min_lenght) {
             $error[] = core::$lng['error_message_short'];
         } else {
             // Проверка на флуд
             $flood = functions::antiflood();
-            if ($flood)
+            if ($flood) {
                 $error[] = core::$lng['error_flood'] . ' ' . $flood . '&#160;' . core::$lng['seconds'];
+            }
         }
+
         // Проверка на повтор сообщений
         if (!$error && $rpt_check) {
-            $req = mysql_query("SELECT * FROM `" . $this->comments_table . "` WHERE `user_id` = '" . $this->user_id . "' ORDER BY `id` DESC LIMIT 1");
-            $res = mysql_fetch_assoc($req);
-            if (mb_strtolower($message) == mb_strtolower($res['text']))
+            $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `user_id` = '" . $this->user_id . "' ORDER BY `id` DESC LIMIT 1");
+            $res = $req->fetch();
+
+            if (mb_strtolower($message) == mb_strtolower($res['text'])) {
                 $error[] = core::$lng['error_message_exists'];
+            }
         }
 
         // Возвращаем результат
-        return array(
-            'code' => $code,
-            'text' => $message,
-            'error' => $error
-        );
+        return [
+            'code'  => $code,
+            'text'  => $message,
+            'error' => $error,
+        ];
     }
 
-    /*
-    -----------------------------------------------------------------
-    Счетчик комментариев
-    -----------------------------------------------------------------
-    */
+    // Счетчик комментариев
     private function msg_total($update = false)
     {
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'"), 0);
+        $total = $this->db->query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
+
         if ($update) {
             // Обновляем счетчики в таблице объекта
-            mysql_query("UPDATE `" . $this->object_table . "` SET `comm_count` = '$total' WHERE `id` = '" . $this->sub_id . "'");
+            $this->db->exec("UPDATE `" . $this->object_table . "` SET `comm_count` = '$total' WHERE `id` = '" . $this->sub_id . "'");
         }
+
         return $total;
     }
 }
