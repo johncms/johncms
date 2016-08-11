@@ -54,7 +54,6 @@ $array = array (
     'komm',
     'new',
     'zip',
-    'arc',
     'down',
     'dfile',
     'opis',
