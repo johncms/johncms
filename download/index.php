@@ -59,7 +59,6 @@ $array = array (
     'opis',
     'screen',
     'ren',
-    'import',
     'refresh',
     'upl',
     'view',
