@@ -1,19 +1,5 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once "pear.php";
@@ -21,6 +7,7 @@ define('PEAR_MP3_ID_FNO', 1);
 define('PEAR_MP3_ID_RE', 2);
 define('PEAR_MP3_ID_TNF', 3);
 define('PEAR_MP3_ID_NOMP3', 4);
+
 class MP3_Id
 {
     var $file = false;
@@ -62,12 +49,14 @@ class MP3_Id
     var $debug = false;
     var $debugbeg = '<DIV STYLE="margin: 0.5 em; padding: 0.5 em; border-width: thin; border-color: black; border-style: solid">';
     var $debugend = '</DIV>';
-    function MP3_Id($study = false)
+
+    public function __construct($study = false)
     {
         if (defined('ID3_SHOW_DEBUG'))
             $this->debug = true;
         $this->study = ($study || defined('ID3_AUTO_STUDY'));
     }
+
     function read($file = "")
     {
         if ($this->debug)
