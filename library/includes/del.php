@@ -1,29 +1,21 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
 
 echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng['delete'] . '</div>';
 
-$type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article', 'image')) ? $_GET['type'] : redir404();
-$change = ($type == 'dir' ? mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1 : '');
+$type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image']) ? $_GET['type'] : redir404();
+$change = ($type == 'dir' ? $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1 : '');
 
 switch ($type) {
 case 'dir':
-  if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id) , 0) == 0) {
+  if ($db->query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() == 0) {
     echo functions::display_error($lng_lib['category_does_not_exist']);
   }
   elseif (!$change) {
     $mode = isset($_POST['mode']) ? $_POST['mode'] : (isset($do) ? $do : false);
-    $dirtype = mysql_result(mysql_query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1"), 0);
+    $dirtype = $db->query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1")->fetchColumn();
     switch($mode) {
         case 'moveaction':
             if (!isset($_GET['movedeny'])) {
@@ -31,14 +23,14 @@ case 'dir':
             } else {
                 $move = intval($_GET['move']);
                 if ($dirtype) {
-                    mysql_query("UPDATE `library_cats` SET `parent`=" . $move . " WHERE `parent` = " . $id);
+                    $afr = $db->exec("UPDATE `library_cats` SET `parent`=" . $move . " WHERE `parent` = " . $id);
                 } else {
-                    mysql_query("UPDATE `library_texts` SET `cat_id` = " . $move . " WHERE `cat_id` = " . $id);
+                    $afr = $db->exec("UPDATE `library_texts` SET `cat_id` = " . $move . " WHERE `cat_id` = " . $id);
                 }
                 
-                if (mysql_affected_rows()) {
-                    mysql_query("DELETE FROM `library_cats` WHERE `id` = " . $id);
-                    if (mysql_affected_rows()) {
+                if ($afr) {
+                    $afr = $db->exec("DELETE FROM `library_cats` WHERE `id` = " . $id);
+                    if ($afr) {
                         echo '<div class="gmenu">' . $lng_lib['successfully_transferred'] . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
                     }
                 }
@@ -48,13 +40,13 @@ case 'dir':
         case 'delmove':                 
             $child_dir = new Tree($id);
             $childrens = $child_dir->get_childs_dir()->result();
-            $list = mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
-            if (mysql_num_rows($list)) {
+            $list = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
+            if ($list->rowCount()) {
             echo '<div class="menu">' 
             . '<h3>' . $lng_lib['move_dir'] . '</h3>'
             . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
             . '<div><select name="move">';
-            while($rm = mysql_fetch_assoc($list)) {
+            while($rm = $list->fetch()) {
                 echo '<option value="' . $rm['id'] . '">' . functions::checkout($rm['name']) . '</option>';
             }
             echo '</select></div>'
@@ -98,7 +90,7 @@ case 'dir':
   break;
 
 case 'article':
-  if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id) , 0) == 0) {
+  if ($db->query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id)->rowCount() == 0) {
     echo functions::display_error($lng_lib['article_does_not_exist']);
   }
   else {
@@ -122,7 +114,7 @@ if (isset($_GET['yes']) && $type == 'image') {
     }
     echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
-  if (mysql_query($sql)) {
+  if ($db->exec($sql)) {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
       @unlink('../files/library/images/big/' . $id . '.png');
       @unlink('../files/library/images/orig/' . $id . '.png');

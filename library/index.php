@@ -1,12 +1,4 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
 
 define('_IN_JOHNCMS', 1);
 $headmod = 'library';
@@ -33,6 +25,9 @@ if ($error) {
     exit;
 }
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 // Заголовки библиотеки
 if ($do) {
     switch ($do) {
@@ -44,7 +39,8 @@ if ($do) {
             $tab = 'library_texts';
     }
 
-    $hdr = $id > 0 ? htmlentities(mb_substr(mysql_result(mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1"), 0), 0, 30), ENT_QUOTES, 'UTF-8') : '';
+    $hdr = $id > 0 ? htmlentities(mb_substr($db->query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn(), 0, 30), ENT_QUOTES, 'UTF-8') : '';
+
     if ($hdr) {
         $textl = mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr;
     }
@@ -82,7 +78,7 @@ if (!$set['mod_lib']) {
     echo functions::display_error($lng_lib['library_closed']);
 }
 
-$array_includes = array(
+$array_includes = [
     'addnew',
     'comments',
     'del',
@@ -96,8 +92,8 @@ $array_includes = array(
     'top',
     'tags',
     'tagcloud',
-    'lastcom'
-);
+    'lastcom',
+];
 $i = 0;
 
 if (in_array($act, $array_includes)) {
@@ -106,32 +102,38 @@ if (in_array($act, $array_includes)) {
     if (!$id) {
         echo '<div class="phdr"><strong>' . $lng['library'] . '</strong></div>';
         echo '<div class="topmenu"><a href="?act=search">' . $lng['search'] . '</a> | <a href="?act=tagcloud">' . $lng_lib['tagcloud'] . '</a></div>';
-
         echo '<div class="gmenu"><p>';
+
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
-            $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0"), 0);
+            $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0")->fetchColumn();
+
             if ($res > 0) {
                 echo '<div>' . $lng['on_moderation'] . ': <a href="?act=premod">' . $res . '</a></div>';
             }
         }
-        $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
+
+        $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
+
         if ($res) {
-            echo functions::image('new.png', array('width' => 16, 'height' => 16)) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
+            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
         }
 
-        echo functions::image('rate.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br/>' .
-            functions::image('talk.gif', array('width' => 16, 'height' => 16)) . '<a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a>' .
+        echo functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br/>' .
+            functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a>' .
             '</p></div>';
-        $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0"), 0);
+
+        $total = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0")->fetchColumn();
         $y = 0;
+
         if ($total) {
-            while ($row = mysql_fetch_assoc($sql)) {
+            $req = $db->query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
+
+            while ($row = $req->fetch()) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                     . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a> ('
-                    . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ')';
+                    . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ')';
 
                 if (!empty($row['description'])) {
                     echo '<div style="font-size: x-small; padding-top: 2px"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
@@ -148,35 +150,38 @@ if (in_array($act, $array_includes)) {
         }
 
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+
         if ($adm) {
             echo '<p><a href="?act=mkdir&amp;id=0">' . $lng_lib['create_category'] . '</a></p>';
         }
     } else {
         $dir_nav = new Tree($id);
         $dir_nav->process_nav_panel();
+
         switch ($do) {
             case 'dir':
                 // dir
-                $actdir = mysql_fetch_assoc(mysql_query("SELECT `id`, `dir` FROM `library_cats` WHERE " . ($id !== null ? '`id`=' . $id : 1) . " LIMIT 1"));
+                $actdir = $db->query("SELECT `id`, `dir` FROM `library_cats` WHERE " . ($id !== null ? '`id`=' . $id : 1) . " LIMIT 1")->fetch();
                 $actdir = $actdir['id'] > 0 ? $actdir['dir'] : redir404();
                 echo '<div class="phdr">' . $dir_nav->print_nav_panel() . '</div>';
 
                 if ($actdir) {
-                    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0')), 0);
+                    $total = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0'))->fetchColumn();
                     $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
                     $y = 0;
 
                     if ($total) {
-                        $sql = mysql_query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $kmess);
+                        $sql = $db->query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE " . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $kmess);
                         echo $nav;
 
-                        while ($row = mysql_fetch_assoc($sql)) {
+                        while ($row = $sql->fetch()) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>('
-                                . mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id'])), 0) . ' '
+                                . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ' '
                                 . ($row['dir'] ? ' кат.' : ' ст.') . ')'
                                 . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
+
                             if ($adm) {
                                 echo '<div class="sub">'
                                     . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . $lng_lib['up']
@@ -186,6 +191,7 @@ if (in_array($act, $array_includes)) {
                                         : $lng_lib['down'])
                                     . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['edit'] . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></div>';
                             }
+
                             echo '</div>';
                         }
                     } else {
@@ -201,16 +207,16 @@ if (in_array($act, $array_includes)) {
                             . '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng_lib['create_category'] . '</a></p>';
                     }
                 } else {
-                    $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id), 0);
+                    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id)->fetchColumn();
                     $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
                     $start = $page == 1 ? 0 : ($page - 1) * $kmess;
                     $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
 
                     if ($total) {
-                        $sql2 = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
+                        $sql2 = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
                         echo $nav;
 
-                        while ($row = mysql_fetch_assoc($sql2)) {
+                        while ($row = $sql2->fetch()) {
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
@@ -244,7 +250,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                     echo $nav;
 
-                    if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0)) && isset($id) && $user_id) {
+                    if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $user_id) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a>'
                             . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
@@ -255,31 +261,32 @@ if (in_array($act, $array_includes)) {
                 break;
 
             default:
-                $res = mysql_fetch_assoc(mysql_query("SELECT * FROM `library_texts` WHERE `id`=" . $id));
-                if ($res['premod'] || $adm) {
+                $row = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id)->fetch();
+
+                if ($row['premod'] || $adm) {
 
                     // Счетчик прочтений
                     if (!isset($_SESSION['lib']) || isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
                         $_SESSION['lib'] = $id;
-                        mysql_query('UPDATE `library_texts` SET  `count_views`=' . ($res['count_views'] ? ++$res['count_views'] : 1) . ' WHERE `id`=' . $id);
+                        $db->exec('UPDATE `library_texts` SET  `count_views`=' . ($row['count_views'] ? ++$row['count_views'] : 1) . ' WHERE `id`=' . $id);
                     }
 
                     // Запрашиваем выбранную статью из базы
                     $symbols = core::$is_mobile ? 3000 : 7000;
-                    $count_pages = ceil(mysql_result(mysql_query("SELECT CHAR_LENGTH(`text`) FROM `library_texts` WHERE `id`= '" . $id . "' LIMIT 1"), 0) / $symbols);
+                    $count_pages = ceil($db->query("SELECT CHAR_LENGTH(`text`) FROM `library_texts` WHERE `id`= '" . $id . "' LIMIT 1")->fetchColumn() / $symbols);
                     if ($count_pages) {
 
                         // Чтоб всегда последнюю страницу считал правильно
                         $page = $page >= $count_pages ? $count_pages : $page;
-                        $text = mysql_result(mysql_query("SELECT SUBSTRING(`text`, " . ($page == 1 ? 1 : ($page - 1) * $symbols) . ", " . ($symbols + 100) . ") FROM `library_texts` WHERE `id`='" . $id . "'"), 0);
+                        $text = $db->query("SELECT SUBSTRING(`text`, " . ($page == 1 ? 1 : ($page - 1) * $symbols) . ", " . ($symbols + 100) . ") FROM `library_texts` WHERE `id`='" . $id . "'")->fetchColumn();
                         $tmp = mb_substr($text, $symbols, 100);
                     } else {
                         redir404();
                     }
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
-                    $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1"));
-                    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
+                    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $row['cat_id'] . " LIMIT 1")->fetch();
+                    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($row['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
@@ -289,19 +296,19 @@ if (in_array($act, $array_includes)) {
                     if ($page == 1) {
                         echo '<div class="list2">';
                         // Заголовок статьи
-                        echo '<h2>' . functions::checkout($res['name']) . '</h2>';
+                        echo '<h2>' . functions::checkout($row['name']) . '</h2>';
 
                         // Описание к статье
-                        $obj = new Hashtags($res['id']);
-                        $rate = new Rating($res['id']);
-                        $uploader = $res['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['uploader_id'] . '">' . functions::checkout($res['uploader']) . '</a>' : functions::checkout($res['uploader']);
+                        $obj = new Hashtags($row['id']);
+                        $rate = new Rating($row['id']);
+                        $uploader = $row['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
                         echo '<table class="desc">'
                             // Тэги
                             . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                            . '<td>' . $uploader . ' (' . functions::display_date($res['time']) . ')</td>'
+                            . '<td>' . $uploader . ' (' . functions::display_date($row['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'
@@ -311,12 +318,12 @@ if (in_array($act, $array_includes)) {
                             // Прочтений
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
-                            . '<td>' . $res['count_views'] . '</td>'
+                            . '<td>' . $row['count_views'] . '</td>'
                             . '</tr>'
                             // Комментарии
                             . '<tr>';
-                        if ($res['comments']) {
-                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $res['count_comments'] . '</td>';
+                        if ($row['comments']) {
+                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
                         } else {
                             echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
                         }
@@ -326,12 +333,15 @@ if (in_array($act, $array_includes)) {
                         echo '</div>';
                     }
 
-                    $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))), (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
+                    $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))),
+                        (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
+
                     if ($set_user['smileys']) {
                         $text = functions::smileys($text, $rights ? 1 : 0);
                     }
 
                     echo '<div class="list2" style="padding: 8px">';
+
                     if ($page == 1) {
                         // Картинка статьи
                         if (file_exists('../files/library/images/big/' . $id . '.png')) {
@@ -339,6 +349,7 @@ if (in_array($act, $array_includes)) {
                             echo '<a href="../files/library/images/orig/' . $id . '.png"><img style="' . $img_style . '" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a>';
                         }
                     }
+
                     // Выводим текст статьи
                     echo $text .
                         '<div style="clear: both"></div>' .
@@ -349,7 +360,7 @@ if (in_array($act, $array_includes)) {
                     echo $nav
                         . ($user_id && $page == 1 ? $rate->print_vote() : '');
 
-                    if ($adm || mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id && $user_id) {
+                    if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }
@@ -359,4 +370,5 @@ if (in_array($act, $array_includes)) {
         } // end switch
     } // end else !id
 } // end else $act
+
 require_once('../incfiles/end.php');

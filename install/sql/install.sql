@@ -590,8 +590,8 @@ CREATE TABLE `library_texts` (
   `count_views`    INT(10) UNSIGNED  NOT NULL DEFAULT '0',
   `premod`         TINYINT(1)        NOT NULL DEFAULT '0',
   `comments`       TINYINT(1)        NOT NULL DEFAULT '0',
-  `count_comments` INT(10)  UNSIGNED NOT NULL DEFAULT '0',
-  `time`           INT(10) UNSIGNED  NOT NULL DEFAULT '0',
+  `comm_count`	   INT(10)  UNSIGNED NOT NULL DEFAULT '0',
+  `time`          INT(10) UNSIGNED  NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `text` (`text`, `name`)
 )

@@ -1,35 +1,27 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
- 
+
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $lng_gal = core::load_lng('gallery');
 
   echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['articles_moderation'] . '</div>';
   if ($id && isset($_GET['yes'])) {
     $sql = "UPDATE `library_texts` SET `premod`=1 WHERE `id`=" . $id;
-    echo '<div class="rmenu">' . $lng_lib['article'] . ' <strong>' . functions::checkout(mysql_result(mysql_query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id) , 0)) . '</strong> ' . $lng_lib['added_to_database'] . '</div>';
+    echo '<div class="rmenu">' . $lng_lib['article'] . ' <strong>' . functions::checkout($db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id)->fetchColumn()) . '</strong> ' . $lng_lib['added_to_database'] . '</div>';
   }
   elseif (isset($_GET['all'])) {
     $sql = 'UPDATE `library_texts` SET `premod`=1';
     echo '<div>' . $lng_lib['added_all'] . '</div>';
   }
   if (isset($_GET['yes']) || isset($_GET['all'])) {
-    mysql_query($sql);
+    $db->exec($sql);
   }
-  $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0') , 0);
+  $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0')->fetchColumn();
   $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
   $start = $page == 1 ? 0 : ($page - 1) * $kmess;
   if ($total) { 
-    $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $kmess);
+    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $kmess);
     $i = 0;
-    while ($row = mysql_fetch_assoc($sql)) {
+    while ($row = $stmt->fetch()) {
         $dir_nav = new tree($row['cat_id']);
         $dir_nav->process_nav_panel();
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">' 

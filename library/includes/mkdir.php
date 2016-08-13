@@ -1,12 +1,4 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
@@ -17,16 +9,14 @@ $adm ?: redir404();
       require_once ('../incfiles/end.php');
       exit;
     }
-    $lastinsert = mysql_result(mysql_query("SELECT MAX(`id`) FROM `library_cats`") , 0);
+    $lastinsert = $db->query('SELECT MAX(`id`) FROM `library_cats`')->fetchColumn();
     ++$lastinsert;
-    $name = functions::check($_POST['name']);
-    $desc = functions::check($_POST['description']);
+    $name = $_POST['name'];
+    $desc = $_POST['description'];
     $type = intval($_POST['type']);
-    $sql = "INSERT INTO `library_cats`
-        (`parent`, `name`, `description`, `dir`, `pos`) 
-    VALUES
-        (" . $id . ", '" . $name . "', '" . $desc . "', " . $type . ", " . $lastinsert . ")";
-    if (mysql_query($sql)) {
+    $stmt = $db->prepare('INSERT INTO `library_cats` (`parent`, `name`, `description`, `dir`, `pos`) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$id, $name, $desc, $type, $lastinsert]);
+    if ($stmt->rowCount()) {
       echo '<div>' . $lng_lib['category_created'] . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
     }
   }
