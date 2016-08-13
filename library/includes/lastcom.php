@@ -6,7 +6,7 @@ echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong>
 
 
 
-$stmt = $db->query('SELECT `cms_library_comments`.`user_id` , `cms_library_comments`.`text` , `library_texts`.`name` , `library_texts`.`count_comments` , `library_texts`.`id` , `cms_library_comments`.`time` 
+$stmt = $db->query('SELECT `cms_library_comments`.`user_id` , `cms_library_comments`.`text` , `library_texts`.`name` , `library_texts`.`comm_count` , `library_texts`.`id` , `cms_library_comments`.`time` 
 FROM `cms_library_comments` 
 JOIN `library_texts` ON `cms_library_comments`.`sub_id` = `library_texts`.`id` 
 GROUP BY `library_texts`.`id` 

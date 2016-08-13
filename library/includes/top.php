@@ -13,7 +13,7 @@ echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong>
      '<div class="topmenu">' . $lng_lib['sort'] . ': ' . functions::display_menu($menu) . '</div>';
 
 if ($sort == 'read' || $sort == 'comm') {
-    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
 } else {
     $total = $db->query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20")->fetchColumn();
 }
@@ -24,7 +24,7 @@ if (!$total) {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 } else {
     if ($sort == 'read' || $sort == 'comm') {
-        $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
+        $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
     } else {
         $stmt = $db->query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
     }
@@ -68,7 +68,7 @@ if (!$total) {
             // Комментарии
             . '<tr>';
         if ($row['comments']) {
-            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
+            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['comm_count'] . '</td>';
         } else {
             echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
         }
