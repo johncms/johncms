@@ -1,12 +1,6 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
+
+defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /*
 -----------------------------------------------------------------
@@ -53,26 +47,25 @@ if ($search && !$error) {
     */
     $array = explode(' ', $search);
     $count = count($array);
-    $query = mysql_real_escape_string($search);
-    $total = mysql_result(mysql_query("
+    $query = $db->quote($search);
+    $total = $db->query('
         SELECT COUNT(*) FROM `library_texts`
-        WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)"), 0);
+        WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)')->fetchColumn();
         
     echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search_results'] . '</div>';
     
     if ($total > $kmess)
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
     if ($total) {
-        $req = mysql_query("
-            SELECT *, MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE) AS `rel`
+        $req = $db->query('
+            SELECT *, MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE) AS `rel`
             FROM `library_texts`
-            WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)
+            WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)
             ORDER BY `rel` DESC
-            LIMIT " . $start . ", " . $kmess
+            LIMIT ' . $start . ', ' . $kmess
         );
-        $i = 0;
-        while (($res = mysql_fetch_assoc($req)) !== false) {
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+        while ($res = $req->fetch()) {
+            echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">';
             foreach ($array as $srch) {
                 if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {
                     break;

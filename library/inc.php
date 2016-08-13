@@ -1,24 +1,8 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
 
 // config
-$sql = mysql_query("SELECT `id`, `pos` FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . " ORDER BY `pos` ASC");
-$y = 0;
-$arrsort = array();
-
-if (mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0')), 0)) {
-    while ($row = mysql_fetch_assoc($sql)) {
-        $y++;
-        $arrsort[$y] = $row['id'] . '|' . $row['pos'];
-    }
-}
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
 
 $adm = ($rights > 4) ? true : false;
 #$kmess = 10; // количество на странице
@@ -66,15 +50,18 @@ function cmpalpha($a, $b)
 */
 class Tree
 {
-    private $result = array();
-    private $cleaned = array('images' => 0, 'comments' => 0, 'tags' => 0);
+    private $result = [];
+    private $cleaned = ['images' => 0, 'comments' => 0, 'tags' => 0];
     private $start_id = false;
     private $child;
     private $parent;
+    /** @var PDO $db */
+    private $db;
 
     public function __construct($id)
     {
         $this->start_id = $id;
+        $this->db = App::getContainer()->get(PDO::class);
     }
     /**
     * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
@@ -85,7 +72,9 @@ class Tree
     public function process_nav_panel($id = 0)
     {
         $id = $id == 0 ? $this->start_id : $id;
-        $this->parent = mysql_fetch_assoc(mysql_query("SELECT `id`, `name`, `parent` FROM `library_cats` WHERE id='" . $id . "' LIMIT 1"));
+        $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
+        $stmt->execute([$id]);
+        $this->parent = $stmt->fetch();
         $this->result[$this->parent['id']] = $this->parent['name'];
         if ($this->parent['parent'] != 0) {
             $this->process_nav_panel($this->parent['parent']);
@@ -104,16 +93,14 @@ class Tree
     public function get_all_childs_id($id = 0)
     {
         $id = $id == 0 ? $this->start_id : $id;
-        $dirtype = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `id` = " . $id), 0) ? mysql_result(mysql_query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1"), 0) : 0;
-        if ($dirtype) {
-            $sql = mysql_query("SELECT `id` FROM `library_cats` WHERE `parent`=" . $id);
-            $this->result['dirs'][$id] = $id;
-        } else {
-            $this->result['dirs'][$id] = $id;
-            $sql = mysql_query("SELECT `id` FROM `library_texts` WHERE `cat_id`=" . $id);
-        }
-        if (mysql_num_rows($sql) > 0) {
-            while ($this->child = mysql_fetch_assoc($sql)) {
+        $stmt = $this->db->prepare('SELECT `dir` FROM `library_cats` WHERE `id` = ? LIMIT 1');
+        $stmt->execute([$id]);
+        $dirtype = $stmt->fetchColumn();
+        $stmt = $this->db->prepare('SELECT `id` FROM ' . ($dirtype ? '`library_cats`' : '`library_texts`') . ' WHERE ' . ($dirtype ? '`parent`' : '`cat_id`') . ' = ?');
+        $stmt->execute([$id]);
+        $this->result['dirs'][$id] = $id;
+        if ($stmt->rowCount() > 0) {
+            while ($this->child = $stmt->fetch()) {
                 $this->result[($dirtype ? 'dirs' : 'texts')][$this->child['id']] = $this->child['id'];
                 if ($dirtype) {
                     $this->get_all_childs_id($this->child['id']);
@@ -131,8 +118,9 @@ class Tree
     */
     public function clean_trash($data) {
         if (!is_array($data)) {
-            mysql_query("DELETE FROM `cms_library_comments` WHERE `sub_id` = " . $data);
-            $this->cleaned['comments'] += mysql_affected_rows();
+            $stmt = $this->db->prepare('DELETE FROM `cms_library_comments` WHERE `sub_id` = ?');
+            $stmt->execute([$data]);
+            $this->cleaned['comments'] += $stmt->rowCount();
             
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->del_tags();
@@ -162,13 +150,18 @@ class Tree
         $texts = array_key_exists('texts', $array) ? $array['texts'] : 0;
         
         $trash = $this->clean_trash($array['texts']);
-                
-        mysql_query("DELETE FROM `library_cats` WHERE `id` IN(" . implode(', ', $dirs) . ")");
-        $dirs = mysql_affected_rows();
-        mysql_query("DELETE FROM `library_texts` WHERE `id` IN(" . implode(', ', $texts) . ")");
-        $texts = mysql_affected_rows();
         
-        return array_merge(array('dirs' => $dirs, 'texts' => $texts), $trash);
+        $place_holders_dirs = implode(', ', array_fill(0, count($dirs), '?'));
+        $place_holders_texts = implode(',', array_fill(0, count($texts), '?'));
+        
+        $stmt = $this->db->prepare('DELETE FROM `library_cats` WHERE `id` IN(' . $place_holders_dirs . ')');
+        $stmt->execute(array_values($dirs));
+        $dirs = $stmt->rowCount();
+        $stmt = $this->db->prepare('DELETE FROM `library_texts` WHERE `id` IN(' . $place_holders_texts . ')');
+        $stmt->execute(array_values($texts));
+        $texts = $stmt->rowCount();
+        
+        return array_merge(['dirs' => $dirs, 'texts' => $texts], $trash);
     }
     /**
     * Рекурсивно проходит по ветке и собирает дочерние вложения
@@ -179,9 +172,10 @@ class Tree
     public function get_childs_dir($parent = 0)
     {
         $parent = $parent == 0 ? $this->start_id : $parent;
-        $sql = mysql_query("SELECT `id` FROM `library_cats` WHERE `parent`=" . $parent . " AND `dir`=1");
-        if (mysql_num_rows($sql) > 0) {
-            while ($this->child = mysql_fetch_assoc($sql)) {
+        $stmt = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
+        $stmt->execute([$parent]);
+        if ($stmt->rowCount() > 0) {
+            while ($this->child = $stmt->fetch()) {
                 $this->result[] = $this->child['id'];
                 $this->get_childs_dir($this->child['id']);
             }
@@ -200,7 +194,7 @@ class Tree
         global $lng;
         $array = $this->result();
         $cnt = count($array);
-        $return = array();
+        $return =[];
         $x = 1;
         foreach ($array as $k => $v) {
             $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . functions::checkout($v) . '</a>';
@@ -222,18 +216,21 @@ class Link_view
     private $link_text;
     private $in;
     private $res;
+    /** @var PDO $db */
+    private $db;
 
     public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = 'index.php?id=')
     {
         $this->link_url = $link_url;
         $this->link_text = $link_text;
         $this->in = $in;
+        $this->db = App::getContainer()->get(PDO::class);
     }
 
     public function proccess($tpl)
     {
         if ($this->in) {
-            $this->res = array_map(array($this, $tpl), $this->in);
+            $this->res = array_map([$this, $tpl], $this->in);
 
             return $this;
         } else {
@@ -277,38 +274,34 @@ class Link_view
 class Hashtags
 {
     private $lib_id = false;
+    /** @var PDO $db */
+    private $db;
 
     public function __construct($id = 0)
     {
         $this->lib_id = $id;
+        $this->db = App::getContainer()->get(PDO::class);
     }
 
     public function get_all_tag_stats($tag)
     {
-        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_tags` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'"), 0);
-        if ($cnt) {
-            $res = array();
-            $sql = mysql_query("SELECT `lib_text_id` FROM `library_tags` WHERE `tag_name` = '" . mysql_real_escape_string($tag) . "'");
-            while ($row = mysql_fetch_assoc($sql)) {
-                $res[] = $row['lib_text_id'];
-            }
-
-            return $res;
-
+        $stmt = $this->db->prepare('SELECT `lib_text_id` FROM `library_tags` WHERE `tag_name` = ?');
+        $stmt->execute([$tag]);
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
         } else {
             return null;
         }
+        
+        return $res;
     }
 
     public function get_all_stat_tags($tpl = 0)
     {
-        $cnt = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id), 0);
-        if ($cnt) {
-            $res = array();
-            $sql = mysql_query("SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id);
-            while ($row = mysql_fetch_assoc($sql)) {
-                $res[] = $row['tag_name'];
-            }
+        $stmt = $this->db->prepare('SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = ?');
+        $stmt->execute([$this->lib_id]);
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
             $obj = new Link_view($res);
             if ($tpl == 1) {
                 return $obj->proccess('tpl_tag')->link_separator()->result();
@@ -325,45 +318,43 @@ class Hashtags
         if (empty($tags)) {
             return null;
         } else {
-            $res = "INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES ";
-            $array_res = array();
+            $stmt = $this->db->prepare('INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES (?, ?)');
             foreach ($tags as $tag) {
                 if (!$this->isset_tag($this->valid_tag($tag))) {
-                    $array_res[] = '("' . $this->lib_id . '", "' . mysql_real_escape_string($this->valid_tag($tag)) . '")';
+                    $stmt->execute([$this->lib_id, $this->valid_tag($tag)]);
                 }
             }
         }
-        if (sizeof($array_res) > 0) {
-            $res .= implode(', ', $array_res);
-
-            return mysql_query($res) ? mysql_affected_rows() : 0;
-        } else {
-            return null; // добавлять не чего
-        }
+        
+        return $stmt->rowCount();
     }
 
     public function del_tags()
     {
-        mysql_query("DELETE FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id);
-        return mysql_affected_rows();
+        $stmt = $this->db->prepare('DELETE FROM `library_tags` WHERE `lib_text_id` = ?');
+        $stmt->execute([$this->lib_id]);
+        return $stmt->rowCount();
     }
 
     public function isset_tag($tag)
     {
-        return $this->lib_id ? (mysql_num_rows(mysql_query("SELECT * FROM `library_tags` WHERE `lib_text_id` = " . $this->lib_id . " AND `tag_name` = '" . mysql_real_escape_string($tag) . "'")) ? 1 : 0) : 0;
+        $stmt = $this->db->prepare('SELECT * FROM `library_tags` WHERE `lib_text_id` = ? AND `tag_name` = ?');
+        $stmt->execute([$this->lib_id, $tag]);
+        
+        return $stmt->rowCount() > 0 ? true : false;
     }
 
     public function valid_tag($tag)
     {
-        return preg_replace(array('/[^[:alnum:]]/ui', '/\s\s+/'), ' ', preg_quote(mb_strtolower($tag)));
+        return preg_replace(['/[^[:alnum:]]/ui', '/\s\s+/'], ' ', preg_quote(mb_strtolower($tag)));
     }
     
     public function array_cloudtags() 
     {
-        $result = array();
-        $sql = mysql_query("SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;");
-        if (mysql_num_rows($sql)) {
-            while($row = mysql_fetch_assoc($sql)) {
+        $result = [];
+        $stmt = $this->db->query('SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;');
+        if ($stmt->rowCount()) {
+            while($row = $stmt->fetch()) {
                 $result[$row['tag_name']] = $row['count'];
             }
         return $result;            
@@ -376,7 +367,7 @@ class Hashtags
     {
         $array = $this->array_cloudtags();
         if ($array) {
-            $return = array();
+            $return = [];
             $max = max(array_values($array));
             $min = min(array_values($array));
             foreach ($array as $key => $value) {
@@ -388,7 +379,7 @@ class Hashtags
                     $tmp = round(($max + $value) / $max, 2);
                 }
 
-            $return[] = array('name' => $key, 'rang' => $tmp);
+            $return[] = ['name' => $key, 'rang' => $tmp];
         }
         uasort($return, $sort);
         
@@ -427,7 +418,7 @@ class Hashtags
         global $lng;
         
         $obj = new self();
-        $tags = mysql_num_rows(mysql_query("SELECT `id` FROM `library_tags` LIMIT 1"));
+        $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();
         $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : '<p>' . $lng['list_empty'] . '</p>');
         file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
         
@@ -438,8 +429,11 @@ class Hashtags
 class Rating
 {
     private $lib_id = false;
+    /** @var PDO $db */
+    private $db;
 
     public function __construct($id) {
+        $this->db = App::getContainer()->get(PDO::class);
         $this->lib_id = $id;
         $this->check();
     }
@@ -454,22 +448,30 @@ class Rating
         global $user_id;
                 
         $point = in_array($point, range(0, 5)) ? $point : 0;
-        if (mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0) {
-            mysql_query("UPDATE `cms_library_rating` SET `point` = " . $point . " WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id);
+        $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
+        $stmt->execute([$user_id, $this->lib_id]);
+        if ($stmt->fetchColumn() > 0) {
+            $stmt = $this->db->prepare('UPDATE `cms_library_rating` SET `point` = ? WHERE `user_id` = ? AND `st_id` = ?');
+            $stmt->execute([$point, $user_id, $this->lib_id]);
         } elseif ($user_id && $this->lib_id > 0) {
-            mysql_query("INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (" . $user_id . ", " . $this->lib_id . ", " . $point . ")");
+            $stmt = $this->db->prepare('INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (?, ?, ?)');
+            $stmt->execute([$user_id, $this->lib_id, $point]);
         }
-        
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
     
     public function get_rate() {
-        return floor(mysql_result(mysql_query("SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = " . $this->lib_id), 0) * 2) / 2;
+        $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
+        $stmt->execute([$this->lib_id]);
+        
+        return floor($stmt->fetchColumn() * 2) / 2;
     }
     
     public function view_rate($anchor = 0) {
-        $res = ($anchor ? '<a href="#rating">' : '') . functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', array('alt' => 'rating ' . $this->lib_id . ' article')) . ($anchor ? '</a>' : '') . ' (' . mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = " . $this->lib_id), 0) . ')';
+        $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
+        $stmt->execute([$this->lib_id]);
+        $res = ($anchor ? '<a href="#rating">' : '') . functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', ['alt' => 'rating ' . $this->lib_id . ' article']) . ($anchor ? '</a>' : '') . ' (' . $stmt->fetchColumn() . ')';
         
         return $res;
     }
@@ -477,9 +479,9 @@ class Rating
     public function get_vote() {
         global $user_id;
         
-        $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0 ? mysql_result(mysql_query("SELECT `point` FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id . " LIMIT 1"), 0) : -1;
-        
-        return $res;
+        $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
+                        
+        return $stmt->execute([$user_id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
     }
     
     public function print_vote() {

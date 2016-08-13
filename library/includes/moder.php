@@ -1,27 +1,19 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
- 
+
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $lng_gal = core::load_lng('gallery');
 
   $obj = new Hashtags($id);  
-  $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
+  $type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article']) ? $_GET['type'] : redir404();
   
-  $author = ($type == 'article' && mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id && $user_id) ? 1 : 0;
+  $author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) ? 1 : 0;
   $adm || $author ?: redir404();
   
   if (isset($_POST['submit'])) {
     switch ($type) {
     case 'dir':
-      $sql = "UPDATE `library_cats` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', `description`='" . mysql_real_escape_string($_POST['description']) . "' " . (isset($_POST['move']) && mysql_result(mysql_query("SELECT count(*) FROM `library_cats`") , 0) > 1 ? ', `parent`=' . intval($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . intval($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . intval($_POST['user_add']) : '') . " WHERE `id`=" . $id;
+      $sql = "UPDATE `library_cats` SET `name`=" . $db->quote($_POST['name']) . ", `description`=" . $db->quote($_POST['description']) . " " . (isset($_POST['move']) && $db->query("SELECT count(*) FROM `library_cats`")->fetchColumn() > 1 ? ', `parent`=' . intval($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . intval($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . intval($_POST['user_add']) : '') . " WHERE `id`=" . $id;
       break;
 
     case 'article':
@@ -40,11 +32,11 @@ $lng_gal = core::load_lng('gallery');
       if ($handle->uploaded) {
         // Обрабатываем фото
         $handle->file_new_name_body = $id;
-        $handle->allowed = array(
+        $handle->allowed = [
           'image/jpeg',
           'image/gif',
           'image/png'
-        );
+        ];
         $handle->file_max_size = 1024 * $set['flsz'];
         $handle->file_overwrite = true;
         $handle->image_x = $handle->image_src_x;
@@ -78,19 +70,19 @@ $lng_gal = core::load_lng('gallery');
         }
         $handle->clean();
       }
-      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) . ', ' : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "' " . ($adm ? ", `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . " WHERE `id`=" . $id;
+      $sql = "UPDATE `library_texts` SET `name`=" . $db->quote($_POST['name']) . ", " . ($_POST['text'] != 'do_not_change' ? " `text`=" . $db->quote($_POST['text']) . ", " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) . ', ' : '') . " `announce`=" . $db->quote(mb_substr(trim($_POST['announce']), 0, 500)) . " " . ($adm ? ", `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . " WHERE `id`=" . $id;
       break;
     }
-    if (mysql_query($sql)) {
-      echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
-    }
+    $db->exec($sql);
+    echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    
   }
   else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->get_childs_dir()->result();
-    $sqlsel = mysql_query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
-    $row = mysql_fetch_assoc(mysql_query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id));
-    $empty = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1;
+    $sqlsel = $db->query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
+    $row = $db->query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id)->fetch();
+    $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
     
     if (!$row) {
       redir404();
@@ -125,7 +117,7 @@ $lng_gal = core::load_lng('gallery');
     ? '<h3>' . $lng_lib['tags'] . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
     : '');
     if ($adm) {
-    if (mysql_num_rows($sqlsel) > 1) { 
+    if ($sqlsel->rowCount() > 1) { 
         echo '<h3>' . $lng_lib['move_dir'] . '</h3>'
         . '<div><select name="move">'
         . ($type == 'dir' 
@@ -134,7 +126,7 @@ $lng_gal = core::load_lng('gallery');
         : '')
         . ' value="0">' . $lng_lib['root'] . '</option>'
         : '');
-        while ($res = mysql_fetch_assoc($sqlsel)) {
+        while ($res = $sqlsel->fetch()) {
             if ($row['name'] != $res['name']) {
                 echo '<option '
                 . (($type == 'dir' && $row['parent'] == $res['id']) || ($type == 'article' && $row['cat_id'] == $res['id'])
@@ -160,8 +152,6 @@ $lng_gal = core::load_lng('gallery');
     . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
     . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . $lng_lib['comment_article'] . '</div>'
     . '<div class="rmenu">' 
-#    . '<h3>' . $lng['author'] . '</h3>'
-#    . '<div><input type="text" name="author" value="' . functions::checkout($row['uploader']) . '" /></div>' . PHP_EOL 
     . '<h3>' . $lng_lib['reads'] 
     . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
     }

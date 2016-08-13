@@ -37,5 +37,3 @@ Addtype image/png .png
 Addtype image/bmp .bmp
 AddType video/mp4 .mp4
 Addtype video/3gpp .3gp
-
-php_flag engine 0
