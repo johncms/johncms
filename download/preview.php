@@ -1,32 +1,20 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require_once ("../incfiles/head.php");
+require_once("../incfiles/head.php");
+
 if (isset ($_POST['submit'])) {
     if (!empty ($_POST['razmer'])) {
         $razmer = intval($_POST['razmer']);
     }
+
     $_SESSION['razm'] = $razmer;
     echo $lng_dl['preview_size_set'] . " $razmer*$razmer px<br/>";
-}
-else {
+} else {
     echo "<form action='?act=preview' method='post'><p>
 	" . $lng_dl['select_preview_size'] . ":<br/><select name='razmer'>";
+
     if (!empty ($_SESSION['razm'])) {
         $realr = $_SESSION['razm'];
         echo "<option value='" . $realr . "'>" . $realr . "*" . $realr . "</option>";
@@ -43,5 +31,3 @@ else {
 </select><input type='submit' name='submit' value='ok'/></p></form>";
 }
 echo "<p><a href='?'>" . $lng['back'] . "</a></p>";
-
-?>
