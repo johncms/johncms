@@ -213,7 +213,7 @@ if (in_array($act, $array_includes)) {
                     $nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' : '';
 
                     if ($total) {
-                        $sql2 = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
+                        $sql2 = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
                         echo $nav;
 
                         while ($row = $sql2->fetch()) {
@@ -261,14 +261,14 @@ if (in_array($act, $array_includes)) {
                 break;
 
             default:
-                $res = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id)->fetch();
+                $row = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id)->fetch();
 
-                if ($res['premod'] || $adm) {
+                if ($row['premod'] || $adm) {
 
                     // Счетчик прочтений
                     if (!isset($_SESSION['lib']) || isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
                         $_SESSION['lib'] = $id;
-                        $db->exec('UPDATE `library_texts` SET  `count_views`=' . ($res['count_views'] ? ++$res['count_views'] : 1) . ' WHERE `id`=' . $id);
+                        $db->exec('UPDATE `library_texts` SET  `count_views`=' . ($row['count_views'] ? ++$row['count_views'] : 1) . ' WHERE `id`=' . $id);
                     }
 
                     // Запрашиваем выбранную статью из базы
@@ -285,8 +285,8 @@ if (in_array($act, $array_includes)) {
                     }
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
-                    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $res['cat_id'] . " LIMIT 1")->fetch();
-                    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
+                    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $row['cat_id'] . " LIMIT 1")->fetch();
+                    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($row['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
@@ -296,19 +296,19 @@ if (in_array($act, $array_includes)) {
                     if ($page == 1) {
                         echo '<div class="list2">';
                         // Заголовок статьи
-                        echo '<h2>' . functions::checkout($res['name']) . '</h2>';
+                        echo '<h2>' . functions::checkout($row['name']) . '</h2>';
 
                         // Описание к статье
-                        $obj = new Hashtags($res['id']);
-                        $rate = new Rating($res['id']);
-                        $uploader = $res['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['uploader_id'] . '">' . functions::checkout($res['uploader']) . '</a>' : functions::checkout($res['uploader']);
+                        $obj = new Hashtags($row['id']);
+                        $rate = new Rating($row['id']);
+                        $uploader = $row['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
                         echo '<table class="desc">'
                             // Тэги
                             . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-                            . '<td>' . $uploader . ' (' . functions::display_date($res['time']) . ')</td>'
+                            . '<td>' . $uploader . ' (' . functions::display_date($row['time']) . ')</td>'
                             . '</tr>'
                             // Рейтинг
                             . '<tr>'
@@ -318,12 +318,12 @@ if (in_array($act, $array_includes)) {
                             // Прочтений
                             . '<tr>'
                             . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
-                            . '<td>' . $res['count_views'] . '</td>'
+                            . '<td>' . $row['count_views'] . '</td>'
                             . '</tr>'
                             // Комментарии
                             . '<tr>';
-                        if ($res['comments']) {
-                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $res['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $res['count_comments'] . '</td>';
+                        if ($row['comments']) {
+                            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['comm_count'] . '</td>';
                         } else {
                             echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
                         }

@@ -1,18 +1,10 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
  
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 ob_end_clean();
 ob_start();
-$type = isset($_GET['type']) && in_array($_GET['type'], array('txt', 'fb2')) ? $_GET['type'] : redir404();
+$type = isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2']) ? $_GET['type'] : redir404();
 $image_lib = file_exists('../files/library/images/orig/' . $id . '.png') 
 ? chunk_split(base64_encode(file_get_contents('../files/library/images/orig/' . $id . '.png')))
  : '';
@@ -21,7 +13,7 @@ $out = '';
 
 switch ($type) {
 case 'txt':
-  $out .= bbcode::notags(mysql_result(mysql_query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0));
+  $out .= bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn());
   break;
 
 case 'fb2':
@@ -62,9 +54,9 @@ case 'fb2':
   . '</description>' . PHP_EOL 
   . '<body>' . PHP_EOL . '<title>';
   
-  $out.= '<p>' . mysql_result(mysql_query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0) . '</p>' . PHP_EOL;
+  $out.= '<p>' . $db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn() . '</p>' . PHP_EOL;
   $out.= '</title>' . PHP_EOL . '<section>';
-  $out.= '<p>' . str_replace('<p></p>', '<empty-line/>', str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', bbcode::notags(mysql_result(mysql_query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0)))) . '</p>' . PHP_EOL;
+  $out.= '<p>' . str_replace('<p></p>', '<empty-line/>', str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn()))) . '</p>' . PHP_EOL;
   $out.= '</section>' . PHP_EOL . '</body>' . PHP_EOL;
   
   if ($image_lib) {

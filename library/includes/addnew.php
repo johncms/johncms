@@ -1,17 +1,9 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $lng_gal = core::load_lng('gallery');
 
-if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0) && isset($id) && $user_id)) {
+if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
     $flood = functions::antiflood();
     if ($flood) {
@@ -28,7 +20,7 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
     $tag = isset($_POST['tags']) ? functions::checkin($_POST['tags']) : '';
 
     if (isset($_POST['submit'])) {
-        $err = array();
+        $err = [];
 
         if (empty($_POST['name'])) {
             $err[] = $lng['error_empty_title'];
@@ -84,9 +76,9 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
               INSERT INTO `library_texts`
               SET
                 `cat_id` = $id,
-                `name` = '" . mysql_real_escape_string($name) . "',
-                `announce` = '" . mysql_real_escape_string($announce) . "',
-                `text` = '" . mysql_real_escape_string($text) . "',
+                `name` = " . $db->quote($name) . ",
+                `announce` = " . $db->quote($announce) . ",
+                `text` = " . $db->quote($text) . ",
                 `uploader` = '" . $login . "',
                 `uploader_id` = " . core::$user_id . ",
                 `premod` = $md,
@@ -94,18 +86,18 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                 `time` = " . time() . "
             ";
 
-            if (mysql_query($sql)) {
-                $cid = mysql_insert_id();
+            if ($db->query($sql)) {
+                $cid = $db->lastInsertId();
 
                 $handle = new upload($_FILES['image']);
                 if ($handle->uploaded) {
                     // Обрабатываем фото
                     $handle->file_new_name_body = $cid;
-                    $handle->allowed = array(
+                    $handle->allowed =[
                         'image/jpeg',
                         'image/gif',
                         'image/png'
-                    );
+                    ];
                     $handle->file_max_size = 1024 * $set['flsz'];
                     $handle->file_overwrite = true;
                     $handle->image_x = $handle->image_src_x;
@@ -152,12 +144,12 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                 }
 
                 echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
-                mysql_query("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
+                $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
                 echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
                 require_once('../incfiles/end.php');
                 exit;
             } else {
-                echo mysql_error();
+                echo $db->errorInfo();
 //                exit;
             }
         }
