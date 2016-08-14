@@ -1,24 +1,13 @@
 <?php
 
-/*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                             Content Management System              //
-// Официальный сайт сайт проекта:      http://johncms.com                     //
-// Дополнительный сайт поддержки:      http://gazenwagen.com                  //
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS core team:                                                         //
-// Евгений Рябинин aka john77          john77@gazenwagen.com                  //
-// Олег Касьянов aka AlkatraZ          alkatraz@gazenwagen.com                //
-//                                                                            //
-// Информацию о версиях смотрите в прилагаемом файле version.txt              //
-////////////////////////////////////////////////////////////////////////////////
-*/
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require_once("../incfiles/head.php");
+
 if (!empty($_GET['cat'])) {
     $cat = $_GET['cat'];
     provcat($cat);
+
     if ($rights == 4 || $rights >= 6) {
         echo "<form action='?act=upl' method='post' enctype='multipart/form-data'>
          <p>" . $lng['select'] . " (max " . $set['flsz'] . " кб.):<br/>
@@ -39,4 +28,3 @@ if (!empty($_GET['cat'])) {
 } else {
     echo 'ERROR';
 }
-?>
