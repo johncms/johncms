@@ -20,7 +20,7 @@ if ($rights == 4 || $rights >= 6) {
 
             if (!in_array($file1, $drt)) {
                 if (is_dir("$loadroot/$file1")) {
-                    $db->exec("INSERT INTO `download` VALUES(0,''," . $db->quote($loadroot) . ",'" . time() . "'," . $db->quote($file1) . ",'cat','','',''," . $db->quote($file1) . ",'');");
+                    $db->exec("INSERT INTO `download` VALUES(0,''," . $db->quote($loadroot) . ",'" . time() . "'," . $db->quote($file1) . ",'cat','','',''," . $db->quote($file1) . ",'')");
                 }
             }
         }
@@ -37,7 +37,7 @@ if ($rights == 4 || $rights >= 6) {
             while (($file = readdir($diropen))) {
                 if ($file != "." && $file != ".." && $file != "index.php") {
                     $pap = "$obn1[adres]/$obn1[name]";
-                    $obn2 = $db->query("SELECT * FROM `download` WHERE name = " . $db->quote($file) . " AND adres = " . $db->quote($pap) . " ;");
+                    $obn2 = $db->query("SELECT * FROM `download` WHERE name = " . $db->quote($file) . " AND adres = " . $db->quote($pap) . "");
 
                     while ($obndir = $obn2->fetch()) {
                         $fod[] = $obndir['name'];
