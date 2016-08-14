@@ -2,16 +2,16 @@
 /*
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS                             Content Management System              //
-// Îôèöèàëüíûé ñàéò ñàéò ïðîåêòà:      http://johncms.com                     //
-// Äîïîëíèòåëüíûé ñàéò ïîääåðæêè:      http://gazenwagen.com                  //
+// ÐžÑ„Ð¸Ñ†Ð¸Ð°Ð»ÑŒÐ½Ñ‹Ð¹ ÑÐ°Ð¹Ñ‚ ÑÐ°Ð¹Ñ‚ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð°:      http://johncms.com                     //
+// Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ð¹ ÑÐ°Ð¹Ñ‚ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶ÐºÐ¸:      http://gazenwagen.com                  //
 ////////////////////////////////////////////////////////////////////////////////
 // JohnCMS core team:                                                         //
-// Åâãåíèé Ðÿáèíèí aka john77          john77@gazenwagen.com                  //
-// Îëåã Êàñüÿíîâ aka AlkatraZ          alkatraz@gazenwagen.com                //
+// Ð•Ð²Ð³ÐµÐ½Ð¸Ð¹ Ð ÑÐ±Ð¸Ð½Ð¸Ð½ aka john77          john77@gazenwagen.com                  //
+// ÐžÐ»ÐµÐ³ ÐšÐ°ÑÑŒÑÐ½Ð¾Ð² aka AlkatraZ          alkatraz@gazenwagen.com                //
 //                                                                            //
-// Èíôîðìàöèþ î âåðñèÿõ ñìîòðèòå â ïðèëàãàåìîì ôàéëå version.txt              //
+// Ð˜Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ Ð²ÐµÑ€ÑÐ¸ÑÑ… ÑÐ¼Ð¾Ñ‚Ñ€Ð¸Ñ‚Ðµ Ð² Ð¿Ñ€Ð¸Ð»Ð°Ð³Ð°ÐµÐ¼Ð¾Ð¼ Ñ„Ð°Ð¹Ð»Ðµ version.txt              //
 ////////////////////////////////////////////////////////////////////////////////
-// Áèáëèîòåêà PEAR  http://pear.php.net
+// Ð‘Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ° PEAR  http://pear.php.net
 */
 
 defined('_IN_JOHNCMS') or die('Error:restricted access');
@@ -61,7 +61,7 @@ class PEAR {
     var $_error_class = 'PEAR_Error';
     var $_expected_errors = array();
 
-    function PEAR($error_class = null) {
+    public function __construct($error_class = null) {
         $classname = strtolower(get_class($this));
         if ($this->_debug) {
             print "PEAR constructor called, class=$classname\n";
@@ -441,7 +441,7 @@ class PEAR_Error {
     var $userinfo = '';
     var $backtrace = null;
 
-    function PEAR_Error($message = 'unknown error', $code = null, $mode = null, $options = null, $userinfo = null) {
+    public function __construct($message = 'unknown error', $code = null, $mode = null, $options = null, $userinfo = null) {
         if ($mode === null) {
             $mode = PEAR_ERROR_RETURN;
         }

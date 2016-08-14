@@ -1,27 +1,21 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once("../incfiles/head.php");
 
-$im = array();
+$im = [];
 $delimag = opendir("$filesroot/graftemp");
+
 while ($imd = readdir($delimag)) {
     if ($imd != "." && $imd != ".." && $imd != "index.php") {
         $im[] = $imd;
     }
 }
+
 closedir($delimag);
 $totalim = count($im);
+
 for ($imi = 0; $imi < $totalim; $imi++) {
     $filtime[$imi] = filemtime("$filesroot/graftemp/$im[$imi]");
     $tim = time();
@@ -30,53 +24,56 @@ for ($imi = 0; $imi < $totalim; $imi++) {
         @unlink("$filesroot/graftemp/$im[$imi]");
     }
 }
-if ($_GET['file'] == '') {
+
+if (empty($_GET['file'])) {
     echo functions::display_error($lng_dl['file_not_selected'], '<a href="index.php">' . $lng['back'] . '</a>');
     require_once('../incfiles/end.php');
     exit;
 }
-$file = intval(trim($_GET['file']));
-$file1 = mysql_query("select * from `download` where type = 'file' and id = '" . $file . "';");
-$file2 = mysql_num_rows($file1);
-$adrfile = mysql_fetch_array($file1);
-if (($file1 == 0) || (!is_file("$adrfile[adres]/$adrfile[name]"))) {
+
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
+$file = intval($_GET['file']);
+$adrfile = $db->query("select * from `download` where type = 'file' and id = " . $file)->fetch();
+
+if (!is_file($adrfile['adres'] . '/' . $adrfile['name'])) {
     echo functions::display_error($lng_dl['file_select_error'], '<a href="index.php">' . $lng['back'] . '</a>');
     require_once('../incfiles/end.php');
     exit;
 }
+
 $_SESSION['downl'] = rand(1000, 9999);
 $siz = filesize("$adrfile[adres]/$adrfile[name]");
 $siz = round($siz / 1024, 2);
 $filtime = filemtime("$adrfile[adres]/$adrfile[name]");
 $filtime = date("d.m.Y", $filtime);
-
-$dnam = mysql_query("select * from `download` where type = 'cat' and id = '" . $adrfile['refid'] . "';");
-$dnam1 = mysql_fetch_array($dnam);
-$dirname = "$dnam1[text]";
-$dirid = "$dnam1[id]";
+$dnam1 = $db->query("select * from `download` where type = 'cat' and id = '" . $adrfile['refid'] . "'")->fetch();
+$dirname = $dnam1['text'];
+$dirid = $dnam1['id'];
 $nadir = $adrfile['refid'];
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['downloads'] . '</b></a>';
+
 // Получаем структуру каталогов
 while ($nadir != "" && $nadir != "0") {
     echo ' | <a href="?cat=' . $nadir . '">' . $dirname . '</a><br/>';
-    $dnamm = mysql_query("select * from `download` where type = 'cat' and id = '" . $nadir . "';");
-    $dnamm1 = mysql_fetch_array($dnamm);
-    $dnamm2 = mysql_query("select * from `download` where type = 'cat' and id = '" . $dnamm1['refid'] . "';");
-    $dnamm3 = mysql_fetch_array($dnamm2);
+    $dnamm1 = $db->query("select * from `download` where type = 'cat' and id = '" . $nadir . "'")->fetch();
+    $dnamm3 = $db->query("select * from `download` where type = 'cat' and id = '" . $dnamm1['refid'] . "'")->fetch();
     $nadir = $dnamm1['refid'];
     $dirname = $dnamm3['text'];
 }
+
 echo '</div><div class="menu"><p>';
 echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br/>' .
     '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br/>';
 
-$graf = array
-(
+$graf = [
     "gif",
     "jpg",
-    "png"
-);
+    "png",
+];
 $prg = strtolower(functions::format($adrfile['name']));
+
 if (in_array($prg, $graf)) {
     $sizsf = GetImageSize("$adrfile[adres]/$adrfile[name]");
     $widthf = $sizsf[0];
@@ -84,27 +81,33 @@ if (in_array($prg, $graf)) {
     #  !предпросмотр!
     $namefile = $adrfile['name'];
     $infile = "$adrfile[adres]/$namefile";
+
     if (!empty($_SESSION['razm'])) {
         $razm = $_SESSION['razm'];
     } else {
         $razm = 110;
     }
+
     $sizs = GetImageSize($infile);
     $width = $sizs[0];
     $height = $sizs[1];
     $quality = 100;
     $x_ratio = $razm / $width;
     $y_ratio = $razm / $height;
+
     if (($width <= $razm) && ($height <= $razm)) {
         $tn_width = $width;
         $tn_height = $height;
-    } else if (($x_ratio * $height) < $razm) {
-        $tn_height = ceil($x_ratio * $height);
-        $tn_width = $razm;
     } else {
-        $tn_width = ceil($y_ratio * $width);
-        $tn_height = $razm;
+        if (($x_ratio * $height) < $razm) {
+            $tn_height = ceil($x_ratio * $height);
+            $tn_width = $razm;
+        } else {
+            $tn_width = ceil($y_ratio * $width);
+            $tn_height = $razm;
+        }
     }
+
     switch ($prg) {
         case "gif":
             $im = ImageCreateFromGIF($infile);
@@ -122,6 +125,7 @@ if (in_array($prg, $graf)) {
             $im = ImageCreateFromPNG($infile);
             break;
     }
+
     $im1 = ImageCreateTrueColor($tn_width, $tn_height);
     imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
     $path = "$filesroot/graftemp";
@@ -139,20 +143,31 @@ if ($prg == "mp3") {
     $result = $id3->read("$adrfile[adres]/$adrfile[name]");
     $result = $id3->study();
     echo '<p>';
-    if (!empty($id3->artists))
+
+    if (!empty($id3->artists)) {
         echo '<div><b>' . $lng_dl['artist'] . ':</b> ' . $id3->artists . '</div>';
-    if (!empty($id3->album))
+    }
+
+    if (!empty($id3->album)) {
         echo '<div><b>' . $lng_dl['album'] . ':</b> ' . $id3->album . '</div>';
-    if (!empty($id3->year))
+    }
+
+    if (!empty($id3->year)) {
         echo '<div><b>' . $lng_dl['released'] . ':</b> ' . $id3->year . '</div>';
-    if (!empty($id3->name))
+    }
+
+    if (!empty($id3->name)) {
         echo '<div><b>' . $lng['title'] . ':</b> ' . $id3->name . '</div>';
+    }
+
     echo '</p>';
+
     if ($id3->getTag('bitrate')) {
         echo '<b>' . $lng_dl['bitrate'] . ':</b> ' . $id3->getTag('bitrate') . ' kBit/sec<br/>' .
             '<b>' . $lng_dl['duration'] . ':</b> ' . $id3->getTag('length') . '<br/>';
     }
 }
+
 if (!empty($adrfile['text'])) {
     echo "<p>Описание:<br/>$adrfile[text]</p>";
 }
@@ -160,12 +175,14 @@ if (!empty($adrfile['text'])) {
 if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
     if (!empty($adrfile['screen'])) {
         $infile = "$screenroot/$adrfile[screen]";
+
         if (!empty($_SESSION['razm'])) {
             $razm = $_SESSION['razm'];
         } else {
             $razm = 110;
         }
-        $sizs = GetImageSize($infile);
+
+        $sizs = getimagesize($infile);
         $width = $sizs[0];
         $height = $sizs[1];
         $quality = 100;
@@ -174,20 +191,25 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
         $tekst = $set['copyright'];
         $x_ratio = $razm / $width;
         $y_ratio = $razm / $height;
+
         if (($width <= $razm) && ($height <= $razm)) {
             $tn_width = $width;
             $tn_height = $height;
-        } else if (($x_ratio * $height) < $razm) {
-            $tn_height = ceil($x_ratio * $height);
-            $tn_width = $razm;
         } else {
-            $tn_width = ceil($y_ratio * $width);
-            $tn_height = $razm;
+            if (($x_ratio * $height) < $razm) {
+                $tn_height = ceil($x_ratio * $height);
+                $tn_width = $razm;
+            } else {
+                $tn_width = ceil($y_ratio * $width);
+                $tn_height = $razm;
+            }
         }
+
         $format = functions::format($infile);
+
         switch ($format) {
             case "gif":
-                $im = ImageCreateFromGIF($infile);
+                $im = imagecreatefromgif($infile);
                 break;
 
             case "jpg":
@@ -202,13 +224,16 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
                 $im = ImageCreateFromPNG($infile);
                 break;
         }
+
         $color = imagecolorallocate($im, 55, 255, 255);
         $fontdir = opendir("$filesroot/fonts");
+
         while ($ttf = readdir($fontdir)) {
             if ($ttf != "." && $ttf != ".." && $ttf != "index.php") {
                 $arr[] = $ttf;
             }
         }
+
         $it = count($arr);
         $ii = rand(0, $it - 1);
         $fontus = "$filesroot/fonts/$arr[$ii]";
@@ -218,6 +243,7 @@ if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
         $namefile = "$adrfile[name]";
         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
         $path = "$filesroot/graftemp";
+
         switch ($format) {
             case "gif":
                 $imagnam = "$path/$namefile.temp.gif";
@@ -256,9 +282,7 @@ echo '</p></div><div class="gmenu"><p>' .
     '<a href="index.php?act=down&amp;id=' . $file . '"><img src="../images/file.gif" border="0" alt=""/></a>&#160;' .
     '<a href="index.php?act=down&amp;id=' . $file . '">' . $lng['download'] . '</a></h3>' .
     '<small><span class="gray">' . $lng_dl['size'] . ':</span> <b>' . $siz . '</b> kB<br />';
-if ($prg == "zip") {
-    echo "<a href='?act=zip&amp;file=" . $file . "'>Открыть архив</a><br/>";
-}
+
 echo '<span class="gray">' . $lng_dl['downloads'] . ':</span> <b>' . $dl_count . '</b>';
 
 if (!empty($adrfile['soft'])) {
@@ -273,18 +297,21 @@ echo '</small></p>';
 
 // Рейтинг файла
 echo '<p><form action="index.php?act=rat&amp;id=' . $file . '" method="post"><select name="rat" style="font-size: x-small;">';
+
 for ($i = 10; $i >= 1; --$i) {
     echo "<option>$i</option>";
 }
+
 echo '</select><input type="submit" value="' . $lng_dl['rate'] . '" style="font-size: x-small;"/></form></p>';
 
 if ($set['mod_down_comm'] || $rights >= 7) {
-    $totalkomm = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'komm' AND `refid` = '$file'"), 0);
+    $totalkomm = $db->query("SELECT COUNT(*) FROM `download` WHERE `type` = 'komm' AND `refid` = '$file'")->fetchColumn();
     echo '<p><small><a href="index.php?act=komm&amp;id=' . $file . '">' . $lng['comments'] . '</a> (' . $totalkomm . ')</small></p>';
 }
 
 echo '</div>';
 echo '<div class="phdr"><a href="index.php">' . $lng['downloads'] . '</a></div>';
+
 if (($rights == 4 || $rights >= 6) && (!empty($_GET['file']))) {
     echo '<p>';
     if ((!in_array($prg, $graf)) && ($prg != "mp3")) {

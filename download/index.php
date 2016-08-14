@@ -53,7 +53,6 @@ $array = [
     'addkomm',
     'komm',
     'new',
-    'zip',
     'down',
     'dfile',
     'opis',
