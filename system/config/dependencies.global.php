@@ -3,7 +3,7 @@
 return [
     'dependencies' => [
         'factories' => [
-            PDO::class => Johncms\Database\PdoFactory::class,
+            PDO::class => Mobicms\Database\PdoFactory::class,
         ],
     ],
 ];

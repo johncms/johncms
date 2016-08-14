@@ -1,4 +1,5 @@
-/files/cache/*.dat
+/files/cache/*
+!/files/cache/.htaccess
 /system/vendor
 /system/config/*.local.php
 /system/config/local.php
