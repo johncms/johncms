@@ -136,7 +136,7 @@ if ($user_id) {
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
-            $total = counters::forum_new();
+            $total = counters::forumNew();
             echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng['unread'] . '</div>';
 
             if ($total > $kmess) {
