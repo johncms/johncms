@@ -25,7 +25,6 @@ $array = [
     'ip_whois',
     'languages',
     'settings',
-    'sitemap',
     'smilies',
     'access',
     'antispy',
@@ -53,11 +52,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['admin_panel'] . '</b></div>';
 
-    /*
-    -----------------------------------------------------------------
-    Блок пользователей
-    -----------------------------------------------------------------
-    */
+    // Блок пользователей
     echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
 
     if ($regtotal && core::$user_rights >= 6) {
@@ -86,8 +81,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>';
 
         if (core::$user_rights == 9) {
-            echo '<br/><li><a href="index.php?act=sitemap">' . $lng['site_map'] . '</a></li>' .
-                '<li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' .
+            echo '<br/><li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' .
                 '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>';
         }
 
