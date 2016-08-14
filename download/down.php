@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-$mas = $db->query("select * from `download` where `id` = '$id'")->fetch();
+$mas = $db->query("select * from `download` where `id` = " . $id)->fetch();
 
 if (!empty ($mas['name'])) {
     if (file_exists($mas['adres'] . '/' . $mas['name'])) {

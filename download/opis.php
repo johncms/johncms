@@ -28,8 +28,8 @@ if ($rights == 4 || $rights >= 6) {
     $stt = "$adrfile[text]";
 
     if (isset ($_POST['submit'])) {
-        $newt = functions::check($_POST['newt']);
-        $db->exec("update `download` set `text`='" . $newt . "' where `id`='" . $file . "';");
+        $newt = trim($_POST['newt']);
+        $db->exec("update `download` set `text`=" . $db->quote($newt) . " where `id`='" . $file . "'");
         echo $lng_dl['description_changed'] . "<br/>";
     }
 
