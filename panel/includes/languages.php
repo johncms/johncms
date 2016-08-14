@@ -37,7 +37,7 @@ $lng_del = array_diff(array_keys(core::$lng_list), array_keys($lng_list));
 if (!empty($lng_add) || !empty($lng_del)) {
     if (!empty($lng_del) && in_array($set['lng'], $lng_del)) {
         // Если удаленный язык был системный, то меняем на первый доступный
-        $db->exec("UPDATE `cms_settings` SET `val` = '" . key($lng_list[]) . "' WHERE `key` = 'lng' LIMIT 1");
+        $db->exec("UPDATE `cms_settings` SET `val` = '" . key($lng_list[$iso]) . "' WHERE `key` = 'lng' LIMIT 1");
     }
 
     $req = $db->query("SELECT * FROM `cms_settings` WHERE `key` = 'lng_list'");
