@@ -24,15 +24,6 @@ switch ($act) {
         $headmod = 'mainpage';
         require('incfiles/head.php');
         include 'pages/mainmenu.php';
-
-        // Карта сайта
-        if (isset($set['sitemap'])) {
-            $set_map = unserialize($set['sitemap']);
-            if (($set_map['forum'] || $set_map['lib']) && ($set_map['users'] || !$user_id) && ($set_map['browsers'] || !$is_mobile)) {
-                $map = new sitemap();
-                echo '<div class="sitemap">' . $map->site() . '</div>';
-            }
-        }
 }
 
 require('incfiles/end.php');
