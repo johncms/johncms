@@ -51,3 +51,39 @@ class App
         return self::$container;
     }
 }
+
+////////////////////////////////////////////////////////////
+// Internationalization (temporary solution)              //
+////////////////////////////////////////////////////////////
+
+$locale = 'ru';
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+//$translator->setCache(App::getContainer()->get(Zend\Cache\Storage\StorageInterface::class));
+$translator->setLocale($locale);
+unset($translator);
+
+function _t($message, $textDomain = 'default', $locale = null)
+{
+    /** @var Zend\I18n\Translator\Translator $translator */
+    static $translator;
+
+    if (null === $translator) {
+        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+    }
+
+    return $translator->translate($message, $textDomain, $locale);
+}
+
+function _p($singular, $plural, $number, $textDomain = 'default', $locale = null)
+{
+    /** @var Zend\I18n\Translator\Translator $translator */
+    static $translator;
+
+    if (null === $translator) {
+        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+    }
+
+    return $translator->translatePlural($singular, $plural, $number, $textDomain, $locale);
+}
