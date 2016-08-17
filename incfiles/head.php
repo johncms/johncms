@@ -1,14 +1,5 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
@@ -31,16 +22,13 @@ echo '<!DOCTYPE html>' .
     (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '">' : '') .
     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
-    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
+    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News') . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
     "\n" . '</head><body>';
 
-/*
------------------------------------------------------------------
-Рекламный модуль
------------------------------------------------------------------
-*/
+// Рекламный модуль
 $cms_ads = [];
+
 if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
     $view = $user_id ? 2 : 1;
     $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
@@ -75,57 +63,33 @@ if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
     }
 }
 
-/*
------------------------------------------------------------------
-Рекламный блок сайта
------------------------------------------------------------------
-*/
+// Рекламный блок сайта
 if (isset($cms_ads[0])) {
     echo $cms_ads[0];
 }
 
-/*
------------------------------------------------------------------
-Выводим логотип и переключатель языков
------------------------------------------------------------------
-*/
+// Выводим логотип и переключатель языков
 echo '<table style="width: 100%;" class="logo"><tr>' .
     '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . functions::image('logo.gif', ['class' => '']) . '</a></td>' .
     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
     '</tr></table>';
 
-/*
------------------------------------------------------------------
-Выводим верхний блок с приветствием
------------------------------------------------------------------
-*/
-echo '<div class="header"> ' . $lng['hi'] . ', ' . ($user_id ? '<b>' . $login . '</b>!' : $lng['guest'] . '!') . '</div>';
+// Выводим верхний блок с приветствием
+echo '<div class="header"> ' . _t('Hi') . ', ' . ($user_id ? '<b>' . $login . '</b>!' : _t('Guest') . '!') . '</div>';
 
-/*
------------------------------------------------------------------
-Главное меню пользователя
------------------------------------------------------------------
-*/
+// Главное меню пользователя
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . $lng['homepage'] . '</a><br/>' : '') .
-    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . functions::image('menu_cabinet.png') . $lng['personal'] . '</a><br/>' : '') .
-    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . $lng['login'] . '</a>' : '') .
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home') . '</a><br/>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . functions::image('menu_cabinet.png') . _t('Personal') . '</a><br/>' : '') .
+    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login') . '</a>' : '') .
     '</div><div class="maintxt">';
 
-/*
------------------------------------------------------------------
-Рекламный блок сайта
------------------------------------------------------------------
-*/
+// Рекламный блок сайта
 if (!empty($cms_ads[1])) {
     echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
 }
 
-/*
------------------------------------------------------------------
-Фиксация местоположений посетителей
------------------------------------------------------------------
-*/
+// Фиксация местоположений посетителей
 $sql = '';
 $set_karma = unserialize($set['karma']);
 
@@ -202,26 +166,18 @@ if ($user_id) {
     }
 }
 
-/*
------------------------------------------------------------------
-Выводим сообщение о Бане
------------------------------------------------------------------
-*/
+// Выводим сообщение о Бане
 if (!empty($ban)) {
-    echo '<div class="alarm">' . $lng['ban'] . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . $lng['in_detail'] . '</a></div>';
+    echo '<div class="alarm">' . _t('Ban') . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . _t('Details') . '</a></div>';
 }
 
-/*
------------------------------------------------------------------
-Ссылки на непрочитанное
------------------------------------------------------------------
-*/
+// Ссылки на непрочитанное
 if ($user_id) {
     $list = [];
     $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `sys`='1' AND `delete`!='$user_id'")->fetchColumn();
 
     if ($new_sys_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">Система</a> (+' . $new_sys_mail . ')';
+        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">' . _t('System') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -234,20 +190,20 @@ if ($user_id) {
                             AND `cms_mail`.`spam`='0'")->fetchColumn();
 
     if ($new_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . $lng['mail'] . '</a> (+' . $new_mail . ')';
+        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . _t('Mail') . '</a> (+' . $new_mail . ')';
     }
 
     if ($datauser['comm_count'] > $datauser['comm_old']) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . $lng['guestbook'] . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
     }
 
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . $lng['albums_comments'] . '</a>';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . _t('Comments') . '</a>';
     }
 
     if (!empty($list)) {
-        echo '<div class="rmenu">' . $lng['unread'] . ': ' . functions::display_menu($list, ', ') . '</div>';
+        echo '<div class="rmenu">' . _t('Unread') . ': ' . functions::display_menu($list, ', ') . '</div>';
     }
 }
