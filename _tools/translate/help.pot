@@ -1,0 +1,186 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../help\n"
+"X-Poedit-KeywordsList: _td\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/admsmilies.php:12 includes/smilies.php:14
+msgid "For administration"
+msgstr ""
+
+#: includes/admsmilies.php:19 includes/my_smilies.php:6 includes/smilies.php:10
+#: includes/usersmilies.php:35
+msgid "My smilies"
+msgstr ""
+
+#: includes/admsmilies.php:45 includes/my_smilies.php:37
+#: includes/usersmilies.php:51
+msgid "or"
+msgstr ""
+
+#: includes/avatars.php:13
+msgid "Avatar has been successfully applied"
+msgstr ""
+
+#: includes/avatars.php:19
+msgid "Set to Profile"
+msgstr ""
+
+#: includes/avatars.php:20
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr ""
+
+#: includes/forum.php:6 index.php:56
+msgid "Forum rules"
+msgstr ""
+
+#: includes/forum.php:20
+msgid "FORBIDDEN"
+msgstr ""
+
+#: includes/forum.php:22
+msgid "Advertising messages"
+msgstr ""
+
+#: includes/forum.php:23
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr ""
+
+#: includes/forum.php:24
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr ""
+
+#: includes/forum.php:25
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr ""
+
+#: includes/forum.php:26
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr ""
+
+#: includes/forum.php:27
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr ""
+
+#: includes/forum.php:28
+msgid "Post messages not related to the topic"
+msgstr ""
+
+#: includes/forum.php:29
+msgid "Continuing topics that have been closed by moderator"
+msgstr ""
+
+#: includes/forum.php:32
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr ""
+
+#: includes/forum.php:34
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr ""
+
+#: includes/forum.php:35
+msgid "Register the nicknames having offensive tone for other users"
+msgstr ""
+
+#: includes/forum.php:38
+msgid "UNACCEPTABLE"
+msgstr ""
+
+#: includes/forum.php:40
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr ""
+
+#: includes/forum.php:41
+msgid "Post messages only contains external link"
+msgstr ""
+
+#: includes/forum.php:42
+msgid "Post messages written in translite"
+msgstr ""
+
+#: includes/forum.php:43
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr ""
+
+#: includes/forum.php:48
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr ""
+
+#: includes/forum.php:49
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr ""
+
+#: includes/my_smilies.php:44
+msgid "Add Smilies"
+msgstr ""
+
+#: includes/tags.php:8 index.php:57
+msgid "bbCode Tags"
+msgstr ""
+
+#: includes/tags.php:14
+msgid "PHP code"
+msgstr ""
+
+#: includes/tags.php:17
+msgid "Link name"
+msgstr ""
+
+#: index.php:24
+msgid "Animals"
+msgstr ""
+
+#: index.php:25
+msgid "Brawl, Weapons"
+msgstr ""
+
+#: index.php:26
+msgid "Emotions"
+msgstr ""
+
+#: index.php:27
+msgid "Flowers"
+msgstr ""
+
+#: index.php:28
+msgid "Food, Alcohol"
+msgstr ""
+
+#: index.php:29
+msgid "Gestures"
+msgstr ""
+
+#: index.php:30
+msgid "Holidays"
+msgstr ""
+
+#: index.php:31
+msgid "Love"
+msgstr ""
+
+#: index.php:32
+msgid "Miscellaneous"
+msgstr ""
+
+#: index.php:33
+msgid "Music, Dancing"
+msgstr ""
+
+#: index.php:34
+msgid "Sports"
+msgstr ""
+
+#: index.php:35
+msgid "Technology"
+msgstr ""
