@@ -7,8 +7,8 @@ $mp = new mainpage();
 // Блок информации
 echo '<div class="phdr"><b>' . _t('Information') . '</b></div>';
 echo $mp->news;
-echo '<div class="menu"><a href="news/index.php">' . _t('News archive') . '</a> (' . $mp->newscount . ')</div>' .
-    '<div class="menu"><a href="pages/faq.php">' . _t('Information, FAQ') . '</a></div>';
+echo '<div class="menu"><a href="news/">' . _t('News archive') . '</a> (' . $mp->newscount . ')</div>' .
+    '<div class="menu"><a href="help/">' . _t('Information, FAQ') . '</a></div>';
 
 // Блок общения
 echo '<div class="phdr"><b>' . _t('Communication') . '</b></div>';

@@ -11,58 +11,190 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../../pages\n"
+"X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: system/vendor\n"
+"X-Poedit-SearchPathExcluded-1: incfiles\n"
+"X-Poedit-SearchPathExcluded-2: files\n"
 
-#: mainmenu.php:8
-msgid "Information"
+#: help/includes/admsmilies.php:7
+msgid "Wrong data"
 msgstr ""
 
-#: mainmenu.php:10
-msgid "News archive"
+#: help/includes/admsmilies.php:7 help/includes/admsmilies.php:61
+#: help/includes/avatars.php:16 help/includes/avatars.php:62
+#: help/includes/avatars.php:80 help/includes/forum.php:51
+#: help/includes/my_smilies.php:53 help/includes/smilies.php:40
+#: help/includes/tags.php:71 help/includes/usersmilies.php:71 help/index.php:60
+msgid "Back"
 msgstr ""
 
-#: mainmenu.php:11
+#: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
+#: help/includes/smilies.php:6 help/includes/usersmilies.php:22
+#: help/index.php:59
+msgid "Smilies"
+msgstr ""
+
+#: help/includes/admsmilies.php:48 help/includes/avatars.php:49
+#: help/includes/my_smilies.php:44 help/includes/usersmilies.php:59
+msgid "The list is empty"
+msgstr ""
+
+#: help/includes/admsmilies.php:51 help/includes/usersmilies.php:56
+msgid "Add"
+msgstr ""
+
+#: help/includes/admsmilies.php:52 help/includes/avatars.php:52
+#: help/includes/avatars.php:79 help/includes/my_smilies.php:47
+#: help/includes/usersmilies.php:62
+msgid "Total"
+msgstr ""
+
+#: help/includes/admsmilies.php:58 help/includes/avatars.php:58
+#: help/includes/usersmilies.php:68
+msgid "To Page"
+msgstr ""
+
+#: help/includes/avatars.php:14
+msgid "Continue"
+msgstr ""
+
+#: help/includes/avatars.php:16
+msgid "An error occurred"
+msgstr ""
+
+#: help/includes/avatars.php:19 help/includes/avatars.php:28
+#: help/includes/avatars.php:66 help/index.php:58
+msgid "Avatars"
+msgstr ""
+
+#: help/includes/avatars.php:22
+msgid "Save"
+msgstr ""
+
+#: help/includes/avatars.php:24
+msgid "Cancel"
+msgstr ""
+
+#: help/includes/avatars.php:43
+msgid "Select"
+msgstr ""
+
+#: help/includes/avatars.php:66 help/includes/forum.php:6
+#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:55
+#: pages/mainmenu.php:11
 msgid "Information, FAQ"
 msgstr ""
 
-#: mainmenu.php:14
+#: help/includes/my_smilies.php:42
+msgid "Delete"
+msgstr ""
+
+#: help/includes/tags.php:18
+msgid "URL Link"
+msgstr ""
+
+#: help/includes/tags.php:21
+msgid "Bold"
+msgstr ""
+
+#: help/includes/tags.php:25
+msgid "Italic"
+msgstr ""
+
+#: help/includes/tags.php:29
+msgid "Underline"
+msgstr ""
+
+#: help/includes/tags.php:33
+msgid "Strike"
+msgstr ""
+
+#: help/includes/tags.php:37
+msgid "Red"
+msgstr ""
+
+#: help/includes/tags.php:41
+msgid "Green"
+msgstr ""
+
+#: help/includes/tags.php:45
+msgid "Blue"
+msgstr ""
+
+#: help/includes/tags.php:49
+msgid "Text Color"
+msgstr ""
+
+#: help/includes/tags.php:53
+msgid "Background Color"
+msgstr ""
+
+#: help/includes/tags.php:57
+msgid "Quote"
+msgstr ""
+
+#: help/includes/tags.php:61
+msgid "Bulleted list"
+msgstr ""
+
+#: help/includes/tags.php:64
+msgid "Title"
+msgstr ""
+
+#: help/includes/tags.php:64
+msgid "Text"
+msgstr ""
+
+#: help/includes/tags.php:65
+msgid "Spoiler"
+msgstr ""
+
+#: pages/mainmenu.php:8
+msgid "Information"
+msgstr ""
+
+#: pages/mainmenu.php:10
+msgid "News archive"
+msgstr ""
+
+#: pages/mainmenu.php:14
 msgid "Communication"
 msgstr ""
 
-#: mainmenu.php:18
+#: pages/mainmenu.php:18
 msgid "Guestbook"
 msgstr ""
 
-#: mainmenu.php:23
+#: pages/mainmenu.php:23
 msgid "Forum"
 msgstr ""
 
-#: mainmenu.php:27
+#: pages/mainmenu.php:27
 msgid "Useful"
 msgstr ""
 
-#: mainmenu.php:31
+#: pages/mainmenu.php:31
 msgid "Downloads"
 msgstr ""
 
-#: mainmenu.php:36
+#: pages/mainmenu.php:36
 msgid "Library"
 msgstr ""
 
-#: mainmenu.php:41
+#: pages/mainmenu.php:41
 msgid "Gallery"
 msgstr ""
 
-#: mainmenu.php:45
+#: pages/mainmenu.php:45
 msgid "Community"
 msgstr ""
 
-#: mainmenu.php:46
+#: pages/mainmenu.php:46
 msgid "Users"
 msgstr ""
 
-#: mainmenu.php:47
+#: pages/mainmenu.php:47
 msgid "Photo Albums"
 msgstr ""

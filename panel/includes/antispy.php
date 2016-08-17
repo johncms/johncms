@@ -197,7 +197,6 @@ class scaner
         '../mail/includes/write.php',
         '../mail/index.php',
         '../news/index.php',
-        '../pages/faq.php',
         '../pages/index.php',
         '../pages/mainmenu.php',
         '../panel/includes/ads.php',
