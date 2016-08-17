@@ -6,9 +6,16 @@ return [
     'translator' => [
         'translation_file_patterns' => [
             [
-                'type'     => 'gettext',
-                'base_dir' => ROOT_PATH . 'system/locale',
-                'pattern'  => '/%s/default.mo',
+                'type'        => 'gettext',
+                'base_dir'    => ROOT_PATH . 'system/locale',
+                'pattern'     => '/%s/default.mo',
+                'text_domain' => 'default',
+            ],
+            [
+                'type'        => 'gettext',
+                'base_dir'    => ROOT_PATH . 'system/locale',
+                'pattern'     => '/%s/help.mo',
+                'text_domain' => 'help',
             ],
         ],
     ],

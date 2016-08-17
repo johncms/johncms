@@ -64,7 +64,13 @@ $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
 $translator->setLocale($locale);
 unset($translator);
 
-function _t($message, $textDomain = 'default', $locale = null)
+/**
+ * Translate a message
+ *
+ * @param string $message
+ * @return string
+ */
+function _t($message)
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
@@ -73,10 +79,17 @@ function _t($message, $textDomain = 'default', $locale = null)
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translate($message, $textDomain, $locale);
+    return $translator->translate($message);
 }
 
-function _p($singular, $plural, $number, $textDomain = 'default', $locale = null)
+/**
+ * Translate a message with specifying of the domain
+ *
+ * @param string $message
+ * @param string $textDomain
+ * @return string
+ */
+function _td($message, $textDomain = 'default')
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
@@ -85,5 +98,46 @@ function _p($singular, $plural, $number, $textDomain = 'default', $locale = null
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translatePlural($singular, $plural, $number, $textDomain, $locale);
+    return $translator->translate($message, $textDomain);
+}
+
+/**
+ * Translate a plural message
+ *
+ * @param string $singular
+ * @param string $plural
+ * @param int    $number
+ * @return string
+ */
+function _p($singular, $plural, $number)
+{
+    /** @var Zend\I18n\Translator\Translator $translator */
+    static $translator;
+
+    if (null === $translator) {
+        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+    }
+
+    return $translator->translatePlural($singular, $plural, $number);
+}
+
+/**
+ * Translate a plural message with specifying of the domain
+ *
+ * @param string $singular
+ * @param string $plural
+ * @param int    $number
+ * @param string $textDomain
+ * @return string
+ */
+function _pd($singular, $plural, $number, $textDomain = 'default')
+{
+    /** @var Zend\I18n\Translator\Translator $translator */
+    static $translator;
+
+    if (null === $translator) {
+        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+    }
+
+    return $translator->translatePlural($singular, $plural, $number, $textDomain);
 }
