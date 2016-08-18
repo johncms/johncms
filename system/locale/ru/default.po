@@ -1,69 +1,205 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: mobiCMS\n"
+"Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"PO-Revision-Date: 2016-08-20 15:36-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../../pages\n"
+"X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
-"Last-Translator: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: system/vendor\n"
+"X-Poedit-SearchPathExcluded-1: incfiles\n"
+"X-Poedit-SearchPathExcluded-2: files\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /System/default.pot\n"
+"Language: ru_RU\n"
 
-#: mainmenu.php:8
-msgid "Information"
-msgstr "Информация"
+#: help/includes/admsmilies.php:7
+msgid "Wrong data"
+msgstr "Неверные данные"
 
-#: mainmenu.php:10
-msgid "News archive"
-msgstr "Архив новостей"
+#: help/includes/admsmilies.php:7 help/includes/admsmilies.php:61
+#: help/includes/avatars.php:16 help/includes/avatars.php:62
+#: help/includes/avatars.php:80 help/includes/forum.php:51
+#: help/includes/my_smilies.php:53 help/includes/smilies.php:40
+#: help/includes/tags.php:71 help/includes/usersmilies.php:71 help/index.php:60
+msgid "Back"
+msgstr "Назад"
 
-#: mainmenu.php:11
+#: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
+#: help/includes/smilies.php:6 help/includes/usersmilies.php:22
+#: help/index.php:59
+msgid "Smilies"
+msgstr "Смайлы"
+
+#: help/includes/admsmilies.php:48 help/includes/avatars.php:49
+#: help/includes/my_smilies.php:44 help/includes/usersmilies.php:59
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: help/includes/admsmilies.php:51 help/includes/usersmilies.php:56
+msgid "Add"
+msgstr "Добавить"
+
+#: help/includes/admsmilies.php:52 help/includes/avatars.php:52
+#: help/includes/avatars.php:79 help/includes/my_smilies.php:47
+#: help/includes/usersmilies.php:62
+msgid "Total"
+msgstr "Всего"
+
+#: help/includes/admsmilies.php:58 help/includes/avatars.php:58
+#: help/includes/usersmilies.php:68
+msgid "To Page"
+msgstr "На страницу"
+
+#: help/includes/avatars.php:14
+msgid "Continue"
+msgstr "Продолжить"
+
+#: help/includes/avatars.php:16
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: help/includes/avatars.php:19 help/includes/avatars.php:28
+#: help/includes/avatars.php:66 help/index.php:58
+msgid "Avatars"
+msgstr "Аватары"
+
+#: help/includes/avatars.php:22
+msgid "Save"
+msgstr "Сохранить"
+
+#: help/includes/avatars.php:24
+msgid "Cancel"
+msgstr "Отмена"
+
+#: help/includes/avatars.php:43
+msgid "Select"
+msgstr "Выбрать"
+
+#: help/includes/avatars.php:66 help/includes/forum.php:6
+#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:55
+#: pages/mainmenu.php:11
 msgid "Information, FAQ"
 msgstr "Информация, FAQ"
 
-#: mainmenu.php:14
+#: help/includes/my_smilies.php:42
+msgid "Delete"
+msgstr "Удалить"
+
+#: help/includes/tags.php:18
+msgid "URL Link"
+msgstr "URL-ссылка"
+
+#: help/includes/tags.php:21
+msgid "Bold"
+msgstr "Жирный"
+
+#: help/includes/tags.php:25
+msgid "Italic"
+msgstr "Курсив"
+
+#: help/includes/tags.php:29
+msgid "Underline"
+msgstr "Подчёркнутый"
+
+#: help/includes/tags.php:33
+msgid "Strike"
+msgstr "Зачеркнутый"
+
+#: help/includes/tags.php:37
+msgid "Red"
+msgstr "Красный"
+
+#: help/includes/tags.php:41
+msgid "Green"
+msgstr "Зеленый"
+
+#: help/includes/tags.php:45
+msgid "Blue"
+msgstr "Синий"
+
+#: help/includes/tags.php:49
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: help/includes/tags.php:53
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: help/includes/tags.php:57
+msgid "Quote"
+msgstr "Цитата"
+
+#: help/includes/tags.php:61
+msgid "Bulleted list"
+msgstr "Маркированный список"
+
+#: help/includes/tags.php:64
+msgid "Title"
+msgstr "Заголовок"
+
+#: help/includes/tags.php:64
+msgid "Text"
+msgstr "Текст"
+
+#: help/includes/tags.php:65
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: pages/mainmenu.php:8
+msgid "Information"
+msgstr "Информация"
+
+#: pages/mainmenu.php:10
+msgid "News archive"
+msgstr "Архив новостей"
+
+#: pages/mainmenu.php:14
 msgid "Communication"
 msgstr "Общение"
 
-#: mainmenu.php:18
+#: pages/mainmenu.php:18
 msgid "Guestbook"
 msgstr "Гостевая"
 
-#: mainmenu.php:23
+#: pages/mainmenu.php:23
 msgid "Forum"
 msgstr "Форум"
 
-#: mainmenu.php:27
+#: pages/mainmenu.php:27
 msgid "Useful"
 msgstr "Полезное"
 
-#: mainmenu.php:31
+#: pages/mainmenu.php:31
 msgid "Downloads"
 msgstr "Загрузки"
 
-#: mainmenu.php:36
+#: pages/mainmenu.php:36
 msgid "Library"
 msgstr "Библиотека"
 
-#: mainmenu.php:41
+#: pages/mainmenu.php:41
 msgid "Gallery"
 msgstr "Галерея"
 
-#: mainmenu.php:45
+#: pages/mainmenu.php:45
 msgid "Community"
 msgstr "Сообщество"
 
-#: mainmenu.php:46
+#: pages/mainmenu.php:46
 msgid "Users"
 msgstr "Пользователи"
 
-#: mainmenu.php:47
+#: pages/mainmenu.php:47
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
+
