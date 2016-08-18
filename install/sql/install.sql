@@ -580,18 +580,18 @@ CREATE TABLE `library_cats` (
 --
 DROP TABLE IF EXISTS `library_texts`;
 CREATE TABLE `library_texts` (
-  `id`             INT(10) UNSIGNED  NOT NULL AUTO_INCREMENT,
-  `cat_id`         INT(10)  UNSIGNED NOT NULL DEFAULT '0',
-  `text`           MEDIUMTEXT        NOT NULL,
-  `name`           VARCHAR(255)      NOT NULL DEFAULT '',
-  `announce`       TEXT,
-  `uploader`       VARCHAR(100)      NOT NULL DEFAULT '',
-  `uploader_id`    INT(10)  UNSIGNED NOT NULL DEFAULT '0',
-  `count_views`    INT(10) UNSIGNED  NOT NULL DEFAULT '0',
-  `premod`         TINYINT(1)        NOT NULL DEFAULT '0',
-  `comments`       TINYINT(1)        NOT NULL DEFAULT '0',
-  `comm_count`	   INT(10)  UNSIGNED NOT NULL DEFAULT '0',
-  `time`          INT(10) UNSIGNED  NOT NULL DEFAULT '0',
+  `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cat_id`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `text`        MEDIUMTEXT       NOT NULL,
+  `name`        VARCHAR(255)     NOT NULL DEFAULT '',
+  `announce`    TEXT,
+  `uploader`    VARCHAR(100)     NOT NULL DEFAULT '',
+  `uploader_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `count_views` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `premod`      TINYINT(1)       NOT NULL DEFAULT '0',
+  `comments`    TINYINT(1)       NOT NULL DEFAULT '0',
+  `comm_count`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `time`        INT(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `text` (`text`, `name`)
 )
@@ -635,15 +635,18 @@ CREATE TABLE `cms_library_comments` (
 --
 -- Структура таблицы `cms_library_rating`
 --
-DROP TABLE IF EXISTS `cms_library_rating`;  
+DROP TABLE IF EXISTS `cms_library_rating`;
 CREATE TABLE IF NOT EXISTS `cms_library_rating` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `st_id` int(11) NOT NULL,
-  `point` tinyint(1) NOT NULL,
+  `id`      INT(11)    NOT NULL AUTO_INCREMENT,
+  `user_id` INT(11)    NOT NULL,
+  `st_id`   INT(11)    NOT NULL,
+  `point`   TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`st_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;  
+  KEY `user_id` (`user_id`, `st_id`)
+)
+  ENGINE = MyISAM
+  DEFAULT CHARSET = utf8
+  AUTO_INCREMENT = 1;
 
 --
 -- Структура таблицы `news`
@@ -672,7 +675,7 @@ CREATE TABLE `users` (
   `password`      VARCHAR(32)         NOT NULL DEFAULT '',
   `rights`        TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   `failed_login`  TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
-  `imname`        VARCHAR(50)         NOT NULL DEFAULT '',
+  `imname`        VARCHAR(100)        NOT NULL DEFAULT '',
   `sex`           VARCHAR(2)          NOT NULL DEFAULT '',
   `komm`          INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `postforum`     INT(10) UNSIGNED    NOT NULL DEFAULT '0',

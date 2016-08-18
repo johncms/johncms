@@ -3,14 +3,13 @@
 define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
-$textl = $lng['registration'];
+$textl = _t('Registration');
 $headmod = 'registration';
 require('incfiles/head.php');
-$lng_reg = core::load_lng('registration');
 
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
-    echo '<p>' . $lng_reg['registration_closed'] . '</p>';
+    echo '<p>' . _td('Registration is temporarily closed', 'registration') . '</p>';
     require('incfiles/end.php');
     exit;
 }
@@ -23,7 +22,7 @@ $reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
 $reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
 $reg_sex = isset($_POST['sex']) ? trim($_POST['sex']) : '';
 
-echo '<div class="phdr"><b>' . $lng['registration'] . '</b></div>';
+echo '<div class="phdr"><b>' . _t('Registration') . '</b></div>';
 
 if (isset($_POST['submit'])) {
     /** @var PDO $db */
@@ -34,29 +33,25 @@ if (isset($_POST['submit'])) {
 
     // Проверка Логина
     if (empty($reg_nick)) {
-        $error['login'][] = $lng_reg['error_nick_empty'];
-    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 15) {
-        $error['login'][] = $lng_reg['error_nick_lenght'];
+        $error['login'][] = _td('You have not entered Nickname', 'registration');
+    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 20) {
+        $error['login'][] = _td('Nickname wrong length', 'registration');
     }
 
     if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
-        $error['login'][] = $lng['error_wrong_symbols'];
+        $error['login'][] = _t('Invalid characters');
     }
 
     // Проверка пароля
     if (empty($reg_pass)) {
-        $error['password'][] = $lng['error_empty_password'];
-    } elseif (mb_strlen($reg_pass) < 3 || mb_strlen($reg_pass) > 10) {
-        $error['password'][] = $lng['error_wrong_lenght'];
-    }
-
-    if (preg_match('/[^\dA-Za-z]+/', $reg_pass)) {
-        $error['password'][] = $lng['error_wrong_symbols'];
+        $error['password'][] = _t('You have not entered password');
+    } elseif (mb_strlen($reg_pass) < 3) {
+        $error['password'][] = _t('Invalid length');
     }
 
     // Проверка пола
     if ($reg_sex != 'm' && $reg_sex != 'zh') {
-        $error['sex'] = $lng_reg['error_sex'];
+        $error['sex'] = _td('You have not selected genger', 'registration');
     }
 
     // Проверка кода CAPTCHA
@@ -65,21 +60,22 @@ if (isset($_POST['submit'])) {
         || mb_strlen($captcha) < 4
         || $captcha != $_SESSION['code']
     ) {
-        $error['captcha'] = $lng['error_wrong_captcha'];
+        $error['captcha'] = _t('The security code is not correct');
     }
+
     unset($_SESSION['code']);
 
     // Проверка переменных
     if (empty($error)) {
         $pass = md5(md5($reg_pass));
-        $reg_name = functions::check(mb_substr($reg_name, 0, 20));
-        $reg_about = functions::check(mb_substr($reg_about, 0, 500));
+        $reg_name = functions::check(mb_substr($reg_name, 0, 50));
+        $reg_about = functions::check(mb_substr($reg_about, 0, 1000));
         // Проверка, занят ли ник
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ?');
         $stmt->execute([$lat_nick]);
 
         if ($stmt->rowCount()) {
-            $error['login'][] = $lng_reg['error_nick_occupied'];
+            $error['login'][] = _td('Selected Nickname is already in use', 'registration');
         }
     }
 
@@ -162,14 +158,17 @@ if (isset($_POST['submit'])) {
             ]);
         }
 
-        echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>';
+        echo '<div class="menu"><p><h3>' . _td('Your registratiton data', 'registration') . '</h3>'
+            . _td('Your ID', 'registration') . ': <b>' . $usid . '</b><br/>'
+            . _td('Your Username', 'registration') . ': <b>' . $reg_nick . '</b><br/>'
+            . _td('Your Password', 'registration') . ': <b>' . $reg_pass . '</b></p>';
 
         if ($set['mod_reg'] == 1) {
-            echo '<p><span class="red"><b>' . $lng_reg['moderation_note'] . '</b></span></p>';
+            echo '<p><span class="red"><b>' . _td('Please, wait until a moderator approves yor registration', 'registration') . '</b></span></p>';
         } else {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
-            echo '<p><a href="' . $home . '">' . $lng_reg['enter'] . '</a></p>';
+            echo '<p><a href="' . $home . '">' . _td('Enter', 'registration') . '</a></p>';
         }
 
         echo '</div>';
@@ -180,41 +179,41 @@ if (isset($_POST['submit'])) {
 
 // Форма регистрации
 if ($set['mod_reg'] == 1) {
-    echo '<div class="rmenu"><p>' . $lng_reg['moderation_warning'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _td('You can get authorized on the site after confirmation of your registration.', 'registration') . '</p></div>';
 }
 
 echo '<form action="registration.php" method="post"><div class="gmenu">' .
-    '<p><h3>' . $lng_reg['login'] . '</h3>' .
+    '<p><h3>' . _td('Choose Nickname', 'registration') . '</h3>' .
     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />',
             $error['login']) . '</small></span><br />' : '') .
     '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-    '<small>' . $lng_reg['login_help'] . '</small></p>' .
-    '<p><h3>' . $lng_reg['password'] . '</h3>' .
+    '<small>' . _td('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)', 'registration') . '</small></p>' .
+    '<p><h3>' . _td('Assign a password', 'registration') . '</h3>' .
     (isset($error['password']) ? '<span class="red"><small>' . implode('<br />',
             $error['password']) . '</small></span><br />' : '') .
     '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
-    '<small>' . $lng_reg['password_help'] . '</small></p>' .
-    '<p><h3>' . $lng_reg['sex'] . '</h3>' .
+    '<small>' . _td('Min. 3 characters', 'registration') . '</small></p>' .
+    '<p><h3>' . _td('Select Gender', 'registration') . '</h3>' .
     (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .
     '<select name="sex"' . (isset($error['sex']) ? ' style="background-color: #FFCCCC"' : '') . '>' .
     '<option value="?">-?-</option>' .
-    '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_m'] . '</option>' .
-    '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . $lng_reg['sex_w'] . '</option>' .
+    '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . _td('Man', 'registration') . '</option>' .
+    '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . _td('Woman', 'registration') . '</option>' .
     '</select></p></div>' .
     '<div class="menu">' .
-    '<p><h3>' . $lng_reg['name'] . '</h3>' .
+    '<p><h3>' . _td('Your name', 'registration') . '</h3>' .
     '<input type="text" name="imname" maxlength="30" value="' . htmlspecialchars($reg_name) . '" /><br />' .
-    '<small>' . $lng_reg['name_help'] . '</small></p>' .
-    '<p><h3>' . $lng_reg['about'] . '</h3>' .
+    '<small>' . _td('Max. 50 characters', 'registration') . '</small></p>' .
+    '<p><h3>' . _td('Tell us a little about yourself', 'registration') . '</h3>' .
     '<textarea rows="3" name="about">' . htmlspecialchars($reg_about) . '</textarea><br />' .
-    '<small>' . $lng_reg['about_help'] . '</small></p></div>' .
+    '<small>' . _td('Max. 1000 characters', 'registration') . '</small></p></div>' .
     '<div class="gmenu"><p>' .
-    '<h3>' . $lng_reg['captcha'] . '</h3>' .
-    '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng_reg['captcha'] . '" border="1"/><br />' .
+    '<h3>' . _td('Verification code', 'registration') . '</h3>' .
+    '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . _td('Verification code', 'registration') . '" border="1"/><br />' .
     (isset($error['captcha']) ? '<span class="red"><small>' . $error['captcha'] . '</small></span><br />' : '') .
     '<input type="text" size="5" maxlength="5"  name="captcha" ' . (isset($error['captcha']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-    '<small>' . $lng_reg['captcha_help'] . '</small></p>' .
-    '<p><input type="submit" name="submit" value="' . $lng_reg['registration'] . '"/></p></div></form>' .
-    '<div class="phdr"><small>' . $lng_reg['registration_terms'] . '</small></div>';
+    '<small>' . _td('If you cannot see the image code, enable graphics in your browser and refresh this page', 'registration') . '</small></p>' .
+    '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
+    '<div class="phdr"><small>' . _td('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted', 'registration') . '</small></div>';
 
 require('incfiles/end.php');
