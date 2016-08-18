@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
             . _td('Your Password', 'registration') . ': <b>' . $reg_pass . '</b></p>';
 
         if ($set['mod_reg'] == 1) {
-            echo '<p><span class="red"><b>' . _td('Please, wait until a moderator approves yor registration', 'registration') . '</b></span></p>';
+            echo '<p><span class="red"><b>' . _td('Please, wait until a moderator approves your registration', 'registration') . '</b></span></p>';
         } else {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));

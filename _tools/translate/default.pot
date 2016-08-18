@@ -209,7 +209,7 @@ msgstr ""
 msgid "You have not entered login"
 msgstr ""
 
-#: login.php:26
+#: login.php:26 registration.php:47
 msgid "You have not entered password"
 msgstr ""
 
@@ -217,7 +217,7 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: login.php:30 login.php:34
+#: login.php:30 login.php:34 registration.php:49
 msgid "Invalid length"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: login.php:57
+#: login.php:57 registration.php:63
 msgid "The security code is not correct"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 msgid "Remember"
 msgstr ""
 
-#: login.php:143
+#: login.php:143 registration.php:6 registration.php:25 registration.php:216
 msgid "Registration"
 msgstr ""
 
@@ -319,4 +319,8 @@ msgstr ""
 
 #: pages/mainmenu.php:47
 msgid "Photo Albums"
+msgstr ""
+
+#: registration.php:42
+msgid "Invalid characters"
 msgstr ""
