@@ -18,16 +18,66 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: incfiles\n"
 "X-Poedit-SearchPathExcluded-2: files\n"
 
-#: help/includes/admsmilies.php:7
-msgid "Wrong data"
+#: exit.php:16
+msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: help/includes/admsmilies.php:7 help/includes/admsmilies.php:61
-#: help/includes/avatars.php:16 help/includes/avatars.php:62
-#: help/includes/avatars.php:80 help/includes/forum.php:51
-#: help/includes/my_smilies.php:53 help/includes/smilies.php:40
-#: help/includes/tags.php:71 help/includes/usersmilies.php:71 help/index.php:60
+#: exit.php:17
+msgid "Logout"
+msgstr ""
+
+#: exit.php:18 help/includes/avatars.php:24
+msgid "Cancel"
+msgstr ""
+
+#: go.php:16
+msgid "Select language"
+msgstr ""
+
+#: go.php:22
+msgid "Default"
+msgstr ""
+
+#: go.php:29
+msgid "Apply"
+msgstr ""
+
+#: go.php:29 go.php:46 help/includes/admsmilies.php:7
+#: help/includes/admsmilies.php:61 help/includes/avatars.php:16
+#: help/includes/avatars.php:62 help/includes/avatars.php:80
+#: help/includes/forum.php:51 help/includes/my_smilies.php:53
+#: help/includes/smilies.php:40 help/includes/tags.php:71
+#: help/includes/usersmilies.php:71 help/index.php:60
 msgid "Back"
+msgstr ""
+
+#: go.php:37
+msgid "External Link"
+msgstr ""
+
+#: go.php:40
+msgid "ATTENTION!"
+msgstr ""
+
+#: go.php:41
+msgid "You are going to leave our site and go to an external link"
+msgstr ""
+
+#: go.php:42
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr ""
+
+#: go.php:43
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr ""
+
+#: go.php:44
+msgid "Go to Link"
+msgstr ""
+
+#: help/includes/admsmilies.php:7
+msgid "Wrong data"
 msgstr ""
 
 #: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
@@ -56,7 +106,7 @@ msgstr ""
 msgid "To Page"
 msgstr ""
 
-#: help/includes/avatars.php:14
+#: help/includes/avatars.php:14 login.php:68
 msgid "Continue"
 msgstr ""
 
@@ -71,10 +121,6 @@ msgstr ""
 
 #: help/includes/avatars.php:22
 msgid "Save"
-msgstr ""
-
-#: help/includes/avatars.php:24
-msgid "Cancel"
 msgstr ""
 
 #: help/includes/avatars.php:43
@@ -149,6 +195,82 @@ msgstr ""
 
 #: help/includes/tags.php:65
 msgid "Spoiler"
+msgstr ""
+
+#: login.php:10
+msgid "Home"
+msgstr ""
+
+#: login.php:12 login.php:141
+msgid "Login"
+msgstr ""
+
+#: login.php:22
+msgid "You have not entered login"
+msgstr ""
+
+#: login.php:26
+msgid "You have not entered password"
+msgstr ""
+
+#: login.php:30
+msgid "Nickname"
+msgstr ""
+
+#: login.php:30 login.php:34
+msgid "Invalid length"
+msgstr ""
+
+#: login.php:34 login.php:138
+msgid "Password"
+msgstr ""
+
+#: login.php:57
+msgid "The security code is not correct"
+msgstr ""
+
+#: login.php:63
+msgid "Verification code"
+msgstr ""
+
+#: login.php:64
+msgid "Enter verification code"
+msgstr ""
+
+#: login.php:80
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: login.php:104
+msgid "Enter site"
+msgstr ""
+
+#: login.php:113 login.php:117
+msgid "Authorization failed"
+msgstr ""
+
+#: login.php:129
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr ""
+
+#: login.php:131
+msgid "At the moment, access to the site is allowed only for Administration of site."
+msgstr ""
+
+#: login.php:136
+msgid "Username"
+msgstr ""
+
+#: login.php:140
+msgid "Remember"
+msgstr ""
+
+#: login.php:143
+msgid "Registration"
+msgstr ""
+
+#: login.php:144
+msgid "Forgot password?"
 msgstr ""
 
 #: pages/mainmenu.php:8

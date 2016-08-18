@@ -12,10 +12,10 @@ if (isset($_POST['submit'])) {
     header('Location: index.php');
 } else {
     require('incfiles/head.php');
-    echo'<div class="rmenu">' .
-        '<p>Вы действительно хотите покинуть сайт?</p>' .
-        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . core::$lng['exit'] . '" /></p></form>' .
-        '<p><a href="' . $referer . '">' . core::$lng['cancel'] . '</a></p>' .
+    echo '<div class="rmenu">' .
+        '<p>' . _t('Are you sure you want to leave the site?') . '</p>' .
+        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout') . '" /></p></form>' .
+        '<p><a href="' . $referer . '">' . _t('Cancel') . '</a></p>' .
         '</div>';
     require('incfiles/end.php');
 }
