@@ -881,7 +881,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     echo '<p>' . ($id ? '<a href="index.php">' . $lng['to_forum'] . '</a><br />' : '');
 
     if (!$id) {
-        echo '<a href="../pages/faq.php?act=forum">' . $lng_forum['forum_rules'] . '</a>';
+        echo '<a href="../help/?act=forum">' . $lng_forum['forum_rules'] . '</a>';
     }
 
     echo '</p>';

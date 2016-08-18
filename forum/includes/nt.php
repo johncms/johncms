@@ -252,7 +252,6 @@ if (isset($_POST['submit'])
         ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
-        '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-        '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
         '<p><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
 }
