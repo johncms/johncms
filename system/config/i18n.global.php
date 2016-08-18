@@ -17,6 +17,12 @@ return [
                 'pattern'     => '/%s/help.mo',
                 'text_domain' => 'help',
             ],
+            [
+                'type'        => 'gettext',
+                'base_dir'    => ROOT_PATH . 'system/locale',
+                'pattern'     => '/%s/registration.mo',
+                'text_domain' => 'registration',
+            ],
         ],
     ],
 
