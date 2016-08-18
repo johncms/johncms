@@ -8,46 +8,42 @@ $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REF
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
 if (isset($_GET['lng'])) {
-    /*
-    -----------------------------------------------------------------
-    Переключатель языков
-    -----------------------------------------------------------------
-    */
+    // Переключатель языков
     require('incfiles/head.php');
     echo '<div class="menu"><form action="' . $referer . '" method="post"><p>';
+
     if (count(core::$lng_list) > 1) {
-        echo '<p><h3>' . $lng['language_select'] . '</h3>';
+        echo '<p><h3>' . _t('Select language') . '</h3>';
+
         foreach (core::$lng_list as $key => $val) {
             echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
-                 (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
-                 $val .
-                 ($key == core::$system_set['lng'] ? ' <small class="red">[' . $lng['default'] . ']</small>' : '') .
-                 '</div>';
+                (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
+                $val .
+                ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Default') . ']</small>' : '') .
+                '</div>';
         }
+
         echo '</p>';
     }
-    echo '</p><p><input type="submit" name="submit" value="' . $lng['apply'] . '" /></p>' .
-         '<p><a href="' . $referer . '">' . $lng['back'] . '</a></p></form></div>';
+
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Apply') . '" /></p><p><a href="' . $referer . '">' . _t('Back') . '</a></p></form></div>';
     require('incfiles/end.php');
 } elseif ($url) {
-    /*
-    -----------------------------------------------------------------
-    Редирект по ссылкам в текстах, обработанным функцией tags()
-    -----------------------------------------------------------------
-    */
+    // Редирект по ссылкам в текстах, обработанным функцией tags()
     if (isset($_POST['submit'])) {
         header('Location: ' . $url);
     } else {
         require('incfiles/head.php');
-        echo '<div class="phdr"><b>' . $lng['external_link'] . '</b></div>' .
-             '<div class="rmenu">' .
-             '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
-             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
-             '<p>' . $lng['redirect_2'] . '.<br />' .
-             $lng['redirect_3'] . ' <span class="green">' . $set['homeurl'] . '</span> ' . $lng['redirect_4'] . '.</p>' .
-             '<p><input type="submit" name="submit" value="' . $lng['redirect_5'] . '" /></p>' .
-             '</form></div>' .
-             '<div class="phdr"><a href="' . $referer . '">' . $lng['back'] . '</a></div>';
+        echo '<div class="phdr"><b>' . _t('External Link') . '</b></div>' .
+            '<div class="rmenu">' .
+            '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
+            '<p><h3>' . _t('ATTENTION!') . '</h3>' .
+            _t('You are going to leave our site and go to an external link') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
+            '<p>' . _t('Administration of our site is not responsible for the content of external sites') . '.<br />' .
+            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites'), '<span class="green">' . $set['homeurl'] . '</span>') . '.</p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Go to Link') . '" /></p>' .
+            '</form></div>' .
+            '<div class="phdr"><a href="' . $referer . '">' . _t('Back') . '</a></div>';
         require('incfiles/end.php');
     }
 } elseif ($id) {
