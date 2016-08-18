@@ -389,13 +389,13 @@ class bbcode extends core
 
         if (!empty($smileys)) {
             $res_sm = '';
-            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/pages/faq.php?act=my_smileys">' . self::$lng['edit_list'] . '</a></small><br />';
+            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/help/?act=my_smilies">' . self::$lng['edit_list'] . '</a></small><br />';
             foreach ($smileys as $value) {
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
             $bb_smileys .= functions::smileys($res_sm, self::$user_data['rights'] >= 1 ? 1 : 0);
         } else {
-            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/pages/faq.php?act=smileys">' . self::$lng['add_smileys'] . '</a></small>';
+            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/help/?act=smilies">' . self::$lng['add_smileys'] . '</a></small>';
         }
 
         // Код

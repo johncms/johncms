@@ -213,8 +213,7 @@ switch ($type1['type']) {
                 '</p></div></form>';
         }
 
-        echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-            '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
             '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
         break;
 
@@ -431,8 +430,7 @@ switch ($type1['type']) {
                 '</p></div></form>';
         }
 
-        echo '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-            '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
             '<p><a href="index.php?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
         break;
 

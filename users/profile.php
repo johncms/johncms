@@ -41,7 +41,7 @@ $array = array(
 );
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 
-if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
+if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
     /** @var PDO $db */

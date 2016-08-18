@@ -227,7 +227,7 @@ if (!$error) {
                 echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
                     ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
                     '</p></form></div>' .
-                    '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | <a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
+                    '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
                     '<p><a href="' . $link . '">' . $lng['back'] . '</a></p>';
             }
     }

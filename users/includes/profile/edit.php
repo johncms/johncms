@@ -171,7 +171,7 @@ if (file_exists(('../files/users/avatar/' . $user['id'] . '.png'))) {
 echo '<small><a href="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>';
 
 if ($user['id'] == $user_id) {
-    echo ' | <a href="../pages/faq.php?act=avatars">' . $lng['select'] . '</a>';
+    echo ' | <a href="../help/?act=avatars">' . $lng['select'] . '</a>';
 }
 
 echo $link . '</small></p>';

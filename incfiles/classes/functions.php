@@ -691,7 +691,7 @@ class functions extends core
     }
 
     // Транслитерация текста
-    public static function trans($str)//TODO: Удалить
+    public static function trans($str)
     {
         $replace = [
             'a'  => 'а',
