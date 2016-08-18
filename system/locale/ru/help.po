@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-08-20 15:36-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../help\n"
+"X-Poedit-KeywordsList: _td\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /System/help.pot\n"
+"Language: ru_RU\n"
+
+#: includes/admsmilies.php:12 includes/smilies.php:14
+msgid "For administration"
+msgstr "Для администрации"
+
+#: includes/admsmilies.php:19 includes/my_smilies.php:6 includes/smilies.php:10
+#: includes/usersmilies.php:35
+msgid "My smilies"
+msgstr "Мои смайлы"
+
+#: includes/admsmilies.php:45 includes/my_smilies.php:37
+#: includes/usersmilies.php:51
+msgid "or"
+msgstr "или"
+
+#: includes/avatars.php:13
+msgid "Avatar has been successfully applied"
+msgstr "Аватар успешно установлен"
+
+#: includes/avatars.php:19
+msgid "Set to Profile"
+msgstr "Установить в анкету"
+
+#: includes/avatars.php:20
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Вы действительно хотите установить себе этот аватар?"
+
+#: includes/forum.php:6 index.php:56
+msgid "Forum rules"
+msgstr "Правила форума"
+
+#: includes/forum.php:20
+msgid "FORBIDDEN"
+msgstr "ЗАПРЕЩЕНО"
+
+#: includes/forum.php:22
+msgid "Advertising messages"
+msgstr "Рекламные сообщения"
+
+#: includes/forum.php:23
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Сообщения, содержащие прямую пропаганду расовой, национальной и религиозной вражды"
+
+#: includes/forum.php:24
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Оскорбительный, непристойный, вульгарный, клеветнический, ненавистный, угрожающий, сексуально-ориентированный, или любой другой материал, который может нарушить любые применимые законы"
+
+#: includes/forum.php:25
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "Сообщения, явно оскорбляющие кого-то"
+
+#: includes/forum.php:26
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "Намеренно искажать написание ников других пользователей с целью придания сообщению оскорбительного оттенка"
+
+#: includes/forum.php:27
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "Повторная публикация сообщений, удаленных модератором"
+
+#: includes/forum.php:28
+msgid "Post messages not related to the topic"
+msgstr "Отправлять сообщения, не относящиеся к теме"
+
+#: includes/forum.php:29
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Продолжать темы, которые были закрыты Модератором"
+
+#: includes/forum.php:32
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО"
+
+#: includes/forum.php:34
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "Выражать в публичных разделах недовольство неадекватными действиями других пользователей и обсуждать работу модераторов. Для этого используйте личные сообщения"
+
+#: includes/forum.php:35
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "Регистрация ников, имеющих оскорбительный тон для других пользователей"
+
+#: includes/forum.php:38
+msgid "UNACCEPTABLE"
+msgstr "НЕЖЕЛАТЕЛЬНО"
+
+#: includes/forum.php:40
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "Цитата полного сообщения предыдущего пользователя и цитировать сообщения, уже содержащие другие цитаты"
+
+#: includes/forum.php:41
+msgid "Post messages only contains external link"
+msgstr "Размещать сообщения, которые содержат только внешнюю ссылку"
+
+#: includes/forum.php:42
+msgid "Post messages written in translite"
+msgstr "Размещать сообщения написанные на транслите"
+
+#: includes/forum.php:43
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "Размещение бессмысленных сообщений состоящих только из смайлов или типа \"ок\", \"что?\", \"Кто тут?\", и т. д."
+
+#: includes/forum.php:48
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "Сообщения, опубликованные несмотря на вышеуказанные предупреждения, будут изменены или удалены."
+
+#: includes/forum.php:49
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Это правило распространяется на всех участников и модераторов, повторные действия могут привести к бану, или даже блокировке Вашей учетной записи."
+
+#: includes/my_smilies.php:44
+msgid "Add Smilies"
+msgstr "Добавить Смайлы"
+
+#: includes/tags.php:8 index.php:57
+msgid "bbCode Tags"
+msgstr "bbCode Теги"
+
+#: includes/tags.php:14
+msgid "PHP code"
+msgstr "PHP код"
+
+#: includes/tags.php:17
+msgid "Link name"
+msgstr "Имя ссылки"
+
+#: index.php:24
+msgid "Animals"
+msgstr "Животные"
+
+#: index.php:25
+msgid "Brawl, Weapons"
+msgstr "Драки, Оружие"
+
+#: index.php:26
+msgid "Emotions"
+msgstr "Эмоции"
+
+#: index.php:27
+msgid "Flowers"
+msgstr "Цветы"
+
+#: index.php:28
+msgid "Food, Alcohol"
+msgstr "Еда, алкоголь"
+
+#: index.php:29
+msgid "Gestures"
+msgstr "Жесты"
+
+#: index.php:30
+msgid "Holidays"
+msgstr "Праздники"
+
+#: index.php:31
+msgid "Love"
+msgstr "Любовь"
+
+#: index.php:32
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: index.php:33
+msgid "Music, Dancing"
+msgstr "Музыка, танцы"
+
+#: index.php:34
+msgid "Sports"
+msgstr "Спорт"
+
+#: index.php:35
+msgid "Technology"
+msgstr "Техника"
+
