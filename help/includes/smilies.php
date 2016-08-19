@@ -7,11 +7,11 @@ echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | 
 
 if ($user_id) {
     $mycount = !empty($datauser['smileys']) ? count(unserialize($datauser['smileys'])) : '0';
-    echo '<div class="topmenu"><a href="?act=my_smilies">' . _td('My smilies', 'help') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
+    echo '<div class="topmenu"><a href="?act=my_smilies">' . _td('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
 }
 
 if ($rights >= 1) {
-    echo '<div class="gmenu"><a href="?act=admsmilies">' . _td('For administration', 'help') . '</a> (' . (int)count(glob(ROOTPATH . 'images/smileys/admin/*.gif')) . ')</div>';
+    echo '<div class="gmenu"><a href="?act=admsmilies">' . _td('For administration') . '</a> (' . (int)count(glob(ROOTPATH . 'images/smileys/admin/*.gif')) . ')</div>';
 }
 
 $dir = glob(ROOTPATH . 'images/smileys/user/*', GLOB_ONLYDIR);

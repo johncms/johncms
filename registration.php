@@ -7,9 +7,18 @@ $textl = _t('Registration');
 $headmod = 'registration';
 require('incfiles/head.php');
 
+/**
+ * Задаем домен для перевода
+ *
+ * Для этого достаточно вызвать функцию _td() с пустым первым параметром,
+ * а в качестве второго указать нужный домен. Функция его запоминает и использует
+ * на время работы скрипта, до тех пор, пока не будет указан другой домен.
+ */
+_td('', 'registration');
+
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
-    echo '<p>' . _td('Registration is temporarily closed', 'registration') . '</p>';
+    echo '<p>' . _td('Registration is temporarily closed') . '</p>';
     require('incfiles/end.php');
     exit;
 }
@@ -33,9 +42,9 @@ if (isset($_POST['submit'])) {
 
     // Проверка Логина
     if (empty($reg_nick)) {
-        $error['login'][] = _td('You have not entered Nickname', 'registration');
+        $error['login'][] = _td('You have not entered Nickname');
     } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 20) {
-        $error['login'][] = _td('Nickname wrong length', 'registration');
+        $error['login'][] = _td('Nickname wrong length');
     }
 
     if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
@@ -51,7 +60,7 @@ if (isset($_POST['submit'])) {
 
     // Проверка пола
     if ($reg_sex != 'm' && $reg_sex != 'zh') {
-        $error['sex'] = _td('You have not selected genger', 'registration');
+        $error['sex'] = _td('You have not selected genger');
     }
 
     // Проверка кода CAPTCHA
@@ -75,7 +84,7 @@ if (isset($_POST['submit'])) {
         $stmt->execute([$lat_nick]);
 
         if ($stmt->rowCount()) {
-            $error['login'][] = _td('Selected Nickname is already in use', 'registration');
+            $error['login'][] = _td('Selected Nickname is already in use');
         }
     }
 
@@ -158,17 +167,17 @@ if (isset($_POST['submit'])) {
             ]);
         }
 
-        echo '<div class="menu"><p><h3>' . _td('Your registratiton data', 'registration') . '</h3>'
-            . _td('Your ID', 'registration') . ': <b>' . $usid . '</b><br/>'
-            . _td('Your Username', 'registration') . ': <b>' . $reg_nick . '</b><br/>'
-            . _td('Your Password', 'registration') . ': <b>' . $reg_pass . '</b></p>';
+        echo '<div class="menu"><p><h3>' . _td('Your registratiton data') . '</h3>'
+            . _td('Your ID') . ': <b>' . $usid . '</b><br/>'
+            . _td('Your Username') . ': <b>' . $reg_nick . '</b><br/>'
+            . _td('Your Password') . ': <b>' . $reg_pass . '</b></p>';
 
         if ($set['mod_reg'] == 1) {
-            echo '<p><span class="red"><b>' . _td('Please, wait until a moderator approves your registration', 'registration') . '</b></span></p>';
+            echo '<p><span class="red"><b>' . _td('Please, wait until a moderator approves your registration') . '</b></span></p>';
         } else {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
-            echo '<p><a href="' . $home . '">' . _td('Enter', 'registration') . '</a></p>';
+            echo '<p><a href="' . $home . '">' . _td('Enter') . '</a></p>';
         }
 
         echo '</div>';
@@ -179,41 +188,41 @@ if (isset($_POST['submit'])) {
 
 // Форма регистрации
 if ($set['mod_reg'] == 1) {
-    echo '<div class="rmenu"><p>' . _td('You can get authorized on the site after confirmation of your registration.', 'registration') . '</p></div>';
+    echo '<div class="rmenu"><p>' . _td('You can get authorized on the site after confirmation of your registration.') . '</p></div>';
 }
 
 echo '<form action="registration.php" method="post"><div class="gmenu">' .
-    '<p><h3>' . _td('Choose Nickname', 'registration') . '</h3>' .
+    '<p><h3>' . _td('Choose Nickname') . '</h3>' .
     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />',
             $error['login']) . '</small></span><br />' : '') .
     '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-    '<small>' . _td('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)', 'registration') . '</small></p>' .
-    '<p><h3>' . _td('Assign a password', 'registration') . '</h3>' .
+    '<small>' . _td('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)') . '</small></p>' .
+    '<p><h3>' . _td('Assign a password') . '</h3>' .
     (isset($error['password']) ? '<span class="red"><small>' . implode('<br />',
             $error['password']) . '</small></span><br />' : '') .
     '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
-    '<small>' . _td('Min. 3 characters', 'registration') . '</small></p>' .
-    '<p><h3>' . _td('Select Gender', 'registration') . '</h3>' .
+    '<small>' . _td('Min. 3 characters') . '</small></p>' .
+    '<p><h3>' . _td('Select Gender') . '</h3>' .
     (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .
     '<select name="sex"' . (isset($error['sex']) ? ' style="background-color: #FFCCCC"' : '') . '>' .
     '<option value="?">-?-</option>' .
-    '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . _td('Man', 'registration') . '</option>' .
-    '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . _td('Woman', 'registration') . '</option>' .
+    '<option value="m"' . ($reg_sex == 'm' ? ' selected="selected"' : '') . '>' . _td('Man') . '</option>' .
+    '<option value="zh"' . ($reg_sex == 'zh' ? ' selected="selected"' : '') . '>' . _td('Woman') . '</option>' .
     '</select></p></div>' .
     '<div class="menu">' .
-    '<p><h3>' . _td('Your name', 'registration') . '</h3>' .
+    '<p><h3>' . _td('Your name') . '</h3>' .
     '<input type="text" name="imname" maxlength="30" value="' . htmlspecialchars($reg_name) . '" /><br />' .
-    '<small>' . _td('Max. 50 characters', 'registration') . '</small></p>' .
-    '<p><h3>' . _td('Tell us a little about yourself', 'registration') . '</h3>' .
+    '<small>' . _td('Max. 50 characters') . '</small></p>' .
+    '<p><h3>' . _td('Tell us a little about yourself') . '</h3>' .
     '<textarea rows="3" name="about">' . htmlspecialchars($reg_about) . '</textarea><br />' .
-    '<small>' . _td('Max. 1000 characters', 'registration') . '</small></p></div>' .
+    '<small>' . _td('Max. 1000 characters') . '</small></p></div>' .
     '<div class="gmenu"><p>' .
-    '<h3>' . _td('Verification code', 'registration') . '</h3>' .
-    '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . _td('Verification code', 'registration') . '" border="1"/><br />' .
+    '<h3>' . _td('Verification code') . '</h3>' .
+    '<img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . _td('Verification code') . '" border="1"/><br />' .
     (isset($error['captcha']) ? '<span class="red"><small>' . $error['captcha'] . '</small></span><br />' : '') .
     '<input type="text" size="5" maxlength="5"  name="captcha" ' . (isset($error['captcha']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
-    '<small>' . _td('If you cannot see the image code, enable graphics in your browser and refresh this page', 'registration') . '</small></p>' .
+    '<small>' . _td('If you cannot see the image code, enable graphics in your browser and refresh this page') . '</small></p>' .
     '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
-    '<div class="phdr"><small>' . _td('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted', 'registration') . '</small></div>';
+    '<div class="phdr"><small>' . _td('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') . '</small></div>';
 
 require('incfiles/end.php');

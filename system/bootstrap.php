@@ -89,16 +89,23 @@ function _t($message)
  * @param string $textDomain
  * @return string
  */
-function _td($message, $textDomain = 'default')
+function _td($message, $textDomain = null)
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
+    static $domain;
+
+    if ($textDomain !== null) {
+        $domain = $textDomain;
+    } elseif (null === $domain) {
+        $domain = 'default';
+    }
 
     if (null === $translator) {
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translate($message, $textDomain);
+    return $translator->translate($message, $domain);
 }
 
 /**
@@ -130,14 +137,21 @@ function _p($singular, $plural, $number)
  * @param string $textDomain
  * @return string
  */
-function _pd($singular, $plural, $number, $textDomain = 'default')
+function _pd($singular, $plural, $number, $textDomain = null)
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
+    static $domain;
+
+    if ($textDomain !== null) {
+        $domain = $textDomain;
+    } elseif (null === $domain) {
+        $domain = 'default';
+    }
 
     if (null === $translator) {
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translatePlural($singular, $plural, $number, $textDomain);
+    return $translator->translatePlural($singular, $plural, $number, $domain);
 }

@@ -9,6 +9,11 @@ $textl = 'FAQ';
 $headmod = 'faq';
 require('../incfiles/head.php');
 
+/**
+ * Задаем домен для перевода
+ */
+_td('', 'help');
+
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $home;
@@ -21,18 +26,18 @@ $user_smileys = 20;
 function smiliesCat()
 {
     return [
-        'animals'       => _td('Animals', 'help'),
-        'brawl_weapons' => _td('Brawl, Weapons', 'help'),
-        'emotions'      => _td('Emotions', 'help'),
-        'flowers'       => _td('Flowers', 'help'),
-        'food_alcohol'  => _td('Food, Alcohol', 'help'),
-        'gestures'      => _td('Gestures', 'help'),
-        'holidays'      => _td('Holidays', 'help'),
-        'love'          => _td('Love', 'help'),
-        'misc'          => _td('Miscellaneous', 'help'),
-        'music'         => _td('Music, Dancing', 'help'),
-        'sports'        => _td('Sports', 'help'),
-        'technology'    => _td('Technology', 'help'),
+        'animals'       => _td('Animals'),
+        'brawl_weapons' => _td('Brawl, Weapons'),
+        'emotions'      => _td('Emotions'),
+        'flowers'       => _td('Flowers'),
+        'food_alcohol'  => _td('Food, Alcohol'),
+        'gestures'      => _td('Gestures'),
+        'holidays'      => _td('Holidays'),
+        'love'          => _td('Love'),
+        'misc'          => _td('Miscellaneous'),
+        'music'         => _td('Music, Dancing'),
+        'sports'        => _td('Sports'),
+        'technology'    => _td('Technology'),
     ];
 }
 
@@ -53,8 +58,8 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
 } else {
     // Главное меню FAQ
     echo '<div class="phdr"><b>' . _t('Information, FAQ') . '</b></div>' .
-        '<div class="menu"><a href="?act=forum">' . _td('Forum rules', 'help') . '</a></div>' .
-        '<div class="menu"><a href="?act=tags">' . _td('bbCode Tags', 'help') . '</a></div>' .
+        '<div class="menu"><a href="?act=forum">' . _td('Forum rules') . '</a></div>' .
+        '<div class="menu"><a href="?act=tags">' . _td('bbCode Tags') . '</a></div>' .
         '<div class="menu"><a href="?act=avatars">' . _t('Avatars') . '</a></div>' .
         '<div class="menu"><a href="?act=smilies">' . _t('Smilies') . '</a></div>' .
         '<div class="phdr"><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></div>';

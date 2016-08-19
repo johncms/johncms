@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Список своих смайлов
-echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _td('My smilies', 'help') . '</div>';
+echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _td('My smilies') . '</div>';
 $smileys = !empty($datauser['smileys']) ? unserialize($datauser['smileys']) : [];
 $total = count($smileys);
 
@@ -34,14 +34,14 @@ foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
     echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
         '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
-        functions::smileys($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _td('or', 'help') . ' ' . functions::trans($smile) . '</div>';
+        functions::smileys($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _td('or') . ' ' . functions::trans($smile) . '</div>';
     $i++;
 }
 
 if ($total) {
     echo '<div class="rmenu"><input type="submit" name="delete" value=" ' . _t('Delete') . ' "/></div></form>';
 } else {
-    echo '<div class="menu"><p>' . _t('The list is empty') . '<br /><a href="?act=smilies">' . _td('Add Smilies', 'help') . '</a></p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '<br /><a href="?act=smilies">' . _td('Add Smilies') . '</a></p></div>';
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . ' / ' . $user_smileys . '</div>';

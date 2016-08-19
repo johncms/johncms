@@ -10,14 +10,14 @@ if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
         if (isset($_POST['submit'])) {
             // Устанавливаем пользовательский Аватар
             if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $user_id . '.png')) {
-                echo '<div class="gmenu"><p>' . _td('Avatar has been successfully applied', 'help') . '<br />' .
+                echo '<div class="gmenu"><p>' . _td('Avatar has been successfully applied') . '<br />' .
                     '<a href="../users/profile.php?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
                 echo functions::display_error(_t('An error occurred'), '<a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a>');
             }
         } else {
-            echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . _td('Set to Profile', 'help') . '</div>' .
-                '<div class="rmenu"><p>' . _td('Are you sure you want to set yourself this avatar?', 'help') . '</p>' .
+            echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . _td('Set to Profile') . '</div>' .
+                '<div class="rmenu"><p>' . _td('Are you sure you want to set yourself this avatar?') . '</p>' .
                 '<p><img src="../images/avatars/' . $id . '/' . $avatar . '.png" alt="" /></p>' .
                 '<p><form action="?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar . '" method="post"><input type="submit" name="submit" value="' . _t('Save') . '"/></form></p>' .
                 '</div>' .
