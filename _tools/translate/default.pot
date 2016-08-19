@@ -15,8 +15,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: system/vendor\n"
-"X-Poedit-SearchPathExcluded-1: incfiles\n"
-"X-Poedit-SearchPathExcluded-2: files\n"
+"X-Poedit-SearchPathExcluded-1: files\n"
 
 #: exit.php:16
 msgid "Are you sure you want to leave the site?"
@@ -197,12 +196,56 @@ msgstr ""
 msgid "Spoiler"
 msgstr ""
 
-#: login.php:10
+#: incfiles/head.php:25
+msgid "Site News"
+msgstr ""
+
+#: incfiles/head.php:78
+msgid "Hi"
+msgstr ""
+
+#: incfiles/head.php:78
+msgid "Guest"
+msgstr ""
+
+#: incfiles/head.php:82 login.php:10
 msgid "Home"
 msgstr ""
 
-#: login.php:12 login.php:141
+#: incfiles/head.php:83
+msgid "Personal"
+msgstr ""
+
+#: incfiles/head.php:84 login.php:12 login.php:141
 msgid "Login"
+msgstr ""
+
+#: incfiles/head.php:171
+msgid "Ban"
+msgstr ""
+
+#: incfiles/head.php:171
+msgid "Details"
+msgstr ""
+
+#: incfiles/head.php:180
+msgid "System"
+msgstr ""
+
+#: incfiles/head.php:193
+msgid "Mail"
+msgstr ""
+
+#: incfiles/head.php:197 pages/mainmenu.php:18
+msgid "Guestbook"
+msgstr ""
+
+#: incfiles/head.php:203
+msgid "Comments"
+msgstr ""
+
+#: incfiles/head.php:207
+msgid "Unread"
 msgstr ""
 
 #: login.php:22
@@ -283,10 +326,6 @@ msgstr ""
 
 #: pages/mainmenu.php:14
 msgid "Communication"
-msgstr ""
-
-#: pages/mainmenu.php:18
-msgid "Guestbook"
 msgstr ""
 
 #: pages/mainmenu.php:23
