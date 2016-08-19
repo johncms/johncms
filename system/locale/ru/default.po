@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-08-20 15:36-0400\n"
+"PO-Revision-Date: 2016-08-20 18:34-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +22,67 @@ msgstr ""
 "X-Crowdin-File: /System/default.pot\n"
 "Language: ru_RU\n"
 
+#: exit.php:16
+msgid "Are you sure you want to leave the site?"
+msgstr "Вы уверены, что хотите покинуть сайт?"
+
+#: exit.php:17
+msgid "Logout"
+msgstr "Выход"
+
+#: exit.php:18 help/includes/avatars.php:24
+msgid "Cancel"
+msgstr "Отмена"
+
+#: go.php:16
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: go.php:22
+msgid "Default"
+msgstr "По умолчанию"
+
+#: go.php:29
+msgid "Apply"
+msgstr "Применить"
+
+#: go.php:29 go.php:46 help/includes/admsmilies.php:7
+#: help/includes/admsmilies.php:61 help/includes/avatars.php:16
+#: help/includes/avatars.php:62 help/includes/avatars.php:80
+#: help/includes/forum.php:51 help/includes/my_smilies.php:53
+#: help/includes/smilies.php:40 help/includes/tags.php:71
+#: help/includes/usersmilies.php:71 help/index.php:60 users/index.php:53
+msgid "Back"
+msgstr "Назад"
+
+#: go.php:37
+msgid "External Link"
+msgstr "Внешняя ссылка"
+
+#: go.php:40
+msgid "ATTENTION!"
+msgstr "ВНИМАНИЕ!"
+
+#: go.php:41
+msgid "You are going to leave our site and go to an external link"
+msgstr "Вы собираетесь покинуть наш сайт и перейти по внешней ссылке"
+
+#: go.php:42
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Администрация нашего ресурса не несёт ответственности за содержание постороннего сайта"
+
+#: go.php:43
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Рекомендуется не указывать ваши данные, относящиеся к %s (логин, пароль), на посторонних сайтах"
+
+#: go.php:44
+msgid "Go to Link"
+msgstr "Перейти по ссылке"
+
 #: help/includes/admsmilies.php:7
 msgid "Wrong data"
 msgstr "Неверные данные"
-
-#: help/includes/admsmilies.php:7 help/includes/admsmilies.php:61
-#: help/includes/avatars.php:16 help/includes/avatars.php:62
-#: help/includes/avatars.php:80 help/includes/forum.php:51
-#: help/includes/my_smilies.php:53 help/includes/smilies.php:40
-#: help/includes/tags.php:71 help/includes/usersmilies.php:71 help/index.php:60
-msgid "Back"
-msgstr "Назад"
 
 #: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
 #: help/includes/smilies.php:6 help/includes/usersmilies.php:22
@@ -60,7 +110,7 @@ msgstr "Всего"
 msgid "To Page"
 msgstr "На страницу"
 
-#: help/includes/avatars.php:14
+#: help/includes/avatars.php:14 login.php:68
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -76,10 +126,6 @@ msgstr "Аватары"
 #: help/includes/avatars.php:22
 msgid "Save"
 msgstr "Сохранить"
-
-#: help/includes/avatars.php:24
-msgid "Cancel"
-msgstr "Отмена"
 
 #: help/includes/avatars.php:43
 msgid "Select"
@@ -155,6 +201,82 @@ msgstr "Текст"
 msgid "Spoiler"
 msgstr "Спойлер"
 
+#: login.php:10
+msgid "Home"
+msgstr "Главная"
+
+#: login.php:12 login.php:141
+msgid "Login"
+msgstr "Вход"
+
+#: login.php:22
+msgid "You have not entered login"
+msgstr "Вы не ввели логин"
+
+#: login.php:26 registration.php:47
+msgid "You have not entered password"
+msgstr "Вы не ввели пароль"
+
+#: login.php:30
+msgid "Nickname"
+msgstr "Ник"
+
+#: login.php:30 login.php:34 registration.php:49
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: login.php:34 login.php:138
+msgid "Password"
+msgstr "Пароль"
+
+#: login.php:57 registration.php:63
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: login.php:63
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: login.php:64
+msgid "Enter verification code"
+msgstr "Введите проверочный код"
+
+#: login.php:80
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Приносим извинения, но Ваша заявка на регистрацию ещё не рассмотрена. Пожалуйста, ожидайте."
+
+#: login.php:104
+msgid "Enter site"
+msgstr "Войти на сайт"
+
+#: login.php:113 login.php:117
+msgid "Authorization failed"
+msgstr "Авторизация не прошла"
+
+#: login.php:129
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "В данный момент доступ к сайту разрешен только для SV!"
+
+#: login.php:131
+msgid "At the moment, access to the site is allowed only for Administration of site."
+msgstr "В данный момент доступ к сайту разрешен только для Администрации сайта"
+
+#: login.php:136
+msgid "Username"
+msgstr "Ваш логин"
+
+#: login.php:140
+msgid "Remember"
+msgstr "Запомнить"
+
+#: login.php:143 registration.php:6 registration.php:25 registration.php:216
+msgid "Registration"
+msgstr "Регистрация"
+
+#: login.php:144
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
 #: pages/mainmenu.php:8
 msgid "Information"
 msgstr "Информация"
@@ -191,15 +313,47 @@ msgstr "Библиотека"
 msgid "Gallery"
 msgstr "Галерея"
 
-#: pages/mainmenu.php:45
+#: pages/mainmenu.php:45 users/index.php:34 users/index.php:40
 msgid "Community"
 msgstr "Сообщество"
 
-#: pages/mainmenu.php:46
+#: pages/mainmenu.php:46 users/index.php:47
 msgid "Users"
 msgstr "Пользователи"
 
-#: pages/mainmenu.php:47
+#: pages/mainmenu.php:47 users/index.php:50
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
+
+#: registration.php:42
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+#: users/index.php:11
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: users/index.php:42
+msgid "Look for the User"
+msgstr "Искать пользователя"
+
+#: users/index.php:44
+msgid "Search"
+msgstr "Поиск"
+
+#: users/index.php:45
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr "Поиск осуществляется по нику и не зависят от регистра."
+
+#: users/index.php:48
+msgid "Administration"
+msgstr "Администрация"
+
+#: users/index.php:49
+msgid "Birthdays"
+msgstr "Именинники"
+
+#: users/index.php:51
+msgid "Top Activity"
+msgstr "Топ активности"
 

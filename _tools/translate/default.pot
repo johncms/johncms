@@ -47,7 +47,7 @@ msgstr ""
 #: help/includes/avatars.php:62 help/includes/avatars.php:80
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
-#: help/includes/usersmilies.php:71 help/index.php:60
+#: help/includes/usersmilies.php:71 help/index.php:60 users/index.php:53
 msgid "Back"
 msgstr ""
 
@@ -309,18 +309,46 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: pages/mainmenu.php:45
+#: pages/mainmenu.php:45 users/index.php:34 users/index.php:40
 msgid "Community"
 msgstr ""
 
-#: pages/mainmenu.php:46
+#: pages/mainmenu.php:46 users/index.php:47
 msgid "Users"
 msgstr ""
 
-#: pages/mainmenu.php:47
+#: pages/mainmenu.php:47 users/index.php:50
 msgid "Photo Albums"
 msgstr ""
 
 #: registration.php:42
 msgid "Invalid characters"
+msgstr ""
+
+#: users/index.php:11
+msgid "For registered users only"
+msgstr ""
+
+#: users/index.php:42
+msgid "Look for the User"
+msgstr ""
+
+#: users/index.php:44
+msgid "Search"
+msgstr ""
+
+#: users/index.php:45
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr ""
+
+#: users/index.php:48
+msgid "Administration"
+msgstr ""
+
+#: users/index.php:49
+msgid "Birthdays"
+msgstr ""
+
+#: users/index.php:51
+msgid "Top Activity"
 msgstr ""
