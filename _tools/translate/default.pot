@@ -46,7 +46,7 @@ msgstr ""
 #: help/includes/avatars.php:62 help/includes/avatars.php:80
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
-#: help/includes/usersmilies.php:71 help/index.php:60 users/index.php:53
+#: help/includes/usersmilies.php:71 help/index.php:65 users/index.php:53
 msgid "Back"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr ""
 
 #: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
 #: help/includes/smilies.php:6 help/includes/usersmilies.php:22
-#: help/index.php:59
+#: help/index.php:64
 msgid "Smilies"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "An error occurred"
 msgstr ""
 
 #: help/includes/avatars.php:19 help/includes/avatars.php:28
-#: help/includes/avatars.php:66 help/index.php:58
+#: help/includes/avatars.php:66 help/index.php:63
 msgid "Avatars"
 msgstr ""
 
@@ -127,12 +127,12 @@ msgid "Select"
 msgstr ""
 
 #: help/includes/avatars.php:66 help/includes/forum.php:6
-#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:55
+#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:60
 #: pages/mainmenu.php:11
 msgid "Information, FAQ"
 msgstr ""
 
-#: help/includes/my_smilies.php:42
+#: help/includes/my_smilies.php:42 users/profile.php:68
 msgid "Delete"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: incfiles/head.php:171
+#: incfiles/head.php:171 users/profile.php:72
 msgid "Ban"
 msgstr ""
 
@@ -252,7 +252,7 @@ msgstr ""
 msgid "You have not entered login"
 msgstr ""
 
-#: login.php:26 registration.php:47
+#: login.php:26 registration.php:52
 msgid "You have not entered password"
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: login.php:30 login.php:34 registration.php:49
+#: login.php:30 login.php:34 registration.php:54
 msgid "Invalid length"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: login.php:57 registration.php:63
+#: login.php:57 registration.php:68
 msgid "The security code is not correct"
 msgstr ""
 
@@ -308,7 +308,7 @@ msgstr ""
 msgid "Remember"
 msgstr ""
 
-#: login.php:143 registration.php:6 registration.php:25 registration.php:216
+#: login.php:143 registration.php:6 registration.php:30 registration.php:221
 msgid "Registration"
 msgstr ""
 
@@ -352,7 +352,7 @@ msgstr ""
 msgid "Community"
 msgstr ""
 
-#: pages/mainmenu.php:46 users/index.php:47
+#: pages/mainmenu.php:46 users/index.php:47 users/profile.php:207
 msgid "Users"
 msgstr ""
 
@@ -360,11 +360,11 @@ msgstr ""
 msgid "Photo Albums"
 msgstr ""
 
-#: registration.php:42
+#: registration.php:47
 msgid "Invalid characters"
 msgstr ""
 
-#: users/index.php:11
+#: users/index.php:11 users/profile.php:10
 msgid "For registered users only"
 msgstr ""
 
@@ -390,4 +390,32 @@ msgstr ""
 
 #: users/index.php:51
 msgid "Top Activity"
+msgstr ""
+
+#: users/profile.php:19
+msgid "This User does not exists"
+msgstr ""
+
+#: users/profile.php:56
+msgid "Profile"
+msgstr ""
+
+#: users/profile.php:64
+msgid "Edit"
+msgstr ""
+
+#: users/profile.php:81
+msgid "Birthday"
+msgstr ""
+
+#: users/profile.php:120
+msgid "Karma"
+msgstr ""
+
+#: users/profile.php:131
+msgid "Vote"
+msgstr ""
+
+#: users/profile.php:201
+msgid "Write"
 msgstr ""

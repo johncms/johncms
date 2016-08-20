@@ -12,7 +12,7 @@ require('../incfiles/head.php');
 /**
  * Задаем домен для перевода
  */
-_td('', 'help');
+_setDomain('help');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {

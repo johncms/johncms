@@ -1,0 +1,108 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../users\n"
+"X-Poedit-KeywordsList: _td\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: profile.php:58
+msgid "User Profile"
+msgstr ""
+
+#: profile.php:58
+msgid "My Profile"
+msgstr ""
+
+#: profile.php:92
+msgid "Where?"
+msgstr ""
+
+#: profile.php:99
+msgid "Pending confirmation"
+msgstr ""
+
+#: profile.php:122
+msgid "For"
+msgstr ""
+
+#: profile.php:123
+msgid "Against"
+msgstr ""
+
+#: profile.php:137
+msgid "New reviews"
+msgstr ""
+
+#: profile.php:146
+msgid "Information"
+msgstr ""
+
+#: profile.php:147
+msgid "Activity"
+msgstr ""
+
+#: profile.php:148
+msgid "Statistic"
+msgstr ""
+
+#: profile.php:152
+msgid "Infringements"
+msgstr ""
+
+#: profile.php:157
+msgid "Photo Album"
+msgstr ""
+
+#: profile.php:158
+msgid "Guestbook"
+msgstr ""
+
+#: profile.php:159
+msgid "Friends"
+msgstr ""
+
+#: profile.php:170
+msgid "Confirm friendship"
+msgstr ""
+
+#: profile.php:170
+msgid "Reject friendship"
+msgstr ""
+
+#: profile.php:173
+msgid "Cancel a request to be friends"
+msgstr ""
+
+#: profile.php:175
+msgid "Add to friends"
+msgstr ""
+
+#: profile.php:179
+msgid "Remove from friends"
+msgstr ""
+
+#: profile.php:186
+msgid "Add to Contacts"
+msgstr ""
+
+#: profile.php:188
+msgid "Remove from Contacts"
+msgstr ""
+
+#: profile.php:193
+msgid "Block User"
+msgstr ""
+
+#: profile.php:195
+msgid "Unlock User"
+msgstr ""
