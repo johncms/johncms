@@ -41,7 +41,7 @@ msgstr ""
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr ""
 
-#: includes/forum.php:6 index.php:56
+#: includes/forum.php:6 index.php:61
 msgid "Forum rules"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Add Smilies"
 msgstr ""
 
-#: includes/tags.php:8 index.php:57
+#: includes/tags.php:8 index.php:62
 msgid "bbCode Tags"
 msgstr ""
 
@@ -137,50 +137,50 @@ msgstr ""
 msgid "Link name"
 msgstr ""
 
-#: index.php:24
+#: index.php:29
 msgid "Animals"
 msgstr ""
 
-#: index.php:25
+#: index.php:30
 msgid "Brawl, Weapons"
 msgstr ""
 
-#: index.php:26
+#: index.php:31
 msgid "Emotions"
 msgstr ""
 
-#: index.php:27
+#: index.php:32
 msgid "Flowers"
 msgstr ""
 
-#: index.php:28
+#: index.php:33
 msgid "Food, Alcohol"
 msgstr ""
 
-#: index.php:29
+#: index.php:34
 msgid "Gestures"
 msgstr ""
 
-#: index.php:30
+#: index.php:35
 msgid "Holidays"
 msgstr ""
 
-#: index.php:31
+#: index.php:36
 msgid "Love"
 msgstr ""
 
-#: index.php:32
+#: index.php:37
 msgid "Miscellaneous"
 msgstr ""
 
-#: index.php:33
+#: index.php:38
 msgid "Music, Dancing"
 msgstr ""
 
-#: index.php:34
+#: index.php:39
 msgid "Sports"
 msgstr ""
 
-#: index.php:35
+#: index.php:40
 msgid "Technology"
 msgstr ""

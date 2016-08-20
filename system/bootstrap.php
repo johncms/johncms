@@ -155,3 +155,9 @@ function _pd($singular, $plural, $number, $textDomain = null)
 
     return $translator->translatePlural($singular, $plural, $number, $domain);
 }
+
+function _setDomain($textDomain)
+{
+    _td('', $textDomain);
+    _pd('', '', 0, $textDomain);
+}
