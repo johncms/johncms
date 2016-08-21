@@ -11,11 +11,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../..\n"
+"X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: system/vendor\n"
-"X-Poedit-SearchPathExcluded-1: files\n"
+"X-Poedit-SearchPathExcluded-0: files\n"
+"X-Poedit-SearchPathExcluded-1: system/vendor\n"
 
 #: exit.php:16
 msgid "Are you sure you want to leave the site?"
@@ -46,7 +46,7 @@ msgstr ""
 #: help/includes/avatars.php:62 help/includes/avatars.php:80
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
-#: help/includes/usersmilies.php:71 help/index.php:65 users/index.php:53
+#: help/includes/usersmilies.php:71 help/index.php:63 users/index.php:53
 msgid "Back"
 msgstr ""
 
@@ -81,12 +81,15 @@ msgstr ""
 
 #: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
 #: help/includes/smilies.php:6 help/includes/usersmilies.php:22
-#: help/index.php:64
+#: help/index.php:62
 msgid "Smilies"
 msgstr ""
 
 #: help/includes/admsmilies.php:48 help/includes/avatars.php:49
 #: help/includes/my_smilies.php:44 help/includes/usersmilies.php:59
+#: users/includes/profile/activity.php:42
+#: users/includes/profile/activity.php:77
+#: users/includes/profile/activity.php:114
 msgid "The list is empty"
 msgstr ""
 
@@ -96,12 +99,12 @@ msgstr ""
 
 #: help/includes/admsmilies.php:52 help/includes/avatars.php:52
 #: help/includes/avatars.php:79 help/includes/my_smilies.php:47
-#: help/includes/usersmilies.php:62
+#: help/includes/usersmilies.php:62 users/includes/profile/activity.php:118
 msgid "Total"
 msgstr ""
 
 #: help/includes/admsmilies.php:58 help/includes/avatars.php:58
-#: help/includes/usersmilies.php:68
+#: help/includes/usersmilies.php:68 users/includes/profile/activity.php:124
 msgid "To Page"
 msgstr ""
 
@@ -114,7 +117,7 @@ msgid "An error occurred"
 msgstr ""
 
 #: help/includes/avatars.php:19 help/includes/avatars.php:28
-#: help/includes/avatars.php:66 help/index.php:63
+#: help/includes/avatars.php:66 help/index.php:61
 msgid "Avatars"
 msgstr ""
 
@@ -127,12 +130,12 @@ msgid "Select"
 msgstr ""
 
 #: help/includes/avatars.php:66 help/includes/forum.php:6
-#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:60
+#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:58
 #: pages/mainmenu.php:11
 msgid "Information, FAQ"
 msgstr ""
 
-#: help/includes/my_smilies.php:42 users/profile.php:68
+#: help/includes/my_smilies.php:42 users/profile.php:66
 msgid "Delete"
 msgstr ""
 
@@ -220,7 +223,8 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: incfiles/head.php:171 users/profile.php:72
+#: incfiles/head.php:171 users/includes/profile/ban.php:121
+#: users/profile.php:70
 msgid "Ban"
 msgstr ""
 
@@ -252,7 +256,7 @@ msgstr ""
 msgid "You have not entered login"
 msgstr ""
 
-#: login.php:26 registration.php:52
+#: login.php:26 registration.php:50
 msgid "You have not entered password"
 msgstr ""
 
@@ -260,7 +264,7 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: login.php:30 login.php:34 registration.php:54
+#: login.php:30 login.php:34 registration.php:52
 msgid "Invalid length"
 msgstr ""
 
@@ -268,7 +272,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: login.php:57 registration.php:68
+#: login.php:57 registration.php:66
 msgid "The security code is not correct"
 msgstr ""
 
@@ -308,7 +312,7 @@ msgstr ""
 msgid "Remember"
 msgstr ""
 
-#: login.php:143 registration.php:6 registration.php:30 registration.php:221
+#: login.php:143 registration.php:6 registration.php:28 registration.php:219
 msgid "Registration"
 msgstr ""
 
@@ -328,7 +332,8 @@ msgstr ""
 msgid "Communication"
 msgstr ""
 
-#: pages/mainmenu.php:23
+#: pages/mainmenu.php:23 users/includes/profile/activity.php:49
+#: users/includes/profile/activity.php:84
 msgid "Forum"
 msgstr ""
 
@@ -352,7 +357,7 @@ msgstr ""
 msgid "Community"
 msgstr ""
 
-#: pages/mainmenu.php:46 users/index.php:47 users/profile.php:207
+#: pages/mainmenu.php:46 users/index.php:47 users/profile.php:205
 msgid "Users"
 msgstr ""
 
@@ -360,8 +365,12 @@ msgstr ""
 msgid "Photo Albums"
 msgstr ""
 
-#: registration.php:47
+#: registration.php:45
 msgid "Invalid characters"
+msgstr ""
+
+#: users/includes/profile/activity.php:12 users/profile.php:54
+msgid "Profile"
 msgstr ""
 
 #: users/index.php:11 users/profile.php:10
@@ -396,26 +405,22 @@ msgstr ""
 msgid "This User does not exists"
 msgstr ""
 
-#: users/profile.php:56
-msgid "Profile"
-msgstr ""
-
-#: users/profile.php:64
+#: users/profile.php:62
 msgid "Edit"
 msgstr ""
 
-#: users/profile.php:81
+#: users/profile.php:79
 msgid "Birthday"
 msgstr ""
 
-#: users/profile.php:120
+#: users/profile.php:118
 msgid "Karma"
 msgstr ""
 
-#: users/profile.php:131
+#: users/profile.php:129
 msgid "Vote"
 msgstr ""
 
-#: users/profile.php:201
+#: users/profile.php:199
 msgid "Write"
 msgstr ""

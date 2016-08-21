@@ -1,0 +1,210 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../../users\n"
+"X-Poedit-KeywordsList: _td\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/profile/activity.php:6 includes/profile/activity.php:12
+#: profile.php:145
+msgid "Activity"
+msgstr ""
+
+#: includes/profile/activity.php:14 includes/profile/activity.php:84
+msgid "Messages"
+msgstr ""
+
+#: includes/profile/activity.php:15 includes/profile/activity.php:49
+msgid "Themes"
+msgstr ""
+
+#: includes/profile/activity.php:16 includes/profile/activity.php:25
+#: includes/profile/ban.php:142
+msgid "Comments"
+msgstr ""
+
+#: includes/profile/ban.php:17
+msgid "You do not have enought rights to ban this user"
+msgstr ""
+
+#: includes/profile/ban.php:19
+msgid "Ban the User"
+msgstr ""
+
+#: includes/profile/ban.php:31
+msgid "Reason not specified"
+msgstr ""
+
+#: includes/profile/ban.php:35
+msgid "There is no required data"
+msgstr ""
+
+#: includes/profile/ban.php:39
+msgid "You have no rights to ban in this section"
+msgstr ""
+
+#: includes/profile/ban.php:43
+msgid "Ban already active"
+msgstr ""
+
+#: includes/profile/ban.php:117
+msgid "System"
+msgstr ""
+
+#: includes/profile/ban.php:127
+msgid "User banned"
+msgstr ""
+
+#: includes/profile/ban.php:134
+msgid "Ban type"
+msgstr ""
+
+#: includes/profile/ban.php:138
+msgid "Full block"
+msgstr ""
+
+#: includes/profile/ban.php:140
+msgid "Private messages"
+msgstr ""
+
+#: includes/profile/ban.php:144 profile.php:156
+msgid "Guestbook"
+msgstr ""
+
+#: includes/profile/ban.php:150
+msgid "Forum"
+msgstr ""
+
+#: includes/profile/ban.php:155
+msgid "Library"
+msgstr ""
+
+#: includes/profile/ban.php:158
+msgid "Ban time"
+msgstr ""
+
+#: includes/profile/ban.php:160
+msgid "Minutes (60 max.)"
+msgstr ""
+
+#: includes/profile/ban.php:161
+msgid "Hours (24 max.)"
+msgstr ""
+
+#: includes/profile/ban.php:164
+msgid "Days (30 max.)"
+msgstr ""
+
+#: includes/profile/ban.php:168
+msgid "Till cancel"
+msgstr ""
+
+#: includes/profile/ban.php:171
+msgid "Reason"
+msgstr ""
+
+#: includes/profile/ban.php:176
+msgid "Infrigement"
+msgstr ""
+
+#: includes/profile/ban.php:181
+msgid "Apply Ban"
+msgstr ""
+
+#: includes/profile/ban.php:184
+msgid "Profile"
+msgstr ""
+
+#: profile.php:56
+msgid "User Profile"
+msgstr ""
+
+#: profile.php:56
+msgid "My Profile"
+msgstr ""
+
+#: profile.php:90
+msgid "Where?"
+msgstr ""
+
+#: profile.php:97
+msgid "Pending confirmation"
+msgstr ""
+
+#: profile.php:120
+msgid "For"
+msgstr ""
+
+#: profile.php:121
+msgid "Against"
+msgstr ""
+
+#: profile.php:135
+msgid "New reviews"
+msgstr ""
+
+#: profile.php:144
+msgid "Information"
+msgstr ""
+
+#: profile.php:146
+msgid "Statistic"
+msgstr ""
+
+#: profile.php:150
+msgid "Infringements"
+msgstr ""
+
+#: profile.php:155
+msgid "Photo Album"
+msgstr ""
+
+#: profile.php:157
+msgid "Friends"
+msgstr ""
+
+#: profile.php:168
+msgid "Confirm friendship"
+msgstr ""
+
+#: profile.php:168
+msgid "Reject friendship"
+msgstr ""
+
+#: profile.php:171
+msgid "Cancel a request to be friends"
+msgstr ""
+
+#: profile.php:173
+msgid "Add to friends"
+msgstr ""
+
+#: profile.php:177
+msgid "Remove from friends"
+msgstr ""
+
+#: profile.php:184
+msgid "Add to Contacts"
+msgstr ""
+
+#: profile.php:186
+msgid "Remove from Contacts"
+msgstr ""
+
+#: profile.php:191
+msgid "Block User"
+msgstr ""
+
+#: profile.php:193
+msgid "Unlock User"
+msgstr ""

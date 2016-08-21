@@ -3,17 +3,17 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // История активности
-$textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['activity'];
+$textl = htmlspecialchars($user['name']) . ': ' . _td('Activity');
 require('../incfiles/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['activity'] . '</div>';
+echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Activity') . '</div>';
 $menu = [
-    (!$mod ? '<b>' . $lng['messages'] . '</b>' : '<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $lng['messages'] . '</a>'),
-    ($mod == 'topic' ? '<b>' . $lng['themes'] . '</b>' : '<a href="profile.php?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . $lng['themes'] . '</a>'),
-    ($mod == 'comments' ? '<b>' . $lng['comments'] . '</b>' : '<a href="profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . $lng['comments'] . '</a>'),
+    (!$mod ? '<b>' . _td('Messages') . '</b>' : '<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . _td('Messages') . '</a>'),
+    ($mod == 'topic' ? '<b>' . _td('Themes') . '</b>' : '<a href="profile.php?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _td('Themes') . '</a>'),
+    ($mod == 'comments' ? '<b>' . _td('Comments') . '</b>' : '<a href="profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _td('Comments') . '</a>'),
 ];
 echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
@@ -22,7 +22,7 @@ switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . $lng['comments'] . '</b></div>';
+        echo '<div class="phdr"><b>' . _td('Comments') . '</b></div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
@@ -39,14 +39,14 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . $lng_profile['guest_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
         break;
 
     case 'topic':
         // Список тем Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . $lng['forum'] . '</b>: ' . $lng['themes'] . '</div>';
+        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Themes') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
@@ -74,14 +74,14 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
         break;
 
     default:
         // Список постов Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . $lng['forum'] . '</b>: ' . $lng['messages'] . '</div>';
+        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Messages') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
@@ -111,16 +111,16 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="profile.php?act=activity&amp;user=' . $user['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }

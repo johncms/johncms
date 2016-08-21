@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../../help\n"
+"X-Poedit-Basepath: ../../../help\n"
 "X-Poedit-KeywordsList: _td\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr ""
 
-#: includes/forum.php:6 index.php:61
+#: includes/forum.php:6 index.php:59
 msgid "Forum rules"
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Add Smilies"
 msgstr ""
 
-#: includes/tags.php:8 index.php:62
+#: includes/tags.php:8 index.php:60
 msgid "bbCode Tags"
 msgstr ""
 
@@ -137,50 +137,50 @@ msgstr ""
 msgid "Link name"
 msgstr ""
 
-#: index.php:29
+#: index.php:27
 msgid "Animals"
 msgstr ""
 
-#: index.php:30
+#: index.php:28
 msgid "Brawl, Weapons"
 msgstr ""
 
-#: index.php:31
+#: index.php:29
 msgid "Emotions"
 msgstr ""
 
-#: index.php:32
+#: index.php:30
 msgid "Flowers"
 msgstr ""
 
-#: index.php:33
+#: index.php:31
 msgid "Food, Alcohol"
 msgstr ""
 
-#: index.php:34
+#: index.php:32
 msgid "Gestures"
 msgstr ""
 
-#: index.php:35
+#: index.php:33
 msgid "Holidays"
 msgstr ""
 
-#: index.php:36
+#: index.php:34
 msgid "Love"
 msgstr ""
 
-#: index.php:37
+#: index.php:35
 msgid "Miscellaneous"
 msgstr ""
 
-#: index.php:38
+#: index.php:36
 msgid "Music, Dancing"
 msgstr ""
 
-#: index.php:39
+#: index.php:37
 msgid "Sports"
 msgstr ""
 
-#: index.php:40
+#: index.php:38
 msgid "Technology"
 msgstr ""
