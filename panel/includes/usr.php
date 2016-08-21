@@ -35,9 +35,9 @@ $i = 0;
 while ($req->fetch()) {
     $link = '';
     if ($rights >= 7) {
-        $link .= '<a href="../users/profile.php?act=edit&amp;user=' . $res['id'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=usr_del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a> | ';
+        $link .= '<a href="../profile/?act=edit&amp;user=' . $res['id'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=usr_del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a> | ';
     }
-    $link .= '<a href="../users/profile.php?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . $lng['ban_do'] . '</a>';
+    $link .= '<a href="../profile/?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . $lng['ban_do'] . '</a>';
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
     echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link]);
     echo '</div>';

@@ -71,7 +71,7 @@ if ($id) {
         }
 
         echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
-        echo '<p><a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+        echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
         require_once('../incfiles/end.php');
         exit;
     }
@@ -424,7 +424,7 @@ if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . $lng['sent'] . '"/></p>' .
         '</form></div>' .
-        '<div class="phdr"><b>' . ($id && isset($qs) ? $lng_mail['personal_correspondence'] . ' <a href="../users/profile.php?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : $lng_mail['sending_the_message']) . '</b></div>';
+        '<div class="phdr"><b>' . ($id && isset($qs) ? $lng_mail['personal_correspondence'] . ' <a href="../profile/?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : $lng_mail['sending_the_message']) . '</b></div>';
 }
 
 if ($id) {
@@ -519,5 +519,5 @@ if ($total) {
     echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . $lng_mail['clear_messages'] . '</a><br/>';
 }
 
-echo '<a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+echo '<a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
 unset($_SESSION['error']);

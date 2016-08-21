@@ -11,7 +11,7 @@ if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
             // Устанавливаем пользовательский Аватар
             if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $user_id . '.png')) {
                 echo '<div class="gmenu"><p>' . _td('Avatar has been successfully applied') . '<br />' .
-                    '<a href="../users/profile.php?act=edit">' . _t('Continue') . '</a></p></div>';
+                    '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
                 echo functions::display_error(_t('An error occurred'), '<a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a>');
             }

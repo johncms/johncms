@@ -289,11 +289,11 @@ class functions extends core
         if (array_key_exists($place[0], $placelist)) {
             if ($place[0] == 'profile') {
                 if ($place[1] == $user_id) {
-                    return '<a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
+                    return '<a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
                 } else {
                     $user = self::get_user($place[1]);
 
-                    return $placelist['profile'] . ': <a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '">' . $user['name'] . '</a>';
+                    return $placelist['profile'] . ': <a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
                 }
             } elseif ($place[0] == 'online' && isset($headmod) && $headmod == 'online') {
                 return $placelist['here'];
@@ -356,7 +356,7 @@ class functions extends core
                 $out .= functions::image('del.png');
             }
 
-            $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . self::$system_set['homeurl'] . '/users/profile.php?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
             $rank = [
                 0 => '',
                 1 => '(GMod)',
@@ -428,7 +428,7 @@ class functions extends core
                     /** @var PDO $db */
                     $db = App::getContainer()->get(PDO::class);
                     $iptotal = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
-                    $out .= '<div><span class="gray">' . self::$lng['ip_history'] . ':</span> <a href="' . self::$system_set['homeurl'] . '/users/profile.php?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
+                    $out .= '<div><span class="gray">' . self::$lng['ip_history'] . ':</span> <a href="' . self::$system_set['homeurl'] . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
                 }
 
                 $out .= '</div>';

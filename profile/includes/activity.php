@@ -9,11 +9,11 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Activity') . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Activity') . '</div>';
 $menu = [
-    (!$mod ? '<b>' . _td('Messages') . '</b>' : '<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . _td('Messages') . '</a>'),
-    ($mod == 'topic' ? '<b>' . _td('Themes') . '</b>' : '<a href="profile.php?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _td('Themes') . '</a>'),
-    ($mod == 'comments' ? '<b>' . _td('Comments') . '</b>' : '<a href="profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _td('Comments') . '</a>'),
+    (!$mod ? '<b>' . _td('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _td('Messages') . '</a>'),
+    ($mod == 'topic' ? '<b>' . _td('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _td('Themes') . '</a>'),
+    ($mod == 'comments' ? '<b>' . _td('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _td('Comments') . '</a>'),
 ];
 echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
@@ -25,7 +25,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _td('Comments') . '</b></div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . functions::display_pagination('?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
@@ -49,7 +49,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Themes') . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . functions::display_pagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
@@ -84,7 +84,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Messages') . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . functions::display_pagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm' " . ($rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
@@ -118,8 +118,8 @@ switch ($mod) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="profile.php?act=activity&amp;user=' . $user['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
+    echo '<div class="topmenu">' . functions::display_pagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=activity&amp;user=' . $user['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';

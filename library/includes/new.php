@@ -34,7 +34,7 @@ if ($total) {
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
+            . '<td><a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'

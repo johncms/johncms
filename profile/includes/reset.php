@@ -13,7 +13,7 @@ if ($rights >= 7 && $rights > $user['rights']) {
     $db->query("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
 
     echo '<div class="gmenu"><p>' . $lng_profile['reset1'] . ' <b>' . $user['name'] . '</b> ' . $lng_profile['reset2'] . '<br />' .
-        '<a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p></div>';
+        '<a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p></div>';
     require_once('../incfiles/end.php');
     exit;
 }

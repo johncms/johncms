@@ -80,7 +80,7 @@ echo '<div class="header"> ' . _t('Hi') . ', ' . ($user_id ? '<b>' . $login . '<
 // Главное меню пользователя
 echo '<div class="tmn">' .
     (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home') . '</a><br/>' : '') .
-    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/users/profile.php?act=office">' . functions::image('menu_cabinet.png') . _t('Personal') . '</a><br/>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal') . '</a><br/>' : '') .
     (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login') . '</a>' : '') .
     '</div><div class="maintxt">';
 
@@ -168,7 +168,7 @@ if ($user_id) {
 
 // Выводим сообщение о Бане
 if (!empty($ban)) {
-    echo '<div class="alarm">' . _t('Ban') . '&#160;<a href="' . $set['homeurl'] . '/users/profile.php?act=ban">' . _t('Details') . '</a></div>';
+    echo '<div class="alarm">' . _t('Ban') . '&#160;<a href="' . $set['homeurl'] . '/profile/?act=ban">' . _t('Details') . '</a></div>';
 }
 
 // Ссылки на непрочитанное
@@ -194,7 +194,7 @@ if ($user_id) {
     }
 
     if ($datauser['comm_count'] > $datauser['comm_old']) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
     }
 
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();

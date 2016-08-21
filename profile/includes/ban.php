@@ -130,7 +130,7 @@ switch ($mod) {
                 }
             } else {
                 // Форма параметров бана
-                echo '<form action="profile.php?act=ban&amp;mod=do&amp;user=' . $user['id'] . '" method="post">' .
+                echo '<form action="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '" method="post">' .
                     '<div class="menu"><p><h3>' . _td('Ban type') . '</h3>';
 
                 if ($rights >= 6) {
@@ -181,7 +181,7 @@ switch ($mod) {
                     '</p><p><input type="submit" value="' . _td('Apply Ban') . '" name="submit" />' .
                     '</p></div></form>';
             }
-            echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . _t('Profile') . '</a></div>';
+            echo '<div class="phdr"><a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></div>';
         }
         break;
 
@@ -208,11 +208,11 @@ switch ($mod) {
                         $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
                         echo '<div class="gmenu"><p><h3>' . _td('Ban terminated') . '</h3></p></div>';
                     } else {
-                        echo '<form action="profile.php?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
+                        echo '<form action="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
                             '<div class="menu"><p>' . _td('Ban time is going to the end. Infrigement will be saved in the bans history') . '</p>' .
                             '<p><input type="submit" name="submit" value="' . _td('Terminate Ban') . '" /></p>' .
                             '</div></form>' .
-                            '<div class="phdr"><a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
+                            '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
                     }
                 } else {
                     echo functions::display_error($error);
@@ -242,13 +242,13 @@ switch ($mod) {
                         `karma_minus` = '" . ($user['karma_minus'] > $points ? $user['karma_minus'] - $points : 0) . "'
                         WHERE `id` = " . $user['id']);
                     $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '$ban'");
-                    echo '<div class="gmenu"><p><h3>' . _td('Ban deleted') . '</h3><a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                    echo '<div class="gmenu"><p><h3>' . _td('Ban deleted') . '</h3><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
-                    echo '<form action="profile.php?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
+                    echo '<form action="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
                         '<div class="menu"><p>' . _td('Removing ban along with a record in the bans history') . '</p>' .
                         '<p><input type="submit" name="submit" value="' . _t('Delete') . '" /></p>' .
                         '</div></form>' .
-                        '<div class="phdr"><a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
+                        '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
                 }
             } else {
                 echo functions::display_error(_t('Wrong data'));
@@ -266,7 +266,7 @@ switch ($mod) {
                 $db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = " . $user['id']);
                 echo '<div class="gmenu"><h3>' . _td('Violations history cleared') . '</h3></div>';
             } else {
-                echo '<form action="profile.php?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '" method="post">' .
+                echo '<form action="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '" method="post">' .
                     '<div class="menu"><p>' . _td('Are you sure want to clean entire history of user violations?') . '</p>' .
                     '<p><input type="submit" value="' . _t('Clear') . '" name="submit" />' .
                     '</p></div></form>';
@@ -275,7 +275,7 @@ switch ($mod) {
             $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
                 '<p>' . ($total
-                    ? '<a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . _td('Violations history') . '</a><br />'
+                    ? '<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Violations history') . '</a><br />'
                     : '') .
                 '<a href="../' . $set['admp'] . '/index.php?act=ban_panel">' . _td('Ban Panel') . '</a></p>';
         } else {
@@ -285,7 +285,7 @@ switch ($mod) {
 
     default:
         // История нарушений
-        echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Violations History') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Violations History') . '</div>';
         // Меню
         $menu = [];
 
@@ -294,7 +294,7 @@ switch ($mod) {
         }
 
         if ($rights == 9) {
-            $menu[] = '<a href="profile.php?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . _td('Clear history') . '</a>';
+            $menu[] = '<a href="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . _td('Clear history') . '</a>';
         }
 
         if (!empty($menu)) {
@@ -348,11 +348,11 @@ switch ($mod) {
                 $menu = [];
 
                 if ($rights >= 7 && $remain > 0) {
-                    $menu[] = '<a href="profile.php?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _td('Cancel Ban') . '</a>';
+                    $menu[] = '<a href="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _td('Cancel Ban') . '</a>';
                 }
 
                 if ($rights == 9) {
-                    $menu[] = '<a href="profile.php?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _td('Delete Ban') . '</a>';
+                    $menu[] = '<a href="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _td('Delete Ban') . '</a>';
                 }
 
                 if (!empty($menu)) {
@@ -369,8 +369,8 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<p>' . functions::display_pagination('profile.php?act=ban&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>' .
-                '<p><form action="profile.php?act=ban&amp;user=' . $user['id'] . '" method="post">' .
+            echo '<p>' . functions::display_pagination('?act=ban&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>' .
+                '<p><form action="?act=ban&amp;user=' . $user['id'] . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }

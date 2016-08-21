@@ -8,14 +8,14 @@ if($user_id && $user['id'] == $user_id)
     $datauser['comm_old'] = $datauser['comm_count'];
 require('../incfiles/head.php');
 
-$context_top = '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['guestbook'] . '</div>' .
+$context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['guestbook'] . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, array ('iphide' => 1,)) . '</p></div>';
 
 // Параметры Гостевой
 $arg = array (
     'comments_table' => 'cms_users_guestbook', // Таблица Гостевой
     'object_table' => 'users',                 // Таблица комментируемых объектов
-    'script' => 'profile.php?act=guestbook',   // Имя скрипта (с параметрами вызова)
+    'script' => '?act=guestbook',              // Имя скрипта (с параметрами вызова)
     'sub_id_name' => 'user',                   // Имя идентификатора комментируемого объекта
     'sub_id' => $user['id'],                   // Идентификатор комментируемого объекта
     'owner' => $user['id'],                    // Владелец объекта

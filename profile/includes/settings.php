@@ -16,9 +16,9 @@ if ($user['id'] != $user_id) {
 $db = App::getContainer()->get(PDO::class);
 
 $menu = [
-    (!$mod ? '<b>' . $lng['common_settings'] . '</b>' : '<a href="profile.php?act=settings">' . $lng['common_settings'] . '</a>'),
-    ($mod == 'forum' ? '<b>' . $lng['forum'] . '</b>' : '<a href="profile.php?act=settings&amp;mod=forum">' . $lng['forum'] . '</a>'),
-    ($mod == 'mail' ? '<b>' . $lng['mail'] . '</b>' : '<a href="profile.php?act=settings&amp;mod=mail">' . $lng['mail'] . '</a>'),
+    (!$mod ? '<b>' . $lng['common_settings'] . '</b>' : '<a href="?act=settings">' . $lng['common_settings'] . '</a>'),
+    ($mod == 'forum' ? '<b>' . $lng['forum'] . '</b>' : '<a href="?act=settings&amp;mod=forum">' . $lng['forum'] . '</a>'),
+    ($mod == 'mail' ? '<b>' . $lng['mail'] . '</b>' : '<a href="?act=settings&amp;mod=mail">' . $lng['mail'] . '</a>'),
 ];
 
 // Пользовательские настройки
@@ -37,7 +37,7 @@ switch ($mod) {
             ]);
         }
 
-        echo '<form method="post" action="profile.php?act=settings&amp;mod=mail">' .
+        echo '<form method="post" action="?act=settings&amp;mod=mail">' .
             '<div class="menu">' .
             '<strong>' . $lng_profile['write_messages'] . '</strong><br />' .
             '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['write_all'] . '<br />' .
@@ -84,7 +84,7 @@ switch ($mod) {
             echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
         }
 
-        echo '<form action="profile.php?act=settings&amp;mod=forum" method="post">' .
+        echo '<form action="?act=settings&amp;mod=forum" method="post">' .
             '<div class="menu"><p><h3>' . $lng_set['main_settings'] . '</h3>' .
             '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . $lng_set['sorting_return'] . '<br/>' .
             '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . $lng_set['field_on'] . '<br/>' .
@@ -94,7 +94,7 @@ switch ($mod) {
             '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['in_not_read'] . '<br />' .
             '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['never'] .
             '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
-            '<div class="phdr"><a href="profile.php?act=settings&amp;mod=forum&amp;reset">' . $lng['reset_settings'] . '</a></div>';
+            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . $lng['reset_settings'] . '</a></div>';
         break;
 
     default:
@@ -156,13 +156,13 @@ switch ($mod) {
             // Записываем настройки
             $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $user_id]);
             $_SESSION['set_ok'] = 1;
-            header('Location: profile.php?act=settings');
+            header('Location: ?act=settings');
             exit;
         } elseif (isset($_GET['reset']) || empty($set_user)) {
             // Задаем настройки по-умолчанию
             $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = '$user_id'");
             $_SESSION['reset_ok'] = 1;
-            header('Location: profile.php?act=settings');
+            header('Location: ?act=settings');
             exit;
         }
 
@@ -177,7 +177,7 @@ switch ($mod) {
             unset($_SESSION['reset_ok']);
         }
 
-        echo '<form action="profile.php?act=settings" method="post" >' .
+        echo '<form action="?act=settings" method="post" >' .
             '<div class="menu"><p><h3>' . $lng['settings_clock'] . '</h3>' .
             '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . $lng['settings_clock_shift'] . ' (+-12)<br />' .
             '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
@@ -223,5 +223,5 @@ switch ($mod) {
         }
 
         echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
-            '<div class="phdr"><a href="profile.php?act=settings&amp;reset">' . $lng['reset_settings'] . '</a></div>';
+            '<div class="phdr"><a href="?act=settings&amp;reset">' . $lng['reset_settings'] . '</a></div>';
 }

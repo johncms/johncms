@@ -63,18 +63,18 @@ switch ($mod) {
             }
 
             echo '<div class="gmenu"><p><b>' . $lng_pass['password_changed'] . '</b><br />' .
-                '<a href="' . ($user_id == $user['id'] ? '../login.php' : 'profile.php?user=' . $user['id']) . '">' . $lng['continue'] . '</a></p>';
+                '<a href="' . ($user_id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . $lng['continue'] . '</a></p>';
             echo '</div>';
         } else {
             echo functions::display_error($error,
-                '<a href="profile.php?act=password&amp;user=' . $user['id'] . '">' . $lng['repeat'] . '</a>');
+                '<a href="?act=password&amp;user=' . $user['id'] . '">' . $lng['repeat'] . '</a>');
         }
         break;
 
     default:
         // Форма смены пароля
         echo '<div class="phdr"><b>' . $lng_pass['change_password'] . ':</b> ' . $user['name'] . '</div>';
-        echo '<form action="profile.php?act=password&amp;mod=change&amp;user=' . $user['id'] . '" method="post">';
+        echo '<form action="?act=password&amp;mod=change&amp;user=' . $user['id'] . '" method="post">';
         if ($user['id'] == $user_id) {
             echo '<div class="menu"><p>' . $lng_pass['input_old_password'] . ':<br /><input type="password" name="oldpass" /></p></div>';
         }
@@ -84,5 +84,5 @@ switch ($mod) {
             '<p><input type="submit" value="' . $lng['save'] . '" name="submit" />' .
             '</p></div></form>' .
             '<div class="phdr"><small>' . $lng_pass['password_change_help'] . '</small></div>' .
-            '<p><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
+            '<p><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
 }

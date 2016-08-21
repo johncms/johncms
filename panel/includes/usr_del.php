@@ -112,7 +112,7 @@ if (!$error) {
             echo '</p></div><div class="rmenu"><p>' . $lng['user_del_confirm'];
             echo '</p><p><input type="submit" value="' . $lng['delete'] . '" name="submit" />';
             echo '</p></div></form>';
-            echo '<div class="phdr"><a href="../users/profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';
+            echo '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';
     }
 } else {
     echo functions::display_error($error);

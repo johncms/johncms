@@ -23,10 +23,10 @@ $online_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` LEFT JOIN `user
 
 echo '' .
     '<div class="gmenu"><p><h3>' . $lng_profile['my_actives'] . '</h3>' .
-    '<div>' . functions::image('contacts.png') . '<a href="profile.php">' . $lng_profile['my_profile'] . '</a></div>' .
-    '<div>' . functions::image('rate.gif') . '<a href="profile.php?act=stat">' . $lng['statistics'] . '</a></div>' .
+    '<div>' . functions::image('contacts.png') . '<a href="index.php">' . $lng_profile['my_profile'] . '</a></div>' .
+    '<div>' . functions::image('rate.gif') . '<a href="?act=stat">' . $lng['statistics'] . '</a></div>' .
     '<div>' . functions::image('photo.gif') . '<a href="album.php?act=list">' . $lng['photo_album'] . '</a>&#160;(' . $total_photo . ')</div>' .
-    '<div>' . functions::image('guestbook.gif') . '<a href="profile.php?act=guestbook">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
+    '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook">' . $lng['guestbook'] . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($rights >= 1) {
     $guest = counters::guestbook(2);
@@ -80,15 +80,15 @@ echo '<div>' . functions::image('user.png') . '<a href="../mail/">' . $lng['cont
 
 //Заблокированные
 $count_ignor = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`='1'")->fetchColumn();
-echo '<div>' . functions::image('user-ok.png') . '<a href="profile.php?act=friends">' . $lng_profile['friends'] . '</a>&#160;(' . $total_friends . ($new_friends ? '/<span class="red">+' . $new_friends . '</span>' : '') . ')&#160;<a href="profile.php?act=friends&amp;do=online">' . $lng['online'] . '</a> (' . $online_friends . ')</div>';
+echo '<div>' . functions::image('user-ok.png') . '<a href="?act=friends">' . $lng_profile['friends'] . '</a>&#160;(' . $total_friends . ($new_friends ? '/<span class="red">+' . $new_friends . '</span>' : '') . ')&#160;<a href="?act=friends&amp;do=online">' . $lng['online'] . '</a> (' . $online_friends . ')</div>';
 echo '<div>' . functions::image('user-block.png') . '<a href="../mail/index.php?act=ignor">' . $lng_profile['banned'] . '</a>&nbsp;(' . $count_ignor . ')</div>';
 echo '</p></div>';
 
 // Блок настроек
 echo '<div class="bmenu"><p><h3>' . $lng['settings'] . '</h3>' .
-    '<div>' . functions::image('settings.png') . '<a href="profile.php?act=settings">' . $lng['system_settings'] . '</a></div>' .
-    '<div>' . functions::image('user-edit.png') . '<a href="profile.php?act=edit">' . $lng_profile['profile_edit'] . '</a></div>' .
-    '<div>' . functions::image('lock.png') . '<a href="profile.php?act=password">' . $lng['change_password'] . '</a></div>';
+    '<div>' . functions::image('settings.png') . '<a href="?act=settings">' . $lng['system_settings'] . '</a></div>' .
+    '<div>' . functions::image('user-edit.png') . '<a href="?act=edit">' . $lng_profile['profile_edit'] . '</a></div>' .
+    '<div>' . functions::image('lock.png') . '<a href="?act=password">' . $lng['change_password'] . '</a></div>';
 if ($rights >= 1) {
     echo '<div>' . functions::image('forbidden.png') . '<span class="red"><a href="../' . $set['admp'] . '/index.php"><b>' . $lng['admin_panel'] . '</b></a></span></div>';
 }

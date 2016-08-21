@@ -102,7 +102,7 @@ switch ($act) {
                         echo '<b>' . $res['text'] . '</b><br />';
                     }
 
-                    echo '<a href="../users/profile.php?user=' . $res['user_id'] . '">' . $res['from'] . '</a> ';
+                    echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a> ';
                     echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br/>';
                     $text = $search_t ? $res_p['text'] : $res['text'];
 

@@ -63,7 +63,7 @@ while ($mass = $mess->fetch()) {
         echo "$div";
 
         if ((!empty ($_SESSION['uid'])) && ($_SESSION['uid'] != $mass1['id'])) {
-            echo '<a href="../users/profile.php?user=' . $mass1['id'] . '">' . $mass['avtor'] . '</a>';
+            echo '<a href="../profile/?user=' . $mass1['id'] . '">' . $mass['avtor'] . '</a>';
         } else {
             echo "$mass[avtor]";
         }

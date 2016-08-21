@@ -30,7 +30,7 @@ if ($total) {
 
     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        echo '<a href="../users/profile.php?user=' . $row['user_id'] . '"><b>' . $row['name'] . '</b></a>:: <a href="index.php?act=load&amp;id=' . $row['id'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ') (' . $row['count'] . ')';
+        echo '<a href="../profile/?user=' . $row['user_id'] . '"><b>' . $row['name'] . '</b></a>:: <a href="index.php?act=load&amp;id=' . $row['id'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ') (' . $row['count'] . ')';
         echo '</div>';
     }
 } else {
@@ -48,4 +48,4 @@ if ($total > $kmess) {
 		<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';

@@ -95,4 +95,4 @@ if ($total > $kmess) {
                 <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';

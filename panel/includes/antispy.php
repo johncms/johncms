@@ -263,7 +263,6 @@ class scaner
         '../users/includes/top.php',
         '../users/includes/userlist.php',
         '../users/index.php',
-        '../users/profile.php',
         '../users/skl.php',
     ];
 
