@@ -46,7 +46,9 @@ msgstr ""
 #: help/includes/avatars.php:62 help/includes/avatars.php:80
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
-#: help/includes/usersmilies.php:71 help/index.php:63 users/index.php:53
+#: help/includes/usersmilies.php:71 help/index.php:63
+#: users/includes/profile/ban.php:215 users/includes/profile/ban.php:251
+#: users/index.php:53
 msgid "Back"
 msgstr ""
 
@@ -75,7 +77,9 @@ msgstr ""
 msgid "Go to Link"
 msgstr ""
 
-#: help/includes/admsmilies.php:7
+#: help/includes/admsmilies.php:7 users/includes/profile/ban.php:191
+#: users/includes/profile/ban.php:221 users/includes/profile/ban.php:229
+#: users/includes/profile/ban.php:254
 msgid "Wrong data"
 msgstr ""
 
@@ -89,7 +93,7 @@ msgstr ""
 #: help/includes/my_smilies.php:44 help/includes/usersmilies.php:59
 #: users/includes/profile/activity.php:42
 #: users/includes/profile/activity.php:77
-#: users/includes/profile/activity.php:114
+#: users/includes/profile/activity.php:114 users/includes/profile/ban.php:366
 msgid "The list is empty"
 msgstr ""
 
@@ -100,15 +104,17 @@ msgstr ""
 #: help/includes/admsmilies.php:52 help/includes/avatars.php:52
 #: help/includes/avatars.php:79 help/includes/my_smilies.php:47
 #: help/includes/usersmilies.php:62 users/includes/profile/activity.php:118
+#: users/includes/profile/ban.php:276 users/includes/profile/ban.php:369
 msgid "Total"
 msgstr ""
 
 #: help/includes/admsmilies.php:58 help/includes/avatars.php:58
 #: help/includes/usersmilies.php:68 users/includes/profile/activity.php:124
+#: users/includes/profile/ban.php:375
 msgid "To Page"
 msgstr ""
 
-#: help/includes/avatars.php:14 login.php:68
+#: help/includes/avatars.php:14 login.php:68 users/includes/profile/ban.php:245
 msgid "Continue"
 msgstr ""
 
@@ -135,7 +141,8 @@ msgstr ""
 msgid "Information, FAQ"
 msgstr ""
 
-#: help/includes/my_smilies.php:42 users/profile.php:66
+#: help/includes/my_smilies.php:42 users/includes/profile/ban.php:249
+#: users/profile.php:66
 msgid "Delete"
 msgstr ""
 
@@ -369,8 +376,13 @@ msgstr ""
 msgid "Invalid characters"
 msgstr ""
 
-#: users/includes/profile/activity.php:12 users/profile.php:54
+#: users/includes/profile/activity.php:12 users/includes/profile/ban.php:184
+#: users/includes/profile/ban.php:288 users/profile.php:54
 msgid "Profile"
+msgstr ""
+
+#: users/includes/profile/ban.php:271
+msgid "Clear"
 msgstr ""
 
 #: users/index.php:11 users/profile.php:10
