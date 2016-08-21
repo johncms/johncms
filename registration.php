@@ -7,9 +7,7 @@ $textl = _t('Registration');
 $headmod = 'registration';
 require('incfiles/head.php');
 
-/**
- * Задаем домен для перевода
- */
+// Задаем домен для перевода
 _setDomain('registration');
 
 // Если регистрация закрыта, выводим предупреждение
