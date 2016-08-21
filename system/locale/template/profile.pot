@@ -105,7 +105,7 @@ msgstr ""
 msgid "Days (30 max.)"
 msgstr ""
 
-#: includes/profile/ban.php:168
+#: includes/profile/ban.php:168 includes/profile/ban.php:341
 msgid "Till cancel"
 msgstr ""
 
@@ -114,15 +114,91 @@ msgid "Reason"
 msgstr ""
 
 #: includes/profile/ban.php:176
-msgid "Infrigement"
+msgid "Violation"
 msgstr ""
 
 #: includes/profile/ban.php:181
 msgid "Apply Ban"
 msgstr ""
 
-#: includes/profile/ban.php:184
-msgid "Profile"
+#: includes/profile/ban.php:200
+msgid "Ban not active"
+msgstr ""
+
+#: includes/profile/ban.php:204
+msgid "Ban termination"
+msgstr ""
+
+#: includes/profile/ban.php:209
+msgid "Ban terminated"
+msgstr ""
+
+#: includes/profile/ban.php:212
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr ""
+
+#: includes/profile/ban.php:213
+msgid "Terminate Ban"
+msgstr ""
+
+#: includes/profile/ban.php:235 includes/profile/ban.php:355
+msgid "Delete Ban"
+msgstr ""
+
+#: includes/profile/ban.php:245
+msgid "Ban deleted"
+msgstr ""
+
+#: includes/profile/ban.php:248
+msgid "Removing ban along with a record in the bans history"
+msgstr ""
+
+#: includes/profile/ban.php:262 includes/profile/ban.php:278
+msgid "Violations history"
+msgstr ""
+
+#: includes/profile/ban.php:267
+msgid "Violations history cleared"
+msgstr ""
+
+#: includes/profile/ban.php:270
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr ""
+
+#: includes/profile/ban.php:280 includes/profile/ban.php:293
+msgid "Ban Panel"
+msgstr ""
+
+#: includes/profile/ban.php:282
+msgid "Violations history can be cleared by Supervisor only"
+msgstr ""
+
+#: includes/profile/ban.php:288
+msgid "Violations History"
+msgstr ""
+
+#: includes/profile/ban.php:297
+msgid "Clear history"
+msgstr ""
+
+#: includes/profile/ban.php:307
+msgid "My Violations"
+msgstr ""
+
+#: includes/profile/ban.php:337
+msgid "Who applied the Ban?"
+msgstr ""
+
+#: includes/profile/ban.php:340
+msgid "Time"
+msgstr ""
+
+#: includes/profile/ban.php:344
+msgid "Remains"
+msgstr ""
+
+#: includes/profile/ban.php:351
+msgid "Cancel Ban"
 msgstr ""
 
 #: profile.php:56
