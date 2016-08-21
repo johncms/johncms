@@ -85,7 +85,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
 
                     echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br />' .
                         '<a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
-                        '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                        '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                 } else {
                     echo functions::display_error($handle->error);
                 }

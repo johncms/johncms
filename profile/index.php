@@ -26,20 +26,20 @@ _setDomain('profile');
 
 // Переключаем режимы работы
 $array = [
-    'activity'  => 'includes/profile',
-    'ban'       => 'includes/profile',
-    'edit'      => 'includes/profile',
-    'images'    => 'includes/profile',
-    'info'      => 'includes/profile',
-    'ip'        => 'includes/profile',
-    'guestbook' => 'includes/profile',
-    'karma'     => 'includes/profile',
-    'office'    => 'includes/profile',
-    'password'  => 'includes/profile',
-    'reset'     => 'includes/profile',
-    'settings'  => 'includes/profile',
-    'stat'      => 'includes/profile',
-    'friends'   => 'includes/profile',
+    'activity'  => 'includes',
+    'ban'       => 'includes',
+    'edit'      => 'includes',
+    'images'    => 'includes',
+    'info'      => 'includes',
+    'ip'        => 'includes',
+    'guestbook' => 'includes',
+    'karma'     => 'includes',
+    'office'    => 'includes',
+    'password'  => 'includes',
+    'reset'     => 'includes',
+    'settings'  => 'includes',
+    'stat'      => 'includes',
+    'friends'   => 'includes',
 ];
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 
@@ -59,7 +59,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     $menu = [];
 
     if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights'])) {
-        $menu[] = '<a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
+        $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
     }
 
     if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
@@ -67,7 +67,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     if ($user['id'] != $user_id && $rights > $user['rights']) {
-        $menu[] = '<a href="profile.php?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
+        $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
     }
 
     if (!empty($menu)) {
@@ -117,8 +117,8 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $set['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
             '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
             '<div class="sub">' .
-            '<span class="green"><a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _td('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
-            '<span class="red"><a href="profile.php?act=karma&amp;user=' . $user['id'] . '">' . _td('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
+            '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _td('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
+            '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _td('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
 
         if ($user['id'] != $user_id) {
             if (!$datauser['karma_off'] && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $datauser['ip']) {
@@ -126,13 +126,14 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if (!$ban && $datauser['postforum'] >= $set_karma['forum'] && $datauser['total_on_site'] >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
-                    echo '<br /><a href="profile.php?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
+                    echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
                 }
             }
         } else {
             $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
+
             if ($total_karma > 0) {
-                echo '<br /><a href="profile.php?act=karma&amp;mod=new">' . _td('New reviews') . '</a> (' . $total_karma . ')';
+                echo '<br /><a href="?act=karma&amp;mod=new">' . _td('New reviews') . '</a> (' . $total_karma . ')';
             }
         }
         echo '</div></td></tr></table></div>';
@@ -141,20 +142,20 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     // Меню выбора
     $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     echo '<div class="list2"><p>' .
-        '<div>' . functions::image('contacts.png') . '<a href="profile.php?act=info&amp;user=' . $user['id'] . '">' . _td('Information') . '</a></div>' .
-        '<div>' . functions::image('activity.gif') . '<a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . _td('Activity') . '</a></div>' .
-        '<div>' . functions::image('rate.gif') . '<a href="profile.php?act=stat&amp;user=' . $user['id'] . '">' . _td('Statistic') . '</a></div>';
+        '<div>' . functions::image('contacts.png') . '<a href="?act=info&amp;user=' . $user['id'] . '">' . _td('Information') . '</a></div>' .
+        '<div>' . functions::image('activity.gif') . '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _td('Activity') . '</a></div>' .
+        '<div>' . functions::image('rate.gif') . '<a href="?act=stat&amp;user=' . $user['id'] . '">' . _td('Statistic') . '</a></div>';
     $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     if ($bancount) {
-        echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . _td('Infringements') . '</a> (' . $bancount . ')</div>';
+        echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Infringements') . '</a> (' . $bancount . ')</div>';
     }
 
     $total_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='{$user['id']}' AND `type`='2' AND `friends`='1'")->fetchColumn();
     echo '<br />' .
-        '<div>' . functions::image('photo.gif') . '<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div>' . functions::image('guestbook.gif') . '<a href="profile.php?act=guestbook&amp;user=' . $user['id'] . '">' . _td('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
-        '<div>' . functions::image('users.png') . '<a href="profile.php?act=friends&amp;user=' . $user['id'] . '">' . _td('Friends') . '</a>&#160;(' . $total_friends . ')</div>' .
+        '<div>' . functions::image('photo.gif') . '<a href="../users/album.php?act=list&amp;user=' . $user['id'] . '">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _td('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div>' . functions::image('users.png') . '<a href="?act=friends&amp;user=' . $user['id'] . '">' . _td('Friends') . '</a>&#160;(' . $total_friends . ')</div>' .
         '</p></div>';
     if ($user['id'] != $user_id) {
         echo '<div class="menu"><p>';
@@ -165,16 +166,16 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
                 $fr_out = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `user_id`='$user_id' AND `from_id`='{$user['id']}'")->fetchColumn();
 
                 if ($fr_in == 1) {
-                    $friend = '<a class="underline" href="profile.php?act=friends&amp;do=ok&amp;id=' . $user['id'] . '">' . _td('Confirm friendship') . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=no&amp;id=' . $user['id'] . '">' . _td('Reject friendship') . '</a>';
+                    $friend = '<a class="underline" href="?act=friends&amp;do=ok&amp;id=' . $user['id'] . '">' . _td('Confirm friendship') . '</a> | <a class="underline" href="?act=friends&amp;do=no&amp;id=' . $user['id'] . '">' . _td('Reject friendship') . '</a>';
                 } else {
                     if ($fr_out == 1) {
-                        $friend = '<a class="underline" href="profile.php?act=friends&amp;do=cancel&amp;id=' . $user['id'] . '">' . _td('Cancel a request to be friends') . '</a>';
+                        $friend = '<a class="underline" href="?act=friends&amp;do=cancel&amp;id=' . $user['id'] . '">' . _td('Cancel a request to be friends') . '</a>';
                     } else {
-                        $friend = '<a href="profile.php?act=friends&amp;do=add&amp;id=' . $user['id'] . '">' . _td('Add to friends') . '</a>';
+                        $friend = '<a href="?act=friends&amp;do=add&amp;id=' . $user['id'] . '">' . _td('Add to friends') . '</a>';
                     }
                 }
             } else {
-                $friend = '<a href="profile.php?act=friends&amp;do=delete&amp;id=' . $user['id'] . '">' . _td('Remove from friends') . '</a>';
+                $friend = '<a href="?act=friends&amp;do=delete&amp;id=' . $user['id'] . '">' . _td('Remove from friends') . '</a>';
             }
             echo '<div>' . functions::image('add.gif') . $friend . '</div>';
         }

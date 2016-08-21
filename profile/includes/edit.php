@@ -18,12 +18,12 @@ $db = App::getContainer()->get(PDO::class);
 // Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
-    echo '<div class="gmenu"><p>' . $lng['settings_default'] . '<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></p></div>';
+    echo '<div class="gmenu"><p>' . $lng['settings_default'] . '<br /><a href="?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></p></div>';
     require('../incfiles/end.php');
     exit;
 }
 
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
 
 if (isset($_GET['delavatar'])) {
     // Удаляем аватар
@@ -143,12 +143,12 @@ if (isset($_GET['delavatar'])) {
         echo functions::display_error($error);
     }
 
-    header('Location: profile.php?act=edit&user=' . $user['id']);
+    header('Location: ?act=edit&user=' . $user['id']);
     exit;
 }
 
 // Форма редактирования анкеты пользователя
-echo '<form action="profile.php?act=edit&amp;user=' . $user['id'] . '" method="post">' .
+echo '<form action="?act=edit&amp;user=' . $user['id'] . '" method="post">' .
     '<div class="gmenu"><p>' .
     $lng['login_name'] . ': <b>' . $user['name_lat'] . '</b><br />';
 
@@ -165,10 +165,10 @@ $link = '';
 
 if (file_exists(('../files/users/avatar/' . $user['id'] . '.png'))) {
     echo '<img src="../files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /><br />';
-    $link = ' | <a href="profile.php?act=edit&amp;user=' . $user['id'] . '&amp;delavatar">' . $lng['delete'] . '</a>';
+    $link = ' | <a href="?act=edit&amp;user=' . $user['id'] . '&amp;delavatar">' . $lng['delete'] . '</a>';
 }
 
-echo '<small><a href="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>';
+echo '<small><a href="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>';
 
 if ($user['id'] == $user_id) {
     echo ' | <a href="../help/?act=avatars">' . $lng['select'] . '</a>';
@@ -180,10 +180,10 @@ $link = '';
 
 if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
     echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br />';
-    $link = ' | <a href="profile.php?act=edit&amp;user=' . $user['id'] . '&amp;delphoto">' . $lng['delete'] . '</a>';
+    $link = ' | <a href="?act=edit&amp;user=' . $user['id'] . '&amp;delphoto">' . $lng['delete'] . '</a>';
 }
 
-echo '<small><a href="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>' . $link . '</small><br />' .
+echo '<small><a href="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . $lng_profile['upload'] . '</a>' . $link . '</small><br />' .
     '</p></div>' .
     '<div class="menu">' .
     '<p><h3><img src="../images/contacts.png" width="16" height="16" class="left" />&#160;' . $lng_profile['personal_data'] . '</h3>' .
@@ -211,9 +211,9 @@ if ($rights >= 7) {
     if ($rights == 9) {
         echo '<li><input name="karma_off" type="checkbox" value="1" ' . ($user['karma_off'] ? 'checked="checked"' : '') . ' />&#160;<span class="red"><b>' . $lng_profile['deny_karma'] . '</b></span></li>';
     }
-    echo '<li><a href="profile.php?act=password&amp;user=' . $user['id'] . '">' . $lng['change_password'] . '</a></li>';
+    echo '<li><a href="?act=password&amp;user=' . $user['id'] . '">' . $lng['change_password'] . '</a></li>';
     if ($rights > $user['rights']) {
-        echo '<li><a href="profile.php?act=reset&amp;user=' . $user['id'] . '">' . $lng['reset_settings'] . '</a></li>';
+        echo '<li><a href="?act=reset&amp;user=' . $user['id'] . '">' . $lng['reset_settings'] . '</a></li>';
     }
     echo '<li>' . $lng_profile['specify_sex'] . ':<br />' .
         '<input type="radio" value="m" name="sex" ' . ($user['sex'] == 'm' ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['sex_m'] . '<br />' .
@@ -237,4 +237,4 @@ if ($rights >= 7) {
 
 echo '<div class="gmenu"><input type="submit" value="' . $lng['save'] . '" name="submit" /></div>' .
     '</form>' .
-    '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';
+    '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';

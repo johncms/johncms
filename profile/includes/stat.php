@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . $lng['statistics'];
 require('../incfiles/head.php');
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['statistics'] . '</div>' .
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['statistics'] . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>' .
     '<div class="list2">' .
     '<p><h3>' . functions::image('rate.gif') . $lng['statistics'] . '</h3><ul>';
@@ -31,8 +31,8 @@ if ($lastvisit) {
 
 echo '</ul></p><p>' .
     '<h3>' . functions::image('activity.gif') . $lng_profile['activity'] . '</h3><ul>' .
-    '<li><span class="gray">' . $lng['forum'] . ':</span> <a href="profile.php?act=activity&amp;user=' . $user['id'] . '">' . $user['postforum'] . '</a></li>' .
-    '<li><span class="gray">' . $lng['guestbook'] . ':</span> <a href="profile.php?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . $user['postguest'] . '</a></li>' .
+    '<li><span class="gray">' . $lng['forum'] . ':</span> <a href="?act=activity&amp;user=' . $user['id'] . '">' . $user['postforum'] . '</a></li>' .
+    '<li><span class="gray">' . $lng['guestbook'] . ':</span> <a href="?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . $user['postguest'] . '</a></li>' .
     '<li><span class="gray">' . $lng['comments'] . ':</span> ' . $user['komm'] . '</li>' .
     '</ul></p>' .
     '<p><h3>' . functions::image('award.png') . $lng_profile['achievements'] . '</h3>';
@@ -63,4 +63,4 @@ foreach ($query as $key => $val) {
     }
     echo '<td><small><b>' . $val . '</b></small></td></tr>';
 }
-echo '</table></p></div><div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a></div>';
+echo '</table></p></div><div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['back'] . '</a></div>';

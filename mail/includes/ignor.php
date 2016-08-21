@@ -130,4 +130,4 @@ if (isset($_GET['del'])) {
     }
 }
 
-echo '<p><a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';

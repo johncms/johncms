@@ -27,7 +27,7 @@ if ($id && $id != $user_id && $do) {
                     $fr_out = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `user_id`='$user_id' AND `from_id`='$id'")->fetchColumn();
                     if ($fr_out) {
                         echo functions::display_error($lng_profile['already_demand']);
-                        echo '<div class="bmenu"><a href="profile.php?user=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="bmenu"><a href="../profile/?user=' . $id . '">' . $lng['back'] . '</a></div>';
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -35,7 +35,7 @@ if ($id && $id != $user_id && $do) {
                     $fr_in = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `from_id`='$user_id' AND `user_id`='$id'")->fetchColumn();
                     if ($fr_in) {
                         echo functions::display_error($lng_profile['offer_already']);
-                        echo '<div class="bmenu"><a href="profile.php?user=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="bmenu"><a href="../profile/?user=' . $id . '">' . $lng['back'] . '</a></div>';
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -61,7 +61,7 @@ if ($id && $id != $user_id && $do) {
                     $user_set = unserialize($user['set_user']);
                     $lng_set = isset($user_set['lng']) && in_array($user_set['lng'], core::$lng_list) ? $user_set['lng'] : core::$lng_iso;
                     $lng_tmp = core::load_lng('profile', $lng_set);
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_tmp['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $user_id . ']' . $lng_tmp['confirm'] . '[/url] | [url=' . $home . '/users/profile.php?act=friends&do=no&id=' . $user_id . ']' . $lng_tmp['decline'] . '[/url]';
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_tmp['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=ok&id=' . $user_id . ']' . $lng_tmp['confirm'] . '[/url] | [url=' . $home . '/profile/?act=friends&do=no&id=' . $user_id . ']' . $lng_tmp['decline'] . '[/url]';
 
                     $db->prepare('INSERT INTO `cms_mail` SET
                       `user_id` = ?,
@@ -79,7 +79,7 @@ if ($id && $id != $user_id && $do) {
                     ]);
 
                     if ($friends) {
-                        $text1 = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $arr_fr[$friends] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=okfriends&id=' . $user_id . ']' . $lng_profile['confirm'] . '[/url]';
+                        $text1 = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $arr_fr[$friends] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=okfriends&id=' . $user_id . ']' . $lng_profile['confirm'] . '[/url]';
 
                         $db->prepare('INSERT INTO `cms_mail` SET
                           `user_id` = ?,
@@ -99,7 +99,7 @@ if ($id && $id != $user_id && $do) {
                     echo '<div class="rmenu">' . $lng_profile['demand_friends_sent'] . '</div>';
                 } else {
                     if (!functions::is_ignor($id) && !isset($ban['1']) && !isset($ban['3'])) {
-                        echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=add&amp;id=' . $id . '" method="post"><div>
+                        echo '<div class="gmenu"><form action="?act=friends&amp;do=add&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_offer_friendship'] . '<br />
 					' . ($set_mail['cat_friends'] ? '<input type="radio" value="6" name="friends" />&#160;' . $lng_profile['relative'] . '<br />
 					<input type="radio" value="5" name="friends" />&#160;' . $lng_profile['classmate'] . '<br />
@@ -127,7 +127,7 @@ if ($id && $id != $user_id && $do) {
 
                     if ($fr_out == 0) {
                         echo functions::display_error($lng_profile['not_demand_friendship']);
-                        echo '<div class="bmenu"><a href="profile.php?user=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="bmenu"><a href="?user=' . $id . '">' . $lng['back'] . '</a></div>';
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -138,12 +138,12 @@ if ($id && $id != $user_id && $do) {
 					  AND `from_id`='$id'
 					");
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $user_id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . $home . '/users/profile.php?act=friends&do=no&id=' . $user_id . ']' . $lng_profile['decline'] . '[/url]';
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=ok&id=' . $user_id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . $home . '/profile/?act=friends&do=no&id=' . $user_id . ']' . $lng_profile['decline'] . '[/url]';
                     $stmt = $db->prepare('DELETE FROM `cms_mail` WHERE `text`=?');
                     $stmt->execute([$text]);
                     echo '<div class="rmenu">' . $lng_profile['demand_cancelled'] . '</div>';
                 } else {
-                    echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=cancel&amp;id=' . $id . '" method="post"><div>
+                    echo '<div class="gmenu"><form action="?act=friends&amp;do=cancel&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_demand_cancelled'] . '<br />
 					<input type="submit" name="submit" value="' . $lng_profile['confirm'] . '"/>
 					</div></form></div>';
@@ -170,7 +170,7 @@ if ($id && $id != $user_id && $do) {
                             $lng_profile['you_my_relatives'],
                         ];
 
-                        $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $id . ']' . $result['name'] . '[/url] ' . $arr_fr[$res['man']] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=okfriends&id=' . $id . ']' . $lng_profile['confirm'] . '[/url]';
+                        $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $id . ']' . $result['name'] . '[/url] ' . $arr_fr[$res['man']] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=okfriends&id=' . $id . ']' . $lng_profile['confirm'] . '[/url]';
 
                         $db->prepare('DELETE FROM `cms_mail` WHERE `user_id` = ? AND `from_id` = ? AND `text` = ?')
                             ->execute([$id, $user_id, $text]);
@@ -198,7 +198,7 @@ if ($id && $id != $user_id && $do) {
                             $lng_profile['relative'],
                         ];
 
-                        echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=okfriends&amp;id=' . $id . '" method="post"><div>
+                        echo '<div class="gmenu"><form action="?act=friends&amp;do=okfriends&amp;id=' . $id . '" method="post"><div>
 						' . $lng_profile['really_okfriends'] . ' ' . $arr_fr2[$res['man']] . '<br />
 						<input type="submit" name="submit" value="' . $lng_profile['confirm'] . '"/>
 						</div></form></div>';
@@ -220,7 +220,7 @@ if ($id && $id != $user_id && $do) {
 
                     if ($fr_out == 0) {
                         echo functions::display_error($lng_profile['not_offers_friendship']);
-                        echo '<div class="bmenu"><a href="profile.php?user=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="bmenu"><a href="?user=' . $id . '">' . $lng['back'] . '</a></div>';
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -237,7 +237,7 @@ if ($id && $id != $user_id && $do) {
 					  AND `from_id`='$user_id'
 					");
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['complied_friends'];
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['complied_friends'];
 
                     $db->prepare('
                       INSERT INTO `cms_mail` SET
@@ -255,14 +255,14 @@ if ($id && $id != $user_id && $do) {
                         $lng_profile['friendship'],
                     ]);
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $id . ']' . $result['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=no&id=' . $id . ']' . $lng_profile['decline'] . '[/url]';
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $id . ']' . $result['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=ok&id=' . $id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=no&id=' . $id . ']' . $lng_profile['decline'] . '[/url]';
 
                     $db->prepare('DELETE FROM `cms_mail` WHERE `user_id` = ? AND `from_id` = ? AND `text` = ?')
                         ->execute([$id, $user_id, $text]);
 
                     echo '<div class="gmenu"><p>' . $lng_profile['confirmed_friendship'] . ' ' . $result['name'] . ' ' . $lng_profile['your_friend'] . '.</p></div>';
                 } else {
-                    echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=ok&amp;id=' . $id . '" method="post"><div>
+                    echo '<div class="gmenu"><form action="?act=friends&amp;do=ok&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_demand_confirm'] . '<br />
 					<input type="submit" name="submit" value="' . $lng_profile['confirm'] . '"/>
 					</div></form></div>';
@@ -291,7 +291,7 @@ if ($id && $id != $user_id && $do) {
 					  AND `from_id`='$id'
 					");
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['deleted_you_friends'];
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['deleted_you_friends'];
 
                     $db->prepare('
                       INSERT INTO `cms_mail` SET
@@ -311,7 +311,7 @@ if ($id && $id != $user_id && $do) {
 
                     echo '<div class="rmenu">' . $lng_profile['you_deleted_friends'] . '</div>';
                 } else {
-                    echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=delete&amp;id=' . $id . '" method="post"><div>
+                    echo '<div class="gmenu"><form action="?act=friends&amp;do=delete&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_deleted_friends'] . '<br />
 					<input type="submit" name="submit" value="' . $lng_profile['confirm'] . '"/>
 					</div></form></div>';
@@ -330,14 +330,14 @@ if ($id && $id != $user_id && $do) {
 
                     if ($fr_out == 0) {
                         echo functions::display_error($lng_profile['not_demand_friendship']);
-                        echo '<div class="bmenu"><a href="profile.php?user=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="bmenu"><a href="?user=' . $id . '">' . $lng['back'] . '</a></div>';
                         require_once('../incfiles/end.php');
                         exit;
                     }
 
                     $db->exec("UPDATE `cms_contact` SET `type`='1' WHERE `user_id`='$id' AND `from_id`='$user_id'");
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['canceled_you_demand'];
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $user_id . ']' . $user['name'] . '[/url] ' . $lng_profile['canceled_you_demand'];
 
                     $db->prepare('
                       INSERT INTO `cms_mail` SET
@@ -355,14 +355,14 @@ if ($id && $id != $user_id && $do) {
                         $lng_profile['friendship'],
                     ]);
 
-                    $text = '[url=' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $id . ']' . $result['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=ok&id=' . $id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . core::$system_set['homeurl'] . '/users/profile.php?act=friends&do=no&id=' . $id . ']' . $lng_profile['decline'] . '[/url]';
+                    $text = '[url=' . core::$system_set['homeurl'] . '/profile/?user=' . $id . ']' . $result['name'] . '[/url] ' . $lng_profile['offers_friends'] . ' [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=ok&id=' . $id . ']' . $lng_profile['confirm'] . '[/url] | [url=' . core::$system_set['homeurl'] . '/profile/?act=friends&do=no&id=' . $id . ']' . $lng_profile['decline'] . '[/url]';
 
                     $db->prepare('DELETE FROM `cms_mail` WHERE `user_id` = ? AND `from_id` = ? AND `text` = ?')
                         ->execute([$id, $user_id, $text]);
 
                     echo '<div class="rmenu">' . $lng_profile['canceled_demand'] . '</div>';
                 } else {
-                    echo '<div class="gmenu"><form action="profile.php?act=friends&amp;do=no&amp;id=' . $id . '" method="post"><div>
+                    echo '<div class="gmenu"><form action="?act=friends&amp;do=no&amp;id=' . $id . '" method="post"><div>
 					' . $lng_profile['really_canceled_demand'] . '<br />
 					<input type="submit" name="submit" value="' . $lng_profile['confirm'] . '"/>
 					</div></form></div>';
@@ -375,7 +375,7 @@ if ($id && $id != $user_id && $do) {
         default:
             echo functions::display_error($lng_profile['pages_not_exist']);
     }
-    echo '<div class="bmenu"><a href="profile.php?act=friends">' . $lng_profile['friends'] . '</a></div>';
+    echo '<div class="bmenu"><a href="?act=friends">' . $lng_profile['friends'] . '</a></div>';
 
 } else {
     if ($user['id'] && $user['id'] != $user_id) {
@@ -429,8 +429,8 @@ if ($id && $id != $user_id && $do) {
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
             //Навигация
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('profile.php?act=friends' . $nav . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>';
-                echo '<p><form action="profile.php" method="get">
+                echo '<p>' . functions::display_pagination('?act=friends' . $nav . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>';
+                echo '<p><form action="index.php" method="get">
 				<input type="hidden" name="act" value="friends"/>
 				' . ($nav ? '<input type="hidden" name="sort" value="' . $sort . '"/>' : '') . '
 				<input type="hidden" name="user" value="' . $user['id'] . '"/>
@@ -442,7 +442,7 @@ if ($id && $id != $user_id && $do) {
         }
 
         if ($set_mail['cat_friends']) {
-            echo '<div class="menu"><form action="profile.php?act=friends&amp;user=' . $user['id'] . '" method="post"><div>
+            echo '<div class="menu"><form action="?act=friends&amp;user=' . $user['id'] . '" method="post"><div>
 			<select name="sort">
 			<option value="0">Все</option>
 			<option value="1"' . ($sort == 1 ? ' selected="selected"' : '') . '>' . $lng_profile['friend'] . '</option>
@@ -458,7 +458,7 @@ if ($id && $id != $user_id && $do) {
         switch ($do) {
             case 'demands':
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <b>' . $lng_profile['my_demand'] . '</b> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
+                echo '<div class="topmenu"><a href="?act=friends">' . $lng_profile['my_friends'] . '</a> | <b>' . $lng_profile['my_demand'] . '</b> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
 
                 $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`!='1'")->fetchColumn();
 
@@ -475,7 +475,7 @@ if ($id && $id != $user_id && $do) {
                     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
 
-                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="profile.php?act=friends&amp;do=cancel&amp;id=' . $row['id'] . '">' . $lng_profile['cancel_demand'] . '</a>';
+                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="?act=friends&amp;do=cancel&amp;id=' . $row['id'] . '">' . $lng_profile['cancel_demand'] . '</a>';
                         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `delete`!='$user_id';")->fetchColumn();
                         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `delete`!='$user_id';")->fetchColumn();
 
@@ -491,8 +491,8 @@ if ($id && $id != $user_id && $do) {
                 }
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('profile.php?act=friends&amp;', $start, $total, $kmess) . '</p>';
-                    echo '<p><form action="profile.php" method="get">
+                    echo '<p>' . functions::display_pagination('?act=friends&amp;', $start, $total, $kmess) . '</p>';
+                    echo '<p><form action="index.php" method="get">
 						<input type="hidden" name="act" value="friends"/>
 						<input type="hidden" name="do" value="demands"/>
 						<input type="text" name="page" size="2"/>
@@ -502,7 +502,7 @@ if ($id && $id != $user_id && $do) {
 
             case 'offers':
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <b>' . $lng_profile['my_offers'] . '</b></div>';
+                echo '<div class="topmenu"><a href="?act=friends">' . $lng_profile['my_friends'] . '</a> | <a href="?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <b>' . $lng_profile['my_offers'] . '</b></div>';
 
                 $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`!='1'")->fetchColumn();
 
@@ -518,7 +518,7 @@ if ($id && $id != $user_id && $do) {
 
                     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=ok&amp;id=' . $row['id'] . '">' . $lng_profile['confirm_friendship'] . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=no&amp;id=' . $row['id'] . '">' . $lng_profile['decline_friendship'] . '</a>';
+                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a class="underline" href="?act=friends&amp;do=ok&amp;id=' . $row['id'] . '">' . $lng_profile['confirm_friendship'] . '</a> | <a class="underline" href="?act=friends&amp;do=no&amp;id=' . $row['id'] . '">' . $lng_profile['decline_friendship'] . '</a>';
                         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['from_id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['user_id']}')) AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';")->fetchColumn();
                         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['from_id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';")->fetchColumn();
                         $arg = [
@@ -533,8 +533,8 @@ if ($id && $id != $user_id && $do) {
                 }
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('profile.php?act=friends&amp;do=offers&amp;', $start, $total, $kmess) . '</p>';
-                    echo '<p><form action="profile.php" method="get">
+                    echo '<p>' . functions::display_pagination('?act=friends&amp;do=offers&amp;', $start, $total, $kmess) . '</p>';
+                    echo '<p><form action="index.php" method="get">
 						<input type="hidden" name="act" value="friends"/>
 						<input type="hidden" name="do" value="offers"/>
 						<input type="text" name="page" size="2"/>
@@ -568,7 +568,7 @@ if ($id && $id != $user_id && $do) {
 
                     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="profile.php?act=friends&amp;do=delete&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="../mail/index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_profile['add_ignor'] . '</a>';
+                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="?act=friends&amp;do=delete&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="../mail/index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_profile['add_ignor'] . '</a>';
                         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id';")->fetchColumn();
                         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id';")->fetchColumn();
                         $arg = [
@@ -584,8 +584,8 @@ if ($id && $id != $user_id && $do) {
 
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('profile.php?act=friends&amp;', $start, $total, $kmess) . '</p>';
-                    echo '<p><form action="profile.php" method="get">
+                    echo '<p>' . functions::display_pagination('?act=friends&amp;', $start, $total, $kmess) . '</p>';
+                    echo '<p><form action="index.php" method="get">
 						<input type="hidden" name="act" value="friends"/>
 						<input type="text" name="page" size="2"/>
 						<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
@@ -597,7 +597,7 @@ if ($id && $id != $user_id && $do) {
                 $dem = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'")->fetchColumn();
 
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><b>' . $lng_profile['my_friends'] . '</b> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
+                echo '<div class="topmenu"><b>' . $lng_profile['my_friends'] . '</b> | <a href="?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
 
                 if ($set_mail['cat_friends']) {
                     $sort = isset($_REQUEST['sort']) && $_REQUEST['sort'] >= 0 && $_REQUEST['sort'] <= 6 ? abs(intval($_REQUEST['sort'])) : 0;
@@ -636,7 +636,7 @@ if ($id && $id != $user_id && $do) {
                     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
 
-                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="profile.php?act=friends&amp;do=delete&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="../mail/index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_profile['add_ignor'] . '</a>';
+                        $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="?act=friends&amp;do=delete&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="../mail/index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_profile['add_ignor'] . '</a>';
                         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id';")->fetchColumn();
                         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id';")->fetchColumn();
 
@@ -653,8 +653,8 @@ if ($id && $id != $user_id && $do) {
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
                 if ($total > $kmess) {
-                    echo '<p>' . functions::display_pagination('profile.php?act=friends' . $nav . '&amp;', $start, $total, $kmess) . '</p>' .
-                        '<p><form action="profile.php" method="get">' .
+                    echo '<p>' . functions::display_pagination('?act=friends' . $nav . '&amp;', $start, $total, $kmess) . '</p>' .
+                        '<p><form action="index.php" method="get">' .
                         '<input type="hidden" name="act" value="friends"/>' .
                         ($nav ? '<input type="hidden" name="sort" value="' . $sort . '"/>' : '') .
                         '<input type="text" name="page" size="2"/>' .
@@ -662,7 +662,7 @@ if ($id && $id != $user_id && $do) {
                 }
 
                 if ($set_mail['cat_friends']) {
-                    echo '<div class="menu"><form action="profile.php?act=friends" method="post"><div>' .
+                    echo '<div class="menu"><form action="?act=friends" method="post"><div>' .
                         '<select name="sort">' .
                         '<option value="0">Все</option>' .
                         '<option value="1"' . ($sort == 1 ? ' selected="selected"' : '') . '>' . $lng_profile['friend'] . '</option>' .
@@ -675,6 +675,6 @@ if ($id && $id != $user_id && $do) {
                         '<input type="submit" value="' . $lng_profile['sea_friends'] . ' &gt;&gt;"/></div></form></div>';
                 }
         }
-        echo '<p><a href="profile.php?act=office">' . $lng['personal'] . '</a></p>';
+        echo '<p><a href="?act=office">' . $lng['personal'] . '</a></p>';
     }
 }

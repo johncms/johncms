@@ -13,7 +13,7 @@ if (!$rights && $user_id != $user['id']) {
 }
 
 // История IP адресов
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['ip_history'] . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['ip_history'] . '</div>';
 echo '<div class="user"><p>';
 $arg = array (
     'lastvisit' => 1,
@@ -43,8 +43,8 @@ if ($total) {
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<p>' . functions::display_pagination('profile.php?act=ip&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>';
-    echo '<p><form action="profile.php?act=ip&amp;user=' . $user['id'] . '" method="post">' .
+    echo '<p>' . functions::display_pagination('?act=ip&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>';
+    echo '<p><form action="?act=ip&amp;user=' . $user['id'] . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
         '</form></p>';

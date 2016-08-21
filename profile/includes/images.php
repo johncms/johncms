@@ -16,7 +16,7 @@ if (($user_id != $user['id'] && $rights < 7)
 switch ($mod) {
     case 'avatar':
         // Выгружаем аватар
-        echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_avatar'] . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_avatar'] . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
@@ -37,15 +37,15 @@ switch ($mod) {
                 $handle->process('../files/users/avatar/');
                 if ($handle->processed) {
                     echo '<div class="gmenu"><p>' . $lng_profile['avatar_uploaded'] . '<br />' .
-                        '<a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
-                        '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
+                        '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                 } else {
                     echo functions::display_error($handle->error);
                 }
                 $handle->clean();
             }
         } else {
-            echo'<form enctype="multipart/form-data" method="post" action="profile.php?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' .
+            echo'<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' .
                 '<div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
@@ -57,7 +57,7 @@ switch ($mod) {
         break;
 
     case 'up_photo':
-        echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
@@ -88,8 +88,8 @@ switch ($mod) {
                     $handle->image_convert = 'jpg';
                     $handle->process('../files/users/photo/');
                     if ($handle->processed) {
-                        echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br /><a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
-                        echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                        echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
+                        echo '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                     } else {
                         echo functions::display_error($handle->error);
                     }
@@ -99,7 +99,7 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="profile.php?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
                 '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" /></p>' .

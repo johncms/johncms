@@ -43,7 +43,7 @@ if ($set_karma['on']) {
                 }
 
                 if ($error) {
-                    echo functions::display_error($error, '<a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a>');
+                    echo functions::display_error($error, '<a href="?user=' . $user['id'] . '">' . $lng['back'] . '</a>');
                 } else {
                     if (isset($_POST['submit'])) {
                         $text = isset($_POST['text']) ? mb_substr(trim($_POST['text']), 0, 500) : '';
@@ -75,10 +75,10 @@ if ($set_karma['on']) {
 
                         $sql = $type ? "`karma_plus` = '" . ($user['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user['karma_minus'] + $points) . "'";
                         $db->query("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
-                        echo '<div class="gmenu">' . $lng_karma['done'] . '!<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['continue'] . '</a></div>';
+                        echo '<div class="gmenu">' . $lng_karma['done'] . '!<br /><a href="?user=' . $user['id'] . '">' . $lng['continue'] . '</a></div>';
                     } else {
                         echo '<div class="phdr"><b>' . $lng_karma['vote_to'] . ' ' . $res['name'] . '</b>: ' . functions::checkout($user['name']) . '</div>' .
-                            '<form action="profile.php?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '" method="post">' .
+                            '<form action="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '" method="post">' .
                             '<div class="gmenu"><b>' . $lng_karma['vote_type'] . ':</b><br />' .
                             '<input name="type" type="radio" value="1" checked="checked"/> ' . $lng_karma['plus'] . '<br />' .
                             '<input name="type" type="radio" value="0"/> ' . $lng_karma['minus'] . '<br />' .
@@ -94,11 +94,11 @@ if ($set_karma['on']) {
                             '<small>' . $lng['minmax_2_500'] . '</small>' .
                             '<p><input type="submit" name="submit" value="' . $lng['vote'] . '"/></p>' .
                             '</div></form>' .
-                            '<div class="list2"><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                            '<div class="list2"><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                     }
                 }
             } else {
-                echo functions::display_error($lng_karma['error_forbidden'], '<a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a>');
+                echo functions::display_error($lng_karma['error_forbidden'], '<a href="?user=' . $user['id'] . '">' . $lng['back'] . '</a>');
             }
 
             break;
@@ -123,11 +123,11 @@ if ($set_karma['on']) {
                         }
 
                         $db->exec("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
-                        header('Location: profile.php?act=karma&user=' . $user['id'] . '&type=' . $type);
+                        header('Location: ?act=karma&user=' . $user['id'] . '&type=' . $type);
                     } else {
                         echo '<div class="rmenu"><p>' . $lng_karma['deletion_warning'] . '?<br/>' .
-                            '<a href="profile.php?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes">' . $lng['delete'] . '</a> | ' .
-                            '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '">' . $lng['cancel'] . '</a></p></div>';
+                            '<a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes">' . $lng['delete'] . '</a> | ' .
+                            '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '">' . $lng['cancel'] . '</a></p></div>';
                     }
                 }
             }
@@ -140,11 +140,11 @@ if ($set_karma['on']) {
                     $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = " . $user['id']);
                     $db->query('OPTIMIZE TABLE `karma_users`');
                     $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user['id']);
-                    header('Location: profile.php?user=' . $user['id']);
+                    header('Location: ?user=' . $user['id']);
                 } else {
                     echo '<div class="rmenu"><p>' . $lng_karma['clear_warning'] . '?<br/>' .
-                        '<a href="profile.php?act=karma&amp;mod=clean&amp;user=' . $user['id'] . '&amp;yes">' . $lng['delete'] . '</a> | ' .
-                        '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></p></div>';
+                        '<a href="?act=karma&amp;mod=clean&amp;user=' . $user['id'] . '&amp;yes">' . $lng['delete'] . '</a> | ' .
+                        '<a href="?act=karma&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></p></div>';
                 }
             }
 
@@ -152,7 +152,7 @@ if ($set_karma['on']) {
 
         case 'new':
             // Список новых отзывов (комментариев)
-            echo '<div class="phdr"><a href="profile.php?act=karma&amp;type=2"><b>' . $lng['karma'] . '</b></a> | ' . $lng_karma['new_responses'] . '</div>';
+            echo '<div class="phdr"><a href="?act=karma&amp;type=2"><b>' . $lng['karma'] . '</b></a> | ' . $lng_karma['new_responses'] . '</div>';
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
@@ -161,7 +161,7 @@ if ($set_karma['on']) {
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
                     if (!empty($res['text'])) {
                         echo '<div class="sub">' . functions::checkout($res['text']) . '</div>';
@@ -175,24 +175,24 @@ if ($set_karma['on']) {
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<p>' . functions::display_pagination('profile.php?act=karma&amp;mod=new&amp;', $start, $total, $kmess) . '</p>' .
-                    '<p><form action="profile.php?act=karma&amp;mod=new" method="post">' .
+                echo '<p>' . functions::display_pagination('?act=karma&amp;mod=new&amp;', $start, $total, $kmess) . '</p>' .
+                    '<p><form action="?act=karma&amp;mod=new" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
 
-            echo '<p><a href="profile.php">' . $lng['profile'] . '</a></p>';
+            echo '<p><a href="index.php">' . $lng['profile'] . '</a></p>';
             break;
 
         default:
             // Главная страница Кармы, список отзывов
             $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
             $menu = [
-                ($type == 2 ? '<b>' . $lng_karma['all'] . '</b>' : '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=2">' . $lng_karma['all'] . '</a>'),
-                ($type == 1 ? '<b>' . $lng_karma['positive'] . '</b>' : '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . $lng_karma['positive'] . '</a>'),
-                (!$type ? '<b>' . $lng_karma['negative'] . '</b>' : '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '">' . $lng_karma['negative'] . '</a>'),
+                ($type == 2 ? '<b>' . $lng_karma['all'] . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=2">' . $lng_karma['all'] . '</a>'),
+                ($type == 1 ? '<b>' . $lng_karma['positive'] . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . $lng_karma['positive'] . '</a>'),
+                (!$type ? '<b>' . $lng_karma['negative'] . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '">' . $lng_karma['negative'] . '</a>'),
             ];
-            echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['karma'] . '</div>' .
+            echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['karma'] . '</div>' .
                 '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
                 '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
             $karma = $user['karma_plus'] - $user['karma_minus'];
@@ -225,11 +225,11 @@ if ($set_karma['on']) {
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
 
                     if ($rights == 9) {
-                        echo ' <span class="red"><a href="profile.php?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';
+                        echo ' <span class="red"><a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';
                     }
 
                     if (!empty($res['text'])) {
@@ -246,13 +246,13 @@ if ($set_karma['on']) {
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . functions::display_pagination('profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
-                    '<p><form action="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '" method="post">' .
+                echo '<div class="topmenu">' . functions::display_pagination('?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
+                    '<p><form action="?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
             }
 
-            echo '<p>' . ($rights == 9 ? '<a href="profile.php?act=karma&amp;user=' . $user['id'] . '&amp;mod=clean">' . $lng_karma['reset'] . '</a><br />' : '') .
-                '<a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
+            echo '<p>' . ($rights == 9 ? '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;mod=clean">' . $lng_karma['reset'] . '</a><br />' : '') .
+                '<a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
     }
 }

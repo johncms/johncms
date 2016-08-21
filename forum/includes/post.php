@@ -41,7 +41,7 @@ if ($res['sex']) {
 
 // Ник юзера и ссылка на его анкету
 if ($user_id && $user_id != $res['user_id']) {
-    echo '<a href="../users/profile.php?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
+    echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
 } else {
     echo '<b>' . $res['from'] . '</b> ';
 }

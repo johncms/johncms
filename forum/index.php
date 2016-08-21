@@ -491,7 +491,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     if ($user_id && $user_id != $postres['user_id']) {
-                        echo '<a href="../users/profile.php?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
+                        echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . $lng_forum['reply_btn'] . '</a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . $lng_forum['cytate_btn'] . '</a> ';
                     } else {
@@ -603,7 +603,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Ник юзера и ссылка на его анкету
                     if ($user_id && $user_id != $res['user_id']) {
-                        echo '<a href="../users/profile.php?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
+                        echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
                     } else {
                         echo '<b>' . $res['from'] . '</b> ';
                     }
@@ -784,7 +784,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     $array = [];
 
                     foreach ($curators as $key => $value) {
-                        $array[] = '<a href="../users/profile.php?user=' . $key . '">' . $value . '</a>';
+                        $array[] = '<a href="../profile/?user=' . $key . '">' . $value . '</a>';
                     }
 
                     echo '<p><div class="func">' . $lng_forum['curators'] . ': ' . implode(', ', $array) . '</div></p>';

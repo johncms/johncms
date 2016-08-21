@@ -40,7 +40,7 @@ if ($req_obj->rowCount()) {
     }
 
     $context_top .= '<div class="sub">' .
-        '<a href="profile.php?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
+        '<a href="../profile/?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
         '<a href="album.php?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . functions::checkout($res_a['name']) . '</a>';
 
     if ($res_obj['access'] == 4 || $rights >= 7) {

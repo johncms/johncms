@@ -68,4 +68,4 @@ if ($id) {
     echo '<div class="rmenu">' . $lng_mail['not_message_is_chose'] . '</div>';
 }
 
-echo '<div class="bmenu"><a href="../users/profile.php?act=office">' . $lng_mail['in_office'] . '</a></div>';
+echo '<div class="bmenu"><a href="../profile/?act=office">' . $lng_mail['in_office'] . '</a></div>';

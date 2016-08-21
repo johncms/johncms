@@ -5,10 +5,10 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 // Подробная информация, контактные данные
 $textl = htmlspecialchars($user['name']) . ': ' . $lng['information'];
 require('../incfiles/head.php');
-echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['information'] . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['information'] . '</div>';
 
 if ($user['id'] == $user_id || ($rights >= 7 && $rights > $user['rights'])) {
-    echo '<div class="topmenu"><a href="profile.php?act=edit&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a></div>';
+    echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . $lng['edit'] . '</a></div>';
 }
 
 echo '<div class="user"><p>' . functions::display_user($user, array('iphide' => 1,)) . '</p></div>' .
@@ -39,4 +39,4 @@ echo '</li>' .
     '<li><span class="gray">Jabber:</span> ' . (empty($user['jabber']) ? '' : $user['jabber']) . '</li>' .
     '<li><span class="gray">' . $lng_profile['site'] . ':</span> ' . (empty($user['www']) ? '' : bbcode::tags($user['www'])) . '</li>' .
     '</ul></p></div>' .
-    '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a></div>';
+    '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['back'] . '</a></div>';

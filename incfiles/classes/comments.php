@@ -114,7 +114,7 @@ class comments
                                 echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
                             }
                         } else {
-                            $text = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
+                            $text = '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . functions::display_date($res['time']) . ')<br />' .
                                 functions::checkout($res['text']);
                             $reply = functions::checkout($res['reply']);
@@ -170,7 +170,7 @@ class comments
                                 echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
                             }
                         } else {
-                            $author = '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
+                            $author = '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . functions::display_date($res['time']) . ')<br />';
                             $text = functions::checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
@@ -298,7 +298,7 @@ class comments
                                 $reply = functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
-                                '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
+                                '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
                                 ' (' . functions::display_date($attributes['reply_time']) . ')</small><br/>' . $reply . '</div>';
                         }
 

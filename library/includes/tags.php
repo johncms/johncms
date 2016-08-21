@@ -26,7 +26,7 @@ if (isset($_GET['tag'])) {
             : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
             . '<div>' . functions::checkout(bbcode::notags($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn())) . '</div></div>'
-            . '<div class="sub">' . $lng_lib['added'] . ': ' . '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
+            . '<div class="sub">' . $lng_lib['added'] . ': ' . '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
             . '<div><span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views'] . '</div>'
             . '<div>' . ($obj->get_all_stat_tags() ? $lng_lib['tags'] . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'
             . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . $row['comm_count'] . ')</div>' : '')

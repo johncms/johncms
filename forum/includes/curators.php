@@ -46,7 +46,7 @@ if (core::$user_rights >= 7) {
 
             echo ($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
                 '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['from'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
-                '<a href="../users/profile.php?user=' . $res['user_id'] . '">' . $res['from'] . '</a></div>';
+                '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a></div>';
         }
 
         echo '<div class="gmenu"><input type="submit" value="' . $lng_forum['assign'] . '" name="submit" /></div></form>';
