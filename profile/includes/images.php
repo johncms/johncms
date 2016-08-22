@@ -23,11 +23,11 @@ switch ($mod) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
                 //$handle->mime_check = false;
-                $handle->allowed = array(
+                $handle->allowed = [
                     'image/jpeg',
                     'image/gif',
-                    'image/png'
-                );
+                    'image/png',
+                ];
                 $handle->file_max_size = 1024 * $set['flsz'];
                 $handle->file_overwrite = true;
                 $handle->image_resize = true;
@@ -44,30 +44,31 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo'<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' .
-                '<div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
-                '<input type="file" name="imagefile" value="" />' .
-                '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
-                '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" />' .
-                '</p></div></form>' .
-                '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . ' kb.<br />' . $lng_profile['select_image_help_2'] . '<br />' . $lng_profile['select_image_help_3'] . $lng_profile['select_image_help_4']
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">'
+                . '<div class="menu"><p>' . _td('Select Image') . ':<br />'
+                . '<input type="file" name="imagefile" value="" />'
+                . '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>'
+                . '<p><input type="submit" name="submit" value="' . _td('Upload') . '" />'
+                . '</p></div></form>'
+                . '<div class="phdr"><small>'
+                . sprintf(_td('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz'])
                 . '</small></div>';
         }
         break;
 
     case 'up_photo':
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Upload Photo') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
                 //$handle->mime_check = false;
-                $handle->allowed = array(
+                $handle->allowed = [
                     'image/jpeg',
                     'image/gif',
-                    'image/png'
-                );
+                    'image/png',
+                ];
                 $handle->file_max_size = 1024 * $set['flsz'];
                 $handle->file_overwrite = true;
                 $handle->image_resize = true;
@@ -87,8 +88,7 @@ switch ($mod) {
                     $handle->image_convert = 'jpg';
                     $handle->process('../files/users/photo/');
                     if ($handle->processed) {
-                        echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
-                        echo '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                        echo '<div class="gmenu"><p>' . _td('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . _td('Continue') . '</a></p></div>';
                     } else {
                         echo functions::display_error($handle->error);
                     }
@@ -98,12 +98,12 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . $lng_profile['select_image'] . ':<br />' .
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . _td('Select image') . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
-                '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" /></p>' .
+                '<p><input type="submit" name="submit" value="' . _td('Upload') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . 'kb.<br />' . $lng_profile['select_image_help_5'] . '<br />' . $lng_profile['select_image_help_3'] . '</small></div>';
+                '<div class="phdr"><small>' . sprintf(_td('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz']) . '</small></div>';
         }
         break;
 }
