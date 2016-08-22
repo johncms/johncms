@@ -285,7 +285,7 @@ switch ($act) {
             '<hr />';
         echo '<h3 class="blue">' . $lng['congratulations'] . '</h3>' .
             $lng['installation_completed'] . '<p><ul>' .
-            '<li><a href="../panel">' . $lng['admin_panel'] . '</a></li>' .
+            '<li><a href="../admin">' . $lng['admin_panel'] . '</a></li>' .
             '<li><a href="../index.php">' . $lng['to_site'] . '</a></li>' .
             '</ul></p>' .
             $lng['final_warning'];

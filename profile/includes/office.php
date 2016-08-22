@@ -90,7 +90,7 @@ echo '<div class="bmenu"><p><h3>' . $lng['settings'] . '</h3>' .
     '<div>' . functions::image('user-edit.png') . '<a href="?act=edit">' . $lng_profile['profile_edit'] . '</a></div>' .
     '<div>' . functions::image('lock.png') . '<a href="?act=password">' . $lng['change_password'] . '</a></div>';
 if ($rights >= 1) {
-    echo '<div>' . functions::image('forbidden.png') . '<span class="red"><a href="../' . $set['admp'] . '/index.php"><b>' . $lng['admin_panel'] . '</b></a></span></div>';
+    echo '<div>' . functions::image('forbidden.png') . '<span class="red"><a href="../admin/"><b>' . $lng['admin_panel'] . '</b></a></span></div>';
 }
 echo '</p></div>';
 
