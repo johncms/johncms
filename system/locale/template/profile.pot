@@ -55,7 +55,7 @@ msgstr ""
 msgid "Ban already active"
 msgstr ""
 
-#: includes/ban.php:117
+#: includes/ban.php:117 includes/office.php:65
 msgid "System"
 msgstr ""
 
@@ -75,7 +75,7 @@ msgstr ""
 msgid "Private messages"
 msgstr ""
 
-#: includes/ban.php:144 index.php:157
+#: includes/ban.php:144 includes/office.php:30 index.php:157
 msgid "Guestbook"
 msgstr ""
 
@@ -199,6 +199,86 @@ msgstr ""
 msgid "Cancel Ban"
 msgstr ""
 
+#: includes/office.php:6
+msgid "My Account"
+msgstr ""
+
+#: includes/office.php:26
+msgid "My Pages"
+msgstr ""
+
+#: includes/office.php:27
+msgid "Profile"
+msgstr ""
+
+#: includes/office.php:28
+msgid "Statistics"
+msgstr ""
+
+#: includes/office.php:29 index.php:156
+msgid "Photo Album"
+msgstr ""
+
+#: includes/office.php:39
+msgid "My Mailbox"
+msgstr ""
+
+#: includes/office.php:51
+msgid "Received"
+msgstr ""
+
+#: includes/office.php:60
+msgid "Sent"
+msgstr ""
+
+#: includes/office.php:69
+msgid "Files"
+msgstr ""
+
+#: includes/office.php:72
+msgid "Write"
+msgstr ""
+
+#: includes/office.php:76 includes/office.php:80
+msgid "Contacts"
+msgstr ""
+
+#: includes/office.php:84 index.php:158
+msgid "Friends"
+msgstr ""
+
+#: includes/office.php:84
+msgid "Online"
+msgstr ""
+
+#: includes/office.php:85
+msgid "Blocked"
+msgstr ""
+
+#: includes/office.php:89
+msgid "Settings"
+msgstr ""
+
+#: includes/office.php:90
+msgid "Edit Profile"
+msgstr ""
+
+#: includes/office.php:91
+msgid "Change Password"
+msgstr ""
+
+#: includes/office.php:92
+msgid "System Settings"
+msgstr ""
+
+#: includes/office.php:94
+msgid "Admin Panel"
+msgstr ""
+
+#: includes/office.php:99
+msgid "Exit"
+msgstr ""
+
 #: index.php:56
 msgid "User Profile"
 msgstr ""
@@ -237,14 +317,6 @@ msgstr ""
 
 #: index.php:151
 msgid "Infringements"
-msgstr ""
-
-#: index.php:156
-msgid "Photo Album"
-msgstr ""
-
-#: index.php:158
-msgid "Friends"
 msgstr ""
 
 #: index.php:169
