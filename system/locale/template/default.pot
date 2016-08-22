@@ -47,8 +47,7 @@ msgstr ""
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
 #: help/includes/usersmilies.php:71 help/index.php:63
-#: users/includes/profile/ban.php:215 users/includes/profile/ban.php:251
-#: users/index.php:53
+#: profile/includes/ban.php:215 profile/includes/ban.php:251 users/index.php:53
 msgid "Back"
 msgstr ""
 
@@ -77,9 +76,9 @@ msgstr ""
 msgid "Go to Link"
 msgstr ""
 
-#: help/includes/admsmilies.php:7 users/includes/profile/ban.php:191
-#: users/includes/profile/ban.php:221 users/includes/profile/ban.php:229
-#: users/includes/profile/ban.php:254
+#: help/includes/admsmilies.php:7 profile/includes/ban.php:191
+#: profile/includes/ban.php:221 profile/includes/ban.php:229
+#: profile/includes/ban.php:254
 msgid "Wrong data"
 msgstr ""
 
@@ -91,9 +90,8 @@ msgstr ""
 
 #: help/includes/admsmilies.php:48 help/includes/avatars.php:49
 #: help/includes/my_smilies.php:44 help/includes/usersmilies.php:59
-#: users/includes/profile/activity.php:42
-#: users/includes/profile/activity.php:77
-#: users/includes/profile/activity.php:114 users/includes/profile/ban.php:366
+#: profile/includes/activity.php:42 profile/includes/activity.php:77
+#: profile/includes/activity.php:114 profile/includes/ban.php:366
 msgid "The list is empty"
 msgstr ""
 
@@ -103,18 +101,18 @@ msgstr ""
 
 #: help/includes/admsmilies.php:52 help/includes/avatars.php:52
 #: help/includes/avatars.php:79 help/includes/my_smilies.php:47
-#: help/includes/usersmilies.php:62 users/includes/profile/activity.php:118
-#: users/includes/profile/ban.php:276 users/includes/profile/ban.php:369
+#: help/includes/usersmilies.php:62 profile/includes/activity.php:118
+#: profile/includes/ban.php:276 profile/includes/ban.php:369
 msgid "Total"
 msgstr ""
 
 #: help/includes/admsmilies.php:58 help/includes/avatars.php:58
-#: help/includes/usersmilies.php:68 users/includes/profile/activity.php:124
-#: users/includes/profile/ban.php:375
+#: help/includes/usersmilies.php:68 profile/includes/activity.php:124
+#: profile/includes/ban.php:375
 msgid "To Page"
 msgstr ""
 
-#: help/includes/avatars.php:14 login.php:68 users/includes/profile/ban.php:245
+#: help/includes/avatars.php:14 login.php:68 profile/includes/ban.php:245
 msgid "Continue"
 msgstr ""
 
@@ -141,8 +139,8 @@ msgstr ""
 msgid "Information, FAQ"
 msgstr ""
 
-#: help/includes/my_smilies.php:42 users/includes/profile/ban.php:249
-#: users/profile.php:66
+#: help/includes/my_smilies.php:42 profile/includes/ban.php:249
+#: profile/index.php:66
 msgid "Delete"
 msgstr ""
 
@@ -230,8 +228,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: incfiles/head.php:171 users/includes/profile/ban.php:121
-#: users/profile.php:70
+#: incfiles/head.php:171 profile/includes/ban.php:121 profile/index.php:70
 msgid "Ban"
 msgstr ""
 
@@ -339,8 +336,8 @@ msgstr ""
 msgid "Communication"
 msgstr ""
 
-#: pages/mainmenu.php:23 users/includes/profile/activity.php:49
-#: users/includes/profile/activity.php:84
+#: pages/mainmenu.php:23 profile/includes/activity.php:49
+#: profile/includes/activity.php:84
 msgid "Forum"
 msgstr ""
 
@@ -364,7 +361,7 @@ msgstr ""
 msgid "Community"
 msgstr ""
 
-#: pages/mainmenu.php:46 users/index.php:47 users/profile.php:205
+#: pages/mainmenu.php:46 profile/index.php:206 users/index.php:47
 msgid "Users"
 msgstr ""
 
@@ -372,21 +369,53 @@ msgstr ""
 msgid "Photo Albums"
 msgstr ""
 
-#: registration.php:45
-msgid "Invalid characters"
-msgstr ""
-
-#: users/includes/profile/activity.php:12 users/includes/profile/ban.php:184
-#: users/includes/profile/ban.php:288 users/profile.php:54
+#: profile/includes/activity.php:12 profile/includes/ban.php:184
+#: profile/includes/ban.php:288 profile/index.php:54
 msgid "Profile"
 msgstr ""
 
-#: users/includes/profile/ban.php:271
+#: profile/includes/ban.php:271
 msgid "Clear"
 msgstr ""
 
-#: users/index.php:11 users/profile.php:10
+#: profile/includes/office.php:11
+msgid "Access forbidden"
+msgstr ""
+
+#: profile/includes/office.php:34
+msgid "Admin-Club"
+msgstr ""
+
+#: profile/index.php:10 users/index.php:11
 msgid "For registered users only"
+msgstr ""
+
+#: profile/index.php:19
+msgid "This User does not exists"
+msgstr ""
+
+#: profile/index.php:62
+msgid "Edit"
+msgstr ""
+
+#: profile/index.php:79
+msgid "Birthday"
+msgstr ""
+
+#: profile/index.php:118
+msgid "Karma"
+msgstr ""
+
+#: profile/index.php:129
+msgid "Vote"
+msgstr ""
+
+#: profile/index.php:200
+msgid "Write"
+msgstr ""
+
+#: registration.php:45
+msgid "Invalid characters"
 msgstr ""
 
 #: users/index.php:42
@@ -411,28 +440,4 @@ msgstr ""
 
 #: users/index.php:51
 msgid "Top Activity"
-msgstr ""
-
-#: users/profile.php:19
-msgid "This User does not exists"
-msgstr ""
-
-#: users/profile.php:62
-msgid "Edit"
-msgstr ""
-
-#: users/profile.php:79
-msgid "Birthday"
-msgstr ""
-
-#: users/profile.php:118
-msgid "Karma"
-msgstr ""
-
-#: users/profile.php:129
-msgid "Vote"
-msgstr ""
-
-#: users/profile.php:199
-msgid "Write"
 msgstr ""
