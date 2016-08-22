@@ -202,8 +202,6 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
         echo '</div>';
     }
-
-    echo '<div class="phdr"><a href="index.php">' . _t('Users') . '</a></div>';
 }
 
 require_once('../incfiles/end.php');
