@@ -277,7 +277,7 @@ switch ($mod) {
                 '<p>' . ($total
                     ? '<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Violations history') . '</a><br />'
                     : '') .
-                '<a href="../' . $set['admp'] . '/index.php?act=ban_panel">' . _td('Ban Panel') . '</a></p>';
+                '<a href="../admin/index.php?act=ban_panel">' . _td('Ban Panel') . '</a></p>';
         } else {
             echo functions::display_error(_td('Violations history can be cleared by Supervisor only'));
         }
@@ -290,7 +290,7 @@ switch ($mod) {
         $menu = [];
 
         if ($rights >= 6) {
-            $menu[] = '<a href="../' . $set['admp'] . '/index.php?act=ban_panel">' . _td('Ban Panel') . '</a>';
+            $menu[] = '<a href="../admin/index.php?act=ban_panel">' . _td('Ban Panel') . '</a>';
         }
 
         if ($rights == 9) {

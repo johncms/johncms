@@ -63,7 +63,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
-        $menu[] = '<a href="' . $set['homeurl'] . '/' . $set['admp'] . '/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
+        $menu[] = '<a href="' . $set['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
     }
 
     if ($user['id'] != $user_id && $rights > $user['rights']) {
