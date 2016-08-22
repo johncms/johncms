@@ -18,12 +18,12 @@ $db = App::getContainer()->get(PDO::class);
 // Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
-    echo '<div class="gmenu"><p>' . _td('Settings reset to default') . '<br /><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
+    echo '<div class="gmenu"><p>' . _td('Settings reset to default') . '<br /><a href="?user=' . $user['id'] . '">' . _td('Back') . '</a></p></div>';
     require('../incfiles/end.php');
     exit;
 }
 
-echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? _td('Profile') : _td('My Profile')) . '</b></a> | ' . _t('Edit') . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? _td('Profile') : _td('My Profile')) . '</b></a> | ' . _td('Edit') . '</div>';
 
 if (isset($_GET['delavatar'])) {
     // Удаляем аватар

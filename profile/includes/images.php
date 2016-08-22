@@ -2,21 +2,21 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng_profile['profile_edit'];
+$textl = _td('Edit Profile');
 require('../incfiles/head.php');
 
 if (($user_id != $user['id'] && $rights < 7)
     || $user['rights'] > $datauser['rights']
 ) {
     // Если не хватает прав, выводим ошибку
-    echo display_error($lng_profile['error_rights']);
+    echo display_error(_td('You cannot edit profile of higher administration'));
     require('../incfiles/end.php');
     exit;
 }
 switch ($mod) {
     case 'avatar':
         // Выгружаем аватар
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng_profile['upload_avatar'] . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Upload Avatar') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
@@ -36,9 +36,8 @@ switch ($mod) {
                 $handle->image_convert = 'png';
                 $handle->process('../files/users/avatar/');
                 if ($handle->processed) {
-                    echo '<div class="gmenu"><p>' . $lng_profile['avatar_uploaded'] . '<br />' .
-                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
-                        '<div class="phdr"><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                    echo '<div class="gmenu"><p>' . _td('The avatar is successfully uploaded') . '<br />' .
+                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _td('Continue') . '</a></p></div>';
                 } else {
                     echo functions::display_error($handle->error);
                 }

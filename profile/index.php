@@ -7,7 +7,7 @@ require('../incfiles/core.php');
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
     require('../incfiles/head.php');
-    echo functions::display_error(_t('For registered users only'));
+    echo functions::display_error(_td('For registered users only'));
     require('../incfiles/end.php');
     exit;
 }
@@ -16,7 +16,7 @@ if (!$user_id) {
 $user = functions::get_user($user);
 if (!$user) {
     require('../incfiles/head.php');
-    echo functions::display_error(_t('This User does not exists'));
+    echo functions::display_error(_td('This User does not exists'));
     require('../incfiles/end.php');
     exit;
 }
@@ -51,7 +51,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
     // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
-    $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
+    $textl = _td('Profile') . ': ' . htmlspecialchars($user['name']);
     require('../incfiles/head.php');
     echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? _td('User Profile') : _td('My Profile')) . '</b></div>';
 
@@ -59,15 +59,15 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     $menu = [];
 
     if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights'])) {
-        $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
+        $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _td('Edit') . '</a>';
     }
 
     if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
-        $menu[] = '<a href="' . $set['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
+        $menu[] = '<a href="' . $set['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _td('Delete') . '</a>';
     }
 
     if ($user['id'] != $user_id && $rights > $user['rights']) {
-        $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
+        $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _td('Ban') . '</a>';
     }
 
     if (!empty($menu)) {
@@ -76,7 +76,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
     //Уведомление о дне рожденья
     if ($user['dayb'] == date('j', time()) && $user['monthb'] == date('n', time())) {
-        echo '<div class="gmenu">' . _t('Birthday') . '!!!</div>';
+        echo '<div class="gmenu">' . _td('Birthday') . '!!!</div>';
     }
 
     // Информация о юзере
@@ -115,7 +115,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         }
 
         echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $set['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
-            '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
+            '<b>' . _td('Karma') . ' (' . $karma . ')</b>' .
             '<div class="sub">' .
             '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _td('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
             '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _td('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
@@ -126,7 +126,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if (!$ban && $datauser['postforum'] >= $set_karma['forum'] && $datauser['total_on_site'] >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
-                    echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
+                    echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _td('Vote') . '</a>';
                 }
             }
         } else {
@@ -197,7 +197,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         echo '</p>';
 
         if (!functions::is_ignor($user['id']) && functions::is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
-            echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
+            echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _td('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 
         echo '</div>';
