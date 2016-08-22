@@ -9,7 +9,7 @@ require('../incfiles/head.php');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _td('Activity') . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Activity') . '</div>';
 $menu = [
     (!$mod ? '<b>' . _td('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _td('Messages') . '</a>'),
     ($mod == 'topic' ? '<b>' . _td('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _td('Themes') . '</a>'),
@@ -39,14 +39,14 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+            echo '<div class="menu"><p>' . _td('The list is empty') . '</p></div>';
         }
         break;
 
     case 'topic':
         // Список тем Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Themes') . '</div>';
+        echo '<div class="phdr"><b>' . _td('Forum') . '</b>: ' . _td('Themes') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
@@ -74,14 +74,14 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+            echo '<div class="menu"><p>' . _td('The list is empty') . '</p></div>';
         }
         break;
 
     default:
         // Список постов Форума
         $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
-        echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _td('Messages') . '</div>';
+        echo '<div class="phdr"><b>' . _td('Forum') . '</b>: ' . _td('Messages') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
@@ -111,16 +111,16 @@ switch ($mod) {
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+            echo '<div class="menu"><p>' . _td('The list is empty') . '</p></div>';
         }
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _td('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('?act=activity' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?act=activity&amp;user=' . $user['id'] . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _td('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }

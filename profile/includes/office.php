@@ -8,7 +8,7 @@ require('../incfiles/head.php');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id) {
-    echo functions::display_error(_t('Access forbidden'));
+    echo functions::display_error(_td('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
@@ -31,7 +31,7 @@ echo '' .
 
 if ($rights >= 1) {
     $guest = counters::guestbook(2);
-    echo '<div>' . functions::image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
+    echo '<div>' . functions::image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . _td('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
 echo '</p></div>';
 
