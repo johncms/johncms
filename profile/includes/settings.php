@@ -1,13 +1,13 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$lng_set = core::load_lng('settings');
-$textl = $lng['settings'];
+
+$textl = _td('Settings');
 require('../incfiles/head.php');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id) {
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_td('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
@@ -16,15 +16,15 @@ if ($user['id'] != $user_id) {
 $db = App::getContainer()->get(PDO::class);
 
 $menu = [
-    (!$mod ? '<b>' . $lng['common_settings'] . '</b>' : '<a href="?act=settings">' . $lng['common_settings'] . '</a>'),
-    ($mod == 'forum' ? '<b>' . $lng['forum'] . '</b>' : '<a href="?act=settings&amp;mod=forum">' . $lng['forum'] . '</a>'),
-    ($mod == 'mail' ? '<b>' . $lng['mail'] . '</b>' : '<a href="?act=settings&amp;mod=mail">' . $lng['mail'] . '</a>'),
+    (!$mod ? '<b>' . _td('General setting') . '</b>' : '<a href="?act=settings">' . _td('General setting') . '</a>'),
+    ($mod == 'forum' ? '<b>' . _td('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _td('Forum') . '</a>'),
+    ($mod == 'mail' ? '<b>' . _td('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _td('Mail') . '</a>'),
 ];
 
 // Пользовательские настройки
 switch ($mod) {
     case 'mail':
-        echo '<div class="phdr"><b>' . $lng['settings'] . '</b> | ' . $lng['mail'] . '</div>' .
+        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('Mail') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
         $set_mail_user = unserialize($datauser['set_mail']);
@@ -39,17 +39,17 @@ switch ($mod) {
 
         echo '<form method="post" action="?act=settings&amp;mod=mail">' .
             '<div class="menu">' .
-            '<strong>' . $lng_profile['write_messages'] . '</strong><br />' .
-            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['write_all'] . '<br />' .
-            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['write_contacts'] . '<br />' .
-            '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['write_friends'] .
-            '<br/><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
+            '<strong>' . _td('Who can write you?') . '</strong><br />' .
+            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _td('All can write') . '<br />' .
+            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _td('Only my contacts') . '<br />' .
+            '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _td('Only my friends') .
+            '<br/><p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
             '<div class="phdr">&#160;</div>';
         break;
 
     case 'forum':
         // Настройки Форума
-        echo '<div class="phdr"><b>' . $lng['settings'] . '</b> | ' . $lng['forum'] . '</div>' .
+        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('Forum') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         $set_forum = [];
         $set_forum = unserialize($datauser['set_forum']);
@@ -68,7 +68,8 @@ switch ($mod) {
                 serialize($set_forum),
                 $user_id,
             ]);
-            echo '<div class="gmenu">' . $lng['settings_saved'] . '</div>';
+
+            echo '<div class="gmenu">' . _td('Settings saved successfully') . '</div>';
         }
 
         if (isset($_GET['reset']) || empty($set_forum)) {
@@ -81,24 +82,24 @@ switch ($mod) {
                 serialize($set_forum),
                 $user_id,
             ]);
-            echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
+            echo '<div class="rmenu">' . _td('Default settings are set') . '</div>';
         }
 
         echo '<form action="?act=settings&amp;mod=forum" method="post">' .
-            '<div class="menu"><p><h3>' . $lng_set['main_settings'] . '</h3>' .
-            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . $lng_set['sorting_return'] . '<br/>' .
-            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . $lng_set['field_on'] . '<br/>' .
-            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['preview'] . '<br/>' .
-            '</p><p><h3>' . $lng_set['clip_first_post'] . '</h3>' .
-            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['always'] . '<br />' .
-            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['in_not_read'] . '<br />' .
-            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . $lng_set['never'] .
-            '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . $lng['reset_settings'] . '</a></div>';
+            '<div class="menu"><p><h3>' . _td('Basic settings') . '</h3>' .
+            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Inverse sorting') . '<br/>' .
+            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Use the form of a quick answer') . '<br/>' .
+            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Preview of messages') . '<br/>' .
+            '</p><p><h3>' . _td('Attach first post') . '</h3>' .
+            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _td('Always') . '<br />' .
+            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _td('In unread topics') . '<br />' .
+            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _td('Never') .
+            '</p><p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
+            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _td('Reset settings') . '</a></div>';
         break;
 
     default:
-        echo '<div class="phdr"><b>' . $lng['settings'] . '</b> | ' . $lng['common_settings'] . '</div>' .
+        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('General setting') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
         if (isset($_POST['submit'])) {
