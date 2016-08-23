@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-08-20 18:34-0400\n"
+"PO-Revision-Date: 2016-08-24 16:08-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -10,12 +10,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: crowdin.com\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../..\n"
+"X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: system/vendor\n"
-"X-Poedit-SearchPathExcluded-1: incfiles\n"
-"X-Poedit-SearchPathExcluded-2: files\n"
+"X-Poedit-SearchPathExcluded-0: files\n"
+"X-Poedit-SearchPathExcluded-1: system/vendor\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: ru\n"
@@ -51,7 +50,7 @@ msgstr "Применить"
 #: help/includes/avatars.php:62 help/includes/avatars.php:80
 #: help/includes/forum.php:51 help/includes/my_smilies.php:53
 #: help/includes/smilies.php:40 help/includes/tags.php:71
-#: help/includes/usersmilies.php:71 help/index.php:60 users/index.php:53
+#: help/includes/usersmilies.php:71 help/index.php:63 users/index.php:53
 msgid "Back"
 msgstr "Назад"
 
@@ -86,7 +85,7 @@ msgstr "Неверные данные"
 
 #: help/includes/admsmilies.php:12 help/includes/my_smilies.php:6
 #: help/includes/smilies.php:6 help/includes/usersmilies.php:22
-#: help/index.php:59
+#: help/index.php:62
 msgid "Smilies"
 msgstr "Смайлы"
 
@@ -119,7 +118,7 @@ msgid "An error occurred"
 msgstr "Произошла ошибка"
 
 #: help/includes/avatars.php:19 help/includes/avatars.php:28
-#: help/includes/avatars.php:66 help/index.php:58
+#: help/includes/avatars.php:66 help/index.php:61
 msgid "Avatars"
 msgstr "Аватары"
 
@@ -132,7 +131,7 @@ msgid "Select"
 msgstr "Выбрать"
 
 #: help/includes/avatars.php:66 help/includes/forum.php:6
-#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:55
+#: help/includes/smilies.php:6 help/includes/tags.php:8 help/index.php:58
 #: pages/mainmenu.php:11
 msgid "Information, FAQ"
 msgstr "Информация, FAQ"
@@ -201,19 +200,63 @@ msgstr "Текст"
 msgid "Spoiler"
 msgstr "Спойлер"
 
-#: login.php:10
+#: incfiles/head.php:25
+msgid "Site News"
+msgstr "Новости ресурса"
+
+#: incfiles/head.php:78
+msgid "Hi"
+msgstr "Привет"
+
+#: incfiles/head.php:78
+msgid "Guest"
+msgstr "Гость"
+
+#: incfiles/head.php:82 login.php:10
 msgid "Home"
 msgstr "Главная"
 
-#: login.php:12 login.php:141
+#: incfiles/head.php:83
+msgid "Personal"
+msgstr "Личное"
+
+#: incfiles/head.php:84 login.php:12 login.php:141
 msgid "Login"
 msgstr "Вход"
+
+#: incfiles/head.php:171
+msgid "Ban"
+msgstr "Бан"
+
+#: incfiles/head.php:171
+msgid "Details"
+msgstr "Подробно"
+
+#: incfiles/head.php:180
+msgid "System"
+msgstr "Система"
+
+#: incfiles/head.php:193
+msgid "Mail"
+msgstr "Почта"
+
+#: incfiles/head.php:197 pages/mainmenu.php:18
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: incfiles/head.php:203
+msgid "Comments"
+msgstr "Комментарии"
+
+#: incfiles/head.php:207
+msgid "Unread"
+msgstr "Непрочитанное"
 
 #: login.php:22
 msgid "You have not entered login"
 msgstr "Вы не ввели логин"
 
-#: login.php:26 registration.php:47
+#: login.php:26 registration.php:50
 msgid "You have not entered password"
 msgstr "Вы не ввели пароль"
 
@@ -221,7 +264,7 @@ msgstr "Вы не ввели пароль"
 msgid "Nickname"
 msgstr "Ник"
 
-#: login.php:30 login.php:34 registration.php:49
+#: login.php:30 login.php:34 registration.php:52
 msgid "Invalid length"
 msgstr "Недопустимая длина"
 
@@ -229,7 +272,7 @@ msgstr "Недопустимая длина"
 msgid "Password"
 msgstr "Пароль"
 
-#: login.php:57 registration.php:63
+#: login.php:57 registration.php:66
 msgid "The security code is not correct"
 msgstr "Проверочный код введен неверно"
 
@@ -269,7 +312,7 @@ msgstr "Ваш логин"
 msgid "Remember"
 msgstr "Запомнить"
 
-#: login.php:143 registration.php:6 registration.php:25 registration.php:216
+#: login.php:143 registration.php:6 registration.php:28 registration.php:219
 msgid "Registration"
 msgstr "Регистрация"
 
@@ -288,10 +331,6 @@ msgstr "Архив новостей"
 #: pages/mainmenu.php:14
 msgid "Communication"
 msgstr "Общение"
-
-#: pages/mainmenu.php:18
-msgid "Guestbook"
-msgstr "Гостевая"
 
 #: pages/mainmenu.php:23
 msgid "Forum"
@@ -325,7 +364,7 @@ msgstr "Пользователи"
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
 
-#: registration.php:42
+#: registration.php:45
 msgid "Invalid characters"
 msgstr "Недопустимые символы"
 
