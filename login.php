@@ -141,7 +141,7 @@ if (core::$user_id) {
             '<p><input type="submit" value="' . _t('Login') . '"/></p>' .
             '</form></div>' .
             '<div class="menu"><p>' . functions::image('user.png') . '<a href="registration.php">' . _t('Registration') . '</a></p></div>' .
-            '<div class="bmenu"><p>' . functions::image('lock.png') . '<a href="users/skl.php?continue">' . _t('Forgot password?') . '</a></p></div>';
+            '<div class="bmenu"><p>' . functions::image('lock.png') . '<a href="profile/skl.php?continue">' . _t('Forgot password?') . '</a></p></div>';
     }
 }
 

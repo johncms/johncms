@@ -4,12 +4,12 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_td('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
-$lng_pass = core::load_lng('pass');
-$textl = htmlspecialchars($user['name']) . ': ' . $lng_pass['change_password'];
+
+$textl = htmlspecialchars($user['name']) . ': ' . _td('Change Password');
 require('../incfiles/head.php');
 
 switch ($mod) {
@@ -23,28 +23,24 @@ switch ($mod) {
 
         if ($user['id'] != $user_id) {
             if (!$newpass || !$newconf) {
-                $error[] = $lng_pass['error_fields'];
+                $error[] = _td('It is necessary to fill in all fields');
             }
         } else {
             if (!$oldpass || !$newpass || !$newconf) {
-                $error[] = $lng_pass['error_fields'];
+                $error[] = _td('It is necessary to fill in all fields');
             }
         }
 
         if (!$error && $user['id'] == $user_id && md5(md5($oldpass)) !== $user['password']) {
-            $error[] = $lng_pass['error_old_password'];
+            $error[] = _td('Old password entered incorrectly');
         }
 
         if ($newpass != $newconf) {
-            $error[] = $lng_pass['error_new_password'];
+            $error[] = _td('The password confirmation you entered is wrong');
         }
 
-        if (preg_match("/[^\da-zA-Z_]+/", $newpass) && !$error) {
-            $error[] = $lng['error_wrong_symbols'];
-        }
-
-        if (!$error && (strlen($newpass) < 3 || strlen($newpass) > 10)) {
-            $error[] = $lng_pass['error_lenght'];
+        if (!$error && (strlen($newpass) < 3)) {
+            $error[] = _td('The password must contain at least 3 characters');
         }
 
         if (!$error) {
@@ -62,27 +58,26 @@ switch ($mod) {
                 setcookie('cups', md5($newpass), time() + 3600 * 24 * 365);
             }
 
-            echo '<div class="gmenu"><p><b>' . $lng_pass['password_changed'] . '</b><br />' .
-                '<a href="' . ($user_id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . $lng['continue'] . '</a></p>';
+            echo '<div class="gmenu"><p><b>' . _td('Password successfully changed') . '</b><br />' .
+                '<a href="' . ($user_id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . _td('Continue') . '</a></p>';
             echo '</div>';
         } else {
             echo functions::display_error($error,
-                '<a href="?act=password&amp;user=' . $user['id'] . '">' . $lng['repeat'] . '</a>');
+                '<a href="?act=password&amp;user=' . $user['id'] . '">' . _td('Repeat') . '</a>');
         }
         break;
 
     default:
         // Форма смены пароля
-        echo '<div class="phdr"><b>' . $lng_pass['change_password'] . ':</b> ' . $user['name'] . '</div>';
+        echo '<div class="phdr"><b>' . _td('Change Password') . ':</b> ' . $user['name'] . '</div>';
         echo '<form action="?act=password&amp;mod=change&amp;user=' . $user['id'] . '" method="post">';
         if ($user['id'] == $user_id) {
-            echo '<div class="menu"><p>' . $lng_pass['input_old_password'] . ':<br /><input type="password" name="oldpass" /></p></div>';
+            echo '<div class="menu"><p>' . _td('Enter old password') . ':<br /><input type="password" name="oldpass" /></p></div>';
         }
-        echo '<div class="gmenu"><p>' . $lng_pass['input_new_password'] . ':<br />' .
-            '<input type="password" name="newpass" /><br />' . $lng_pass['repeat_password'] . ':<br />' .
+        echo '<div class="gmenu"><p>' . _td('Enter new password') . ':<br />' .
+            '<input type="password" name="newpass" /><br />' . _td('Repeat password') . ':<br />' .
             '<input type="password" name="newconf" /></p>' .
-            '<p><input type="submit" value="' . $lng['save'] . '" name="submit" />' .
+            '<p><input type="submit" value="' . _td('Save') . '" name="submit" />' .
             '</p></div></form>' .
-            '<div class="phdr"><small>' . $lng_pass['password_change_help'] . '</small></div>' .
-            '<p><a href="?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
+            '<p><a href="?user=' . $user['id'] . '">' . _td('Profile') . '</a></p>';
 }

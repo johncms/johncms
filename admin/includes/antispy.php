@@ -240,7 +240,6 @@ class scaner
         '../users/includes/top.php',
         '../users/includes/userlist.php',
         '../users/index.php',
-        '../users/skl.php',
     ];
 
     public $snap_base = 'scan_snapshot.dat';
