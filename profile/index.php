@@ -148,7 +148,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     if ($bancount) {
-        echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Infringements') . '</a> (' . $bancount . ')</div>';
+        echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Violations') . '</a> (' . $bancount . ')</div>';
     }
 
     $total_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='{$user['id']}' AND `type`='2' AND `friends`='1'")->fetchColumn();
