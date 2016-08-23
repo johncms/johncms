@@ -2,20 +2,20 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = htmlspecialchars($user['name']) . ': ' . $lng['ip_history'];
+$textl = htmlspecialchars($user['name']) . ': ' . _td('IP History');
 require('../incfiles/head.php');
 
 // Проверяем права доступа
 if (!$rights && $user_id != $user['id']) {
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_td('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
 
 // История IP адресов
-echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . $lng['profile'] . '</b></a> | ' . $lng['ip_history'] . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('IP History') . '</div>';
 echo '<div class="user"><p>';
-$arg = array (
+$arg = array(
     'lastvisit' => 1,
     'header' => '<b>ID:' . $user['id'] . '</b>'
 );
@@ -37,15 +37,15 @@ if ($total) {
         ++$i;
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _td('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _td('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<p>' . functions::display_pagination('?act=ip&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</p>';
     echo '<p><form action="?act=ip&amp;user=' . $user['id'] . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _td('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
