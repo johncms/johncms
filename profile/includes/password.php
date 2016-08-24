@@ -71,9 +71,11 @@ switch ($mod) {
         // Форма смены пароля
         echo '<div class="phdr"><b>' . _td('Change Password') . ':</b> ' . $user['name'] . '</div>';
         echo '<form action="?act=password&amp;mod=change&amp;user=' . $user['id'] . '" method="post">';
+
         if ($user['id'] == $user_id) {
             echo '<div class="menu"><p>' . _td('Enter old password') . ':<br /><input type="password" name="oldpass" /></p></div>';
         }
+
         echo '<div class="gmenu"><p>' . _td('Enter new password') . ':<br />' .
             '<input type="password" name="newpass" /><br />' . _td('Repeat password') . ':<br />' .
             '<input type="password" name="newconf" /></p>' .
