@@ -18,7 +18,7 @@ $db = App::getContainer()->get(PDO::class);
 // Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
-    echo '<div class="gmenu"><p>' . _td('Settings reset to default') . '<br /><a href="?user=' . $user['id'] . '">' . _td('Back') . '</a></p></div>';
+    echo '<div class="gmenu"><p>' . _td('Default settings are set') . '<br /><a href="?user=' . $user['id'] . '">' . _td('Back') . '</a></p></div>';
     require('../incfiles/end.php');
     exit;
 }
