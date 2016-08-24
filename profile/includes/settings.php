@@ -169,37 +169,33 @@ switch ($mod) {
 
         // Форма ввода пользовательских настроек
         if (isset($_SESSION['set_ok'])) {
-            echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+            echo '<div class="rmenu">' . _td('Settings saved successfully') . '</div>';
             unset($_SESSION['set_ok']);
         }
 
         if (isset($_SESSION['reset_ok'])) {
-            echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
+            echo '<div class="rmenu">' . _td('Default settings are set') . '</div>';
             unset($_SESSION['reset_ok']);
         }
 
         echo '<form action="?act=settings" method="post" >' .
-            '<div class="menu"><p><h3>' . $lng['settings_clock'] . '</h3>' .
-            '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . $lng['settings_clock_shift'] . ' (+-12)<br />' .
+            '<div class="menu"><p><h3>' . _td('Time settings') . '</h3>' .
+            '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . _td('Shift of time') . ' (+-12)<br />' .
             '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
-                time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . $lng['system_time'] .
-            '</p><p><h3>' . $lng['system_functions'] . '</h3>' .
-            '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['direct_url'] . '<br />' .
-            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['avatars'] . '<br/>' .
-            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['smileys'] . '<br/>' .
-            '</p><p><h3>' . $lng['text_input'] . '</h3>' .
-            '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . $lng['field_height'] . ' (1-9)<br />';
+                time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _td('System time') .
+            '</p><p><h3>' . _td('System Functions') . '</h3>' .
+            '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Direct URL') . '<br />' .
+            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Avatars') . '<br/>' .
+            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Smilies') . '<br/>' .
+            '</p><p><h3>' . _td('Text entering') . '</h3>' .
+            '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . _td('Height of field') . ' (1-9)<br />';
 
-        if (core::$lng_iso == 'ru' || core::$lng_iso == 'uk') {
-            echo '<input name="translit" type="checkbox" value="1" ' . (core::$user_set['translit'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['translit'];
-        }
-
-        echo '</p><p><h3>' . $lng['apperance'] . '</h3>' .
-            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . $lng['lines_on_page'] . ' (5-99)' .
+        echo '</p><p><h3>' . _td('Appearance') . '</h3>' .
+            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . _td('Size of Lists') . ' (5-99)' .
             '</p>';
 
         // Выбор темы оформления
-        echo '<p><h3>' . $lng['design_template'] . '</h3><select name="skin">';
+        echo '<p><h3>' . _td('Theme') . '</h3><select name="skin">';
 
         foreach (glob('../theme/*/*.css') as $val) {
             $dir = explode('/', dirname($val));
@@ -211,18 +207,18 @@ switch ($mod) {
 
         // Выбор языка
         if (count(core::$lng_list) > 1) {
-            echo '<p><h3>' . $lng['language_select'] . '</h3>';
+            echo '<p><h3>' . _td('Select Language') . '</h3>';
             $user_lng = isset(core::$user_set['lng']) ? core::$user_set['lng'] : core::$lng_iso;
             foreach (core::$lng_list as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
                     (file_exists('../images/flags/' . $key . '.gif') ? '<img src="../images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                     $val .
-                    ($key == core::$system_set['lng'] ? ' <small class="red">[' . $lng['default'] . ']</small>' : '') .
+                    ($key == core::$system_set['lng'] ? ' <small class="red">[' . _td('Site Default') . ']</small>' : '') .
                     '</div>';
             }
             echo '</p>';
         }
 
-        echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;reset">' . $lng['reset_settings'] . '</a></div>';
+        echo '<p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
+            '<div class="phdr"><a href="?act=settings&amp;reset">' . _td('Reset Settings') . '</a></div>';
 }
