@@ -203,7 +203,6 @@ class scaner
         '../sitemap/forum.php',
         '../sitemap/index.php',
         '../sitemap/library.php',
-        '../users/album.php',
         '../users/image.php',
         '../users/includes/admlist.php',
         '../users/includes/album/comments.php',

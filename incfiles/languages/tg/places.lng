@@ -1,5 +1,5 @@
 admlist                       =   "<a href='#home#/users/index.php?act=admlist'>Саҳифаи Администраторҳо</a>"
-album                         =   "<a href='#home#/users/album.php'>Албоми расмҳо</a>"
+album                         =   "<a href='#home#/album/index.php'>Албоми расмҳо</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>Саҳифаи ҳамномҳо</a>"
 downloads                     =   "<a href='#home#/download/index.php'>Файлҳо</a>"
 faq                           =   "<a href='#home#/pages/faq.php'>Маълумотро мехонад</a>"

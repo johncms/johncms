@@ -64,8 +64,8 @@ function vote_photo($arg = null)
             // Проверяем, имеет ли юзер право голоса
             $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
             if ($req->rowCount()) {
-                $out .= '<br />' . $lng['vote'] . ': <a href="album.php?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | ' .
-                    '<a href="album.php?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
+                $out .= '<br />' . $lng['vote'] . ': <a href="?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | ' .
+                    '<a href="?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
             }
         }
         $out .= '</div>';
@@ -82,23 +82,25 @@ function vote_photo($arg = null)
 -----------------------------------------------------------------
 */
 $array = [
-    'comments'       => 'includes/album',
-    'delete'         => 'includes/album',
-    'edit'           => 'includes/album',
-    'image_delete'   => 'includes/album',
-    'image_download' => 'includes/album',
-    'image_edit'     => 'includes/album',
-    'image_move'     => 'includes/album',
-    'image_upload'   => 'includes/album',
-    'list'           => 'includes/album',
-    'new_comm'       => 'includes/album',
-    'show'           => 'includes/album',
-    'sort'           => 'includes/album',
-    'top'            => 'includes/album',
-    'users'          => 'includes/album',
-    'vote'           => 'includes/album',
+    'comments'       => 'includes',
+    'delete'         => 'includes',
+    'edit'           => 'includes',
+    'image_delete'   => 'includes',
+    'image_download' => 'includes',
+    'image_edit'     => 'includes',
+    'image_move'     => 'includes',
+    'image_upload'   => 'includes',
+    'list'           => 'includes',
+    'new_comm'       => 'includes',
+    'show'           => 'includes',
+    'sort'           => 'includes',
+    'top'            => 'includes',
+    'users'          => 'includes',
+    'vote'           => 'includes',
 ];
+
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
+
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
@@ -117,25 +119,25 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     $newcount = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['photo_albums'] . '</b></div>' .
         '<div class="gmenu"><p>' .
-        functions::image('users.png', ['width' => 16, 'height' => 16]) . '<a href="album.php?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
-        functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="album.php?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
+        functions::image('users.png', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . $lng_profile['new_photo'] . '</a> (' . $newcount . ')<br />' .
+        functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top&amp;mod=last_comm">' . $lng_profile['new_comments'] . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
         '<p><h3><img src="' . $set['homeurl'] . '/images/users.png" width="16" height="16" class="left" />&#160;' . $lng['albums'] . '</h3><ul>' .
-        '<li><a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a> (' . $total_mans . ')</li>' .
-        '<li><a href="album.php?act=users&amp;mod=girls">' . $lng['womans'] . '</a> (' . $total_womans . ')</li>';
+        '<li><a href="?act=users&amp;mod=boys">' . $lng['mans'] . '</a> (' . $total_mans . ')</li>' .
+        '<li><a href="?act=users&amp;mod=girls">' . $lng['womans'] . '</a> (' . $total_womans . ')</li>';
 
     if ($user_id) {
-        echo '<li><a href="album.php?act=list">' . $lng_profile['my_album'] . '</a></li>';
+        echo '<li><a href="?act=list">' . $lng_profile['my_album'] . '</a></li>';
     }
 
     echo '</ul></p>' .
         '<p><h3>' . functions::image('rate.gif') . $lng['rating'] . '</h3><ul>' .
-        '<li><a href="album.php?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
-        '<li><a href="album.php?act=top&amp;mod=downloads">' . $lng_profile['top_downloads'] . '</a></li>' .
-        '<li><a href="album.php?act=top&amp;mod=views">' . $lng_profile['top_views'] . '</a></li>' .
-        '<li><a href="album.php?act=top&amp;mod=comments">' . $lng_profile['top_comments'] . '</a></li>' .
-        '<li><a href="album.php?act=top&amp;mod=trash">' . $lng_profile['top_trash'] . '</a></li>' .
+        '<li><a href="?act=top&amp;mod=votes">' . $lng_profile['top_votes'] . '</a></li>' .
+        '<li><a href="?act=top&amp;mod=downloads">' . $lng_profile['top_downloads'] . '</a></li>' .
+        '<li><a href="?act=top&amp;mod=views">' . $lng_profile['top_views'] . '</a></li>' .
+        '<li><a href="?act=top&amp;mod=comments">' . $lng_profile['top_comments'] . '</a></li>' .
+        '<li><a href="?act=top&amp;mod=trash">' . $lng_profile['top_trash'] . '</a></li>' .
         '</ul></p>' .
         '</div>' .
         '<div class="phdr"><a href="index.php">' . $lng['users'] . '</a></div>';

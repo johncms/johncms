@@ -23,7 +23,7 @@ echo '' .
     '<div class="gmenu"><p><h3>' . _td('My Pages') . '</h3>' .
     '<div>' . functions::image('contacts.png') . '<a href="index.php">' . _td('Profile') . '</a></div>' .
     '<div>' . functions::image('rate.gif') . '<a href="?act=stat">' . _td('Statistics') . '</a></div>' .
-    '<div>' . functions::image('photo.gif') . '<a href="album.php?act=list">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+    '<div>' . functions::image('photo.gif') . '<a href="../album/index.php?act=list">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
     '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook">' . _td('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($rights >= 1) {

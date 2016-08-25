@@ -152,7 +152,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     echo '<br />' .
-        '<div>' . functions::image('photo.gif') . '<a href="../users/album.php?act=list&amp;user=' . $user['id'] . '">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div>' . functions::image('photo.gif') . '<a href="../album/index.php?act=list&amp;user=' . $user['id'] . '">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
         '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _td('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
         '</p></div>';
     if ($user['id'] != $user_id) {

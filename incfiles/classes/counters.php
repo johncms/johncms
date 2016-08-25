@@ -46,7 +46,7 @@ class counters
         }
 
         return $album . '&#160;/&#160;' . $photo .
-        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top">+' . $newcount . '</a></span>' : '');
+        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
     }
 
     /**

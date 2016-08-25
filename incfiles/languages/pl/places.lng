@@ -1,5 +1,5 @@
 admlist                       =   "<a href='#home#/users/index.php?act=admlist'>Lista Adminów</a>"
-album                         =   "<a href='#home#/users/album.php'>Ogląda albumu zdjęć</a>"
+album                         =   "<a href='#home#/album/index.php'>Ogląda albumu zdjęć</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>Lista urodzin</a>"
 downloads                     =   "<a href='#home#/download/index.php'>Pobieralnia</a>"
 faq                           =   "<a href='#home#/pages/faq.php'>Czyta FAQ</a>"

@@ -1,5 +1,5 @@
 admlist                       =   "<a href='#home#/users/index.php?act=admlist'>Administrācijas saraksts</a>"
-album                         =   "<a href='#home#/users/album.php'>Skatās foto albūmus</a>"
+album                         =   "<a href='#home#/album/index.php'>Skatās foto albūmus</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>Skatās dzimšanas dienas gaviļniekus</a>"
 downloads                     =   "<a href='#home#/download/index.php'>Lejuplādes</a>"
 faq                           =   "<a href='#home#/pages/faq.php'>Lasa FAQ</a>"

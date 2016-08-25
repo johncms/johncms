@@ -200,7 +200,7 @@ if ($user_id) {
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/users/album.php?act=top&amp;mod=my_new_comm">' . _t('Comments') . '</a>';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments') . '</a>';
     }
 
     if (!empty($list)) {

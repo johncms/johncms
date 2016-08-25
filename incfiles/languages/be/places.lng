@@ -1,5 +1,5 @@
 admlist                       =   "<a href='#home#/users/index.php?act=admlist'>Спіс Адміністрацыі</a>"
-album                         =   "<a href='#home#/users/album.php'>Фотаальбомы</a>"
+album                         =   "<a href='#home#/album/index.php'>Фотаальбомы</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>Спіс імяніннікаў</a>"
 downloads                     =   "<a href='#home#/download/index.php'>Сьцягваць</a>"
 error404                      =   "Error: 404"
