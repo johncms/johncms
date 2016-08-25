@@ -18,9 +18,6 @@ $db = App::getContainer()->get(PDO::class);
 
 // Личный кабинет пользователя
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();
-$total_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='1'")->fetchColumn();
-$new_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0'")->fetchColumn();
-$online_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id` WHERE `cms_contact`.`user_id`='$user_id' AND `cms_contact`.`type`='2' AND `cms_contact`.`friends`='1' AND `lastdate` > " . (time() - 300))->fetchColumn();
 
 echo '' .
     '<div class="gmenu"><p><h3>' . _td('My Pages') . '</h3>' .
@@ -81,7 +78,6 @@ echo '<div>' . functions::image('user.png') . '<a href="../mail/">' . _td('Conta
 
 //Заблокированные
 $count_ignor = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`='1'")->fetchColumn();
-echo '<div>' . functions::image('user-ok.png') . '<a href="?act=friends">' . _td('Friends') . '</a>&#160;(' . $total_friends . ($new_friends ? '/<span class="red">+' . $new_friends . '</span>' : '') . ')&#160;<a href="?act=friends&amp;do=online">' . _td('Online') . '</a> (' . $online_friends . ')</div>';
 echo '<div>' . functions::image('user-block.png') . '<a href="../mail/index.php?act=ignor">' . _td('Blocked') . '</a>&nbsp;(' . $count_ignor . ')</div>';
 echo '</p></div>';
 

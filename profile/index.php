@@ -39,7 +39,6 @@ $array = [
     'reset'     => 'includes',
     'settings'  => 'includes',
     'stat'      => 'includes',
-    'friends'   => 'includes',
 ];
 $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 
@@ -87,7 +86,8 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     ];
 
     if ($user['id'] != core::$user_id) {
-        $arg['footer'] = '<span class="gray">' . _td('Where?') . ':</span> ' . functions::display_place($user['id'], $user['place']);
+        $arg['footer'] = '<span class="gray">' . _td('Where?') . ':</span> ' . functions::display_place($user['id'],
+                $user['place']);
     }
 
     echo '<div class="user"><p>' . functions::display_user($user, $arg) . '</p></div>';
@@ -151,35 +151,13 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="?act=ban&amp;user=' . $user['id'] . '">' . _td('Violations') . '</a> (' . $bancount . ')</div>';
     }
 
-    $total_friends = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='{$user['id']}' AND `type`='2' AND `friends`='1'")->fetchColumn();
     echo '<br />' .
         '<div>' . functions::image('photo.gif') . '<a href="../users/album.php?act=list&amp;user=' . $user['id'] . '">' . _td('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
         '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _td('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
-        '<div>' . functions::image('users.png') . '<a href="?act=friends&amp;user=' . $user['id'] . '">' . _td('Friends') . '</a>&#160;(' . $total_friends . ')</div>' .
         '</p></div>';
     if ($user['id'] != $user_id) {
         echo '<div class="menu"><p>';
         // Контакты
-        if (!functions::is_ignor($user['id']) && functions::is_contact($user['id']) != 2) {
-            if (!functions::is_friend($user['id'])) {
-                $fr_in = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `from_id`='$user_id' AND `user_id`='{$user['id']}'")->fetchColumn();
-                $fr_out = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type`='2' AND `user_id`='$user_id' AND `from_id`='{$user['id']}'")->fetchColumn();
-
-                if ($fr_in == 1) {
-                    $friend = '<a class="underline" href="?act=friends&amp;do=ok&amp;id=' . $user['id'] . '">' . _td('Confirm friendship') . '</a> | <a class="underline" href="?act=friends&amp;do=no&amp;id=' . $user['id'] . '">' . _td('Reject friendship') . '</a>';
-                } else {
-                    if ($fr_out == 1) {
-                        $friend = '<a class="underline" href="?act=friends&amp;do=cancel&amp;id=' . $user['id'] . '">' . _td('Cancel a request to be friends') . '</a>';
-                    } else {
-                        $friend = '<a href="?act=friends&amp;do=add&amp;id=' . $user['id'] . '">' . _td('Add to friends') . '</a>';
-                    }
-                }
-            } else {
-                $friend = '<a href="?act=friends&amp;do=delete&amp;id=' . $user['id'] . '">' . _td('Remove from friends') . '</a>';
-            }
-            echo '<div>' . functions::image('add.gif') . $friend . '</div>';
-        }
-
         if (functions::is_contact($user['id']) != 2) {
             if (!functions::is_contact($user['id'])) {
                 echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?id=' . $user['id'] . '">' . _td('Add to Contacts') . '</a></div>';

@@ -80,7 +80,6 @@ if ($album['access'] == 1
 } elseif ($album['access'] == 3
     && $user['id'] != $user_id
     && $rights < 6
-    && !functions::is_friend($user['id'])
 ) {
     // Доступ только для друзей
     echo functions::display_error($lng_profile['friends_only'], '<a href="album.php?act=list&amp;user=' . $user['id'] . '">' . $lng_profile['album_list'] . '</a>');
