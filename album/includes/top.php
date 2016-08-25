@@ -96,7 +96,7 @@ switch ($mod) {
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
 require('../incfiles/head.php');
-echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {
     $total = $new_album_comm;
@@ -106,7 +106,7 @@ if ($mod == 'my_new_comm') {
 
 if ($total) {
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('album.php?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . functions::display_pagination('?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     $req = $db->query("
@@ -125,7 +125,7 @@ if ($total) {
 
         if ($res['access'] == 4 || core::$user_rights >= 7) {
             // Если доступ открыт всем, или смотрит Администратор
-            echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
+            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (!empty($res['description']))
                 echo '<div class="gray">' . functions::smileys(functions::checkout($res['description'], 1)) . '</div>';
         } elseif ($res['access'] == 3) {
@@ -133,18 +133,18 @@ if ($total) {
             echo 'Только для друзей';
         } elseif ($res['access'] == 2) {
             // Если доступ по паролю
-            echo '<a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '"><img src="' . core::$system_set['homeurl'] . '/images/stop.gif" width="50" height="50"/></a>';
+            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '"><img src="' . core::$system_set['homeurl'] . '/images/stop.gif" width="50" height="50"/></a>';
         }
 
         echo '<div class="sub">' .
-            '<a href="album.php?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="album.php?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . functions::checkout($res['album_name']) . '</a>';
+            '<a href="?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . functions::checkout($res['album_name']) . '</a>';
 
         if ($res['access'] == 4 || core::$user_rights >= 6) {
             echo vote_photo($res) .
                 '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
                 '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .
-                '<a href="album.php?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
-                '<br /><a href="album.php?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
+                '<a href="?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
+                '<br /><a href="?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
         }
 
         echo '</div></div>';
@@ -156,8 +156,8 @@ if ($total) {
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('album.php?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="album.php?act=top' . $link . '" method="post">' .
+    echo '<div class="topmenu">' . functions::display_pagination('?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=top' . $link . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
         '</form></p>';

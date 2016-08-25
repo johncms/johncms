@@ -21,11 +21,11 @@ switch ($mod) {
 }
 
 $menu = array(
-    (!$mod ? '<b>' . $lng['all'] . '</b>' : '<a href="album.php?act=users">' . $lng['all'] . '</a>'),
-    ($mod == 'boys' ? '<b>' . $lng['mans'] . '</b>' : '<a href="album.php?act=users&amp;mod=boys">' . $lng['mans'] . '</a>'),
-    ($mod == 'girls' ? '<b>' . $lng['womans'] . '</b>' : '<a href="album.php?act=users&amp;mod=girls">' . $lng['womans'] . '</a>')
+    (!$mod ? '<b>' . $lng['all'] . '</b>' : '<a href="?act=users">' . $lng['all'] . '</a>'),
+    ($mod == 'boys' ? '<b>' . $lng['mans'] . '</b>' : '<a href="?act=users&amp;mod=boys">' . $lng['mans'] . '</a>'),
+    ($mod == 'girls' ? '<b>' . $lng['womans'] . '</b>' : '<a href="?act=users&amp;mod=girls">' . $lng['womans'] . '</a>')
 );
-echo '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $lng['list'] . '</div>' .
+echo '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $lng['list'] . '</div>' .
      '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
@@ -43,7 +43,7 @@ if ($total) {
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo '<a href="album.php?act=list&amp;user=' . $res['uid'] . '">' . $res['nick'] . '</a> (' . $res['count'] . ')</div>';
+        echo '<a href="?act=list&amp;user=' . $res['uid'] . '">' . $res['nick'] . '</a> (' . $res['count'] . ')</div>';
         ++$i;
     }
 } else {
@@ -51,8 +51,8 @@ if ($total) {
 }
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('album.php?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
-         '<p><form action="album.php?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
+    echo '<div class="topmenu">' . functions::display_pagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
+         '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
          '<input type="text" name="page" size="2"/>' .
          '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
          '</form></p>';

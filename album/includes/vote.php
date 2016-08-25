@@ -9,7 +9,7 @@ if (!$img) {
     exit;
 }
 
-$ref = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'album.php';
+$ref = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

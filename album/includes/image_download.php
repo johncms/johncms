@@ -40,5 +40,5 @@ if (!$error) {
     header('location: ' . $set['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
     require('../incfiles/head.php');
-    echo functions::display_error($error, '<a href="album.php">' . $lng['back'] . '</a>');
+    echo functions::display_error($error, '<a href="index.php">' . $lng['back'] . '</a>');
 }

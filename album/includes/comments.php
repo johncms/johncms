@@ -26,14 +26,14 @@ if ($req_obj->rowCount()) {
         // Если доступ закрыт
         require('../incfiles/head.php');
         echo functions::display_error($lng['access_forbidden']) .
-            '<div class="phdr"><a href="album.php?act=list&amp;user=' . $owner['id'] . '">' . $lng_profile['album_list'] . '</a></div>';
+            '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . $lng_profile['album_list'] . '</a></div>';
         require('../incfiles/end.php');
         exit;
     }
 
-    $context_top = '<div class="phdr"><a href="album.php"><b>' . $lng['photo_albums'] . '</b></a> | ' .
-        '<a href="album.php?act=list&amp;user=' . $owner['id'] . '">' . $lng['personal_2'] . '</a></div>' .
-        '<div class="menu"><a href="album.php?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
+    $context_top = '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' .
+        '<a href="?act=list&amp;user=' . $owner['id'] . '">' . $lng['personal_2'] . '</a></div>' .
+        '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 
     if (!empty($res_obj['description'])) {
         $context_top .= '<div class="gray">' . functions::smileys(functions::checkout($res_obj['description'], 1)) . '</div>';
@@ -41,12 +41,12 @@ if ($req_obj->rowCount()) {
 
     $context_top .= '<div class="sub">' .
         '<a href="../profile/?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
-        '<a href="album.php?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . functions::checkout($res_a['name']) . '</a>';
+        '<a href="?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . functions::checkout($res_a['name']) . '</a>';
 
     if ($res_obj['access'] == 4 || $rights >= 7) {
         $context_top .= vote_photo($res_obj) .
             '<div class="gray">' . $lng['count_views'] . ': ' . $res_obj['views'] . ', ' . $lng['count_downloads'] . ': ' . $res_obj['downloads'] . '</div>' .
-            '<a href="album.php?act=image_download&amp;img=' . $res_obj['id'] . '">' . $lng['download'] . '</a>';
+            '<a href="?act=image_download&amp;img=' . $res_obj['id'] . '">' . $lng['download'] . '</a>';
     }
 
     $context_top .= '</div></div>';
@@ -55,7 +55,7 @@ if ($req_obj->rowCount()) {
     $arg = [
         'comments_table' => 'cms_album_comments',     // Таблица с комментариями
         'object_table'   => 'cms_album_files',        // Таблица комментируемых объектов
-        'script'         => 'album.php?act=comments', // Имя скрипта (с параметрами вызова)
+        'script'         => '?act=comments', // Имя скрипта (с параметрами вызова)
         'sub_id_name'    => 'img',                    // Имя идентификатора комментируемого объекта
         'sub_id'         => $img,                     // Идентификатор комментируемого объекта
         'owner'          => $owner['id'],             // Владелец объекта

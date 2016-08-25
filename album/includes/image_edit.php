@@ -14,7 +14,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
-        echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_edit'] . '</div>';
+        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_edit'] . '</div>';
 
         if (isset($_POST['submit'])) {
             if (!isset($_SESSION['post'])) {
@@ -147,10 +147,10 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
             }
 
             echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br />' .
-                '<a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
+                '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
         } else {
             unset($_SESSION['post']);
-            echo '<form action="album.php?act=image_edit&amp;img=' . $img . '&amp;user=' . $user['id'] . '" method="post">' .
+            echo '<form action="?act=image_edit&amp;img=' . $img . '&amp;user=' . $user['id'] . '" method="post">' .
                 '<div class="menu">' .
                 '<p><h3>' . $lng_profile['image'] . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
@@ -193,7 +193,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<p><small>' . $lng_profile['image_edit_warning'] . '</small></p>' .
                 '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
                 '</div></form>' .
-                '<div class="phdr"><a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></div>';
+                '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></div>';
         }
     } else {
         echo functions::display_error($lng['error_wrong_data']);

@@ -1,5 +1,5 @@
 ﻿admlist                       =   "<a href='#home#/users/index.php?act=admlist'>Администраторлор тизмеси</a>"
-album                         =   "<a href='#home#/users/album.php'>Фотоальбомдорду көрүүдө</a>"
+album                         =   "<a href='#home#/album/index.php'>Фотоальбомдорду көрүүдө</a>"
 birth                         =   "<a href='#home#/users/index.php?act=birth'>Туулган күн ээлери</a>"
 downloads                     =   "<a href='#home#/download/index.php'>Жүктөөлөр</a>"
 faq                           =   "<a href='#home#/pages/faq.php'>FAQ окуп жатат</a>"

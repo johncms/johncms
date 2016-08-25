@@ -44,7 +44,7 @@ if ($set['mod_gal'] || $rights >= 7) {
 if ($user_id || $set['active']) {
     echo '<div class="phdr"><b>' . _t('Community') . '</b></div>' .
         '<div class="menu"><a href="users/index.php">' . _t('Users') . '</a> (' . counters::users() . ')</div>' .
-        '<div class="menu"><a href="users/album.php">' . _t('Photo Albums') . '</a> (' . counters::album() . ')</div>';
+        '<div class="menu"><a href="album/index.php">' . _t('Photo Albums') . '</a> (' . counters::album() . ')</div>';
 }
 
 echo '<div class="phdr"><a href="http://gazenwagen.com">Gazenwagen</a></div>';

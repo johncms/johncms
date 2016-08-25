@@ -19,7 +19,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     }
 
     $res_a = $req_a->fetch();
-    echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
+    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
 
     if (isset($_POST['submit'])) {
         $handle = new upload($_FILES['imagefile']);
@@ -84,7 +84,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                     ]);
 
                     echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br />' .
-                        '<a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
+                        '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
                         '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                 } else {
                     echo functions::display_error($handle->error);
@@ -95,7 +95,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
             $handle->clean();
         }
     } else {
-        echo '<form enctype="multipart/form-data" method="post" action="album.php?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' .
+        echo '<form enctype="multipart/form-data" method="post" action="?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' .
             '<div class="menu"><p><h3>' . $lng_profile['select_image'] . '</h3>' .
             '<input type="file" name="imagefile" value="" /></p>' .
             '<p><h3>' . $lng['description'] . '</h3>' .
@@ -105,6 +105,6 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
             '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" /></p>' .
             '</div></form>' .
             '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . 'kb.<br />' . $lng_profile['select_image_help_5'] . '</small></div>' .
-            '<p><a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['back'] . '</a></p>';
     }
 }
