@@ -498,31 +498,6 @@ class functions extends core
     }
 
     /**
-     * Является ли выбранный юзер другом?
-     *
-     * @param int $id Идентификатор пользователя, которого проверяем
-     * @return bool
-     */
-    public static function is_friend($id = 0)
-    {
-        static $user_id = null;
-        static $return = false;
-
-        if (!self::$user_id && !$id) {
-            return false;
-        }
-
-        if (is_null($user_id) || $id != $user_id) {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-            $query = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `type` = '2' AND ((`from_id` = '$id' AND `user_id` = '" . self::$user_id . "') OR (`from_id` = '" . self::$user_id . "' AND `user_id` = '$id'))")->fetchColumn();
-            $return = $query == 2 ? true : false;
-        }
-
-        return $return;
-    }
-
-    /**
      * Находится ли выбранный пользователь в контактах и игноре?
      *
      * @param int $id Идентификатор пользователя, которого проверяем
