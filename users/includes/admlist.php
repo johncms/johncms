@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng['administration'];
+$textl = _t('Administration');
 $headmod = "admlist";
 require('../incfiles/head.php');
 
@@ -19,7 +19,7 @@ for ($i = 0; $res = $req->fetch(); ++$i) {
     echo functions::display_user($res) . '</div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<p>' . functions::display_pagination('index.php?act=admlist&amp;', $start, $total, $kmess) . '</p>' .
