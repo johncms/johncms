@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-08-26 11:36+0400\n"
+"POT-Creation-Date: 2016-08-26 20:14+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "For registered users only"
 msgstr ""
 
-#: index.php:40 index.php:46
+#: index.php:40 index.php:46 search.php:22
 msgid "Community"
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Look for the User"
 msgstr ""
 
-#: index.php:50
+#: index.php:50 search.php:26
 msgid "Search"
 msgstr ""
 
@@ -57,6 +57,46 @@ msgstr ""
 msgid "Top Activity"
 msgstr ""
 
-#: index.php:59
+#: index.php:59 search.php:89
 msgid "Back"
+msgstr ""
+
+#: search.php:15 search.php:22
+msgid "User Search"
+msgstr ""
+
+#: search.php:33 search.php:37
+msgid "Nickname"
+msgstr ""
+
+#: search.php:33
+msgid "Invalid length"
+msgstr ""
+
+#: search.php:37
+msgid "Invalid characters"
+msgstr ""
+
+#: search.php:52
+msgid "Searching results"
+msgstr ""
+
+#: search.php:69
+msgid "Your search did not match any results"
+msgstr ""
+
+#: search.php:72
+msgid "Total"
+msgstr ""
+
+#: search.php:78
+msgid "To Page"
+msgstr ""
+
+#: search.php:85
+msgid "Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical."
+msgstr ""
+
+#: search.php:88
+msgid "New search"
 msgstr ""
