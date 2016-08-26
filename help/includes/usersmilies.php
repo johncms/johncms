@@ -32,7 +32,7 @@ if ($total) {
         }
 
         echo '<div class="topmenu">' .
-            '<a href="?act=my_smilies">' . _td('My smilies') . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
+            '<a href="?act=my_smilies">' . _t('My smilies') . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
             '<form action="?act=set_my_sm&amp;cat=' . $cat . '&amp;start=' . $start . '" method="post">';
     }
 
@@ -48,7 +48,7 @@ if ($total) {
             echo(in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
         }
 
-        echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _td('or') . ' :' . functions::trans($smile) . ':';
+        echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . functions::trans($smile) . ':';
         echo '</div>';
     }
 

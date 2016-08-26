@@ -13,9 +13,9 @@ if (isset($_POST['submit'])) {
 } else {
     require('incfiles/head.php');
     echo '<div class="rmenu">' .
-        '<p>' . _t('Are you sure you want to leave the site?') . '</p>' .
-        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout') . '" /></p></form>' .
-        '<p><a href="' . $referer . '">' . _t('Cancel') . '</a></p>' .
+        '<p>' . _t('Are you sure you want to leave the site?', 'system') . '</p>' .
+        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .
+        '<p><a href="' . $referer . '">' . _t('Cancel', 'system') . '</a></p>' .
         '</div>';
     require('incfiles/end.php');
 }

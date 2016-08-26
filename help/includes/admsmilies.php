@@ -9,14 +9,14 @@ if ($rights < 1) {
     exit;
 }
 
-echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _td('For administration') . '</div>';
+echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('For administration') . '</div>';
 $user_sm = unserialize($datauser['smileys']);
 
 if (!is_array($user_sm)) {
     $user_sm = [];
 }
 
-echo '<div class="topmenu"><a href="?act=my_smilies">' . _td('My smilies') . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
+echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a>  (' . count($user_sm) . ' / ' . $user_smileys . ')</div>' .
     '<form action="?act=set_my_sm&amp;start=' . $start . '&amp;adm" method="post">';
 $array = [];
 $dir = opendir('../images/smileys/admin');
@@ -42,7 +42,7 @@ if ($total > 0) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         $smileys = (in_array($smile, $user_sm) ? ''
             : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
-        echo $smileys . '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . _td('or') . ' :' . functions::trans($smile) . ':</div>';
+        echo $smileys . '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . _t('or') . ' :' . functions::trans($smile) . ':</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

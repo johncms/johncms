@@ -22,7 +22,7 @@ echo '<!DOCTYPE html>' .
     (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '">' : '') .
     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
-    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News') . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
+    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News', 'system') . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
     "\n" . '</head><body>';
 
@@ -75,13 +75,13 @@ echo '<table style="width: 100%;" class="logo"><tr>' .
     '</tr></table>';
 
 // Выводим верхний блок с приветствием
-echo '<div class="header"> ' . _t('Hi') . ', ' . ($user_id ? '<b>' . $login . '</b>!' : _t('Guest') . '!') . '</div>';
+echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($user_id ? '<b>' . $login . '</b>!' : _t('Guest', 'system') . '!') . '</div>';
 
 // Главное меню пользователя
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home') . '</a><br/>' : '') .
-    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal') . '</a><br/>' : '') .
-    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login') . '</a>' : '') .
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a><br/>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br/>' : '') .
+    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 
 // Рекламный блок сайта
@@ -168,7 +168,7 @@ if ($user_id) {
 
 // Выводим сообщение о Бане
 if (!empty($ban)) {
-    echo '<div class="alarm">' . _t('Ban') . '&#160;<a href="' . $set['homeurl'] . '/profile/?act=ban">' . _t('Details') . '</a></div>';
+    echo '<div class="alarm">' . _t('Ban', 'system') . '&#160;<a href="' . $set['homeurl'] . '/profile/?act=ban">' . _t('Details', 'system') . '</a></div>';
 }
 
 // Ссылки на непрочитанное
@@ -177,7 +177,7 @@ if ($user_id) {
     $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `sys`='1' AND `delete`!='$user_id'")->fetchColumn();
 
     if ($new_sys_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">' . _t('System') . '</a> (+' . $new_sys_mail . ')';
+        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -190,20 +190,20 @@ if ($user_id) {
                             AND `cms_mail`.`spam`='0'")->fetchColumn();
 
     if ($new_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . _t('Mail') . '</a> (+' . $new_mail . ')';
+        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
     }
 
     if ($datauser['comm_count'] > $datauser['comm_old']) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook', 'system') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
     }
 
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments') . '</a>';
+        $list[] = '<a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
     }
 
     if (!empty($list)) {
-        echo '<div class="rmenu">' . _t('Unread') . ': ' . functions::display_menu($list, ', ') . '</div>';
+        echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . functions::display_menu($list, ', ') . '</div>';
     }
 }

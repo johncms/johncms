@@ -9,7 +9,7 @@ if (!empty($cms_ads[2])) {
 
 echo '</div><div class="fmenu">';
 if (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act)) {
-    echo '<div><a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . $lng['homepage'] . '</a></div>';
+    echo '<div><a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a></div>';
 }
 echo '<div>' . counters::online() . '</div>' .
     '</div>' .

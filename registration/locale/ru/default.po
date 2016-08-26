@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-08-20 17:56-0400\n"
+"PO-Revision-Date: 2016-08-26 04:12-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -11,115 +11,135 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Poedit-KeywordsList: _td\n"
-"X-Poedit-SearchPath-0: registration.php\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: ru\n"
-"X-Crowdin-File: /System/registration.pot\n"
+"X-Crowdin-File: /registration/default.pot\n"
 "Language: ru_RU\n"
 
-#: registration.php:12
+#: index.php:6 index.php:28 index.php:219
+msgid "Registration"
+msgstr "Регистрация"
+
+#: index.php:15
 msgid "Registration is temporarily closed"
 msgstr "Регистрация временно закрыта"
 
-#: registration.php:36
+#: index.php:39
 msgid "You have not entered Nickname"
 msgstr "Вы не ввели Ник"
 
-#: registration.php:38
+#: index.php:41
 msgid "Nickname wrong length"
 msgstr "Неверная длина Ника"
 
-#: registration.php:54
+#: index.php:45
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+#: index.php:50
+msgid "You have not entered password"
+msgstr "Вы не ввели пароль"
+
+#: index.php:52
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: index.php:57
 msgid "You have not selected genger"
 msgstr "Не указан пол"
 
-#: registration.php:78
+#: index.php:66
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: index.php:81
 msgid "Selected Nickname is already in use"
 msgstr "Выбранный Ник уже используется"
 
-#: registration.php:161
+#: index.php:164
 msgid "Your registratiton data"
 msgstr "Вы зарегистрированы"
 
-#: registration.php:162
+#: index.php:165
 msgid "Your ID"
 msgstr "Ваш ID"
 
-#: registration.php:163
+#: index.php:166
 msgid "Your Username"
 msgstr "Ваш Логин"
 
-#: registration.php:164
+#: index.php:167
 msgid "Your Password"
 msgstr "Ваш Пароль"
 
-#: registration.php:167
+#: index.php:170
 msgid "Please, wait until a moderator approves your registration"
 msgstr "Пожалуйста подождите, пока модератор одобрит вашу регистрацию"
 
-#: registration.php:171
+#: index.php:174
 msgid "Enter"
-msgstr "ВХОД"
+msgstr "Вход"
 
-#: registration.php:182
+#: index.php:185
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr "Вы сможете получить авторизованный доступ к разделам сайта после подтверждения Вашей регистрации."
 
-#: registration.php:186
+#: index.php:189
 msgid "Choose Nickname"
 msgstr "Выберите Ник"
 
-#: registration.php:190
+#: index.php:193
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr "Мин. 2, макс. 20 символов.<br>Разрешены буквы Русского и Латинского алфавита, цифры и знаки - = @ ! ? ~ _ ( ) [ ] * (кроме нуля)"
 
-#: registration.php:191
+#: index.php:194
 msgid "Assign a password"
 msgstr "Назначьте пароль"
 
-#: registration.php:195
+#: index.php:198
 msgid "Min. 3 characters"
 msgstr "Мин. 3 символа"
 
-#: registration.php:196
+#: index.php:199
 msgid "Select Gender"
 msgstr "Укажите пол"
 
-#: registration.php:200
+#: index.php:203
 msgid "Man"
 msgstr "Мужчина"
 
-#: registration.php:201
+#: index.php:204
 msgid "Woman"
 msgstr "Женщина"
 
-#: registration.php:204
+#: index.php:207
 msgid "Your name"
 msgstr "Ваше имя"
 
-#: registration.php:206
+#: index.php:209
 msgid "Max. 50 characters"
 msgstr "Макс. 50 символов"
 
-#: registration.php:207
+#: index.php:210
 msgid "Tell us a little about yourself"
 msgstr "Расскажите немного о себе"
 
-#: registration.php:209
+#: index.php:212
 msgid "Max. 1000 characters"
 msgstr "Макс. 1000 символов"
 
-#: registration.php:211 registration.php:212
+#: index.php:214 index.php:215
 msgid "Verification code"
 msgstr "Проверочный код"
 
-#: registration.php:215
+#: index.php:218
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr "Если Вы не видите рисунок с кодом, включите поддержку графики в настройках браузера и обновите страницу"
 
-#: registration.php:217
+#: index.php:220
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr "Просьба не регистрировать ники типа 111, ггг, uuuu и им подобные, они будут сразу же удалены.<br>Также будут удалены ВСЕ профили, которые регистрировались через Прокси серверы"
 

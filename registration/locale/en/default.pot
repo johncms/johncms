@@ -12,109 +12,129 @@ msgstr ""
 "X-Generator: Poedit 1.8.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
-"X-Poedit-KeywordsList: _td\n"
-"X-Poedit-SearchPath-0: registration.php\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: registration.php:17
+#: index.php:6 index.php:28 index.php:219
+msgid "Registration"
+msgstr ""
+
+#: index.php:15
 msgid "Registration is temporarily closed"
 msgstr ""
 
-#: registration.php:41
+#: index.php:39
 msgid "You have not entered Nickname"
 msgstr ""
 
-#: registration.php:43
+#: index.php:41
 msgid "Nickname wrong length"
 msgstr ""
 
-#: registration.php:59
+#: index.php:45
+msgid "Invalid characters"
+msgstr ""
+
+#: index.php:50
+msgid "You have not entered password"
+msgstr ""
+
+#: index.php:52
+msgid "Invalid length"
+msgstr ""
+
+#: index.php:57
 msgid "You have not selected genger"
 msgstr ""
 
-#: registration.php:83
+#: index.php:66
+msgid "The security code is not correct"
+msgstr ""
+
+#: index.php:81
 msgid "Selected Nickname is already in use"
 msgstr ""
 
-#: registration.php:166
+#: index.php:164
 msgid "Your registratiton data"
 msgstr ""
 
-#: registration.php:167
+#: index.php:165
 msgid "Your ID"
 msgstr ""
 
-#: registration.php:168
+#: index.php:166
 msgid "Your Username"
 msgstr ""
 
-#: registration.php:169
+#: index.php:167
 msgid "Your Password"
 msgstr ""
 
-#: registration.php:172
+#: index.php:170
 msgid "Please, wait until a moderator approves your registration"
 msgstr ""
 
-#: registration.php:176
+#: index.php:174
 msgid "Enter"
 msgstr ""
 
-#: registration.php:187
+#: index.php:185
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: registration.php:191
+#: index.php:189
 msgid "Choose Nickname"
 msgstr ""
 
-#: registration.php:195
+#: index.php:193
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: registration.php:196
+#: index.php:194
 msgid "Assign a password"
 msgstr ""
 
-#: registration.php:200
+#: index.php:198
 msgid "Min. 3 characters"
 msgstr ""
 
-#: registration.php:201
+#: index.php:199
 msgid "Select Gender"
 msgstr ""
 
-#: registration.php:205
+#: index.php:203
 msgid "Man"
 msgstr ""
 
-#: registration.php:206
+#: index.php:204
 msgid "Woman"
 msgstr ""
 
-#: registration.php:209
+#: index.php:207
 msgid "Your name"
 msgstr ""
 
-#: registration.php:211
+#: index.php:209
 msgid "Max. 50 characters"
 msgstr ""
 
-#: registration.php:212
+#: index.php:210
 msgid "Tell us a little about yourself"
 msgstr ""
 
-#: registration.php:214
+#: index.php:212
 msgid "Max. 1000 characters"
 msgstr ""
 
-#: registration.php:216 registration.php:217
+#: index.php:214 index.php:215
 msgid "Verification code"
 msgstr ""
 
-#: registration.php:220
+#: index.php:218
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: registration.php:222
+#: index.php:220
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""

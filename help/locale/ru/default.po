@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-08-20 15:36-0400\n"
+"PO-Revision-Date: 2016-08-26 04:29-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -10,14 +10,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: crowdin.com\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: ../../help\n"
-"X-Poedit-KeywordsList: _td\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: ru\n"
-"X-Crowdin-File: /System/help.pot\n"
+"X-Crowdin-File: /help/default.pot\n"
 "Language: ru_RU\n"
+
+#: includes/admsmilies.php:7
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: includes/admsmilies.php:7 includes/admsmilies.php:61 includes/avatars.php:16
+#: includes/avatars.php:62 includes/avatars.php:80 includes/forum.php:51
+#: includes/my_smilies.php:53 includes/smilies.php:40 includes/tags.php:71
+#: includes/usersmilies.php:71 index.php:63
+msgid "Back"
+msgstr "Назад"
+
+#: includes/admsmilies.php:12 includes/my_smilies.php:6 includes/smilies.php:6
+#: includes/usersmilies.php:22 index.php:62
+msgid "Smilies"
+msgstr "Смайлы"
 
 #: includes/admsmilies.php:12 includes/smilies.php:14
 msgid "For administration"
@@ -33,9 +49,41 @@ msgstr "Мои смайлы"
 msgid "or"
 msgstr "или"
 
+#: includes/admsmilies.php:48 includes/avatars.php:49
+#: includes/my_smilies.php:44 includes/usersmilies.php:59
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: includes/admsmilies.php:51 includes/usersmilies.php:56
+msgid "Add"
+msgstr "Добавить"
+
+#: includes/admsmilies.php:52 includes/avatars.php:52 includes/avatars.php:79
+#: includes/my_smilies.php:47 includes/usersmilies.php:62
+msgid "Total"
+msgstr "Всего"
+
+#: includes/admsmilies.php:58 includes/avatars.php:58
+#: includes/usersmilies.php:68
+msgid "To Page"
+msgstr "На страницу"
+
 #: includes/avatars.php:13
 msgid "Avatar has been successfully applied"
 msgstr "Аватар успешно установлен"
+
+#: includes/avatars.php:14
+msgid "Continue"
+msgstr "Продолжить"
+
+#: includes/avatars.php:16
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: includes/avatars.php:19 includes/avatars.php:28 includes/avatars.php:66
+#: index.php:61
+msgid "Avatars"
+msgstr "Аватары"
 
 #: includes/avatars.php:19
 msgid "Set to Profile"
@@ -45,7 +93,24 @@ msgstr "Установить в анкету"
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr "Вы действительно хотите установить себе этот аватар?"
 
-#: includes/forum.php:6 index.php:56
+#: includes/avatars.php:22
+msgid "Save"
+msgstr "Сохранить"
+
+#: includes/avatars.php:24
+msgid "Cancel"
+msgstr "Отмена"
+
+#: includes/avatars.php:43
+msgid "Select"
+msgstr "Выбрать"
+
+#: includes/avatars.php:66 includes/forum.php:6 includes/smilies.php:6
+#: includes/tags.php:8 index.php:58
+msgid "Information, FAQ"
+msgstr "Информация, FAQ"
+
+#: includes/forum.php:6 index.php:59
 msgid "Forum rules"
 msgstr "Правила форума"
 
@@ -125,11 +190,15 @@ msgstr "Сообщения, опубликованные несмотря на �
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr "Это правило распространяется на всех участников и модераторов, повторные действия могут привести к бану, или даже блокировке Вашей учетной записи."
 
+#: includes/my_smilies.php:42
+msgid "Delete"
+msgstr "Удалить"
+
 #: includes/my_smilies.php:44
 msgid "Add Smilies"
 msgstr "Добавить Смайлы"
 
-#: includes/tags.php:8 index.php:57
+#: includes/tags.php:8 index.php:60
 msgid "bbCode Tags"
 msgstr "bbCode Теги"
 
@@ -141,51 +210,111 @@ msgstr "PHP код"
 msgid "Link name"
 msgstr "Имя ссылки"
 
-#: index.php:24
+#: includes/tags.php:18
+msgid "URL Link"
+msgstr "URL-ссылка"
+
+#: includes/tags.php:21
+msgid "Bold"
+msgstr "Жирный"
+
+#: includes/tags.php:25
+msgid "Italic"
+msgstr "Наклонный"
+
+#: includes/tags.php:29
+msgid "Underline"
+msgstr "Подчёркнутый"
+
+#: includes/tags.php:33
+msgid "Strike"
+msgstr "Зачеркнутый"
+
+#: includes/tags.php:37
+msgid "Red"
+msgstr "Красный"
+
+#: includes/tags.php:41
+msgid "Green"
+msgstr "Зеленый"
+
+#: includes/tags.php:45
+msgid "Blue"
+msgstr "Синий"
+
+#: includes/tags.php:49
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: includes/tags.php:53
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: includes/tags.php:57
+msgid "Quote"
+msgstr "Цитата"
+
+#: includes/tags.php:61
+msgid "Bulleted list"
+msgstr "Маркированный список"
+
+#: includes/tags.php:64
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/tags.php:64
+msgid "Text"
+msgstr "Текст"
+
+#: includes/tags.php:65
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: index.php:27
 msgid "Animals"
 msgstr "Животные"
 
-#: index.php:25
+#: index.php:28
 msgid "Brawl, Weapons"
 msgstr "Драки, Оружие"
 
-#: index.php:26
+#: index.php:29
 msgid "Emotions"
 msgstr "Эмоции"
 
-#: index.php:27
+#: index.php:30
 msgid "Flowers"
 msgstr "Цветы"
 
-#: index.php:28
+#: index.php:31
 msgid "Food, Alcohol"
 msgstr "Еда, алкоголь"
 
-#: index.php:29
+#: index.php:32
 msgid "Gestures"
 msgstr "Жесты"
 
-#: index.php:30
+#: index.php:33
 msgid "Holidays"
 msgstr "Праздники"
 
-#: index.php:31
+#: index.php:34
 msgid "Love"
 msgstr "Любовь"
 
-#: index.php:32
+#: index.php:35
 msgid "Miscellaneous"
 msgstr "Разное"
 
-#: index.php:33
+#: index.php:36
 msgid "Music, Dancing"
 msgstr "Музыка, танцы"
 
-#: index.php:34
+#: index.php:37
 msgid "Sports"
 msgstr "Спорт"
 
-#: index.php:35
+#: index.php:38
 msgid "Technology"
 msgstr "Техника"
 

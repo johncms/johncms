@@ -68,44 +68,19 @@ unset($translator);
  * Translate a message
  *
  * @param string $message
- * @return string
- */
-function _t($message)
-{
-    /** @var Zend\I18n\Translator\Translator $translator */
-    static $translator;
-
-    if (null === $translator) {
-        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
-    }
-
-    return $translator->translate($message);
-}
-
-/**
- * Translate a message with specifying of the domain
- *
- * @param string $message
  * @param string $textDomain
  * @return string
  */
-function _td($message, $textDomain = null)
+function _t($message, $textDomain = 'default')
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
-    static $domain;
-
-    if ($textDomain !== null) {
-        $domain = $textDomain;
-    } elseif (null === $domain) {
-        $domain = 'default';
-    }
 
     if (null === $translator) {
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translate($message, $domain);
+    return $translator->translate($message, $textDomain);
 }
 
 /**
@@ -126,38 +101,4 @@ function _p($singular, $plural, $number)
     }
 
     return $translator->translatePlural($singular, $plural, $number);
-}
-
-/**
- * Translate a plural message with specifying of the domain
- *
- * @param string $singular
- * @param string $plural
- * @param int    $number
- * @param string $textDomain
- * @return string
- */
-function _pd($singular, $plural, $number, $textDomain = null)
-{
-    /** @var Zend\I18n\Translator\Translator $translator */
-    static $translator;
-    static $domain;
-
-    if ($textDomain !== null) {
-        $domain = $textDomain;
-    } elseif (null === $domain) {
-        $domain = 'default';
-    }
-
-    if (null === $translator) {
-        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
-    }
-
-    return $translator->translatePlural($singular, $plural, $number, $domain);
-}
-
-function _setDomain($textDomain)
-{
-    _td('', $textDomain);
-    _pd('', '', 0, $textDomain);
 }

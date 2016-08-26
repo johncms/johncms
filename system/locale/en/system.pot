@@ -1,0 +1,246 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: incfiles/mainmenu.php\n"
+"X-Poedit-SearchPath-1: incfiles/head.php\n"
+"X-Poedit-SearchPath-2: incfiles/end.php\n"
+"X-Poedit-SearchPath-3: login.php\n"
+"X-Poedit-SearchPath-4: go.php\n"
+"X-Poedit-SearchPath-5: exit.php\n"
+
+#: exit.php:16
+msgid "Are you sure you want to leave the site?"
+msgstr ""
+
+#: exit.php:17
+msgid "Logout"
+msgstr ""
+
+#: exit.php:18
+msgid "Cancel"
+msgstr ""
+
+#: go.php:16
+msgid "Select language"
+msgstr ""
+
+#: go.php:22
+msgid "Default"
+msgstr ""
+
+#: go.php:29
+msgid "Apply"
+msgstr ""
+
+#: go.php:29 go.php:46
+msgid "Back"
+msgstr ""
+
+#: go.php:37
+msgid "External Link"
+msgstr ""
+
+#: go.php:40
+msgid "ATTENTION!"
+msgstr ""
+
+#: go.php:41
+msgid "You are going to leave our site and go to an external link"
+msgstr ""
+
+#: go.php:42
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr ""
+
+#: go.php:43
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr ""
+
+#: go.php:44
+msgid "Go to Link"
+msgstr ""
+
+#: incfiles/end.php:12 incfiles/head.php:82 login.php:10
+msgid "Home"
+msgstr ""
+
+#: incfiles/head.php:25
+msgid "Site News"
+msgstr ""
+
+#: incfiles/head.php:78
+msgid "Hi"
+msgstr ""
+
+#: incfiles/head.php:78
+msgid "Guest"
+msgstr ""
+
+#: incfiles/head.php:83
+msgid "Personal"
+msgstr ""
+
+#: incfiles/head.php:84 login.php:12 login.php:141
+msgid "Login"
+msgstr ""
+
+#: incfiles/head.php:171
+msgid "Ban"
+msgstr ""
+
+#: incfiles/head.php:171
+msgid "Details"
+msgstr ""
+
+#: incfiles/head.php:180
+msgid "System"
+msgstr ""
+
+#: incfiles/head.php:193
+msgid "Mail"
+msgstr ""
+
+#: incfiles/head.php:197 incfiles/mainmenu.php:18
+msgid "Guestbook"
+msgstr ""
+
+#: incfiles/head.php:203
+msgid "Comments"
+msgstr ""
+
+#: incfiles/head.php:207
+msgid "Unread"
+msgstr ""
+
+#: incfiles/mainmenu.php:8
+msgid "Information"
+msgstr ""
+
+#: incfiles/mainmenu.php:10
+msgid "News archive"
+msgstr ""
+
+#: incfiles/mainmenu.php:11
+msgid "Information, FAQ"
+msgstr ""
+
+#: incfiles/mainmenu.php:14
+msgid "Communication"
+msgstr ""
+
+#: incfiles/mainmenu.php:23
+msgid "Forum"
+msgstr ""
+
+#: incfiles/mainmenu.php:27
+msgid "Useful"
+msgstr ""
+
+#: incfiles/mainmenu.php:31
+msgid "Downloads"
+msgstr ""
+
+#: incfiles/mainmenu.php:36
+msgid "Library"
+msgstr ""
+
+#: incfiles/mainmenu.php:41
+msgid "Gallery"
+msgstr ""
+
+#: incfiles/mainmenu.php:45
+msgid "Community"
+msgstr ""
+
+#: incfiles/mainmenu.php:46
+msgid "Users"
+msgstr ""
+
+#: incfiles/mainmenu.php:47
+msgid "Photo Albums"
+msgstr ""
+
+#: login.php:22
+msgid "You have not entered login"
+msgstr ""
+
+#: login.php:26
+msgid "You have not entered password"
+msgstr ""
+
+#: login.php:30
+msgid "Nickname"
+msgstr ""
+
+#: login.php:30 login.php:34
+msgid "Invalid length"
+msgstr ""
+
+#: login.php:34 login.php:138
+msgid "Password"
+msgstr ""
+
+#: login.php:57
+msgid "The security code is not correct"
+msgstr ""
+
+#: login.php:63
+msgid "Verification code"
+msgstr ""
+
+#: login.php:64
+msgid "Enter verification code"
+msgstr ""
+
+#: login.php:68
+msgid "Continue"
+msgstr ""
+
+#: login.php:80
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: login.php:104
+msgid "Enter site"
+msgstr ""
+
+#: login.php:113 login.php:117
+msgid "Authorization failed"
+msgstr ""
+
+#: login.php:129
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr ""
+
+#: login.php:131
+msgid "At the moment, access to the site is allowed only for Administration of site."
+msgstr ""
+
+#: login.php:136
+msgid "Username"
+msgstr ""
+
+#: login.php:140
+msgid "Remember"
+msgstr ""
+
+#: login.php:143
+msgid "Registration"
+msgstr ""
+
+#: login.php:144
+msgid "Forgot password?"
+msgstr ""

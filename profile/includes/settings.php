@@ -2,12 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = _td('Settings');
+$textl = _t('Settings');
 require('../incfiles/head.php');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id) {
-    echo functions::display_error(_td('Access forbidden'));
+    echo functions::display_error(_t('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
@@ -16,15 +16,15 @@ if ($user['id'] != $user_id) {
 $db = App::getContainer()->get(PDO::class);
 
 $menu = [
-    (!$mod ? '<b>' . _td('General setting') . '</b>' : '<a href="?act=settings">' . _td('General setting') . '</a>'),
-    ($mod == 'forum' ? '<b>' . _td('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _td('Forum') . '</a>'),
-    ($mod == 'mail' ? '<b>' . _td('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _td('Mail') . '</a>'),
+    (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
+    ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
+    ($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
 ];
 
 // Пользовательские настройки
 switch ($mod) {
     case 'mail':
-        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('Mail') . '</div>' .
+        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
         $set_mail_user = unserialize($datauser['set_mail']);
@@ -39,17 +39,17 @@ switch ($mod) {
 
         echo '<form method="post" action="?act=settings&amp;mod=mail">' .
             '<div class="menu">' .
-            '<strong>' . _td('Who can write you?') . '</strong><br />' .
-            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _td('All can write') . '<br />' .
-            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _td('Only my contacts') . '<br />' .
-            '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _td('Only my friends') .
-            '<br/><p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
+            '<strong>' . _t('Who can write you?') . '</strong><br />' .
+            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
+            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') . '<br />' .
+            '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my friends') .
+            '<br/><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
             '<div class="phdr">&#160;</div>';
         break;
 
     case 'forum':
         // Настройки Форума
-        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('Forum') . '</div>' .
+        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         $set_forum = [];
         $set_forum = unserialize($datauser['set_forum']);
@@ -69,7 +69,7 @@ switch ($mod) {
                 $user_id,
             ]);
 
-            echo '<div class="gmenu">' . _td('Settings saved successfully') . '</div>';
+            echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
         }
 
         if (isset($_GET['reset']) || empty($set_forum)) {
@@ -82,24 +82,24 @@ switch ($mod) {
                 serialize($set_forum),
                 $user_id,
             ]);
-            echo '<div class="rmenu">' . _td('Default settings are set') . '</div>';
+            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
         }
 
         echo '<form action="?act=settings&amp;mod=forum" method="post">' .
-            '<div class="menu"><p><h3>' . _td('Basic settings') . '</h3>' .
-            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Inverse sorting') . '<br/>' .
-            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Use the form of a quick answer') . '<br/>' .
-            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Preview of messages') . '<br/>' .
-            '</p><p><h3>' . _td('Attach first post') . '</h3>' .
-            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _td('Always') . '<br />' .
-            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _td('In unread topics') . '<br />' .
-            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _td('Never') .
-            '</p><p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _td('Reset settings') . '</a></div>';
+            '<div class="menu"><p><h3>' . _t('Basic settings') . '</h3>' .
+            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br/>' .
+            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br/>' .
+            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br/>' .
+            '</p><p><h3>' . _t('Attach first post') . '</h3>' .
+            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
+            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
+            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
+            '</p><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _t('Reset settings') . '</a></div>';
         break;
 
     default:
-        echo '<div class="phdr"><b>' . _td('Settings') . '</b> | ' . _td('General setting') . '</div>' .
+        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('General setting') . '</div>' .
             '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
         if (isset($_POST['submit'])) {
@@ -169,33 +169,33 @@ switch ($mod) {
 
         // Форма ввода пользовательских настроек
         if (isset($_SESSION['set_ok'])) {
-            echo '<div class="rmenu">' . _td('Settings saved successfully') . '</div>';
+            echo '<div class="rmenu">' . _t('Settings saved successfully') . '</div>';
             unset($_SESSION['set_ok']);
         }
 
         if (isset($_SESSION['reset_ok'])) {
-            echo '<div class="rmenu">' . _td('Default settings are set') . '</div>';
+            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
             unset($_SESSION['reset_ok']);
         }
 
         echo '<form action="?act=settings" method="post" >' .
-            '<div class="menu"><p><h3>' . _td('Time settings') . '</h3>' .
-            '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . _td('Shift of time') . ' (+-12)<br />' .
+            '<div class="menu"><p><h3>' . _t('Time settings') . '</h3>' .
+            '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . _t('Shift of time') . ' (+-12)<br />' .
             '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
-                time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _td('System time') .
-            '</p><p><h3>' . _td('System Functions') . '</h3>' .
-            '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Direct URL') . '<br />' .
-            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Avatars') . '<br/>' .
-            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _td('Smilies') . '<br/>' .
-            '</p><p><h3>' . _td('Text entering') . '</h3>' .
-            '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . _td('Height of field') . ' (1-9)<br />';
+                time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _t('System time') .
+            '</p><p><h3>' . _t('System Functions') . '</h3>' .
+            '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
+            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Avatars') . '<br/>' .
+            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br/>' .
+            '</p><p><h3>' . _t('Text entering') . '</h3>' .
+            '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . _t('Height of field') . ' (1-9)<br />';
 
-        echo '</p><p><h3>' . _td('Appearance') . '</h3>' .
-            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . _td('Size of Lists') . ' (5-99)' .
+        echo '</p><p><h3>' . _t('Appearance') . '</h3>' .
+            '<input type="text" name="kmess" size="2" maxlength="2" value="' . core::$user_set['kmess'] . '"/> ' . _t('Size of Lists') . ' (5-99)' .
             '</p>';
 
         // Выбор темы оформления
-        echo '<p><h3>' . _td('Theme') . '</h3><select name="skin">';
+        echo '<p><h3>' . _t('Theme') . '</h3><select name="skin">';
 
         foreach (glob('../theme/*/*.css') as $val) {
             $dir = explode('/', dirname($val));
@@ -207,18 +207,18 @@ switch ($mod) {
 
         // Выбор языка
         if (count(core::$lng_list) > 1) {
-            echo '<p><h3>' . _td('Select Language') . '</h3>';
+            echo '<p><h3>' . _t('Select Language') . '</h3>';
             $user_lng = isset(core::$user_set['lng']) ? core::$user_set['lng'] : core::$lng_iso;
             foreach (core::$lng_list as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
                     (file_exists('../images/flags/' . $key . '.gif') ? '<img src="../images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                     $val .
-                    ($key == core::$system_set['lng'] ? ' <small class="red">[' . _td('Site Default') . ']</small>' : '') .
+                    ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
                     '</div>';
             }
             echo '</p>';
         }
 
-        echo '<p><input type="submit" name="submit" value="' . _td('Save') . '"/></p></div></form>' .
-            '<div class="phdr"><a href="?act=settings&amp;reset">' . _td('Reset Settings') . '</a></div>';
+        echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+            '<div class="phdr"><a href="?act=settings&amp;reset">' . _t('Reset Settings') . '</a></div>';
 }

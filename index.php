@@ -26,7 +26,7 @@ switch ($act) {
         }
         $headmod = 'mainpage';
         require('incfiles/head.php');
-        include 'pages/mainmenu.php';
+        include 'incfiles/mainmenu.php';
 }
 
 require('incfiles/end.php');
