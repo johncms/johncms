@@ -8,26 +8,8 @@ return [
             [
                 'type'        => 'gettext',
                 'base_dir'    => ROOT_PATH . 'system/locale',
-                'pattern'     => '/%s/default.mo',
-                'text_domain' => 'default',
-            ],
-            [
-                'type'        => 'gettext',
-                'base_dir'    => ROOT_PATH . 'system/locale',
-                'pattern'     => '/%s/profile.mo',
-                'text_domain' => 'profile',
-            ],
-            [
-                'type'        => 'gettext',
-                'base_dir'    => ROOT_PATH . 'system/locale',
-                'pattern'     => '/%s/help.mo',
-                'text_domain' => 'help',
-            ],
-            [
-                'type'        => 'gettext',
-                'base_dir'    => ROOT_PATH . 'system/locale',
-                'pattern'     => '/%s/registration.mo',
-                'text_domain' => 'registration',
+                'pattern'     => '/%s/system.mo',
+                'text_domain' => 'system',
             ],
         ],
     ],

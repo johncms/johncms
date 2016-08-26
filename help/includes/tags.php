@@ -5,16 +5,16 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 // Справка по BBcode
 echo '
 <div class="phdr">
-    <a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _td('bbCode Tags') . '
+    <a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('bbCode Tags') . '
 </div>
 <div class="menu">
     <p>
     <table cellpadding="3" cellspacing="0">
         <tr>
-            <td align="right">[php]...[/php]</td><td>' . _td('PHP code') . '</td>
+            <td align="right">[php]...[/php]</td><td>' . _t('PHP code') . '</td>
             </tr>
         <tr>
-            <td align="right">[url=http://site_url]<span style="color:blue">' . _td('Link name') . '</span>[/url]</td>
+            <td align="right">[url=http://site_url]<span style="color:blue">' . _t('Link name') . '</span>[/url]</td>
             <td><a href="#">' . _t('URL Link') . '</a></td>
         </tr>
         <tr>

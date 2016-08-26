@@ -2,13 +2,13 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = _td('Profile') . ' | ' . _td('Guestbook');
+$textl = _t('Profile') . ' | ' . _t('Guestbook');
 $headmod = 'my_guest';
 if($user_id && $user['id'] == $user_id)
     $datauser['comm_old'] = $datauser['comm_count'];
 require('../incfiles/head.php');
 
-$context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Guestbook') . '</div>' .
+$context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Guestbook') . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, array ('iphide' => 1,)) . '</p></div>';
 
 // Параметры Гостевой
@@ -21,7 +21,7 @@ $arg = array (
     'owner' => $user['id'],                    // Владелец объекта
     'owner_delete' => true,                    // Возможность владельцу удалять комментарий
     'owner_reply' => true,                     // Возможность владельцу отвечать на комментарий
-    'title' => _td('Comments'),               // Название раздела
+    'title' => _t('Comments'),               // Название раздела
     'context_top' => $context_top              // Выводится вверху списка
 );
 

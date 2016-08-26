@@ -13,20 +13,20 @@ if (isset($_GET['lng'])) {
     echo '<div class="menu"><form action="' . $referer . '" method="post"><p>';
 
     if (count(core::$lng_list) > 1) {
-        echo '<p><h3>' . _t('Select language') . '</h3>';
+        echo '<p><h3>' . _t('Select language', 'system') . '</h3>';
 
         foreach (core::$lng_list as $key => $val) {
             echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
                 (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                 $val .
-                ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Default') . ']</small>' : '') .
+                ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
                 '</div>';
         }
 
         echo '</p>';
     }
 
-    echo '</p><p><input type="submit" name="submit" value="' . _t('Apply') . '" /></p><p><a href="' . $referer . '">' . _t('Back') . '</a></p></form></div>';
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Apply', 'system') . '" /></p><p><a href="' . $referer . '">' . _t('Back', 'system') . '</a></p></form></div>';
     require('incfiles/end.php');
 } elseif ($url) {
     // Редирект по ссылкам в текстах, обработанным функцией tags()
@@ -34,16 +34,16 @@ if (isset($_GET['lng'])) {
         header('Location: ' . $url);
     } else {
         require('incfiles/head.php');
-        echo '<div class="phdr"><b>' . _t('External Link') . '</b></div>' .
+        echo '<div class="phdr"><b>' . _t('External Link', 'system') . '</b></div>' .
             '<div class="rmenu">' .
             '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
-            '<p><h3>' . _t('ATTENTION!') . '</h3>' .
-            _t('You are going to leave our site and go to an external link') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
-            '<p>' . _t('Administration of our site is not responsible for the content of external sites') . '.<br />' .
-            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites'), '<span class="green">' . $set['homeurl'] . '</span>') . '.</p>' .
-            '<p><input type="submit" name="submit" value="' . _t('Go to Link') . '" /></p>' .
+            '<p><h3>' . _t('ATTENTION!', 'system') . '</h3>' .
+            _t('You are going to leave our site and go to an external link', 'system') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
+            '<p>' . _t('Administration of our site is not responsible for the content of external sites', 'system') . '.<br />' .
+            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $set['homeurl'] . '</span>') . '.</p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Go to Link', 'system') . '" /></p>' .
             '</form></div>' .
-            '<div class="phdr"><a href="' . $referer . '">' . _t('Back') . '</a></div>';
+            '<div class="phdr"><a href="' . $referer . '">' . _t('Back', 'system') . '</a></div>';
         require('incfiles/end.php');
     }
 } elseif ($id) {

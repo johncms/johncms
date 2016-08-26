@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-08-26 04:45-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: incfiles/mainmenu.php\n"
+"X-Poedit-SearchPath-1: incfiles/head.php\n"
+"X-Poedit-SearchPath-2: incfiles/end.php\n"
+"X-Poedit-SearchPath-3: login.php\n"
+"X-Poedit-SearchPath-4: go.php\n"
+"X-Poedit-SearchPath-5: exit.php\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /system/system.pot\n"
+"Language: ru_RU\n"
+
+#: exit.php:16
+msgid "Are you sure you want to leave the site?"
+msgstr "Вы уверены, что хотите покинуть сайт?"
+
+#: exit.php:17
+msgid "Logout"
+msgstr "Выход"
+
+#: exit.php:18
+msgid "Cancel"
+msgstr "Отмена"
+
+#: go.php:16
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: go.php:22
+msgid "Default"
+msgstr "По умолчанию"
+
+#: go.php:29
+msgid "Apply"
+msgstr "Применить"
+
+#: go.php:29 go.php:46
+msgid "Back"
+msgstr "Назад"
+
+#: go.php:37
+msgid "External Link"
+msgstr "Внешняя ссылка"
+
+#: go.php:40
+msgid "ATTENTION!"
+msgstr "ВНИМАНИЕ!"
+
+#: go.php:41
+msgid "You are going to leave our site and go to an external link"
+msgstr "Вы собираетесь покинуть наш сайт и перейти по внешней ссылке"
+
+#: go.php:42
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Администрация нашего ресурса не несёт ответственности за содержание постороннего сайта"
+
+#: go.php:43
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Рекомендуется не указывать ваши данные, относящиеся к %s (логин, пароль), на посторонних сайтах"
+
+#: go.php:44
+msgid "Go to Link"
+msgstr "Перейти по ссылке"
+
+#: incfiles/end.php:12 incfiles/head.php:82 login.php:10
+msgid "Home"
+msgstr "Главная"
+
+#: incfiles/head.php:25
+msgid "Site News"
+msgstr "Новости ресурса"
+
+#: incfiles/head.php:78
+msgid "Hi"
+msgstr "Привет"
+
+#: incfiles/head.php:78
+msgid "Guest"
+msgstr "Гость"
+
+#: incfiles/head.php:83
+msgid "Personal"
+msgstr "Личное"
+
+#: incfiles/head.php:84 login.php:12 login.php:141
+msgid "Login"
+msgstr "Вход"
+
+#: incfiles/head.php:171
+msgid "Ban"
+msgstr "Бан"
+
+#: incfiles/head.php:171
+msgid "Details"
+msgstr "Подробно"
+
+#: incfiles/head.php:180
+msgid "System"
+msgstr "Система"
+
+#: incfiles/head.php:193
+msgid "Mail"
+msgstr "Почта"
+
+#: incfiles/head.php:197 incfiles/mainmenu.php:18
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: incfiles/head.php:203
+msgid "Comments"
+msgstr "Комментарии"
+
+#: incfiles/head.php:207
+msgid "Unread"
+msgstr "Непрочитанное"
+
+#: incfiles/mainmenu.php:8
+msgid "Information"
+msgstr "Информация"
+
+#: incfiles/mainmenu.php:10
+msgid "News archive"
+msgstr "Архив новостей"
+
+#: incfiles/mainmenu.php:11
+msgid "Information, FAQ"
+msgstr "Информация, FAQ"
+
+#: incfiles/mainmenu.php:14
+msgid "Communication"
+msgstr "Общение"
+
+#: incfiles/mainmenu.php:23
+msgid "Forum"
+msgstr "Форум"
+
+#: incfiles/mainmenu.php:27
+msgid "Useful"
+msgstr "Полезное"
+
+#: incfiles/mainmenu.php:31
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: incfiles/mainmenu.php:36
+msgid "Library"
+msgstr "Библиотека"
+
+#: incfiles/mainmenu.php:41
+msgid "Gallery"
+msgstr "Галерея"
+
+#: incfiles/mainmenu.php:45
+msgid "Community"
+msgstr "Сообщество"
+
+#: incfiles/mainmenu.php:46
+msgid "Users"
+msgstr "Пользователи"
+
+#: incfiles/mainmenu.php:47
+msgid "Photo Albums"
+msgstr "Фотоальбомы"
+
+#: login.php:22
+msgid "You have not entered login"
+msgstr "Вы не ввели логин"
+
+#: login.php:26
+msgid "You have not entered password"
+msgstr "Вы не ввели пароль"
+
+#: login.php:30
+msgid "Nickname"
+msgstr "Ник"
+
+#: login.php:30 login.php:34
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: login.php:34 login.php:138
+msgid "Password"
+msgstr "Пароль"
+
+#: login.php:57
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: login.php:63
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: login.php:64
+msgid "Enter verification code"
+msgstr "Введите проверочный код"
+
+#: login.php:68
+msgid "Continue"
+msgstr "Продолжить"
+
+#: login.php:80
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Приносим извинения, но Ваша заявка на регистрацию ещё не рассмотрена. Пожалуйста, ожидайте."
+
+#: login.php:104
+msgid "Enter site"
+msgstr "Войти на сайт"
+
+#: login.php:113 login.php:117
+msgid "Authorization failed"
+msgstr "Авторизация не прошла"
+
+#: login.php:129
+msgid "At the moment, access to the site is allowed only for SV!"
+msgstr "В данный момент доступ к сайту разрешен только для SV!"
+
+#: login.php:131
+msgid "At the moment, access to the site is allowed only for Administration of site."
+msgstr "В данный момент доступ к сайту разрешен только для Администрации сайта"
+
+#: login.php:136
+msgid "Username"
+msgstr "Ваш логин"
+
+#: login.php:140
+msgid "Remember"
+msgstr "Запомнить"
+
+#: login.php:143
+msgid "Registration"
+msgstr "Регистрация"
+
+#: login.php:144
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+

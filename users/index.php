@@ -5,6 +5,13 @@ define('_IN_JOHNCMS', 1);
 $headmod = 'users';
 require('../incfiles/core.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 // Закрываем от неавторизованных юзеров
 if (!$user_id && !$set['active']) {
     require('../incfiles/head.php');
@@ -18,7 +25,6 @@ $array = [
     'admlist'  => 'includes',
     'birth'    => 'includes',
     'online'   => 'includes',
-    'search'   => 'includes',
     'top'      => 'includes',
     'userlist' => 'includes',
 ];
@@ -28,7 +34,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     // Актив сайта
     $textl = _t('Community');

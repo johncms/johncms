@@ -2,21 +2,21 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = _td('Edit Profile');
+$textl = _t('Edit Profile');
 require('../incfiles/head.php');
 
 if (($user_id != $user['id'] && $rights < 7)
     || $user['rights'] > $datauser['rights']
 ) {
     // Если не хватает прав, выводим ошибку
-    echo display_error(_td('You cannot edit profile of higher administration'));
+    echo display_error(_t('You cannot edit profile of higher administration'));
     require('../incfiles/end.php');
     exit;
 }
 switch ($mod) {
     case 'avatar':
         // Выгружаем аватар
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Upload Avatar') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
@@ -36,8 +36,8 @@ switch ($mod) {
                 $handle->image_convert = 'png';
                 $handle->process('../files/users/avatar/');
                 if ($handle->processed) {
-                    echo '<div class="gmenu"><p>' . _td('The avatar is successfully uploaded') . '<br />' .
-                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _td('Continue') . '</a></p></div>';
+                    echo '<div class="gmenu"><p>' . _t('The avatar is successfully uploaded') . '<br />' .
+                        '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
                     echo functions::display_error($handle->error);
                 }
@@ -45,19 +45,19 @@ switch ($mod) {
             }
         } else {
             echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">'
-                . '<div class="menu"><p>' . _td('Select Image') . ':<br />'
+                . '<div class="menu"><p>' . _t('Select Image') . ':<br />'
                 . '<input type="file" name="imagefile" value="" />'
                 . '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>'
-                . '<p><input type="submit" name="submit" value="' . _td('Upload') . '" />'
+                . '<p><input type="submit" name="submit" value="' . _t('Upload') . '" />'
                 . '</p></div></form>'
                 . '<div class="phdr"><small>'
-                . sprintf(_td('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz'])
+                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz'])
                 . '</small></div>';
         }
         break;
 
     case 'up_photo':
-        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _td('Profile') . '</b></a> | ' . _td('Upload Photo') . '</div>';
+        echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
         if (isset($_POST['submit'])) {
             $handle = new upload($_FILES['imagefile']);
             if ($handle->uploaded) {
@@ -88,7 +88,7 @@ switch ($mod) {
                     $handle->image_convert = 'jpg';
                     $handle->process('../files/users/photo/');
                     if ($handle->processed) {
-                        echo '<div class="gmenu"><p>' . _td('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . _td('Continue') . '</a></p></div>';
+                        echo '<div class="gmenu"><p>' . _t('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                     } else {
                         echo functions::display_error($handle->error);
                     }
@@ -98,12 +98,12 @@ switch ($mod) {
                 $handle->clean();
             }
         } else {
-            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . _td('Select image') . ':<br />' .
+            echo '<form enctype="multipart/form-data" method="post" action="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"><div class="menu"><p>' . _t('Select image') . ':<br />' .
                 '<input type="file" name="imagefile" value="" />' .
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" /></p>' .
-                '<p><input type="submit" name="submit" value="' . _td('Upload') . '" /></p>' .
+                '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . sprintf(_td('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz']) . '</small></div>';
+                '<div class="phdr"><small>' . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $set['flsz']) . '</small></div>';
         }
         break;
 }
