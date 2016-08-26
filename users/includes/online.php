@@ -3,21 +3,21 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'online';
-$textl = $lng['online'];
+$textl = _t('Online');
 require('../incfiles/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
 // Показываем список Online
-$menu[] = !$mod ? '<b>' . $lng['users'] . '</b>' : '<a href="index.php?act=online">' . $lng['users'] . '</a>';
-$menu[] = $mod == 'history' ? '<b>' . $lng['history'] . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . $lng['history'] . '</a> ';
+$menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
+$menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . _t('History') . '</a> ';
 if (core::$user_rights) {
-    $menu[] = $mod == 'guest' ? '<b>' . $lng['guests'] . '</b>' : '<a href="index.php?act=online&amp;mod=guest">' . $lng['guests'] . '</a>';
-    $menu[] = $mod == 'ip' ? '<b>' . $lng['ip_activity'] . '</b>' : '<a href="index.php?act=online&amp;mod=ip">' . $lng['ip_activity'] . '</a>';
+    $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="index.php?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
+    $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="index.php?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
 }
 
-echo '<div class="phdr"><b>' . $lng['who_on_site'] . '</b></div>' .
+echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div>' .
     '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
 switch ($mod) {
@@ -55,12 +55,12 @@ switch ($mod) {
                     '&#160;&#160;<small>[<a href="' . core::$system_set['homeurl'] . '/' . core::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small>';
                 echo '</div>';
             }
-            echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>' .
                     '<p><form action="index.php?act=online&amp;mod=ip" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
-                    '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                    '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
         }
         require_once('../incfiles/end.php');
@@ -122,13 +122,13 @@ if ($total) {
         ++$i;
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
