@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng['users_list'];
+$textl = _t('List of users');
 $headmod = 'userlist';
 require('../incfiles/head.php');
 
@@ -11,7 +11,7 @@ $db = App::getContainer()->get(PDO::class);
 
 // Выводим список пользователей
 $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = 1")->fetchColumn();
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['users_list'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('List of users') . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</div>';
@@ -24,15 +24,15 @@ for ($i = 0; ($res = $req->fetch()) !== false; $i++) {
     echo functions::display_user($res) . '</div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php?act=userlist" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
 
-echo '<p><a href="search.php">' . $lng['search_user'] . '</a><br />' .
-    '<a href="index.php">' . $lng['back'] . '</a></p>';
+echo '<p><a href="search.php">' . _t('User Search') . '</a><br />' .
+    '<a href="index.php">' . _t('Back') . '</a></p>';
