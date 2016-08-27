@@ -1,0 +1,114 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: JohnCMS 7.0\n"
+"POT-Creation-Date: 2016-08-27 18:52+0400\n"
+"PO-Revision-Date: 2016-08-26 11:27+0400\n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:23 index.php:58
+msgid "Admin Panel"
+msgstr ""
+
+#: index.php:61 index.php:67
+msgid "Users"
+msgstr ""
+
+#: index.php:64
+msgid "On registration"
+msgstr ""
+
+#: index.php:68
+msgid "Administration"
+msgstr ""
+
+#: index.php:69
+msgid "Database cleanup"
+msgstr ""
+
+#: index.php:70
+msgid "Ban Panel"
+msgstr ""
+
+#: index.php:71
+msgid "Antiflood"
+msgstr ""
+
+#: index.php:72
+msgid "Karma"
+msgstr ""
+
+#: index.php:74
+msgid "Search by Nickname"
+msgstr ""
+
+#: index.php:75
+msgid "Search IP"
+msgstr ""
+
+#: index.php:83
+msgid "Modules"
+msgstr ""
+
+#: index.php:84
+msgid "Forum"
+msgstr ""
+
+#: index.php:85
+msgid "News"
+msgstr ""
+
+#: index.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: index.php:89
+msgid "Counters"
+msgstr ""
+
+#: index.php:90
+msgid "Mail"
+msgstr ""
+
+#: index.php:97
+msgid "System"
+msgstr ""
+
+#: index.php:99
+msgid "System Settings"
+msgstr ""
+
+#: index.php:100
+msgid "Update Smilies"
+msgstr ""
+
+#: index.php:101
+msgid "Language Settings"
+msgstr ""
+
+#: index.php:102
+msgid "Permissions"
+msgstr ""
+
+#: index.php:108
+msgid "Security"
+msgstr ""
+
+#: index.php:110
+msgid "Anti-Spyware"
+msgstr ""
+
+#: index.php:111
+msgid "Ban by IP"
+msgstr ""

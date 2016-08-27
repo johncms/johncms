@@ -5,8 +5,6 @@ define('_IN_JOHNCMS', 1);
 define('_IN_JOHNADM', 1);
 
 require('../incfiles/core.php');
-// Подключаем язык Админ-панели
-$lng = array_merge($lng, core::load_lng('admin'));
 
 // Проверяем права доступа
 if (core::$user_rights < 1) {
@@ -14,8 +12,15 @@ if (core::$user_rights < 1) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 $headmod = 'admin';
-$textl = $lng['admin_panel'];
+$textl = _t('Admin Panel');
 require('../incfiles/head.php');
 $array = [
     'forum',
@@ -46,28 +51,28 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     require('includes/' . $array[$key] . '.php');
 } else {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     $regtotal = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
     $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
-    echo '<div class="phdr"><b>' . $lng['admin_panel'] . '</b></div>';
+    echo '<div class="phdr"><b>' . _t('Admin Panel') . '</b></div>';
 
     // Блок пользователей
-    echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
+    echo '<div class="user"><p><h3>' . _t('Users') . '</h3><ul>';
 
     if ($regtotal && core::$user_rights >= 6) {
-        echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
+        echo '<li><span class="red"><b><a href="index.php?act=reg">' . _t('On registration') . '</a>&#160;(' . $regtotal . ')</b></span></li>';
     }
 
-    echo '<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
-        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn() . ')</li>' .
-        ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
-        '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
-        (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' : '') .
-        (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . $lng['karma'] . '</a></li>' : '') .
+    echo '<li><a href="index.php?act=usr">' . _t('Users') . '</a>&#160;(' . counters::users() . ')</li>' .
+        '<li><a href="index.php?act=usr_adm">' . _t('Administration') . '</a>&#160;(' . $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn() . ')</li>' .
+        ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . _t('Database cleanup') . '</a></li>' : '') .
+        '<li><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a>&#160;(' . $bantotal . ')</li>' .
+        (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . _t('Antiflood') . '</a></li>' : '') .
+        (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . _t('Karma') . '</a></li>' : '') .
         '<br />' .
-        '<li><a href="../users/search.php">' . $lng['search_nick'] . '</a></li>' .
-        '<li><a href="index.php?act=search_ip">' . $lng['ip_search'] . '</a></li>' .
+        '<li><a href="../users/search.php">' . _t('Search by Nickname') . '</a></li>' .
+        '<li><a href="index.php?act=search_ip">' . _t('Search IP') . '</a></li>' .
         '</ul></p></div>';
 
     if ($rights >= 7) {
@@ -75,39 +80,39 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         $spam = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';")->fetchColumn();
 
         echo '<div class="gmenu"><p>';
-        echo '<h3>' . $lng['modules'] . '</h3><ul>' .
-            '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .
-            '<li><a href="index.php?act=news">' . $lng['news'] . '</a></li>' .
-            '<li><a href="index.php?act=ads">' . $lng['advertisement'] . '</a></li>';
+        echo '<h3>' . _t('Modules') . '</h3><ul>' .
+            '<li><a href="index.php?act=forum">' . _t('Forum') . '</a></li>' .
+            '<li><a href="index.php?act=news">' . _t('News') . '</a></li>' .
+            '<li><a href="index.php?act=ads">' . _t('Advertisement') . '</a></li>';
 
         if (core::$user_rights == 9) {
-            echo '<br/><li><a href="index.php?act=counters">' . $lng['counters'] . '</a></li>' .
-                '<li><a href="index.php?act=mail">' . $lng['mail'] . '</a></li>';
+            echo '<li><a href="index.php?act=counters">' . _t('Counters') . '</a></li>' .
+                '<li><a href="index.php?act=mail">' . _t('Mail') . '</a></li>';
         }
 
         echo '</ul></p></div>';
 
         // Блок системных настроек
         echo '<div class="menu"><p>' .
-            '<h3>' . $lng['system'] . '</h3>' .
+            '<h3>' . _t('System') . '</h3>' .
             '<ul>' .
-            (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . $lng['site_settings'] . '</b></a></li>' : '') .
-            '<li><a href="index.php?act=smilies">' . $lng['refresh_smileys'] . '</a></li>' .
-            (core::$user_rights == 9 ? '<li><a href="index.php?act=languages">' . $lng['language_settings'] . '</a></li>' : '') .
-            '<li><a href="index.php?act=access">' . $lng['access_rights'] . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=settings"><b>' . _t('System Settings') . '</b></a></li>' : '') .
+            '<li><a href="index.php?act=smilies">' . _t('Update Smilies') . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=languages">' . _t('Language Settings') . '</a></li>' : '') .
+            '<li><a href="index.php?act=access">' . _t('Permissions') . '</a></li>' .
             '</ul>' .
             '</p></div>';
 
         // Блок безопасности
         echo '<div class="rmenu"><p>' .
-            '<h3>' . $lng['security'] . '</h3>' .
+            '<h3>' . _t('Security') . '</h3>' .
             '<ul>' .
-            '<li><a href="index.php?act=antispy">' . $lng['antispy'] . '</a></li>' .
-            (core::$user_rights == 9 ? '<li><a href="index.php?act=ipban">' . $lng['ip_ban'] . '</a></li>' : '') .
+            '<li><a href="index.php?act=antispy">' . _t('Anti-Spyware') . '</a></li>' .
+            (core::$user_rights == 9 ? '<li><a href="index.php?act=ipban">' . _t('Ban by IP') . '</a></li>' : '') .
             '</ul>' .
             '</p></div>';
     }
-    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 6.2.0</b></div>';
+    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 7.0.0</b></div>';
 }
 
 require('../incfiles/end.php');
