@@ -15,9 +15,6 @@ $textl = _t('Registration');
 $headmod = 'registration';
 require('../incfiles/head.php');
 
-// Задаем домен для перевода
-_setDomain('registration');
-
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
