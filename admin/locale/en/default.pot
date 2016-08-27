@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-08-27 18:52+0400\n"
+"POT-Creation-Date: 2016-08-28 00:42+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -17,12 +17,386 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: index.php:23 index.php:58
+#: includes/access.php:11 includes/access.php:116 includes/ads.php:204
+#: includes/ads.php:303 includes/ads.php:409 includes/antiflood.php:15
+#: includes/antiflood.php:93 index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
-#: index.php:61 index.php:67
+#: includes/access.php:11 index.php:102
+msgid "Permissions"
+msgstr ""
+
+#: includes/access.php:39 includes/antiflood.php:59
+msgid "Settings are saved successfully"
+msgstr ""
+
+#: includes/access.php:47 index.php:84
+msgid "Forum"
+msgstr ""
+
+#: includes/access.php:49 includes/access.php:58 includes/access.php:66
+#: includes/access.php:75 includes/access.php:84 includes/access.php:93
+#: includes/access.php:100 includes/access.php:109
+msgid "Access is allowed"
+msgstr ""
+
+#: includes/access.php:50 includes/access.php:59 includes/access.php:67
+#: includes/access.php:76 includes/access.php:85 includes/access.php:94
+msgid "Only for authorized"
+msgstr ""
+
+#: includes/access.php:51
+msgid "Read only"
+msgstr ""
+
+#: includes/access.php:52 includes/access.php:60 includes/access.php:68
+#: includes/access.php:77 includes/access.php:86 includes/access.php:102
+msgid "Access denied"
+msgstr ""
+
+#: includes/access.php:56
+msgid "Guestbook"
+msgstr ""
+
+#: includes/access.php:64
+msgid "Library"
+msgstr ""
+
+#: includes/access.php:69 includes/access.php:78 includes/access.php:87
+msgid "Comments"
+msgstr ""
+
+#: includes/access.php:73
+msgid "Gallery"
+msgstr ""
+
+#: includes/access.php:82
+msgid "Downloads"
+msgstr ""
+
+#: includes/access.php:91
+msgid "Community"
+msgstr ""
+
+#: includes/access.php:98
+msgid "Registration"
+msgstr ""
+
+#: includes/access.php:101
+msgid "With moderation"
+msgstr ""
+
+#: includes/access.php:107
+msgid "Site access"
+msgstr ""
+
+#: includes/access.php:110
+msgid "It is closed for all, except Administration"
+msgstr ""
+
+#: includes/access.php:111
+msgid "It is closed for all, except SV"
+msgstr ""
+
+#: includes/access.php:114
+msgid "Administrators always have access to all closed modules and comments"
+msgstr ""
+
+#: includes/access.php:115 includes/antiflood.php:91
+msgid "Save"
+msgstr ""
+
+#: includes/ads.php:17 includes/ads.php:203 includes/ads.php:261
+#: includes/ads.php:279 includes/ads.php:303 index.php:86
+msgid "Advertisement"
+msgstr ""
+
+#: includes/ads.php:17
+msgid "Edit link"
+msgstr ""
+
+#: includes/ads.php:17 includes/ads.php:407
+msgid "Add link"
+msgstr ""
+
+#: includes/ads.php:26
+msgid "Wrong data"
+msgstr ""
+
+#: includes/ads.php:26 includes/ads.php:78
+msgid "Back"
+msgstr ""
+
+#: includes/ads.php:53
+msgid "The required fields are not filled"
+msgstr ""
+
+#: includes/ads.php:64
+msgid "This place is occupied"
+msgstr ""
+
+#: includes/ads.php:70
+msgid "Invalid characters"
+msgstr ""
+
+#: includes/ads.php:73
+msgid "Color is specified incorrectly"
+msgstr ""
+
+#: includes/ads.php:163
+msgid "Link successfully changed"
+msgstr ""
+
+#: includes/ads.php:163
+msgid "Link successfully added"
+msgstr ""
+
+#: includes/ads.php:164
+msgid "Continue"
+msgstr ""
+
+#: includes/ads.php:168
+msgid "Link"
+msgstr ""
+
+#: includes/ads.php:170 includes/ads.php:391
+msgid "Direct Link"
+msgstr ""
+
+#: includes/ads.php:171
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr ""
+
+#: includes/ads.php:172
+msgid "Title"
+msgstr ""
+
+#: includes/ads.php:174
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr ""
+
+#: includes/ads.php:175
+msgid "Color"
+msgstr ""
+
+#: includes/ads.php:177
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr ""
+
+#: includes/ads.php:178
+msgid "Hits"
+msgstr ""
+
+#: includes/ads.php:180
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: includes/ads.php:181
+msgid "Days"
+msgstr ""
+
+#: includes/ads.php:183
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr ""
+
+#: includes/ads.php:185 includes/ads.php:356 includes/ads.php:362
+msgid "Show"
+msgstr ""
+
+#: includes/ads.php:186 includes/ads.php:310
+msgid "Everyone"
+msgstr ""
+
+#: includes/ads.php:187 includes/ads.php:311
+msgid "Guests"
+msgstr ""
+
+#: includes/ads.php:188 includes/ads.php:312 index.php:61 index.php:67
 msgid "Users"
+msgstr ""
+
+#: includes/ads.php:189
+msgid "Location"
+msgstr ""
+
+#: includes/ads.php:190 includes/ads.php:316
+msgid "Above logo"
+msgstr ""
+
+#: includes/ads.php:191 includes/ads.php:317
+msgid "Under menu"
+msgstr ""
+
+#: includes/ads.php:192 includes/ads.php:318
+msgid "Over the counter"
+msgstr ""
+
+#: includes/ads.php:193 includes/ads.php:319
+msgid "Under counter"
+msgstr ""
+
+#: includes/ads.php:194
+msgid "Layout"
+msgstr ""
+
+#: includes/ads.php:195 includes/ads.php:305
+msgid "All pages"
+msgstr ""
+
+#: includes/ads.php:196 includes/ads.php:306
+msgid "Only on Homepage"
+msgstr ""
+
+#: includes/ads.php:197 includes/ads.php:307
+msgid "On all, except Homepage"
+msgstr ""
+
+#: includes/ads.php:198
+msgid "Styling links"
+msgstr ""
+
+#: includes/ads.php:199
+msgid "Bold"
+msgstr ""
+
+#: includes/ads.php:200
+msgid "Italic"
+msgstr ""
+
+#: includes/ads.php:201
+msgid "Underline"
+msgstr ""
+
+#: includes/ads.php:202 includes/ads.php:354
+msgid "Edit"
+msgstr ""
+
+#: includes/ads.php:202
+msgid "Add"
+msgstr ""
+
+#: includes/ads.php:261 includes/ads.php:264 includes/ads.php:282
+#: includes/ads.php:355
+msgid "Delete"
+msgstr ""
+
+#: includes/ads.php:263
+msgid "Are you sure want to delete link?"
+msgstr ""
+
+#: includes/ads.php:267 includes/ads.php:284
+msgid "Cancel"
+msgstr ""
+
+#: includes/ads.php:279 includes/ads.php:408
+msgid "Delete inactive links"
+msgstr ""
+
+#: includes/ads.php:281
+msgid "Are you sure you want to delete all inactive links?"
+msgstr ""
+
+#: includes/ads.php:352
+msgid "Up"
+msgstr ""
+
+#: includes/ads.php:353
+msgid "Down"
+msgstr ""
+
+#: includes/ads.php:356
+msgid "Hide"
+msgstr ""
+
+#: includes/ads.php:360
+msgid "Start date"
+msgstr ""
+
+#: includes/ads.php:361
+msgid "Disposition"
+msgstr ""
+
+#: includes/ads.php:368 includes/ads.php:371
+msgid "hits"
+msgstr ""
+
+#: includes/ads.php:385
+msgid "Agreement"
+msgstr ""
+
+#: includes/ads.php:388
+msgid "Remains"
+msgstr ""
+
+#: includes/ads.php:395
+msgid "The list is empty"
+msgstr ""
+
+#: includes/ads.php:398
+msgid "Total"
+msgstr ""
+
+#: includes/ads.php:404
+msgid "To Page"
+msgstr ""
+
+#: includes/antiflood.php:15
+msgid "Antiflood Settings"
+msgstr ""
+
+#: includes/antiflood.php:62
+msgid "Default settings are set"
+msgstr ""
+
+#: includes/antiflood.php:75
+msgid "Operation mode"
+msgstr ""
+
+#: includes/antiflood.php:76 includes/antiflood.php:78
+#: includes/antiflood.php:85
+msgid "Day"
+msgstr ""
+
+#: includes/antiflood.php:77 includes/antiflood.php:78
+#: includes/antiflood.php:86
+msgid "Night"
+msgstr ""
+
+#: includes/antiflood.php:79
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr ""
+
+#: includes/antiflood.php:81
+msgid "Adaptive"
+msgstr ""
+
+#: includes/antiflood.php:82
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr ""
+
+#: includes/antiflood.php:84
+msgid "Time limit"
+msgstr ""
+
+#: includes/antiflood.php:87
+msgid "Min. 4, max. 300 seconds"
+msgstr ""
+
+#: includes/antiflood.php:88
+msgid "Day mode"
+msgstr ""
+
+#: includes/antiflood.php:89
+msgid "Beginning of day"
+msgstr ""
+
+#: includes/antiflood.php:90
+msgid "End of day"
+msgstr ""
+
+#: includes/antiflood.php:92
+msgid "Reset Settings"
 msgstr ""
 
 #: index.php:64
@@ -61,16 +435,8 @@ msgstr ""
 msgid "Modules"
 msgstr ""
 
-#: index.php:84
-msgid "Forum"
-msgstr ""
-
 #: index.php:85
 msgid "News"
-msgstr ""
-
-#: index.php:86
-msgid "Advertisement"
 msgstr ""
 
 #: index.php:89
@@ -95,10 +461,6 @@ msgstr ""
 
 #: index.php:101
 msgid "Language Settings"
-msgstr ""
-
-#: index.php:102
-msgid "Permissions"
 msgstr ""
 
 #: index.php:108
