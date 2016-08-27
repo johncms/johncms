@@ -14,7 +14,7 @@ $db = App::getContainer()->get(PDO::class);
 switch ($mod) {
     case 'edit':
         // Добавляем / редактируем ссылку
-        echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . ($id ? $lng['link_edit'] : $lng['link_add']) . '</div>';
+        echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . ($id ? _t('Edit link') : _t('Add link')) . '</div>';
 
         if ($id) {
             // Если ссылка редактироется, запрашиваем ее данные в базе
@@ -23,7 +23,7 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
             } else {
-                echo functions::display_error($lng['error_wrong_data'], '<a href="index.php?act=ads">' . $lng['back'] . '</a>');
+                echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -34,10 +34,10 @@ switch ($mod) {
         if (isset($_POST['submit'])) {
             $link = isset($_POST['link']) ? trim($_POST['link']) : '';
             $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-            $bold = isset($_POST['bold']);
-            $italic = isset($_POST['italic']);
-            $underline = isset($_POST['underline']);
-            $show = isset($_POST['show']);
+            $bold = isset($_POST['bold']) ? 1 : 0;
+            $italic = isset($_POST['italic']) ? 1 : 0;
+            $underline = isset($_POST['underline']) ? 1 : 0;
+            $show = isset($_POST['show']) ? 1 : 0;
             $font = $font_1 + $font_2 + $font_3;
             $view = isset($_POST['view']) ? abs(intval($_POST['view'])) : 0;
             $day = isset($_POST['day']) ? abs(intval($_POST['day'])) : 0;
@@ -50,7 +50,7 @@ switch ($mod) {
             $error = [];
 
             if (empty($link) || empty($name)) {
-                $error[] = $lng['error_empty_fields'];
+                $error[] = _t('The required fields are not filled');
             }
 
             if ($type > 3 || $type < 0) {
@@ -61,21 +61,21 @@ switch ($mod) {
                 $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `mesto` = '" . $mesto . "' AND `type` = '" . $type . "'")->fetchColumn();
 
                 if ($total) {
-                    $error[] = $lng['links_place_occupied'];
+                    $error[] = _t('This place is occupied');
                 }
             }
 
             if ($color) {
                 if (preg_match("/[^\da-fA-F_]+/", $color)) {
-                    $error[] = $lng['error_wrong_symbols'];
+                    $error[] = _t('Invalid characters');
                 }
                 if (strlen($color) < 6) {
-                    $error[] = $lng['error_color'];
+                    $error[] = _t('Color is specified incorrectly');
                 }
             }
 
             if ($error) {
-                echo functions::display_error($error, '<a href="index.php?act=ads&amp;from=addlink">' . $lng['back'] . '</a>');
+                echo functions::display_error($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -110,6 +110,7 @@ switch ($mod) {
                     $bold,
                     $italic,
                     $underline,
+                    $id,
                 ]);
             } else {
                 // Добавляем новую ссылку
@@ -159,48 +160,48 @@ switch ($mod) {
 
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
 
-            echo '<div class="menu"><p>' . ($id ? $lng['link_edit_ok'] : $lng['link_add_ok']) . '<br />' .
-                '<a href="index.php?act=ads&amp;sort=' . $type . '">' . $lng['continue'] . '</a></p></div>';
+            echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br />' .
+                '<a href="index.php?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма добавления / изменения ссылки
             echo '<form action="index.php?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
-                '<div class="menu"><p><h3>' . $lng['link'] . '</h3>' .
+                '<div class="menu"><p><h3>' . _t('Link') . '</h3>' .
                 '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
-                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_direct'] . '<br />' .
-                '<small>' . $lng['link_direct_help'] . '</small></p>' .
-                '<p><h3>' . $lng['title'] . '</h3>' .
+                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br />' .
+                '<small>' . _t('Click statistics won\'t be counted, If the direct link is turned on') . '</small></p>' .
+                '<p><h3>' . _t('Title') . '</h3>' .
                 '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
-                '<small>' . $lng['link_add_name_help'] . '</small></p>' .
-                '<p><h3>' . $lng['color'] . '</h3>' .
+                '<small>' . _t('To change the name when updating pages, you must wtite names trought the symbol |') . '</small></p>' .
+                '<p><h3>' . _t('Color') . '</h3>' .
                 '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br />' .
-                '<small>' . $lng['link_add_color_help'] . '</small></p>' .
-                '<p><h3>' . $lng['transitions'] . '</h3>' .
+                '<small>' . _t('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') . '</small></p>' .
+                '<p><h3>' . _t('Hits') . '</h3>' .
                 '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br />' .
-                '<small>' . $lng['link_add_trans_help'] . '</small></p>' .
-                '<p><h3>' . $lng['days'] . '</h3>' .
+                '<small>' . _t('Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
+                '<p><h3>' . _t('Days') . '</h3>' .
                 '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br />' .
-                '<small>' . $lng['link_add_days_help'] . '</small></p>' .
+                '<small>' . _t('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
                 '</div><div class="gmenu">' .
-                '<p><h3>' . $lng['to_show'] . '</h3>' .
-                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_all'] . '<br />' .
-                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_guest'] . '<br />' .
-                '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['to_users'] . '</p>' .
-                '<p><h3>' . $lng['arrangement'] . '</h3>' .
-                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_logo'] . '<br />' .
-                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_usermenu'] . '<br />' .
-                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_over_counters'] . '<br />' .
-                '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['links_armt_under_counters'] . '</p>' .
-                '<p><h3>' . $lng['placing'] . '</h3>' .
-                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_all'] . '<br />' .
-                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_front'] . '<br />' .
-                '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_add_placing_child'] . '</p>' .
-                '<p><h3>' . $lng['links_allocation'] . '</h3>' .
-                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . $lng['font_bold'] . '</b><br />' .
-                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . $lng['font_italic'] . '</i><br />' .
-                '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . $lng['font_underline'] . '</u></p></div>' .
-                '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? $lng['edit'] : $lng['add']) . '" /></div></form>' .
-                '<p><a href="index.php?act=ads">' . $lng['advertisement'] . '</a><br />' .
-                '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+                '<p><h3>' . _t('Show') . '</h3>' .
+                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Everyone') . '<br />' .
+                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Guests') . '<br />' .
+                '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Users') . '</p>' .
+                '<p><h3>' . _t('Location') . '</h3>' .
+                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Above logo') . '<br />' .
+                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under menu') . '<br />' .
+                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Over the counter') . '<br />' .
+                '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under counter') . '</p>' .
+                '<p><h3>' . _t('Layout') . '</h3>' .
+                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('All pages') . '<br />' .
+                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Only on Homepage') . '<br />' .
+                '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('On all, except Homepage') . '</p>' .
+                '<p><h3>' . _t('Styling links') . '</h3>' .
+                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . _t('Bold') . '</b><br />' .
+                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . _t('Italic') . '</i><br />' .
+                '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . _t('Underline') . '</u></p></div>' .
+                '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? _t('Edit') : _t('Add')) . '" /></div></form>' .
+                '<p><a href="index.php?act=ads">' . _t('Advertisement') . '</a><br />' .
+                '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
@@ -257,13 +258,13 @@ switch ($mod) {
                 $db->exec("DELETE FROM `cms_ads` WHERE `id` = '$id'");
                 header('Location: ' . $_POST['ref']);
             } else {
-                echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['delete'] . '</div>' .
+                echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete') . '</div>' .
                     '<div class="rmenu"><form action="index.php?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
-                    '<p>' . $lng['link_deletion_warning'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" /></p>' .
+                    '<p>' . _t('Are you sure want to delete link?') . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Delete') . '" /></p>' .
                     '<input type="hidden" name="ref" value="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" />' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . $lng['cancel'] . '</a></div>';
+                    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . _t('Cancel') . '</a></div>';
             }
         }
         break;
@@ -275,12 +276,12 @@ switch ($mod) {
             $db->query("OPTIMIZE TABLE `cms_ads`");
             header('location: index.php?act=ads');
         } else {
-            echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['links_delete_hidden'] . '</div>' .
+            echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete inactive links') . '</div>' .
                 '<div class="menu"><form method="post" action="index.php?act=ads&amp;mod=clear">' .
-                '<p>' . $lng['link_clear_warning'] . '</p>' .
-                '<p><input type="submit" name="submit" value="' . $lng['delete'] . '" />' .
+                '<p>' . _t('Are you sure you want to delete all inactive links?') . '</p>' .
+                '<p><input type="submit" name="submit" value="' . _t('Delete') . '" />' .
                 '</p></form></div>' .
-                '<div class="phdr"><a href="index.php?act=ads">' . $lng['cancel'] . '</a></div>';
+                '<div class="phdr"><a href="index.php?act=ads">' . _t('Cancel') . '</a></div>';
         }
         break;
 
@@ -299,29 +300,23 @@ switch ($mod) {
 
     default:
         // Главное меню модуля управления рекламой
-        echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['advertisement'] . '</div>';
-        $array_type = [
-            $lng['links_armt_over_logo'],
-            $lng['links_armt_under_usermenu'],
-            $lng['links_armt_over_counters'],
-            $lng['links_armt_under_counters'],
-        ];
+        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Advertisement') . '</div>';
         $array_placing = [
-            $lng['link_add_placing_all'],
-            $lng['link_add_placing_front'],
-            $lng['link_add_placing_child'],
+            _t('All pages'),
+            _t('Only on Homepage'),
+            _t('On all, except Homepage'),
         ];
         $array_show = [
-            $lng['to_all'],
-            $lng['to_guest'],
-            $lng['to_users'],
+            _t('Everyone'),
+            _t('Guests'),
+            _t('Users'),
         ];
         $type = isset($_GET['type']) ? intval($_GET['type']) : 0;
         $array_menu = [
-            (!$type ? $lng['links_armt_over_logo'] : '<a href="index.php?act=ads">' . $lng['links_armt_over_logo'] . '</a>'),
-            ($type == 1 ? $lng['links_armt_under_usermenu'] : '<a href="index.php?act=ads&amp;type=1">' . $lng['links_armt_under_usermenu'] . '</a>'),
-            ($type == 2 ? $lng['links_armt_over_counters'] : '<a href="index.php?act=ads&amp;type=2">' . $lng['links_armt_over_counters'] . '</a>'),
-            ($type == 3 ? $lng['links_armt_under_counters'] : '<a href="index.php?act=ads&amp;type=3">' . $lng['links_armt_under_counters'] . '</a>'),
+            (!$type ? _t('Above logo') : '<a href="index.php?act=ads">' . _t('Above logo') . '</a>'),
+            ($type == 1 ? _t('Under menu') : '<a href="index.php?act=ads&amp;type=1">' . _t('Under menu') . '</a>'),
+            ($type == 2 ? _t('Over the counter') : '<a href="index.php?act=ads&amp;type=2">' . _t('Over the counter') . '</a>'),
+            ($type == 3 ? _t('Under counter') : '<a href="index.php?act=ads&amp;type=3">' . _t('Under counter') . '</a>'),
         ];
         echo '<div class="topmenu">' . functions::display_menu($array_menu) . '</div>';
 
@@ -354,26 +349,26 @@ switch ($mod) {
                 echo '<p><img src="../images/' . ($res['to'] ? 'red' : 'green') . '.gif" width="16" height="16" class="left"/>&#160;' .
                     '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br />' . $name . '</p>';
                 $menu = [
-                    '<a href="index.php?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? $lng['to_show'] : $lng['hide']) . '</a>',
+                    '<a href="index.php?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a>',
+                    '<a href="index.php?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a>',
+                    '<a href="index.php?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
+                    '<a href="index.php?act=ads&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
+                    '<a href="index.php?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? _t('Show') : _t('Hide')) . '</a>',
                 ];
                 echo '<div class="sub">' .
                     '<div>' . functions::display_menu($menu) . '</div>' .
-                    '<p><span class="gray">' . $lng['installation_date'] . ':</span> ' . functions::display_date($res['time']) . '<br />' .
-                    '<span class="gray">' . $lng['placing'] . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br />' .
-                    '<span class="gray">' . $lng['to_show'] . ':</span>&nbsp;' . $array_show[$res['view']];
+                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . functions::display_date($res['time']) . '<br />' .
+                    '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br />' .
+                    '<span class="gray">' . _t('Show') . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу
                 $agreement = [];
                 $remains = [];
 
                 if (!empty($res['count_link'])) {
-                    $agreement[] = $res['count_link'] . ' ' . $lng['transitions_n'];
+                    $agreement[] = $res['count_link'] . ' ' . _t('hits');
                     $remains_count = $res['count_link'] - $res['count'];
                     if ($remains_count > 0) {
-                        $remains[] = $remains_count . ' ' . $lng['transitions_n'];
+                        $remains[] = $remains_count . ' ' . _t('hits');
                     }
                 }
 
@@ -387,29 +382,29 @@ switch ($mod) {
 
                 // Если был договор, то выводим описание
                 if ($agreement) {
-                    echo '<br /><span class="gray">' . $lng['agreement'] . ':</span>&nbsp;' . implode($agreement, ', ');
+                    echo '<br /><span class="gray">' . _t('Agreement') . ':</span>&nbsp;' . implode($agreement, ', ');
 
                     if ($remains) {
-                        echo '<br /><span class="gray">' . $lng['remains'] . ':</span> ' . implode($remains, ', ');
+                        echo '<br /><span class="gray">' . _t('Remains') . ':</span> ' . implode($remains, ', ');
                     }
                 }
-                echo ($res['show'] ? '<br /><span class="red"><b>' . $lng['link_direct'] . '</b></span>' : '') . '</p></div></div>';
+                echo ($res['show'] ? '<br /><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
                 ++$i;
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
 
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
                 '<p><form action="index.php?act=ads&amp;type=' . $type . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p><a href="index.php?act=ads&amp;mod=edit">' . $lng['link_add'] . '</a><br />' .
-            '<a href="index.php?act=ads&amp;mod=clear">' . $lng['links_delete_hidden'] . '</a><br />' .
-            '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+        echo '<p><a href="index.php?act=ads&amp;mod=edit">' . _t('Add link') . '</a><br />' .
+            '<a href="index.php?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br />' .
+            '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
 }
