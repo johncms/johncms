@@ -368,33 +368,33 @@ switch ($mod) {
     case 'scan':
         // Сканируем на соответствие дистрибутиву
         $scaner->scan();
-        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . $lng['antispy'] . '</b></a> | ' . $lng['antispy_dist_scan'] . '</div>';
+        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Distributive scan') . '</div>';
 
         if (count($scaner->bad_files)) {
-            echo '<div class="rmenu"><small>' . $lng['antispy_dist_scan_bad'] . '</small></div>';
+            echo '<div class="rmenu"><small>' . _t('Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site.') . '</small></div>';
             echo '<div class="menu">';
 
             foreach ($scaner->bad_files as $idx => $data) {
                 echo $data['file_path'] . '<br />';
             }
-            echo '</div><div class="phdr">' . $lng['total'] . ': ' . count($scaner->bad_files) . '</div>';
+            echo '</div><div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
         } else {
-            echo '<div class="gmenu">' . $lng['antispy_dist_scan_good'] . '</div>';
+            echo '<div class="gmenu">' . _t('<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive') . '</div>';
         }
 
-        echo '<p><a href="index.php?act=antispy&amp;mod=scan">' . $lng['antispy_rescan'] . '</a></p>';
+        echo '<p><a href="index.php?act=antispy&amp;mod=scan">' . _t('Rescan') . '</a></p>';
         break;
 
     case 'snapscan':
         // Сканируем на соответствие ранее созданному снимку
         $scaner->snapscan();
-        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . $lng['antispy'] . '</b></a> | ' . $lng['antispy_snapshot_scan'] . '</div>';
+        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
 
         if (count($scaner->track_files) == 0) {
-            echo functions::display_error($lng['antispy_no_snapshot'], '<a href="index.php?act=antispy&amp;mod=snap">' . $lng['antispy_snapshot_create'] . '</a>');
+            echo functions::display_error(_t('Snapshot is not created'), '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
         } else {
             if (count($scaner->bad_files)) {
-                echo '<div class="rmenu">' . $lng['antispy_snapshot_scan_bad'] . '</div>';
+                echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';
                 echo '<div class="menu">';
 
                 foreach ($scaner->bad_files as $idx => $data) {
@@ -402,41 +402,41 @@ switch ($mod) {
                 }
                 echo '</div>';
             } else {
-                echo '<div class="gmenu">' . $lng['antispy_snapshot_scan_ok'] . '</div>';
+                echo '<div class="gmenu">' . _t('Excellent!<br>All files are consistent with previously made image.') . '</div>';
             }
 
-            echo '<div class="phdr">' . $lng['total'] . ': ' . count($scaner->bad_files) . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
         }
         break;
 
     case 'snap':
         // Создаем снимок файлов
-        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . $lng['antispy'] . '</b></a> | ' . $lng['antispy_snapshot_create'] . '</div>';
+        echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Create snapshot') . '</div>';
 
         if (isset($_POST['submit'])) {
             $scaner->snap();
-            echo '<div class="gmenu"><p>' . $lng['antispy_snapshot_create_ok'] . '</p></div>' .
-                '<div class="phdr"><a href="index.php?act=antispy">' . $lng['continue'] . '</a></div>';
+            echo '<div class="gmenu"><p>' . _t('Snapshot successfully created') . '</p></div>' .
+                '<div class="phdr"><a href="index.php?act=antispy">' . _t('Continue') . '</a></div>';
         } else {
             echo '<form action="index.php?act=antispy&amp;mod=snap" method="post">' .
-                '<div class="menu"><p>' . $lng['antispy_snapshot_warning'] . '</p>' .
-                '<p><input type="submit" name="submit" value="' . $lng['antispy_snapshot_create'] . '" /></p>' .
+                '<div class="menu"><p>' . _t('WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.') . '</p>' .
+                '<p><input type="submit" name="submit" value="' . _t('Create snapshot') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . $lng['antispy_snapshot_help'] . '</small></div>';
+                '<div class="phdr"><small>' . _t('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') . '</small></div>';
         }
         break;
 
     default:
         // Главное меню Сканера
-        echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['antispy'] . '</div>' .
-            '<div class="menu"><p><h3>' . $lng['antispy_scan_mode'] . '</h3><ul>' .
-            '<li><a href="index.php?act=antispy&amp;mod=scan">' . $lng['antispy_dist_scan'] . '</a><br />' .
-            '<small>' . $lng['antispy_dist_scan_help'] . '</small></li>' .
-            '<li><a href="index.php?act=antispy&amp;mod=snapscan">' . $lng['antispy_snapshot_scan'] . '</a><br />' .
-            '<small>' . $lng['antispy_snapshot_scan_help'] . '</small></li>' .
-            '<li><a href="index.php?act=antispy&amp;mod=snap">' . $lng['antispy_snapshot_create'] . '</a><br />' .
-            '<small>' . $lng['antispy_snapshot_create_help'] . '</small></li>' .
-            '</ul></p></div><div class="phdr">&#160;</div>';
+        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Anti-Spyware') . '</div>'
+            . '<div class="menu"><p><h3>' . _t('Scan mode') . '</h3><ul>'
+            . '<li><a href="index.php?act=antispy&amp;mod=scan">' . _t('Distributive scan') . '</a><br />'
+            . '<small>' . _t('Files identification which are not included in the original distributive') . '</small></li>'
+            . '<li><a href="index.php?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br />'
+            . '<small>' . _t('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
+            . '<li><a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br />'
+            . '<small>' . _t('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') . '</small></li>'
+            . '</ul></p></div><div class="phdr">&#160;</div>';
 }
 
-echo '<p>' . ($mod ? '<a href="index.php?act=antispy">' . $lng['antispy_menu'] . '</a><br />' : '') . '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<p>' . ($mod ? '<a href="index.php?act=antispy">' . _t('Scanner menu') . '</a><br />' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
