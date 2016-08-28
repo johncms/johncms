@@ -1,547 +1,479 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-08-28 22:53+0400\n"
-"PO-Revision-Date: 2016-08-26 11:27+0400\n"
-"Last-Translator: \n"
-"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-08-28 00:42+0400\n"
+"PO-Revision-Date: 2016-08-28 07:49-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /admin/default.pot\n"
 
 #: includes/access.php:11 includes/access.php:116 includes/ads.php:204
 #: includes/ads.php:303 includes/ads.php:409 includes/antiflood.php:15
-#: includes/antiflood.php:93 includes/antispy.php:431 includes/antispy.php:442
-#: index.php:23 index.php:58
+#: includes/antiflood.php:93 index.php:23 index.php:58
 msgid "Admin Panel"
-msgstr ""
+msgstr "Админ панель"
 
 #: includes/access.php:11 index.php:102
 msgid "Permissions"
-msgstr ""
+msgstr "Права доступа"
 
 #: includes/access.php:39 includes/antiflood.php:59
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "Настройки успешно сохранены"
 
 #: includes/access.php:47 index.php:84
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: includes/access.php:49 includes/access.php:58 includes/access.php:66
 #: includes/access.php:75 includes/access.php:84 includes/access.php:93
 #: includes/access.php:100 includes/access.php:109
 msgid "Access is allowed"
-msgstr ""
+msgstr "Доступ открыт"
 
 #: includes/access.php:50 includes/access.php:59 includes/access.php:67
 #: includes/access.php:76 includes/access.php:85 includes/access.php:94
 msgid "Only for authorized"
-msgstr ""
+msgstr "Только для авторизованных"
 
 #: includes/access.php:51
 msgid "Read only"
-msgstr ""
+msgstr "Только для чтения"
 
 #: includes/access.php:52 includes/access.php:60 includes/access.php:68
 #: includes/access.php:77 includes/access.php:86 includes/access.php:102
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ закрыт"
 
 #: includes/access.php:56
 msgid "Guestbook"
-msgstr ""
+msgstr "Гостевая"
 
 #: includes/access.php:64
 msgid "Library"
-msgstr ""
+msgstr "Библиотека"
 
 #: includes/access.php:69 includes/access.php:78 includes/access.php:87
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: includes/access.php:73
 msgid "Gallery"
-msgstr ""
+msgstr "Галерея"
 
 #: includes/access.php:82
 msgid "Downloads"
-msgstr ""
+msgstr "Загрузки"
 
 #: includes/access.php:91
 msgid "Community"
-msgstr ""
+msgstr "Сообщество"
 
 #: includes/access.php:98
 msgid "Registration"
-msgstr ""
+msgstr "Регистрация"
 
 #: includes/access.php:101
 msgid "With moderation"
-msgstr ""
+msgstr "С модерацией"
 
 #: includes/access.php:107
 msgid "Site access"
-msgstr ""
+msgstr "Доступ к сайту"
 
 #: includes/access.php:110
 msgid "It is closed for all, except Administration"
-msgstr ""
+msgstr "Закрыт для всех, кроме Администрации"
 
 #: includes/access.php:111
 msgid "It is closed for all, except SV"
-msgstr ""
+msgstr "Закрыт для всех, кроме SV"
 
 #: includes/access.php:114
 msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
+msgstr "У Администратора всегда остается доступ ко всем закрытым модулям и комментариям"
 
 #: includes/access.php:115 includes/antiflood.php:91
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: includes/ads.php:17 includes/ads.php:203 includes/ads.php:261
 #: includes/ads.php:279 includes/ads.php:303 index.php:86
 msgid "Advertisement"
-msgstr ""
+msgstr "Реклама"
 
 #: includes/ads.php:17
 msgid "Edit link"
-msgstr ""
+msgstr "Редактировать ссылку"
 
 #: includes/ads.php:17 includes/ads.php:407
 msgid "Add link"
-msgstr ""
+msgstr "Добавить ссылку"
 
 #: includes/ads.php:26
 msgid "Wrong data"
-msgstr ""
+msgstr "Неверные данные"
 
 #: includes/ads.php:26 includes/ads.php:78
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: includes/ads.php:53
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Не заполнены обязательные поля"
 
 #: includes/ads.php:64
 msgid "This place is occupied"
-msgstr ""
+msgstr "Данное место занято"
 
 #: includes/ads.php:70
 msgid "Invalid characters"
-msgstr ""
+msgstr "Недопустимые символы"
 
 #: includes/ads.php:73
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "Цвет указан неправильно"
 
 #: includes/ads.php:163
 msgid "Link successfully changed"
-msgstr ""
+msgstr "Ссылка успешно изменена"
 
 #: includes/ads.php:163
 msgid "Link successfully added"
-msgstr ""
+msgstr "Cсылка успешно добавлена"
 
-#: includes/ads.php:164 includes/antispy.php:419
+#: includes/ads.php:164
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #: includes/ads.php:168
 msgid "Link"
-msgstr ""
+msgstr "Ссылка"
 
 #: includes/ads.php:170 includes/ads.php:391
 msgid "Direct Link"
-msgstr ""
+msgstr "Прямая ссылка"
 
 #: includes/ads.php:171
 msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
+msgstr "Если включена \"Прямая ссылка\", то статистика по переходам не ведется"
 
 #: includes/ads.php:172
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: includes/ads.php:174
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
+msgstr "Для смены названия при обновлении страницы перечислите все названия через знак |"
 
 #: includes/ads.php:175
 msgid "Color"
-msgstr ""
+msgstr "Цвет"
 
 #: includes/ads.php:177
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
+msgstr "В формате FFFFFF, если не хотите выделять ссылку цветом, то просто не заполняйте это поле"
 
 #: includes/ads.php:178
 msgid "Hits"
-msgstr ""
+msgstr "Переходы"
 
 #: includes/ads.php:180
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Количество переходов, после которого ссылка автоматически уберется<br>0 - без ограничений"
 
 #: includes/ads.php:181
 msgid "Days"
-msgstr ""
+msgstr "дней"
 
 #: includes/ads.php:183
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Количество дней с момента установки ссылки, по истечению которого ссылка автоматически уберется<br />0 - без ограничений"
 
 #: includes/ads.php:185 includes/ads.php:356 includes/ads.php:362
 msgid "Show"
-msgstr ""
+msgstr "Показать"
 
 #: includes/ads.php:186 includes/ads.php:310
 msgid "Everyone"
-msgstr ""
+msgstr "Всем"
 
 #: includes/ads.php:187 includes/ads.php:311
 msgid "Guests"
-msgstr ""
+msgstr "Гости"
 
 #: includes/ads.php:188 includes/ads.php:312 index.php:61 index.php:67
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: includes/ads.php:189
 msgid "Location"
-msgstr ""
+msgstr "Расположение"
 
 #: includes/ads.php:190 includes/ads.php:316
 msgid "Above logo"
-msgstr ""
+msgstr "Над логотипом"
 
 #: includes/ads.php:191 includes/ads.php:317
 msgid "Under menu"
-msgstr ""
+msgstr "Под меню"
 
 #: includes/ads.php:192 includes/ads.php:318
 msgid "Over the counter"
-msgstr ""
+msgstr "Над счетчиками"
 
 #: includes/ads.php:193 includes/ads.php:319
 msgid "Under counter"
-msgstr ""
+msgstr "Под счетчиками"
 
 #: includes/ads.php:194
 msgid "Layout"
-msgstr ""
+msgstr "Размещение"
 
 #: includes/ads.php:195 includes/ads.php:305
 msgid "All pages"
-msgstr ""
+msgstr "На всех страницах"
 
 #: includes/ads.php:196 includes/ads.php:306
 msgid "Only on Homepage"
-msgstr ""
+msgstr "Только на главной странице"
 
 #: includes/ads.php:197 includes/ads.php:307
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "На всех, кроме главной страницы"
 
 #: includes/ads.php:198
 msgid "Styling links"
-msgstr ""
+msgstr "Выделение"
 
 #: includes/ads.php:199
 msgid "Bold"
-msgstr ""
+msgstr "Жирный"
 
 #: includes/ads.php:200
 msgid "Italic"
-msgstr ""
+msgstr "Наклонный"
 
 #: includes/ads.php:201
 msgid "Underline"
-msgstr ""
+msgstr "Подчёркнутый"
 
 #: includes/ads.php:202 includes/ads.php:354
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: includes/ads.php:202
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #: includes/ads.php:261 includes/ads.php:264 includes/ads.php:282
 #: includes/ads.php:355
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: includes/ads.php:263
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "Вы действительно хотите удалить ссылку?"
 
 #: includes/ads.php:267 includes/ads.php:284
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: includes/ads.php:279 includes/ads.php:408
 msgid "Delete inactive links"
-msgstr ""
+msgstr "Удалить неактивные ссылки"
 
 #: includes/ads.php:281
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "Вы действительно хотите удалить все неактивные ссылки?"
 
 #: includes/ads.php:352
 msgid "Up"
-msgstr ""
+msgstr "Вверх"
 
 #: includes/ads.php:353
 msgid "Down"
-msgstr ""
+msgstr "Вниз"
 
 #: includes/ads.php:356
 msgid "Hide"
-msgstr ""
+msgstr "Скрыть"
 
 #: includes/ads.php:360
 msgid "Start date"
-msgstr ""
+msgstr "Начальная дата"
 
 #: includes/ads.php:361
 msgid "Disposition"
-msgstr ""
+msgstr "Расположение"
 
 #: includes/ads.php:368 includes/ads.php:371
 msgid "hits"
-msgstr ""
+msgstr "переходов"
 
 #: includes/ads.php:385
 msgid "Agreement"
-msgstr ""
+msgstr "Договор"
 
 #: includes/ads.php:388
 msgid "Remains"
-msgstr ""
+msgstr "Осталось"
 
 #: includes/ads.php:395
 msgid "The list is empty"
-msgstr ""
+msgstr "Список пуст"
 
-#: includes/ads.php:398 includes/antispy.php:380 includes/antispy.php:408
+#: includes/ads.php:398
 msgid "Total"
-msgstr ""
+msgstr "Всего"
 
 #: includes/ads.php:404
 msgid "To Page"
-msgstr ""
+msgstr "На страницу"
 
 #: includes/antiflood.php:15
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "Настройка антифлуда"
 
 #: includes/antiflood.php:62
 msgid "Default settings are set"
-msgstr ""
+msgstr "Установлены настройки по умолчанию"
 
 #: includes/antiflood.php:75
 msgid "Operation mode"
-msgstr ""
+msgstr "Режим работы"
 
 #: includes/antiflood.php:76 includes/antiflood.php:78
 #: includes/antiflood.php:85
 msgid "Day"
-msgstr ""
+msgstr "День"
 
 #: includes/antiflood.php:77 includes/antiflood.php:78
 #: includes/antiflood.php:86
 msgid "Night"
-msgstr ""
+msgstr "Ночь"
 
 #: includes/antiflood.php:79
 msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
+msgstr "Автоматический переход с дневного на ночной режим, согласно заданному в настройках времени"
 
 #: includes/antiflood.php:81
 msgid "Adaptive"
-msgstr ""
+msgstr "Адаптивный"
 
 #: includes/antiflood.php:82
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
+msgstr "Если на сайте есть кто-то из Администрации, система работает в &quot;дневном&quot; режиме, иначе переходит в &quot;ночной&quot;"
 
 #: includes/antiflood.php:84
 msgid "Time limit"
-msgstr ""
+msgstr "Лимит времени"
 
 #: includes/antiflood.php:87
 msgid "Min. 4, max. 300 seconds"
-msgstr ""
+msgstr "Минимум 4, максимум 300 секунд"
 
 #: includes/antiflood.php:88
 msgid "Day mode"
-msgstr ""
+msgstr "Дневной режим"
 
 #: includes/antiflood.php:89
 msgid "Beginning of day"
-msgstr ""
+msgstr "Начало дня"
 
 #: includes/antiflood.php:90
 msgid "End of day"
-msgstr ""
+msgstr "Конец дня"
 
 #: includes/antiflood.php:92
 msgid "Reset Settings"
-msgstr ""
-
-#: includes/antispy.php:371 includes/antispy.php:391 includes/antispy.php:414
-#: includes/antispy.php:431 index.php:110
-msgid "Anti-Spyware"
-msgstr ""
-
-#: includes/antispy.php:371 includes/antispy.php:433
-msgid "Distributive scan"
-msgstr ""
-
-#: includes/antispy.php:374
-msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
-msgstr ""
-
-#: includes/antispy.php:382
-msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
-msgstr ""
-
-#: includes/antispy.php:385
-msgid "Rescan"
-msgstr ""
-
-#: includes/antispy.php:391 includes/antispy.php:435
-msgid "Snapshot scan"
-msgstr ""
-
-#: includes/antispy.php:394
-msgid "Snapshot is not created"
-msgstr ""
-
-#: includes/antispy.php:394 includes/antispy.php:414 includes/antispy.php:423
-#: includes/antispy.php:437
-msgid "Create snapshot"
-msgstr ""
-
-#: includes/antispy.php:397
-msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
-
-#: includes/antispy.php:405
-msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
-
-#: includes/antispy.php:418
-msgid "Snapshot successfully created"
-msgstr ""
-
-#: includes/antispy.php:422
-msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
-
-#: includes/antispy.php:425
-msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
-
-#: includes/antispy.php:432
-msgid "Scan mode"
-msgstr ""
-
-#: includes/antispy.php:434
-msgid "Files identification which are not included in the original distributive"
-msgstr ""
-
-#: includes/antispy.php:436
-msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
-
-#: includes/antispy.php:438
-msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
-
-#: includes/antispy.php:442
-msgid "Scanner menu"
-msgstr ""
+msgstr "Сбросить настройки"
 
 #: index.php:64
 msgid "On registration"
-msgstr ""
+msgstr "На регистрации"
 
 #: index.php:68
 msgid "Administration"
-msgstr ""
+msgstr "Администрация"
 
 #: index.php:69
 msgid "Database cleanup"
-msgstr ""
+msgstr "Очистка базы"
 
 #: index.php:70
 msgid "Ban Panel"
-msgstr ""
+msgstr "Бан панель"
 
 #: index.php:71
 msgid "Antiflood"
-msgstr ""
+msgstr "Антифлуд"
 
 #: index.php:72
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: index.php:74
 msgid "Search by Nickname"
-msgstr ""
+msgstr "Поиск по Нику"
 
 #: index.php:75
 msgid "Search IP"
-msgstr ""
+msgstr "Поиск по IP"
 
 #: index.php:83
 msgid "Modules"
-msgstr ""
+msgstr "Модули"
 
 #: index.php:85
 msgid "News"
-msgstr ""
+msgstr "Новости"
 
 #: index.php:89
 msgid "Counters"
-msgstr ""
+msgstr "Счетчики"
 
 #: index.php:90
 msgid "Mail"
-msgstr ""
+msgstr "Почта"
 
 #: index.php:97
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: index.php:99
 msgid "System Settings"
-msgstr ""
+msgstr "Системные настройки"
 
 #: index.php:100
 msgid "Update Smilies"
-msgstr ""
+msgstr "Обновить смайлы"
 
 #: index.php:101
 msgid "Language Settings"
-msgstr ""
+msgstr "Настройка языка"
 
 #: index.php:108
 msgid "Security"
-msgstr ""
+msgstr "Безопасность"
+
+#: index.php:110
+msgid "Anti-Spyware"
+msgstr "Антишпион"
 
 #: index.php:111
 msgid "Ban by IP"
-msgstr ""
+msgstr "Бан по IP"
+
