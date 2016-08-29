@@ -3,7 +3,7 @@
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | IP WHOIS</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
 function whoisQuery($whoisserver, $domain)
 {
@@ -97,8 +97,8 @@ if ($ip) {
     $ipwhois = trim(bbcode::highlight_url(htmlspecialchars($res)));
     $ipwhois = strtr($ipwhois, $array);
 } else {
-    $ipwhois = $lng['error_wrong_data'];
+    $ipwhois = _t('Wrong data');
 }
 
 echo '<div class="menu"><small>' . nl2br($ipwhois) . '</small></div>' .
-    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . $lng['back'] . '</a></div>';
+    '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . _t('Back') . '</a></div>';
