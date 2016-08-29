@@ -56,7 +56,8 @@ $rootpath = ROOTPATH;
 $ip = core::$ip; // Адрес IP
 $agn = core::$user_agent; // User Agent
 $set = core::$system_set; // Системные настройки
-$lng = core::$lng; // Фразы языка
+//TODO: Временно отключено. После окончания перевода на Gettext опять включить
+//$lng = core::$lng; // Фразы языка
 $is_mobile = core::$is_mobile; // Определение мобильного браузера
 $home = $set['homeurl']; // Домашняя страница
 
