@@ -81,11 +81,11 @@ if ($rights == 4 || $rights >= 6) {
         }
     }
 
-    echo '<h3>' . $lng_dl['refreshed'] . "</h3>" . $lng_dl['added'] . " $totald " . $lng_dl['folders'] . " и $totalf " . $lng_dl['files'] . "<br/>
-" . $lng_dl['deleted'] . " $idd " . $lng_dl['folders'] . " и $idf " . $lng_dl['files'] . "<br/>";
+    echo '<h3>' . $lng_dl['refreshed'] . "</h3>" . $lng_dl['added'] . " $totald " . $lng_dl['folders'] . " и $totalf " . $lng_dl['files'] . "<br>
+" . $lng_dl['deleted'] . " $idd " . $lng_dl['folders'] . " и $idf " . $lng_dl['files'] . "<br>";
 
     if ($totald != 0 || $totalf != 0) {
-        echo "<a href='?act=refresh'>" . $lng_dl['refresh_continue'] . "</a><br/>";
+        echo "<a href='?act=refresh'>" . $lng_dl['refresh_continue'] . "</a><br>";
     }
 }
 

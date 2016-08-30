@@ -49,15 +49,15 @@ if ($total) {
             if (mb_strlen($tx) > 100) {
                 $tx = mb_substr(strip_tags($tx), 0, 90);
 
-                $tx = "<br/>$tx...";
+                $tx = "<br>$tx...";
             } else {
-                $tx = "<br/>$tx";
+                $tx = "<br>$tx";
             }
         } else {
             $tx = "";
         }
 
-        echo '<img src="' . $filesroot . '/img/' . $imt . '" alt=""/><a href="?act=view&amp;file=' . $newf['id'] . '">' . htmlentities($newf['name'], ENT_QUOTES, 'UTF-8') . '</a> (' . $fsz . ' кб)' . $tx . '<br/>';
+        echo '<img src="' . $filesroot . '/img/' . $imt . '" alt=""/><a href="?act=view&amp;file=' . $newf['id'] . '">' . htmlentities($newf['name'], ENT_QUOTES, 'UTF-8') . '</a> (' . $fsz . ' кб)' . $tx . '<br>';
         $nadir = $newf['refid'];
         $pat = "";
 

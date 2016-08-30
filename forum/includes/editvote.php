@@ -75,21 +75,21 @@ if ($rights == 3 || $rights >= 6) {
             echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_vote'] . '</div>' .
                 '<form action="index.php?act=editvote&amp;id=' . $id . '" method="post">' .
                 '<div class="gmenu"><p>' .
-                '<b>' . $lng_forum['voting'] . ':</b><br/>' .
+                '<b>' . $lng_forum['voting'] . ':</b><br>' .
                 '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8') . '"/>' .
                 '</p></div>' .
                 '<div class="menu"><p>';
             $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'");
 
             while ($vote = $vote_result->fetch()) {
-                echo $lng_forum['answer'] . ' ' . ($i + 1) . ' (max. 50): <br/>' .
+                echo $lng_forum['answer'] . ' ' . ($i + 1) . ' (max. 50): <br>' .
                     '<input type="text" name="' . $vote['id'] . 'vote" value="' . htmlentities($vote['name'], ENT_QUOTES, 'UTF-8') . '"/>';
 
                 if ($countvote > 2) {
                     echo '&nbsp;<a href="index.php?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote">[x]</a>';
                 }
 
-                echo '<br/>';
+                echo '<br>';
                 ++$i;
             }
 
@@ -107,7 +107,7 @@ if ($rights == 3 || $rights >= 6) {
                 }
 
                 for ($vote = $i; $vote < $_POST['count_vote']; $vote++) {
-                    echo 'Ответ ' . ($vote + 1) . '(max. 50): <br/><input type="text" name="' . $vote . '" value="' . functions::checkout($_POST[$vote]) . '"/><br/>';
+                    echo 'Ответ ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . functions::checkout($_POST[$vote]) . '"/><br>';
                 }
 
                 echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>' . ($_POST['count_vote'] < 20 ? '<input type="submit" name="plus" value="' . $lng['add'] . '"/>' : '')

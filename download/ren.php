@@ -6,7 +6,7 @@ require_once("../incfiles/head.php");
 
 if ($rights == 4 || $rights >= 6) {
     if (empty($_GET['cat'])) {
-        echo "ERROR<br /><a href='?'>Back</a><br/>";
+        echo "ERROR<br /><a href='?'>Back</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -31,7 +31,7 @@ if ($rights == 4 || $rights >= 6) {
         }
     } else {
         echo "<form action='?act=ren&amp;cat=" . $cat . "' method='post'><p>";
-        echo $lng_dl['folder_name_for_list'] . "<br/><input type='text' name='newrus' value='" . $adrdir['text'] . "'/></p>";
+        echo $lng_dl['folder_name_for_list'] . "<br><input type='text' name='newrus' value='" . $adrdir['text'] . "'/></p>";
         echo "<p><input type='submit' name='submit' value='" . $lng_dl['change'] . "'/></p></form>";
     }
 }

@@ -56,7 +56,7 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['downloads'] . '</b></a>
 
 // Получаем структуру каталогов
 while ($nadir != "" && $nadir != "0") {
-    echo ' | <a href="?cat=' . $nadir . '">' . $dirname . '</a><br/>';
+    echo ' | <a href="?cat=' . $nadir . '">' . $dirname . '</a><br>';
     $dnamm1 = $db->query("select * from `download` where type = 'cat' and id = '" . $nadir . "'")->fetch();
     $dnamm3 = $db->query("select * from `download` where type = 'cat' and id = '" . $dnamm1['refid'] . "'")->fetch();
     $nadir = $dnamm1['refid'];
@@ -64,8 +64,8 @@ while ($nadir != "" && $nadir != "0") {
 }
 
 echo '</div><div class="menu"><p>';
-echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br/>' .
-    '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br/>';
+echo '<b>' . $lng_dl['file'] . ': <span class="red">' . $adrfile['name'] . '</span></b><br>' .
+    '<b>' . $lng_dl['uploaded'] . ':</b> ' . $filtime . '<br>';
 
 $graf = [
     "gif",
@@ -135,7 +135,7 @@ if (in_array($prg, $graf)) {
     imagedestroy($im);
     imagedestroy($im1);
     @chmod("$imagnam", 0644);
-    echo $widthf . ' x ' . $heightf . 'px<br/>';
+    echo $widthf . ' x ' . $heightf . 'px<br>';
 }
 
 if ($prg == "mp3") {
@@ -163,13 +163,13 @@ if ($prg == "mp3") {
     echo '</p>';
 
     if ($id3->getTag('bitrate')) {
-        echo '<b>' . $lng_dl['bitrate'] . ':</b> ' . $id3->getTag('bitrate') . ' kBit/sec<br/>' .
-            '<b>' . $lng_dl['duration'] . ':</b> ' . $id3->getTag('length') . '<br/>';
+        echo '<b>' . $lng_dl['bitrate'] . ':</b> ' . $id3->getTag('bitrate') . ' kBit/sec<br>' .
+            '<b>' . $lng_dl['duration'] . ':</b> ' . $id3->getTag('length') . '<br>';
     }
 }
 
 if (!empty($adrfile['text'])) {
-    echo "<p>Описание:<br/>$adrfile[text]</p>";
+    echo "<p>Описание:<br>$adrfile[text]</p>";
 }
 
 if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
@@ -315,9 +315,9 @@ echo '<div class="phdr"><a href="index.php">' . $lng['downloads'] . '</a></div>'
 if (($rights == 4 || $rights >= 6) && (!empty($_GET['file']))) {
     echo '<p>';
     if ((!in_array($prg, $graf)) && ($prg != "mp3")) {
-        echo '<a href="index.php?act=screen&amp;file=' . $file . '">' . $lng_dl['change_screenshot'] . '</a><br/>';
+        echo '<a href="index.php?act=screen&amp;file=' . $file . '">' . $lng_dl['change_screenshot'] . '</a><br>';
     }
-    echo '<a href="index.php?act=opis&amp;file=' . $file . '">' . $lng_dl['change_description'] . '</a><br/>';
+    echo '<a href="index.php?act=opis&amp;file=' . $file . '">' . $lng_dl['change_description'] . '</a><br>';
     echo '<a href="index.php?act=dfile&amp;file=' . $file . '">' . $lng_dl['delete_file'] . '</a>';
     echo '</p>';
 }

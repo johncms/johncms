@@ -36,7 +36,7 @@ switch ($act) {
                 header("Location: index.php");
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['delete_message'] . '</div>' .
-                    '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br/>' .
+                    '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br>' .
                     '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | ' .
                     '<a href="index.php">' . $lng['cancel'] . '</a></p></div>';
             }
@@ -302,15 +302,15 @@ switch ($act) {
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
 
             if (!$user_id) {
-                echo $lng['name'] . ' (max 25):<br/><input type="text" name="name" maxlength="25"/><br/>';
+                echo $lng['name'] . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
             }
 
-            echo '<b>' . $lng['message'] . '</b> <small>(max 5000)</small>:<br/>';
+            echo '<b>' . $lng['message'] . '</b> <small>(max 5000)</small>:<br>';
             echo bbcode::auto_bb('form', 'msg');
-            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br/>';
+            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br>';
 
             if ($set_user['translit']) {
-                echo '<input type="checkbox" name="msgtrans" value="1" />&nbsp;' . $lng['translit'] . '<br/>';
+                echo '<input type="checkbox" name="msgtrans" value="1" />&nbsp;' . $lng['translit'] . '<br>';
             }
 
             if (!$user_id) {
@@ -381,7 +381,7 @@ switch ($act) {
                     if ($set_user['smileys']) {
                         $otvet = functions::smileys($otvet, 1);
                     }
-                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . functions::display_date($res['otime']) . ')<br/>' . $otvet . '</div>';
+                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . functions::display_date($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
                 if ($rights >= 6) {

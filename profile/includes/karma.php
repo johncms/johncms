@@ -126,7 +126,7 @@ if ($set_karma['on']) {
                         $db->exec("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
                         header('Location: ?act=karma&user=' . $user['id'] . '&type=' . $type);
                     } else {
-                        echo '<div class="rmenu"><p>' . _t('Do you really want to delete comment?') . '<br/>' .
+                        echo '<div class="rmenu"><p>' . _t('Do you really want to delete comment?') . '<br>' .
                             '<a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes">' . _t('Delete') . '</a> | ' .
                             '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=' . $type . '">' . _t('Cancel') . '</a></p></div>';
                     }
@@ -143,7 +143,7 @@ if ($set_karma['on']) {
                     $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user['id']);
                     header('Location: ?user=' . $user['id']);
                 } else {
-                    echo '<div class="rmenu"><p>' . _t('Do you really want to delete all reviews about user?') . '<br/>' .
+                    echo '<div class="rmenu"><p>' . _t('Do you really want to delete all reviews about user?') . '<br>' .
                         '<a href="?act=karma&amp;mod=clean&amp;user=' . $user['id'] . '&amp;yes">' . _t('Delete') . '</a> | ' .
                         '<a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></p></div>';
                 }

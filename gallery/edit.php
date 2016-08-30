@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
     if ($_GET['id'] == "") {
-        echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+        echo "ERROR<br><a href='index.php'>Back</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -20,8 +20,8 @@ if ($rights >= 6) {
                 $db->exec("UPDATE `gallery` SET text='" . $text . "' WHERE id='" . $id . "';");
                 header("location: index.php?id=$id");
             } else {
-                echo $lng_gal['edit_album'] . "<br/><form action='index.php?act=edit&amp;id=" . $id . "' method='post'><input type='text' name='text' value='" . $ms['text'] .
-                    "'/><br/><input type='submit' name='submit' value='Ok!'/></form><br/><a href='index.php?id=" . $id . "'>" . $lng['back'] . "</a><br/>";
+                echo $lng_gal['edit_album'] . "<br><form action='index.php?act=edit&amp;id=" . $id . "' method='post'><input type='text' name='text' value='" . $ms['text'] .
+                    "'/><br><input type='submit' name='submit' value='Ok!'/></form><br><a href='index.php?id=" . $id . "'>" . $lng['back'] . "</a><br>";
             }
             break;
 
@@ -38,13 +38,13 @@ if ($rights >= 6) {
                 $db->exec("UPDATE `gallery` SET text='" . $text . "', user='" . $user . "' WHERE id='" . $id . "';");
                 header("location: index.php?id=$id");
             } else {
-                echo $lng_gal['edit_section'] . "<br/><form action='index.php?act=edit&amp;id=" . $id . "' method='post'><input type='text' name='text' value='" . $ms['text'] . "'/><br/>";
-                echo "<input type='submit' name='submit' value='Ok!'/></form><br/><a href='index.php?id=" . $id . "'>" . $lng['back'] . "</a><br/>";
+                echo $lng_gal['edit_section'] . "<br><form action='index.php?act=edit&amp;id=" . $id . "' method='post'><input type='text' name='text' value='" . $ms['text'] . "'/><br>";
+                echo "<input type='submit' name='submit' value='Ok!'/></form><br><a href='index.php?id=" . $id . "'>" . $lng['back'] . "</a><br>";
             }
             break;
 
         default:
-            echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+            echo "ERROR<br><a href='index.php'>Back</a><br>";
             require_once('../incfiles/end.php');
             exit;
             break;

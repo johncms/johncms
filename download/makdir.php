@@ -25,7 +25,7 @@ if ($rights == 4 || $rights >= 6) {
 
         if ($mk == true) {
             chmod("$droot/$drn", 0777);
-            echo "Папка создана<br/>";
+            echo "Папка создана<br>";
 
             $db->exec("INSERT INTO `download` SET
               `refid` = $cat,
@@ -40,19 +40,19 @@ if ($rights == 4 || $rights >= 6) {
               ");
 
             $newcat = $db->query("select * from `download` where type = 'cat' and name=" . $db->quote($drn) . " and refid = '" . $cat . "'")->fetch();
-            echo "&#187;<a href='?cat=" . $newcat['id'] . "'>В папку</a><br/>";
+            echo "&#187;<a href='?cat=" . $newcat['id'] . "'>В папку</a><br>";
         } else {
-            echo "ERROR<br/>";
+            echo "ERROR<br>";
         }
     } else {
         echo "<form action='?act=makdir&amp;cat=" . intval($_GET['cat']) . "' method='post'>
          <p>" . $lng_dl['folder_name'] . "<br />
          <input type='text' name='drn'/></p>
-         <p>" . $lng_dl['folder_name_for_list'] . ":<br/>
+         <p>" . $lng_dl['folder_name_for_list'] . ":<br>
          <input type='text' name='rusn'/></p>
          <p><input type='submit' name='submit' value='Создать'/></p>
          </form>";
     }
 }
 
-echo "<a href='?'>" . $lng['back'] . "</a><br/>";
+echo "<a href='?'>" . $lng['back'] . "</a><br>";

@@ -5,7 +5,7 @@ require_once("../incfiles/head.php");
 
 if ($rights == 4 || $rights >= 6) {
     if ($_GET['file'] == "") {
-        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
+        echo $lng_dl['file_not_selected'] . "<br><a href='?'>" . $lng['back'] . "</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -19,7 +19,7 @@ if ($rights == 4 || $rights >= 6) {
     $adrfile = $file1->fetch();
 
     if (!$file1 || !is_file($adrfile['adres'] . '/' . $adrfile['name'])) {
-        echo $lng_dl['file_not_selected'] . "<br/><a href='?'>" . $lng['back'] . "</a><br/>";
+        echo $lng_dl['file_not_selected'] . "<br><a href='?'>" . $lng['back'] . "</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }

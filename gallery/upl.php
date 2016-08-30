@@ -8,7 +8,7 @@ if (!$user_id || $rights < 6) {
 }
 
 if (empty($_GET['id'])) {
-    echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+    echo "ERROR<br><a href='index.php'>Back</a><br>";
     require_once('../incfiles/end.php');
     exit;
 }
@@ -18,7 +18,7 @@ $db = App::getContainer()->get(PDO::class);
 $ms = $db->query("SELECT * FROM `gallery` WHERE `id` = " . $id)->fetch();
 
 if ($ms['type'] != "al") {
-    echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+    echo "ERROR<br><a href='index.php'>Back</a><br>";
     require_once('../incfiles/end.php');
     exit;
 }
@@ -33,8 +33,8 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
     ];
     $tff = implode(" ,", $dopras);
     $fotsize = $set['flsz'] / 5;
-    echo '<h3>' . $lng_gal['upload_photo'] . "</h3>" . $lng_gal['allowed_types'] . ": $tff<br/>" . $lng_gal['maximum_weight'] . ": $fotsize кб.<br/><form action='index.php?act=load&amp;id=" . $id .
-        "' method='post' enctype='multipart/form-data'><p>" . $lng_gal['select_photo'] . ":<br/><input type='file' name='fail'/></p><p>" . $lng['description'] . ":<br/><textarea name='text'></textarea></p><p><input type='submit' value='" . $lng['sent'] . "'/></p></form><a href='index.php?id="
+    echo '<h3>' . $lng_gal['upload_photo'] . "</h3>" . $lng_gal['allowed_types'] . ": $tff<br>" . $lng_gal['maximum_weight'] . ": $fotsize кб.<br><form action='index.php?act=load&amp;id=" . $id .
+        "' method='post' enctype='multipart/form-data'><p>" . $lng_gal['select_photo'] . ":<br><input type='file' name='fail'/></p><p>" . $lng['description'] . ":<br><textarea name='text'></textarea></p><p><input type='submit' value='" . $lng['sent'] . "'/></p></form><a href='index.php?id="
         . $id . "'>" . $lng['back'] . "</a>";
 } else {
     header("location: index.php");

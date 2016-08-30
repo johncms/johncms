@@ -59,7 +59,7 @@ class mainpage
 
                     // Если включены переносы, то обрабатываем
                     if ($this->settings['breaks']) {
-                        $text = str_replace("\r\n", "<br/>", $text);
+                        $text = str_replace("\r\n", "<br>", $text);
                     }
 
                     // Обрабатываем тэги

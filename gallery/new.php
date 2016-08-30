@@ -37,7 +37,7 @@ if ($totalnew != 0) {
                 $div = "<div class='b'>";
             }
 
-            echo "$div<br/>&#160;<a href='index.php?id=" . $newf['id'] . "'>";
+            echo "$div<br>&#160;<a href='index.php?id=" . $newf['id'] . "'>";
             $infile = "foto/$newf[name]";
 
             if (!empty($_SESSION['frazm'])) {
@@ -94,33 +94,33 @@ if ($totalnew != 0) {
                 case "gif":
                     $imagnam = "temp/$namefile.temp.gif";
                     ImageGif($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br>";
                     break;
 
                 case "jpg":
                     $imagnam = "temp/$namefile.temp.jpg";
                     imageJpeg($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br>";
                     break;
 
                 case "jpeg":
                     $imagnam = "temp/$namefile.temp.jpg";
                     imageJpeg($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br>";
 
                     break;
 
                 case "png":
                     $imagnam = "temp/$namefile.temp.png";
                     imagePng($im1, $imagnam, $quality);
-                    echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                    echo "<img src='" . $imagnam . "' alt=''/><br>";
 
                     break;
             }
 
             imagedestroy($im);
             imagedestroy($im1);
-            echo "</a><br/>" . $lng['date'] . ': ' . functions::display_date($newf['time']) . '<br/>' . $lng['description'] . ": $newf[text]<br/>";
+            echo "</a><br>" . $lng['date'] . ': ' . functions::display_date($newf['time']) . '<br>' . $lng['description'] . ": $newf[text]<br>";
             $al1 = $db->query("SELECT * FROM `gallery` WHERE type = 'al' AND id = '" . $newf['refid'] . "'")->fetch();
             $rz1 = $db->query("SELECT * FROM `gallery` WHERE type = 'rz' AND id = '" . $al1['refid'] . "'")->fetch();
             echo '<a href="index.php?id=' . $al1['id'] . '">' . $rz1['text'] . '&#160;/&#160;' . $al1['text'] . '</a></div>';
@@ -185,11 +185,11 @@ if ($totalnew != 0) {
             echo ' <a href="index.php?act=new&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
         }
 
-        echo "<form action='index.php'>" . $lng['to_page'] . ":<br/><input type='hidden' name='act' value='new'/><input type='text' name='page'/><br/><input type='submit' value='Go!'/></form>";
+        echo "<form action='index.php'>" . $lng['to_page'] . ":<br><input type='hidden' name='act' value='new'/><input type='text' name='page'/><br><input type='submit' value='Go!'/></form>";
     }
-    echo "<br/>" . $lng['total'] . ": $totalnew";
+    echo "<br>" . $lng['total'] . ": $totalnew";
 } else {
     echo '<p>' . $lng['list_empty'] . '</p>';
 }
 
-echo "<br/><a href='index.php?'>" . $lng['to_gallery'] . "</a><br/>";
+echo "<br><a href='index.php?'>" . $lng['to_gallery'] . "</a><br>";

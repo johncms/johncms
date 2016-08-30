@@ -143,8 +143,8 @@ switch ($act) {
         // Форма для восстановления пароля
         echo '<div class="phdr"><b>' . _t('Password recovery') . '</b></div>';
         echo '<div class="menu"><form action="skl.php?act=sent" method="post">';
-        echo '<p>' . _t('Username') . ':<br/><input type="text" name="nick" /><br/>';
-        echo _t('Your E-mail') . ':<br/><input type="text" name="email" /></p>';
+        echo '<p>' . _t('Username') . ':<br><input type="text" name="nick" /><br>';
+        echo _t('Your E-mail') . ':<br><input type="text" name="email" /></p>';
         echo '<p><img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Verification code') . '"/><br />';
         echo '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Enter code') . '</p>';
         echo '<p><input type="submit" value="' . _t('Send') . '"/></p></form></div>';

@@ -200,7 +200,7 @@ msgstr "дней"
 
 #: includes/ads.php:183
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr "Количество дней с момента установки ссылки, по истечению которого ссылка автоматически уберется<br />0 - без ограничений"
+msgstr "Количество дней с момента установки ссылки, по истечению которого ссылка автоматически уберется<br>0 - без ограничений"
 
 #: includes/ads.php:185 includes/ads.php:356 includes/ads.php:362
 msgid "Show"

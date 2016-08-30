@@ -18,5 +18,5 @@ if (!empty ($mas['name'])) {
 
 else {
     require_once ('../incfiles/head.php');
-    echo "ERROR<br/>&#187;<a href='index.php'>Back</a><br/>";
+    echo "ERROR<br>&#187;<a href='index.php'>Back</a><br>";
 }

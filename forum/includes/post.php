@@ -111,7 +111,7 @@ if ($freq->rowCount()) {
         echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
     }
 
-    echo ' (' . $fls . ' кб.)<br/>';
+    echo ' (' . $fls . ' кб.)<br>';
     echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</div>';
     $file_id = $fres['id'];
 }

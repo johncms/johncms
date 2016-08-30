@@ -167,8 +167,8 @@ if (isset($_POST['submit'])) {
         }
 
         echo '<div class="menu"><p><h3>' . _t('Your registratiton data') . '</h3>'
-            . _t('Your ID') . ': <b>' . $usid . '</b><br/>'
-            . _t('Your Username') . ': <b>' . $reg_nick . '</b><br/>'
+            . _t('Your ID') . ': <b>' . $usid . '</b><br>'
+            . _t('Your Username') . ': <b>' . $reg_nick . '</b><br>'
             . _t('Your Password') . ': <b>' . $reg_pass . '</b></p>';
 
         if ($set['mod_reg'] == 1) {
@@ -199,7 +199,7 @@ echo '<form action="index.php" method="post"><div class="gmenu">' .
     '<p><h3>' . _t('Assign a password') . '</h3>' .
     (isset($error['password']) ? '<span class="red"><small>' . implode('<br />',
             $error['password']) . '</small></span><br />' : '') .
-    '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
+    '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br>' .
     '<small>' . _t('Min. 3 characters') . '</small></p>' .
     '<p><h3>' . _t('Select Gender') . '</h3>' .
     (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .

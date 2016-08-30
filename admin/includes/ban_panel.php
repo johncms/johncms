@@ -36,14 +36,14 @@ switch ($mod) {
                 }
             } else {
                 echo '<form action="index.php?act=ban_panel&amp;mod=amnesty" method="post"><div class="menu"><p>' .
-                    '<input type="radio" name="term" value="0" checked="checked" />&#160;' . _t('Unban all') . '<br />' .
+                    '<input type="radio" name="term" value="0" checked="checked" />&#160;' . _t('Unban all') . '<br>' .
                     '<input type="radio" name="term" value="1" />&#160;' . _t('Clear Ban database') .
                     '</p><p><input type="submit" name="submit" value="' . _t('Amnesty') . '" />' .
                     '</p></div></form>' .
                     '<div class="phdr"><small>' . _t('&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history') . '</small></div>';
             }
 
-            echo '<p><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            echo '<p><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
@@ -72,7 +72,7 @@ switch ($mod) {
             while ($res = $req->fetch()) {
                 echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
                 $arg = [
-                    'header' => '<br /><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>',
+                    'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>',
                 ];
                 echo functions::display_user($res, $arg);
                 echo '</div>';
@@ -89,7 +89,7 @@ switch ($mod) {
         }
 
         echo '<p>' . ($rights == 9 && $total
-                ? '<a href="index.php?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br />'
+                ? '<a href="index.php?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
                 : '')
             . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
 }

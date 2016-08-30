@@ -103,7 +103,7 @@ switch ($act) {
                     }
 
                     echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a> ';
-                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br/>';
+                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br>';
                     $text = $search_t ? $res_p['text'] : $res['text'];
 
                     foreach ($array as $srch) {

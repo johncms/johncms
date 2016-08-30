@@ -20,10 +20,10 @@ if ($rights == 3 || $rights >= 6) {
                 WHERE `id` = '" . intval($delid) . "'
             ");
         }
-        echo $lng_forum['mass_delete_confirm'] . '<br/><a href="' . $prd . '">' . $lng['back'] . '</a><br/>';
+        echo $lng_forum['mass_delete_confirm'] . '<br><a href="' . $prd . '">' . $lng['back'] . '</a><br>';
     } else {
         if (empty($_POST['delch'])) {
-            echo '<p>' . $lng_forum['error_mass_delete'] . '<br/><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['back'] . '</a></p>';
+            echo '<p>' . $lng_forum['error_mass_delete'] . '<br><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['back'] . '</a></p>';
             require('../incfiles/end.php');
             exit;
         }
@@ -34,7 +34,7 @@ if ($rights == 3 || $rights >= 6) {
 
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
-        echo '<p>' . $lng['delete_confirmation'] . '<br/><a href="index.php?act=massdel&amp;yes">' . $lng['delete'] . '</a> | ' .
+        echo '<p>' . $lng['delete_confirmation'] . '<br><a href="index.php?act=massdel&amp;yes">' . $lng['delete'] . '</a> | ' .
             '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p>';
     }
 }

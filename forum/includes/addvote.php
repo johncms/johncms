@@ -56,8 +56,8 @@ if ($rights == 3 || $rights >= 6) {
         }
     } else {
         echo '<form action="index.php?act=addvote&amp;id=' . $id . '" method="post">' .
-            '<br />' . $lng_forum['voting'] . ':<br/>' .
-            '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'], ENT_QUOTES, 'UTF-8') . '"/><br/>';
+            '<br />' . $lng_forum['voting'] . ':<br>' .
+            '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'], ENT_QUOTES, 'UTF-8') . '"/><br>';
 
         if (isset($_POST['plus'])) {
             ++$_POST['count_vote'];
@@ -72,12 +72,12 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         for ($vote = 0; $vote < $_POST['count_vote']; $vote++) {
-            echo $lng_forum['answer'] . ' ' . ($vote + 1) . '(max. 50): <br/><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br/>';
+            echo $lng_forum['answer'] . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br>';
         }
 
         echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>';
-        echo ($_POST['count_vote'] < 20) ? '<br/><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
-        echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/><br/>' : '<br/>';
+        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
+        echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/><br>' : '<br>';
         echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form>';
         echo '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>';
     }

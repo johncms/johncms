@@ -160,47 +160,47 @@ switch ($mod) {
 
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
 
-            echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br />' .
+            echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br>' .
                 '<a href="index.php?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма добавления / изменения ссылки
             echo '<form action="index.php?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
                 '<div class="menu"><p><h3>' . _t('Link') . '</h3>' .
-                '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
-                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br />' .
+                '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
+                '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br>' .
                 '<small>' . _t('Click statistics won\'t be counted, If the direct link is turned on') . '</small></p>' .
                 '<p><h3>' . _t('Title') . '</h3>' .
-                '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
+                '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
                 '<small>' . _t('To change the name when updating pages, you must wtite names trought the symbol |') . '</small></p>' .
                 '<p><h3>' . _t('Color') . '</h3>' .
-                '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br />' .
+                '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br>' .
                 '<small>' . _t('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') . '</small></p>' .
                 '<p><h3>' . _t('Hits') . '</h3>' .
-                '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br />' .
+                '<input type="text" name="count" size="6" value="' . $res['count_link'] . '"/><br>' .
                 '<small>' . _t('Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
                 '<p><h3>' . _t('Days') . '</h3>' .
-                '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br />' .
+                '<input type="text" name="day" size="6" value="' . $res['day'] . '"/><br>' .
                 '<small>' . _t('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
                 '</div><div class="gmenu">' .
                 '<p><h3>' . _t('Show') . '</h3>' .
-                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Everyone') . '<br />' .
-                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Guests') . '<br />' .
+                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Everyone') . '<br>' .
+                '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Guests') . '<br>' .
                 '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Users') . '</p>' .
                 '<p><h3>' . _t('Location') . '</h3>' .
-                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Above logo') . '<br />' .
-                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under menu') . '<br />' .
-                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Over the counter') . '<br />' .
+                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Above logo') . '<br>' .
+                '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under menu') . '<br>' .
+                '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Over the counter') . '<br>' .
                 '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under counter') . '</p>' .
                 '<p><h3>' . _t('Layout') . '</h3>' .
-                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('All pages') . '<br />' .
-                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Only on Homepage') . '<br />' .
+                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('All pages') . '<br>' .
+                '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Only on Homepage') . '<br>' .
                 '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('On all, except Homepage') . '</p>' .
                 '<p><h3>' . _t('Styling links') . '</h3>' .
-                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . _t('Bold') . '</b><br />' .
-                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . _t('Italic') . '</i><br />' .
+                '<input type="checkbox" name="bold" ' . ($res['bold'] ? 'checked="checked"' : '') . '/>&nbsp;<b>' . _t('Bold') . '</b><br>' .
+                '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . _t('Italic') . '</i><br>' .
                 '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . _t('Underline') . '</u></p></div>' .
                 '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? _t('Edit') : _t('Add')) . '" /></div></form>' .
-                '<p><a href="index.php?act=ads">' . _t('Advertisement') . '</a><br />' .
+                '<p><a href="index.php?act=ads">' . _t('Advertisement') . '</a><br>' .
                 '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
         }
         break;
@@ -347,7 +347,7 @@ switch ($mod) {
 
                 // Выводим рекламмную ссылку с атрибутами
                 echo '<p><img src="../images/' . ($res['to'] ? 'red' : 'green') . '.gif" width="16" height="16" class="left"/>&#160;' .
-                    '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br />' . $name . '</p>';
+                    '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br>' . $name . '</p>';
                 $menu = [
                     '<a href="index.php?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a>',
                     '<a href="index.php?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a>',
@@ -357,8 +357,8 @@ switch ($mod) {
                 ];
                 echo '<div class="sub">' .
                     '<div>' . functions::display_menu($menu) . '</div>' .
-                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . functions::display_date($res['time']) . '<br />' .
-                    '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br />' .
+                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . functions::display_date($res['time']) . '<br>' .
+                    '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br>' .
                     '<span class="gray">' . _t('Show') . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу
                 $agreement = [];
@@ -382,13 +382,13 @@ switch ($mod) {
 
                 // Если был договор, то выводим описание
                 if ($agreement) {
-                    echo '<br /><span class="gray">' . _t('Agreement') . ':</span>&nbsp;' . implode($agreement, ', ');
+                    echo '<br><span class="gray">' . _t('Agreement') . ':</span>&nbsp;' . implode($agreement, ', ');
 
                     if ($remains) {
-                        echo '<br /><span class="gray">' . _t('Remains') . ':</span> ' . implode($remains, ', ');
+                        echo '<br><span class="gray">' . _t('Remains') . ':</span> ' . implode($remains, ', ');
                     }
                 }
-                echo ($res['show'] ? '<br /><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
+                echo ($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
                 ++$i;
             }
         } else {
@@ -404,7 +404,7 @@ switch ($mod) {
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p><a href="index.php?act=ads&amp;mod=edit">' . _t('Add link') . '</a><br />' .
-            '<a href="index.php?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br />' .
+        echo '<p><a href="index.php?act=ads&amp;mod=edit">' . _t('Add link') . '</a><br>' .
+            '<a href="index.php?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br>' .
             '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
 }

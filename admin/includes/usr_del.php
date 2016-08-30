@@ -118,4 +118,4 @@ if (!$error) {
     echo functions::display_error($error);
 }
 
-echo '<p><a href="index.php?act=users">' . $lng['users_list'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<p><a href="index.php?act=users">' . $lng['users_list'] . '</a><br><a href="index.php">' . $lng['admin_panel'] . '</a></p>';

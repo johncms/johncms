@@ -129,7 +129,7 @@ switch ($do) {
                     while ($pr1 = $pr->fetch()) {
                         echo '<option value="' . $pr1['id'] . '">' . $pr1['text'] . '</option>';
                     }
-                    echo '</select><br/>';
+                    echo '</select><br>';
                 }
 
                 echo '</p></div><div class="bmenu">' .
@@ -252,9 +252,9 @@ switch ($do) {
             if (isset($_GET['yes'])) {
                 $db->query("DELETE FROM `news` WHERE `id` = '$id'");
 
-                echo '<p>' . $lng_news['article_deleted'] . '<br/><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                echo '<p>' . $lng_news['article_deleted'] . '<br><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
             } else {
-                echo '<p>' . $lng['delete_confirmation'] . '<br/>' .
+                echo '<p>' . $lng['delete_confirmation'] . '<br>' .
                     '<a href="index.php?do=del&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | <a href="index.php">' . $lng['cancel'] . '</a></p>';
             }
         } else {
@@ -290,7 +290,7 @@ switch ($do) {
                 $komm = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'")->fetchColumn();
 
                 if ($komm >= 0) {
-                    echo '<a href="../forum/?id=' . $res['kom'] . '">' . $lng_news['discuss_on_forum'] . ' (' . $komm . ')</a><br/>';
+                    echo '<a href="../forum/?id=' . $res['kom'] . '">' . $lng_news['discuss_on_forum'] . ' (' . $komm . ')</a><br>';
                 }
             }
 

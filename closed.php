@@ -5,8 +5,8 @@
 </head>
 <body>
 <div style="text-align: center">
-<h2 style="color:red">Attention!</h2><br/>
-The site carried out technical work.<br/>Please, try again later
+<h2 style="color:red">Attention!</h2><br>
+The site carried out technical work.<br>Please, try again later
 </div>
 </body>
 </html>
