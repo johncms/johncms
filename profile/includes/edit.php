@@ -18,7 +18,7 @@ $db = App::getContainer()->get(PDO::class);
 // Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
-    echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br /><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
+    echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
     require('../incfiles/end.php');
     exit;
 }
@@ -150,21 +150,21 @@ if (isset($_GET['delavatar'])) {
 // Форма редактирования анкеты пользователя
 echo '<form action="?act=edit&amp;user=' . $user['id'] . '" method="post">' .
     '<div class="gmenu"><p>' .
-    _t('Username') . ': <b>' . $user['name_lat'] . '</b><br />';
+    _t('Username') . ': <b>' . $user['name_lat'] . '</b><br>';
 
 if ($rights >= 7) {
-    echo _t('Nickname') . ': (' . _t('Min.2, Max. 20') . ')<br /><input type="text" value="' . $user['name'] . '" name="name" /><br />' .
-        _t('Status') . ': (' . _t('Max. 50') . ')<br /><input type="text" value="' . $user['status'] . '" name="status" /><br />';
+    echo _t('Nickname') . ': (' . _t('Min.2, Max. 20') . ')<br><input type="text" value="' . $user['name'] . '" name="name" /><br>' .
+        _t('Status') . ': (' . _t('Max. 50') . ')<br><input type="text" value="' . $user['status'] . '" name="status" /><br>';
 } else {
-    echo '<span class="gray">' . _t('Nickname') . ':</span> <b>' . $user['name'] . '</b><br />' .
-        '<span class="gray">' . _t('Status') . ':</span> ' . $user['status'] . '<br />';
+    echo '<span class="gray">' . _t('Nickname') . ':</span> <b>' . $user['name'] . '</b><br>' .
+        '<span class="gray">' . _t('Status') . ':</span> ' . $user['status'] . '<br>';
 }
 
-echo '</p><p>' . _t('Avatar') . ':<br />';
+echo '</p><p>' . _t('Avatar') . ':<br>';
 $link = '';
 
 if (file_exists(('../files/users/avatar/' . $user['id'] . '.png'))) {
-    echo '<img src="../files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /><br />';
+    echo '<img src="../files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="' . $user['name'] . '" /><br>';
     $link = ' | <a href="?act=edit&amp;user=' . $user['id'] . '&amp;delavatar">' . _t('Delete') . '</a>';
 }
 
@@ -175,34 +175,35 @@ if ($user['id'] == $user_id) {
 }
 
 echo $link . '</small></p>';
-echo '<p>' . _t('Photo') . ':<br />';
+echo '<p>' . _t('Photo') . ':<br>';
 $link = '';
 
 if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
-    echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br />';
+    echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a><br>';
     $link = ' | <a href="?act=edit&amp;user=' . $user['id'] . '&amp;delphoto">' . _t('Delete') . '</a>';
 }
 
-echo '<small><a href="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . _t('Upload') . '</a>' . $link . '</small><br />' .
+echo '<small><a href="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '">' . _t('Upload') . '</a>' . $link . '</small><br>' .
     '</p></div>' .
     '<div class="menu">' .
     '<p><h3><img src="../images/contacts.png" width="16" height="16" class="left" />&#160;' . _t('Personal info') . '</h3>' .
-    _t('Your name') . ':<br /><input type="text" value="' . $user['imname'] . '" name="imname" /></p>' .
-    '<p>' . _t('Date of birth (d.m.y)') . '<br />' .
+    _t('Your name') . ':<br><input type="text" value="' . $user['imname'] . '" name="imname" /></p>' .
+    '<p>' . _t('Date of birth (d.m.y)') . '<br>' .
     '<input type="text" value="' . $user['dayb'] . '" size="2" maxlength="2" name="dayb" />.' .
     '<input type="text" value="' . $user['monthb'] . '" size="2" maxlength="2" name="monthb" />.' .
     '<input type="text" value="' . $user['yearofbirth'] . '" size="4" maxlength="4" name="yearofbirth" /></p>' .
-    '<p>' . _t('City, Country') . ':<br /><input type="text" value="' . $user['live'] . '" name="live" /></p>' .
-    '<p>' . _t('About myself') . ':<br /><textarea rows="' . $set_user['field_h'] . '" name="about">' . strip_tags($user['about']) . '</textarea></p>' .
+    '<p>' . _t('City, Country') . ':<br><input type="text" value="' . $user['live'] . '" name="live" /></p>' .
+    '<p>' . _t('About myself') . ':<br><textarea rows="' . $set_user['field_h'] . '" name="about">' . strip_tags($user['about']) . '</textarea></p>' .
     '<p><h3><img src="../images/mail.png" width="16" height="16" class="left" />&#160;' . _t('Contacts') . '</h3>' .
-    _t('Phone number') . ':<br /><input type="text" value="' . $user['mibile'] . '" name="mibile" /><br />' .
-    '</p><p>E-mail:<br /><small>' . _t('Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.') . '</small><br />' .
-    '<input type="text" value="' . $user['mail'] . '" name="mail" /><br />' .
-    '<input name="mailvis" type="checkbox" value="1" ' . ($user['mailvis'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Show in Profile') . '</p>' .
-    '<p>ICQ:<br /><input type="text" value="' . $user['icq'] . '" name="icq" size="10" maxlength="10" /></p>' .
-    '<p>Skype:<br /><input type="text" value="' . $user['skype'] . '" name="skype" /></p>' .
-    '<p>Jabber:<br /><input type="text" value="' . $user['jabber'] . '" name="jabber" /></p>' .
-    '<p>' . _t('Site') . ':<br /><input type="text" value="' . $user['www'] . '" name="www" /></p>' .
+    _t('Phone number') . ':<br><input type="text" value="' . $user['mibile'] . '" name="mibile" /><br>' .
+    '</p><p>E-mail<br>' .
+    '<input type="text" value="' . $user['mail'] . '" name="mail" /><br>' .
+    '<input name="mailvis" type="checkbox" value="1" ' . ($user['mailvis'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Show in Profile') . '<br>' .
+    '<small class="gray">' . _t('Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account.') . '</small></p>' .
+    '<p>ICQ:<br><input type="text" value="' . $user['icq'] . '" name="icq" size="10" maxlength="10" /></p>' .
+    '<p>Skype:<br><input type="text" value="' . $user['skype'] . '" name="skype" /></p>' .
+    '<p>Jabber:<br><input type="text" value="' . $user['jabber'] . '" name="jabber" /></p>' .
+    '<p>' . _t('Site') . ':<br><input type="text" value="' . $user['www'] . '" name="www" /></p>' .
     '</div>';
 
 // Административные функции
@@ -215,26 +216,25 @@ if ($rights >= 7) {
         echo '<li><a href="?act=reset&amp;user=' . $user['id'] . '">' . _t('Reset User options to default') . '</a></li>';
     }
 
-    echo '<li>' . _t('Select gender') . ':<br />' .
-        '<input type="radio" value="m" name="sex" ' . ($user['sex'] == 'm' ? 'checked="checked"' : '') . '/>&#160;' . _t('Man') . '<br />' .
+    echo '<li>' . _t('Select gender') . ':<br>' .
+        '<input type="radio" value="m" name="sex" ' . ($user['sex'] == 'm' ? 'checked="checked"' : '') . '/>&#160;' . _t('Man') . '<br>' .
         '<input type="radio" value="zh" name="sex" ' . ($user['sex'] == 'zh' ? 'checked="checked"' : '') . '/>&#160;' . _t('Woman') . '</li>' .
         '</ul></p>';
 
     if ($user['id'] != $user_id) {
         echo '<p><h3><img src="../images/forbidden.png" width="16" height="16" class="left" />&#160;' . _t('Position on the Site') . '</h3><ul>' .
-            '<input type="radio" value="0" name="rights" ' . (!$user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . _t('User') . '</b><br />' .
-            '<input type="radio" value="3" name="rights" ' . ($user['rights'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Forum Moderator') . '<br />' .
-            '<input type="radio" value="4" name="rights" ' . ($user['rights'] == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Download Moderator') . '<br />' .
-            '<input type="radio" value="5" name="rights" ' . ($user['rights'] == 5 ? 'checked="checked"' : '') . '/>&#160;' . _t('Library Moderator') . '<br />' .
-            '<input type="radio" value="6" name="rights" ' . ($user['rights'] == 6 ? 'checked="checked"' : '') . '/>&#160;' . _t('Super Modererator') . '<br />';
+            '<input type="radio" value="0" name="rights" ' . (!$user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . _t('User') . '</b><br>' .
+            '<input type="radio" value="3" name="rights" ' . ($user['rights'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Forum Moderator') . '<br>' .
+            '<input type="radio" value="4" name="rights" ' . ($user['rights'] == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Download Moderator') . '<br>' .
+            '<input type="radio" value="5" name="rights" ' . ($user['rights'] == 5 ? 'checked="checked"' : '') . '/>&#160;' . _t('Library Moderator') . '<br>' .
+            '<input type="radio" value="6" name="rights" ' . ($user['rights'] == 6 ? 'checked="checked"' : '') . '/>&#160;' . _t('Super Modererator') . '<br>';
         if ($rights == 9) {
-            echo '<input type="radio" value="7" name="rights" ' . ($user['rights'] == 7 ? 'checked="checked"' : '') . '/>&#160;' . _t('Administrator') . '<br />' .
-                '<input type="radio" value="9" name="rights" ' . ($user['rights'] == 9 ? 'checked="checked"' : '') . '/>&#160;<span class="red"><b>' . _t('Supervisor') . '</b></span><br />';
+            echo '<input type="radio" value="7" name="rights" ' . ($user['rights'] == 7 ? 'checked="checked"' : '') . '/>&#160;' . _t('Administrator') . '<br>' .
+                '<input type="radio" value="9" name="rights" ' . ($user['rights'] == 9 ? 'checked="checked"' : '') . '/>&#160;<span class="red"><b>' . _t('Supervisor') . '</b></span><br>';
         }
         echo '</ul></p>';
     }
     echo '</div>';
 }
 
-echo '<div class="gmenu"><input type="submit" value="' . _t('Save') . '" name="submit" /></div>' .
-    '</form>';
+echo '<div class="gmenu"><input type="submit" value="' . _t('Save') . '" name="submit" /></div></form>';
