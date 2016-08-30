@@ -115,7 +115,7 @@ switch ($mod) {
         if ($req->rowCount()) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
-                echo '<p>' . _t('Counter deleted') . '<br/><a href="index.php?act=counters">' . _t('Continue') . '</a></p>';
+                echo '<p>' . _t('Counter deleted') . '<br><a href="index.php?act=counters">' . _t('Continue') . '</a></p>';
                 require('../incfiles/end.php');
                 exit;
             } else {
@@ -191,13 +191,13 @@ switch ($mod) {
             echo '<form action="index.php?act=counters&amp;mod=edit" method="post">' .
                 '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Add') . '</div>' .
                 '<div class="menu"><p><h3>' . _t('Title') . '</h3><input type="text" name="name" value="' . $name . '" /></p>' .
-                '<p><h3>' . _t('Option 1') . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br /><small>' . _t('Code for main page') . '</small></p>' .
-                '<p><h3>' . _t('Option 2') . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br /><small>' . _t('Code for other pages') . '</small></p>' .
-                '<p><h3>' . _t('Display mode') . '</h3>' . '<input type="radio" value="1" ' . ($mode == 0 || $mode == 1 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Default') . '<br />' .
+                '<p><h3>' . _t('Option 1') . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br><small>' . _t('Code for main page') . '</small></p>' .
+                '<p><h3>' . _t('Option 2') . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br><small>' . _t('Code for other pages') . '</small></p>' .
+                '<p><h3>' . _t('Display mode') . '</h3>' . '<input type="radio" value="1" ' . ($mode == 0 || $mode == 1 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Default') . '<br>' .
                 '<small>' . _t('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') . '</small></p><p>' .
-                '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 1') . '<br />' .
+                '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 1') . '<br>' .
                 '<input type="radio" value="3" ' . ($mode == 3 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . _t('Option 2') . '</p></div>' .
-                '<div class="rmenu"><small>' . _t('WARNING!<br />Make sure you have correctly entered the code. It must meet the standard of XML <br /> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>';
+                '<div class="rmenu"><small>' . _t('WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors.') . '</small></div>';
 
             if ($id) {
                 echo '<input type="hidden" value="' . $id . '" name="id" />';
@@ -287,7 +287,7 @@ switch ($mod) {
             while ($res = $req->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../images/' . ($res['switch'] == 1 ? 'green' : 'red') . '.gif" width="16" height="16" class="left"/>&#160;';
-                echo '<a href="index.php?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br />';
+                echo '<a href="index.php?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br>';
                 echo '<div class="sub"><a href="index.php?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ';
                 echo '<a href="index.php?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ';
                 echo '<a href="index.php?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ';
@@ -299,4 +299,4 @@ switch ($mod) {
         echo '<div class="phdr"><a href="index.php?act=counters&amp;mod=edit">' . _t('Add') . '</a></div>';
 }
 
-echo '<p>' . ($mod ? '<a href="index.php?act=counters">' . _t('Counters') . '</a><br />' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+echo '<p>' . ($mod ? '<a href="index.php?act=counters">' . _t('Counters') . '</a><br>' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';

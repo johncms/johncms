@@ -375,7 +375,7 @@ switch ($mod) {
             echo '<div class="menu">';
 
             foreach ($scaner->bad_files as $idx => $data) {
-                echo $data['file_path'] . '<br />';
+                echo $data['file_path'] . '<br>';
             }
             echo '</div><div class="phdr">' . _t('Total') . ': ' . count($scaner->bad_files) . '</div>';
         } else {
@@ -398,7 +398,7 @@ switch ($mod) {
                 echo '<div class="menu">';
 
                 foreach ($scaner->bad_files as $idx => $data) {
-                    echo $data['file_path'] . '<br />';
+                    echo $data['file_path'] . '<br>';
                 }
                 echo '</div>';
             } else {
@@ -430,13 +430,13 @@ switch ($mod) {
         // Главное меню Сканера
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Anti-Spyware') . '</div>'
             . '<div class="menu"><p><h3>' . _t('Scan mode') . '</h3><ul>'
-            . '<li><a href="index.php?act=antispy&amp;mod=scan">' . _t('Distributive scan') . '</a><br />'
+            . '<li><a href="index.php?act=antispy&amp;mod=scan">' . _t('Distributive scan') . '</a><br>'
             . '<small>' . _t('Files identification which are not included in the original distributive') . '</small></li>'
-            . '<li><a href="index.php?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br />'
+            . '<li><a href="index.php?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br>'
             . '<small>' . _t('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
-            . '<li><a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br />'
+            . '<li><a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br>'
             . '<small>' . _t('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') . '</small></li>'
             . '</ul></p></div><div class="phdr">&#160;</div>';
 }
 
-echo '<p>' . ($mod ? '<a href="index.php?act=antispy">' . _t('Scanner menu') . '</a><br />' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+echo '<p>' . ($mod ? '<a href="index.php?act=antispy">' . _t('Scanner menu') . '</a><br>' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';

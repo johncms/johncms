@@ -116,10 +116,10 @@ if (in_array($act, $array_includes)) {
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br/>';
+            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . $lng_lib['new_articles'] . '</a> (' . $res . ')<br>';
         }
 
-        echo functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br/>' .
+        echo functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . $lng_lib['rated_articles'] . '</a><br>' .
             functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . $lng_lib['last_comments'] . '</a>' .
             '</p></div>';
 
@@ -202,8 +202,8 @@ if (in_array($act, $array_includes)) {
                     echo $nav;
 
                     if ($adm) {
-                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
-                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a><br/>'
+                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br>'
+                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a><br>'
                             . '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng_lib['create_category'] . '</a></p>';
                     }
                 } else {
@@ -252,7 +252,7 @@ if (in_array($act, $array_includes)) {
 
                     if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $user_id) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . $lng_lib['write_article'] . '</a>'
-                            . ($adm ? ('<br/><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                            . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . $lng['edit'] . '</a><br>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . $lng['delete'] . '</a>') : '')
                             . '</p>';
                     }
@@ -361,7 +361,7 @@ if (in_array($act, $array_includes)) {
                         . ($user_id && $page == 1 ? $rate->print_vote() : '');
 
                     if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) {
-                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br/>'
+                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['edit'] . '</a><br>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . $lng['delete'] . '</a></p>';
                     }
                 } else {

@@ -42,19 +42,19 @@ if ($rights == 4 || $rights >= 6) {
             $formfot = functions::format($ffot);
 
             if (!in_array($formfot, $dopras)) {
-                echo $lng_dl['screenshot_upload_error'] . '<br/><a href="index.php?act=screen&amp;file=' . $file . '">' . $lng['repeat'] . '</a><br/>';
+                echo $lng_dl['screenshot_upload_error'] . '<br><a href="index.php?act=screen&amp;file=' . $file . '">' . $lng['repeat'] . '</a><br>';
                 require_once('../incfiles/end.php');
                 exit;
             }
 
             if ($scwidth > 320 || $scheight > 320) {
-                echo $lng_dl['screenshot_size_error'] . '<br/><a href="index.php?act=screen&amp;file=' . $file . '">' . $lng['repeat'] . '</a><br/>';
+                echo $lng_dl['screenshot_size_error'] . '<br><a href="index.php?act=screen&amp;file=' . $file . '">' . $lng['repeat'] . '</a><br>';
                 require_once('../incfiles/end.php');
                 exit;
             }
 
             if (preg_match("/[^\da-z_\-.]+/", $scrname)) {
-                echo $lng_dl['screenshot_name_error'] . "<br/><a href='?act=screen&amp;file=" . $file . "'>" . $lng['repeat'] . "</a><br/>";
+                echo $lng_dl['screenshot_name_error'] . "<br><a href='?act=screen&amp;file=" . $file . "'>" . $lng['repeat'] . "</a><br>";
                 require_once('../incfiles/end.php');
                 exit;
             }
@@ -66,13 +66,13 @@ if ($rights == 4 || $rights >= 6) {
                 $ch1 = "$filnam.$formfot";
                 @chmod("$ch1", 0777);
                 @chmod("$screenroot/$ch1", 0777);
-                echo $lng_dl['screenshot_uploaded'] . '<br/>';
+                echo $lng_dl['screenshot_uploaded'] . '<br>';
                 $db->exec("UPDATE `download` SET `screen` = " . $db->quote($ch1) . " WHERE `id` = '" . $file . "'");
             }
         }
     } else {
-        echo $lng_dl['upload_screenshot'] . '<br/>';
-        echo '<form action="index.php?act=screen&amp;file=' . $file . '" method="post" enctype="multipart/form-data"><p>' . $lng['select'] . ' (max. 320*320):<br/>' .
+        echo $lng_dl['upload_screenshot'] . '<br>';
+        echo '<form action="index.php?act=screen&amp;file=' . $file . '" method="post" enctype="multipart/form-data"><p>' . $lng['select'] . ' (max. 320*320):<br>' .
             '<input type="file" name="screens"/>' .
             '</p><p><input type="submit" name="submit" value="' . $lng_dl['upload'] . '"/></p>' .
             '</form>';

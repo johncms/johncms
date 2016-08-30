@@ -85,7 +85,7 @@ switch ($mod) {
                             echo '<option value="' . $res_c['id'] . '">' . $res_c['text'] . '</option>';
                         }
 
-                        echo '</select><br /><small>' . _t('All categories, topics, and files will be moved into selected category. Old category will be removed.') . '</small></p>' .
+                        echo '</select><br><small>' . _t('All categories, topics, and files will be moved into selected category. Old category will be removed.') . '</small></p>' .
                             '<p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
 
                         // Для супервайзоров запрос на полное удаление
@@ -152,7 +152,7 @@ switch ($mod) {
                         $db->exec("DELETE FROM `forum` WHERE `id` = '$id'");
                         // Оптимизируем таблицы
                         $db->query("OPTIMIZE TABLE `cms_forum_files` , `cms_forum_rdm` , `forum` , `cms_forum_vote` , `cms_forum_vote_users`");
-                        echo '<div class="rmenu"><p>' . _t('Section with all contents are removed') . '<br />' .
+                        echo '<div class="rmenu"><p>' . _t('Section with all contents are removed') . '<br>' .
                             '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['refid'] . '">' . _t('Go to category') . '</a></p></div>';
                     } else {
                         echo '<form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST"><div class="rmenu">' .
@@ -162,7 +162,7 @@ switch ($mod) {
                         $req_r = $db->query("SELECT * FROM `forum` WHERE `refid` = '$ref' AND `id` != '$id' AND `type` = 'r' ORDER BY `realid` ASC");
 
                         while ($res_r = $req_r->fetch()) {
-                            echo '<input type="radio" name="subcat" value="' . $res_r['id'] . '" />&#160;' . $res_r['text'] . '<br />';
+                            echo '<input type="radio" name="subcat" value="' . $res_r['id'] . '" />&#160;' . $res_r['text'] . '<br>';
                         }
 
                         echo '</p><p><h3>' . _t('Other category') . '</h3><ul>';
@@ -285,15 +285,15 @@ switch ($mod) {
                 '<div class="gmenu">' .
                 '<p><h3>' . _t('Title') . '</h3>' .
                 '<input type="text" name="name" />' .
-                '<br /><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
+                '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
                 '<textarea name="desc" rows="' . $set_user['field_h'] . '"></textarea>' .
-                '<br /><small>' . _t('Optional field') . '<br />' . _t('Min. 2, Max. 500 characters') . '</small></p>';
+                '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
             if ($id) {
-                echo '<p><input type="radio" name="allow" value="0" checked="checked"/>&#160;' . _t('Common access') . '<br/>' .
-                    '<input type="radio" name="allow" value="4"/>&#160;' . _t('Only for reading') . '<br/>' .
-                    '<input type="radio" name="allow" value="2"/>&#160;' . _t('Allow authors to edit the 1st post') . '<br/>' .
+                echo '<p><input type="radio" name="allow" value="0" checked="checked"/>&#160;' . _t('Common access') . '<br>' .
+                    '<input type="radio" name="allow" value="4"/>&#160;' . _t('Only for reading') . '<br>' .
+                    '<input type="radio" name="allow" value="2"/>&#160;' . _t('Allow authors to edit the 1st post') . '<br>' .
                     '<input type="radio" name="allow" value="1"/>&#160;' . _t('Assign the newly created authors as curators') . '</p>';
             }
 
@@ -382,16 +382,16 @@ switch ($mod) {
                         '<div class="gmenu">' .
                         '<p><h3>' . _t('Title') . '</h3>' .
                         '<input type="text" name="name" value="' . $res['text'] . '"/>' .
-                        '<br /><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
+                        '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                         '<p><h3>' . _t('Description') . '</h3>' .
-                        '<textarea name="desc" rows="' . $set_user['field_h'] . '">' . str_replace('<br />', "\r\n", $res['soft']) . '</textarea>' .
-                        '<br /><small>' . _t('Optional field') . '<br />' . _t('Min. 2, Max. 500 characters') . '</small></p>';
+                        '<textarea name="desc" rows="' . $set_user['field_h'] . '">' . str_replace('<br>', "\r\n", $res['soft']) . '</textarea>' .
+                        '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
                     if ($res['type'] == 'r') {
                         $allow = !empty($res['edit']) ? intval($res['edit']) : 0;
-                        echo '<p><input type="radio" name="allow" value="0" ' . (!$allow ? 'checked="checked"' : '') . '/>&#160;' . _t('Common access') . '<br/>' .
-                            '<input type="radio" name="allow" value="4" ' . ($allow == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for reading') . '<br/>' .
-                            '<input type="radio" name="allow" value="2" ' . ($allow == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Allow authors to edit the 1st post') . '<br/>' .
+                        echo '<p><input type="radio" name="allow" value="0" ' . (!$allow ? 'checked="checked"' : '') . '/>&#160;' . _t('Common access') . '<br>' .
+                            '<input type="radio" name="allow" value="4" ' . ($allow == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for reading') . '<br>' .
+                            '<input type="radio" name="allow" value="2" ' . ($allow == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Allow authors to edit the 1st post') . '<br>' .
                             '<input type="radio" name="allow" value="1" ' . ($allow == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Assign the newly created authors as curators') . '</p>';
                         echo '<p><h3>' . _t('Category') . '</h3><select name="category" size="1">';
 
@@ -479,7 +479,7 @@ switch ($mod) {
                         '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
 
                     if (!empty($res['soft'])) {
-                        echo '<br /><span class="gray"><small>' . $res['soft'] . '</small></span><br />';
+                        echo '<br><span class="gray"><small>' . $res['soft'] . '</small></span><br>';
                     }
 
                     echo '<div class="sub">' .
@@ -506,7 +506,7 @@ switch ($mod) {
                     '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
 
                 if (!empty($res['soft'])) {
-                    echo '<br /><span class="gray"><small>' . $res['soft'] . '</small></span><br />';
+                    echo '<br><span class="gray"><small>' . $res['soft'] . '</small></span><br>';
                 }
 
                 echo '<div class="sub">' .
@@ -589,7 +589,7 @@ switch ($mod) {
                     $cat = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $subcat['refid'] . "'")->fetch();
                     $ttime = '<span class="gray">(' . functions::display_date($res['time']) . ')</span>';
                     $text = '<a href="../forum/index.php?id=' . $res['fid'] . '"><b>' . $res['text'] . '</b></a>';
-                    $text .= '<br /><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['text'] . '</a> / <a href="../forum/index.php?id=' . $subcat['id'] . '">' . $subcat['text'] . '</a></small>';
+                    $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['text'] . '</a> / <a href="../forum/index.php?id=' . $subcat['id'] . '">' . $subcat['text'] . '</a></small>';
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;rsort=' . $res['refid'] . '">' . _t('by section') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
@@ -687,7 +687,7 @@ switch ($mod) {
                     $text = functions::checkout($text, 1, 0);
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                     $theme = $db->query("SELECT `id`, `text` FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                    $text = '<b>' . $theme['text'] . '</b> <a href="../forum/index.php?id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br />' . $text;
+                    $text = '<b>' . $theme['text'] . '</b> <a href="../forum/index.php?id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';

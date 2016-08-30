@@ -23,13 +23,13 @@ switch ($mod) {
         }
 
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($login) . ' WHERE `id` = ' . $id);
-        echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->exec($login) . ' WHERE `preg` = 0');
-        echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
     case 'del':
@@ -47,13 +47,13 @@ switch ($mod) {
             $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '$id' LIMIT 1");
         }
 
-        echo '<div class="menu"><p>' . $lng['user_deleted'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="menu"><p>' . $lng['user_deleted'] . '<br><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
     case 'massdel':
         $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
         $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
-        echo '<div class="menu"><p>' . $lng['reg_deleted_all'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="menu"><p>' . $lng['reg_deleted_all'] . '<br><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
     case 'delip':
@@ -69,7 +69,7 @@ switch ($mod) {
 
             $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
             $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
-            echo '<div class="menu"><p>' . $lng['reg_del_ip_done'] . '<br />' .
+            echo '<div class="menu"><p>' . $lng['reg_del_ip_done'] . '<br>' .
                 '<a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         } else {
             echo functions::display_error($lng['error_wrong_data']);
@@ -121,7 +121,7 @@ switch ($mod) {
         echo '<p>';
 
         if ($total) {
-            echo '<a href="index.php?act=reg&amp;mod=massapprove">' . $lng['reg_approve_all'] . '</a><br /><a href="index.php?act=reg&amp;mod=massdel">' . $lng['reg_del_all'] . '</a><br />';
+            echo '<a href="index.php?act=reg&amp;mod=massapprove">' . $lng['reg_approve_all'] . '</a><br><a href="index.php?act=reg&amp;mod=massdel">' . $lng['reg_del_all'] . '</a><br>';
         }
 
         echo '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';

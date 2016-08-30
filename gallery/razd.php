@@ -14,7 +14,7 @@ if ($rights >= 6) {
         echo '<div class="phdr"><b>' . $lng_gal['create_section'] . '</b></div>' .
             '<form action="index.php?act=razd" method="post">' .
             '<div class="gmenu">' .
-            '<p>' . $lng['name'] . ':<br/><input type="text" name="text"/></p>' .
+            '<p>' . $lng['name'] . ':<br><input type="text" name="text"/></p>' .
             '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
             '</div></form>' .
             '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';

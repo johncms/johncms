@@ -155,7 +155,7 @@ switch ($mod) {
                 }
 
                 echo '</p><p><h3>' . _t('Ban time') . '</h3>' .
-                    '&#160;<input type="text" name="timeval" size="2" maxlength="2" value="12"/><br/>' .
+                    '&#160;<input type="text" name="timeval" size="2" maxlength="2" value="12"/><br>' .
                     '<input name="time" type="radio" value="1" />&#160;' . _t('Minutes (60 max.)') . '<br />' .
                     '<input name="time" type="radio" value="2" checked="checked" />&#160;' . _t('Hours (24 max.)') . '<br />';
 

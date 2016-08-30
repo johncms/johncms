@@ -94,9 +94,9 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 }
 
                 if ($rights >= 6) {
-                    echo "<a href='index.php?act=cral&amp;id=" . $id . "'>" . $lng_gal['create_album'] . "</a><br/>";
-                    echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_section'] . "</a><br/>";
-                    echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_section'] . "</a><br/>";
+                    echo "<a href='index.php?act=cral&amp;id=" . $id . "'>" . $lng_gal['create_album'] . "</a><br>";
+                    echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_section'] . "</a><br>";
+                    echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_section'] . "</a><br>";
                 }
 
                 echo "<a href='index.php'>В галерею</a></p>";
@@ -187,20 +187,20 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                             case "gif":
                                 $imagnam = "temp/$namefile.temp.gif";
                                 ImageGif($im1, $imagnam);
-                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                                echo "<img src='" . $imagnam . "' alt=''/><br>";
                                 break;
 
                             case "jpg":
                             case "jpeg":
                                 $imagnam = "temp/$namefile.temp.jpg";
                                 imageJpeg($im1, $imagnam, 75);
-                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                                echo "<img src='" . $imagnam . "' alt=''/><br>";
                                 break;
 
                             case "png":
                                 $imagnam = "temp/$namefile.temp.png";
                                 imagePng($im1, $imagnam, 5);
-                                echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                                echo "<img src='" . $imagnam . "' alt=''/><br>";
 
                                 break;
                         }
@@ -211,11 +211,11 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         echo '</a>';
 
                         if (!empty($fot1['text'])) {
-                            echo "$fot1[text]<br/>";
+                            echo "$fot1[text]<br>";
                         }
 
                         if ($rights >= 6) {
-                            echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br/>";
+                            echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br>";
                         }
                     } else {
                         echo $lng_gal['image_missing'] . '<br /><a href="index.php?act=delf&amp;id=' . $fot1['id'] . '">' . $lng['delete'] . '</a>';
@@ -235,12 +235,12 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 }
 
                 if (($user_id && $rz1['user'] == 1 && $ms['text'] == $login && !$ban['1'] && !$ban['14']) || $rights >= 6) {
-                    echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br/>';
+                    echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br>';
                 }
 
                 if ($rights >= 6) {
-                    echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_album'] . "</a><br/>";
-                    echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_album'] . "</a><br/>";
+                    echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_album'] . "</a><br>";
+                    echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_album'] . "</a><br>";
                 }
 
                 echo "<a href='index.php'>" . $lng_gal['to_gallery'] . "</a></p>";
@@ -248,7 +248,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
 
             case 'ft':
                 // Просмотр фото
-                echo "<br/>&#160;";
+                echo "<br>&#160;";
                 $infile = "foto/$ms[name]";
 
                 if (!empty($_SESSION['frazm'])) {
@@ -289,20 +289,20 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                     case "gif":
                         $imagnam = "temp/$namefile.gif";
                         imagegif($im1, $imagnam);
-                        echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                        echo "<img src='" . $imagnam . "' alt=''/><br>";
                         break;
 
                     case "jpg":
                     case "jpeg":
                         $imagnam = "temp/$namefile.jpg";
                         imagejpeg($im1, $imagnam, 75);
-                        echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                        echo "<img src='" . $imagnam . "' alt=''/><br>";
                         break;
 
                     case "png":
                         $imagnam = "temp/$namefile.png";
                         imagePng($im1, $imagnam, 5);
-                        echo "<img src='" . $imagnam . "' alt=''/><br/>";
+                        echo "<img src='" . $imagnam . "' alt=''/><br>";
 
                         break;
                 }
@@ -314,13 +314,13 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $sizs = GetImageSize("foto/$ms[name]");
                 $fwidth = $sizs[0];
                 $fheight = $sizs[1];
-                echo "<p>" . $lng['description'] . ": $ms[text]<br/>";
-                echo $lng_gal['dimensions'] . ": $fwidth*$fheight пкс.<br/>";
-                echo $lng_gal['weight'] . ": $fotsz кб.<br/>";
-                echo $lng['date'] . ': ' . functions::display_date($ms['time']) . '<br/>';
-                echo $lng_gal['posted_by'] . ": $ms[avtor]<br/>";
+                echo "<p>" . $lng['description'] . ": $ms[text]<br>";
+                echo $lng_gal['dimensions'] . ": $fwidth*$fheight пкс.<br>";
+                echo $lng_gal['weight'] . ": $fotsz кб.<br>";
+                echo $lng['date'] . ': ' . functions::display_date($ms['time']) . '<br>';
+                echo $lng_gal['posted_by'] . ": $ms[avtor]<br>";
                 echo "<a href='foto/$ms[name]'>" . $lng['download'] . "</a><br /><br />";
-                echo "<a href='index.php?id=" . $ms['refid'] . "'>" . $lng['back'] . "</a><br/>";
+                echo "<a href='index.php?id=" . $ms['refid'] . "'>" . $lng['back'] . "</a><br>";
                 echo "<a href='index.php'>" . $lng_gal['to_gallery'] . "</a></p>";
                 break;
             default :
@@ -344,7 +344,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
 
         if ($rights >= 6) {
-            echo "<a href='index.php?act=razd'>" . $lng_gal['create_section'] . "</a><br/>";
+            echo "<a href='index.php?act=razd'>" . $lng_gal['create_section'] . "</a><br>";
         }
 
         echo "</p>";

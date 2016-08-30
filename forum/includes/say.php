@@ -387,7 +387,7 @@ switch ($type1['type']) {
 
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
             echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $th1['text'] . '</div>';
-            $qt = str_replace("<br/>", "\r\n", $qt);
+            $qt = str_replace("<br>", "\r\n", $qt);
             $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
             $qt = functions::checkout($qt, 0, 2);
 

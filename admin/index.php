@@ -70,7 +70,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         '<li><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a>&#160;(' . $bantotal . ')</li>' .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . _t('Antiflood') . '</a></li>' : '') .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . _t('Karma') . '</a></li>' : '') .
-        '<br />' .
+        '<br>' .
         '<li><a href="../users/search.php">' . _t('Search by Nickname') . '</a></li>' .
         '<li><a href="index.php?act=search_ip">' . _t('Search IP') . '</a></li>' .
         '</ul></p></div>';

@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require_once("../incfiles/head.php");
 
 if (!$set['mod_down_comm'] && $rights < 7) {
-    echo '<p>ERROR<br/><a href="index.php">Back</a></p>';
+    echo '<p>ERROR<br><a href="index.php">Back</a></p>';
     require_once('../incfiles/end.php');
     exit;
 }
@@ -17,7 +17,7 @@ $db = App::getContainer()->get(PDO::class);
 $fayl = $db->query("SELECT * FROM `download` WHERE type='file' AND id='" . $id . "'");
 
 if (!$fayl->rowCount()) {
-    echo "ERROR<br/><a href='?'>Back</a><br/>";
+    echo "ERROR<br><a href='?'>Back</a><br>";
     require_once('../incfiles/end.php');
     exit;
 }
@@ -28,7 +28,7 @@ $fayl1 = $fayl->fetch();
 echo '<p>' . $lng['comments'] . ': <span class="red">' . $fayl1['name'] . '</span></p>';
 
 if ($user_id && !$ban['1'] && !$ban['10']) {
-    echo "<a href='?act=addkomm&amp;id=" . $id . "'>Написать</a><br/>";
+    echo "<a href='?act=addkomm&amp;id=" . $id . "'>Написать</a><br>";
 }
 
 if (empty ($_GET['page'])) {
@@ -92,7 +92,7 @@ while ($mass = $mess->fetch()) {
             echo " [ON]";
         }
 
-        echo '(' . functions::display_date($mass['time']) . ')<br/>';
+        echo '(' . functions::display_date($mass['time']) . ')<br>';
         $text = functions::checkout($mass['text'], 1, 1);
 
         if ($set_user['smileys']) {
@@ -102,7 +102,7 @@ while ($mass = $mess->fetch()) {
         echo '<div>' . $text . '</div>';
 
         if ($rights == 4 || $rights >= 6) {
-            echo "$mass[ip] - $mass[soft]<br/><a href='index.php?act=delmes&amp;id=" . $mass['id'] . "'>(Удалить)</a><br/>";
+            echo "$mass[ip] - $mass[soft]<br><a href='index.php?act=delmes&amp;id=" . $mass['id'] . "'>(Удалить)</a><br>";
         }
 
         echo '</div>';
@@ -113,7 +113,7 @@ while ($mass = $mess->fetch()) {
 if ($countm > $kmess) {
     echo "<hr/>";
     $ba = ceil($countm / $kmess);
-    echo "Страницы:<br/>";
+    echo "Страницы:<br>";
     $asd = $start - ($kmess);
     $asd2 = $start + ($kmess * 2);
 
@@ -167,9 +167,9 @@ if ($countm > $kmess) {
         echo ' <a href="index.php?act=komm&amp;id=' . $id . '&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
     }
 
-    echo "<form action='index.php'>Перейти к странице:<br/><input type='hidden' name='id' value='" . $id .
-        "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br/><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
+    echo "<form action='index.php'>Перейти к странице:<br><input type='hidden' name='id' value='" . $id .
+        "'/><input type='hidden' name='act' value='komm'/><input type='text' name='page' title='Введите номер страницы'/><br><input type='submit' title='Нажмите для перехода' value='Go!'/></form>";
 }
 
-echo "<br/>" . $lng['total'] . ": $countm";
-echo '<br/><a href="?act=view&amp;file=' . $id . '">' . $lng['back'] . '</a><br/>';
+echo "<br>" . $lng['total'] . ": $countm";
+echo '<br><a href="?act=view&amp;file=' . $id . '">' . $lng['back'] . '</a><br>';

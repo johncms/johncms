@@ -28,8 +28,8 @@ if ($req_obj->rowCount()) {
         '<p><b><a href="index.php?id=' . $id . '">' . functions::checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
-        ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br/>' : '') .
-        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br/>' .
+        ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br>' : '') .
+        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br>' .
         '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [

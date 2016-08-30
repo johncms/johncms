@@ -516,7 +516,7 @@ echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . $lng_mail['clear_messages'] . '</a><br/>';
+    echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . $lng_mail['clear_messages'] . '</a><br>';
 }
 
 echo '<a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';

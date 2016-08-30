@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 4 || $rights >= 6) {
     if (empty($_GET['id'])) {
         require_once("../incfiles/head.php");
-        echo "ERROR<br/><a href='index.php?'>Back</a><br/>";
+        echo "ERROR<br><a href='index.php?'>Back</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -18,7 +18,7 @@ if ($rights == 4 || $rights >= 6) {
 
     if ($ms['type'] != 'komm') {
         require_once("../incfiles/head.php");
-        echo "ERROR<br/><a href='index.php?'>Back</a><br/>";
+        echo "ERROR<br><a href='index.php?'>Back</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }

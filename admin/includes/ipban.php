@@ -116,7 +116,7 @@ switch ($mod) {
                     }
 
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-                    echo '<p><a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+                    echo '<p><a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
                     require_once('../incfiles/end.php');
                     exit;
                 }
@@ -168,7 +168,7 @@ switch ($mod) {
                     '<p><input type="submit" name="submit" value=" ' . _t('Add Ban') . ' "/></p>' .
                     '</div><div class="phdr"><small>' . _t('Please, check up correctness of the input data') . '</small></div>' .
                     '</form>' .
-                    '<p><a href="index.php?act=ipban">' . _t('Cancel') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+                    '<p><a href="index.php?act=ipban">' . _t('Cancel') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
             } else {
                 echo functions::display_error($error,
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
@@ -179,18 +179,18 @@ switch ($mod) {
                 '<div class="menu"><p><h3>' . _t('IP address') . '</h3>' .
                 '&nbsp;<input type="text" name="ip"/></p>' .
                 '<p><h3>' . _t('Ban type') . '</h3>' .
-                '<input name="term" type="radio" value="1" checked="checked" />' . _t('Block') . '<br />' .
-                '<input name="term" type="radio" value="3" />' . _t('Registration') . '<br />' .
-                '<input name="term" type="radio" value="2" />' . _t('Redirect') . '<br /></p>' .
+                '<input name="term" type="radio" value="1" checked="checked" />' . _t('Block') . '<br>' .
+                '<input name="term" type="radio" value="3" />' . _t('Registration') . '<br>' .
+                '<input name="term" type="radio" value="2" />' . _t('Redirect') . '<br></p>' .
                 '<p><h3>' . _t('Redirect URL') . '</h3>' .
-                '&nbsp;<input type="text" name="url"/><br />' .
+                '&nbsp;<input type="text" name="url"/><br>' .
                 '<small>&nbsp;' . _t('If the ban on Redirect, then specify the URL') . '</small></p>' .
                 '<p><h3>' . _t('Reason') . '</h3>' .
                 '&nbsp;<textarea rows="' . core::$user_set['field_h'] . '" name="reason"></textarea></small></p>' .
                 '<p><input type="submit" name="submit" value=" ' . _t('Add Ban') . ' "/></p></div>' .
-                '<div class="phdr"><small>' . _t('Example:<br /><span class=\'red\'>10.5.7.1</span> - Ban one address<br /><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br /><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' .
+                '<div class="phdr"><small>' . _t('Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' .
                 '</form>' .
-                '<p><a href="index.php?act=ipban">' . _t('Cancel') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+                '<p><a href="index.php?act=ipban">' . _t('Cancel') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
@@ -295,15 +295,15 @@ switch ($mod) {
             }
 
             if ($res['ban_type'] == 2) {
-                echo '<br />&nbsp;' . $res['link'];
+                echo '<br>&nbsp;' . $res['link'];
             }
 
             echo '</p><p><h3>' . _t('Reason') . '</h3>&nbsp;' . (empty($res['reason']) ? _t('Not specified') : $res['reason']) . '</p></div>';
-            echo '<div class="menu">' . _t('Who applied the ban?') . ': <b>' . $res['who'] . '</b><br />';
-            echo _t('Date') . ': <b>' . date('d.m.Y', $res['date']) . '</b><br />';
+            echo '<div class="menu">' . _t('Who applied the ban?') . ': <b>' . $res['who'] . '</b><br>';
+            echo _t('Date') . ': <b>' . date('d.m.Y', $res['date']) . '</b><br>';
             echo _t('Time') . ': <b>' . date('H:i:s', $res['date']) . '</b></div>';
             echo '<div class="phdr"><a href="index.php?act=ipban&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete Ban') . '</a></div>';
-            echo '<p><a href="index.php?act=ipban">В список</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            echo '<p><a href="index.php?act=ipban">В список</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
@@ -332,7 +332,7 @@ switch ($mod) {
             '</p><p><input type="submit" name="submit" value="' . _t('Search') . '"/>' .
             '</p></div><div class="phdr"><small>' . _t('Enter a single address, mask and range are not allowed') . '</small></div>' .
             '</form>' .
-            '<p><a href="index.php?act=ipban">' . _t('Back') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            '<p><a href="index.php?act=ipban">' . _t('Back') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
         break;
 
     default:
@@ -381,7 +381,7 @@ switch ($mod) {
         echo '<p>';
 
         if ($total > 0) {
-            echo '<a href="index.php?act=ipban&amp;mod=search">' . _t('Search') . '</a><br /><a href="index.php?act=ipban&amp;mod=clear">' . _t('Unban all IP') . '</a><br />';
+            echo '<a href="index.php?act=ipban&amp;mod=search">' . _t('Search') . '</a><br><a href="index.php?act=ipban&amp;mod=clear">' . _t('Unban all IP') . '</a><br>';
         }
 
         echo '<a href="index.php">' . _t('Admin Panel') . '</a></p>';

@@ -167,9 +167,9 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         . '<p><h3>' . $lng_gal['upload_photo'] . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'
         . '<p><h3>' . $lng_lib['select_text_file'] . '</h3>'
-        . '<input type="file" name="textfile" accept="text/plain" /><br/><small>' . $lng_lib['ignor_input'] . '</small></p>'
+        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . $lng_lib['ignor_input'] . '</small></p>'
         . '<p><h3>' . $lng_lib['tags'] . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br/><small>' . $lng_lib['input_tags'] . '</small></p>'
+        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . $lng_lib['input_tags'] . '</small></p>'
         . '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>'
         . '</div></form>'
         . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';

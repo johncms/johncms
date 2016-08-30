@@ -59,15 +59,15 @@ if (empty($set['reg_message'])) {
 echo '<form action="index.php?act=mail" method="post"><div class="menu">';
 
 // Общие настройки
-echo '<h3>' . $lng_mail['system_message_reg'] . '</h3>' . $lng_mail['theme_system_message'] . ':<br/>' .
-    '<input type="text" name="them_message" value="' . (!empty($set['them_message']) ? htmlentities($set['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br/>' .
-    $lng['message'] . ':<br /><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($set['reg_message']) ? htmlentities($set['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br />' .
-    '<strong>' . $lng_mail['sending_the_message'] . ':</strong><br />' .
-    '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br />' .
-    '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br />' .
-    '<strong>' . $lng_mail['marks'] . ':</strong><br />{LOGIN} - ' . $lng_mail['login_contacts'] . '<br />{TIME} - ' . $lng_mail['current_time'] . '<br />' .
-    '<strong>' . $lng_mail['cat_friends'] . ':</strong><br />' .
-    '<input type="radio" value="1" name="cat_friends" ' . ($set_mail['cat_friends'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br />' .
-    '<input type="radio" value="0" name="cat_friends" ' . (empty($set_mail['cat_friends']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br />' .
+echo '<h3>' . $lng_mail['system_message_reg'] . '</h3>' . $lng_mail['theme_system_message'] . ':<br>' .
+    '<input type="text" name="them_message" value="' . (!empty($set['them_message']) ? htmlentities($set['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br>' .
+    $lng['message'] . ':<br><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($set['reg_message']) ? htmlentities($set['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
+    '<strong>' . $lng_mail['sending_the_message'] . ':</strong><br>' .
+    '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br>' .
+    '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br>' .
+    '<strong>' . $lng_mail['marks'] . ':</strong><br>{LOGIN} - ' . $lng_mail['login_contacts'] . '<br>{TIME} - ' . $lng_mail['current_time'] . '<br>' .
+    '<strong>' . $lng_mail['cat_friends'] . ':</strong><br>' .
+    '<input type="radio" value="1" name="cat_friends" ' . ($set_mail['cat_friends'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br>' .
+    '<input type="radio" value="0" name="cat_friends" ' . (empty($set_mail['cat_friends']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br>' .
     '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
     '<div class="phdr"><a href="index.php">' . $lng['admin_panel'] . '</a></div>';

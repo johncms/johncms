@@ -20,7 +20,7 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></
     '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
     '<form action="index.php?act=search_ip" method="post"><div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . functions::checkout($search) . '" />' .
-    '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br />' .
+    '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br>' .
     '</p></div></form>';
 
 if ($search) {
@@ -123,7 +123,7 @@ if ($search && !$error) {
             '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
             '</form></p>';
     }
-    echo '<p><a href="index.php?act=search_ip">' . $lng['search_new'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+    echo '<p><a href="index.php?act=search_ip">' . $lng['search_new'] . '</a><br><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
 } else {
     // Выводим сообщение об ошибке
     if ($error) {

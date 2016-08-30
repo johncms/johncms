@@ -52,7 +52,7 @@ if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
                 $name = '<span style="' . $font . '">' . $name . '</span>';
             }
 
-            @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br/>';
+            @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br>';
 
             if (($res['day'] != 0 && time() >= ($res['time'] + $res['day'] * 3600 * 24))
                 || ($res['count_link'] != 0 && $res['count'] >= $res['count_link'])
@@ -79,8 +79,8 @@ echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($user_id ? '<b>' . $
 
 // Главное меню пользователя
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a><br/>' : '') .
-    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br/>' : '') .
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
     (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 

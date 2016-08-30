@@ -88,5 +88,5 @@ switch ($mod) {
             '</table></p>' .
             '</form></div>' .
             '<div class="phdr">' . _t('Total') . ': <b>' . count($lng_desc) . '</b></div>' .
-            '<p><a href="index.php?act=languages&amp;refresh">' . _t('Update Descriptions') . '</a><br /><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            '<p><a href="index.php?act=languages&amp;refresh">' . _t('Update Descriptions') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
 }

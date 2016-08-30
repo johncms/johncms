@@ -53,4 +53,4 @@ if ($total > $kmess) {
     echo '<p><form action="index.php?act=usr&amp;sort=' . $sort . '" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="index.php?act=search_user">' . $lng['search_user'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<p><a href="index.php?act=search_user">' . $lng['search_user'] . '</a><br><a href="index.php">' . $lng['admin_panel'] . '</a></p>';

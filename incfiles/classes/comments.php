@@ -299,7 +299,7 @@ class comments
                             }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                ' (' . functions::display_date($attributes['reply_time']) . ')</small><br/>' . $reply . '</div>';
+                                ' (' . functions::display_date($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
                         }
 
                         $user_arg = [
@@ -377,8 +377,8 @@ class comments
         (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
         '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
         '</p><p>' . bbcode::auto_bb('form', 'message') .
-        '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br/>' .
-        (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br/>' : '') .
+        '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
+        (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br>' : '') .
         '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
     }
 

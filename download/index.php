@@ -40,7 +40,7 @@ function provcat($catalog)
     $adrdir = $cat1->fetch();
 
     if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]"))) {
-        echo 'ERROR<br/><a href="?">Back</a><br/>';
+        echo 'ERROR<br><a href="?">Back</a><br>';
         require_once('../incfiles/end.php');
         exit;
     }
@@ -225,7 +225,7 @@ if (in_array($act, $array)) {
     if ($rights == 4 || $rights >= 6) {
         // Выводим ссылки на модерские функции
         echo '<p><div class="func">';
-        echo '<a href="?act=makdir&amp;cat=' . $cat . '">' . $lng_dl['make_folder'] . '</a><br/>';
+        echo '<a href="?act=makdir&amp;cat=' . $cat . '">' . $lng_dl['make_folder'] . '</a><br>';
 
         if (!empty($_GET['cat'])) {
             $delcat = $db->query("SELECT * FROM `download` WHERE type = 'cat' AND refid = '" . $cat . "'");

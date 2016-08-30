@@ -98,7 +98,7 @@ echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=systems&amp;mod=clear">' . $lng_mail['clear_messages'] . '</a><br/>';
+    echo '<a href="index.php?act=systems&amp;mod=clear">' . $lng_mail['clear_messages'] . '</a><br>';
 }
 
 echo '<a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';

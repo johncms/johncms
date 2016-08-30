@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
     if ($_GET['id'] == "") {
-        echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+        echo "ERROR<br><a href='index.php'>Back</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -57,7 +57,7 @@ if ($rights >= 6) {
                 break;
 
             default:
-                echo "ERROR<br/><a href='index.php'>Back</a><br/>";
+                echo "ERROR<br><a href='index.php'>Back</a><br>";
                 require_once('../incfiles/end.php');
                 exit;
                 break;
@@ -65,20 +65,20 @@ if ($rights >= 6) {
     } else {
         switch ($ms['type']) {
             case "al":
-                echo $lng['delete_confirmation'] . " $ms[text]?<br/>";
+                echo $lng['delete_confirmation'] . " $ms[text]?<br>";
                 break;
 
             case "rz":
-                echo $lng['delete_confirmation'] . " $ms[text]?<br/>";
+                echo $lng['delete_confirmation'] . " $ms[text]?<br>";
                 break;
 
             default:
-                echo "ERROR<br/><a href='index.php'>" . $lng['to_gallery'] . "</a><br/>";
+                echo "ERROR<br><a href='index.php'>" . $lng['to_gallery'] . "</a><br>";
                 require_once('../incfiles/end.php');
                 exit;
                 break;
         }
-        echo "<a href='index.php?act=del&amp;id=" . $id . "&amp;yes'>" . $lng['delete'] . "</a> | <a href='index.php?id=" . $id . "'>" . $lng['cancel'] . "</a><br/>";
+        echo "<a href='index.php?act=del&amp;id=" . $id . "&amp;yes'>" . $lng['delete'] . "</a> | <a href='index.php?id=" . $id . "'>" . $lng['cancel'] . "</a><br>";
     }
 } else {
     header("location: index.php");

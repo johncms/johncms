@@ -10,10 +10,10 @@ if (isset ($_POST['submit'])) {
     }
 
     $_SESSION['razm'] = $razmer;
-    echo $lng_dl['preview_size_set'] . " $razmer*$razmer px<br/>";
+    echo $lng_dl['preview_size_set'] . " $razmer*$razmer px<br>";
 } else {
     echo "<form action='?act=preview' method='post'><p>
-	" . $lng_dl['select_preview_size'] . ":<br/><select name='razmer'>";
+	" . $lng_dl['select_preview_size'] . ":<br><select name='razmer'>";
 
     if (!empty ($_SESSION['razm'])) {
         $realr = $_SESSION['razm'];

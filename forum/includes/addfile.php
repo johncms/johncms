@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
             if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../files/forum/attach/$fname")) == true) {
                 @chmod("$fname", 0777);
                 @chmod("../files/forum/attach/$fname", 0777);
-                echo $lng_forum['file_uploaded'] . '<br/>';
+                echo $lng_forum['file_uploaded'] . '<br>';
             } else {
                 $error[] = $lng_forum['error_upload_error'];
             }
@@ -149,14 +149,14 @@ if (isset($_POST['submit'])) {
 
     $pa2 = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'")->rowCount();
     $page = ceil($pa2 / $kmess);
-    echo '<br/><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng['continue'] . '</a><br/>';
+    echo '<br><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng['continue'] . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки
     echo '<div class="phdr"><b>' . $lng_forum['add_file'] . '</b></div>' .
         '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
 
     if (stristr($agn, 'Opera/8.01')) {
-        echo '<input name="fail1" value =""/>&#160;<br/><a href="op:fileselect">' . $lng_forum['select_file'] . '</a>';
+        echo '<input name="fail1" value =""/>&#160;<br><a href="op:fileselect">' . $lng_forum['select_file'] . '</a>';
     } else {
         echo '<input type="file" name="fail"/>';
     }

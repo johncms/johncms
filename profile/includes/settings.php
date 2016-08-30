@@ -43,7 +43,7 @@ switch ($mod) {
             '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
             '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') . '<br />' .
             '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my friends') .
-            '<br/><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+            '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
             '<div class="phdr">&#160;</div>';
         break;
 
@@ -87,9 +87,9 @@ switch ($mod) {
 
         echo '<form action="?act=settings&amp;mod=forum" method="post">' .
             '<div class="menu"><p><h3>' . _t('Basic settings') . '</h3>' .
-            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br/>' .
-            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br/>' .
-            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br/>' .
+            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br>' .
+            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br>' .
+            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br>' .
             '</p><p><h3>' . _t('Attach first post') . '</h3>' .
             '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
             '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
@@ -185,8 +185,8 @@ switch ($mod) {
                 time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
             '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
-            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Avatars') . '<br/>' .
-            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br/>' .
+            '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Avatars') . '<br>' .
+            '<input name="smileys" type="checkbox" value="1" ' . (core::$user_set['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br>' .
             '</p><p><h3>' . _t('Text entering') . '</h3>' .
             '<input type="text" name="field_h" size="2" maxlength="1" value="' . core::$user_set['field_h'] . '"/> ' . _t('Height of field') . ' (1-9)<br />';
 

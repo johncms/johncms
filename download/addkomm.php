@@ -10,7 +10,7 @@ if ($id > 0 && $user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] |
 
     if (!$file->rowCount()) {
         require_once("../incfiles/head.php");
-        echo "Не выбран файл<br/><a href='?'>К категориям</a><br/>";
+        echo "Не выбран файл<br><a href='?'>К категориям</a><br>";
         require_once('../incfiles/end.php');
         exit;
     }
@@ -28,7 +28,7 @@ if ($id > 0 && $user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] |
 
         if ($_POST['msg'] == "") {
             require_once("../incfiles/head.php");
-            echo "Вы не ввели сообщение!<br/><a href='?act=komm&amp;id=" . $id . "'>К комментариям</a><br/>";
+            echo "Вы не ввели сообщение!<br><a href='?act=komm&amp;id=" . $id . "'>К комментариям</a><br>";
             require_once('../incfiles/end.php');
             exit;
         }
@@ -47,14 +47,14 @@ if ($id > 0 && $user_id && !$ban['1'] && !$ban['10'] && ($set['mod_down_comm'] |
         require_once("../incfiles/head.php");
         echo "<form action='?act=addkomm&amp;id=" . $id .
             "' method='post'>
-" . $lng['message'] . " (max. 500)<br/>
-<textarea rows='3' name='msg' ></textarea><br/><br/>
+" . $lng['message'] . " (max. 500)<br>
+<textarea rows='3' name='msg' ></textarea><br><br>
 <input type='submit' name='submit' value='" . $lng['add'] . "' />
   </form>";
     }
 } else {
     require_once("../incfiles/head.php");
-    echo "Вы не авторизованы!<br/>";
+    echo "Вы не авторизованы!<br>";
 }
 
-echo '<br/><a href="?act=komm&amp;id=' . $id . '">' . $lng['comments'] . '</a><br/><a href="?act=view&amp;file=' . $id . '">' . $lng_dl['file'] . '</a><br/>';
+echo '<br><a href="?act=komm&amp;id=' . $id . '">' . $lng['comments'] . '</a><br><a href="?act=view&amp;file=' . $id . '">' . $lng_dl['file'] . '</a><br>';
