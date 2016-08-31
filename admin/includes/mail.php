@@ -10,21 +10,17 @@ if ($rights < 9) {
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng_mail = core::load_lng('mail');
 
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['mail'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Mail') . '</div>';
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы
-    $set_mail['cat_friends'] = isset($_POST['cat_friends']) && $_POST['cat_friends'] == 1 ? 1 : 0;
+    $set_mail['cat_friends'] = 0;
     $set_mail['message_include'] = isset($_POST['message_include']) && $_POST['message_include'] == 1 ? 1 : 0;
 
     $stmt = $db->prepare('UPDATE `cms_settings` SET `val` = ? WHERE `key` = ?');
     $stmt->execute([$_POST['them_message'], 'them_message']);
     $stmt->execute([$_POST['reg_message'], 'reg_message']);
-
-    //TODO: разобраться, что за фигня?
-    //mysql_query("UPDATE `cms_settings` SET `val`='" . (isset($_POST['message_include']) && $_POST['message_include'] == 1 ? 1 : 0) . "' WHERE `key` = 'setting_mail'");
 
     $stmt->execute([serialize($set_mail), 'setting_mail']);
     $req = $db->query("SELECT * FROM `cms_settings`");
@@ -34,7 +30,7 @@ if (isset($_POST['submit'])) {
         $set[$res[0]] = $res[1];
     }
 
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
 }
 
 $set_mail = unserialize($set['setting_mail']);
@@ -49,25 +45,22 @@ if (!isset($set_mail['message_include'])) {
 
 // Форма ввода параметров системы
 if (empty($set['them_message'])) {
-    $set['them_message'] = $lng_mail['them_message'];
+    $set['them_message'] = _t('Welcome!');
 }
 
 if (empty($set['reg_message'])) {
-    $set['reg_message'] = $lng['hi'] . ", {LOGIN}\r\n" . $lng_mail['pleased_see_you'] . "\r\n" . $lng_mail['come_my_site'] . "\r\n" . $lng_mail['respectfully_yours'];
+    $set['reg_message'] = _t("Hi {LOGIN}!\n\nWe are glad to see you on our site.\nCome more often and here it will be pleasant to you.\n\nYours faithfully,\nAdministrator.");
 }
 
 echo '<form action="index.php?act=mail" method="post"><div class="menu">';
 
 // Общие настройки
-echo '<h3>' . $lng_mail['system_message_reg'] . '</h3>' . $lng_mail['theme_system_message'] . ':<br>' .
+echo '<h3>' . _t('System message upon registration') . '</h3>' . _t('Subject of the system message') . ':<br>' .
     '<input type="text" name="them_message" value="' . (!empty($set['them_message']) ? htmlentities($set['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br>' .
-    $lng['message'] . ':<br><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($set['reg_message']) ? htmlentities($set['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
-    '<strong>' . $lng_mail['sending_the_message'] . ':</strong><br>' .
-    '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br>' .
-    '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br>' .
-    '<strong>' . $lng_mail['marks'] . ':</strong><br>{LOGIN} - ' . $lng_mail['login_contacts'] . '<br>{TIME} - ' . $lng_mail['current_time'] . '<br>' .
-    '<strong>' . $lng_mail['cat_friends'] . ':</strong><br>' .
-    '<input type="radio" value="1" name="cat_friends" ' . ($set_mail['cat_friends'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_on'] . '<br>' .
-    '<input type="radio" value="0" name="cat_friends" ' . (empty($set_mail['cat_friends']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br>' .
-    '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
-    '<div class="phdr"><a href="index.php">' . $lng['admin_panel'] . '</a></div>';
+    _t('Message') . ':<br><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($set['reg_message']) ? htmlentities($set['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
+    '<br><h3>' . _t('Send a message') . '</h3>' .
+    '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('ON') . '<br>' .
+    '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . _t('OFF') . '<br>' .
+    '<br><h3>' . _t('Tags') . '</h3>{LOGIN} - ' . _t('recipient Nickname') . '<br>{TIME} - ' . _t('current time') . '<br>' .
+    '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+    '<div class="phdr"><a href="index.php">' . _t('Admin Panel') . '</a></div>';
