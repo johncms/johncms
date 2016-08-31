@@ -11,27 +11,27 @@ if ($rights < 7) {
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['news_on_frontpage'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
 // Настройки Новостей
 if (!isset($set['news']) || isset($_GET['reset'])) {
     // Задаем настройки по умолчанию
-    $settings = array (
-        'view' => '1',
-        'size' => '200',
+    $settings = [
+        'view'     => '1',
+        'size'     => '200',
         'quantity' => '3',
-        'days' => '7',
-        'breaks' => '1',
-        'smileys' => '0',
-        'tags' => '1',
-        'kom' => '1'
-    );
+        'days'     => '7',
+        'breaks'   => '1',
+        'smileys'  => '0',
+        'tags'     => '1',
+        'kom'      => '1',
+    ];
     @$db->exec("DELETE FROM `cms_settings` WHERE `key` = 'news'");
     $db->exec("INSERT INTO `cms_settings` SET
         `key` = 'news',
         `val` = " . $db->quote(serialize($settings)) . "
     ");
-    echo '<div class="rmenu"><p>' . $lng['settings_default'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _t('Default settings are set') . '</p></div>';
 } elseif (isset($_POST['submit'])) {
     // Принимаем настройки из формы
     $settings['view'] = isset($_POST['view']) && $_POST['view'] >= 0 && $_POST['view'] < 4 ? intval($_POST['view']) : 1;
@@ -46,7 +46,7 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
         `val` = " . $db->quote(serialize($settings)) . "
         WHERE `key` = 'news'
     ");
-    echo '<div class="gmenu"><p>' . $lng['settings_saved'] . '</p></div>';
+    echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
 } else {
     // Получаем сохраненные настройки
     $settings = unserialize($set['news']);
@@ -54,23 +54,20 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
 
 // Форма ввода настроек
 echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
-    '<h3>' . $lng['apperance'] . '</h3>' .
-    '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng['heading_and_text'] . '<br>' .
-    '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng['heading'] . '<br>' .
-    '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng['text'] . '<br>' .
-    '<input type="radio" value="0" name="view" ' . (!$settings['view'] ? 'checked="checked"' : '') . '/>&#160;<b>' . $lng['dont_display'] . '</b></p>' .
-    '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['line_foldings'] . '<br>' .
-    '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['smileys'] . '<br>' .
-    '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['bbcode'] . '<br>' .
-    '<input name="kom" type="checkbox" value="1" ' . ($settings['kom'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['comments'] . '</p>' .
-    '<p><h3>' . $lng['text_size'] . '</h3>&#160;' .
+    '<h3>' . _t('Appearance') . '</h3>' .
+    '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title + Text') . '<br>' .
+    '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title') . '<br>' .
+    '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Text') . '<br>' .
+    '<input type="radio" value="0" name="view" ' . (!$settings['view'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Not to show') . '</p>' .
+    '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Line breaks') . '<br>' .
+    '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br>' .
+    '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . _t('bbCode Tags') . '<br>' .
+    '<input name="kom" type="checkbox" value="1" ' . ($settings['kom'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Comments') . '</p>' .
+    '<p><h3>' . _t('Text size') . '</h3>&#160;' .
     '<input type="text" size="3" maxlength="3" name="size" value="' . $settings['size'] . '" />&#160;(50 - 500)</p>' .
-    '<p><h3>' . $lng['news_count'] . '</h3>&#160;' .
-    '<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
-    '<p><h3>' . $lng['news_howmanydays_display'] . '</h3><input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(0 - 15)<br>' .
-    '<small>0 - ' . $lng['without_limit'] . '</small></p>' .
-    '<p><input type="submit" value="' . $lng['save'] . '" name="submit" /></p></div>' .
-    '<div class="phdr"><a href="index.php?act=news&amp;reset">' . $lng['reset_settings'] . '</a>' .
+    '<p><h3>' . _t('Quantity of news') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
+    '<p><h3>' . _t('How many days to show?') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(0 - 15)</p>' .
+    '<br><p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
+    '<div class="phdr"><a href="index.php?act=news&amp;reset">' . _t('Reset Settings') . '</a>' .
     '</div></form>' .
-    '<p><a href="index.php">' . $lng['admin_panel'] . '</a><br>' .
-    '<a href="../news/index.php">' . $lng['to_news'] . '</a></p>';
+    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
