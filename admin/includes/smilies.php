@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['smileys'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
 $ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных расширений
 $smileys = [];
@@ -39,10 +39,10 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
 
 // Записываем в файл Кэша
 if (file_put_contents(ROOTPATH . 'files/cache/smileys.dat', serialize($smileys))) {
-    echo '<div class="gmenu"><p>' . $lng['smileys_updated'] . '</p></div>';
+    echo '<div class="gmenu"><p>' . _t('Smilie cache updated successfully') . '</p></div>';
 } else {
-    echo '<div class="rmenu"><p>' . $lng['smileys_error'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _t('Error updating cache') . '</p></div>';
 }
 $total = count($smileys['adm']) + count($smileys['usr']);
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .
-    '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
+    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';

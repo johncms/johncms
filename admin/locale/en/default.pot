@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-04 23:08+0400\n"
+"POT-Creation-Date: 2016-09-05 00:00+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -30,7 +30,8 @@ msgstr ""
 #: includes/mail.php:14 includes/mail.php:66 includes/news.php:14
 #: includes/news.php:73 includes/reg.php:14 includes/reg.php:127
 #: includes/search_ip.php:19 includes/search_ip.php:126
-#: includes/search_ip.php:135 index.php:23 index.php:58
+#: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
+#: includes/smilies.php:5 includes/smilies.php:48 index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
@@ -39,7 +40,7 @@ msgid "Permissions"
 msgstr ""
 
 #: includes/access.php:39 includes/antiflood.php:59 includes/karma.php:40
-#: includes/mail.php:33 includes/news.php:49
+#: includes/mail.php:33 includes/news.php:49 includes/settings.php:36
 msgid "Settings are saved successfully"
 msgstr ""
 
@@ -119,7 +120,7 @@ msgstr ""
 
 #: includes/access.php:115 includes/antiflood.php:91 includes/counters.php:165
 #: includes/forum.php:405 includes/karma.php:55 includes/languages.php:87
-#: includes/mail.php:65 includes/news.php:70
+#: includes/mail.php:65 includes/news.php:70 includes/settings.php:81
 msgid "Save"
 msgstr ""
 
@@ -378,7 +379,7 @@ msgstr ""
 #: includes/ads.php:398 includes/antispy.php:380 includes/antispy.php:408
 #: includes/ban_panel.php:84 includes/forum.php:616 includes/forum.php:711
 #: includes/ipban.php:118 includes/ipban.php:373 includes/languages.php:90
-#: includes/reg.php:111 includes/search_ip.php:117
+#: includes/reg.php:111 includes/search_ip.php:117 includes/smilies.php:47
 msgid "Total"
 msgstr ""
 
@@ -777,7 +778,7 @@ msgstr ""
 msgid "Min. 2, Max. 30 characters"
 msgstr ""
 
-#: includes/forum.php:289 includes/forum.php:386
+#: includes/forum.php:289 includes/forum.php:386 includes/settings.php:64
 msgid "Description"
 msgstr ""
 
@@ -1194,7 +1195,7 @@ msgstr ""
 msgid "Line breaks"
 msgstr ""
 
-#: includes/news.php:63
+#: includes/news.php:63 includes/smilies.php:5
 msgid "Smilies"
 msgstr ""
 
@@ -1274,6 +1275,66 @@ msgstr ""
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
 msgstr ""
 
+#: includes/settings.php:11 index.php:99
+msgid "System Settings"
+msgstr ""
+
+#: includes/settings.php:44
+msgid "Common Settings"
+msgstr ""
+
+#: includes/settings.php:45
+msgid "Web site address without the slash at the end"
+msgstr ""
+
+#: includes/settings.php:46
+msgid "Site copyright"
+msgstr ""
+
+#: includes/settings.php:47
+msgid "Site Email"
+msgstr ""
+
+#: includes/settings.php:48
+msgid "Max. file size"
+msgstr ""
+
+#: includes/settings.php:49
+msgid "Gzip compression"
+msgstr ""
+
+#: includes/settings.php:54
+msgid "Time shift"
+msgstr ""
+
+#: includes/settings.php:56
+msgid "System Time"
+msgstr ""
+
+#: includes/settings.php:57
+msgid "Server Time"
+msgstr ""
+
+#: includes/settings.php:62
+msgid "META tags"
+msgstr ""
+
+#: includes/settings.php:63
+msgid "Keywords"
+msgstr ""
+
+#: includes/settings.php:68
+msgid "Themes"
+msgstr ""
+
+#: includes/smilies.php:42
+msgid "Smilie cache updated successfully"
+msgstr ""
+
+#: includes/smilies.php:44
+msgid "Error updating cache"
+msgstr ""
+
 #: index.php:64
 msgid "On registration"
 msgstr ""
@@ -1304,10 +1365,6 @@ msgstr ""
 
 #: index.php:97
 msgid "System"
-msgstr ""
-
-#: index.php:99
-msgid "System Settings"
 msgstr ""
 
 #: index.php:100
