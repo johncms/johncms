@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-05 00:00+0400\n"
+"POT-Creation-Date: 2016-09-05 00:07+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -31,7 +31,8 @@ msgstr ""
 #: includes/news.php:73 includes/reg.php:14 includes/reg.php:127
 #: includes/search_ip.php:19 includes/search_ip.php:126
 #: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
-#: includes/smilies.php:5 includes/smilies.php:48 index.php:23 index.php:58
+#: includes/smilies.php:5 includes/smilies.php:48 includes/usr.php:8
+#: includes/usr.php:56 index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
@@ -302,6 +303,7 @@ msgstr ""
 
 #: includes/ads.php:202 includes/ads.php:354 includes/counters.php:53
 #: includes/counters.php:293 includes/forum.php:488 includes/forum.php:515
+#: includes/usr.php:39
 msgid "Edit"
 msgstr ""
 
@@ -314,7 +316,7 @@ msgstr ""
 #: includes/ads.php:355 includes/counters.php:53 includes/counters.php:123
 #: includes/counters.php:125 includes/counters.php:294 includes/forum.php:180
 #: includes/forum.php:194 includes/forum.php:489 includes/forum.php:516
-#: includes/ipban.php:320 includes/reg.php:96
+#: includes/ipban.php:320 includes/reg.php:96 includes/usr.php:39
 msgid "Delete"
 msgstr ""
 
@@ -380,12 +382,13 @@ msgstr ""
 #: includes/ban_panel.php:84 includes/forum.php:616 includes/forum.php:711
 #: includes/ipban.php:118 includes/ipban.php:373 includes/languages.php:90
 #: includes/reg.php:111 includes/search_ip.php:117 includes/smilies.php:47
+#: includes/usr.php:49
 msgid "Total"
 msgstr ""
 
 #: includes/ads.php:404 includes/ban_panel.php:88 includes/forum.php:622
 #: includes/forum.php:717 includes/ipban.php:378 includes/reg.php:117
-#: includes/search_ip.php:123
+#: includes/search_ip.php:123 includes/usr.php:53
 msgid "To Page"
 msgstr ""
 
@@ -555,7 +558,7 @@ msgstr ""
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
 msgstr ""
 
-#: includes/ban_panel.php:53
+#: includes/ban_panel.php:53 includes/usr.php:10
 msgid "Sort"
 msgstr ""
 
@@ -1044,7 +1047,7 @@ msgstr ""
 msgid "Enter a single address, mask and range are not allowed"
 msgstr ""
 
-#: includes/ipban.php:372
+#: includes/ipban.php:372 includes/usr.php:42
 msgid "Ban"
 msgstr ""
 
@@ -1333,6 +1336,14 @@ msgstr ""
 
 #: includes/smilies.php:44
 msgid "Error updating cache"
+msgstr ""
+
+#: includes/usr.php:8
+msgid "List of Users"
+msgstr ""
+
+#: includes/usr.php:15 includes/usr.php:21 includes/usr.php:27
+msgid "Nickname"
 msgstr ""
 
 #: index.php:64
