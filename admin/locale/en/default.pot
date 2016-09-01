@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-05 00:13+0400\n"
+"POT-Creation-Date: 2016-09-05 00:21+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -33,7 +33,7 @@ msgstr ""
 #: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
 #: includes/smilies.php:5 includes/smilies.php:48 includes/usr.php:8
 #: includes/usr.php:56 includes/usr_adm.php:9 includes/usr_adm.php:62
-#: index.php:23 index.php:58
+#: includes/usr_clean.php:14 index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 #: includes/forum.php:302 includes/forum.php:407 includes/ip_whois.php:104
 #: includes/ipban.php:28 includes/ipban.php:119 includes/ipban.php:174
 #: includes/ipban.php:207 includes/ipban.php:260 includes/ipban.php:268
-#: includes/ipban.php:275 includes/ipban.php:335
+#: includes/ipban.php:275 includes/ipban.php:335 includes/usr_clean.php:73
 msgid "Back"
 msgstr ""
 
@@ -185,6 +185,7 @@ msgstr ""
 #: includes/ads.php:164 includes/antispy.php:419 includes/counters.php:118
 #: includes/ipban.php:317 includes/reg.php:26 includes/reg.php:32
 #: includes/reg.php:50 includes/reg.php:56 includes/reg.php:73
+#: includes/usr_clean.php:57
 msgid "Continue"
 msgstr ""
 
@@ -318,6 +319,7 @@ msgstr ""
 #: includes/counters.php:125 includes/counters.php:294 includes/forum.php:180
 #: includes/forum.php:194 includes/forum.php:489 includes/forum.php:516
 #: includes/ipban.php:320 includes/reg.php:96 includes/usr.php:39
+#: includes/usr_clean.php:72
 msgid "Delete"
 msgstr ""
 
@@ -383,7 +385,7 @@ msgstr ""
 #: includes/ban_panel.php:84 includes/forum.php:616 includes/forum.php:711
 #: includes/ipban.php:118 includes/ipban.php:373 includes/languages.php:90
 #: includes/reg.php:111 includes/search_ip.php:117 includes/smilies.php:47
-#: includes/usr.php:49 includes/usr_adm.php:61
+#: includes/usr.php:49 includes/usr_adm.php:61 includes/usr_clean.php:71
 msgid "Total"
 msgstr ""
 
@@ -1367,12 +1369,24 @@ msgstr ""
 msgid "Moderators"
 msgstr ""
 
-#: index.php:64
-msgid "On registration"
+#: includes/usr_clean.php:14 index.php:69
+msgid "Database cleanup"
 msgstr ""
 
-#: index.php:69
-msgid "Database cleanup"
+#: includes/usr_clean.php:57
+msgid "Inactive profiles deleted"
+msgstr ""
+
+#: includes/usr_clean.php:69
+msgid "Inactive profiles"
+msgstr ""
+
+#: includes/usr_clean.php:70
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr ""
+
+#: index.php:64
+msgid "On registration"
 msgstr ""
 
 #: index.php:71
