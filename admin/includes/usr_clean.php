@@ -11,7 +11,7 @@ if ($rights < 7) {
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['users_clean'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Database cleanup') . '</div>';
 
 switch ($mod) {
     case 1:
@@ -54,7 +54,7 @@ switch ($mod) {
             ");
         }
 
-        echo '<div class="rmenu"><p>' . $lng['dead_profiles_deleted'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="rmenu"><p>' . _t('Inactive profiles deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
         break;
 
     default:
@@ -66,8 +66,9 @@ switch ($mod) {
             AND `komm` < '10'")->fetchColumn();
         echo '<div class="menu">' .
             '<form action="index.php?act=usr_clean&amp;mod=1" method="post">' .
-            '<p><h3>' . $lng['dead_profiles'] . '</h3>' . $lng['dead_profiles_desc'] . '</p>' .
-            '<p>' . $lng['total'] . ': <b>' . $total . '</b></p>' .
-            '<p><input type="submit" name="submit" value="' . $lng['delete'] . '"/></p></form></div>' .
-            '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
+            '<p><h3>' . _t('Inactive profiles') . '</h3>'
+            . _t('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.') . '</p>' .
+            '<p>' . _t('Total') . ': <b>' . $total . '</b></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p></form></div>' .
+            '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
 }
