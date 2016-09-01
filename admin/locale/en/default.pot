@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-05 00:07+0400\n"
+"POT-Creation-Date: 2016-09-05 00:13+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -32,7 +32,8 @@ msgstr ""
 #: includes/search_ip.php:19 includes/search_ip.php:126
 #: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
 #: includes/smilies.php:5 includes/smilies.php:48 includes/usr.php:8
-#: includes/usr.php:56 index.php:23 index.php:58
+#: includes/usr.php:56 includes/usr_adm.php:9 includes/usr_adm.php:62
+#: index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
@@ -382,7 +383,7 @@ msgstr ""
 #: includes/ban_panel.php:84 includes/forum.php:616 includes/forum.php:711
 #: includes/ipban.php:118 includes/ipban.php:373 includes/languages.php:90
 #: includes/reg.php:111 includes/search_ip.php:117 includes/smilies.php:47
-#: includes/usr.php:49
+#: includes/usr.php:49 includes/usr_adm.php:61
 msgid "Total"
 msgstr ""
 
@@ -1346,12 +1347,28 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: index.php:64
-msgid "On registration"
+#: includes/usr_adm.php:9 index.php:68
+msgid "Administration"
 msgstr ""
 
-#: index.php:68
-msgid "Administration"
+#: includes/usr_adm.php:13
+msgid "Supervisors"
+msgstr ""
+
+#: includes/usr_adm.php:25
+msgid "Administrators"
+msgstr ""
+
+#: includes/usr_adm.php:38
+msgid "Super Moderators"
+msgstr ""
+
+#: includes/usr_adm.php:51
+msgid "Moderators"
+msgstr ""
+
+#: index.php:64
+msgid "On registration"
 msgstr ""
 
 #: index.php:69
