@@ -8,7 +8,7 @@ if ($rights < 9) {
     exit;
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['site_settings'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
 if (isset($_POST['submit'])) {
     /** @var PDO $db */
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         $set[$res[0]] = $res[1];
     }
 
-    echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
+    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
 }
 
 // Форма ввода параметров системы
@@ -41,31 +41,31 @@ echo '<form action="index.php?act=settings" method="post"><div class="menu">';
 
 // Общие настройки
 echo '<p>' .
-    '<h3>' . $lng['common_settings'] . '</h3>' .
-    $lng['site_url'] . ':<br>' . '<input type="text" name="homeurl" value="' . htmlentities($set['homeurl']) . '"/><br>' .
-    $lng['site_copyright'] . ':<br>' . '<input type="text" name="copyright" value="' . htmlentities($set['copyright'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
-    $lng['site_email'] . ':<br>' . '<input name="madm" maxlength="50" value="' . htmlentities($set['email']) . '"/><br>' .
-    $lng['file_maxsize'] . ' (kb):<br>' . '<input type="text" name="flsz" value="' . intval($set['flsz']) . '"/><br>' .
-    '<input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['gzip_compress'] .
+    '<h3>' . _t('Common Settings') . '</h3>' .
+    _t('Web site address without the slash at the end') . '<br>' . '<input type="text" name="homeurl" value="' . htmlentities($set['homeurl']) . '"/><br>' .
+    _t('Site copyright') . '<br>' . '<input type="text" name="copyright" value="' . htmlentities($set['copyright'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
+    _t('Site Email') . '<br>' . '<input name="madm" maxlength="50" value="' . htmlentities($set['email']) . '"/><br>' .
+    _t('Max. file size') . ' (kb):<br>' . '<input type="text" name="flsz" value="' . intval($set['flsz']) . '"/><br>' .
+    '<input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Gzip compression') .
     '</p>';
 
 // Настройка времени
 echo '<p>' .
-    '<h3>' . $lng['clock_settings'] . '</h3>' .
-    '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $set['timeshift'] . '"/> ' . $lng['time_shift'] . ' (+-12)<br>' .
-    '<span style="font-weight:bold; background-color:#C0FFC0">' . date("H:i", time() + $set['timeshift'] * 3600) . '</span> ' . $lng['system_time'] .
-    '<br><span style="font-weight:bold; background-color:#FFC0C0">' . date("H:i") . '</span> ' . $lng['server_time'] .
+    '<h3>' . _t('Time shift') . '</h3>' .
+    '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $set['timeshift'] . '"/> (+-12)<br>' .
+    '<span style="font-weight:bold; background-color:#C0FFC0">' . date("H:i", time() + $set['timeshift'] * 3600) . '</span> ' . _t('System Time') .
+    '<br><span style="font-weight:bold; background-color:#FFC0C0">' . date("H:i") . '</span> ' . _t('Server Time') .
     '</p>';
 
 // META тэги
 echo '<p>' .
-    '<h3>' . $lng['meta_tags'] . '</h3>' .
-    '&#160;' . $lng['meta_keywords'] . ':<br>&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_key">' . $set['meta_key'] . '</textarea><br>' .
-    '&#160;' . $lng['meta_description'] . ':<br>&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_desc">' . $set['meta_desc'] . '</textarea>' .
+    '<h3>' . _t('META tags') . '</h3>' .
+    '&#160;' . _t('Keywords') . '<br>&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_key">' . $set['meta_key'] . '</textarea><br>' .
+    '&#160;' . _t('Description') . '<br>&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_desc">' . $set['meta_desc'] . '</textarea>' .
     '</p>';
 
 // Выбор темы оформления
-echo '<p><h3>' . $lng['design_template'] . '</h3>&#160;<select name="skindef">';
+echo '<p><h3>' . _t('Themes') . '</h3>&#160;<select name="skindef">';
 $dir = opendir('../theme');
 
 while ($skindef = readdir($dir)) {
@@ -78,6 +78,6 @@ while ($skindef = readdir($dir)) {
 closedir($dir);
 
 echo '</select>' .
-    '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
+    '</p><br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
     '<div class="phdr">&#160;</div>' .
-    '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
