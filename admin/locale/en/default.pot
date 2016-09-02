@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-05 00:21+0400\n"
+"POT-Creation-Date: 2016-09-05 00:32+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -33,7 +33,7 @@ msgstr ""
 #: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
 #: includes/smilies.php:5 includes/smilies.php:48 includes/usr.php:8
 #: includes/usr.php:56 includes/usr_adm.php:9 includes/usr_adm.php:62
-#: includes/usr_clean.php:14 index.php:23 index.php:58
+#: includes/usr_clean.php:14 includes/usr_del.php:53 index.php:23 index.php:58
 msgid "Admin Panel"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: includes/access.php:47 index.php:84
+#: includes/access.php:47 includes/usr_del.php:109 index.php:84
 msgid "Forum"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgid "Library"
 msgstr ""
 
 #: includes/access.php:69 includes/access.php:78 includes/access.php:87
-#: includes/news.php:65
+#: includes/news.php:65 includes/usr_del.php:105
 msgid "Comments"
 msgstr ""
 
@@ -145,6 +145,7 @@ msgstr ""
 #: includes/forum.php:59 includes/forum.php:105 includes/forum.php:113
 #: includes/forum.php:215 includes/forum.php:309 includes/ip_whois.php:100
 #: includes/reg.php:20 includes/reg.php:38 includes/reg.php:75
+#: includes/usr_del.php:31
 msgid "Wrong data"
 msgstr ""
 
@@ -319,7 +320,7 @@ msgstr ""
 #: includes/counters.php:125 includes/counters.php:294 includes/forum.php:180
 #: includes/forum.php:194 includes/forum.php:489 includes/forum.php:516
 #: includes/ipban.php:320 includes/reg.php:96 includes/usr.php:39
-#: includes/usr_clean.php:72
+#: includes/usr_clean.php:72 includes/usr_del.php:114
 msgid "Delete"
 msgstr ""
 
@@ -329,7 +330,7 @@ msgstr ""
 
 #: includes/ads.php:267 includes/ads.php:284 includes/counters.php:126
 #: includes/ipban.php:171 includes/ipban.php:193 includes/ipban.php:242
-#: includes/ipban.php:321 includes/karma.php:24
+#: includes/ipban.php:321 includes/karma.php:24 includes/usr_del.php:121
 msgid "Cancel"
 msgstr ""
 
@@ -1229,7 +1230,7 @@ msgstr ""
 msgid "Registration is confirmed"
 msgstr ""
 
-#: includes/reg.php:50
+#: includes/reg.php:50 includes/usr_del.php:97
 msgid "User deleted"
 msgstr ""
 
@@ -1383,6 +1384,30 @@ msgstr ""
 
 #: includes/usr_clean.php:70
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr ""
+
+#: includes/usr_del.php:25
+msgid "You cannot delete higher administration"
+msgstr ""
+
+#: includes/usr_del.php:28
+msgid "User does not exists"
+msgstr ""
+
+#: includes/usr_del.php:53
+msgid "Delete user"
+msgstr ""
+
+#: includes/usr_del.php:102
+msgid "Cleaning activities"
+msgstr ""
+
+#: includes/usr_del.php:110
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr ""
+
+#: includes/usr_del.php:113
+msgid "Are you sure that you want to delete this user?"
 msgstr ""
 
 #: index.php:64

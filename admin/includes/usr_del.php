@@ -22,13 +22,13 @@ if ($id && $id != $user_id) {
         $user = $req->fetch();
 
         if ($user['rights'] > $datauser['rights']) {
-            $error = $lng['error_usrdel_rights'];
+            $error = _t('You cannot delete higher administration');
         }
     } else {
-        $error = $lng['error_user_not_exist'];
+        $error = _t('User does not exists');
     }
 } else {
-    $error = $lng['error_wrong_data'];
+    $error = _t('Wrong data');
 }
 
 if (!$error) {
@@ -49,7 +49,8 @@ if (!$error) {
     $forumt_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't' AND `close` != '1'")->fetchColumn();
     // Считаем посты на Форуме
     $forump_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'")->fetchColumn();
-    echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['user_del'] . '</div>';
+
+    echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
     // Выводим краткие данные
     echo '<div class="user"><p>' . functions::display_user($user, [
             'lastvisit' => 1,
@@ -93,29 +94,28 @@ if (!$error) {
                 `cms_forum_rdm`
             ");
 
-            echo '<div class="rmenu"><p><h3>' . $lng['user_deleted'] . '</h3></p></div>';
+            echo '<div class="rmenu"><p><h3>' . _t('User deleted') . '</h3></p></div>';
             break;
 
         default:
             // Форма параметров удаления
-            echo '<form action="index.php?act=usr_del&amp;mod=del&amp;id=' . $user['id'] . '" method="post"><div class="menu"><p><h3>' . $lng['user_del_activity'] . '</h3>';
+            echo '<form action="index.php?act=usr_del&amp;mod=del&amp;id=' . $user['id'] . '" method="post"><div class="menu"><p><h3>' . _t('Cleaning activities') . '</h3>';
 
             if ($comm_count) {
-                echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . $lng['comments'] . ' <span class="red">(' . $comm_count . ')</span></div>';
+                echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . _t('Comments') . ' <span class="red">(' . $comm_count . ')</span></div>';
             }
 
             if ($forumt_count || $forump_count) {
-                echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . $lng['forum'] . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
-                echo '<small><span class="gray">' . $lng['user_del_forumnote'] . '</span></small>';
+                echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . _t('Forum') . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
+                echo '<small><span class="gray">' . _t('All threads and posts created by the user go in the hidden state') . '</span></small>';
             }
 
-            echo '</p></div><div class="rmenu"><p>' . $lng['user_del_confirm'];
-            echo '</p><p><input type="submit" value="' . $lng['delete'] . '" name="submit" />';
+            echo '</p></div><div class="rmenu"><p>' . _t('Are you sure that you want to delete this user?');
+            echo '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" />';
             echo '</p></div></form>';
-            echo '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></div>';
     }
 } else {
     echo functions::display_error($error);
 }
 
-echo '<p><a href="index.php?act=users">' . $lng['users_list'] . '</a><br><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
+echo '<p><a href="index.php">' . _t('Cancel') . '</a></p>';
