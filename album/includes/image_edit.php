@@ -146,7 +146,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 ");
             }
 
-            echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br />' .
+            echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br>' .
                 '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
         } else {
             unset($_SESSION['post']);
@@ -155,7 +155,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<p><h3>' . $lng_profile['image'] . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
                 '<p><h3>' . $lng['description'] . '</h3>' .
-                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br />' .
+                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br>' .
                 '<small>' . $lng['not_mandatory_field'] . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .
@@ -187,8 +187,8 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<td>+2</td>' .
                 '</tr></table></p>' .
                 '<p><h3>' . $lng_profile['image_rotate'] . '</h3>' .
-                '<input type="radio" name="rotate" value="0" checked="checked"/>&#160;' . $lng_profile['image_rotate_not'] . '<br />' .
-                '<input type="radio" name="rotate" value="2"/>&#160;' . $lng_profile['image_rotate_right'] . '<br />' .
+                '<input type="radio" name="rotate" value="0" checked="checked"/>&#160;' . $lng_profile['image_rotate_not'] . '<br>' .
+                '<input type="radio" name="rotate" value="2"/>&#160;' . $lng_profile['image_rotate_right'] . '<br>' .
                 '<input type="radio" name="rotate" value="1"/>&#160;' . $lng_profile['image_rotate_left'] . '</p>' .
                 '<p><small>' . $lng_profile['image_edit_warning'] . '</small></p>' .
                 '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .

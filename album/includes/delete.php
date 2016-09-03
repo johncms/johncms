@@ -31,7 +31,7 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
             $db->exec("DELETE FROM `cms_album_files` WHERE `album_id` = " . $res_a['id']);
             $db->exec("DELETE FROM `cms_album_cat` WHERE `id` = " . $res_a['id']);
 
-            echo '<div class="menu"><p>' . $lng_profile['album_deleted'] . '<br />' .
+            echo '<div class="menu"><p>' . $lng_profile['album_deleted'] . '<br>' .
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
         } else {
             echo '<div class="rmenu"><form action="?act=delete&amp;al=' . $al . '&amp;user=' . $user['id'] . '" method="post">' .
