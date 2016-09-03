@@ -23,7 +23,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     `access` = '" . $res_a['access'] . "'
                     WHERE `id` = '$img'
                 ");
-                echo '<div class="gmenu"><p>' . $lng_profile['image_moved'] . '<br />' .
+                echo '<div class="gmenu"><p>' . $lng_profile['image_moved'] . '<br>' .
                     '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
             } else {
                 echo functions::display_error($lng['error_wrong_data']);

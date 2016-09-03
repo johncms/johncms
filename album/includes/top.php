@@ -144,7 +144,7 @@ if ($total) {
                 '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
                 '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .
                 '<a href="?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
-                '<br /><a href="?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
+                '<br><a href="?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
         }
 
         echo '</div></div>';

@@ -114,7 +114,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
                 ]);
             }
 
-            echo '<div class="gmenu"><p>' . ($al ? $lng_profile['album_changed'] : $lng_profile['album_created']) . '<br />' .
+            echo '<div class="gmenu"><p>' . ($al ? $lng_profile['album_changed'] : $lng_profile['album_created']) . '<br>' .
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
             require('../incfiles/end.php');
             exit;
@@ -128,18 +128,18 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     echo '<div class="menu">' .
         '<form action="?act=edit&amp;user=' . $user['id'] . '&amp;al=' . $al . '" method="post">' .
         '<p><h3>' . $lng['title'] . '</h3>' .
-        '<input type="text" name="name" value="' . functions::checkout($name) . '" maxlength="30" /><br />' .
+        '<input type="text" name="name" value="' . functions::checkout($name) . '" maxlength="30" /><br>' .
         '<small>Min. 2, Max. 30</small></p>' .
         '<p><h3>' . $lng['description'] . '</h3>' .
-        '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($description) . '</textarea><br />' .
-        '<small>' . $lng['not_mandatory_field'] . '<br />Max. 500</small></p>' .
+        '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($description) . '</textarea><br>' .
+        '<small>' . $lng['not_mandatory_field'] . '<br>Max. 500</small></p>' .
         '<p><h3>' . $lng['password'] . '</h3>' .
-        '<input type="text" name="password" value="' . functions::checkout($password) . '" maxlength="15" /><br />' .
-        '<small>' . $lng_profile['access_help'] . '<br />Min. 3, Max. 15</small></p>' .
+        '<input type="text" name="password" value="' . functions::checkout($password) . '" maxlength="15" /><br>' .
+        '<small>' . $lng_profile['access_help'] . '<br>Min. 3, Max. 15</small></p>' .
         '<p><h3>Доступ</h3>' .
-        '<input type="radio" name="access" value="4" ' . (!$access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_all'] . '<br />' .
-        '<input type="radio" name="access" value="3" ' . ($access == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_friends'] . '<br />' .
-        '<input type="radio" name="access" value="2" ' . ($access == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_by_password'] . '<br />' .
+        '<input type="radio" name="access" value="4" ' . (!$access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_all'] . '<br>' .
+        '<input type="radio" name="access" value="3" ' . ($access == 3 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_friends'] . '<br>' .
+        '<input type="radio" name="access" value="2" ' . ($access == 2 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_by_password'] . '<br>' .
         '<input type="radio" name="access" value="1" ' . ($access == 1 ? 'checked="checked"' : '') . '/>&#160;' . $lng_profile['access_closed'] . '</p>' .
         '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>' .
         '</form></div>' .

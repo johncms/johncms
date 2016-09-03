@@ -69,7 +69,7 @@ if ($album['access'] == 1
 
     if (!isset($_SESSION['ap']) || $_SESSION['ap'] != $album['password']) {
         echo '<form action="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '" method="post"><div class="menu"><p>' .
-            $lng_profile['album_password'] . '<br />' .
+            $lng_profile['album_password'] . '<br>' .
             '<input type="text" name="password"/></p>' .
             '<p><input type="submit" name="submit" value="' . $lng['login'] . '"/></p>' .
             '</div></form>' .
@@ -123,7 +123,7 @@ if ($total) {
                     '../files/users/album/' . $user['id'] . '/' . $res['img_name'],
                     '../files/users/photo/' . $user_id . '.jpg'
                 );
-                echo '<span class="green"><b>' . $lng_profile['photo_profile_ok'] . '</b></span><br />';
+                echo '<span class="green"><b>' . $lng_profile['photo_profile_ok'] . '</b></span><br>';
             }
             echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
 
@@ -159,7 +159,7 @@ if ($total) {
         echo vote_photo($res) .
             '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
             '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .
-            '<a href="?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')<br />' .
+            '<a href="?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')<br>' .
             '<a href="?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>' .
             '</div></div>';
         ++$i;

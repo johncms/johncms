@@ -83,7 +83,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                         $res_a['access'],
                     ]);
 
-                    echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br />' .
+                    echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br>' .
                         '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
                         '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
                 } else {
@@ -99,12 +99,12 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
             '<div class="menu"><p><h3>' . $lng_profile['select_image'] . '</h3>' .
             '<input type="file" name="imagefile" value="" /></p>' .
             '<p><h3>' . $lng['description'] . '</h3>' .
-            '<textarea name="description" rows="' . $set_user['field_h'] . '"></textarea><br />' .
+            '<textarea name="description" rows="' . $set_user['field_h'] . '"></textarea><br>' .
             '<small>' . $lng['not_mandatory_field'] . ', max. 500</small></p>' .
             '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" />' .
             '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" /></p>' .
             '</div></form>' .
-            '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . 'kb.<br />' . $lng_profile['select_image_help_5'] . '</small></div>' .
+            '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . 'kb.<br>' . $lng_profile['select_image_help_5'] . '</small></div>' .
             '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['back'] . '</a></p>';
     }
 }

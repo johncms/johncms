@@ -1,0 +1,98 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: JohnCMS 7.0\n"
+"POT-Creation-Date: 2016-09-05 22:04+0400\n"
+"PO-Revision-Date: 2016-08-26 11:27+0400\n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.9\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:14
+msgid "Album"
+msgstr ""
+
+#: index.php:25
+msgid "For registered users only"
+msgstr ""
+
+#: index.php:34
+msgid "User does not exists"
+msgstr ""
+
+#: index.php:62 index.php:131
+msgid "Rating"
+msgstr ""
+
+#: index.php:63
+msgid "Against"
+msgstr ""
+
+#: index.php:63
+msgid "For"
+msgstr ""
+
+#: index.php:70
+msgid "Vote"
+msgstr ""
+
+#: index.php:116
+msgid "Photo Albums"
+msgstr ""
+
+#: index.php:118
+msgid "New Photos"
+msgstr ""
+
+#: index.php:119
+msgid "New Comments"
+msgstr ""
+
+#: index.php:122
+msgid "Albums"
+msgstr ""
+
+#: index.php:123
+msgid "Guys"
+msgstr ""
+
+#: index.php:124
+msgid "Girls"
+msgstr ""
+
+#: index.php:127
+msgid "My Album"
+msgstr ""
+
+#: index.php:132
+msgid "Top Votes"
+msgstr ""
+
+#: index.php:133
+msgid "Top Downloads"
+msgstr ""
+
+#: index.php:134
+msgid "Top Views"
+msgstr ""
+
+#: index.php:135
+msgid "Top Comments"
+msgstr ""
+
+#: index.php:136
+msgid "Top Worst"
+msgstr ""
+
+#: index.php:139
+msgid "Users"
+msgstr ""
