@@ -25,7 +25,7 @@ if ($req->rowCount()) {
     }
     // Проверка наличия файла
     if (!$error && !file_exists('../files/users/album/' . $res['user_id'] . '/' . $res['img_name']))
-        $error[] = $lng['error_file_not_exist'];
+        $error[] = _t('File does not exist');
 } else {
     $error[] = _t('Wrong data');
 }
@@ -40,5 +40,5 @@ if (!$error) {
     header('location: ' . $set['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
     require('../incfiles/head.php');
-    echo functions::display_error($error, '<a href="index.php">' . $lng['back'] . '</a>');
+    echo functions::display_error($error, '<a href="index.php">' . _t('Back') . '</a>');
 }
