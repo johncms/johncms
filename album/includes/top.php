@@ -96,7 +96,7 @@ switch ($mod) {
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
 require('../incfiles/head.php');
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $title . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {
     $total = $new_album_comm;

@@ -13,7 +13,7 @@ if ($req_obj->rowCount()) {
     $owner = functions::get_user($res_obj['user_id']);
     if (!$owner) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['user_does_not_exist']);
+        echo functions::display_error(_t('User does not exists'));
         require('../incfiles/end.php');
         exit;
     }
@@ -25,14 +25,14 @@ if ($req_obj->rowCount()) {
     if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 7) || ($res_a['access'] == 2 && $rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
         // Если доступ закрыт
         require('../incfiles/head.php');
-        echo functions::display_error($lng['access_forbidden']) .
-            '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . $lng_profile['album_list'] . '</a></div>';
+        echo functions::display_error(_t('Access forbidden')) .
+            '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>';
         require('../incfiles/end.php');
         exit;
     }
 
-    $context_top = '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' .
-        '<a href="?act=list&amp;user=' . $owner['id'] . '">' . $lng['personal_2'] . '</a></div>' .
+    $context_top = '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' .
+        '<a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Personal') . '</a></div>' .
         '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 
     if (!empty($res_obj['description'])) {
