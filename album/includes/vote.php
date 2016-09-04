@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Голосуем за фотографию
 if (!$img) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -54,5 +54,5 @@ if ($req->rowCount()) {
 
     header('Location: ' . $ref);
 } else {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
 }

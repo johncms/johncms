@@ -13,7 +13,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
 
     if (!$req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }

@@ -26,7 +26,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 echo '<div class="gmenu"><p>' . $lng_profile['image_moved'] . '<br>' .
                     '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
             } else {
-                echo functions::display_error($lng['error_wrong_data']);
+                echo functions::display_error(_t('Wrong data'));
             }
         } else {
             $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `id` != '" . $image['album_id'] . "' ORDER BY `sort` ASC");
@@ -43,12 +43,12 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 echo '</select></p>' .
                     '<p><input type="submit" name="submit" value="' . $lng['move'] . '"/></p>' .
                     '</div></form>' .
-                    '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '">' . $lng['cancel'] . '</a></div>';
+                    '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
             } else {
-                echo functions::display_error($lng_profile['image_move_error'], '<a href="?act=list&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a>');
+                echo functions::display_error($lng_profile['image_move_error'], '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a>');
             }
         }
     } else {
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
     }
 }

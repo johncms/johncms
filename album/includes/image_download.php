@@ -20,14 +20,14 @@ if ($req->rowCount()) {
             if($res_a['access'] == 1 || $res_a['access'] == 2 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']))
                 $error[] = $lng['access_forbidden'];
         } else {
-            $error[] = $lng['error_wrong_data'];
+            $error[] = _t('Wrong data');
         }
     }
     // Проверка наличия файла
     if (!$error && !file_exists('../files/users/album/' . $res['user_id'] . '/' . $res['img_name']))
         $error[] = $lng['error_file_not_exist'];
 } else {
-    $error[] = $lng['error_wrong_data'];
+    $error[] = _t('Wrong data');
 }
 if (!$error) {
     // Счетчик скачиваний
