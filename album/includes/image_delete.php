@@ -31,9 +31,9 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<p>' . $lng_profile['image_delete_warning'] . '</p>' .
                 '<p><input type="submit" name="submit" value="' . $lng['delete'] . '"/></p>' .
                 '</form></div>' .
-                '<div class="phdr"><a href="?act=show&amp;al=' . $album . 'user=' . $user['id'] . '">' . $lng['cancel'] . '</a></div>';
+                '<div class="phdr"><a href="?act=show&amp;al=' . $album . 'user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
     }
 }

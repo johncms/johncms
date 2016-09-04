@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 
 if (!$al) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -16,7 +16,7 @@ $db = App::getContainer()->get(PDO::class);
 $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
 
 if (!$req->rowCount()) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
