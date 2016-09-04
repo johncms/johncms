@@ -25,7 +25,7 @@ $menu = array(
     ($mod == 'boys' ? '<b>' . $lng['mans'] . '</b>' : '<a href="?act=users&amp;mod=boys">' . $lng['mans'] . '</a>'),
     ($mod == 'girls' ? '<b>' . $lng['womans'] . '</b>' : '<a href="?act=users&amp;mod=girls">' . $lng['womans'] . '</a>')
 );
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['photo_albums'] . '</b></a> | ' . $lng['list'] . '</div>' .
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . $lng['list'] . '</div>' .
      '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
