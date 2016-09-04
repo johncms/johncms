@@ -13,7 +13,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
-        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_delete'] . '</div>';
+        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . $lng_profile['image_delete'] . '</div>';
         //TODO: Сделать проверку, чтоб администрация не могла удалять фотки старших по должности
         if (isset($_POST['submit'])) {
             // Удаляем файлы картинок

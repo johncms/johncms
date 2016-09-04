@@ -12,7 +12,7 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
     if ($req_a->rowCount()) {
         $res_a = $req_a->fetch();
-        echo '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng['delete'] . '</div>';
+        echo '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Delete') . '</div>';
 
         if (isset($_POST['submit'])) {
             $req = $db->query("SELECT * FROM `cms_album_files` WHERE `album_id` = " . $res_a['id']);
@@ -31,13 +31,13 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
             $db->exec("DELETE FROM `cms_album_files` WHERE `album_id` = " . $res_a['id']);
             $db->exec("DELETE FROM `cms_album_cat` WHERE `id` = " . $res_a['id']);
 
-            echo '<div class="menu"><p>' . $lng_profile['album_deleted'] . '<br>' .
-                '<a href="?act=list&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
+            echo '<div class="menu"><p>' . _t('Album deleted') . '<br>' .
+                '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
         } else {
             echo '<div class="rmenu"><form action="?act=delete&amp;al=' . $al . '&amp;user=' . $user['id'] . '" method="post">' .
-                '<p>' . $lng_profile['album'] . ': <b>' . functions::checkout($res_a['name']) . '</b></p>' .
-                '<p>' . $lng_profile['album_delete_warning'] . '</p>' .
-                '<p><input type="submit" name="submit" value="' . $lng['delete'] . '"/></p>' .
+                '<p>' . _t('Album') . ': <b>' . functions::checkout($res_a['name']) . '</b></p>' .
+                '<p>' . _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.') . '</p>' .
+                '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>' .
                 '</form></div>' .
                 '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
         }

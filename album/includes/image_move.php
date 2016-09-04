@@ -12,7 +12,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
     if ($req->rowCount()) {
         $image = $req->fetch();
-        echo '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_move'] . '</div>';
+        echo '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . $lng_profile['image_move'] . '</div>';
         if (isset($_POST['submit'])) {
             $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 

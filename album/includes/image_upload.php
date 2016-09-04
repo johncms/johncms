@@ -19,7 +19,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     }
 
     $res_a = $req_a->fetch();
-    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
+    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
 
     if (isset($_POST['submit'])) {
         $handle = new upload($_FILES['imagefile']);
