@@ -18,7 +18,7 @@ if ($req->rowCount()) {
         if ($req_a->rowCount()) {
             $res_a = $req_a->fetch();
             if($res_a['access'] == 1 || $res_a['access'] == 2 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']))
-                $error[] = $lng['access_forbidden'];
+                $error[] = _t('Access forbidden');
         } else {
             $error[] = _t('Wrong data');
         }
