@@ -14,7 +14,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
-        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . $lng_profile['image_edit'] . '</div>';
+        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Edit image') . '</div>';
 
         if (isset($_POST['submit'])) {
             if (!isset($_SESSION['post'])) {
@@ -146,17 +146,17 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 ");
             }
 
-            echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br>' .
-                '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
+            echo '<div class="gmenu"><p>' . _t('Image successfully changed') . '<br>' .
+                '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
         } else {
             unset($_SESSION['post']);
             echo '<form action="?act=image_edit&amp;img=' . $img . '&amp;user=' . $user['id'] . '" method="post">' .
                 '<div class="menu">' .
-                '<p><h3>' . $lng_profile['image'] . '</h3>' .
+                '<p><h3>' . _t('Image') . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
-                '<p><h3>' . $lng['description'] . '</h3>' .
+                '<p><h3>' . _t('Description') . '</h3>' .
                 '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br>' .
-                '<small>' . $lng['not_mandatory_field'] . ', max. 500</small></p>' .
+                '<small>' . _t('Optional field') . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .
                 '<table border="0" cellspacing="0" cellpadding="0" style="text-align:center"><tr>' .
@@ -186,11 +186,11 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<td>+1</td>' .
                 '<td>+2</td>' .
                 '</tr></table></p>' .
-                '<p><h3>' . $lng_profile['image_rotate'] . '</h3>' .
-                '<input type="radio" name="rotate" value="0" checked="checked"/>&#160;' . $lng_profile['image_rotate_not'] . '<br>' .
-                '<input type="radio" name="rotate" value="2"/>&#160;' . $lng_profile['image_rotate_right'] . '<br>' .
-                '<input type="radio" name="rotate" value="1"/>&#160;' . $lng_profile['image_rotate_left'] . '</p>' .
-                '<p><small>' . $lng_profile['image_edit_warning'] . '</small></p>' .
+                '<p><h3>' . _t('Rotate') . '</h3>' .
+                '<input type="radio" name="rotate" value="0" checked="checked"/>&#160;' . _t('do not rotate') . '<br>' .
+                '<input type="radio" name="rotate" value="2"/>&#160;' . _t('clockwise') . '<br>' .
+                '<input type="radio" name="rotate" value="1"/>&#160;' . _t('counterclockwise') . '</p>' .
+                '<p><small>' . _t('Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason.') . '</small></p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                 '</div></form>' .
                 '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
