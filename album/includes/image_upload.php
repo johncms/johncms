@@ -19,7 +19,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     }
 
     $res_a = $req_a->fetch();
-    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
+    echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Upload image') . '</div>';
 
     if (isset($_POST['submit'])) {
         $handle = new upload($_FILES['imagefile']);
@@ -83,9 +83,9 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                         $res_a['access'],
                     ]);
 
-                    echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br>' .
-                        '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
-                        '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';
+                    echo '<div class="gmenu"><p>' . _t('Image uploaded') . '<br>' .
+                        '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>' .
+                        '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . _t('Profile') . '</a></div>';
                 } else {
                     echo functions::display_error($handle->error);
                 }
@@ -96,15 +96,15 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
         }
     } else {
         echo '<form enctype="multipart/form-data" method="post" action="?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' .
-            '<div class="menu"><p><h3>' . $lng_profile['select_image'] . '</h3>' .
+            '<div class="menu"><p><h3>' . _t('Image') . '</h3>' .
             '<input type="file" name="imagefile" value="" /></p>' .
-            '<p><h3>' . $lng['description'] . '</h3>' .
+            '<p><h3>' . _t('Description') . '</h3>' .
             '<textarea name="description" rows="' . $set_user['field_h'] . '"></textarea><br>' .
-            '<small>' . $lng['not_mandatory_field'] . ', max. 500</small></p>' .
+            '<small>' . _t('Optional field') . ', max. 500</small></p>' .
             '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" />' .
-            '<p><input type="submit" name="submit" value="' . $lng_profile['upload'] . '" /></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
             '</div></form>' .
-            '<div class="phdr"><small>' . $lng_profile['select_image_help'] . ' ' . $set['flsz'] . 'kb.<br>' . $lng_profile['select_image_help_5'] . '</small></div>' .
-            '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['back'] . '</a></p>';
+            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'), $set['flsz']) . '</small></div>' .
+            '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></p>';
     }
 }
