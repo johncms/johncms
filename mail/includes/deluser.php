@@ -48,20 +48,20 @@ if ($id) {
 
             //Удаляем контакт
             $db->exec("DELETE FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id' LIMIT 1");
-            echo '<div class="gmenu"><p>' . $lng_mail['contact_delete'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
+            echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
         } else {
-            echo '<div class="phdr"><b>' . $lng['delete'] . '</b></div>
+            echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>
 			<div class="rmenu">
 			<form action="index.php?act=deluser&amp;id=' . $id . '" method="post">
-			<p>' . $lng_mail['really_delete_contact'] . '</p>
-			<p><input type="submit" name="submit" value="' . $lng['delete'] . '"/></p>
+			<p>' . _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?') . '</p>
+			<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>
 			</form>
 			</div>';
             echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
         }
     } else {
-        echo '<div class="rmenu"><p>' . $lng_mail['contact_does_not_exist'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
+        echo '<div class="rmenu"><p>' . _t('Contact does not exist') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
     }
 } else {
-    echo '<div class="rmenu"><p>' . $lng_mail['not_contact_is_chose'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _t('Contact for removal isn\'t chosen') . '</p></div>';
 }
