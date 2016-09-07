@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Mail');
 require_once('../incfiles/head.php');
-echo '<div class="phdr"><b>' . $lng_mail['sent_messages'] . '</b></div>';
+echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
@@ -56,7 +56,7 @@ if ($total) {
                 $text = functions::smileys($text, $row['rights'] ? 1 : 0);
             }
             $text = bbcode::notags($text);
-            $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['continue'] . ' &gt;&gt;</a>';
+            $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
             $text = functions::checkout($last_msg['text'], 1, 1);
@@ -68,7 +68,7 @@ if ($total) {
         $arg = [
             'header' => '<span class="gray">(' . functions::display_date($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . $lng_mail['correspondence'] . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></p>',
+            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
             'iphide' => 1,
         ];
 
@@ -92,7 +92,7 @@ if ($total > $kmess) {
         '<p><form action="index.php" method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>
-                <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
