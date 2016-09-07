@@ -3,13 +3,13 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
-$textl = _t('Mail') . ' | ' . $lng['files'];
+$textl = _t('Mail') . ' | ' . _t('Files');
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><b>' . $lng['files'] . '</b></div>';
+echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 
 //Отображаем список файлов
 $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `delete`!='$user_id' AND `file_name`!=''")->fetchColumn();
@@ -45,7 +45,7 @@ if ($total > $kmess) {
     echo '<p><form action="index.php" method="get">
 		<input type="hidden" name="act" value="files"/>
 		<input type="text" name="page" size="2"/>
-		<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+		<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
