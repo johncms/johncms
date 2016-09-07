@@ -1,13 +1,14 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $textl = _t('Mail');
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
-echo '<div class="phdr"><b>' . $lng_mail['new_messages'] . '</b></div>';
+echo '<div class="phdr"><b>' . _t('New Messages') . '</b></div>';
 //TODO: Разобраться с запросом
 $total = $db->query("SELECT COUNT(*) FROM (SELECT DISTINCT `user_id` FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `spam`='0') a;")->fetchColumn();
 
@@ -32,7 +33,7 @@ if ($total) {
 
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng_mail['correspondence'] . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_mail['ban_contact'] . '</a>';
+        $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block user') . '</a>';
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `delete`!='$user_id' AND `spam`='0';")->rowCount();
         $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `delete`!='$user_id' AND `spam`='0';")->rowCount();
         $arg = [
@@ -53,7 +54,7 @@ if ($total > $kmess) {
     echo '<p><form action="index.php" method="get">
 		<input type="hidden" name="act" value="new"/>
 		<input type="text" name="page" size="2"/>
-		<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+		<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
