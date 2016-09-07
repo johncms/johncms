@@ -4,18 +4,25 @@ define('_IN_JOHNCMS', 1);
 
 $headmod = 'news';
 require('../incfiles/core.php');
-$lng_news = core::load_lng('news'); // Загружаем язык модуля
-$textl = $lng['news'];
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+$textl = _t('News');
 require('../incfiles/head.php');
 
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 switch ($do) {
     case 'add':
         // Добавление новости
         if ($rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['news'] . '</b></a> | ' . $lng['add'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
             $old = 20;
 
             if (isset($_POST['submit'])) {
@@ -24,17 +31,17 @@ switch ($do) {
                 $text = isset($_POST['text']) ? trim($_POST['text']) : false;
 
                 if (!$name) {
-                    $error[] = $lng_news['error_title'];
+                    $error[] = _t('You have not entered news title');
                 }
 
                 if (!$text) {
-                    $error[] = $lng_news['error_text'];
+                    $error[] = _t('You have not entered news text');
                 }
 
                 $flood = functions::antiflood();
 
                 if ($flood) {
-                    $error[] = $lng['error_flood'] . ' ' . $flood . '&#160;' . $lng['seconds'];
+                    $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
                 }
 
                 if (!$error) {
@@ -108,19 +115,19 @@ switch ($do) {
                     ]);
 
                     $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
-                    echo '<p>' . $lng_news['article_added'] . '<br /><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                    echo '<p>' . _t('News added') . '<br /><a href="index.php">' . _t('Back to news') . '</a></p>';
                 } else {
-                    echo functions::display_error($error, '<a href="index.php">' . $lng_news['to_news'] . '</a>');
+                    echo functions::display_error($error, '<a href="index.php">' . _t('Back to news') . '</a>');
                 }
             } else {
                 echo '<form action="index.php?do=add" method="post"><div class="menu">' .
-                    '<p><h3>' . $lng_news['article_title'] . '</h3>' .
+                    '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name"/></p>' .
-                    '<p><h3>' . $lng['text'] . '</h3>' .
+                    '<p><h3>' . _t('Text') . '</h3>' .
                     '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>' .
-                    '<p><h3>' . $lng_news['discuss'] . '</h3>';
+                    '<p><h3>' . _t('Discussion') . '</h3>';
                 $fr = $db->query("SELECT * FROM `forum` WHERE `type` = 'f'");
-                echo '<input type="radio" name="pf" value="0" checked="checked" />' . $lng_news['discuss_off'] . '<br />';
+                echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
 
                 while ($fr1 = $fr->fetch()) {
                     echo '<input type="radio" name="pf" value="' . $fr1['id'] . '"/>' . $fr1['text'] . '<select name="rz[]">';
@@ -133,9 +140,9 @@ switch ($do) {
                 }
 
                 echo '</p></div><div class="bmenu">' .
-                    '<input type="submit" name="submit" value="' . $lng['save'] . '"/>' .
+                    '<input type="submit" name="submit" value="' . _t('Save') . '"/>' .
                     '</div></form>' .
-                    '<p><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                    '<p><a href="index.php">' . _t('Back to news') . '</a></p>';
             }
         } else {
             header("location: index.php");
@@ -145,10 +152,10 @@ switch ($do) {
     case 'edit':
         // Редактирование новости
         if ($rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['news'] . '</b></a> | ' . $lng['edit'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (!$id) {
-                echo functions::display_error($lng['error_wrong_data'], '<a href="index.php">' . $lng_news['to_news'] . '</a>');
+                echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -157,11 +164,11 @@ switch ($do) {
                 $error = [];
 
                 if (empty($_POST['name'])) {
-                    $error[] = $lng_news['error_title'];
+                    $error[] = _t('You have not entered news title');
                 }
 
                 if (empty($_POST['text'])) {
-                    $error[] = $lng_news['error_text'];
+                    $error[] = _t('You have not entered news text');
                 }
 
                 $name = functions::check($_POST['name']);
@@ -179,20 +186,20 @@ switch ($do) {
                         $id,
                     ]);
                 } else {
-                    echo functions::display_error($error, '<a href="index.php?act=edit&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                    echo functions::display_error($error, '<a href="index.php?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 }
-                echo '<p>' . $lng_news['article_changed'] . '<br /><a href="index.php">' . $lng['continue'] . '</a></p>';
+                echo '<p>' . _t('Article changed') . '<br /><a href="index.php">' . _t('Continue') . '</a></p>';
             } else {
                 $res = $db->query("SELECT * FROM `news` WHERE `id` = '$id'")->fetch();
 
                 echo '<div class="menu"><form action="index.php?do=edit&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . $lng_news['article_title'] . '</h3>' .
+                    '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
-                    '<p><h3>' . $lng['text'] . '</h3>' .
+                    '<p><h3>' . _t('Text') . '</h3>' .
                     '<textarea rows="' . $set_user['field_h'] . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . $lng_news['to_news'] . '</a></div>';
+                    '<div class="phdr"><a href="index.php">' . _t('Back to news') . '</a></div>';
             }
         } else {
             header('location: index.php');
@@ -202,7 +209,7 @@ switch ($do) {
     case 'clean':
         // Чистка новостей
         if ($rights >= 7) {
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng_news['site_news'] . '</b></a> | ' . $lng['clear'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
 
             if (isset($_POST['submit'])) {
                 $cl = isset($_POST['cl']) ? intval($_POST['cl']) : '';
@@ -213,31 +220,31 @@ switch ($do) {
                         $db->query("DELETE FROM `news` WHERE `time` <= " . (time() - 604800));
                         $db->query("OPTIMIZE TABLE `news`");
 
-                        echo '<p>' . $lng_news['clear_week_confirmation'] . '</p><p><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                        echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
                         $db->query("TRUNCATE TABLE `news`");
 
-                        echo '<p>' . $lng_news['clear_all_confirmation'] . '</p><p><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                        echo '<p>' . _t('Delete all news') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                         break;
                     default :
                         // Чистим сообщения, старше 1 месяца
                         $db->query("DELETE FROM `news` WHERE `time` <= " . (time() - 2592000));
                         $db->query("OPTIMIZE TABLE `news`;");
 
-                        echo '<p>' . $lng_news['clear_month_confirmation'] . '</p><p><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                        echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                 }
             } else {
                 echo '<div class="menu"><form id="clean" method="post" action="index.php?do=clean">' .
-                    '<p><h3>' . $lng['clear_param'] . '</h3>' .
-                    '<input type="radio" name="cl" value="0" checked="checked" />' . $lng_news['clear_month'] . '<br />' .
-                    '<input type="radio" name="cl" value="1" />' . $lng_news['clear_week'] . '<br />' .
-                    '<input type="radio" name="cl" value="2" />' . $lng['clear_all'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['clear'] . '" /></p>' .
+                    '<p><h3>' . _t('Clearing parameters') . '</h3>' .
+                    '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 month') . '<br />' .
+                    '<input type="radio" name="cl" value="1" />' . _t('Older than 1 week') . '<br />' .
+                    '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . $lng['cancel'] . '</a></div>';
+                    '<div class="phdr"><a href="index.php">' . _t('Cancel') . '</a></div>';
             }
         } else {
             header("location: index.php");
@@ -247,15 +254,15 @@ switch ($do) {
     case 'del':
         // Удаление новости
         if ($rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['site_news'] . '</b></a> | ' . $lng['delete'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
 
             if (isset($_GET['yes'])) {
                 $db->query("DELETE FROM `news` WHERE `id` = '$id'");
 
-                echo '<p>' . $lng_news['article_deleted'] . '<br><a href="index.php">' . $lng_news['to_news'] . '</a></p>';
+                echo '<p>' . _t('Article deleted') . '<br><a href="index.php">' . _t('Back to news') . '</a></p>';
             } else {
-                echo '<p>' . $lng['delete_confirmation'] . '<br>' .
-                    '<a href="index.php?do=del&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | <a href="index.php">' . $lng['cancel'] . '</a></p>';
+                echo '<p>' . _t('Do you really want to delete?') . '<br>' .
+                    '<a href="index.php?do=del&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="index.php">' . _t('Cancel') . '</a></p>';
             }
         } else {
             header("location: index.php");
@@ -264,10 +271,10 @@ switch ($do) {
 
     default:
         // Вывод списка новостей
-        echo '<div class="phdr"><b>' . $lng['site_news'] . '</b></div>';
+        echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
         if ($rights >= 6) {
-            echo '<div class="topmenu"><a href="index.php?do=add">' . $lng['add'] . '</a> | <a href="index.php?do=clean">' . $lng['clear'] . '</a></div>';
+            echo '<div class="topmenu"><a href="index.php?do=add">' . _t('Add') . '</a> | <a href="index.php?do=clean">' . _t('Clear') . '</a></div>';
         }
 
         $total = $db->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
@@ -283,32 +290,32 @@ switch ($do) {
             }
 
             echo '<h3>' . $res['name'] . '</h3>' .
-                '<span class="gray"><small>' . $lng['author'] . ': ' . $res['avt'] . ' (' . functions::display_date($res['time']) . ')</small></span>' .
+                '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . functions::display_date($res['time']) . ')</small></span>' .
                 '<br />' . $text . '<div class="sub">';
 
             if ($res['kom'] != 0 && $res['kom'] != "") {
                 $komm = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'")->fetchColumn();
 
                 if ($komm >= 0) {
-                    echo '<a href="../forum/?id=' . $res['kom'] . '">' . $lng_news['discuss_on_forum'] . ' (' . $komm . ')</a><br>';
+                    echo '<a href="../forum/?id=' . $res['kom'] . '">' . _t('Discuss in Forum') . ' (' . $komm . ')</a><br>';
                 }
             }
 
             if ($rights >= 6) {
-                echo '<a href="index.php?do=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ' .
-                    '<a href="index.php?do=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>';
+                echo '<a href="index.php?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
+                    '<a href="index.php?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
             }
 
             echo '</div></div>';
             ++$i;
         }
-        echo '<div class="phdr">' . $lng['total'] . ':&#160;' . $total . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ':&#160;' . $total . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>' .
                 '<p><form action="index.php" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 }
 
