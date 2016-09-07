@@ -4,7 +4,6 @@ define('_IN_JOHNCMS', 1);
 
 require_once('../incfiles/core.php');
 $headmod = 'mail';
-$lng_mail = core::load_lng('mail');
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
@@ -15,6 +14,13 @@ if (!$user_id) {
     header('Location: ' . $home . '/?err');
     exit;
 }
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 function formatsize($size)
 {
@@ -50,18 +56,18 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
 } else {
-    $textl = $lng['mail'];
+    $textl = _t('Mail');
     require_once('../incfiles/head.php');
-    echo '<div class="phdr"><b>' . $lng_mail['contacts'] . '</b></div>';
+    echo '<div class="phdr"><b>' . _t('Contacts') . '</b></div>';
 
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     if ($id) {
         $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
         if (!$req->rowCount()) {
-            echo functions::display_error($lng['error_user_not_exist']);
+            echo functions::display_error(_t('User does not exists'));
             require_once("../incfiles/end.php");
             exit;
         }
@@ -69,7 +75,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $res = $req->fetch();
 
         if ($id == $user_id) {
-            echo '<div class="rmenu">' . $lng_mail['impossible_add_contact'] . '</div>';
+            echo '<div class="rmenu">' . _t('You cannot add yourself as a contact') . '</div>';
         } else {
             //Добавляем в заблокированные
             if (isset($_POST['submit'])) {
@@ -81,17 +87,17 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 					`from_id` = " . $id . ",
 					`time` = " . time());
                 }
-                echo '<div class="gmenu"><p>' . $lng_mail['add_contact'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
+                echo '<div class="gmenu"><p>' . _t('User has been added to your contact list') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
             } else {
                 echo '<div class="menu">' .
                     '<form action="index.php?id=' . $id . '&amp;add" method="post">' .
-                    '<div><p>' . $lng_mail['really_add_contact'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['add'] . '"/></p>' .
+                    '<div><p>' . _t('You really want to add contact?') . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Add') . '"/></p>' .
                     '</div></form></div>';
             }
         }
     } else {
-        echo '<div class="topmenu"><b>' . $lng_mail['my_contacts'] . '</b> | <a href="index.php?act=ignor">' . $lng_mail['blocklist'] . '</a></div>';
+        echo '<div class="topmenu"><b>' . _t('My Contacts') . '</b> | <a href="index.php?act=ignor">' . _t('Blocklist') . '</a></div>';
         //Получаем список контактов
         $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`!='1'")->fetchColumn();
 
@@ -111,7 +117,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                 echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-                $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng_mail['correspondence'] . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_mail['ban_contact'] . '</a>';
+                $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
                 $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id'")->rowCount();
                 $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id'")->rowCount();
                 $arg = [
@@ -122,19 +128,19 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 echo '</div>';
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
 
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
             echo '<p><form action="index.php" method="get">
 				<input type="text" name="page" size="2"/>
-				<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+				<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+        echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
     }
 }
 
