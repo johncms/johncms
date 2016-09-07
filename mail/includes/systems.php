@@ -24,13 +24,13 @@ if ($mod == 'clear') {
                 $db->exec("DELETE FROM `cms_mail` WHERE `id` IN (" . $result . ")");
             }
         }
-        $out .= '<div class="gmenu">' . $lng_mail['messages_are_removed'] . '</div>';
+        $out .= '<div class="gmenu">' . _t('Messages are deleted') . '</div>';
     } else {
         $out .= '
-		<div class="rmenu">' . $lng_mail['really_messages_removed'] . '</div>
+		<div class="rmenu">' . _t('Confirm the deletion of messages') . '</div>
 		<div class="gmenu">
 		<form action="index.php?act=systems&amp;mod=clear" method="post"><div>
-		<input type="submit" name="clear" value="' . $lng['delete'] . '"/>
+		<input type="submit" name="clear" value="' . _t('Delete') . '"/>
 		</div></form>
 		</div>';
     }
@@ -67,7 +67,7 @@ if ($mod == 'clear') {
             $out .= '<strong>' . functions::checkout($row['them']) . '</strong> (' . functions::display_date($row['time']) . ')<br />';
             $post = preg_replace_callback("/{TIME=(.+?)}/usi", 'time_parce', $post);
             $out .= $post;
-            $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></div>';
+            $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
             $out .= '</div>';
         }
 
@@ -87,18 +87,18 @@ if ($mod == 'clear') {
         $out .= '<p><form action="index.php" method="get">
 			<input type="hidden" name="act" value="systems"/>
 			<input type="text" name="page" size="2"/>
-			<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+			<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 }
 
 $textl = _t('Mail');
 require_once('../incfiles/head.php');
-echo '<div class="phdr"><b>' . $lng_mail['systems_messages'] . '</b></div>';
+echo '<div class="phdr"><b>' . _t('System messages') . '</b></div>';
 echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=systems&amp;mod=clear">' . $lng_mail['clear_messages'] . '</a><br>';
+    echo '<a href="index.php?act=systems&amp;mod=clear">' . _t('Clear messages') . '</a><br>';
 }
 
-echo '<a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+echo '<a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
