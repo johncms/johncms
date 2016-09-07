@@ -1,7 +1,7 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */
@@ -43,10 +43,10 @@ if ($total) {
         echo '</div>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $new_mail . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $new_mail . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';

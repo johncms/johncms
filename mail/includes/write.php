@@ -15,7 +15,7 @@ if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
 
     if (!$req->rowCount()) {
-        $textl = $lng['mail'];
+        $textl = _t('Mail');
         require_once('../incfiles/head.php');
         echo functions::display_error($lng['error_user_not_exist']);
         require_once("../incfiles/end.php");
@@ -25,7 +25,7 @@ if ($id) {
     $qs = $req->fetch();
 
     if ($mod == 'clear') {
-        $textl = $lng['mail'];
+        $textl = _t('Mail');
         require_once('../incfiles/head.php');
         echo '<div class="phdr"><b>' . $lng_mail['clear_messages'] . '</b></div>';
 
@@ -70,7 +70,7 @@ if ($id) {
 			</div>';
         }
 
-        echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
         require_once('../incfiles/end.php');
         exit;
@@ -81,7 +81,7 @@ if (empty($_SESSION['error'])) {
     $_SESSION['error'] = '';
 }
 
-$out .= '<div class="phdr"><b>' . $lng['mail'] . '</b></div>';
+$out .= '<div class="phdr"><b>' . _t('Mail') . '</b></div>';
 
 if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !functions::is_ignor($id)) {
     if (!$id) {
@@ -495,10 +495,10 @@ if ($id) {
             $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='$user_id' AND `id` IN (" . $result . ")");
         }
     } else {
-        $out .= '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+        $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
-    $out .= '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
@@ -510,7 +510,7 @@ if ($id) {
     }
 }
 
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 echo $out;
 echo '<p>';

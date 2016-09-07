@@ -3,10 +3,10 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 
-echo '<div class="phdr"><h3>' . $lng_mail['deleted_messages'] . '</h3></div>';
+echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 
 if ($id) {
     /** @var PDO $db */
@@ -17,7 +17,7 @@ if ($id) {
 
     if (!$req->rowCount()) {
         //Выводим ошибку
-        echo functions::display_error($lng_mail['messages_does_not_exist']);
+        echo functions::display_error(_t('Message does not exist'));
         require_once("../incfiles/end.php");
         exit;
     }
@@ -28,8 +28,8 @@ if ($id) {
         //Удаляем системное сообщение
         if ($res['sys']) {
             $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='$user_id' AND `id` = '$id' AND `sys`='1' LIMIT 1");
-            echo '<div class="gmenu">' . $lng_mail['messages_delete_ok'] . '</div>';
-            echo '<div class="bmenu"><a href="index.php?act=systems">' . $lng['back'] . '</a></div>';
+            echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
+            echo '<div class="bmenu"><a href="index.php?act=systems">' . _t('Back') . '</a></div>';
         } else {
             //Удаляем непрочитанное сообщение
             if ($res['read'] == 0 && $res['user_id'] == $user_id) {
@@ -55,17 +55,17 @@ if ($id) {
                 }
             }
 
-            echo '<div class="gmenu">' . $lng_mail['messages_delete_ok'] . '</div>';
-            echo '<div class="bmenu"><a href="index.php?act=write&amp;id=' . ($res['user_id'] == $user_id ? $res['from_id'] : $res['user_id']) . '">' . $lng['back'] . '</a></div>';
+            echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
+            echo '<div class="bmenu"><a href="index.php?act=write&amp;id=' . ($res['user_id'] == $user_id ? $res['from_id'] : $res['user_id']) . '">' . _t('Back') . '</a></div>';
         }
     } else {
         echo '<div class="gmenu"><form action="index.php?act=delete&amp;id=' . $id . '" method="post"><div>
-		' . $lng_mail['really_delete_message'] . '<br />
-		<input type="submit" name="submit" value="' . $lng['delete'] . '"/>
+		' . _t('You really want to remove the message?') . '<br />
+		<input type="submit" name="submit" value="' . _t('Delete') . '"/>
 		</div></form></div>';
     }
 } else {
-    echo '<div class="rmenu">' . $lng_mail['not_message_is_chose'] . '</div>';
+    echo '<div class="rmenu">' . _t('The message for removal isn\'t chosen') . '</div>';
 }
 
-echo '<div class="bmenu"><a href="../profile/?act=office">' . $lng_mail['in_office'] . '</a></div>';
+echo '<div class="bmenu"><a href="../profile/?act=office">' . _t('Personal') . '</a></div>';

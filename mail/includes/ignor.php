@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */
@@ -79,7 +79,7 @@ if (isset($_GET['del'])) {
 			<p>' . $lng_mail['really_block_contact'] . '</p>
 			<p><input type="submit" name="submit" value="' . $lng_mail['block'] . '"/></p>
 			</form></div>';
-            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . $lng['back'] . '</a></div>';
+            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
         }
     } else {
         echo functions::display_error($lng_mail['no_contact_is_chose']);
@@ -116,10 +116,10 @@ if (isset($_GET['del'])) {
             echo '</div>';
         }
     } else {
-        echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('index.php?act=ignor&amp;', $start, $total, $kmess) . '</div>';
