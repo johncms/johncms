@@ -17,7 +17,7 @@ if ($id) {
     if (!$req->rowCount()) {
         $textl = _t('Mail');
         require_once('../incfiles/head.php');
-        echo functions::display_error($lng['error_user_not_exist']);
+        echo functions::display_error(_t('User does not exists'));
         require_once("../incfiles/end.php");
         exit;
     }
@@ -27,7 +27,7 @@ if ($id) {
     if ($mod == 'clear') {
         $textl = _t('Mail');
         require_once('../incfiles/head.php');
-        echo '<div class="phdr"><b>' . $lng_mail['clear_messages'] . '</b></div>';
+        echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
             $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id'")->fetchColumn();
@@ -60,18 +60,18 @@ if ($id) {
                 }
             }
 
-            echo '<div class="gmenu"><p>' . $lng_mail['messages_are_removed'] . '</p></div>';
+            echo '<div class="gmenu"><p>' . _t('Messages are deleted') . '</p></div>';
         } else {
             echo '<div class="rmenu">
 			<form action="index.php?act=write&amp;mod=clear&amp;id=' . $id . '" method="post">
-			<p>' . $lng_mail['really_messages_removed'] . '</p>
-			<p><input type="submit" name="clear" value="' . $lng['delete'] . '"/></p>
+			<p>' . _t('Confirm the deletion of messages') . '</p>
+			<p><input type="submit" name="clear" value="' . _t('Delete') . '"/></p>
 			</form>
 			</div>';
         }
 
         echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
-        echo '<p><a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+        echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
         require_once('../incfiles/end.php');
         exit;
     }
@@ -97,21 +97,21 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
     $error = [];
 
     if (!$id && empty($name)) {
-        $error[] = $lng_mail['indicate_login_grantee'];
+        $error[] = _t('Specify the recipient\'s login');
     }
 
     if (empty($text)) {
-        $error[] = $lng_mail['message_not_empty'];
+        $error[] = _t('Message cannot be empty');
     }
 
     if (($id && $id == $user_id) || !$id && $datauser['name_lat'] == $name) {
-        $error[] = $lng_mail['impossible_add_message'];
+        $error[] = _t('You cannot send messages to yourself');
     }
 
     $flood = functions::antiflood();
 
     if ($flood) {
-        $error[] = $lng['error_flood'] . ' ' . $flood . $lng['sec'];
+        $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d sec.'), $flood);
     }
 
     if (empty($error)) {
@@ -119,7 +119,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
             $query = $db->query("SELECT * FROM `users` WHERE `name_lat` = " . $db->quote($name) . " LIMIT 1");
 
             if (!$query->rowCount()) {
-                $error[] = $lng['error_user_not_exist'];
+                $error[] = _t('User does not exists');
             } else {
                 $user = $query->fetch();
                 $id = $user['id'];
@@ -137,14 +137,14 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
                             $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "' LIMIT 1");
 
                             if (!$query->rowCount()) {
-                                $error[] = $lng_mail['write_contacts'];
+                                $error[] = _t('To this user can write only contacts');
                             }
                         } else {
                             if ($set_mail['access'] == 2) {
                                 $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "' AND `friends`='1' LIMIT 1");
 
                                 if (!$query->rowCount()) {
-                                    $error[] = $lng_mail['write_friends'];
+                                    $error[] = _t('To this user can write only friends');
                                 }
                             }
                         }
@@ -176,7 +176,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         $fsize = $_FILES['fail']['size'];
 
         if (!empty($_FILES['fail']['error'])) {
-            $error[] = $lng['error_load_file'];
+            $error[] = _t('Error uploading file');
         }
 
     } else {
@@ -188,7 +188,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
             $fsize = strlen(base64_decode($filebase64));
 
             if (empty($fsize)) {
-                $error[] = $lng['error_load_file'];
+                $error[] = _t('Error uploading file');
             }
         }
     }
@@ -263,23 +263,23 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         $info = parseFileName($fname);
 
         if (empty($info['filename'])) {
-            $error[] = $lng_mail['error_empty_name_file'];
+            $error[] = _t('It is forbidden to upload files without a name');
         }
 
         if (empty($info['fileext'])) {
-            $error[] = $lng_mail['error_empty_ext_file'];
+            $error[] = _t('It is forbidden to upload files without extension');
         }
 
         if ($fsize > (1024 * $set['flsz'])) {
-            $error[] = $lng_mail['error_max_file_size'];
+            $error[] = _t('The size of the file exceeds the maximum allowable upload');
         }
 
         if (preg_match("/[^a-z0-9.()+_-]/", $info['filename'])) {
-            $error[] = $lng_mail['error_simbol'];
+            $error[] = _t('File name contains invalid characters');
         }
 
         if (!in_array($info['fileext'], $ext)) {
-            $error[] = $lng_mail['error_ext_type'] . ': ' . implode(', ', $ext);
+            $error[] = _t('Forbidden file type! By uploading permitted only files with the following extension') . ': ' . implode(', ', $ext);
         }
 
         $newfile = $info['filename'] . '.' . $info['fileext'];
@@ -293,7 +293,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
 		AND `ban`='1';")->fetchColumn();
 
         if ($ignor) {
-            $error[] = $lng_mail['error_user_ignor_in'];
+            $error[] = _t('The user at your ignore list. Sending the message is impossible.');
         }
 
         if (empty($error)) {
@@ -303,7 +303,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
 			AND `ban`='1';")->fetchColumn();
 
             if ($ignor_m) {
-                $error[] = $lng_mail['error_user_ignor_out'];
+                $error[] = _t('The user added you in the ignore list. Sending the message isn\'t possible.');
             }
         }
     }
@@ -343,7 +343,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
             @ chmod('../files/mail/' . $newfile, 0666);
             @unlink($_FILES['fail']['tmp_name']);
         } else {
-            $error[] = $lng['error_load_file'];
+            $error[] = _t('Error uploading file');
         }
     }
 
@@ -364,10 +364,10 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
                 @ chmod($FileName, 0666);
                 unset($FileName);
             } else {
-                $error[] = $lng['error_load_file'];
+                $error[] = _t('Error uploading file');
             }
         } else {
-            $error[] = $lng['error_load_file'];
+            $error[] = _t('Error uploading file');
         }
     }
 
@@ -381,7 +381,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         ")->fetch();
 
         if ($rres['text'] == $text) {
-            $error[] = $lng['error_message_exists'];
+            $error[] = _t('Message already exists');
         }
     }
 
@@ -414,17 +414,14 @@ if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
     $out .= isset($_SESSION['error']) ? $_SESSION['error'] : '';
     $out .= '<div class="gmenu">' .
         '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
-        ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? functions::check($_POST['nick']) : '') . '" placeholder="' . $lng_mail['to_whom'] . '?"/></p>') .
+        ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? functions::check($_POST['nick']) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
     $out .= bbcode::auto_bb('form', 'text');
     $out .= '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>';
-    if ($set_user['translit']) {
-        $out .= '<input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'] . '<br />';
-    }
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
-    $out .= '<p><input type="submit" name="submit" value="' . $lng['sent'] . '"/></p>' .
+    $out .= '<p><input type="submit" name="submit" value="' . _t('Sent') . '"/></p>' .
         '</form></div>' .
-        '<div class="phdr"><b>' . ($id && isset($qs) ? $lng_mail['personal_correspondence'] . ' <a href="../profile/?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : $lng_mail['sending_the_message']) . '</b></div>';
+        '<div class="phdr"><b>' . ($id && isset($qs) ? _t('Personal correspondence with') . ' <a href="../profile/?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : _t('Send a message')) . '</b></div>';
 }
 
 if ($id) {
@@ -473,10 +470,10 @@ if ($id) {
             }
 
             if ($row['file_name']) {
-                $post .= '<div class="func">' . $lng_mail['file'] . ': <a href="index.php?act=load&amp;id=' . $row['mid'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ')(' . $row['count'] . ')</div>';
+                $post .= '<div class="func">' . _t('File') . ': <a href="index.php?act=load&amp;id=' . $row['mid'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ')(' . $row['count'] . ')</div>';
             }
 
-            $subtext = '<a href="index.php?act=delete&amp;id=' . $row['mid'] . '">' . $lng['delete'] . '</a>';
+            $subtext = '<a href="index.php?act=delete&amp;id=' . $row['mid'] . '">' . _t('Delete') . '</a>';
             $arg = [
                 'header'  => '(' . functions::display_date($row['mtime']) . ')',
                 'body'    => $post,
@@ -506,7 +503,7 @@ if ($id) {
 			<input type="hidden" name="act" value="write"/>
 			<input type="hidden" name="id" value="' . $id . '"/>
 			<input type="text" name="page" size="2"/>
-			<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+			<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 }
 
@@ -516,8 +513,8 @@ echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . $lng_mail['clear_messages'] . '</a><br>';
+    echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . _t('Clear messages') . '</a><br>';
 }
 
-echo '<a href="../profile/?act=office">' . $lng['personal'] . '</a></p>';
+echo '<a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
 unset($_SESSION['error']);
