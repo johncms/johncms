@@ -1,6 +1,7 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $textl = _t('Mail');
 require_once('../incfiles/head.php');
 
@@ -12,7 +13,7 @@ if ($id) {
 
     if (!$req->rowCount()) {
         //Выводим ошибку
-        echo functions::display_error($lng_mail['file_does_not_exist']);
+        echo functions::display_error(_t('Such file does not exist'));
         require_once("../incfiles/end.php");
         exit;
     }
@@ -24,8 +25,8 @@ if ($id) {
         header('Location: ../files/mail/' . $res['file_name']);
         exit;
     } else {
-        echo functions::display_error($lng_mail['file_does_not_exist']);
+        echo functions::display_error(_t('Such file does not exist'));
     }
 } else {
-    echo functions::display_error($lng_mail['file_is_not_chose']);
+    echo functions::display_error(_t('No file selected'));
 }
