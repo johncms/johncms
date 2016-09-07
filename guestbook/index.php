@@ -4,8 +4,15 @@ define('_IN_JOHNCMS', 1);
 $headmod = 'guestbook';
 require('../incfiles/core.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
@@ -17,12 +24,12 @@ if (isset($_SESSION['ga']) && $rights < 1) {
 }
 
 // Задаем заголовки страницы
-$textl = isset($_SESSION['ga']) ? $lng['admin_club'] : $lng['guestbook'];
+$textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 require('../incfiles/head.php');
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (!$set['mod_guest'] && $rights < 7) {
-    echo '<div class="rmenu"><p>' . $lng['guestbook_closed'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
     require('../incfiles/end.php');
     exit;
 }
@@ -35,10 +42,10 @@ switch ($act) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
                 header("Location: index.php");
             } else {
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['delete_message'] . '</div>' .
-                    '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br>' .
-                    '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a> | ' .
-                    '<a href="index.php">' . $lng['cancel'] . '</a></p></div>';
+                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Delete message') . '</div>' .
+                    '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '?<br>' .
+                    '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | ' .
+                    '<a href="index.php">' . _t('Cancel') . '</a></p></div>';
             }
         }
         break;
@@ -57,24 +64,24 @@ switch ($act) {
         $flood = false;
 
         if (!isset($_POST['token']) || !isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
-            $error[] = $lng['error_wrong_data'];
+            $error[] = _t('Wrong data');
         }
 
         if (!$user_id && empty($name)) {
-            $error[] = $lng['error_empty_name'];
+            $error[] = _t('You have not entered a name');
         }
 
         if (empty($msg)) {
-            $error[] = $lng['error_empty_message'];
+            $error[] = _t('You have not entered the message');
         }
 
         if ($ban['1'] || $ban['13']) {
-            $error[] = $lng['access_forbidden'];
+            $error[] = _t('Access forbidden');
         }
 
         // CAPTCHA для гостей
         if (!$user_id && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code'])) {
-            $error[] = $lng['error_wrong_captcha'];
+            $error[] = _t('The security code is not correct');
         }
 
         unset($_SESSION['code']);
@@ -93,7 +100,7 @@ switch ($act) {
         }
 
         if ($flood) {
-            $error = $lng['error_flood'] . ' ' . $flood . '&#160;' . $lng['seconds'];
+            $error = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
         }
 
         if (!$error) {
@@ -133,13 +140,15 @@ switch ($act) {
                 $postguest = $datauser['postguest'] + 1;
                 $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
             }
+
             header('location: index.php');
         } else {
-            echo functions::display_error($error, '<a href="index.php">' . $lng['back'] . '</a>');
+            echo functions::display_error($error, '<a href="index.php">' . _t('Back') . '</a>');
         }
         break;
 
-    case 'otvet':
+    case
+    'otvet':
         // Добавление "ответа Админа"
         if ($rights >= 6 && $id) {
             if (isset($_POST['submit'])
@@ -156,7 +165,7 @@ switch ($act) {
                 ");
                 header("location: index.php");
             } else {
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['reply'] . '</div>';
+                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Reply') . '</div>';
                 $req = $db->query("SELECT * FROM `guest` WHERE `id` = '$id'");
                 $res = $req->fetch();
                 $token = mt_rand(1000, 100000);
@@ -166,12 +175,12 @@ switch ($act) {
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . functions::checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . $lng['reply'] . '</h3>' . bbcode::auto_bb('form', 'otv') .
+                    '<p><h3>' . _t('Reply') . '</h3>' . bbcode::auto_bb('form', 'otv') .
                     '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['reply'] . '"/></p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
+                    '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
             }
         }
         break;
@@ -209,16 +218,16 @@ switch ($act) {
                 $_SESSION['token'] = $token;
                 $res = $db->query("SELECT * FROM `guest` WHERE `id` = '$id'")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
+                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Edit') . '</div>' .
                     '<div class="rmenu">' .
                     '<form name="form" action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
-                    '<p><b>' . $lng['author'] . ':</b> ' . $res['name'] . '</p><p>';
+                    '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
                 echo bbcode::auto_bb('form', 'msg');
                 echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
+                    '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
             }
         }
         break;
@@ -235,34 +244,34 @@ switch ($act) {
                     case '1':
                         // Чистим сообщения, старше 1 дня
                         $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time` < '" . (time() - 86400) . "'");
-                        echo '<p>' . $lng['clear_day_ok'] . '</p>';
+                        echo '<p>' . _t('All messages older than 1 day were deleted') . '</p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
                         $db->exec("DELETE FROM `guest` WHERE `adm`='$adm'");
-                        echo '<p>' . $lng['clear_full_ok'] . '</p>';
+                        echo '<p>' . _t('Full clearing is finished') . '</p>';
                         break;
                     default :
                         // Чистим сообщения, старше 1 недели
                         $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time`<='" . (time() - 604800) . "';");
-                        echo '<p>' . $lng['clear_week_ok'] . '</p>';
+                        echo '<p>' . _t('All messages older than 1 week were deleted') . '</p>';
                 }
 
                 $db->query("OPTIMIZE TABLE `guest`");
-                echo '<p><a href="index.php">' . $lng['guestbook'] . '</a></p>';
+                echo '<p><a href="index.php">' . _t('Guestbook') . '</a></p>';
             } else {
                 // Запрос параметров очистки
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['clear'] . '</div>' .
+                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Clear') . '</div>' .
                     '<div class="menu">' .
                     '<form id="clean" method="post" action="index.php?act=clean">' .
-                    '<p><h3>' . $lng['clear_param'] . '</h3>' .
-                    '<input type="radio" name="cl" value="0" checked="checked" />' . $lng['clear_param_week'] . '<br />' .
-                    '<input type="radio" name="cl" value="1" />' . $lng['clear_param_day'] . '<br />' .
-                    '<input type="radio" name="cl" value="2" />' . $lng['clear_param_all'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . $lng['clear'] . '" /></p>' .
+                    '<p><h3>' . _t('Clearing parameters') . '</h3>' .
+                    '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 week') . '<br />' .
+                    '<input type="radio" name="cl" value="1" />' . _t('Older than 1 day') . '<br />' .
+                    '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . $lng['cancel'] . '</a></div>';
+                    '<div class="phdr"><a href="index.php">' . _t('Cancel') . '</a></div>';
             }
         }
         break;
@@ -280,17 +289,17 @@ switch ($act) {
     default:
         // Отображаем Гостевую, или Админ клуб
         if (!$set['mod_guest']) {
-            echo '<div class="alarm">' . $lng['guestbook_closed'] . '</div>';
+            echo '<div class="alarm">' . _t('The guestbook is closed') . '</div>';
         }
 
-        echo '<div class="phdr"><b>' . $lng['guestbook'] . '</b></div>';
+        echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
 
         if ($rights > 0) {
             $menu = [];
-            $menu[] = isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . $lng['guestbook'] . '</a>' : '<b>' . $lng['guestbook'] . '</b>';
-            $menu[] = isset($_SESSION['ga']) ? '<b>' . $lng['admin_club'] . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . $lng['admin_club'] . '</a>';
+            $menu[] = isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>';
+            $menu[] = isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>';
             if ($rights >= 7) {
-                $menu[] = '<a href="index.php?act=clean">' . $lng['clear'] . '</a>';
+                $menu[] = '<a href="index.php?act=clean">' . _t('Clear') . '</a>';
             }
             echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
         }
@@ -302,30 +311,26 @@ switch ($act) {
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
 
             if (!$user_id) {
-                echo $lng['name'] . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
+                echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
             }
 
-            echo '<b>' . $lng['message'] . '</b> <small>(max 5000)</small>:<br>';
+            echo '<b>' . _t('Message') . '</b> <small>(max 5000)</small>:<br>';
             echo bbcode::auto_bb('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br>';
 
-            if ($set_user['translit']) {
-                echo '<input type="checkbox" name="msgtrans" value="1" />&nbsp;' . $lng['translit'] . '<br>';
-            }
-
             if (!$user_id) {
                 // CAPTCHA для гостей
-                echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['captcha'] . '"/><br />' .
-                    '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . $lng['captcha'] . '<br />';
+                echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Symbols on the picture') . '"/><br />' .
+                    '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br />';
             }
             echo '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>';
+                '<input type="submit" name="submit" value="' . _t('Sent') . '"/></form></div>';
         } else {
-            echo '<div class="rmenu">' . $lng['access_guest_forbidden'] . '</div>';
+            echo '<div class="rmenu">' . _t('For registered users only') . '</div>';
         }
 
         $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `adm`='" . (isset($_SESSION['ga']) ? 1 : 0) . "'")->fetchColumn();
-        echo '<div class="phdr"><b>' . $lng['comments'] . '</b></div>';
+        echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
@@ -385,8 +390,8 @@ switch ($act) {
                 }
 
                 if ($rights >= 6) {
-                    $subtext = '<a href="index.php?act=otvet&amp;id=' . $res['gid'] . '">' . $lng['reply'] . '</a>' .
-                        ($rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . $lng['delete'] . '</a>' : '');
+                    $subtext = '<a href="index.php?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
+                        ($rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
                 } else {
                     $subtext = '';
                 }
@@ -401,15 +406,15 @@ switch ($act) {
                 echo '</div>';
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['guestbook_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The guestbook is empty.<br><strong>Be the first! :)</strong>') . '</p></div>';
         }
 
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>' .
                 '<p><form action="index.php" method="get"><input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
         break;
