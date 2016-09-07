@@ -9,12 +9,12 @@ switch ($mod) {
     case 'my_new_comm':
         // Непрочитанные комментарии в личных альбомах
         if (!core::$user_id || core::$user_id != $user['id']) {
-            echo functions::display_error($lng['wrong_data']);
+            echo functions::display_error(_t('Wrong data'));
             require('../incfiles/end.php');
             exit;
         }
 
-        $title = $lng_profile['unread_comments'];
+        $title = _t('Unread Comments');
         $select = "";
         $join = "INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`";
         $where = "`cms_album_files`.`user_id` = '" . core::$user_id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
@@ -25,7 +25,7 @@ switch ($mod) {
     case 'last_comm':
         // Последние комментарии по всем альбомам
         $total = $db->query("SELECT COUNT(DISTINCT `sub_id`) FROM `cms_album_comments` WHERE `time` >" . (time() - 86400))->fetchColumn();
-        $title = $lng_profile['new_comments'];
+        $title = _t('Recent comments');
         $select = "";
         $join = "INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`";
         $where = "`cms_album_comments`.`time` > " . (time() - 86400) . " GROUP BY `cms_album_files`.`id`";
@@ -35,7 +35,7 @@ switch ($mod) {
 
     case 'views':
         // ТОП просмотров
-        $title = $lng_profile['top_views'];
+        $title = _t('Top Views');
         $select = "";
         $join = "";
         $where = "`cms_album_files`.`views` > '0'" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -45,7 +45,7 @@ switch ($mod) {
 
     case 'downloads':
         // ТОП скачиваний
-        $title = $lng_profile['top_downloads'];
+        $title = _t('Top Downloads');
         $select = "";
         $join = "";
         $where = "`cms_album_files`.`downloads` > 0" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -55,7 +55,7 @@ switch ($mod) {
 
     case 'comments':
         // ТОП комментариев
-        $title = $lng_profile['top_comments'];
+        $title = _t('Top Comments');
         $select = "";
         $join = "";
         $where = "`cms_album_files`.`comm_count` > '0'" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -65,7 +65,7 @@ switch ($mod) {
 
     case 'votes':
         // ТОП положительных голосов
-        $title = $lng_profile['top_votes'];
+        $title = _t('Top Votes');
         $select = ", (`vote_plus` - `vote_minus`) AS `rating`";
         $join = "";
         $where = "(`vote_plus` - `vote_minus`) > 2" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -75,7 +75,7 @@ switch ($mod) {
 
     case 'trash':
         // ТОП отрицательных голосов
-        $title = $lng_profile['top_trash'];
+        $title = _t('Top Worst');
         $select = ", (`vote_plus` - `vote_minus`) AS `rating`";
         $join = "";
         $where = "(`vote_plus` - `vote_minus`) < -2" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -85,7 +85,7 @@ switch ($mod) {
 
     default:
         // Новые изображения
-        $title = $lng_profile['new_photo'];
+        $title = _t('New photos');
         $select = "";
         $join = "";
         $where = "`cms_album_files`.`time` > '" . (time() - 259200) . "'" . (core::$user_rights >= 6 ? "" : " AND `cms_album_files`.`access` = '4'");
@@ -141,24 +141,24 @@ if ($total) {
 
         if ($res['access'] == 4 || core::$user_rights >= 6) {
             echo vote_photo($res) .
-                '<div class="gray">' . $lng['count_views'] . ': ' . $res['views'] . ', ' . $lng['count_downloads'] . ': ' . $res['downloads'] . '</div>' .
-                '<div class="gray">' . $lng['date'] . ': ' . functions::display_date($res['time']) . '</div>' .
-                '<a href="?act=comments&amp;img=' . $res['id'] . '">' . $lng['comments'] . '</a> (' . $res['comm_count'] . ')' .
-                '<br><a href="?act=image_download&amp;img=' . $res['id'] . '">' . $lng['download'] . '</a>';
+                '<div class="gray">' . _t('Views') . ': ' . $res['views'] . ', ' . _t('Downloads') . ': ' . $res['downloads'] . '</div>' .
+                '<div class="gray">' . _t('Date') . ': ' . functions::display_date($res['time']) . '</div>' .
+                '<a href="?act=comments&amp;img=' . $res['id'] . '">' . _t('Comments') . '</a> (' . $res['comm_count'] . ')' .
+                '<br><a href="?act=image_download&amp;img=' . $res['id'] . '">' . _t('Download') . '</a>';
         }
 
         echo '</div></div>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?act=top' . $link . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
-        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
