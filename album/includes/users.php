@@ -21,11 +21,11 @@ switch ($mod) {
 }
 
 $menu = array(
-    (!$mod ? '<b>' . $lng['all'] . '</b>' : '<a href="?act=users">' . $lng['all'] . '</a>'),
-    ($mod == 'boys' ? '<b>' . $lng['mans'] . '</b>' : '<a href="?act=users&amp;mod=boys">' . $lng['mans'] . '</a>'),
-    ($mod == 'girls' ? '<b>' . $lng['womans'] . '</b>' : '<a href="?act=users&amp;mod=girls">' . $lng['womans'] . '</a>')
+    (!$mod ? '<b>' . _t('All') . '</b>' : '<a href="?act=users">' . _t('All') . '</a>'),
+    ($mod == 'boys' ? '<b>' . _t('Guys') . '</b>' : '<a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a>'),
+    ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>')
 );
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . $lng['list'] . '</div>' .
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
      '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
@@ -47,13 +47,13 @@ if ($total) {
         ++$i;
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
          '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
          '<input type="text" name="page" size="2"/>' .
-         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
          '</form></p>';
 }
