@@ -1,43 +1,45 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: JohnCMS 7.0\n"
+"Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-09-07 12:36+0400\n"
-"PO-Revision-Date: 2016-08-26 11:27+0400\n"
-"Last-Translator: \n"
-"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"PO-Revision-Date: 2016-09-07 05:19-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /album/default.pot\n"
 
 #: includes/comments.php:16 index.php:34
 msgid "User does not exists"
-msgstr ""
+msgstr "Такого пользователя не существует"
 
 #: includes/comments.php:28 includes/image_download.php:21 includes/show.php:54
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ запрещен"
 
 #: includes/comments.php:29 includes/show.php:54 includes/show.php:76
 #: includes/show.php:173
 msgid "Album List"
-msgstr ""
+msgstr "Список альбомов"
 
 #: includes/comments.php:34 includes/list.php:15 includes/show.php:28
 #: includes/top.php:99 includes/users.php:28 index.php:116
 msgid "Photo Albums"
-msgstr ""
+msgstr "Фотоальбомы"
 
 #: includes/comments.php:35 includes/list.php:15 includes/show.php:28
 msgid "Personal"
-msgstr ""
+msgstr "Персональные"
 
 #: includes/comments.php:84 includes/delete.php:45 includes/edit.php:23
 #: includes/edit.php:60 includes/image_delete.php:37
@@ -47,367 +49,368 @@ msgstr ""
 #: includes/show.php:19 includes/top.php:12 includes/vote.php:7
 #: includes/vote.php:57
 msgid "Wrong data"
-msgstr ""
+msgstr "Неверные данные"
 
 #: includes/delete.php:15 includes/image_delete.php:16
 #: includes/image_edit.php:17 includes/image_move.php:15
 #: includes/image_upload.php:22
 msgid "Photo Album"
-msgstr ""
+msgstr "Фотоальбом"
 
 #: includes/delete.php:15 includes/delete.php:40 includes/image_delete.php:32
 #: includes/list.php:38 includes/show.php:143
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: includes/delete.php:34
 msgid "Album deleted"
-msgstr ""
+msgstr "Альбом удален"
 
 #: includes/delete.php:35 includes/edit.php:118 includes/image_edit.php:150
 #: includes/image_move.php:27 includes/image_move.php:48
 #: includes/image_upload.php:87
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #: includes/delete.php:38 includes/show.php:35 index.php:14
 msgid "Album"
-msgstr ""
+msgstr "Альбом"
 
 #: includes/delete.php:39
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
-msgstr ""
+msgstr "Вы действительно хотите удалить альбом? Если в нем есть фотографии, они тоже будут удалены."
 
 #: includes/delete.php:42 includes/edit.php:145 includes/image_delete.php:34
 #: includes/image_edit.php:196 includes/image_move.php:46
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: includes/edit.php:16
 msgid "Edit Album"
-msgstr ""
+msgstr "Изменить альбом"
 
 #: includes/edit.php:28 includes/list.php:20
 msgid "Create Album"
-msgstr ""
+msgstr "Создать альбом"
 
 #: includes/edit.php:46
 msgid "You have not entered Title"
-msgstr ""
+msgstr "Вы не ввели название"
 
 #: includes/edit.php:48 includes/edit.php:130
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: includes/edit.php:48 includes/edit.php:56
 msgid "Invalid length"
-msgstr ""
+msgstr "Недопустимая длина"
 
 #: includes/edit.php:54
 msgid "You have not entered password"
-msgstr ""
+msgstr "Вы не ввели пароль"
 
 #: includes/edit.php:56 includes/edit.php:136
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: includes/edit.php:65
 msgid "The album already exists"
-msgstr ""
+msgstr "Такой альбом уже есть"
 
 #: includes/edit.php:117
 msgid "Album successfully changed"
-msgstr ""
+msgstr "Альбом успешно изменен"
 
 #: includes/edit.php:117
 msgid "Album successfully created"
-msgstr ""
+msgstr "Альбом успешно создан"
 
 #: includes/edit.php:132
 msgid "Min. 2, Max. 30"
-msgstr ""
+msgstr "Мин.2, макс. 20"
 
 #: includes/edit.php:133 includes/image_edit.php:157
 #: includes/image_upload.php:101
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: includes/edit.php:135 includes/image_edit.php:159
 #: includes/image_upload.php:103
 msgid "Optional field"
-msgstr ""
+msgstr "Необязательное поле"
 
 #: includes/edit.php:135
 msgid "Max. 500"
-msgstr ""
+msgstr "Макс. 500"
 
 #: includes/edit.php:138
 msgid "This field is required if the password access is activated"
-msgstr ""
+msgstr "Если включен доступ по паролю, то данное поле обязательно"
 
 #: includes/edit.php:139
 msgid "Access"
-msgstr ""
+msgstr "Доступ"
 
 #: includes/edit.php:140
 msgid "Everyone"
-msgstr ""
+msgstr "Всем"
 
 #: includes/edit.php:141
 msgid "With Password"
-msgstr ""
+msgstr "По паролю"
 
 #: includes/edit.php:142
 msgid "Only for me"
-msgstr ""
+msgstr "Только для меня"
 
 #: includes/edit.php:143 includes/image_edit.php:194
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: includes/image_delete.php:16
 msgid "Delete image"
-msgstr ""
+msgstr "Удалить фото"
 
 #: includes/image_delete.php:31
 msgid "Are you sure you want to delete this image?"
-msgstr ""
+msgstr "Вы действительно хотите удалить изображение?"
 
 #: includes/image_download.php:28
 msgid "File does not exist"
-msgstr ""
+msgstr "Файла не существует"
 
 #: includes/image_download.php:43 includes/image_upload.php:108
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: includes/image_edit.php:17
 msgid "Edit image"
-msgstr ""
+msgstr "Изменить картинку"
 
 #: includes/image_edit.php:149
 msgid "Image successfully changed"
-msgstr ""
+msgstr "Картинка изменена"
 
 #: includes/image_edit.php:155 includes/image_upload.php:99
 msgid "Image"
-msgstr ""
+msgstr "Картинка"
 
 #: includes/image_edit.php:189
 msgid "Rotate"
-msgstr ""
+msgstr "Повернуть"
 
 #: includes/image_edit.php:190
 msgid "do not rotate"
-msgstr ""
+msgstr "не поворачивать"
 
 #: includes/image_edit.php:191
 msgid "clockwise"
-msgstr ""
+msgstr "по часовой стрелке"
 
 #: includes/image_edit.php:192
 msgid "counterclockwise"
-msgstr ""
+msgstr "против часовой стрелки"
 
 #: includes/image_edit.php:193
 msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
-msgstr ""
+msgstr "Учтите, что при частом изменении яркости, контрастности и повороте, теряется качество изображения. Не пользуйтесь этими функциями без необходимости."
 
 #: includes/image_move.php:15
 msgid "Move image"
-msgstr ""
+msgstr "Переместить изображение"
 
 #: includes/image_move.php:26
 msgid "Image successfully moved to the selected album"
-msgstr ""
+msgstr "Фотография перемещена в выбранный альбом"
 
 #: includes/image_move.php:36
 msgid "Select Album"
-msgstr ""
+msgstr "Выберите альбом"
 
 #: includes/image_move.php:44 includes/show.php:142
 msgid "Move"
-msgstr ""
+msgstr "Переместить"
 
 #: includes/image_move.php:48
 msgid "You must create at least one additional album in order to move the image"
-msgstr ""
+msgstr "Для того, чтобы перемещать фотографии, у Вас должен быть создан еще один альбом"
 
 #: includes/image_upload.php:22
 msgid "Upload image"
-msgstr ""
+msgstr "Загрузить изображение"
 
 #: includes/image_upload.php:86
 msgid "Image uploaded"
-msgstr ""
+msgstr "Изображение загружено"
 
 #: includes/image_upload.php:88
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: includes/image_upload.php:105
 msgid "Upload"
-msgstr ""
+msgstr "Загрузить"
 
 #: includes/image_upload.php:107
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
-msgstr ""
+msgstr "Для выгрузки разрешены файлы JPG, JPEG, PNG, GIF<br>Размер файла не должен превышать %d kb."
 
 #: includes/list.php:35
 msgid "Up"
-msgstr ""
+msgstr "Вверх"
 
 #: includes/list.php:36
 msgid "Down"
-msgstr ""
+msgstr "Вниз"
 
 #: includes/list.php:37 includes/show.php:141
 msgid "Edit"
-msgstr ""
+msgstr "Изменить"
 
 #: includes/list.php:50 includes/show.php:160 includes/top.php:153
 #: includes/users.php:50
 msgid "The list is empty"
-msgstr ""
+msgstr "Список пуст"
 
 #: includes/list.php:53 includes/show.php:163 includes/top.php:156
 #: includes/users.php:52
 msgid "Total"
-msgstr ""
+msgstr "Всего"
 
 #: includes/show.php:31
 msgid "Add image"
-msgstr ""
+msgstr "Добавить фото"
 
 #: includes/show.php:66
 msgid "Incorrect Password"
-msgstr ""
+msgstr "Пароль неверный"
 
 #: includes/show.php:72
 msgid "You must type a password to view this album"
-msgstr ""
+msgstr "Для доступа к данному альбому, необходимо ввести пароль"
 
 #: includes/show.php:74
 msgid "Login"
-msgstr ""
+msgstr "Логин"
 
 #: includes/show.php:118
 msgid "Photo added to the profile"
-msgstr ""
+msgstr "Фото установлено в анкету"
 
 #: includes/show.php:147
 msgid "Add to Profile"
-msgstr ""
+msgstr "В анкету"
 
 #: includes/show.php:152 includes/top.php:144
 msgid "Views"
-msgstr ""
+msgstr "Просмотров"
 
 #: includes/show.php:152 includes/top.php:144
 msgid "Downloads"
-msgstr ""
+msgstr "Скачано"
 
 #: includes/show.php:153 includes/top.php:145
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: includes/show.php:154 includes/top.php:146
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: includes/show.php:155 includes/top.php:147
 msgid "Download"
-msgstr ""
+msgstr "Скачать"
 
 #: includes/show.php:169 includes/top.php:162 includes/users.php:57
 msgid "To Page"
-msgstr ""
+msgstr "На страницу"
 
 #: includes/top.php:17
 msgid "Unread Comments"
-msgstr ""
+msgstr "Непрочитанные комментарии"
 
 #: includes/top.php:28
 msgid "Recent comments"
-msgstr ""
+msgstr "Последние комментарии"
 
 #: includes/top.php:38 index.php:134
 msgid "Top Views"
-msgstr ""
+msgstr "ТОП просмотров"
 
 #: includes/top.php:48 index.php:133
 msgid "Top Downloads"
-msgstr ""
+msgstr "ТОП загрузок"
 
 #: includes/top.php:58 index.php:135
 msgid "Top Comments"
-msgstr ""
+msgstr "ТОП комментариев"
 
 #: includes/top.php:68 index.php:132
 msgid "Top Votes"
-msgstr ""
+msgstr "ТОП голосов"
 
 #: includes/top.php:78 index.php:136
 msgid "Top Worst"
-msgstr ""
+msgstr "Топ Худших"
 
 #: includes/top.php:88
 msgid "New photos"
-msgstr ""
+msgstr "Новые фото"
 
 #: includes/users.php:24
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: includes/users.php:25 index.php:123
 msgid "Guys"
-msgstr ""
+msgstr "Парни"
 
 #: includes/users.php:26 index.php:124
 msgid "Girls"
-msgstr ""
+msgstr "Девушки"
 
 #: includes/users.php:28
 msgid "List"
-msgstr ""
+msgstr "Список"
 
 #: index.php:25
 msgid "For registered users only"
-msgstr ""
+msgstr "Только для зарегистрированных посетителей"
 
 #: index.php:62 index.php:131
 msgid "Rating"
-msgstr ""
+msgstr "Рейтингу"
 
 #: index.php:63
 msgid "Against"
-msgstr ""
+msgstr "Против"
 
 #: index.php:63
 msgid "For"
-msgstr ""
+msgstr "За"
 
 #: index.php:70
 msgid "Vote"
-msgstr ""
+msgstr "Голосовать"
 
 #: index.php:118
 msgid "New Photos"
-msgstr ""
+msgstr "Новые фото"
 
 #: index.php:119
 msgid "New Comments"
-msgstr ""
+msgstr "Новые комментарии"
 
 #: index.php:122
 msgid "Albums"
-msgstr ""
+msgstr "Альбомы"
 
 #: index.php:127
 msgid "My Album"
-msgstr ""
+msgstr "Мой альбом"
 
 #: index.php:139
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
+
