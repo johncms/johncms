@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
-$textl = $lng['mail'] . ' | ' . $lng['files'];
+$textl = _t('Mail') . ' | ' . $lng['files'];
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */
@@ -34,11 +34,11 @@ if ($total) {
         echo '</div>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';

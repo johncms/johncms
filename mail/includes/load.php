@@ -1,7 +1,7 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 
 /** @var PDO $db */

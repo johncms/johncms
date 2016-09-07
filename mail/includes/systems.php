@@ -77,10 +77,10 @@ if ($mod == 'clear') {
             $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='$user_id' AND `sys`='1' AND `id` IN (" . $result . ")");
         }
     } else {
-        $out .= '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+        $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
-    $out .= '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=systems&amp;', $start, $total, $kmess) . '</div>';
@@ -91,7 +91,7 @@ if ($mod == 'clear') {
     }
 }
 
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng_mail['systems_messages'] . '</b></div>';
 echo $out;

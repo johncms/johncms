@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
-$textl = $lng['mail'];
+$textl = _t('Mail');
 require_once('../incfiles/head.php');
 
 if ($id) {
@@ -57,7 +57,7 @@ if ($id) {
 			<p><input type="submit" name="submit" value="' . $lng['delete'] . '"/></p>
 			</form>
 			</div>';
-            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . $lng['back'] . '</a></div>';
+            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
         }
     } else {
         echo '<div class="rmenu"><p>' . $lng_mail['contact_does_not_exist'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
