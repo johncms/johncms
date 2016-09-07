@@ -16,6 +16,10 @@ use Interop\Container\ContainerInterface;
 
 class PdoFactory
 {
+    /**
+     * @param ContainerInterface $container
+     * @return \PDO
+     */
     public function __invoke(ContainerInterface $container)
     {
         $config = $container->get('config');
