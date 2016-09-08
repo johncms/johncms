@@ -4,13 +4,20 @@ define('_IN_JOHNCMS', 1);
 
 $headmod = 'forumsearch';
 require('../incfiles/core.php');
-$lng_forum = core::load_lng('forum');
-$textl = $lng_forum['search_forum'];
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Zend\I18n\Translator\Translator $translator */
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+$textl = _t('Forum search');
 require('../incfiles/head.php');
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
@@ -30,9 +37,9 @@ switch ($act) {
             } else {
                 echo '<form action="search.php?act=reset" method="post">' .
                     '<div class="rmenu">' .
-                    '<p>' . core::$lng['search_history_reset'] . '</p>' .
-                    '<p><input type="submit" name="submit" value="' . core::$lng['clear'] . '" /></p>' .
-                    '<p><a href="search.php">' . core::$lng['cancel'] . '</a></p>' .
+                    '<p>' . _t('Do you really want to clear the search history?') . '</p>' .
+                    '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
+                    '<p><a href="search.php">' . _t('Cancel') . '</a></p>' .
                     '</div>' .
                     '</form>';
             }
@@ -50,7 +57,7 @@ switch ($act) {
         echo '<div class="gmenu"><form action="search.php" method="post"><p>' .
             '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />' .
             '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
-            '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . $lng_forum['search_topic_name'] .
+            '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in the topic names') .
             '</p></form></div>';
 
         // Проверям на ошибки
@@ -66,7 +73,7 @@ switch ($act) {
                 WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
                 AND `type` = '" . ($search_t ? 't' : 'm') . "'" . ($rights >= 7 ? "" : " AND `close` != '1'
             "))->fetchColumn();
-            echo '<div class="phdr">' . $lng['search_results'] . '</div>';
+            echo '<div class="phdr">' . _t('Search results') . '</div>';
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
@@ -128,24 +135,24 @@ switch ($act) {
                     echo $text;
 
                     if (mb_strlen($res['text']) > 500) {
-                        echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+                        echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
-                    echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . $lng_forum['to_topic'] . '</a>' . ($search_t ? ''
-                            : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['to_post'] . '</a>');
+                    echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to topic') . '</a>' . ($search_t ? ''
+                            : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Go to message') . '</a>');
                     echo '</div>';
                     ++$i;
                 }
             } else {
-                echo '<div class="rmenu"><p>' . $lng['search_results_empty'] . '</p></div>';
+                echo '<div class="rmenu"><p>' . _t('Your search did not match any results') . '</p></div>';
             }
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
         } else {
             if ($error) {
-                echo functions::display_error(core::$lng['error_wrong_lenght']);
+                echo functions::display_error(_t('Invalid length'));
             }
 
-            echo '<div class="phdr"><small>' . $lng['search_help'] . '</small></div>';
+            echo '<div class="phdr"><small>' . _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') . '</small></div>';
         }
 
         // Обрабатываем и показываем историю личных поисковых запросов
@@ -178,7 +185,7 @@ switch ($act) {
 
                 // Показываем историю запросов
                 echo '<div class="topmenu">' .
-                    '<b>' . core::$lng['search_history'] . '</b> <span class="red"><a href="search.php?act=reset">[x]</a></span><br />' .
+                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="search.php?act=reset">[x]</a></span><br />' .
                     functions::display_menu($history_list) .
                     '</div>';
             } elseif ($to_history) {
@@ -200,7 +207,7 @@ switch ($act) {
                 '</form></p>';
         }
 
-        echo '<p>' . ($search ? '<a href="search.php">' . $lng['search_new'] . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
+        echo '<p>' . ($search ? '<a href="search.php">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
 }
 
 require('../incfiles/end.php');

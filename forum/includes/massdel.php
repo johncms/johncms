@@ -35,6 +35,6 @@ if ($rights == 3 || $rights >= 6) {
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
         echo '<p>' . $lng['delete_confirmation'] . '<br><a href="index.php?act=massdel&amp;yes">' . $lng['delete'] . '</a> | ' .
-            '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p>';
+            '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p>';
     }
 }
