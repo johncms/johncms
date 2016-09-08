@@ -58,7 +58,7 @@ $flood = functions::antiflood();
 
 if ($flood) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -73,7 +73,7 @@ switch ($type1['type']) {
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $rights < 7) {
             // Проверка, закрыта ли тема
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>');
+            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -91,7 +91,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>');
+                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -103,7 +103,7 @@ switch ($type1['type']) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
-                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -214,7 +214,7 @@ switch ($type1['type']) {
         }
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
-            '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     case 'm':
@@ -224,14 +224,14 @@ switch ($type1['type']) {
 
         if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $th1['id'] . '">' . $lng['back'] . '</a>');
+            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
 
         if ($type1['user_id'] == $user_id) {
             require('../incfiles/head.php');
-            echo functions::display_error('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . $lng['back'] . '</a>');
+            echo functions::display_error('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -280,7 +280,7 @@ switch ($type1['type']) {
         ) {
             if (empty($_POST['msg'])) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . $lng['repeat'] . '</a>');
+                echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -288,7 +288,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>');
+                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -301,7 +301,7 @@ switch ($type1['type']) {
 
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
-                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -431,7 +431,7 @@ switch ($type1['type']) {
         }
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
-            '<p><a href="index.php?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="index.php?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     default:

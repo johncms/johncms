@@ -10,7 +10,7 @@ if ($rights == 3 || $rights >= 6) {
     require('../incfiles/head.php');
 
     if ($topic_vote == 0) {
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -35,7 +35,7 @@ if ($rights == 3 || $rights >= 6) {
                 header('location: ?act=editvote&id=' . $id . '');
             } else {
                 echo '<div class="rmenu"><p>' . $lng_forum['voting_variant_warning'] . '<br />' .
-                    '<a href="index.php?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes">' . $lng['delete'] . '</a><br />' .
+                    '<a href="index.php?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes">' . _t('Delete') . '</a><br />' .
                     '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p></div>';
             }
         } else {
@@ -67,7 +67,7 @@ if ($rights == 3 || $rights >= 6) {
                 }
             }
 
-            echo '<div class="gmenu"><p>' . $lng_forum['voting_changed'] . '<br /><a href="index.php?id=' . $id . '">' . $lng['continue'] . '</a></p></div>';
+            echo '<div class="gmenu"><p>' . $lng_forum['voting_changed'] . '<br /><a href="index.php?id=' . $id . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма редактирования опроса
             $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();

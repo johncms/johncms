@@ -10,7 +10,7 @@ if ($rights == 3 || $rights >= 6) {
     require('../incfiles/head.php');
 
     if ($topic_vote == 0) {
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -19,10 +19,10 @@ if ($rights == 3 || $rights >= 6) {
         $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '$id'");
         $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '$id'");
         $db->exec("UPDATE `forum` SET  `realid` = '0'  WHERE `id` = '$id'");
-        echo $lng_forum['voting_deleted'] . '<br /><a href="' . $_SESSION['prd'] . '">' . $lng['continue'] . '</a>';
+        echo $lng_forum['voting_deleted'] . '<br /><a href="' . $_SESSION['prd'] . '">' . _t('Continue') . '</a>';
     } else {
         echo '<p>' . $lng_forum['voting_delete_warning'] . '</p>';
-        echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a><br />';
+        echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a><br />';
         echo '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p>';
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
     }

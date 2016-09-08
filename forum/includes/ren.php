@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -14,7 +14,7 @@ if ($rights == 3 || $rights >= 6) {
 
     if ($ms[type] != "t") {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -24,7 +24,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if (!$nn) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+            echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -34,7 +34,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if ($pt->rowCount()) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_exists'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+            echo functions::display_error($lng_forum['error_topic_exists'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -50,7 +50,7 @@ if ($rights == 3 || $rights >= 6) {
             '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
             '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
             '</form></div>' .
-            '<div class="phdr"><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></div>';
+            '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
     require('../incfiles/head.php');

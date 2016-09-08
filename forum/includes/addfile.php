@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 
 if (!$id || !$user_id) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -17,14 +17,14 @@ $db = App::getContainer()->get(PDO::class);
 $res = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
 if ($res['type'] != 'm' || $res['user_id'] != $user_id) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['time'] < (time() - 180)) {
-    echo functions::display_error($lng_forum['upload_timeout'], '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng['back'] . '</a>');
+    echo functions::display_error(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -33,7 +33,7 @@ if ($res['time'] < (time() - 180)) {
 $exist = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'")->fetchColumn();
 
 if ($exist) {
-    echo functions::display_error($lng_forum['error_file_uploaded']);
+    echo functions::display_error(_t('File is already uploaded'));
     require('../incfiles/end.php');
     exit;
 }
@@ -59,17 +59,17 @@ if (isset($_POST['submit'])) {
 
         // Проверка на допустимый размер файла
         if ($fsize > 1024 * $set['flsz']) {
-            $error[] = $lng_forum['error_file_size'] . ' ' . $set['flsz'] . 'kb.';
+            $error[] = _t('File size exceed') . ' ' . $set['flsz'] . 'kb.';
         }
 
         // Проверка файла на наличие только одного расширения
         if (count($ext) != 2) {
-            $error[] = $lng_forum['error_file_name'];
+            $error[] = _t('You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden.');
         }
 
         // Проверка допустимых расширений файлов
         if (!in_array($ext[1], $al_ext)) {
-            $error[] = $lng_forum['error_file_ext'] . ':<br />' . implode(', ', $al_ext);
+            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
         }
 
         // Обработка названия файла
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
         // Проверка на запрещенные символы
         if (preg_match("/[^\da-z_\-.]+/", $fname)) {
-            $error[] = $lng_forum['error_file_symbols'];
+            $error[] = _t('File name contains invalid characters');
         }
 
         // Проверка наличия файла с таким же именем
@@ -96,9 +96,9 @@ if (isset($_POST['submit'])) {
             if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../files/forum/attach/$fname")) == true) {
                 @chmod("$fname", 0777);
                 @chmod("../files/forum/attach/$fname", 0777);
-                echo $lng_forum['file_uploaded'] . '<br>';
+                echo _t('File attached') . '<br>';
             } else {
-                $error[] = $lng_forum['error_upload_error'];
+                $error[] = _t('Error uploading file');
             }
         }
 
@@ -141,26 +141,26 @@ if (isset($_POST['submit'])) {
               `filetype` = '$type'
             ");
         } else {
-            echo functions::display_error($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+            echo functions::display_error($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         }
     } else {
-        echo $lng_forum['error_upload_error'] . '<br />';
+        echo _t('Error uploading file') . '<br />';
     }
 
     $pa2 = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'")->rowCount();
     $page = ceil($pa2 / $kmess);
-    echo '<br><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng['continue'] . '</a><br>';
+    echo '<br><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки
-    echo '<div class="phdr"><b>' . $lng_forum['add_file'] . '</b></div>' .
+    echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>' .
         '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
 
     if (stristr($agn, 'Opera/8.01')) {
-        echo '<input name="fail1" value =""/>&#160;<br><a href="op:fileselect">' . $lng_forum['select_file'] . '</a>';
+        echo '<input name="fail1" value =""/>&#160;<br><a href="op:fileselect">' . _t('Select File') . '</a>';
     } else {
         echo '<input type="file" name="fail"/>';
     }
 
-    echo '</p><p><input type="submit" name="submit" value="' . $lng_forum['upload'] . '"/></p></form></div>' .
-        '<div class="phdr">' . $lng_forum['max_size'] . ': ' . $set['flsz'] . 'kb.</div>';
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>' .
+        '<div class="phdr">' . _t('Max. Size') . ': ' . $set['flsz'] . 'kb.</div>';
 }
