@@ -23,5 +23,5 @@ if ($user_id) {
     $db->exec("UPDATE `cms_forum_vote` SET `count` = count + 1 WHERE topic = '$id' AND `type` = '1'");
     echo $lng_forum['vote_accepted'] . '<br /><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['back'] . '</a>';
 } else {
-    echo functions::display_error($lng['access_guest_forbidden']);
+    echo functions::display_error(_t('For registered users only'));
 }

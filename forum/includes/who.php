@@ -55,20 +55,20 @@ if ($id) {
         header('Location: index.php');
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('index.php?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>' .
             '<p><form action="index.php?act=who&amp;id=' . $id . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';
     }
 
     echo '<p><a href="index.php?id=' . $id . '">' . $lng_forum['to_topic'] . '</a></p>';
 } else {
     // Показываем общий список тех, кто в форуме
-    echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['who_in_forum'] . '</div>';
+    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['who_in_forum'] . '</div>';
 
     if ($rights > 0) {
         echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="index.php?act=who">' . $lng['users'] . '</a> | <b>' . $lng['guests'] . '</b>'
@@ -167,13 +167,13 @@ if ($id) {
         echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('index.php?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>' .
             '<p><form action="index.php?act=who' . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';
     }
     echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';

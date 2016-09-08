@@ -21,7 +21,7 @@ if (core::$user_rights >= 7) {
         FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
         WHERE `forum`.`refid`='$id' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum`.`from` ORDER BY `forum`.`from`");
     $total = $req->rowCount();
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['curators'] . '</div>' .
+    echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['curators'] . '</div>' .
         '<div class="bmenu">' . $topic['text'] . '</div>';
     $curators = [];
     $users = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
@@ -58,6 +58,6 @@ if (core::$user_rights >= 7) {
     } else {
         echo functions::display_error($lng['list_empty']);
     }
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
         '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
 }
