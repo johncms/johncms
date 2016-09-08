@@ -11,7 +11,7 @@ if ($rights == 3 || $rights >= 6) {
     require_once('../incfiles/head.php');
 
     if ($topic_vote != 0 || $topic == 0) {
-        echo functions::display_error($lng['error_wrong_data'], '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['back'] . '</a>');
+        echo functions::display_error(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -50,9 +50,9 @@ if ($rights == 3 || $rights >= 6) {
                     `topic`='$id'
                 ");
             }
-            echo $lng_forum['voting_added'] . '<br /><a href="?id=' . $id . '">' . $lng['continue'] . '</a>';
+            echo $lng_forum['voting_added'] . '<br /><a href="?id=' . $id . '">' . _t('Continue') . '</a>';
         } else {
-            echo $lng['error_empty_fields'] . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+            echo $lng['error_empty_fields'] . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
         }
     } else {
         echo '<form action="index.php?act=addvote&amp;id=' . $id . '" method="post">' .
@@ -79,7 +79,7 @@ if ($rights == 3 || $rights >= 6) {
         echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
         echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/><br>' : '<br>';
         echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form>';
-        echo '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>';
+        echo '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>';
     }
 } else {
     header('location: ../index.php?err');

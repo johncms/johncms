@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -56,7 +56,7 @@ if ($rights == 3 || $rights >= 6) {
             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . $lng['delete_confirmation'] . '</h3>' .
             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . $lng['hide'] . '<br />' .
-            (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . $lng['delete'] . '</p>' : '') .
+            (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
             '<p><input type="submit" name="submit" value="' . $lng['do'] . '" /></p>' .
             '<p><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .

@@ -59,5 +59,5 @@ if (core::$user_rights >= 7) {
         echo functions::display_error($lng['list_empty']);
     }
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-        '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p>';
+        '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
 }

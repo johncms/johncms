@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 
 if (!$user_id || !$id) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -39,14 +39,14 @@ if ($req->rowCount()) {
                 $res_u = $req_u->fetch();
 
                 if ($res_u['rights'] > $datauser['rights']) {
-                    $error = $lng['error_edit_rights'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
+                    $error = $lng['error_edit_rights'] . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
             }
         }
     } else {
         // Проверка для обычных юзеров
         if ($res['user_id'] != $user_id) {
-            $error = $lng_forum['error_edit_another'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
+            $error = $lng_forum['error_edit_another'] . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
         }
 
         if (!$error) {
@@ -66,9 +66,9 @@ if ($req->rowCount()) {
                 $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` DESC LIMIT 1")->fetch();
 
                 if ($res_m['user_id'] != $user_id) {
-                    $error = $lng_forum['error_edit_last'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
+                    $error = $lng_forum['error_edit_last'] . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 } elseif ($res['time'] < time() - 300) {
-                    $error = $lng_forum['error_edit_timeout'] . '<br /><a href="' . $link . '">' . $lng['back'] . '</a>';
+                    $error = $lng_forum['error_edit_timeout'] . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
             }
         }
@@ -164,7 +164,7 @@ if (!$error) {
             }
 
             echo $lng['delete_confirmation'] . '</p>' .
-                '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . $lng['delete'] . '</a>';
+                '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . _t('Delete') . '</a>';
 
             if ($rights == 9) {
                 echo ' | <a href="index.php?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . $lng['hide'] . '</a>';
@@ -180,7 +180,7 @@ if (!$error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=editpost&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                    echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -228,7 +228,7 @@ if (!$error) {
                     ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
                     '</p></form></div>' .
                     '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
-                    '<p><a href="' . $link . '">' . $lng['back'] . '</a></p>';
+                    '<p><a href="' . $link . '">' . _t('Back') . '</a></p>';
             }
     }
 } else {

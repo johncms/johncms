@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -17,7 +17,7 @@ if ($rights == 3 || $rights >= 6) {
 
     if (!$typ->rowCount()) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -27,7 +27,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if (!$razd) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng['error_wrong_data']);
+            echo functions::display_error(_t('Wrong data'));
             require('../incfiles/end.php');
             exit;
         }
@@ -36,7 +36,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if (!$typ1->rowCount()) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng['error_wrong_data']);
+            echo functions::display_error(_t('Wrong data'));
             require('../incfiles/end.php');
             exit;
         }
@@ -83,6 +83,6 @@ if ($rights == 3 || $rights >= 6) {
             ++$i;
         }
 
-        echo '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
+        echo '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
     }
 }

@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../incfiles/head.php');
 
 if (!$id) {
-    echo functions::display_error($lng['error_wrong_data'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
+    echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -22,7 +22,7 @@ switch ($do) {
         $users = isset($_POST['users']) ? $_POST['users'] : '';
 
         if (empty($_POST['users'])) {
-            echo '<div class="rmenu"><p>' . $lng_forum['error_author_select'] . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a></p></div>';
+            echo '<div class="rmenu"><p>' . $lng_forum['error_author_select'] . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
             require('../incfiles/end.php');
             exit;
         }
@@ -62,7 +62,7 @@ switch ($do) {
                 '<div class="phdr"><small>' . $lng_forum['filter_on_author_help'] . '</small></div>' .
                 '</form>';
         } else {
-            echo functions::display_error($lng['error_wrong_data']);
+            echo functions::display_error(_t('Wrong data'));
         }
 }
 

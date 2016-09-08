@@ -24,7 +24,7 @@ for ($it = 0; $it < $totalt; $it++) {
 }
 
 if (!$id) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -35,7 +35,7 @@ $db = App::getContainer()->get(PDO::class);
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND `close` != '1'");
 
 if (!$req->rowCount()) {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }

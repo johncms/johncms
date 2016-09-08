@@ -13,7 +13,7 @@ if ($user_id) {
     require('../incfiles/head.php');
 
     if ($topic_vote == 0 || $vote_user > 0 || $topic == 0) {
-        echo functions::display_error($lng['error_wrong_data']);
+        echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
     }
@@ -21,7 +21,7 @@ if ($user_id) {
     $db->exec("INSERT INTO `cms_forum_vote_users` SET `topic` = '$id', `user` = '$user_id', `vote` = '$vote'");
     $db->exec("UPDATE `cms_forum_vote` SET `count` = count + 1 WHERE id = '$vote'");
     $db->exec("UPDATE `cms_forum_vote` SET `count` = count + 1 WHERE topic = '$id' AND `type` = '1'");
-    echo $lng_forum['vote_accepted'] . '<br /><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['back'] . '</a>';
+    echo $lng_forum['vote_accepted'] . '<br /><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>';
 } else {
     echo functions::display_error(_t('For registered users only'));
 }

@@ -58,7 +58,7 @@ $flood = functions::antiflood();
 
 if ($flood) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'] . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
+    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'] . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -67,7 +67,7 @@ $req_r = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' L
 
 if (!$req_r->rowCount()) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
@@ -199,7 +199,7 @@ if (isset($_POST['submit'])
     } else {
         // Выводим сообщение об ошибке
         require('../incfiles/head.php');
-        echo functions::display_error($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+        echo functions::display_error($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -253,5 +253,5 @@ if (isset($_POST['submit'])
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
         '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
-        '<p><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
+        '<p><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></p>';
 }

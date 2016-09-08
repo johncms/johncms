@@ -61,7 +61,7 @@ if ($c || $s || $t) {
         $res = $req->fetch();
         $caption .= $res['text'];
     } else {
-        echo functions::display_error($lng['error_wrong_data'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
+        echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
         require('../incfiles/end.php');
         exit;
     }
