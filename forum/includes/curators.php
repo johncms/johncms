@@ -11,7 +11,7 @@ if (core::$user_rights >= 7) {
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$req->rowCount() || $rights < 7) {
-        echo functions::display_error($lng_forum['error_topic_deleted']);
+        echo functions::display_error(_t('Topic has been deleted or does not exists'));
         require('../incfiles/end.php');
         exit;
     }
@@ -21,7 +21,7 @@ if (core::$user_rights >= 7) {
         FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
         WHERE `forum`.`refid`='$id' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum`.`from` ORDER BY `forum`.`from`");
     $total = $req->rowCount();
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['curators'] . '</div>' .
+    echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
         '<div class="bmenu">' . $topic['text'] . '</div>';
     $curators = [];
     $users = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
@@ -49,14 +49,14 @@ if (core::$user_rights >= 7) {
                 '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a></div>';
         }
 
-        echo '<div class="gmenu"><input type="submit" value="' . $lng_forum['assign'] . '" name="submit" /></div></form>';
+        echo '<div class="gmenu"><input type="submit" value="' . _t('Assign') . '" name="submit" /></div></form>';
 
         if (isset($_POST['submit'])) {
             $db->exec("UPDATE `forum` SET `curators`=" . $db->quote(serialize($curators)) . " WHERE `id` = '$id'");
         }
 
     } else {
-        echo functions::display_error($lng['list_empty']);
+        echo functions::display_error(_t('The list is empty'));
     }
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
         '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';

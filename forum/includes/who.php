@@ -49,7 +49,7 @@ if ($id) {
                 echo '</div>';
             }
         } else {
-            echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+            echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
         }
     } else {
         header('Location: index.php');
@@ -164,7 +164,7 @@ if ($id) {
             echo '</div>';
         }
     } else {
-        echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';

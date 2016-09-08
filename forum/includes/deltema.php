@@ -18,7 +18,7 @@ if ($rights == 3 || $rights >= 6) {
 
     if (!$req->rowCount()) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng_forum['error_topic_deleted']);
+        echo functions::display_error(_t('Topic has been deleted or does not exists'));
         require('../incfiles/end.php');
         exit;
     }
