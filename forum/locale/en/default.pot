@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-09-08 15:04+0400\n"
+"POT-Creation-Date: 2016-09-09 00:30+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -23,21 +23,27 @@ msgstr ""
 #: includes/new.php:67 includes/new.php:140 includes/new.php:211
 #: includes/nt.php:227 includes/per.php:62 includes/ren.php:47
 #: includes/say.php:368 includes/tema.php:79 includes/who.php:71 index.php:110
-#: index.php:184 index.php:224 index.php:858 index.php:883 search.php:10
-#: search.php:203
+#: index.php:184 index.php:224 index.php:858 index.php:883 search.php:17
+#: search.php:210
 msgid "Forum"
 msgstr ""
 
 #: includes/curators.php:61 includes/files.php:131 includes/files.php:168
 #: includes/new.php:127 includes/new.php:193 includes/users.php:34
 #: includes/who.php:58 includes/who.php:170 index.php:304 index.php:363
-#: index.php:771 search.php:142
+#: index.php:771 search.php:149
 msgid "Total"
+msgstr ""
+
+#: includes/deltema.php:61 includes/delvote.php:26 includes/editpost.php:167
+#: includes/editvote.php:39 includes/editvote.php:119 includes/massdel.php:38
+#: search.php:42
+msgid "Cancel"
 msgstr ""
 
 #: includes/files.php:140 includes/new.php:133 includes/new.php:200
 #: includes/users.php:40 includes/who.php:64 includes/who.php:176 index.php:369
-#: index.php:778 search.php:199
+#: index.php:778 search.php:206
 msgid "To Page"
 msgstr ""
 
@@ -73,7 +79,7 @@ msgstr ""
 msgid "Who is here"
 msgstr ""
 
-#: index.php:268 index.php:859 search.php:10 search.php:52
+#: index.php:268 index.php:859 search.php:17 search.php:59
 msgid "Search"
 msgstr ""
 
@@ -137,7 +143,7 @@ msgstr ""
 msgid "Post deleted"
 msgstr ""
 
-#: index.php:525
+#: index.php:525 search.php:138
 msgid "Read more"
 msgstr ""
 
@@ -279,4 +285,52 @@ msgstr ""
 
 #: index.php:895
 msgid "New at the bottom"
+msgstr ""
+
+#: search.php:15
+msgid "Forum search"
+msgstr ""
+
+#: search.php:40
+msgid "Do you really want to clear the search history?"
+msgstr ""
+
+#: search.php:41
+msgid "Clear"
+msgstr ""
+
+#: search.php:60
+msgid "Search in the topic names"
+msgstr ""
+
+#: search.php:76
+msgid "Search results"
+msgstr ""
+
+#: search.php:141
+msgid "Go to topic"
+msgstr ""
+
+#: search.php:142
+msgid "Go to message"
+msgstr ""
+
+#: search.php:147
+msgid "Your search did not match any results"
+msgstr ""
+
+#: search.php:152
+msgid "Invalid length"
+msgstr ""
+
+#: search.php:155
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr ""
+
+#: search.php:188
+msgid "Search History"
+msgstr ""
+
+#: search.php:210
+msgid "New Search"
 msgstr ""

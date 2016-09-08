@@ -58,7 +58,7 @@ if ($rights == 3 || $rights >= 6) {
             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . $lng['hide'] . '<br />' .
             (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . $lng['delete'] . '</p>' : '') .
             '<p><input type="submit" name="submit" value="' . $lng['do'] . '" /></p>' .
-            '<p><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a>' .
+            '<p><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .
             '<div class="phdr">&#160;</div>';
     }

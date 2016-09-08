@@ -23,7 +23,7 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         echo '<p>' . $lng_forum['voting_delete_warning'] . '</p>';
         echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a><br />';
-        echo '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p>';
+        echo '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p>';
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
     }
 } else {

@@ -36,7 +36,7 @@ if ($rights == 3 || $rights >= 6) {
             } else {
                 echo '<div class="rmenu"><p>' . $lng_forum['voting_variant_warning'] . '<br />' .
                     '<a href="index.php?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes">' . $lng['delete'] . '</a><br />' .
-                    '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p></div>';
+                    '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p></div>';
             }
         } else {
             header('location: ?act=editvote&id=' . $id . '');
@@ -116,7 +116,7 @@ if ($rights == 3 || $rights >= 6) {
             echo '</p></div><div class="gmenu">' .
                 '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
                 '</div></form>' .
-                '<div class="phdr"><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a></div>';
+                '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a></div>';
         }
     }
 }
