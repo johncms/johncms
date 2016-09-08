@@ -50,13 +50,13 @@ if ($rights == 3 || $rights >= 6) {
                     `topic`='$id'
                 ");
             }
-            echo $lng_forum['voting_added'] . '<br /><a href="?id=' . $id . '">' . _t('Continue') . '</a>';
+            echo _t('Poll added') . '<br /><a href="?id=' . $id . '">' . _t('Continue') . '</a>';
         } else {
-            echo $lng['error_empty_fields'] . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+            echo _t('The required fields are not filled') . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
         }
     } else {
         echo '<form action="index.php?act=addvote&amp;id=' . $id . '" method="post">' .
-            '<br />' . $lng_forum['voting'] . ':<br>' .
+            '<br />' . _t('Poll (max. 150)') . ':<br>' .
             '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'], ENT_QUOTES, 'UTF-8') . '"/><br>';
 
         if (isset($_POST['plus'])) {
@@ -72,13 +72,13 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         for ($vote = 0; $vote < $_POST['count_vote']; $vote++) {
-            echo $lng_forum['answer'] . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br>';
+            echo _t('Answer') . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br>';
         }
 
         echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>';
-        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . $lng_forum['add_answer'] . '"/>' : '';
-        echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/><br>' : '<br>';
-        echo '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></form>';
+        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add answer') . '"/>' : '';
+        echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/><br>' : '<br>';
+        echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form>';
         echo '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>';
     }
 } else {

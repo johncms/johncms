@@ -48,7 +48,7 @@ if ($rights == 3 || $rights >= 6) {
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . $lng_forum['topic_name'] . '</h3>' .
             '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
-            '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
             '</form></div>' .
             '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
     }

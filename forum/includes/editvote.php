@@ -114,7 +114,7 @@ if ($rights == 3 || $rights >= 6) {
                     . ($_POST['count_vote'] - $countvote ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/>' : '');
             }
             echo '</p></div><div class="gmenu">' .
-                '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+                '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                 '</div></form>' .
                 '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a></div>';
         }
