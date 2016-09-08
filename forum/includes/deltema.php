@@ -52,16 +52,16 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         // Меню выбора режима удаления темы
         require('../incfiles/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['topic_delete'] . '</div>' .
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete topic') . '</div>' .
             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
-            '<p><h3>' . $lng['delete_confirmation'] . '</h3>' .
-            '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . $lng['hide'] . '<br />' .
+            '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
+            '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
             (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
-            '<p><input type="submit" name="submit" value="' . $lng['do'] . '" /></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
             '<p><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .
             '<div class="phdr">&#160;</div>';
     }
 } else {
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_t('Access forbidden'));
 }

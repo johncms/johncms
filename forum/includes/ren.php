@@ -54,5 +54,5 @@ if ($rights == 3 || $rights >= 6) {
     }
 } else {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_t('Access forbidden'));
 }

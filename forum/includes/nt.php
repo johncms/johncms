@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 // Закрываем доступ для определенных ситуаций
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $set['mod_forum'] == 3)) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['access_forbidden']);
+    echo functions::display_error(_t('Access forbidden'));
     require('../incfiles/end.php');
     exit;
 }
