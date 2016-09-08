@@ -248,7 +248,7 @@ if (isset($_POST['submit'])
 
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
-    echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
         ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
