@@ -436,6 +436,6 @@ switch ($type1['type']) {
 
     default:
         require('../incfiles/head.php');
-        echo functions::display_error($lng_forum['error_topic_deleted'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
+        echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
         require('../incfiles/end.php');
 }

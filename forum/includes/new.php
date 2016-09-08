@@ -187,7 +187,7 @@ if ($user_id) {
                         '</div></div>';
                 }
             } else {
-                echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+                echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
             }
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
@@ -244,7 +244,7 @@ if ($user_id) {
             echo '</div></div>';
         }
     } else {
-        echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
     echo '<div class="phdr"><a href="index.php">' . $lng['to_forum'] . '</a></div>';
 }

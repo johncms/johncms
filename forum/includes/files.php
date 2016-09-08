@@ -140,7 +140,7 @@ if ($do || isset($_GET['new'])) {
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
     } else {
-        echo '<div class="list1">' . $lng['list_empty'] . '</div>';
+        echo '<div class="list1">' . _t('The list is empty') . '</div>';
     }
 } else {
     // Выводим список разделов, в которых есть файлы
