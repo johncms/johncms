@@ -72,7 +72,7 @@ if ($rights == 3 || $rights >= 6) {
             // Форма редактирования опроса
             $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();
             $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
-            echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_vote'] . '</div>' .
+            echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['edit_vote'] . '</div>' .
                 '<form action="index.php?act=editvote&amp;id=' . $id . '" method="post">' .
                 '<div class="gmenu"><p>' .
                 '<b>' . $lng_forum['voting'] . ':</b><br>' .

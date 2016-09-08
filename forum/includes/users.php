@@ -31,13 +31,13 @@ if ($topic_vote == 0 || core::$user_rights < 7) {
         echo '<div class="menu">' . $lng_forum['voting_users_empty'] . '</div>';
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
         echo '<p>' . functions::display_pagination('index.php?act=users&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
             '<p><form action="index.php?act=users&amp;id=' . $id . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
-            '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
     echo '<p><a href="index.php?id=' . $id . '">' . $lng_forum['to_topic'] . '</a></p>';

@@ -128,7 +128,7 @@ if ($do || isset($_GET['new'])) {
             echo '</div>';
         }
 
-        echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
             // Постраничная навигация
@@ -137,7 +137,7 @@ if ($do || isset($_GET['new'])) {
                 '<p><form action="index.php" method="get">' .
                 '<input type="hidden" name="act" value="files"/>' .
                 '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
     } else {
         echo '<div class="list1">' . $lng['list_empty'] . '</div>';
@@ -165,9 +165,9 @@ if ($do || isset($_GET['new'])) {
         ++$i;
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 }
 
 echo '<p>' . (($do || isset($_GET['new']))
         ? '<a href="index.php?act=files' . $lnk . '">' . $lng_forum['section_list'] . '</a><br />'
-        : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . $lng['forum'] . '</a></p>';
+        : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . _t('Forum') . '</a></p>';

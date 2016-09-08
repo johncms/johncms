@@ -365,7 +365,7 @@ switch ($type1['type']) {
             }
             exit;
         } else {
-            $textl = $lng['forum'];
+            $textl = _t('Forum');
             require('../incfiles/head.php');
             $qt = " $type1[text]";
 

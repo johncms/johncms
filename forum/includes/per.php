@@ -59,7 +59,7 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         $fr1 = $db->query("SELECT * FROM `forum` WHERE id='" . $other . "'")->fetch();
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_move'] . '</div>' .
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['topic_move'] . '</div>' .
             '<form action="index.php?act=per&amp;id=' . $id . '" method="post">' .
             '<div class="gmenu"><p>' .
             '<h3>' . $lng['category'] . '</h3>' . $fr1['text'] . '</p>' .

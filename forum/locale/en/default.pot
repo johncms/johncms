@@ -1,0 +1,282 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: JohnCMS 7.0\n"
+"POT-Creation-Date: 2016-09-08 15:04+0400\n"
+"PO-Revision-Date: 2016-08-26 11:27+0400\n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/curators.php:24 includes/deltema.php:55 includes/editpost.php:77
+#: includes/editpost.php:159 includes/editpost.php:212 includes/editvote.php:75
+#: includes/files.php:173 includes/filter.php:50 includes/new.php:5
+#: includes/new.php:67 includes/new.php:140 includes/new.php:211
+#: includes/nt.php:227 includes/per.php:62 includes/ren.php:47
+#: includes/say.php:368 includes/tema.php:79 includes/who.php:71 index.php:110
+#: index.php:184 index.php:224 index.php:858 index.php:883 search.php:10
+#: search.php:203
+msgid "Forum"
+msgstr ""
+
+#: includes/curators.php:61 includes/files.php:131 includes/files.php:168
+#: includes/new.php:127 includes/new.php:193 includes/users.php:34
+#: includes/who.php:58 includes/who.php:170 index.php:304 index.php:363
+#: index.php:771 search.php:142
+msgid "Total"
+msgstr ""
+
+#: includes/files.php:140 includes/new.php:133 includes/new.php:200
+#: includes/users.php:40 includes/who.php:64 includes/who.php:176 index.php:369
+#: index.php:778 search.php:199
+msgid "To Page"
+msgstr ""
+
+#: includes/vote.php:26 index.php:94
+msgid "For registered users only"
+msgstr ""
+
+#: index.php:92 index.php:163
+msgid "Forum is closed"
+msgstr ""
+
+#: index.php:165
+msgid "Read Only"
+msgstr ""
+
+#: index.php:184
+msgid "Topic has been deleted or does not exists"
+msgstr ""
+
+#: index.php:238
+msgid "Category files"
+msgstr ""
+
+#: index.php:244
+msgid "Section files"
+msgstr ""
+
+#: index.php:250
+msgid "Topic files"
+msgstr ""
+
+#: index.php:262
+msgid "Who is here"
+msgstr ""
+
+#: index.php:268 index.php:859 search.php:10 search.php:52
+msgid "Search"
+msgstr ""
+
+#: index.php:301
+msgid "There are no sections in this category"
+msgstr ""
+
+#: index.php:315
+msgid "New topic"
+msgstr ""
+
+#: index.php:360
+msgid "No topics in this section"
+msgstr ""
+
+#: index.php:401
+msgid "Topic deleted"
+msgstr ""
+
+#: index.php:401
+msgid "Go to section"
+msgstr ""
+
+#: index.php:422
+msgid "Topic deleted by"
+msgstr ""
+
+#: index.php:424
+msgid "Undelete topic"
+msgstr ""
+
+#: index.php:429
+msgid "Topic closed"
+msgstr ""
+
+#: index.php:448 index.php:471
+msgid "Vote"
+msgstr ""
+
+#: index.php:449
+msgid "Results"
+msgstr ""
+
+#: index.php:457
+msgid "Rating"
+msgstr ""
+
+#: index.php:460
+msgid "Total votes"
+msgstr ""
+
+#: index.php:502 index.php:634
+msgid "[r]"
+msgstr ""
+
+#: index.php:503 index.php:635
+msgid "[q]"
+msgstr ""
+
+#: index.php:519 index.php:720
+msgid "Post deleted"
+msgstr ""
+
+#: index.php:525
+msgid "Read more"
+msgstr ""
+
+#: index.php:533
+msgid "Filter by author is activated"
+msgstr ""
+
+#: index.php:564 index.php:759
+msgid "Add file"
+msgstr ""
+
+#: index.php:565 index.php:570 index.php:761 index.php:766
+msgid "Write"
+msgstr ""
+
+#: index.php:566 index.php:762
+msgid "Preview"
+msgstr ""
+
+#: index.php:665
+msgid "Edited"
+msgstr ""
+
+#: index.php:674
+msgid "Attachment"
+msgstr ""
+
+#: index.php:686
+msgid "Click to view image"
+msgstr ""
+
+#: index.php:692
+msgid "Downloads"
+msgstr ""
+
+#: index.php:692
+msgid "Time"
+msgstr ""
+
+#: index.php:712
+msgid "Edit"
+msgstr ""
+
+#: index.php:713
+msgid "Restore"
+msgstr ""
+
+#: index.php:714 index.php:745
+msgid "Delete"
+msgstr ""
+
+#: index.php:722
+msgid "Post restored by"
+msgstr ""
+
+#: index.php:792
+msgid "Curators"
+msgstr ""
+
+#: index.php:800
+msgid "Curators of the Topic"
+msgstr ""
+
+#: index.php:804
+msgid "Edit Poll"
+msgstr ""
+
+#: index.php:804
+msgid "Delete Poll"
+msgstr ""
+
+#: index.php:805
+msgid "Add Poll"
+msgstr ""
+
+#: index.php:806
+msgid "Rename Topic"
+msgstr ""
+
+#: index.php:810
+msgid "New Topic"
+msgstr ""
+
+#: index.php:812
+msgid "Close Topic"
+msgstr ""
+
+#: index.php:817
+msgid "Restore Topic"
+msgstr ""
+
+#: index.php:820
+msgid "Delete Topic"
+msgstr ""
+
+#: index.php:823
+msgid "Unfix Topic"
+msgstr ""
+
+#: index.php:825
+msgid "Pin Topic"
+msgstr ""
+
+#: index.php:828
+msgid "Move Topic"
+msgstr ""
+
+#: index.php:838
+msgid "Cancel Filter"
+msgstr ""
+
+#: index.php:840
+msgid "Filter by author"
+msgstr ""
+
+#: index.php:844
+msgid "Download Topic"
+msgstr ""
+
+#: index.php:849
+msgid "Wrong data"
+msgstr ""
+
+#: index.php:859
+msgid "Files"
+msgstr ""
+
+#: index.php:877
+msgid "Who in Forum"
+msgstr ""
+
+#: index.php:886
+msgid "Forum rules"
+msgstr ""
+
+#: index.php:893
+msgid "New at the top"
+msgstr ""
+
+#: index.php:895
+msgid "New at the bottom"
+msgstr ""

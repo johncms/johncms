@@ -74,7 +74,7 @@ if ($req->rowCount()) {
         }
     }
 } else {
-    $error = $lng_forum['error_post_deleted'] . '<br /><a href="index.php">' . $lng['forum'] . '</a>';
+    $error = $lng_forum['error_post_deleted'] . '<br /><a href="index.php">' . _t('Forum') . '</a>';
 }
 
 if (!$error) {
@@ -156,7 +156,7 @@ if (!$error) {
 
         case 'del':
             // Удаление поста, предварительное напоминание
-            echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['delete_post'] . '</div>' .
+            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['delete_post'] . '</div>' .
                 '<div class="rmenu"><p>';
 
             if ($posts == 1) {
@@ -209,7 +209,7 @@ if (!$error) {
                 }
 
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-                echo '<div class="phdr"><a href="' . $link . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['edit_message'] . '</div>';
+                echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['edit_message'] . '</div>';
 
                 if ($msg && !isset($_POST['submit'])) {
                     $user = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();

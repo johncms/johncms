@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng['forum'] . ' | ' . $lng['unread'];
+$textl = _t('Forum') . ' | ' . $lng['unread'];
 $headmod = 'forumnew';
 require('../incfiles/head.php');
 unset($_SESSION['fsort_id']);
@@ -64,7 +64,7 @@ if ($user_id) {
             }
 
             $count = $req->fetchColumn();
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_all_for_period'] . ' ' . $vr . ' ' . $lng_forum['hours'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['unread_all_for_period'] . ' ' . $vr . ' ' . $lng_forum['hours'] . '</div>';
 
             // Форма выбора периода времени
             echo '<div class="topmenu"><form action="index.php?act=new&amp;do=period" method="post">' .
@@ -124,20 +124,20 @@ if ($user_id) {
                 echo '<div class="menu"><p>' . $lng_forum['unread_period_empty'] . '</p></div>';
             }
 
-            echo '<div class="phdr">' . $lng['total'] . ': ' . $count . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
 
             if ($count > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>' .
                     '<p><form action="index.php?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
                     <input type="text" name="page" size="2"/>
-                    <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                    <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
             break;
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
             $total = counters::forumNew();
-            echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng['unread'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng['unread'] . '</div>';
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
@@ -190,14 +190,14 @@ if ($user_id) {
                 echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
             }
 
-            echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>' .
                     '<p><form action="index.php" method="get">' .
                     '<input type="hidden" name="act" value="new"/>' .
                     '<input type="text" name="page" size="2"/>' .
-                    '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                    '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                     '</form></p>';
             }
 
@@ -208,7 +208,7 @@ if ($user_id) {
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
-    echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['unread_last_10'] . '</div>';
+    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['unread_last_10'] . '</div>';
     $req = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `close` != '1' ORDER BY `time` DESC LIMIT 10");
 
     if ($req->rowCount()) {

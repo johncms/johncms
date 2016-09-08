@@ -7,7 +7,7 @@ require('../incfiles/core.php');
 $lng_forum = core::load_lng('forum');
 $textl = $lng_forum['search_forum'];
 require('../incfiles/head.php');
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['forum'] . '</b></a> | ' . $lng['search'] . '</div>';
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
@@ -49,7 +49,7 @@ switch ($act) {
         $to_history = false;
         echo '<div class="gmenu"><form action="search.php" method="post"><p>' .
             '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />' .
-            '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br />' .
+            '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
             '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . $lng_forum['search_topic_name'] .
             '</p></form></div>';
 
@@ -139,7 +139,7 @@ switch ($act) {
             } else {
                 echo '<div class="rmenu"><p>' . $lng['search_results_empty'] . '</p></div>';
             }
-            echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
         } else {
             if ($error) {
                 echo functions::display_error(core::$lng['error_wrong_lenght']);
@@ -196,11 +196,11 @@ switch ($act) {
             echo '<div class="topmenu">' . functions::display_pagination('search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
                 '<p><form action="search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
-                '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                 '</form></p>';
         }
 
-        echo '<p>' . ($search ? '<a href="search.php">' . $lng['search_new'] . '</a><br />' : '') . '<a href="index.php">' . $lng['forum'] . '</a></p>';
+        echo '<p>' . ($search ? '<a href="search.php">' . $lng['search_new'] . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
 }
 
 require('../incfiles/end.php');

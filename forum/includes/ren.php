@@ -44,7 +44,7 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         // Переименовываем тему
         require('../incfiles/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_rename'] . '</div>' .
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['topic_rename'] . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . $lng_forum['topic_name'] . '</h3>' .
             '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
