@@ -34,7 +34,7 @@ if ($rights == 3 || $rights >= 6) {
                 $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `vote` = '$vote'");
                 header('location: ?act=editvote&id=' . $id . '');
             } else {
-                echo '<div class="rmenu"><p>' . $lng_forum['voting_variant_warning'] . '<br />' .
+                echo '<div class="rmenu"><p>' . _t('Do you really want to delete the answer?') . '<br />' .
                     '<a href="index.php?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote . '&amp;delvote&amp;yes">' . _t('Delete') . '</a><br />' .
                     '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p></div>';
             }
@@ -67,22 +67,22 @@ if ($rights == 3 || $rights >= 6) {
                 }
             }
 
-            echo '<div class="gmenu"><p>' . $lng_forum['voting_changed'] . '<br /><a href="index.php?id=' . $id . '">' . _t('Continue') . '</a></p></div>';
+            echo '<div class="gmenu"><p>' . _t('Poll changed') . '<br /><a href="index.php?id=' . $id . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма редактирования опроса
             $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();
             $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
-            echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['edit_vote'] . '</div>' .
+            echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit poll') . '</div>' .
                 '<form action="index.php?act=editvote&amp;id=' . $id . '" method="post">' .
                 '<div class="gmenu"><p>' .
-                '<b>' . $lng_forum['voting'] . ':</b><br>' .
+                '<b>' . _t('Poll (max. 150)') . ':</b><br>' .
                 '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8') . '"/>' .
                 '</p></div>' .
                 '<div class="menu"><p>';
             $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'");
 
             while ($vote = $vote_result->fetch()) {
-                echo $lng_forum['answer'] . ' ' . ($i + 1) . ' (max. 50): <br>' .
+                echo _t('Answer') . ' ' . ($i + 1) . ' (max. 50): <br>' .
                     '<input type="text" name="' . $vote['id'] . 'vote" value="' . htmlentities($vote['name'], ENT_QUOTES, 'UTF-8') . '"/>';
 
                 if ($countvote > 2) {
@@ -110,8 +110,8 @@ if ($rights == 3 || $rights >= 6) {
                     echo 'Ответ ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . functions::checkout($_POST[$vote]) . '"/><br>';
                 }
 
-                echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>' . ($_POST['count_vote'] < 20 ? '<input type="submit" name="plus" value="' . $lng['add'] . '"/>' : '')
-                    . ($_POST['count_vote'] - $countvote ? '<input type="submit" name="minus" value="' . $lng_forum['delete_last'] . '"/>' : '');
+                echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>' . ($_POST['count_vote'] < 20 ? '<input type="submit" name="plus" value="' . _t('Add') . '"/>' : '')
+                    . ($_POST['count_vote'] - $countvote ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/>' : '');
             }
             echo '</p></div><div class="gmenu">' .
                 '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
