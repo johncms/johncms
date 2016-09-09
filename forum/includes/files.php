@@ -9,15 +9,15 @@ require('../incfiles/head.php');
 $db = App::getContainer()->get(PDO::class);
 
 $types = [
-    1 => $lng_forum['files_type_win'],
-    2 => $lng_forum['files_type_java'],
-    3 => $lng_forum['files_type_sis'],
-    4 => $lng_forum['files_type_txt'],
-    5 => $lng_forum['files_type_pic'],
-    6 => $lng_forum['files_type_arc'],
-    7 => $lng_forum['files_type_video'],
-    8 => $lng_forum['files_type_audio'],
-    9 => $lng_forum['files_type_other'],
+    1 => _t('Windows applications'),
+    2 => _t('Java applications'),
+    3 => _t('SIS'),
+    4 => _t('txt'),
+    5 => _t('Pictures'),
+    6 => _t('Archive'),
+    7 => _t('Videos'),
+    8 => _t('MP3'),
+    9 => _t('Other'),
 ];
 $new = time() - 86400; // Сколько времени файлы считать новыми?
 
@@ -31,25 +31,25 @@ if ($c) {
     $id = $c;
     $lnk = '&amp;c=' . $c;
     $sql = " AND `cat` = '" . $c . "'";
-    $caption = '<b>' . $lng_forum['files_category'] . '</b>: ';
+    $caption = '<b>' . _t('Category files') . '</b>: ';
     $input = '<input type="hidden" name="c" value="' . $c . '"/>';
 } elseif ($s) {
     $id = $s;
     $lnk = '&amp;s=' . $s;
     $sql = " AND `subcat` = '" . $s . "'";
-    $caption = '<b>' . $lng_forum['files_section'] . '</b>: ';
+    $caption = '<b>' . _t('Section files') . '</b>: ';
     $input = '<input type="hidden" name="s" value="' . $s . '"/>';
 } elseif ($t) {
     $id = $t;
     $lnk = '&amp;t=' . $t;
     $sql = " AND `topic` = '" . $t . "'";
-    $caption = '<b>' . $lng_forum['files_topic'] . '</b>: ';
+    $caption = '<b>' . _t('Topic files') . '</b>: ';
     $input = '<input type="hidden" name="t" value="' . $t . '"/>';
 } else {
     $id = false;
     $sql = '';
     $lnk = '';
-    $caption = '<b>' . $lng_forum['files_forum'] . '</b>';
+    $caption = '<b>' . _t('Forum Files') . '</b>';
     $input = '';
 }
 
@@ -61,7 +61,7 @@ if ($c || $s || $t) {
         $res = $req->fetch();
         $caption .= $res['text'];
     } else {
-        echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
+        echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -73,7 +73,7 @@ if ($do || isset($_GET['new'])) {
 
     if ($total) {
         // Заголовок раздела
-        echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . $lng['new_files'] : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
+        echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . _t('New Files') : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
         $req = $db->query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
             FROM `cms_forum_files`
             LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
@@ -92,7 +92,7 @@ if ($do || isset($_GET['new'])) {
             $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
-                $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+                $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
             }
 
             // Формируем ссылку на файл
@@ -109,7 +109,7 @@ if ($do || isset($_GET['new'])) {
             if (in_array($att_ext, $pic_ext)) {
                 // Если картинка, то выводим предпросмотр
                 $file = '<div><a href="index.php?act=file&amp;id=' . $res['id'] . '">';
-                $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . $lng_forum['click_to_view'] . '" /></a></div>';
+                $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
             } else {
                 // Если обычный файл, выводим значок и ссылку
                 $file = ($res['del'] ? '<img src="../images/del.png" width="16" height="16" />'
@@ -117,7 +117,7 @@ if ($do || isset($_GET['new'])) {
             }
 
             $file .= '<a href="index.php?act=file&amp;id=' . $res['id'] . '">' . htmlspecialchars($res['filename']) . '</a><br />';
-            $file .= '<small><span class="gray">' . $lng_forum['size'] . ': ' . $fls . ' kb.<br />' . $lng_forum['downloaded'] . ': ' . $res['dlcount'] . ' ' . $lng_forum['time'] . '</span></small>';
+            $file .= '<small><span class="gray">' . _t('Size') . ': ' . $fls . ' kb.<br />' . _t('Downloaded') . ': ' . $res['dlcount'] . ' ' . _t('Time') . '</span></small>';
             $arg = [
                 'iphide' => 1,
                 'sub'    => $file,
@@ -146,8 +146,8 @@ if ($do || isset($_GET['new'])) {
     // Выводим список разделов, в которых есть файлы
     $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     echo '<p>' . ($countnew > 0
-            ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . $lng['new_files'] . ' (' . $countnew . ')</a>'
-            : $lng_forum['new_files_empty']) . '</p>';
+            ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
+            : _t('No new files')) . '</p>';
     echo '<div class="phdr">' . $caption . '</div>';
     $link = [];
     $total = 0;
@@ -169,5 +169,5 @@ if ($do || isset($_GET['new'])) {
 }
 
 echo '<p>' . (($do || isset($_GET['new']))
-        ? '<a href="index.php?act=files' . $lnk . '">' . $lng_forum['section_list'] . '</a><br />'
+        ? '<a href="index.php?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'
         : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . _t('Forum') . '</a></p>';

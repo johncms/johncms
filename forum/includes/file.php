@@ -1,11 +1,11 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$error = false;
 
 if ($id) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
+    $error = false;
 
     // Скачивание прикрепленного файла Форума
     $req = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '$id'");
@@ -26,7 +26,7 @@ if ($id) {
 
     if ($error) {
         require('../incfiles/head.php');
-        echo functions::display_error($lng['error_file_not_exist'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
+        echo functions::display_error(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
