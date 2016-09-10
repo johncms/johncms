@@ -20,10 +20,11 @@ if ($rights == 3 || $rights >= 6) {
                 WHERE `id` = '" . intval($delid) . "'
             ");
         }
-        echo $lng_forum['mass_delete_confirm'] . '<br><a href="' . $prd . '">' . _t('Back') . '</a><br>';
+
+        echo _t('Marked posts are deleted') . '<br><a href="' . $prd . '">' . _t('Back') . '</a><br>';
     } else {
         if (empty($_POST['delch'])) {
-            echo '<p>' . $lng_forum['error_mass_delete'] . '<br><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a></p>';
+            echo '<p>' . _t('You did not choose something to delete') . '<br><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a></p>';
             require('../incfiles/end.php');
             exit;
         }
@@ -34,7 +35,7 @@ if ($rights == 3 || $rights >= 6) {
 
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
-        echo '<p>' . $lng['delete_confirmation'] . '<br><a href="index.php?act=massdel&amp;yes">' . _t('Delete') . '</a> | ' .
+        echo '<p>' . _t('Do you really want to delete?') . '<br><a href="index.php?act=massdel&amp;yes">' . _t('Delete') . '</a> | ' .
             '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p>';
     }
 }
