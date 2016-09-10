@@ -1,10 +1,11 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 require('../incfiles/head.php');
 
 if (!$id) {
-    echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
+    echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -22,7 +23,7 @@ switch ($do) {
         $users = isset($_POST['users']) ? $_POST['users'] : '';
 
         if (empty($_POST['users'])) {
-            echo '<div class="rmenu"><p>' . $lng_forum['error_author_select'] . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
+            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
             require('../incfiles/end.php');
             exit;
         }
@@ -47,7 +48,7 @@ switch ($do) {
         $total = $req->rowCount();
 
         if ($total) {
-            echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['filter_on_author'] . '</div>' .
+            echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
                 '<form action="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
             $i = 0;
 
@@ -58,12 +59,12 @@ switch ($do) {
                 ++$i;
             }
 
-            echo '<div class="gmenu"><input type="submit" value="' . $lng_forum['filter_to'] . '" name="submit" /></div>' .
-                '<div class="phdr"><small>' . $lng_forum['filter_on_author_help'] . '</small></div>' .
+            echo '<div class="gmenu"><input type="submit" value="' . _t('Filter') . '" name="submit" /></div>' .
+                '<div class="phdr"><small>' . _t('Filter will be display posts from selected authors only') . '</small></div>' .
                 '</form>';
         } else {
             echo functions::display_error(_t('Wrong data'));
         }
 }
 
-echo '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng_forum['return_to_topic'] . '</a></p>';
+echo '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back to topic') . '</a></p>';
