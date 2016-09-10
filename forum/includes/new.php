@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = _t('Forum') . ' | ' . $lng['unread'];
+$textl = _t('Forum') . ' | ' . _t('Unread');
 $headmod = 'forumnew';
 require('../incfiles/head.php');
 unset($_SESSION['fsort_id']);
@@ -49,7 +49,7 @@ if ($user_id) {
                 ");
             }
 
-            echo '<div class="menu"><p>' . $lng_forum['unread_reset_done'] . '<br /><a href="index.php">' . $lng_forum['to_forum'] . '</a></p></div>';
+            echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="index.php">' . _t('Forum') . '</a></p></div>';
             break;
 
         case 'period':
@@ -64,12 +64,12 @@ if ($user_id) {
             }
 
             $count = $req->fetchColumn();
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['unread_all_for_period'] . ' ' . $vr . ' ' . $lng_forum['hours'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'), $vr) . '</div>';
 
             // Форма выбора периода времени
             echo '<div class="topmenu"><form action="index.php?act=new&amp;do=period" method="post">' .
                 '<input type="text" maxlength="3" name="vr" value="' . $vr . '" size="3"/>' .
-                '<input type="submit" name="submit" value="' . $lng['show_for_period'] . '"/>' .
+                '<input type="submit" name="submit" value="' . _t('Show period') . '"/>' .
                 '</form></div>';
 
             if ($count > $kmess) {
@@ -121,7 +121,7 @@ if ($user_id) {
                     echo '</div></div>';
                 }
             } else {
-                echo '<div class="menu"><p>' . $lng_forum['unread_period_empty'] . '</p></div>';
+                echo '<div class="menu"><p>' . _t('There is nothing new in this forum for selected period') . '</p></div>';
             }
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
@@ -137,7 +137,7 @@ if ($user_id) {
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
             $total = counters::forumNew();
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng['unread'] . '</div>';
+            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
@@ -202,13 +202,13 @@ if ($user_id) {
             }
 
             if ($total) {
-                echo '<p><a href="index.php?act=new&amp;do=reset">' . $lng_forum['unread_reset'] . '</a></p>';
+                echo '<p><a href="index.php?act=new&amp;do=reset">' . _t('Mark as read') . '</a></p>';
             }
 
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
-    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['unread_last_10'] . '</div>';
+    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
     $req = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `close` != '1' ORDER BY `time` DESC LIMIT 10");
 
     if ($req->rowCount()) {
@@ -246,5 +246,5 @@ if ($user_id) {
     } else {
         echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
-    echo '<div class="phdr"><a href="index.php">' . $lng['to_forum'] . '</a></div>';
+    echo '<div class="phdr"><a href="index.php">' . _t('Forum') . '</a></div>';
 }
