@@ -76,7 +76,7 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         echo '<input type="hidden" name="count_vote" value="' . abs(intval($_POST['count_vote'])) . '"/>';
-        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add answer') . '"/>' : '';
+        echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add Answer') . '"/>' : '';
         echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/><br>' : '<br>';
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form>';
         echo '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>';

@@ -156,7 +156,7 @@ if (!$error) {
 
         case 'del':
             // Удаление поста, предварительное напоминание
-            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete message') . '</div>' .
+            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Message') . '</div>' .
                 '<div class="rmenu"><p>';
 
             if ($posts == 1) {
@@ -209,7 +209,7 @@ if (!$error) {
                 }
 
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-                echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit message') . '</div>';
+                echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Message') . '</div>';
 
                 if ($msg && !isset($_POST['submit'])) {
                     $user = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();

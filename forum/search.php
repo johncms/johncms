@@ -138,8 +138,8 @@ switch ($act) {
                         echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
-                    echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to topic') . '</a>' . ($search_t ? ''
-                            : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Go to message') . '</a>');
+                    echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
+                            : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
                     echo '</div>';
                     ++$i;
                 }
