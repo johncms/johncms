@@ -20,7 +20,7 @@ WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($rights >= 7 ? "" : " AN
 
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'")->fetch();
-echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $them['text'] . '</div><div class="menu">';
+echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['text'] . '</div><div class="menu">';
 
 // Данные пользователя
 if ($set_user['avatar']) {
@@ -61,8 +61,8 @@ echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post
 
 // Ссылки на ответ и цитирование
 if ($user_id && $user_id != $res['user_id']) {
-    echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . $lng_forum['reply_btn'] . '</a>&#160;' .
-        '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . $lng_forum['cytate_btn'] . '</a> ';
+    echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
+        '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
 }
 
 // Время поста
@@ -94,7 +94,7 @@ $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id
 if ($freq->rowCount()) {
     $fres = $freq->fetch();
     $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
-    echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . $lng_forum['attached_file'] . ':';
+    echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
     // Предпросмотр изображений
     $att_ext = strtolower(functions::format('./files/forum/attach/' . $fres['filename']));
     $pic_ext = [
@@ -106,13 +106,13 @@ if ($freq->rowCount()) {
 
     if (in_array($att_ext, $pic_ext)) {
         echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
-        echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . $lng_forum['click_to_view'] . '" /></a></div>';
+        echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
     } else {
         echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
     }
 
     echo ' (' . $fls . ' кб.)<br>';
-    echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</div>';
+    echo _t('Downloads') . ': ' . $fres['dlcount'] . '</div>';
     $file_id = $fres['id'];
 }
 
@@ -120,5 +120,5 @@ echo '</div>';
 
 // Вычисляем, на какой странице сообщение?
 $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'")->fetchColumn() / $kmess);
-echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng_forum['back_to_topic'] . '</a></div>';
-echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';
+echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
+echo '<p><a href="index.php">' . _t('Forum') . '</a></p>';
