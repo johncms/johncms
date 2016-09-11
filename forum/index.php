@@ -162,7 +162,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     if (!$set['mod_forum']) {
         echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
     } elseif ($set['mod_forum'] == 3) {
-        echo '<div class="rmenu">' . _t('Read Only') . '</div>';
+        echo '<div class="rmenu">' . _t('Read only') . '</div>';
     }
 
     if (!$user_id) {
@@ -235,19 +235,19 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = '$id'" . $sql)->fetchColumn();
 
             if ($count > 0) {
-                $filelink = '<a href="index.php?act=files&amp;c=' . $id . '">' . _t('Category files') . '</a>';
+                $filelink = '<a href="index.php?act=files&amp;c=' . $id . '">' . _t('Category Files') . '</a>';
             }
         } elseif ($type1['type'] == 'r') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '$id'" . $sql)->fetchColumn();
 
             if ($count > 0) {
-                $filelink = '<a href="index.php?act=files&amp;s=' . $id . '">' . _t('Section files') . '</a>';
+                $filelink = '<a href="index.php?act=files&amp;s=' . $id . '">' . _t('Section Files') . '</a>';
             }
         } elseif ($type1['type'] == 't') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `topic` = '$id'" . $sql)->fetchColumn();
 
             if ($count > 0) {
-                $filelink = '<a href="index.php?act=files&amp;t=' . $id . '">' . _t('Topic files') . '</a>';
+                $filelink = '<a href="index.php?act=files&amp;t=' . $id . '">' . _t('Topic Files') . '</a>';
             }
         }
 
@@ -312,7 +312,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                 if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $set['mod_forum'] != 4) || core::$user_rights) {
                     // Кнопка создания новой темы
-                    echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New topic') . '" /></form></div>';
+                    echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New Topic') . '" /></form></div>';
                 }
 
                 if ($total) {
@@ -398,7 +398,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
                 if ($rights < 6 && $type1['close'] == 1) {
-                    echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?id=' . $type1['refid'] . '">' . _t('Go to section') . '</a></p></div>';
+                    echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?id=' . $type1['refid'] . '">' . _t('Go to Section') . '</a></p></div>';
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -561,7 +561,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<p>' .
                             bbcode::auto_bb('form1', 'msg') .
                             '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add file') .
+                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
                             (isset($set_forum['preview']) && $set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
                             '<input type="hidden" name="token" value="' . $token . '"/>' .
@@ -756,7 +756,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<p>';
                         echo bbcode::auto_bb('form2', 'msg');
                         echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br></p>' .
-                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add file');
+                            '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 
                         echo '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
                             (isset($set_forum['preview']) && $set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .

@@ -229,7 +229,7 @@ if (isset($_POST['submit'])
         '<p><h3>' . _t('Message') . '</h3>';
     echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
-        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add file');
+        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;

@@ -101,11 +101,11 @@ if ($id) {
 
             switch ($res['place']) {
                 case 'forum':
-                    $place = '<a href="index.php">' . _t('In the forum main') . '</a>';
+                    $place = '<a href="index.php">' . _t('In the forum Main') . '</a>';
                     break;
 
                 case 'forumwho':
-                    $place = _t('Here, in the list');
+                    $place = _t('Here, in the List');
                     break;
 
                 case 'forumfiles':
@@ -131,15 +131,15 @@ if ($id) {
 
                             switch ($res_t['type']) {
                                 case 'f':
-                                    $place = _t('In the category') . ' &quot;' . $link . '&quot;';
+                                    $place = _t('In the Category') . ' &quot;' . $link . '&quot;';
                                     break;
 
                                 case 'r':
-                                    $place = _t('In the section') . ' &quot;' . $link . '&quot;';
+                                    $place = _t('In the Section') . ' &quot;' . $link . '&quot;';
                                     break;
 
                                 case 't':
-                                    $place = (isset($where[2]) ? _t('Writes in the topic') . ' &quot;' : _t('In the topic') . ' &quot;') . $link . '&quot;';
+                                    $place = (isset($where[2]) ? _t('Writes in the Topic') . ' &quot;' : _t('In the Topic') . ' &quot;') . $link . '&quot;';
                                     break;
 
                                 case 'm':
@@ -147,7 +147,7 @@ if ($id) {
 
                                     if ($req_m->rowCount()) {
                                         $res_m = $req_m->fetch();
-                                        $place = (isset($where[2]) ? _t('Answers in the topic') : _t('In the topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . $res_m['text'] . '</a>&quot;';
+                                        $place = (isset($where[2]) ? _t('Answers in the Topic') : _t('In the Topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . $res_m['text'] . '</a>&quot;';
                                     }
 
                                     break;

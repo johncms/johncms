@@ -31,7 +31,7 @@ if ($c) {
     $id = $c;
     $lnk = '&amp;c=' . $c;
     $sql = " AND `cat` = '" . $c . "'";
-    $caption = '<b>' . _t('Category files') . '</b>: ';
+    $caption = '<b>' . _t('Category Files') . '</b>: ';
     $input = '<input type="hidden" name="c" value="' . $c . '"/>';
 } elseif ($s) {
     $id = $s;
@@ -43,7 +43,7 @@ if ($c) {
     $id = $t;
     $lnk = '&amp;t=' . $t;
     $sql = " AND `topic` = '" . $t . "'";
-    $caption = '<b>' . _t('Topic files') . '</b>: ';
+    $caption = '<b>' . _t('Topic Files') . '</b>: ';
     $input = '<input type="hidden" name="t" value="' . $t . '"/>';
 } else {
     $id = false;
