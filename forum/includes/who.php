@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng_forum['who_in_forum'];
+$textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id : 'forumwho';
 require_once('../incfiles/head.php');
 
@@ -20,11 +20,11 @@ if ($id) {
 
     if ($req->rowCount()) {
         $res = $req->fetch();
-        echo '<div class="phdr"><b>' . $lng_forum['who_in_topic'] . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
+        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
 
         if ($rights > 0) {
             echo '<div class="topmenu">' .
-                ($do == 'guest' ? '<a href="index.php?act=who&amp;id=' . $id . '">' . $lng['authorized'] . '</a> | ' . $lng['guests'] : $lng['authorized'] . ' | <a href="index.php?act=who&amp;do=guest&amp;id=' . $id . '">' . $lng['guests'] . '</a>') .
+                ($do == 'guest' ? '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Authorized') . '</a> | ' . _t('Guests') : _t('Authorized') . ' | <a href="index.php?act=who&amp;do=guest&amp;id=' . $id . '">' . _t('Guests') . '</a>') .
                 '</div>';
         }
 
@@ -65,14 +65,14 @@ if ($id) {
             '</form></p>';
     }
 
-    echo '<p><a href="index.php?id=' . $id . '">' . $lng_forum['to_topic'] . '</a></p>';
+    echo '<p><a href="index.php?id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 } else {
     // Показываем общий список тех, кто в форуме
-    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['who_in_forum'] . '</div>';
+    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';
 
     if ($rights > 0) {
-        echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="index.php?act=who">' . $lng['users'] . '</a> | <b>' . $lng['guests'] . '</b>'
-                : '<b>' . $lng['users'] . '</b> | <a href="index.php?act=who&amp;do=guest">' . $lng['guests'] . '</a>') . '</div>';
+        echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="index.php?act=who">' . _t('Users') . '</a> | <b>' . _t('Guests') . '</b>'
+                : '<b>' . _t('Users') . '</b> | <a href="index.php?act=who&amp;do=guest">' . _t('Guests') . '</a>') . '</div>';
     }
 
     $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
@@ -101,23 +101,23 @@ if ($id) {
 
             switch ($res['place']) {
                 case 'forum':
-                    $place = '<a href="index.php">' . $lng_forum['place_main'] . '</a>';
+                    $place = '<a href="index.php">' . _t('In the forum main') . '</a>';
                     break;
 
                 case 'forumwho':
-                    $place = $lng_forum['place_list'];
+                    $place = _t('Here, in the list');
                     break;
 
                 case 'forumfiles':
-                    $place = '<a href="index.php?act=files">' . $lng_forum['place_files'] . '</a>';
+                    $place = '<a href="index.php?act=files">' . _t('Looking forum files') . '</a>';
                     break;
 
                 case 'forumnew':
-                    $place = '<a href="index.php?act=new">' . $lng_forum['place_new'] . '</a>';
+                    $place = '<a href="index.php?act=new">' . _t('In the unreads') . '</a>';
                     break;
 
                 case 'forumsearch':
-                    $place = '<a href="search.php">' . $lng_forum['place_search'] . '</a>';
+                    $place = '<a href="search.php">' . _t('Forum search') . '</a>';
                     break;
 
                 default:
@@ -131,15 +131,15 @@ if ($id) {
 
                             switch ($res_t['type']) {
                                 case 'f':
-                                    $place = $lng_forum['place_category'] . ' &quot;' . $link . '&quot;';
+                                    $place = _t('In the category') . ' &quot;' . $link . '&quot;';
                                     break;
 
                                 case 'r':
-                                    $place = $lng_forum['place_section'] . ' &quot;' . $link . '&quot;';
+                                    $place = _t('In the section') . ' &quot;' . $link . '&quot;';
                                     break;
 
                                 case 't':
-                                    $place = (isset($where[2]) ? $lng_forum['place_write'] . ' &quot;' : $lng_forum['place_topic'] . ' &quot;') . $link . '&quot;';
+                                    $place = (isset($where[2]) ? _t('Writes in the topic') . ' &quot;' : _t('In the topic') . ' &quot;') . $link . '&quot;';
                                     break;
 
                                 case 'm':
@@ -147,7 +147,7 @@ if ($id) {
 
                                     if ($req_m->rowCount()) {
                                         $res_m = $req_m->fetch();
-                                        $place = (isset($where[2]) ? $lng_forum['place_answer'] : $lng_forum['place_topic']) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . $res_m['text'] . '</a>&quot;';
+                                        $place = (isset($where[2]) ? _t('Answers in the topic') : _t('In the topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . $res_m['text'] . '</a>&quot;';
                                     }
 
                                     break;
@@ -176,5 +176,5 @@ if ($id) {
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';
     }
-    echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';
+    echo '<p><a href="index.php">' . _t('Forum') . '</a></p>';
 }
