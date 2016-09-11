@@ -59,11 +59,11 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         $fr1 = $db->query("SELECT * FROM `forum` WHERE id='" . $other . "'")->fetch();
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['topic_move'] . '</div>' .
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Move Topic') . '</div>' .
             '<form action="index.php?act=per&amp;id=' . $id . '" method="post">' .
             '<div class="gmenu"><p>' .
-            '<h3>' . $lng['category'] . '</h3>' . $fr1['text'] . '</p>' .
-            '<p><h3>' . $lng['section'] . '</h3>' .
+            '<h3>' . _t('Category') . '</h3>' . $fr1['text'] . '</p>' .
+            '<p><h3>' . _t('Section') . '</h3>' .
             '<select name="razd">';
         $raz = $db->query("SELECT * FROM `forum` WHERE `refid` = '$other' AND `type` = 'r' AND `id` != '" . $ms['refid'] . "' ORDER BY `realid` ASC");
 
@@ -72,9 +72,9 @@ if ($rights == 3 || $rights >= 6) {
         }
 
         echo '</select></p>' .
-            '<p><input type="submit" name="submit" value="' . $lng['move'] . '"/></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Move') . '"/></p>' .
             '</div></form>' .
-            '<div class="phdr">' . $lng_forum['other_categories'] . '</div>';
+            '<div class="phdr">' . _t('Other categories') . '</div>';
         $frm = $db->query("SELECT * FROM `forum` WHERE `type` = 'f' AND `id` != '$other' ORDER BY `realid` ASC");
 
         while ($frm1 = $frm->fetch()) {
