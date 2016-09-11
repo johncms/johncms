@@ -58,7 +58,7 @@ $flood = functions::antiflood();
 
 if ($flood) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'] . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -85,19 +85,19 @@ if (isset($_POST['submit'])
     $error = [];
 
     if (empty($th)) {
-        $error[] = $lng_forum['error_topic_name'];
+        $error[] = _t('You have not entered topic name');
     }
 
     if (mb_strlen($th) < 2) {
-        $error[] = $lng_forum['error_topic_name_lenght'];
+        $error[] = _t('Topic name too short');
     }
 
     if (empty($msg)) {
-        $error[] = $lng['error_empty_message'];
+        $error[] = _t('You have not entered the message');
     }
 
     if (mb_strlen($msg) < 4) {
-        $error[] = $lng['error_message_short'];
+        $error[] = _t('Text is too short');
     }
 
     if (!$error) {
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])
 
         // Прверяем, есть ли уже такая тема в текущем разделе?
         if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'")->fetchColumn() > 0) {
-            $error[] = $lng_forum['error_topic_exists'];
+            $error[] = _t('Topic with same name already exists in this section');
         }
 
         // Проверяем, не повторяется ли сообщение?
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])
             $res = $req->fetch();
 
             if ($msg == $res['text']) {
-                $error[] = $lng['error_message_exists'];
+                $error[] = _t('Message already exists');
             }
         }
     }
@@ -206,17 +206,6 @@ if (isset($_POST['submit'])
 } else {
     $res_c = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'")->fetch();
     require('../incfiles/head.php');
-
-    if ($datauser['postforum'] == 0) {
-        if (!isset($_GET['yes'])) {
-            $lng_faq = core::load_lng('faq');
-            echo '<p>' . $lng_faq['forum_rules_text'] . '</p>';
-            echo '<p><a href="index.php?act=nt&amp;id=' . $id . '&amp;yes">' . $lng_forum['agree'] . '</a> | <a href="index.php?id=' . $id . '">' . $lng_forum['not_agree'] . '</a></p>';
-            require('../incfiles/end.php');
-            exit;
-        }
-    }
-
     $msg_pre = functions::checkout($msg, 1, 1);
 
     if ($set_user['smileys']) {
@@ -224,7 +213,7 @@ if (isset($_POST['submit'])
     }
 
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['new_topic'] . '</div>';
+    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
     if ($msg && $th && !isset($_POST['submit'])) {
         echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
@@ -233,25 +222,21 @@ if (isset($_POST['submit'])
 
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .
-        '<p><h3>' . $lng['section'] . '</h3>' .
+        '<p><h3>' . _t('Section') . '</h3>' .
         '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
-        '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
+        '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
-        '<p><h3>' . $lng_forum['post'] . '</h3>';
+        '<p><h3>' . _t('Message') . '</h3>';
     echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
-        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-
-    if ($set_user['translit']) {
-        echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-    }
+        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add file');
 
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
     echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
-        ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+        ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
-        '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
         '<p><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></p>';
 }
