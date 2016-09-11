@@ -58,7 +58,7 @@ $flood = functions::antiflood();
 
 if ($flood) {
     require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
 }
@@ -73,7 +73,7 @@ switch ($type1['type']) {
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $rights < 7) {
             // Проверка, закрыта ли тема
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+            echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -91,7 +91,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+                echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -103,7 +103,7 @@ switch ($type1['type']) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
-                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -169,18 +169,6 @@ switch ($type1['type']) {
             exit;
         } else {
             require('../incfiles/head.php');
-
-            if ($datauser['postforum'] == 0) {
-                if (!isset($_GET['yes'])) {
-                    $lng_faq = core::load_lng('faq');
-                    echo '<p>' . $lng_faq['forum_rules_text'] . '</p>' .
-                        '<p><a href="index.php?act=say&amp;id=' . $id . '&amp;yes">' . $lng_forum['agree'] . '</a> | ' .
-                        '<a href="index.php?id=' . $id . '">' . $lng_forum['not_agree'] . '</a></p>';
-                    require('../incfiles/end.php');
-                    exit;
-                }
-            }
-
             $msg_pre = functions::checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
@@ -188,32 +176,28 @@ switch ($type1['type']) {
             }
 
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $type1['text'] . '</div>';
+            echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $type1['text'] . '</div>';
 
             if ($msg && !isset($_POST['submit'])) {
                 echo '<div class="list1">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
-                '<p><h3>' . $lng_forum['post'] . '</h3>';
+                '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . bbcode::auto_bb('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($msg)) . '</textarea></p>' .
-                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-
-            if ($set_user['translit']) {
-                echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-            }
+                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
             echo '</p><p>' .
-                '<input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer"/> ' .
-                ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer"/>' : '') .
+                '<input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer"/> ' .
+                ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer"/>' : '') .
                 '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '</p></div></form>';
         }
 
-        echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
             '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
@@ -224,7 +208,7 @@ switch ($type1['type']) {
 
         if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -253,15 +237,11 @@ switch ($type1['type']) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
                 case 2:
-                    $repl = $type1['from'] . ', ' . $lng_forum['reply_1'] . ', ';
+                    $repl = $type1['from'] . ', ' . _t('I am glad to answer you') . ', ';
                     break;
 
                 case 3:
-                    $repl = $type1['from'] . ', ' . $lng_forum['reply_2'] . ' ([url=' . $set['homeurl'] . '/forum/index.php?act=post&id=' . $type1['id'] . ']' . $vr . '[/url]) ' . $lng_forum['reply_3'] . ', ';
-                    break;
-
-                case 4:
-                    $repl = $type1['from'] . ', ' . $lng_forum['reply_4'] . ' ';
+                    $repl = $type1['from'] . ', ' . _t('respond to Your message') . ' ([url=' . $set['homeurl'] . '/forum/index.php?act=post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
                     break;
 
                 default :
@@ -280,7 +260,7 @@ switch ($type1['type']) {
         ) {
             if (empty($_POST['msg'])) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_empty_message'], '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
+                echo functions::display_error(_t('You have not entered the message'), '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -288,7 +268,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../incfiles/head.php');
-                echo functions::display_error($lng['error_message_short'], '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+                echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
             }
@@ -301,7 +281,7 @@ switch ($type1['type']) {
 
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
-                    echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
                 }
@@ -368,17 +348,6 @@ switch ($type1['type']) {
             $textl = _t('Forum');
             require('../incfiles/head.php');
             $qt = " $type1[text]";
-
-            if (($datauser['postforum'] == "" || $datauser['postforum'] == 0)) {
-                if (!isset($_GET['yes'])) {
-                    $lng_faq = core::load_lng('faq');
-                    echo '<p>' . $lng_faq['forum_rules_text'] . '</p>';
-                    echo '<p><a href="index.php?act=say&amp;id=' . $id . '&amp;yes&amp;cyt">' . $lng_forum['agree'] . '</a> | <a href="index.php?id=' . $type1['refid'] . '">' . $lng_forum['not_agree'] . '</a></p>';
-                    require('../incfiles/end.php');
-                    exit;
-                }
-            }
-
             $msg_pre = functions::checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
@@ -386,7 +355,7 @@ switch ($type1['type']) {
             }
 
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $th1['text'] . '</div>';
+            echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $th1['text'] . '</div>';
             $qt = str_replace("<br>", "\r\n", $qt);
             $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
             $qt = functions::checkout($qt, 0, 2);
@@ -400,42 +369,36 @@ switch ($type1['type']) {
             if (isset($_GET['cyt'])) {
                 // Форма с цитатой
                 echo '<p><b>' . $type1['from'] . '</b> <span class="gray">(' . $vr . ')</span></p>' .
-                    '<p><h3>' . $lng_forum['cytate'] . '</h3>' .
+                    '<p><h3>' . _t('Quote') . '</h3>' .
                     '<textarea rows="' . $set_user['field_h'] . '" name="citata">' . (empty($_POST['citata']) ? $qt : functions::checkout($_POST['citata'])) . '</textarea>' .
-                    '<br /><small>' . $lng_forum['cytate_help'] . '</small></p>';
+                    '<br /><small>' . _t('Only allowed 200 characters, other text will be cropped.') . '</small></p>';
             } else {
                 // Форма с репликой
-                echo '<p><h3>' . $lng_forum['reference'] . '</h3>' .
+                echo '<p><h3>' . _t('Appeal') . '</h3>' .
                     '<input type="radio" value="0" ' . (!$txt ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>,<br />' .
-                    '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>, ' . $lng_forum['reply_1'] . ',<br />' .
-                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"'
-                        : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>, ' . $lng_forum['reply_2'] . ' (<a href="index.php?act=post&amp;id=' . $type1['id'] . '">' . $vr . '</a>) ' . $lng_forum['reply_3'] . ',<br />' .
-                    '<input type="radio" value="4" ' . ($txt == 4 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>, ' . $lng_forum['reply_4'] . '</p>';
+                    '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>, ' . _t('I am glad to answer you') . ',<br />' .
+                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['from'] . '</b>, ' . _t('respond to Your message') . ' (<a href="index.php?act=post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
             }
 
-            echo '<p><h3>' . $lng_forum['post'] . '</h3>';
+            echo '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . bbcode::auto_bb('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($_POST['msg'])) . '</textarea></p>' .
-                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-
-            if ($set_user['translit']) {
-                echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-            }
+                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
-            echo '</p><p><input type="submit" name="submit" value="' . $lng['sent'] . '" style="width: 107px; cursor: pointer;"/> ' .
-                ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+            echo '</p><p><input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer;"/> ' .
+                ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
                 '<input type="hidden" name="token" value="' . $token . '"/>' .
                 '</p></div></form>';
         }
 
-        echo '<div class="phdr"><a href="../help/?act=smileys">' . $lng['smileys'] . '</a></div>' .
+        echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
             '<p><a href="index.php?id=' . $type1['refid'] . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     default:
         require('../incfiles/head.php');
-        echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . $lng['to_forum'] . '</a>');
+        echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../incfiles/end.php');
 }
