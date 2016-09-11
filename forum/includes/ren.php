@@ -24,7 +24,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if (!$nn) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo functions::display_error(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -34,7 +34,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if ($pt->rowCount()) {
             require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_exists'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo functions::display_error(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
@@ -44,9 +44,9 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         // Переименовываем тему
         require('../incfiles/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . $lng_forum['topic_rename'] . '</div>' .
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
-            '<p><h3>' . $lng_forum['topic_name'] . '</h3>' .
+            '<p><h3>' . _t('Topic name') . '</h3>' .
             '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
             '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
             '</form></div>' .
