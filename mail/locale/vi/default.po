@@ -1,0 +1,308 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-09-08 01:22+0400\n"
+"PO-Revision-Date: 2016-09-18 17:36-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Vietnamese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: vi\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /mail/default.pot\n"
+
+#: includes/delete.php:6 includes/deluser.php:6 includes/files.php:6
+#: includes/ignor.php:6 includes/input.php:5 includes/load.php:5
+#: includes/new.php:5 includes/output.php:5 includes/systems.php:94
+#: includes/write.php:18 includes/write.php:28 includes/write.php:84
+#: includes/write.php:510 index.php:59
+msgid "Mail"
+msgstr "Thư"
+
+#: includes/delete.php:9
+msgid "Deleting messages"
+msgstr "Xoá thư"
+
+#: includes/delete.php:20
+msgid "Message does not exist"
+msgstr "Tin nhắn không tồn tại"
+
+#: includes/delete.php:31 includes/delete.php:58
+msgid "Message deleted"
+msgstr "Đã xóa thư"
+
+#: includes/delete.php:32 includes/delete.php:59 includes/deluser.php:60
+#: includes/ignor.php:82 includes/write.php:73
+msgid "Back"
+msgstr "Quay lại"
+
+#: includes/delete.php:63
+msgid "You really want to remove the message?"
+msgstr "Bạn thực sự muốn loại bỏ các tin nhắn?"
+
+#: includes/delete.php:64 includes/deluser.php:53 includes/deluser.php:57
+#: includes/ignor.php:108 includes/input.php:73 includes/new.php:36
+#: includes/output.php:71 includes/systems.php:33 includes/systems.php:70
+#: includes/write.php:68 includes/write.php:476 index.php:120
+msgid "Delete"
+msgstr "Xóa"
+
+#: includes/delete.php:68
+msgid "The message for removal isn't chosen"
+msgstr "Thư để loại bỏ không phải là lựa chọn"
+
+#: includes/delete.php:71 includes/files.php:51 includes/ignor.php:133
+#: includes/input.php:100 includes/new.php:60 includes/output.php:98
+#: includes/systems.php:104 includes/write.php:74 includes/write.php:519
+#: index.php:143
+msgid "Personal"
+msgstr "Cá nhân"
+
+#: includes/deluser.php:51
+msgid "Contact deleted"
+msgstr "Đã xóa các địa chỉ liên hệ"
+
+#: includes/deluser.php:51 includes/deluser.php:63 includes/input.php:60
+#: includes/output.php:59 index.php:90
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: includes/deluser.php:56
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "Confirm removal of contact?"
+
+#: includes/deluser.php:63
+msgid "Contact does not exist"
+msgstr "Liên hệ không tồn tại"
+
+#: includes/deluser.php:66
+msgid "Contact for removal isn't chosen"
+msgstr "Liên lạc cho loại không phải là lựa chọn"
+
+#: includes/files.php:6 includes/files.php:12
+msgid "Files"
+msgstr "Tập tin"
+
+#: includes/files.php:37 includes/ignor.php:119 includes/input.php:87
+#: includes/new.php:47 includes/output.php:85 includes/systems.php:80
+#: includes/write.php:495 index.php:131
+msgid "The list is empty"
+msgstr "Danh sách này là trống rỗng"
+
+#: includes/files.php:41 includes/ignor.php:122 includes/input.php:90
+#: includes/new.php:50 includes/output.php:88 includes/systems.php:83
+#: includes/write.php:498 index.php:134
+msgid "Total"
+msgstr "Tổng số"
+
+#: includes/files.php:48 includes/ignor.php:129 includes/input.php:97
+#: includes/new.php:57 includes/output.php:95 includes/systems.php:90
+#: includes/write.php:506 index.php:140
+msgid "To Page"
+msgstr "Đến trang"
+
+#: includes/ignor.php:12 includes/ignor.php:88 includes/output.php:71
+#: index.php:100
+msgid "Blocklist"
+msgstr "Chặn tất cả"
+
+#: includes/ignor.php:20 includes/ignor.php:49 includes/write.php:20
+#: includes/write.php:122 index.php:70
+msgid "User does not exists"
+msgstr "Người dùng không tồn tại"
+
+#: includes/ignor.php:30
+msgid "User not blocked"
+msgstr "Dùng không chặn"
+
+#: includes/ignor.php:33
+msgid "User is unblocked"
+msgstr "Dùng bị cấm"
+
+#: includes/ignor.php:37
+msgid "You really want to unblock contact?"
+msgstr "Bạn thực sự muốn bỏ chặn liên lạc?"
+
+#: includes/ignor.php:38 includes/ignor.php:108
+msgid "Unblock"
+msgstr "Mở khóa"
+
+#: includes/ignor.php:42 includes/ignor.php:85
+msgid "Contact isn't chosen"
+msgstr "Liên lạc phải không được lựa chọn"
+
+#: includes/ignor.php:59
+msgid "This user can not be blocked"
+msgstr "Người này không thể được chặn"
+
+#: includes/ignor.php:75
+msgid "User is blocked"
+msgstr "Dùng bị chặn"
+
+#: includes/ignor.php:79
+msgid "You really want to block contact?"
+msgstr "Bạn thực sự muốn bỏ chặn liên lạc?"
+
+#: includes/ignor.php:80
+msgid "Block"
+msgstr "Danh sách bỏ qua"
+
+#: includes/ignor.php:88 index.php:100
+msgid "My Contacts"
+msgstr "Danh bạ của tôi"
+
+#: includes/ignor.php:108 includes/input.php:73 includes/new.php:36
+#: includes/output.php:71 index.php:120
+msgid "Correspondence"
+msgstr "Thư"
+
+#: includes/input.php:7
+msgid "Incoming messages"
+msgstr "Tín nhắn đến"
+
+#: includes/load.php:16 includes/load.php:28
+msgid "Such file does not exist"
+msgstr "Tập tin như vậy không tồn tại"
+
+#: includes/load.php:31
+msgid "No file selected"
+msgstr "Chưa chọn một tập tin nào"
+
+#: includes/new.php:11
+msgid "New Messages"
+msgstr "Tin nhắn Mới"
+
+#: includes/new.php:36 index.php:120
+msgid "Block User"
+msgstr "Chặn người dùng"
+
+#: includes/output.php:7
+msgid "Sent messages"
+msgstr "Tin nhắn đã gửi"
+
+#: includes/systems.php:27 includes/write.php:63
+msgid "Messages are deleted"
+msgstr "Tin nhắn bị xóa"
+
+#: includes/systems.php:30 includes/write.php:67
+msgid "Confirm the deletion of messages"
+msgstr "Xác nhận việc xóa tin nhắn"
+
+#: includes/systems.php:96
+msgid "System messages"
+msgstr "Tin nhắn hệ thống"
+
+#: includes/systems.php:101 includes/write.php:30 includes/write.php:516
+msgid "Clear messages"
+msgstr "Rõ ràng tin nhắn"
+
+#: includes/write.php:100
+msgid "Specify the recipient's login"
+msgstr "Xác định nhận là login"
+
+#: includes/write.php:104
+msgid "Message cannot be empty"
+msgstr "Tin nhắn không được để trống"
+
+#: includes/write.php:108
+msgid "You cannot send messages to yourself"
+msgstr "Bạn không thể gửi tin nhắn cho chính mình"
+
+#: includes/write.php:114
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d sec."
+msgstr "Bạn không thể thêm những tin nhắn vì vậy thường. Xin vui lòng, chờ %d giây."
+
+#: includes/write.php:140
+msgid "To this user can write only contacts"
+msgstr "Để người này có thể viết chỉ có liên lạc"
+
+#: includes/write.php:147
+msgid "To this user can write only friends"
+msgstr "Để người này có thể viết only friends"
+
+#: includes/write.php:179 includes/write.php:191 includes/write.php:346
+#: includes/write.php:367 includes/write.php:370
+msgid "Error uploading file"
+msgstr "Lỗi tải lên tập tin"
+
+#: includes/write.php:266
+msgid "It is forbidden to upload files without a name"
+msgstr "Nó bị cấm để tải dữ liệu lên mà không có một cái tên"
+
+#: includes/write.php:270
+msgid "It is forbidden to upload files without extension"
+msgstr "Nó bị cấm để tải dữ liệu lên mà không có mở rộng"
+
+#: includes/write.php:274
+msgid "The size of the file exceeds the maximum allowable upload"
+msgstr "Kích thước của các tập tin vượt quá tối đa cho phép lên"
+
+#: includes/write.php:278
+msgid "File name contains invalid characters"
+msgstr "Trong tên tập tin chứa các kí tự không hợp lệ"
+
+#: includes/write.php:282
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "Cấm loại tập tin! Bằng cách chỉ được phép với các tập tin sau mở rộng"
+
+#: includes/write.php:296
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "Những người bạn danh sách bỏ qua. Gửi các tin nhắn là không thể."
+
+#: includes/write.php:306
+msgid "The user added you in the ignore list. Sending the message isn't possible."
+msgstr "Các người dùng thêm bạn trong danh sách bỏ qua. Gửi các tin nhắn không thể."
+
+#: includes/write.php:384
+msgid "Message already exists"
+msgstr "Bài viết đã tồn tại"
+
+#: includes/write.php:417
+msgid "To Whom"
+msgstr "Mà"
+
+#: includes/write.php:422
+msgid "Sent"
+msgstr "Hộp thư đã gửi"
+
+#: includes/write.php:424
+msgid "Personal correspondence with"
+msgstr "Thư riêng với"
+
+#: includes/write.php:424
+msgid "Send a message"
+msgstr "Gửi Tin nhắn"
+
+#: includes/write.php:473
+msgid "File"
+msgstr "Tệp"
+
+#: index.php:61
+msgid "Contacts"
+msgstr "Danh bạ"
+
+#: index.php:78
+msgid "You cannot add yourself as a contact"
+msgstr "Bạn không thể thêm chính mình, như là một liên hệ"
+
+#: index.php:90
+msgid "User has been added to your contact list"
+msgstr "{0} đã được thêm vào danh bạ của bạn"
+
+#: index.php:94
+msgid "You really want to add contact?"
+msgstr "Bạn thực sự muốn thêm liên lạc?"
+
+#: index.php:95
+msgid "Add"
+msgstr "Thêm"
+

@@ -1,0 +1,1447 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-09-05 00:32+0400\n"
+"PO-Revision-Date: 2016-09-18 17:36-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Vietnamese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: vi\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /admin/default.pot\n"
+
+#: includes/access.php:11 includes/access.php:116 includes/ads.php:204
+#: includes/ads.php:303 includes/ads.php:409 includes/antiflood.php:15
+#: includes/antiflood.php:93 includes/antispy.php:431 includes/antispy.php:442
+#: includes/ban_panel.php:46 includes/ban_panel.php:52
+#: includes/ban_panel.php:94 includes/counters.php:281
+#: includes/counters.php:302 includes/forum.php:734 includes/forum.php:751
+#: includes/ip_whois.php:6 includes/ipban.php:119 includes/ipban.php:171
+#: includes/ipban.php:193 includes/ipban.php:306 includes/ipban.php:335
+#: includes/ipban.php:340 includes/ipban.php:387 includes/karma.php:28
+#: includes/karma.php:57 includes/languages.php:68 includes/languages.php:91
+#: includes/mail.php:14 includes/mail.php:66 includes/news.php:14
+#: includes/news.php:73 includes/reg.php:14 includes/reg.php:127
+#: includes/search_ip.php:19 includes/search_ip.php:126
+#: includes/search_ip.php:135 includes/settings.php:11 includes/settings.php:83
+#: includes/smilies.php:5 includes/smilies.php:48 includes/usr.php:8
+#: includes/usr.php:56 includes/usr_adm.php:9 includes/usr_adm.php:62
+#: includes/usr_clean.php:14 includes/usr_del.php:53 index.php:23 index.php:58
+msgid "Admin Panel"
+msgstr "Quản Trị Viên"
+
+#: includes/access.php:11 index.php:102
+msgid "Permissions"
+msgstr "Quyền truy cập"
+
+#: includes/access.php:39 includes/antiflood.php:59 includes/karma.php:40
+#: includes/mail.php:33 includes/news.php:49 includes/settings.php:36
+msgid "Settings are saved successfully"
+msgstr "Lưu Cài Đặt Thành Công"
+
+#: includes/access.php:47 includes/usr_del.php:109 index.php:84
+msgid "Forum"
+msgstr "Diễn đàn"
+
+#: includes/access.php:49 includes/access.php:58 includes/access.php:66
+#: includes/access.php:75 includes/access.php:84 includes/access.php:93
+#: includes/access.php:100 includes/access.php:109
+msgid "Access is allowed"
+msgstr "Được Phép Truy Cập"
+
+#: includes/access.php:50 includes/access.php:59 includes/access.php:67
+#: includes/access.php:76 includes/access.php:85 includes/access.php:94
+msgid "Only for authorized"
+msgstr "Chỉ cho phép"
+
+#: includes/access.php:51
+msgid "Read only"
+msgstr "Chỉ đọc"
+
+#: includes/access.php:52 includes/access.php:60 includes/access.php:68
+#: includes/access.php:77 includes/access.php:86 includes/access.php:102
+msgid "Access denied"
+msgstr "Truy cập bị từ chối"
+
+#: includes/access.php:56
+msgid "Guestbook"
+msgstr "Lưu bút Của Bạn"
+
+#: includes/access.php:64
+msgid "Library"
+msgstr "Thư viện"
+
+#: includes/access.php:69 includes/access.php:78 includes/access.php:87
+#: includes/news.php:65 includes/usr_del.php:105
+msgid "Comments"
+msgstr "Bình luận"
+
+#: includes/access.php:73
+msgid "Gallery"
+msgstr "Bộ sưu tập"
+
+#: includes/access.php:82
+msgid "Downloads"
+msgstr "Tải xuống"
+
+#: includes/access.php:91
+msgid "Community"
+msgstr "Cộng đồng"
+
+#: includes/access.php:98 includes/ipban.php:108 includes/ipban.php:155
+#: includes/ipban.php:183 includes/ipban.php:290 includes/ipban.php:359
+msgid "Registration"
+msgstr "Đăng ký Thành Viên"
+
+#: includes/access.php:101
+msgid "With moderation"
+msgstr "Với kiểm duyệt"
+
+#: includes/access.php:107
+msgid "Site access"
+msgstr "Truy cập vào trang web"
+
+#: includes/access.php:110
+msgid "It is closed for all, except Administration"
+msgstr "Nó đóng cửa cho tất cả, ngoại trừ chính Quyền"
+
+#: includes/access.php:111
+msgid "It is closed for all, except SV"
+msgstr "đóng cửa cho tất cả, ngoại trừ SV"
+
+#: includes/access.php:114
+msgid "Administrators always have access to all closed modules and comments"
+msgstr "Quản trị luôn luôn có quyền truy cập để tất cả đóng cửa module và bình luận"
+
+#: includes/access.php:115 includes/antiflood.php:91 includes/counters.php:165
+#: includes/forum.php:405 includes/karma.php:55 includes/languages.php:87
+#: includes/mail.php:65 includes/news.php:70 includes/settings.php:81
+msgid "Save"
+msgstr "Lưu"
+
+#: includes/ads.php:17 includes/ads.php:203 includes/ads.php:261
+#: includes/ads.php:279 includes/ads.php:303 index.php:86
+msgid "Advertisement"
+msgstr "Quảng cáo"
+
+#: includes/ads.php:17
+msgid "Edit link"
+msgstr "Sửa liên kết"
+
+#: includes/ads.php:17 includes/ads.php:407
+msgid "Add link"
+msgstr "Thêm liên kết"
+
+#: includes/ads.php:26 includes/counters.php:55 includes/counters.php:108
+#: includes/counters.php:129 includes/counters.php:185
+#: includes/counters.php:229 includes/forum.php:31 includes/forum.php:51
+#: includes/forum.php:59 includes/forum.php:105 includes/forum.php:113
+#: includes/forum.php:215 includes/forum.php:309 includes/ip_whois.php:100
+#: includes/reg.php:20 includes/reg.php:38 includes/reg.php:75
+#: includes/usr_del.php:31
+msgid "Wrong data"
+msgstr "Sai dữ liệu"
+
+#: includes/ads.php:26 includes/ads.php:78 includes/counters.php:108
+#: includes/counters.php:129 includes/counters.php:145
+#: includes/counters.php:185 includes/counters.php:219 includes/forum.php:198
+#: includes/forum.php:302 includes/forum.php:407 includes/ip_whois.php:104
+#: includes/ipban.php:28 includes/ipban.php:119 includes/ipban.php:174
+#: includes/ipban.php:207 includes/ipban.php:260 includes/ipban.php:268
+#: includes/ipban.php:275 includes/ipban.php:335 includes/usr_clean.php:73
+msgid "Back"
+msgstr "Quay lại"
+
+#: includes/ads.php:53 includes/counters.php:145 includes/counters.php:219
+msgid "The required fields are not filled"
+msgstr "Chưa Nhập Nội Dung"
+
+#: includes/ads.php:64
+msgid "This place is occupied"
+msgstr "Đóng Cửa"
+
+#: includes/ads.php:70
+msgid "Invalid characters"
+msgstr "Ký tự không hợp lệ"
+
+#: includes/ads.php:73
+msgid "Color is specified incorrectly"
+msgstr "Màu được chỉ định không chính xác"
+
+#: includes/ads.php:163
+msgid "Link successfully changed"
+msgstr "Liên kết thay đổi thành công"
+
+#: includes/ads.php:163
+msgid "Link successfully added"
+msgstr "Liên kết thêm thành công"
+
+#: includes/ads.php:164 includes/antispy.php:419 includes/counters.php:118
+#: includes/ipban.php:317 includes/reg.php:26 includes/reg.php:32
+#: includes/reg.php:50 includes/reg.php:56 includes/reg.php:73
+#: includes/usr_clean.php:57
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: includes/ads.php:168
+msgid "Link"
+msgstr "Liên kết"
+
+#: includes/ads.php:170 includes/ads.php:391
+msgid "Direct Link"
+msgstr "Liên kết trực tiếp"
+
+#: includes/ads.php:171
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr "Số liệu thống kê Click sẽ không được tính, nếu các liên kết trực tiếp được bật"
+
+#: includes/ads.php:172 includes/counters.php:151 includes/counters.php:193
+#: includes/forum.php:235 includes/forum.php:286 includes/forum.php:341
+#: includes/forum.php:383 includes/news.php:59
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: includes/ads.php:174
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "Để thay đổi tên khi các trang cập nhật vào danh sách tất cả các tên tiêu đề các biểu tượng |"
+
+#: includes/ads.php:175
+msgid "Color"
+msgstr "Màu"
+
+#: includes/ads.php:177
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "Định dạng màu mặc định FFFFFF, nếu bạn không muốn cung cấp một màu khác, hãy để trống ô trống này"
+
+#: includes/ads.php:178
+msgid "Hits"
+msgstr "Lượt truy cập"
+
+#: includes/ads.php:180
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Số lượt truy cập có hạn để hệ thống tự động gỡ bỏ<br>0 - Vô thời hạn"
+
+#: includes/ads.php:181 includes/karma.php:51
+msgid "Days"
+msgstr "Ngày"
+
+#: includes/ads.php:183
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Số ngày kể từ khi thêm các liên kết mà hệ thống tự động gỡ bỏ<br>0 - Vô thời hạn"
+
+#: includes/ads.php:185 includes/ads.php:356 includes/ads.php:362
+msgid "Show"
+msgstr "Hiện"
+
+#: includes/ads.php:186 includes/ads.php:310
+msgid "Everyone"
+msgstr "Tất cả mọi người"
+
+#: includes/ads.php:187 includes/ads.php:311
+msgid "Guests"
+msgstr "Khách"
+
+#: includes/ads.php:188 includes/ads.php:312 index.php:61 index.php:67
+msgid "Users"
+msgstr "Thành viên"
+
+#: includes/ads.php:189
+msgid "Location"
+msgstr "Địa điểm"
+
+#: includes/ads.php:190 includes/ads.php:316
+msgid "Above logo"
+msgstr "Trên logo"
+
+#: includes/ads.php:191 includes/ads.php:317
+msgid "Under menu"
+msgstr "Dưới menu"
+
+#: includes/ads.php:192 includes/ads.php:318
+msgid "Over the counter"
+msgstr "Trong truy cập"
+
+#: includes/ads.php:193 includes/ads.php:319
+msgid "Under counter"
+msgstr "Theo số lượt truy cập"
+
+#: includes/ads.php:194
+msgid "Layout"
+msgstr "Giao diện"
+
+#: includes/ads.php:195 includes/ads.php:305
+msgid "All pages"
+msgstr "Tất cả các trang"
+
+#: includes/ads.php:196 includes/ads.php:306
+msgid "Only on Homepage"
+msgstr "Chỉ trên trang chủ"
+
+#: includes/ads.php:197 includes/ads.php:307
+msgid "On all, except Homepage"
+msgstr "Trên tất cả, ngoại trừ Chủ"
+
+#: includes/ads.php:198
+msgid "Styling links"
+msgstr "Phong cách liên kết"
+
+#: includes/ads.php:199
+msgid "Bold"
+msgstr "In đậm"
+
+#: includes/ads.php:200
+msgid "Italic"
+msgstr "In nghiêng"
+
+#: includes/ads.php:201
+msgid "Underline"
+msgstr "Gạch dưới"
+
+#: includes/ads.php:202 includes/ads.php:354 includes/counters.php:53
+#: includes/counters.php:293 includes/forum.php:488 includes/forum.php:515
+#: includes/usr.php:39
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: includes/ads.php:202 includes/counters.php:192 includes/counters.php:299
+#: includes/forum.php:300 includes/forum.php:524
+msgid "Add"
+msgstr "Thêm"
+
+#: includes/ads.php:261 includes/ads.php:264 includes/ads.php:282
+#: includes/ads.php:355 includes/counters.php:53 includes/counters.php:123
+#: includes/counters.php:125 includes/counters.php:294 includes/forum.php:180
+#: includes/forum.php:194 includes/forum.php:489 includes/forum.php:516
+#: includes/ipban.php:320 includes/reg.php:96 includes/usr.php:39
+#: includes/usr_clean.php:72 includes/usr_del.php:114
+msgid "Delete"
+msgstr "Xóa"
+
+#: includes/ads.php:263
+msgid "Are you sure want to delete link?"
+msgstr "Bạn có chắc chắn muốn xóa liên kết?"
+
+#: includes/ads.php:267 includes/ads.php:284 includes/counters.php:126
+#: includes/ipban.php:171 includes/ipban.php:193 includes/ipban.php:242
+#: includes/ipban.php:321 includes/karma.php:24 includes/usr_del.php:121
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: includes/ads.php:279 includes/ads.php:408
+msgid "Delete inactive links"
+msgstr "Xóa liên kết ẩn"
+
+#: includes/ads.php:281
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Bạn có chắc chắn muốn xóa tất cả các liên kết không hoạt động?"
+
+#: includes/ads.php:352 includes/counters.php:291 includes/forum.php:486
+#: includes/forum.php:513
+msgid "Up"
+msgstr "Lên trên"
+
+#: includes/ads.php:353 includes/counters.php:292 includes/forum.php:487
+#: includes/forum.php:514
+msgid "Down"
+msgstr "Dưới"
+
+#: includes/ads.php:356
+msgid "Hide"
+msgstr "Ẩn đi"
+
+#: includes/ads.php:360
+msgid "Start date"
+msgstr "Ngày Bắt đầu"
+
+#: includes/ads.php:361
+msgid "Disposition"
+msgstr "Bố trí"
+
+#: includes/ads.php:368 includes/ads.php:371
+msgid "hits"
+msgstr "lượt truy cập"
+
+#: includes/ads.php:385
+msgid "Agreement"
+msgstr "Thỏa thuận"
+
+#: includes/ads.php:388
+msgid "Remains"
+msgstr "Vẫn còn"
+
+#: includes/ads.php:395 includes/ban_panel.php:81 includes/forum.php:494
+#: includes/forum.php:613 includes/forum.php:708 includes/ipban.php:369
+#: includes/reg.php:108
+msgid "The list is empty"
+msgstr "Danh sách này là trống rỗng"
+
+#: includes/ads.php:398 includes/antispy.php:380 includes/antispy.php:408
+#: includes/ban_panel.php:84 includes/forum.php:616 includes/forum.php:711
+#: includes/ipban.php:118 includes/ipban.php:373 includes/languages.php:90
+#: includes/reg.php:111 includes/search_ip.php:117 includes/smilies.php:47
+#: includes/usr.php:49 includes/usr_adm.php:61 includes/usr_clean.php:71
+msgid "Total"
+msgstr "Tổng số"
+
+#: includes/ads.php:404 includes/ban_panel.php:88 includes/forum.php:622
+#: includes/forum.php:717 includes/ipban.php:378 includes/reg.php:117
+#: includes/search_ip.php:123 includes/usr.php:53
+msgid "To Page"
+msgstr "Đến trang"
+
+#: includes/antiflood.php:15
+msgid "Antiflood Settings"
+msgstr "Cài đặt antiflood"
+
+#: includes/antiflood.php:62 includes/news.php:34
+msgid "Default settings are set"
+msgstr "Mặc được thiết lập"
+
+#: includes/antiflood.php:75
+msgid "Operation mode"
+msgstr "Chế độ hoạt động"
+
+#: includes/antiflood.php:76 includes/antiflood.php:78
+#: includes/antiflood.php:85
+msgid "Day"
+msgstr "Ngày"
+
+#: includes/antiflood.php:77 includes/antiflood.php:78
+#: includes/antiflood.php:86
+msgid "Night"
+msgstr "Đêm"
+
+#: includes/antiflood.php:79
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Tự động thay đổi từ ngày này sang chế độ ban đêm, theo thời gian quy định thiết lập"
+
+#: includes/antiflood.php:81
+msgid "Adaptive"
+msgstr "Thích nghi"
+
+#: includes/antiflood.php:82
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Nếu một người quản lý trực tuyến (trên các trang web), việc hệ thống trong chế độ \"ngày\", nếu quản trị diễn đàn, nó chuyển sang \"đêm\""
+
+#: includes/antiflood.php:84
+msgid "Time limit"
+msgstr "Giới hạn thời gian"
+
+#: includes/antiflood.php:87
+msgid "Min. 4, max. 300 seconds"
+msgstr "Tối thiểu 4,tối đa là 300 giây"
+
+#: includes/antiflood.php:88
+msgid "Day mode"
+msgstr "Chế độ ngày"
+
+#: includes/antiflood.php:89
+msgid "Beginning of day"
+msgstr "Bắt đầu của ngày"
+
+#: includes/antiflood.php:90
+msgid "End of day"
+msgstr "Cuối của ngày"
+
+#: includes/antiflood.php:92 includes/news.php:71
+msgid "Reset Settings"
+msgstr "Phục hồi cài đặt"
+
+#: includes/antispy.php:371 includes/antispy.php:391 includes/antispy.php:414
+#: includes/antispy.php:431 index.php:110
+msgid "Anti-Spyware"
+msgstr "Chống Gián Điệp"
+
+#: includes/antispy.php:371 includes/antispy.php:433
+msgid "Distributive scan"
+msgstr "Phân phối quét"
+
+#: includes/antispy.php:374
+msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
+msgstr "Quét phân phối <br> <small> Cảnh báo! Nếu tập tin được liệt kê trong danh sách, không bao gồm các module bổ sung của bạn và bạn không chắc chắn nó là của bạn, bạn cần phải loại bỏ nó, vì nó có thể trở thành một mối nguy hiểm cho trang web của bạn</small>."
+
+#: includes/antispy.php:382
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>TUYỆT VỜI!!</h3>Danh sách các tập tin tương ứng với phân phối ban đầu"
+
+#: includes/antispy.php:385
+msgid "Rescan"
+msgstr "Quét lại"
+
+#: includes/antispy.php:391 includes/antispy.php:435
+msgid "Snapshot scan"
+msgstr "Ảnh quét"
+
+#: includes/antispy.php:394
+msgid "Snapshot is not created"
+msgstr "Ảnh là không được tạo ra"
+
+#: includes/antispy.php:394 includes/antispy.php:414 includes/antispy.php:423
+#: includes/antispy.php:437
+msgid "Create snapshot"
+msgstr "Tạo ảnh chụp"
+
+#: includes/antispy.php:397
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr "Ảnh chụp không thống nhất<br><small>Chú ý! Bạn cần phải chú ý đến tất cả các file trong danh sách. Họ đã được thêm vào hoặc sửa đổi kể từ những hình ảnh tạo ra</small>."
+
+#: includes/antispy.php:405
+msgid "Excellent!<br>All files are consistent with previously made image."
+msgstr "Tuyệt vời! <br> Tất cả các tập tin phù hợp với hình ảnh trước đây được thực hiện."
+
+#: includes/antispy.php:418
+msgid "Snapshot successfully created"
+msgstr "Ảnh chụp tạo thành công"
+
+#: includes/antispy.php:422
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr "<b>Lỗi!!!</b><br>Trước khi tiếp tục hãy đảm bảo rằng tất cả các tập tin đã được xác định trong chế độ phân phối quét đáng tin cậy và không chứa sửa đổi trái phép."
+
+#: includes/antispy.php:425
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr "Thủ tục này tạo ra một danh sách tất cả các tập tin kịch bản để trang web của bạn, tính toán tổng kiểm tra và ghi vào cơ sở dữ liệu, để đối chiếu sau này."
+
+#: includes/antispy.php:432
+msgid "Scan mode"
+msgstr "Chế độ quét"
+
+#: includes/antispy.php:434
+msgid "Files identification which are not included in the original distributive"
+msgstr "Các tập tin xác định là không bao gồm trong ban đầu phân phối"
+
+#: includes/antispy.php:436
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr "So sánh danh sách các tập tin và tổng kiểm tra với cách làm trước <br> Cho phép bạn để nhận file unknow, và những thay đổi trái phép."
+
+#: includes/antispy.php:438
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
+msgstr "Có một bản chụp của tất cả các tập tin kịch bản từ trang web của các tính toán tổng kiểm tra và lưu trữ trong cơ sở dữ liệu"
+
+#: includes/antispy.php:442
+msgid "Scanner menu"
+msgstr "Máy quét menu"
+
+#: includes/ban_panel.php:11
+msgid "Amnesty is available for supervisors only"
+msgstr "Tổ chức Ân xá chỉ có sẵn cho người giám sát"
+
+#: includes/ban_panel.php:13 includes/ban_panel.php:46
+#: includes/ban_panel.php:52 index.php:70
+msgid "Ban Panel"
+msgstr "Bảng điều khiển ban"
+
+#: includes/ban_panel.php:13 includes/ban_panel.php:30
+#: includes/ban_panel.php:41 includes/ban_panel.php:92
+msgid "Amnesty"
+msgstr "Tổ chức Ân xá"
+
+#: includes/ban_panel.php:21
+msgid "Amnesty has been successful"
+msgstr "Ân xá đã thành công"
+
+#: includes/ban_panel.php:35
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Gỡ bỏ tất cả lệnh cấm của người dùng đã có (trừ lệnh cấm &quot;trước khi gỡ bỏ&quot;)"
+
+#: includes/ban_panel.php:39
+msgid "Unban all"
+msgstr "Gỡ bỏ tất cả lệnh cấm"
+
+#: includes/ban_panel.php:40
+msgid "Clear Ban database"
+msgstr "Làm trống dữ liệu ngôn ngữ"
+
+#: includes/ban_panel.php:43
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Gỡ bỏ tất cả lệnh cấm&quot; - chấm dứt tất cả các lệnh cấm hoạt động<br>&quot;Cơ sở dữ liệu sẽ bị xóa&quot; - chấm dứt tất cả các lệnh cấm và làm sạch lịch sử của hành vi vi phạm"
+
+#: includes/ban_panel.php:53 includes/usr.php:10
+msgid "Sort"
+msgstr "Phân loại"
+
+#: includes/ban_panel.php:56 includes/ban_panel.php:58
+msgid "Term"
+msgstr "Thời hạn"
+
+#: includes/ban_panel.php:56 includes/ban_panel.php:58
+msgid "Violations"
+msgstr "Hành vi vi phạm"
+
+#: includes/ban_panel.php:75
+msgid "Violations history"
+msgstr "Hành vi vi phạm lịch sử"
+
+#: includes/counters.php:30 includes/counters.php:123 includes/counters.php:150
+#: includes/counters.php:192 includes/counters.php:281
+#: includes/counters.php:302 index.php:89
+msgid "Counters"
+msgstr "Đếm"
+
+#: includes/counters.php:30 includes/counters.php:206
+msgid "Viewing"
+msgstr "Xem thông tin"
+
+#: includes/counters.php:32 includes/counters.php:152 includes/counters.php:194
+#: includes/counters.php:198
+msgid "Option 1"
+msgstr "Lựa chọn 1"
+
+#: includes/counters.php:33 includes/counters.php:153 includes/counters.php:195
+#: includes/counters.php:199
+msgid "Option 2"
+msgstr "Lựa chọn 2"
+
+#: includes/counters.php:34 includes/counters.php:196
+msgid "Display mode"
+msgstr "Chế độ hiển thị"
+
+#: includes/counters.php:38
+msgid "On all pages showing option 1"
+msgstr "Trên trang chính hiển thị tùy chọn 1"
+
+#: includes/counters.php:42
+msgid "On all pages showing option 2"
+msgstr "Trên tất cả các trang hiển thị tùy chọn 2"
+
+#: includes/counters.php:46
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "Tại trang chính hiển thị tùy chọn 1, vào tùy chọn các trang khác 2"
+
+#: includes/counters.php:51
+msgid "Disable"
+msgstr "Désactiver"
+
+#: includes/counters.php:52
+msgid "Enable"
+msgstr "Kích hoạt"
+
+#: includes/counters.php:118
+msgid "Counter deleted"
+msgstr "Thư mục đã bị xóa"
+
+#: includes/counters.php:125 includes/forum.php:192
+msgid "Do you really want to delete?"
+msgstr "Bạn có thực sự muốn xóa?"
+
+#: includes/counters.php:150
+msgid "Preview"
+msgstr "Xem trước"
+
+#: includes/counters.php:154
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr "Nếu truy cập được hiển thị một cách chính xác và không có lỗi, Nhấp vào Lưu  <br> Nếu không., hãy nhấp vào nút quay lại và sửa lỗi"
+
+#: includes/counters.php:194
+msgid "Code for main page"
+msgstr "Mã cho trang chính"
+
+#: includes/counters.php:195
+msgid "Code for other pages"
+msgstr "Mã số cho các trang khác"
+
+#: includes/counters.php:196 includes/ipban.php:151
+msgid "Default"
+msgstr "Mặc định"
+
+#: includes/counters.php:197
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr "Tại tùy chọn hiển thị chính 1, vào tùy chọn các trang khác 2 <br> Nếu tùy chọn 2 không đầy, chỉ truy cập sẽ xuất hiện trên trang chính"
+
+#: includes/counters.php:200
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "Cảnh báo!<br>Hãy chắc chắn rằng bạn đã nhập đúng mã. Nó phải đáp ứng các tiêu chuẩn của XML <br> Nếu bạn nhấp vào View lỗi xảy ra XHTML, sau đó nhấp vào trình duyệt của bạn nút Back, trở về hình thức này và sửa lỗi."
+
+#: includes/counters.php:276
+msgid "Counter successfully changed"
+msgstr "Số lượt truy cập thay đổi thành công!"
+
+#: includes/counters.php:276
+msgid "Counter successfully added"
+msgstr "Số lượt truy cập thêm thành công"
+
+#: includes/forum.php:31 includes/forum.php:105 includes/forum.php:113
+#: includes/forum.php:215 includes/forum.php:309 includes/forum.php:464
+#: includes/forum.php:526 includes/forum.php:531 includes/forum.php:630
+#: includes/forum.php:734
+msgid "Forum Management"
+msgstr "Quản lý diễn đàn"
+
+#: includes/forum.php:40
+msgid "Delete section"
+msgstr "Xoá mục"
+
+#: includes/forum.php:40
+msgid "Delete category"
+msgstr "Xoá danh mục"
+
+#: includes/forum.php:77 includes/forum.php:190
+msgid "Category deleted"
+msgstr "Thể loại đã xóa"
+
+#: includes/forum.php:77 includes/forum.php:121
+msgid "All content has been moved to"
+msgstr "The content has been removed"
+
+#: includes/forum.php:77
+msgid "selected category"
+msgstr "Thể loại đã chọn"
+
+#: includes/forum.php:80
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>Lỗi!</h3>Có phần cấp dưới <br> Bạn cần chuyển nó sang thể loại khác."
+
+#: includes/forum.php:81
+msgid "Select category"
+msgstr "Chọn thể loại"
+
+#: includes/forum.php:88
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Tất cả các thể loại, chủ đề, và các tập tin sẽ được chuyển sang thể loại mới được lựa chọn. <br> Thể loại sẽ bị xóa tất cả"
+
+#: includes/forum.php:89 includes/forum.php:175
+msgid "Move"
+msgstr "Di chuyển"
+
+#: includes/forum.php:93 includes/forum.php:179
+msgid "Complete removal"
+msgstr "Loại bỏ hoàn toàn"
+
+#: includes/forum.php:93
+msgid "If you want to destroy all the information, first remove"
+msgstr "Nếu bạn muốn xóa tất cả các bài viết, đầu tiên gỡ bỏ"
+
+#: includes/forum.php:93
+msgid "subsections"
+msgstr "Phần phụ"
+
+#: includes/forum.php:121 includes/forum.php:190
+msgid "Section deleted"
+msgstr "Mục gỡ bỏ"
+
+#: includes/forum.php:121
+msgid "selected section"
+msgstr "Phần đã chọn"
+
+#: includes/forum.php:125 includes/forum.php:549 includes/forum.php:646
+msgid "Access forbidden"
+msgstr "Truy cập bị từ chối"
+
+#: includes/forum.php:155
+msgid "Section with all contents are removed"
+msgstr "Phần với tất cả nội dung được loại bỏ"
+
+#: includes/forum.php:156 includes/forum.php:281
+msgid "Go to category"
+msgstr "Tới thể loại"
+
+#: includes/forum.php:159
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>Lỗi</h3>Các chủ đề sau <br>. Bạn cần di chuyển đến phần khác."
+
+#: includes/forum.php:159
+msgid "Select section"
+msgstr "Chọn phần"
+
+#: includes/forum.php:168
+msgid "Other category"
+msgstr "Các thể loại"
+
+#: includes/forum.php:175
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Tất cả các chủ đề và các tập tin sẽ được chuyển đến phần cũ mà bạn chọn <br>Nó sẽ được gỡ bỏ hoàn toàn."
+
+#: includes/forum.php:179
+msgid "WARNING! All the information will be deleted"
+msgstr "CẢNH BÁO! Điều này sẽ loại bỏ tất cả bài viết"
+
+#: includes/forum.php:231 includes/forum.php:337
+msgid "You have not entered Title"
+msgstr "Bạn chưa nhập vào tiêu đề"
+
+#: includes/forum.php:235 includes/forum.php:341
+msgid "Invalid length"
+msgstr "Chiều dài không hợp lệ"
+
+#: includes/forum.php:239 includes/forum.php:345
+msgid "Description should be at least 2 characters in length"
+msgstr "Chiều dài của mô tả shoul có ít nhất 2 ký tự"
+
+#: includes/forum.php:278
+msgid "Add Section"
+msgstr "Thêm phần"
+
+#: includes/forum.php:278
+msgid "Add Category"
+msgstr "Thêm hạng mục"
+
+#: includes/forum.php:288 includes/forum.php:385
+msgid "Min. 2, Max. 30 characters"
+msgstr "Ít nhất. 2, nhiều nhất. 30 ký tự"
+
+#: includes/forum.php:289 includes/forum.php:386 includes/settings.php:64
+msgid "Description"
+msgstr "Mô tả"
+
+#: includes/forum.php:291 includes/forum.php:388
+msgid "Optional field"
+msgstr "Tùy chọn trường"
+
+#: includes/forum.php:291 includes/forum.php:388
+msgid "Min. 2, Max. 500 characters"
+msgstr "Ít nhất. 2, nhiều nhất. 500 ký tự"
+
+#: includes/forum.php:294 includes/forum.php:392
+msgid "Common access"
+msgstr "Chung truy cập"
+
+#: includes/forum.php:295 includes/forum.php:393
+msgid "Only for reading"
+msgstr "Chỉ đọc sách"
+
+#: includes/forum.php:296 includes/forum.php:394
+msgid "Allow authors to edit the 1st post"
+msgstr "Cho phép tác giả để chỉnh sửa 1 bài"
+
+#: includes/forum.php:297 includes/forum.php:395
+msgid "Assign the newly created authors as curators"
+msgstr "Gán mới được tạo tác giả như tuyển"
+
+#: includes/forum.php:331 includes/forum.php:333
+msgid "Category is not chosen"
+msgstr "Bạn chưa chọn thể loại muốn xem"
+
+#: includes/forum.php:380
+msgid "Edit Section"
+msgstr "Chỉnh sửa mục"
+
+#: includes/forum.php:380
+msgid "Edit Category"
+msgstr "Chỉnh sửa Thể loại"
+
+#: includes/forum.php:396
+msgid "Category"
+msgstr "Thể loại"
+
+#: includes/forum.php:464 includes/forum.php:744
+msgid "Forum structure"
+msgstr "Cấu trúc diễn đàn"
+
+#: includes/forum.php:470
+msgid "List of sections"
+msgstr "Danh sách các phần"
+
+#: includes/forum.php:498 includes/forum.php:526
+msgid "List of categories"
+msgstr "Danh sách các loại"
+
+#: includes/forum.php:531 includes/forum.php:746
+msgid "Hidden topics"
+msgstr "Chủ đề được ẩn"
+
+#: includes/forum.php:538 includes/forum.php:641
+msgid "Filter by author"
+msgstr "Lọc theo tác giả"
+
+#: includes/forum.php:544
+msgid "Filter by section"
+msgstr "Lọc ở phần"
+
+#: includes/forum.php:593 includes/forum.php:691
+msgid "Filter"
+msgstr "Lọc"
+
+#: includes/forum.php:594
+msgid "by section"
+msgstr "trong phần"
+
+#: includes/forum.php:595 includes/forum.php:693
+msgid "by author"
+msgstr "của tác giả"
+
+#: includes/forum.php:609 includes/forum.php:705 includes/reg.php:124
+msgid "Delete all"
+msgstr "Xóa tất cả"
+
+#: includes/forum.php:630 includes/forum.php:745
+msgid "Hidden posts"
+msgstr "Bài viết được ẩn"
+
+#: includes/forum.php:637
+msgid "Filter by topic"
+msgstr "Lọc chủ đề"
+
+#: includes/forum.php:692
+msgid "by topic"
+msgstr "trong chủ đề"
+
+#: includes/forum.php:735
+msgid "Statistic"
+msgstr "Số liệu thống kê"
+
+#: includes/forum.php:736
+msgid "Categories"
+msgstr "Hạng mục"
+
+#: includes/forum.php:737
+msgid "Sections"
+msgstr "Phòng"
+
+#: includes/forum.php:738
+msgid "Topics"
+msgstr "Các chủ đề"
+
+#: includes/forum.php:739
+msgid "Messages"
+msgstr "Tin nhắn"
+
+#: includes/forum.php:740
+msgid "Files"
+msgstr "Tập tin"
+
+#: includes/forum.php:741
+msgid "Votes"
+msgstr "Lượt bình chọn"
+
+#: includes/forum.php:743
+msgid "Settings"
+msgstr "Tùy chọn Thiết lập"
+
+#: includes/forum.php:748
+msgid "Go to Forum"
+msgstr "Tới diễn đàn"
+
+#: includes/ipban.php:17 includes/ipban.php:248 includes/ipban.php:328
+#: includes/ipban.php:340 index.php:111
+msgid "Ban by IP"
+msgstr "Cấm IP"
+
+#: includes/ipban.php:17 includes/ipban.php:168 includes/ipban.php:190
+msgid "Add Ban"
+msgstr "Thêm Cấm"
+
+#: includes/ipban.php:27 includes/ipban.php:70 includes/ipban.php:81
+#: includes/ipban.php:206 includes/ipban.php:259 includes/ipban.php:267
+#: includes/search_ip.php:57 includes/search_ip.php:66
+msgid "Invalid IP"
+msgstr "Địa chỉ IP không hợp lệ"
+
+#: includes/ipban.php:45 includes/search_ip.php:33
+msgid "First IP is entered incorrectly"
+msgstr "Đầu tiên IP được nhập sai"
+
+#: includes/ipban.php:53 includes/search_ip.php:41
+msgid "Second IP is entered incorrectly"
+msgstr "Thứ hai IP được nhập sai"
+
+#: includes/ipban.php:94
+msgid "Address you entered conflicts with other who in the database"
+msgstr "Địa chỉ Ip của bạn thêm vào đã tồn tại trong cơ sở dữ liệu"
+
+#: includes/ipban.php:104 includes/ipban.php:151 includes/ipban.php:184
+#: includes/ipban.php:286 includes/ipban.php:355
+msgid "Redirect"
+msgstr "Tự động chuyển trang"
+
+#: includes/ipban.php:112 includes/ipban.php:159 includes/ipban.php:182
+#: includes/ipban.php:294 includes/ipban.php:363
+msgid "Block"
+msgstr "Danh sách bỏ qua"
+
+#: includes/ipban.php:127
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Ban không thể cấm Ip này.Ip này trùng với Ip bạn đang sử dụng"
+
+#: includes/ipban.php:136
+msgid "Ban range address"
+msgstr "Cấm dải địa chỉ"
+
+#: includes/ipban.php:140
+msgid "Ban on the subnet mask"
+msgstr "Cấm về subnet mark"
+
+#: includes/ipban.php:144
+msgid "Ban IP address"
+msgstr "Cấm địa chỉ IP"
+
+#: includes/ipban.php:147 includes/ipban.php:181 includes/ipban.php:282
+msgid "Ban type"
+msgstr "Ban loại"
+
+#: includes/ipban.php:151 includes/ipban.php:185
+msgid "Redirect URL"
+msgstr "URL redicect"
+
+#: includes/ipban.php:162 includes/ipban.php:188 includes/ipban.php:301
+msgid "Reason"
+msgstr "Lý do"
+
+#: includes/ipban.php:162 includes/ipban.php:301
+msgid "Not specified"
+msgstr "Không quy định"
+
+#: includes/ipban.php:169
+msgid "Please, check up correctness of the input data"
+msgstr "Hãy kiểm tra đầu vào của bạn"
+
+#: includes/ipban.php:179 includes/ipban.php:330
+msgid "IP address"
+msgstr "Địa chỉ IP"
+
+#: includes/ipban.php:187
+msgid "If the ban on Redirect, then specify the URL"
+msgstr "Nếu lệnh cấm Chuyển hướng, sau đó chỉ định địa chỉ"
+
+#: includes/ipban.php:191
+msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Ví dụ:<br><span class=\"red\">10.5.7.1</span> - Cấm một địa chỉ Ip<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Cấm 1 dải Ip.<br><span class=\"red\">10.5.*.*</span> - Nó sẽ bị cấm từ mạng con, bắt đầu với địa chỉ 0 và kết thúc bằng 255"
+
+#: includes/ipban.php:240
+msgid "Are you sure you wan to unban all IP?"
+msgstr "Bạn có chắc bạn muốn xóa tất cả cookie?"
+
+#: includes/ipban.php:241
+msgid "Perform"
+msgstr "Hiện"
+
+#: includes/ipban.php:248
+msgid "Ban details"
+msgstr "Thông tin lệnh cấm"
+
+#: includes/ipban.php:274
+msgid "This address not in the database"
+msgstr "Địa chỉ này không có trong cơ sở dữ liệu"
+
+#: includes/ipban.php:302
+msgid "Who applied the ban?"
+msgstr "Những người áp dụng lệnh cấm?"
+
+#: includes/ipban.php:303
+msgid "Date"
+msgstr "Ngày"
+
+#: includes/ipban.php:304
+msgid "Time"
+msgstr "Thời gian"
+
+#: includes/ipban.php:305
+msgid "Delete Ban"
+msgstr "Xóa lệnh cấm"
+
+#: includes/ipban.php:316
+msgid "Ban has been successfully removed"
+msgstr "Lệnh cấm đã được thực hiện thành công"
+
+#: includes/ipban.php:319
+msgid "re you sure to remove ban?"
+msgstr "bạn có chắc chắn để loại bỏ các lệnh cấm?"
+
+#: includes/ipban.php:328 includes/ipban.php:332 includes/ipban.php:384
+#: includes/search_ip.php:23
+msgid "Search"
+msgstr "Tìm kiếm"
+
+#: includes/ipban.php:333
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "Nhập một địa chỉ duy nhất, phạm vi không được phép"
+
+#: includes/ipban.php:372 includes/usr.php:42
+msgid "Ban"
+msgstr "Cấm"
+
+#: includes/ipban.php:384
+msgid "Unban all IP"
+msgstr "Gỡ bỏ lệnh cấm cho IP"
+
+#: includes/karma.php:20
+msgid "Karma is cleared"
+msgstr "Karma được xóa"
+
+#: includes/karma.php:22
+msgid "You really want to clear the Karma?"
+msgstr "Bạn thực sự muốn xóa Nghiệp?"
+
+#: includes/karma.php:23
+msgid "Clear"
+msgstr "Xoá"
+
+#: includes/karma.php:28 index.php:72
+msgid "Karma"
+msgstr "Karma"
+
+#: includes/karma.php:45
+msgid "Voices per day"
+msgstr "Hạn chế mỗi ngày"
+
+#: includes/karma.php:47
+msgid "Restriction for vote"
+msgstr "Hạn chế bình luận"
+
+#: includes/karma.php:48
+msgid "Forum posts"
+msgstr "Diễn đàn post"
+
+#: includes/karma.php:49
+msgid "Stay on site"
+msgstr "Được tổ chức trên trang web"
+
+#: includes/karma.php:50
+msgid "Hours"
+msgstr "Giờ"
+
+#: includes/karma.php:52
+msgid "General Settings"
+msgstr "Thay đổi thiết lập"
+
+#: includes/karma.php:53
+msgid "Switch module ON"
+msgstr "Chuyển module TRÊN"
+
+#: includes/karma.php:54
+msgid "Forbid to vote for the administration"
+msgstr "Cấm bình luận cho ban quản trị"
+
+#: includes/karma.php:56
+msgid "Clear Karma"
+msgstr "Rõ Ràng Karma"
+
+#: includes/languages.php:31
+msgid "Descriptions have been updated successfully"
+msgstr "Mô tả đã được cập nhật thành công"
+
+#: includes/languages.php:68
+msgid "Default language"
+msgstr "Ngôn ngữ mặc định"
+
+#: includes/languages.php:91
+msgid "Update Descriptions"
+msgstr "Thông tin mô tả"
+
+#: includes/mail.php:14 index.php:90
+msgid "Mail"
+msgstr "Thư"
+
+#: includes/mail.php:48
+msgid "Welcome!"
+msgstr "Xin chào!"
+
+#: includes/mail.php:52
+msgid "Hi {LOGIN}!\n\n"
+"We are glad to see you on our site.\n"
+"Come more often and here it will be pleasant to you.\n\n"
+"Yours faithfully,\n"
+"Administrator."
+msgstr "Hi {LOGIN}! tính n tính new rất vui mừng khi nhìn thấy anh trên trang web của chúng tôi. tính nháy thường xuyên hơn và ở đây nó sẽ là dễ chịu cho bạn. tính n tính nYours trung thành, tính nAdministrator."
+
+#: includes/mail.php:58
+msgid "System message upon registration"
+msgstr "Hệ thống thông điệp khi đăng ký"
+
+#: includes/mail.php:58
+msgid "Subject of the system message"
+msgstr "Đề của các hệ thống thông điệp"
+
+#: includes/mail.php:60
+msgid "Message"
+msgstr "Bài viết"
+
+#: includes/mail.php:61
+msgid "Send a message"
+msgstr "Gửi Tin nhắn"
+
+#: includes/mail.php:62
+msgid "ON"
+msgstr "BẬT"
+
+#: includes/mail.php:63
+msgid "OFF"
+msgstr "TẮT"
+
+#: includes/mail.php:64
+msgid "Tags"
+msgstr "Nhãn"
+
+#: includes/mail.php:64
+msgid "recipient Nickname"
+msgstr "nhận Nickname"
+
+#: includes/mail.php:64
+msgid "current time"
+msgstr "giờ hiện tại"
+
+#: includes/news.php:14
+msgid "News on the mainpage"
+msgstr "Tin tức hiển thị ở trang chủ"
+
+#: includes/news.php:57
+msgid "Appearance"
+msgstr "Xuất hiện"
+
+#: includes/news.php:58
+msgid "Title + Text"
+msgstr "Tiêu đề + Văn bản"
+
+#: includes/news.php:60
+msgid "Text"
+msgstr "Văn bản"
+
+#: includes/news.php:61
+msgid "Not to show"
+msgstr "Không phải"
+
+#: includes/news.php:62
+msgid "Line breaks"
+msgstr "Ngắt dòng"
+
+#: includes/news.php:63 includes/smilies.php:5
+msgid "Smilies"
+msgstr "Mặt cười"
+
+#: includes/news.php:64
+msgid "bbCode Tags"
+msgstr "hướng Dẫn Sử Dụng Bbcode"
+
+#: includes/news.php:66
+msgid "Text size"
+msgstr "Kích thước văn bản"
+
+#: includes/news.php:68
+msgid "Quantity of news"
+msgstr "Số tin tức"
+
+#: includes/news.php:69
+msgid "How many days to show?"
+msgstr "Hiển thị trong bao nhiêu ngày?"
+
+#: includes/reg.php:14
+msgid "Registration confirmation"
+msgstr "Đăng ký xác nhận"
+
+#: includes/reg.php:26 includes/reg.php:32
+msgid "Registration is confirmed"
+msgstr "Đăng ký được xác nhận"
+
+#: includes/reg.php:50 includes/usr_del.php:97
+msgid "User deleted"
+msgstr "Người dùng đã bị xóa"
+
+#: includes/reg.php:56
+msgid "All unconfirmed registrations were removed"
+msgstr "Mọi đăng ký chưa được xác nhận sẽ gỡ bỏ"
+
+#: includes/reg.php:72
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "Tất cả không phải đăng ký xác nhận với lựa chọn IP đã được xóa"
+
+#: includes/reg.php:95
+msgid "Approve"
+msgstr "Duyệt"
+
+#: includes/reg.php:97
+msgid "Remove IP"
+msgstr "Hủy bỏ IP"
+
+#: includes/reg.php:124
+msgid "Confirm all"
+msgstr "Xác nhận tất cả"
+
+#: includes/search_ip.php:15
+msgid "Actual IP"
+msgstr "Thứ hai IP được nhập sai"
+
+#: includes/search_ip.php:16
+msgid "IP history"
+msgstr "Lịch sử của IP"
+
+#: includes/search_ip.php:19 index.php:75
+msgid "Search IP"
+msgstr "Tìm kiếm IP"
+
+#: includes/search_ip.php:79
+msgid "Search results"
+msgstr "Kết quả tìm kiếm"
+
+#: includes/search_ip.php:114
+msgid "At your request, nothing found"
+msgstr "Theo yêu cầu của bạn, không có gì tìm thấy"
+
+#: includes/search_ip.php:126
+msgid "New Search"
+msgstr "Tìm kiếm mới"
+
+#: includes/search_ip.php:134
+msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr "<small><b>Các truy vấn mẫu:</b><br><span class=\"red\">10.5.7.1</span> - Tìm kiếm một địa chỉ duy nhất<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Tìm kiếm một địa chỉ phạm vi (Đăng ký không thể sử dụng IP *)<br><span class=\"red\">10.5.*.*</span> - Tìm kiếm IP. Nó được tìm thấy tất cả các địa chỉ subnet đầu từ 0 và kết thúc với 255</small>"
+
+#: includes/settings.php:11 index.php:99
+msgid "System Settings"
+msgstr "Cài đặt hệ thống"
+
+#: includes/settings.php:44
+msgid "Common Settings"
+msgstr "Thiết Lập Chung"
+
+#: includes/settings.php:45
+msgid "Web site address without the slash at the end"
+msgstr "Địa chỉ trang web mà không có dấu gạch chéo vào cuối"
+
+#: includes/settings.php:46
+msgid "Site copyright"
+msgstr "Trang web bản quyền"
+
+#: includes/settings.php:47
+msgid "Site Email"
+msgstr "Trang Web Email"
+
+#: includes/settings.php:48
+msgid "Max. file size"
+msgstr "Max. kích thước tập tin"
+
+#: includes/settings.php:49
+msgid "Gzip compression"
+msgstr "Nén Gzip"
+
+#: includes/settings.php:54
+msgid "Time shift"
+msgstr "Sự dịch chuyển thời gian"
+
+#: includes/settings.php:56
+msgid "System Time"
+msgstr "Cài đặt Thời gian"
+
+#: includes/settings.php:57
+msgid "Server Time"
+msgstr "Thời gian trên Server"
+
+#: includes/settings.php:62
+msgid "META tags"
+msgstr "Loại SIÊU"
+
+#: includes/settings.php:63
+msgid "Keywords"
+msgstr "Từ chìa khóa"
+
+#: includes/settings.php:68
+msgid "Themes"
+msgstr "Chủ đề"
+
+#: includes/smilies.php:42
+msgid "Smilie cache updated successfully"
+msgstr "Cười nhớ tạm cập nhật thành công"
+
+#: includes/smilies.php:44
+msgid "Error updating cache"
+msgstr "Lỗi khi cập nhật bộ nhớ cache"
+
+#: includes/usr.php:8
+msgid "List of Users"
+msgstr "Danh sách người dùng"
+
+#: includes/usr.php:15 includes/usr.php:21 includes/usr.php:27
+msgid "Nickname"
+msgstr "Tên Bạn"
+
+#: includes/usr_adm.php:9 index.php:68
+msgid "Administration"
+msgstr "Dành cho quản trị"
+
+#: includes/usr_adm.php:13
+msgid "Supervisors"
+msgstr "Giám sát"
+
+#: includes/usr_adm.php:25
+msgid "Administrators"
+msgstr "Quản trị viên"
+
+#: includes/usr_adm.php:38
+msgid "Super Moderators"
+msgstr "SuperMod"
+
+#: includes/usr_adm.php:51
+msgid "Moderators"
+msgstr "Ban quản trị"
+
+#: includes/usr_clean.php:14 index.php:69
+msgid "Database cleanup"
+msgstr "Dọn dẹp cơ sở dữ liệu"
+
+#: includes/usr_clean.php:57
+msgid "Inactive profiles deleted"
+msgstr "Không hiện hoạt cấu hình đã xóa"
+
+#: includes/usr_clean.php:69
+msgid "Inactive profiles"
+msgstr "Hồ sơ không hoạt động"
+
+#: includes/usr_clean.php:70
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "Thể loại này bao gồm hồ sơ đăng ký nhiều hơn 6 tháng trước, với ngày cuối cùng ghé thăm hơn 6 tháng trước và số không hoạt động.<br>Có thể loại bỏ chúng một cách an toàn."
+
+#: includes/usr_del.php:25
+msgid "You cannot delete higher administration"
+msgstr "Bạn không thể xóa bài cũ của bạn"
+
+#: includes/usr_del.php:28
+msgid "User does not exists"
+msgstr "Người dùng không tồn tại"
+
+#: includes/usr_del.php:53
+msgid "Delete user"
+msgstr "Xoá người dùng"
+
+#: includes/usr_del.php:102
+msgid "Cleaning activities"
+msgstr "Làm sạch hoạt động của thành viên"
+
+#: includes/usr_del.php:110
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr "Chủ đề và bài viết được tạo ra bởi những người đi trong nước"
+
+#: includes/usr_del.php:113
+msgid "Are you sure that you want to delete this user?"
+msgstr "Bạn có chắc chắn rằng bạn muốn xóa người dùng này?"
+
+#: index.php:64
+msgid "On registration"
+msgstr "Tại đăng ký"
+
+#: index.php:71
+msgid "Antiflood"
+msgstr "Antiflood"
+
+#: index.php:74
+msgid "Search by Nickname"
+msgstr "Tìm kiếm bằng Tài Khoản"
+
+#: index.php:83
+msgid "Modules"
+msgstr "Các Mô-Đun"
+
+#: index.php:85
+msgid "News"
+msgstr "Tin tức"
+
+#: index.php:97
+msgid "System"
+msgstr "Hệ thống"
+
+#: index.php:100
+msgid "Update Smilies"
+msgstr "Cập Nhật biểu tượng mặt cười"
+
+#: index.php:101
+msgid "Language Settings"
+msgstr "Thiết Lập Ngôn Ngữ"
+
+#: index.php:108
+msgid "Security"
+msgstr "Bảo mật"
+
