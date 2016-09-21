@@ -28,7 +28,7 @@ echo '<div class="phdr"><b>' . _t('Useful', 'system') . '</b></div>';
 
 // Ссылка на загрузки
 if ($set['mod_down'] || $rights >= 7) {
-    echo '<div class="menu"><a href="download/">' . _t('Downloads', 'system') . '</a> (' . counters::downloads() . ')</div>';
+    //echo '<div class="menu"><a href="downloads/">' . _t('Downloads', 'system') . '</a> (X)</div>';
 }
 
 // Ссылка на библиотеку

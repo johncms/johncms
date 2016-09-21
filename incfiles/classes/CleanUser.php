@@ -133,7 +133,7 @@ class CleanUser
             // Удаляем из Библиотеки
             $this->db->exec("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем из Загрузок
-            $this->db->exec("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
+            //$this->db->exec("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
             // Удаляем комментарии из личных гостевых
             $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем комментарии из личных фотоальбомов

@@ -428,30 +428,6 @@ CREATE TABLE `cms_users_iphistory` (
   DEFAULT CHARSET = utf8;
 
 --
--- Структура таблицы `download`
---
-DROP TABLE IF EXISTS `download`;
-CREATE TABLE `download` (
-  `id`     INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `refid`  INT(11)          NOT NULL DEFAULT '0',
-  `adres`  TEXT             NOT NULL,
-  `time`   INT(11)          NOT NULL DEFAULT '0',
-  `name`   TEXT             NOT NULL,
-  `type`   VARCHAR(4)       NOT NULL DEFAULT '',
-  `avtor`  VARCHAR(25)      NOT NULL DEFAULT '',
-  `ip`     TEXT             NOT NULL,
-  `soft`   TEXT             NOT NULL,
-  `text`   TEXT             NOT NULL,
-  `screen` TEXT             NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type` (`type`),
-  KEY `refid` (`refid`),
-  KEY `time` (`time`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
-
---
 -- Структура таблицы `forum`
 --
 DROP TABLE IF EXISTS `forum`;

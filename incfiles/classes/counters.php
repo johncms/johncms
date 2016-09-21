@@ -50,33 +50,6 @@ class counters
     }
 
     /**
-     * Статистика загрузок
-     *
-     * @return string
-     */
-    public static function downloads()
-    {
-        $file = ROOTPATH . 'files/cache/count_downloads.dat';
-        if (file_exists($file) && filemtime($file) > (time() - 900)) {
-            $res = unserialize(file_get_contents($file));
-            $total = $res['total'];
-            $new = $res['new'];
-        } else {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-
-            $total = $db->query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file'")->fetchColumn();
-            $new = $db->query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file'")->fetchColumn();
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new]));
-        }
-        if ($new) {
-            $total .= '&#160;/&#160;<span class="red"><a href="/download/?act=new">+' . $new . '</a></span>';
-        }
-
-        return $total;
-    }
-
-    /**
      * Статистика Форума
      *
      * @return string
