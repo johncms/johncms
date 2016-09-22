@@ -1,0 +1,3 @@
+RemoveHandler .php .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
+AddType application/x-httpd-php-source .php .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
+php_flag engine 0
