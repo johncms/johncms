@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+MIDlet-1: Файл #23, , br.BookReader
+MIDlet-Name: $tmp_jad
+MIDlet-Vendor: mobiCMS
+MIDlet-Version: 1.5.3
+MIDletX-No-Command: true
+MIDletX-LG-Contents: true
+MicroEdition-Configuration: CLDC-1.0
+MicroEdition-Profile: MIDP-1.0
+TCBR-Platform: Generic version (all phones)
