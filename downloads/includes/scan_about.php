@@ -29,15 +29,16 @@ if ($rights == 4 || $rights >= 6) {
         }
     }
 
+    require '../incfiles/head.php';
     echo '<div class="phdr"><b>' . $lng['download_scan_about'] . '</b></div>';
 
     if (isset($_GET['clean'])) {
         echo '<div class="rmenu"><p>' . $lng['scan_about_clean_ok'] . '</p></div>';
     } else {
         echo '<div class="gmenu"><p>' . $lng['scan_about_ok'] . '</p></div>' .
-            '<div class="rmenu"><a href="?act=scan_about&amp;clean&amp;id=' . App::request()->getQuery('id', '') . '">' . $lng['scan_about_clean'] . '</a></div>';
+            '<div class="rmenu"><a href="?act=scan_about&amp;clean&amp;id=' . $id . '">' . $lng['scan_about_clean'] . '</a></div>';
     }
-    echo '<div class="phdr"><a href="?id=' . App::request()->getQuery('id', '') . '">' . $lng['back'] . '</a></div>';
-} else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
+
+    echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
+    require '../incfiles/end.php';
 }

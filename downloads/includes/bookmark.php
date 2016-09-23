@@ -9,6 +9,7 @@ $url = $set['homeurl'] . '/downloads/';
 
 // Закладки
 $textl = $lng['download_bookmark'];
+require '../incfiles/head.php';
 
 if (!$user_id) {
     echo $lng['access_guest_forbidden'];
@@ -34,10 +35,10 @@ if ($total) {
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
@@ -48,3 +49,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="' . $url . '">' . $lng['download_title'] . '</a></p>';
+require '../incfiles/end.php';
