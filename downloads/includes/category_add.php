@@ -10,7 +10,7 @@ if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    require_once('../incfiles/head.php');
+    require_once '../incfiles/head.php';
 
     if (!$id) {
         $load_cat = $files_path;
@@ -117,7 +117,7 @@ if ($rights == 4 || $rights >= 6) {
     }
 
     echo '<a href="?">' . _t('Back') . '</a></div>';
-    require_once('../incfiles/end.php');
+    require_once '../incfiles/end.php';
 } else {
     header('Location: ' . App::cfg()->sys->homeurl . '404');
 }

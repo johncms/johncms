@@ -4,24 +4,25 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $lng = core::load_lng('dl');
 $url = $set['homeurl'] . '/downloads/';
+require_once '../incfiles/head.php';
 
 // Обзор комментариев
 //TODO: Переделать на получение настроек из таблицы модулей
-if (!App::cfg()->sys->acl_downloads_comm && $rights < 7) {
-    echo $lng['comments_cloded'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
-    exit;
-}
+//if (!App::cfg()->sys->acl_downloads_comm && $rights < 7) {
+//    echo $lng['comments_cloded'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+//    exit;
+//}
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 $textl = $lng['review_comments'];
 
 //TODO: Переделать на получение настроек из таблицы модулей
-if (!App::cfg()->sys->acl_downloads_comm) {
-    echo '<div class="rmenu">' . $lng['comments_cloded'] . '</div>';
-}
+//if (!App::cfg()->sys->acl_downloads_comm) {
+//    echo '<div class="rmenu">' . $lng['comments_cloded'] . '</div>';
+//}
 
-echo '<div class="phdr"><a href="?"><b>' . $lng['downloads'] . '</b></a> | ' . $textl . '</div>';
+echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `download__comments`")->fetchColumn();
 
 if ($total) {
@@ -80,10 +81,10 @@ if ($total) {
         echo functions::displayUser($res, $arg) . '</div>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
@@ -94,3 +95,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="' . $url . '">' . $lng['download_title'] . '</a></p>';
+require_once '../incfiles/end.php';
