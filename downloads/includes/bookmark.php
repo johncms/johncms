@@ -16,7 +16,7 @@ if (!$user_id) {
     exit;
 }
 
-echo '<div class="phdr"><b>' . $textl . '</b></div>';
+echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = " . $user_id)->fetchColumn();
 
 // Навигация
