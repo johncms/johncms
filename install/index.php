@@ -69,11 +69,8 @@ class install
      */
     public static function check_folders_rights()
     {
+        //TODO: добавить для проверки папки нового загруза
         $folders = [
-            '/download/arctemp/',
-            '/download/files/',
-            '/download/graftemp/',
-            '/download/screen/',
             '/files/cache/',
             '/files/forum/attach/',
             '/files/library/',
