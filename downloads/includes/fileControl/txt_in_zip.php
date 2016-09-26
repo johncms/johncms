@@ -75,4 +75,4 @@ echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
     '<div class="menu"><a href="' . htmlspecialchars($file) . '">' . $lng['download_in'] . ' ZIP</a></div>' .
     '<div class="rmenu"><input type="text" value="' . App::cfg()->sys->homeurl . htmlspecialchars($file) . '"/><b></b></div>' .
     '<div class="phdr">' . $lng['time_limit'] . '</div>' .
-    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
+    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';

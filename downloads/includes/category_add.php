@@ -2,8 +2,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 if ($rights == 4 || $rights >= 6) {
@@ -19,7 +17,7 @@ if ($rights == 4 || $rights >= 6) {
         $res_down = $req_down->fetch();
 
         if (!$req_down->rowCount() || !is_dir($res_down['dir'])) {
-            echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+            echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
             exit;
         }
 
@@ -35,24 +33,24 @@ if ($rights == 4 || $rights >= 6) {
         $error = [];
 
         if (empty($name)) {
-            $error[] = $lng['error_empty_fields'];
+            $error[] = _t('The required fields are not filled');
         }
 
         if (preg_match("/[^0-9a-zA-Z]+/", $name)) {
-            $error[] = $error[] = $lng['error_wrong_symbols'];
+            $error[] = $error[] = _t('Invalid characters');
         }
 
         if ($rights == 9 && $user_down) {
             foreach (explode(',', $format) as $value) {
                 if (!in_array(trim($value), $defaultExt)) {
-                    $error[] = $lng['extensions_ok'] . ': ' . implode(', ', $defaultExt);
+                    $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
                     break;
                 }
             }
         }
 
         if ($error) {
-            echo $error . ' <a href="' . $url . '?act=add_cat&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+            echo $error . ' <a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             exit;
         }
 
@@ -88,36 +86,34 @@ if ($rights == 4 || $rights >= 6) {
             ]);
             $cat_id = $db->lastInsertId();
 
-            echo '<div class="phdr"><b>' . $lng['add_cat_title'] . '</b></div>' .
-                '<div class="list1"><p>' . $lng['add_cat_ok'] . '<br><a href="' . $url . '?id=' . $cat_id . '">' . _t('Continue') . '</a></p></div>';
+            echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>' .
+                '<div class="list1"><p>' . _t('The Folder is created') . '<br><a href="?id=' . $cat_id . '">' . _t('Continue') . '</a></p></div>';
         } else {
-            echo $lng['add_cat_error'] . '<a href="' . $url . 'act=add_cat&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+            echo _t('Error creating categories') . '<a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             exit;
         }
     } else {
-        echo '<div class="phdr"><b>' . $lng['add_cat_title'] . '</b></div><div class="menu">' .
-            '<form action="' . $url . '?act=add_cat&amp;id=' . $id . '" method="post">' .
-            $lng['dir_name'] . ' [A-Za-z0-9]:<br/><input type="text" name="name"/><br/>' .
-            $lng['dir_name_view'] . ':<br/><input type="text" name="rus_name"/><br/>' .
-            $lng['dir_desc'] . ' (max. 500):<br/><textarea name="desc" cols="24" rows="4"></textarea><br/>';
+        echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div><div class="menu">' .
+            '<form action="?act=add_cat&amp;id=' . $id . '" method="post">' .
+            '<p>' . _t('Folder Name') . ' [A-Za-z0-9]:<br/><input type="text" name="name"/></p>' .
+            '<p>' . _t('Title to display') . '<br/><input type="text" name="rus_name"/></p>' .
+            '<p>' . _t('Description') . ' (max. 500)<br/><textarea name="desc" cols="24" rows="4"></textarea></p>';
 
         if ($rights == 9) {
-            echo '<div class="sub"><input type="checkbox" name="user_down" value="1" /> ' . $lng['user_download'] . '<br/>' .
-                $lng['extensions'] . ':<br/><input type="text" name="format"/></div>' .
-                '<div class="sub">' . $lng['extensions_ok'] . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
+            echo '<p><input type="checkbox" name="user_down" value="1" /> ' . _t('Allow users to upload files') . '</p>' .
+                _t('Allowed extensions') . ':<br/><input type="text" name="format"/>' .
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
         }
 
-        echo '<p><input type="submit" name="submit" value="' . $lng['add_cat'] . '"/></p></form></div>';
+        echo '<p><input type="submit" name="submit" value="' . _t('Create') . '"/></p></form></div>';
     }
 
     echo '<div class="phdr">';
 
     if ($id) {
-        echo '<a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a> | ';
+        echo '<a href="?id=' . $id . '">' . _t('Back') . '</a> | ';
     }
 
     echo '<a href="?">' . _t('Back') . '</a></div>';
     require_once '../incfiles/end.php';
-} else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
 }

@@ -25,7 +25,7 @@ if ($rights >= 6) {
         header("location: index.php?id=$ms[refid]");
     } else {
         echo $lng_gal['edit_description'] . "<br><form action='index.php?act=edf&amp;id=" . $id . "' method='post'><input type='text' name='text' value='" . $ms['text'] .
-            "'/><br><input type='submit' name='submit' value='Ok!'/></form><br><a href='index.php?id=" . $ms['refid'] . "'>" . $lng['back'] . "</a><br>";
+            "'/><br><input type='submit' name='submit' value='Ok!'/></form><br><a href='index.php?id=" . $ms['refid'] . "'>" . _t('Back') . "</a><br>";
     }
 } else {
     header("location: index.php");

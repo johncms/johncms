@@ -35,5 +35,5 @@ $adm ?: redir404();
     . '</select></div>' 
     . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
     . '</div></form>' 
-    . '<p><a href ="?">' . $lng['back'] . '</a></p>';
+    . '<p><a href ="?">' . _t('Back') . '</a></p>';
   }

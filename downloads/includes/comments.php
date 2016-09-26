@@ -46,7 +46,7 @@ $arg = [
     'owner_edit'        => false, // Возможность владельцу редактировать комментарий
     'title'             => $lng['comments'], // Название раздела
     'context_top'       => '<div class="phdr"><b>' . $textl . '</b></div>', // Выводится вверху списка
-    'context_bottom'    => '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>' // Выводится внизу списка
+    'context_bottom'    => '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>' // Выводится внизу списка
 ];
 
 // Показываем комментарии

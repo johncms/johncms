@@ -17,6 +17,6 @@ if ($rights >= 6) {
             '<p>' . $lng['name'] . ':<br><input type="text" name="text"/></p>' .
             '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
             '</div></form>' .
-            '<div class="phdr"><a href="index.php">' . $lng['back'] . '</a></div>';
+            '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
     }
 }

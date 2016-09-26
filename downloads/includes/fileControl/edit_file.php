@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
         header('Location: ' . $url . '?act=view&id=' . $id);
     } else {
-        echo $lng['error_empty_fields'] . ' <a href="' . $url . '?act=edit_file&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+        echo _t('The required fields are not filled') . ' <a href="' . $url . '?act=edit_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
     }
 } else {
     $file_name = htmlspecialchars($res_down['rus_name']);
@@ -45,5 +45,5 @@ if (isset($_POST['submit'])) {
         $lng['name_file'] . '(мах. 200):<br /><input type="text" name="text" value="' . $file_name . '"/><br />' .
         $lng['link_file'] . ' (мах. 200):<br /><input type="text" name="name_link" value="' . $res_down['text'] . '"/><br />' .
         '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
-        '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 }

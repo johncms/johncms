@@ -44,7 +44,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if (empty($name_link)) {
-                    $error[] = $lng['error_empty_fields'];
+                    $error[] = _t('The required fields are not filled');
                 }
 
                 if ($fsize > 1024 * $set['flsz']) {
@@ -64,7 +64,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+                    $error[] = '<a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                 } else {
                     if (file_exists("$load_cat/$fname")) {
@@ -156,13 +156,13 @@ if ($req->rowCount() && is_dir($res['dir'])) {
 
                             $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
                         }
-                        echo '<div class="phdr"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></div>';
+                        echo '<div class="phdr"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
                     } else {
-                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['repeat'] . '</a></div>';
+                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['repeat'] . '</a></div>';
+                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
             echo '<div class="phdr"><b>' . $lng['download_upload_file'] . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>' .
@@ -176,13 +176,13 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
                 '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . $set['flsz'] . 'kb<br />' .
                 $lng['extensions'] . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>' .
-                '<p><a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></p>';
+                '<p><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     } else {
-        echo $lng['access_forbidden '] . ' <a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a>';
+        echo $lng['access_forbidden '] . ' <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a>';
     }
 } else {
-    echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('The directory does not exist') . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 

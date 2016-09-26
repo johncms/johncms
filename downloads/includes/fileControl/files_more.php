@@ -45,7 +45,7 @@ if ($edit) {
             $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br />' .
             '<input type="text" name="name_link" value="' . $res_file_more['rus_name'] . '"/><br />' .
             '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form>' .
-            '</div><div class="phdr"><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+            '</div><div class="phdr"><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
     if ($del) {
@@ -87,7 +87,7 @@ if ($edit) {
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                     exit;
                 }
@@ -108,7 +108,7 @@ if ($edit) {
                 }
 
                 if (empty($name_link)) {
-                    $error[] = $lng['error_empty_fields'];
+                    $error[] = _t('The required fields are not filled');
                 }
 
                 if ($fsize > 1024 * App::cfg()->sys->filesize && !$link_file) {
@@ -128,7 +128,7 @@ if ($edit) {
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                 } else {
                     $newFile = 'file' . $id . '_' . $fname;
@@ -150,7 +150,7 @@ if ($edit) {
                         @chmod("$fname", 0777);
                         @chmod("$res_down[dir]/$fname", 0777);
                         echo '<div class="gmenu">' . $lng['upload_file_ok'] . '<br />' .
-                            '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '&amp;act=view">' . $lng['back'] . '</a></div>';
+                            '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '&amp;act=view">' . _t('Back') . '</a></div>';
 
                         $stmt = $db->prepare("
                           INSERT INTO `download__more`
@@ -166,11 +166,11 @@ if ($edit) {
                             intval($fsize),
                         ]);
                     } else {
-                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['repeat'] . '</a></div>';
+                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['repeat'] . '</a></div>';
+                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
             // Выводим форму
@@ -204,7 +204,7 @@ if ($edit) {
 
                 echo '<div class="phdr">' . $lng['total'] . ': ' . $total_file . '</div>';
             }
-            echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
+            echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     }
 }

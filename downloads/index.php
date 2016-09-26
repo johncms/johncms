@@ -310,7 +310,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     if ($rights == 4 || $rights >= 6) {
         // Выводим ссылки на модерские функции
         echo '<p><div class="func">';
-        echo '<div><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Create a folder') . '</a></div>';
+        echo '<div><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Create Folder') . '</a></div>';
 
         if ($id) {
             echo '<div><a href="?act=delete_cat&amp;id=' . $id . '">' . _t('Delete Folder') . '</a></div>';

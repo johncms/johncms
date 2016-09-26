@@ -17,7 +17,7 @@ if ($rights == 4 || $rights >= 6) {
     $res = $req->fetch();
 
     if (!$req->rowCount() || !is_dir($res['dir'])) {
-        echo $lng['not_found_dir'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -48,7 +48,7 @@ if ($rights == 4 || $rights >= 6) {
         $rus_name = isset($_POST['rus_name']) ? trim($_POST['rus_name']) : '';
 
         if (empty($rus_name)) {
-            $error[] = $lng['error_empty_fields'];
+            $error[] = _t('The required fields are not filled');
         }
 
         $error_format = false;
@@ -73,7 +73,7 @@ if ($rights == 4 || $rights >= 6) {
         }
 
         if ($error) {
-            echo $error . ' <a href="' . $url . '?act=edit_cat&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+            echo $error . ' <a href="' . $url . '?act=edit_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             exit;
         }
 

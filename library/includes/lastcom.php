@@ -30,4 +30,4 @@ $i = 0;
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 }
 
-echo '<div class="phdr"><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+echo '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;

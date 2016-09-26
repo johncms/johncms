@@ -18,7 +18,7 @@ $flood = functions::antiflood();
 
 if ($flood) {
     require_once('../incfiles/head.php');
-    echo functions::display_error('You cannot add pictures so often<br />Please wait ' . $flood . ' sec.', '<a href="index.php?id=' . $id . '">' . $lng['back'] . '</a>');
+    echo functions::display_error('You cannot add pictures so often<br />Please wait ' . $flood . ' sec.', '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
     require_once('../incfiles/end.php');
     exit;
 }

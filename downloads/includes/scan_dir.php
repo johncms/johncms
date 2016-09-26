@@ -66,7 +66,7 @@ if ($rights == 4 || $rights >= 6) {
 
             echo '<div class="phdr"><b>' . $lng['scan_dir_clean'] . '</b></div>' .
                 '<div class="rmenu"><p>' . $lng['scan_dir_clean_ok'] . '</p></div>' .
-                '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></div>';
+                '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
             break;
 
         default:
@@ -77,7 +77,7 @@ if ($rights == 4 || $rights >= 6) {
                 $scan_dir = $res_down_cat['dir'];
 
                 if (!$cat->rowCount() || !is_dir($scan_dir)) {
-                    echo $lng['not_found_dir'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+                    echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
                     exit;
                 }
             } else {
@@ -299,7 +299,7 @@ if ($rights == 4 || $rights >= 6) {
 
                 echo '<a href="' . $url . '?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . $lng['scan_dir_clean'] . '</a></div>';
             }
-            echo '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></div>';
+            echo '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
     header('Location: ' . App::cfg()->sys->homeurl . '404');

@@ -31,7 +31,7 @@ case 'dir':
                 if ($afr) {
                     $afr = $db->exec("DELETE FROM `library_cats` WHERE `id` = " . $id);
                     if ($afr) {
-                        echo '<div class="gmenu">' . $lng_lib['successfully_transferred'] . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+                        echo '<div class="gmenu">' . $lng_lib['successfully_transferred'] . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . _t('Back') . '</a></div>' . PHP_EOL;
                     }
                 }
             }        
@@ -55,7 +55,7 @@ case 'dir':
             . '</form>'
             . '</div>'; 
             } else {
-                echo '<div class="rmenu">' . $lng_lib['no_partitions_to_move'] . '</div><div class="bmenu"><a href="?">' . $lng['back'] . '</a></div>';
+                echo '<div class="rmenu">' . $lng_lib['no_partitions_to_move'] . '</div><div class="bmenu"><a href="?">' . _t('Back') . '</a></div>';
             }
         break;
         
@@ -65,7 +65,7 @@ case 'dir':
             } else {
                 $childs = new Tree($id);
                 $deleted = $childs->get_all_childs_id()->clean_dir();
-                echo '<div class="gmenu">' . $lng_lib['successfully_removed'] . ': ' . $lng_lib['dirs'] . ' (' . $deleted['dirs'] . ') , ' . $lng_lib['articles'] . '(' . $deleted['texts'] . '), ' . $lng_lib['tags'] . '(' . $deleted['tags'] . '), ' . $lng_lib['comments'] . '(' . $deleted['comments'] . '), ' . $lng_lib['images'] . '(' . $deleted['images'] . ')</div><div><a href="?">' . $lng['back'] . '</a></div>' . PHP_EOL;
+                echo '<div class="gmenu">' . $lng_lib['successfully_removed'] . ': ' . $lng_lib['dirs'] . ' (' . $deleted['dirs'] . ') , ' . $lng_lib['articles'] . '(' . $deleted['texts'] . '), ' . $lng_lib['tags'] . '(' . $deleted['tags'] . '), ' . $lng_lib['comments'] . '(' . $deleted['comments'] . '), ' . $lng_lib['images'] . '(' . $deleted['images'] . ')</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
             }
         break;
         
@@ -112,7 +112,7 @@ if (isset($_GET['yes']) && $type == 'image') {
       @unlink('../files/library/images/orig/' . $id . '.png');
       @unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
   if ($db->exec($sql)) {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
@@ -120,6 +120,6 @@ if (isset($_GET['yes']) && $type == 'image') {
       @unlink('../files/library/images/orig/' . $id . '.png');
       @unlink('../files/library/images/small/' . $id . '.png');
     }
-    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><p><a href="?">' . $lng['back'] . '</a></p>' . PHP_EOL;
+    echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><p><a href="?">' . _t('Back') . '</a></p>' . PHP_EOL;
   }
 }

@@ -9,7 +9,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     if ($flood) {
         require('../incfiles/head.php');
 
-        echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<br /><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a>');
+        echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<br /><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -172,7 +172,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . $lng_lib['input_tags'] . '</small></p>'
         . '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>'
         . '</div></form>'
-        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 } else {
     header('location: ?');
 }

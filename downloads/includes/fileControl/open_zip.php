@@ -58,7 +58,7 @@ if (!isset($_GET['file'])) {
     $zip = new PclZip($file_open);
 
     if (($list = $zip->listContent()) == 0) {
-        echo $lng['open_archive_error'] . '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
+        echo $lng['open_archive_error'] . '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
         exit;
     }
 
@@ -141,7 +141,7 @@ if (!isset($_GET['file'])) {
     $format_file = strtolower($format[count($format) - 1]);
 
     if (strpos($FileName, '..') !== false or strpos($FileName, './') !== false) {
-        echo $lng['not_found_file'] . '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . $isset_more . '">' . $lng['back'] . '</a></p>';
+        echo $lng['not_found_file'] . '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . $isset_more . '">' . _t('Back') . '</a></p>';
         exit;
     }
 
@@ -265,7 +265,7 @@ if (!isset($_GET['file'])) {
             echo $lng['error_file_save'];
         }
     }
-    echo '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . '&amp;page=' . $page . $isset_more . '">' . $lng['back'] . '</a><br />';
+    echo '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . '&amp;page=' . $page . $isset_more . '">' . _t('Back') . '</a><br />';
 }
 
 echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Downloads') . '</a></p>';
