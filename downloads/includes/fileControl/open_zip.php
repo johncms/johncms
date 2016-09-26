@@ -130,7 +130,7 @@ if (!isset($_GET['file'])) {
             '<input type="hidden" value="open_zip" name="act" />' .
             '<input type="hidden" value="' . $id . '" name="id" />' .
             (isset($more) ? '<input type="hidden" value="' . $more . '" name="more" />' : '') .
-            '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
     echo '<p>';

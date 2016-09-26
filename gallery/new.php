@@ -185,7 +185,7 @@ if ($totalnew != 0) {
             echo ' <a href="index.php?act=new&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
         }
 
-        echo "<form action='index.php'>" . $lng['to_page'] . ":<br><input type='hidden' name='act' value='new'/><input type='text' name='page'/><br><input type='submit' value='Go!'/></form>";
+        echo "<form action='index.php'>" . _t('To Page') . ":<br><input type='hidden' name='act' value='new'/><input type='text' name='page'/><br><input type='submit' value='Go!'/></form>";
     }
     echo "<br>" . $lng['total'] . ": $totalnew";
 } else {

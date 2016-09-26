@@ -322,7 +322,7 @@ class comments
                     echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
                         '<p><form action="' . $this->url . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . core::$lng['to_page'] . ' &gt;&gt;"/>' .
+                        '<input type="submit" value="' . core::_t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
 
