@@ -56,7 +56,7 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
         }
 
         echo '<br /><a href="' . $url . '?act=edit_screen&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a>' .
-            '<br /><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+            '<br /><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     } else {
         // Форма выгрузки
         echo '<div class="phdr"><b>' . $lng['screen_file'] . '</b>: ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
@@ -96,6 +96,6 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
             }
         }
 
-        echo '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        echo '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 }

@@ -13,7 +13,7 @@ if ($rights == 4 || $rights >= 6) {
     $res = $req->fetch();
 
     if (!$req->rowCount() || !is_dir($res['dir'])) {
-        echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('The directory does not exist') . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -50,7 +50,7 @@ if ($rights == 4 || $rights >= 6) {
             }
 
             if (empty($name_link)) {
-                $error[] = $lng['error_empty_fields'];
+                $error[] = _t('The required fields are not filled');
             }
 
             if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
@@ -69,7 +69,7 @@ if ($rights == 4 || $rights >= 6) {
         }
 
         if ($error) {
-            $error[] = '<a href="' . $url . '?act=import&amp;id=' . $id . '">' . $lng['repeat'] . '</a>';
+            $error[] = '<a href="' . $url . '?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             echo $error;
         } else {
             if (file_exists("$load_cat/$fname")) {
@@ -145,9 +145,9 @@ if ($rights == 4 || $rights >= 6) {
                 }
 
                 $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
-                echo '<div class="phdr"><a href="' . $url . '?act=import&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></div>';
+                echo '<div class="phdr"><a href="' . $url . '?act=import&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=import&amp;id=' . $id . '">' . $lng['repeat'] . '</a></div>';
+                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         }
     } else {
@@ -162,7 +162,7 @@ if ($rights == 4 || $rights >= 6) {
             $lng['dir_desc'] . ' (max. 500)<br /><textarea name="opis"></textarea>' .
             '<br /><input type="submit" name="submit" value="' . $lng['upload'] . '"/></form></div>' .
             '<div class="phdr"><small>' . $lng['extensions'] . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>' .
-            '<p><a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a></p>';
+            '<p><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 } else {
     header('Location: ' . App::cfg()->sys->homeurl . '404');

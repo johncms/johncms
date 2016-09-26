@@ -37,5 +37,5 @@ if (isset($_POST['submit'])) {
         '<small>' . $lng['desc_file_faq'] . '</small><br />' .
         '<textarea name="opis">' . htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8') . '</textarea><br />' .
         '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
-        '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 }

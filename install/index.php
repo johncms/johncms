@@ -256,7 +256,7 @@ switch ($act) {
         break;
 
     case 'changelog':
-        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        echo '<a href="?">&lt;&lt; ' . _t('Back') . '</a><br><br><br>';
         if (($changelog = file_get_contents('../CHANGELOG.md')) !== false) {
             $parsedown = new Parsedown();
             echo $parsedown->text($changelog);
@@ -264,7 +264,7 @@ switch ($act) {
         break;
 
     case 'license':
-        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        echo '<a href="?">&lt;&lt; ' . _t('Back') . '</a><br><br><br>';
         if (($changelog = file_get_contents('../LICENSE.md')) !== false) {
             $parsedown = new Parsedown();
             echo $parsedown->text($changelog);

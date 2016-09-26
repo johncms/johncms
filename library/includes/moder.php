@@ -74,7 +74,7 @@ $lng_gal = core::load_lng('gallery');
       break;
     }
     $db->exec($sql);
-    echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+    echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
     
   }
   else {
@@ -157,5 +157,5 @@ $lng_gal = core::load_lng('gallery');
     }
     echo '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 
     . '</div></div></form>' . PHP_EOL 
-    . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></p>' . PHP_EOL;
+    . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></p>' . PHP_EOL;
   }

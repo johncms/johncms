@@ -29,13 +29,13 @@ if ($rights > 6) {
         }
     }
 
-    echo '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a> | <b>' . $lng['transfer_file'] . '</b></div>';
+    echo '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a> | <b>' . $lng['transfer_file'] . '</b></div>';
 
     switch ($do) {
         case 'transfer':
             if ($catId) {
                 if ($catId == $res_down['refid']) {
-                    echo '<a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . $lng['back'] . '</a>';
+                    echo '<a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
                     exit;
                 }
 
@@ -114,7 +114,7 @@ if ($rights > 6) {
             }
     }
 
-    echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
+    echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
 } else {
     header('Location: ' . App::cfg()->sys->homeurl . '404');
 }

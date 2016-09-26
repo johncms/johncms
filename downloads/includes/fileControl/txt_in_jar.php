@@ -127,4 +127,4 @@ MIDlet-Jar-URL: ' . App::cfg()->sys->homeurl . '/' . $tmp; //TODO: Переде�
 echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
     '<div class="menu">' . $lng['download'] . ': <a href="' . htmlspecialchars($tmp) . '">JAR</a> | <a href="' . htmlspecialchars($tmp_jad) . '">JAD</a></div>' .
     '<div class="phdr">' . $lng['time_limit'] . '</div>' .
-    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></p>';
+    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';

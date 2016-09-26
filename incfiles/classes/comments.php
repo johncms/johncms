@@ -88,7 +88,7 @@ class comments
                         $attributes = unserialize($res['attributes']);
 
                         if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
-                            echo functions::display_error(core::$lng['error_reply_rights'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
+                            echo functions::display_error(core::$lng['error_reply_rights'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -111,7 +111,7 @@ class comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
+                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . core::_t('Back') . '</a>');
                             }
                         } else {
                             $text = '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
@@ -119,10 +119,10 @@ class comments
                                 functions::checkout($res['text']);
                             $reply = functions::checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
-                                '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
+                                '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
                         }
                     } else {
-                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
+                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
                     }
                 }
                 break;
@@ -139,7 +139,7 @@ class comments
                         $user = functions::get_user($res['user_id']);
 
                         if ($user['rights'] > core::$user_rights) {
-                            echo functions::display_error(core::$lng['error_edit_rights'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
+                            echo functions::display_error(core::$lng['error_edit_rights'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -167,7 +167,7 @@ class comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . core::$lng['back'] . '</a>');
+                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . core::_t('Back') . '</a>');
                             }
                         } else {
                             $author = '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
@@ -176,10 +176,10 @@ class comments
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
-                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::$lng['back'] . '</a>');
+                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
                     }
 
-                    echo '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
                 }
                 break;
 
@@ -223,7 +223,7 @@ class comments
                             '<div class="sub">' . core::$lng['clear_user_msg'] . '<br />' .
                             '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . core::$lng['clear'] . '</a></span>' .
                             '</div></p></div>' .
-                            '<div class="phdr"><a href="' . $this->url . '">' . core::$lng['back'] . '</a></div>';
+                            '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
                     }
                 }
                 break;

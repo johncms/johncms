@@ -71,7 +71,7 @@ if ($rights == 4 || $rights >= 6) {
     } else {
         echo '<div class="phdr"><b>' . $lng['delete_file'] . '</b></div>' .
             '<div class="rmenu"><p><a href="' . $url . '?act=delete_file&amp;id=' . $id . '&amp;yes"><b>' . $lng['delete'] . '</b></a></p></div>' .
-            '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+            '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
     header('Location: ' . App::cfg()->sys->homeurl . '404');

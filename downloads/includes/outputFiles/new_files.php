@@ -16,7 +16,7 @@ if ($id) {
     $res_down_cat = $cat->fetch();
 
     if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
-        echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('The directory does not exist') . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 

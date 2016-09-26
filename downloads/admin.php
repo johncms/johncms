@@ -83,7 +83,7 @@ $form
     ->element('submit', 'submit', [
         'value' => $lng['save'],
         'class' => 'btn btn-primary btn-large'])
-    ->html('<a class="btn" href="' . App::cfg()->sys->homeurl . 'admin/' . '">' . $lng['back'] . '</a>');
+    ->html('<a class="btn" href="' . App::cfg()->sys->homeurl . 'admin/' . '">' . _t('Back') . '</a>');
 
 if ($form->process() === true) {
     // Записываем настройки в базу

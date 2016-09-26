@@ -78,4 +78,4 @@ if (!$total) {
     }
 }
 
-echo '<div class="phdr"><a href="?">' . $lng['back'] . '</a></div>';
+echo '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>';

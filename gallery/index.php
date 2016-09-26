@@ -320,7 +320,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 echo $lng['date'] . ': ' . functions::display_date($ms['time']) . '<br>';
                 echo $lng_gal['posted_by'] . ": $ms[avtor]<br>";
                 echo "<a href='foto/$ms[name]'>" . $lng['download'] . "</a><br /><br />";
-                echo "<a href='index.php?id=" . $ms['refid'] . "'>" . $lng['back'] . "</a><br>";
+                echo "<a href='index.php?id=" . $ms['refid'] . "'>" . _t('Back') . "</a><br>";
                 echo "<a href='index.php'>" . $lng_gal['to_gallery'] . "</a></p>";
                 break;
             default :
