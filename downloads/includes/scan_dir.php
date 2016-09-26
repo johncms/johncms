@@ -77,7 +77,7 @@ if ($rights == 4 || $rights >= 6) {
                 $scan_dir = $res_down_cat['dir'];
 
                 if (!$cat->rowCount() || !is_dir($scan_dir)) {
-                    echo $lng['not_found_dir'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+                    echo $lng['not_found_dir'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
                     exit;
                 }
             } else {

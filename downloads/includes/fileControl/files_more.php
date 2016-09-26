@@ -12,7 +12,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($rights < 6 && $rights != 4)) {
-    echo '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 

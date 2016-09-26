@@ -16,7 +16,7 @@ if ($id) {
     $res_down_cat = $cat->fetch();
 
     if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
-        echo $lng['not_found_dir'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+        echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -56,4 +56,4 @@ if ($total > $kmess) {
         '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '?id=' . $id . '">' . $lng['download_title'] . '</a></p>';
+echo '<p><a href="' . $url . '?id=' . $id . '">' . _t('Downloads') . '</a></p>';

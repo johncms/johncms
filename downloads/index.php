@@ -11,12 +11,11 @@ $container = App::getContainer();
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$lng = core::load_lng('dl');
 $url = $set['homeurl'] . '/downloads/';
 
 //App::autoload()->import('Download', __DIR__ . DS . '_sys' . DS . 'classes' . DS . 'download.php');
 
-$textl = $lng['download_title'];
+$textl = _t('Downloads');
 $down_path = '../files/downloads'; //TODO: переделать на константы
 $screens_path = '../files/downloads/screen'; //TODO: переделать на константы
 $files_path = '../files/downloads/files'; //TODO: переделать на константы
@@ -44,9 +43,9 @@ if ($set_down['video_screen'] && !extension_loaded('ffmpeg')) {
 $error = '';
 
 if (!$set['mod_down'] && $rights < 7) {
-    $error = $lng['downloads_closed'];
+    $error = _t('Downloads are closed');
 } elseif ($set['mod_down'] == 1 && !$user_id) {
-    $error = $lng['access_guest_forbidden'];
+    $error = _t('For registered users only');
 }
 
 if ($error) {
@@ -135,7 +134,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require '../incfiles/head.php';
 
     if (!$set['mod_down']) {
-        echo '<div class="rmenu">' . $lng_dl['downloads_closed'] . '</div>';
+        echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';
     }
 
     // Получаем список файлов и папок
@@ -146,7 +145,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $res_down_cat = $cat->fetch();
 
         if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
-            echo $lng['not_found_dir'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+            echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
             exit;
         }
 
@@ -156,17 +155,17 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
-            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . $lng['new_files'] . '</a> (' . $total_new . ')<br />';
+            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br />';
         }
     } else {
-        $navigation = '<b>' . $lng['download_title'] . '</b></div>' .
+        $navigation = '<b>' . _t('Downloads') . '</b></div>' .
             '<div class="topmenu"><a href="' . $url . '?act=search">' . _t('Search') . '</a> | ' .
-            '<a href="' . $url . '?act=top_files&amp;id=0">' . $lng['top_files'] . '</a> | ' .
-            '<a href="' . $url . '?act=top_users">' . $lng['top_users'] . '</a>';
+            '<a href="' . $url . '?act=top_files&amp;id=0">' . _t('Top Files') . '</a> | ' .
+            '<a href="' . $url . '?act=top_users">' . _t('Top Users') . '</a>';
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old")->fetchColumn();
 
         if ($total_new) {
-            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . $lng['new_files'] . '</a> (' . $total_new . ')<br />';
+            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br />';
         }
     }
 
@@ -174,7 +173,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $mod_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
         if ($mod_files > 0) {
-            $notice .= '<a href="' . $url . '?act=mod_files">' . $lng['mod_files'] . '</a> ' . $mod_files;
+            $notice .= '<a href="' . $url . '?act=mod_files">' . _t('Files on moderation') . '</a> ' . $mod_files;
         }
     }
 
@@ -195,7 +194,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         if ($total_cat > 0) {
             // Выводи папки
             if ($total_files) {
-                echo '<div class="phdr"><b>' . $lng['list_category'] . '</b></div>';
+                echo '<div class="phdr"><b>' . _t('List of category') . '</b></div>';
             }
 
             $req_down = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $id . "' ORDER BY `sort` ASC ");
@@ -207,7 +206,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     '<a href="' . $url . '?id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['total'] . ')';
 
                 if ($res_down['field']) {
-                    echo '<div><small>' . $lng['extensions'] . ': <span class="green"><b>' . $res_down['text'] . '</b></span></small></div>';
+                    echo '<div><small>' . _t('Allowed extensions') . ': <span class="green"><b>' . $res_down['text'] . '</b></span></small></div>';
                 }
 
                 if ($rights == 4 || $rights >= 6 || !empty($res_down['desc'])) {
@@ -230,7 +229,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         if ($total_files > 0) {
             // Выводи файлы
             if ($total_cat) {
-                echo '<div class="phdr"><b>' . $lng['list_files'] . '</b></div>';
+                echo '<div class="phdr"><b>' . _t('List of Files') . '</b></div>';
             }
 
             if ($total_files > 1) {
@@ -254,13 +253,13 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                 $sql_sort = isset($_SESSION['sort_down']) && $_SESSION['sort_down'] ? ', `name`' : ', `time`';
                 $sql_sort .= isset($_SESSION['sort_down2']) && $_SESSION['sort_down2'] ? ' ASC' : ' DESC';
                 echo '<form action="' . $url . '?id=' . $id . '" method="post"><div class="topmenu">' .
-                    '<b>' . $lng['download_sort'] . ': </b>' .
+                    '<b>' . _t('Sorting') . ': </b>' .
                     '<select name="sort_down" style="font-size:x-small">' .
-                    '<option value="0"' . (!$_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . $lng['download_sort1'] . '</option>' .
-                    '<option value="1"' . ($_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . $lng['download_sort2'] . '</option></select> &amp; ' .
+                    '<option value="0"' . (!$_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . _t('by time') . '</option>' .
+                    '<option value="1"' . ($_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . _t('by name') . '</option></select> &amp; ' .
                     '<select name="sort_down2" style="font-size:x-small">' .
-                    '<option value="0"' . (!$_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . $lng['download_sort3'] . '</option>' .
-                    '<option value="1"' . ($_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . $lng['download_sort4'] . '</option></select>' .
+                    '<option value="0"' . (!$_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . _t('descending') . '</option>' .
+                    '<option value="1"' . ($_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . _t('ascending') . '</option></select>' .
                     '<input type="submit" value="&gt;&gt;" style="font-size:x-small"/></div></form>';
             } else {
                 $sql_sort = '';
@@ -287,7 +286,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     echo '<div class="phdr">';
 
     if ($total_cat || !$total_files) {
-        echo $lng['total_dir'] . ': ' . $total_cat;
+        echo _t('Folders') . ': ' . $total_cat;
     }
 
     if ($total_cat && $total_files) {
@@ -295,7 +294,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     }
 
     if ($total_files) {
-        echo $lng['total_files'] . ': ' . $total_files;
+        echo _t('Files') . ': ' . $total_files;
     }
 
     echo '</div>';
@@ -305,29 +304,29 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
             '<p><form action="' . $url . '" method="get">' .
             '<input type="hidden" name="id" value="' . $id . '"/>' .
-            '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
     if ($rights == 4 || $rights >= 6) {
         // Выводим ссылки на модерские функции
         echo '<p><div class="func">';
-        echo '<div><a href="?act=add_cat&amp;id=' . $id . '">' . $lng['download_add_cat'] . '</a></div>';
+        echo '<div><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Create a folder') . '</a></div>';
 
         if ($id) {
-            echo '<div><a href="?act=delete_cat&amp;id=' . $id . '">' . $lng['download_del_cat'] . '</a></div>';
-            echo '<div><a href="?act=edit_cat&amp;id=' . $id . '">' . $lng['download_edit_cat'] . '</a></div>';
-            echo '<div><a href="?act=import&amp;id=' . $id . '">' . $lng['download_import'] . '</a></div>';
-            echo '<div><a href="?act=down_file&amp;id=' . $id . '">' . $lng['download_upload_file'] . '</a></div>';
+            echo '<div><a href="?act=delete_cat&amp;id=' . $id . '">' . _t('Delete Folder') . '</a></div>';
+            echo '<div><a href="?act=edit_cat&amp;id=' . $id . '">' . _t('Change Folder') . '</a></div>';
+            echo '<div><a href="?act=import&amp;id=' . $id . '">' . _t('Import File') . '</a></div>';
+            echo '<div><a href="?act=down_file&amp;id=' . $id . '">' . _t('Upload File') . '</a></div>';
         }
 
-        echo '<div><a href="?act=scan_dir&amp;id=' . $id . '">' . $lng['download_scan_dir'] . '</a></div>';
-        echo '<div><a href="?act=clean&amp;id=' . $id . '">' . $lng['download_clean'] . '</a></div>';
-        echo '<div><a href="?act=scan_about&amp;id=' . $id . '">' . $lng['download_scan_about'] . '</a></div>';
-        echo '<div><a href="?act=recount&amp;id=' . $id . '">' . $lng['download_recount'] . '</a></div>';
+        echo '<div><a href="?act=scan_dir&amp;id=' . $id . '">' . _t('Update Files') . '</a></div>';
+        echo '<div><a href="?act=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
+        echo '<div><a href="?act=scan_about&amp;id=' . $id . '">' . _t('Update descriptions') . '</a></div>';
+        echo '<div><a href="?act=recount&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
         echo '</div></p>';
     } else {
         if (isset($res_down_cat['field']) && $res_down_cat['field'] && $user_id && $id) {
-            echo '<p><div class="func"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['download_upload_file'] . '</a></div></p>';
+            echo '<p><div class="func"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Upload File') . '</a></div></p>';
         }
     }
 
@@ -335,13 +334,13 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     echo '<p>';
 
     if ($id) {
-        echo '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+        echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     } else {
         if ($rights >= 7 || isset($set['mod_down_comm']) && $set['mod_down_comm']) {
-            echo '<a href="' . $url . '?act=review_comments">' . $lng['review_comments'] . '</a><br />';
+            echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br />';
         }
 
-        echo '<a href="' . $url . '?act=bookmark">' . $lng['download_bookmark'] . '</a>';
+        echo '<a href="' . $url . '?act=bookmark">' . _t('Favorites') . '</a>';
     }
 
     echo '</p>';

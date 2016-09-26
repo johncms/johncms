@@ -41,4 +41,4 @@ while ($res_down = $req_down->fetch()) {
     echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down, 1) . '</div>';
 }
 
-echo '<div class="phdr"><a href="' . $url . '">' . $lng['download_title'] . '</a></div>';
+echo '<div class="phdr"><a href="' . $url . '">' . _t('Downloads') . '</a></div>';
