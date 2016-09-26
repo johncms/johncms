@@ -9,7 +9,7 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 // Комментарии
 //TODO: Переделать на получение настроек из таблицы модулей
 if (!App::cfg()->sys->acl_downloads_comm && $rights < 7) {
-    echo $lng['comments_cloded'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo $lng['comments_cloded'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -20,7 +20,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
-    echo $lng['not_found_file'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 

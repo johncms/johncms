@@ -25,7 +25,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || (functions::format($res_down['name']) != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
-    echo $lng['not_found_file'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -35,7 +35,7 @@ if (isset($_GET['more'])) {
     $res_more = $req_more->fetch();
 
     if (!$req_more->rowCount() || !is_file($res_down['dir'] . '/' . $res_more['name']) || functions::format($res_more['name']) != 'txt') {
-        echo $lng['not_found_file'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+        echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 

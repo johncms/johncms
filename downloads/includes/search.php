@@ -12,7 +12,7 @@ $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
 // Форма для поиска
-echo '<div class="phdr"><a href="' . $url . '"><b>' . $lng['download_title'] . '</b></a> | ' . $lng['search'] . '</div>' .
+echo '<div class="phdr"><a href="' . $url . '"><b>' . _t('Downloads') . '</b></a> | ' . $lng['search'] . '</div>' .
     '<form action="' . $url . '?act=search" method="post"><div class="gmenu"><p>' .
     $lng['name_file'] . ':<br /><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br />' .
     '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . $lng['search_for_desc'] . '<br />' .
@@ -79,4 +79,4 @@ if ($search && !$error) {
     echo '<div class="phdr"><small>' . $lng['search_faq'] . '</small></div>';
 }
 
-echo '<p><a href="' . $url . '">' . $lng['download_title'] . '</a></p>';
+echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';

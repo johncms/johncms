@@ -360,7 +360,7 @@ class Download
     public static function navigation($array = [])
     {
         $lng = core::load_lng('dl');
-        $category = ['<a href="?"><b>' . $lng['download_title'] . '</b></a>'];
+        $category = ['<a href="?"><b>' . _t('Downloads') . '</b></a>'];
 
         if ($array['refid']) {
             $sql = [];

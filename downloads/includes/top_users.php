@@ -43,4 +43,4 @@ if ($total > $kmess) {
         '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '">' . $lng['download_title'] . '</a></p>';
+echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';

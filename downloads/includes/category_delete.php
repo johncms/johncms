@@ -18,7 +18,7 @@ if ($rights == 4 || $rights >= 6) {
     $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
 
     if (!$req->rowCount() || $del_cat) {
-        echo ($del_cat ? $lng['sub_catalogs'] : $lng['not_found_dir']) . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+        echo ($del_cat ? $lng['sub_catalogs'] : $lng['not_found_dir']) . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 

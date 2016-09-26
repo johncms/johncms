@@ -182,7 +182,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
         echo $lng['access_forbidden '] . ' <a href="' . $url . '?id=' . $id . '">' . $lng['back'] . '</a>';
     }
 } else {
-    echo $lng['not_found_dir'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 

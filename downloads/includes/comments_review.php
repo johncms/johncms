@@ -9,7 +9,7 @@ require_once '../incfiles/head.php';
 // Обзор комментариев
 //TODO: Переделать на получение настроек из таблицы модулей
 //if (!App::cfg()->sys->acl_downloads_comm && $rights < 7) {
-//    echo $lng['comments_cloded'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+//    echo $lng['comments_cloded'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
 //    exit;
 //}
 
@@ -94,5 +94,5 @@ if ($total > $kmess) {
         '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '">' . $lng['download_title'] . '</a></p>';
+echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';
 require_once '../incfiles/end.php';

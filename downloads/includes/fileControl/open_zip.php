@@ -25,7 +25,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
-    echo $lng['not_found_file'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+    echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -35,7 +35,7 @@ if (isset($_GET['more'])) {
     $res_more = $req_more->fetch();
 
     if (!$req_more->rowCount() || !is_file($res_down['dir'] . '/' . $res_more['name'])) {
-        echo $lng['not_found_file'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+        echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -154,7 +154,7 @@ if (!isset($_GET['file'])) {
 
     if (in_array($format_file, $array)) {
         if (!$content) {
-            echo $lng['not_found_file'] . ' <a href="' . $url . '">' . $lng['download_title'] . '</a>';
+            echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
             exit;
         }
 
@@ -268,4 +268,4 @@ if (!isset($_GET['file'])) {
     echo '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . '&amp;page=' . $page . $isset_more . '">' . $lng['back'] . '</a><br />';
 }
 
-echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . $lng['download_title'] . '</a></p>';
+echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Downloads') . '</a></p>';

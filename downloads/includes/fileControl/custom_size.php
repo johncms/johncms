@@ -22,7 +22,7 @@ if ($val < 50 || $val > 100) {
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || !in_array($format_file, $pic_ext) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4) || empty($array[$size_img])) {
     $lng = core::load_lng('dl');
-    echo $lng['not_found_file'] . ' <a href="?">' . $lng['download_title'] . '</a>';
+    echo $lng['not_found_file'] . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 

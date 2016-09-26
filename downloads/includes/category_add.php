@@ -19,7 +19,7 @@ if ($rights == 4 || $rights >= 6) {
         $res_down = $req_down->fetch();
 
         if (!$req_down->rowCount() || !is_dir($res_down['dir'])) {
-            echo $lng['not_found_dir'] . '<a href="' . $url . '">' . $lng['download_title'] . '</a>';
+            echo $lng['not_found_dir'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
             exit;
         }
 
