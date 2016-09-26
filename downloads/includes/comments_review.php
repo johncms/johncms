@@ -91,7 +91,7 @@ if ($total > $kmess) {
     echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="' . $url . '" method="get">' .
         '<input type="hidden" value="review_comments" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
 echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';

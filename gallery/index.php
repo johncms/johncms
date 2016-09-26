@@ -89,7 +89,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                             $kmess) . '</p>' .
                         '<p><form action="index.php?id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
 
@@ -230,7 +230,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                             $kmess) . '</p>' .
                         '<p><form action="index.php?id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
 

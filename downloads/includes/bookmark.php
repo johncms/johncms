@@ -4,15 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
 $url = $set['homeurl'] . '/downloads/';
 
 // Закладки
-$textl = $lng['download_bookmark'];
+$textl = _t('Favorites');
 require '../incfiles/head.php';
 
 if (!$user_id) {
-    echo $lng['access_guest_forbidden'];
+    echo _t('For registered users only');
     exit;
 }
 
@@ -45,7 +44,7 @@ if ($total > $kmess) {
     echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=bookmark&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="' . $url . '" method="get">' .
         '<input type="hidden" value="bookmark" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
 echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';

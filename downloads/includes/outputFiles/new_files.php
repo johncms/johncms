@@ -53,7 +53,7 @@ if ($total > $kmess) {
         '<p><form action="' . $url . '" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .
-        '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+        '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
 echo '<p><a href="' . $url . '?id=' . $id . '">' . _t('Downloads') . '</a></p>';

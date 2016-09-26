@@ -100,7 +100,7 @@ if ($search && !$error) {
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>'
             . '<div><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">'
             . '<input type="text" name="page" size="2"/>'
-            . '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>'
+            . '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>'
             . '</form></div>';
     }
 } else {

@@ -67,7 +67,7 @@ if ($search && !$error) {
             '<input type="hidden" value="' . $check_search . '" name="search" />' .
             '<input type="hidden" value="search" name="act" />' .
             '<input type="hidden" value="' . $id . '" name="id" />' .
-            '<input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+            '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
     echo '<p><a href="' . $url . '?act=search">' . $lng['search_new'] . '</a></p>';
 } else {
