@@ -2,8 +2,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 // Редактирование категорий
@@ -17,7 +15,7 @@ if ($rights == 4 || $rights >= 6) {
     $res = $req->fetch();
 
     if (!$req->rowCount() || !is_dir($res['dir'])) {
-        echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('The directory does not exist') . ' <a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -39,7 +37,7 @@ if ($rights == 4 || $rights >= 6) {
             $db->exec("UPDATE `download__category` SET `sort` = '" . $res['sort'] . "' WHERE `id` = '" . $res_two['id'] . "' LIMIT 1");
         }
 
-        header('location: ' . $url . '?id=' . $res['refid']);
+        header('location: ?id=' . $res['refid']);
         exit;
     }
 
@@ -69,11 +67,11 @@ if ($rights == 4 || $rights >= 6) {
         }
 
         if ($error_format) {
-            $error[] = $lng['extensions_ok'] . ': ' . implode(', ', $defaultExt);
+            $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
         }
 
         if ($error) {
-            echo $error . ' <a href="' . $url . '?act=edit_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+            echo $error . ' <a href="?act=edit_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             exit;
         }
 
@@ -96,18 +94,18 @@ if ($rights == 4 || $rights >= 6) {
             $id,
         ]);
 
-        header('location: ' . $url . '?id=' . $id);
+        header('location: ?id=' . $id);
     } else {
         $name = htmlspecialchars($res['rus_name']);
-        echo '<div class="phdr"><b>' . $lng['download_edit_cat'] . ':</b> ' . $name . '</div>' .
-            '<div class="menu"><form action="' . $url . '?act=edit_cat&amp;id=' . $id . '" method="post">' .
-            $lng['dir_name_view'] . ':<br/><input type="text" name="rus_name" value="' . $name . '"/><br/>' .
-            $lng['dir_desc'] . ' (max. 500):<br/><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br/>';
+        echo '<div class="phdr"><b>' . _t('Change Folder') . ':</b> ' . $name . '</div>' .
+            '<div class="menu"><form action="?act=edit_cat&amp;id=' . $id . '" method="post">' .
+            _t('Title to display') . ':<br/><input type="text" name="rus_name" value="' . $name . '"/><br/>' .
+            _t('Description') . ' (max. 500):<br/><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br/>';
 
         if ($rights == 9) {
-            echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . $lng['user_download'] . '<br/>' .
-                $lng['extensions'] . ':<br/><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
-                '<div class="sub">' . $lng['extensions_ok'] . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
+            echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br/>' .
+                _t('Allowed extensions') . ':<br/><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form></div>';
@@ -115,6 +113,4 @@ if ($rights == 4 || $rights >= 6) {
 
     echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     require_once('../incfiles/end.php');
-} else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
 }
