@@ -129,7 +129,7 @@ if ($rights == 4 || $rights >= 6) {
                     }
                 }
 
-                echo '<div class="menu"><a href="' . $url . '?act=view&amp;id=' . $file_id . '">' . $lng['continue'] . '</a></div>';
+                echo '<div class="menu"><a href="' . $url . '?act=view&amp;id=' . $file_id . '">' . _t('Continue') . '</a></div>';
                 $dirid = $id;
                 $sql = '';
                 $i = 0;
