@@ -2,25 +2,21 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 require_once '../incfiles/head.php';
 
 // Обзор комментариев
-//TODO: Переделать на получение настроек из таблицы модулей
-//if (!App::cfg()->sys->acl_downloads_comm && $rights < 7) {
-//    echo $lng['comments_cloded'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
-//    exit;
-//}
+if (!$set['mod_down_comm'] && $rights < 7) {
+    echo _t('Comments are disabled') . '<a href="?">' . _t('Downloads') . '</a>';
+    exit;
+}
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$textl = $lng['review_comments'];
+$textl = _t('Review comments');
 
-//TODO: Переделать на получение настроек из таблицы модулей
-//if (!App::cfg()->sys->acl_downloads_comm) {
-//    echo '<div class="rmenu">' . $lng['comments_cloded'] . '</div>';
-//}
+if (!$set['mod_down_comm']) {
+    echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
+}
 
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 $total = $db->query("SELECT COUNT(*) FROM `download__comments`")->fetchColumn();
@@ -32,7 +28,7 @@ if ($total) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=review_comments&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . Functions::displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>';
     }
 
     // Выводим список
@@ -46,7 +42,7 @@ if ($total) {
             $post = Functions::smilies($post, $res['rights'] >= 1 ? 1 : 0);
         }
 
-        $subtext = '<a href="index.php?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="' . $url . '?act=comments&amp;id=' . $res['sub_id'] . '">' . $lng['comments'] . '</a>';
+        $subtext = '<a href="index.php?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="?act=comments&amp;id=' . $res['sub_id'] . '">' . _t('Comments') . '</a>';
         $attributes = unserialize($res['attributes']);
         $res['nickname'] = $attributes['author_name'];
         $res['ip'] = $attributes['author_ip'];
@@ -88,11 +84,11 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="' . $url . '" method="get">' .
+    echo '<div class="topmenu">' . Functions::displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?" method="get">' .
         '<input type="hidden" value="review_comments" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';
+echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
 require_once '../incfiles/end.php';
