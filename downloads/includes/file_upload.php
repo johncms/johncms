@@ -4,8 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 require_once('../incfiles/head.php');
 
@@ -48,23 +46,23 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if ($fsize > 1024 * $set['flsz']) {
-                    $error[] = $lng['error_file_size'] . ' ' . $set['flsz'] . 'kb.';
+                    $error[] = _t('The weight of the file exceeds') . ' ' . $set['flsz'] . 'kb.';
                 }
 
                 if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
-                    $error[] = $lng['error_file_ext'] . ': ' . implode(', ', $al_ext);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
                 if (strlen($fname) > 100) {
-                    $error[] = $lng['error_file_name_size '];
+                    $error[] = _t('The file name length must not exceed 100 characters');
                 }
 
                 if (preg_match("/[^\da-z_\-.]+/", $fname)) {
-                    $error[] = $lng['error_file_symbols'];
+                    $error[] = _t('The file name contains invalid characters');
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+                    $error[] = '<a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                 } else {
                     if (file_exists("$load_cat/$fname")) {
@@ -72,13 +70,13 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     }
 
                     if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "$load_cat/$fname")) == true) {
-                        echo '<div class="phdr"><b>' . $lng['download_upload_file'] . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>';
+                        echo '<div class="phdr"><b>' . _t('Upload File') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>';
                         @chmod("$fname", 0777);
                         @chmod("$load_cat/$fname", 0777);
-                        echo '<div class="gmenu">' . $lng['upload_file_ok'];
+                        echo '<div class="gmenu">' . _t('File attached');
 
                         if ($set_down['mod'] && ($rights < 6 && $rights != 4)) {
-                            echo $lng['upload_file_mod'];
+                            echo _t('If you pass moderation, it will be added to the Downloads');
                             $type = 3;
                         } else {
                             $type = 2;
@@ -130,16 +128,16 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             $handle->process($screens_path . '/' . $file_id . '/');
 
                             if ($handle->processed) {
-                                echo '<div class="gmenu">' . $lng['upload_screen_ok'] . '</div>';
+                                echo '<div class="gmenu">' . _t('Screenshot is attached') . '</div>';
                             } else {
-                                echo '<div class="rmenu">' . $lng['upload_screen_no'] . ': ' . $handle->error . '</div>';
+                                echo '<div class="rmenu">' . _t('Screenshot not attached') . ': ' . $handle->error . '</div>';
                             }
                         } else {
-                            echo '<div class="rmenu">' . $lng['upload_screen_no'] . '</div>';
+                            echo '<div class="rmenu">' . _t('Screenshot not attached') . '</div>';
                         }
 
                         if (!$set_down['mod'] || $rights > 6 || $rights == 4) {
-                            echo '<div class="menu"><a href="' . $url . '?act=view&amp;id=' . $file_id . '">' . $lng['continue'] . '</a></div>';
+                            echo '<div class="menu"><a href="?act=view&amp;id=' . $file_id . '">' . _t('Continue') . '</a></div>';
                             $dirid = $id;
                             $sql = '';
                             $i = 0;
@@ -156,33 +154,33 @@ if ($req->rowCount() && is_dir($res['dir'])) {
 
                             $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
                         }
-                        echo '<div class="phdr"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
+                        echo '<div class="phdr"><a href="?act=down_file&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
                     } else {
-                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                        echo '<div class="rmenu">' . _t('File not attached') . '<br /><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                echo '<div class="rmenu">' . _t('File not attached') . '<br /><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
-            echo '<div class="phdr"><b>' . $lng['download_upload_file'] . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>' .
-                '<div class="list1"><form action="' . $url . '?act=down_file&amp;id=' . $id . '" method="post" enctype="multipart/form-data">' .
-                $lng['select_file'] . '<span class="red">*</span>:<br /><input type="file" name="fail"/><br />' .
-                $lng['save_name_file'] . ':<br /><input type="text" name="new_file"/><br />' .
-                $lng['screen_file'] . ':<br /><input type="file" name="screen"/><br />' .
-                $lng['name_file'] . ' (мах. 200):<br /><input type="text" name="text"/><br />' .
-                $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br /><input type="text" name="name_link" value="' . $lng['download_file'] . '"/><br />' .
-                $lng['dir_desc'] . ' (max. 500)<br /><textarea name="opis"></textarea><br />' .
+            echo '<div class="phdr"><b>' . _t('Upload File') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>' .
+                '<div class="list1"><form action="?act=down_file&amp;id=' . $id . '" method="post" enctype="multipart/form-data">' .
+                _t('Select File') . '<span class="red">*</span>:<br /><input type="file" name="fail"/><br />' .
+                _t('Save as (max. 30, without extension)') . ':<br /><input type="text" name="new_file"/><br />' .
+                _t('Screenshot') . ':<br /><input type="file" name="screen"/><br />' .
+                _t('File Name') . ' (мах. 200):<br /><input type="text" name="text"/><br />' .
+                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br /><input type="text" name="name_link" value="' . _t('Download File') . '"/><br />' .
+                _t('Description') . ' (max. 500)<br /><textarea name="opis"></textarea><br />' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-                '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . $set['flsz'] . 'kb<br />' .
-                $lng['extensions'] . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>' .
-                '<p><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></p>';
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br />' .
+                _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+                '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     } else {
-        echo $lng['access_forbidden '] . ' <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a>';
+        echo _t('Access forbidden') . ' <a href="?id=' . $id . '">' . _t('Back') . '</a>';
     }
 } else {
-    echo _t('The directory does not exist') . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
