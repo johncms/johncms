@@ -42,8 +42,8 @@ if ($edit) {
         echo '<div class="phdr"><b>' . htmlspecialchars($res_down['rus_name']) . '</b></div>' .
             '<div class="gmenu"><b>' . $lng['edit_file'] . '</b></div>' .
             '<div class="list1"><form action="' . $url . '?act=files_more&amp;id=' . $id . '&amp;edit=' . $edit . '"  method="post">' .
-            $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br />' .
-            '<input type="text" name="name_link" value="' . $res_file_more['rus_name'] . '"/><br />' .
+            $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br>' .
+            '<input type="text" name="name_link" value="' . $res_file_more['rus_name'] . '"/><br>' .
             '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form>' .
             '</div><div class="phdr"><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
@@ -62,7 +62,7 @@ if ($edit) {
             $db->exec("DELETE FROM `download__more` WHERE `id` = '$del' LIMIT 1");
             header('Location: ' . $url . '?act=files_more&id=' . $id);
         } else {
-            echo '<div class="rmenu">' . $lng['delete_confirmation'] . '<br /> <a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . $lng['delete'] . '</a> | <a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['cancel'] . '</a></div>';
+            echo '<div class="rmenu">' . $lng['delete_confirmation'] . '<br> <a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . $lng['delete'] . '</a> | <a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['cancel'] . '</a></div>';
         }
     } else {
         if (isset($_POST['submit'])) {
@@ -149,7 +149,7 @@ if ($edit) {
                     if ($up_file == true) {
                         @chmod("$fname", 0777);
                         @chmod("$res_down[dir]/$fname", 0777);
-                        echo '<div class="gmenu">' . $lng['upload_file_ok'] . '<br />' .
+                        echo '<div class="gmenu">' . $lng['upload_file_ok'] . '<br>' .
                             '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '&amp;act=view">' . _t('Back') . '</a></div>';
 
                         $stmt = $db->prepare("
@@ -166,25 +166,25 @@ if ($edit) {
                             intval($fsize),
                         ]);
                     } else {
-                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
             // Выводим форму
             echo '<div class="phdr"><b>' . $lng['files_more'] . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
                 '<div class="menu"><form action="' . $url . '?act=files_more&amp;id=' . $id . '"  method="post" enctype="multipart/form-data">' .
-                $lng['select_file'] . '<span class="red">*</span>::<br /><input type="file" name="fail"/><br />' .
-                $lng['or_link_to_it'] . ':<br /><input type="post" name="link_file" value=""/><br />' .
-                $lng['save_name_file'] . ':<br /><input type="text" name="new_file"/><br />' .
-                $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br />' .
-                '<input type="text" name="name_link" value="' . $lng['download_file_more'] . '"/><br />' .
+                $lng['select_file'] . '<span class="red">*</span>::<br><input type="file" name="fail"/><br>' .
+                $lng['or_link_to_it'] . ':<br><input type="post" name="link_file" value=""/><br>' .
+                $lng['save_name_file'] . ':<br><input type="text" name="new_file"/><br>' .
+                $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br>' .
+                '<input type="text" name="name_link" value="' . $lng['download_file_more'] . '"/><br>' .
                 '<input type="submit" name="submit" value="' . $lng['upload'] . '"/>' .
                 '</form></div>' .
-                '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . App::cfg()->sys->filesize . 'kb<br />' .
-                $lng['extensions'] . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>';
+                '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . App::cfg()->sys->filesize . 'kb<br>' .
+                $lng['extensions'] . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . $lng['add_screen_faq'] : '') . '</small></div>';
 
             // Дополнительные файлы
             $req_file_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = " . $id);
@@ -197,7 +197,7 @@ if ($edit) {
                     $format_file = strtolower($format[count($format) - 1]);
                     echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">');
                     echo '<b>' . $res_file_more['rus_name'] . '</b>' .
-                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . functions::displayDate($res_file_more['time']) . '<br />' .
+                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . functions::displayDate($res_file_more['time']) . '<br>' .
                         '<a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;edit=' . $res_file_more['id'] . '">' . $lng['edit'] . '</a> | ' .
                         '<span class="red"><a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;del=' . $res_file_more['id'] . '">' . $lng['delete'] . '</a></span></div></div>';
                 }

@@ -72,7 +72,7 @@ if (is_dir($screens_path . '/' . $id)) {
 
 // Плейер видео файлов
 if (($format_file == 'mp4' || $format_file == 'flv') && !Functions::isMobile()) {
-    echo '<div class="menu"><b>' . $lng['view'] . '</b><br />
+    echo '<div class="menu"><b>' . $lng['view'] . '</b><br>
 	<div id="mediaplayer">JW Player goes here</div>
     <script type="text/javascript" src="' . $homeurl . 'files/download/system/players/mediaplayer-5.7-viral/jwplayer.js"></script>
     <script type="text/javascript">
@@ -89,7 +89,7 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
     $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
     //echo '<div class="gmenu"><img src="' . Vars::$HOME_URL . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
     $screen[] = $res_down['dir'] . '/' . $res_down['name'];
-    $text_info = '<b>' . $lng['resolution'] . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br />';
+    $text_info = '<b>' . $lng['resolution'] . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
 } else {
     if (($format_file == '3gp' || $format_file == 'avi' || $format_file == 'mp4') && !$screen && $set_down['video_screen']) {
         $screen[] = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
@@ -99,7 +99,7 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
         if (!Functions::isMobile()) {//TODO: убрать Flash
             $text_info = '<object type="application/x-shockwave-flash" data="' . $homeurl . 'files/download/system/players/player.swf" width="240" height="20" id="dewplayer" name="dewplayer">' .
                 '<param name="wmode" value="transparent" /><param name="movie" value="' . $homeurl . 'files/download/system/download/players/player.swf" />' .
-                '<param name="flashVars" value="mp3=' . $homeurl . str_replace('../', '', $res_down['dir']) . '/' . $res_down['name'] . '" /> </object><br />';
+                '<param name="flashVars" value="mp3=' . $homeurl . str_replace('../', '', $res_down['dir']) . '/' . $res_down['name'] . '" /> </object><br>';
         }
 
         require(SYSPATH . 'lib/getid3/getid3.php');
@@ -116,26 +116,26 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
             $mp3info = false;
         }
 
-        $text_info .= '<b>' . $lng['mp3_channels'] . '</b>: ' . $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')<br/>' .
-            '<b>' . $lng['mp3_sample_rate'] . '</b>: ' . ceil($getid['audio']['sample_rate'] / 1000) . ' KHz<br/>' .
-            '<b>' . $lng['mp3_bitrate'] . '</b>: ' . ceil($getid['audio']['bitrate'] / 1000) . ' Kbit/s<br/>' .
-            '<b>' . $lng['mp3_playtime_seconds'] . '</b>: ' . date('i:s', $getid['playtime_seconds']) . '<br />';
+        $text_info .= '<b>' . $lng['mp3_channels'] . '</b>: ' . $getid['audio']['channels'] . ' (' . $getid['audio']['channelmode'] . ')<br>' .
+            '<b>' . $lng['mp3_sample_rate'] . '</b>: ' . ceil($getid['audio']['sample_rate'] / 1000) . ' KHz<br>' .
+            '<b>' . $lng['mp3_bitrate'] . '</b>: ' . ceil($getid['audio']['bitrate'] / 1000) . ' Kbit/s<br>' .
+            '<b>' . $lng['mp3_playtime_seconds'] . '</b>: ' . date('i:s', $getid['playtime_seconds']) . '<br>';
 
         if ($mp3info) {
             if (isset($tagsArray['artist'][0])) {
-                $text_info .= '<b>' . $lng['mp3_artist'] . '</b>: ' . Download::mp3tagsOut($tagsArray['artist'][0]) . '<br />';
+                $text_info .= '<b>' . $lng['mp3_artist'] . '</b>: ' . Download::mp3tagsOut($tagsArray['artist'][0]) . '<br>';
             }
             if (isset($tagsArray['title'][0])) {
-                $text_info .= '<b>' . $lng['mp3_title'] . '</b>: ' . Download::mp3tagsOut($tagsArray['title'][0]) . '<br />';
+                $text_info .= '<b>' . $lng['mp3_title'] . '</b>: ' . Download::mp3tagsOut($tagsArray['title'][0]) . '<br>';
             }
             if (isset($tagsArray['album'][0])) {
-                $text_info .= '<b>' . $lng['mp3_album'] . '</b>: ' . Download::mp3tagsOut($tagsArray['album'][0]) . '<br />';
+                $text_info .= '<b>' . $lng['mp3_album'] . '</b>: ' . Download::mp3tagsOut($tagsArray['album'][0]) . '<br>';
             }
             if (isset($tagsArray['genre'][0])) {
-                $text_info .= '<b>' . $lng['mp3_genre'] . '</b>: ' . Download::mp3tagsOut($tagsArray['genre'][0]) . '<br />';
+                $text_info .= '<b>' . $lng['mp3_genre'] . '</b>: ' . Download::mp3tagsOut($tagsArray['genre'][0]) . '<br>';
             }
             if (intval($tagsArray['year'][0])) {
-                $text_info .= '<b>' . $lng['mp3_year'] . '</b>: ' . (int)$tagsArray['year'][0] . '<br />';
+                $text_info .= '<b>' . $lng['mp3_year'] . '</b>: ' . (int)$tagsArray['year'][0] . '<br>';
             }
         }
     }
@@ -150,10 +150,10 @@ if ($screen) {
         }
 
         echo '<div class="topmenu"> ' . Functions::displayPagination($url . '?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
-            '<div class="gmenu"><b>' . $lng['screen_file'] . ' (' . $page . '/' . $total . '):</b><br />' .
+            '<div class="gmenu"><b>' . $lng['screen_file'] . ' (' . $page . '/' . $total . '):</b><br>' .
             '<img src="' . $homeurl . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
     } else {
-        echo '<div class="gmenu"><b>' . $lng['screen_file'] . ':</b><br />' .
+        echo '<div class="gmenu"><b>' . $lng['screen_file'] . ':</b><br>' .
             '<img src="' . $homeurl . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
     }
 }
@@ -164,9 +164,9 @@ App::user()->settings['avatars'] = 0;
 //TODO: Переделать на класс Users
 //$user = Mobi::getUser();
 $user = 'Admin';
-echo '<div class="list1"><b>' . $lng['name_for_server'] . ':</b> ' . $res_down['name'] . '<br />' .
-    '<b>' . $lng['user_upload'] . ':</b> ' . $user . '<br />' . $text_info .
-    '<b>' . $lng['number_of_races'] . ':</b> ' . $res_down['field'] . '<br />';
+echo '<div class="list1"><b>' . $lng['name_for_server'] . ':</b> ' . $res_down['name'] . '<br>' .
+    '<b>' . $lng['user_upload'] . ':</b> ' . $user . '<br>' . $text_info .
+    '<b>' . $lng['number_of_races'] . ':</b> ' . $res_down['field'] . '<br>';
 
 if ($res_down['about']) {
     echo '<b>' . $lng['dir_desc'] . ':</b> ' . htmlspecialchars($res_down['about']);
@@ -184,7 +184,7 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_fi
     }
 
     $db->exec("UPDATE `download__files` SET `rate`='" . $file_rate[0] . '|' . $file_rate[1] . "' WHERE `id`=" . $id);
-    echo '<b><span class="green">' . $lng['your_vote'] . '</span></b><br />';
+    echo '<b><span class="green">' . $lng['your_vote'] . '</span></b><br>';
     $_SESSION['rate_file_' . $id] = true;
 }
 
@@ -197,7 +197,7 @@ if (!isset($_SESSION['rate_file_' . $id]) && $user_id) {
     echo '(+/-)';
 }
 
-echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br />' .
+echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
     '<img src="' . $homeurl . 'assets/misc/rating.php?img=' . $sum . '" alt="' . $lng['rating'] . '" />';
 
 // Скачка изображения в особом размере
@@ -215,7 +215,7 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
         ++$img;
     }
 
-    echo '</select><br />' .
+    echo '</select><br>' .
         $lng['quality'] . ': <select name="val">' .
         '<option value="100">100</option>' .
         '<option value="90">90</option>' .
@@ -223,8 +223,8 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
         '<option value="70">70</option>' .
         '<option value="60">60</option>' .
         '<option value="50">50</option>' .
-        '</select><br />' .
-        '<input name="proportion" type="checkbox" value="1" />&nbsp;' . $lng['proportion'] . '<br />' .
+        '</select><br>' .
+        '<input name="proportion" type="checkbox" value="1" />&nbsp;' . $lng['proportion'] . '<br>' .
         '<input type="submit" value="' . $lng['download'] . '" /></form>';
 }
 
@@ -267,16 +267,16 @@ echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 're
 // Управление файлами
 if ($rights > 6 || $rights == 4) {
     echo '<p><div class="func">' .
-        '<a href="' . $url . '?act=edit_file&amp;id=' . $id . '">' . $lng['edit_file'] . '</a><br />' .
-        '<a href="' . $url . '?act=edit_about&amp;id=' . $id . '">' . $lng['edit_about'] . '</a><br />' .
-        '<a href="' . $url . '?act=edit_screen&amp;id=' . $id . '">' . $lng['edit_screen'] . '</a><br />' .
-        '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['files_more'] . '</a><br />' .
+        '<a href="' . $url . '?act=edit_file&amp;id=' . $id . '">' . $lng['edit_file'] . '</a><br>' .
+        '<a href="' . $url . '?act=edit_about&amp;id=' . $id . '">' . $lng['edit_about'] . '</a><br>' .
+        '<a href="' . $url . '?act=edit_screen&amp;id=' . $id . '">' . $lng['edit_screen'] . '</a><br>' .
+        '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['files_more'] . '</a><br>' .
         '<a href="' . $url . '?act=delete_file&amp;id=' . $id . '">' . $lng['delete_file'] . '</a>';
 
     if ($rights > 6) {
-        echo '<br /><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '">' . $lng['transfer_file'] . '</a>';
+        echo '<br><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '">' . $lng['transfer_file'] . '</a>';
         if ($format_file == 'mp3') {
-            echo '<br /><a href="' . $url . '?act=mp3tags&amp;id=' . $id . '">' . $lng['edit_mp3tags'] . '</a>';
+            echo '<br><a href="' . $url . '?act=mp3tags&amp;id=' . $id . '">' . $lng['edit_mp3tags'] . '</a>';
         }
     }
 

@@ -265,7 +265,7 @@ if (!isset($_GET['file'])) {
             echo $lng['error_file_save'];
         }
     }
-    echo '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . '&amp;page=' . $page . $isset_more . '">' . _t('Back') . '</a><br />';
+    echo '<p><a href="' . $url . '?act=open_zip&amp;id=' . $id . '&amp;page=' . $page . $isset_more . '">' . _t('Back') . '</a><br>';
 }
 
 echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Downloads') . '</a></p>';

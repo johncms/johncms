@@ -14,9 +14,9 @@ $search = $search_post ? $search_post : $search_get;
 // Форма для поиска
 echo '<div class="phdr"><a href="' . $url . '"><b>' . _t('Downloads') . '</b></a> | ' . $lng['search'] . '</div>' .
     '<form action="' . $url . '?act=search" method="post"><div class="gmenu"><p>' .
-    $lng['name_file'] . ':<br /><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br />' .
-    '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . $lng['search_for_desc'] . '<br />' .
-    '<input type="submit" value="Поиск" name="submit" /><br />' .
+    $lng['name_file'] . ':<br><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br>' .
+    '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . $lng['search_for_desc'] . '<br>' .
+    '<input type="submit" value="Поиск" name="submit" /><br>' .
     '</p></div></form>';
 
 // Проверяем на коректность ввода

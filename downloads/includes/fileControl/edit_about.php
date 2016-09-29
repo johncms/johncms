@@ -34,8 +34,8 @@ if (isset($_POST['submit'])) {
 } else {
     echo '<div class="phdr"><b>' . $lng['dir_desc'] . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
         '<div class="list1"><form action="' . $url . '?act=edit_about&amp;id=' . $id . '" method="post">' .
-        '<small>' . $lng['desc_file_faq'] . '</small><br />' .
-        '<textarea name="opis">' . htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8') . '</textarea><br />' .
+        '<small>' . $lng['desc_file_faq'] . '</small><br>' .
+        '<textarea name="opis">' . htmlentities($res_down['about'], ENT_QUOTES, 'UTF-8') . '</textarea><br>' .
         '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
         '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 }

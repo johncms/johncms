@@ -156,7 +156,7 @@ class Download
 
         if ($rate) {
             $file_rate = explode('|', $res_down['rate']);
-            $out .= '<br />' . $lng['rating'] . ': <span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span>';
+            $out .= '<br>' . $lng['rating'] . ': <span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span>';
         }
 
         $sub = false;

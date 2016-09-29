@@ -2,8 +2,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 // Обновление файлов
@@ -64,9 +62,9 @@ if ($rights == 4 || $rights >= 6) {
 
             $db->query("OPTIMIZE TABLE `download__bookmark`, `download__files`, `download__comments`,`download__more`");
 
-            echo '<div class="phdr"><b>' . $lng['scan_dir_clean'] . '</b></div>' .
-                '<div class="rmenu"><p>' . $lng['scan_dir_clean_ok'] . '</p></div>' .
-                '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
+            echo '<div class="phdr"><b>' . _t('Remove missing files') . '</b></div>' .
+                '<div class="rmenu"><p>' . _t('Database successfully updated') . '</p></div>' .
+                '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
             break;
 
         default:
@@ -77,14 +75,14 @@ if ($rights == 4 || $rights >= 6) {
                 $scan_dir = $res_down_cat['dir'];
 
                 if (!$cat->rowCount() || !is_dir($scan_dir)) {
-                    echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+                    echo _t('The directory does not exist') . ' <a href="?">' . _t('Downloads') . '</a>';
                     exit;
                 }
             } else {
                 $scan_dir = $files_path;
             }
 
-            echo '<div class="phdr"><b>' . $lng['download_scan_dir'] . '</b>' . ($id ? ': ' . htmlspecialchars($res_down_cat['rus_name']) : '') . '</div>';
+            echo '<div class="phdr"><b>' . _t('Update files') . '</b>' . ($id ? ': ' . htmlspecialchars($res_down_cat['rus_name']) : '') . '</div>';
 
             if (isset($_GET['yes'])) {
                 // Сканирование папок
@@ -184,7 +182,7 @@ if ($rights == 4 || $rights >= 6) {
                                 if (preg_match("/^file([0-9]+)_/", $name)) {
                                     if (!in_array($name, $array_more)) {
                                         $refid = (int)str_replace('file', '', $name);
-                                        $name_link = htmlspecialchars(mb_substr(str_replace('file' . $refid . '_', $lng['download'] . ' ', $name), 0, 200));
+                                        $name_link = htmlspecialchars(mb_substr(str_replace('file' . $refid . '_', _t('Download') . ' ', $name), 0, 200));
                                         $size = filesize($val);
 
                                         $stmt_m->execute([
@@ -265,42 +263,40 @@ if ($rights == 4 || $rights >= 6) {
                     }
                 }
 
-                echo '<div class="menu"><b>' . $lng['scan_dir_add'] . ':</b><br />' .
-                    $lng['scan_dir_add_cat'] . ': ' . $i . '<br />' .
-                    $lng['scan_dir_add_files'] . ': ' . $i_three . '<br />' .
-                    $lng['scan_dir_add_files_more'] . ': ' . $i_two . '</div>';
+                echo '<div class="menu"><b>' . _t('Added') . ':</b><br>' .
+                    _t('Categories') . ': ' . $i . '<br>' .
+                    _t('Files') . ': ' . $i_three . '<br>' .
+                    _t('Additional Files') . ': ' . $i_two . '</div>';
 
                 if ($start) {
-                    echo '<div class="gmenu"><a href="' . $url . '?act=scan_about&amp;id=' . $id . '">' . $lng['download_scan_about'] . '</div>';
+                    echo '<div class="gmenu"><a href="?act=scan_about&amp;id=' . $id . '">' . _t('Update Descriptions') . '</div>';
                 }
 
                 echo '<div class="rmenu">' .
-                    '<a href="' . $url . '?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . $lng['scan_dir_clean'] . '</a><br />' .
-                    '<a href="' . $url . '?act=recount&amp;do=clean&amp;id=' . $id . '">' . $lng['download_recount'] . '</a></div>';
+                    '<a href="?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a><br>' .
+                    '<a href="?act=recount&amp;do=clean&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
             } else {
                 // Выбор режима обновление
-                echo '<div class="menu"><b><a href="' . $url . '?act=scan_dir&amp;yes&amp;id=' . $id . '">' . ($id ? $lng['download_scan_dir2'] : $lng['download_scan_dir4']) . '</a></b>' .
-                    ($id ? '<br /><a href="' . $url . '?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1">' . $lng['download_scan_dir3'] . '</a>' : '') . '</div>';
+                echo '<div class="menu"><b><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '">' . ($id ? _t('Update all folders from the current') : _t('Update entire Downloads')) . '</a></b>' .
+                    ($id ? '<br><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1">' . _t('Update only current folder') . '</a>' : '') . '</div>';
 
                 if ($id) {
-                    echo '<div class="rmenu"><a href="' . $url . '?act=scan_dir&amp;yes">' . $lng['download_scan_dir4'] . '</a></div>';
+                    echo '<div class="rmenu"><a href="?act=scan_dir&amp;yes">' . _t('Update entire Downloads') . '</a></div>';
                 }
 
-                echo '<div class="phdr"><b>' . $lng['scan_dir_v2'] . '</b> beta</div>' .
-                    '<div class="topmenu">' . $lng['scan_dir_about'] . '</div><div class="menu">' .
-                    '<a href="' . $url . '?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;start=1"><b>' . ($id ? $lng['download_scan_dir2'] : $lng['download_scan_dir4']) . '</b></a> ' .
-                    ($id ? '<br /><a href="' . $url . '?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1&amp;start=1">' . $lng['download_scan_dir3'] . '</a>' : '') .
-                    '<div class="sub"><small>' . $lng['scan_dir_v2_faq'] . '</small></div>' .
+                echo '<div class="phdr"><b>' . _t('Update v.2') . '</b> beta</div>' .
+                    '<div class="topmenu">' . _t('After this update, you must update the description') . '</div><div class="menu">' .
+                    '<a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;start=1"><b>' . ($id ? _t('Update all folders from the current') : _t('Update entire Downloads')) . '</b></a> ' .
+                    ($id ? '<br><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1&amp;start=1">' . _t('Update only current folder') . '</a>' : '') .
+                    '<div class="sub"><small>' . _t('This action not only updates the file, but will distribute screenshots and descriptions for folders<br>Sample file: file.jar, file.jar.txt, file.jar.jpg (gif, png) (only 1 screenshot)<br><b>ATTENTION:</b> load this update is much higher') . '</small></div>' .
                     '</div><div class="rmenu">';
 
                 if ($id) {
-                    echo ' <a href="' . $url . '?act=scan_dir&amp;yes&amp;start=1">' . $lng['download_scan_dir4'] . '</a><br />';
+                    echo ' <a href="?act=scan_dir&amp;yes&amp;start=1">' . _t('Update entire Downloads') . '</a><br>';
                 }
 
-                echo '<a href="' . $url . '?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . $lng['scan_dir_clean'] . '</a></div>';
+                echo '<a href="?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
             }
-            echo '<div class="phdr"><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
+            echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
-} else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
 }
