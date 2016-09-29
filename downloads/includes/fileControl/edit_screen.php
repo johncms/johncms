@@ -55,15 +55,15 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
             echo '<div class="rmenu"><b>' . $lng['upload_screen_no'] . '</b>';
         }
 
-        echo '<br /><a href="' . $url . '?act=edit_screen&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a>' .
-            '<br /><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+        echo '<br><a href="' . $url . '?act=edit_screen&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a>' .
+            '<br><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     } else {
         // Форма выгрузки
         echo '<div class="phdr"><b>' . $lng['screen_file'] . '</b>: ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
-            '<div class="list1"><form action="' . $url . '?act=edit_screen&amp;id=' . $id . '"  method="post" enctype="multipart/form-data"><input type="file" name="screen"/><br />' .
+            '<div class="list1"><form action="' . $url . '?act=edit_screen&amp;id=' . $id . '"  method="post" enctype="multipart/form-data"><input type="file" name="screen"/><br>' .
             '<input type="submit" name="submit" value="' . $lng['upload'] . '"/></form></div>' .
             '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . App::cfg()->sys->filesize . 'kb' .
-            ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>';
+            ($set_down['screen_resize'] ? '<br>' . $lng['add_screen_faq'] : '') . '</small></div>';
 
         // Выводим скриншоты
         $screen = [];

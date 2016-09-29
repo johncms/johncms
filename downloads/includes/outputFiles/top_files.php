@@ -17,12 +17,12 @@ if ($id == 2) {
 }
 
 //TODO: Переделать на получение настроек из таблицы модулей
-$linkTopComments = App::cfg()->sys->acl_downloads_comm || $rights >= 7 ? '<br /><a href="' . $url . '?act=top_files&amp;id=2">' . $lng['top_files_comments'] . '</a>' : '';
+$linkTopComments = App::cfg()->sys->acl_downloads_comm || $rights >= 7 ? '<br><a href="' . $url . '?act=top_files&amp;id=2">' . $lng['top_files_comments'] . '</a>' : '';
 echo '<div class="phdr"><a href="?"><b>' . $lng['downloads'] . '</b></a> | ' . $textl . ' (' . $set_down['top'] . ')</div>';
 
 //TODO: Переделать на получение настроек из таблицы модулей
 if ($id == 2 && (App::cfg()->sys->acl_downloads_comm || $rights >= 7)) {
-    echo '<div class="gmenu"><a href="' . $url . '?act=top_files&amp;id=0">' . $lng['top_files_popular'] . '</a><br />' .
+    echo '<div class="gmenu"><a href="' . $url . '?act=top_files&amp;id=0">' . $lng['top_files_popular'] . '</a><br>' .
         '<a href="' . $url . '?act=top_files&amp;id=1">' . $lng['top_files_download'] . '</a></div>';
     $sql = '`total`';
 } elseif ($id == 1) {

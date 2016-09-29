@@ -50,7 +50,7 @@ if ($total) {
         $res['user_agent'] = $attributes['author_browser'];
 
         if (isset($attributes['edit_count'])) {
-            $post .= '<br /><span class="gray"><small>Изменен: <b>' . $attributes['edit_name'] . '</b>' .
+            $post .= '<br><span class="gray"><small>Изменен: <b>' . $attributes['edit_name'] . '</b>' .
                 ' (' . functions::displayDate($attributes['edit_time']) . ') <b>' .
                 '[' . $attributes['edit_count'] . ']</b></small></span>';
         }
@@ -65,7 +65,7 @@ if ($total) {
             $post .= '<div class="reply"><small>' .
                 //TODO: Переделать ссылку
                 '<a href="' . App::cfg()->sys->homeurl . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                ' (' . functions::displayDate($attributes['reply_time']) . ')</small><br/>' . $reply . '</div>';
+                ' (' . functions::displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
         }
 
         $arg = [

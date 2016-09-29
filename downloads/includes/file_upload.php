@@ -156,24 +156,24 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         }
                         echo '<div class="phdr"><a href="?act=down_file&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
                     } else {
-                        echo '<div class="rmenu">' . _t('File not attached') . '<br /><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                        echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . _t('File not attached') . '<br /><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
             echo '<div class="phdr"><b>' . _t('Upload File') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>' .
                 '<div class="list1"><form action="?act=down_file&amp;id=' . $id . '" method="post" enctype="multipart/form-data">' .
-                _t('Select File') . '<span class="red">*</span>:<br /><input type="file" name="fail"/><br />' .
-                _t('Save as (max. 30, without extension)') . ':<br /><input type="text" name="new_file"/><br />' .
-                _t('Screenshot') . ':<br /><input type="file" name="screen"/><br />' .
-                _t('File Name') . ' (мах. 200):<br /><input type="text" name="text"/><br />' .
-                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br /><input type="text" name="name_link" value="' . _t('Download File') . '"/><br />' .
-                _t('Description') . ' (max. 500)<br /><textarea name="opis"></textarea><br />' .
+                _t('Select File') . '<span class="red">*</span>:<br><input type="file" name="fail"/><br>' .
+                _t('Save as (max. 30, without extension)') . ':<br><input type="text" name="new_file"/><br>' .
+                _t('Screenshot') . ':<br><input type="file" name="screen"/><br>' .
+                _t('File Name') . ' (мах. 200):<br><input type="text" name="text"/><br>' .
+                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br><input type="text" name="name_link" value="' . _t('Download File') . '"/><br>' .
+                _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br />' .
-                _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
+                _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
                 '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     } else {

@@ -99,13 +99,13 @@ if ($rights == 4 || $rights >= 6) {
         $name = htmlspecialchars($res['rus_name']);
         echo '<div class="phdr"><b>' . _t('Change Folder') . ':</b> ' . $name . '</div>' .
             '<div class="menu"><form action="?act=edit_cat&amp;id=' . $id . '" method="post">' .
-            _t('Title to display') . ':<br/><input type="text" name="rus_name" value="' . $name . '"/><br/>' .
-            _t('Description') . ' (max. 500):<br/><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br/>';
+            _t('Title to display') . ':<br><input type="text" name="rus_name" value="' . $name . '"/><br>' .
+            _t('Description') . ' (max. 500):<br><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br>';
 
         if ($rights == 9) {
-            echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br/>' .
-                _t('Allowed extensions') . ':<br/><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
+            echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br>' .
+                _t('Allowed extensions') . ':<br><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ', $defaultExt) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form></div>';

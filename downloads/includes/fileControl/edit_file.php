@@ -42,8 +42,8 @@ if (isset($_POST['submit'])) {
     $file_name = htmlspecialchars($res_down['rus_name']);
     echo '<div class="phdr"><b>' . $file_name . '</b></div>' .
         '<div class="list1"><form action="' . $url . '?act=edit_file&amp;id=' . $id . '" method="post">' .
-        $lng['name_file'] . '(мах. 200):<br /><input type="text" name="text" value="' . $file_name . '"/><br />' .
-        $lng['link_file'] . ' (мах. 200):<br /><input type="text" name="name_link" value="' . $res_down['text'] . '"/><br />' .
+        $lng['name_file'] . '(мах. 200):<br><input type="text" name="text" value="' . $file_name . '"/><br>' .
+        $lng['link_file'] . ' (мах. 200):<br><input type="text" name="name_link" value="' . $res_down['text'] . '"/><br>' .
         '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
         '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 }

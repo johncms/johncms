@@ -45,10 +45,10 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<div class="list1"><form action="' . $url . '?act=mp3tags&amp;id=' . $id . '" method="post">' .
-    '<b>' . $lng['mp3_artist'] . '</b>:<br /> <input name="artist" type="text" value="' . Download::mp3tagsOut($tagsArray['artist'][0]) . '" /><br />' .
-    '<b>' . $lng['mp3_title'] . '</b>:<br /> <input name="title" type="text" value="' . Download::mp3tagsOut($tagsArray['title'][0]) . '" /><br />' .
-    '<b>' . $lng['mp3_album'] . '</b>:<br /> <input name="album" type="text" value="' . Download::mp3tagsOut($tagsArray['album'][0]) . '" /><br />' .
-    '<b>' . $lng['mp3_genre'] . '</b>: <br /><input name="genre" type="text" value="' . Download::mp3tagsOut($tagsArray['genre'][0]) . '" /><br />' .
-    '<b>' . $lng['mp3_year'] . '</b>:<br /> <input name="year" type="text" value="' . (int)$tagsArray['year'][0] . '" /><br />' .
+    '<b>' . $lng['mp3_artist'] . '</b>:<br> <input name="artist" type="text" value="' . Download::mp3tagsOut($tagsArray['artist'][0]) . '" /><br>' .
+    '<b>' . $lng['mp3_title'] . '</b>:<br> <input name="title" type="text" value="' . Download::mp3tagsOut($tagsArray['title'][0]) . '" /><br>' .
+    '<b>' . $lng['mp3_album'] . '</b>:<br> <input name="album" type="text" value="' . Download::mp3tagsOut($tagsArray['album'][0]) . '" /><br>' .
+    '<b>' . $lng['mp3_genre'] . '</b>: <br><input name="genre" type="text" value="' . Download::mp3tagsOut($tagsArray['genre'][0]) . '" /><br>' .
+    '<b>' . $lng['mp3_year'] . '</b>:<br> <input name="year" type="text" value="' . (int)$tagsArray['year'][0] . '" /><br>' .
     '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
     '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';

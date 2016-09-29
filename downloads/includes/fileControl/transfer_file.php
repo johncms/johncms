@@ -81,7 +81,7 @@ if ($rights > 6) {
                         '<div class="phdr"><a href="' . $url . '?act=recount">' . $lng['download_recount'] . '</a></div>';
                 } else {
                     echo '<div class="menu"><p><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer&amp;yes"><b>' . $lng['transfer_file'] . '</b></a></p></div>' .
-                        '<div class="phdr"><br /></div>';
+                        '<div class="phdr"><br></div>';
                 }
             }
             break;
@@ -98,7 +98,7 @@ if ($rights > 6) {
                         '<a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '">' . htmlspecialchars($resCat['rus_name']) . '</a>';
 
                     if ($resCat['id'] != $res_down['refid']) {
-                        echo '<br /><small><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '&amp;do=transfer">' . $lng['move_this_folder'] . '</a></small>';
+                        echo '<br><small><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '&amp;do=transfer">' . $lng['move_this_folder'] . '</a></small>';
                     }
 
                     echo '</div>';

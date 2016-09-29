@@ -147,21 +147,21 @@ if ($rights == 4 || $rights >= 6) {
                 $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
                 echo '<div class="phdr"><a href="' . $url . '?act=import&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></div>';
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br /><a href="' . $url . '?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br><a href="' . $url . '?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         }
     } else {
         echo '<div class="phdr"><b>' . $lng['download_import'] . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>' .
             '<div class="list1"><form action="' . $url . '?act=import&amp;id=' . $id . '" method="post" enctype="multipart/form-data">' .
-            $lng['download_link'] . '<span class="red">*</span>:<br /><input type="post" name="fail" value="http://"/><br />' .
-            $lng['save_name_file'] . ':<br /><input type="text" name="new_file"/><br />' .
-            $lng['screen_file'] . ':<br /><input type="file" name="screen"/><br />' .
-            $lng['name_file'] . ' (мах. 200):<br /><input type="text" name="text"/><br />' .
-            $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br />' .
-            '<input type="text" name="name_link" value="Скачать файл"/><br />' .
-            $lng['dir_desc'] . ' (max. 500)<br /><textarea name="opis"></textarea>' .
-            '<br /><input type="submit" name="submit" value="' . $lng['upload'] . '"/></form></div>' .
-            '<div class="phdr"><small>' . $lng['extensions'] . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br />' . $lng['add_screen_faq'] : '') . '</small></div>' .
+            $lng['download_link'] . '<span class="red">*</span>:<br><input type="post" name="fail" value="http://"/><br>' .
+            $lng['save_name_file'] . ':<br><input type="text" name="new_file"/><br>' .
+            $lng['screen_file'] . ':<br><input type="file" name="screen"/><br>' .
+            $lng['name_file'] . ' (мах. 200):<br><input type="text" name="text"/><br>' .
+            $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br>' .
+            '<input type="text" name="name_link" value="Скачать файл"/><br>' .
+            $lng['dir_desc'] . ' (max. 500)<br><textarea name="opis"></textarea>' .
+            '<br><input type="submit" name="submit" value="' . $lng['upload'] . '"/></form></div>' .
+            '<div class="phdr"><small>' . $lng['extensions'] . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br>' . $lng['add_screen_faq'] : '') . '</small></div>' .
             '<p><a href="' . $url . '?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 } else {

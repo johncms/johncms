@@ -95,14 +95,14 @@ if ($rights == 4 || $rights >= 6) {
     } else {
         echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div><div class="menu">' .
             '<form action="?act=add_cat&amp;id=' . $id . '" method="post">' .
-            '<p>' . _t('Folder Name') . ' [A-Za-z0-9]:<br/><input type="text" name="name"/></p>' .
-            '<p>' . _t('Title to display') . '<br/><input type="text" name="rus_name"/></p>' .
-            '<p>' . _t('Description') . ' (max. 500)<br/><textarea name="desc" cols="24" rows="4"></textarea></p>';
+            '<p>' . _t('Folder Name') . ' [A-Za-z0-9]:<br><input type="text" name="name"/></p>' .
+            '<p>' . _t('Title to display') . '<br><input type="text" name="rus_name"/></p>' .
+            '<p>' . _t('Description') . ' (max. 500)<br><textarea name="desc" cols="24" rows="4"></textarea></p>';
 
         if ($rights == 9) {
             echo '<p><input type="checkbox" name="user_down" value="1" /> ' . _t('Allow users to upload files') . '</p>' .
-                _t('Allowed extensions') . ':<br/><input type="text" name="format"/>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br /> ' . implode(', ', $defaultExt) . '</div>';
+                _t('Allowed extensions') . ':<br><input type="text" name="format"/>' .
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ', $defaultExt) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Create') . '"/></p></form></div>';

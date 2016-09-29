@@ -155,7 +155,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
-            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br />';
+            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br>';
         }
     } else {
         $navigation = '<b>' . _t('Downloads') . '</b></div>' .
@@ -165,7 +165,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old")->fetchColumn();
 
         if ($total_new) {
-            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br />';
+            $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br>';
         }
     }
 
@@ -337,7 +337,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     } else {
         if ($rights >= 7 || isset($set['mod_down_comm']) && $set['mod_down_comm']) {
-            echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br />';
+            echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br>';
         }
 
         echo '<a href="' . $url . '?act=bookmark">' . _t('Favorites') . '</a>';
