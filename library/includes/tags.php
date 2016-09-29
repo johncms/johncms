@@ -11,7 +11,7 @@ if (isset($_GET['tag'])) {
         $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
         $start = $page == 1 ? 0 : ($page - 1) * $kmess;    
 
-        echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng_lib['tags'] . '</div>';
+        echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Tags') . '</div>';
         
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';            
@@ -26,19 +26,19 @@ if (isset($_GET['tag'])) {
             : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
             . '<div>' . functions::checkout(bbcode::notags($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn())) . '</div></div>'
-            . '<div class="sub">' . $lng_lib['added'] . ': ' . '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
-            . '<div><span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views'] . '</div>'
-            . '<div>' . ($obj->get_all_stat_tags() ? $lng_lib['tags'] . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'
-            . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a> (' . $row['comm_count'] . ')</div>' : '')
+            . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
+            . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
+            . '<div>' . ($obj->get_all_stat_tags() ? _t('Tags') . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'
+            . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a> (' . $row['comm_count'] . ')</div>' : '')
             . '</div>';
         }
         
-        echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
         
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';            
         }
-        echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>';
+        echo '<p><a href="?">' . _t('To library') . '</a></p>';
     }
 } else {
     redir404();

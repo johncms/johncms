@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if (!$user_id) {
-    echo functions::display_error($lng['access_guest_forbidden']);
+    echo functions::display_error(_t('Access forbidden'));
     require_once('../incfiles/end.php');
     exit;
 }
@@ -15,7 +15,7 @@ if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
     if (!$res_obj) {
-        echo functions::display_error($lng['access_forbidden']);
+        echo functions::display_error(_t('Access forbidden'));
         require('../incfiles/end.php');
         exit;
     }
@@ -23,14 +23,14 @@ if ($req_obj->rowCount()) {
     $obj = new Hashtags($id);
     $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1")->fetch();
     $context_top =
-        '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a></div>' .
+        '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
         '<p><b><a href="index.php?id=' . $id . '">' . functions::checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
-        ($obj->get_all_stat_tags() ? '<span class="gray">' . $lng_lib['tags'] . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br>' : '') .
-        '<span class="gray">' . $lng_lib['added'] . ':</span> <a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br>' .
-        '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res_obj['count_views'] .
+        ($obj->get_all_stat_tags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br>' : '') .
+        '<span class="gray">' . _t('Added') . ':</span> <a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br>' .
+        '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [
         'comments_table' => 'cms_library_comments',  // Таблица с комментариями
@@ -42,7 +42,7 @@ if ($req_obj->rowCount()) {
         'owner_delete'   => true,                    // Возможность владельцу удалять комментарий
         'owner_reply'    => true,                    // Возможность владельцу отвечать на комментарий
         'owner_edit'     => false,                   // Возможность владельцу редактировать комментарий
-        'title'          => $lng['comments'],        // Название раздела
+        'title'          => _t('Comments'),        // Название раздела
         'context_top'    => $context_top,            // Выводится вверху списка
     ];
     $comm = new comments($arg);
@@ -51,5 +51,5 @@ if ($req_obj->rowCount()) {
         $db->exec("UPDATE `library_texts` SET `comm_count`=" . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . " WHERE `id`=" . $id);
     }
 } else {
-    echo functions::display_error($lng['error_wrong_data']);
+    echo functions::display_error(_t('Wrong data'));
 }

@@ -4,13 +4,13 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm': 'read');
 
-$menu[] = $sort == 'read' ? '<strong>' . $lng_lib['by_reading'] . '</strong>' : '<a href="?act=top&amp;sort=read">' . $lng_lib['by_reading'] . '</a> ';
-$menu[] = $sort == 'rating' ? '<strong>' . $lng_lib['by_rating'] . '</strong>' : '<a href="?act=top&amp;sort=rating">' . $lng_lib['by_rating'] . '</a> ';
-$menu[] = $sort == 'comm' ? '<strong>' . $lng_lib['by_comments'] . '</strong>' : '<a href="?act=top&amp;sort=comm">' . $lng_lib['by_comments'] . '</a>';
+$menu[] = $sort == 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';
+$menu[] = $sort == 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
+$menu[] = $sort == 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a href="?act=top&amp;sort=comm">' . _t('By comments') . '</a>';
 
 
-echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['rated_articles'] . '</div>' .
-     '<div class="topmenu">' . $lng_lib['sort'] . ': ' . functions::display_menu($menu) . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Rating articles') . '</div>' .
+     '<div class="topmenu">' . _t('Sort') . ': ' . functions::display_menu($menu) . '</div>';
 
 if ($sort == 'read' || $sort == 'comm') {
     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
@@ -21,7 +21,7 @@ if ($sort == 'read' || $sort == 'comm') {
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 if (!$total) {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 } else {
     if ($sort == 'read' || $sort == 'comm') {
         $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
@@ -45,32 +45,32 @@ if (!$total) {
         echo '<table class="desc">'
             // Раздел
             . '<tr>'
-            . '<td class="caption">' . $lng['section'] . ':</td>'
+            . '<td class="caption">' . _t('Section') . ':</td>'
             . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . functions::checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
-            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
             // Кто добавил?
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['added'] . ':</td>'
+            . '<td class="caption">' . _t('Who added') . ':</td>'
             . '<td>' . $uploader . ' (' . functions::display_date($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'
-            . '<td class="caption">' . $lng['rating'] . ':</td>'
+            . '<td class="caption">' . _t('Rating') . ':</td>'
             . '<td>' . $rate->view_rate(1) . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
+            . '<td class="caption">' . _t('Number of readings') . ':</td>'
             . '<td>' . $row['count_views'] . '</td>'
             . '</tr>'
             // Комментарии
             . '<tr>';
         if ($row['comments']) {
-            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['comm_count'] . '</td>';
+            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a>:</td><td>' . $row['comm_count'] . '</td>';
         } else {
-            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
+            echo '<td class="caption">' . _t('Comments') . ':</td><td>' . _t('Comments are closed') . '</td>';
         }
         echo '</tr></table>';
 
@@ -78,4 +78,4 @@ if (!$total) {
     }
 }
 
-echo '<div class="phdr"><a href="?">' . $lng['back'] . '</a></div>';
+echo '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>';

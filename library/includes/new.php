@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['new_articles'] . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New articles') . '</div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
@@ -26,38 +26,38 @@ if ($total) {
         echo '<table class="desc">'
             // Раздел
             . '<tr>'
-            . '<td class="caption">' . $lng['section'] . ':</td>'
+            . '<td class="caption">' . _t('Section') . ':</td>'
             . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . functions::checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
-            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
             // Кто добавил?
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['added'] . ':</td>'
+            . '<td class="caption">' . _t('Who added') . ':</td>'
             . '<td><a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'
-            . '<td class="caption">' . $lng['rating'] . ':</td>'
+            . '<td class="caption">' . _t('Rating') . ':</td>'
             . '<td>' . $rate->view_rate() . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
+            . '<td class="caption">' . _t('Reads') . ':</td>'
             . '<td>' . $row['count_views'] . '</td>'
             . '</tr>'
             // Комментарии
             . '<tr>';
         if ($row['comments']) {
-            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['comm_count'] . '</td>';
+            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a>:</td><td>' . $row['comm_count'] . '</td>';
         } else {
-            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
+            echo '<td class="caption">' . _t('Comments') . ':</td><td>' . _t('Comments are closed') . '</td>';
         }
         echo '</tr></table>';
 
         echo '</div>';
     }
 }
-echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
 echo $nav;
-echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>';
+echo '<p><a href="?">' . _t('To library') . '</a></p>';
