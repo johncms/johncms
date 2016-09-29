@@ -2,8 +2,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 // Поиск файлов
@@ -12,10 +10,10 @@ $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
 // Форма для поиска
-echo '<div class="phdr"><a href="' . $url . '"><b>' . _t('Downloads') . '</b></a> | ' . $lng['search'] . '</div>' .
-    '<form action="' . $url . '?act=search" method="post"><div class="gmenu"><p>' .
-    $lng['name_file'] . ':<br><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br>' .
-    '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . $lng['search_for_desc'] . '<br>' .
+echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . _t('Search') . '</div>' .
+    '<form action="?act=search" method="post"><div class="gmenu"><p>' .
+    _t('File Name') . ':<br><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br>' .
+    '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . _t('Search in description') . '<br>' .
     '<input type="submit" value="Поиск" name="submit" /><br>' .
     '</p></div></form>';
 
@@ -23,7 +21,7 @@ echo '<div class="phdr"><a href="' . $url . '"><b>' . _t('Downloads') . '</b></a
 $error = false;
 
 if (!empty($search) && mb_strlen($search) < 2 || mb_strlen($search) > 64) {
-    $error = $lng['search_error'];
+    $error = _t('Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters.');
 }
 
 // Выводим результаты поиска
@@ -39,12 +37,12 @@ if ($search && !$error) {
     $sql = ($id ? '`about`' : '`rus_name`') . ' LIKE ' . $search_db;
 
     // Результаты поиска
-    echo '<div class="phdr"><b>' . $lng['search_result'] . '</b></div>';
+    echo '<div class="phdr"><b>' . _t('Search results') . '</b></div>';
     $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND $sql")->fetchColumn();
 
     if ($total > $kmess) {
         $check_search = htmlspecialchars(rawurlencode($search));
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . Functions::displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     if ($total) {
@@ -55,28 +53,28 @@ if ($search && !$error) {
             echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
         }
     } else {
-        echo '<div class="rmenu"><p>' . $lng['search_list_empty'] . '</p></div>';
+        echo '<div class="rmenu"><p>' . _t('No items found') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . $lng['total'] . ':  ' . $total . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ':  ' . $total . '</div>';
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
-            '<p><form action="' . $url . '" method="get">' .
+        echo '<div class="topmenu">' . Functions::displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
+            '<p><form action="?" method="get">' .
             '<input type="hidden" value="' . $check_search . '" name="search" />' .
             '<input type="hidden" value="search" name="act" />' .
             '<input type="hidden" value="' . $id . '" name="id" />' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
-    echo '<p><a href="' . $url . '?act=search">' . $lng['search_new'] . '</a></p>';
+    echo '<p><a href="?act=search">' . _t('New Search') . '</a></p>';
 } else {
     // FAQ по поиску и вывод ошибки
     if ($error) {
         echo $error;
     }
 
-    echo '<div class="phdr"><small>' . $lng['search_faq'] . '</small></div>';
+    echo '<div class="phdr"><small>' . _t('Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс.') . '</small></div>';
 }
 
-echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';
+echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
