@@ -4,11 +4,9 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Новые файлы
-$textl = $lng['new_files'];
+$textl = _t('New Files');
 $sql_down = '';
 
 if ($id) {
@@ -16,12 +14,12 @@ if ($id) {
     $res_down_cat = $cat->fetch();
 
     if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
-        echo _t('The directory does not exist') . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
 
     $title_pages = htmlspecialchars(mb_substr($res_down_cat['rus_name'], 0, 30));
-    $textl = $lng['new_files'] . ': ' . (mb_strlen($res_down_cat['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
+    $textl = _t('New Files') . ': ' . (mb_strlen($res_down_cat['rus_name']) > 30 ? $title_pages . '...' : $title_pages);
     $sql_down = ' AND `dir` LIKE \'' . ($res_down_cat['dir']) . '%\' ';
 }
 
@@ -30,7 +28,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . Functions::displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Выводим список
@@ -42,18 +40,18 @@ if ($total) {
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
-    echo '<div class="rmenu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="' . $url . '" method="get">' .
+    echo '<div class="topmenu">' . Functions::displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '?id=' . $id . '">' . _t('Downloads') . '</a></p>';
+echo '<p><a href="?id=' . $id . '">' . _t('Downloads') . '</a></p>';
