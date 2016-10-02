@@ -28,7 +28,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Выводим список
@@ -47,7 +47,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .

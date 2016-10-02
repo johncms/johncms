@@ -267,7 +267,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             // Постраничная навигация
             if ($total_files > $kmess) {
-                echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>';
+                echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>';
             }
 
             // Выводи данные

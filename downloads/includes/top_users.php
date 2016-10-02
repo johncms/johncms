@@ -13,7 +13,7 @@ $total = $req->rowCount();
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?act=top_users&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . functions::display_pagination('?act=top_users&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Список файлов
@@ -35,7 +35,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?act=top_users&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . functions::display_pagination('?act=top_users&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" value="top_users" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
