@@ -24,7 +24,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . functions::display_pagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Список файлов
@@ -44,7 +44,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . Functions::displayPagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . functions::display_pagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="USER" value="' . Mobi::$USER . '"/>' .
         '<input type="hidden" value="user_files" name="act" />' .

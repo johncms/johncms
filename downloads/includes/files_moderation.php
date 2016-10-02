@@ -25,7 +25,7 @@ if ($rights == 4 || $rights >= 6) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . functions::display_pagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>';
     }
 
     $i = 0;
@@ -47,7 +47,7 @@ if ($rights == 4 || $rights >= 6) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . functions::display_pagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="top_users" name="act" />' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

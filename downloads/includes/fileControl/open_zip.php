@@ -86,7 +86,7 @@ if (!isset($_GET['file'])) {
 
 	// Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     if ($total > 0) {
@@ -125,7 +125,7 @@ if (!isset($_GET['file'])) {
 
 	// Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>' .
             '<p><form action="' . $url . '" method="get">' .
             '<input type="hidden" value="open_zip" name="act" />' .
             '<input type="hidden" value="' . $id . '" name="id" />' .
