@@ -3,95 +3,165 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Please see readme.txt for more information                  //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
-error_reporting(0);
-// Defines
-define('GETID3_VERSION', '1.7.9-20090308');
-define('GETID3_FREAD_BUFFER_SIZE', 16384); // read buffer size in bytes
-define('GETID3_OS_ISWINDOWS', false);
+
+// define a constant rather than looking up every time it is needed
+if (!defined('GETID3_OS_ISWINDOWS')) {
+	define('GETID3_OS_ISWINDOWS', (stripos(PHP_OS, 'WIN') === 0));
+}
+// Get base path of getID3() - ONCE
+if (!defined('GETID3_INCLUDEPATH')) {
+	define('GETID3_INCLUDEPATH', dirname(__FILE__).DIRECTORY_SEPARATOR);
+}
+// Workaround Bug #39923 (https://bugs.php.net/bug.php?id=39923)
+if (!defined('IMG_JPG') && defined('IMAGETYPE_JPEG')) {
+	define('IMG_JPG', IMAGETYPE_JPEG);
+}
+
+// attempt to define temp dir as something flexible but reliable
+$temp_dir = ini_get('upload_tmp_dir');
+if ($temp_dir && (!is_dir($temp_dir) || !is_readable($temp_dir))) {
+	$temp_dir = '';
+}
+if (!$temp_dir && function_exists('sys_get_temp_dir')) { // sys_get_temp_dir added in PHP v5.2.1
+	// sys_get_temp_dir() may give inaccessible temp dir, e.g. with open_basedir on virtual hosts
+	$temp_dir = sys_get_temp_dir();
+}
+$temp_dir = @realpath($temp_dir); // see https://github.com/JamesHeinrich/getID3/pull/10
+$open_basedir = ini_get('open_basedir');
+if ($open_basedir) {
+	// e.g. "/var/www/vhosts/getid3.org/httpdocs/:/tmp/"
+	$temp_dir     = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $temp_dir);
+	$open_basedir = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $open_basedir);
+	if (substr($temp_dir, -1, 1) != DIRECTORY_SEPARATOR) {
+		$temp_dir .= DIRECTORY_SEPARATOR;
+	}
+	$found_valid_tempdir = false;
+	$open_basedirs = explode(PATH_SEPARATOR, $open_basedir);
+	foreach ($open_basedirs as $basedir) {
+		if (substr($basedir, -1, 1) != DIRECTORY_SEPARATOR) {
+			$basedir .= DIRECTORY_SEPARATOR;
+		}
+		if (preg_match('#^'.preg_quote($basedir).'#', $temp_dir)) {
+			$found_valid_tempdir = true;
+			break;
+		}
+	}
+	if (!$found_valid_tempdir) {
+		$temp_dir = '';
+	}
+	unset($open_basedirs, $found_valid_tempdir, $basedir);
+}
+if (!$temp_dir) {
+	$temp_dir = '*'; // invalid directory name should force tempnam() to use system default temp dir
+}
+// $temp_dir = '/something/else/';  // feel free to override temp dir here if it works better for your system
+if (!defined('GETID3_TEMP_DIR')) {
+	define('GETID3_TEMP_DIR', $temp_dir);
+}
+unset($open_basedir, $temp_dir);
+
+// End: Defines
 
 
 class getID3
 {
 	// public: Settings
-	var $encoding        = 'UTF-8';   // CASE SENSITIVE! - i.e. (must be supported by iconv())
-	                                       // Examples:  ISO-8859-1  UTF-8  UTF-16  UTF-16BE
-
-	var $tempdir         = '*';            // default '*' should use system temp dir
+	public $encoding        = 'UTF-8';        // CASE SENSITIVE! - i.e. (must be supported by iconv()). Examples:  ISO-8859-1  UTF-8  UTF-16  UTF-16BE
+	public $encoding_id3v1  = 'ISO-8859-1';   // Should always be 'ISO-8859-1', but some tags may be written in other encodings such as 'EUC-CN' or 'CP1252'
 
 	// public: Optional tag checks - disable for speed.
-	var $option_tag_id3v1         = true;  // Read and process ID3v1 tags
-	var $option_tag_id3v2         = true;  // Read and process ID3v2 tags
-	var $option_tag_lyrics3       = false;  // Read and process Lyrics3 tags
-	var $option_tag_apetag        = false;  // Read and process APE tags
-	var $option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
-	var $option_tags_html         = false;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
+	public $option_tag_id3v1         = true;  // Read and process ID3v1 tags
+	public $option_tag_id3v2         = true;  // Read and process ID3v2 tags
+	public $option_tag_lyrics3       = true;  // Read and process Lyrics3 tags
+	public $option_tag_apetag        = true;  // Read and process APE tags
+	public $option_tags_process      = true;  // Copy tags to root key 'tags' and encode to $this->encoding
+	public $option_tags_html         = true;  // Copy tags to root key 'tags_html' properly translated from various encodings to HTML entities
 
 	// public: Optional tag/comment calucations
-	var $option_extra_info        = false;  // Calculate additional info such as bitrate, channelmode etc
+	public $option_extra_info        = true;  // Calculate additional info such as bitrate, channelmode etc
+
+	// public: Optional handling of embedded attachments (e.g. images)
+	public $option_save_attachments  = true; // defaults to true (ATTACHMENTS_INLINE) for backward compatibility
 
 	// public: Optional calculations
-	var $option_md5_data          = false; // Get MD5 sum of data part - slow
-	var $option_md5_data_source   = false; // Use MD5 of source file if availble - only FLAC and OptimFROG
-	var $option_sha1_data         = false; // Get SHA1 sum of data part - slow
-	var $option_max_2gb_check     = true;  // Check whether file is larger than 2 Gb and thus not supported by PHP
+	public $option_md5_data          = false; // Get MD5 sum of data part - slow
+	public $option_md5_data_source   = false; // Use MD5 of source file if availble - only FLAC and OptimFROG
+	public $option_sha1_data         = false; // Get SHA1 sum of data part - slow
+	public $option_max_2gb_check     = null;  // Check whether file is larger than 2GB and thus not supported by 32-bit PHP (null: auto-detect based on PHP_INT_MAX)
 
-	// private
-	var $filename;
+	// public: Read buffer size in bytes
+	public $option_fread_buffer_size = 32768;
 
+	// Public variables
+	public $filename;                         // Filename of file being analysed.
+	public $fp;                               // Filepointer to file being analysed.
+	public $info;                             // Result array.
+	public $tempdir = GETID3_TEMP_DIR;
+	public $memory_limit = 0;
+
+	// Protected variables
+	protected $startup_error   = '';
+	protected $startup_warning = '';
+
+	const VERSION           = '1.9.12-201602240818';
+	const FREAD_BUFFER_SIZE = 32768;
+
+	const ATTACHMENTS_NONE   = false;
+	const ATTACHMENTS_INLINE = true;
 
 	// public: constructor
-	function getID3()
-	{
+	public function __construct() {
 
-		$this->startup_error   = '';
-		$this->startup_warning = '';
-
-		// Check for PHP version >= 4.2.0
-		if (phpversion() < '4.2.0') {
-		    $this->startup_error .= 'getID3() requires PHP v4.2.0 or higher - you are running v'.phpversion();
+		// Check for PHP version
+		$required_php_version = '5.3.0';
+		if (version_compare(PHP_VERSION, $required_php_version, '<')) {
+			$this->startup_error .= 'getID3() requires PHP v'.$required_php_version.' or higher - you are running v'.PHP_VERSION;
+			return false;
 		}
 
 		// Check memory
-		$memory_limit = ini_get('memory_limit');
-		if (eregi('([0-9]+)M', $memory_limit, $matches)) {
+		$this->memory_limit = ini_get('memory_limit');
+		if (preg_match('#([0-9]+)M#i', $this->memory_limit, $matches)) {
 			// could be stored as "16M" rather than 16777216 for example
-			$memory_limit = $matches[1] * 1048576;
+			$this->memory_limit = $matches[1] * 1048576;
+		} elseif (preg_match('#([0-9]+)G#i', $this->memory_limit, $matches)) { // The 'G' modifier is available since PHP 5.1.0
+			// could be stored as "2G" rather than 2147483648 for example
+			$this->memory_limit = $matches[1] * 1073741824;
 		}
-		if ($memory_limit <= 0) {
+		if ($this->memory_limit <= 0) {
 			// memory limits probably disabled
-		} elseif ($memory_limit <= 3145728) {
-	    	$this->startup_error .= 'PHP has less than 3MB available memory and will very likely run out. Increase memory_limit in php.ini';
-		} elseif ($memory_limit <= 12582912) {
-	    	$this->startup_warning .= 'PHP has less than 12MB available memory and might run out if all modules are loaded. Increase memory_limit in php.ini';
+		} elseif ($this->memory_limit <= 4194304) {
+			$this->startup_error .= 'PHP has less than 4MB available memory and will very likely run out. Increase memory_limit in php.ini';
+		} elseif ($this->memory_limit <= 12582912) {
+			$this->startup_warning .= 'PHP has less than 12MB available memory and might run out if all modules are loaded. Increase memory_limit in php.ini';
 		}
 
 		// Check safe_mode off
-		if ((bool) ini_get('safe_mode')) {
-		    $this->warning('WARNING: Safe mode is on, shorten support disabled, md5data/sha1data for ogg vorbis disabled, ogg vorbos/flac tag writing disabled.');
+		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
+			$this->warning('WARNING: Safe mode is on, shorten support disabled, md5data/sha1data for ogg vorbis disabled, ogg vorbos/flac tag writing disabled.');
 		}
 
+		if (intval(ini_get('mbstring.func_overload')) > 0) {
+			$this->warning('WARNING: php.ini contains "mbstring.func_overload = '.ini_get('mbstring.func_overload').'", this may break things.');
+		}
 
-		// define a constant rather than looking up every time it is needed
-		if (!defined('GETID3_OS_ISWINDOWS')) {
-			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-				define('GETID3_OS_ISWINDOWS', true);
-			} else {
-				define('GETID3_OS_ISWINDOWS', false);
+		// Check for magic_quotes_runtime
+		if (function_exists('get_magic_quotes_runtime')) {
+			if (get_magic_quotes_runtime()) {
+				return $this->startup_error('magic_quotes_runtime must be disabled before running getID3(). Surround getid3 block by set_magic_quotes_runtime(0) and set_magic_quotes_runtime(1).');
 			}
 		}
 
-		// Get base path of getID3() - ONCE
-		if (!defined('GETID3_INCLUDEPATH')) {
-			foreach (get_included_files() as $val) {
-				if (basename($val) == 'getid3.php') {
-					define('GETID3_INCLUDEPATH', dirname($val).DIRECTORY_SEPARATOR);
-					break;
-				}
+		// Check for magic_quotes_gpc
+		if (function_exists('magic_quotes_gpc')) {
+			if (get_magic_quotes_gpc()) {
+				return $this->startup_error('magic_quotes_gpc must be disabled before running getID3(). Surround getid3 block by set_magic_quotes_gpc(0) and set_magic_quotes_gpc(1).');
 			}
 		}
 
@@ -100,46 +170,70 @@ class getID3
 			$this->startup_error .= 'getid3.lib.php is missing or corrupt';
 		}
 
+		if ($this->option_max_2gb_check === null) {
+			$this->option_max_2gb_check = (PHP_INT_MAX <= 2147483647);
+		}
+
 
 		// Needed for Windows only:
 		// Define locations of helper applications for Shorten, VorbisComment, MetaFLAC
 		//   as well as other helper functions such as head, tail, md5sum, etc
-		// IMPORTANT: This path cannot have spaces in it. If neccesary, use the 8dot3 equivalent
-		//   ie for "C:/Program Files/Apache/" put "C:/PROGRA~1/APACHE/"
+		// This path cannot contain spaces, but the below code will attempt to get the
+		//   8.3-equivalent path automatically
 		// IMPORTANT: This path must include the trailing slash
 		if (GETID3_OS_ISWINDOWS && !defined('GETID3_HELPERAPPSDIR')) {
 
 			$helperappsdir = GETID3_INCLUDEPATH.'..'.DIRECTORY_SEPARATOR.'helperapps'; // must not have any space in this path
 
 			if (!is_dir($helperappsdir)) {
-				$this->startup_error .= '"'.$helperappsdir.'" cannot be defined as GETID3_HELPERAPPSDIR because it does not exist';
+				$this->startup_warning .= '"'.$helperappsdir.'" cannot be defined as GETID3_HELPERAPPSDIR because it does not exist';
 			} elseif (strpos(realpath($helperappsdir), ' ') !== false) {
 				$DirPieces = explode(DIRECTORY_SEPARATOR, realpath($helperappsdir));
+				$path_so_far = array();
 				foreach ($DirPieces as $key => $value) {
-					if ((strpos($value, '.') !== false) && (strpos($value, ' ') === false)) {
-						if (strpos($value, '.') > 8) {
-							$value = substr($value, 0, 6).'~1';
+					if (strpos($value, ' ') !== false) {
+						if (!empty($path_so_far)) {
+							$commandline = 'dir /x '.escapeshellarg(implode(DIRECTORY_SEPARATOR, $path_so_far));
+							$dir_listing = `$commandline`;
+							$lines = explode("\n", $dir_listing);
+							foreach ($lines as $line) {
+								$line = trim($line);
+								if (preg_match('#^([0-9/]{10}) +([0-9:]{4,5}( [AP]M)?) +(<DIR>|[0-9,]+) +([^ ]{0,11}) +(.+)$#', $line, $matches)) {
+									list($dummy, $date, $time, $ampm, $filesize, $shortname, $filename) = $matches;
+									if ((strtoupper($filesize) == '<DIR>') && (strtolower($filename) == strtolower($value))) {
+										$value = $shortname;
+									}
+								}
+							}
+						} else {
+							$this->startup_warning .= 'GETID3_HELPERAPPSDIR must not have any spaces in it - use 8dot3 naming convention if neccesary. You can run "dir /x" from the commandline to see the correct 8.3-style names.';
 						}
-					} elseif ((strpos($value, ' ') !== false) || strlen($value) > 8) {
-						$value = substr($value, 0, 6).'~1';
 					}
-					$DirPieces[$key] = strtoupper($value);
+					$path_so_far[] = $value;
 				}
-				$this->startup_error .= 'GETID3_HELPERAPPSDIR must not have any spaces in it - use 8dot3 naming convention if neccesary (on this server that would be something like "'.implode(DIRECTORY_SEPARATOR, $DirPieces).'" - NOTE: this may or may not be the actual 8.3 equivalent of "'.$helperappsdir.'", please double-check). You can run "dir /x" from the commandline to see the correct 8.3-style names.';
+				$helperappsdir = implode(DIRECTORY_SEPARATOR, $path_so_far);
 			}
-			define('GETID3_HELPERAPPSDIR', realpath($helperappsdir).DIRECTORY_SEPARATOR);
+			define('GETID3_HELPERAPPSDIR', $helperappsdir.DIRECTORY_SEPARATOR);
 		}
 
+		return true;
+	}
+
+	public function version() {
+		return self::VERSION;
+	}
+
+	public function fread_buffer_size() {
+		return $this->option_fread_buffer_size;
 	}
 
 
 	// public: setOption
-	function setOption($optArray) {
+	public function setOption($optArray) {
 		if (!is_array($optArray) || empty($optArray)) {
 			return false;
 		}
 		foreach ($optArray as $opt => $val) {
-			//if (isset($this, $opt) === false) {
 			if (isset($this->$opt) === false) {
 				continue;
 			}
@@ -149,263 +243,249 @@ class getID3
 	}
 
 
-	// public: analyze file - replaces GetAllFileInfo() and GetTagOnly()
-	function analyze($filename) {
+	public function openfile($filename, $filesize=null) {
+		try {
+			if (!empty($this->startup_error)) {
+				throw new getid3_exception($this->startup_error);
+			}
+			if (!empty($this->startup_warning)) {
+				$this->warning($this->startup_warning);
+			}
 
-		if (!empty($this->startup_error)) {
-			return $this->error($this->startup_error);
-		}
-		if (!empty($this->startup_warning)) {
-			$this->warning($this->startup_warning);
-		}
+			// init result array and set parameters
+			$this->filename = $filename;
+			$this->info = array();
+			$this->info['GETID3_VERSION']   = $this->version();
+			$this->info['php_memory_limit'] = (($this->memory_limit > 0) ? $this->memory_limit : false);
 
-		// init result array and set parameters
-		$this->info = array();
-		$this->info['GETID3_VERSION'] = GETID3_VERSION;
+			// remote files not supported
+			if (preg_match('/^(ht|f)tp:\/\//', $filename)) {
+				throw new getid3_exception('Remote files are not supported - please copy the file locally first');
+			}
 
-		// Check encoding/iconv support
-		if (!function_exists('iconv') && !in_array($this->encoding, array('ISO-8859-1', 'UTF-8', 'UTF-16LE', 'UTF-16BE', 'UTF-16', 'cp1251'))) {
-			$errormessage = 'iconv() support is needed for encodings other than ISO-8859-1, UTF-8, UTF-16LE, UTF16-BE, UTF-16. ';
-			if (GETID3_OS_ISWINDOWS) {
-				$errormessage .= 'PHP does not have iconv() support. Please enable php_iconv.dll in php.ini, and copy iconv.dll from c:/php/dlls to c:/windows/system32';
+			$filename = str_replace('/', DIRECTORY_SEPARATOR, $filename);
+			$filename = preg_replace('#(.+)'.preg_quote(DIRECTORY_SEPARATOR).'{2,}#U', '\1'.DIRECTORY_SEPARATOR, $filename);
+
+			// open local file
+			//if (is_readable($filename) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) { // see http://www.getid3.org/phpBB3/viewtopic.php?t=1720
+			if ((is_readable($filename) || file_exists($filename)) && is_file($filename) && ($this->fp = fopen($filename, 'rb'))) {
+				// great
 			} else {
-				$errormessage .= 'PHP is not compiled with iconv() support. Please recompile with the --with-iconv switch';
+				$errormessagelist = array();
+				if (!is_readable($filename)) {
+					$errormessagelist[] = '!is_readable';
+				}
+				if (!is_file($filename)) {
+					$errormessagelist[] = '!is_file';
+				}
+				if (!file_exists($filename)) {
+					$errormessagelist[] = '!file_exists';
+				}
+				if (empty($errormessagelist)) {
+					$errormessagelist[] = 'fopen failed';
+				}
+				throw new getid3_exception('Could not open "'.$filename.'" ('.implode('; ', $errormessagelist).')');
 			}
-	    	return $this->error($errormessage);
-		}
 
-		// Disable magic_quotes_runtime, if neccesary
-		$old_magic_quotes_runtime = get_magic_quotes_runtime(); // store current setting of magic_quotes_runtime
-		if ($old_magic_quotes_runtime) {
-			set_magic_quotes_runtime(0);                        // turn off magic_quotes_runtime
-			if (get_magic_quotes_runtime()) {
-				return $this->error('Could not disable magic_quotes_runtime - getID3() cannot work properly with this setting enabled');
-			}
-		}
+			$this->info['filesize'] = (!is_null($filesize) ? $filesize : filesize($filename));
+			// set redundant parameters - might be needed in some include file
+			// filenames / filepaths in getID3 are always expressed with forward slashes (unix-style) for both Windows and other to try and minimize confusion
+			$filename = str_replace('\\', '/', $filename);
+			$this->info['filepath']     = str_replace('\\', '/', realpath(dirname($filename)));
+			$this->info['filename']     = getid3_lib::mb_basename($filename);
+			$this->info['filenamepath'] = $this->info['filepath'].'/'.$this->info['filename'];
 
-		// remote files not supported
-		if (preg_match('/^(ht|f)tp:\/\//', $filename)) {
-			return $this->error('Remote files are not supported in this version of getID3() - please copy the file locally first');
-		}
 
-		$filename = str_replace('/', DIRECTORY_SEPARATOR, $filename);
-		$filename = preg_replace('#'.preg_quote(DIRECTORY_SEPARATOR).'{2,}#', DIRECTORY_SEPARATOR, $filename);
+			// option_max_2gb_check
+			if ($this->option_max_2gb_check) {
+				// PHP (32-bit all, and 64-bit Windows) doesn't support integers larger than 2^31 (~2GB)
+				// filesize() simply returns (filesize % (pow(2, 32)), no matter the actual filesize
+				// ftell() returns 0 if seeking to the end is beyond the range of unsigned integer
+				$fseek = fseek($this->fp, 0, SEEK_END);
+				if (($fseek < 0) || (($this->info['filesize'] != 0) && (ftell($this->fp) == 0)) ||
+					($this->info['filesize'] < 0) ||
+					(ftell($this->fp) < 0)) {
+						$real_filesize = getid3_lib::getFileSizeSyscall($this->info['filenamepath']);
 
-		// open local file
-		if (file_exists($filename) && ($fp = @fopen($filename, 'rb'))) {
-			// great
-		} else {
-			return $this->error('Could not open file "'.$filename.'"');
-		}
-
-		// set parameters
-		$this->info['filesize'] = filesize($filename);
-
-		// option_max_2gb_check
-		if ($this->option_max_2gb_check) {
-			// PHP doesn't support integers larger than 31-bit (~2GB)
-			// filesize() simply returns (filesize % (pow(2, 32)), no matter the actual filesize
-			// ftell() returns 0 if seeking to the end is beyond the range of unsigned integer
-			fseek($fp, 0, SEEK_END);
-			if ((($this->info['filesize'] != 0) && (ftell($fp) == 0)) ||
-				($this->info['filesize'] < 0) ||
-				(ftell($fp) < 0)) {
-					$real_filesize = false;
-					if (GETID3_OS_ISWINDOWS) {
-						$commandline = 'dir /-C "'.str_replace('/', DIRECTORY_SEPARATOR, $filename).'"';
-						$dir_output = `$commandline`;
-						if (eregi('1 File\(s\)[ ]+([0-9]+) bytes', $dir_output, $matches)) {
-							$real_filesize = (float) $matches[1];
+						if ($real_filesize === false) {
+							unset($this->info['filesize']);
+							fclose($this->fp);
+							throw new getid3_exception('Unable to determine actual filesize. File is most likely larger than '.round(PHP_INT_MAX / 1073741824).'GB and is not supported by PHP.');
+						} elseif (getid3_lib::intValueSupported($real_filesize)) {
+							unset($this->info['filesize']);
+							fclose($this->fp);
+							throw new getid3_exception('PHP seems to think the file is larger than '.round(PHP_INT_MAX / 1073741824).'GB, but filesystem reports it as '.number_format($real_filesize, 3).'GB, please report to info@getid3.org');
 						}
-					} else {
-						$commandline = 'ls -o -g -G --time-style=long-iso '.escapeshellarg($filename);
-						$dir_output = `$commandline`;
-						if (eregi('([0-9]+) ([0-9]{4}-[0-9]{2}\-[0-9]{2} [0-9]{2}:[0-9]{2}) '.preg_quote($filename).'$', $dir_output, $matches)) {
-							$real_filesize = (float) $matches[1];
-						}
+						$this->info['filesize'] = $real_filesize;
+						$this->warning('File is larger than '.round(PHP_INT_MAX / 1073741824).'GB (filesystem reports it as '.number_format($real_filesize, 3).'GB) and is not properly supported by PHP.');
+				}
+			}
+
+			// set more parameters
+			$this->info['avdataoffset']        = 0;
+			$this->info['avdataend']           = $this->info['filesize'];
+			$this->info['fileformat']          = '';                // filled in later
+			$this->info['audio']['dataformat'] = '';                // filled in later, unset if not used
+			$this->info['video']['dataformat'] = '';                // filled in later, unset if not used
+			$this->info['tags']                = array();           // filled in later, unset if not used
+			$this->info['error']               = array();           // filled in later, unset if not used
+			$this->info['warning']             = array();           // filled in later, unset if not used
+			$this->info['comments']            = array();           // filled in later, unset if not used
+			$this->info['encoding']            = $this->encoding;   // required by id3v2 and iso modules - can be unset at the end if desired
+
+			return true;
+
+		} catch (Exception $e) {
+			$this->error($e->getMessage());
+		}
+		return false;
+	}
+
+	// public: analyze file
+	public function analyze($filename, $filesize=null, $original_filename='') {
+		try {
+			if (!$this->openfile($filename, $filesize)) {
+				return $this->info;
+			}
+
+			// Handle tags
+			foreach (array('id3v2'=>'id3v2', 'id3v1'=>'id3v1', 'apetag'=>'ape', 'lyrics3'=>'lyrics3') as $tag_name => $tag_key) {
+				$option_tag = 'option_tag_'.$tag_name;
+				if ($this->$option_tag) {
+					$this->include_module('tag.'.$tag_name);
+					try {
+						$tag_class = 'getid3_'.$tag_name;
+						$tag = new $tag_class($this);
+						$tag->Analyze();
 					}
-					if ($real_filesize === false) {
-						unset($this->info['filesize']);
-						fclose($fp);
-						return $this->error('File is most likely larger than 2GB and is not supported by PHP');
-					} elseif ($real_filesize < pow(2, 31)) {
-						unset($this->info['filesize']);
-						fclose($fp);
-						return $this->error('PHP seems to think the file is larger than 2GB, but filesystem reports it as '.number_format($real_filesize, 3).'GB, please report to info@getid3.org');
+					catch (getid3_exception $e) {
+						throw $e;
 					}
-					$this->info['filesize'] = $real_filesize;
-					$this->error('File is larger than 2GB (filesystem reports it as '.number_format($real_filesize, 3).'GB) and is not properly supported by PHP.');
+				}
 			}
-		}
-
-		// set more parameters
-		$this->info['avdataoffset']        = 0;
-		$this->info['avdataend']           = $this->info['filesize'];
-		$this->info['fileformat']          = '';                // filled in later
-		$this->info['audio']['dataformat'] = '';                // filled in later, unset if not used
-		$this->info['video']['dataformat'] = '';                // filled in later, unset if not used
-		$this->info['tags']                = array();           // filled in later, unset if not used
-		$this->info['error']               = array();           // filled in later, unset if not used
-		$this->info['warning']             = array();           // filled in later, unset if not used
-		$this->info['comments']            = array();           // filled in later, unset if not used
-		$this->info['encoding']            = $this->encoding;   // required by id3v2 and iso modules - can be unset at the end if desired
-
-		// set redundant parameters - might be needed in some include file
-		$this->info['filename']            = basename($filename);
-		$this->info['filepath']            = str_replace('\\', '/', realpath(dirname($filename)));
-		$this->info['filenamepath']        = $this->info['filepath'].'/'.$this->info['filename'];
-
-
-		// handle ID3v2 tag - done first - already at beginning of file
-		// ID3v2 detection (even if not parsing) is always done otherwise fileformat is much harder to detect
-		if ($this->option_tag_id3v2) {
-			if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE__, false)) {
-				$tag = new getid3_id3v2($fp, $this->info);
-				unset($tag);
+			if (isset($this->info['id3v2']['tag_offset_start'])) {
+				$this->info['avdataoffset'] = max($this->info['avdataoffset'], $this->info['id3v2']['tag_offset_end']);
+			}
+			foreach (array('id3v1'=>'id3v1', 'apetag'=>'ape', 'lyrics3'=>'lyrics3') as $tag_name => $tag_key) {
+				if (isset($this->info[$tag_key]['tag_offset_start'])) {
+					$this->info['avdataend'] = min($this->info['avdataend'], $this->info[$tag_key]['tag_offset_start']);
+				}
 			}
 
-		} else {
-
-			fseek($fp, 0, SEEK_SET);
-			$header = fread($fp, 10);
-			if (substr($header, 0, 3) == 'ID3'  &&  strlen($header) == 10) {
-				$this->info['id3v2']['header']           = true;
-				$this->info['id3v2']['majorversion']     = ord($header{3});
-				$this->info['id3v2']['minorversion']     = ord($header{4});
-				$this->info['id3v2']['headerlength']     = getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10; // length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
-
-				$this->info['id3v2']['tag_offset_start'] = 0;
-				$this->info['id3v2']['tag_offset_end']   = $this->info['id3v2']['tag_offset_start'] + $this->info['id3v2']['headerlength'];
-				$this->info['avdataoffset']              = $this->info['id3v2']['tag_offset_end'];
+			// ID3v2 detection (NOT parsing), even if ($this->option_tag_id3v2 == false) done to make fileformat easier
+			if (!$this->option_tag_id3v2) {
+				fseek($this->fp, 0);
+				$header = fread($this->fp, 10);
+				if ((substr($header, 0, 3) == 'ID3') && (strlen($header) == 10)) {
+					$this->info['id3v2']['header']        = true;
+					$this->info['id3v2']['majorversion']  = ord($header{3});
+					$this->info['id3v2']['minorversion']  = ord($header{4});
+					$this->info['avdataoffset']          += getid3_lib::BigEndian2Int(substr($header, 6, 4), 1) + 10; // length of ID3v2 tag in 10-byte header doesn't include 10-byte header length
+				}
 			}
 
-		}
+			// read 32 kb file data
+			fseek($this->fp, $this->info['avdataoffset']);
+			$formattest = fread($this->fp, 32774);
 
+			// determine format
+			$determined_format = $this->GetFileFormat($formattest, ($original_filename ? $original_filename : $filename));
 
-		// handle ID3v1 tag
-		if ($this->option_tag_id3v1) {
-			if (!@include_once(GETID3_INCLUDEPATH.'module.tag.id3v1.php')) {
-				return $this->error('module.tag.id3v1.php is missing - you may disable option_tag_id3v1.');
+			// unable to determine file format
+			if (!$determined_format) {
+				fclose($this->fp);
+				return $this->error('unable to determine file format');
 			}
-			$tag = new getid3_id3v1($fp, $this->info);
-			unset($tag);
-		}
 
-		// handle APE tag
-		if ($this->option_tag_apetag) {
-			if (!@include_once(GETID3_INCLUDEPATH.'module.tag.apetag.php')) {
-				return $this->error('module.tag.apetag.php is missing - you may disable option_tag_apetag.');
+			// check for illegal ID3 tags
+			if (isset($determined_format['fail_id3']) && (in_array('id3v1', $this->info['tags']) || in_array('id3v2', $this->info['tags']))) {
+				if ($determined_format['fail_id3'] === 'ERROR') {
+					fclose($this->fp);
+					return $this->error('ID3 tags not allowed on this file type.');
+				} elseif ($determined_format['fail_id3'] === 'WARNING') {
+					$this->warning('ID3 tags not allowed on this file type.');
+				}
 			}
-			$tag = new getid3_apetag($fp, $this->info);
-			unset($tag);
-		}
 
-		// handle lyrics3 tag
-		if ($this->option_tag_lyrics3) {
-			if (!@include_once(GETID3_INCLUDEPATH.'module.tag.lyrics3.php')) {
-				return $this->error('module.tag.lyrics3.php is missing - you may disable option_tag_lyrics3.');
+			// check for illegal APE tags
+			if (isset($determined_format['fail_ape']) && in_array('ape', $this->info['tags'])) {
+				if ($determined_format['fail_ape'] === 'ERROR') {
+					fclose($this->fp);
+					return $this->error('APE tags not allowed on this file type.');
+				} elseif ($determined_format['fail_ape'] === 'WARNING') {
+					$this->warning('APE tags not allowed on this file type.');
+				}
 			}
-			$tag = new getid3_lyrics3($fp, $this->info);
-			unset($tag);
-		}
 
-		// read 32 kb file data
-		fseek($fp, $this->info['avdataoffset'], SEEK_SET);
-		$formattest = fread($fp, 32774);
+			// set mime type
+			$this->info['mime_type'] = $determined_format['mime_type'];
 
-		// determine format
-		$determined_format = $this->GetFileFormat($formattest, $filename);
-
-		// unable to determine file format
-		if (!$determined_format) {
-			fclose($fp);
-			return $this->error('unable to determine file format');
-		}
-
-		// check for illegal ID3 tags
-		if (isset($determined_format['fail_id3']) && (in_array('id3v1', $this->info['tags']) || in_array('id3v2', $this->info['tags']))) {
-			if ($determined_format['fail_id3'] === 'ERROR') {
-				fclose($fp);
-				return $this->error('ID3 tags not allowed on this file type.');
-			} elseif ($determined_format['fail_id3'] === 'WARNING') {
-				$this->info['warning'][] = 'ID3 tags not allowed on this file type.';
+			// supported format signature pattern detected, but module deleted
+			if (!file_exists(GETID3_INCLUDEPATH.$determined_format['include'])) {
+				fclose($this->fp);
+				return $this->error('Format not supported, module "'.$determined_format['include'].'" was removed.');
 			}
-		}
 
-		// check for illegal APE tags
-		if (isset($determined_format['fail_ape']) && in_array('ape', $this->info['tags'])) {
-			if ($determined_format['fail_ape'] === 'ERROR') {
-				fclose($fp);
-				return $this->error('APE tags not allowed on this file type.');
-			} elseif ($determined_format['fail_ape'] === 'WARNING') {
-				$this->info['warning'][] = 'APE tags not allowed on this file type.';
+			// module requires iconv support
+			// Check encoding/iconv support
+			if (!empty($determined_format['iconv_req']) && !function_exists('iconv') && !in_array($this->encoding, array('ISO-8859-1', 'UTF-8', 'UTF-16LE', 'UTF-16BE', 'UTF-16'))) {
+				$errormessage = 'iconv() support is required for this module ('.$determined_format['include'].') for encodings other than ISO-8859-1, UTF-8, UTF-16LE, UTF16-BE, UTF-16. ';
+				if (GETID3_OS_ISWINDOWS) {
+					$errormessage .= 'PHP does not have iconv() support. Please enable php_iconv.dll in php.ini, and copy iconv.dll from c:/php/dlls to c:/windows/system32';
+				} else {
+					$errormessage .= 'PHP is not compiled with iconv() support. Please recompile with the --with-iconv switch';
+				}
+				return $this->error($errormessage);
 			}
-		}
 
-		// set mime type
-		$this->info['mime_type'] = $determined_format['mime_type'];
+			// include module
+			include_once(GETID3_INCLUDEPATH.$determined_format['include']);
 
-		// supported format signature pattern detected, but module deleted
-		if (!file_exists(GETID3_INCLUDEPATH.$determined_format['include'])) {
-			fclose($fp);
-			return $this->error('Format not supported, module "'.$determined_format['include'].'" was removed.');
-		}
-
-		// module requires iconv support
-        if (!function_exists('iconv') && @$determined_format['iconv_req']) {
-		    return $this->error('iconv support is required for this module ('.$determined_format['include'].').');
-		}
-
-		// include module
-		include_once(GETID3_INCLUDEPATH.$determined_format['include']);
-
-		// instantiate module class
-		$class_name = 'getid3_'.$determined_format['module'];
-		if (!class_exists($class_name)) {
-			return $this->error('Format not supported, module "'.$determined_format['include'].'" is corrupt.');
-		}
-		if (isset($determined_format['option'])) {
-			$class = new $class_name($fp, $this->info, $determined_format['option']);
-		} else {
-			$class = new $class_name($fp, $this->info);
-		}
-		unset($class);
-
-		// close file
-		fclose($fp);
-
-		// process all tags - copy to 'tags' and convert charsets
-		if ($this->option_tags_process) {
-			$this->HandleAllTags();
-		}
-
-		// perform more calculations
-		if ($this->option_extra_info) {
-			$this->ChannelsBitratePlaytimeCalculations();
-			$this->CalculateCompressionRatioVideo();
-			$this->CalculateCompressionRatioAudio();
-			$this->CalculateReplayGain();
-			$this->ProcessAudioStreams();
-		}
-
-		// get the MD5 sum of the audio/video portion of the file - without ID3/APE/Lyrics3/etc header/footer tags
-		if ($this->option_md5_data) {
-			// do not cald md5_data if md5_data_source is present - set by flac only - future MPC/SV8 too
-			if (!$this->option_md5_data_source || empty($this->info['md5_data_source'])) {
-				$this->getHashdata('md5');
+			// instantiate module class
+			$class_name = 'getid3_'.$determined_format['module'];
+			if (!class_exists($class_name)) {
+				return $this->error('Format not supported, module "'.$determined_format['include'].'" is corrupt.');
 			}
+			$class = new $class_name($this);
+			$class->Analyze();
+			unset($class);
+
+			// close file
+			fclose($this->fp);
+
+			// process all tags - copy to 'tags' and convert charsets
+			if ($this->option_tags_process) {
+				$this->HandleAllTags();
+			}
+
+			// perform more calculations
+			if ($this->option_extra_info) {
+				$this->ChannelsBitratePlaytimeCalculations();
+				$this->CalculateCompressionRatioVideo();
+				$this->CalculateCompressionRatioAudio();
+				$this->CalculateReplayGain();
+				$this->ProcessAudioStreams();
+			}
+
+			// get the MD5 sum of the audio/video portion of the file - without ID3/APE/Lyrics3/etc header/footer tags
+			if ($this->option_md5_data) {
+				// do not calc md5_data if md5_data_source is present - set by flac only - future MPC/SV8 too
+				if (!$this->option_md5_data_source || empty($this->info['md5_data_source'])) {
+					$this->getHashdata('md5');
+				}
+			}
+
+			// get the SHA1 sum of the audio/video portion of the file - without ID3/APE/Lyrics3/etc header/footer tags
+			if ($this->option_sha1_data) {
+				$this->getHashdata('sha1');
+			}
+
+			// remove undesired keys
+			$this->CleanUp();
+
+		} catch (Exception $e) {
+			$this->error('Caught exception: '.$e->getMessage());
 		}
-
-		// get the SHA1 sum of the audio/video portion of the file - without ID3/APE/Lyrics3/etc header/footer tags
-		if ($this->option_sha1_data) {
-			$this->getHashdata('sha1');
-		}
-
-		// remove undesired keys
-		$this->CleanUp();
-
-		// restore magic_quotes_runtime setting
-		set_magic_quotes_runtime($old_magic_quotes_runtime);
 
 		// return info array
 		return $this->info;
@@ -413,28 +493,29 @@ class getID3
 
 
 	// private: error handling
-	function error($message) {
-
+	public function error($message) {
 		$this->CleanUp();
-
+		if (!isset($this->info['error'])) {
+			$this->info['error'] = array();
+		}
 		$this->info['error'][] = $message;
 		return $this->info;
 	}
 
 
 	// private: warning handling
-	function warning($message) {
+	public function warning($message) {
 		$this->info['warning'][] = $message;
 		return true;
 	}
 
 
 	// private: CleanUp
-	function CleanUp() {
+	private function CleanUp() {
 
 		// remove possible empty keys
 		$AVpossibleEmptyKeys = array('dataformat', 'bits_per_sample', 'encoder_options', 'streams', 'bitrate');
-		foreach ($AVpossibleEmptyKeys as $key) {
+		foreach ($AVpossibleEmptyKeys as $dummy => $key) {
 			if (empty($this->info['audio'][$key]) && isset($this->info['audio'][$key])) {
 				unset($this->info['audio'][$key]);
 			}
@@ -461,11 +542,24 @@ class getID3
 				unset($this->info['avdataend']);
 			}
 		}
+
+		// remove possible duplicated identical entries
+		if (!empty($this->info['error'])) {
+			$this->info['error'] = array_values(array_unique($this->info['error']));
+		}
+		if (!empty($this->info['warning'])) {
+			$this->info['warning'] = array_values(array_unique($this->info['warning']));
+		}
+
+		// remove "global variable" type keys
+		unset($this->info['php_memory_limit']);
+
+		return true;
 	}
 
 
 	// return array containing information about all supported formats
-	function GetFileFormatArray() {
+	public function GetFileFormatArray() {
 		static $format_info = array();
 		if (empty($format_info)) {
 			$format_info = array(
@@ -485,18 +579,24 @@ class getID3
 							'pattern'   => '^ADIF',
 							'group'     => 'audio',
 							'module'    => 'aac',
-							'option'    => 'adif',
 							'mime_type' => 'application/octet-stream',
 							'fail_ape'  => 'WARNING',
 						),
 
-
+/*
+				// AA   - audio       - Audible Audiobook
+				'aa'   => array(
+							'pattern'   => '^.{4}\x57\x90\x75\x36',
+							'group'     => 'audio',
+							'module'    => 'aa',
+							'mime_type' => 'audio/audible',
+						),
+*/
 				// AAC  - audio       - Advanced Audio Coding (AAC) - ADTS format (very similar to MP3)
 				'adts' => array(
 							'pattern'   => '^\xFF[\xF0-\xF1\xF8-\xF9]',
 							'group'     => 'audio',
 							'module'    => 'aac',
-							'option'    => 'adts',
 							'mime_type' => 'application/octet-stream',
 							'fail_ape'  => 'WARNING',
 						),
@@ -508,6 +608,14 @@ class getID3
 							'group'     => 'audio',
 							'module'    => 'au',
 							'mime_type' => 'audio/basic',
+						),
+
+				// AMR  - audio       - Adaptive Multi Rate
+				'amr'  => array(
+							'pattern'   => '^\x23\x21AMR\x0A', // #!AMR[0A]
+							'group'     => 'audio',
+							'module'    => 'amr',
+							'mime_type' => 'audio/amr',
 						),
 
 				// AVR  - audio       - Audio Visual Research
@@ -526,9 +634,17 @@ class getID3
 							'mime_type' => 'audio/xmms-bonk',
 						),
 
+				// DSF  - audio       - Direct Stream Digital (DSD) Storage Facility files (DSF) - https://en.wikipedia.org/wiki/Direct_Stream_Digital
+				'dsf'  => array(
+							'pattern'   => '^DSD ',  // including trailing space: 44 53 44 20
+							'group'     => 'audio',
+							'module'    => 'dsf',
+							'mime_type' => 'audio/dsd',
+						),
+
 				// DSS  - audio       - Digital Speech Standard
 				'dss'  => array(
-							'pattern'   => '^[\x02]dss',
+							'pattern'   => '^[\x02-\x03]ds[s2]',
 							'group'     => 'audio',
 							'module'    => 'dss',
 							'mime_type' => 'application/octet-stream',
@@ -597,7 +713,7 @@ class getID3
 							'pattern'   => '^IMPM',
 							'group'     => 'audio',
 							'module'    => 'mod',
-							'option'    => 'it',
+							//'option'    => 'it',
 							'mime_type' => 'audio/it',
 						),
 
@@ -606,7 +722,7 @@ class getID3
 							'pattern'   => '^Extended Module',
 							'group'     => 'audio',
 							'module'    => 'mod',
-							'option'    => 'xm',
+							//'option'    => 'xm',
 							'mime_type' => 'audio/xm',
 						),
 
@@ -615,7 +731,7 @@ class getID3
 							'pattern'   => '^.{44}SCRM',
 							'group'     => 'audio',
 							'module'    => 'mod',
-							'option'    => 's3m',
+							//'option'    => 's3m',
 							'mime_type' => 'audio/s3m',
 						),
 
@@ -629,7 +745,7 @@ class getID3
 
 				// MP3  - audio       - MPEG-audio Layer 3 (very similar to AAC-ADTS)
 				'mp3'  => array(
-							'pattern'   => '^\xFF[\xE2-\xE7\xF2-\xF7\xFA-\xFF][\x00-\xEB]',
+							'pattern'   => '^\xFF[\xE2-\xE7\xF2-\xF7\xFA-\xFF][\x00-\x0B\x10-\x1B\x20-\x2B\x30-\x3B\x40-\x4B\x50-\x5B\x60-\x6B\x70-\x7B\x80-\x8B\x90-\x9B\xA0-\xAB\xB0-\xBB\xC0-\xCB\xD0-\xDB\xE0-\xEB\xF0-\xFB]',
 							'group'     => 'audio',
 							'module'    => 'mp3',
 							'mime_type' => 'audio/mpeg',
@@ -768,7 +884,7 @@ class getID3
 							'pattern'   => '^(RIFF|SDSS|FORM)',
 							'group'     => 'audio-video',
 							'module'    => 'riff',
-							'mime_type' => 'audio/x-wave',
+							'mime_type' => 'audio/x-wav',
 							'fail_ape'  => 'WARNING',
 						),
 
@@ -786,6 +902,14 @@ class getID3
 							'group'     => 'audio-video',
 							'module'    => 'swf',
 							'mime_type' => 'application/x-shockwave-flash',
+						),
+
+				// TS - audio/video - MPEG-2 Transport Stream
+				'ts' => array(
+							'pattern'   => '^(\x47.{187}){10,}', // packets are 188 bytes long and start with 0x47 "G".  Check for at least 10 packets matching this pattern
+							'group'     => 'audio-video',
+							'module'    => 'ts',
+							'mime_type' => 'video/MP2T',
 						),
 
 
@@ -843,9 +967,9 @@ class getID3
 						),
 
 
-                // SVG  - still image - Scalable Vector Graphics (SVG)
+				// SVG  - still image - Scalable Vector Graphics (SVG)
 				'svg'  => array(
-							'pattern'   => '<!DOCTYPE svg PUBLIC ',
+							'pattern'   => '(<!DOCTYPE svg PUBLIC |xmlns="http:\/\/www\.w3\.org\/2000\/svg")',
 							'group'     => 'graphic',
 							'module'    => 'svg',
 							'mime_type' => 'image/svg+xml',
@@ -854,12 +978,23 @@ class getID3
 						),
 
 
-				// TIFF  - still image - Tagged Information File Format (TIFF)
+				// TIFF - still image - Tagged Information File Format (TIFF)
 				'tiff' => array(
 							'pattern'   => '^(II\x2A\x00|MM\x00\x2A)',
 							'group'     => 'graphic',
 							'module'    => 'tiff',
 							'mime_type' => 'image/tiff',
+							'fail_id3'  => 'ERROR',
+							'fail_ape'  => 'ERROR',
+						),
+
+
+				// EFAX - still image - eFax (TIFF derivative)
+				'efax'  => array(
+							'pattern'   => '^\xDC\xFE',
+							'group'     => 'graphic',
+							'module'    => 'efax',
+							'mime_type' => 'image/efax',
 							'fail_id3'  => 'ERROR',
 							'fail_ape'  => 'ERROR',
 						),
@@ -931,10 +1066,10 @@ class getID3
 
 				// Misc other formats
 
-                // PAR2 - data        - Parity Volume Set Specification 2.0
-                'par2' => array (
-                			'pattern'   => '^PAR2\x00PKT',
-                			'group'     => 'misc',
+				// PAR2 - data        - Parity Volume Set Specification 2.0
+				'par2' => array (
+							'pattern'   => '^PAR2\x00PKT',
+							'group'     => 'misc',
 							'module'    => 'par2',
 							'mime_type' => 'application/octet-stream',
 							'fail_id3'  => 'ERROR',
@@ -953,13 +1088,22 @@ class getID3
 
 				// MSOFFICE  - data   - ZIP compressed data
 				'msoffice' => array(
-							'pattern'   => '^\xD0\xCF\x11\xE0', // D0CF11E == DOCFILE == Microsoft Office Document
+							'pattern'   => '^\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1', // D0CF11E == DOCFILE == Microsoft Office Document
 							'group'     => 'misc',
 							'module'    => 'msoffice',
 							'mime_type' => 'application/octet-stream',
 							'fail_id3'  => 'ERROR',
 							'fail_ape'  => 'ERROR',
 						),
+
+				 // CUE  - data       - CUEsheet (index to single-file disc images)
+				 'cue' => array(
+							'pattern'   => '', // empty pattern means cannot be automatically detected, will fall through all other formats and match based on filename and very basic file contents
+							'group'     => 'misc',
+							'module'    => 'cue',
+							'mime_type' => 'application/octet-stream',
+						   ),
+
 			);
 		}
 
@@ -968,30 +1112,37 @@ class getID3
 
 
 
-	function GetFileFormat(&$filedata, $filename='') {
+	public function GetFileFormat(&$filedata, $filename='') {
 		// this function will determine the format of a file based on usually
 		// the first 2-4 bytes of the file (8 bytes for PNG, 16 bytes for JPG,
 		// and in the case of ISO CD image, 6 bytes offset 32kb from the start
 		// of the file).
 
 		// Identify file format - loop through $format_info and detect with reg expr
-		foreach ($this->GetFileFormatArray() as $info) {
-			// Using preg_match() instead of ereg() - much faster
+		foreach ($this->GetFileFormatArray() as $format_name => $info) {
 			// The /s switch on preg_match() forces preg_match() NOT to treat
 			// newline (0x0A) characters as special chars but do a binary match
-			if (preg_match('/'.$info['pattern'].'/s', $filedata)) {
+			if (!empty($info['pattern']) && preg_match('#'.$info['pattern'].'#s', $filedata)) {
 				$info['include'] = 'module.'.$info['group'].'.'.$info['module'].'.php';
 				return $info;
 			}
 		}
 
 
-		if (preg_match('/\.mp[123a]$/i', $filename)) {
+		if (preg_match('#\.mp[123a]$#i', $filename)) {
 			// Too many mp3 encoders on the market put gabage in front of mpeg files
 			// use assume format on these if format detection failed
 			$GetFileFormatArray = $this->GetFileFormatArray();
 			$info = $GetFileFormatArray['mp3'];
 			$info['include'] = 'module.'.$info['group'].'.'.$info['module'].'.php';
+			return $info;
+		} elseif (preg_match('/\.cue$/i', $filename) && preg_match('#FILE "[^"]+" (BINARY|MOTOROLA|AIFF|WAVE|MP3)#', $filedata)) {
+			// there's not really a useful consistent "magic" at the beginning of .cue files to identify them
+			// so until I think of something better, just go by filename if all other format checks fail
+			// and verify there's at least one instance of "TRACK xx AUDIO" in the file
+			$GetFileFormatArray = $this->GetFileFormatArray();
+			$info = $GetFileFormatArray['cue'];
+			$info['include']   = 'module.'.$info['group'].'.'.$info['module'].'.php';
 			return $info;
 		}
 
@@ -1000,7 +1151,7 @@ class getID3
 
 
 	// converts array to $encoding charset from $this->encoding
-	function CharConvert(&$array, $encoding) {
+	public function CharConvert(&$array, $encoding) {
 
 		// identical encoding - end here
 		if ($encoding == $this->encoding) {
@@ -1023,7 +1174,7 @@ class getID3
 	}
 
 
-	function HandleAllTags() {
+	public function HandleAllTags() {
 
 		// key name => array (tag name, character encoding)
 		static $tags;
@@ -1035,19 +1186,24 @@ class getID3
 				'ogg'       => array('vorbiscomment' , 'UTF-8'),
 				'png'       => array('png'           , 'UTF-8'),
 				'tiff'      => array('tiff'          , 'ISO-8859-1'),
-				'quicktime' => array('quicktime'     , 'ISO-8859-1'),
+				'quicktime' => array('quicktime'     , 'UTF-8'),
 				'real'      => array('real'          , 'ISO-8859-1'),
 				'vqf'       => array('vqf'           , 'ISO-8859-1'),
 				'zip'       => array('zip'           , 'ISO-8859-1'),
 				'riff'      => array('riff'          , 'ISO-8859-1'),
 				'lyrics3'   => array('lyrics3'       , 'ISO-8859-1'),
-				'id3v1'     => array('id3v1'         , 'UTF-8'),
+				'id3v1'     => array('id3v1'         , $this->encoding_id3v1),
 				'id3v2'     => array('id3v2'         , 'UTF-8'), // not according to the specs (every frame can have a different encoding), but getID3() force-converts all encodings to UTF-8
-				'ape'       => array('ape'           , 'UTF-8')
+				'ape'       => array('ape'           , 'UTF-8'),
+				'cue'       => array('cue'           , 'ISO-8859-1'),
+				'matroska'  => array('matroska'      , 'UTF-8'),
+				'flac'      => array('vorbiscomment' , 'UTF-8'),
+				'divxtag'   => array('divx'          , 'ISO-8859-1'),
+				'iptc'      => array('iptc'          , 'ISO-8859-1'),
 			);
 		}
 
-		// loop thru comments array
+		// loop through comments array
 		foreach ($tags as $comment_name => $tagname_encoding_array) {
 			list($tag_name, $encoding) = $tagname_encoding_array;
 
@@ -1058,12 +1214,21 @@ class getID3
 
 			// copy comments if key name set
 			if (!empty($this->info[$comment_name]['comments'])) {
-
 				foreach ($this->info[$comment_name]['comments'] as $tag_key => $valuearray) {
-					foreach ($valuearray as $value) {
-						if (strlen(trim($value)) > 0) {
-							$this->info['tags'][trim($tag_name)][trim($tag_key)][] = $value; // do not trim!! Unicode characters will get mangled if trailing nulls are removed!
+					foreach ($valuearray as $key => $value) {
+						if (is_string($value)) {
+							$value = trim($value, " \r\n\t"); // do not trim nulls from $value!! Unicode characters will get mangled if trailing nulls are removed!
 						}
+						if ($value) {
+							if (!is_numeric($key)) {
+								$this->info['tags'][trim($tag_name)][trim($tag_key)][$key] = $value;
+							} else {
+								$this->info['tags'][trim($tag_name)][trim($tag_key)][]     = $value;
+							}
+						}
+					}
+					if ($tag_key == 'picture') {
+						unset($this->info[$comment_name]['comments'][$tag_key]);
 					}
 				}
 
@@ -1074,26 +1239,86 @@ class getID3
 
 				if ($this->option_tags_html) {
 					foreach ($this->info['tags'][$tag_name] as $tag_key => $valuearray) {
-						foreach ($valuearray as $key => $value) {
-							if (is_string($value)) {
-								//$this->info['tags_html'][$tag_name][$tag_key][$key] = getid3_lib::MultiByteCharString2HTML($value, $encoding);
-								$this->info['tags_html'][$tag_name][$tag_key][$key] = str_replace('&#0;', '', getid3_lib::MultiByteCharString2HTML($value, $encoding));
-							} else {
-								$this->info['tags_html'][$tag_name][$tag_key][$key] = $value;
+						$this->info['tags_html'][$tag_name][$tag_key] = getid3_lib::recursiveMultiByteCharString2HTML($valuearray, $encoding);
+					}
+				}
+
+				// ID3v1 encoding detection hack start
+				// ID3v1 is defined as always using ISO-8859-1 encoding, but it is not uncommon to find files tagged with ID3v1 using Windows-1251 or other character sets
+				// Since ID3v1 has no concept of character sets there is no certain way to know we have the correct non-ISO-8859-1 character set, but we can guess
+				if ($comment_name == 'id3v1') {
+					if ($encoding == 'ISO-8859-1') {
+						if (function_exists('iconv')) {
+							foreach ($this->info['tags'][$tag_name] as $tag_key => $valuearray) {
+								foreach ($valuearray as $key => $value) {
+									if (preg_match('#^[\\x80-\\xFF]+$#', $value)) {
+										foreach (array('windows-1251', 'KOI8-R') as $id3v1_bad_encoding) {
+											if (@iconv($id3v1_bad_encoding, $id3v1_bad_encoding, $value) === $value) {
+												$encoding = $id3v1_bad_encoding;
+												break 3;
+											}
+										}
+									}
+								}
 							}
 						}
 					}
 				}
+				// ID3v1 encoding detection hack end
 
 				$this->CharConvert($this->info['tags'][$tag_name], $encoding);           // only copy gets converted!
 			}
 
 		}
+
+		// pictures can take up a lot of space, and we don't need multiple copies of them
+		// let there be a single copy in [comments][picture], and not elsewhere
+		if (!empty($this->info['tags'])) {
+			$unset_keys = array('tags', 'tags_html');
+			foreach ($this->info['tags'] as $tagtype => $tagarray) {
+				foreach ($tagarray as $tagname => $tagdata) {
+					if ($tagname == 'picture') {
+						foreach ($tagdata as $key => $tagarray) {
+							$this->info['comments']['picture'][] = $tagarray;
+							if (isset($tagarray['data']) && isset($tagarray['image_mime'])) {
+								if (isset($this->info['tags'][$tagtype][$tagname][$key])) {
+									unset($this->info['tags'][$tagtype][$tagname][$key]);
+								}
+								if (isset($this->info['tags_html'][$tagtype][$tagname][$key])) {
+									unset($this->info['tags_html'][$tagtype][$tagname][$key]);
+								}
+							}
+						}
+					}
+				}
+				foreach ($unset_keys as $unset_key) {
+					// remove possible empty keys from (e.g. [tags][id3v2][picture])
+					if (empty($this->info[$unset_key][$tagtype]['picture'])) {
+						unset($this->info[$unset_key][$tagtype]['picture']);
+					}
+					if (empty($this->info[$unset_key][$tagtype])) {
+						unset($this->info[$unset_key][$tagtype]);
+					}
+					if (empty($this->info[$unset_key])) {
+						unset($this->info[$unset_key]);
+					}
+				}
+				// remove duplicate copy of picture data from (e.g. [id3v2][comments][picture])
+				if (isset($this->info[$tagtype]['comments']['picture'])) {
+					unset($this->info[$tagtype]['comments']['picture']);
+				}
+				if (empty($this->info[$tagtype]['comments'])) {
+					unset($this->info[$tagtype]['comments']);
+				}
+				if (empty($this->info[$tagtype])) {
+					unset($this->info[$tagtype]);
+				}
+			}
+		}
 		return true;
 	}
 
-
-	function getHashdata($algorithm) {
+	public function getHashdata($algorithm) {
 		switch ($algorithm) {
 			case 'md5':
 			case 'sha1':
@@ -1104,7 +1329,7 @@ class getID3
 				break;
 		}
 
-		if ((@$this->info['fileformat'] == 'ogg') && (@$this->info['audio']['dataformat'] == 'vorbis')) {
+		if (!empty($this->info['fileformat']) && !empty($this->info['dataformat']) && ($this->info['fileformat'] == 'ogg') && ($this->info['audio']['dataformat'] == 'vorbis')) {
 
 			// We cannot get an identical md5_data value for Ogg files where the comments
 			// span more than 1 Ogg page (compared to the same audio data with smaller
@@ -1124,10 +1349,10 @@ class getID3
 			// page sequence numbers likely happens for OggSpeex and OggFLAC as well, but
 			// currently vorbiscomment only works on OggVorbis files.
 
-			if ((bool) ini_get('safe_mode')) {
+			if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 
-				$this->info['warning'][] = 'Failed making system call to vorbiscomment.exe - '.$algorithm.'_data is incorrect - error returned: PHP running in Safe Mode (backtick operator not available)';
-				$this->info[$algorithm.'_data']  = false;
+				$this->warning('Failed making system call to vorbiscomment.exe - '.$algorithm.'_data is incorrect - error returned: PHP running in Safe Mode (backtick operator not available)');
+				$this->info[$algorithm.'_data'] = false;
 
 			} else {
 
@@ -1135,12 +1360,11 @@ class getID3
 				$old_abort = ignore_user_abort(true);
 
 				// Create empty file
-				$empty = tempnam('*', 'getID3');
+				$empty = tempnam(GETID3_TEMP_DIR, 'getID3');
 				touch($empty);
 
-
 				// Use vorbiscomment to make temp file without comments
-				$temp = tempnam('*', 'getID3');
+				$temp = tempnam(GETID3_TEMP_DIR, 'getID3');
 				$file = $this->info['filenamepath'];
 
 				if (GETID3_OS_ISWINDOWS) {
@@ -1174,11 +1398,11 @@ class getID3
 					// Get hash of newly created file
 					switch ($algorithm) {
 						case 'md5':
-							$this->info[$algorithm.'_data'] = getid3_lib::md5_file($temp);
+							$this->info[$algorithm.'_data'] = md5_file($temp);
 							break;
 
 						case 'sha1':
-							$this->info[$algorithm.'_data'] = getid3_lib::sha1_file($temp);
+							$this->info[$algorithm.'_data'] = sha1_file($temp);
 							break;
 					}
 				}
@@ -1204,11 +1428,11 @@ class getID3
 				// get hash from whole file
 				switch ($algorithm) {
 					case 'md5':
-						$this->info[$algorithm.'_data'] = getid3_lib::md5_file($this->info['filenamepath']);
+						$this->info[$algorithm.'_data'] = md5_file($this->info['filenamepath']);
 						break;
 
 					case 'sha1':
-						$this->info[$algorithm.'_data'] = getid3_lib::sha1_file($this->info['filenamepath']);
+						$this->info[$algorithm.'_data'] = sha1_file($this->info['filenamepath']);
 						break;
 				}
 			}
@@ -1218,12 +1442,14 @@ class getID3
 	}
 
 
-	function ChannelsBitratePlaytimeCalculations() {
+	public function ChannelsBitratePlaytimeCalculations() {
 
 		// set channelmode on audio
-		if (@$this->info['audio']['channels'] == '1') {
+		if (!empty($this->info['audio']['channelmode']) || !isset($this->info['audio']['channels'])) {
+			// ignore
+		} elseif ($this->info['audio']['channels'] == 1) {
 			$this->info['audio']['channelmode'] = 'mono';
-		} elseif (@$this->info['audio']['channels'] == '2') {
+		} elseif ($this->info['audio']['channels'] == 2) {
 			$this->info['audio']['channelmode'] = 'stereo';
 		}
 
@@ -1264,11 +1490,6 @@ class getID3
 		if (!isset($this->info['bitrate']) && !empty($this->info['playtime_seconds'])) {
 			$this->info['bitrate'] = (($this->info['avdataend'] - $this->info['avdataoffset']) * 8) / $this->info['playtime_seconds'];
 		}
-//echo '<pre>';
-//var_dump($this->info['bitrate']);
-//var_dump($this->info['audio']['bitrate']);
-//var_dump($this->info['video']['bitrate']);
-//echo '</pre>';
 		if (isset($this->info['bitrate']) && empty($this->info['audio']['bitrate']) && empty($this->info['video']['bitrate'])) {
 			if (isset($this->info['audio']['dataformat']) && empty($this->info['video']['resolution_x'])) {
 				// audio only
@@ -1286,7 +1507,7 @@ class getID3
 	}
 
 
-	function CalculateCompressionRatioVideo() {
+	public function CalculateCompressionRatioVideo() {
 		if (empty($this->info['video'])) {
 			return false;
 		}
@@ -1334,8 +1555,8 @@ class getID3
 	}
 
 
-	function CalculateCompressionRatioAudio() {
-		if (empty($this->info['audio']['bitrate']) || empty($this->info['audio']['channels']) || empty($this->info['audio']['sample_rate'])) {
+	public function CalculateCompressionRatioAudio() {
+		if (empty($this->info['audio']['bitrate']) || empty($this->info['audio']['channels']) || empty($this->info['audio']['sample_rate']) || !is_numeric($this->info['audio']['sample_rate'])) {
 			return false;
 		}
 		$this->info['audio']['compression_ratio'] = $this->info['audio']['bitrate'] / ($this->info['audio']['channels'] * $this->info['audio']['sample_rate'] * (!empty($this->info['audio']['bits_per_sample']) ? $this->info['audio']['bits_per_sample'] : 16));
@@ -1351,9 +1572,11 @@ class getID3
 	}
 
 
-	function CalculateReplayGain() {
+	public function CalculateReplayGain() {
 		if (isset($this->info['replay_gain'])) {
-			$this->info['replay_gain']['reference_volume'] = 89;
+			if (!isset($this->info['replay_gain']['reference_volume'])) {
+				$this->info['replay_gain']['reference_volume'] = (double) 89.0;
+			}
 			if (isset($this->info['replay_gain']['track']['adjustment'])) {
 				$this->info['replay_gain']['track']['volume'] = $this->info['replay_gain']['reference_volume'] - $this->info['replay_gain']['track']['adjustment'];
 			}
@@ -1371,7 +1594,7 @@ class getID3
 		return true;
 	}
 
-	function ProcessAudioStreams() {
+	public function ProcessAudioStreams() {
 		if (!empty($this->info['audio']['bitrate']) || !empty($this->info['audio']['channels']) || !empty($this->info['audio']['sample_rate'])) {
 			if (!isset($this->info['audio']['streams'])) {
 				foreach ($this->info['audio'] as $key => $value) {
@@ -1384,8 +1607,228 @@ class getID3
 		return true;
 	}
 
-	function getid3_tempnam() {
+	public function getid3_tempnam() {
 		return tempnam($this->tempdir, 'gI3');
 	}
 
+	public function include_module($name) {
+		//if (!file_exists($this->include_path.'module.'.$name.'.php')) {
+		if (!file_exists(GETID3_INCLUDEPATH.'module.'.$name.'.php')) {
+			throw new getid3_exception('Required module.'.$name.'.php is missing.');
+		}
+		include_once(GETID3_INCLUDEPATH.'module.'.$name.'.php');
+		return true;
+	}
+
+}
+
+
+abstract class getid3_handler {
+
+	/**
+	* @var getID3
+	*/
+	protected $getid3;                       // pointer
+
+	protected $data_string_flag     = false; // analyzing filepointer or string
+	protected $data_string          = '';    // string to analyze
+	protected $data_string_position = 0;     // seek position in string
+	protected $data_string_length   = 0;     // string length
+
+	private $dependency_to = null;
+
+
+	public function __construct(getID3 $getid3, $call_module=null) {
+		$this->getid3 = $getid3;
+
+		if ($call_module) {
+			$this->dependency_to = str_replace('getid3_', '', $call_module);
+		}
+	}
+
+
+	// Analyze from file pointer
+	abstract public function Analyze();
+
+
+	// Analyze from string instead
+	public function AnalyzeString($string) {
+		// Enter string mode
+		$this->setStringMode($string);
+
+		// Save info
+		$saved_avdataoffset = $this->getid3->info['avdataoffset'];
+		$saved_avdataend    = $this->getid3->info['avdataend'];
+		$saved_filesize     = (isset($this->getid3->info['filesize']) ? $this->getid3->info['filesize'] : null); // may be not set if called as dependency without openfile() call
+
+		// Reset some info
+		$this->getid3->info['avdataoffset'] = 0;
+		$this->getid3->info['avdataend']    = $this->getid3->info['filesize'] = $this->data_string_length;
+
+		// Analyze
+		$this->Analyze();
+
+		// Restore some info
+		$this->getid3->info['avdataoffset'] = $saved_avdataoffset;
+		$this->getid3->info['avdataend']    = $saved_avdataend;
+		$this->getid3->info['filesize']     = $saved_filesize;
+
+		// Exit string mode
+		$this->data_string_flag = false;
+	}
+
+	public function setStringMode($string) {
+		$this->data_string_flag   = true;
+		$this->data_string        = $string;
+		$this->data_string_length = strlen($string);
+	}
+
+	protected function ftell() {
+		if ($this->data_string_flag) {
+			return $this->data_string_position;
+		}
+		return ftell($this->getid3->fp);
+	}
+
+	protected function fread($bytes) {
+		if ($this->data_string_flag) {
+			$this->data_string_position += $bytes;
+			return substr($this->data_string, $this->data_string_position - $bytes, $bytes);
+		}
+		$pos = $this->ftell() + $bytes;
+		if (!getid3_lib::intValueSupported($pos)) {
+			throw new getid3_exception('cannot fread('.$bytes.' from '.$this->ftell().') because beyond PHP filesystem limit', 10);
+		}
+		return fread($this->getid3->fp, $bytes);
+	}
+
+	protected function fseek($bytes, $whence=SEEK_SET) {
+		if ($this->data_string_flag) {
+			switch ($whence) {
+				case SEEK_SET:
+					$this->data_string_position = $bytes;
+					break;
+
+				case SEEK_CUR:
+					$this->data_string_position += $bytes;
+					break;
+
+				case SEEK_END:
+					$this->data_string_position = $this->data_string_length + $bytes;
+					break;
+			}
+			return 0;
+		} else {
+			$pos = $bytes;
+			if ($whence == SEEK_CUR) {
+				$pos = $this->ftell() + $bytes;
+			} elseif ($whence == SEEK_END) {
+				$pos = $this->getid3->info['filesize'] + $bytes;
+			}
+			if (!getid3_lib::intValueSupported($pos)) {
+				throw new getid3_exception('cannot fseek('.$pos.') because beyond PHP filesystem limit', 10);
+			}
+		}
+		return fseek($this->getid3->fp, $bytes, $whence);
+	}
+
+	protected function feof() {
+		if ($this->data_string_flag) {
+			return $this->data_string_position >= $this->data_string_length;
+		}
+		return feof($this->getid3->fp);
+	}
+
+	final protected function isDependencyFor($module) {
+		return $this->dependency_to == $module;
+	}
+
+	protected function error($text) {
+		$this->getid3->info['error'][] = $text;
+
+		return false;
+	}
+
+	protected function warning($text) {
+		return $this->getid3->warning($text);
+	}
+
+	protected function notice($text) {
+		// does nothing for now
+	}
+
+	public function saveAttachment($name, $offset, $length, $image_mime=null) {
+		try {
+
+			// do not extract at all
+			if ($this->getid3->option_save_attachments === getID3::ATTACHMENTS_NONE) {
+
+				$attachment = null; // do not set any
+
+			// extract to return array
+			} elseif ($this->getid3->option_save_attachments === getID3::ATTACHMENTS_INLINE) {
+
+				$this->fseek($offset);
+				$attachment = $this->fread($length); // get whole data in one pass, till it is anyway stored in memory
+				if ($attachment === false || strlen($attachment) != $length) {
+					throw new Exception('failed to read attachment data');
+				}
+
+			// assume directory path is given
+			} else {
+
+				// set up destination path
+				$dir = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $this->getid3->option_save_attachments), DIRECTORY_SEPARATOR);
+				if (!is_dir($dir) || !is_writable($dir)) { // check supplied directory
+					throw new Exception('supplied path ('.$dir.') does not exist, or is not writable');
+				}
+				$dest = $dir.DIRECTORY_SEPARATOR.$name.($image_mime ? '.'.getid3_lib::ImageExtFromMime($image_mime) : '');
+
+				// create dest file
+				if (($fp_dest = fopen($dest, 'wb')) == false) {
+					throw new Exception('failed to create file '.$dest);
+				}
+
+				// copy data
+				$this->fseek($offset);
+				$buffersize = ($this->data_string_flag ? $length : $this->getid3->fread_buffer_size());
+				$bytesleft = $length;
+				while ($bytesleft > 0) {
+					if (($buffer = $this->fread(min($buffersize, $bytesleft))) === false || ($byteswritten = fwrite($fp_dest, $buffer)) === false || ($byteswritten === 0)) {
+						throw new Exception($buffer === false ? 'not enough data to read' : 'failed to write to destination file, may be not enough disk space');
+					}
+					$bytesleft -= $byteswritten;
+				}
+
+				fclose($fp_dest);
+				$attachment = $dest;
+
+			}
+
+		} catch (Exception $e) {
+
+			// close and remove dest file if created
+			if (isset($fp_dest) && is_resource($fp_dest)) {
+				fclose($fp_dest);
+				unlink($dest);
+			}
+
+			// do not set any is case of error
+			$attachment = null;
+			$this->warning('Failed to extract attachment '.$name.': '.$e->getMessage());
+
+		}
+
+		// seek to the end of attachment
+		$this->fseek($offset + $length);
+
+		return $attachment;
+	}
+
+}
+
+
+class getid3_exception extends Exception
+{
+	public $message;
 }

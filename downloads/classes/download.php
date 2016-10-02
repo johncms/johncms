@@ -112,7 +112,7 @@ class Download
     // Вывод файла в ЗЦ
     public static function displayFile($res_down = [], $rate = 0)
     {
-        global $set_down, $screens_path, $old, $set;
+        global $set_down, $screens_path, $old, $set, $rights;
         $out = false;
         $preview = false;
         $format_file = htmlspecialchars($res_down['name']);
@@ -138,7 +138,7 @@ class Download
         }
 
         if ($preview) {
-            //$out = '<img src="' . App::cfg()->sys->homeurl . 'assets/misc/thumbinal.php?type=1&amp;img=' . rawurlencode($preview) . '" alt="preview" />&nbsp;';
+            $out = '<img src="' . $set['homeurl'] . '/downloads/preview.php?type=1&amp;img=' . rawurlencode($preview) . '" alt="preview" />&nbsp;';
         }
 
         if ($format_file == 'jar' && $set_down['icon_java']) {
@@ -156,7 +156,7 @@ class Download
 
         if ($rate) {
             $file_rate = explode('|', $res_down['rate']);
-            $out .= '<br>' . $lng['rating'] . ': <span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span>';
+            $out .= '<br>' . _t('Rating') . ': <span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span>';
         }
 
         $sub = false;
@@ -170,9 +170,9 @@ class Download
         }
 
         //TODO: Переделать на получение настроек из таблицы модулей
-//        if (App::cfg()->sys->acl_downloads_comm || $rights >= 7) {
-//            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . $lng['comments'] . '</a> (' . $res_down['total'] . ')';
-//        }
+        if ($set['mod_down_comm'] || $rights >= 7) {
+            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . $lng['comments'] . '</a> (' . $res_down['total'] . ')';
+        }
 
         if ($sub) {
             $out .= '<div class="sub">' . $sub . '</div>';
@@ -288,6 +288,7 @@ class Download
             $out .= Download::javaIcon($array['res']['dir'] . '/' . $array['res']['name'], (isset($array['more']) ? $array['res']['refid'] . '_' . $array['res']['id'] : $array['res']['id']));
         } else {
             $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
+            //TODO: Разобраться
             //$out .= Functions::getIcon('filetype-' . $icon_id . '.png') . '&nbsp;';
         }
 
