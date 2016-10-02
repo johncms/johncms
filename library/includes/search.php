@@ -23,11 +23,11 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
 $search = $search_post ? $search_post : $search_get;
 $search_t = isset($_REQUEST['t']);
-echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search'] . '</div>'
+echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search') . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
     . '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />'
-    . '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br />'
-    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . $lng_lib['search_name']
+    . '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />'
+    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in titles articles')
     . '</div></form></div>';
 
 /*
@@ -36,8 +36,8 @@ echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a>
 -----------------------------------------------------------------
 */
 $error = false;
-if ($search && (mb_strlen($search) < 2 || mb_strlen($search) > 64))
-    $error = $lng['error_search_length'];
+if ($search && (mb_strlen($search) < 4 || mb_strlen($search) > 64))
+    $error = _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.');
 
 if ($search && !$error) {
     /*
@@ -52,7 +52,7 @@ if ($search && !$error) {
         SELECT COUNT(*) FROM `library_texts`
         WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)')->fetchColumn();
         
-    echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search_results'] . '</div>';
+    echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search results') . '</div>';
     
     if ($total > $kmess)
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
@@ -86,28 +86,28 @@ if ($search && !$error) {
                 }
             }
             echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br />' . $text
-                . ' <div class="sub"><span class="gray">' . $lng_lib['added'] . ':</span> ' . functions::checkout($res['author'])
+                . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . functions::checkout($res['author'])
                 . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />'
-                . '<span class="gray">' . $lng_lib['reads'] . ':</span> ' . $res['count_views']
+                . '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res['count_views']
                 . '</div></div>';
             ++$i;
         }
     } else {
-        echo '<div class="rmenu"><p>' . $lng['search_results_empty'] . '</p></div>';
+        echo '<div class="rmenu"><p>' . _t('Your search did not match any results') . '</p></div>';
     }
-    echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
     if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>'
             . '<div><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">'
             . '<input type="text" name="page" size="2"/>'
-            . '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>'
+            . '<input type="submit" value="' .  _t('To Page') . ' &gt;&gt;"/>'
             . '</form></div>';
     }
 } else {
     if ($error) {
         echo functions::display_error($error);
     }
-    echo '<div class="phdr"><small>' . $lng['search_help'] . '</small></div>';
+    echo '<div class="phdr"><small>' . _t('Length of query: 4 min 64 max <br /> Search is case-insensitive letters <br /> Results are sorted by relevance') . '</small></div>';
 }
-echo '<p>' . ($search ? '<a href="?act=search">' . $lng['search_new'] . '</a><br />' : '')
-    . '<a href="?">' . $lng['library'] . '</a></p>';
+echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br />' : '')
+    . '<a href="?">' . _t('Library') . '</a></p>';

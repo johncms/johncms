@@ -191,7 +191,6 @@ class Tree
     */ 
     public function print_nav_panel()
     {
-        global $lng;
         $array = $this->result();
         $cnt = count($array);
         $return =[];
@@ -201,7 +200,7 @@ class Tree
             $x++;
         }
 
-        return '<a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . implode(' | ', $return);
+        return '<a href="?"><strong>' . _t('Library') . '</strong></a> | ' . implode(' | ', $return);
     }
 
     public function result()
@@ -415,11 +414,9 @@ class Hashtags
     }
     
     public function set_cache($sort = 'cmpalpha') {
-        global $lng;
-        
         $obj = new self();
         $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();
-        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : '<p>' . $lng['list_empty'] . '</p>');
+        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : '<p>' . _t('The list is empty') . '</p>');
         file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
         
         return $this->get_cache($sort);
@@ -485,7 +482,6 @@ class Rating
     }
     
     public function print_vote() {
-        global $lng_lib;
         
         $return = PHP_EOL;
         
@@ -494,7 +490,7 @@ class Rating
         for($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $this->get_vote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
         }
-        $return .= '<br /><input type="submit" name="rating_submit" value="' . $lng_lib['vote'] . '" />' . PHP_EOL;
+        $return .= '<br /><input type="submit" name="rating_submit" value="' . _t('Vote') . '" />' . PHP_EOL;
         $return .= '</div></form>' . PHP_EOL;
         
         return $return . PHP_EOL;
