@@ -5,7 +5,7 @@ $adm ?: redir404();
 
   if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
-      echo functions::display_error($lng['error_empty_title'], '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+      echo functions::display_error(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
       require_once ('../incfiles/end.php');
       exit;
     }
@@ -17,23 +17,23 @@ $adm ?: redir404();
     $stmt = $db->prepare('INSERT INTO `library_cats` (`parent`, `name`, `description`, `dir`, `pos`) VALUES (?, ?, ?, ?, ?)');
     $stmt->execute([$id, $name, $desc, $type, $lastinsert]);
     if ($stmt->rowCount()) {
-      echo '<div>' . $lng_lib['category_created'] . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+      echo '<div>' . _t('Category created') . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . _t('To category') . '</a></div>';
     }
   }
   else {
-    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['create_category'] . '</div>'  
+    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Create category') . '</div>'  
     . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">' 
     . '<div class="menu">'
-    . '<h3>' . $lng['title'] . ':</h3>' 
+    . '<h3>' . _t('Title') . ':</h3>' 
     . '<div><input type="text" name="name" /></div>' 
-    . '<h3>' . $lng_lib['add_dir_descriptions'] . ':</h3>' 
+    . '<h3>' . _t('Category description') . ':</h3>' 
     . '<div><textarea name="description" rows="4" cols="20"></textarea></div>' 
-    . '<h3>' . $lng_lib['category_type'] . '</h3>' 
+    . '<h3>' . _t('Category type') . '</h3>' 
     . '<div><select name="type">' 
-    . '<option value="1">' . $lng_lib['categories'] . '</option>' 
-    . '<option value="0">' . $lng_lib['articles'] . '</option>' 
+    . '<option value="1">' . _t('Categories') . '</option>' 
+    . '<option value="0">' . _t('Articles') . '</option>' 
     . '</select></div>' 
-    . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
+    . '<div><input type="submit" name="submit" value="' . _t('Save') . '"/></div>' 
     . '</div></form>' 
     . '<p><a href ="?">' . _t('Back') . '</a></p>';
   }

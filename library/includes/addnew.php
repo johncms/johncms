@@ -1,7 +1,6 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$lng_gal = core::load_lng('gallery');
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
@@ -9,7 +8,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     if ($flood) {
         require('../incfiles/head.php');
 
-        echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<br /><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
+        echo functions::display_error(sprintf(_t('You cannot add the article so often<br>Please, wait %d sec.'), $flood), '<br /><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -23,7 +22,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         $err = [];
 
         if (empty($_POST['name'])) {
-            $err[] = $lng['error_empty_title'];
+            $err[] = _t('You have not entered the name');
         }
 
         if (!empty($_FILES['textfile']['name'])) {
@@ -38,7 +37,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo functions::display_error($lng_lib['invalid_file_encoding'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                        echo functions::display_error(_t('The file is invalid encoding, preferably UTF-8') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -46,19 +45,19 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $text = trim($txt);
                     unlink('../files/library/tmp' . DIRECTORY_SEPARATOR . $newname);
                 } else {
-                    echo functions::display_error($lng_lib['error_uploading'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                    echo functions::display_error(_t('Error uploading') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require_once('../incfiles/end.php');
                     exit;
                 }
             } else {
-                echo functions::display_error($lng_lib['invalid_file_format'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                echo functions::display_error(_t('Invalid file format allowed * .txt') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 require_once('../incfiles/end.php');
                 exit;
             }
         } elseif (!empty($_POST['text'])) {
             $text = trim($_POST['text']);
         } else {
-            $err[] = $lng['error_empty_text'];
+            $err[] = _t('You have not entered text');
         }
 
         if(empty($announce)){
@@ -129,7 +128,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $handle->process('../files/library/images/small/');
 
                     if ($err_image) {
-                        echo functions::display_error($lng_gal['error_uploading_photo'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                        echo functions::display_error(_t('Photo uploading error') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     }
                     $handle->clean();
                 }
@@ -143,9 +142,9 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     }
                 }
 
-                echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
+                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your article will be published in the library.') . '</div>' : '');
                 $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
-                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To category') . '</a></div>';
                 require_once('../incfiles/end.php');
                 exit;
             } else {
@@ -154,23 +153,23 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             }
         }
     }
-    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['write_article'] . '</div>'
+    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write article') . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
-        . '<p><h3>' . $lng['title'] . ' (max. 100):</h3>'
+        . '<p><h3>' . _t('Title') . ' (max. 100):</h3>'
         . '<input type="text" name="name" value="' . $name . '" /></p>'
-        . '<p><h3>' . $lng_lib['announce'] . ' (max. 500):</h3>'
+        . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
-        . '<p><h3>' . $lng['text'] . ':</h3>'
+        . '<p><h3>' . _t('Text') . ':</h3>'
         . bbcode::auto_bb('form', 'text') . '<textarea name="text" rows="' . $set_user['field_h'] . '" cols="20">' . $text . '</textarea></p>'
-        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . $lng_lib['comment_article'] . '</p>'
-        . '<p><h3>' . $lng_gal['upload_photo'] . '</h3>'
+        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the article') . '</p>'
+        . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'
-        . '<p><h3>' . $lng_lib['select_text_file'] . '</h3>'
-        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . $lng_lib['ignor_input'] . '</small></p>'
-        . '<p><h3>' . $lng_lib['tags'] . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . $lng_lib['input_tags'] . '</small></p>'
-        . '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>'
+        . '<p><h3>' . _t('Select the text file') . '</h3>'
+        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . _t('Text entry field will be ignored') . '</small></p>'
+        . '<p><h3>' . _t('Tags') . '</h3>'
+        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . _t('Specify the tag to the article, separated by commas') . '</small></p>'
+        . '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>'
         . '</div></form>'
         . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 } else {
