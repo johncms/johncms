@@ -297,7 +297,7 @@ class Download
             $out .= ' <span class="red">(NEW)</span>';
         }
 
-        $out .= '<div class="sub">' . $lng['file_time'] . ': ' . Functions::displayDate($array['res']['time']);
+        $out .= '<div class="sub">' . $lng['file_time'] . ': ' . functions::display_date($array['res']['time']);
 
         if ($array['format'] == 'jar') {
             $out .= ', <a href="?act=jad_file&amp;id=' . $id . $morelink . '">JAD</a>';

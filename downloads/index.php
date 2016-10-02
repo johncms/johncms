@@ -121,7 +121,7 @@ $actions = [
     'txt_in_jar'      => 'fileControl/txt_in_jar.php',
     'txt_in_zip'      => 'fileControl/txt_in_zip.php',
     'user_files'      => 'files_user.php',
-    'view'            => 'fileControl/view.php',
+    'view'            => 'view.php',
 ];
 
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
