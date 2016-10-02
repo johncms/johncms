@@ -12,7 +12,8 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
-    echo _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a>';
+    echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
+    require '../incfiles/end.php';
     exit;
 }
 
@@ -21,37 +22,15 @@ $textl = mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_p
 
 if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
+
     if ($rights < 6 && $rights != 4) {
+        require '../incfiles/end.php';
         exit;
     }
 }
 
-
-echo '<div class="phdr"><b>' . htmlspecialchars($res_down['rus_name']) . '</b></div>';
-$format_file = htmlspecialchars($res_down['name']);
-
-// Управление закладками
-if ($user_id) {
-    $bookmark = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = " . $id . "  AND `user_id` = " . $user_id)->fetchColumn();
-
-    if (isset($_GET['addBookmark']) && !$bookmark) {
-        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id`=" . $user_id);
-        $bookmark = 1;
-    } elseif (isset($_GET['delBookmark']) && $bookmark) {
-        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id`=" . $user_id);
-        $bookmark = 0;
-    }
-
-    echo '<div class="topmenu">';
-
-    if (!$bookmark) {
-        echo '<a href="?act=view&amp;id=' . $id . '&amp;addBookmark">' . _t('Add to Favorites') . '</a>';
-    } else {
-        echo '<a href="?act=view&amp;id=' . $id . '&amp;delBookmark">' . _t('Remove from Favorites') . '</a>';
-    }
-
-    echo '</div>';
-}
+echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]) . '</div>';
+$format_file = functions::format($res_down['name']);
 
 // Получаем список скриншотов
 $text_info = '';
@@ -70,7 +49,7 @@ if (is_dir($screens_path . '/' . $id)) {
 }
 
 // Плейер видео файлов
-if (($format_file == 'mp4' || $format_file == 'flv') && !Functions::isMobile()) {
+if ($format_file == 'mp4' || $format_file == 'flv') {
     echo '<div class="menu"><b>' . _t('View') . '</b><br>
 	<div id="mediaplayer">JW Player goes here</div>
     <script type="text/javascript" src="' . $homeurl . 'files/download/system/players/mediaplayer-5.7-viral/jwplayer.js"></script>
@@ -86,8 +65,7 @@ if (($format_file == 'mp4' || $format_file == 'flv') && !Functions::isMobile()) 
 // Получаем данные
 if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
     $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
-    //echo '<div class="gmenu"><img src="' . Vars::$HOME_URL . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
-    $screen[] = $res_down['dir'] . '/' . $res_down['name'];
+    echo '<div class="gmenu"><img src="preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
     $text_info = '<b>' . _t('Resolution') . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
 } else {
     if (($format_file == '3gp' || $format_file == 'avi' || $format_file == 'mp4') && !$screen && $set_down['video_screen']) {
@@ -95,13 +73,10 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
     } elseif (($format_file == 'thm' || $format_file == 'nth') && !$screen && $set_down['theme_screen']) {
         $screen[] = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
     } elseif ($format_file == 'mp3') {
-        if (!Functions::isMobile()) {//TODO: убрать Flash
-            $text_info = '<object type="application/x-shockwave-flash" data="' . $homeurl . 'files/download/system/players/player.swf" width="240" height="20" id="dewplayer" name="dewplayer">' .
-                '<param name="wmode" value="transparent" /><param name="movie" value="' . $homeurl . 'files/download/system/download/players/player.swf" />' .
-                '<param name="flashVars" value="mp3=' . $homeurl . str_replace('../', '', $res_down['dir']) . '/' . $res_down['name'] . '" /> </object><br>';
-        }
+        // Показываем HTML5 плейер
+        $text_info = '<audio src="' . $set['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
 
-        require(SYSPATH . 'lib/getid3/getid3.php');
+        require('classes/getid3/getid3.php');
         $getID3 = new getID3;
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
@@ -141,19 +116,20 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
 }
 
 // Выводим скриншоты
-if ($screen) {
+if (!empty($screen)) {
     $total = count($screen);
+
     if ($total > 1) {
         if ($page >= $total) {
             $page = $total;
         }
 
-        echo '<div class="topmenu"> ' . Functions::displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
+        echo '<div class="topmenu"> ' . functions::display_pagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
             '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
-            '<img src="' . $homeurl . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
+            '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
     } else {
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ':</b><br>' .
-            '<img src="' . $homeurl . 'assets/misc/thumbinal.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
+            '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
     }
 }
 
@@ -194,7 +170,7 @@ if (!isset($_SESSION['rate_file_' . $id]) && $user_id) {
 }
 
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
-    '<img src="' . $homeurl . 'assets/misc/rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" />';
+    '<img src="rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" />';
 
 // Скачка изображения в особом размере
 if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
@@ -224,7 +200,6 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
         '<input type="submit" value="' . _t('Download') . '" /></form>';
 }
 
-//TODO: Переделать на получение настроек из таблицы модулей
 if ($set['mod_down_comm'] || $rights >= 7) {
     echo '<div class="sub"></div><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')';
 }
@@ -257,8 +232,28 @@ if ($total_files_more) {
     }
 }
 
-// Навигация
-echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]) . '</div>';
+// Управление закладками
+if ($user_id) {
+    $bookmark = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = " . $id . "  AND `user_id` = " . $user_id)->fetchColumn();
+
+    if (isset($_GET['addBookmark']) && !$bookmark) {
+        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id`=" . $user_id);
+        $bookmark = 1;
+    } elseif (isset($_GET['delBookmark']) && $bookmark) {
+        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id`=" . $user_id);
+        $bookmark = 0;
+    }
+
+    echo '<div class="phdr">';
+
+    if (!$bookmark) {
+        echo '<a href="?act=view&amp;id=' . $id . '&amp;addBookmark">' . _t('Add to Favorites') . '</a>';
+    } else {
+        echo '<a href="?act=view&amp;id=' . $id . '&amp;delBookmark">' . _t('Remove from Favorites') . '</a>';
+    }
+
+    echo '</div>';
+}
 
 // Управление файлами
 if ($rights > 6 || $rights == 4) {
