@@ -4,6 +4,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+require '../incfiles/head.php';
+require 'classes/download.php';
 
 // Новые файлы
 $textl = _t('New Files');
@@ -23,8 +25,8 @@ if ($id) {
     $sql_down = ' AND `dir` LIKE \'' . ($res_down_cat['dir']) . '%\' ';
 }
 
-echo '<div class="phdr"><b>' . $textl . '</b></div>';
-$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $sql_down")->fetchColumn();
+echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
+$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old $sql_down")->fetchColumn();
 
 // Навигация
 if ($total > $kmess) {
@@ -34,7 +36,7 @@ if ($total > $kmess) {
 // Выводим список
 if ($total) {
     $i = 0;
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > $old $sql_down ORDER BY `time` DESC " . $db->pagination());
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > $old $sql_down ORDER BY `time` DESC LIMIT $start, $kmess");
 
     while ($res_down = $req_down->fetch()) {
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
@@ -55,3 +57,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?id=' . $id . '">' . _t('Downloads') . '</a></p>';
+require '../incfiles/end.php';

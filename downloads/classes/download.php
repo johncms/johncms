@@ -116,7 +116,6 @@ class Download
         $out = false;
         $preview = false;
         $format_file = htmlspecialchars($res_down['name']);
-        $lng = core::load_lng('dl');
 
         if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
             $preview = $res_down['dir'] . '/' . $res_down['name'];
@@ -171,7 +170,7 @@ class Download
 
         //TODO: Переделать на получение настроек из таблицы модулей
         if ($set['mod_down_comm'] || $rights >= 7) {
-            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . $lng['comments'] . '</a> (' . $res_down['total'] . ')';
+            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')';
         }
 
         if ($sub) {
