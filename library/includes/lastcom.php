@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['last_comments'] . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Last comments') . '</div>';
 
 
 
@@ -23,11 +23,11 @@ $i = 0;
     : '')
     . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
     . '<div>' . functions::checkout(substr(bbcode::notags($row['text']), 0, 500)) . '</div></div>'
-    . '<div class="sub">' . $lng_lib['added'] . ': ' . functions::checkout($db->query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id'])->fetchColumn()) . ' (' . functions::display_date($row['time']) . ')</div>'
+    . '<div class="sub">' . _t('Who added') . ': ' . functions::checkout($db->query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id'])->fetchColumn()) . ' (' . functions::display_date($row['time']) . ')</div>'
     . '</div>';
   }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
 echo '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
