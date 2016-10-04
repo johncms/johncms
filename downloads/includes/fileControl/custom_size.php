@@ -21,12 +21,11 @@ if ($val < 50 || $val > 100) {
 }
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || !in_array($format_file, $pic_ext) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4) || empty($array[$size_img])) {
-    $lng = core::load_lng('dl');
-    echo $lng['not_found_file'] . ' <a href="?">' . _t('Downloads') . '</a>';
+    echo _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
-$sizs = GetImageSize($res_down['dir'] . '/' . $res_down['name']);
+$sizs = getimagesize($res_down['dir'] . '/' . $res_down['name']);
 $explode = explode('x', $array[$size_img]);
 $width = $sizs[0];
 $height = $sizs[1];
@@ -53,19 +52,19 @@ if ($proportion) {
 
 switch ($format_file) {
     case "gif":
-        $image_create = ImageCreateFromGIF($res_down['dir'] . '/' . $res_down['name']);
+        $image_create = imagecreatefromgif($res_down['dir'] . '/' . $res_down['name']);
         break;
 
     case "jpg":
-        $image_create = ImageCreateFromJPEG($res_down['dir'] . '/' . $res_down['name']);
+        $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
         break;
 
     case "jpeg":
-        $image_create = ImageCreateFromJPEG($res_down['dir'] . '/' . $res_down['name']);
+        $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
         break;
 
     case "png":
-        $image_create = ImageCreateFromPNG($res_down['dir'] . '/' . $res_down['name']);
+        $image_create = imagecreatefrompng($res_down['dir'] . '/' . $res_down['name']);
         break;
 }
 
@@ -78,11 +77,10 @@ if (!isset($_SESSION['down_' . $id])) {
 $image = imagecreatetruecolor($tn_width, $tn_height);
 imagecopyresized($image, $image_create, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
 
-App::view()->setLayout(false);
 ob_end_clean();
 ob_start();
-imageJpeg($image, null, $val);
-ImageDestroy($image);
+imagejpeg($image, null, $val);
+imagedestroy($image);
 imagedestroy($image_create);
 header('Content-Type: image/jpeg');
 header('Content-Disposition: inline; filename=image.jpg');
