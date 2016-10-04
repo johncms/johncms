@@ -4,16 +4,13 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
-$id = App::request()->getQuery('id', 0);
 
 // Удаление файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
-    echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -67,12 +64,10 @@ if ($rights == 4 || $rights >= 6) {
         $db->exec("UPDATE `download__category` SET `total` = (`total`-1) WHERE $sql");
         $db->exec("DELETE FROM `download__files` WHERE `id` = " . $id);
         $db->query("OPTIMIZE TABLE `download__files`");
-        header('Location: ' . $url . '?id=' . $res_down['refid']);
+        header('Location: ?id=' . $res_down['refid']);
     } else {
-        echo '<div class="phdr"><b>' . $lng['delete_file'] . '</b></div>' .
-            '<div class="rmenu"><p><a href="' . $url . '?act=delete_file&amp;id=' . $id . '&amp;yes"><b>' . $lng['delete'] . '</b></a></p></div>' .
-            '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+        echo '<div class="phdr"><b>' . _t('Delete File') . '</b></div>' .
+            '<div class="rmenu"><p><a href="?act=delete_file&amp;id=' . $id . '&amp;yes"><b>' . _t('Delete') . '</b></a></p></div>' .
+            '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
-} else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
 }
