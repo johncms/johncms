@@ -4,15 +4,13 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Дополнительные файлы
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($rights < 6 && $rights != 4)) {
-    echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -36,16 +34,16 @@ if ($edit) {
             $edit,
         ]);
 
-        header('Location: ' . $url . '?act=files_more&id=' . $id);
+        header('Location: ?act=files_more&id=' . $id);
     } else {
         $res_file_more = $req_file_more->fetch();
         echo '<div class="phdr"><b>' . htmlspecialchars($res_down['rus_name']) . '</b></div>' .
-            '<div class="gmenu"><b>' . $lng['edit_file'] . '</b></div>' .
-            '<div class="list1"><form action="' . $url . '?act=files_more&amp;id=' . $id . '&amp;edit=' . $edit . '"  method="post">' .
-            $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br>' .
+            '<div class="gmenu"><b>' . _t('Edit File') . '</b></div>' .
+            '<div class="list1"><form action="?act=files_more&amp;id=' . $id . '&amp;edit=' . $edit . '"  method="post">' .
+            _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br>' .
             '<input type="text" name="name_link" value="' . $res_file_more['rus_name'] . '"/><br>' .
-            '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form>' .
-            '</div><div class="phdr"><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+            '<input type="submit" name="submit" value="' . _t('Save') . '"/></form>' .
+            '</div><div class="phdr"><a href="?act=files_more&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
     if ($del) {
@@ -60,9 +58,9 @@ if ($edit) {
             }
 
             $db->exec("DELETE FROM `download__more` WHERE `id` = '$del' LIMIT 1");
-            header('Location: ' . $url . '?act=files_more&id=' . $id);
+            header('Location: ?act=files_more&id=' . $id);
         } else {
-            echo '<div class="rmenu">' . $lng['delete_confirmation'] . '<br> <a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . $lng['delete'] . '</a> | <a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['cancel'] . '</a></div>';
+            echo '<div class="rmenu">' . _t('Do you really want to delete?') . '<br> <a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $del . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=files_more&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
         if (isset($_POST['submit'])) {
@@ -73,7 +71,7 @@ if ($edit) {
 
             if ($link_file) {
                 if (mb_substr($link_file, 0, 7) !== 'http://') {
-                    $error[] = $lng['error_link_import'];
+                    $error[] = _t('Invalid Link');
                 } else {
                     $link_file = str_replace('http://', '', $link_file);
 
@@ -82,12 +80,12 @@ if ($edit) {
                         $fname = basename($link_file);
                         $fsize = 0;
                     } else {
-                        $error[] = $lng['error_link_import'];
+                        $error[] = _t('Invalid Link');
                     }
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+                    $error[] = '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                     exit;
                 }
@@ -112,23 +110,23 @@ if ($edit) {
                 }
 
                 if ($fsize > 1024 * App::cfg()->sys->filesize && !$link_file) {
-                    $error[] = $lng['error_file_size'] . ' ' . App::cfg()->sys->filesize . 'kb.';
+                    $error[] = _t('The weight of the file exceeds') . ' ' . App::cfg()->sys->filesize . 'kb.';
                 }
 
                 if (!in_array($ext[(count($ext) - 1)], $defaultExt)) {
-                    $error[] = $lng['error_file_ext'] . ': ' . implode(', ', $defaultExt);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
                 }
 
                 if (strlen($fname) > 100) {
-                    $error[] = $lng['error_file_name_size '];
+                    $error[] = _t('The file name length must not exceed 100 characters');
                 }
 
                 if (preg_match("/[^\da-zA-Z_\-.]+/", $fname)) {
-                    $error[] = $lng['error_file_symbols'];
+                    $error[] = _t('The file name contains invalid characters');
                 }
 
                 if ($error) {
-                    $error[] = '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+                    $error[] = '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo $error;
                 } else {
                     $newFile = 'file' . $id . '_' . $fname;
@@ -149,8 +147,8 @@ if ($edit) {
                     if ($up_file == true) {
                         @chmod("$fname", 0777);
                         @chmod("$res_down[dir]/$fname", 0777);
-                        echo '<div class="gmenu">' . $lng['upload_file_ok'] . '<br>' .
-                            '<a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . $lng['upload_file_more'] . '</a> | <a href="' . $url . '?id=' . $id . '&amp;act=view">' . _t('Back') . '</a></div>';
+                        echo '<div class="gmenu">' . _t('File attached') . '<br>' .
+                            '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '&amp;act=view">' . _t('Back') . '</a></div>';
 
                         $stmt = $db->prepare("
                           INSERT INTO `download__more`
@@ -166,25 +164,25 @@ if ($edit) {
                             intval($fsize),
                         ]);
                     } else {
-                        echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                        echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
                     }
                 }
             } else {
-                echo '<div class="rmenu">' . $lng['upload_file_no'] . '<br><a href="' . $url . '?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
+                echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';
             }
         } else {
             // Выводим форму
-            echo '<div class="phdr"><b>' . $lng['files_more'] . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
-                '<div class="menu"><form action="' . $url . '?act=files_more&amp;id=' . $id . '"  method="post" enctype="multipart/form-data">' .
-                $lng['select_file'] . '<span class="red">*</span>::<br><input type="file" name="fail"/><br>' .
-                $lng['or_link_to_it'] . ':<br><input type="post" name="link_file" value=""/><br>' .
-                $lng['save_name_file'] . ':<br><input type="text" name="new_file"/><br>' .
-                $lng['link_file'] . ' (мах. 200)<span class="red">*</span>:<br>' .
-                '<input type="text" name="name_link" value="' . $lng['download_file_more'] . '"/><br>' .
-                '<input type="submit" name="submit" value="' . $lng['upload'] . '"/>' .
+            echo '<div class="phdr"><b>' . _t('Additional files') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
+                '<div class="menu"><form action="?act=files_more&amp;id=' . $id . '"  method="post" enctype="multipart/form-data">' .
+                _t('Select the file') . '<span class="red">*</span>::<br><input type="file" name="fail"/><br>' .
+                _t('Or link to it') . ':<br><input type="post" name="link_file" value=""/><br>' .
+                _t('Save as (max. 30, without extension)') . ':<br><input type="text" name="new_file"/><br>' .
+                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br>' .
+                '<input type="text" name="name_link" value="' . _t('Download the additional file') . '"/><br>' .
+                '<input type="submit" name="submit" value="' . _t('Upload') . '"/>' .
                 '</form></div>' .
-                '<div class="phdr"><small>' . $lng['file_size_faq'] . ' ' . App::cfg()->sys->filesize . 'kb<br>' .
-                $lng['extensions'] . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . $lng['add_screen_faq'] : '') . '</small></div>';
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . App::cfg()->sys->filesize . 'kb<br>' .
+                _t('Allowed extensions') . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
 
             // Дополнительные файлы
             $req_file_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = " . $id);
@@ -197,14 +195,14 @@ if ($edit) {
                     $format_file = strtolower($format[count($format) - 1]);
                     echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">');
                     echo '<b>' . $res_file_more['rus_name'] . '</b>' .
-                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . functions::displayDate($res_file_more['time']) . '<br>' .
-                        '<a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;edit=' . $res_file_more['id'] . '">' . $lng['edit'] . '</a> | ' .
-                        '<span class="red"><a href="' . $url . '?act=files_more&amp;id=' . $id . '&amp;del=' . $res_file_more['id'] . '">' . $lng['delete'] . '</a></span></div></div>';
+                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . functions::display_date($res_file_more['time']) . '<br>' .
+                        '<a href="?act=files_more&amp;id=' . $id . '&amp;edit=' . $res_file_more['id'] . '">' . _t('Edit') . '</a> | ' .
+                        '<span class="red"><a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $res_file_more['id'] . '">' . _t('Delete') . '</a></span></div></div>';
                 }
 
-                echo '<div class="phdr">' . $lng['total'] . ': ' . $total_file . '</div>';
+                echo '<div class="phdr">' . _t('Total') . ': ' . $total_file . '</div>';
             }
-            echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
+            echo '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     }
 }
