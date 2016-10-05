@@ -4,19 +4,17 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Редактировать mp3 тегов
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || functions::format($res_down['name']) != 'mp3' || $rights < 6) {
-    echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
-echo '<div class="phdr"><b>' . $lng['edit_mp3tags'] . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>';
+echo '<div class="phdr"><b>' . _t('Edit mp3 tags') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>';
 require(SYSPATH . 'lib/getid3/getid3.php');
 $getID3 = new getID3;
 $getID3->encoding = 'cp1251';
@@ -41,14 +39,14 @@ if (isset($_POST['submit'])) {
     $tagsWriter->tag_encoding = 'cp1251';
     $tagsWriter->tag_data = $tagsArray;
     $tagsWriter->WriteTags();
-    echo '<div class="gmenu">' . $lng['mp3tags_saved'] . '</div>';
+    echo '<div class="gmenu">' . _t('Tags saved') . '</div>';
 }
 
-echo '<div class="list1"><form action="' . $url . '?act=mp3tags&amp;id=' . $id . '" method="post">' .
-    '<b>' . $lng['mp3_artist'] . '</b>:<br> <input name="artist" type="text" value="' . Download::mp3tagsOut($tagsArray['artist'][0]) . '" /><br>' .
-    '<b>' . $lng['mp3_title'] . '</b>:<br> <input name="title" type="text" value="' . Download::mp3tagsOut($tagsArray['title'][0]) . '" /><br>' .
-    '<b>' . $lng['mp3_album'] . '</b>:<br> <input name="album" type="text" value="' . Download::mp3tagsOut($tagsArray['album'][0]) . '" /><br>' .
-    '<b>' . $lng['mp3_genre'] . '</b>: <br><input name="genre" type="text" value="' . Download::mp3tagsOut($tagsArray['genre'][0]) . '" /><br>' .
-    '<b>' . $lng['mp3_year'] . '</b>:<br> <input name="year" type="text" value="' . (int)$tagsArray['year'][0] . '" /><br>' .
-    '<input type="submit" name="submit" value="' . $lng['sent'] . '"/></form></div>' .
-    '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+echo '<div class="list1"><form action="?act=mp3tags&amp;id=' . $id . '" method="post">' .
+    '<b>' . _t('Artist') . '</b>:<br> <input name="artist" type="text" value="' . Download::mp3tagsOut($tagsArray['artist'][0]) . '" /><br>' .
+    '<b>' . _t('Title') . '</b>:<br> <input name="title" type="text" value="' . Download::mp3tagsOut($tagsArray['title'][0]) . '" /><br>' .
+    '<b>' . _t('Album') . '</b>:<br> <input name="album" type="text" value="' . Download::mp3tagsOut($tagsArray['album'][0]) . '" /><br>' .
+    '<b>' . _t('Genre') . '</b>: <br><input name="genre" type="text" value="' . Download::mp3tagsOut($tagsArray['genre'][0]) . '" /><br>' .
+    '<b>' . _t('Year') . '</b>:<br> <input name="year" type="text" value="' . (int)$tagsArray['year'][0] . '" /><br>' .
+    '<input type="submit" name="submit" value="' . _t('Save') . '"/></form></div>' .
+    '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';

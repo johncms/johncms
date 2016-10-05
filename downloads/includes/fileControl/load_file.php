@@ -28,7 +28,7 @@ if ($more) {
 }
 
 if ($error) {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
+    header('Location: ' . $set['homeurl'] . '/404');
 } else {
     if (!isset($_SESSION['down_' . $id])) {
         $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`=" . $id);
