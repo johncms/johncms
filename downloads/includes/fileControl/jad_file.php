@@ -39,5 +39,5 @@ require(SYSPATH . 'lib/pclzip.lib.php');
 $zip = new PclZip($down_file);
 $content = $zip->extract(PCLZIP_OPT_BY_NAME, 'META-INF/MANIFEST.MF', PCLZIP_OPT_EXTRACT_AS_STRING);
 
-$out = $content[0]['content'] . "\n" . 'MIDlet-Jar-Size: ' . $size . "\n" . 'MIDlet-Jar-URL: ' . App::cfg()->sys->homeurl . $res_down['dir'] . '/' . $jar_file;
+$out = $content[0]['content'] . "\n" . 'MIDlet-Jar-Size: ' . $size . "\n" . 'MIDlet-Jar-URL: ' . $set['homeurl'] . $res_down['dir'] . '/' . $jar_file;
 Functions::downloadFile($out, basename($down_file) . '.jad');
