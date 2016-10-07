@@ -4,7 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
 
 // Открытие ZIP прхива
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/open_zip');
