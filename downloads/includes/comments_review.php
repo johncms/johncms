@@ -64,7 +64,7 @@ if ($total) {
 
             $post .= '<div class="reply"><small>' .
                 //TODO: Переделать ссылку
-                '<a href="' . App::cfg()->sys->homeurl . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
+                '<a href="' . $set['homeurl'] . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
                 ' (' . functions::displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
         }
 

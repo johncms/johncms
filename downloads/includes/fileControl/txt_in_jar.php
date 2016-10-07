@@ -73,7 +73,7 @@ if (!file_exists($tmp)) {
     $files = fopen("files/download/temp/created_java/java/textfile.txt", 'w+');
     flock($files, LOCK_EX);
     $book_name = iconv('UTF-8', 'windows-1251', $res_down['rus_name']);
-    $result = "\r\n" . $book_name . "\r\n\r\n----------\r\n\r\n" . trim($book_text) . "\r\n\r\nDownloaded from " . App::cfg()->sys->homeurl;
+    $result = "\r\n" . $book_name . "\r\n\r\n----------\r\n\r\n" . trim($book_text) . "\r\n\r\nDownloaded from " . $set['homeurl'];
     fputs($files, $result);
     flock($files, LOCK_UN);
     fclose($files);
@@ -115,7 +115,7 @@ MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-1.0
 TCBR-Platform: Generic version (all phones)
 MIDlet-Jar-Size: ' . $filesize . '
-MIDlet-Jar-URL: ' . App::cfg()->sys->homeurl . '/' . $tmp; //TODO: Переделать ссылку
+MIDlet-Jar-URL: ' . $set['homeurl'] . '/' . $tmp; //TODO: Переделать ссылку
     $files = fopen($tmp_jad, 'w+');
     flock($files, LOCK_EX);
     fputs($files, $jad_text);

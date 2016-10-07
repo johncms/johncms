@@ -56,7 +56,7 @@ if (!isset($_SESSION['down_' . $id])) {
 $file = 'files/download/temp/created_zip/' . $txt_file . '.zip';
 
 if (!file_exists($file)) {
-    require(SYSPATH . 'lib/pclzip.lib.php');
+    require('lib/pclzip.lib.php');
     $zip = new PclZip($file);
 
     function w($event, &$header)
@@ -73,6 +73,6 @@ if (!file_exists($file)) {
 // Ссылка на файл
 echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
     '<div class="menu"><a href="' . htmlspecialchars($file) . '">' . $lng['download_in'] . ' ZIP</a></div>' .
-    '<div class="rmenu"><input type="text" value="' . App::cfg()->sys->homeurl . htmlspecialchars($file) . '"/><b></b></div>' .
+    '<div class="rmenu"><input type="text" value="' . $set['homeurl'] . htmlspecialchars($file) . '"/><b></b></div>' .
     '<div class="phdr">' . $lng['time_limit'] . '</div>' .
     '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';

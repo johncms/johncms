@@ -116,5 +116,5 @@ if ($rights > 6) {
 
     echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
 } else {
-    header('Location: ' . App::cfg()->sys->homeurl . '404');
+    header('Location: ' . $set['homeurl'] . '404');
 }
