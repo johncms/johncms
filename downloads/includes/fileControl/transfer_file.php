@@ -4,15 +4,13 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Перенос файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
-    echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -29,13 +27,13 @@ if ($rights > 6) {
         }
     }
 
-    echo '<div class="phdr"><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a> | <b>' . $lng['transfer_file'] . '</b></div>';
+    echo '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a> | <b>' . _t('Move File') . '</b></div>';
 
     switch ($do) {
         case 'transfer':
             if ($catId) {
                 if ($catId == $res_down['refid']) {
-                    echo '<a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
+                    echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
                     exit;
                 }
 
@@ -77,10 +75,10 @@ if ($rights > 6) {
                         $id,
                     ]);
 
-                    echo '<div class="menu"><p>' . $lng['transfer_file_ok'] . '</p></div>' .
-                        '<div class="phdr"><a href="' . $url . '?act=recount">' . $lng['download_recount'] . '</a></div>';
+                    echo '<div class="menu"><p>' . _t('The file has been moved') . '</p></div>' .
+                        '<div class="phdr"><a href="?act=recount">' . _t('Update counters') . '</a></div>';
                 } else {
-                    echo '<div class="menu"><p><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer&amp;yes"><b>' . $lng['transfer_file'] . '</b></a></p></div>' .
+                    echo '<div class="menu"><p><a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer&amp;yes"><b>' . _t('Move File') . '</b></a></p></div>' .
                         '<div class="phdr"><br></div>';
                 }
             }
@@ -95,26 +93,24 @@ if ($rights > 6) {
                 while ($resCat = $queryCat->fetch()) {
                     echo ($i++ % 2) ? '<div class="list2">' : '<div class="list1">';
                     echo Functions::loadModuleImage('folder.png') . '&#160;' .
-                        '<a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '">' . htmlspecialchars($resCat['rus_name']) . '</a>';
+                        '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '">' . htmlspecialchars($resCat['rus_name']) . '</a>';
 
                     if ($resCat['id'] != $res_down['refid']) {
-                        echo '<br><small><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '&amp;do=transfer">' . $lng['move_this_folder'] . '</a></small>';
+                        echo '<br><small><a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '&amp;do=transfer">' . _t('Move to this folder') . '</a></small>';
                     }
 
                     echo '</div>';
                 }
             } else {
-                echo '<div class="rmenu"><p>' . $lng['list_empty'] . '</p></div>';
+                echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';
             }
 
-            echo '<div class="phdr">' . $lng['total'] . ': ' . $totalCat . '</div>';
+            echo '<div class="phdr">' . _t('Total') . ': ' . $totalCat . '</div>';
 
             if ($catId && $catId != $res_down['refid']) {
-                echo '<p><div class="func"><a href="' . $url . '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer">' . $lng['move_this_folder'] . '</a></div></p>';
+                echo '<p><div class="func"><a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer">' . _t('Move to this folder') . '</a></div></p>';
             }
     }
 
-    echo '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
-} else {
-    header('Location: ' . $set['homeurl'] . '404');
+    echo '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
 }
