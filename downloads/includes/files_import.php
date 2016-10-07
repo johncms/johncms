@@ -51,7 +51,7 @@ if ($rights == 4 || $rights >= 6) {
             }
 
             if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
-                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions.') . ': ' . implode(', ', $al_ext);
+                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
             }
 
             if (strlen($fname) > 100) {

@@ -82,7 +82,7 @@ if ($rights == 4 || $rights >= 6) {
                 $scan_dir = $files_path;
             }
 
-            echo '<div class="phdr"><b>' . _t('Update files') . '</b>' . ($id ? ': ' . htmlspecialchars($res_down_cat['rus_name']) : '') . '</div>';
+            echo '<div class="phdr"><b>' . _t('Update Files') . '</b>' . ($id ? ': ' . htmlspecialchars($res_down_cat['rus_name']) : '') . '</div>';
 
             if (isset($_GET['yes'])) {
                 // Сканирование папок

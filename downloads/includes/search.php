@@ -9,6 +9,8 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
+require_once '../incfiles/head.php';
+
 // Форма для поиска
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . _t('Search') . '</div>' .
     '<form action="?act=search" method="post"><div class="gmenu"><p>' .
@@ -78,3 +80,4 @@ if ($search && !$error) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
+require_once '../incfiles/end.php';

@@ -172,9 +172,9 @@ if ($edit) {
             }
         } else {
             // Выводим форму
-            echo '<div class="phdr"><b>' . _t('Additional files') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
+            echo '<div class="phdr"><b>' . _t('Additional Files') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>' .
                 '<div class="menu"><form action="?act=files_more&amp;id=' . $id . '"  method="post" enctype="multipart/form-data">' .
-                _t('Select the file') . '<span class="red">*</span>::<br><input type="file" name="fail"/><br>' .
+                _t('Select File') . '<span class="red">*</span>::<br><input type="file" name="fail"/><br>' .
                 _t('Or link to it') . ':<br><input type="post" name="link_file" value=""/><br>' .
                 _t('Save as (max. 30, without extension)') . ':<br><input type="text" name="new_file"/><br>' .
                 _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br>' .

@@ -14,7 +14,7 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
     exit;
 }
 
-echo '<div class="phdr"><b>' . _t('Edit mp3 tags') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>';
+echo '<div class="phdr"><b>' . _t('Edit MP3 Tags') . ':</b> ' . htmlspecialchars($res_down['rus_name']) . '</div>';
 require(SYSPATH . 'lib/getid3/getid3.php');
 $getID3 = new getID3;
 $getID3->encoding = 'cp1251';

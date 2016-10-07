@@ -169,7 +169,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 _t('Save as (max. 30, without extension)') . ':<br><input type="text" name="new_file"/><br>' .
                 _t('Screenshot') . ':<br><input type="file" name="screen"/><br>' .
                 _t('File Name') . ' (мах. 200):<br><input type="text" name="text"/><br>' .
-                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br><input type="text" name="name_link" value="' . _t('Download File') . '"/><br>' .
+                _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br><input type="text" name="name_link" value="' . _t('Download') . '"/><br>' .
                 _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
                 '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
