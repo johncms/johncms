@@ -1,0 +1,762 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-10-07 22:05+0400\n"
+"PO-Revision-Date: 2016-10-07 14:34-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /downloads/default.pot\n"
+
+#: admin.php:86 includes/category_add.php:114 includes/category_add.php:117
+#: includes/category_delete.php:66 includes/category_edit.php:114
+#: includes/comments.php:45 includes/fileControl/delete_file.php:71
+#: includes/fileControl/edit_about.php:38 includes/fileControl/edit_file.php:46
+#: includes/fileControl/edit_screen.php:57
+#: includes/fileControl/edit_screen.php:97
+#: includes/fileControl/files_more.php:46
+#: includes/fileControl/files_more.php:151
+#: includes/fileControl/files_more.php:205 includes/fileControl/mp3tags.php:52
+#: includes/fileControl/open_zip.php:59 includes/fileControl/open_zip.php:142
+#: includes/fileControl/open_zip.php:266
+#: includes/fileControl/transfer_file.php:30
+#: includes/fileControl/transfer_file.php:36
+#: includes/fileControl/transfer_file.php:115
+#: includes/fileControl/txt_in_jar.php:128
+#: includes/fileControl/txt_in_zip.php:76 includes/files_import.php:145
+#: includes/files_import.php:162 includes/files_upload.php:157
+#: includes/files_upload.php:177 includes/files_upload.php:180
+#: includes/scan_about.php:41 includes/scan_dir.php:67
+#: includes/scan_dir.php:300
+msgid "Back"
+msgstr "Назад"
+
+#: classes/download.php:158 includes/view.php:164 includes/view.php:173
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: classes/download.php:173 includes/comments.php:29 includes/comments.php:43
+#: includes/comments_review.php:45 includes/view.php:204
+msgid "Comments"
+msgstr "Комментарии"
+
+#: classes/download.php:363 includes/bookmark.php:18 includes/bookmark.php:50
+#: includes/category_add.php:20 includes/category_delete.php:19
+#: includes/category_edit.php:18 includes/comments.php:9
+#: includes/comments.php:20 includes/comments_review.php:9
+#: includes/comments_review.php:21 includes/comments_review.php:93
+#: includes/fileControl/custom_size.php:24
+#: includes/fileControl/delete_file.php:13
+#: includes/fileControl/edit_about.php:13 includes/fileControl/edit_file.php:13
+#: includes/fileControl/edit_screen.php:13
+#: includes/fileControl/files_more.php:13 includes/fileControl/jad_file.php:13
+#: includes/fileControl/jad_file.php:22 includes/fileControl/mp3tags.php:13
+#: includes/fileControl/open_zip.php:26 includes/fileControl/open_zip.php:36
+#: includes/fileControl/open_zip.php:155 includes/fileControl/open_zip.php:269
+#: includes/fileControl/transfer_file.php:13
+#: includes/fileControl/txt_in_jar.php:27
+#: includes/fileControl/txt_in_jar.php:38
+#: includes/fileControl/txt_in_zip.php:26
+#: includes/fileControl/txt_in_zip.php:36 includes/files_import.php:13
+#: includes/files_moderation.php:12 includes/files_moderation.php:56
+#: includes/files_new.php:19 includes/files_new.php:28
+#: includes/files_new.php:59 includes/files_top.php:18
+#: includes/files_top.php:40 includes/files_upload.php:183
+#: includes/files_user.php:54 includes/scan_dir.php:78 includes/search.php:13
+#: includes/search.php:80 includes/top_users.php:10 includes/top_users.php:44
+#: includes/view.php:15 includes/view.php:141 index.php:18 index.php:148
+#: index.php:161 index.php:337
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: includes/bookmark.php:10 index.php:343
+msgid "Favorites"
+msgstr "Избранное"
+
+#: includes/bookmark.php:14 index.php:48
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: includes/bookmark.php:37 includes/comments_review.php:80
+#: includes/fileControl/open_zip.php:118
+#: includes/fileControl/transfer_file.php:105 includes/files_moderation.php:43
+#: includes/files_new.php:45 includes/files_user.php:40
+#: includes/top_users.php:31 index.php:283
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: includes/bookmark.php:40 includes/comments_review.php:83
+#: includes/fileControl/files_more.php:203
+#: includes/fileControl/open_zip.php:122 includes/fileControl/open_zip.php:241
+#: includes/fileControl/transfer_file.php:108 includes/files_moderation.php:46
+#: includes/files_new.php:48 includes/files_user.php:43 includes/search.php:59
+#: includes/top_users.php:34
+msgid "Total"
+msgstr "Всего"
+
+#: includes/bookmark.php:47 includes/comments_review.php:90
+#: includes/fileControl/open_zip.php:131 includes/files_moderation.php:53
+#: includes/files_new.php:56 includes/files_user.php:51 includes/search.php:68
+#: includes/top_users.php:41 index.php:307
+msgid "To Page"
+msgstr "На страницу"
+
+#: includes/category_add.php:20 includes/category_delete.php:19
+#: includes/category_edit.php:18 includes/files_import.php:13
+#: includes/files_new.php:19 includes/files_upload.php:183
+#: includes/scan_dir.php:78 index.php:148
+msgid "The directory does not exist"
+msgstr "Каталог не существует"
+
+#: includes/category_add.php:36 includes/category_edit.php:49
+#: includes/fileControl/edit_file.php:37
+#: includes/fileControl/files_more.php:109 includes/files_import.php:50
+#: includes/files_upload.php:45
+msgid "The required fields are not filled"
+msgstr "Не заполнены обязательные поля"
+
+#: includes/category_add.php:40
+msgid "Invalid characters"
+msgstr "Недопустимые символы"
+
+#: includes/category_add.php:46 includes/category_add.php:105
+#: includes/category_edit.php:70 includes/category_edit.php:108
+msgid "You can write only the following extensions"
+msgstr "Вы можете вписать только следующие расширения"
+
+#: includes/category_add.php:53 includes/category_add.php:92
+#: includes/category_edit.php:74 includes/fileControl/edit_file.php:37
+#: includes/fileControl/files_more.php:88
+#: includes/fileControl/files_more.php:129
+#: includes/fileControl/files_more.php:167
+#: includes/fileControl/files_more.php:171 includes/files_import.php:69
+#: includes/files_import.php:147 includes/files_upload.php:65
+#: includes/files_upload.php:159 includes/files_upload.php:163
+msgid "Repeat"
+msgstr "Повторить"
+
+#: includes/category_add.php:89 includes/category_add.php:96 index.php:313
+msgid "Create Folder"
+msgstr "Создать папку"
+
+#: includes/category_add.php:90
+msgid "The Folder is created"
+msgstr "Папка создана"
+
+#: includes/category_add.php:90 includes/files_import.php:129
+#: includes/files_upload.php:140
+msgid "Continue"
+msgstr "Продолжить"
+
+#: includes/category_add.php:92
+msgid "Error creating categories"
+msgstr "Ошибка при создании категорий"
+
+#: includes/category_add.php:98
+msgid "Folder Name"
+msgstr "Имя папки"
+
+#: includes/category_add.php:99 includes/category_edit.php:102
+msgid "Title to display"
+msgstr "Заголовок для отображения"
+
+#: includes/category_add.php:100 includes/category_edit.php:103
+#: includes/fileControl/edit_about.php:33 includes/files_import.php:159
+#: includes/files_upload.php:173 includes/view.php:144
+msgid "Description"
+msgstr "Описание"
+
+#: includes/category_add.php:103 includes/category_edit.php:106
+msgid "Allow users to upload files"
+msgstr "Разрешить пользователям выгружать файлы"
+
+#: includes/category_add.php:104 includes/category_edit.php:107
+#: includes/fileControl/files_more.php:185 includes/files_import.php:161
+#: includes/files_upload.php:176 index.php:209
+msgid "Allowed extensions"
+msgstr "Допустимые расширения"
+
+#: includes/category_add.php:108
+msgid "Create"
+msgstr "Создать"
+
+#: includes/category_delete.php:19
+msgid "Before removing, delete subdirectories"
+msgstr "В начале удалите все подкаталоги"
+
+#: includes/category_delete.php:64 index.php:316
+msgid "Delete Folder"
+msgstr "Удалить папку"
+
+#: includes/category_delete.php:65 includes/fileControl/delete_file.php:70
+#: includes/fileControl/edit_screen.php:93
+#: includes/fileControl/files_more.php:63
+#: includes/fileControl/files_more.php:200 includes/files_moderation.php:38
+#: index.php:217
+msgid "Delete"
+msgstr "Удалить"
+
+#: includes/category_edit.php:100 index.php:317
+msgid "Change Folder"
+msgstr "Изменить папку"
+
+#: includes/category_edit.php:111 includes/fileControl/edit_about.php:37
+#: includes/fileControl/edit_file.php:45 includes/fileControl/files_more.php:45
+#: includes/fileControl/mp3tags.php:51
+msgid "Save"
+msgstr "Сохранить"
+
+#: includes/comments.php:9 includes/comments.php:25
+#: includes/comments_review.php:9 includes/comments_review.php:18
+msgid "Comments are disabled"
+msgstr "Комментарии закрыты"
+
+#: includes/comments.php:20 includes/fileControl/custom_size.php:24
+#: includes/fileControl/delete_file.php:13 includes/fileControl/jad_file.php:13
+#: includes/fileControl/jad_file.php:22 includes/fileControl/open_zip.php:26
+#: includes/fileControl/open_zip.php:36 includes/fileControl/open_zip.php:142
+#: includes/fileControl/open_zip.php:155
+#: includes/fileControl/transfer_file.php:13
+#: includes/fileControl/txt_in_jar.php:27
+#: includes/fileControl/txt_in_jar.php:38
+#: includes/fileControl/txt_in_zip.php:26
+#: includes/fileControl/txt_in_zip.php:36 includes/view.php:15
+msgid "File not found"
+msgstr "Файл не найден"
+
+#: includes/comments_review.php:15 index.php:340
+msgid "Review comments"
+msgstr "Просмотр комментариев"
+
+#: includes/fileControl/delete_file.php:69 includes/view.php:265
+msgid "Delete File"
+msgstr "Удалить файл"
+
+#: includes/fileControl/edit_about.php:35
+msgid "Maximum 500 characters"
+msgstr "Макс. 500 символов"
+
+#: includes/fileControl/edit_file.php:43 includes/files_import.php:156
+#: includes/files_upload.php:171 includes/search.php:15
+msgid "File Name"
+msgstr "Имя файла"
+
+#: includes/fileControl/edit_file.php:44 includes/fileControl/files_more.php:43
+#: includes/fileControl/files_more.php:180 includes/files_import.php:157
+#: includes/files_upload.php:172
+msgid "Link to download file"
+msgstr "Ссылка для скачивания файла"
+
+#: includes/fileControl/edit_screen.php:48 includes/files_import.php:123
+#: includes/files_upload.php:131
+msgid "Screenshot is attached"
+msgstr "Скриншот прикреплен"
+
+#: includes/fileControl/edit_screen.php:50
+#: includes/fileControl/edit_screen.php:53 includes/files_import.php:125
+#: includes/files_upload.php:133 includes/files_upload.php:136
+msgid "Screenshot not attached"
+msgstr "Скриншот не прикреплен"
+
+#: includes/fileControl/edit_screen.php:56
+#: includes/fileControl/files_more.php:151 includes/files_import.php:145
+#: includes/files_upload.php:157
+msgid "Upload more"
+msgstr "Загрузить ещё"
+
+#: includes/fileControl/edit_screen.php:60 includes/files_import.php:155
+#: includes/files_upload.php:170 includes/view.php:128 includes/view.php:131
+msgid "Screenshot"
+msgstr "Скриншот"
+
+#: includes/fileControl/edit_screen.php:62
+#: includes/fileControl/files_more.php:182 includes/files_import.php:160
+#: includes/files_upload.php:174
+msgid "Upload"
+msgstr "Выгрузить"
+
+#: includes/fileControl/edit_screen.php:63
+#: includes/fileControl/files_more.php:184 includes/files_upload.php:175
+msgid "File weight should not exceed"
+msgstr "Вес файла не должен превышать"
+
+#: includes/fileControl/edit_screen.php:64
+#: includes/fileControl/files_more.php:185 includes/files_import.php:161
+#: includes/files_upload.php:176
+msgid "A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)"
+msgstr "Скриншот автоматически преобразуется в изображение, шириной не более х 240 пикселей (высота будет рассчитана автоматически)"
+
+#: includes/fileControl/files_more.php:41 includes/view.php:261
+msgid "Edit File"
+msgstr "Редактировать файл"
+
+#: includes/fileControl/files_more.php:63
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+#: includes/fileControl/files_more.php:63
+msgid "Cancel"
+msgstr "Отмена"
+
+#: includes/fileControl/files_more.php:74
+#: includes/fileControl/files_more.php:83 includes/files_import.php:26
+#: includes/files_import.php:65
+msgid "Invalid Link"
+msgstr "Неверная ссылка"
+
+#: includes/fileControl/files_more.php:113 includes/files_upload.php:49
+msgid "The weight of the file exceeds"
+msgstr "Вес файла превышает"
+
+#: includes/fileControl/files_more.php:117 includes/files_import.php:54
+#: includes/files_upload.php:53
+msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
+msgstr "Запрещенный тип файла!<br>К выгрузке разрешены файлы, имеющие следующие расширения"
+
+#: includes/fileControl/files_more.php:121 includes/files_import.php:58
+#: includes/files_upload.php:57
+msgid "The file name length must not exceed 100 characters"
+msgstr "Длина имени файла не должна превышать 30 символов"
+
+#: includes/fileControl/files_more.php:125 includes/files_import.php:62
+#: includes/files_upload.php:61
+msgid "The file name contains invalid characters"
+msgstr "В названии файла присутствуют недопустимые символы"
+
+#: includes/fileControl/files_more.php:150 includes/files_import.php:78
+#: includes/files_upload.php:76
+msgid "File attached"
+msgstr "Файл прикреплен"
+
+#: includes/fileControl/files_more.php:167
+#: includes/fileControl/files_more.php:171 includes/files_import.php:147
+#: includes/files_upload.php:159 includes/files_upload.php:163
+msgid "File not attached"
+msgstr "Файл не прикреплен"
+
+#: includes/fileControl/files_more.php:175 includes/scan_dir.php:269
+#: includes/view.php:264
+msgid "Additional Files"
+msgstr "Дополнительные файлы"
+
+#: includes/fileControl/files_more.php:177 includes/files_upload.php:168
+msgid "Select File"
+msgstr "Выбрать файл"
+
+#: includes/fileControl/files_more.php:178
+msgid "Or link to it"
+msgstr "Или ссылку на него"
+
+#: includes/fileControl/files_more.php:179 includes/files_import.php:154
+#: includes/files_upload.php:169
+msgid "Save as (max. 30, without extension)"
+msgstr "Сохранить как (Макс. 30, без расширения)"
+
+#: includes/fileControl/files_more.php:181
+msgid "Download the additional file"
+msgstr "Скачать дополнительный файл"
+
+#: includes/fileControl/files_more.php:199 index.php:216
+msgid "Edit"
+msgstr "Изменить"
+
+#: includes/fileControl/mp3tags.php:17 includes/view.php:270
+msgid "Edit MP3 Tags"
+msgstr "Редактирование mp3 тегов"
+
+#: includes/fileControl/mp3tags.php:42
+msgid "Tags saved"
+msgstr "Теги сохранены"
+
+#: includes/fileControl/mp3tags.php:46 includes/view.php:100
+msgid "Artist"
+msgstr "Исполнитель"
+
+#: includes/fileControl/mp3tags.php:47 includes/view.php:103
+msgid "Title"
+msgstr "Название"
+
+#: includes/fileControl/mp3tags.php:48 includes/view.php:106
+msgid "Album"
+msgstr "Альбом"
+
+#: includes/fileControl/mp3tags.php:49 includes/view.php:109
+msgid "Genre"
+msgstr "Жанр"
+
+#: includes/fileControl/mp3tags.php:50 includes/view.php:112
+msgid "Year"
+msgstr "Год"
+
+#: includes/fileControl/open_zip.php:50 includes/fileControl/open_zip.php:80
+msgid "Open archive"
+msgstr "Открыть архив"
+
+#: includes/fileControl/open_zip.php:59
+msgid "Failed to open archive or selected file is not a ZIP archive"
+msgstr "Не удалось открыть архив, или выбранный файл не является архивом zip"
+
+#: includes/fileControl/open_zip.php:81
+msgid "You can download individual files from the archive or view the code"
+msgstr "Вы можете скачать отдельные файлы из архива, или просмотр кода"
+
+#: includes/fileControl/open_zip.php:112
+msgid "Code"
+msgstr "Код"
+
+#: includes/fileControl/open_zip.php:112
+#: includes/fileControl/txt_in_jar.php:126 includes/files_upload.php:172
+#: includes/scan_dir.php:185 includes/view.php:200
+msgid "Download"
+msgstr "Скачать"
+
+#: includes/fileControl/open_zip.php:121
+msgid "Weight unpacked"
+msgstr "Вес без упаковки"
+
+#: includes/fileControl/open_zip.php:263
+msgid "Failed to save the file on the server"
+msgstr "Не удалось сохранить файл на сервере"
+
+#: includes/fileControl/transfer_file.php:30
+#: includes/fileControl/transfer_file.php:81 includes/view.php:268
+msgid "Move File"
+msgstr "Переместить файл"
+
+#: includes/fileControl/transfer_file.php:78
+msgid "The file has been moved"
+msgstr "Файл был перемещен"
+
+#: includes/fileControl/transfer_file.php:79 includes/scan_dir.php:277
+#: index.php:325
+msgid "Update counters"
+msgstr "Обновление счетчиков"
+
+#: includes/fileControl/transfer_file.php:99
+#: includes/fileControl/transfer_file.php:111
+msgid "Move to this folder"
+msgstr "Переместить в эту папку"
+
+#: includes/fileControl/txt_in_jar.php:98
+msgid "Error creating the JAR file"
+msgstr "Ошибка при создании файла JAR"
+
+#: includes/fileControl/txt_in_jar.php:127
+#: includes/fileControl/txt_in_zip.php:75
+msgid "The file will be available for download within 5 minutes"
+msgstr "Файл будет доступен для скачивания в течение 5 минут"
+
+#: includes/fileControl/txt_in_zip.php:73
+msgid "Download to ZIP"
+msgstr "Скачать в ZIP"
+
+#: includes/files_import.php:77 includes/files_import.php:151
+msgid "File import"
+msgstr "Импорт файла"
+
+#: includes/files_import.php:153
+msgid "Link to file"
+msgstr "Ссылка на файл"
+
+#: includes/files_moderation.php:6 index.php:176
+msgid "Files on moderation"
+msgstr "Файлы на модерации"
+
+#: includes/files_moderation.php:16
+msgid "File accepted"
+msgstr "Файл принят"
+
+#: includes/files_moderation.php:20
+msgid "All files accepted"
+msgstr "Все файлы приняты"
+
+#: includes/files_moderation.php:37
+msgid "Accept"
+msgstr "Принять"
+
+#: includes/files_moderation.php:41
+msgid "Accept all files"
+msgstr "Принять все файлы"
+
+#: includes/files_new.php:11 includes/files_new.php:24 index.php:158
+#: index.php:168
+msgid "New Files"
+msgstr "Новые файлы"
+
+#: includes/files_top.php:10 includes/files_top.php:17
+msgid "Most Commented"
+msgstr "Наиболее комментируемые"
+
+#: includes/files_top.php:12 includes/files_top.php:22
+#: includes/files_top.php:28
+msgid "Most Downloaded"
+msgstr "Самые скачиваемые"
+
+#: includes/files_top.php:14 includes/files_top.php:21
+#: includes/files_top.php:25
+msgid "Popular Files"
+msgstr "Популярные файлы"
+
+#: includes/files_upload.php:73 includes/files_upload.php:166 index.php:319
+#: index.php:329
+msgid "Upload File"
+msgstr "Выгрузить файл"
+
+#: includes/files_upload.php:79
+msgid "If you pass moderation, it will be added to the Downloads"
+msgstr "Если вы пройдете модерацию, он будет добавлен к загрузки"
+
+#: includes/files_upload.php:180
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: includes/files_user.php:9 includes/files_user.php:22
+#: includes/top_users.php:28
+msgid "User Files"
+msgstr "Пользовательские файлы"
+
+#: includes/files_user.php:12
+msgid "User does not exists"
+msgstr "Пользователь не существует"
+
+#: includes/files_user.php:20
+msgid "Profile"
+msgstr "Профиль"
+
+#: includes/scan_about.php:32 index.php:324
+msgid "Update descriptions"
+msgstr "Обновить описания"
+
+#: includes/scan_about.php:35
+msgid "Folder cleared"
+msgstr "Папка очищена"
+
+#: includes/scan_about.php:37
+msgid "Descriptions updated"
+msgstr "Описания обновлены"
+
+#: includes/scan_about.php:38
+msgid "Empty Folder"
+msgstr "Очистить папку"
+
+#: includes/scan_dir.php:65 includes/scan_dir.php:276 includes/scan_dir.php:298
+#: index.php:323
+msgid "Remove missing files"
+msgstr "Удалить отсутствующие файлы"
+
+#: includes/scan_dir.php:66
+msgid "Database successfully updated"
+msgstr "База данных успешно обновлена"
+
+#: includes/scan_dir.php:85 index.php:322
+msgid "Update Files"
+msgstr "Обновить файлы"
+
+#: includes/scan_dir.php:266
+msgid "Added"
+msgstr "Добавил"
+
+#: includes/scan_dir.php:267
+msgid "Categories"
+msgstr "Категории"
+
+#: includes/scan_dir.php:268 index.php:297
+msgid "Files"
+msgstr "Файлы"
+
+#: includes/scan_dir.php:272
+msgid "Update Descriptions"
+msgstr "Обновить описания"
+
+#: includes/scan_dir.php:280 includes/scan_dir.php:289
+msgid "Update all folders from the current"
+msgstr "Обновить все папки ниже текущей"
+
+#: includes/scan_dir.php:280 includes/scan_dir.php:284
+#: includes/scan_dir.php:289 includes/scan_dir.php:295
+msgid "Update entire Downloads"
+msgstr "Обновление всего загруз центра"
+
+#: includes/scan_dir.php:281 includes/scan_dir.php:290
+msgid "Update only current folder"
+msgstr "Обновление только текущей папки"
+
+#: includes/scan_dir.php:287
+msgid "Update v.2"
+msgstr "Обновление v.2"
+
+#: includes/scan_dir.php:288
+msgid "After this update, you must update the description"
+msgstr "После этого обновления необходимо обновить описания"
+
+#: includes/scan_dir.php:291
+msgid "This action not only updates the file, but will distribute screenshots and descriptions for folders<br>Sample file: file.jar, file.jar.txt, file.jar.jpg (gif, png) (only 1 screenshot)<br><b>ATTENTION:</b> load this update is much higher"
+msgstr "Данное действие не просто обновит файл, но и распределит скриншоты / описания по папкам<br>Пример файла: file.jar, file.jar.txt, file.jar.jpg (gif, png) (только 1 скриншот)<br><b>ВНИМАНИЕ:</b> нагрузка при таком обновление значительно выше."
+
+#: includes/search.php:13 index.php:162
+msgid "Search"
+msgstr "Поиск"
+
+#: includes/search.php:16
+msgid "Search in description"
+msgstr "Искать в описаниях"
+
+#: includes/search.php:24
+msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
+msgstr "Недопустимая длина имени файла. Допускается не менее 3 и не более 64 символов."
+
+#: includes/search.php:40
+msgid "Search results"
+msgstr "Результаты поиска"
+
+#: includes/search.php:56
+msgid "No items found"
+msgstr "Не найдено"
+
+#: includes/search.php:70
+msgid "New Search"
+msgstr "Новый поиск"
+
+#: includes/search.php:77
+msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
+msgstr "Поиск по имени файла нечувствителен к регистру.<br>Длина запроса: мин. 2, макс. 64 символа."
+
+#: includes/top_users.php:9 index.php:164
+msgid "Top Users"
+msgstr "Топ пользователей"
+
+#: includes/view.php:24
+msgid "The file is on moderation"
+msgstr "Файлы на модерации"
+
+#: includes/view.php:53
+msgid "View"
+msgstr "Просмотр"
+
+#: includes/view.php:69
+msgid "Resolution"
+msgstr "Разрешение"
+
+#: includes/view.php:93
+msgid "Channels"
+msgstr "Каналы"
+
+#: includes/view.php:94
+msgid "Sample rate"
+msgstr "Частота дискретизации"
+
+#: includes/view.php:95
+msgid "Bitrate"
+msgstr "Битрейт"
+
+#: includes/view.php:96
+msgid "Duration"
+msgstr "Длительность"
+
+#: includes/view.php:139
+msgid "Name of the server"
+msgstr "Имя на сервере"
+
+#: includes/view.php:140
+msgid "Uploaded by"
+msgstr "Загрузил"
+
+#: includes/view.php:159
+msgid "Voice adopted"
+msgstr "Голос принят"
+
+#: includes/view.php:182
+msgid "Custom size"
+msgstr "Пользовательский размер"
+
+#: includes/view.php:191
+msgid "Quality"
+msgstr "Качество"
+
+#: includes/view.php:199
+msgid "Keep aspect ratio"
+msgstr "Сохранять пропорции"
+
+#: includes/view.php:214
+msgid "Files for Download"
+msgstr "Файлы для скачивания"
+
+#: includes/view.php:250
+msgid "Add to Favorites"
+msgstr "В избранное"
+
+#: includes/view.php:252
+msgid "Remove from Favorites"
+msgstr "Удалить из избранного"
+
+#: includes/view.php:262
+msgid "Edit Description"
+msgstr "Изменить описание"
+
+#: includes/view.php:263
+msgid "Managing Screenshots"
+msgstr "Управление скриншотами"
+
+#: index.php:46 index.php:137
+msgid "Downloads are closed"
+msgstr "Загрузки закрыты"
+
+#: index.php:163
+msgid "Top Files"
+msgstr "Топ файлов"
+
+#: index.php:197
+msgid "List of category"
+msgstr "Список категорий"
+
+#: index.php:214
+msgid "Up"
+msgstr "Вверх"
+
+#: index.php:215
+msgid "Down"
+msgstr "Вниз"
+
+#: index.php:232
+msgid "List of Files"
+msgstr "Список файлов"
+
+#: index.php:256
+msgid "Sorting"
+msgstr "Сортировка"
+
+#: index.php:258
+msgid "by time"
+msgstr "по времени"
+
+#: index.php:259
+msgid "by name"
+msgstr "по имени"
+
+#: index.php:261
+msgid "descending"
+msgstr "по убыванию"
+
+#: index.php:262
+msgid "ascending"
+msgstr "по возрастанию"
+
+#: index.php:289
+msgid "Folders"
+msgstr "Папки"
+
+#: index.php:318
+msgid "Import File"
+msgstr "Импорт файла"
+
