@@ -4,8 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Скачка TXT файла в ZIP
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/created_zip');
@@ -25,7 +23,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || (functions::format($res_down['name']) != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
-    echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -35,7 +33,7 @@ if (isset($_GET['more'])) {
     $res_more = $req_more->fetch();
 
     if (!$req_more->rowCount() || !is_file($res_down['dir'] . '/' . $res_more['name']) || functions::format($res_more['name']) != 'txt') {
-        echo $lng['not_found_file'] . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -72,7 +70,7 @@ if (!file_exists($file)) {
 
 // Ссылка на файл
 echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
-    '<div class="menu"><a href="' . htmlspecialchars($file) . '">' . $lng['download_in'] . ' ZIP</a></div>' .
+    '<div class="menu"><a href="' . htmlspecialchars($file) . '">' . _t('Download to ZIP') . '</a></div>' .
     '<div class="rmenu"><input type="text" value="' . $set['homeurl'] . htmlspecialchars($file) . '"/><b></b></div>' .
-    '<div class="phdr">' . $lng['time_limit'] . '</div>' .
-    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
+    '<div class="phdr">' . _t('The file will be available for download within 5 minutes') . '</div>' .
+    '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';

@@ -4,8 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$lng = core::load_lng('dl');
-$url = $set['homeurl'] . '/downloads/';
 
 // Скачка TXT файла в JAR
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/created_java/files');
@@ -26,7 +24,7 @@ $res_down = $req_down->fetch();
 $format_file = functions::format($res_down['name']);
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($format_file != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
-    echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+    echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
@@ -37,7 +35,7 @@ if (isset($_GET['more'])) {
     $format_file = functions::format($res_more['name']);
 
     if (!$req_more->rowCount() || !is_file($res_down['dir'] . '/' . $res_more['name']) || $format_file != 'txt') {
-        echo $lng['not_found_file'] . '<a href="' . $url . '">' . _t('Downloads') . '</a>';
+        echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
 
@@ -97,7 +95,7 @@ TCBR-Platform: Generic version (all phones)';
     $list = $archive->create('files/download/temp/created_java/java', PCLZIP_OPT_REMOVE_PATH, 'files/download/temp/created_java/java');
 
     if (!file_exists($tmp)) {
-        echo $lng['error_jar_file'];
+        echo _t('Error creating the JAR file');
         exit;
     }
 }
@@ -125,6 +123,6 @@ MIDlet-Jar-URL: ' . $set['homeurl'] . '/' . $tmp; //TODO: Переделать �
 
 // Ссылки на файлы
 echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
-    '<div class="menu">' . $lng['download'] . ': <a href="' . htmlspecialchars($tmp) . '">JAR</a> | <a href="' . htmlspecialchars($tmp_jad) . '">JAD</a></div>' .
-    '<div class="phdr">' . $lng['time_limit'] . '</div>' .
-    '<p><a href="' . $url . '?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
+    '<div class="menu">' . _t('Download') . ': <a href="' . htmlspecialchars($tmp) . '">JAR</a> | <a href="' . htmlspecialchars($tmp_jad) . '">JAD</a></div>' .
+    '<div class="phdr">' . _t('The file will be available for download within 5 minutes') . '</div>' .
+    '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
