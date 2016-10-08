@@ -4,7 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-$url = $set['homeurl'] . '/downloads/';
 
 // Закладки
 $textl = _t('Favorites');
@@ -20,7 +19,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` =
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination($url . '?act=bookmark&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . functions::display_pagination('?act=bookmark&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Список закладок
@@ -41,11 +40,11 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination($url . '?act=bookmark&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="' . $url . '" method="get">' .
+    echo '<div class="topmenu">' . functions::display_pagination('?act=bookmark&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form action="?" method="get">' .
         '<input type="hidden" value="bookmark" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="' . $url . '">' . _t('Downloads') . '</a></p>';
+echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
 require '../incfiles/end.php';
