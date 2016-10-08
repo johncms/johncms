@@ -10,13 +10,14 @@ $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
 require_once '../incfiles/head.php';
+require 'classes/download.php';
 
 // Форма для поиска
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . _t('Search') . '</div>' .
     '<form action="?act=search" method="post"><div class="gmenu"><p>' .
     _t('File Name') . ':<br><input type="text" name="search" value="' . htmlspecialchars($search) . '" /><br>' .
     '<input name="id" type="checkbox" value="1" ' . ($id ? 'checked="checked"' : '') . '/> ' . _t('Search in description') . '<br>' .
-    '<input type="submit" value="Поиск" name="submit" /><br>' .
+    '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>' .
     '</p></div></form>';
 
 // Проверяем на коректность ввода
@@ -48,7 +49,7 @@ if ($search && !$error) {
     }
 
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND $sql ORDER BY `rus_name` ASC " . $db->pagination());
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND $sql ORDER BY `rus_name` ASC LIMIT $start, $kmess");
         $i = 0;
 
         while ($res_down = $req_down->fetch()) {

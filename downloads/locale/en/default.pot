@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-10-07 22:05+0400\n"
+"POT-Creation-Date: 2016-10-08 15:47+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
@@ -71,8 +71,8 @@ msgstr ""
 #: includes/files_new.php:19 includes/files_new.php:28
 #: includes/files_new.php:59 includes/files_top.php:18
 #: includes/files_top.php:40 includes/files_upload.php:183
-#: includes/files_user.php:54 includes/scan_dir.php:78 includes/search.php:13
-#: includes/search.php:80 includes/top_users.php:10 includes/top_users.php:44
+#: includes/files_user.php:54 includes/scan_dir.php:78 includes/search.php:16
+#: includes/search.php:83 includes/top_users.php:10 includes/top_users.php:44
 #: includes/view.php:15 includes/view.php:141 index.php:18 index.php:148
 #: index.php:161 index.php:337
 msgid "Downloads"
@@ -98,14 +98,14 @@ msgstr ""
 #: includes/fileControl/files_more.php:203
 #: includes/fileControl/open_zip.php:122 includes/fileControl/open_zip.php:241
 #: includes/fileControl/transfer_file.php:108 includes/files_moderation.php:46
-#: includes/files_new.php:48 includes/files_user.php:43 includes/search.php:59
+#: includes/files_new.php:48 includes/files_user.php:43 includes/search.php:62
 #: includes/top_users.php:34
 msgid "Total"
 msgstr ""
 
 #: includes/bookmark.php:47 includes/comments_review.php:90
 #: includes/fileControl/open_zip.php:131 includes/files_moderation.php:53
-#: includes/files_new.php:56 includes/files_user.php:51 includes/search.php:68
+#: includes/files_new.php:56 includes/files_user.php:51 includes/search.php:71
 #: includes/top_users.php:41 index.php:307
 msgid "To Page"
 msgstr ""
@@ -246,7 +246,7 @@ msgid "Maximum 500 characters"
 msgstr ""
 
 #: includes/fileControl/edit_file.php:43 includes/files_import.php:156
-#: includes/files_upload.php:171 includes/search.php:15
+#: includes/files_upload.php:171 includes/search.php:18
 msgid "File Name"
 msgstr ""
 
@@ -602,31 +602,31 @@ msgstr ""
 msgid "This action not only updates the file, but will distribute screenshots and descriptions for folders<br>Sample file: file.jar, file.jar.txt, file.jar.jpg (gif, png) (only 1 screenshot)<br><b>ATTENTION:</b> load this update is much higher"
 msgstr ""
 
-#: includes/search.php:13 index.php:162
+#: includes/search.php:16 includes/search.php:20 index.php:162
 msgid "Search"
 msgstr ""
 
-#: includes/search.php:16
+#: includes/search.php:19
 msgid "Search in description"
 msgstr ""
 
-#: includes/search.php:24
+#: includes/search.php:27
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
 msgstr ""
 
-#: includes/search.php:40
+#: includes/search.php:43
 msgid "Search results"
 msgstr ""
 
-#: includes/search.php:56
+#: includes/search.php:59
 msgid "No items found"
 msgstr ""
 
-#: includes/search.php:70
+#: includes/search.php:73
 msgid "New Search"
 msgstr ""
 
-#: includes/search.php:77
+#: includes/search.php:80
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
 msgstr ""
 
