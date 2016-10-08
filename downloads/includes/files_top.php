@@ -4,6 +4,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+require '../incfiles/head.php';
+require 'classes/download.php';
 
 // Топ файлов
 if ($id == 2) {
@@ -38,3 +40,4 @@ while ($res_down = $req_down->fetch()) {
 }
 
 echo '<div class="phdr"><a href="?">' . _t('Downloads') . '</a></div>';
+require '../incfiles/end.php';
