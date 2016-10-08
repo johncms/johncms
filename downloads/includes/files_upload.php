@@ -63,7 +63,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
 
                 if ($error) {
                     $error[] = '<a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
-                    echo $error;
+                    echo implode('<br>', $error);
                 } else {
                     if (file_exists("$load_cat/$fname")) {
                         $fname = time() . $fname;
@@ -173,7 +173,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
                 '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
-                _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+                _t('Allowed extensions') . ': ' . implode(', ',
+                    $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
                 '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
         }
     } else {
