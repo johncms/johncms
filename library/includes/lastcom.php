@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Last comments') . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Latest comments') . '</div>';
 
 
 

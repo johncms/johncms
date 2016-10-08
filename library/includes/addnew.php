@@ -8,7 +8,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     if ($flood) {
         require('../incfiles/head.php');
 
-        echo functions::display_error(sprintf(_t('You cannot add the article so often<br>Please, wait %d sec.'), $flood), '<br /><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
+        echo functions::display_error(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood), '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../incfiles/end.php');
         exit;
     }
@@ -37,7 +37,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo functions::display_error(_t('The file is invalid encoding, preferably UTF-8') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        echo functions::display_error(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                         require_once('../incfiles/end.php');
                         exit;
                     }
@@ -45,12 +45,12 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $text = trim($txt);
                     unlink('../files/library/tmp' . DIRECTORY_SEPARATOR . $newname);
                 } else {
-                    echo functions::display_error(_t('Error uploading') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo functions::display_error(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require_once('../incfiles/end.php');
                     exit;
                 }
             } else {
-                echo functions::display_error(_t('Invalid file format allowed * .txt') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                echo functions::display_error(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 require_once('../incfiles/end.php');
                 exit;
             }
@@ -128,7 +128,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $handle->process('../files/library/images/small/');
 
                     if ($err_image) {
-                        echo functions::display_error(_t('Photo uploading error') . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        echo functions::display_error(_t('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     }
                     $handle->clean();
                 }
@@ -142,9 +142,9 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     }
                 }
 
-                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your article will be published in the library.') . '</div>' : '');
+                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
-                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To category') . '</a></div>';
+                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
                 require_once('../incfiles/end.php');
                 exit;
             } else {
@@ -153,7 +153,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             }
         }
     }
-    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write article') . '</div>'
+    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write Article') . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
         . '<p><h3>' . _t('Title') . ' (max. 100):</h3>'
@@ -162,13 +162,13 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
         . bbcode::auto_bb('form', 'text') . '<textarea name="text" rows="' . $set_user['field_h'] . '" cols="20">' . $text . '</textarea></p>'
-        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the article') . '</p>'
+        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
         . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'
         . '<p><h3>' . _t('Select the text file') . '</h3>'
         . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . _t('Text entry field will be ignored') . '</small></p>'
         . '<p><h3>' . _t('Tags') . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . _t('Specify the tag to the article, separated by commas') . '</small></p>'
+        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . _t('Specify the Tag to the Article, separated by commas') . '</small></p>'
         . '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>'
         . '</div></form>'
         . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
