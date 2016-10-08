@@ -26,8 +26,8 @@ $search_t = isset($_REQUEST['t']);
 echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search') . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
     . '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />'
-    . '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />'
-    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in titles articles')
+    . '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>'
+    . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in titles Articles')
     . '</div></form></div>';
 
 /*
@@ -37,7 +37,7 @@ echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> |
 */
 $error = false;
 if ($search && (mb_strlen($search) < 4 || mb_strlen($search) > 64))
-    $error = _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.');
+    $error = _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance');
 
 if ($search && !$error) {
     /*
@@ -85,9 +85,9 @@ if ($search && !$error) {
                     $text = ReplaceKeywords($val, $text);
                 }
             }
-            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br />' . $text
+            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br>' . $text
                 . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . functions::checkout($res['author'])
-                . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />'
+                . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br>'
                 . '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res['count_views']
                 . '</div></div>';
             ++$i;
@@ -107,7 +107,7 @@ if ($search && !$error) {
     if ($error) {
         echo functions::display_error($error);
     }
-    echo '<div class="phdr"><small>' . _t('Length of query: 4 min 64 max <br /> Search is case-insensitive letters <br /> Results are sorted by relevance') . '</small></div>';
+    echo '<div class="phdr"><small>' . _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') . '</small></div>';
 }
-echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br />' : '')
-    . '<a href="?">' . _t('Library') . '</a></p>';
+echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br>' : '')
+    . '<a href="?">' . _t('To Library') . '</a></p>';
