@@ -4,6 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+require '../incfiles/head.php';
 
 // Топ юзеров
 $textl = _t('Top Users');
@@ -20,12 +21,12 @@ if ($total > $kmess) {
 $i = 0;
 
 if ($total) {
-    $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC " . $db->pagination());
+    $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT $start, $kmess");
 
     while ($res_down = $req_down->fetch()) {
-        $user = $db->query("SELECT * FROM `user__` WHERE `id`=" . $res_down['user_id'])->fetch();
+        $user = $db->query("SELECT * FROM `users` WHERE `id`=" . $res_down['user_id'])->fetch();
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            functions::displayUser($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
+            functions::display_user($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
@@ -42,3 +43,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
+require '../incfiles/end.php';
