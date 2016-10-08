@@ -48,34 +48,10 @@ if (is_dir($screens_path . '/' . $id)) {
     closedir($dir);
 }
 
-// Плейер видео файлов
-if ($format_file == 'mp4' || $format_file == 'flv') {
-    echo '<div class="menu"><b>' . _t('View') . '</b><br>
-	<div id="mediaplayer">JW Player goes here</div>
-    <script type="text/javascript" src="' . $homeurl . 'files/download/system/players/mediaplayer-5.7-viral/jwplayer.js"></script>
-    <script type="text/javascript">
-        jwplayer("mediaplayer").setup({
-            flashplayer: "' . $homeurl . 'files/download/system/players/mediaplayer-5.7-viral/player.swf",
-            file: "' . $homeurl . $res_down['dir'] . '/' . $res_down['name'] . '",
-            image: "' . $homeurl . 'assets/misc/thumbinal.php?type=3&amp;img=' . rawurlencode($screen[0]) . '"
-        });
-    </script></div>';
-}
-
-// Получаем данные
-if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
-    $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
-    echo '<div class="gmenu"><img src="preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
-    $text_info = '<b>' . _t('Resolution') . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
-} else {
-    if (($format_file == '3gp' || $format_file == 'avi' || $format_file == 'mp4') && !$screen && $set_down['video_screen']) {
-        $screen[] = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
-    } elseif (($format_file == 'thm' || $format_file == 'nth') && !$screen && $set_down['theme_screen']) {
-        $screen[] = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
-    } elseif ($format_file == 'mp3') {
-        // Показываем HTML5 плейер
+switch ($format_file) {
+    case 'mp3':
+        // Проигрываем аудио файлы
         $text_info = '<audio src="' . $set['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
-
         require('classes/getid3/getid3.php');
         $getID3 = new getID3;
         $getID3->encoding = 'cp1251';
@@ -112,7 +88,23 @@ if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || 
                 $text_info .= '<b>' . _t('Year') . '</b>: ' . (int)$tagsArray['year'][0] . '<br>';
             }
         }
-    }
+        break;
+
+    case 'avi':
+    case 'webm':
+    case 'mp4':
+        // Проигрываем видео файлы
+        echo '<div class="gmenu"><video src="' . $set['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
+        break;
+
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'png':
+        $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
+        echo '<div class="gmenu"><img src="preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
+        $text_info = '<b>' . _t('Resolution') . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
+        break;
 }
 
 // Выводим скриншоты
