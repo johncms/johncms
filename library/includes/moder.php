@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
     }
     
     echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | '
-    . ($type == 'dir' ? _t('Edit directory') : _t('Edit article'))
+    . ($type == 'dir' ? _t('Edit Section') : _t('Edit Article'))
     . '</div>'
     . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
     . '<div class="menu">'
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
     . '<div><input name="image" type="file" /></div>'
     . '<h3>' . _t('Title') . '</h3>' : '')
     . '<div><input type="text" name="name" value="' . functions::checkout($row['name']) . '" /></div>'
-    . ($type == 'dir' ? '<h3>' . _t('Category description') . '</h3>'
+    . ($type == 'dir' ? '<h3>' . _t('Section description') . '</h3>'
     . '<div><textarea name="description" rows="4" cols="20">' . functions::checkout($row['description']) . '</textarea></div>' : '')
     . ($type == 'article'
     ? '<h3>' . _t('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . functions::checkout($row['announce'])
@@ -109,14 +109,14 @@ if (isset($_POST['submit'])) {
     ? '<h3>' . _t('Text') . '</h3><div>' . bbcode::auto_bb('form', 'text') . '<textarea rows="5" cols="20" name="text">' . functions::checkout($row['text'])
     . '</textarea></div>'
     : ($type == 'article' && mb_strlen($row['text']) > 500000
-    ? '<div class="alarm">' . _t('The text of the article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
+    ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
     : ''))
     . ($type == 'article' 
     ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
     : '');
     if ($adm) {
     if ($sqlsel->rowCount() > 1) { 
-        echo '<h3>' . _t('Move to category') . '</h3>'
+        echo '<h3>' . _t('Move to Section') . '</h3>'
         . '<div><select name="move">'
         . ($type == 'dir' 
         ? '<option ' . ($type == 'dir' && $row['parent'] == 0 
@@ -136,19 +136,19 @@ if (isset($_POST['submit'])) {
     echo '</select></div>';
     }
     echo (($type == 'dir' && $empty) 
-    ? '<h3>' . _t('Category type') . '</h3><div><input type="radio" name="dir" value="1" '
+    ? '<h3>' . _t('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
     . ($row['dir'] == 1 
     ? 'checked="checked"' 
-    : '') . ' />' . _t('Categories') . '</div>'
+    : '') . ' />' . _t('Sections') . '</div>'
     . '<div><input type="radio" name="dir" value="0" ' . ($row['dir'] == 0 ? 'checked="checked"' : '') . ' />' . _t('Articles') . '</div>' : '')
     . ($type == 'dir' && $row['dir'] == 0
-    ? '<div>' . _t('Allow users to add their articles?') . '</div><div><input type="radio" name="user_add" value="1" '
+    ? '<div>' . _t('Allow users to add their Articles?') . '</div><div><input type="radio" name="user_add" value="1" '
     . ($row['user_add'] == 1 ? 'checked="checked"' : '') . ' /> ' . _t('Yes') . '</div><div><input type="radio" name="user_add" value="0" '
     . ($row['user_add'] == 0 ? 'checked="checked"' : '') . ' /> ' . _t('No') . '</div>' : '')
     . ($type == 'article' ? '<div class="' . ($row['premod'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="premod" value="1" ' . ($row['premod'] > 0 
     ? 'checked="checked"' : '') . '/> ' . _t('Verified') . '</div>'
     . '<div class="' . ($row['comments'] > 0 ? 'green' : 'red') . '"><input type="checkbox" name="comments" value="1" '
-    . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . _t('Commenting on the article') . '</div>'
+    . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . _t('Commenting on the Article') . '</div>'
     . '<div class="rmenu">' 
     . '<h3>' . _t('Number of readings') 
     . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '');

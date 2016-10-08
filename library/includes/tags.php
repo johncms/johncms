@@ -38,7 +38,7 @@ if (isset($_GET['tag'])) {
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';            
         }
-        echo '<p><a href="?">' . _t('To library') . '</a></p>';
+        echo '<p><a href="?">' . _t('To Library') . '</a></p>';
     }
 } else {
     redir404();

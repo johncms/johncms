@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New articles') . '</div>';
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New Articles') . '</div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
@@ -60,4 +60,4 @@ if ($total) {
 }
 echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
 echo $nav;
-echo '<p><a href="?">' . _t('To library') . '</a></p>';
+echo '<p><a href="?">' . _t('To Library') . '</a></p>';

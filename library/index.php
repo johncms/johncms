@@ -31,9 +31,6 @@ if ($error) {
     exit;
 }
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
-
 // Заголовки библиотеки
 if ($do) {
     switch ($do) {
@@ -122,7 +119,7 @@ if (in_array($act, $array_includes)) {
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . _t('New articles') . '</a> (' . $res . ')<br>';
+            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
         }
 
         echo functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('Rating articles') . '</a><br>' .
@@ -146,7 +143,7 @@ if (in_array($act, $array_includes)) {
                 }
 
                 if ($adm) {
-                    echo '<div class="sub">' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Move up') . '</a> | ' : _t('Move up') . ' | ') . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Move down') . '</a>' : _t('Move down')) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit directory') . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Remove directory') . '</a></div>';
+                    echo '<div class="sub">' . ($y != 1 ? '<a href="?act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Up') . '</a> | ' : _t('Up') . ' | ') . ($y != $total ? '<a href="?act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Down') . '</a>' : _t('Down')) . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit') . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
                 }
 
                 echo '</div>';
@@ -158,7 +155,7 @@ if (in_array($act, $array_includes)) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($adm) {
-            echo '<p><a href="?act=mkdir&amp;id=0">' . _t('Create a directory') . '</a></p>';
+            echo '<p><a href="?act=mkdir&amp;id=0">' . _t('Create Section') . '</a></p>';
         }
     } else {
         $dir_nav = new Tree($id);
@@ -185,17 +182,17 @@ if (in_array($act, $array_includes)) {
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>('
                                 . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ' '
-                                . ($row['dir'] ? ' ' . _t('[Dir]') : ' ' . _t('[Art]')) . ')'
+                                . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
                                 . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
 
                             if ($adm) {
                                 echo '<div class="sub">'
-                                    . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Move up')
-                                        . '</a> | ' : '' . _t('Move up') . ' | ')
+                                    . ($y != 1 ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=up&amp;posid=' . $y . '">' . _t('Up')
+                                        . '</a> | ' : '' . _t('Up') . ' | ')
                                     . ($y != $total
-                                        ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Move down') . '</a>'
-                                        : _t('Move down'))
-                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit directory') . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Remove directory') . '</a></div>';
+                                        ? '<a href="?do=dir&amp;id=' . $id . '&amp;act=move&amp;moveset=down&amp;posid=' . $y . '">' . _t('Down') . '</a>'
+                                        : _t('Down'))
+                                    . ' | <a href="?act=moder&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Edit') . '</a> | <a href="?act=del&amp;type=dir&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
                             }
 
                             echo '</div>';
@@ -208,9 +205,9 @@ if (in_array($act, $array_includes)) {
                     echo $nav;
 
                     if ($adm) {
-                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit directory') . '</a><br>'
-                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Remove directory') . '</a><br>'
-                            . '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Create a directory') . '</a></p>';
+                        echo '<p><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
+                            . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a><br>'
+                            . '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Create') . '</a></p>';
                     }
                 } else {
                     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id)->fetchColumn();
@@ -236,7 +233,7 @@ if (in_array($act, $array_includes)) {
                             $uploader = $row['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
                             echo '<table class="desc">'
                                 // Тэги
-                                . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+                                . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                                 // Кто добавил?
                                 . '<tr>'
                                 . '<td class="caption">' . _t('Who added') . ':</td>'
@@ -257,9 +254,9 @@ if (in_array($act, $array_includes)) {
                     echo $nav;
 
                     if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $user_id) {
-                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write article') . '</a>'
-                            . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit directory') . '</a><br>'
-                                . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Remove directory') . '</a>') : '')
+                        echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write Article') . '</a>'
+                            . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
+                                . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a>') : '')
                             . '</p>';
                     }
                 }
@@ -310,7 +307,7 @@ if (in_array($act, $array_includes)) {
                         $uploader = $row['uploader_id'] ? '<a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
                         echo '<table class="desc">'
                             // Тэги
-                            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+                            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
                             // Кто добавил?
                             . '<tr>'
                             . '<td class="caption">' . _t('Who added') . ':</td>'
@@ -367,8 +364,8 @@ if (in_array($act, $array_includes)) {
                         . ($user_id && $page == 1 ? $rate->print_vote() : '');
 
                     if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) {
-                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit article') . '</a><br>'
-                            . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Remove article') . '</a></p>';
+                        echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
+                            . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
                     }
                 } else {
                     redir404();
