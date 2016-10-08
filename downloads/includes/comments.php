@@ -3,6 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+require '../incfiles/head.php';
 
 // Комментарии
 if (!$set['mod_down_comm'] && $rights < 7) {
@@ -18,6 +19,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
+    require '../incfiles/end.php';
     exit;
 }
 
@@ -31,8 +33,8 @@ $textl = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title
 // Параметры комментариев
 $arg = [
     'object_comm_count' => 'total', // Поле с числом комментариев
-    'comments_table'    => 'cms_download_comments', // Таблица с комментариями
-    'object_table'      => 'cms_download_files', // Таблица комментируемых объектов
+    'comments_table'    => 'download__comments', // Таблица с комментариями
+    'object_table'      => 'download__files', // Таблица комментируемых объектов
     'script'            => '?act=comments', // Имя скрипта (с параметрами вызова)
     'sub_id_name'       => 'id', // Имя идентификатора комментируемого объекта
     'sub_id'            => $id, // Идентификатор комментируемого объекта
@@ -47,3 +49,5 @@ $arg = [
 
 // Показываем комментарии
 $comm = new comments($arg);
+
+require '../incfiles/end.php';
