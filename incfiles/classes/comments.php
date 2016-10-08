@@ -223,7 +223,7 @@ class comments
                             '<div class="sub">' . core::$lng['clear_user_msg'] . '<br />' .
                             '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . core::$lng['clear'] . '</a></span>' .
                             '</div></p></div>' .
-                            '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
+                            '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
                     }
                 }
                 break;

@@ -8,6 +8,7 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
+    require '../incfiles/head.php';
 
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
@@ -154,8 +155,8 @@ if ($rights == 4 || $rights >= 6) {
 
                     $stmt_f = $db->prepare("
                         INSERT INTO `download__files`
-                        (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`)
-                        VALUES (?, ?, ?, ?, 'Download', ?, 2, ?)
+                        (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`)
+                        VALUES (?, ?, ?, ?, 'Download', ?, 2, ?, '', '')
                     ");
 
                     foreach ($arr_scan_dir as $val) {
@@ -299,4 +300,6 @@ if ($rights == 4 || $rights >= 6) {
             }
             echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
+
+    require '../incfiles/end.php';
 }
