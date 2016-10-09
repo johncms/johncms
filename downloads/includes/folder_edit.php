@@ -98,7 +98,7 @@ if ($rights == 4 || $rights >= 6) {
     } else {
         $name = htmlspecialchars($res['rus_name']);
         echo '<div class="phdr"><b>' . _t('Change Folder') . ':</b> ' . $name . '</div>' .
-            '<div class="menu"><form action="?act=edit_cat&amp;id=' . $id . '" method="post">' .
+            '<div class="menu"><form action="?act=folder_edit&amp;id=' . $id . '" method="post">' .
             _t('Title to display') . ':<br><input type="text" name="rus_name" value="' . $name . '"/><br>' .
             _t('Description') . ' (max. 500):<br><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br>';
 

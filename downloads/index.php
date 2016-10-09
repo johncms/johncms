@@ -90,18 +90,18 @@ $defaultExt = [
 
 // Переключаем режимы работы
 $actions = [
-    'add_cat'         => 'category_add.php',
     'bookmark'        => 'bookmark.php',
     'comments'        => 'comments.php',
     'custom_size'     => 'fileControl/custom_size.php',
-    'delete_cat'      => 'category_delete.php',
     'delete_file'     => 'fileControl/delete_file.php',
     'down_file'       => 'files_upload.php',
     'edit_about'      => 'fileControl/edit_about.php',
-    'edit_cat'        => 'category_edit.php',
     'edit_file'       => 'fileControl/edit_file.php',
     'edit_screen'     => 'fileControl/edit_screen.php',
     'files_more'      => 'fileControl/files_more.php',
+    'folder_add'      => 'folder_add.php',
+    'folder_delete'   => 'folder_delete.php',
+    'folder_edit'     => 'folder_edit.php',
     'import'          => 'files_import.php',
     'jad_file'        => 'fileControl/jad_file.php',
     'load_file'       => 'fileControl/load_file.php',
@@ -112,7 +112,6 @@ $actions = [
     'recount'         => 'recount.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
-    'scan_about'      => 'scan_about.php',
     'scan_dir'        => 'scan_dir.php',
     'search'          => 'search.php',
     'top_files'       => 'files_top.php',
@@ -202,7 +201,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             while ($res_down = $req_down->fetch()) {
                 echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-                    //App::image('folder.png', [], true) . '&#160;' .
                     '<a href="' . $url . '?id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['total'] . ')';
 
                 if ($res_down['field']) {
@@ -213,8 +211,8 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     $menu = [
                         '<a href="' . $url . '?act=edit_cat&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
                         '<a href="' . $url . '?act=edit_cat&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
-                        '<a href="' . $url . '?act=edit_cat&amp;id=' . $res_down['id'] . '">' . _t('Edit') . '</a>',
-                        '<a href="' . $url . '?act=delete_cat&amp;id=' . $res_down['id'] . '">' . _t('Delete') . '</a>',
+                        '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '">' . _t('Edit') . '</a>',
+                        '<a href="' . $url . '?act=folder_delete&amp;id=' . $res_down['id'] . '">' . _t('Delete') . '</a>',
                     ];
                     echo '<div class="sub">' .
                         (!empty($res_down['desc']) ? '<div class="gray">' . htmlspecialchars($res_down['desc']) . '</div>' : '') .
@@ -309,19 +307,28 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     if ($rights == 4 || $rights >= 6) {
         // Выводим ссылки на модерские функции
-        echo '<p><div class="func">';
-        echo '<div><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Create Folder') . '</a></div>';
-
         if ($id) {
-            echo '<div><a href="?act=delete_cat&amp;id=' . $id . '">' . _t('Delete Folder') . '</a></div>';
-            echo '<div><a href="?act=edit_cat&amp;id=' . $id . '">' . _t('Change Folder') . '</a></div>';
-            echo '<div><a href="?act=import&amp;id=' . $id . '">' . _t('Import File') . '</a></div>';
+            echo '<p><div class="func">';
             echo '<div><a href="?act=down_file&amp;id=' . $id . '">' . _t('Upload File') . '</a></div>';
+            echo '<div><a href="?act=import&amp;id=' . $id . '">' . _t('Import File') . '</a></div>';
+            echo '</div></p>';
         }
 
+        ////////////////////////////////////////////////////////////////////////////////
+
+        echo '<p><div class="func">';
+        echo '<div><a href="?act=folder_add&amp;id=' . $id . '">' . _t('Create Folder') . '</a></div>';
+
+        if ($id) {
+            echo '<div><a href="?act=folder_edit&amp;id=' . $id . '">' . _t('Change Folder') . '</a></div>';
+            echo '<div><a href="?act=folder_delete&amp;id=' . $id . '">' . _t('Delete Folder') . '</a></div>';
+        }
+
+        echo '</div></p>';
+
+        echo '<p><div class="func">';
         echo '<div><a href="?act=scan_dir&amp;id=' . $id . '">' . _t('Update Files') . '</a></div>';
         echo '<div><a href="?act=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
-        echo '<div><a href="?act=scan_about&amp;id=' . $id . '">' . _t('Update descriptions') . '</a></div>';
         echo '<div><a href="?act=recount&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
         echo '</div></p>';
     } else {
