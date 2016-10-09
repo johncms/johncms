@@ -37,7 +37,7 @@ if ($rights == 4 || $rights >= 6) {
         }
 
         if (preg_match("/[^0-9a-zA-Z]+/", $name)) {
-            $error[] = $error[] = _t('Invalid characters');
+            $error[] = _t('Invalid characters');
         }
 
         if ($rights == 9 && $user_down) {
@@ -50,7 +50,9 @@ if ($rights == 4 || $rights >= 6) {
         }
 
         if ($error) {
-            echo $error . ' <a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
+            echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
+            echo '<div class="rmenu"><p>' . implode('<br>', $error) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
+            require_once('../incfiles/end.php');
             exit;
         }
 
@@ -94,7 +96,7 @@ if ($rights == 4 || $rights >= 6) {
         }
     } else {
         echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div><div class="menu">' .
-            '<form action="?act=add_cat&amp;id=' . $id . '" method="post">' .
+            '<form action="?act=folder_add&amp;id=' . $id . '" method="post">' .
             '<p>' . _t('Folder Name') . ' [A-Za-z0-9]:<br><input type="text" name="name"/></p>' .
             '<p>' . _t('Title to display') . '<br><input type="text" name="rus_name"/></p>' .
             '<p>' . _t('Description') . ' (max. 500)<br><textarea name="desc" cols="24" rows="4"></textarea></p>';

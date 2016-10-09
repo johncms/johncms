@@ -4,7 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 //TODO: Добавить проверку, пустой ли каталог, если нет, выводить предупреждение
 //TODO: Добавить рекурсивное удаление
-//TODO: Переделать на POST запрос с валидацией по токену
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 // Удаление каталога
@@ -22,7 +21,7 @@ if ($rights == 4 || $rights >= 6) {
 
     $res = $req->fetch();
 
-    if (isset($_GET['yes'])) {
+    if (isset($_POST['delete'])) {
         $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = " . $id);
 
         while ($res_down = $req_down->fetch()) {
@@ -62,7 +61,10 @@ if ($rights == 4 || $rights >= 6) {
     } else {
         require_once('../incfiles/head.php');
         echo '<div class="phdr"><b>' . _t('Delete Folder') . '</b></div>' .
-            '<div class="rmenu"><p><a href="?act=delete_cat&amp;id=' . $id . '&amp;yes"><b>' . _t('Delete') . '</b></a></p></div>' .
+            '<div class="rmenu"><p>' .
+            _t('Do you really want to delete?') . '<br>' .
+            '<form act="?act=folder_delete&amp;id=' . $id . '" method="post"><input type="submit" name="delete" value="' . _t('Delete') . '"></form>' .
+            '</p></div>' .
             '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
         require_once('../incfiles/end.php');
     }
