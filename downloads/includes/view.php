@@ -195,7 +195,7 @@ echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' 
 //}
 
 if ($set['mod_down_comm'] || $rights >= 7) {
-    echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')</p>';
+    echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
 }
 
 echo '</div>';

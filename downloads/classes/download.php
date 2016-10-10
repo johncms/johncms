@@ -167,9 +167,8 @@ class Download
             $sub = '<div>' . htmlspecialchars($about, 2) . '</div>';
         }
 
-        //TODO: Переделать на получение настроек из таблицы модулей
         if ($set['mod_down_comm'] || $rights >= 7) {
-            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')';
+            $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')';
         }
 
         if ($sub) {
