@@ -5,12 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
+    require '../incfiles/head.php';
 
     $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
     $res = $req->fetch();
 
     if (!$req->rowCount() || !is_dir($res['dir'])) {
         echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
+        require '../incfiles/end.php';
         exit;
     }
 
@@ -79,8 +81,8 @@ if ($rights == 4 || $rights >= 6) {
 
                 $stmt = $db->prepare("
                     INSERT INTO `download__files`
-                    (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`)
-                    VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?)
+                    (`refid`, `dir`, `time`, `name`, `text`, `rus_name`, `type`, `user_id`, `about`, `desc`)
+                    VALUES (?, ?, ?, ?, ?, ?, 2, ?, ?, '')
                 ");
 
                 $stmt->execute([
@@ -162,3 +164,5 @@ if ($rights == 4 || $rights >= 6) {
             '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 }
+
+require '../incfiles/end.php';
