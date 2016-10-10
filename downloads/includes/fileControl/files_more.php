@@ -4,6 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+require '../incfiles/head.php';
 
 // Дополнительные файлы
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -11,6 +12,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($rights < 6 && $rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
+    require '../incfiles/end.php';
     exit;
 }
 
@@ -109,8 +111,8 @@ if ($edit) {
                     $error[] = _t('The required fields are not filled');
                 }
 
-                if ($fsize > 1024 * App::cfg()->sys->filesize && !$link_file) {
-                    $error[] = _t('The weight of the file exceeds') . ' ' . App::cfg()->sys->filesize . 'kb.';
+                if ($fsize > 1024 * $set['flsz'] && !$link_file) {
+                    $error[] = _t('The weight of the file exceeds') . ' ' . $set['flsz'] . 'kb.';
                 }
 
                 if (!in_array($ext[(count($ext) - 1)], $defaultExt)) {
@@ -127,7 +129,7 @@ if ($edit) {
 
                 if ($error) {
                     $error[] = '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
-                    echo $error;
+                    echo implode('<br>', $error);
                 } else {
                     $newFile = 'file' . $id . '_' . $fname;
 
@@ -181,7 +183,7 @@ if ($edit) {
                 '<input type="text" name="name_link" value="' . _t('Download the additional file') . '"/><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/>' .
                 '</form></div>' .
-                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . App::cfg()->sys->filesize . 'kb<br>' .
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
                 _t('Allowed extensions') . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
 
             // Дополнительные файлы
@@ -190,6 +192,8 @@ if ($edit) {
             $i = 0;
 
             if ($total_file) {
+                require 'classes/download.php';
+
                 while ($res_file_more = $req_file_more->fetch()) {
                     $format = explode('.', $res_file_more['name']);
                     $format_file = strtolower($format[count($format) - 1]);
@@ -206,3 +210,5 @@ if ($edit) {
         }
     }
 }
+
+require '../incfiles/end.php';
