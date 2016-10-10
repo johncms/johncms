@@ -208,8 +208,8 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
                 if ($rights == 4 || $rights >= 6 || !empty($res_down['desc'])) {
                     $menu = [
-                        '<a href="' . $url . '?act=edit_cat&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
-                        '<a href="' . $url . '?act=edit_cat&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
+                        '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
+                        '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '">' . _t('Edit') . '</a>',
                         '<a href="' . $url . '?act=folder_delete&amp;id=' . $res_down['id'] . '">' . _t('Delete') . '</a>',
                     ];
