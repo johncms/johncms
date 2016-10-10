@@ -22,7 +22,7 @@ echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $te
 if ($id == 2 && ($set['mod_down_comm'] || $rights >= 7)) {
     echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a><br>' .
         '<a href="?act=top_files&amp;id=1">' . _t('Most Downloaded') . '</a></div>';
-    $sql = '`total`';
+    $sql = '`comm_count`';
 } elseif ($id == 1) {
     echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a>' . $linkTopComments . '</div>';
     $sql = '`field`';
