@@ -4,6 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+require '../incfiles/head.php';
 
 // Удаление файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -11,22 +12,23 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
+    require '../incfiles/end.php';
     exit;
 }
 
 if ($rights == 4 || $rights >= 6) {
     if (isset($_GET['yes'])) {
-        if (is_dir($screens_path . '/' . $id)) {
-            $dir_clean = opendir($screens_path . '/' . $id);
+        if (is_dir(DOWNLOADS_SCR . $id)) {
+            $dir_clean = opendir(DOWNLOADS_SCR . $id);
 
             while ($file = readdir($dir_clean)) {
                 if ($file != '.' && $file != '..') {
-                    @unlink($screens_path . '/' . $id . '/' . $file);
+                    @unlink(DOWNLOADS_SCR . $id . '/' . $file);
                 }
             }
 
             closedir($dir_clean);
-            rmdir($screens_path . '/' . $id);
+            rmdir(DOWNLOADS_SCR . $id);
         }
 
         @unlink(ROOT_PATH . 'files/download/java_icons/' . $id . '.png');
@@ -71,3 +73,5 @@ if ($rights == 4 || $rights >= 6) {
             '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 }
+
+require '../incfiles/end.php';

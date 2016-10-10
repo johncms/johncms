@@ -49,6 +49,31 @@ class counters
         ($newcount ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
     }
 
+    static function downloads()
+    {
+        /** @var PDO $db */
+        $db = App::getContainer()->get(PDO::class);
+
+        global $rights;
+        $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
+        $old = time() - (3 * 24 * 3600);
+        $new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
+
+        if ($new > 0) {
+            $total .= '&nbsp;/&nbsp;<span class="red"><a href="/download/?act=new_files">+' . $new . '</a></span>';
+        }
+
+        if ($rights == 4 || $rights >= 6) {
+            $mod = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
+
+            if ($mod > 0) {
+                $total .= '&nbsp;/&nbsp;<span class="red"><a href="/download/?act=mod_files">м. ' . $mod . '</a></span>';
+            }
+        }
+
+        return $total;
+    }
+
     /**
      * Статистика Форума
      *
@@ -158,6 +183,7 @@ class counters
         $db = App::getContainer()->get(PDO::class);
 
         $count = 0;
+
         switch ($mod) {
             case 1:
                 $count = $db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=0 AND `time` > ' . (time() - 86400))->fetchColumn();

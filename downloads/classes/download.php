@@ -31,7 +31,6 @@ class Download
     // Автоматическое создание скриншотов
     public static function screenAuto($file, $id, $format_file)
     {
-        global $screens_path;
         $screen = false;
         $screen_video = false;
         if ($format_file == 'nth') {
@@ -44,7 +43,7 @@ class Download
             $val = simplexml_load_string($content[0]['content'])->wallpaper['src'] or $val = simplexml_load_string($content[0]['content'])->wallpaper['main_display_graphics'];
             $image = $theme->extract(PCLZIP_OPT_BY_NAME, trim($val), PCLZIP_OPT_EXTRACT_AS_STRING);
             $image = $image[0]['content'];
-            $file_img = $screens_path . '/' . $id . '/' . $id . '.jpg';
+            $file_img = DOWNLOADS_SCR . $id . '/' . $id . '.jpg';
         } elseif ($format_file == 'thm') {
             require_once('Tar.php');
             $theme = new Archive_Tar($file);
@@ -82,20 +81,20 @@ class Download
                 exit;
             }
             $image = $theme->extractInString($load_file);
-            $file_img = $screens_path . '/' . $id . '/' . $id . '.jpg';
+            $file_img = DOWNLOADS_SCR . $id . '/' . $id . '.jpg';
         } else {
             $ffmpeg = new ffmpeg_movie($file, false);
             $frame = $ffmpeg->getFrame(20);
             $image = $frame->toGDImage();
-            $file_img = $screens_path . '/' . $id . '/' . $id . '.gif';
+            $file_img = DOWNLOADS_SCR . $id . '/' . $id . '.gif';
             $screen_video = true;
         }
         if (!empty($image)) {
-            $is_dir = is_dir($screens_path . '/' . $id);
+            $is_dir = is_dir(DOWNLOADS_SCR . $id);
             if (!$is_dir) {
-                $is_dir = mkdir($screens_path . '/' . $id, 0777);
+                $is_dir = mkdir(DOWNLOADS_SCR . $id, 0777);
                 if ($is_dir == true) {
-                    @chmod($screens_path . '/' . $id, 0777);
+                    @chmod(DOWNLOADS_SCR . $id, 0777);
                 }
             }
             if ($is_dir) {
@@ -112,7 +111,7 @@ class Download
     // Вывод файла в ЗЦ
     public static function displayFile($res_down = [], $rate = 0)
     {
-        global $set_down, $screens_path, $old, $set, $rights;
+        global $set_down, $old, $set, $rights;
         $out = false;
         $preview = false;
         $format_file = htmlspecialchars($res_down['name']);
@@ -121,12 +120,12 @@ class Download
             $preview = $res_down['dir'] . '/' . $res_down['name'];
         } else {
             if ($format_file == 'thm' || $format_file == 'nth' || $format_file == '3gp' || $format_file == 'avi' || $format_file == 'mp4') {
-                if (is_file($screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.jpg')) {
-                    $preview = $screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.jpg';
-                } elseif (is_file($screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.gif')) {
-                    $preview = $screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.gif';
-                } elseif (is_file($screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.png')) {
-                    $preview = $screens_path . '/' . $res_down['id'] . '/' . $res_down['id'] . '.png';
+                if (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.jpg')) {
+                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.jpg';
+                } elseif (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.gif')) {
+                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.gif';
+                } elseif (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.png')) {
+                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.png';
                 } elseif (($format_file == 'thm' || $format_file == 'nth') && $set_down['theme_screen']) {
                     $preview = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
                 } elseif ($set_down['video_screen']) {
@@ -281,14 +280,12 @@ class Download
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
-        $lng = core::load_lng('dl');
 
         if ($array['format'] == 'jar' && $set_down['icon_java']) {
             $out .= Download::javaIcon($array['res']['dir'] . '/' . $array['res']['name'], (isset($array['more']) ? $array['res']['refid'] . '_' . $array['res']['id'] : $array['res']['id']));
         } else {
             $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
-            //TODO: Разобраться
-            //$out .= Functions::getIcon('filetype-' . $icon_id . '.png') . '&nbsp;';
+            $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
         }
 
         $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . Download::displayFileSize((isset($array['res']['size']) ? $array['res']['size'] : filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
@@ -297,7 +294,7 @@ class Download
             $out .= ' <span class="red">(NEW)</span>';
         }
 
-        $out .= '<div class="sub">' . $lng['file_time'] . ': ' . functions::display_date($array['res']['time']);
+        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . functions::display_date($array['res']['time']);
 
         if ($array['format'] == 'jar') {
             $out .= ', <a href="?act=jad_file&amp;id=' . $id . $morelink . '">JAD</a>';
@@ -305,7 +302,7 @@ class Download
             $out .= ', <a href="?act=txt_in_zip&amp;id=' . $id . $morelink . '">ZIP</a> / <a href="?act=txt_in_jar&amp;id=' . $id . $morelink . '">JAR</a>';
         } else {
             if ($array['format'] == 'zip') {
-                $out .= ', <a href="?act=open_zip&amp;id=' . $id . $morelink . '">' . $lng['open_archive'] . '</a>';
+                $out .= ', <a href="?act=open_zip&amp;id=' . $id . $morelink . '">' . _t('Open Archive') . '</a>';
             }
         }
 

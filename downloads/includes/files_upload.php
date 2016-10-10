@@ -106,8 +106,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         $handle = new upload($_FILES['screen']);
 
                         if ($handle->uploaded) {
-                            if (mkdir($screens_path . '/' . $file_id, 0777) == true) {
-                                @chmod($screens_path . '/' . $file_id, 0777);
+                            if (mkdir(DOWNLOADS_SCR . $file_id, 0777) == true) {
+                                @chmod(DOWNLOADS_SCR . $file_id, 0777);
                             }
 
                             $handle->file_new_name_body = $file_id;
@@ -125,7 +125,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                                 $handle->image_ratio_y = true;
                             }
 
-                            $handle->process($screens_path . '/' . $file_id . '/');
+                            $handle->process(DOWNLOADS_SCR . $file_id . '/');
 
                             if ($handle->processed) {
                                 echo '<div class="gmenu">' . _t('Screenshot is attached') . '</div>';

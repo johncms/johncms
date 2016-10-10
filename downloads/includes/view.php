@@ -36,12 +36,12 @@ $format_file = functions::format($res_down['name']);
 $text_info = '';
 $screen = [];
 
-if (is_dir($screens_path . '/' . $id)) {
-    $dir = opendir($screens_path . '/' . $id);
+if (is_dir(DOWNLOADS_SCR . $id)) {
+    $dir = opendir(DOWNLOADS_SCR . $id);
 
     while ($file = readdir($dir)) {
         if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
-            $screen[] = $screens_path . '/' . $id . '/' . $file;
+            $screen[] = DOWNLOADS_SCR . $id . '/' . $file;
         }
     }
 
@@ -103,7 +103,7 @@ switch ($format_file) {
     case 'png':
         $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
         echo '<div class="gmenu"><img src="preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
-        $text_info = '<b>' . _t('Resolution') . ': </b>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
+        $text_info = '<span class="gray">' . _t('Resolution') . ': </span>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
         break;
 }
 
@@ -126,17 +126,19 @@ if (!empty($screen)) {
 }
 
 // Выводим данные
-//TODO: Разобраться с пользователем
-$user = 'Admin';
-echo '<div class="list1"><b>' . _t('Name of the server') . ':</b> ' . $res_down['name'] . '<br>' .//TODO: Разобраться с фразой
-    '<b>' . _t('Uploaded by') . ':</b> ' . $user . '<br>' . $text_info .
-    '<b>' . _t('Downloads') . ':</b> ' . $res_down['field'] . '<br>';
+$user = $db->query("SELECT `name`, `id` FROM `users` WHERE `id` = " . $res_down['user_id'])->fetch();
+echo '<div class="list1">'
+    . '<h3>' . $res_down['rus_name'] . '</h3>'
+    . '<small>'
+    . '<span class="gray">' . _t('File name') . ':</span> ' . $res_down['name'] . '<br>'
+    . '<span class="gray">' . _t('Uploaded by') . ':</span> ' . $user['name'] . '<br>' . $text_info
+    . '<span class="gray">' . _t('Downloads') . ':</span> ' . $res_down['field'] . '<br>';
 
 if ($res_down['about']) {
     echo '<b>' . _t('Description') . ':</b> ' . htmlspecialchars($res_down['about']);
 }
 
-echo '<div class="sub"></div>';
+echo '</small><p>';
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
@@ -162,38 +164,38 @@ if (!isset($_SESSION['rate_file_' . $id]) && $user_id) {
 }
 
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
-    '<img src="rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" />';
+    '<img src="rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
 
 // Скачка изображения в особом размере
-if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
-    $array = ['101x80', '128x128', '128x160', '176x176', '176x208', '176x220', '208x208', '208x320', '240x266', '240x320', '240x432', '352x416', '480x800'];
-    echo '<div class="sub"></div>' .
-        '<form action="?" method="get">' .
-        '<input name="id" type="hidden" value="' . $id . '" />' .
-        '<input name="act" type="hidden" value="custom_size" />' .
-        _t('Custom size') . ': ' . '<select name="img_size">';
-    $img = 0;
-
-    foreach ($array as $v) {
-        echo '<option value="' . $img . '">' . $v . '</option>';
-        ++$img;
-    }
-
-    echo '</select><br>' .
-        _t('Quality') . ': <select name="val">' .
-        '<option value="100">100</option>' .
-        '<option value="90">90</option>' .
-        '<option value="80">80</option>' .
-        '<option value="70">70</option>' .
-        '<option value="60">60</option>' .
-        '<option value="50">50</option>' .
-        '</select><br>' .
-        '<input name="proportion" type="checkbox" value="1" />&nbsp;' . _t('Keep aspect ratio') . '<br>' .
-        '<input type="submit" value="' . _t('Download') . '" /></form>';
-}
+//if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
+//    $array = ['240x320', '320x240', '320x480', '480x360', '360x640', '480x800', '768x1024', '640x960', '1280x800'];
+//    echo '<div class="sub"></div>' .
+//        '<form action="?" method="get">' .
+//        '<input name="id" type="hidden" value="' . $id . '" />' .
+//        '<input name="act" type="hidden" value="custom_size" />' .
+//        _t('Custom size') . ': ' . '<select name="img_size">';
+//    $img = 0;
+//
+//    foreach ($array as $v) {
+//        echo '<option value="' . $img . '">' . $v . '</option>';
+//        ++$img;
+//    }
+//
+//    echo '</select><br>' .
+//        _t('Quality') . ': <select name="val">' .
+//        '<option value="100">100</option>' .
+//        '<option value="90">90</option>' .
+//        '<option value="80">80</option>' .
+//        '<option value="70">70</option>' .
+//        '<option value="60">60</option>' .
+//        '<option value="50">50</option>' .
+//        '</select><br>' .
+//        '<input name="proportion" type="checkbox" value="1" />&nbsp;' . _t('Keep aspect ratio') . '<br>' .
+//        '<input type="submit" value="' . _t('Download') . '" /></form>';
+//}
 
 if ($set['mod_down_comm'] || $rights >= 7) {
-    echo '<div class="sub"></div><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')';
+    echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['total'] . ')</p>';
 }
 
 echo '</div>';
@@ -217,7 +219,7 @@ if ($total_files_more) {
         $res_file_more['text'] = $res_file_more['rus_name'];
         echo (($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
             Download::downloadLlink([
-                'format' => Functions::format($res_file_more['name']),
+                'format' => functions::format($res_file_more['name']),
                 'res'    => $res_file_more,
                 'more'   => $res_file_more['id'],
             ]) . '</div>';

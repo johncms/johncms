@@ -17,9 +17,9 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
 $screen = [];
 $do = isset($_GET['do']) ? trim($_GET['do']) : '';
 
-if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
+if ($do && is_file(DOWNLOADS_SCR . $id . '/' . $do)) {
     // Удаление скриншота
-    unlink($screens_path . '/' . $id . '/' . $do);
+    unlink(DOWNLOADS_SCR . $id . '/' . $do);
     header('Location: ?act=edit_screen&id=' . $id);
     exit;
 } else {
@@ -42,7 +42,7 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
                 $handle->image_ratio_y = true;
             }
 
-            $handle->process($screens_path . '/' . $id . '/');
+            $handle->process(DOWNLOADS_SCR . $id . '/');
 
             if ($handle->processed) {
                 echo '<div class="gmenu"><b>' . _t('Screenshot is attached') . '</b>';
@@ -66,18 +66,18 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
         // Выводим скриншоты
         $screen = [];
 
-        if (is_dir($screens_path . '/' . $id)) {
-            $dir = opendir($screens_path . '/' . $id);
+        if (is_dir(DOWNLOADS_SCR . $id)) {
+            $dir = opendir(DOWNLOADS_SCR . $id);
 
             while ($file = readdir($dir)) {
                 if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
-                    $screen[] = $screens_path . '/' . $id . '/' . $file;
+                    $screen[] = DOWNLOADS_SCR . $id . '/' . $file;
                 }
             }
             closedir($dir);
         } else {
-            if (mkdir($screens_path . '/' . $id, 0777) == true) {
-                @chmod($screens_path . '/' . $id, 0777);
+            if (mkdir(DOWNLOADS_SCR . $id, 0777) == true) {
+                @chmod(DOWNLOADS_SCR . $id, 0777);
             }
         }
 
@@ -86,7 +86,7 @@ if ($do && is_file($screens_path . '/' . $id . '/' . $do)) {
 
             for ($i = 0; $i < $total; $i++) {
                 $screen_name = htmlentities($screen[$i], ENT_QUOTES, 'utf-8');
-                $file = preg_replace('#^' . $screens_path . '/' . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
+                $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
                 echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<table  width="100%"><tr><td width="40" valign="top">' .
                     '<a href="' . $screen_name . '"><img src="' . $set['homeurl'] . 'assets/misc/thumbinal.php?type=1&amp;img=' . rawurlencode($screen_name) . '" alt="screen_' . $i . '" /></a></td><td>' . $file .
