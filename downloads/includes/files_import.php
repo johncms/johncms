@@ -98,8 +98,8 @@ if ($rights == 4 || $rights >= 6) {
                 $handle = new upload($_FILES['screen']);
 
                 if ($handle->uploaded) {
-                    if (mkdir($screens_path . '/' . $file_id, 0777) == true) {
-                        @chmod($screens_path . '/' . $file_id, 0777);
+                    if (mkdir(DOWNLOADS_SCR . $file_id, 0777) == true) {
+                        @chmod(DOWNLOADS_SCR . $file_id, 0777);
                     }
 
                     $handle->file_new_name_body = $file_id;
@@ -117,7 +117,7 @@ if ($rights == 4 || $rights >= 6) {
                         $handle->image_ratio_y = true;
                     }
 
-                    $handle->process($screens_path . '/' . $file_id . '/');
+                    $handle->process(DOWNLOADS_SCR . $file_id . '/');
 
                     if ($handle->processed) {
                         echo '<div class="rmenu">' . _t('Screenshot is attached') . '</div>';

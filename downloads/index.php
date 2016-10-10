@@ -16,15 +16,14 @@ $url = $set['homeurl'] . '/downloads/';
 //App::autoload()->import('Download', __DIR__ . DS . '_sys' . DS . 'classes' . DS . 'download.php');
 
 $textl = _t('Downloads');
-$down_path = '../files/downloads'; //TODO: переделать на константы
-$screens_path = '../files/downloads/screen'; //TODO: переделать на константы
+const DOWNLOADS = ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR;
+const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
 $files_path = '../files/downloads/files'; //TODO: переделать на константы
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 
 // Настройки
-//TODO: Переделать на получение настроек из таблицы модулей
 $set_down =
     [
         'mod'           => 1,
@@ -299,7 +298,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     // Постраничная навигация
     if ($total_files > $kmess) {
-        echo '<div class="topmenu">' . Functions::displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
             '<p><form action="' . $url . '" method="get">' .
             '<input type="hidden" name="id" value="' . $id . '"/>' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -328,7 +327,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
         echo '<p><div class="func">';
         echo '<div><a href="?act=scan_dir&amp;id=' . $id . '">' . _t('Update Files') . '</a></div>';
-        echo '<div><a href="?act=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
+        echo '<div><a href="?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
         echo '<div><a href="?act=recount&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
         echo '</div></p>';
     } else {

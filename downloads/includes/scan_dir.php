@@ -235,7 +235,7 @@ if ($rights == 4 || $rights >= 6) {
                                             }
 
                                             if (is_file($val . '.txt')) {
-                                                @copy($val . '.txt', $down_path . '/about/' . $fileId . '.txt');
+                                                @copy($val . '.txt', DOWNLOADS . 'about/' . $fileId . '.txt');
                                                 unlink($val . '.txt');
                                             }
                                         }
@@ -269,34 +269,20 @@ if ($rights == 4 || $rights >= 6) {
                     _t('Files') . ': ' . $i_three . '<br>' .
                     _t('Additional Files') . ': ' . $i_two . '</div>';
 
-                if ($start) {
-                    echo '<div class="gmenu"><a href="?act=scan_about&amp;id=' . $id . '">' . _t('Update Descriptions') . '</div>';
-                }
-
                 echo '<div class="rmenu">' .
                     '<a href="?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a><br>' .
                     '<a href="?act=recount&amp;do=clean&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
             } else {
-                // Выбор режима обновление
-                echo '<div class="menu"><b><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '">' . ($id ? _t('Update all folders from the current') : _t('Update entire Downloads')) . '</a></b>' .
-                    ($id ? '<br><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1">' . _t('Update only current folder') . '</a>' : '') . '</div>';
+                // Выбор режима обновления
+                echo '<div class="menu"><p><h3>' . _t('Update') . '</h3><ul>';
 
                 if ($id) {
-                    echo '<div class="rmenu"><a href="?act=scan_dir&amp;yes">' . _t('Update entire Downloads') . '</a></div>';
+                    echo '<li><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1">' . _t('Current folder') . '</a></li>'
+                        . '<li><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '">' . _t('Current folder and all subfolders') . '</a></li>';
                 }
 
-                echo '<div class="phdr"><b>' . _t('Update v.2') . '</b> beta</div>' .
-                    '<div class="topmenu">' . _t('After this update, you must update the description') . '</div><div class="menu">' .
-                    '<a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;start=1"><b>' . ($id ? _t('Update all folders from the current') : _t('Update entire Downloads')) . '</b></a> ' .
-                    ($id ? '<br><a href="?act=scan_dir&amp;yes&amp;id=' . $id . '&amp;mod=1&amp;start=1">' . _t('Update only current folder') . '</a>' : '') .
-                    '<div class="sub"><small>' . _t('This action not only updates the file, but will distribute screenshots and descriptions for folders<br>Sample file: file.jar, file.jar.txt, file.jar.jpg (gif, png) (only 1 screenshot)<br><b>ATTENTION:</b> load this update is much higher') . '</small></div>' .
-                    '</div><div class="rmenu">';
-
-                if ($id) {
-                    echo ' <a href="?act=scan_dir&amp;yes&amp;start=1">' . _t('Update entire Downloads') . '</a><br>';
-                }
-
-                echo '<a href="?act=scan_dir&amp;do=clean&amp;id=' . $id . '">' . _t('Remove missing files') . '</a></div>';
+                echo '<li><a href="?act=scan_dir&amp;yes">' . _t('Entire Downloads') . '</a></li>'
+                    . '</ul></p></div>';
             }
             echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }

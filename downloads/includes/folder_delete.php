@@ -25,17 +25,17 @@ if ($rights == 4 || $rights >= 6) {
         $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = " . $id);
 
         while ($res_down = $req_down->fetch()) {
-            if (is_dir($screens_path . '/' . $res_down['id'])) {
-                $dir_clean = opendir($screens_path . '/' . $res_down['id']);
+            if (is_dir(DOWNLOADS_SCR . $res_down['id'])) {
+                $dir_clean = opendir(DOWNLOADS_SCR . $res_down['id']);
 
                 while ($file = readdir($dir_clean)) {
                     if ($file != '.' && $file != '..') {
-                        @unlink($screens_path . '/' . $res_down['id'] . '/' . $file);
+                        @unlink(DOWNLOADS_SCR . $res_down['id'] . '/' . $file);
                     }
                 }
 
                 closedir($dir_clean);
-                rmdir($screens_path . '/' . $res_down['id']);
+                rmdir(DOWNLOADS_SCR . $res_down['id']);
             }
 
             @unlink(ROOT_PATH . 'files/download/java_icons/' . $res_down['id'] . '.png');

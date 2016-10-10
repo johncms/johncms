@@ -1,5 +1,7 @@
 /files/cache/*
 !/files/cache/.htaccess
+/files/downloads/files/*
+!/files/downloads/files/index.php
 /system/vendor
 /system/config/*.local.php
 /system/config/local.php

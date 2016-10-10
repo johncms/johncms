@@ -11,7 +11,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 $format_file = functions::format($res_down['name']);
 $pic_ext = ['gif', 'jpg', 'jpeg', 'png'];
-$array = ['101x80', '128x128', '128x160', '176x176', '176x208', '176x220', '208x208', '208x320', '240x266', '240x320', '240x432', '352x416', '480x800'];
+$array = ['240x320', '320x240', '320x480', '480x360', '360x640', '480x800', '768x1024', '640x960', '1280x800'];
 $size_img = isset($_GET['img_size']) ? abs(intval($_GET['img_size'])) : 0;
 $proportion = isset($_GET['proportion']) ? abs(intval($_GET['proportion'])) : 0;
 $val = isset($_GET['val']) ? abs(intval($_GET['val'])) : 100;
