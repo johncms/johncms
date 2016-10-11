@@ -40,11 +40,6 @@ if ($set['mod_lib'] || $rights >= 7) {
     echo '<div class="menu"><a href="library/">' . _t('Library', 'system') . '</a> (' . counters::library() . ')</div>';
 }
 
-// Ссылка на библиотеку
-if ($set['mod_gal'] || $rights >= 7) {
-    echo '<div class="menu"><a href="gallery/">' . _t('Gallery', 'system') . '</a> (' . counters::gallery() . ')</div>';
-}
-
 ////////////////////////////////////////////////////////////
 // Блок Сообщества                                        //
 ////////////////////////////////////////////////////////////

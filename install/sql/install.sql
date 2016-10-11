@@ -568,30 +568,6 @@ CREATE TABLE `forum` (
   DEFAULT CHARSET = utf8;
 
 --
--- Структура таблицы `gallery`
---
-DROP TABLE IF EXISTS `gallery`;
-CREATE TABLE `gallery` (
-  `id`    INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `refid` INT(11)          NOT NULL DEFAULT '0',
-  `time`  INT(11)          NOT NULL DEFAULT '0',
-  `type`  VARCHAR(2)       NOT NULL DEFAULT '',
-  `avtor` VARCHAR(25)      NOT NULL DEFAULT '',
-  `text`  TEXT             NOT NULL,
-  `name`  TEXT             NOT NULL,
-  `user`  BINARY(1)        NOT NULL DEFAULT '\0',
-  `ip`    TEXT             NOT NULL,
-  `soft`  TEXT             NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `refid` (`refid`),
-  KEY `type` (`type`),
-  KEY `time` (`time`),
-  KEY `avtor` (`avtor`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
-
---
 -- Структура таблицы `guest`
 --
 DROP TABLE IF EXISTS `guest`;

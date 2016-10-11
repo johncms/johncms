@@ -21,10 +21,8 @@ if (isset($_POST['submit'])) {
     $stmt->execute([(isset($_POST['forum']) ? intval($_POST['forum']) : 0), 'mod_forum']);
     $stmt->execute([(isset($_POST['guest']) ? intval($_POST['guest']) : 0), 'mod_guest']);
     $stmt->execute([(isset($_POST['lib']) ? intval($_POST['lib']) : 0), 'mod_lib']);
-    $stmt->execute([(isset($_POST['gal']) ? intval($_POST['gal']) : 0), 'mod_gal']);
     $stmt->execute([(isset($_POST['down']) ? intval($_POST['down']) : 0), 'mod_down']);
     $stmt->execute([isset($_POST['libcomm']), 'mod_lib_comm']);
-    $stmt->execute([isset($_POST['galcomm']), 'mod_gal_comm']);
     $stmt->execute([isset($_POST['downcomm']), 'mod_down_comm']);
     $stmt->execute([(isset($_POST['active']) ? intval($_POST['active']) : 0), 'active']);
     $stmt->execute([(isset($_POST['access']) ? intval($_POST['access']) : 0), 'site_access']);
@@ -67,15 +65,6 @@ echo '<p><h3><img src="../images/' . $color[$set['mod_lib']] . '.gif" width="16"
     '<input type="radio" value="1" name="lib" ' . ($set['mod_lib'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for authorized') . '<br>' .
     '<input type="radio" value="0" name="lib" ' . (!$set['mod_lib'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Access denied') . '<br>' .
     '<input name="libcomm" type="checkbox" value="1" ' . ($set['mod_lib_comm'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Comments') .
-    '</div></p>';
-
-// Управление доступом к Галерее
-echo '<p><h3><img src="../images/' . $color[$set['mod_gal']] . '.gif" width="16" height="16" class="left"/>&#160;' . _t('Gallery') . '</h3>' .
-    '<div style="font-size: x-small">' .
-    '<input type="radio" value="2" name="gal" ' . ($set['mod_gal'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Access is allowed') . '<br>' .
-    '<input type="radio" value="1" name="gal" ' . ($set['mod_gal'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for authorized') . '<br>' .
-    '<input type="radio" value="0" name="gal" ' . (!$set['mod_gal'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Access denied') . '<br>' .
-    '<input name="galcomm" type="checkbox" value="1" ' . ($set['mod_gal_comm'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Comments') .
     '</div></p>';
 
 // Управление доступом к Загрузкам
