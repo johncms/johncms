@@ -151,35 +151,6 @@ class counters
     }
 
     /**
-     * Статистика галлереи
-     *
-     * $mod = 1    будет выдавать только колличество новых картинок
-     *
-     * @param int $mod
-     * @return string
-     */
-    public static function gallery($mod = 0)
-    {
-        /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
-
-        $new = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'ft'")->fetchColumn();
-
-        if ($mod == 0) {
-            $total = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft'")->fetchColumn();
-            $out = $total;
-
-            if ($new > 0) {
-                $out .= '&#160;/&#160;<span class="red"><a href="/gallery/index.php?act=new">+' . $new . '</a></span>';
-            }
-        } else {
-            $out = $new;
-        }
-
-        return $out;
-    }
-
-    /**
      * Статистика гостевой
      *
      * $mod = 1    колличество новых в гостевой
