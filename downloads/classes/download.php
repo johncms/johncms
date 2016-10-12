@@ -111,41 +111,11 @@ class Download
     // Вывод файла в ЗЦ
     public static function displayFile($res_down = [], $rate = 0)
     {
-        global $set_down, $old, $set, $rights;
+        global $old, $set, $rights;
         $out = false;
-        $preview = false;
-        $format_file = htmlspecialchars($res_down['name']);
-
-        if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
-            $preview = $res_down['dir'] . '/' . $res_down['name'];
-        } else {
-            if ($format_file == 'thm' || $format_file == 'nth' || $format_file == '3gp' || $format_file == 'avi' || $format_file == 'mp4') {
-                if (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.jpg')) {
-                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.jpg';
-                } elseif (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.gif')) {
-                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.gif';
-                } elseif (is_file(DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.png')) {
-                    $preview = DOWNLOADS_SCR . $res_down['id'] . '/' . $res_down['id'] . '.png';
-                } elseif (($format_file == 'thm' || $format_file == 'nth') && $set_down['theme_screen']) {
-                    $preview = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
-                } elseif ($set_down['video_screen']) {
-                    $preview = Download::screenAuto($res_down['dir'] . '/' . $res_down['name'], $res_down['id'], $format_file);
-                }
-                //$preview = $preview ? $preview : Functions::loadModuleImage('easy.gif'); //TODO: Переделать иконку
-            }
-        }
-
-        if ($preview) {
-            $out = '<img src="' . $set['homeurl'] . '/downloads/preview.php?type=1&amp;img=' . rawurlencode($preview) . '" alt="preview" />&nbsp;';
-        }
-
-        if ($format_file == 'jar' && $set_down['icon_java']) {
-            $out = Download::javaIcon($res_down['dir'] . '/' . $res_down['name'], $res_down['id']) . '&nbsp;';
-        } else {
-            $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
-            //$out .= Functions::getIcon('filetype-' . $icon_id . '.png') . '&nbsp;';//TODO: Переделать на векторные иконки
-        }
-
+        $format_file =  functions::format($res_down['name']);
+        $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
+        $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
 
         if ($res_down['time'] > $old) {
@@ -176,74 +146,6 @@ class Download
         }
 
         return $out;
-    }
-
-    // Вынимаем иконку из Java
-    public static function javaIcon($file, $id)
-    {
-        $out = false;
-        if (is_file('files/download/java_icons/' . $id . '.png')) {
-            $out = 'files/download/java_icons/' . $id . '.png';
-        } else {
-            require_once('pclzip.lib.php');//TODO: Сделать автозагрузку
-            $zip = new PclZip($file);
-
-            if ($zip->listContent() == 0) {
-                if ($manifest = $zip->extract(PCLZIP_OPT_BY_NAME, 'META-INF/MANIFEST.MF', PCLZIP_OPT_EXTRACT_AS_STRING)) {
-                    $text = $manifest[0]['content'];
-
-                    if (strpos($text, 'MIDlet-Icon: ') !== false) {
-                        $explode = explode('MIDlet-Icon: ', $text);
-                        $icon = str_replace("\r", ' ', str_replace("\n", ' ', $explode[1]));
-                        $icon = strtok($icon, ' ');
-                        $icon = preg_replace('#^/#', null, $icon);
-                    } else {
-                        $icon = 'icon.png';
-                    }
-
-                    $ext = explode('.', $icon);
-
-                    if ($ext[1] == 'png' && count($ext) == 2) {
-                        if ($image = $zip->extract(PCLZIP_OPT_BY_NAME, $icon, PCLZIP_OPT_EXTRACT_AS_STRING)) {
-                            $image = imagecreatefromstring($image[0]['content']);
-                            $width = imagesx($image);
-                            $height = imagesy($image);
-                            $x_ratio = 16 / $width;
-                            $y_ratio = 16 / $height;
-
-                            if (($width <= 16) && ($height <= 16)) {
-                                $tn_width = $width;
-                                $tn_height = $height;
-                            } elseif (($x_ratio * $height) < 16) {
-                                $tn_height = ceil($x_ratio * $height);
-                                $tn_width = 16;
-                            } else {
-                                $tn_width = ceil($y_ratio * $width);
-                                $tn_height = 16;
-                            }
-
-                            $image_two = ImageCreate($tn_width, $tn_height);
-                            imagecopyresampled($image_two, $image, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
-                            $image = $image_two;
-                            $file_img = 'files/download/java_icons/' . $id . '.png';
-
-                            if (imagepng($image, $file_img)) {
-                                $out = $file_img;
-                            }
-
-                            imagedestroy($image);
-                        }
-                    }
-                }
-            }
-
-            if (!$out) {
-                $out = 'assets/icons/filetype-2.png';
-                @copy($out, 'files/download/java_icons/' . $id . '.png');
-            }
-        }
-
-        return '<img src="' . App::cfg()->sys->homeurl . $out . '" alt="file"/> ';
     }
 
     // Форматирование размера файлов
@@ -279,14 +181,8 @@ class Download
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
-
-        if ($array['format'] == 'jar' && $set_down['icon_java']) {
-            $out .= Download::javaIcon($array['res']['dir'] . '/' . $array['res']['name'], (isset($array['more']) ? $array['res']['refid'] . '_' . $array['res']['id'] : $array['res']['id']));
-        } else {
-            $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
-            $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
-        }
-
+        $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
+        $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . Download::displayFileSize((isset($array['res']['size']) ? $array['res']['size'] : filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
 
         if ($array['res']['time'] > $old) {
@@ -295,9 +191,7 @@ class Download
 
         $out .= '<div class="sub">' . _t('Uploaded') . ': ' . functions::display_date($array['res']['time']);
 
-        if ($array['format'] == 'jar') {
-            $out .= ', <a href="?act=jad_file&amp;id=' . $id . $morelink . '">JAD</a>';
-        } elseif ($array['format'] == 'txt') {
+        if ($array['format'] == 'txt') {
             $out .= ', <a href="?act=txt_in_zip&amp;id=' . $id . $morelink . '">ZIP</a> / <a href="?act=txt_in_jar&amp;id=' . $id . $morelink . '">JAR</a>';
         } else {
             if ($array['format'] == 'zip') {
