@@ -2,14 +2,15 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$ref = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+
 // Голосуем за фотографию
 if (!$img) {
     echo functions::display_error(_t('Wrong data'));
     require('../incfiles/end.php');
     exit;
 }
-
-$ref = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

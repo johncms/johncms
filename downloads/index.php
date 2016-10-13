@@ -2,6 +2,10 @@
 
 define('_IN_JOHNCMS', 1);
 
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+
 require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
@@ -19,9 +23,6 @@ $textl = _t('Downloads');
 const DOWNLOADS = ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
 $files_path = '../files/downloads/files'; //TODO: переделать на константы
-
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
-$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 
 // Настройки
 $set_down =

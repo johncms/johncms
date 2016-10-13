@@ -56,8 +56,7 @@ $rootpath = ROOTPATH;
 $ip = core::$ip; // Адрес IP
 $agn = core::$user_agent; // User Agent
 $set = core::$system_set; // Системные настройки
-//TODO: Временно отключено. После окончания перевода на Gettext опять включить
-//$lng = core::$lng; // Фразы языка
+$lng = core::$lng; // Фразы языка
 $is_mobile = core::$is_mobile; // Определение мобильного браузера
 $home = $set['homeurl']; // Домашняя страница
 
@@ -79,10 +78,10 @@ $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess']
 Получаем и фильтруем основные переменные для системы
 -----------------------------------------------------------------
 */
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false;
+//$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false; //TODO: после отвязки раскомментировать
+//$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : ''; //TODO: после отвязки раскомментировать
+//$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : ''; //TODO: после отвязки раскомментировать
 $user = isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : false;
-$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
-$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
