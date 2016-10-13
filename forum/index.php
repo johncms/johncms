@@ -7,6 +7,7 @@ require('../incfiles/core.php');
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
