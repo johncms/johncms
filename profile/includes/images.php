@@ -13,6 +13,7 @@ if (($user_id != $user['id'] && $rights < 7)
     require('../incfiles/end.php');
     exit;
 }
+
 switch ($mod) {
     case 'avatar':
         // Выгружаем аватар

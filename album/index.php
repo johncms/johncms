@@ -2,6 +2,12 @@
 
 define('_IN_JOHNCMS', 1);
 
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+$al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
+$img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
+
 require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
@@ -16,8 +22,6 @@ $headmod = 'album';
 
 $max_album = 20;
 $max_photo = 400;
-$al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
-$img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
 
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {

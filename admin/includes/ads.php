@@ -38,7 +38,6 @@ switch ($mod) {
             $italic = isset($_POST['italic']) ? 1 : 0;
             $underline = isset($_POST['underline']) ? 1 : 0;
             $show = isset($_POST['show']) ? 1 : 0;
-            $font = $font_1 + $font_2 + $font_3;
             $view = isset($_POST['view']) ? abs(intval($_POST['view'])) : 0;
             $day = isset($_POST['day']) ? abs(intval($_POST['day'])) : 0;
             $count = isset($_POST['count']) ? abs(intval($_POST['count'])) : 0;

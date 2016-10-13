@@ -7,6 +7,9 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+$id = isset($_GET['id']) ? abs(intval($_GET['id'])) : 0;
+$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');

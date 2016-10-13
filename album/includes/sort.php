@@ -5,6 +5,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+
 switch ($mod) {
     case 'up':
         // Передвигаем альбом на позицию вверх

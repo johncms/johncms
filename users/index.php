@@ -2,6 +2,10 @@
 
 define('_IN_JOHNCMS', 1);
 
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+
 $headmod = 'users';
 require('../incfiles/core.php');
 
