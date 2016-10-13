@@ -24,7 +24,7 @@ if (!$user_id) {
 }
 
 // Получаем данные пользователя
-$user = functions::get_user($user);
+$user = functions::get_user(isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : 0);
 
 if (!$user) {
     require('../incfiles/head.php');
