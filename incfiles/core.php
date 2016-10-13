@@ -52,7 +52,6 @@ new core;
 Получаем системные переменные для совместимости со старыми модулями
 -----------------------------------------------------------------
 */
-$rootpath = ROOTPATH;
 $ip = core::$ip; // Адрес IP
 $agn = core::$user_agent; // User Agent
 $set = core::$system_set; // Системные настройки
@@ -84,7 +83,7 @@ $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess']
 //$user = isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : false;
 //$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 //$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+//$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 $headmod = isset($headmod) ? $headmod : '';
 
 /*
