@@ -17,7 +17,7 @@ if (isset($_SESSION['ref'])) {
 
 //Проверка авторизации
 if (!$user_id) {
-    header('Location: ' . $home . '/?err');
+    header('Location: ' . $set['homeurl'] . '/?err');
     exit;
 }
 

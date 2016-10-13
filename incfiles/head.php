@@ -177,7 +177,7 @@ if ($user_id) {
     $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `read`='0' AND `sys`='1' AND `delete`!='$user_id'")->fetchColumn();
 
     if ($new_sys_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
+        $list[] = '<a href="' . $set['homeurl'] . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -190,7 +190,7 @@ if ($user_id) {
                             AND `cms_mail`.`spam`='0'")->fetchColumn();
 
     if ($new_mail) {
-        $list[] = '<a href="' . $home . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
+        $list[] = '<a href="' . $set['homeurl'] . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
     }
 
     if ($datauser['comm_count'] > $datauser['comm_old']) {

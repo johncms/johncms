@@ -176,7 +176,7 @@ if (isset($_POST['submit'])) {
         } else {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
-            echo '<p><a href="' . $home . '">' . _t('Enter') . '</a></p>';
+            echo '<p><a href="' . $set['homeurl'] . '">' . _t('Enter') . '</a></p>';
         }
 
         echo '</div>';

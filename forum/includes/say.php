@@ -232,7 +232,7 @@ switch ($type1['type']) {
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date("d.m.Y H:i", $type1['time']);
-            $msg = '[c][url=' . $home . '/forum/index.php?act=post&id=' . $type1['id'] . ']#[/url] ' . $type1['from'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
+            $msg = '[c][url=' . $set['homeurl'] . '/forum/index.php?act=post&id=' . $type1['id'] . ']#[/url] ' . $type1['from'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
