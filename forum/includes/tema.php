@@ -30,8 +30,12 @@ if (!$id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND `close` != '1'");
 
@@ -110,7 +114,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $text = "$text $stroka";
                 ++$i;
             }
-            $text = $text . '<p>' . _t('This theme was downloaded from the forum site') . ': <b>' . $set['copyright'] . '</b></p></body></html>';
+            $text = $text . '<p>' . _t('This theme was downloaded from the forum site') . ': <b>' . $config['copyright'] . '</b></p></body></html>';
             $num = time() . $id;
             $fp = fopen("../files/forum/topics/$num.htm", "a+");
             flock($fp, LOCK_EX);

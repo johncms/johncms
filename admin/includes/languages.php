@@ -1,5 +1,5 @@
 <?php
-
+//TODO: разобраться с конфигом!!!
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа

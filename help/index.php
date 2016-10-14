@@ -20,7 +20,8 @@ require('../incfiles/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $set['homeurl'];
+    $config = App::getContainer()->get('config')['johncms'];
+    $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 
 // Сколько смайлов разрешено выбрать пользователям?

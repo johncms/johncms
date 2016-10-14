@@ -15,14 +15,15 @@ if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
-//Проверка авторизации
-if (!$user_id) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
+//Проверка авторизации
+if (!$user_id) {
+    header('Location: ' . $config['homeurl'] . '/?err');
+    exit;
+}
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);

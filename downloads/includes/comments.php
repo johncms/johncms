@@ -5,14 +5,18 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 require '../incfiles/head.php';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 // Комментарии
-if (!$set['mod_down_comm'] && $rights < 7) {
+if (!$config['mod_down_comm'] && $rights < 7) {
     echo _t('Comments are disabled') . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
@@ -23,7 +27,7 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
     exit;
 }
 
-if (!$set['mod_down_comm']) {
+if (!$config['mod_down_comm']) {
     echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
 }
 

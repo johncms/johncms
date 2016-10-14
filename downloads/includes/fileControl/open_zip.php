@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Открытие ZIP прхива
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/open_zip');
@@ -244,7 +248,7 @@ if (!isset($_GET['file'])) {
         $NewNameFile = strtr(Download::translateFileName(mb_strtolower($FileName)), [' ' => '_', '@' => '', '%' => '']);
 
         if (file_exists(ROOT_PATH . 'files/download/temp/open_zip/' . $NewNameFile)) {
-            header('Location: ' . $set['homeurl'] . 'files/download/temp/open_zip/' . $NewNameFile);
+            header('Location: ' . $config['homeurl'] . 'files/download/temp/open_zip/' . $NewNameFile);
             exit;
         }
 
@@ -257,7 +261,7 @@ if (!isset($_GET['file'])) {
             }
 
             fclose($dir);
-            header('Location: ' . $set['homeurl'] . 'files/download/temp/open_zip/' . $NewNameFile);
+            header('Location: ' . $config['homeurl'] . 'files/download/temp/open_zip/' . $NewNameFile);
             exit;
         } else {
             echo _t('Failed to save the file on the server');

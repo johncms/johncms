@@ -2,8 +2,13 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
 require '../incfiles/head.php';
 require 'classes/download.php';
 
@@ -51,7 +56,7 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
 switch ($format_file) {
     case 'mp3':
         // Проигрываем аудио файлы
-        $text_info = '<audio src="' . $set['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
+        $text_info = '<audio src="' . $config['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
         require('classes/getid3/getid3.php');
         $getID3 = new getID3;
         $getID3->encoding = 'cp1251';
@@ -94,7 +99,7 @@ switch ($format_file) {
     case 'webm':
     case 'mp4':
         // Проигрываем видео файлы
-        echo '<div class="gmenu"><video src="' . $set['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
+        echo '<div class="gmenu"><video src="' . $config['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
         break;
 
     case 'jpg':
@@ -194,7 +199,7 @@ echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' 
 //        '<input type="submit" value="' . _t('Download') . '" /></form>';
 //}
 
-if ($set['mod_down_comm'] || $rights >= 7) {
+if ($config['mod_down_comm'] || $rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
 }
 

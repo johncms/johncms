@@ -12,14 +12,13 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+$config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$url = $set['homeurl'] . '/downloads/';
-
-//App::autoload()->import('Download', __DIR__ . DS . '_sys' . DS . 'classes' . DS . 'download.php');
+$url = $config['homeurl'] . '/downloads/';
 
 $textl = _t('Downloads');
 const DOWNLOADS = ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR;
@@ -44,9 +43,9 @@ if ($set_down['video_screen'] && !extension_loaded('ffmpeg')) {
 // Ограничиваем доступ к Загрузкам
 $error = '';
 
-if (!$set['mod_down'] && $rights < 7) {
+if (!$config['mod_down'] && $rights < 7) {
     $error = _t('Downloads are closed');
-} elseif ($set['mod_down'] == 1 && !$user_id) {
+} elseif ($config['mod_down'] == 1 && !$user_id) {
     $error = _t('For registered users only');
 }
 
@@ -134,7 +133,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require __DIR__ . '/classes/download.php';
     require '../incfiles/head.php';
 
-    if (!$set['mod_down']) {
+    if (!$config['mod_down']) {
         echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';
     }
 
@@ -345,7 +344,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     if ($id) {
         echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     } else {
-        if ($rights >= 7 || isset($set['mod_down_comm']) && $set['mod_down_comm']) {
+        if ($rights >= 7 || isset($config['mod_down_comm']) && $config['mod_down_comm']) {
             echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br>';
         }
 

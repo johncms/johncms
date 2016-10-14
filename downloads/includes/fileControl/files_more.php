@@ -2,8 +2,13 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
 require '../incfiles/head.php';
 
 // Дополнительные файлы
@@ -111,8 +116,8 @@ if ($edit) {
                     $error[] = _t('The required fields are not filled');
                 }
 
-                if ($fsize > 1024 * $set['flsz'] && !$link_file) {
-                    $error[] = _t('The weight of the file exceeds') . ' ' . $set['flsz'] . 'kb.';
+                if ($fsize > 1024 * $config['flsz'] && !$link_file) {
+                    $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
                 }
 
                 if (!in_array($ext[(count($ext) - 1)], $defaultExt)) {
@@ -183,7 +188,7 @@ if ($edit) {
                 '<input type="text" name="name_link" value="' . _t('Download the additional file') . '"/><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/>' .
                 '</form></div>' .
-                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config['flsz'] . 'kb<br>' .
                 _t('Allowed extensions') . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
 
             // Дополнительные файлы

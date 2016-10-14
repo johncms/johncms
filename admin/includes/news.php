@@ -8,13 +8,17 @@ if ($rights < 7) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
 // Настройки Новостей
-if (!isset($set['news']) || isset($_GET['reset'])) {
+if (empty($config['news']) || isset($_GET['reset'])) {
     // Задаем настройки по умолчанию
     $settings = [
         'view'     => '1',
@@ -49,7 +53,7 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
     echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
 } else {
     // Получаем сохраненные настройки
-    $settings = unserialize($set['news']);
+    $settings = unserialize($config['news']);
 }
 
 // Форма ввода настроек

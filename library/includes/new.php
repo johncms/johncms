@@ -2,6 +2,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New Articles') . '</div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();

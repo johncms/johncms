@@ -111,7 +111,7 @@ class Download
     // Вывод файла в ЗЦ
     public static function displayFile($res_down = [], $rate = 0)
     {
-        global $old, $set, $rights;
+        global $old, $config, $rights;
         $out = false;
         $format_file =  functions::format($res_down['name']);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
@@ -137,7 +137,7 @@ class Download
             $sub = '<div>' . htmlspecialchars($about, 2) . '</div>';
         }
 
-        if ($set['mod_down_comm'] || $rights >= 7) {
+        if ($config['mod_down_comm'] || $rights >= 7) {
             $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')';
         }
 

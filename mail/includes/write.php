@@ -8,8 +8,12 @@ $total = 0;
 $ch = 0;
 $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
@@ -270,7 +274,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
             $error[] = _t('It is forbidden to upload files without extension');
         }
 
-        if ($fsize > (1024 * $set['flsz'])) {
+        if ($fsize > (1024 * $config['flsz'])) {
             $error[] = _t('The size of the file exceeds the maximum allowable upload');
         }
 

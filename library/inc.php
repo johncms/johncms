@@ -13,9 +13,10 @@ $i = 0;
 
 function redir404()
 {
-    global $set;
+    $config = App::getContainer()->get('config')['johncms'];
+
     ob_get_level() and ob_end_clean();
-    header('Location: ' . $set['homeurl'] . '/?err');
+    header('Location: ' . $config['homeurl'] . '/?err');
     exit;
 }
 

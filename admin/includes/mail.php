@@ -8,8 +8,12 @@ if ($rights < 9) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Mail') . '</div>';
 
@@ -33,7 +37,7 @@ if (isset($_POST['submit'])) {
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
 }
 
-$set_mail = unserialize($set['setting_mail']);
+$set_mail = unserialize($config['setting_mail']);
 
 if (!isset($set_mail['cat_friends'])) {
     $set_mail['cat_friends'] = 0;
@@ -44,20 +48,20 @@ if (!isset($set_mail['message_include'])) {
 }
 
 // Форма ввода параметров системы
-if (empty($set['them_message'])) {
-    $set['them_message'] = _t('Welcome!');
+if (empty($config['them_message'])) {
+    $config['them_message'] = _t('Welcome!');
 }
 
-if (empty($set['reg_message'])) {
-    $set['reg_message'] = _t("Hi {LOGIN}!\n\nWe are glad to see you on our site.\nCome more often and here it will be pleasant to you.\n\nYours faithfully,\nAdministrator.");
+if (empty($config['reg_message'])) {
+    $config['reg_message'] = _t("Hi {LOGIN}!\n\nWe are glad to see you on our site.\nCome more often and here it will be pleasant to you.\n\nYours faithfully,\nAdministrator.");
 }
 
 echo '<form action="index.php?act=mail" method="post"><div class="menu">';
 
 // Общие настройки
 echo '<h3>' . _t('System message upon registration') . '</h3>' . _t('Subject of the system message') . ':<br>' .
-    '<input type="text" name="them_message" value="' . (!empty($set['them_message']) ? htmlentities($set['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br>' .
-    _t('Message') . ':<br><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($set['reg_message']) ? htmlentities($set['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
+    '<input type="text" name="them_message" value="' . (!empty($config['them_message']) ? htmlentities($config['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br>' .
+    _t('Message') . ':<br><textarea rows="' . $set_user['field_h'] . '" name="reg_message">' . (!empty($config['reg_message']) ? htmlentities($config['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
     '<br><h3>' . _t('Send a message') . '</h3>' .
     '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('ON') . '<br>' .
     '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . _t('OFF') . '<br>' .

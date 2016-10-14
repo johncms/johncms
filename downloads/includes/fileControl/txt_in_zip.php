@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Скачка TXT файла в ZIP
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/created_zip');
@@ -71,6 +75,6 @@ if (!file_exists($file)) {
 // Ссылка на файл
 echo '<div class="phdr"><b>' . htmlspecialchars($title_pages) . '</b></div>' .
     '<div class="menu"><a href="' . htmlspecialchars($file) . '">' . _t('Download to ZIP') . '</a></div>' .
-    '<div class="rmenu"><input type="text" value="' . $set['homeurl'] . htmlspecialchars($file) . '"/><b></b></div>' .
+    '<div class="rmenu"><input type="text" value="' . $config['homeurl'] . htmlspecialchars($file) . '"/><b></b></div>' .
     '<div class="phdr">' . _t('The file will be available for download within 5 minutes') . '</div>' .
     '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';

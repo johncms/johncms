@@ -12,8 +12,12 @@ if ($user['id'] != $user_id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
@@ -143,8 +147,7 @@ switch ($mod) {
                 $theme_list[] = array_pop(explode('/', dirname($val)));
             }
 
-            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'],
-                $theme_list) ? functions::check($_POST['skin']) : $set['skindef'];
+            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? functions::check($_POST['skin']) : $config['skindef'];
 
             // Устанавливаем язык
             $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;

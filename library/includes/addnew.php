@@ -2,6 +2,13 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
     $flood = functions::antiflood();
@@ -60,7 +67,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             $err[] = _t('You have not entered text');
         }
 
-        if(empty($announce)){
+        if (empty($announce)) {
             $announce = mb_substr($text, 0, 500);
         }
 
@@ -92,12 +99,12 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                 if ($handle->uploaded) {
                     // Обрабатываем фото
                     $handle->file_new_name_body = $cid;
-                    $handle->allowed =[
+                    $handle->allowed = [
                         'image/jpeg',
                         'image/gif',
-                        'image/png'
+                        'image/png',
                     ];
-                    $handle->file_max_size = 1024 * $set['flsz'];
+                    $handle->file_max_size = 1024 * $config['flsz'];
                     $handle->file_overwrite = true;
                     $handle->image_x = $handle->image_src_x;
                     $handle->image_y = $handle->image_src_y;

@@ -2,7 +2,10 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm': 'read');
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
+$sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm' : 'read');
 
 $menu[] = $sort == 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';
 $menu[] = $sort == 'rating' ? '<strong>' . _t('By rating') . '</strong>' : '<a href="?act=top&amp;sort=rating">' . _t('By rating') . '</a> ';
@@ -10,7 +13,7 @@ $menu[] = $sort == 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a h
 
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Rating articles') . '</div>' .
-     '<div class="topmenu">' . _t('Sort') . ': ' . functions::display_menu($menu) . '</div>';
+    '<div class="topmenu">' . _t('Sort') . ': ' . functions::display_menu($menu) . '</div>';
 
 if ($sort == 'read' || $sort == 'comm') {
     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
@@ -20,6 +23,7 @@ if ($sort == 'read' || $sort == 'comm') {
 
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
+
 if (!$total) {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 } else {
@@ -30,6 +34,7 @@ if (!$total) {
     }
 
     $i = 0;
+
     while ($row = $stmt->fetch()) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')

@@ -2,6 +2,8 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+$config = App::getContainer()->get('config')['johncms'];
+
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
 $ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных расширений
@@ -12,7 +14,7 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
-        $smileys['usr'][':' . $name[0]] = '<img src="' . $set['homeurl'] . '/images/smileys/simply/' . $file . '" alt="" />';
+        $smileys['usr'][':' . $name[0]] = '<img src="' . $config['homeurl'] . '/images/smileys/simply/' . $file . '" alt="" />';
     }
 }
 
@@ -21,8 +23,8 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
-        $smileys['adm'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $set['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
-        $smileys['adm'][':' . $name[0] . ':'] = '<img src="' . $set['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
+        $smileys['adm'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $config['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
+        $smileys['adm'][':' . $name[0] . ':'] = '<img src="' . $config['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
     }
 }
 
@@ -31,7 +33,7 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
-        $path = $set['homeurl'] . '/images/smileys/user/' . basename(dirname($var));
+        $path = $config['homeurl'] . '/images/smileys/user/' . basename(dirname($var));
         $smileys['usr'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
         $smileys['usr'][':' . $name[0] . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
     }

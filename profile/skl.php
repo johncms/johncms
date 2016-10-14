@@ -4,11 +4,12 @@ define('_IN_JOHNCMS', 1);
 
 require('../incfiles/core.php');
 
-/** @var Interop\Container\ContainerInterface $container */
-$container = App::getContainer();
-
 $id = isset($_GET['id']) ? abs(intval($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -69,15 +70,15 @@ switch ($act) {
 
         if (!$error) {
             // Высылаем инструкции на E-mail
-            $link = $set['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
+            $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
             $subject = _t('Password recovery');
             $mail = sprintf(
                 _t("Hello %s!\nYou start process of password recovery on the site %s\nIn order to recover your password, you must click on the link: %s\nLink valid for 1 hour\n\nIf you receive this mail by mistake, just ignore this letter"),
                 $res['name'],
-                $set['homeurl'],
+                $config['homeurl'],
                 $link
             );
-            $adds = "From: <" . $set['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
+            $adds = "From: <" . $config['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec("UPDATE `users` SET `rest_code` = " . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
@@ -124,10 +125,10 @@ switch ($act) {
             $mail = sprintf(
                 _t("Hello %s\nYou have changed your password on the site %s\n\nYour new password: %s\n\nAfter logging in, you can change your password to new one."),
                 $res['name'],
-                $set['homeurl'],
+                $config['homeurl'],
                 $pass
             );
-            $adds = "From: <" . $set['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
+            $adds = "From: <" . $config['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
                 $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . " WHERE `id` = " . $id);

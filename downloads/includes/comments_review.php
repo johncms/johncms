@@ -4,17 +4,21 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require_once '../incfiles/head.php';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 // Обзор комментариев
-if (!$set['mod_down_comm'] && $rights < 7) {
+if (!$config['mod_down_comm'] && $rights < 7) {
     echo _t('Comments are disabled') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 $textl = _t('Review comments');
 
-if (!$set['mod_down_comm']) {
+if (!$config['mod_down_comm']) {
     echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
 }
 
@@ -64,7 +68,7 @@ if ($total) {
 
             $post .= '<div class="reply"><small>' .
                 //TODO: Переделать ссылку
-                '<a href="' . $set['homeurl'] . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
+                '<a href="' . $config['homeurl'] . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
                 ' (' . functions::displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
         }
 
