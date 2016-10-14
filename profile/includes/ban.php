@@ -6,8 +6,12 @@ $headmod = 'userban';
 require('../incfiles/head.php');
 $ban = isset($_GET['ban']) ? intval($_GET['ban']) : 0;
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 switch ($mod) {
     case 'do':
@@ -172,7 +176,7 @@ switch ($mod) {
                 if (isset($_GET['fid'])) {
                     // Если бан из форума, фиксируем ID поста
                     $fid = intval($_GET['fid']);
-                    echo '&#160;' . _t('Violation') . ' <a href="' . $set['homeurl'] . '/forum/index.php?act=post&amp;id=' . $fid . '"></a><br />' .
+                    echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/index.php?act=post&amp;id=' . $fid . '"></a><br />' .
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
 

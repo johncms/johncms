@@ -13,8 +13,12 @@ if ($user['id'] != $user_id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Личный кабинет пользователя
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();
@@ -92,4 +96,4 @@ if ($rights >= 1) {
 echo '</p></div>';
 
 // Выход с сайта
-echo '<div class="rmenu"><p><a href="' . $set['homeurl'] . '/exit.php">' . functions::image('del.png') . _t('Exit') . '</a></p></div>';
+echo '<div class="rmenu"><p><a href="' . $config['homeurl'] . '/exit.php">' . functions::image('del.png') . _t('Exit') . '</a></p></div>';

@@ -12,6 +12,7 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+$config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -73,7 +74,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
-        $menu[] = '<a href="' . $set['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
+        $menu[] = '<a href="' . $config['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
     }
 
     if ($user['id'] != $user_id && $rights > $user['rights']) {
@@ -125,7 +126,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
             }
         }
 
-        echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $set['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
+        echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
             '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
             '<div class="sub">' .
             '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _t('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .

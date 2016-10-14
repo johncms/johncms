@@ -13,13 +13,14 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+$config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Закрываем от неавторизованных юзеров
-if (!$user_id && !$set['active']) {
+if (!$user_id && !$config['active']) {
     require('../incfiles/head.php');
     echo functions::display_error(_t('For registered users only'));
     require('../incfiles/end.php');

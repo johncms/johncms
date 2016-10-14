@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 require_once('../incfiles/head.php');
 
@@ -45,8 +49,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = _t('The required fields are not filled');
                 }
 
-                if ($fsize > 1024 * $set['flsz']) {
-                    $error[] = _t('The weight of the file exceeds') . ' ' . $set['flsz'] . 'kb.';
+                if ($fsize > 1024 * $config['flsz']) {
+                    $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
                 }
 
                 if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
@@ -172,7 +176,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 _t('Link to download file') . ' (мах. 200)<span class="red">*</span>:<br><input type="text" name="name_link" value="' . _t('Download') . '"/><br>' .
                 _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea><br>' .
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $set['flsz'] . 'kb<br>' .
+                '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config['flsz'] . 'kb<br>' .
                 _t('Allowed extensions') . ': ' . implode(', ',
                     $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
                 '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';

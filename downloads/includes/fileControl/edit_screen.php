@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Управление скриншотами
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -89,7 +93,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . '/' . $do)) {
                 $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
                 echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<table  width="100%"><tr><td width="40" valign="top">' .
-                    '<a href="' . $screen_name . '"><img src="' . $set['homeurl'] . 'assets/misc/thumbinal.php?type=1&amp;img=' . rawurlencode($screen_name) . '" alt="screen_' . $i . '" /></a></td><td>' . $file .
+                    '<a href="' . $screen_name . '"><img src="' . $config['homeurl'] . 'assets/misc/thumbinal.php?type=1&amp;img=' . rawurlencode($screen_name) . '" alt="screen_' . $i . '" /></a></td><td>' . $file .
                     '<div class="sub"><a href="?act=edit_screen&amp;id=' . $id . '&amp;do=' . $file . '">' . _t('Delete') . '</a></div></td></tr></table></div>';
             }
         }

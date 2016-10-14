@@ -6,8 +6,12 @@ $textl = _t('Karma');
 require('../incfiles/head.php');
 
 if ($set_karma['on']) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+    $config = $container->get('config')['johncms'];
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     switch ($mod) {
         case 'vote':
@@ -211,7 +215,7 @@ if ($set_karma['on']) {
                 }
             }
 
-            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $set['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
+            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
                 '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
                 '<div class="sub">' .
                 '<span class="green">' . _t('For') . ' (' . $user['karma_plus'] . ')</span> | ' .

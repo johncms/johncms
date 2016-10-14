@@ -8,10 +8,14 @@ if ($rights < 7) {
     exit;
 }
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
 
-$set_af = isset($set['antiflood']) ? unserialize($set['antiflood']) : [];
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+$set_af = isset($config['antiflood']) ? unserialize($config['antiflood']) : [];
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';
 
 if (isset($_POST['submit']) || isset($_POST['save'])) {

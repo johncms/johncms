@@ -8,6 +8,9 @@ if (!$user_id) {
     exit;
 }
 
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
 

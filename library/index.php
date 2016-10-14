@@ -14,9 +14,14 @@ require_once('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
 
 require_once('inc.php');
 
@@ -26,9 +31,9 @@ $textl = _t('Library');
 
 $error = '';
 
-if (!$set['mod_lib'] && $rights < 7) {
+if (!$config['mod_lib'] && $rights < 7) {
     $error = _t('Library is closed');
-} elseif ($set['mod_lib'] == 1 && !$user_id) {
+} elseif ($config['mod_lib'] == 1 && !$user_id) {
     $error = _t('Access forbidden');
 }
 
@@ -85,7 +90,7 @@ require_once('../incfiles/head.php');
 
 <?php
 
-if (!$set['mod_lib']) {
+if (!$config['mod_lib']) {
     echo functions::display_error(_t('Library is closed'));
 }
 

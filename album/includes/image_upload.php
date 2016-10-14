@@ -6,8 +6,12 @@ require('../incfiles/head.php');
 
 // Выгрузка фотографии
 if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+    $config = $container->get('config')['johncms'];
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 
@@ -32,7 +36,7 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                 'image/gif',
                 'image/png',
             ];
-            $handle->file_max_size = 1024 * $set['flsz'];
+            $handle->file_max_size = 1024 * $config['flsz'];
             $handle->image_resize = true;
             $handle->image_x = 1920;
             $handle->image_y = 1024;
@@ -101,10 +105,10 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
             '<p><h3>' . _t('Description') . '</h3>' .
             '<textarea name="description" rows="' . $set_user['field_h'] . '"></textarea><br>' .
             '<small>' . _t('Optional field') . ', max. 500</small></p>' .
-            '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $set['flsz']) . '" />' .
+            '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" />' .
             '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
             '</div></form>' .
-            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'), $set['flsz']) . '</small></div>' .
+            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'), $config['flsz']) . '</small></div>' .
             '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></p>';
     }
 }

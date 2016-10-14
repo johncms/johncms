@@ -12,6 +12,13 @@ if (!$rights && $user_id != $user['id']) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
 // История IP адресов
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('IP History') . '</div>';
 echo '<div class="user"><p>';
@@ -22,8 +29,6 @@ $arg = array(
 echo functions::display_user($user, $arg);
 echo '</p></div>';
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 $total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
 if ($total) {
@@ -32,7 +37,7 @@ if ($total) {
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        $link = $rights ? '<a href="' . $set['homeurl'] . '/admin/index.php?act=search_ip&amp;mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
+        $link = $rights ? '<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
         echo $link . ' <span class="gray">(' . date("d.m.Y / H:i", $res['time']) . ')</span></div>';
         ++$i;
     }

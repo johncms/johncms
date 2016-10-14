@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
@@ -28,7 +32,7 @@ if ($more) {
 }
 
 if ($error) {
-    header('Location: ' . $set['homeurl'] . '/404');
+    header('Location: ' . $config['homeurl'] . '/404');
 } else {
     if (!isset($_SESSION['down_' . $id])) {
         $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`=" . $id);

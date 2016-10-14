@@ -10,8 +10,12 @@ if (!$id || !$user_id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
 $res = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
@@ -58,8 +62,8 @@ if (isset($_POST['submit'])) {
         $error = [];
 
         // Проверка на допустимый размер файла
-        if ($fsize > 1024 * $set['flsz']) {
-            $error[] = _t('File size exceed') . ' ' . $set['flsz'] . 'kb.';
+        if ($fsize > 1024 * $config['flsz']) {
+            $error[] = _t('File size exceed') . ' ' . $config['flsz'] . 'kb.';
         }
 
         // Проверка файла на наличие только одного расширения
@@ -162,5 +166,5 @@ if (isset($_POST['submit'])) {
     }
 
     echo '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>' .
-        '<div class="phdr">' . _t('Max. Size') . ': ' . $set['flsz'] . 'kb.</div>';
+        '<div class="phdr">' . _t('Max. Size') . ': ' . $config['flsz'] . 'kb.</div>';
 }

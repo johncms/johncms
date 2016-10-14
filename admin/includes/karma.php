@@ -8,8 +8,12 @@ if ($rights < 7) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 if ($rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
@@ -26,7 +30,7 @@ if ($rights == 9 && $do == 'clean') {
 }
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Karma') . '</div>';
-$settings = unserialize($set['karma']);
+$settings = unserialize($config['karma']);
 
 if (isset($_POST['submit'])) {
     $settings['karma_points'] = isset($_POST['karma_points']) ? abs(intval($_POST['karma_points'])) : 0;
