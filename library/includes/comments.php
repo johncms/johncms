@@ -8,8 +8,12 @@ if (!$user_id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
@@ -32,7 +36,7 @@ if ($req_obj->rowCount()) {
         '<small>' . functions::smileys(functions::checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->get_all_stat_tags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br>' : '') .
-        '<span class="gray">' . _t('Who added') . ':</span> <a href="' . core::$system_set['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br>' .
+        '<span class="gray">' . _t('Who added') . ':</span> <a href="' . $config['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . functions::checkout($res_obj['uploader']) . '</a> (' . functions::display_date($res_obj['time']) . ')<br>' .
         '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [

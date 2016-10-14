@@ -185,7 +185,7 @@ switch ($mod) {
             '<div class="menu"><p><h3>' . _t('Time settings') . '</h3>' .
             '<input type="text" name="timeshift" size="2" maxlength="3" value="' . core::$user_set['timeshift'] . '"/> ' . _t('Shift of time') . ' (+-12)<br />' .
             '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
-                time() + (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _t('System time') .
+                time() + ($config['timeshift'] + core::$user_set['timeshift']) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
             '<input name="direct_url" type="checkbox" value="1" ' . (core::$user_set['direct_url'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
             '<input name="avatar" type="checkbox" value="1" ' . (core::$user_set['avatar'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Avatars') . '<br>' .
@@ -216,7 +216,7 @@ switch ($mod) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
                     (file_exists('../images/flags/' . $key . '.gif') ? '<img src="../images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                     $val .
-                    ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
+                    ($key == $config['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
                     '</div>';
             }
             echo '</p>';

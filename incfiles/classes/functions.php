@@ -11,7 +11,7 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class functions extends core
+class functions extends core //TODO: убрать extends
 {
     /**
      * Антифлуд
@@ -26,39 +26,36 @@ class functions extends core
      */
     public static function antiflood()
     {
-        $default = [
-            'mode'    => 2,
-            'day'     => 10,
-            'night'   => 30,
-            'dayfrom' => 10,
-            'dayto'   => 22,
-        ];
-        $af = isset(self::$system_set['antiflood']) ? unserialize(self::$system_set['antiflood']) : $default;
-        switch ($af['mode']) {
+        $config = unserialize(App::getContainer()->get('config')['johncms']['antiflood']);
+
+        switch ($config['mode']) {
             case 1: // Адаптивный режим
                 /** @var PDO $db */
                 $db = App::getContainer()->get(PDO::class);
 
                 $adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > ' . (time() - 300))->fetchColumn();
-                $limit = $adm > 0 ? $af['day'] : $af['night'];
+                $limit = $adm > 0 ? $config['day'] : $config['night'];
                 break;
 
             case 3: // День
-                $limit = $af['day'];
+                $limit = $config['day'];
                 break;
 
             case 4: // Ночь
-                $limit = $af['night'];
+                $limit = $config['night'];
                 break;
 
             default: // По умолчанию день / ночь
                 $c_time = date('G', time());
-                $limit = $c_time > $af['day'] && $c_time < $af['night'] ? $af['day'] : $af['night'];
+                $limit = $c_time > $config['day'] && $c_time < $config['night'] ? $config['day'] : $config['night'];
         }
+
         if (self::$user_rights > 0) {
             $limit = 4;
         } // Для Администрации задаем лимит в 4 секунды
+
         $flood = self::$user_data['lastpost'] + $limit - time();
+
         if ($flood > 0) {
             return $flood;
         } else {
@@ -176,7 +173,8 @@ class functions extends core
      */
     public static function display_date($var)
     {
-        $shift = (self::$system_set['timeshift'] + self::$user_set['timeshift']) * 3600;
+        $shift = (App::getContainer()->get('config')['johncms']['timeshift'] + self::$user_set['timeshift']) * 3600;
+
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {
                 return self::$lng['today'] . ', ' . date("H:i", $var + $shift);
@@ -284,25 +282,28 @@ class functions extends core
     public static function display_place($user_id = 0, $place = '')
     {
         global $headmod;
+
+        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
         $place = explode(",", $place);
         $placelist = parent::load_lng('places');
+
         if (array_key_exists($place[0], $placelist)) {
             if ($place[0] == 'profile') {
                 if ($place[1] == $user_id) {
-                    return '<a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
+                    return '<a href="' . $homeurl . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
                 } else {
                     $user = self::get_user($place[1]);
 
-                    return $placelist['profile'] . ': <a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
+                    return $placelist['profile'] . ': <a href="' . $homeurl . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
                 }
             } elseif ($place[0] == 'online' && isset($headmod) && $headmod == 'online') {
                 return $placelist['here'];
             } else {
-                return str_replace('#home#', self::$system_set['homeurl'], $placelist[$place[0]]);
+                return str_replace('#home#', $homeurl, $placelist[$place[0]]);
             }
         }
 
-        return '<a href="' . self::$system_set['homeurl'] . '/index.php">' . $placelist['homepage'] . '</a>';
+        return '<a href="' . $homeurl . '/index.php">' . $placelist['homepage'] . '</a>';
     }
 
     /**
@@ -326,6 +327,7 @@ class functions extends core
     {
         global $mod;
         $out = false;
+        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
 
         if (!$user['id']) {
             $out = '<b>' . self::$lng['guest'] . '</b>';
@@ -342,9 +344,9 @@ class functions extends core
                 $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
 
                 if (file_exists((ROOTPATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
-                    $out .= '<img src="' . self::$system_set['homeurl'] . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
+                    $out .= '<img src="' . $homeurl . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
                 } else {
-                    $out .= '<img src="' . self::$system_set['homeurl'] . '/images/empty.png" width="32" height="32" alt="" />&#160;';
+                    $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
                 }
 
                 $out .= '</td><td>';
@@ -356,7 +358,7 @@ class functions extends core
                 $out .= functions::image('del.png');
             }
 
-            $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . self::$system_set['homeurl'] . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $out .= !self::$user_id || self::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
             $rank = [
                 0 => '',
                 1 => '(GMod)',
@@ -412,14 +414,14 @@ class functions extends core
                 $ip = long2ip($user['ip']);
 
                 if (self::$user_rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
-                    $out .= '<b class="red"><a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
-                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
+                    $out .= '<b class="red"><a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                     $out .= ' / ';
-                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
-                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
+                    $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
                 } elseif (self::$user_rights) {
-                    $out .= '<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
-                    $out .= '&#160;[<a href="' . self::$system_set['homeurl'] . '/' . self::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
+                    $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {
                     $out .= $ip . $iphist;
                 }
@@ -428,7 +430,7 @@ class functions extends core
                     /** @var PDO $db */
                     $db = App::getContainer()->get(PDO::class);
                     $iptotal = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
-                    $out .= '<div><span class="gray">' . self::$lng['ip_history'] . ':</span> <a href="' . self::$system_set['homeurl'] . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
+                    $out .= '<div><span class="gray">' . self::$lng['ip_history'] . ':</span> <a href="' . $homeurl . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
                 }
 
                 $out .= '</div>';
@@ -483,10 +485,12 @@ class functions extends core
 
     public static function image($name, $args = [])
     {
+        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
+
         if (is_file(ROOTPATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
-            $src = core::$system_set['homeurl'] . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
+            $src = $homeurl . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
         } elseif (is_file(ROOTPATH . 'images/' . $name)) {
-            $src = core::$system_set['homeurl'] . '/images/' . $name;
+            $src = $homeurl . '/images/' . $name;
         } else {
             return false;
         }
