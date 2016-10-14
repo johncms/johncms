@@ -6,8 +6,12 @@ $headmod = 'online';
 $textl = _t('Online');
 require('../incfiles/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 // Показываем список Online
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
@@ -51,8 +55,8 @@ switch ($mod) {
                 } else {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 }
-                echo '[' . $out[1] . ']&#160;&#160;<a href="' . core::$system_set['homeurl'] . '/' . core::$system_set['admp'] . '/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-                    '&#160;&#160;<small>[<a href="' . core::$system_set['homeurl'] . '/' . core::$system_set['admp'] . '/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small>';
+                echo '[' . $out[1] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+                    '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small>';
                 echo '</div>';
             }
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
