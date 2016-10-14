@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class bbcode extends core
+class bbcode extends core //TODO: убрать extends
 {
     // Обработка тэгов и ссылок
     public static function tags($var)
@@ -26,7 +26,8 @@ class bbcode extends core
         return preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
             function ($matches) {
-                $shift = (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600;
+                $timeshift = App::getContainer()->get('config')['johncms']['timeshift'];
+                $shift = ($timeshift + core::$user_set['timeshift']) * 3600;
                 if (($out = strtotime($matches[1])) !== false) {
                     return date("d.m.Y / H:i", $out + $shift);
                 } else {
@@ -46,9 +47,12 @@ class bbcode extends core
      */
     public static function highlight_url($text)
     {
+        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
+
         if (!function_exists('url_callback')) {
             function url_callback($type, $whitespace, $url, $relative_url)
             {
+                global $homeurl;
                 $orig_url = $url;
                 $orig_relative = $relative_url;
                 $url = htmlspecialchars_decode($url);
@@ -112,7 +116,7 @@ class bbcode extends core
                     case 2:
                         $text = $short_url;
                         if (!isset(core::$user_set['direct_url']) || !core::$user_set['direct_url']) {
-                            $url = core::$system_set['homeurl'] . '/go.php?url=' . rawurlencode($url);
+                            $url = $homeurl . '/go.php?url=' . rawurlencode($url);
                         }
                         break;
 
@@ -131,7 +135,7 @@ class bbcode extends core
 
         // Обработка внутренних ссылок
         $text = preg_replace_callback(
-            '#(^|[\n\t (>.])(' . preg_quote(core::$system_set['homeurl'],
+            '#(^|[\n\t (>.])(' . preg_quote($homeurl,
                 '#') . ')/((?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-zа-яё0-9\-._~!$&\'(*+,;=:@/?|]+|%[\dA-F]{2})*)?)#iu',
             function ($matches) {
                 return url_callback(1, $matches[1], $matches[2], $matches[3]);
@@ -257,12 +261,13 @@ class bbcode extends core
         if (!function_exists('process_url')) {
             function process_url($url)
             {
-                $home = parse_url(core::$system_set['homeurl']);
+                $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
+                $home = parse_url($homeurl);
                 $tmp = parse_url($url[1]);
                 if ($home['host'] == $tmp['host'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
                     return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
                 } else {
-                    return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
+                    return '<a href="' . $homeurl . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
                 }
             }
         }
@@ -339,6 +344,8 @@ class bbcode extends core
      */
     public static function auto_bb($form, $field)
     {
+        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
+
         $colors = [
             'ffffff',
             'bcbcbc',
@@ -389,13 +396,13 @@ class bbcode extends core
 
         if (!empty($smileys)) {
             $res_sm = '';
-            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/help/?act=my_smilies">' . self::$lng['edit_list'] . '</a></small><br />';
+            $bb_smileys = '<small><a href="' . $homeurl . '/help/?act=my_smilies">' . self::$lng['edit_list'] . '</a></small><br />';
             foreach ($smileys as $value) {
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
             $bb_smileys .= functions::smileys($res_sm, self::$user_data['rights'] >= 1 ? 1 : 0);
         } else {
-            $bb_smileys = '<small><a href="' . self::$system_set['homeurl'] . '/help/?act=smilies">' . self::$lng['add_smileys'] . '</a></small>';
+            $bb_smileys = '<small><a href="' . $homeurl . '/help/?act=smilies">' . self::$lng['add_smileys'] . '</a></small>';
         }
 
         // Код
@@ -452,20 +459,20 @@ text-decoration: none;
               }
             }
             </script>
-            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/bold.gif" alt="b" title="' . self::$lng['tag_bold'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/italics.gif" alt="i" title="' . self::$lng['tag_italic'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/underline.gif" alt="u" title="' . self::$lng['tag_underline'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/strike.gif" alt="s" title="' . self::$lng['tag_strike'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/list.gif" alt="s" title="' . self::$lng['tag_list'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
-            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>
-            <a href="javascript:show_hide(\'code\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" title="' . Code . '" border="0"/></a>
-            <a href="javascript:show_hide(\'color\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" border="0"/></a>
-            <a href="javascript:show_hide(\'bg\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" border="0"/></a>';
+            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img src="' . $homeurl . '/images/bb/bold.gif" alt="b" title="' . self::$lng['tag_bold'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . $homeurl . '/images/bb/italics.gif" alt="i" title="' . self::$lng['tag_italic'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . $homeurl . '/images/bb/underline.gif" alt="u" title="' . self::$lng['tag_underline'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . $homeurl . '/images/bb/strike.gif" alt="s" title="' . self::$lng['tag_strike'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img src="' . $homeurl . '/images/bb/list.gif" alt="s" title="' . self::$lng['tag_list'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="' . $homeurl . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
+            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . $homeurl . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" border="0"/></a>
+            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . $homeurl . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>
+            <a href="javascript:show_hide(\'code\');"><img src="' . $homeurl . '/images/bb/php.gif" title="' . Code . '" border="0"/></a>
+            <a href="javascript:show_hide(\'color\');"><img src="' . $homeurl . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" border="0"/></a>
+            <a href="javascript:show_hide(\'bg\');"><img src="' . $homeurl . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" border="0"/></a>';
 
         if (self::$user_id) {
-            $out .= ' <a href="javascript:show_hide(\'sm\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" border="0"/></a><br />
+            $out .= ' <a href="javascript:show_hide(\'sm\');"><img src="' . $homeurl . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" border="0"/></a><br />
                 <table id="sm" style="display:none"><tr><td>' . $bb_smileys . '</td></tr></table>
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
         } else {

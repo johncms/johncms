@@ -259,14 +259,9 @@ class core
     /**
      * Получаем системные настройки
      */
-    private function system_settings() //TODO: удалить и переделать на глобальный кнофиг из контейнера
+    private function system_settings()
     {
-        $set = [];
-        $req = $this->db->query("SELECT * FROM `cms_settings`");
-
-        while ($res = $req->fetch()) {
-            $set[$res['key']] = $res['val'];
-        }
+        $set = App::getContainer()->get('config')['johncms'];
 
         if (isset($set['lng']) && !empty($set['lng'])) {
             self::$lng_iso = $set['lng'];
@@ -449,12 +444,13 @@ class core
      */
     private function auto_clean()
     {
-        if (self::$system_set['clean_time'] < time() - 86400) {
-            $this->db->exec("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
-            $this->db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
-            $this->db->exec("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
-            $this->db->query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
-        }
+        //TODO: переделать очистку
+//        if (self::$system_set['clean_time'] < time() - 86400) {
+//            $this->db->exec("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
+//            $this->db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
+//            $this->db->exec("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
+//            $this->db->query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
+//        }
     }
 
     /**

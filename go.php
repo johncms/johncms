@@ -4,7 +4,13 @@ define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
 
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
 if (isset($_GET['lng'])) {
@@ -19,7 +25,7 @@ if (isset($_GET['lng'])) {
             echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
                 (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                 $val .
-                ($key == core::$system_set['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
+                ($key == $config['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
                 '</div>';
         }
 
@@ -48,7 +54,7 @@ if (isset($_GET['lng'])) {
     }
 } elseif ($id) {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     // Редирект по рекламной ссылке
     $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");

@@ -6,8 +6,14 @@ $headmod = 'login';
 require('incfiles/core.php');
 require('incfiles/head.php');
 
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 if (core::$user_id) {
-    echo '<div class="menu"><h2><a href="' . $set['homeurl'] . '">' . _t('Home', 'system') . '</a></h2></div>';
+    echo '<div class="menu"><h2><a href="' . $config['homeurl'] . '">' . _t('Home', 'system') . '</a></h2></div>';
 } else {
     echo '<div class="phdr"><b>' . _t('Login', 'system') . '</b></div>';
     $error = [];
@@ -36,7 +42,7 @@ if (core::$user_id) {
 
     if (!$error && $user_pass && $user_login) {
         /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
+        $db = $container->get(PDO::class);
 
         // Запрос в базу на юзера
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
@@ -96,9 +102,9 @@ if (core::$user_id) {
                         $set_user = unserialize($user['set_user']);
 
                         if ($user['lastdate'] < (time() - 3600) && $set_user['digest']) {
-                            header('Location: ' . $set['homeurl'] . '/index.php?act=digest&last=' . $user['lastdate']);
+                            header('Location: ' . $config['homeurl'] . '/index.php?act=digest&last=' . $user['lastdate']);
                         } else {
-                            header('Location: ' . $set['homeurl'] . '/index.php');
+                            header('Location: ' . $config['homeurl'] . '/index.php');
                         }
 
                         echo '<div class="gmenu"><p><b><a href="index.php?act=digest">' . _t('Enter site', 'system') . '</a></b></p></div>';
@@ -124,10 +130,10 @@ if (core::$user_id) {
         }
 
         $info = '';
-        if (core::$system_set['site_access'] == 0 || core::$system_set['site_access'] == 1) {
-            if (core::$system_set['site_access'] == 0) {
+        if ($config['site_access'] == 0 || $config['site_access'] == 1) {
+            if ($config['site_access'] == 0) {
                 $info = '<div class="rmenu">' . _t('At the moment, access to the site is allowed only for SV!', 'system') . '</div>';
-            } elseif (core::$system_set['site_access'] == 1) {
+            } elseif ($config['site_access'] == 1) {
                 $info = '<div class="rmenu">' . _t('At the moment, access to the site is allowed only for Administration of site.', 'system') . '</div>';
             }
         }

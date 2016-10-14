@@ -52,12 +52,13 @@ new core;
 Получаем системные переменные для совместимости со старыми модулями
 -----------------------------------------------------------------
 */
+$set = App::getContainer()->get('config')['johncms']; // Системные настройки
+$home = $set['homeurl'];                              // Домашняя страница
+
 $ip = core::$ip; // Адрес IP
 $agn = core::$user_agent; // User Agent
-$set = core::$system_set; // Системные настройки
 $lng = core::$lng; // Фразы языка
 $is_mobile = core::$is_mobile; // Определение мобильного браузера
-//$home = $set['homeurl']; // Домашняя страница
 
 /*
 -----------------------------------------------------------------
@@ -91,8 +92,8 @@ $headmod = isset($headmod) ? $headmod : '';
 Закрытие сайта / редирект гостей на страницу ожидания
 -----------------------------------------------------------------
 */
-if ((core::$system_set['site_access'] == 0 || core::$system_set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
-    header('Location: ' . core::$system_set['homeurl'] . '/closed.php');
+if (($set['site_access'] == 0 || $set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
+    header('Location: ' . $set['homeurl'] . '/closed.php');
 }
 
 /*

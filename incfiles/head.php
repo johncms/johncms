@@ -2,8 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 $headmod = isset($headmod) ? $headmod : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
@@ -194,13 +198,13 @@ if ($user_id) {
     }
 
     if ($datauser['comm_count'] > $datauser['comm_old']) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook', 'system') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user_id . '">' . _t('Guestbook', 'system') . '</a> (' . ($datauser['comm_count'] - $datauser['comm_old']) . ')';
     }
 
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . core::$user_id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
+        $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
     }
 
     if (!empty($list)) {
