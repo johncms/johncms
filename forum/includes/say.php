@@ -224,7 +224,7 @@ switch ($type1['type']) {
             exit;
         }
 
-        $shift = (core::$system_set['timeshift'] + core::$user_set['timeshift']) * 3600;
+        $shift = ($config['timeshift'] + core::$user_set['timeshift']) * 3600;
         $vr = date("d.m.Y / H:i", $type1['time'] + $shift);
         $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
         $txt = isset($_POST['txt']) ? intval($_POST['txt']) : false;

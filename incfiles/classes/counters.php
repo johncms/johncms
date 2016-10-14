@@ -46,7 +46,7 @@ class counters
         }
 
         return $album . '&#160;/&#160;' . $photo .
-        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
+        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
     }
 
     static function downloads()
@@ -108,7 +108,7 @@ class counters
         }
 
         if (core::$user_id && ($new_msg = self::forumNew()) > 0) {
-            $new = '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/forum/index.php?act=new">+' . $new_msg . '</a></span>';
+            $new = '&#160;/&#160;<span class="red"><a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/forum/index.php?act=new">+' . $new_msg . '</a></span>';
         }
 
         return $top . '&#160;/&#160;' . $msg . $new;
@@ -214,10 +214,10 @@ class counters
             file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]));
         }
         if ($new) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/library/index.php?act=new">+' . $new . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/library/index.php?act=new">+' . $new . '</a></span>';
         }
         if ((core::$user_rights == 5 || core::$user_rights >= 6) && $mod) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . core::$system_set['homeurl'] . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
         }
 
         return $total;
@@ -235,8 +235,9 @@ class counters
 
         $users = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
         $guests = $db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+        $config = App::getContainer()->get('config')['johncms'];
 
-        return (core::$user_id || core::$system_set['active'] ? '<a href="' . core::$system_set['homeurl'] . '/users/index.php?act=online">' . functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>' : core::$lng['online'] . ': ' . $users . ' / ' . $guests);
+        return (core::$user_id || $config['active'] ? '<a href="' . $config['homeurl'] . '/users/index.php?act=online">' . functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>' : core::$lng['online'] . ': ' . $users . ' / ' . $guests);
     }
 
     /**

@@ -3,7 +3,9 @@
 define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+
+$config = App::getContainer()->get('config')['johncms'];
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 
 if (isset($_POST['submit'])) {
     setcookie('cuid', '');
