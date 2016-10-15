@@ -1,14 +1,20 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$adm ?: redir404();
+if (!$adm) {
+    redir404();
+}
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Delete') . '</div>';
 
-$type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image']) ? $_GET['type'] : redir404();
+if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image'])) {
+    $type = $_GET['type'];
+} else {
+    redir404();
+}
 $change = ($type == 'dir' ? $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1 : '');
 
 switch ($type) {
