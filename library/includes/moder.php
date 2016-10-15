@@ -3,7 +3,11 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $obj = new Hashtags($id);
-$type = isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article']) ? $_GET['type'] : redir404();
+if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
+    $type = $_GET['type'];
+} else {
+    redir404();
+}
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -13,7 +17,9 @@ $config = $container->get('config')['johncms'];
 $db = $container->get(PDO::class);
 
 $author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) ? 1 : 0;
-$adm || $author ?: redir404();
+if (!$adm || !$author) {
+    redir404();
+}
 
 if (isset($_POST['submit'])) {
     switch ($type) {
