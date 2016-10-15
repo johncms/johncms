@@ -1,7 +1,9 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$adm ?: redir404();
+if (!$adm) {
+    redir404();
+}
 
 if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {

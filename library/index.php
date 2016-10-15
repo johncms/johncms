@@ -178,7 +178,11 @@ if (in_array($act, $array_includes)) {
             case 'dir':
                 // dir
                 $actdir = $db->query("SELECT `id`, `dir` FROM `library_cats` WHERE " . ($id !== null ? '`id`=' . $id : 1) . " LIMIT 1")->fetch();
-                $actdir = $actdir['id'] > 0 ? $actdir['dir'] : redir404();
+                if ($actdir['id'] > 0) {
+                    $actdir = $actdir['dir'];
+                } else {
+                    redir404();
+                }
                 echo '<div class="phdr">' . $dir_nav->print_nav_panel() . '</div>';
 
                 if ($actdir) {
