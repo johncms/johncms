@@ -46,7 +46,7 @@ if (isset($_GET['lng'])) {
             '<p><h3>' . _t('ATTENTION!', 'system') . '</h3>' .
             _t('You are going to leave our site and go to an external link', 'system') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
             '<p>' . _t('Administration of our site is not responsible for the content of external sites', 'system') . '.<br />' .
-            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $set['homeurl'] . '</span>') . '.</p>' .
+            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $config['homeurl'] . '</span>') . '.</p>' .
             '<p><input type="submit" name="submit" value="' . _t('Go to Link', 'system') . '" /></p>' .
             '</form></div>' .
             '<div class="phdr"><a href="' . $referer . '">' . _t('Back', 'system') . '</a></div>';
