@@ -123,7 +123,11 @@ switch ($mod) {
             }
 
             // Проверяем, не попадает ли IP администратора в диапазон
-            if ((core::$ip >= $ip1 && core::$ip <= $ip2) || (core::$ip_via_proxy >= $ip1 && core::$ip_via_proxy <= $ip2)) {
+
+            /** @var Johncms\VarsFactory $globals */
+            $globals = App::getContainer()->get('vars');
+
+            if (($globals->getIp() >= $ip1 && $globals->getIp() <= $ip2) || ($globals->getIpViaProxy() >= $ip1 && $globals->getIpViaProxy() <= $ip2)) {
                 $error = _t('Ban impossible. Your own IP address in the range');
             }
 

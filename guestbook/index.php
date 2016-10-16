@@ -138,7 +138,7 @@ switch ($act) {
                 ($user_id ? $user_id : 0),
                 $from,
                 $msg,
-                core::$ip,
+                $container->get('vars')->getIp(),
                 $container->get('vars')->getUserAgent(),
             ]);
 

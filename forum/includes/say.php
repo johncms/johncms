@@ -68,7 +68,6 @@ if ($flood) {
 }
 
 $headmod = 'forum,' . $id . ',1';
-$agn1 = $container->get('vars')->getUserAgent();
 $type1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
 switch ($type1['type']) {
@@ -140,9 +139,9 @@ switch ($type1['type']) {
                 time(),
                 $user_id,
                 $login,
-                core::$ip,
-                core::$ip_via_proxy,
-                $agn1,
+                $container->get('vars')->getIp(),
+                $container->get('vars')->getIpViaProxy(),
+                $container->get('vars')->getUserAgent(),
                 $msg,
             ]);
 
@@ -318,9 +317,9 @@ switch ($type1['type']) {
                 time(),
                 $user_id,
                 $login,
-                core::$ip,
-                core::$ip_via_proxy,
-                $agn1,
+                $container->get('vars')->getIp(),
+                $container->get('vars')->getIpViaProxy(),
+                $container->get('vars')->getUserAgent(),
                 $msg,
             ]);
 

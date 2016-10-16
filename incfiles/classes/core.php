@@ -7,6 +7,7 @@ class core
     public static $ip; // Путь к корневой папке
     public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
     public static $ip_count = []; // Счетчик обращений с IP адреса
+    public static $user_agent; // User Agent
     public static $system_set; // Системные настройки
     public static $lng_iso = 'en'; // Двухбуквенный ISO код языка
     public static $lng_list = []; // Список имеющихся языков
@@ -25,35 +26,30 @@ class core
     private $flood_interval = '120'; // Интервал времени в секундах
     private $flood_limit = '70'; // Число разрешенных запросов за интервал
 
+    /**
+     * @var Interop\Container\ContainerInterface
+     */
     private $container;
-    private $config;
 
     /**
      * @var PDO
      */
     private $db;
 
+    private $config;
+
     function __construct()
     {
-        // Получаем IP адреса
-        $ip = ip2long($_SERVER['REMOTE_ADDR']) or die('Invalid IP');
-        self::$ip = sprintf("%u", $ip);
+        $this->container = App::getContainer();
 
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $vars)) {
-            foreach ($vars[0] AS $var) {
-                $ip_via_proxy = ip2long($var);
-                if ($ip_via_proxy && $ip_via_proxy != $ip && !preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
-                    self::$ip_via_proxy = sprintf("%u", $ip_via_proxy);
-                    break;
-                }
-            }
-        }
+        /** @var Johncms\VarsFactory $globals */
+        $globals = $this->container->get('vars');
+        self::$ip = $globals->getIp();
+        self::$ip_via_proxy = $globals->getIpViaProxy();
+        self::$user_agent = $globals->getUserAgent();
 
         // Проверка адреса IP на флуд
         $this->ip_flood();
-
-        // Получаем объект контейнера
-        $this->container = App::getContainer();
 
         // Получаем глобальную конфигурацию
         $this->config = $this->container->get('config');
@@ -298,12 +294,6 @@ class core
      */
     private function authorize()
     {
-        /** @var Interop\Container\ContainerInterface $container */
-        $container = App::getContainer();
-
-        /** @var Johncms\VarsFactory $globals */
-        $globals = $container->get('vars');
-
         $user_id = false;
         $user_ps = false;
 
@@ -324,7 +314,7 @@ class core
 
             if ($req->rowCount()) {
                 $user_data = $req->fetch();
-                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == $globals->getUserAgent() ? true : false;
+                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == self::$user_agent ? true : false;
 
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно

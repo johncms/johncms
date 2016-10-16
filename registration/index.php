@@ -89,8 +89,10 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        $preg = $config['mod_reg'] > 1 ? 1 : 0;
+        /** @var Johncms\VarsFactory $globals */
+        $globals = $container->get('vars');
 
+        $preg = $config['mod_reg'] > 1 ? 1 : 0;
         $db->prepare('
           INSERT INTO `users` SET
           `name` = ?,
@@ -118,9 +120,9 @@ if (isset($_POST['submit'])) {
             $reg_name,
             $reg_about,
             $reg_sex,
-            core::$ip,
-            core::$ip_via_proxy,
-            $container->get('vars')->getUserAgent(),
+            $globals->getIp(),
+            $globals->getIpViaProxy(),
+            $globals->getUserAgent(),
             time(),
             time(),
             time(),

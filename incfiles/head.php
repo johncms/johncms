@@ -137,7 +137,7 @@ if ($user_id) {
 } else {
     // Фиксируем местоположение гостей
     $movings = 0;
-    $session = md5(core::$ip . core::$ip_via_proxy . $globals->getUserAgent());
+    $session = md5($globals->getIp() . $globals->getIpViaProxy() . $globals->getUserAgent());
     $req = $db->query("SELECT * FROM `cms_sessions` WHERE `session_id` = " . $db->quote($session) . " LIMIT 1");
 
     if ($req->rowCount()) {
@@ -163,8 +163,8 @@ if ($user_id) {
         // Если еще небыло в базе, то добавляем запись
         $db->exec("INSERT INTO `cms_sessions` SET
             `session_id` = '" . $session . "',
-            `ip` = '" . core::$ip . "',
-            `ip_via_proxy` = '" . core::$ip_via_proxy . "',
+            `ip` = '" . $globals->getIp() . "',
+            `ip_via_proxy` = '" . $globals->getIpViaProxy() . "',
             `browser` = " . $db->quote($globals->getUserAgent()) . ",
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
