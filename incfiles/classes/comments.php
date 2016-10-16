@@ -336,12 +336,18 @@ class comments
     // Добавляем комментарий в базу
     private function add_comment($message)
     {
+        /** @var Interop\Container\ContainerInterface $container */
+        $container = App::getContainer();
+
+        /** @var Johncms\VarsFactory $globals */
+        $globals = $container->get('vars');
+
         // Формируем атрибуты сообщения
         $attributes = [
             'author_name'         => core::$user_data['name'],
             'author_ip'           => core::$ip,
             'author_ip_via_proxy' => core::$ip_via_proxy,
-            'author_browser'      => core::$user_agent,
+            'author_browser'      => $globals->getUserAgent(),
         ];
 
         // Записываем комментарий в базу
