@@ -13,7 +13,6 @@ class core
     public static $lng_list = []; // Список имеющихся языков
     public static $lng = []; // Массив с фразами языка
     public static $deny_registration = false; // Запрет регистрации пользователей
-    public static $is_mobile = false; // Мобильный браузер
     public static $core_errors = []; // Ошибки ядра
 
     public static $user_id = false; // Идентификатор пользователя
@@ -400,7 +399,7 @@ class core
             'digest'     => 0, // Показывать Дайджест
             'direct_url' => 0, // Внешние ссылки
             'field_h'    => 3, // Высота текстового поля ввода
-            'field_w'    => (self::$is_mobile ? 20 : 40), // Ширина текстового поля ввода
+            'field_w'    => 40, // Ширина текстового поля ввода
             'kmess'      => 20, // Число сообщений на страницу
             'quick_go'   => 1, // Быстрый переход
             'timeshift'  => 0, // Временной сдвиг

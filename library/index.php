@@ -292,7 +292,7 @@ if (in_array($act, $array_includes)) {
                     }
 
                     // Запрашиваем выбранную статью из базы
-                    $symbols = core::$is_mobile ? 3000 : 7000;
+                    $symbols = 7000;
                     $count_pages = ceil($db->query("SELECT CHAR_LENGTH(`text`) FROM `library_texts` WHERE `id`= '" . $id . "' LIMIT 1")->fetchColumn() / $symbols);
                     if ($count_pages) {
 
