@@ -156,15 +156,9 @@ if (isset($_POST['submit'])) {
     echo '<br><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки
-    echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>' .
-        '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
-
-    if (stristr($agn, 'Opera/8.01')) {
-        echo '<input name="fail1" value =""/>&#160;<br><a href="op:fileselect">' . _t('Select File') . '</a>';
-    } else {
-        echo '<input type="file" name="fail"/>';
-    }
-
-    echo '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>' .
-        '<div class="phdr">' . _t('Max. Size') . ': ' . $config['flsz'] . 'kb.</div>';
+    echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>'
+        . '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>'
+        . '<input type="file" name="fail"/>'
+        . '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>'
+        . '<div class="phdr">' . _t('Max. Size') . ': ' . $config['flsz'] . 'kb.</div>';
 }
