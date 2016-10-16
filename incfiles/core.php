@@ -1,36 +1,21 @@
 <?php
-/*
- * mobiCMS Content Management System (http://mobicms.net)
- *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
- */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-error_reporting(E_ALL & ~E_NOTICE);
-//ini_set('display_errors', 'Off');
 
-// Проверяем версию PHP
+////////////////////////////////////////////////////////////////////////////////
+// Проверяем версию PHP                                                       //
+////////////////////////////////////////////////////////////////////////////////
 if (version_compare(PHP_VERSION, '7', '>=')) {
     //TODO: после полного перевода на новое ядро, раскоментировать
     //die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Compatibility Pack can not work with PHP 7</div>');
 }
 
-// Корневая папка
 define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
-
-// Подключаем новую систему
 require ROOTPATH . 'system/bootstrap.php';
 
-/*
------------------------------------------------------------------
-Автозагрузка Классов
------------------------------------------------------------------
-*/
+////////////////////////////////////////////////////////////////////////////////
+// Автозагрузка Классов                                                       //
+////////////////////////////////////////////////////////////////////////////////
 spl_autoload_register('autoload');
 function autoload($name)
 {
@@ -40,70 +25,41 @@ function autoload($name)
     }
 }
 
-/*
------------------------------------------------------------------
-Инициализируем Ядро системы
------------------------------------------------------------------
-*/
+////////////////////////////////////////////////////////////////////////////////
+// Инициализируем заглушку старого ядра системы                               //
+////////////////////////////////////////////////////////////////////////////////
 new core;
 
-/*
------------------------------------------------------------------
-Получаем системные переменные для совместимости со старыми модулями
------------------------------------------------------------------
-*/
-$set = App::getContainer()->get('config')['johncms']; // Системные настройки
-$home = $set['homeurl'];                              // Домашняя страница
+////////////////////////////////////////////////////////////////////////////////
+// Получаем переменные для совместимости со старыми модулями                  //
+////////////////////////////////////////////////////////////////////////////////
+$set = core::$system_set;             // Системные настройки
+$home = core::$system_set['homeurl']; // Домашняя страница
 
-$ip = core::$ip; // Адрес IP
-$agn = core::$user_agent; // User Agent
-$lng = core::$lng; // Фразы языка
-$is_mobile = core::$is_mobile; // Определение мобильного браузера
+$ip = core::$ip;                      // Адрес IP                           //TODO: переделать
+$agn = core::$user_agent;             // User Agent                         //TODO: переделать
+$lng = core::$lng;                    // Фразы языка                        //TODO: переделать
+$is_mobile = core::$is_mobile;        // Определение мобильного браузера    //TODO: переделать
 
-/*
------------------------------------------------------------------
-Получаем пользовательские переменные
------------------------------------------------------------------
-*/
-$user_id = core::$user_id; // Идентификатор пользователя
-$rights = core::$user_rights; // Права доступа
-$datauser = core::$user_data; // Все данные пользователя
-$set_user = core::$user_set; // Пользовательские настройки
-$ban = core::$user_ban; // Бан
-$login = isset($datauser['name']) ? $datauser['name'] : false;
-$kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;
+$user_id = core::$user_id;            // Идентификатор пользователя         //TODO: переделать
+$rights = core::$user_rights;         // Права доступа                      //TODO: переделать
+$datauser = core::$user_data;         // Все данные пользователя            //TODO: переделать
+$set_user = core::$user_set;          // Пользовательские настройки         //TODO: переделать
+$ban = core::$user_ban;               // Бан                                //TODO: переделать
+$login = isset($datauser['name']) ? $datauser['name'] : false;                          //TODO: переделать
+$kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;  //TODO: переделать
 
-/*
------------------------------------------------------------------
-Получаем и фильтруем основные переменные для системы
------------------------------------------------------------------
-*/
-//$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false;
-//$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
-//$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
-//$user = isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : false;
-//$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
-//$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-//$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : false;
+$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
+$mod = isset($_REQUEST['mod']) ? trim($_REQUEST['mod']) : '';
+$user = isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : false;
+$do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
+$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
+$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+
+// Закрытие сайта / редирект гостей на страницу ожидания
 $headmod = isset($headmod) ? $headmod : '';
 
-/*
------------------------------------------------------------------
-Закрытие сайта / редирект гостей на страницу ожидания
------------------------------------------------------------------
-*/
 if (($set['site_access'] == 0 || $set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
     header('Location: ' . $set['homeurl'] . '/closed.php');
-}
-
-/*
------------------------------------------------------------------
-Буфферизация вывода
------------------------------------------------------------------
-*/
-if ($set['gzip'] && @extension_loaded('zlib')) {
-    @ini_set('zlib.output_compression_level', 3);
-    ob_start('ob_gzhandler');
-} else {
-    ob_start();
 }
