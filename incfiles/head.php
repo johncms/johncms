@@ -118,8 +118,8 @@ if ($user_id) {
         $sql .= " `place` = " . $db->quote($headmod) . ", ";
     }
 
-    if ($datauser['browser'] != $agn) {
-        $sql .= " `browser` = " . $db->quote($agn) . ", ";
+    if ($datauser['browser'] != $globals->getUserAgent()) {
+        $sql .= " `browser` = " . $db->quote($globals->getUserAgent()) . ", ";
     }
 
     $totalonsite = $datauser['total_on_site'];
@@ -165,7 +165,7 @@ if ($user_id) {
             `session_id` = '" . $session . "',
             `ip` = '" . core::$ip . "',
             `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `browser` = " . $db->quote($agn) . ",
+            `browser` = " . $db->quote($globals->getUserAgent()) . ",
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
             `place` = " . $db->quote($headmod) . "

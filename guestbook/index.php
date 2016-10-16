@@ -98,7 +98,7 @@ switch ($act) {
             $flood = functions::antiflood();
         } else {
             // Антифлуд для гостей
-            $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '$ip' AND `browser` = " . $db->quote($agn) . " AND `time` > '" . (time() - 60) . "'");
+            $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '$ip' AND `browser` = " . $db->quote($container->get('vars')->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -139,7 +139,7 @@ switch ($act) {
                 $from,
                 $msg,
                 core::$ip,
-                $agn,
+                $container->get('vars')->getUserAgent(),
             ]);
 
             // Фиксируем время последнего поста (антиспам)

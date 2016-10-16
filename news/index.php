@@ -98,7 +98,7 @@ switch ($do) {
                                     $user_id,
                                     $login,
                                     long2ip($ip),
-                                    $agn,
+                                    $container->get('vars')->getUserAgent(),
                                     $text,
                                 ]);
                             }
