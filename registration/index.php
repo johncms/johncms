@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
             $reg_sex,
             core::$ip,
             core::$ip_via_proxy,
-            $agn,
+            $container->get('vars')->getUserAgent(),
             time(),
             time(),
             time(),

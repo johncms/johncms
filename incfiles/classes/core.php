@@ -7,7 +7,6 @@ class core
     public static $ip; // Путь к корневой папке
     public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
     public static $ip_count = []; // Счетчик обращений с IP адреса
-    public static $user_agent; // User Agent
     public static $system_set; // Системные настройки
     public static $lng_iso = 'en'; // Двухбуквенный ISO код языка
     public static $lng_list = []; // Список имеющихся языков
@@ -48,15 +47,6 @@ class core
                     break;
                 }
             }
-        }
-
-        // Получаем UserAgent
-        if (isset($_SERVER["HTTP_X_OPERAMINI_PHONE_UA"]) && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
-            self::$user_agent = 'Opera Mini: ' . htmlspecialchars(mb_substr(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']), 0, 150));
-        } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
-            self::$user_agent = htmlspecialchars(mb_substr(trim($_SERVER['HTTP_USER_AGENT']), 0, 150));
-        } else {
-            self::$user_agent = 'Not Recognised';
         }
 
         // Проверка адреса IP на флуд
@@ -308,6 +298,12 @@ class core
      */
     private function authorize()
     {
+        /** @var Interop\Container\ContainerInterface $container */
+        $container = App::getContainer();
+
+        /** @var Johncms\VarsFactory $globals */
+        $globals = $container->get('vars');
+
         $user_id = false;
         $user_ps = false;
 
@@ -328,7 +324,7 @@ class core
 
             if ($req->rowCount()) {
                 $user_data = $req->fetch();
-                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == self::$user_agent ? true : false;
+                $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == $globals->getUserAgent() ? true : false;
 
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно

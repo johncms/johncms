@@ -68,7 +68,7 @@ if ($flood) {
 }
 
 $headmod = 'forum,' . $id . ',1';
-$agn1 = strtok($agn, ' ');
+$agn1 = $container->get('vars')->getUserAgent();
 $type1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
 switch ($type1['type']) {
