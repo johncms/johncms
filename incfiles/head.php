@@ -6,6 +6,9 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
+/** @var Johncms\VarsFactory $globals */
+$globals = $container->get('vars');
+
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
@@ -134,7 +137,7 @@ if ($user_id) {
 } else {
     // Фиксируем местоположение гостей
     $movings = 0;
-    $session = md5(core::$ip . core::$ip_via_proxy . core::$user_agent);
+    $session = md5(core::$ip . core::$ip_via_proxy . $globals->getUserAgent());
     $req = $db->query("SELECT * FROM `cms_sessions` WHERE `session_id` = " . $db->quote($session) . " LIMIT 1");
 
     if ($req->rowCount()) {

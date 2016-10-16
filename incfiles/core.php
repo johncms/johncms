@@ -33,11 +33,15 @@ new core;
 ////////////////////////////////////////////////////////////////////////////////
 // Получаем переменные для совместимости со старыми модулями                  //
 ////////////////////////////////////////////////////////////////////////////////
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 $set = core::$system_set;             // Системные настройки
 $home = core::$system_set['homeurl']; // Домашняя страница
 
 $ip = core::$ip;                      // Адрес IP                           //TODO: переделать
-$agn = core::$user_agent;             // User Agent                         //TODO: переделать
+$agn = $container->get('vars')->getUserAgent(); // User Agent
 $lng = core::$lng;                    // Фразы языка                        //TODO: переделать
 $is_mobile = core::$is_mobile;        // Определение мобильного браузера    //TODO: переделать
 
