@@ -37,19 +37,22 @@ new core;
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-$set = core::$system_set;             // Системные настройки
-$home = core::$system_set['homeurl']; // Домашняя страница
+/** @var Johncms\VarsFactory $globals */
+$globals = $container->get('vars');
 
-$ip = core::$ip;                      // Адрес IP                           //TODO: переделать
-$agn = $container->get('vars')->getUserAgent(); // User Agent
-$lng = core::$lng;                    // Фразы языка                        //TODO: переделать
-$is_mobile = core::$is_mobile;        // Определение мобильного браузера    //TODO: переделать
+$set = $container->get('config')['johncms']; // Системные настройки
+$home = $set['homeurl'];                     // Домашняя страница
 
-$user_id = core::$user_id;            // Идентификатор пользователя         //TODO: переделать
-$rights = core::$user_rights;         // Права доступа                      //TODO: переделать
-$datauser = core::$user_data;         // Все данные пользователя            //TODO: переделать
-$set_user = core::$user_set;          // Пользовательские настройки         //TODO: переделать
-$ban = core::$user_ban;               // Бан                                //TODO: переделать
+$ip = $globals->getIp();                     // Адрес IP
+$agn = $globals->getUserAgent();             // User Agent
+$lng = core::$lng;                           // Фразы языка                        //TODO: переделать
+$is_mobile = core::$is_mobile;               // Определение мобильного браузера    //TODO: переделать
+
+$user_id = core::$user_id;                   // Идентификатор пользователя         //TODO: переделать
+$rights = core::$user_rights;                // Права доступа                      //TODO: переделать
+$datauser = core::$user_data;                // Все данные пользователя            //TODO: переделать
+$set_user = core::$user_set;                 // Пользовательские настройки         //TODO: переделать
+$ban = core::$user_ban;                      // Бан                                //TODO: переделать
 $login = isset($datauser['name']) ? $datauser['name'] : false;                          //TODO: переделать
 $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;  //TODO: переделать
 

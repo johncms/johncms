@@ -29,37 +29,47 @@ switch ($mod) {
         // Список активных IP, со счетчиком обращений
         $ip_array = array_count_values(core::$ip_count);
         $total = count($ip_array);
+
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
             $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
         }
+
         $end = $start + $kmess;
+
         if ($end > $total) {
             $end = $total;
         }
+
         arsort($ip_array);
         $i = 0;
+
         foreach ($ip_array as $key => $val) {
             $ip_list[$i] = [$key => $val];
             ++$i;
         }
+
         if ($total && core::$user_rights) {
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
             }
+
             for ($i = $start; $i < $end; $i++) {
                 $out = each($ip_list[$i]);
                 $ip = long2ip($out[0]);
-                if ($out[0] == core::$ip) {
+
+                if ($out[0] == $container->get('vars')->getIp()) {
                     echo '<div class="gmenu">';
                 } else {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 }
+
                 echo '[' . $out[1] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-                    '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small>';
-                echo '</div>';
+                    '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
             }
+
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>' .
                     '<p><form action="index.php?act=online&amp;mod=ip" method="post">' .
@@ -67,6 +77,7 @@ switch ($mod) {
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
         }
+
         require_once('../incfiles/end.php');
         exit;
         break;

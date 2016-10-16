@@ -172,8 +172,8 @@ if (isset($_POST['submit'])
             time(),
             $user_id,
             $login,
-            core::$ip,
-            core::$ip_via_proxy,
+            $container->get('vars')->getIp(),
+            $container->get('vars')->getIpViaProxy(),
             $container->get('vars')->getUserAgent(),
             $msg,
         ]);

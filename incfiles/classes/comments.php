@@ -345,8 +345,8 @@ class comments
         // Формируем атрибуты сообщения
         $attributes = [
             'author_name'         => core::$user_data['name'],
-            'author_ip'           => core::$ip,
-            'author_ip_via_proxy' => core::$ip_via_proxy,
+            'author_ip'           => $globals->getIp(),
+            'author_ip_via_proxy' => $globals->getIpViaProxy(),
             'author_browser'      => $globals->getUserAgent(),
         ];
 
