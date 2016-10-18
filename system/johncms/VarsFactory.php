@@ -18,7 +18,13 @@ class VarsFactory
 
     public function getIpViaProxy()
     {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $vars)) {
+        if (filter_has_var(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR')
+            && preg_match_all(
+                '#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s',
+                filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING),
+                $vars
+            )
+        ) {
             foreach ($vars[0] AS $var) {
                 $ip_via_proxy = ip2long($var);
 
@@ -33,10 +39,10 @@ class VarsFactory
 
     public function getUserAgent()
     {
-        if (isset($_SERVER["HTTP_X_OPERAMINI_PHONE_UA"]) && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
-            return 'Opera Mini: ' . htmlspecialchars(mb_substr(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']), 0, 150));
-        } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
-            return htmlspecialchars(mb_substr(trim($_SERVER['HTTP_USER_AGENT']), 0, 150));
+        if (filter_has_var(INPUT_SERVER, 'HTTP_X_OPERAMINI_PHONE_UA') && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
+            return 'Opera Mini: ' . mb_substr(filter_input(INPUT_SERVER, 'HTTP_X_OPERAMINI_PHONE_UA', FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
+        } elseif (filter_has_var(INPUT_SERVER, 'HTTP_USER_AGENT')) {
+            return mb_substr(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
         } else {
             return 'Not Recognised';
         }
