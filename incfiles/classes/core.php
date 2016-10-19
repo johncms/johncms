@@ -65,10 +65,6 @@ class core
         // Проверяем адрес IP на бан
         $this->checkIpBan();
 
-        // Стартуем сессию
-        session_name('SESID');
-        session_start();
-
         // Получаем системные настройки
         $this->system_settings();
 

@@ -55,6 +55,9 @@ class App
     }
 }
 
+session_name('SESID');
+session_start();
+
 $locale = 'ru';
 
 /** @var Zend\I18n\Translator\Translator $translator */
