@@ -14,6 +14,9 @@ require('../incfiles/core.php');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
+/** @var Johncms\EnvFactory $env */
+$env = App::getContainer()->get('env');
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -98,7 +101,7 @@ switch ($act) {
             $flood = functions::antiflood();
         } else {
             // Антифлуд для гостей
-            $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '$ip' AND `browser` = " . $db->quote($container->get('vars')->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
+            $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '" . $env->getIp() . "' AND `browser` = " . $db->quote($env->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -138,8 +141,8 @@ switch ($act) {
                 ($user_id ? $user_id : 0),
                 $from,
                 $msg,
-                $container->get('vars')->getIp(),
-                $container->get('vars')->getUserAgent(),
+                $env->getIp(),
+                $env->getUserAgent(),
             ]);
 
             // Фиксируем время последнего поста (антиспам)

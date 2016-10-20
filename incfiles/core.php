@@ -37,14 +37,14 @@ new core;
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\VarsFactory $globals */
-$globals = $container->get('vars');
+/** @var Johncms\EnvFactory $env */
+$env = $container->get('env');
 
 $set = $container->get('config')['johncms']; // Системные настройки
 $home = $set['homeurl'];                     // Домашняя страница
 
-$ip = $globals->getIp();                     // Адрес IP
-$agn = $globals->getUserAgent();             // User Agent
+$ip = $env->getIp();                         // Адрес IP
+$agn = $env->getUserAgent();                 // User Agent
 $lng = core::$lng;                           // Фразы языка                        //TODO: переделать
 $is_mobile = false;                          // Определение мобильного браузера
 

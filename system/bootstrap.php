@@ -26,6 +26,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\Config;
+use Zend\Stdlib\ArrayObject as ConfigObject;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;
 
@@ -46,9 +47,10 @@ class App
                 $config = ArrayUtils::merge($config, include $file);
             }
 
-            self::$container = new ServiceManager;
-            (new Config($config['dependencies']))->configureServiceManager(self::$container);
-            self::$container->setService('config', $config);
+            $container = new ServiceManager;
+            (new Config($config['dependencies']))->configureServiceManager($container);
+            $container->setService('config', new ConfigObject($config, ConfigObject::ARRAY_AS_PROPS));
+            self::$container = $container;
         }
 
         return self::$container;
@@ -58,10 +60,15 @@ class App
 session_name('SESID');
 session_start();
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+
+
 $locale = 'ru';
 
 /** @var Zend\I18n\Translator\Translator $translator */
-$translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
 //$translator->setCache(App::getContainer()->get(Zend\Cache\Storage\StorageInterface::class));
 $translator->setLocale($locale);
 unset($translator);

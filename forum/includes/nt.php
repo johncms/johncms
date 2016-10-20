@@ -151,6 +151,8 @@ if (isset($_POST['submit'])
             $curator,
         ]);
 
+        /** @var Johncms\EnvFactory $env */
+        $env = App::getContainer()->get('env');
         $rid = $db->lastInsertId();
 
         // Добавляем текст поста
@@ -172,9 +174,9 @@ if (isset($_POST['submit'])
             time(),
             $user_id,
             $login,
-            $container->get('vars')->getIp(),
-            $container->get('vars')->getIpViaProxy(),
-            $container->get('vars')->getUserAgent(),
+            $env->getIp(),
+            $env->getIpViaProxy(),
+            $env->getUserAgent(),
             $msg,
         ]);
 

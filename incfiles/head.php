@@ -6,8 +6,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
-/** @var Johncms\VarsFactory $globals */
-$globals = $container->get('vars');
+/** @var Johncms\EnvFactory $env */
+$env = $container->get('env');
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -118,8 +118,8 @@ if ($user_id) {
         $sql .= " `place` = " . $db->quote($headmod) . ", ";
     }
 
-    if ($datauser['browser'] != $globals->getUserAgent()) {
-        $sql .= " `browser` = " . $db->quote($globals->getUserAgent()) . ", ";
+    if ($datauser['browser'] != $env->getUserAgent()) {
+        $sql .= " `browser` = " . $db->quote($env->getUserAgent()) . ", ";
     }
 
     $totalonsite = $datauser['total_on_site'];
@@ -137,7 +137,7 @@ if ($user_id) {
 } else {
     // Фиксируем местоположение гостей
     $movings = 0;
-    $session = md5($globals->getIp() . $globals->getIpViaProxy() . $globals->getUserAgent());
+    $session = md5($env->getIp() . $env->getIpViaProxy() . $env->getUserAgent());
     $req = $db->query("SELECT * FROM `cms_sessions` WHERE `session_id` = " . $db->quote($session) . " LIMIT 1");
 
     if ($req->rowCount()) {
@@ -163,9 +163,9 @@ if ($user_id) {
         // Если еще небыло в базе, то добавляем запись
         $db->exec("INSERT INTO `cms_sessions` SET
             `session_id` = '" . $session . "',
-            `ip` = '" . $globals->getIp() . "',
-            `ip_via_proxy` = '" . $globals->getIpViaProxy() . "',
-            `browser` = " . $db->quote($globals->getUserAgent()) . ",
+            `ip` = '" . $env->getIp() . "',
+            `ip_via_proxy` = '" . $env->getIpViaProxy() . "',
+            `browser` = " . $db->quote($env->getUserAgent()) . ",
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
             `place` = " . $db->quote($headmod) . "

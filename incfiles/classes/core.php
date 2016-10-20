@@ -4,26 +4,26 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class core
 {
-    public static $ip; // Путь к корневой папке
-    public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
-    public static $ip_count = []; // Счетчик обращений с IP адреса
-    public static $user_agent; // User Agent
-    public static $system_set; // Системные настройки
-    public static $lng_iso = 'en'; // Двухбуквенный ISO код языка
-    public static $lng_list = []; // Список имеющихся языков
-    public static $lng = []; // Массив с фразами языка
+    public static $ip;                        // Путь к корневой папке
+    public static $ip_via_proxy = 0;          // IP адрес за прокси-сервером
+    public static $ip_count = [];             // Счетчик обращений с IP адреса
+    public static $user_agent;                // User Agent
+    public static $system_set;                // Системные настройки
+    public static $lng_iso = 'en';            // Двухбуквенный ISO код языка
+    public static $lng_list = [];             // Список имеющихся языков
+    public static $lng = [];                  // Массив с фразами языка
     public static $deny_registration = false; // Запрет регистрации пользователей
-    public static $core_errors = []; // Ошибки ядра
+    public static $core_errors = [];          // Ошибки ядра
 
-    public static $user_id = false; // Идентификатор пользователя
-    public static $user_rights = 0; // Права доступа
-    public static $user_data = []; // Все данные пользователя
-    public static $user_set = []; // Пользовательские настройки
-    public static $user_ban = []; // Бан
+    public static $user_id = false;           // Идентификатор пользователя
+    public static $user_rights = 0;           // Права доступа
+    public static $user_data = [];            // Все данные пользователя
+    public static $user_set = [];             // Пользовательские настройки
+    public static $user_ban = [];             // Бан
 
-    private $flood_chk = 1; // Включение - выключение функции IP антифлуда
-    private $flood_interval = '120'; // Интервал времени в секундах
-    private $flood_limit = '70'; // Число разрешенных запросов за интервал
+    private $flood_chk = 1;                   // Включение - выключение функции IP антифлуда
+    private $flood_interval = '120';          // Интервал времени в секундах
+    private $flood_limit = '70';              // Число разрешенных запросов за интервал
 
     /**
      * @var Interop\Container\ContainerInterface
@@ -41,11 +41,11 @@ class core
     {
         $this->container = App::getContainer();
 
-        /** @var Johncms\VarsFactory $globals */
-        $globals = $this->container->get('vars');
-        self::$ip = $globals->getIp();
-        self::$ip_via_proxy = $globals->getIpViaProxy();
-        self::$user_agent = $globals->getUserAgent();
+        /** @var Johncms\EnvFactory $env */
+        $env = $this->container->get('env');
+        self::$ip = $env->getIp();
+        self::$ip_via_proxy = $env->getIpViaProxy();
+        self::$user_agent = $env->getUserAgent();
 
         // Проверка адреса IP на флуд
         $this->ip_flood();
@@ -66,7 +66,8 @@ class core
         $this->checkIpBan();
 
         // Получаем системные настройки
-        $this->system_settings();
+        self::$system_set = $this->container->get('config')['johncms'];
+        self::$lng_iso = self::$system_set['lng'];
 
         // Автоочистка системы
         //TODO: перенести после авторизации и добавить чистку данных пользователей
@@ -235,24 +236,6 @@ class core
                     exit;
             }
         }
-    }
-
-    /**
-     * Получаем системные настройки
-     */
-    private function system_settings()
-    {
-        $set = App::getContainer()->get('config')['johncms'];
-
-        if (isset($set['lng']) && !empty($set['lng'])) {
-            self::$lng_iso = $set['lng'];
-        }
-
-        if (isset($set['lng_list'])) {
-            self::$lng_list = unserialize($set['lng_list']);
-        }
-
-        self::$system_set = $set;
     }
 
     /**
