@@ -339,15 +339,15 @@ class comments
         /** @var Interop\Container\ContainerInterface $container */
         $container = App::getContainer();
 
-        /** @var Johncms\VarsFactory $globals */
-        $globals = $container->get('vars');
+        /** @var Johncms\EnvFactory $env */
+        $env = $container->get('env');
 
         // Формируем атрибуты сообщения
         $attributes = [
             'author_name'         => core::$user_data['name'],
-            'author_ip'           => $globals->getIp(),
-            'author_ip_via_proxy' => $globals->getIpViaProxy(),
-            'author_browser'      => $globals->getUserAgent(),
+            'author_ip'           => $env->getIp(),
+            'author_ip_via_proxy' => $env->getIpViaProxy(),
+            'author_browser'      => $env->getUserAgent(),
         ];
 
         // Записываем комментарий в базу

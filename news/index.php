@@ -80,6 +80,8 @@ switch ($do) {
                                     $name,
                                 ]);
 
+                                /** @var Johncms\EnvFactory $env */
+                                $env = App::getContainer()->get('env');
                                 $rid = $db->lastInsertId();
 
                                 $db->prepare('
@@ -97,8 +99,8 @@ switch ($do) {
                                     time(),
                                     $user_id,
                                     $login,
-                                    long2ip($ip),
-                                    $container->get('vars')->getUserAgent(),
+                                    long2ip($env->getIp()),
+                                    $env->getUserAgent(),
                                     $text,
                                 ]);
                             }

@@ -89,8 +89,8 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        /** @var Johncms\VarsFactory $globals */
-        $globals = $container->get('vars');
+        /** @var Johncms\EnvFactory $env */
+        $env = $container->get('env');
 
         $preg = $config['mod_reg'] > 1 ? 1 : 0;
         $db->prepare('
@@ -120,9 +120,9 @@ if (isset($_POST['submit'])) {
             $reg_name,
             $reg_about,
             $reg_sex,
-            $globals->getIp(),
-            $globals->getIpViaProxy(),
-            $globals->getUserAgent(),
+            $env->getIp(),
+            $env->getIpViaProxy(),
+            $env->getUserAgent(),
             time(),
             time(),
             time(),

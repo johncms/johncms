@@ -120,6 +120,9 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
+            /** @var Johncms\EnvFactory $env */
+            $env = App::getContainer()->get('env');
+
             // Добавляем сообщение в базу
             $db->prepare('
               INSERT INTO `forum` SET
@@ -139,9 +142,9 @@ switch ($type1['type']) {
                 time(),
                 $user_id,
                 $login,
-                $container->get('vars')->getIp(),
-                $container->get('vars')->getIpViaProxy(),
-                $container->get('vars')->getUserAgent(),
+                $env->getIp(),
+                $env->getIpViaProxy(),
+                $env->getUserAgent(),
                 $msg,
             ]);
 
@@ -298,6 +301,9 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
+            /** @var Johncms\EnvFactory $env */
+            $env = App::getContainer()->get('env');
+
             // Добавляем сообщение в базу
             $db->prepare('
               INSERT INTO `forum` SET
@@ -317,9 +323,9 @@ switch ($type1['type']) {
                 time(),
                 $user_id,
                 $login,
-                $container->get('vars')->getIp(),
-                $container->get('vars')->getIpViaProxy(),
-                $container->get('vars')->getUserAgent(),
+                $env->getIp(),
+                $env->getIpViaProxy(),
+                $env->getUserAgent(),
                 $msg,
             ]);
 

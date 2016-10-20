@@ -124,10 +124,10 @@ switch ($mod) {
 
             // Проверяем, не попадает ли IP администратора в диапазон
 
-            /** @var Johncms\VarsFactory $globals */
-            $globals = App::getContainer()->get('vars');
+            /** @var Johncms\EnvFactory $env */
+            $env = App::getContainer()->get('env');
 
-            if (($globals->getIp() >= $ip1 && $globals->getIp() <= $ip2) || ($globals->getIpViaProxy() >= $ip1 && $globals->getIpViaProxy() <= $ip2)) {
+            if (($env->getIp() >= $ip1 && $env->getIp() <= $ip2) || ($env->getIpViaProxy() >= $ip1 && $env->getIpViaProxy() <= $ip2)) {
                 $error = _t('Ban impossible. Your own IP address in the range');
             }
 
