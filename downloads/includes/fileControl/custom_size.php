@@ -9,7 +9,7 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 // Скачка изображения в особом размере
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
-$format_file = functions::format($res_down['name']);
+$format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
 $pic_ext = ['gif', 'jpg', 'jpeg', 'png'];
 $array = ['240x320', '320x240', '320x480', '480x360', '360x640', '480x800', '768x1024', '640x960', '1280x800'];
 $size_img = isset($_GET['img_size']) ? abs(intval($_GET['img_size'])) : 0;
@@ -20,7 +20,12 @@ if ($val < 50 || $val > 100) {
     $val = 100;
 }
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || !in_array($format_file, $pic_ext) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4) || empty($array[$size_img])) {
+if (!$req_down->rowCount()
+    || !is_file($res_down['dir'] . '/' . $res_down['name'])
+    || !in_array($format_file, $pic_ext)
+    || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)
+    || empty($array[$size_img])
+) {
     echo _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a>';
     exit;
 }

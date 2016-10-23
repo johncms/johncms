@@ -25,7 +25,7 @@ while ($file = readdir($dir_clean)) {
 closedir($dir_clean);
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
-$format_file = functions::format($res_down['name']);
+$format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($format_file != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
     echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';
@@ -36,7 +36,7 @@ if (isset($_GET['more'])) {
     $more = abs(intval($_GET['more']));
     $req_more = $db->query("SELECT * FROM `download__more` WHERE `id` = '$more' LIMIT 1");
     $res_more = $req_more->fetch();
-    $format_file = functions::format($res_more['name']);
+    $format_file = pathinfo($res_more['name'], PATHINFO_EXTENSION);
 
     if (!$req_more->rowCount() || !is_file($res_down['dir'] . '/' . $res_more['name']) || $format_file != 'txt') {
         echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';

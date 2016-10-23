@@ -35,7 +35,7 @@ if ($res_down['type'] == 3) {
 }
 
 echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]) . '</div>';
-$format_file = functions::format($res_down['name']);
+$format_file = array_pop(explode('.', $res_down['name']));
 
 // Получаем список скриншотов
 $text_info = '';
@@ -224,7 +224,7 @@ if ($total_files_more) {
         $res_file_more['text'] = $res_file_more['rus_name'];
         echo (($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
             Download::downloadLlink([
-                'format' => functions::format($res_file_more['name']),
+                'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,
                 'more'   => $res_file_more['id'],
             ]) . '</div>';

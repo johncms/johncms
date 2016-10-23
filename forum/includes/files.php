@@ -98,7 +98,7 @@ if ($do || isset($_GET['new'])) {
             // Формируем ссылку на файл
             $fls = @filesize('../files/forum/attach/' . $res['filename']);
             $fls = round($fls / 1024, 0);
-            $att_ext = strtolower(functions::format('./files/forum/attach/' . $res['filename']));
+            $att_ext = strtolower(pathinfo('./files/forum/attach/' . $res['filename'], PATHINFO_EXTENSION));
             $pic_ext = [
                 'gif',
                 'jpg',

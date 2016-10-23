@@ -113,7 +113,7 @@ class Download
     {
         global $old, $config, $rights;
         $out = false;
-        $format_file =  functions::format($res_down['name']);
+        $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
         $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
