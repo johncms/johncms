@@ -23,7 +23,7 @@ if ($set_karma['on']) {
                     $error[] = _t('It is forbidden to vote for administration');
                 }
 
-                if ($user['ip'] == $ip) {
+                if ($user['ip'] == $container->get('env')->getIp()) {
                     $error[] = _t('Cheating karma is forbidden');
                 }
 

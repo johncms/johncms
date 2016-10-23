@@ -12,6 +12,7 @@ $env = $container->get('env');
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+$act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 $headmod = isset($headmod) ? $headmod : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
 
