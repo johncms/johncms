@@ -28,7 +28,7 @@ $menu = array(
     ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>')
 );
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
-     '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+     '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`

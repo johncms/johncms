@@ -22,7 +22,7 @@ if (core::$user_rights) {
 }
 
 echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div>' .
-    '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+    '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 switch ($mod) {
     case 'ip':

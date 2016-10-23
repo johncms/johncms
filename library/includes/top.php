@@ -13,7 +13,7 @@ $menu[] = $sort == 'comm' ? '<strong>' . _t('By comments') . '</strong>' : '<a h
 
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Rating articles') . '</div>' .
-    '<div class="topmenu">' . _t('Sort') . ': ' . functions::display_menu($menu) . '</div>';
+    '<div class="topmenu">' . _t('Sort') . ': ' . implode(' | ', $menu) . '</div>';
 
 if ($sort == 'read' || $sort == 'comm') {
     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();

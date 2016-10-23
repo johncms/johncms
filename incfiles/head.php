@@ -212,6 +212,6 @@ if ($user_id) {
     }
 
     if (!empty($list)) {
-        echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . functions::display_menu($list, ', ') . '</div>';
+        echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . implode(', ', $list) . '</div>';
     }
 }

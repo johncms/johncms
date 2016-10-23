@@ -44,7 +44,7 @@ switch ($mod) {
     case 'guest':
         // Топ Гостевой
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Guestbook') . '</div>';
-        echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('postguest');
         echo '<div class="phdr"><a href="../guestbook/index.php">' . _t('Guestbook') . '</a></div>';
         break;
@@ -52,7 +52,7 @@ switch ($mod) {
     case 'comm':
         // Топ комментариев
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Most commentators') . '</div>';
-        echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('komm');
         echo '<div class="phdr"><a href="../index.php">' . _t('Home') . '</a></div>';
         break;
@@ -61,7 +61,7 @@ switch ($mod) {
         // Топ Кармы
         if ($set_karma['on']) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
-            echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
             $req = $db->query("SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9");
 
             if ($req->rowCount()) {
@@ -81,7 +81,7 @@ switch ($mod) {
     default:
         // Топ Форума
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Most active in Forum') . '</div>';
-        echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         echo get_top('postforum');
         echo '<div class="phdr"><a href="../forum/index.php">' . _t('Forum') . '</a></div>';
 }

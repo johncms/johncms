@@ -17,7 +17,7 @@ $menu = [
 ];
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Search IP') . '</div>' .
-    '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
+    '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
     '<form action="index.php?act=search_ip" method="post"><div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . functions::checkout($search) . '" />' .
     '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>' .

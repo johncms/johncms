@@ -39,7 +39,7 @@ if ($total) {
             ];
             echo '<div class="sub">' .
                 (!empty($res['description']) ? '<div class="gray">' . functions::checkout($res['description'], 1, 1) . '</div>' : '') .
-                ($user['id'] == $user_id && empty($ban) || $rights >= 6 ? functions::display_menu($menu) : '') .
+                ($user['id'] == $user_id && empty($ban) || $rights >= 6 ? implode(' | ', $menu) : '') .
                 '</div>';
         }
 

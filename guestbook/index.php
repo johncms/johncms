@@ -308,13 +308,12 @@ switch ($act) {
         echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
 
         if ($rights > 0) {
-            $menu = [];
-            $menu[] = isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>';
-            $menu[] = isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>';
-            if ($rights >= 7) {
-                $menu[] = '<a href="index.php?act=clean">' . _t('Clear') . '</a>';
-            }
-            echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            $menu = [
+                isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
+                isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
+                $rights >= 7 ? '<a href="index.php?act=clean">' . _t('Clear') . '</a>' : '',
+            ];
+            echo '<div class="topmenu">' . implode(' | ', array_filter($menu)) . '</div>';
         }
 
         // Форма ввода нового сообщения

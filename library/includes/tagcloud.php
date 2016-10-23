@@ -11,6 +11,6 @@ $menu[] = $sort == 'cmprang' ? '<strong>' . _t('Sorted by relevance') . '</stron
 
 echo '<div class="phdr">' .
     '<strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Tag Cloud') . '</div>' .
-    '<div class="topmenu">' . _t('Sort') . ': ' . functions::display_menu($menu) . '</div>' .
+    '<div class="topmenu">' . _t('Sort') . ': ' . implode(' | ', $menu) . '</div>' .
     '<div class="gmenu">' . $obj->get_cache($sort) . '</div>' .
     '<p><a href="?">' . _t('To Library') . '</a></p>';

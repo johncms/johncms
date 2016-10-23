@@ -99,7 +99,7 @@ switch ($mod) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo functions::display_user($res, [
                     'header' => '<b>ID:' . $res['id'] . '</b>',
-                    'sub'    => functions::display_menu($link),
+                    'sub'    => implode(' | ', $link),
                 ]);
                 echo '</div>';
                 ++$i;

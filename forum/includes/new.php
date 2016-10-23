@@ -173,7 +173,7 @@ if ($user_id) {
                         ($res['realid'] ? functions::image('rate.gif') : ''),
                         ($res['edit'] ? functions::image('tz.gif') : ''),
                     ];
-                    echo functions::display_menu($icons, '');
+                    echo implode('', array_filter($icons));
                     echo '<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . $res['text'] .
                         '</a>&#160;[' . $colmes1 . ']';
 
@@ -226,7 +226,7 @@ if ($user_id) {
                 ($res['realid'] ? functions::image('rate.gif') : ''),
                 ($res['edit'] ? functions::image('tz.gif') : ''),
             ];
-            echo functions::display_menu($icons, '');
+            echo implode('', array_filter($icons));
             echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';
 
             if ($cpg > 1) {
