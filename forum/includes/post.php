@@ -96,7 +96,7 @@ if ($freq->rowCount()) {
     $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
     echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
     // Предпросмотр изображений
-    $att_ext = strtolower(functions::format('./files/forum/attach/' . $fres['filename']));
+    $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
     $pic_ext = [
         'gif',
         'jpg',

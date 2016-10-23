@@ -14,7 +14,7 @@ $o = opendir("../files/forum/topics");
 
 while ($f = readdir($o)) {
     if ($f != "." && $f != ".." && $f != "index.php" && $f != ".htaccess") {
-        $ff = functions::format($f);
+        $ff = pathinfo($f, PATHINFO_EXTENSION);
         $f1 = str_replace(".$ff", "", $f);
         $a[] = $f;
         $b[] = $f1;
@@ -31,7 +31,7 @@ if (!in_array($n, $b)) {
 }
 
 for ($i = 0; $i < $tt; $i++) {
-    $tf = functions::format($a[$i]);
+    $tf = pathinfo($a[$i], PATHINFO_EXTENSION);
     $tf1 = str_replace(".$tf", "", $a[$i]);
     if ($n == $tf1) {
         header("Location: ../files/forum/topics/$n.$tf");

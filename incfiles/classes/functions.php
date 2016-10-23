@@ -31,12 +31,14 @@ class functions extends core
     public static function checkout($str, $br = 0, $tags = 0)
     {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
+
         if ($br == 1) {
             // Вставляем переносы строк
             $str = nl2br($str);
         } elseif ($br == 2) {
             $str = str_replace("\r\n", ' ', $str);
         }
+
         if ($tags == 1) {
             $str = bbcode::tags($str);
         } elseif ($tags == 2) {
@@ -311,21 +313,6 @@ class functions extends core
         }
 
         return $out;
-    }
-
-    /**
-     * Форматирование имени файла
-     *
-     * @param string $name
-     * @return string
-     */
-    public static function format($name)
-    {
-        $f1 = strrpos($name, ".");
-        $f2 = substr($name, $f1 + 1, 999);
-        $fname = strtolower($f2);
-
-        return $fname;
     }
 
     /**

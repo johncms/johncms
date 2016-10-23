@@ -9,7 +9,7 @@ $db = App::getContainer()->get(PDO::class);
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || functions::format($res_down['name']) != 'mp3' || $rights < 6) {
+if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || pathinfo($res_down['name'], PATHINFO_EXTENSION) != 'mp3' || $rights < 6) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
