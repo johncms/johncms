@@ -47,30 +47,6 @@ class functions extends core
     }
 
     /**
-     * Показ различных счетчиков внизу страницы
-     */
-    public static function display_counters()
-    {
-        global $headmod;
-
-        /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
-        $req = $db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort` ASC');
-
-        if ($req->rowCount()) {
-            while ($res = $req->fetch()) {
-                $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
-                $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
-                $count = ($headmod == 'mainpage') ? $link1 : $link2;
-
-                if (!empty($count)) {
-                    echo $count;
-                }
-            }
-        }
-    }
-
-    /**
      * Показываем дату с учетом сдвига времени
      *
      * @param int $var Время в Unix формате
