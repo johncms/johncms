@@ -84,7 +84,7 @@ switch ($type1['type']) {
             exit;
         }
 
-        $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
+        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
         //Обрабатываем ссылки
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
 
@@ -231,7 +231,7 @@ switch ($type1['type']) {
 
         $shift = ($config['timeshift'] + core::$user_set['timeshift']) * 3600;
         $vr = date("d.m.Y / H:i", $type1['time'] + $shift);
-        $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
+        $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
         $txt = isset($_POST['txt']) ? intval($_POST['txt']) : false;
 
         if (!empty($_POST['citata'])) {
