@@ -17,6 +17,9 @@ $config = $container->get('config')['johncms'];
 /** @var Johncms\EnvFactory $env */
 $env = App::getContainer()->get('env');
 
+/** @var Johncms\ToolsFactory $tools */
+$tools = $container->get('tools');
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -98,7 +101,7 @@ switch ($act) {
 
         if ($user_id) {
             // Антифлуд для зарегистрированных пользователей
-            $flood = functions::antiflood();
+            $flood = $tools->antiflood(core::$user_data);
         } else {
             // Антифлуд для гостей
             $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '" . $env->getIp() . "' AND `browser` = " . $db->quote($env->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");

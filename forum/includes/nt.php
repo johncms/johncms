@@ -14,6 +14,9 @@ if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_
     exit;
 }
 
+/** @var Johncms\ToolsFactory $tools */
+$tools = $container->get('tools');
+
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
@@ -58,7 +61,7 @@ function forum_link($m)
 }
 
 // Проверка на флуд
-$flood = functions::antiflood();
+$flood = $tools->antiflood(core::$user_data);
 
 if ($flood) {
     require('../incfiles/head.php');

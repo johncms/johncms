@@ -14,6 +14,9 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\ToolsFactory $tools */
+$tools = $container->get('tools');
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -44,7 +47,7 @@ switch ($do) {
                     $error[] = _t('You have not entered news text');
                 }
 
-                $flood = functions::antiflood();
+                $flood = $tools->antiflood(core::$user_data);
 
                 if ($flood) {
                     $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);

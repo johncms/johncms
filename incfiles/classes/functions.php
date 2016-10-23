@@ -11,55 +11,8 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class functions
+class functions extends core
 {
-    /**
-     * Антифлуд
-     *
-     * Режимы работы:
-     *   1 - Адаптивный
-     *   2 - День / Ночь
-     *   3 - День
-     *   4 - Ночь
-     *
-     * @return int|bool
-     */
-    public static function antiflood(array $userData)
-    {
-        $config = unserialize(App::getContainer()->get('config')['johncms']['antiflood']);
-
-        switch ($config['mode']) {
-            case 1: // Адаптивный режим
-                /** @var PDO $db */
-                $db = App::getContainer()->get(PDO::class);
-
-                $adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0 AND `lastdate` > ' . (time() - 300))->fetchColumn();
-                $limit = $adm > 0 ? $config['day'] : $config['night'];
-                break;
-
-            case 3: // День
-                $limit = $config['day'];
-                break;
-
-            case 4: // Ночь
-                $limit = $config['night'];
-                break;
-
-            default: // По умолчанию день / ночь
-                $c_time = date('G', time());
-                $limit = $c_time > $config['day'] && $c_time < $config['night'] ? $config['day'] : $config['night'];
-        }
-
-        // Для Администрации задаем лимит в 4 секунды
-        if ($userData['rights'] > 0) {
-            $limit = 4;
-        }
-
-        $flood = $userData['lastpost'] + $limit - time();
-
-        return $flood > 0 ? $flood : false;
-    }
-
     /**
      * Маскировка ссылок в тексте
      *
