@@ -301,7 +301,7 @@ switch ($mod) {
         }
 
         if (!empty($menu)) {
-            echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         }
 
         if ($user['id'] != $user_id) {
@@ -359,7 +359,7 @@ switch ($mod) {
                 }
 
                 if (!empty($menu)) {
-                    echo '<div>' . functions::display_menu($menu) . '</div>';
+                    echo '<div>' . implode(' | ', $menu) . '</div>';
                 }
 
                 echo '</div></div>';

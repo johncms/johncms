@@ -272,7 +272,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         // Выводим верхнюю панель навигации
         echo '<a id="up"></a><p>' . counters::forumNew(1) . '</p>' .
-            '<div class="phdr">' . functions::display_menu($tree) . '</div>' .
+            '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
             '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
         switch ($type1['type']) {
@@ -345,7 +345,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             ($res['realid'] ? functions::image('rate.gif') : ''),
                             ($res['edit'] ? functions::image('tz.gif') : ''),
                         ];
-                        echo functions::display_menu($icons, '');
+                        echo implode('', array_filter($icons));
                         echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> [' . $colmes . ']';
 
                         if ($cpg > 1) {
@@ -721,7 +721,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             ($rights >= 7 && $res['close'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
                             ($res['close'] == 1 ? '' : '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>'),
                         ];
-                        echo functions::display_menu($menu);
+                        echo implode(' | ', array_filter($menu));
 
                         // Показываем, кто удалил пост
                         if ($res['close']) {

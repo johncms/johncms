@@ -198,7 +198,7 @@ if ($set_karma['on']) {
                 (!$type ? '<b>' . _t('Negative') . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Negative') . '</a>'),
             ];
             echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Karma') . '</div>' .
-                '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
+                '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
                 '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
             $karma = $user['karma_plus'] - $user['karma_minus'];
 

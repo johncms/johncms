@@ -82,7 +82,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     if (!empty($menu)) {
-        echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+        echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
     }
 
     //Уведомление о дне рожденья

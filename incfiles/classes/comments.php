@@ -306,7 +306,7 @@ class comments
                         $user_arg = [
                             'header' => ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>',
                             'body'   => $text,
-                            'sub'    => functions::display_menu($menu),
+                            'sub'    => implode(' | ', array_filter($menu)),
                             'iphide' => (core::$user_rights ? false : true),
                         ];
                         echo functions::display_user($res, $user_arg);

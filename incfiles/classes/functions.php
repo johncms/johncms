@@ -87,19 +87,6 @@ class functions extends core
     }
 
     /**
-     * Отображение различных меню
-     *
-     * @param array  $val
-     * @param string $delimiter Разделитель между пунктами
-     * @param string $end_space Выводится в конце
-     * @return string
-     */
-    public static function display_menu($val = [], $delimiter = ' | ', $end_space = '')
-    {
-        return implode($delimiter, array_diff($val, [''])) . $end_space;
-    }
-
-    /**
      * Постраничная навигация
      * За основу взята доработанная функция от форума SMF 2.x.x
      *
@@ -166,7 +153,7 @@ class functions extends core
 
         $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
         $place = explode(",", $place);
-        $placelist = parent::load_lng('places');
+        $placelist = []; //TODO: Написать список местоположений
 
         if (array_key_exists($place[0], $placelist)) {
             if ($place[0] == 'profile') {

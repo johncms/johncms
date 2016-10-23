@@ -16,7 +16,7 @@ $menu = [
     ($mod == 'topic' ? '<b>' . _t('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _t('Themes') . '</a>'),
     ($mod == 'comments' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _t('Comments') . '</a>'),
 ];
-echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>' .
+echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
 
 switch ($mod) {

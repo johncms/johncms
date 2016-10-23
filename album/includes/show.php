@@ -137,7 +137,7 @@ if ($total) {
         echo '<div class="sub">';
 
         if ($user['id'] == $user_id || core::$user_rights >= 6) {
-            echo functions::display_menu([
+            echo implode(' | ', [
                 '<a href="?act=image_edit&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>',
                 '<a href="?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Move') . '</a>',
                 '<a href="?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Delete') . '</a>',

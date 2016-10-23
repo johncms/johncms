@@ -190,7 +190,7 @@ switch ($act) {
                 // Показываем историю запросов
                 echo '<div class="topmenu">' .
                     '<b>' . _t('Search History') . '</b> <span class="red"><a href="search.php?act=reset">[x]</a></span><br />' .
-                    functions::display_menu($history_list) .
+                    implode(' | ', $history_list) .
                     '</div>';
             } elseif ($to_history) {
                 $history[] = $search;

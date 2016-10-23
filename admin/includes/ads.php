@@ -317,7 +317,7 @@ switch ($mod) {
             ($type == 2 ? _t('Over the counter') : '<a href="index.php?act=ads&amp;type=2">' . _t('Over the counter') . '</a>'),
             ($type == 3 ? _t('Under counter') : '<a href="index.php?act=ads&amp;type=3">' . _t('Under counter') . '</a>'),
         ];
-        echo '<div class="topmenu">' . functions::display_menu($array_menu) . '</div>';
+        echo '<div class="topmenu">' . implode(' | ', $array_menu) . '</div>';
 
         $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '$type'")->fetchColumn();
 
@@ -355,7 +355,7 @@ switch ($mod) {
                     '<a href="index.php?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? _t('Show') : _t('Hide')) . '</a>',
                 ];
                 echo '<div class="sub">' .
-                    '<div>' . functions::display_menu($menu) . '</div>' .
+                    '<div>' . implode(' | ', $menu) . '</div>' .
                     '<p><span class="gray">' . _t('Start date') . ':</span> ' . functions::display_date($res['time']) . '<br>' .
                     '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br>' .
                     '<span class="gray">' . _t('Show') . ':</span>&nbsp;' . $array_show[$res['view']];

@@ -29,7 +29,7 @@ $menu = [
 switch ($mod) {
     case 'mail':
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
-            '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
         $set_mail_user = unserialize($datauser['set_mail']);
 
@@ -54,7 +54,7 @@ switch ($mod) {
     case 'forum':
         // Настройки Форума
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
-            '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         $set_forum = [];
         $set_forum = unserialize($datauser['set_forum']);
 
@@ -104,7 +104,7 @@ switch ($mod) {
 
     default:
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('General setting') . '</div>' .
-            '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
+            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
         if (isset($_POST['submit'])) {
             // Записываем новые настройки, заданные пользователем
