@@ -14,33 +14,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class functions extends core
 {
     /**
-     * Маскировка ссылок в тексте
-     *
-     * @param string $var
-     * @return string
-     */
-    public static function antilink($var)
-    {
-        $var = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $var);
-        $replace = [
-            '.ru'   => '***',
-            '.com'  => '***',
-            '.biz'  => '***',
-            '.cn'   => '***',
-            '.in'   => '***',
-            '.net'  => '***',
-            '.org'  => '***',
-            '.info' => '***',
-            '.mobi' => '***',
-            '.wen'  => '***',
-            '.kmx'  => '***',
-            '.h2m'  => '***',
-        ];
-
-        return strtr($var, $replace);
-    }
-
-    /**
      * Фильтрация строк
      *
      * @param string $str

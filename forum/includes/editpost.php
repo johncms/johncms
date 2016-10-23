@@ -176,7 +176,7 @@ if (!$error) {
 
         default:
             // Редактирование поста
-            $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
+            $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {

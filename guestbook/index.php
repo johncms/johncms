@@ -385,7 +385,24 @@ switch ($act) {
                 } else {
                     // Для гостей обрабатываем имя и фильтруем ссылки
                     $res['name'] = functions::checkout($res['name']);
-                    $post = functions::antilink(functions::checkout($res['text'], 0, 2));
+                    $post = functions::checkout($res['text'], 0, 2);
+                    $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $post);
+                    $replace = [
+                        '.ru'   => '***',
+                        '.com'  => '***',
+                        '.biz'  => '***',
+                        '.cn'   => '***',
+                        '.in'   => '***',
+                        '.net'  => '***',
+                        '.org'  => '***',
+                        '.info' => '***',
+                        '.mobi' => '***',
+                        '.wen'  => '***',
+                        '.kmx'  => '***',
+                        '.h2m'  => '***',
+                    ];
+
+                    $post = strtr($post, $replace);
                 }
 
                 if ($res['edit_count']) {
