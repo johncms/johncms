@@ -203,8 +203,8 @@ switch ($mod) {
         $ip1 = isset($_POST['ip1']) ? intval($_POST['ip1']) : '';
         $ip2 = isset($_POST['ip2']) ? intval($_POST['ip2']) : '';
         $ban_term = isset($_POST['term']) ? intval($_POST['term']) : 1;
-        $ban_url = isset($_POST['url']) ? functions::check($_POST['url']) : '';
-        $reason = isset($_POST['reason']) ? functions::check($_POST['reason']) : '';
+        $ban_url = isset($_POST['url']) ? htmlspecialchars(trim($_POST['url'])) : '';
+        $reason = isset($_POST['reason']) ? htmlspecialchars(trim($_POST['reason'])) : '';
 
         if (!$ip1 || !$ip2) {
             echo functions::display_error(_t('Invalid IP'),

@@ -421,7 +421,7 @@ if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
     $out .= isset($_SESSION['error']) ? $_SESSION['error'] : '';
     $out .= '<div class="gmenu">' .
         '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
-        ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? functions::check($_POST['nick']) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
+        ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
     $out .= bbcode::auto_bb('form', 'text');
     $out .= '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>';

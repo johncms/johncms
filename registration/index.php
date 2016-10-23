@@ -77,8 +77,8 @@ if (isset($_POST['submit'])) {
     // Проверка переменных
     if (empty($error)) {
         $pass = md5(md5($reg_pass));
-        $reg_name = functions::check(mb_substr($reg_name, 0, 50));
-        $reg_about = functions::check(mb_substr($reg_about, 0, 1000));
+        $reg_name = htmlspecialchars(mb_substr($reg_name, 0, 50));
+        $reg_about = htmlspecialchars(mb_substr($reg_about, 0, 1000));
         // Проверка, занят ли ник
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ?');
         $stmt->execute([$lat_nick]);

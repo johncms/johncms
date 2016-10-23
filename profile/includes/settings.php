@@ -147,7 +147,7 @@ switch ($mod) {
                 $theme_list[] = array_pop(explode('/', dirname($val)));
             }
 
-            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? functions::check($_POST['skin']) : $config['skindef'];
+            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
 
             // Устанавливаем язык
             $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;

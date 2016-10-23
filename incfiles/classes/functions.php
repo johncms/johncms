@@ -609,23 +609,4 @@ class functions extends core
 
         return strtr($str, $replace);
     }
-
-    /*
-    -----------------------------------------------------------------
-    Старая функция проверки переменных.
-    В новых разработках не применять!
-    Вместо данной функции использовать checkin()
-    -----------------------------------------------------------------
-    */
-    public static function check($str)//TODO: на удаление
-    {
-        /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
-
-        $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
-        $str = nl2br($str);
-        $str = $db->quote($str);
-
-        return $str;
-    }
 }
