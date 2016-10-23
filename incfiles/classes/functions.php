@@ -11,7 +11,7 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class functions extends core //TODO: убрать extends
+class functions
 {
     /**
      * Антифлуд
@@ -24,7 +24,7 @@ class functions extends core //TODO: убрать extends
      *
      * @return int|bool
      */
-    public static function antiflood()
+    public static function antiflood(array $userData)
     {
         $config = unserialize(App::getContainer()->get('config')['johncms']['antiflood']);
 
@@ -50,17 +50,14 @@ class functions extends core //TODO: убрать extends
                 $limit = $c_time > $config['day'] && $c_time < $config['night'] ? $config['day'] : $config['night'];
         }
 
-        if (self::$user_rights > 0) {
+        // Для Администрации задаем лимит в 4 секунды
+        if ($userData['rights'] > 0) {
             $limit = 4;
-        } // Для Администрации задаем лимит в 4 секунды
-
-        $flood = self::$user_data['lastpost'] + $limit - time();
-
-        if ($flood > 0) {
-            return $flood;
-        } else {
-            return false;
         }
+
+        $flood = $userData['lastpost'] + $limit - time();
+
+        return $flood > 0 ? $flood : false;
     }
 
     /**
