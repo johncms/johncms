@@ -24,10 +24,10 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         exit;
     }
 
-    $name = isset($_POST['name']) ? mb_substr(functions::checkin($_POST['name']), 0, 100) : '';
-    $announce = isset($_POST['announce']) ? mb_substr(functions::checkin($_POST['announce']), 0, 500) : '';
-    $text = isset($_POST['text']) ? functions::checkin($_POST['text']) : '';
-    $tag = isset($_POST['tags']) ? functions::checkin($_POST['tags']) : '';
+    $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
+    $announce = isset($_POST['announce']) ? mb_substr(trim($_POST['announce']), 0, 500) : '';
+    $text = isset($_POST['text']) ? trim($_POST['text']) : '';
+    $tag = isset($_POST['tags']) ? trim($_POST['tags']) : '';
 
     if (isset($_POST['submit'])) {
         $err = [];

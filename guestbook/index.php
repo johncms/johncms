@@ -67,8 +67,8 @@ switch ($act) {
         // Добавление нового поста
         $admset = isset($_SESSION['ga']) ? 1 : 0; // Задаем куда вставляем, в Админ клуб (1), или в Гастивуху (0)
         // Принимаем и обрабатываем данные
-        $name = isset($_POST['name']) ? functions::checkin(mb_substr(trim($_POST['name']), 0, 20)) : '';
-        $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
+        $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 20) : '';
+        $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $from = $user_id ? $login : $name;
@@ -169,7 +169,7 @@ switch ($act) {
                 && isset($_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
-                $reply = isset($_POST['otv']) ? functions::checkin(mb_substr(trim($_POST['otv']), 0, 5000)) : '';
+                $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
                 $db->exec("UPDATE `guest` SET
                     `admin` = '$login',
                     `otvet` = " . $db->quote($reply) . ",
@@ -208,7 +208,7 @@ switch ($act) {
             ) {
                 $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='$id'")->fetch();
                 $edit_count = $res['edit_count'] + 1;
-                $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
+                $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
 
                 $db->prepare('
                   UPDATE `guest` SET

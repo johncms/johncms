@@ -14,24 +14,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class functions extends core
 {
     /**
-     * Фильтрация строк
-     *
-     * @param string $str
-     * @return string
-     */
-    public static function checkin($str)
-    {
-        if (function_exists('iconv')) {
-            $str = iconv("UTF-8", "UTF-8", $str);
-        }
-
-        // Фильтруем невидимые символы
-        $str = preg_replace('/[^\P{C}\n]+/u', '', $str);
-
-        return trim($str);
-    }
-
-    /**
      * Обработка текстов перед выводом на экран
      *
      * @param string $str
@@ -678,7 +660,6 @@ class functions extends core
         $db = App::getContainer()->get(PDO::class);
 
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
-        $str = self::checkin($str);
         $str = nl2br($str);
         $str = $db->quote($str);
 
