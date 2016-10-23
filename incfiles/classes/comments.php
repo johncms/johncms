@@ -409,7 +409,8 @@ class comments
             $error[] = core::$lng['error_message_short'];
         } else {
             // Проверка на флуд
-            $flood = functions::antiflood();
+            $flood = \App::getContainer()->get('tools')->antiflood(\core::$user_data);
+
             if ($flood) {
                 $error[] = core::$lng['error_flood'] . ' ' . $flood . '&#160;' . core::$lng['seconds'];
             }

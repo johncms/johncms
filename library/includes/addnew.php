@@ -6,12 +6,16 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
+/** @var Johncms\ToolsFactory $tools */
+$tools = $container->get('tools');
+
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
-    $flood = functions::antiflood();
+    $flood = $tools->antiflood(core::$user_data);
+
     if ($flood) {
         require('../incfiles/head.php');
 

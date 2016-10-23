@@ -12,6 +12,9 @@ $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
+/** @var Johncms\ToolsFactory $tools */
+$tools = $container->get('tools');
+
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
@@ -112,7 +115,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
         $error[] = _t('You cannot send messages to yourself');
     }
 
-    $flood = functions::antiflood();
+    $flood = $tools->antiflood(core::$user_data);
 
     if ($flood) {
         $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d sec.'), $flood);
