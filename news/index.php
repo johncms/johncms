@@ -36,7 +36,7 @@ switch ($do) {
 
             if (isset($_POST['submit'])) {
                 $error = [];
-                $name = isset($_POST['name']) ? functions::check($_POST['name']) : false;
+                $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : false;
                 $text = isset($_POST['text']) ? trim($_POST['text']) : false;
 
                 if (!$name) {
@@ -182,7 +182,7 @@ switch ($do) {
                     $error[] = _t('You have not entered news text');
                 }
 
-                $name = functions::check($_POST['name']);
+                $name = htmlspecialchars(trim($_POST['name']));
                 $text = trim($_POST['text']);
 
                 if (!$error) {

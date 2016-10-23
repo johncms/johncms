@@ -148,7 +148,7 @@ switch ($mod) {
             }
 
             echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Preview') . '</div>' .
-                '<div class="menu"><p><h3>' . _t('Title') . '</h3><b>' . functions::check($name) . '</b></p>' .
+                '<div class="menu"><p><h3>' . _t('Title') . '</h3><b>' . htmlspecialchars($name) . '</b></p>' .
                 '<p><h3>' . _t('Option 1') . '</h3>' . $link1 . '</p>' .
                 '<p><h3>' . _t('Option 2') . '</h3>' . $link2 . '</p></div>' .
                 '<div class="rmenu">' . _t('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.') . '</div>' .

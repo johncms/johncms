@@ -55,7 +55,7 @@ if ($rights == 3 || $rights >= 6) {
             $rz1 = $db->query("SELECT * FROM `forum` WHERE id='" . $ms['refid'] . "'")->fetch();
             $other = $rz1['refid'];
         } else {
-            $other = intval(functions::check($_GET['other']));
+            $other = intval($_GET['other']);
         }
 
         $fr1 = $db->query("SELECT * FROM `forum` WHERE id='" . $other . "'")->fetch();
