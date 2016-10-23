@@ -19,7 +19,21 @@ echo '<div>' . counters::online() . '</div>' .
     '<p><b>' . $set['copyright'] . '</b></p>';
 
 // Счетчики каталогов
-functions::display_counters();
+/** @var PDO $db */
+$db = App::getContainer()->get(PDO::class);
+$req = $db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort` ASC');
+
+if ($req->rowCount()) {
+    while ($res = $req->fetch()) {
+        $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
+        $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
+        $count = ($headmod == 'mainpage') ? $link1 : $link2;
+
+        if (!empty($count)) {
+            echo $count;
+        }
+    }
+}
 
 // Рекламный блок сайта
 if (!empty($cms_ads[3])) {
