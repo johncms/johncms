@@ -12,7 +12,7 @@ $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
-/** @var Johncms\ToolsFactory $tools */
+/** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var PDO $db */

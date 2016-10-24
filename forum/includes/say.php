@@ -14,7 +14,7 @@ if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_
     exit;
 }
 
-/** @var Johncms\ToolsFactory $tools */
+/** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var PDO $db */
@@ -123,7 +123,7 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\EnvFactory $env */
+            /** @var Johncms\Environment $env */
             $env = App::getContainer()->get('env');
 
             // Добавляем сообщение в базу
@@ -304,7 +304,7 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\EnvFactory $env */
+            /** @var Johncms\Environment $env */
             $env = App::getContainer()->get('env');
 
             // Добавляем сообщение в базу

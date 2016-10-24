@@ -4,7 +4,7 @@ namespace Johncms;
 
 use Interop\Container\ContainerInterface;
 
-class ToolsFactory
+class Tools
 {
     /**
      * @var ContainerInterface

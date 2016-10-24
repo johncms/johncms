@@ -14,10 +14,10 @@ require('../incfiles/core.php');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
-/** @var Johncms\EnvFactory $env */
+/** @var Johncms\Environment $env */
 $env = App::getContainer()->get('env');
 
-/** @var Johncms\ToolsFactory $tools */
+/** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var Zend\I18n\Translator\Translator $translator */

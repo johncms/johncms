@@ -14,7 +14,7 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\ToolsFactory $tools */
+/** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var Zend\I18n\Translator\Translator $translator */
@@ -83,7 +83,7 @@ switch ($do) {
                                     $name,
                                 ]);
 
-                                /** @var Johncms\EnvFactory $env */
+                                /** @var Johncms\Environment $env */
                                 $env = App::getContainer()->get('env');
                                 $rid = $db->lastInsertId();
 

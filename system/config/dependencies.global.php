@@ -4,8 +4,8 @@ return [
     'dependencies' => [
         'factories' => [
             PDO::class => Johncms\PdoFactory::class,
-            'env'      => Johncms\EnvFactory::class,
-            'tools'    => Johncms\ToolsFactory::class,
+            'env'      => Johncms\Environment::class,
+            'tools'    => Johncms\Tools::class,
         ],
     ],
 ];
