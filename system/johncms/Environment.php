@@ -4,7 +4,7 @@ namespace Johncms;
 
 use Interop\Container\ContainerInterface;
 
-class EnvFactory
+class Environment
 {
     private $ip;
     private $ipViaProxy;

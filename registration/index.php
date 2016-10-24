@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        /** @var Johncms\EnvFactory $env */
+        /** @var Johncms\Environment $env */
         $env = $container->get('env');
 
         $preg = $config['mod_reg'] > 1 ? 1 : 0;

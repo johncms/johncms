@@ -41,7 +41,7 @@ class core
     {
         $this->container = App::getContainer();
 
-        /** @var Johncms\EnvFactory $env */
+        /** @var Johncms\Environment $env */
         $env = $this->container->get('env');
         self::$ip = $env->getIp();
         self::$ip_via_proxy = $env->getIpViaProxy();

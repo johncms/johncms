@@ -6,7 +6,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
-/** @var Johncms\ToolsFactory $tools */
+/** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var PDO $db */

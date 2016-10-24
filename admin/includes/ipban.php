@@ -124,7 +124,7 @@ switch ($mod) {
 
             // Проверяем, не попадает ли IP администратора в диапазон
 
-            /** @var Johncms\EnvFactory $env */
+            /** @var Johncms\Environment $env */
             $env = App::getContainer()->get('env');
 
             if (($env->getIp() >= $ip1 && $env->getIp() <= $ip2) || ($env->getIpViaProxy() >= $ip1 && $env->getIpViaProxy() <= $ip2)) {

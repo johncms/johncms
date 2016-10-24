@@ -136,8 +136,8 @@ class counters
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)")->fetchColumn();
 
             if ($mod) {
-                return '<a href="index.php?act=new&amp;do=period">' . core::$lng['show_for_period'] . '</a>' .
-                ($total ? '<br><a href="index.php?act=new">' . core::$lng['unread'] . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+                return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period') . '</a>' .
+                ($total ? '<br><a href="index.php?act=new">' . _t('Unread') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
             } else {
                 return $total;
             }

@@ -339,7 +339,7 @@ class comments
         /** @var Interop\Container\ContainerInterface $container */
         $container = App::getContainer();
 
-        /** @var Johncms\EnvFactory $env */
+        /** @var Johncms\Environment $env */
         $env = $container->get('env');
 
         // Формируем атрибуты сообщения
