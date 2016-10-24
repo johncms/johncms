@@ -76,9 +76,6 @@ class core
         // Авторизация пользователей
         $this->authorize();
 
-        // Доступ к сайту
-        $this->site_access();
-
         // Определяем язык системы
         $this->lng_detect();
 
@@ -415,25 +412,5 @@ class core
 //            $this->db->exec("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
 //            $this->db->query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
 //        }
-    }
-
-    /**
-     * Закрытие сайта / выгоняем всех онлайн юзеров и редиректим их на страницу ожидания
-     */
-    private function site_access()
-    {
-        if (self::$system_set['site_access'] == 0 && (self::$user_id && self::$user_rights < 9))   // выгоняем всех, кроме SV!
-        {
-            self::user_unset();
-            session_destroy();
-            header('Location: ' . self::$system_set['homeurl'] . '/closed.php');
-        }
-
-        if (self::$system_set['site_access'] == 1 && (self::$user_id && self::$user_rights == 0))   // выгоняем всех, кроме администрации
-        {
-            self::user_unset();
-            session_destroy();
-            header('Location: ' . self::$system_set['homeurl'] . '/closed.php');
-        }
     }
 }
