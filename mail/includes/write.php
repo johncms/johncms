@@ -423,7 +423,7 @@ if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
         '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
-    $out .= bbcode::auto_bb('form', 'text');
+    $out .= $container->get('bbcode')->buttons('form', 'text');
     $out .= '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . _t('Sent') . '"/></p>' .

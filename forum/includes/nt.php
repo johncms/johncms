@@ -236,7 +236,7 @@ if (isset($_POST['submit'])
         '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
-    echo '</p><p>' . bbcode::auto_bb('form', 'msg');
+    echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 

@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . bbcode::auto_bb('form', 'text') . '<textarea rows="5" cols="20" name="text">' . functions::checkout($row['text'])
+            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form', 'text') . '<textarea rows="5" cols="20" name="text">' . functions::checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000
                 ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
