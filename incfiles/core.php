@@ -46,7 +46,3 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 
 // Закрытие сайта / редирект гостей на страницу ожидания
 $headmod = isset($headmod) ? $headmod : '';
-
-if (($set['site_access'] == 0 || $set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
-    header('Location: ' . $set['homeurl'] . '/closed.php');
-}
