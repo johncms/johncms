@@ -193,7 +193,7 @@ switch ($type1['type']) {
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . bbcode::auto_bb('form', 'msg');
+            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
@@ -393,7 +393,7 @@ switch ($type1['type']) {
             }
 
             echo '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . bbcode::auto_bb('form', 'msg');
+            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 

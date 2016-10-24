@@ -20,6 +20,9 @@ $env = App::getContainer()->get('env');
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+/** @var Johncms\Bbcode $bbcode */
+$bbcode = $container->get('bbcode');
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -188,7 +191,7 @@ switch ($act) {
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . functions::checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
-                    '<p><h3>' . _t('Reply') . '</h3>' . bbcode::auto_bb('form', 'otv') .
+                    '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
                     '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
@@ -235,7 +238,7 @@ switch ($act) {
                     '<div class="rmenu">' .
                     '<form name="form" action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
                     '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
-                echo bbcode::auto_bb('form', 'msg');
+                echo $bbcode->buttons('form', 'msg');
                 echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
@@ -327,7 +330,7 @@ switch ($act) {
             }
 
             echo '<b>' . _t('Message') . '</b> <small>(max 5000)</small>:<br>';
-            echo bbcode::auto_bb('form', 'msg');
+            echo $bbcode->buttons('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br>';
 
             if (!$user_id) {

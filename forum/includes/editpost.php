@@ -217,7 +217,7 @@ if (!$error) {
                 }
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
-                echo bbcode::auto_bb('form', 'msg');
+                echo App::getContainer()->get('bbcode')->buttons('form', 'msg');
                 echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : functions::checkout($_POST['msg'])) . '</textarea><br>';
 
                 echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .

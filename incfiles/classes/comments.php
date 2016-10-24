@@ -383,7 +383,7 @@ class comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
         (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
         '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-        '</p><p>' . bbcode::auto_bb('form', 'message') .
+        '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
         '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
         (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br>' : '') .
         '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';

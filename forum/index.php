@@ -567,7 +567,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>' .
-                            bbcode::auto_bb('form1', 'msg') .
+                            $container->get('bbcode')->buttons('form1', 'msg') .
                             '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
@@ -762,7 +762,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>';
-                        echo bbcode::auto_bb('form2', 'msg');
+                        echo $container->get('bbcode')->buttons('form2', 'msg');
                         echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 
