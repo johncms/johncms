@@ -6,8 +6,14 @@ $textl = _t('Mail');
 require_once('../incfiles/head.php');
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Bbcode $bbcode */
+$bbcode = $container->get('bbcode');
 
 $total = $db->query("
 	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)
@@ -56,7 +62,7 @@ if ($total) {
                 $text = functions::smileys($text, $row['rights'] ? 1 : 0);
             }
 
-            $text = bbcode::notags($text);
+            $text = $bbcode->notags($text);
             $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст

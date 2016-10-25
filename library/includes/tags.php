@@ -27,7 +27,7 @@ if (isset($_GET['tag'])) {
                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')
                 . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
-                . '<div>' . functions::checkout(bbcode::notags($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn())) . '</div></div>'
+                . '<div>' . functions::checkout($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
                 . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
                 . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
                 . '<div>' . ($obj->get_all_stat_tags() ? _t('Tags') . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'

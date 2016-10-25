@@ -156,50 +156,6 @@ class bbcode extends core //TODO: убрать extends
     }
 
     /**
-     * Удаление bbCode из текста
-     *
-     * @param string $var
-     * @return string
-     */
-    static function notags($var = '')
-    {
-        $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
-        $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
-        $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
-        $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
-        $replace = [
-            '[small]'  => '',
-            '[/small]' => '',
-            '[big]'    => '',
-            '[/big]'   => '',
-            '[green]'  => '',
-            '[/green]' => '',
-            '[red]'    => '',
-            '[/red]'   => '',
-            '[blue]'   => '',
-            '[/blue]'  => '',
-            '[b]'      => '',
-            '[/b]'     => '',
-            '[i]'      => '',
-            '[/i]'     => '',
-            '[u]'      => '',
-            '[/u]'     => '',
-            '[s]'      => '',
-            '[/s]'     => '',
-            '[quote]'  => '',
-            '[/quote]' => '',
-            '[php]'    => '',
-            '[/php]'   => '',
-            '[c]'      => '',
-            '[/c]'     => '',
-            '[*]'      => '',
-            '[/*]'     => '',
-        ];
-
-        return strtr($var, $replace);
-    }
-
-    /**
      * Подсветка кода
      *
      * @param string $var

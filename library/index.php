@@ -242,7 +242,7 @@ if (in_array($act, $array_includes)) {
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
                                 . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
-                                . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
+                                . '<div><small>' . functions::checkout($row['announce'], 0, 0) . '</small></div></div>';
 
                             // Описание к статье
                             $obj = new Hashtags($row['id']);

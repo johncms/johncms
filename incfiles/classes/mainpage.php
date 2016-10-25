@@ -66,7 +66,7 @@ class mainpage
                     if ($this->settings['tags']) {
                         $text = bbcode::tags($text);
                     } else {
-                        $text = bbcode::notags($text);
+                        $text = \App::getContainer()->get('bbcode')->notags($text);
                     }
 
                     // Обрабатываем смайлы
