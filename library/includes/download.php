@@ -4,23 +4,31 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 ob_end_clean();
 ob_start();
+
 if (isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2'])) {
     $type = $_GET['type'];
 } else {
     redir404();
 }
+
 $image_lib = file_exists('../files/library/images/orig/' . $id . '.png')
     ? chunk_split(base64_encode(file_get_contents('../files/library/images/orig/' . $id . '.png')))
     : '';
 
 $out = '';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Bbcode $bbcode */
+$bbcode = $container->get('bbcode');
 
 switch ($type) {
     case 'txt':
-        $out .= bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn());
+        $out .= $bbcode->notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn());
         break;
 
     case 'fb2':
@@ -64,7 +72,7 @@ switch ($type) {
         $out .= '<p>' . $db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn() . '</p>' . PHP_EOL;
         $out .= '</title>' . PHP_EOL . '<section>';
         $out .= '<p>' . str_replace('<p></p>', '<empty-line/>',
-                str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn()))) . '</p>' . PHP_EOL;
+                str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', $bbcode->notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn()))) . '</p>' . PHP_EOL;
         $out .= '</section>' . PHP_EOL . '</body>' . PHP_EOL;
 
         if ($image_lib) {

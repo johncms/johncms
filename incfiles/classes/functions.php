@@ -42,7 +42,7 @@ class functions extends core
         if ($tags == 1) {
             $str = bbcode::tags($str);
         } elseif ($tags == 2) {
-            $str = bbcode::notags($str);
+            $str = \App::getContainer()->get('bbcode')->notags($str);
         }
 
         return trim($str);
