@@ -19,7 +19,7 @@ require('../incfiles/head.php');
 Проверяем права доступа для редактирования Профиля
 -----------------------------------------------------------------
 */
-if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
+if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
     echo functions::display_error($lng_profile['error_rights']);
     require('../incfiles/end.php');
     exit;
