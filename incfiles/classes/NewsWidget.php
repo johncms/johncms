@@ -11,7 +11,7 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class mainpage
+class NewsWidget
 {
     public $news;         // Текст новостей
     public $newscount;    // Общее к-во новостей
@@ -19,15 +19,16 @@ class mainpage
     private $settings = [];
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $db;
 
     public function __construct()
     {
-        global $set;
-        $this->db = App::getContainer()->get(PDO::class);
-        $this->settings = unserialize($set['news']);
+        /** @var Interop\Container\ContainerInterface $container */
+        $container = \App::getContainer();
+        $this->db = $container->get(\PDO::class);
+        $this->settings = unserialize($container->get('config')['johncms']['news']);
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();
     }

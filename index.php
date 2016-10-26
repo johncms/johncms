@@ -4,9 +4,12 @@ define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
 
+$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
+
 if (isset($_GET['err'])) {
     $act = 404;
 }
