@@ -21,6 +21,7 @@ return [
         'mod_down_comm' => 1,
         'meta_key'      => 'johncms',
         'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
+        'news'          => '',
         'skindef'       => 'default',
     ],
 ];
