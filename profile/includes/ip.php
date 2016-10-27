@@ -8,7 +8,7 @@ require('../system/head.php');
 // Проверяем права доступа
 if (!$rights && $user_id != $user['id']) {
     echo functions::display_error(_t('Access forbidden'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

@@ -18,7 +18,7 @@ switch ($mod) {
         // Подтверждаем регистрацию выбранного пользователя
         if (!$id) {
             echo functions::display_error(_t('Wrong data'));
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -36,7 +36,7 @@ switch ($mod) {
         // Удаляем регистрацию выбранного пользователя
         if (!$id) {
             echo functions::display_error(_t('Wrong data'));
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -73,7 +73,7 @@ switch ($mod) {
                 '<a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         } else {
             echo functions::display_error(_t('Wrong data'));
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
         break;

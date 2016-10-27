@@ -6,7 +6,7 @@ if ($rights == 3 || $rights >= 6) {
     if (empty($_GET['id'])) {
         require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 
@@ -19,7 +19,7 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 }

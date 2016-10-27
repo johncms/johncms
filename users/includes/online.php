@@ -78,7 +78,7 @@ switch ($mod) {
             }
         }
 
-        require_once('../incfiles/end.php');
+        require_once('../system/end.php');
         exit;
         break;
 

@@ -75,7 +75,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         if (!$req->rowCount()) {
             echo functions::display_error(_t('User does not exists'));
-            require_once("../incfiles/end.php");
+            require_once("../system/end.php");
             exit;
         }
 
@@ -151,4 +151,4 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 }
 
-require_once(ROOTPATH . 'incfiles/end.php');
+require_once(ROOTPATH . 'system/end.php');

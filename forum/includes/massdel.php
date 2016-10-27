@@ -25,7 +25,7 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         if (empty($_POST['delch'])) {
             echo '<p>' . _t('You did not choose something to delete') . '<br><a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a></p>';
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 

@@ -6,7 +6,7 @@ require('../system/head.php');
 
 if (!$user_id || !$id) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -181,7 +181,7 @@ if (!$error) {
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
                     echo functions::display_error(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    require('../incfiles/end.php');
+                    require('../system/end.php');
                     exit;
                 }
 

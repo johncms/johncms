@@ -10,7 +10,7 @@ $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '
 
 if ($topic_vote == 0 || core::$user_rights < 7) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 } else {
     $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
@@ -44,4 +44,4 @@ if ($topic_vote == 0 || core::$user_rights < 7) {
     echo '<p><a href="index.php?id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

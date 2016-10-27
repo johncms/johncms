@@ -45,4 +45,4 @@ while ($res_down = $req_down->fetch()) {
 }
 
 echo '<div class="phdr"><a href="?">' . _t('Downloads') . '</a></div>';
-require '../incfiles/end.php';
+require '../system/end.php';

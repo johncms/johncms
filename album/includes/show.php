@@ -6,7 +6,7 @@ require('../system/head.php');
 
 if (!$al) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
 
 if (!$req->rowCount()) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -52,7 +52,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
 ) {
     // Доступ закрыт
     echo functions::display_error(_t('Access forbidden'), '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a>');
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 } elseif ($album['access'] == 2
     && $user['id'] != $user_id
@@ -74,7 +74,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
             '<p><input type="submit" name="submit" value="' . _t('Login') . '"/></p>' .
             '</div></form>' .
             '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a></div>';
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 }

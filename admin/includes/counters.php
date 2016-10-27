@@ -106,7 +106,7 @@ switch ($mod) {
         // Удаление счетчика
         if (!$id) {
             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -116,7 +116,7 @@ switch ($mod) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
                 echo '<p>' . _t('Counter deleted') . '<br><a href="index.php?act=counters">' . _t('Continue') . '</a></p>';
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             } else {
                 echo '<form action="index.php?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
@@ -127,7 +127,7 @@ switch ($mod) {
             }
         } else {
             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
         break;
@@ -143,7 +143,7 @@ switch ($mod) {
 
             if (empty($name) || empty($link1)) {
                 echo functions::display_error(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
 
@@ -183,7 +183,7 @@ switch ($mod) {
                     $switch = 1;
                 } else {
                     echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-                    require('../incfiles/end.php');
+                    require('../system/end.php');
                     exit;
                 }
             }
@@ -217,7 +217,7 @@ switch ($mod) {
 
         if (empty($name) || empty($link1)) {
             echo functions::display_error(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-            require_once('../incfiles/end.php');
+            require_once('../system/end.php');
             exit;
         }
 
@@ -227,7 +227,7 @@ switch ($mod) {
 
             if (mysql_num_rows($req) != 1) {
                 echo functions::display_error(_t('Wrong data'));
-                require_once('../incfiles/end.php');
+                require_once('../system/end.php');
                 exit;
             }
 

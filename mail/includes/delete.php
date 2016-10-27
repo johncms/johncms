@@ -18,7 +18,7 @@ if ($id) {
     if (!$req->rowCount()) {
         //Выводим ошибку
         echo functions::display_error(_t('Message does not exist'));
-        require_once("../incfiles/end.php");
+        require_once("../system/end.php");
         exit;
     }
 

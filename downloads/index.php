@@ -52,7 +52,7 @@ if (!$config['mod_down'] && $rights < 7) {
 if ($error) {
     require_once('../system/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require_once("../incfiles/end.php");
+    require_once("../system/end.php");
     exit;
 }
 
@@ -353,5 +353,5 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     echo '</p>';
 
-    require_once('../incfiles/end.php');
+    require_once('../system/end.php');
 }

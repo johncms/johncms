@@ -13,7 +13,7 @@ $res_down = $req_down->fetch();
 if ($rights == 4 || $rights >= 6) {
     if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
         echo '<a href="?">' . _t('Downloads') . '</a>';
-        require '../incfiles/end.php';
+        require '../system/end.php';
         exit;
     }
 
@@ -49,5 +49,5 @@ if ($rights == 4 || $rights >= 6) {
             '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 
-    require '../incfiles/end.php';
+    require '../system/end.php';
 }

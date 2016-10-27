@@ -18,7 +18,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
-    require '../incfiles/end.php';
+    require '../system/end.php';
     exit;
 }
 
@@ -29,7 +29,7 @@ if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
 
     if ($rights < 6 && $rights != 4) {
-        require '../incfiles/end.php';
+        require '../system/end.php';
         exit;
     }
 }
@@ -273,4 +273,4 @@ if ($rights > 6 || $rights == 4) {
     echo '</div></p>';
 }
 
-require '../incfiles/end.php';
+require '../system/end.php';

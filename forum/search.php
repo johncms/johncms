@@ -214,4 +214,4 @@ switch ($act) {
         echo '<p>' . ($search ? '<a href="search.php">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

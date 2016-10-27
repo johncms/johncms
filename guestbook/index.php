@@ -46,7 +46,7 @@ require('../system/head.php');
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (!$config['mod_guest'] && $rights < 7) {
     echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -452,4 +452,4 @@ switch ($act) {
         break;
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

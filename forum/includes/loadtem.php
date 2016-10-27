@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if (empty($_GET['n'])) {
     require('../system/head.php');
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -26,7 +26,7 @@ $tt = count($a);
 if (!in_array($n, $b)) {
     require_once('../system/head.php');
     echo functions::display_error(_t('Wrong data'));
-    require_once('../incfiles/end.php');
+    require_once('../system/end.php');
     exit;
 }
 

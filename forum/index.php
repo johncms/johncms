@@ -104,7 +104,7 @@ if (!$config['mod_forum'] && $rights < 7) {
 if ($error) {
     require('../system/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -190,7 +190,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         if (!$type->rowCount()) {
             // Если темы не существует, показываем ошибку
             echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -407,7 +407,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Если тема помечена для удаления, разрешаем доступ только администрации
                 if ($rights < 6 && $type1['close'] == 1) {
                     echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?id=' . $type1['refid'] . '">' . _t('Go to Section') . '</a></p></div>';
-                    require('../incfiles/end.php');
+                    require('../system/end.php');
                     exit;
                 }
 
@@ -905,4 +905,4 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 }
 
-require_once('../incfiles/end.php');
+require_once('../system/end.php');

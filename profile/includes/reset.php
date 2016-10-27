@@ -15,5 +15,5 @@ if ($rights >= 7 && $rights > $user['rights']) {
     echo '<div class="gmenu"><p>' . sprintf(_t('For user %s default settings were set.'), $user['name'])
         . '<br />'
         . '<a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></p></div>';
-    require_once('../incfiles/end.php');
+    require_once('../system/end.php');
 }

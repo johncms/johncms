@@ -66,6 +66,6 @@ if ($rights == 4 || $rights >= 6) {
             '<form act="?act=folder_delete&amp;id=' . $id . '" method="post"><input type="submit" name="delete" value="' . _t('Delete') . '"></form>' .
             '</p></div>' .
             '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
-        require_once('../incfiles/end.php');
+        require_once('../system/end.php');
     }
 }

@@ -151,4 +151,4 @@ if (core::$user_id) {
     }
 }
 
-require('incfiles/end.php');
+require('system/end.php');

@@ -32,4 +32,4 @@ switch ($act) {
         include 'incfiles/mainmenu.php';
 }
 
-require('incfiles/end.php');
+require('system/end.php');

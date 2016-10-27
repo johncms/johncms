@@ -123,4 +123,4 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 7.0.0</b></div>';
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

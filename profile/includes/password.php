@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 // Проверяем права доступа
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
     echo functions::display_error(_t('Access forbidden'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

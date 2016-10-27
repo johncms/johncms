@@ -17,7 +17,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($rights < 6 && $rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
-    require '../incfiles/end.php';
+    require '../system/end.php';
     exit;
 }
 
@@ -216,4 +216,4 @@ if ($edit) {
     }
 }
 
-require '../incfiles/end.php';
+require '../system/end.php';

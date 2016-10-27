@@ -25,7 +25,7 @@ if ($id) {
         $textl = _t('Mail');
         require_once('../system/head.php');
         echo functions::display_error(_t('User does not exists'));
-        require_once("../incfiles/end.php");
+        require_once("../system/end.php");
         exit;
     }
 
@@ -79,7 +79,7 @@ if ($id) {
 
         echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-        require_once('../incfiles/end.php');
+        require_once('../system/end.php');
         exit;
     }
 }

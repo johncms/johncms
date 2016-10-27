@@ -12,7 +12,7 @@ if ($rights == 4 || $rights >= 6) {
 
     if (!$req->rowCount() || !is_dir($res['dir'])) {
         echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
-        require '../incfiles/end.php';
+        require '../system/end.php';
         exit;
     }
 
@@ -165,4 +165,4 @@ if ($rights == 4 || $rights >= 6) {
     }
 }
 
-require '../incfiles/end.php';
+require '../system/end.php';

@@ -52,7 +52,7 @@ if ($rights == 4 || $rights >= 6) {
         if ($error) {
             echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
             echo '<div class="rmenu"><p>' . implode('<br>', $error) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
-            require_once('../incfiles/end.php');
+            require_once('../system/end.php');
             exit;
         }
 
@@ -117,5 +117,5 @@ if ($rights == 4 || $rights >= 6) {
     }
 
     echo '<a href="?">' . _t('Back') . '</a></div>';
-    require_once '../incfiles/end.php';
+    require_once '../system/end.php';
 }

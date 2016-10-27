@@ -62,7 +62,7 @@ if ($c || $s || $t) {
         $caption .= $res['text'];
     } else {
         echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 }

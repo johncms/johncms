@@ -26,7 +26,7 @@ for ($it = 0; $it < $totalt; $it++) {
 
 if (!$id) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -41,7 +41,7 @@ $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND
 
 if (!$req->rowCount()) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

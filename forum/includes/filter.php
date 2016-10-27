@@ -6,7 +6,7 @@ require('../system/head.php');
 
 if (!$id) {
     echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ switch ($do) {
 
         if (empty($_POST['users'])) {
             echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 

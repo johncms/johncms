@@ -95,4 +95,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require_once '../incfiles/end.php';
+require_once '../system/end.php';

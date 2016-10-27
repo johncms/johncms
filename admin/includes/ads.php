@@ -24,7 +24,7 @@ switch ($mod) {
                 $res = $req->fetch();
             } else {
                 echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
         } else {
@@ -75,7 +75,7 @@ switch ($mod) {
 
             if ($error) {
                 echo functions::display_error($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
 

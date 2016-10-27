@@ -156,4 +156,4 @@ switch ($act) {
         break;
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

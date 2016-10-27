@@ -16,7 +16,7 @@ switch ($mod) {
         // Непрочитанные комментарии в личных альбомах
         if (!core::$user_id || core::$user_id != $user['id']) {
             echo functions::display_error(_t('Wrong data'));
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
