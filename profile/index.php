@@ -20,7 +20,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
     require('../incfiles/end.php');
     exit;
@@ -30,7 +30,7 @@ if (!$user_id) {
 $user = functions::get_user(isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : 0);
 
 if (!$user) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('This User does not exists'));
     require('../incfiles/end.php');
     exit;
@@ -63,7 +63,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
     $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты

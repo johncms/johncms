@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'forumfiles';
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {

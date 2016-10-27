@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
     // Массовое удаление выбранных постов форума
-    require('../incfiles/head.php');
+    require('../system/head.php');
 
     if (isset($_GET['yes'])) {
         $dc = $_SESSION['dc'];

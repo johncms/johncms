@@ -7,7 +7,7 @@ $db = App::getContainer()->get(PDO::class);
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Список посетителей. у которых есть фотографии
 switch ($mod) {

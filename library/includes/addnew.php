@@ -17,7 +17,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     $flood = $tools->antiflood(core::$user_data);
 
     if ($flood) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
 
         echo functions::display_error(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood), '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../incfiles/end.php');

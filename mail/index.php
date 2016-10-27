@@ -64,7 +64,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     require('includes/' . $mods[$key] . '.php');
 } else {
     $textl = _t('Mail');
-    require_once('../incfiles/head.php');
+    require_once('../system/head.php');
     echo '<div class="phdr"><b>' . _t('Contacts') . '</b></div>';
 
     /** @var PDO $db */

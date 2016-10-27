@@ -8,7 +8,7 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
-    require '../incfiles/head.php';
+    require '../system/head.php';
 
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';

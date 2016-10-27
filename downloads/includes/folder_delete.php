@@ -59,7 +59,7 @@ if ($rights == 4 || $rights >= 6) {
         rmdir($res['dir']);
         header('location: ?id=' . $res['refid']);
     } else {
-        require_once('../incfiles/head.php');
+        require_once('../system/head.php');
         echo '<div class="phdr"><b>' . _t('Delete Folder') . '</b></div>' .
             '<div class="rmenu"><p>' .
             _t('Do you really want to delete?') . '<br>' .

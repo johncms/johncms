@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id : 'forumwho';
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 
 if (!$user_id) {
     header('Location: index.php');

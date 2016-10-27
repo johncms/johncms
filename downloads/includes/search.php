@@ -9,7 +9,7 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
-require_once '../incfiles/head.php';
+require_once '../system/head.php';
 require 'classes/download.php';
 
 // Форма для поиска

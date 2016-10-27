@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Settings');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id) {

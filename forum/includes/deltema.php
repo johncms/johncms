@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -17,7 +17,7 @@ if ($rights == 3 || $rights >= 6) {
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$req->rowCount()) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Topic has been deleted or does not exists'));
         require('../incfiles/end.php');
         exit;
@@ -51,7 +51,7 @@ if ($rights == 3 || $rights >= 6) {
         header('Location: index.php?id=' . $res['refid']);
     } else {
         // Меню выбора режима удаления темы
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .

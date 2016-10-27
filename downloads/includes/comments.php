@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
-require '../incfiles/head.php';
+require '../system/head.php';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

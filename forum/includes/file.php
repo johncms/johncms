@@ -25,7 +25,7 @@ if ($id) {
     }
 
     if ($error) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../incfiles/end.php');
         exit;

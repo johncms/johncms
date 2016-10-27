@@ -10,7 +10,7 @@ if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
 }
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Change Password');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 switch ($mod) {
     case 'change':

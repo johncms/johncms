@@ -17,7 +17,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('Forum search');
-require('../incfiles/head.php');
+require('../system/head.php');
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */

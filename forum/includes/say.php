@@ -8,7 +8,7 @@ $config = $container->get('config')['johncms'];
 
 // Закрываем доступ для определенных ситуаций
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('Access forbidden'));
     require('../incfiles/end.php');
     exit;
@@ -64,7 +64,7 @@ function forum_link($m)
 $flood = $tools->antiflood(core::$user_data);
 
 if ($flood) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../incfiles/end.php');
     exit;
@@ -78,7 +78,7 @@ switch ($type1['type']) {
         // Добавление простого сообщения
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $rights < 7) {
             // Проверка, закрыта ли тема
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
@@ -96,7 +96,7 @@ switch ($type1['type']) {
         ) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                require('../incfiles/head.php');
+                require('../system/head.php');
                 echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
@@ -108,7 +108,7 @@ switch ($type1['type']) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
-                    require('../incfiles/head.php');
+                    require('../system/head.php');
                     echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
@@ -177,7 +177,7 @@ switch ($type1['type']) {
 
             exit;
         } else {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             $msg_pre = functions::checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
@@ -216,14 +216,14 @@ switch ($type1['type']) {
         $th1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$th'")->fetch();
 
         if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
         }
 
         if ($type1['user_id'] == $user_id) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../incfiles/end.php');
             exit;
@@ -268,7 +268,7 @@ switch ($type1['type']) {
             && $_POST['token'] == $_SESSION['token']
         ) {
             if (empty($_POST['msg'])) {
-                require('../incfiles/head.php');
+                require('../system/head.php');
                 echo functions::display_error(_t('You have not entered the message'), '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 require('../incfiles/end.php');
                 exit;
@@ -276,7 +276,7 @@ switch ($type1['type']) {
 
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                require('../incfiles/head.php');
+                require('../system/head.php');
                 echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../incfiles/end.php');
                 exit;
@@ -289,7 +289,7 @@ switch ($type1['type']) {
                 $res = $req->fetch();
 
                 if ($msg == $res['text']) {
-                    require('../incfiles/head.php');
+                    require('../system/head.php');
                     echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../incfiles/end.php');
                     exit;
@@ -358,7 +358,7 @@ switch ($type1['type']) {
             exit;
         } else {
             $textl = _t('Forum');
-            require('../incfiles/head.php');
+            require('../system/head.php');
             $qt = " $type1[text]";
             $msg_pre = functions::checkout($msg, 1, 1);
 
@@ -410,7 +410,7 @@ switch ($type1['type']) {
         break;
 
     default:
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../incfiles/end.php');
 }

@@ -9,7 +9,7 @@ $config = $container->get('config')['johncms'];
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-require '../incfiles/head.php';
+require '../system/head.php';
 
 // Дополнительные файлы
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");

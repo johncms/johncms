@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'userban';
-require('../incfiles/head.php');
+require('../system/head.php');
 $ban = isset($_GET['ban']) ? intval($_GET['ban']) : 0;
 
 /** @var Interop\Container\ContainerInterface $container */

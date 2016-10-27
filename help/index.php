@@ -16,7 +16,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 $textl = 'FAQ';
 $headmod = 'faq';
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {

@@ -41,7 +41,7 @@ if (isset($_SESSION['ga']) && $rights < 1) {
 
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (!$config['mod_guest'] && $rights < 7) {

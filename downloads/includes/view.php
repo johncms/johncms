@@ -9,7 +9,7 @@ $config = $container->get('config')['johncms'];
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-require '../incfiles/head.php';
+require '../system/head.php';
 require 'classes/download.php';
 
 // Выводим файл

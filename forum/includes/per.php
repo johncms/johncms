@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -16,7 +16,7 @@ if ($rights == 3 || $rights >= 6) {
     $typ = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$typ->rowCount()) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -26,7 +26,7 @@ if ($rights == 3 || $rights >= 6) {
         $razd = isset($_POST['razd']) ? abs(intval($_POST['razd'])) : false;
 
         if (!$razd) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('Wrong data'));
             require('../incfiles/end.php');
             exit;
@@ -35,7 +35,7 @@ if ($rights == 3 || $rights >= 6) {
         $typ1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$razd' AND `type` = 'r'");
 
         if (!$typ1->rowCount()) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('Wrong data'));
             require('../incfiles/end.php');
             exit;
@@ -49,7 +49,7 @@ if ($rights == 3 || $rights >= 6) {
     } else {
         // Перенос темы
         $ms = $typ->fetch();
-        require('../incfiles/head.php');
+        require('../system/head.php');
 
         if (empty($_GET['other'])) {
             $rz1 = $db->query("SELECT * FROM `forum` WHERE id='" . $ms['refid'] . "'")->fetch();

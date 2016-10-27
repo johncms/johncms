@@ -7,7 +7,7 @@ $db = App::getContainer()->get(PDO::class);
 
 // Закладки
 $textl = _t('Favorites');
-require '../incfiles/head.php';
+require '../system/head.php';
 
 if (!$user_id) {
     echo _t('For registered users only');

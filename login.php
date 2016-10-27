@@ -4,7 +4,7 @@ define('_IN_JOHNCMS', 1);
 
 $headmod = 'login';
 require('incfiles/core.php');
-require('incfiles/head.php');
+require('system/head.php');
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 

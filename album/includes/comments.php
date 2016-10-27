@@ -12,7 +12,7 @@ if ($req_obj->rowCount()) {
     // Получаем данные владельца Альбома
     $owner = functions::get_user($res_obj['user_id']);
     if (!$owner) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('User does not exists'));
         require('../incfiles/end.php');
         exit;
@@ -24,7 +24,7 @@ if ($req_obj->rowCount()) {
 
     if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 7) || ($res_a['access'] == 2 && $rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
         // Если доступ закрыт
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Access forbidden')) .
             '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>';
         require('../incfiles/end.php');
@@ -73,7 +73,7 @@ if ($req_obj->rowCount()) {
     }
 
     // Показываем комментарии
-    require('../incfiles/head.php');
+    require('../system/head.php');
     $comm = new comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев

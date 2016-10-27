@@ -22,7 +22,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('News');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);

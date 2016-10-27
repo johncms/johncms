@@ -19,7 +19,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $db = $container->get(PDO::class);
 
 $textl = _t('Password recovery');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 function passgen($length)
 {

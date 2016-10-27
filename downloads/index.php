@@ -50,7 +50,7 @@ if (!$config['mod_down'] && $rights < 7) {
 }
 
 if ($error) {
-    require_once('../incfiles/head.php');
+    require_once('../system/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require_once("../incfiles/end.php");
     exit;
@@ -131,7 +131,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     $db = $container->get(PDO::class);
 
     require __DIR__ . '/classes/download.php';
-    require '../incfiles/head.php';
+    require '../system/head.php';
 
     if (!$config['mod_down']) {
         echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';

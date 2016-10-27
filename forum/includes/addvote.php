@@ -8,7 +8,7 @@ if ($rights == 3 || $rights >= 6) {
 
     $topic = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `id`='$id' AND `edit` != '1'")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id'")->fetchColumn();
-    require_once('../incfiles/head.php');
+    require_once('../system/head.php');
 
     if ($topic_vote != 0 || $topic == 0) {
         echo functions::display_error(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>');

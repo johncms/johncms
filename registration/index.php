@@ -14,7 +14,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 $textl = _t('Registration');
 $headmod = 'registration';
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$config['mod_reg'] || core::$user_id) {

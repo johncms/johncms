@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Administration');
 $headmod = "admlist";
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

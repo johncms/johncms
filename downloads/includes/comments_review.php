@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require_once '../incfiles/head.php';
+require_once '../system/head.php';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

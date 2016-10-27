@@ -18,7 +18,7 @@ switch ($act) {
     case '404':
         // Сообщение об ошибке 404
         $headmod = 'error404';
-        require('incfiles/head.php');
+        require('system/head.php');
         echo functions::display_error($lng['error_404']);
         break;
 
@@ -28,7 +28,7 @@ switch ($act) {
             unset($_SESSION['ref']);
         }
         $headmod = 'mainpage';
-        require('incfiles/head.php');
+        require('system/head.php');
         include 'incfiles/mainmenu.php';
 }
 

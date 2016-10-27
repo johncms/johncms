@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'office';
 $textl = _t('My Account');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Проверяем права доступа
 if ($user['id'] != $user_id) {

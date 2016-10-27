@@ -159,7 +159,7 @@ class scaner
         '../incfiles/db.php',
         '../incfiles/end.php',
         '../incfiles/func.php',
-        '../incfiles/head.php',
+        '../system/head.php',
         '../incfiles/index.php',
         '../incfiles/lib/mp3.php',
         '../incfiles/lib/pclerror.lib.php',
