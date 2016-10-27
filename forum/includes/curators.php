@@ -12,7 +12,7 @@ if (core::$user_rights >= 7) {
 
     if (!$req->rowCount() || $rights < 7) {
         echo functions::display_error(_t('Topic has been deleted or does not exists'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 

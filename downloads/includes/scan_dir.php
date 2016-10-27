@@ -287,5 +287,5 @@ if ($rights == 4 || $rights >= 6) {
             echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 
-    require '../incfiles/end.php';
+    require '../system/end.php';
 }

@@ -8,7 +8,7 @@ if (!$adm) {
 if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         echo functions::display_error(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require_once('../incfiles/end.php');
+        require_once('../system/end.php');
         exit;
     }
 

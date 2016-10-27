@@ -14,7 +14,7 @@ if ($user_id) {
 
     if ($topic_vote == 0 || $vote_user > 0 || $topic == 0) {
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 

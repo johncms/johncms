@@ -12,7 +12,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    require '../incfiles/end.php';
+    require '../system/end.php';
     exit;
 }
 
@@ -74,4 +74,4 @@ if ($rights == 4 || $rights >= 6) {
     }
 }
 
-require '../incfiles/end.php';
+require '../system/end.php';

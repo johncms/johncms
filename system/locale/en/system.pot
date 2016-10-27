@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: incfiles/mainmenu.php\n"
 "X-Poedit-SearchPath-1: system/head.php\n"
-"X-Poedit-SearchPath-2: incfiles/end.php\n"
+"X-Poedit-SearchPath-2: system/end.php\n"
 "X-Poedit-SearchPath-3: login.php\n"
 "X-Poedit-SearchPath-4: go.php\n"
 "X-Poedit-SearchPath-5: exit.php\n"
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Go to Link"
 msgstr ""
 
-#: incfiles/end.php:12 system/head.php:82 login.php:10
+#: system/end.php:12 system/head.php:82 login.php:10
 msgid "Home"
 msgstr ""
 

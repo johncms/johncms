@@ -26,7 +26,7 @@ switch ($mod) {
             if (empty($get_ip)) {
                 echo functions::display_error(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-                require_once('../incfiles/end.php');
+                require_once('../system/end.php');
                 exit;
             }
 
@@ -117,7 +117,7 @@ switch ($mod) {
 
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                     echo '<p><a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
-                    require_once('../incfiles/end.php');
+                    require_once('../system/end.php');
                     exit;
                 }
             }
@@ -209,7 +209,7 @@ switch ($mod) {
         if (!$ip1 || !$ip2) {
             echo functions::display_error(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-            require_once('../incfiles/end.php');
+            require_once('../system/end.php');
             exit;
         }
 
@@ -262,7 +262,7 @@ switch ($mod) {
             if (!$get_ip) {
                 echo functions::display_error(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-                require_once('../incfiles/end.php');
+                require_once('../system/end.php');
                 exit;
             }
 
@@ -270,14 +270,14 @@ switch ($mod) {
         } else {
             echo functions::display_error(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-            require_once('../incfiles/end.php');
+            require_once('../system/end.php');
             exit;
         }
 
         if (!$req->rowCount()) {
             echo '<div class="menu"><p>' . _t('This address not in the database') . '</p></div>';
             echo '<div class="phdr"><a href="index.php?act=ipban">' . _t('Back') . '</a></div>';
-            require_once('../incfiles/end.php');
+            require_once('../system/end.php');
             exit;
         } else {
             $res = $req->fetch();

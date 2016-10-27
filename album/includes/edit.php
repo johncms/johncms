@@ -21,7 +21,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
             $access = $res['access'];
         } else {
             echo functions::display_error(_t('Wrong data'));
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
     } else {
@@ -116,7 +116,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
 
             echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
     }

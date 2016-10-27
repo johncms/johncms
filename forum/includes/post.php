@@ -6,7 +6,7 @@ require('../system/head.php');
 
 if (empty($_GET['id'])) {
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

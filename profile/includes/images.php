@@ -10,7 +10,7 @@ if (($user_id != $user['id'] && $rights < 7)
 ) {
     // Если не хватает прав, выводим ошибку
     echo functions::display_error(_t('You cannot edit profile of higher administration'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

@@ -23,7 +23,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 if (!$user_id && !$config['active']) {
     require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -66,4 +66,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
 }
 
-require_once('../incfiles/end.php');
+require_once('../system/end.php');

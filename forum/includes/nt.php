@@ -10,7 +10,7 @@ $config = $container->get('config')['johncms'];
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {
     require('../system/head.php');
     echo functions::display_error(_t('Access forbidden'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -66,7 +66,7 @@ $flood = $tools->antiflood(core::$user_data);
 if ($flood) {
     require('../system/head.php');
     echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -75,7 +75,7 @@ $req_r = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' L
 if (!$req_r->rowCount()) {
     require('../system/head.php');
     echo functions::display_error(_t('Wrong data'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -209,7 +209,7 @@ if (isset($_POST['submit'])
         // Выводим сообщение об ошибке
         require('../system/head.php');
         echo functions::display_error($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 } else {

@@ -70,4 +70,4 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         '<div class="phdr"><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></div>';
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

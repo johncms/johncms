@@ -6,7 +6,7 @@ if ($rights == 3 || $rights >= 6) {
     if (!$id) {
         require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 
@@ -15,7 +15,7 @@ if ($rights == 3 || $rights >= 6) {
     if ($ms[type] != "t") {
         require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 
@@ -25,7 +25,7 @@ if ($rights == 3 || $rights >= 6) {
         if (!$nn) {
             require('../system/head.php');
             echo functions::display_error(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -35,7 +35,7 @@ if ($rights == 3 || $rights >= 6) {
         if ($pt->rowCount()) {
             require('../system/head.php');
             echo functions::display_error(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 

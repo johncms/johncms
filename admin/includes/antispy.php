@@ -157,7 +157,7 @@ class scaner
         '../incfiles/classes/sitemap.php',
         '../incfiles/core.php',
         '../incfiles/db.php',
-        '../incfiles/end.php',
+        '../system/end.php',
         '../incfiles/func.php',
         '../system/head.php',
         '../incfiles/index.php',

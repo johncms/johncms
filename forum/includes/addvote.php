@@ -12,7 +12,7 @@ if ($rights == 3 || $rights >= 6) {
 
     if ($topic_vote != 0 || $topic == 0) {
         echo functions::display_error(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>');
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 

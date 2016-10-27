@@ -189,4 +189,4 @@ if ($req->rowCount() && is_dir($res['dir'])) {
     exit;
 }
 
-require_once('../incfiles/end.php');
+require_once('../system/end.php');

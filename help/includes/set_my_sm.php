@@ -10,7 +10,7 @@ $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
 if (($adm && !$rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
     echo functions::display_error($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

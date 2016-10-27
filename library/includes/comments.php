@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if (!$user_id) {
     echo functions::display_error(_t('Access forbidden'));
-    require_once('../incfiles/end.php');
+    require_once('../system/end.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ if ($req_obj->rowCount()) {
 
     if (!$res_obj) {
         echo functions::display_error(_t('Access forbidden'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 

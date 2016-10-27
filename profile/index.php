@@ -22,7 +22,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 if (!$user_id) {
     require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -32,7 +32,7 @@ $user = functions::get_user(isset($_REQUEST['user']) ? abs(intval($_REQUEST['use
 if (!$user) {
     require('../system/head.php');
     echo functions::display_error(_t('This User does not exists'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -194,4 +194,4 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 }
 
-require_once('../incfiles/end.php');
+require_once('../system/end.php');

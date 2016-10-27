@@ -167,7 +167,7 @@ switch ($do) {
 
             if (!$id) {
                 echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
 
@@ -330,4 +330,4 @@ switch ($do) {
         }
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

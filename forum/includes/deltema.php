@@ -6,7 +6,7 @@ if ($rights == 3 || $rights >= 6) {
     if (!$id) {
         require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 
@@ -19,7 +19,7 @@ if ($rights == 3 || $rights >= 6) {
     if (!$req->rowCount()) {
         require('../system/head.php');
         echo functions::display_error(_t('Topic has been deleted or does not exists'));
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 

@@ -30,7 +30,7 @@ $max_photo = 400;
 if (!$user_id) {
     require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -39,7 +39,7 @@ $user = functions::get_user($user);
 if (!$user) {
     require('../system/head.php');
     echo functions::display_error(_t('User does not exists'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -146,4 +146,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Users') . '</a></div>';
 }
 
-require('../incfiles/end.php');
+require('../system/end.php');

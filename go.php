@@ -33,7 +33,7 @@ if (isset($_GET['lng'])) {
     }
 
     echo '</p><p><input type="submit" name="submit" value="' . _t('Apply', 'system') . '" /></p><p><a href="' . $referer . '">' . _t('Back', 'system') . '</a></p></form></div>';
-    require('incfiles/end.php');
+    require('system/end.php');
 } elseif ($url) {
     // Редирект по ссылкам в текстах, обработанным функцией tags()
     if (isset($_POST['submit'])) {
@@ -50,7 +50,7 @@ if (isset($_GET['lng'])) {
             '<p><input type="submit" name="submit" value="' . _t('Go to Link', 'system') . '" /></p>' .
             '</form></div>' .
             '<div class="phdr"><a href="' . $referer . '">' . _t('Back', 'system') . '</a></div>';
-        require('incfiles/end.php');
+        require('system/end.php');
     }
 } elseif ($id) {
     /** @var PDO $db */

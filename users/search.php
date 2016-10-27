@@ -88,4 +88,4 @@ if ($search && !$error) {
 echo '<p>' . ($search && !$error ? '<a href="search.php">' . _t('New search') . '</a><br />' : '') .
     '<a href="index.php">' . _t('Back') . '</a></p>';
 
-require('../incfiles/end.php');
+require('../system/end.php');

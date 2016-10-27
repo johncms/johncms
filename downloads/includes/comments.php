@@ -23,7 +23,7 @@ $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    require '../incfiles/end.php';
+    require '../system/end.php';
     exit;
 }
 
@@ -54,4 +54,4 @@ $arg = [
 // Показываем комментарии
 $comm = new comments($arg);
 
-require '../incfiles/end.php';
+require '../system/end.php';

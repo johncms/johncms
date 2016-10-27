@@ -19,5 +19,5 @@ if (isset($_POST['submit'])) {
         '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .
         '<p><a href="' . $referer . '">' . _t('Cancel', 'system') . '</a></p>' .
         '</div>';
-    require('incfiles/end.php');
+    require('system/end.php');
 }

@@ -29,7 +29,7 @@ switch ($mod) {
         // Удаление категории, или раздела
         if (!$id) {
             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -49,7 +49,7 @@ switch ($mod) {
 
                         if (!$category || $category == $id) {
                             echo functions::display_error(_t('Wrong data'));
-                            require('../incfiles/end.php');
+                            require('../system/end.php');
                             exit;
                         }
 
@@ -57,7 +57,7 @@ switch ($mod) {
 
                         if (!$check) {
                             echo functions::display_error(_t('Wrong data'));
-                            require('../incfiles/end.php');
+                            require('../system/end.php');
                             exit;
                         }
 
@@ -103,7 +103,7 @@ switch ($mod) {
 
                         if (!$subcat || $subcat == $id) {
                             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                            require('../incfiles/end.php');
+                            require('../system/end.php');
                             exit;
                         }
 
@@ -111,7 +111,7 @@ switch ($mod) {
 
                         if (!$check) {
                             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                            require('../incfiles/end.php');
+                            require('../system/end.php');
                             exit;
                         }
 
@@ -123,7 +123,7 @@ switch ($mod) {
                     } elseif (isset($_POST['delete'])) {
                         if ($rights != 9) {
                             echo functions::display_error(_t('Access forbidden'));
-                            require_once('../incfiles/end.php');
+                            require_once('../system/end.php');
                             exit;
                         }
 
@@ -213,7 +213,7 @@ switch ($mod) {
                 $cat_name = $res['text'];
             } else {
                 echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
         }
@@ -307,7 +307,7 @@ switch ($mod) {
         // Редактирование выбранной категории, или раздела
         if (!$id) {
             echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-            require('../incfiles/end.php');
+            require('../system/end.php');
             exit;
         }
 
@@ -547,7 +547,7 @@ switch ($mod) {
         if (isset($_POST['deltopic'])) {
             if ($rights != 9) {
                 echo functions::display_error(_t('Access forbidden'));
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
 
@@ -644,7 +644,7 @@ switch ($mod) {
         if (isset($_POST['delpost'])) {
             if ($rights != 9) {
                 echo functions::display_error(_t('Access forbidden'));
-                require('../incfiles/end.php');
+                require('../system/end.php');
                 exit;
             }
 

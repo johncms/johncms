@@ -8,7 +8,7 @@ require('../system/head.php');
 // Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
     echo functions::display_error(_t('You cannot edit profile of higher administration'));
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ $db = App::getContainer()->get(PDO::class);
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 

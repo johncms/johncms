@@ -18,7 +18,7 @@ if (isset($_GET['del'])) {
 
         if (!$req->rowCount()) {
             echo functions::display_error(_t('User does not exists'));
-            require_once("../incfiles/end.php");
+            require_once("../system/end.php");
             exit;
         }
 
@@ -47,7 +47,7 @@ if (isset($_GET['del'])) {
 
         if (!$req->rowCount()) {
             echo functions::display_error(_t('User does not exists'));
-            require_once("../incfiles/end.php");
+            require_once("../system/end.php");
             exit;
         }
 

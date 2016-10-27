@@ -19,7 +19,7 @@ require('../system/head.php');
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$config['mod_reg'] || core::$user_id) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
-    require('../incfiles/end.php');
+    require('../system/end.php');
     exit;
 }
 
@@ -183,7 +183,7 @@ if (isset($_POST['submit'])) {
         }
 
         echo '</div>';
-        require('../incfiles/end.php');
+        require('../system/end.php');
         exit;
     }
 }
@@ -227,4 +227,4 @@ echo '<form action="index.php" method="post"><div class="gmenu">' .
     '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
     '<div class="phdr"><small>' . _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') . '</small></div>';
 
-require('../incfiles/end.php');
+require('../system/end.php');

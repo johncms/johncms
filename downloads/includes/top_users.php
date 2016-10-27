@@ -43,4 +43,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require '../incfiles/end.php';
+require '../system/end.php';
