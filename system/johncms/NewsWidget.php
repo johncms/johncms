@@ -1,15 +1,6 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
-defined('_IN_JOHNCMS') or die('Restricted access');
+namespace Johncms;
 
 class NewsWidget
 {
@@ -25,7 +16,7 @@ class NewsWidget
 
     public function __construct()
     {
-        /** @var Interop\Container\ContainerInterface $container */
+        /** @var \Interop\Container\ContainerInterface $container */
         $container = \App::getContainer();
         $this->db = $container->get(\PDO::class);
         $this->settings = unserialize($container->get('config')['johncms']['news']);

@@ -29,7 +29,7 @@ switch ($act) {
         }
         $headmod = 'mainpage';
         require('system/head.php');
-        include 'incfiles/mainmenu.php';
+        include 'system/mainmenu.php';
 }
 
 require('system/end.php');
