@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$mp = new NewsWidget();
+$mp = new Johncms\NewsWidget();
 
 // Блок информации
 echo '<div class="phdr"><b>' . _t('Information', 'system') . '</b></div>';
