@@ -102,7 +102,7 @@ if (!$config['mod_forum'] && $rights < 7) {
     $error = _t('For registered users only');
 }
 if ($error) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require('../incfiles/end.php');
     exit;
@@ -164,7 +164,7 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
 } else {
-    require('../incfiles/head.php');
+    require('../system/head.php');
 
     // Если форум закрыт, то для Админов выводим напоминание
     if (!$config['mod_forum']) {

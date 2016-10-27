@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
     if (empty($_GET['id'])) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -17,7 +17,7 @@ if ($rights == 3 || $rights >= 6) {
         $db->exec("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id'");
         header('Location: index.php?id=' . $id);
     } else {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;

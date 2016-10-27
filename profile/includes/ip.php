@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('IP History');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Проверяем права доступа
 if (!$rights && $user_id != $user['id']) {

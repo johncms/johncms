@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require('../incfiles/head.php');
+require('../system/head.php');
 $delf = opendir('../files/forum/topics');
 $tm = [];
 

@@ -5,7 +5,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
-    require '../incfiles/head.php';
+    require '../system/head.php';
 
     $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
     $res = $req->fetch();

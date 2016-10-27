@@ -21,7 +21,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 // Закрываем от неавторизованных юзеров
 if (!$user_id && !$config['active']) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
     require('../incfiles/end.php');
     exit;
@@ -45,7 +45,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 
     // Актив сайта
     $textl = _t('Community');
-    require('../incfiles/head.php');
+    require('../system/head.php');
 
     $brth = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
     $count_adm = $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0")->fetchColumn();

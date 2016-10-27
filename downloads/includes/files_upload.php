@@ -9,7 +9,7 @@ $config = $container->get('config')['johncms'];
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
 $res = $req->fetch();

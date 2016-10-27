@@ -28,7 +28,7 @@ $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('For registered users only'));
     require('../incfiles/end.php');
     exit;
@@ -37,7 +37,7 @@ if (!$user_id) {
 // Получаем данные пользователя
 $user = functions::get_user($user);
 if (!$user) {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('User does not exists'));
     require('../incfiles/end.php');
     exit;
@@ -107,7 +107,7 @@ $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     $albumcount = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`")->fetchColumn();
     $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`

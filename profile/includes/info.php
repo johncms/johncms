@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Подробная информация, контактные данные
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Information');
-require('../incfiles/head.php');
+require('../system/head.php');
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Information') . '</div>';
 
 if ($user['id'] == $user_id || ($rights >= 7 && $rights > $user['rights'])) {

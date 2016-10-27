@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
-require '../incfiles/head.php';
+require '../system/head.php';
 require 'classes/download.php';
 
 // Новые файлы

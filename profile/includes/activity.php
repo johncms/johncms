@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // История активности
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Activity');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

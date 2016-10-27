@@ -8,7 +8,7 @@ if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    require_once '../incfiles/head.php';
+    require_once '../system/head.php';
 
     if (!$id) {
         $load_cat = $files_path;

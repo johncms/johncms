@@ -38,7 +38,7 @@ if (!$config['mod_lib'] && $rights < 7) {
 }
 
 if ($error) {
-    require_once('../incfiles/head.php');
+    require_once('../system/head.php');
     echo functions::display_error($error);
     require_once('../incfiles/end.php');
     exit;
@@ -62,7 +62,7 @@ if ($do) {
     }
 }
 
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 
 ?>
 

@@ -9,7 +9,7 @@ if ($rights == 4 || $rights >= 6) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
-    require_once('../incfiles/head.php');
+    require_once('../system/head.php');
 
     $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
     $res = $req->fetch();

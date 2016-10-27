@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     session_destroy();
     header('Location: index.php');
 } else {
-    require('incfiles/head.php');
+    require('system/head.php');
     echo '<div class="rmenu">' .
         '<p>' . _t('Are you sure you want to leave the site?', 'system') . '</p>' .
         '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .

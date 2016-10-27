@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'online';
 $textl = _t('Online');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

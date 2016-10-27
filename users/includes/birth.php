@@ -4,7 +4,7 @@ define('_IN_JOHNCMS', 1);
 
 $textl = _t('Birthdays');
 $headmod = 'birth';
-require('../incfiles/head.php');
+require('../system/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Karma');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 if ($set_karma['on']) {
     /** @var Interop\Container\ContainerInterface $container */

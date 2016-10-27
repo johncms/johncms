@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
-require('../incfiles/head.php');
+require('../system/head.php');
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>' .
     '<div class="list2">' .

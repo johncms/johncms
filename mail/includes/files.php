@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail') . ' | ' . _t('Files');
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);

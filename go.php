@@ -15,7 +15,7 @@ $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))
 
 if (isset($_GET['lng'])) {
     // Переключатель языков
-    require('incfiles/head.php');
+    require('system/head.php');
     echo '<div class="menu"><form action="' . $referer . '" method="post"><p>';
 
     if (count(core::$lng_list) > 1) {
@@ -39,7 +39,7 @@ if (isset($_GET['lng'])) {
     if (isset($_POST['submit'])) {
         header('Location: ' . $url);
     } else {
-        require('incfiles/head.php');
+        require('system/head.php');
         echo '<div class="phdr"><b>' . _t('External Link', 'system') . '</b></div>' .
             '<div class="rmenu">' .
             '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .

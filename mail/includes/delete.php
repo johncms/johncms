@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail');
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 
 echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 

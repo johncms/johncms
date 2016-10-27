@@ -28,7 +28,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 $headmod = 'admin';
 $textl = _t('Admin Panel');
-require('../incfiles/head.php');
+require('../system/head.php');
 
 $array = [
     'forum',

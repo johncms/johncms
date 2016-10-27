@@ -4,7 +4,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
     if (!$id) {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -13,7 +13,7 @@ if ($rights == 3 || $rights >= 6) {
     $ms = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
     if ($ms[type] != "t") {
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo functions::display_error(_t('Wrong data'));
         require('../incfiles/end.php');
         exit;
@@ -23,7 +23,7 @@ if ($rights == 3 || $rights >= 6) {
         $nn = isset($_POST['nn']) ? trim($_POST['nn']) : '';
 
         if (!$nn) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
@@ -33,7 +33,7 @@ if ($rights == 3 || $rights >= 6) {
         $pt = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and text=" . $db->quote($nn) . " LIMIT 1");
 
         if ($pt->rowCount()) {
-            require('../incfiles/head.php');
+            require('../system/head.php');
             echo functions::display_error(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../incfiles/end.php');
             exit;
@@ -43,7 +43,7 @@ if ($rights == 3 || $rights >= 6) {
         header("Location: index.php?id=$id");
     } else {
         // Переименовываем тему
-        require('../incfiles/head.php');
+        require('../system/head.php');
         echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . _t('Topic name') . '</h3>' .
@@ -53,6 +53,6 @@ if ($rights == 3 || $rights >= 6) {
             '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 } else {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error(_t('Access forbidden'));
 }

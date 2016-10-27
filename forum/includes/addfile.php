@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require('../incfiles/head.php');
+require('../system/head.php');
 
 if (!$id || !$user_id) {
     echo functions::display_error(_t('Wrong data'));

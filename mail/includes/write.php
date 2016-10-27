@@ -23,7 +23,7 @@ if ($id) {
 
     if (!$req->rowCount()) {
         $textl = _t('Mail');
-        require_once('../incfiles/head.php');
+        require_once('../system/head.php');
         echo functions::display_error(_t('User does not exists'));
         require_once("../incfiles/end.php");
         exit;
@@ -33,7 +33,7 @@ if ($id) {
 
     if ($mod == 'clear') {
         $textl = _t('Mail');
-        require_once('../incfiles/head.php');
+        require_once('../system/head.php');
         echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
@@ -515,7 +515,7 @@ if ($id) {
 }
 
 $textl = _t('Mail');
-require_once('../incfiles/head.php');
+require_once('../system/head.php');
 echo $out;
 echo '<p>';
 

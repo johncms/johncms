@@ -7,7 +7,7 @@ $headmod = 'my_guest';
 if ($user_id && $user['id'] == $user_id) {
     $datauser['comm_old'] = $datauser['comm_count'];
 }
-require('../incfiles/head.php');
+require('../system/head.php');
 
 $context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Guestbook') . '</div>' .
     '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';

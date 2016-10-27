@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: incfiles/mainmenu.php\n"
-"X-Poedit-SearchPath-1: incfiles/head.php\n"
+"X-Poedit-SearchPath-1: system/head.php\n"
 "X-Poedit-SearchPath-2: incfiles/end.php\n"
 "X-Poedit-SearchPath-3: login.php\n"
 "X-Poedit-SearchPath-4: go.php\n"
@@ -77,55 +77,55 @@ msgstr "Рекомендуется не указывать ваши данные
 msgid "Go to Link"
 msgstr "Перейти по ссылке"
 
-#: incfiles/end.php:12 incfiles/head.php:82 login.php:10
+#: incfiles/end.php:12 system/head.php:82 login.php:10
 msgid "Home"
 msgstr "Главная"
 
-#: incfiles/head.php:25
+#: system/head.php:25
 msgid "Site News"
 msgstr "Новости ресурса"
 
-#: incfiles/head.php:78
+#: system/head.php:78
 msgid "Hi"
 msgstr "Привет"
 
-#: incfiles/head.php:78
+#: system/head.php:78
 msgid "Guest"
 msgstr "Гость"
 
-#: incfiles/head.php:83
+#: system/head.php:83
 msgid "Personal"
 msgstr "Личное"
 
-#: incfiles/head.php:84 login.php:12 login.php:141
+#: system/head.php:84 login.php:12 login.php:141
 msgid "Login"
 msgstr "Вход"
 
-#: incfiles/head.php:171
+#: system/head.php:171
 msgid "Ban"
 msgstr "Бан"
 
-#: incfiles/head.php:171
+#: system/head.php:171
 msgid "Details"
 msgstr "Подробно"
 
-#: incfiles/head.php:180
+#: system/head.php:180
 msgid "System"
 msgstr "Система"
 
-#: incfiles/head.php:193
+#: system/head.php:193
 msgid "Mail"
 msgstr "Почта"
 
-#: incfiles/head.php:197 incfiles/mainmenu.php:18
+#: system/head.php:197 incfiles/mainmenu.php:18
 msgid "Guestbook"
 msgstr "Гостевая"
 
-#: incfiles/head.php:203
+#: system/head.php:203
 msgid "Comments"
 msgstr "Комментарии"
 
-#: incfiles/head.php:207
+#: system/head.php:207
 msgid "Unread"
 msgstr "Непрочитанное"
 

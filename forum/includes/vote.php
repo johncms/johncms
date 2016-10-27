@@ -10,7 +10,7 @@ if ($user_id) {
     $vote = abs(intval($_POST['vote']));
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '$vote' AND `topic` = '$id'")->fetchColumn();
     $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user` = '$user_id' AND `topic` = '$id'")->fetchColumn();
-    require('../incfiles/head.php');
+    require('../system/head.php');
 
     if ($topic_vote == 0 || $vote_user > 0 || $topic == 0) {
         echo functions::display_error(_t('Wrong data'));

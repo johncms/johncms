@@ -43,6 +43,6 @@ if (!$error) {
     // Отдаем файл
     header('location: ' . $config['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
-    require('../incfiles/head.php');
+    require('../system/head.php');
     echo functions::display_error($error, '<a href="index.php">' . _t('Back') . '</a>');
 }

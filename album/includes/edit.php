@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require('../incfiles/head.php');
+require('../system/head.php');
 
 // Создать / изменить альбом
 if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
