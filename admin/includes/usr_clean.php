@@ -10,6 +10,7 @@ if ($rights < 7) {
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Database cleanup') . '</div>';
 
@@ -26,7 +27,7 @@ switch ($mod) {
         ");
 
         if ($req->rowCount()) {
-            $del = new CleanUser;
+            $del = new Johncms\CleanUser;
 
             // Удаляем всю информацию
             while ($res = $req->fetch()) {
