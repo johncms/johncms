@@ -1,23 +1,17 @@
 <?php
 
-/**
- * Class CleanUser
- *
- * @package JohnCMS
- * @author  Oleg (AlkatraZ) Kasyanov <dev@mobicms.net>
- * @version v.1.0 2015-01-21
- * @since   build 1647
- */
+namespace Johncms;
+
 class CleanUser
 {
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $db;
 
     public function __construct()
     {
-        $this->db = App::getContainer()->get(PDO::class);
+        $this->db = \App::getContainer()->get(\PDO::class);
     }
 
     public function removeUser($clean_id)

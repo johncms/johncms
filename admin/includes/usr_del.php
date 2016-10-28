@@ -10,6 +10,7 @@ if ($rights < 9) {
 
 /** @var PDO $db */
 $db = App::getContainer()->get(PDO::class);
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $user = false;
 $error = false;
@@ -61,7 +62,7 @@ if (!$error) {
 
         case 'del':
             // Удаляем личные данные
-            $del = new CleanUser;
+            $del = new Johncms\CleanUser;
             $del->removeAlbum($user['id']);         // Удаляем личные Фотоальбомы
             $del->removeGuestbook($user['id']);     // Удаляем личную Гостевую
             $del->removeMail($user['id']);          // Удаляем почту
