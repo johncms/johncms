@@ -74,11 +74,11 @@ if ($req_obj->rowCount()) {
 
     // Показываем комментарии
     require('../system/head.php');
-    $comm = new comments($arg);
+    $comm = new Johncms\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
     if ($comm->added && core::$user_id != $owner['id']) {
-        mysql_query("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
+        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
     }
 } else {
     echo functions::display_error(_t('Wrong data'));

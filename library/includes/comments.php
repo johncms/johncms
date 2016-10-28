@@ -52,7 +52,7 @@ if ($req_obj->rowCount()) {
         'title'          => _t('Comments'),        // Название раздела
         'context_top'    => $context_top,            // Выводится вверху списка
     ];
-    $comm = new comments($arg);
+    $comm = new Johncms\Comments($arg);
 
     if ($comm->added) {
         $db->exec("UPDATE `library_texts` SET `comm_count`=" . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . " WHERE `id`=" . $id);

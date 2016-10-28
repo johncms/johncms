@@ -1,8 +1,8 @@
 <?php
 
-defined('_IN_JOHNCMS') or die('Restricted access');
+namespace Johncms;
 
-class comments
+class Comments
 {
     // Служебные данные
     private $object_table;                                // Таблица комментируемых объектов
@@ -16,7 +16,7 @@ class comments
     private $url;                                         // URL формируемых ссылок
 
     /**
-     * @var PDO
+     * @var \PDO
      */
     private $db;
 
@@ -39,10 +39,10 @@ class comments
     {
         global $mod, $start, $kmess;
 
-        $this->db = App::getContainer()->get(PDO::class);
+        $this->db = \App::getContainer()->get(\PDO::class);
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
-        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
+        $homeurl = \App::getContainer()->get('config')['johncms']['homeurl'];
 
         if (!empty($arg['sub_id_name']) && !empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];
@@ -54,16 +54,16 @@ class comments
         $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
 
         // Получаем данные пользователя
-        if (core::$user_id) {
-            $this->user_id = core::$user_id;
-            $this->rights = core::$user_rights;
-            $this->ban = core::$user_ban;
+        if (\core::$user_id) {
+            $this->user_id = \core::$user_id;
+            $this->rights = \core::$user_rights;
+            $this->ban = \core::$user_ban;
         }
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {
             $this->owner = $arg['owner'];
-            if (core::$user_id && $arg['owner'] == core::$user_id && !$this->ban) {
+            if (\core::$user_id && $arg['owner'] == \core::$user_id && !$this->ban) {
                 $this->access_delete = isset($arg['owner_delete']) ? $arg['owner_delete'] : false;
                 $this->access_reply = isset($arg['owner_reply']) ? $arg['owner_reply'] : false;
                 $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
@@ -81,7 +81,7 @@ class comments
             case 'reply':
                 // Отвечаем на комментарий
                 if ($this->item && $this->access_reply && !$this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['reply'] . '</div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -89,14 +89,14 @@ class comments
                         $attributes = unserialize($res['attributes']);
 
                         if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
-                            echo functions::display_error(core::$lng['error_reply_rights'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
+                            echo \functions::display_error(_t('Administrator already replied to this message'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
                             if (empty($message['error'])) {
                                 $attributes['reply_id'] = $this->user_id;
                                 $attributes['reply_rights'] = $this->rights;
-                                $attributes['reply_name'] = core::$user_data['name'];
+                                $attributes['reply_name'] = \core::$user_data['name'];
                                 $attributes['reply_time'] = time();
 
                                 $this->db->prepare('
@@ -112,18 +112,18 @@ class comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . core::_t('Back') . '</a>');
+                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back') . '</a>');
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                ' (' . functions::display_date($res['time']) . ')<br />' .
-                                functions::checkout($res['text']);
-                            $reply = functions::checkout($res['reply']);
+                                ' (' . \functions::display_date($res['time']) . ')<br />' .
+                                \functions::checkout($res['text']);
+                            $reply = \functions::checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
-                                '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
+                                '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
                         }
                     } else {
-                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
+                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
                     }
                 }
                 break;
@@ -131,22 +131,22 @@ class comments
             case 'edit':
                 // Редактируем комментарий
                 if ($this->item && $this->access_edit && !$this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['edit'] . '</div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
-                        $user = functions::get_user($res['user_id']);
+                        $user = \functions::get_user($res['user_id']);
 
-                        if ($user['rights'] > core::$user_rights) {
-                            echo functions::display_error(core::$lng['error_edit_rights'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
+                        if ($user['rights'] > \core::$user_rights) {
+                            echo \functions::display_error(_t('You cannot edit posts of higher administration'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
                             if (empty($message['error'])) {
                                 $attributes['edit_id'] = $this->user_id;
-                                $attributes['edit_name'] = core::$user_data['name'];
+                                $attributes['edit_name'] = \core::$user_data['name'];
                                 $attributes['edit_time'] = time();
 
                                 if (isset($attributes['edit_count'])) {
@@ -168,19 +168,19 @@ class comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . core::_t('Back') . '</a>');
+                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back') . '</a>');
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
-                            $author .= ' (' . functions::display_date($res['time']) . ')<br />';
-                            $text = functions::checkout($res['text']);
+                            $author .= ' (' . \functions::display_date($res['time']) . ')<br />';
+                            $text = \functions::checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
-                        echo functions::display_error(core::$lng['error_wrong_data'], '<a href="' . $this->url . '">' . core::_t('Back') . '</a>');
+                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
                     }
 
-                    echo '<div class="phdr"><a href="' . $this->url . '">' . core::_t('Back') . '</a></div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
                 }
                 break;
 
@@ -217,12 +217,12 @@ class comments
                         }
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
-                        echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . core::$lng['delete'] . '</div>' .
-                            '<div class="rmenu"><p>' . core::$lng['delete_confirmation'] . '<br />' .
-                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . core::$lng['delete'] . '</a> | ' .
-                            '<a href="' . $this->url . '">' . core::$lng['cancel'] . '</a><br />' .
-                            '<div class="sub">' . core::$lng['clear_user_msg'] . '<br />' .
-                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . core::$lng['clear'] . '</a></span>' .
+                        echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Delete') . '</div>' .
+                            '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '<br />' .
+                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . _t('Delete') . '</a> | ' .
+                            '<a href="' . $this->url . '">' . _t('Cancel') . '</a><br />' .
+                            '<div class="sub">' . _t('Clear all messages from this user') . '<br />' .
+                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . _t('Clear') . '</a></span>' .
                             '</div></p></div>' .
                             '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
                     }
@@ -235,7 +235,7 @@ class comments
                 }
 
                 // Добавляем новый комментарий
-                if (!$this->ban && !functions::is_ignor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
+                if (!$this->ban && !\functions::is_ignor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->add_comment($message['text']);
@@ -243,7 +243,7 @@ class comments
                         $_SESSION['code'] = $message['code'];
                     } else {
                         // Показываем ошибки, если есть
-                        echo functions::display_error($message['error']);
+                        echo \functions::display_error($message['error']);
                         $this->total = $this->msg_total();
                     }
                 } else {
@@ -251,7 +251,7 @@ class comments
                 }
 
                 // Показываем форму ввода
-                if (!$this->ban && !functions::is_ignor($this->owner)) {
+                if (!$this->ban && !\functions::is_ignor($this->owner)) {
                     echo $this->msg_form();
                 }
 
@@ -259,7 +259,7 @@ class comments
                 echo '<div class="phdr"><b>' . $arg['title'] . '</b></div>';
 
                 if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
+                    echo '<div class="topmenu">' . \functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
                 }
 
                 if ($this->total) {
@@ -276,54 +276,54 @@ class comments
                         $res['browser'] = $attributes['author_browser'];
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         $menu = [
-                            $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . core::$lng['reply'] . '</a>' : '',
-                            $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . core::$lng['edit'] . '</a>' : '',
-                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . core::$lng['delete'] . '</a>' : '',
+                            $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . _t('Reply') . '</a>' : '',
+                            $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . _t('Edit') . '</a>' : '',
+                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete') . '</a>' : '',
                         ];
-                        $text = functions::checkout($res['text'], 1, 1);
+                        $text = \functions::checkout($res['text'], 1, 1);
 
-                        if (core::$user_set['smileys']) {
-                            $text = functions::smileys($text, $res['rights'] >= 1 ? 1 : 0);
+                        if (\core::$user_set['smileys']) {
+                            $text = \functions::smileys($text, $res['rights'] >= 1 ? 1 : 0);
                         }
 
                         if (isset($attributes['edit_count'])) {
-                            $text .= '<br /><span class="gray"><small>' . core::$lng['edited'] . ': <b>' . $attributes['edit_name'] . '</b>' .
-                                ' (' . functions::display_date($attributes['edit_time']) . ') <b>' .
+                            $text .= '<br /><span class="gray"><small>' . _t('Edited') . ': <b>' . $attributes['edit_name'] . '</b>' .
+                                ' (' . \functions::display_date($attributes['edit_time']) . ') <b>' .
                                 '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
 
                         if (!empty($res['reply'])) {
-                            $reply = functions::checkout($res['reply'], 1, 1);
+                            $reply = \functions::checkout($res['reply'], 1, 1);
 
-                            if (core::$user_set['smileys']) {
-                                $reply = functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
+                            if (\core::$user_set['smileys']) {
+                                $reply = \functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                ' (' . functions::display_date($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                                ' (' . \functions::display_date($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
                         }
 
                         $user_arg = [
-                            'header' => ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>',
+                            'header' => ' <span class="gray">(' . \functions::display_date($res['time']) . ')</span>',
                             'body'   => $text,
                             'sub'    => implode(' | ', array_filter($menu)),
-                            'iphide' => (core::$user_rights ? false : true),
+                            'iphide' => (\core::$user_rights ? false : true),
                         ];
-                        echo functions::display_user($res, $user_arg);
+                        echo \functions::display_user($res, $user_arg);
                         echo '</div>';
                         ++$i;
                     }
                 } else {
-                    echo '<div class="menu"><p>' . core::$lng['list_empty'] . '</p></div>';
+                    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
                 }
 
-                echo '<div class="phdr">' . core::$lng['total'] . ': ' . $this->total . '</div>';
+                echo '<div class="phdr">' . _t('Total') . ': ' . $this->total . '</div>';
 
                 if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
+                    echo '<div class="topmenu">' . \functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
                         '<p><form action="' . $this->url . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . core::_t('To Page') . ' &gt;&gt;"/>' .
+                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
 
@@ -336,15 +336,15 @@ class comments
     // Добавляем комментарий в базу
     private function add_comment($message)
     {
-        /** @var Interop\Container\ContainerInterface $container */
-        $container = App::getContainer();
+        /** @var \Interop\Container\ContainerInterface $container */
+        $container = \App::getContainer();
 
-        /** @var Johncms\Environment $env */
+        /** @var \Johncms\Environment $env */
         $env = $container->get('env');
 
         // Формируем атрибуты сообщения
         $attributes = [
-            'author_name'         => core::$user_data['name'],
+            'author_name'         => \core::$user_data['name'],
             'author_ip'           => $env->getIp(),
             'author_ip_via_proxy' => $env->getIpViaProxy(),
             'author_browser'      => $env->getUserAgent(),
@@ -368,10 +368,10 @@ class comments
         ]);
 
         // Обновляем статистику пользователя
-        $this->db->exec("UPDATE `users` SET `komm` = '" . (++core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
+        $this->db->exec("UPDATE `users` SET `komm` = '" . (++\core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
 
         if ($this->owner && $this->user_id == $this->owner) {
-            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
+            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (\core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
         }
 
         $this->added = true;
@@ -382,11 +382,10 @@ class comments
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
         (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
-        '<b>' . core::$lng['message'] . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
+        '<b>' . _t('Message') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
         '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
-        '<textarea rows="' . core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
-        (core::$user_set['translit'] ? '<input type="checkbox" name="translit" value="1" />&nbsp;' . core::$lng['translit'] . '<br>' : '') .
-        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . core::$lng['sent'] . '"/></p></form></div>';
+        '<textarea rows="' . \core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
+        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send') . '"/></p></form></div>';
     }
 
     // Проверка текста сообщения
@@ -406,13 +405,13 @@ class comments
 
         // Проверяем на минимально допустимую длину
         if (mb_strlen($message) < $this->min_lenght) {
-            $error[] = core::$lng['error_message_short'];
+            $error[] = _t('Text is too short');
         } else {
             // Проверка на флуд
             $flood = \App::getContainer()->get('tools')->antiflood(\core::$user_data);
 
             if ($flood) {
-                $error[] = core::$lng['error_flood'] . ' ' . $flood . '&#160;' . core::$lng['seconds'];
+                $error[] = _t('You cannot add the message so often<br>Please, wait') . ' ' . $flood . '&#160;' . _t('seconds');
             }
         }
 
@@ -422,7 +421,7 @@ class comments
             $res = $req->fetch();
 
             if (mb_strtolower($message) == mb_strtolower($res['text'])) {
-                $error[] = core::$lng['error_message_exists'];
+                $error[] = _t('Message already exists');
             }
         }
 
