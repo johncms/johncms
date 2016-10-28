@@ -52,6 +52,6 @@ $arg = [
 ];
 
 // Показываем комментарии
-$comm = new comments($arg);
+$comm = new Johncms\Comments($arg);
 
 require '../system/end.php';

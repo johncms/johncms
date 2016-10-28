@@ -2,11 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = _t('Profile') . ' | ' . _t('Guestbook');
 $headmod = 'my_guest';
+$textl = _t('Profile') . ' | ' . _t('Guestbook');
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+
 if ($user_id && $user['id'] == $user_id) {
     $datauser['comm_old'] = $datauser['comm_count'];
 }
+
 require('../system/head.php');
 
 $context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Guestbook') . '</div>' .
@@ -27,7 +30,7 @@ $arg = [
 ];
 
 // Показываем комментарии
-$comm = new comments($arg);
+$comm = new Johncms\Comments($arg);
 
 // Обновляем счетчик непрочитанного
 if (!$mod && $user['id'] == $user_id && $user['comm_count'] != $user['comm_old']) {

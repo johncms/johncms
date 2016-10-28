@@ -56,6 +56,7 @@ class functions extends core
      */
     public static function display_date($var)
     {
+        //TODO: Undefined index: timeshift
         $shift = (App::getContainer()->get('config')['johncms']['timeshift'] + self::$user_set['timeshift']) * 3600;
 
         if (date('Y', $var) == date('Y', time())) {
