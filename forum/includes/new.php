@@ -8,8 +8,11 @@ require('../system/head.php');
 unset($_SESSION['fsort_id']);
 unset($_SESSION['fsort_users']);
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
 
 if (empty($_SESSION['uid'])) {
     if (isset($_GET['newup'])) {
@@ -136,7 +139,7 @@ if ($user_id) {
 
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
-            $total = counters::forumNew();
+            $total = $container->get('counters')->forumNew();
             echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
             if ($total > $kmess) {

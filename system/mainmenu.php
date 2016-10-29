@@ -24,7 +24,7 @@ if ($set['mod_guest'] || $rights >= 7) {
 
 // Ссылка на Форум
 if ($set['mod_forum'] || $rights >= 7) {
-    echo '<div class="menu"><a href="forum/">' . _t('Forum', 'system') . '</a> (' . counters::forum() . ')</div>';
+    echo '<div class="menu"><a href="forum/">' . _t('Forum', 'system') . '</a> (' . $counters->forum() . ')</div>';
 }
 
 ////////////////////////////////////////////////////////////
