@@ -13,42 +13,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class counters
 {
-    static function downloads()
-    {
-        global $rights;
-
-        $file = ROOTPATH . 'files/cache/count_downloads.dat';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = unserialize(file_get_contents($file));
-            $total = isset($res['total']) ? $res['total'] : 0;
-            $new = isset($res['new']) ? $res['new'] : 0;
-            $mod = isset($res['mod']) ? $res['mod'] : 0;
-        } else {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-
-            $old = time() - (3 * 24 * 3600);
-            $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
-            $mod = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
-
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]));
-        }
-
-        if ($new > 0) {
-            $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=new_files">+' . $new . '</a></span>';
-        }
-
-        if ($rights == 4 || $rights >= 6) {
-            if ($mod) {
-                $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=mod_files">м. ' . $mod . '</a></span>';
-            }
-        }
-
-        return $total;
-    }
-
     /**
      * Статистика Форума
      *
