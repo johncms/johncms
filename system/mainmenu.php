@@ -2,6 +2,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Counters $counters */
+$counters = App::getContainer()->get('counters');
 $mp = new Johncms\NewsWidget();
 
 // Блок информации
@@ -46,7 +48,7 @@ if ($set['mod_lib'] || $rights >= 7) {
 if ($user_id || $set['active']) {
     echo '<div class="phdr"><b>' . _t('Community', 'system') . '</b></div>' .
         '<div class="menu"><a href="users/index.php">' . _t('Users', 'system') . '</a> (' . counters::users() . ')</div>' .
-        '<div class="menu"><a href="album/index.php">' . _t('Photo Albums', 'system') . '</a> (' . counters::album() . ')</div>';
+        '<div class="menu"><a href="album/index.php">' . _t('Photo Albums', 'system') . '</a> (' . $counters->album() . ')</div>';
 }
 
 echo '<div class="phdr"><a href="http://gazenwagen.com">Gazenwagen</a></div>';
