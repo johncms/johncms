@@ -43,6 +43,9 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\Counters $counters */
+    $counters = $container->get('counters');
+
     // Актив сайта
     $textl = _t('Community');
     require('../system/head.php');
@@ -60,7 +63,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         functions::image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=userlist">' . _t('Users') . '</a> (' . counters::users() . ')<br />' .
         functions::image('users.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=admlist">' . _t('Administration') . '</a> (' . $count_adm . ')<br>' .
         ($brth ? functions::image('award.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=birth">' . _t('Birthdays') . '</a> (' . $brth . ')<br>' : '') .
-        functions::image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/index.php">' . _t('Photo Albums') . '</a> (' . counters::album() . ')<br>' .
+        functions::image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/index.php">' . _t('Photo Albums') . '</a> (' . $counters->album() . ')<br>' .
         functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=top">' . _t('Top Activity') . '</a></p>' .
         '</div>' .
         '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
