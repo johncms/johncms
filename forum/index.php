@@ -15,6 +15,9 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 $container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
+/** @var Johncms\Counters $counters */
+$counters = App::getContainer()->get('counters');
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -271,7 +274,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         }
 
         // Выводим верхнюю панель навигации
-        echo '<a id="up"></a><p>' . counters::forumNew(1) . '</p>' .
+        echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
             '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
@@ -862,7 +865,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         // Список Категорий форума                                //
         ////////////////////////////////////////////////////////////
         $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files`" . ($rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
-        echo '<p>' . counters::forumNew(1) . '</p>' .
+        echo '<p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
             '<div class="topmenu"><a href="search.php">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
         $req = $db->query("SELECT `id`, `text`, `soft` FROM `forum` WHERE `type`='f' ORDER BY `realid`");

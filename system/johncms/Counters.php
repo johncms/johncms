@@ -59,7 +59,7 @@ class Counters
      *
      * @return string
      */
-    function downloads()
+    public function downloads()
     {
         $file = ROOTPATH . 'files/cache/count_downloads.dat';
 
@@ -88,5 +88,64 @@ class Counters
         }
 
         return $total;
+    }
+
+    /**
+     * Статистика Форума
+     *
+     * @return string
+     */
+    public function forum()
+    {
+        $file = ROOTPATH . 'files/cache/count_forum.dat';
+        $new = '';
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = unserialize(file_get_contents($file));
+            $top = $res['top'];
+            $msg = $res['msg'];
+        } else {
+            $top = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `close` != '1'")->fetchColumn();
+            $msg = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` != '1'")->fetchColumn();
+            file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]));
+        }
+
+        if (\core::$user_id && ($new_msg = $this->forumNew()) > 0) {
+            $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/index.php?act=new">+' . $new_msg . '</a></span>';
+        }
+
+        return $top . '&#160;/&#160;' . $msg . $new;
+    }
+
+    /**
+     * Счетчик непрочитанных тем на форуме
+     *
+     * $mod = 0   Возвращает число непрочитанных тем
+     * $mod = 1   Выводит ссылки на непрочитанное
+     *
+     * @param int $mod
+     * @return bool|int|string
+     */
+    public function forumNew($mod = 0)
+    {
+        if (\core::$user_id) {
+            $total = $this->db->query("SELECT COUNT(*) FROM `forum`
+                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . \core::$user_id . "'
+                WHERE `forum`.`type` = 't'" . (\core::$user_rights >= 7 ? "" : " AND `forum`.`close` != 1") . "
+                AND (`cms_forum_rdm`.`topic_id` IS NULL
+                OR `forum`.`time` > `cms_forum_rdm`.`time`)")->fetchColumn();
+
+            if ($mod) {
+                return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period') . '</a>' .
+                ($total ? '<br><a href="index.php?act=new">' . _t('Unread') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+            } else {
+                return $total;
+            }
+        } else {
+            if ($mod) {
+                return '<a href="index.php?act=new">' . _t('Last activity') . '</a>';
+            } else {
+                return false;
+            }
+        }
     }
 }
