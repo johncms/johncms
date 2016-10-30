@@ -2,6 +2,10 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+$config = $container->get('config')['johncms'];
+
 // Рекламный блок сайта
 if (!empty($cms_ads[2])) {
     echo '<div class="gmenu">' . $cms_ads[2] . '</div>';
@@ -10,13 +14,13 @@ if (!empty($cms_ads[2])) {
 echo '</div><div class="fmenu">';
 
 if (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && isset($_GET['act']))) {
-    echo '<div><a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a></div>';
+    echo '<div><a href=\'' . $config['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a></div>';
 }
 
-echo '<div>' . counters::online() . '</div>' .
+echo '<div>' . $container->get('counters')->online() . '</div>' .
     '</div>' .
     '<div style="text-align:center">' .
-    '<p><b>' . $set['copyright'] . '</b></p>';
+    '<p><b>' . $config['copyright'] . '</b></p>';
 
 // Счетчики каталогов
 /** @var PDO $db */

@@ -14,23 +14,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class counters
 {
     /**
-     * Счетчик посетителей онлайн
-     *
-     * @return string
-     */
-    public static function online()
-    {
-        /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
-
-        $users = $db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-        $guests = $db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-        $config = App::getContainer()->get('config')['johncms'];
-
-        return (core::$user_id || $config['active'] ? '<a href="' . $config['homeurl'] . '/users/index.php?act=online">' . functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>' : core::$lng['online'] . ': ' . $users . ' / ' . $guests);
-    }
-
-    /**
      * Количество зарегистрированных пользователей
      *
      * @return string
