@@ -47,7 +47,7 @@ if ($set['mod_lib'] || $rights >= 7) {
 ////////////////////////////////////////////////////////////
 if ($user_id || $set['active']) {
     echo '<div class="phdr"><b>' . _t('Community', 'system') . '</b></div>' .
-        '<div class="menu"><a href="users/index.php">' . _t('Users', 'system') . '</a> (' . counters::users() . ')</div>' .
+        '<div class="menu"><a href="users/index.php">' . _t('Users', 'system') . '</a> (' . $counters->users() . ')</div>' .
         '<div class="menu"><a href="album/index.php">' . _t('Photo Albums', 'system') . '</a> (' . $counters->album() . ')</div>';
 }
 

@@ -60,7 +60,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
         '<small>' . _t('The search is performed by Nickname and are case-insensitive.') . '</small></p></form></div>' .
         '<div class="menu"><p>' .
-        functions::image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=userlist">' . _t('Users') . '</a> (' . counters::users() . ')<br />' .
+        functions::image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=userlist">' . _t('Users') . '</a> (' . $container->get('counters')->users() . ')<br />' .
         functions::image('users.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=admlist">' . _t('Administration') . '</a> (' . $count_adm . ')<br>' .
         ($brth ? functions::image('award.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=birth">' . _t('Birthdays') . '</a> (' . $brth . ')<br>' : '') .
         functions::image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/index.php">' . _t('Photo Albums') . '</a> (' . $counters->album() . ')<br>' .

@@ -28,7 +28,7 @@ class Counters
      */
     public function album()
     {
-        $file = ROOTPATH . 'files/cache/count_album.dat';
+        $file = ROOT_PATH . 'files/cache/count_album.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
@@ -62,7 +62,7 @@ class Counters
      */
     public function downloads()
     {
-        $file = ROOTPATH . 'files/cache/count_downloads.dat';
+        $file = ROOT_PATH . 'files/cache/count_downloads.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
@@ -98,7 +98,7 @@ class Counters
      */
     public function forum()
     {
-        $file = ROOTPATH . 'files/cache/count_forum.dat';
+        $file = ROOT_PATH . 'files/cache/count_forum.dat';
         $new = '';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
@@ -195,7 +195,7 @@ class Counters
      */
     public function library()
     {
-        $file = ROOTPATH . 'files/cache/count_library.dat';
+        $file = ROOT_PATH . 'files/cache/count_library.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
             $res = unserialize(file_get_contents($file));
@@ -232,5 +232,28 @@ class Counters
         $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
         return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . \functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>';
+    }
+
+    /**
+     * Количество зарегистрированных пользователей
+     *
+     * @return string
+     */
+    public function users()
+    {
+        $file = ROOT_PATH . 'files/cache/count_users.dat';
+
+        if (file_exists($file) && filemtime($file) > (time() - 600)) {
+            $res = unserialize(file_get_contents($file));
+            $total = $res['total'];
+            $new = $res['new'];
+        } else {
+            $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
+            $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
+
+            file_put_contents($file, serialize(['total' => $total, 'new' => $new]));
+        }
+
+        return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
     }
 }
