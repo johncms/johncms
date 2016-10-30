@@ -39,7 +39,7 @@ if ($set['mod_down'] || $rights >= 7) {
 
 // Ссылка на библиотеку
 if ($set['mod_lib'] || $rights >= 7) {
-    echo '<div class="menu"><a href="library/">' . _t('Library', 'system') . '</a> (' . counters::library() . ')</div>';
+    echo '<div class="menu"><a href="library/">' . _t('Library', 'system') . '</a> (' . $counters->library() . ')</div>';
 }
 
 ////////////////////////////////////////////////////////////

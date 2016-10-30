@@ -29,6 +29,7 @@ class Counters
     public function album()
     {
         $file = ROOTPATH . 'files/cache/count_album.dat';
+
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
             $album = $res['album'];
@@ -99,6 +100,7 @@ class Counters
     {
         $file = ROOTPATH . 'files/cache/count_forum.dat';
         $new = '';
+
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
             $top = $res['top'];
@@ -184,5 +186,38 @@ class Counters
         }
 
         return $count;
+    }
+
+    /**
+     * Статистика библиотеки
+     *
+     * @return string
+     */
+    public function library()
+    {
+        $file = ROOTPATH . 'files/cache/count_library.dat';
+
+        if (file_exists($file) && filemtime($file) > (time() - 3200)) {
+            $res = unserialize(file_get_contents($file));
+            $total = $res['total'];
+            $new = $res['new'];
+            $mod = $res['mod'];
+        } else {
+            $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn();
+            $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
+            $mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
+
+            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]));
+        }
+
+        if ($new) {
+            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=new">+' . $new . '</a></span>';
+        }
+
+        if ((\core::$user_rights == 5 || \core::$user_rights >= 6) && $mod) {
+            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
+        }
+
+        return $total;
     }
 }
