@@ -8,10 +8,14 @@ require('../system/head.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 // Показываем список Online
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
@@ -126,7 +130,7 @@ if ($total) {
         $arg['header'] = ' <span class="gray">(';
 
         if ($mod == 'history') {
-            $arg['header'] .= functions::display_date($res['sestime']);
+            $arg['header'] .= $tools->displayDate($res['sestime']);
         } else {
             $arg['header'] .= $res['movings'] . ' - ' . functions::timecount(time() - $res['sestime']);
         }

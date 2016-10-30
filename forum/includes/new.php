@@ -14,6 +14,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (empty($_SESSION['uid'])) {
     if (isset($_GET['newup'])) {
         $_SESSION['uppost'] = 1;
@@ -120,7 +123,7 @@ if ($user_id) {
                         echo '&#160;/&#160;' . $nick['from'];
                     }
 
-                    echo ' <span class="gray">' . functions::display_date($nick['time']) . '</span>';
+                    echo ' <span class="gray">' . $tools->displayDate($nick['time']) . '</span>';
                     echo '</div></div>';
                 }
             } else {
@@ -185,7 +188,7 @@ if ($user_id) {
                     }
 
                     echo '<div class="sub">' . $res['from'] . ($colmes1 > 1 ? '&#160;/&#160;' . $nick['from'] : '') .
-                        ' <span class="gray">(' . functions::display_date($nick['time']) . ')</span><br />' .
+                        ' <span class="gray">(' . $tools->displayDate($nick['time']) . ')</span><br />' .
                         '<a href="index.php?id=' . $frm['id'] . '">' . $frm['text'] . '</a>&#160;/&#160;<a href="index.php?id=' . $razd['id'] . '">' . $razd['text'] . '</a>' .
                         '</div></div>';
                 }

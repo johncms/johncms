@@ -13,15 +13,9 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class functions extends core
 {
-    /**
-     * Показываем дату с учетом сдвига времени
-     *
-     * @param int $var Время в Unix формате
-     * @return string Отформатированное время
-     */
+    //TODO: убрать
     public static function display_date($var)
     {
-        //TODO: Undefined index: timeshift
         $shift = (App::getContainer()->get('config')['johncms']['timeshift'] + self::$user_set['timeshift']) * 3600;
 
         if (date('Y', $var) == date('Y', time())) {
@@ -244,8 +238,8 @@ class functions extends core
             $iphist = '';
 
             if ($ipinf) {
-                $out .= '<div><span class="gray">' . self::$lng['browser'] . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
-                    '<div><span class="gray">' . self::$lng['ip_address'] . ':</span> ';
+                $out .= '<div><span class="gray">' . _t('Browser') . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
+                    '<div><span class="gray">' . _t('IP address') . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
 

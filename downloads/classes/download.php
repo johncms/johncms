@@ -177,7 +177,7 @@ class Download
     // Вывод ссылок на файл
     public static function downloadLlink($array = [])
     {
-        global $set_down, $old;
+        global $old;
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
@@ -189,7 +189,10 @@ class Download
             $out .= ' <span class="red">(NEW)</span>';
         }
 
-        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . functions::display_date($array['res']['time']);
+        /** @var Johncms\Tools $tools */
+        $tools = App::getContainer()->get('tools');
+
+        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate($array['res']['time']);
 
         if ($array['format'] == 'txt') {
             $out .= ', <a href="?act=txt_in_zip&amp;id=' . $id . $morelink . '">ZIP</a> / <a href="?act=txt_in_jar&amp;id=' . $id . $morelink . '">JAR</a>';

@@ -593,7 +593,7 @@ switch ($mod) {
                 while ($res = $req->fetch()) {
                     $subcat = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
                     $cat = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $subcat['refid'] . "'")->fetch();
-                    $ttime = '<span class="gray">(' . functions::display_date($res['time']) . ')</span>';
+                    $ttime = '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
                     $text = '<a href="../forum/index.php?id=' . $res['fid'] . '"><b>' . $res['text'] . '</b></a>';
                     $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['text'] . '</a> / <a href="../forum/index.php?id=' . $subcat['id'] . '">' . $subcat['text'] . '</a></small>';
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
@@ -687,7 +687,7 @@ switch ($mod) {
 
                 while ($res = $req->fetch()) {
                     $res['ip'] = ip2long($res['ip']);
-                    $posttime = ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
+                    $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
                     $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['fid'] . "'")->fetchColumn() / $kmess);
                     $text = mb_substr($res['text'], 0, 500);
                     $text = $tools->checkout($text, 1, 0);

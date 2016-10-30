@@ -376,7 +376,7 @@ switch ($act) {
                 }
 
                 // Время создания поста
-                $text = ' <span class="gray">(' . functions::display_date($res['time']) . ')</span>';
+                $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
@@ -409,7 +409,7 @@ switch ($act) {
 
                 if ($res['edit_count']) {
                     // Если пост редактировался, показываем кем и когда
-                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . functions::display_date($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
+                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                 }
 
                 if (!empty($res['otvet'])) {
@@ -418,7 +418,7 @@ switch ($act) {
                     if ($set_user['smileys']) {
                         $otvet = functions::smileys($otvet, 1);
                     }
-                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . functions::display_date($res['otime']) . ')<br>' . $otvet . '</div>';
+                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
                 if ($rights >= 6) {
