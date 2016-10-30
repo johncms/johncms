@@ -10,8 +10,14 @@ if (empty($_GET['id'])) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 // Запрос сообщения
 $res = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
@@ -78,7 +84,7 @@ if ($set_user['avatar']) {
 }
 
 // Вывод текста поста
-$text = functions::checkout($res['text'], 1, 1);
+$text = $tools->checkout($res['text'], 1, 1);
 
 if ($set_user['smileys']) {
     $text = functions::smileys($text, ($res['rights'] >= 1) ? 1 : 0);

@@ -56,13 +56,21 @@ class Tree
     private $start_id = false;
     private $child;
     private $parent;
+
     /** @var PDO $db */
     private $db;
+
+    /**
+     * @var Johncms\Tools
+     */
+    private $tools;
 
     public function __construct($id)
     {
         $this->start_id = $id;
-        $this->db = App::getContainer()->get(PDO::class);
+        $container = App::getContainer();
+        $this->db = $container->get(PDO::class);
+        $this->tools = $container->get('tools');
     }
     /**
     * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
@@ -197,7 +205,7 @@ class Tree
         $return =[];
         $x = 1;
         foreach ($array as $k => $v) {
-            $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . functions::checkout($v) . '</a>';
+            $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . $this->tools->checkout($v) . '</a>';
             $x++;
         }
 
@@ -216,15 +224,23 @@ class Link_view
     private $link_text;
     private $in;
     private $res;
+
     /** @var PDO $db */
     private $db;
+
+    /**
+     * @var Johncms\Tools
+     */
+    private $tools;
 
     public function __construct($in, $link_url = '?act=tags&amp;tag=', $link_text = 'index.php?id=')
     {
         $this->link_url = $link_url;
         $this->link_text = $link_text;
         $this->in = $in;
-        $this->db = App::getContainer()->get(PDO::class);
+        $container = App::getContainer();
+        $this->db = $container->get(PDO::class);
+        $this->tools = $container->get('tools');
     }
 
     public function proccess($tpl)
@@ -240,12 +256,12 @@ class Link_view
     
     public function tpl_tag($n) 
     {
-        return '<a href="' . $this->link_url . $n . '">' . functions::checkout($n) . '</a>';
+        return '<a href="' . $this->link_url . $n . '">' . $this->tools->checkout($n) . '</a>';
     }
     
     public function tpl_cloud($n) 
     {
-        return '<a href="' . $this->link_url . functions::checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . functions::checkout($n['name']) . '</span></a>';
+        return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . $this->tools->checkout($n['name']) . '</span></a>';
     }
 
     public function link_separator($sepatator = ' | ')

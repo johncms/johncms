@@ -2,6 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
 {
@@ -17,7 +23,7 @@ $search = $search_post ? $search_post : $search_get;
 $search_t = isset($_REQUEST['t']);
 echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search') . '</div>'
     . '<div class="gmenu"><form action="?act=search" method="post"><div>'
-    . '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />'
+    . '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />'
     . '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>'
     . '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in titles Articles')
     . '</div></form></div>';
@@ -69,8 +75,8 @@ if ($search && !$error) {
                 $pos = 100;
             }
 
-            $name = functions::checkout($res['name']);
-            $text = functions::checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
+            $name = $tools->checkout($res['name']);
+            $text = $tools->checkout(mb_substr($res['text'], ($pos - 100), 400), 1);
 
             if ($search_t) {
                 foreach ($array as $val) {
@@ -83,7 +89,7 @@ if ($search && !$error) {
             }
 
             echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br>' . $text
-                . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . functions::checkout($res['author'])
+                . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . $tools->checkout($res['author'])
                 . ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br>'
                 . '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res['count_views']
                 . '</div></div>';

@@ -10,8 +10,15 @@ if (!$user_id || !$id) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' " . ($rights >= 7 ? "" : " AND `close` != '1'"));
 
 if ($req->rowCount()) {
@@ -202,7 +209,7 @@ if (!$error) {
 
                 header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
             } else {
-                $msg_pre = functions::checkout($msg, 1, 1);
+                $msg_pre = $tools->checkout($msg, 1, 1);
 
                 if ($set_user['smileys']) {
                     $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
@@ -218,7 +225,7 @@ if (!$error) {
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
                 echo App::getContainer()->get('bbcode')->buttons('form', 'msg');
-                echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : functions::checkout($_POST['msg'])) . '</textarea><br>';
+                echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
 
                 echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
                     ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .

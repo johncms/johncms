@@ -4,10 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -133,7 +137,7 @@ if ($total) {
             // Если доступ открыт всем, или смотрит Администратор
             echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (!empty($res['description']))
-                echo '<div class="gray">' . functions::smileys(functions::checkout($res['description'], 1)) . '</div>';
+                echo '<div class="gray">' . functions::smileys($tools->checkout($res['description'], 1)) . '</div>';
         } elseif ($res['access'] == 3) {
             // Если доступ открыт друзьям
             echo 'Только для друзей';
@@ -143,7 +147,7 @@ if ($total) {
         }
 
         echo '<div class="sub">' .
-            '<a href="?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . functions::checkout($res['album_name']) . '</a>';
+            '<a href="?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . $tools->checkout($res['album_name']) . '</a>';
 
         if ($res['access'] == 4 || core::$user_rights >= 6) {
             echo vote_photo($res) .

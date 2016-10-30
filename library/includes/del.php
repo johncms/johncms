@@ -5,8 +5,14 @@ if (!$adm) {
     redir404();
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Delete') . '</div>';
 
@@ -55,7 +61,7 @@ switch ($type) {
                             . '<form action="?act=del&amp;type=dir&amp;id=' . $id . '" method="post">'
                             . '<div><select name="move">';
                         while ($rm = $list->fetch()) {
-                            echo '<option value="' . $rm['id'] . '">' . functions::checkout($rm['name']) . '</option>';
+                            echo '<option value="' . $rm['id'] . '">' . $tools->checkout($rm['name']) . '</option>';
                         }
                         echo '</select></div>'
                             . '<div><input type="hidden" name="mode" value="moveaction" /></div>'

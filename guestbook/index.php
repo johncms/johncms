@@ -189,10 +189,10 @@ switch ($act) {
 
                 echo '<div class="menu">' .
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
-                    '<br />' . functions::checkout($res['text']) . '</div>' .
+                    '<br />' . $tools->checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
-                    '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . functions::checkout($res['otvet']) . '</textarea></p>' .
+                    '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -380,14 +380,14 @@ switch ($act) {
 
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
-                    $post = functions::checkout($res['text'], 1, 1);
+                    $post = $tools->checkout($res['text'], 1, 1);
                     if ($set_user['smileys']) {
                         $post = functions::smileys($post, $res['rights'] >= 1 ? 1 : 0);
                     }
                 } else {
                     // Для гостей обрабатываем имя и фильтруем ссылки
-                    $res['name'] = functions::checkout($res['name']);
-                    $post = functions::checkout($res['text'], 0, 2);
+                    $res['name'] = $tools->checkout($res['name']);
+                    $post = $tools->checkout($res['text'], 0, 2);
                     $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $post);
                     $replace = [
                         '.ru'   => '***',
@@ -414,7 +414,7 @@ switch ($act) {
 
                 if (!empty($res['otvet'])) {
                     // Ответ Администрации
-                    $otvet = functions::checkout($res['otvet'], 1, 1);
+                    $otvet = $tools->checkout($res['otvet'], 1, 1);
                     if ($set_user['smileys']) {
                         $otvet = functions::smileys($otvet, 1);
                     }

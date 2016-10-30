@@ -6,8 +6,14 @@ require('../system/head.php');
 
 // Удалить альбом
 if ($al && $user['id'] == $user_id || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
     if ($req_a->rowCount()) {
@@ -35,7 +41,7 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
         } else {
             echo '<div class="rmenu"><form action="?act=delete&amp;al=' . $al . '&amp;user=' . $user['id'] . '" method="post">' .
-                '<p>' . _t('Album') . ': <b>' . functions::checkout($res_a['name']) . '</b></p>' .
+                '<p>' . _t('Album') . ': <b>' . $tools->checkout($res_a['name']) . '</b></p>' .
                 '<p>' . _t('Are you sure you want to delete this album? If it contains photos, they also will be deleted.') . '</p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>' .
                 '</form></div>' .

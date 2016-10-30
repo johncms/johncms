@@ -6,8 +6,14 @@ require('../system/head.php');
 
 // Перемещение картинки в другой альбом
 if ($img && $user['id'] == $user_id || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
     if ($req->rowCount()) {
@@ -37,7 +43,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     '<select name="al">';
 
                 while ($res = $req->fetch()) {
-                    echo '<option value="' . $res['id'] . '">' . functions::checkout($res['name']) . '</option>';
+                    echo '<option value="' . $res['id'] . '">' . $tools->checkout($res['name']) . '</option>';
                 }
 
                 echo '</select></p>' .

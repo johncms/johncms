@@ -1,11 +1,19 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 $out = '';
 $total = 0;
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 if ($mod == 'clear') {
     if (isset($_POST['clear'])) {
@@ -58,13 +66,13 @@ if ($mod == 'clear') {
             }
 
             $post = $row['text'];
-            $post = functions::checkout($post, 1, 1);
+            $post = $tools->checkout($post, 1, 1);
 
             if ($set_user['smileys']) {
                 $post = functions::smileys($post);
             }
 
-            $out .= '<strong>' . functions::checkout($row['them']) . '</strong> (' . functions::display_date($row['time']) . ')<br />';
+            $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . functions::display_date($row['time']) . ')<br />';
             $post = preg_replace_callback("/{TIME=(.+?)}/usi", 'time_parce', $post);
             $out .= $post;
             $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';

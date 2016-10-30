@@ -11,10 +11,14 @@ if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 $author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) ? 1 : 0;
 if (!$adm || !$author) {
@@ -112,21 +116,21 @@ if (isset($_POST['submit'])) {
             . '<h3>' . _t('To upload a photo') . '</h3>'
             . '<div><input name="image" type="file" /></div>'
             . '<h3>' . _t('Title') . '</h3>' : '')
-        . '<div><input type="text" name="name" value="' . functions::checkout($row['name']) . '" /></div>'
+        . '<div><input type="text" name="name" value="' . $tools->checkout($row['name']) . '" /></div>'
         . ($type == 'dir' ? '<h3>' . _t('Section description') . '</h3>'
-            . '<div><textarea name="description" rows="4" cols="20">' . functions::checkout($row['description']) . '</textarea></div>' : '')
+            . '<div><textarea name="description" rows="4" cols="20">' . $tools->checkout($row['description']) . '</textarea></div>' : '')
         . ($type == 'article'
-            ? '<h3>' . _t('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . functions::checkout($row['announce'])
+            ? '<h3>' . _t('Announce') . '</h3><div><textarea rows="2" cols="20" name="announce">' . $tools->checkout($row['announce'])
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form', 'text') . '<textarea rows="5" cols="20" name="text">' . functions::checkout($row['text'])
+            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form', 'text') . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000
                 ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
                 : ''))
         . ($type == 'article'
-            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
+            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout($obj->get_all_stat_tags()) . '" /></div>'
             : '');
     if ($adm) {
         if ($sqlsel->rowCount() > 1) {
@@ -144,7 +148,7 @@ if (isset($_POST['submit'])) {
                         . (($type == 'dir' && $row['parent'] == $res['id']) || ($type == 'article' && $row['cat_id'] == $res['id'])
                             ? 'selected="selected" '
                             : '')
-                        . 'value="' . $res['id'] . '">' . functions::checkout($res['name']) . '</option>';
+                        . 'value="' . $res['id'] . '">' . $tools->checkout($res['name']) . '</option>';
                 }
             }
             echo '</select></div>';

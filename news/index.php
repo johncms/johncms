@@ -294,7 +294,7 @@ switch ($do) {
 
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $text = functions::checkout($res['text'], 1, 1);
+            $text = $tools->checkout($res['text'], 1, 1);
 
             if ($set_user['smileys']) {
                 $text = functions::smileys($text, 1);

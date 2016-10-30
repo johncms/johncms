@@ -7,6 +7,12 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
 $search = $search_post ? $search_post : $search_get;
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (isset($_GET['ip'])) {
     $search = trim($_GET['ip']);
 }
@@ -19,7 +25,7 @@ $menu = [
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Search IP') . '</div>' .
     '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
     '<form action="index.php?act=search_ip" method="post"><div class="gmenu"><p>' .
-    '<input type="text" name="search" value="' . functions::checkout($search) . '" />' .
+    '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
     '<input type="submit" value="' . _t('Search') . '" name="submit" /><br>' .
     '</p></div></form>';
 
@@ -73,7 +79,7 @@ if ($search) {
 
 if ($search && !$error) {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
 
     // Выводим результаты поиска
     echo '<div class="phdr">' . _t('Search results') . '</div>';
