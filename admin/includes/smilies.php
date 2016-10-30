@@ -10,7 +10,7 @@ $ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных р�
 $smileys = [];
 
 // Обрабатываем простые смайлы
-foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'simply' . DIRECTORY_SEPARATOR . '*') as $var) {
+foreach (glob(ROOT_PATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'simply' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -19,7 +19,7 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
 }
 
 // Обрабатываем Админские смайлы
-foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . '*') as $var) {
+foreach (glob(ROOT_PATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -29,7 +29,7 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
 }
 
 // Обрабатываем смайлы каталога
-foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'user' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*') as $var) {
+foreach (glob(ROOT_PATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_SEPARATOR . 'user' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . '*') as $var) {
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
@@ -40,7 +40,7 @@ foreach (glob(ROOTPATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY_
 }
 
 // Записываем в файл Кэша
-if (file_put_contents(ROOTPATH . 'files/cache/smileys.dat', serialize($smileys))) {
+if (file_put_contents(ROOT_PATH . 'files/cache/smileys.dat', serialize($smileys))) {
     echo '<div class="gmenu"><p>' . _t('Smilie cache updated successfully') . '</p></div>';
 } else {
     echo '<div class="rmenu"><p>' . _t('Error updating cache') . '</p></div>';

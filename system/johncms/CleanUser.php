@@ -32,7 +32,7 @@ class CleanUser
     public function removeAlbum($clean_id)
     {
         // Удаляем папку с файлами картинок
-        $dir = ROOTPATH . 'files/users/album/' . $clean_id;
+        $dir = ROOT_PATH . 'files/users/album/' . $clean_id;
         if (is_dir($dir)) {
             $this->removeDir($dir);
         }
@@ -68,7 +68,7 @@ class CleanUser
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 // Удаляем файлы почты
-                if (is_file(ROOTPATH . 'files/mail/' . $res['file_name'])) {
+                if (is_file(ROOT_PATH . 'files/mail/' . $res['file_name'])) {
                     @unlink('../files/mail/' . $res['file_name']);
                 }
             }

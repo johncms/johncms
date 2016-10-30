@@ -109,12 +109,12 @@ class core
     {
         $lng_set = $lng !== null && in_array($lng, self::$lng_list) ? $lng : self::$lng_iso;
 
-        if (!is_dir(ROOTPATH . 'incfiles/languages/' . $lng_set)) {
+        if (!is_dir(ROOT_PATH . 'incfiles/languages/' . $lng_set)) {
             self::$lng_iso = 'en';
         }
 
-        $lng_file = ROOTPATH . 'incfiles/languages/' . $lng_set . '/' . $module . '.lng';
-        $lng_file_edit = ROOTPATH . 'files/lng_edit/' . $lng_set . '_iso.lng';
+        $lng_file = ROOT_PATH . 'incfiles/languages/' . $lng_set . '/' . $module . '.lng';
+        $lng_file_edit = ROOT_PATH . 'files/lng_edit/' . $lng_set . '_iso.lng';
 
         if (file_exists($lng_file)) {
             $out = parse_ini_file($lng_file) or die('ERROR: language file');
@@ -158,7 +158,7 @@ class core
         if ($this->flood_chk) {
             //if ($this->ip_whitelist(self::$ip))
             //    return true;
-            $file = ROOTPATH . 'files/cache/ip_flood.dat';
+            $file = ROOT_PATH . 'files/cache/ip_flood.dat';
             $tmp = [];
             $requests = 1;
 

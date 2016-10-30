@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Restricted access');
 
-class bbcode extends core //TODO: убрать extends
+class bbcode
 {
     // Обработка тэгов и ссылок
     public static function tags($var)

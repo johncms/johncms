@@ -214,7 +214,7 @@ class functions extends core
             if (self::$user_set['avatar']) {
                 $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
 
-                if (file_exists((ROOTPATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
+                if (file_exists((ROOT_PATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
                     $out .= '<img src="' . $homeurl . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
                 } else {
                     $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
@@ -343,9 +343,9 @@ class functions extends core
     {
         $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
 
-        if (is_file(ROOTPATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
+        if (is_file(ROOT_PATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
             $src = $homeurl . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
-        } elseif (is_file(ROOTPATH . 'images/' . $name)) {
+        } elseif (is_file(ROOT_PATH . 'images/' . $name)) {
             $src = $homeurl . '/images/' . $name;
         } else {
             return false;
@@ -486,7 +486,7 @@ class functions extends core
     {
         static $smileys_cache = [];
         if (empty($smileys_cache)) {
-            $file = ROOTPATH . 'files/cache/smileys.dat';
+            $file = ROOT_PATH . 'files/cache/smileys.dat';
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
                 $smileys_cache = unserialize($smileys);
 

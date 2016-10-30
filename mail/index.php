@@ -151,4 +151,4 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 }
 
-require_once(ROOTPATH . 'system/end.php');
+require_once(ROOT_PATH . 'system/end.php');
