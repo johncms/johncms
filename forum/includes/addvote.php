@@ -3,15 +3,21 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $topic = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `id`='$id' AND `edit` != '1'")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id'")->fetchColumn();
     require_once('../system/head.php');
 
     if ($topic_vote != 0 || $topic == 0) {
-        echo functions::display_error(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>');
+        echo $tools->displayError(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Back') . '</a>');
         require('../system/end.php');
         exit;
     }

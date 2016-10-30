@@ -19,7 +19,7 @@ if ($req_obj->rowCount()) {
     $owner = functions::get_user($res_obj['user_id']);
     if (!$owner) {
         require('../system/head.php');
-        echo functions::display_error(_t('User does not exists'));
+        echo $tools->displayError(_t('User does not exists'));
         require('../system/end.php');
         exit;
     }
@@ -31,7 +31,7 @@ if ($req_obj->rowCount()) {
     if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 7) || ($res_a['access'] == 2 && $rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
         // Если доступ закрыт
         require('../system/head.php');
-        echo functions::display_error(_t('Access forbidden')) .
+        echo $tools->displayError(_t('Access forbidden')) .
             '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>';
         require('../system/end.php');
         exit;
@@ -87,5 +87,5 @@ if ($req_obj->rowCount()) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
     }
 } else {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
 }

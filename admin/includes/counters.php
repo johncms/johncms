@@ -8,8 +8,14 @@ if ($rights < 9) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 switch ($mod) {
     case 'view':
@@ -52,7 +58,7 @@ switch ($mod) {
                         : '<a href="index.php?act=counters&amp;mod=view&amp;go=on&amp;id=' . $id . '">' . _t('Enable') . '</a>')
                     . ' | <a href="index.php?act=counters&amp;mod=edit&amp;id=' . $id . '">' . _t('Edit') . '</a> | <a href="index.php?act=counters&amp;mod=del&amp;id=' . $id . '">' . _t('Delete') . '</a></div>';
             } else {
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
             }
         }
         break;
@@ -105,7 +111,7 @@ switch ($mod) {
     case 'del':
         // Удаление счетчика
         if (!$id) {
-            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -126,7 +132,7 @@ switch ($mod) {
                 echo '<div class="phdr"><a href="index.php?act=counters">' . _t('Cancel') . '</a></div></form>';
             }
         } else {
-            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -142,7 +148,7 @@ switch ($mod) {
             $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
 
             if (empty($name) || empty($link1)) {
-                echo functions::display_error(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -182,7 +188,7 @@ switch ($mod) {
                     $mode = $res['mode'];
                     $switch = 1;
                 } else {
-                    echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
+                    echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
                     require('../system/end.php');
                     exit;
                 }
@@ -216,7 +222,7 @@ switch ($mod) {
         $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
 
         if (empty($name) || empty($link1)) {
-            echo functions::display_error(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
             require_once('../system/end.php');
             exit;
         }
@@ -226,7 +232,7 @@ switch ($mod) {
             $req = $db->query('SELECT * FROM `cms_counters` WHERE `id` = ' . $id);
 
             if (mysql_num_rows($req) != 1) {
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
                 require_once('../system/end.php');
                 exit;
             }

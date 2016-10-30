@@ -3,8 +3,15 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($id) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     $error = false;
 
     // Скачивание прикрепленного файла Форума
@@ -26,7 +33,7 @@ if ($id) {
 
     if ($error) {
         require('../system/head.php');
-        echo functions::display_error(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../system/end.php');
         exit;
     }

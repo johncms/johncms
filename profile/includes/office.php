@@ -6,19 +6,23 @@ $headmod = 'office';
 $textl = _t('My Account');
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Проверяем права доступа
 if ($user['id'] != $user_id) {
-    echo functions::display_error(_t('Access forbidden'));
+    echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
 }
 
-/** @var Interop\Container\ContainerInterface $container */
-$container = App::getContainer();
 $config = $container->get('config')['johncms'];
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 // Личный кабинет пользователя
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();

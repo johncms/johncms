@@ -4,21 +4,22 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 // Закрываем доступ для определенных ситуаций
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {
     require('../system/head.php');
-    echo functions::display_error(_t('Access forbidden'));
+    echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
 }
-
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 // Вспомогательная Функция обработки ссылок форума
 function forum_link($m)
@@ -65,7 +66,7 @@ $flood = $tools->antiflood(core::$user_data);
 
 if ($flood) {
     require('../system/head.php');
-    echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -74,7 +75,7 @@ $req_r = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' L
 
 if (!$req_r->rowCount()) {
     require('../system/head.php');
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
@@ -208,7 +209,7 @@ if (isset($_POST['submit'])
     } else {
         // Выводим сообщение об ошибке
         require('../system/head.php');
-        echo functions::display_error($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo $tools->displayError($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         require('../system/end.php');
         exit;
     }

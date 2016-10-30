@@ -4,31 +4,35 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-if (!$id || !$user_id) {
-    echo functions::display_error(_t('Wrong data'));
-    require('../system/end.php');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
+
+if (!$id || !$user_id) {
+    echo $tools->displayError(_t('Wrong data'));
+    require('../system/end.php');
+    exit;
+}
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
 $res = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
 if ($res['type'] != 'm' || $res['user_id'] != $user_id) {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['time'] < (time() - 180)) {
-    echo functions::display_error(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -37,7 +41,7 @@ if ($res['time'] < (time() - 180)) {
 $exist = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'")->fetchColumn();
 
 if ($exist) {
-    echo functions::display_error(_t('File is already uploaded'));
+    echo $tools->displayError(_t('File is already uploaded'));
     require('../system/end.php');
     exit;
 }
@@ -145,7 +149,7 @@ if (isset($_POST['submit'])) {
               `filetype` = '$type'
             ");
         } else {
-            echo functions::display_error($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         }
     } else {
         echo _t('Error uploading file') . '<br />';

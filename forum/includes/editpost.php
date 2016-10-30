@@ -4,12 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-if (!$user_id || !$id) {
-    echo functions::display_error(_t('Wrong data'));
-    require('../system/end.php');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -18,6 +12,12 @@ $db = $container->get(PDO::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+if (!$user_id || !$id) {
+    echo $tools->displayError(_t('Wrong data'));
+    require('../system/end.php');
+    exit;
+}
 
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' " . ($rights >= 7 ? "" : " AND `close` != '1'"));
 
@@ -187,7 +187,7 @@ if (!$error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo functions::display_error(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require('../system/end.php');
                     exit;
                 }
@@ -236,5 +236,5 @@ if (!$error) {
     }
 } else {
     // Выводим сообщения об ошибках
-    echo functions::display_error($error);
+    echo $tools->displayError($error);
 }

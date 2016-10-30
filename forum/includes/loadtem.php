@@ -2,9 +2,15 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (empty($_GET['n'])) {
     require('../system/head.php');
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
@@ -25,7 +31,7 @@ $tt = count($a);
 
 if (!in_array($n, $b)) {
     require_once('../system/head.php');
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require_once('../system/end.php');
     exit;
 }

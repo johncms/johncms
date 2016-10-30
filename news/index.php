@@ -128,7 +128,7 @@ switch ($do) {
                     $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
                     echo '<p>' . _t('News added') . '<br /><a href="index.php">' . _t('Back to news') . '</a></p>';
                 } else {
-                    echo functions::display_error($error, '<a href="index.php">' . _t('Back to news') . '</a>');
+                    echo $tools->displayError($error, '<a href="index.php">' . _t('Back to news') . '</a>');
                 }
             } else {
                 echo '<form action="index.php?do=add" method="post"><div class="menu">' .
@@ -166,7 +166,7 @@ switch ($do) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (!$id) {
-                echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
+                echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -197,7 +197,7 @@ switch ($do) {
                         $id,
                     ]);
                 } else {
-                    echo functions::display_error($error, '<a href="index.php?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $tools->displayError($error, '<a href="index.php?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 }
                 echo '<p>' . _t('Article changed') . '<br /><a href="index.php">' . _t('Continue') . '</a></p>';
             } else {

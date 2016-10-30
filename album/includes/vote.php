@@ -5,15 +5,21 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $ref = isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Голосуем за фотографию
 if (!$img) {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
-
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 
 $check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '$img' LIMIT 1");
 
@@ -55,5 +61,5 @@ if ($req->rowCount()) {
 
     header('Location: ' . $ref);
 } else {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
 }

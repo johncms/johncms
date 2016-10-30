@@ -3,18 +3,27 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     if (!$id) {
         require('../system/head.php');
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }
 
     $ms = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
-    if ($ms[type] != "t") {
+    if ($ms['type'] != "t") {
         require('../system/head.php');
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }
@@ -24,7 +33,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if (!$nn) {
             require('../system/head.php');
-            echo functions::display_error(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -34,7 +43,7 @@ if ($rights == 3 || $rights >= 6) {
 
         if ($pt->rowCount()) {
             require('../system/head.php');
-            echo functions::display_error(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -52,7 +61,4 @@ if ($rights == 3 || $rights >= 6) {
             '</form></div>' .
             '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
-} else {
-    require('../system/head.php');
-    echo functions::display_error(_t('Access forbidden'));
 }

@@ -29,7 +29,7 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
             } else {
-                echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -80,7 +80,7 @@ switch ($mod) {
             }
 
             if ($error) {
-                echo functions::display_error($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
+                echo $tools->displayError($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
                 require('../system/end.php');
                 exit;
             }

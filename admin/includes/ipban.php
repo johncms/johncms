@@ -8,8 +8,14 @@ if ($rights < 9) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 switch ($mod) {
     case 'new':
@@ -24,7 +30,7 @@ switch ($mod) {
             $reason = isset($_POST['reason']) ? htmlentities(trim($_POST['reason']), ENT_QUOTES, 'UTF-8') : '';
 
             if (empty($get_ip)) {
-                echo functions::display_error(_t('Invalid IP'),
+                echo $tools->displayError(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
                 require_once('../system/end.php');
                 exit;
@@ -91,7 +97,7 @@ switch ($mod) {
                 $total = $req->rowCount();
 
                 if ($total) {
-                    echo functions::display_error(_t('Address you entered conflicts with other who in the database'));
+                    echo $tools->displayError(_t('Address you entered conflicts with other who in the database'));
                     $i = 0;
 
                     while ($res = $req->fetch()) {
@@ -174,7 +180,7 @@ switch ($mod) {
                     '</form>' .
                     '<p><a href="index.php?act=ipban">' . _t('Cancel') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
             } else {
-                echo functions::display_error($error,
+                echo $tools->displayError($error,
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
             }
         } else {
@@ -207,7 +213,7 @@ switch ($mod) {
         $reason = isset($_POST['reason']) ? htmlspecialchars(trim($_POST['reason'])) : '';
 
         if (!$ip1 || !$ip2) {
-            echo functions::display_error(_t('Invalid IP'),
+            echo $tools->displayError(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
             require_once('../system/end.php');
             exit;
@@ -260,7 +266,7 @@ switch ($mod) {
             $get_ip = ip2long($_POST['ip']);
 
             if (!$get_ip) {
-                echo functions::display_error(_t('Invalid IP'),
+                echo $tools->displayError(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
                 require_once('../system/end.php');
                 exit;
@@ -268,7 +274,7 @@ switch ($mod) {
 
             $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '$get_ip' BETWEEN `ip1` AND `ip2` LIMIT 1");
         } else {
-            echo functions::display_error(_t('Invalid IP'),
+            echo $tools->displayError(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
             require_once('../system/end.php');
             exit;

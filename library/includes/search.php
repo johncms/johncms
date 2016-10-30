@@ -110,10 +110,11 @@ if ($search && !$error) {
     }
 } else {
     if ($error) {
-        echo functions::display_error($error);
+        echo $tools->displayError($error);
     }
 
     echo '<div class="phdr"><small>' . _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance') . '</small></div>';
 }
+
 echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br>' : '')
     . '<a href="?">' . _t('To Library') . '</a></p>';

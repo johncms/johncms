@@ -18,10 +18,13 @@ $config = $container->get('config')['johncms'];
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
     require('../system/head.php');
-    echo functions::display_error(_t('For registered users only'));
+    echo $tools->displayError(_t('For registered users only'));
     require('../system/end.php');
     exit;
 }
@@ -31,7 +34,7 @@ $user = functions::get_user(isset($_REQUEST['user']) ? abs(intval($_REQUEST['use
 
 if (!$user) {
     require('../system/head.php');
-    echo functions::display_error(_t('This User does not exists'));
+    echo $tools->displayError(_t('This User does not exists'));
     require('../system/end.php');
     exit;
 }

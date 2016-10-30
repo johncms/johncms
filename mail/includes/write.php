@@ -10,13 +10,14 @@ $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+$config = $container->get('config')['johncms'];
 
 if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
@@ -24,7 +25,7 @@ if ($id) {
     if (!$req->rowCount()) {
         $textl = _t('Mail');
         require_once('../system/head.php');
-        echo functions::display_error(_t('User does not exists'));
+        echo $tools->displayError(_t('User does not exists'));
         require_once("../system/end.php");
         exit;
     }

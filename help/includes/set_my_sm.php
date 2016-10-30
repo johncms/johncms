@@ -8,8 +8,11 @@ $add = isset($_POST['add']);
 $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 if (($adm && !$rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
-    echo functions::display_error($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
+    echo $tools->displayError($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -34,8 +37,6 @@ if (count($smileys) > $user_smileys) {
     $smileys = $smileys[0];
 }
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 $db->query("UPDATE `users` SET `smileys` = " . $db->quote(serialize($smileys)) . " WHERE `id` = '$user_id'");
 
 if ($delete || isset($_GET['clean'])) {

@@ -26,7 +26,7 @@ $change = ($type == 'dir' ? $db->query("SELECT COUNT(*) FROM `library_cats` WHER
 switch ($type) {
     case 'dir':
         if ($db->query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() == 0) {
-            echo functions::display_error(_t('Section does not exist'));
+            echo $tools->displayError(_t('Section does not exist'));
         } elseif (!$change) {
             $mode = isset($_POST['mode']) ? $_POST['mode'] : (isset($do) ? $do : false);
             $dirtype = $db->query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1")->fetchColumn();
@@ -105,7 +105,7 @@ switch ($type) {
 
     case 'article':
         if ($db->query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id)->rowCount() == 0) {
-            echo functions::display_error(_t('Articles do not exist'));
+            echo $tools->displayError(_t('Articles do not exist'));
         } else {
             $sql = "DELETE FROM `library_texts` WHERE `id`=" . $id;
             if (!isset($_GET['yes'])) {

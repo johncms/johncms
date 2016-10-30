@@ -5,17 +5,21 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Edit Profile');
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (($user_id != $user['id'] && $rights < 7)
     || $user['rights'] > $datauser['rights']
 ) {
     // Если не хватает прав, выводим ошибку
-    echo functions::display_error(_t('You cannot edit profile of higher administration'));
+    echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require('../system/end.php');
     exit;
 }
 
-/** @var Interop\Container\ContainerInterface $container */
-$container = App::getContainer();
 $config = $container->get('config')['johncms'];
 
 switch ($mod) {
@@ -44,7 +48,7 @@ switch ($mod) {
                     echo '<div class="gmenu"><p>' . _t('The avatar is successfully uploaded') . '<br />' .
                         '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
-                    echo functions::display_error($handle->error);
+                    echo $tools->displayError($handle->error);
                 }
                 $handle->clean();
             }
@@ -95,10 +99,10 @@ switch ($mod) {
                     if ($handle->processed) {
                         echo '<div class="gmenu"><p>' . _t('The photo is successfully uploaded') . '<br /><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                     } else {
-                        echo functions::display_error($handle->error);
+                        echo $tools->displayError($handle->error);
                     }
                 } else {
-                    echo functions::display_error($handle->error);
+                    echo $tools->displayError($handle->error);
                 }
                 $handle->clean();
             }

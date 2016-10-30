@@ -2,13 +2,21 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 switch ($mod) {
     case 'amnesty':
         if ($rights < 9) {
-            echo functions::display_error(_t('Amnesty is available for supervisors only'));
+            echo $tools->displayError(_t('Amnesty is available for supervisors only'));
         } else {
             echo '<div class="phdr"><a href="index.php?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
 

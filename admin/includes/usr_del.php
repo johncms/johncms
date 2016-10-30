@@ -8,8 +8,15 @@ if ($rights < 9) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $user = false;
@@ -116,7 +123,7 @@ if (!$error) {
             echo '</p></div></form>';
     }
 } else {
-    echo functions::display_error($error);
+    echo $tools->displayError($error);
 }
 
 echo '<p><a href="index.php">' . _t('Cancel') . '</a></p>';

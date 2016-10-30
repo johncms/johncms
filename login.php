@@ -10,6 +10,13 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 if (core::$user_id) {
@@ -41,9 +48,6 @@ if (core::$user_id) {
     }
 
     if (!$error && $user_pass && $user_login) {
-        /** @var PDO $db */
-        $db = $container->get(PDO::class);
-
         // Запрос в базу на юзера
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
         $stmt->execute([functions::rus_lat(mb_strtolower($user_login))]);
@@ -126,7 +130,7 @@ if (core::$user_id) {
 
     if ($display_form) {
         if ($error) {
-            echo functions::display_error($error);
+            echo $tools->displayError($error);
         }
 
         $info = '';

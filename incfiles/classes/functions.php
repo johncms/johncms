@@ -1,51 +1,13 @@
 <?php
 
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
- */
-
 defined('_IN_JOHNCMS') or die('Restricted access');
 
 class functions extends core
 {
     //TODO: убрать
-    public static function display_date($var)
+    public static function display_date()
     {
-        $shift = (App::getContainer()->get('config')['johncms']['timeshift'] + self::$user_set['timeshift']) * 3600;
-
-        if (date('Y', $var) == date('Y', time())) {
-            if (date('z', $var + $shift) == date('z', time() + $shift)) {
-                return self::$lng['today'] . ', ' . date("H:i", $var + $shift);
-            }
-            if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
-                return self::$lng['yesterday'] . ', ' . date("H:i", $var + $shift);
-            }
-        }
-
-        return date("d.m.Y / H:i", $var + $shift);
-    }
-
-    /**
-     * Сообщения об ошибках
-     *
-     * @param string|array $error Сообщение об ошибке (или массив с сообщениями)
-     * @param string       $link  Необязательная ссылка перехода
-     * @return bool|string
-     */
-    public static function display_error($error = '', $link = '')
-    {
-        if (!empty($error)) {
-            return '<div class="rmenu"><p><b>' . self::$lng['error'] . '!</b><br />' .
-            (is_array($error) ? implode('<br />', $error) : $error) . '</p>' .
-            (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
-        } else {
-            return false;
-        }
+        return 'please use new method';
     }
 
     /**

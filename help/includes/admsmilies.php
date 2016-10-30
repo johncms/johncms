@@ -4,7 +4,10 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Каталог Админских Смайлов
 if ($rights < 1) {
-    echo functions::display_error(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
+    /** @var Johncms\Tools $tools */
+    $tools = App::getContainer()->get('tools');
+
+    echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }

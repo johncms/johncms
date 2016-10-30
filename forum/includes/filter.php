@@ -4,8 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (!$id) {
-    echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
+    echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -41,7 +47,7 @@ switch ($do) {
 
     default :
         /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
+        $db = $container->get(PDO::class);
 
         // Показываем список авторов темы, с возможностью выбора
         $req = $db->query("SELECT *, COUNT(`from`) AS `count` FROM `forum` WHERE `refid` = '$id' GROUP BY `from` ORDER BY `from`");
@@ -63,7 +69,7 @@ switch ($do) {
                 '<div class="phdr"><small>' . _t('Filter will be display posts from selected authors only') . '</small></div>' .
                 '</form>';
         } else {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
         }
 }
 

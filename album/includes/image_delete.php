@@ -6,10 +6,17 @@ require('../system/head.php');
 
 // Удалить картинку
 if ($img && $user['id'] == $user_id || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
+
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
@@ -34,6 +41,6 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<div class="phdr"><a href="?act=show&amp;al=' . $album . 'user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
     }
 }

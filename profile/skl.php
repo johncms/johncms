@@ -18,6 +18,9 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $textl = _t('Password recovery');
 require('../system/head.php');
 
@@ -88,7 +91,7 @@ switch ($act) {
             }
         } else {
             // Выводим сообщение об ошибке
-            echo functions::display_error($error, '<a href="skl.php">' . _t('Back') . '</a>');
+            echo $tools->displayError($error, '<a href="skl.php">' . _t('Back') . '</a>');
         }
         break;
 
@@ -139,7 +142,7 @@ switch ($act) {
             }
         } else {
             // Выводим сообщение об ошибке
-            echo functions::display_error($error);
+            echo $tools->displayError($error);
         }
         break;
 

@@ -391,7 +391,10 @@ switch ($mod) {
         echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
 
         if (count($scaner->track_files) == 0) {
-            echo functions::display_error(_t('Snapshot is not created'), '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
+            /** @var Johncms\Tools $tools */
+            $tools = \App::getContainer()->get('tools');
+
+            echo $tools->displayError(_t('Snapshot is not created'), '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
         } else {
             if (count($scaner->bad_files)) {
                 echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';

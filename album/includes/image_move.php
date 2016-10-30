@@ -32,7 +32,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 echo '<div class="gmenu"><p>' . _t('Image successfully moved to the selected album') . '<br>' .
                     '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
             } else {
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
             }
         } else {
             $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `id` != '" . $image['album_id'] . "' ORDER BY `sort` ASC");
@@ -51,10 +51,10 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     '</div></form>' .
                     '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
             } else {
-                echo functions::display_error(_t('You must create at least one additional album in order to move the image'), '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a>');
+                echo $tools->displayError(_t('You must create at least one additional album in order to move the image'), '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a>');
             }
         }
     } else {
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
     }
 }

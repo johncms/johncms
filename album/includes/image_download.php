@@ -4,10 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 // Загрузка выбранного файла и обработка счетчика скачиваний
 $error = array ();
@@ -44,5 +48,5 @@ if (!$error) {
     header('location: ' . $config['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
     require('../system/head.php');
-    echo functions::display_error($error, '<a href="index.php">' . _t('Back') . '</a>');
+    echo $tools->displayError($error, '<a href="index.php">' . _t('Back') . '</a>');
 }

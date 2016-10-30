@@ -34,7 +34,7 @@ switch ($mod) {
     case 'del':
         // Удаление категории, или раздела
         if (!$id) {
-            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -54,7 +54,7 @@ switch ($mod) {
                         $category = isset($_POST['category']) ? intval($_POST['category']) : 0;
 
                         if (!$category || $category == $id) {
-                            echo functions::display_error(_t('Wrong data'));
+                            echo $tools->displayError(_t('Wrong data'));
                             require('../system/end.php');
                             exit;
                         }
@@ -62,7 +62,7 @@ switch ($mod) {
                         $check = $db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$category' AND `type` = 'f'")->fetchColumn();
 
                         if (!$check) {
-                            echo functions::display_error(_t('Wrong data'));
+                            echo $tools->displayError(_t('Wrong data'));
                             require('../system/end.php');
                             exit;
                         }
@@ -108,7 +108,7 @@ switch ($mod) {
                         $subcat = isset($_POST['subcat']) ? intval($_POST['subcat']) : 0;
 
                         if (!$subcat || $subcat == $id) {
-                            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+                            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
                             require('../system/end.php');
                             exit;
                         }
@@ -116,7 +116,7 @@ switch ($mod) {
                         $check = $db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$subcat' AND `type` = 'r'")->fetchColumn();
 
                         if (!$check) {
-                            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+                            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
                             require('../system/end.php');
                             exit;
                         }
@@ -128,7 +128,7 @@ switch ($mod) {
                             '</p></div>';
                     } elseif (isset($_POST['delete'])) {
                         if ($rights != 9) {
-                            echo functions::display_error(_t('Access forbidden'));
+                            echo $tools->displayError(_t('Access forbidden'));
                             require_once('../system/end.php');
                             exit;
                         }
@@ -218,7 +218,7 @@ switch ($mod) {
                 $res = $req->fetch();
                 $cat_name = $res['text'];
             } else {
-                echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+                echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -277,7 +277,7 @@ switch ($mod) {
                 header('Location: index.php?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
             } else {
                 // Выводим сообщение об ошибках
-                echo functions::display_error($error);
+                echo $tools->displayError($error);
             }
         } else {
             // Форма ввода
@@ -312,7 +312,7 @@ switch ($mod) {
     case 'edit':
         // Редактирование выбранной категории, или раздела
         if (!$id) {
-            echo functions::display_error(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -379,7 +379,7 @@ switch ($mod) {
                         header('Location: index.php?act=forum&mod=cat' . ($res['type'] == 'r' ? '&id=' . $res['refid'] : ''));
                     } else {
                         // Выводим сообщение об ошибках
-                        echo functions::display_error($error);
+                        echo $tools->displayError($error);
                     }
                 } else {
                     // Форма ввода
@@ -552,7 +552,7 @@ switch ($mod) {
 
         if (isset($_POST['deltopic'])) {
             if ($rights != 9) {
-                echo functions::display_error(_t('Access forbidden'));
+                echo $tools->displayError(_t('Access forbidden'));
                 require('../system/end.php');
                 exit;
             }
@@ -649,7 +649,7 @@ switch ($mod) {
 
         if (isset($_POST['delpost'])) {
             if ($rights != 9) {
-                echo functions::display_error(_t('Access forbidden'));
+                echo $tools->displayError(_t('Access forbidden'));
                 require('../system/end.php');
                 exit;
             }

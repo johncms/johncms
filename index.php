@@ -6,6 +6,7 @@ require('incfiles/core.php');
 
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
+
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
@@ -16,10 +17,12 @@ if (isset($_GET['err'])) {
 
 switch ($act) {
     case '404':
-        // Сообщение об ошибке 404
+        /** @var Johncms\Tools $tools */
+        $tools = App::getContainer()->get('tools');
+
         $headmod = 'error404';
         require('system/head.php');
-        echo functions::display_error($lng['error_404']);
+        echo $tools->displayError(_t('The requested page does not exists'));
         break;
 
     default:

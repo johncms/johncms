@@ -2,9 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 // Проверяем права доступа
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
-    echo functions::display_error(_t('Access forbidden'));
+    echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
 }
@@ -62,7 +65,7 @@ switch ($mod) {
                 '<a href="' . ($user_id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . _t('Continue') . '</a></p>';
             echo '</div>';
         } else {
-            echo functions::display_error($error,
+            echo $tools->displayError($error,
                 '<a href="?act=password&amp;user=' . $user['id'] . '">' . _t('Repeat') . '</a>');
         }
         break;
