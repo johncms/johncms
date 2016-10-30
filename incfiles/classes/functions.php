@@ -40,7 +40,7 @@ class functions extends core
         }
 
         if ($tags == 1) {
-            $str = bbcode::tags($str);
+            $str = App::getContainer()->get('bbcode')->tags($str);
         } elseif ($tags == 2) {
             $str = \App::getContainer()->get('bbcode')->notags($str);
         }

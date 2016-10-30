@@ -78,9 +78,7 @@ if ($set_user['avatar']) {
 }
 
 // Вывод текста поста
-$text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-$text = nl2br($text);
-$text = bbcode::tags($text);
+$text = functions::checkout($res['text'], 1, 1);
 
 if ($set_user['smileys']) {
     $text = functions::smileys($text, ($res['rights'] >= 1) ? 1 : 0);

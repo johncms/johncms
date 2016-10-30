@@ -94,11 +94,11 @@ if ($ip) {
         'NetType:'       => '<strong class="gray">NetType:</strong>',
         'Comment:'       => '<strong class="gray">Comment:</strong>'
     );
-    $ipwhois = trim(bbcode::highlight_url(htmlspecialchars($res)));
+    $ipwhois = trim(functions::checkout($res, 1, 1));
     $ipwhois = strtr($ipwhois, $array);
 } else {
     $ipwhois = _t('Wrong data');
 }
 
-echo '<div class="menu"><small>' . nl2br($ipwhois) . '</small></div>' .
+echo '<div class="menu"><small>' . $ipwhois . '</small></div>' .
     '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . _t('Back') . '</a></div>';
