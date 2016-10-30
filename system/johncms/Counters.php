@@ -137,14 +137,14 @@ class Counters
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)")->fetchColumn();
 
             if ($mod) {
-                return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period') . '</a>' .
-                ($total ? '<br><a href="index.php?act=new">' . _t('Unread') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+                return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
+                ($total ? '<br><a href="index.php?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
             } else {
                 return $total;
             }
         } else {
             if ($mod) {
-                return '<a href="index.php?act=new">' . _t('Last activity') . '</a>';
+                return '<a href="index.php?act=new">' . _t('Last activity', 'system') . '</a>';
             } else {
                 return false;
             }

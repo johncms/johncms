@@ -81,7 +81,7 @@ class Comments
             case 'reply':
                 // Отвечаем на комментарий
                 if ($this->item && $this->access_reply && !$this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply') . '</div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply', 'system') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -89,7 +89,7 @@ class Comments
                         $attributes = unserialize($res['attributes']);
 
                         if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
-                            echo \functions::display_error(_t('Administrator already replied to this message'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
+                            echo \functions::display_error(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -112,7 +112,7 @@ class Comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back') . '</a>');
+                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
@@ -120,10 +120,10 @@ class Comments
                                 \functions::checkout($res['text']);
                             $reply = \functions::checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
-                                '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
+                                '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                         }
                     } else {
-                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
+                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                     }
                 }
                 break;
@@ -131,7 +131,7 @@ class Comments
             case 'edit':
                 // Редактируем комментарий
                 if ($this->item && $this->access_edit && !$this->ban) {
-                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit') . '</div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit', 'system') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
@@ -140,7 +140,7 @@ class Comments
                         $user = \functions::get_user($res['user_id']);
 
                         if ($user['rights'] > \core::$user_rights) {
-                            echo \functions::display_error(_t('You cannot edit posts of higher administration'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
+                            echo \functions::display_error(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -168,7 +168,7 @@ class Comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back') . '</a>');
+                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
@@ -177,10 +177,10 @@ class Comments
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
-                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back') . '</a>');
+                        echo \functions::display_error(_t('Wrong data', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                     }
 
-                    echo '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
+                    echo '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                 }
                 break;
 
@@ -217,14 +217,14 @@ class Comments
                         }
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
-                        echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Delete') . '</div>' .
-                            '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '<br />' .
-                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . _t('Delete') . '</a> | ' .
-                            '<a href="' . $this->url . '">' . _t('Cancel') . '</a><br />' .
-                            '<div class="sub">' . _t('Clear all messages from this user') . '<br />' .
-                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . _t('Clear') . '</a></span>' .
+                        echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Delete', 'system') . '</div>' .
+                            '<div class="rmenu"><p>' . _t('Do you really want to delete?', 'system') . '<br />' .
+                            '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes">' . _t('Delete', 'system') . '</a> | ' .
+                            '<a href="' . $this->url . '">' . _t('Cancel', 'system') . '</a><br />' .
+                            '<div class="sub">' . _t('Clear all messages from this user', 'system') . '<br />' .
+                            '<span class="red"><a href="' . $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all">' . _t('Clear', 'system') . '</a></span>' .
                             '</div></p></div>' .
-                            '<div class="phdr"><a href="' . $this->url . '">' . _t('Back') . '</a></div>';
+                            '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                     }
                 }
                 break;
@@ -276,9 +276,9 @@ class Comments
                         $res['browser'] = $attributes['author_browser'];
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         $menu = [
-                            $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . _t('Reply') . '</a>' : '',
-                            $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . _t('Edit') . '</a>' : '',
-                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete') . '</a>' : '',
+                            $this->access_reply ? '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $res['subid'] . '">' . _t('Reply', 'system') . '</a>' : '',
+                            $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . _t('Edit', 'system') . '</a>' : '',
+                            $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete', 'system') . '</a>' : '',
                         ];
                         $text = \functions::checkout($res['text'], 1, 1);
 
@@ -287,7 +287,7 @@ class Comments
                         }
 
                         if (isset($attributes['edit_count'])) {
-                            $text .= '<br /><span class="gray"><small>' . _t('Edited') . ': <b>' . $attributes['edit_name'] . '</b>' .
+                            $text .= '<br /><span class="gray"><small>' . _t('Edited', 'system') . ': <b>' . $attributes['edit_name'] . '</b>' .
                                 ' (' . \functions::display_date($attributes['edit_time']) . ') <b>' .
                                 '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
@@ -314,16 +314,16 @@ class Comments
                         ++$i;
                     }
                 } else {
-                    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
+                    echo '<div class="menu"><p>' . _t('The list is empty', 'system') . '</p></div>';
                 }
 
-                echo '<div class="phdr">' . _t('Total') . ': ' . $this->total . '</div>';
+                echo '<div class="phdr">' . _t('Total', 'system') . ': ' . $this->total . '</div>';
 
                 if ($this->total > $kmess) {
                     echo '<div class="topmenu">' . \functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
                         '<p><form action="' . $this->url . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
-                        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
+                        '<input type="submit" value="' . _t('To Page', 'system') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
 
@@ -382,10 +382,10 @@ class Comments
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
         (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
-        '<b>' . _t('Message') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
+        '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
         '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
         '<textarea rows="' . \core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
-        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send') . '"/></p></form></div>';
+        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
 
     // Проверка текста сообщения
@@ -405,13 +405,13 @@ class Comments
 
         // Проверяем на минимально допустимую длину
         if (mb_strlen($message) < $this->min_lenght) {
-            $error[] = _t('Text is too short');
+            $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
             $flood = \App::getContainer()->get('tools')->antiflood(\core::$user_data);
 
             if ($flood) {
-                $error[] = _t('You cannot add the message so often<br>Please, wait') . ' ' . $flood . '&#160;' . _t('seconds');
+                $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');
             }
         }
 
@@ -421,7 +421,7 @@ class Comments
             $res = $req->fetch();
 
             if (mb_strtolower($message) == mb_strtolower($res['text'])) {
-                $error[] = _t('Message already exists');
+                $error[] = _t('Message already exists', 'system');
             }
         }
 
