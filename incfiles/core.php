@@ -5,26 +5,18 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 require ROOTPATH . 'system/bootstrap.php';
 
-////////////////////////////////////////////////////////////////////////////////
-// Автозагрузка Классов                                                       //
-////////////////////////////////////////////////////////////////////////////////
+// Автозагрузка Классов
 spl_autoload_register('autoload');
 function autoload($name)
 {
-    $file = ROOTPATH . 'incfiles/classes/' . $name . '.php';
+    $file = ROOT_PATH . 'incfiles/classes/' . $name . '.php';
     if (file_exists($file)) {
         require_once($file);
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// Инициализируем заглушку старого ядра системы                               //
-////////////////////////////////////////////////////////////////////////////////
+// Инициализируем заглушку старого ядра системы
 new core;
-
-////////////////////////////////////////////////////////////////////////////////
-// Получаем переменные для совместимости со старыми модулями                  //
-////////////////////////////////////////////////////////////////////////////////
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

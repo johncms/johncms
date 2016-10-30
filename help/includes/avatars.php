@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Каталог пользовательских Аватаров
-if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
+if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
     $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : false;
 
     if ($user_id && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
@@ -25,8 +25,8 @@ if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
         }
     } else {
         // Показываем список Аватаров
-        echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . htmlentities(file_get_contents(ROOTPATH . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
-        $array = glob(ROOTPATH . 'images/avatars/' . $id . '/*.png');
+        echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . htmlentities(file_get_contents(ROOT_PATH . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
+        $array = glob(ROOT_PATH . 'images/avatars/' . $id . '/*.png');
         $total = count($array);
         $end = $start + $kmess;
 
@@ -64,7 +64,7 @@ if ($id && is_dir(ROOTPATH . 'images/avatars/' . $id)) {
 } else {
     // Показываем каталоги с Аватарами
     echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Avatars') . '</div>';
-    $dir = glob(ROOTPATH . 'images/avatars/*', GLOB_ONLYDIR);
+    $dir = glob(ROOT_PATH . 'images/avatars/*', GLOB_ONLYDIR);
     $total = 0;
     $total_dir = count($dir);
 
