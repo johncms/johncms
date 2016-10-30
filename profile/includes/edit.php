@@ -6,7 +6,7 @@ $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
 require('../system/head.php');
 
 // Проверяем права доступа для редактирования Профиля
-if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
+if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
     echo functions::display_error(_t('You cannot edit profile of higher administration'));
     require('../system/end.php');
     exit;
