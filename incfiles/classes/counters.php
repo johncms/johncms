@@ -14,46 +14,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class counters
 {
     /**
-     * Статистика гостевой
-     *
-     * $mod = 1    колличество новых в гостевой
-     * $mod = 2    колличество новых в Админ-Клубе
-     *
-     * @param int $mod
-     * @return int|string
-     */
-    public static function guestbook($mod = 0)
-    {
-        /** @var PDO $db */
-        $db = App::getContainer()->get(PDO::class);
-
-        $count = 0;
-
-        switch ($mod) {
-            case 1:
-                $count = $db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=0 AND `time` > ' . (time() - 86400))->fetchColumn();
-                break;
-
-            case 2:
-                if (core::$user_rights >= 1) {
-                    $count = $db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=1 AND `time` > ' . (time() - 86400))->fetchColumn();
-                    //$count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time` > '" . (time() - 86400) . "'"), 0);
-                }
-                break;
-
-            default:
-                $count = $db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
-
-                if (core::$user_rights >= 1) {
-                    $adm = $db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
-                    $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/index.php?act=ga&amp;do=set">' . $adm . '</a></span>';
-                }
-        }
-
-        return $count;
-    }
-
-    /**
      * Статистика библиотеки
      *
      * @return string

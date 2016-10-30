@@ -148,4 +148,41 @@ class Counters
             }
         }
     }
+
+    /**
+     * Статистика гостевой
+     *
+     * $mod = 1    колличество новых в гостевой
+     * $mod = 2    колличество новых в Админ-Клубе
+     *
+     * @param int $mod
+     * @return int|string
+     */
+    public function guestbook($mod = 0)
+    {
+        $count = 0;
+
+        switch ($mod) {
+            case 1:
+                $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=0 AND `time` > ' . (time() - 86400))->fetchColumn();
+                break;
+
+            case 2:
+                if (\core::$user_rights >= 1) {
+                    $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=1 AND `time` > ' . (time() - 86400))->fetchColumn();
+                    //$count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time` > '" . (time() - 86400) . "'"), 0);
+                }
+                break;
+
+            default:
+                $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
+
+                if (\core::$user_rights >= 1) {
+                    $adm = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
+                    $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/index.php?act=ga&amp;do=set">' . $adm . '</a></span>';
+                }
+        }
+
+        return $count;
+    }
 }

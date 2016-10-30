@@ -31,7 +31,7 @@ echo '' .
     '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($rights >= 1) {
-    $guest = counters::guestbook(2);
+    $guest = $container->get('counters')->guestbook(2);
     echo '<div>' . functions::image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
 echo '</p></div>';
