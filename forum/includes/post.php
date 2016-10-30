@@ -72,7 +72,7 @@ if ($user_id && $user_id != $res['user_id']) {
 }
 
 // Время поста
-echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />';
+echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br />';
 
 // Статус юзера
 if (!empty($res['status'])) {

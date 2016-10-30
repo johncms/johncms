@@ -30,7 +30,7 @@ if ($stmt->rowCount()) {
                 : '')
             . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
             . '<div>' . $tools->checkout(substr($row['text'], 0, 500), 0, 2) . '</div></div>'
-            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($db->query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id'])->fetchColumn()) . ' (' . functions::display_date($row['time']) . ')</div>'
+            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($db->query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id'])->fetchColumn()) . ' (' . $tools->displayDate($row['time']) . ')</div>'
             . '</div>';
     }
 } else {

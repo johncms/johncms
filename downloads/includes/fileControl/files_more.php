@@ -4,10 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 require '../system/head.php';
 
@@ -204,7 +208,7 @@ if ($edit) {
                     $format_file = strtolower($format[count($format) - 1]);
                     echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">');
                     echo '<b>' . $res_file_more['rus_name'] . '</b>' .
-                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . functions::display_date($res_file_more['time']) . '<br>' .
+                        '<div class="sub">' . $res_file_more['name'] . ' (' . Download::displayFileSize($res_file_more['size']) . '), ' . $tools->displayDate($res_file_more['time']) . '<br>' .
                         '<a href="?act=files_more&amp;id=' . $id . '&amp;edit=' . $res_file_more['id'] . '">' . _t('Edit') . '</a> | ' .
                         '<span class="red"><a href="?act=files_more&amp;id=' . $id . '&amp;del=' . $res_file_more['id'] . '">' . _t('Delete') . '</a></span></div></div>';
                 }

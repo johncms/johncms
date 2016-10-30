@@ -64,7 +64,7 @@ if (!$total) {
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . _t('Who added') . ':</td>'
-            . '<td>' . $uploader . ' (' . functions::display_date($row['time']) . ')</td>'
+            . '<td>' . $uploader . ' (' . $tools->displayDate($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'

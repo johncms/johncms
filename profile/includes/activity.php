@@ -42,7 +42,7 @@ switch ($mod) {
             $i = 0;
             while ($res = $req->fetch()) {
                 echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
-                    '<span class="gray">(' . functions::display_date($res['time']) . ')</span>' .
+                    '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -77,7 +77,7 @@ switch ($mod) {
                     '<div class="sub">' .
                     '<a href="' . $config['homeurl'] . '/forum/index.php?id=' . $category['id'] . '">' . $category['text'] . '</a> | ' .
                     '<a href="' . $config['homeurl'] . '/forum/index.php?id=' . $section['id'] . '">' . $section['text'] . '</a>' .
-                    '<br /><span class="gray">(' . functions::display_date($res['time']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -114,7 +114,7 @@ switch ($mod) {
                     '<div class="sub">' .
                     '<a href="' . $config['homeurl'] . '/forum/index.php?id=' . $category['id'] . '">' . $category['text'] . '</a> | ' .
                     '<a href="' . $config['homeurl'] . '/forum/index.php?id=' . $section['id'] . '">' . $section['text'] . '</a>' .
-                    '<br /><span class="gray">(' . functions::display_date($res['time']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }

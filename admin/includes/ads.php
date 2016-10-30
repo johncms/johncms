@@ -8,8 +8,14 @@ if ($rights < 7) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 switch ($mod) {
     case 'edit':
@@ -356,7 +362,7 @@ switch ($mod) {
                 ];
                 echo '<div class="sub">' .
                     '<div>' . implode(' | ', $menu) . '</div>' .
-                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . functions::display_date($res['time']) . '<br>' .
+                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . $tools->displayDate($res['time']) . '<br>' .
                     '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br>' .
                     '<span class="gray">' . _t('Show') . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу

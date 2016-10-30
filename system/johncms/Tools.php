@@ -94,4 +94,27 @@ class Tools
 
         return trim($str);
     }
+
+    /**
+     * Показываем дату с учетом сдвига времени
+     *
+     * @param int $var Время в Unix формате
+     * @return string Отформатированное время
+     */
+    public function displayDate($var)
+    {
+        //TODO: Undefined index: timeshift
+        $shift = ($this->config['timeshift'] + \core::$user_set['timeshift']) * 3600;
+
+        if (date('Y', $var) == date('Y', time())) {
+            if (date('z', $var + $shift) == date('z', time() + $shift)) {
+                return _t('Today') . ', ' . date("H:i", $var + $shift);
+            }
+            if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
+                return _t('Yesterday') . ', ' . date("H:i", $var + $shift);
+            }
+        }
+
+        return date("d.m.Y / H:i", $var + $shift);
+    }
 }

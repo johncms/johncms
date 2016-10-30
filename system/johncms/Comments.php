@@ -125,7 +125,7 @@ class Comments
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                ' (' . \functions::display_date($res['time']) . ')<br />' .
+                                ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
                                 $this->tools->checkout($res['text']);
                             $reply = $this->tools->checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
@@ -181,7 +181,7 @@ class Comments
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
-                            $author .= ' (' . \functions::display_date($res['time']) . ')<br />';
+                            $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
                             $text = $this->tools->checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
@@ -297,7 +297,7 @@ class Comments
 
                         if (isset($attributes['edit_count'])) {
                             $text .= '<br /><span class="gray"><small>' . _t('Edited', 'system') . ': <b>' . $attributes['edit_name'] . '</b>' .
-                                ' (' . \functions::display_date($attributes['edit_time']) . ') <b>' .
+                                ' (' . $this->tools->displayDate($attributes['edit_time']) . ') <b>' .
                                 '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
 
@@ -309,11 +309,11 @@ class Comments
                             }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                ' (' . \functions::display_date($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                                ' (' . $this->tools->displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
                         }
 
                         $user_arg = [
-                            'header' => ' <span class="gray">(' . \functions::display_date($res['time']) . ')</span>',
+                            'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
                             'body'   => $text,
                             'sub'    => implode(' | ', array_filter($menu)),
                             'iphide' => (\core::$user_rights ? false : true),

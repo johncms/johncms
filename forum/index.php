@@ -365,7 +365,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             echo '&#160;/&#160;' . $nam['from'];
                         }
 
-                        echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span></div></div>';
+                        echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span></div></div>';
                         ++$i;
                     }
                     unset($_SESSION['fsort_id']);
@@ -527,7 +527,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     ];
                     echo @$user_rights[$postres['rights']];
                     echo(time() > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
-                    echo ' <span class="gray">(' . functions::display_date($postres['time']) . ')</span><br>';
+                    echo ' <span class="gray">(' . $tools->displayDate($postres['time']) . ')</span><br>';
 
                     if ($postres['close']) {
                         echo '<span class="red">' . _t('Post deleted') . '</span><br>';
@@ -650,7 +650,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Время поста
-                    echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br />';
+                    echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br />';
 
                     // Статус пользователя
                     if (!empty($res['status'])) {
@@ -676,7 +676,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Если пост редактировался, показываем кем и когда
                     if ($res['kedit']) {
-                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . functions::display_date($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
+                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . $tools->displayDate($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
                     }
 
                     // Если есть прикрепленный файл, выводим его описание

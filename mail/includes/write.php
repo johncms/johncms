@@ -482,7 +482,7 @@ if ($id) {
 
             $subtext = '<a href="index.php?act=delete&amp;id=' . $row['mid'] . '">' . _t('Delete') . '</a>';
             $arg = [
-                'header'  => '(' . functions::display_date($row['mtime']) . ')',
+                'header'  => '(' . $tools->displayDate($row['mtime']) . ')',
                 'body'    => $post,
                 'sub'     => $subtext,
                 'stshide' => 1,

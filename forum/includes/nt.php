@@ -226,7 +226,7 @@ if (isset($_POST['submit'])
 
     if ($msg && $th && !isset($_POST['submit'])) {
         echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
-            '<div class="list2">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+            '<div class="list2">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
     }
 
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
