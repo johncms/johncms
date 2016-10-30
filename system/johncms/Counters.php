@@ -220,4 +220,17 @@ class Counters
 
         return $total;
     }
+
+    /**
+     * Счетчик посетителей онлайн
+     *
+     * @return string
+     */
+    public function online()
+    {
+        $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+        $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+
+        return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . \functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>';
+    }
 }
