@@ -6,8 +6,14 @@ require('../system/head.php');
 
 // Создать / изменить альбом
 if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     if ($al) {
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
@@ -128,13 +134,13 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     echo '<div class="menu">' .
         '<form action="?act=edit&amp;user=' . $user['id'] . '&amp;al=' . $al . '" method="post">' .
         '<p><h3>' . _t('Title') . '</h3>' .
-        '<input type="text" name="name" value="' . functions::checkout($name) . '" maxlength="30" /><br>' .
+        '<input type="text" name="name" value="' . $tools->checkout($name) . '" maxlength="30" /><br>' .
         '<small>' . _t('Min. 2, Max. 30') . '</small></p>' .
         '<p><h3>' . _t('Description') . '</h3>' .
-        '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($description) . '</textarea><br>' .
+        '<textarea name="description" rows="' . $set_user['field_h'] . '">' . $tools->checkout($description) . '</textarea><br>' .
         '<small>' . _t('Optional field') . '. ' . _t('Max. 500') . '</small></p>' .
         '<p><h3>' . _t('Password') . '</h3>' .
-        '<input type="text" name="password" value="' . functions::checkout($password) . '" maxlength="15" /><br>' .
+        '<input type="text" name="password" value="' . $tools->checkout($password) . '" maxlength="15" /><br>' .
         '<small>' . _t('This field is required if the password access is activated') . '<br>Min. 3, Max. 15</small></p>' .
         '<p><h3>' . _t('Access') . '</h3>' .
         '<input type="radio" name="access" value="4" ' . (!$access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Everyone') . '<br>' .

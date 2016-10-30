@@ -20,6 +20,11 @@ class Comments
      */
     private $db;
 
+    /**
+     * @var \Johncms\Tools
+     */
+    private $tools;
+
     // Права доступа
     private $access_reply = false;                        // Возможность отвечать на комментарий
     private $access_edit = false;                         // Возможность редактировать комментарий
@@ -39,7 +44,11 @@ class Comments
     {
         global $mod, $start, $kmess;
 
-        $this->db = \App::getContainer()->get(\PDO::class);
+        /** @var \Interop\Container\ContainerInterface $container */
+        $container = \App::getContainer();
+        $this->tools = $container->get('tools');
+        $this->db = $container->get(\PDO::class);
+
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
         $homeurl = \App::getContainer()->get('config')['johncms']['homeurl'];
@@ -117,8 +126,8 @@ class Comments
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . \functions::display_date($res['time']) . ')<br />' .
-                                \functions::checkout($res['text']);
-                            $reply = \functions::checkout($res['reply']);
+                                $this->tools->checkout($res['text']);
+                            $reply = $this->tools->checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
                                 '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                         }
@@ -173,7 +182,7 @@ class Comments
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . \functions::display_date($res['time']) . ')<br />';
-                            $text = \functions::checkout($res['text']);
+                            $text = $this->tools->checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
@@ -280,7 +289,7 @@ class Comments
                             $this->access_edit ? '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $res['subid'] . '">' . _t('Edit', 'system') . '</a>' : '',
                             $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete', 'system') . '</a>' : '',
                         ];
-                        $text = \functions::checkout($res['text'], 1, 1);
+                        $text = $this->tools->checkout($res['text'], 1, 1);
 
                         if (\core::$user_set['smileys']) {
                             $text = \functions::smileys($text, $res['rights'] >= 1 ? 1 : 0);
@@ -293,7 +302,7 @@ class Comments
                         }
 
                         if (!empty($res['reply'])) {
-                            $reply = \functions::checkout($res['reply'], 1, 1);
+                            $reply = $this->tools->checkout($res['reply'], 1, 1);
 
                             if (\core::$user_set['smileys']) {
                                 $reply = \functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);

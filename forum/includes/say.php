@@ -178,7 +178,7 @@ switch ($type1['type']) {
             exit;
         } else {
             require('../system/head.php');
-            $msg_pre = functions::checkout($msg, 1, 1);
+            $msg_pre = $tools->checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
                 $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
@@ -194,7 +194,7 @@ switch ($type1['type']) {
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
-            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($msg)) . '</textarea></p>' .
+            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);
@@ -360,7 +360,7 @@ switch ($type1['type']) {
             $textl = _t('Forum');
             require('../system/head.php');
             $qt = " $type1[text]";
-            $msg_pre = functions::checkout($msg, 1, 1);
+            $msg_pre = $tools->checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
                 $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
@@ -370,7 +370,7 @@ switch ($type1['type']) {
             echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $th1['text'] . '</div>';
             $qt = str_replace("<br>", "\r\n", $qt);
             $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
-            $qt = functions::checkout($qt, 0, 2);
+            $qt = $tools->checkout($qt, 0, 2);
 
             if (!empty($_POST['msg']) && !isset($_POST['submit'])) {
                 echo '<div class="list1">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
@@ -382,7 +382,7 @@ switch ($type1['type']) {
                 // Форма с цитатой
                 echo '<p><b>' . $type1['from'] . '</b> <span class="gray">(' . $vr . ')</span></p>' .
                     '<p><h3>' . _t('Quote') . '</h3>' .
-                    '<textarea rows="' . $set_user['field_h'] . '" name="citata">' . (empty($_POST['citata']) ? $qt : functions::checkout($_POST['citata'])) . '</textarea>' .
+                    '<textarea rows="' . $set_user['field_h'] . '" name="citata">' . (empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'])) . '</textarea>' .
                     '<br /><small>' . _t('Only allowed 200 characters, other text will be cropped.') . '</small></p>';
             } else {
                 // Форма с репликой
@@ -394,7 +394,7 @@ switch ($type1['type']) {
 
             echo '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
-            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : functions::checkout($_POST['msg'])) . '</textarea></p>' .
+            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);

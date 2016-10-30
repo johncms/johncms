@@ -6,8 +6,14 @@ require('../system/head.php');
 
 // Редактировать картинку
 if ($img && $user['id'] == $user_id || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
 
@@ -155,7 +161,7 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<p><h3>' . _t('Image') . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
-                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . functions::checkout($res['description']) . '</textarea><br>' .
+                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . $tools->checkout($res['description']) . '</textarea><br>' .
                 '<small>' . _t('Optional field') . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .

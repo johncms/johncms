@@ -18,17 +18,24 @@ if (isset($_GET['tag'])) {
         }
 
         foreach (new LimitIterator(new ArrayIterator($obj->get_all_tag_stats($tag)), $start, $kmess) as $txt) {
+            /** @var Interop\Container\ContainerInterface $container */
+            $container = App::getContainer();
+
             /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
+            $db = $container->get(PDO::class);
+
+            /** @var Johncms\Tools $tools */
+            $tools = $container->get('tools');
+
             $row = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt)->fetch();
             $obj = new Hashtags($row['id']);
             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')
-                . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
-                . '<div>' . functions::checkout($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
-                . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
+                . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
+                . '<div>' . $tools->checkout($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
+                . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
                 . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
                 . '<div>' . ($obj->get_all_stat_tags() ? _t('Tags') . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'
                 . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a> (' . $row['comm_count'] . ')</div>' : '')

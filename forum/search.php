@@ -23,6 +23,9 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' .
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
 {
@@ -59,7 +62,7 @@ switch ($act) {
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
         echo '<div class="gmenu"><form action="search.php" method="post"><p>' .
-            '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />' .
+            '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />' .
             '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
             '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in the topic names') .
             '</p></form></div>';
@@ -128,7 +131,7 @@ switch ($act) {
                     }
 
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
-                    $text = functions::checkout(mb_substr($text, ($pos - 100), 400), 1);
+                    $text = $tools->checkout(mb_substr($text, ($pos - 100), 400), 1);
 
                     if (!$search_t) {
                         foreach ($array as $val) {

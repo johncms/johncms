@@ -23,6 +23,9 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 require_once('inc.php');
 
 $textl = _t('Library');
@@ -148,11 +151,11 @@ if (in_array($act, $array_includes)) {
             while ($row = $req->fetch()) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                    . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a> ('
+                    . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> ('
                     . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ')';
 
                 if (!empty($row['description'])) {
-                    echo '<div style="font-size: x-small; padding-top: 2px"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
+                    echo '<div style="font-size: x-small; padding-top: 2px"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
                 }
 
                 if ($adm) {
@@ -197,10 +200,10 @@ if (in_array($act, $array_includes)) {
                         while ($row = $sql->fetch()) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>('
+                                . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>('
                                 . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ' '
                                 . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
-                                . '<div class="sub"><span class="gray">' . functions::checkout($row['description']) . '</span></div>';
+                                . '<div class="sub"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
 
                             if ($adm) {
                                 echo '<div class="sub">'
@@ -241,13 +244,13 @@ if (in_array($act, $array_includes)) {
                                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
-                                . '<div><small>' . functions::checkout($row['announce'], 0, 0) . '</small></div></div>';
+                                . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
+                                . '<div><small>' . $tools->checkout($row['announce'], 0, 0) . '</small></div></div>';
 
                             // Описание к статье
                             $obj = new Hashtags($row['id']);
                             $rate = new Rating($row['id']);
-                            $uploader = $row['uploader_id'] ? '<a href="' . $config['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
+                            $uploader = $row['uploader_id'] ? '<a href="' . $config['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' : $tools->checkout($row['uploader']);
                             echo '<table class="desc">'
                                 // Тэги
                                 . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
@@ -306,7 +309,7 @@ if (in_array($act, $array_includes)) {
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $row['cat_id'] . " LIMIT 1")->fetch();
-                    echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($row['name']) : '') . '</div>';
+                    echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . $tools->checkout($row['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
@@ -316,12 +319,12 @@ if (in_array($act, $array_includes)) {
                     if ($page == 1) {
                         echo '<div class="list2">';
                         // Заголовок статьи
-                        echo '<h2>' . functions::checkout($row['name']) . '</h2>';
+                        echo '<h2>' . $tools->checkout($row['name']) . '</h2>';
 
                         // Описание к статье
                         $obj = new Hashtags($row['id']);
                         $rate = new Rating($row['id']);
-                        $uploader = $row['uploader_id'] ? '<a href="' . $config['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' : functions::checkout($row['uploader']);
+                        $uploader = $row['uploader_id'] ? '<a href="' . $config['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' : $tools->checkout($row['uploader']);
                         echo '<table class="desc">'
                             // Тэги
                             . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('The Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
@@ -353,7 +356,7 @@ if (in_array($act, $array_includes)) {
                         echo '</div>';
                     }
 
-                    $text = functions::checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))),
+                    $text = $tools->checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))),
                         (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
 
                     if ($set_user['smileys']) {

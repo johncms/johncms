@@ -22,6 +22,9 @@ $counters = App::getContainer()->get('counters');
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
@@ -131,7 +134,7 @@ if (empty($id)) {
         '&#039;'  => '',
     ]);
     $hdr = mb_substr($hdr, 0, 30);
-    $hdr = functions::checkout($hdr);
+    $hdr = $tools->checkout($hdr);
     $textl = mb_strlen($res['text']) > 30 ? $hdr . '...' : $hdr;
 }
 
@@ -445,7 +448,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
                     $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='$user_id' AND `topic`='$id'")->fetchColumn();
                     $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id' LIMIT 1")->fetch();
-                    echo '<div  class="gmenu"><b>' . functions::checkout($topic_vote['name']) . '</b><br />';
+                    echo '<div  class="gmenu"><b>' . $tools->checkout($topic_vote['name']) . '</b><br />';
                     $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
 
                     if (!$type1['edit'] && !isset($_GET['vote_result']) && $user_id && $vote_user == 0) {
@@ -453,7 +456,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<form action="index.php?act=vote&amp;id=' . $id . '" method="post">';
 
                         while ($vote = $vote_result->fetch()) {
-                            echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . functions::checkout($vote['name'], 0, 1) . '<br />';
+                            echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . $tools->checkout($vote['name'], 0, 1) . '<br />';
                         }
 
                         echo '<p><input type="submit" name="submit" value="' . _t('Vote') . '"/><br /><a href="index.php?id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
@@ -464,7 +467,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                         while ($vote = $vote_result->fetch()) {
                             $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-                            echo functions::checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']<br />';
+                            echo $tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']<br />';
                             echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . _t('Rating') . ': ' . $count_vote . '%" /><br />';
                         }
 
@@ -530,7 +533,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<span class="red">' . _t('Post deleted') . '</span><br>';
                     }
 
-                    echo functions::checkout(mb_substr($postres['text'], 0, 500), 0, 2);
+                    echo $tools->checkout(mb_substr($postres['text'], 0, 500), 0, 2);
 
                     if (mb_strlen($postres['text']) > 500) {
                         echo '...<a href="index.php?act=post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
@@ -663,7 +666,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     // Вывод текста поста                                     //
                     ////////////////////////////////////////////////////////////
                     $text = $res['text'];
-                    $text = functions::checkout($text, 1, 1);
+                    $text = $tools->checkout($text, 1, 1);
 
                     if ($set_user['smileys']) {
                         $text = functions::smileys($text, $res['rights'] ? 1 : 0);

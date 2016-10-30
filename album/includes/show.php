@@ -10,8 +10,14 @@ if (!$al) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
 
@@ -33,10 +39,10 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
 
 echo '<div class="user"><p>' . functions::display_user($user) . '</p></div>' .
     '<div class="phdr">' . _t('Album') . ': ' .
-    ($view ? '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . functions::checkout($album['name']) . '</b></a>' : '<b>' . functions::checkout($album['name']) . '</b>');
+    ($view ? '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($album['name']) . '</b></a>' : '<b>' . $tools->checkout($album['name']) . '</b>');
 
 if (!empty($album['description'])) {
-    echo '<div class="sub">' . functions::checkout($album['description'], 1) . '</div>';
+    echo '<div class="sub">' . $tools->checkout($album['description'], 1) . '</div>';
 }
 
 echo '</div>';
@@ -131,7 +137,7 @@ if ($total) {
         }
 
         if (!empty($res['description'])) {
-            echo '<div class="gray">' . functions::smileys(functions::checkout($res['description'], 1)) . '</div>';
+            echo '<div class="gray">' . functions::smileys($tools->checkout($res['description'], 1)) . '</div>';
         }
 
         echo '<div class="sub">';

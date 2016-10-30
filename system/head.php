@@ -4,13 +4,17 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 /** @var Johncms\Environment $env */
 $env = $container->get('env');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+$config = $container->get('config')['johncms'];
 
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 $headmod = isset($headmod) ? $headmod : '';
@@ -60,7 +64,7 @@ if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
                 $name = '<span style="' . $font . '">' . $name . '</span>';
             }
 
-            @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? functions::checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br>';
+            @$cms_ads[$res['type']] .= '<a href="' . ($res['show'] ? $tools->checkout($res['link']) : $set['homeurl'] . '/go.php?id=' . $res['id']) . '">' . $name . '</a><br>';
 
             if (($res['day'] != 0 && time() >= ($res['time'] + $res['day'] * 3600 * 24))
                 || ($res['count_link'] != 0 && $res['count'] >= $res['count_link'])

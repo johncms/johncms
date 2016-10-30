@@ -12,6 +12,9 @@ $container = App::getContainer();
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $textl = _t('User Search');
 require('../system/head.php');
 
@@ -22,7 +25,7 @@ $search = $search_post ? $search_post : $search_get;
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
     '<form action="search.php" method="post">' .
     '<div class="gmenu"><p>' .
-    '<input type="text" name="search" value="' . functions::checkout($search) . '" />' .
+    '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
     '<input type="submit" value="' . _t('Search') . '" name="submit" />' .
     '</p></div></form>';
 

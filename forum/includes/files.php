@@ -5,8 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $headmod = 'forumfiles';
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 $types = [
     1 => _t('Windows applications'),
@@ -86,7 +92,7 @@ if ($do || isset($_GET['new'])) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             // Выводим текст поста
             $text = mb_substr($res['text'], 0, 500);
-            $text = functions::checkout($text, 1, 0);
+            $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
             $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
             $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;

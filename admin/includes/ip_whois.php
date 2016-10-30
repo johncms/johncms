@@ -5,6 +5,9 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 function whoisQuery($whoisserver, $domain)
 {
     $port = 43;
@@ -94,7 +97,7 @@ if ($ip) {
         'NetType:'       => '<strong class="gray">NetType:</strong>',
         'Comment:'       => '<strong class="gray">Comment:</strong>'
     );
-    $ipwhois = trim(functions::checkout($res, 1, 1));
+    $ipwhois = trim($tools->checkout($res, 1, 1));
     $ipwhois = strtr($ipwhois, $array);
 } else {
     $ipwhois = _t('Wrong data');

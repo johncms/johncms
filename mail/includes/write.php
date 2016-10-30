@@ -470,7 +470,7 @@ if ($id) {
             }
 
             $post = $row['text'];
-            $post = functions::checkout($post, 1, 1);
+            $post = $tools->checkout($post, 1, 1);
 
             if ($set_user['smileys']) {
                 $post = functions::smileys($post, $row['rights'] >= 1 ? 1 : 0);

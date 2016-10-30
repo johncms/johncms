@@ -8,10 +8,14 @@ $ban = isset($_GET['ban']) ? intval($_GET['ban']) : 0;
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 switch ($mod) {
     case 'do':
@@ -333,7 +337,7 @@ switch ($mod) {
                         : 'green') . '.gif" width="16" height="16" align="left" />&#160;' .
                     '<b>' . $types[$res['ban_type']] . '</b>' .
                     ' <span class="gray">(' . date("d.m.Y / H:i", $res['ban_while']) . ')</span>' .
-                    '<br />' . functions::checkout($res['ban_reason']) .
+                    '<br />' . $tools->checkout($res['ban_reason']) .
                     '<div class="sub">';
 
                 if ($rights > 0) {

@@ -1,7 +1,13 @@
 <?php
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
@@ -36,12 +42,12 @@ if ($req_obj->rowCount()) {
         '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 
     if (!empty($res_obj['description'])) {
-        $context_top .= '<div class="gray">' . functions::smileys(functions::checkout($res_obj['description'], 1)) . '</div>';
+        $context_top .= '<div class="gray">' . functions::smileys($tools->checkout($res_obj['description'], 1)) . '</div>';
     }
 
     $context_top .= '<div class="sub">' .
         '<a href="../profile/?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
-        '<a href="?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . functions::checkout($res_a['name']) . '</a>';
+        '<a href="?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . $tools->checkout($res_a['name']) . '</a>';
 
     if ($res_obj['access'] == 4 || $rights >= 7) {
         $context_top .= vote_photo($res_obj) .

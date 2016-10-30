@@ -14,41 +14,6 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 class functions extends core
 {
     /**
-     * Обработка текстов перед выводом на экран
-     *
-     * @param string $str
-     * @param int    $br   Параметр обработки переносов строк
-     *                     0 - не обрабатывать (по умолчанию)
-     *                     1 - обрабатывать
-     *                     2 - вместо переносов строки вставляются пробелы
-     * @param int    $tags Параметр обработки тэгов
-     *                     0 - не обрабатывать (по умолчанию)
-     *                     1 - обрабатывать
-     *                     2 - вырезать тэги
-     *
-     * @return string
-     */
-    public static function checkout($str, $br = 0, $tags = 0)
-    {
-        $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
-
-        if ($br == 1) {
-            // Вставляем переносы строк
-            $str = nl2br($str);
-        } elseif ($br == 2) {
-            $str = str_replace("\r\n", ' ', $str);
-        }
-
-        if ($tags == 1) {
-            $str = App::getContainer()->get('bbcode')->tags($str);
-        } elseif ($tags == 2) {
-            $str = \App::getContainer()->get('bbcode')->notags($str);
-        }
-
-        return trim($str);
-    }
-
-    /**
      * Показываем дату с учетом сдвига времени
      *
      * @param int $var Время в Unix формате

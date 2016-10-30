@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 /** @var Johncms\Bbcode $bbcode */
 $bbcode = $container->get('bbcode');
 
@@ -56,7 +59,7 @@ if ($total) {
 
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
-            $text = functions::checkout($text, 1, 1);
+            $text = $tools->checkout($text, 1, 1);
 
             if ($set_user['smileys']) {
                 $text = functions::smileys($text, $row['rights'] ? 1 : 0);
@@ -66,7 +69,7 @@ if ($total) {
             $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
-            $text = functions::checkout($last_msg['text'], 1, 1);
+            $text = $tools->checkout($last_msg['text'], 1, 1);
 
             if ($set_user['smileys']) {
                 $text = functions::smileys($text, $row['rights'] ? 1 : 0);
