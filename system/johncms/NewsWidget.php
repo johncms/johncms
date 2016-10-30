@@ -27,8 +27,6 @@ class NewsWidget
     // Запрос свежих новостей на Главную
     private function news()
     {
-        global $lng;
-
         if ($this->settings['view'] > 0) {
             $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
             $req = $this->db->query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
@@ -44,7 +42,7 @@ class NewsWidget
                     if (mb_strlen($text) > $this->settings['size']) {
                         $text = mb_substr($text, 0, $this->settings['size']);
                         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-                        $text .= ' <a href="news/index.php">' . $lng['next'] . '...</a>';
+                        $text .= ' <a href="news/index.php">' . _t('show more', 'system') . '...</a>';
                     } else {
                         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
                     }
@@ -86,7 +84,7 @@ class NewsWidget
                         $komm = $mes - 1;
 
                         if ($komm >= 0) {
-                            $news .= '<br /><a href="../forum/?id=' . $res['kom'] . '">' . $lng['discuss'] . '</a> (' . $komm . ')';
+                            $news .= '<br /><a href="../forum/?id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
                         }
                     }
                     $news .= '</div>';

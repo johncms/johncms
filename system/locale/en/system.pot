@@ -9,238 +9,388 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
-"X-Poedit-SearchPath-0: incfiles/mainmenu.php\n"
-"X-Poedit-SearchPath-1: system/head.php\n"
-"X-Poedit-SearchPath-2: system/end.php\n"
-"X-Poedit-SearchPath-3: login.php\n"
-"X-Poedit-SearchPath-4: go.php\n"
-"X-Poedit-SearchPath-5: exit.php\n"
+"X-Poedit-SearchPath-0: login.php\n"
+"X-Poedit-SearchPath-1: go.php\n"
+"X-Poedit-SearchPath-2: exit.php\n"
+"X-Poedit-SearchPath-3: system/johncms\n"
+"X-Poedit-SearchPath-4: system/head.php\n"
+"X-Poedit-SearchPath-5: system/end.php\n"
+"X-Poedit-SearchPath-6: system/mainmenu.php\n"
 
-#: exit.php:16
+#: exit.php:18
 msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: exit.php:17
+#: exit.php:19
 msgid "Logout"
 msgstr ""
 
-#: exit.php:18
+#: exit.php:20 system/johncms/Comments.php:223
 msgid "Cancel"
 msgstr ""
 
-#: go.php:16
+#: go.php:22
 msgid "Select language"
 msgstr ""
 
-#: go.php:22
+#: go.php:28
 msgid "Default"
 msgstr ""
 
-#: go.php:29
+#: go.php:35
 msgid "Apply"
 msgstr ""
 
-#: go.php:29 go.php:46
+#: go.php:35 go.php:52 system/johncms/Comments.php:92
+#: system/johncms/Comments.php:115 system/johncms/Comments.php:123
+#: system/johncms/Comments.php:126 system/johncms/Comments.php:143
+#: system/johncms/Comments.php:171 system/johncms/Comments.php:180
+#: system/johncms/Comments.php:183 system/johncms/Comments.php:227
 msgid "Back"
 msgstr ""
 
-#: go.php:37
+#: go.php:43
 msgid "External Link"
 msgstr ""
 
-#: go.php:40
+#: go.php:46
 msgid "ATTENTION!"
 msgstr ""
 
-#: go.php:41
+#: go.php:47
 msgid "You are going to leave our site and go to an external link"
 msgstr ""
 
-#: go.php:42
+#: go.php:48
 msgid "Administration of our site is not responsible for the content of external sites"
 msgstr ""
 
-#: go.php:43
+#: go.php:49
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
-#: go.php:44
+#: go.php:50
 msgid "Go to Link"
 msgstr ""
 
-#: system/end.php:12 system/head.php:82 login.php:10
+#: login.php:16 system/end.php:17 system/head.php:90
 msgid "Home"
 msgstr ""
 
-#: system/head.php:25
-msgid "Site News"
-msgstr ""
-
-#: system/head.php:78
-msgid "Hi"
-msgstr ""
-
-#: system/head.php:78
-msgid "Guest"
-msgstr ""
-
-#: system/head.php:83
-msgid "Personal"
-msgstr ""
-
-#: system/head.php:84 login.php:12 login.php:141
+#: login.php:18 login.php:147 system/head.php:92
 msgid "Login"
 msgstr ""
 
-#: system/head.php:171
-msgid "Ban"
-msgstr ""
-
-#: system/head.php:171
-msgid "Details"
-msgstr ""
-
-#: system/head.php:180
-msgid "System"
-msgstr ""
-
-#: system/head.php:193
-msgid "Mail"
-msgstr ""
-
-#: system/head.php:197 incfiles/mainmenu.php:18
-msgid "Guestbook"
-msgstr ""
-
-#: system/head.php:203
-msgid "Comments"
-msgstr ""
-
-#: system/head.php:207
-msgid "Unread"
-msgstr ""
-
-#: incfiles/mainmenu.php:8
-msgid "Information"
-msgstr ""
-
-#: incfiles/mainmenu.php:10
-msgid "News archive"
-msgstr ""
-
-#: incfiles/mainmenu.php:11
-msgid "Information, FAQ"
-msgstr ""
-
-#: incfiles/mainmenu.php:14
-msgid "Communication"
-msgstr ""
-
-#: incfiles/mainmenu.php:23
-msgid "Forum"
-msgstr ""
-
-#: incfiles/mainmenu.php:27
-msgid "Useful"
-msgstr ""
-
-#: incfiles/mainmenu.php:31
-msgid "Downloads"
-msgstr ""
-
-#: incfiles/mainmenu.php:36
-msgid "Library"
-msgstr ""
-
-#: incfiles/mainmenu.php:41
-msgid "Gallery"
-msgstr ""
-
-#: incfiles/mainmenu.php:45
-msgid "Community"
-msgstr ""
-
-#: incfiles/mainmenu.php:46
-msgid "Users"
-msgstr ""
-
-#: incfiles/mainmenu.php:47
-msgid "Photo Albums"
-msgstr ""
-
-#: login.php:22
+#: login.php:28
 msgid "You have not entered login"
 msgstr ""
 
-#: login.php:26
+#: login.php:32
 msgid "You have not entered password"
 msgstr ""
 
-#: login.php:30
+#: login.php:36
 msgid "Nickname"
 msgstr ""
 
-#: login.php:30 login.php:34
+#: login.php:36 login.php:40
 msgid "Invalid length"
 msgstr ""
 
-#: login.php:34 login.php:138
+#: login.php:40 login.php:144
 msgid "Password"
 msgstr ""
 
-#: login.php:57
+#: login.php:63
 msgid "The security code is not correct"
 msgstr ""
 
-#: login.php:63
+#: login.php:69
 msgid "Verification code"
 msgstr ""
 
-#: login.php:64
+#: login.php:70
 msgid "Enter verification code"
 msgstr ""
 
-#: login.php:68
+#: login.php:74
 msgid "Continue"
 msgstr ""
 
-#: login.php:80
+#: login.php:86
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: login.php:104
+#: login.php:110
 msgid "Enter site"
 msgstr ""
 
-#: login.php:113 login.php:117
+#: login.php:119 login.php:123
 msgid "Authorization failed"
 msgstr ""
 
-#: login.php:129
+#: login.php:135
 msgid "At the moment, access to the site is allowed only for SV!"
 msgstr ""
 
-#: login.php:131
+#: login.php:137
 msgid "At the moment, access to the site is allowed only for Administration of site."
 msgstr ""
 
-#: login.php:136
+#: login.php:142
 msgid "Username"
 msgstr ""
 
-#: login.php:140
+#: login.php:146
 msgid "Remember"
 msgstr ""
 
-#: login.php:143
+#: login.php:149
 msgid "Registration"
 msgstr ""
 
-#: login.php:144
+#: login.php:150
 msgid "Forgot password?"
+msgstr ""
+
+#: system/head.php:33
+msgid "Site News"
+msgstr ""
+
+#: system/head.php:86
+msgid "Hi"
+msgstr ""
+
+#: system/head.php:86
+msgid "Guest"
+msgstr ""
+
+#: system/head.php:91
+msgid "Personal"
+msgstr ""
+
+#: system/head.php:179
+msgid "Ban"
+msgstr ""
+
+#: system/head.php:179
+msgid "Details"
+msgstr ""
+
+#: system/head.php:188
+msgid "System"
+msgstr ""
+
+#: system/head.php:201
+msgid "Mail"
+msgstr ""
+
+#: system/head.php:205 system/mainmenu.php:22
+msgid "Guestbook"
+msgstr ""
+
+#: system/head.php:211
+msgid "Comments"
+msgstr ""
+
+#: system/head.php:215 system/johncms/Counters.php:141
+msgid "Unread"
+msgstr ""
+
+#: system/johncms/Bbcode.php:123
+msgid "Edit List"
+msgstr ""
+
+#: system/johncms/Bbcode.php:131
+msgid "Add Smilies"
+msgstr ""
+
+#: system/johncms/Bbcode.php:189
+msgid "Bold"
+msgstr ""
+
+#: system/johncms/Bbcode.php:190
+msgid "Italic"
+msgstr ""
+
+#: system/johncms/Bbcode.php:191
+msgid "Underline"
+msgstr ""
+
+#: system/johncms/Bbcode.php:192
+msgid "Strike"
+msgstr ""
+
+#: system/johncms/Bbcode.php:193
+msgid "List"
+msgstr ""
+
+#: system/johncms/Bbcode.php:194
+msgid "Spoiler"
+msgstr ""
+
+#: system/johncms/Bbcode.php:195
+msgid "Quote"
+msgstr ""
+
+#: system/johncms/Bbcode.php:196
+msgid "URL"
+msgstr ""
+
+#: system/johncms/Bbcode.php:197
+msgid "Code"
+msgstr ""
+
+#: system/johncms/Bbcode.php:198
+msgid "Text Color"
+msgstr ""
+
+#: system/johncms/Bbcode.php:199
+msgid "Background Color"
+msgstr ""
+
+#: system/johncms/Bbcode.php:202
+msgid "Smilies"
+msgstr ""
+
+#: system/johncms/Comments.php:84 system/johncms/Comments.php:279
+msgid "Reply"
+msgstr ""
+
+#: system/johncms/Comments.php:92
+msgid "Administrator already replied to this message"
+msgstr ""
+
+#: system/johncms/Comments.php:126 system/johncms/Comments.php:180
+msgid "Wrong data"
+msgstr ""
+
+#: system/johncms/Comments.php:134 system/johncms/Comments.php:280
+msgid "Edit"
+msgstr ""
+
+#: system/johncms/Comments.php:143
+msgid "You cannot edit posts of higher administration"
+msgstr ""
+
+#: system/johncms/Comments.php:220 system/johncms/Comments.php:222
+#: system/johncms/Comments.php:281
+msgid "Delete"
+msgstr ""
+
+#: system/johncms/Comments.php:221
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: system/johncms/Comments.php:224
+msgid "Clear all messages from this user"
+msgstr ""
+
+#: system/johncms/Comments.php:225
+msgid "Clear"
+msgstr ""
+
+#: system/johncms/Comments.php:290
+msgid "Edited"
+msgstr ""
+
+#: system/johncms/Comments.php:317
+msgid "The list is empty"
+msgstr ""
+
+#: system/johncms/Comments.php:320
+msgid "Total"
+msgstr ""
+
+#: system/johncms/Comments.php:326
+msgid "To Page"
+msgstr ""
+
+#: system/johncms/Comments.php:385
+msgid "Message"
+msgstr ""
+
+#: system/johncms/Comments.php:388
+msgid "Send"
+msgstr ""
+
+#: system/johncms/Comments.php:408
+msgid "Text is too short"
+msgstr ""
+
+#: system/johncms/Comments.php:414
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr ""
+
+#: system/johncms/Comments.php:414
+msgid "seconds"
+msgstr ""
+
+#: system/johncms/Comments.php:424
+msgid "Message already exists"
+msgstr ""
+
+#: system/johncms/Counters.php:140
+msgid "Show for Period"
+msgstr ""
+
+#: system/johncms/Counters.php:147
+msgid "Last activity"
+msgstr ""
+
+#: system/johncms/NewsWidget.php:45
+msgid "show more"
+msgstr ""
+
+#: system/johncms/NewsWidget.php:87
+msgid "Discuss"
+msgstr ""
+
+#: system/mainmenu.php:10
+msgid "Information"
+msgstr ""
+
+#: system/mainmenu.php:12
+msgid "News archive"
+msgstr ""
+
+#: system/mainmenu.php:13
+msgid "Information, FAQ"
+msgstr ""
+
+#: system/mainmenu.php:18
+msgid "Communication"
+msgstr ""
+
+#: system/mainmenu.php:27
+msgid "Forum"
+msgstr ""
+
+#: system/mainmenu.php:33
+msgid "Useful"
+msgstr ""
+
+#: system/mainmenu.php:37
+msgid "Downloads"
+msgstr ""
+
+#: system/mainmenu.php:42
+msgid "Library"
+msgstr ""
+
+#: system/mainmenu.php:49
+msgid "Community"
+msgstr ""
+
+#: system/mainmenu.php:50
+msgid "Users"
+msgstr ""
+
+#: system/mainmenu.php:51
+msgid "Photo Albums"
 msgstr ""
