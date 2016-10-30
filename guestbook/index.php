@@ -159,7 +159,7 @@ switch ($act) {
 
             header('location: index.php');
         } else {
-            echo functions::display_error($error, '<a href="index.php">' . _t('Back') . '</a>');
+            echo $tools->displayError($error, '<a href="index.php">' . _t('Back') . '</a>');
         }
         break;
 

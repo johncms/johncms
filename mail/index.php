@@ -70,11 +70,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     if ($id) {
         $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
         if (!$req->rowCount()) {
-            echo functions::display_error(_t('User does not exists'));
+            echo $tools->displayError(_t('User does not exists'));
             require_once("../system/end.php");
             exit;
         }

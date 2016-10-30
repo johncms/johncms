@@ -5,19 +5,23 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = htmlspecialchars($user['name']) . ': ' . _t('IP History');
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Проверяем права доступа
 if (!$rights && $user_id != $user['id']) {
-    echo functions::display_error(_t('Access forbidden'));
+    echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
 }
 
-/** @var Interop\Container\ContainerInterface $container */
-$container = App::getContainer();
 $config = $container->get('config')['johncms'];
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 // История IP адресов
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('IP History') . '</div>';

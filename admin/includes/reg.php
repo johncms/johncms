@@ -8,8 +8,14 @@ if ($rights < 6) {
     exit;
 }
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
 
@@ -17,7 +23,7 @@ switch ($mod) {
     case 'approve':
         // Подтверждаем регистрацию выбранного пользователя
         if (!$id) {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
         }
@@ -35,7 +41,7 @@ switch ($mod) {
     case 'del':
         // Удаляем регистрацию выбранного пользователя
         if (!$id) {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
         }
@@ -72,7 +78,7 @@ switch ($mod) {
             echo '<div class="menu"><p>' . _t('All unconfirmed registrations with selected IP were deleted') . '<br>' .
                 '<a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         } else {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
         }

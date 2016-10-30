@@ -22,6 +22,9 @@ $counters = App::getContainer()->get('counters');
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -102,20 +105,19 @@ $ext_other = ['wmf'];
 
 // Ограничиваем доступ к Форуму
 $error = '';
+
 if (!$config['mod_forum'] && $rights < 7) {
     $error = _t('Forum is closed');
 } elseif ($config['mod_forum'] == 1 && !$user_id) {
     $error = _t('For registered users only');
 }
+
 if ($error) {
     require('../system/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require('../system/end.php');
     exit;
 }
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 $headmod = $id ? 'forum,' . $id : 'forum';
 
@@ -195,7 +197,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         if (!$type->rowCount()) {
             // Если темы не существует, показываем ошибку
-            echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
+            echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -860,7 +862,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
             default:
                 // Если неверные данные, показываем ошибку
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
                 break;
         }
     } else {

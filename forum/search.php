@@ -156,7 +156,7 @@ switch ($act) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
         } else {
             if ($error) {
-                echo functions::display_error(_t('Invalid length'));
+                echo $tools->displayError(_t('Invalid length'));
             }
 
             echo '<div class="phdr"><small>' . _t('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.') . '</small></div>';

@@ -5,15 +5,21 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
-    echo functions::display_error(_t('You cannot edit profile of higher administration'));
+    echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require('../system/end.php');
     exit;
 }
-
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 
 // Сброс настроек
 if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
@@ -140,7 +146,7 @@ if (isset($_GET['delavatar'])) {
 
         echo '<div class="gmenu">' . _t('Data saved') . '</div>';
     } else {
-        echo functions::display_error($error);
+        echo $tools->displayError($error);
     }
 
     header('Location: ?act=edit&user=' . $user['id']);

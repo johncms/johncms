@@ -8,16 +8,20 @@ require('../system/head.php');
 if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     /** @var Interop\Container\ContainerInterface $container */
     $container = App::getContainer();
-    $config = $container->get('config')['johncms'];
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
+    $config = $container->get('config')['johncms'];
 
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 
     if (!$req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }
@@ -91,10 +95,10 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                         '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>' .
                         '<div class="phdr"><a href="../profile/?user=' . $user['id'] . '">' . _t('Profile') . '</a></div>';
                 } else {
-                    echo functions::display_error($handle->error);
+                    echo $tools->displayError($handle->error);
                 }
             } else {
-                echo functions::display_error($handle->error);
+                echo $tools->displayError($handle->error);
             }
             $handle->clean();
         }

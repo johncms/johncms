@@ -4,12 +4,6 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-if (empty($_GET['id'])) {
-    echo functions::display_error(_t('Wrong data'));
-    require('../system/end.php');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -18,6 +12,12 @@ $db = $container->get(PDO::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+if (empty($_GET['id'])) {
+    echo $tools->displayError(_t('Wrong data'));
+    require('../system/end.php');
+    exit;
+}
 
 // Запрос сообщения
 $res = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`

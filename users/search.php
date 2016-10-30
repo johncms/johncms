@@ -83,7 +83,7 @@ if ($search && !$error) {
     }
 } else {
     if ($error) {
-        echo functions::display_error($error);
+        echo $tools->displayError($error);
     }
     echo '<div class="phdr"><small>' . _t('Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical.') . '</small></div>';
 }

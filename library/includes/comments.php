@@ -2,21 +2,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (!$user_id) {
-    echo functions::display_error(_t('Access forbidden'));
-    require_once('../system/end.php');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+if (!$user_id) {
+    echo $tools->displayError(_t('Access forbidden'));
+    require_once('../system/end.php');
+    exit;
+}
+
+$config = $container->get('config')['johncms'];
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
@@ -25,7 +26,7 @@ if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
     if (!$res_obj) {
-        echo functions::display_error(_t('Access forbidden'));
+        echo $tools->displayError(_t('Access forbidden'));
         require('../system/end.php');
         exit;
     }
@@ -61,5 +62,5 @@ if ($req_obj->rowCount()) {
         $db->exec("UPDATE `library_texts` SET `comm_count`=" . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . " WHERE `id`=" . $id);
     }
 } else {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
 }

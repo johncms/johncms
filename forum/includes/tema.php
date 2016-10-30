@@ -2,6 +2,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 require('../system/head.php');
 $delf = opendir('../files/forum/topics');
 $tm = [];
@@ -25,7 +28,7 @@ for ($it = 0; $it < $totalt; $it++) {
 }
 
 if (!$id) {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
@@ -40,7 +43,7 @@ $db = $container->get(PDO::class);
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND `close` != '1'");
 
 if (!$req->rowCount()) {
-    echo functions::display_error(_t('Wrong data'));
+    echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }

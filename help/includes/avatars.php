@@ -2,6 +2,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
     $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : false;
@@ -13,7 +16,7 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
                 echo '<div class="gmenu"><p>' . _t('Avatar has been successfully applied') . '<br />' .
                     '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
-                echo functions::display_error(_t('An error occurred'), '<a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('An error occurred'), '<a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a>');
             }
         } else {
             echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . _t('Set to Profile') . '</div>' .

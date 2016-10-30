@@ -5,13 +5,19 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 require('../system/head.php');
 
 if (core::$user_rights >= 7) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$req->rowCount() || $rights < 7) {
-        echo functions::display_error(_t('Topic has been deleted or does not exists'));
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'));
         require('../system/end.php');
         exit;
     }
@@ -56,7 +62,7 @@ if (core::$user_rights >= 7) {
         }
 
     } else {
-        echo functions::display_error(_t('The list is empty'));
+        echo $tools->displayError(_t('The list is empty'));
     }
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
         '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';

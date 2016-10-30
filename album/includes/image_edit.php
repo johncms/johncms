@@ -202,6 +202,6 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                 '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
     }
 }

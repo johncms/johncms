@@ -6,8 +6,14 @@ $headmod = 'mail';
 $textl = _t('Mail');
 require_once('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 echo '<div class="phdr"><b>' . _t('Blocklist') . '</b></div>';
 
@@ -17,7 +23,7 @@ if (isset($_GET['del'])) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (!$req->rowCount()) {
-            echo functions::display_error(_t('User does not exists'));
+            echo $tools->displayError(_t('User does not exists'));
             require_once("../system/end.php");
             exit;
         }
@@ -39,14 +45,14 @@ if (isset($_GET['del'])) {
 			</div></form></div>';
         }
     } else {
-        echo functions::display_error(_t('Contact isn\'t chosen'));
+        echo $tools->displayError(_t('Contact isn\'t chosen'));
     }
 } elseif (isset($_GET['add'])) {
     if ($id) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (!$req->rowCount()) {
-            echo functions::display_error(_t('User does not exists'));
+            echo $tools->displayError(_t('User does not exists'));
             require_once("../system/end.php");
             exit;
         }
@@ -82,7 +88,7 @@ if (isset($_GET['del'])) {
             echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
         }
     } else {
-        echo functions::display_error(_t('Contact isn\'t chosen'));
+        echo $tools->displayError(_t('Contact isn\'t chosen'));
     }
 } else {
     echo '<div class="topmenu"><a href="index.php">' . _t('My Contacts') . '</a> | <b>' . _t('Blocklist') . '</b></div>';

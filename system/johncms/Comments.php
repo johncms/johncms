@@ -98,7 +98,7 @@ class Comments
                         $attributes = unserialize($res['attributes']);
 
                         if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
-                            echo \functions::display_error(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                            echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -121,7 +121,7 @@ class Comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
+                                echo $this->tools->displayError($message['error'], '<a href="' . $this->url . '&amp;mod=reply&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
@@ -132,7 +132,7 @@ class Comments
                                 '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
                         }
                     } else {
-                        echo \functions::display_error(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                        echo $this->tools->displayError(_t('Wrong data'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                     }
                 }
                 break;
@@ -149,7 +149,7 @@ class Comments
                         $user = \functions::get_user($res['user_id']);
 
                         if ($user['rights'] > \core::$user_rights) {
-                            echo \functions::display_error(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                            echo $this->tools->displayError(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
@@ -177,7 +177,7 @@ class Comments
 
                                 header('Location: ' . str_replace('&amp;', '&', $this->url));
                             } else {
-                                echo \functions::display_error($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
+                                echo $this->tools->displayError($message['error'], '<a href="' . $this->url . '&amp;mod=edit&amp;item=' . $this->item . '">' . _t('Back', 'system') . '</a>');
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
@@ -186,7 +186,7 @@ class Comments
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
                     } else {
-                        echo \functions::display_error(_t('Wrong data', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
+                        echo $this->tools->displayError(_t('Wrong data', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                     }
 
                     echo '<div class="phdr"><a href="' . $this->url . '">' . _t('Back', 'system') . '</a></div>';
@@ -252,7 +252,7 @@ class Comments
                         $_SESSION['code'] = $message['code'];
                     } else {
                         // Показываем ошибки, если есть
-                        echo \functions::display_error($message['error']);
+                        echo $this->tools->displayError($message['error']);
                         $this->total = $this->msg_total();
                     }
                 } else {

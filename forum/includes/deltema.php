@@ -3,22 +3,28 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     if (!$id) {
         require('../system/head.php');
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }
-
-    /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
 
     // Проверяем, существует ли тема
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$req->rowCount()) {
         require('../system/head.php');
-        echo functions::display_error(_t('Topic has been deleted or does not exists'));
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'));
         require('../system/end.php');
         exit;
     }
@@ -62,6 +68,4 @@ if ($rights == 3 || $rights >= 6) {
             '</p></form></div>' .
             '<div class="phdr">&#160;</div>';
     }
-} else {
-    echo functions::display_error(_t('Access forbidden'));
 }

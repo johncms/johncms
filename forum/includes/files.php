@@ -67,7 +67,7 @@ if ($c || $s || $t) {
         $res = $req->fetch();
         $caption .= $res['text'];
     } else {
-        echo functions::display_error(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../system/end.php');
         exit;
     }

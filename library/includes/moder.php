@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                 $handle->image_convert = 'png';
                 $handle->process('../files/library/images/small/');
                 if ($err_image) {
-                    echo functions::display_error(_t('Photo uploading error'));
+                    echo $tools->displayError(_t('Photo uploading error'));
                 }
                 $handle->clean();
             }

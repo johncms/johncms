@@ -3,9 +3,12 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
+    /** @var Johncms\Tools $tools */
+    $tools = App::getContainer()->get('tools');
+
     if (empty($_GET['id'])) {
         require('../system/head.php');
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }
@@ -18,7 +21,7 @@ if ($rights == 3 || $rights >= 6) {
         header('Location: index.php?id=' . $id);
     } else {
         require('../system/head.php');
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }

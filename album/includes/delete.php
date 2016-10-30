@@ -16,6 +16,7 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
     $tools = $container->get('tools');
 
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
+
     if ($req_a->rowCount()) {
         $res_a = $req_a->fetch();
         echo '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Delete') . '</div>';
@@ -48,6 +49,6 @@ if ($al && $user['id'] == $user_id || $rights >= 6) {
                 '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
     }
 }

@@ -4,21 +4,22 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 // Закрываем доступ для определенных ситуаций
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {
     require('../system/head.php');
-    echo functions::display_error(_t('Access forbidden'));
+    echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
 }
-
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 // Вспомогательная Функция обработки ссылок форума
 function forum_link($m)
@@ -65,7 +66,7 @@ $flood = $tools->antiflood(core::$user_data);
 
 if ($flood) {
     require('../system/head.php');
-    echo functions::display_error(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -79,7 +80,7 @@ switch ($type1['type']) {
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $rights < 7) {
             // Проверка, закрыта ли тема
             require('../system/head.php');
-            echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -97,7 +98,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../system/head.php');
-                echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -109,7 +110,7 @@ switch ($type1['type']) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
                     require('../system/head.php');
-                    echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $tools->displayError(_t('Message already exists'), '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../system/end.php');
                     exit;
                 }
@@ -217,14 +218,14 @@ switch ($type1['type']) {
 
         if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
             require('../system/head.php');
-            echo functions::display_error(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
 
         if ($type1['user_id'] == $user_id) {
             require('../system/head.php');
-            echo functions::display_error('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -269,7 +270,7 @@ switch ($type1['type']) {
         ) {
             if (empty($_POST['msg'])) {
                 require('../system/head.php');
-                echo functions::display_error(_t('You have not entered the message'), '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
+                echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -277,7 +278,7 @@ switch ($type1['type']) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require('../system/head.php');
-                echo functions::display_error(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
                 require('../system/end.php');
                 exit;
             }
@@ -290,7 +291,7 @@ switch ($type1['type']) {
 
                 if ($msg == $res['text']) {
                     require('../system/head.php');
-                    echo functions::display_error(_t('Message already exists'), '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $tools->displayError(_t('Message already exists'), '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require('../system/end.php');
                     exit;
                 }
@@ -411,6 +412,6 @@ switch ($type1['type']) {
 
     default:
         require('../system/head.php');
-        echo functions::display_error(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../system/end.php');
 }

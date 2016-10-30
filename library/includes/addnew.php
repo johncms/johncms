@@ -19,7 +19,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     if ($flood) {
         require('../system/head.php');
 
-        echo functions::display_error(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood), '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
+        echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood), '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../system/end.php');
         exit;
     }
@@ -48,7 +48,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo functions::display_error(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        echo $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                         require_once('../system/end.php');
                         exit;
                     }
@@ -56,12 +56,12 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $text = trim($txt);
                     unlink('../files/library/tmp' . DIRECTORY_SEPARATOR . $newname);
                 } else {
-                    echo functions::display_error(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require_once('../system/end.php');
                     exit;
                 }
             } else {
-                echo functions::display_error(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                echo $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 require_once('../system/end.php');
                 exit;
             }
@@ -79,7 +79,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
 
         if (sizeof($err) > 0) {
             foreach ($err as $e) {
-                echo functions::display_error($e);
+                echo $tools->displayError($e);
             }
         } else {
             $sql = "
@@ -139,7 +139,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $handle->process('../files/library/images/small/');
 
                     if ($err_image) {
-                        echo functions::display_error(_t('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        echo $tools->displayError(_t('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     }
                     $handle->clean();
                 }

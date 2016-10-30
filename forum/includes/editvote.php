@@ -16,7 +16,7 @@ if ($rights == 3 || $rights >= 6) {
     require('../system/head.php');
 
     if ($topic_vote == 0) {
-        echo functions::display_error(_t('Wrong data'));
+        echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
         exit;
     }

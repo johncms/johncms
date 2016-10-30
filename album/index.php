@@ -20,6 +20,9 @@ $config = $container->get('config')['johncms'];
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $textl = _t('Album');
 $headmod = 'album';
 
@@ -29,7 +32,7 @@ $max_photo = 400;
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
     require('../system/head.php');
-    echo functions::display_error(_t('For registered users only'));
+    echo $tools->displayError(_t('For registered users only'));
     require('../system/end.php');
     exit;
 }
@@ -38,7 +41,7 @@ if (!$user_id) {
 $user = functions::get_user($user);
 if (!$user) {
     require('../system/head.php');
-    echo functions::display_error(_t('User does not exists'));
+    echo $tools->displayError(_t('User does not exists'));
     require('../system/end.php');
     exit;
 }

@@ -21,7 +21,7 @@ switch ($mod) {
     case 'do':
         // Баним пользователя (добавляем Бан в базу)
         if ($rights < 1 || ($rights < 6 && $user['rights']) || ($rights <= $user['rights'])) {
-            echo functions::display_error(_t('You do not have enought rights to ban this user'));
+            echo $tools->displayError(_t('You do not have enought rights to ban this user'));
         } else {
             echo '<div class="phdr"><b>' . _t('Ban the User') . '</b></div>';
             echo '<div class="rmenu"><p>' . functions::display_user($user) . '</p></div>';
@@ -133,7 +133,7 @@ switch ($mod) {
 
                     echo '<div class="rmenu"><p><h3>' . _t('User banned') . '</h3></p></div>';
                 } else {
-                    echo functions::display_error($error);
+                    echo $tools->displayError($error);
                 }
             } else {
                 // Форма параметров бана
@@ -195,7 +195,7 @@ switch ($mod) {
     case 'cancel':
         // Разбаниваем пользователя (с сохранением истории)
         if (!$ban || $user['id'] == $user_id || $rights < 7) {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
         } else {
             $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
 
@@ -222,10 +222,10 @@ switch ($mod) {
                             '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
                     }
                 } else {
-                    echo functions::display_error($error);
+                    echo $tools->displayError($error);
                 }
             } else {
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
             }
         }
         break;
@@ -233,7 +233,7 @@ switch ($mod) {
     case 'delete':
         // Удаляем бан (с удалением записи из истории)
         if (!$ban || $rights < 9) {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
         } else {
             $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
 
@@ -258,7 +258,7 @@ switch ($mod) {
                         '<div class="phdr"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
                 }
             } else {
-                echo functions::display_error(_t('Wrong data'));
+                echo $tools->displayError(_t('Wrong data'));
             }
         }
         break;
@@ -286,7 +286,7 @@ switch ($mod) {
                     : '') .
                 '<a href="../admin/index.php?act=ban_panel">' . _t('Ban Panel') . '</a></p>';
         } else {
-            echo functions::display_error(_t('Violations history can be cleared by Supervisor only'));
+            echo $tools->displayError(_t('Violations history can be cleared by Supervisor only'));
         }
         break;
 

@@ -133,7 +133,7 @@ if ($search && !$error) {
 } else {
     // Выводим сообщение об ошибке
     if ($error) {
-        echo functions::display_error($error);
+        echo $tools->displayError($error);
     }
 
     // Инструкции для поиска

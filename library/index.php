@@ -42,7 +42,7 @@ if (!$config['mod_lib'] && $rights < 7) {
 
 if ($error) {
     require_once('../system/head.php');
-    echo functions::display_error($error);
+    echo $tools->displayError($error);
     require_once('../system/end.php');
     exit;
 }
@@ -94,7 +94,7 @@ require_once('../system/head.php');
 <?php
 
 if (!$config['mod_lib']) {
-    echo functions::display_error(_t('Library is closed'));
+    echo $tools->displayError(_t('Library is closed'));
 }
 
 $array_includes = [

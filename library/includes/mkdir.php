@@ -1,19 +1,26 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
+
 if (!$adm) {
     redir404();
 }
 
 if (isset($_POST['submit'])) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     if (empty($_POST['name'])) {
-        echo functions::display_error(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo $tools->displayError(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         require_once('../system/end.php');
         exit;
     }
-
-    /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
 
     $lastinsert = $db->query('SELECT MAX(`id`) FROM `library_cats`')->fetchColumn();
     ++$lastinsert;

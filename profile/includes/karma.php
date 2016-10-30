@@ -52,7 +52,7 @@ if ($set_karma['on']) {
                 }
 
                 if ($error) {
-                    echo functions::display_error($error, '<a href="?user=' . $user['id'] . '">' . _t('Back') . '</a>');
+                    echo $tools->displayError($error, '<a href="?user=' . $user['id'] . '">' . _t('Back') . '</a>');
                 } else {
                     if (isset($_POST['submit'])) {
                         $text = isset($_POST['text']) ? mb_substr(trim($_POST['text']), 0, 500) : '';
@@ -107,7 +107,7 @@ if ($set_karma['on']) {
                     }
                 }
             } else {
-                echo functions::display_error(_t('You are not allowed to vote for users'), '<a href="?user=' . $user['id'] . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('You are not allowed to vote for users'), '<a href="?user=' . $user['id'] . '">' . _t('Back') . '</a>');
             }
 
             break;

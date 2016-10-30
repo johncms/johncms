@@ -19,7 +19,7 @@ switch ($mod) {
     case 'my_new_comm':
         // Непрочитанные комментарии в личных альбомах
         if (!core::$user_id || core::$user_id != $user['id']) {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
         }

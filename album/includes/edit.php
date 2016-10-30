@@ -26,7 +26,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
             $password = htmlspecialchars($res['password']);
             $access = $res['access'];
         } else {
-            echo functions::display_error(_t('Wrong data'));
+            echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
         }
@@ -128,7 +128,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     }
 
     if ($error) {
-        echo functions::display_error($error);
+        echo $tools->displayError($error);
     }
 
     echo '<div class="menu">' .

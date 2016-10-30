@@ -117,4 +117,18 @@ class Tools
 
         return date("d.m.Y / H:i", $var + $shift);
     }
+
+    /**
+     * Сообщения об ошибках
+     *
+     * @param string|array $error Сообщение об ошибке (или массив с сообщениями)
+     * @param string       $link  Необязательная ссылка перехода
+     * @return string
+     */
+    public function displayError($error = '', $link = '')
+    {
+        return '<div class="rmenu"><p><b>' . _t('ERROR') . '!</b><br>'
+        . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
+        . (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
+    }
 }
