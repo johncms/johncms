@@ -71,7 +71,7 @@ if ($mod == 'clear') {
             $post = $tools->checkout($post, 1, 1);
 
             if ($set_user['smileys']) {
-                $post = functions::smileys($post);
+                $post = $tools->smilies($post);
             }
 
             $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate($row['time']) . ')<br />';

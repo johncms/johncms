@@ -474,7 +474,7 @@ if ($id) {
             $post = $tools->checkout($post, 1, 1);
 
             if ($set_user['smileys']) {
-                $post = functions::smileys($post, $row['rights'] >= 1 ? 1 : 0);
+                $post = $tools->smilies($post, $row['rights'] >= 1 ? 1 : 0);
             }
 
             if ($row['file_name']) {

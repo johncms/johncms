@@ -137,7 +137,7 @@ if ($total) {
         }
 
         if (!empty($res['description'])) {
-            echo '<div class="gray">' . functions::smileys($tools->checkout($res['description'], 1)) . '</div>';
+            echo '<div class="gray">' . $tools->smilies($tools->checkout($res['description'], 1)) . '</div>';
         }
 
         echo '<div class="sub">';

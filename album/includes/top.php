@@ -137,7 +137,7 @@ if ($total) {
             // Если доступ открыт всем, или смотрит Администратор
             echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (!empty($res['description']))
-                echo '<div class="gray">' . functions::smileys($tools->checkout($res['description'], 1)) . '</div>';
+                echo '<div class="gray">' . $tools->smilies($tools->checkout($res['description'], 1)) . '</div>';
         } elseif ($res['access'] == 3) {
             // Если доступ открыт друзьям
             echo 'Только для друзей';

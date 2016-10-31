@@ -671,7 +671,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     $text = $tools->checkout($text, 1, 1);
 
                     if ($set_user['smileys']) {
-                        $text = functions::smileys($text, $res['rights'] ? 1 : 0);
+                        $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
                     }
 
                     echo $text;

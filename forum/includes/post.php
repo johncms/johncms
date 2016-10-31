@@ -87,7 +87,7 @@ if ($set_user['avatar']) {
 $text = $tools->checkout($res['text'], 1, 1);
 
 if ($set_user['smileys']) {
-    $text = functions::smileys($text, ($res['rights'] >= 1) ? 1 : 0);
+    $text = $tools->smilies($text, ($res['rights'] >= 1) ? 1 : 0);
 }
 
 echo $text . '';

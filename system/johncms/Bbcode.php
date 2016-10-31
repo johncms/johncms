@@ -126,7 +126,10 @@ class Bbcode
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
 
-            $bb_smileys .= \functions::smileys($res_sm, \core::$user_data['rights'] >= 1 ? 1 : 0);
+            /** @var \Johncms\Tools $tools */
+            $tools = \App::getContainer()->get('tools');
+
+            $bb_smileys .= $tools->smilies($res_sm, \core::$user_data['rights'] >= 1 ? 1 : 0);
         } else {
             $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=smilies">' . _t('Add Smilies', 'system') . '</a></small>';
         }

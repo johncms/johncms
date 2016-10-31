@@ -194,4 +194,30 @@ class Tools
 
         return implode(' ', $out);
     }
+
+    /**
+     * Обработка смайлов
+     *
+     * @param string $str
+     * @param bool   $adm
+     * @return string
+     */
+    public function smilies($str, $adm = false)
+    {
+        static $smiliesCache = [];
+
+        if (empty($smiliesCache)) {
+            $file = ROOT_PATH . 'files/cache/smileys.dat';
+
+            if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
+                $smiliesCache = unserialize($smileys);
+
+                return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
+            } else {
+                return $str;
+            }
+        } else {
+            return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
+        }
+    }
 }
