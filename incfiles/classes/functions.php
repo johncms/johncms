@@ -80,45 +80,6 @@ class functions extends core
     }
 
     /**
-     * Находится ли выбранный пользователь в контактах и игноре?
-     *
-     * @param int $id Идентификатор пользователя, которого проверяем
-     * @return int Результат запроса:
-     *                0 - не в контактах
-     *                1 - в контактах
-     *                2 - в игноре у меня
-     */
-    public static function is_contact($id = 0)
-    {
-        static $user_id = null;
-        static $return = 0;
-
-        if (!self::$user_id && !$id) {
-            return 0;
-        }
-
-        if (is_null($user_id) || $id != $user_id) {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-            $user_id = $id;
-            $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . self::$user_id . "' AND `from_id` = '$id'");
-
-            if ($req->rowCount()) {
-                $res = $req->fetch();
-                if ($res['ban'] == 1) {
-                    $return = 2;
-                } else {
-                    $return = 1;
-                }
-            } else {
-                $return = 0;
-            }
-        }
-
-        return $return;
-    }
-
-    /**
      * Проверка на игнор у получателя
      *
      * @param $id
