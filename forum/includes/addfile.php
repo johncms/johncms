@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
     if ($_FILES['fail']['size'] > 0) {
         // Проверка загрузки с обычного браузера
         $do_file = true;
-        $file = functions::rus_lat(mb_strtolower($_FILES['fail']['name']));
+        $file = $tools->rusLat($_FILES['fail']['name']);
         $fsize = $_FILES['fail']['size'];
     }
 

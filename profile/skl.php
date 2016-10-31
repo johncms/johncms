@@ -38,7 +38,7 @@ function passgen($length)
 switch ($act) {
     case 'sent':
         // Отправляем E-mail с инструкциями по восстановлению пароля
-        $nick = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower($_POST['nick'])) : '';
+        $nick = isset($_POST['nick']) ? $tools->rusLat($_POST['nick']) : '';
         $email = isset($_POST['email']) ? htmlspecialchars(trim($_POST['email'])) : '';
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
         $check_code = md5(rand(1000, 9999));

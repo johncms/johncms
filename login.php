@@ -50,7 +50,7 @@ if (core::$user_id) {
     if (!$error && $user_pass && $user_login) {
         // Запрос в базу на юзера
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
-        $stmt->execute([functions::rus_lat(mb_strtolower($user_login))]);
+        $stmt->execute([$tools->rusLat($user_login)]);
 
         if ($stmt->rowCount()) {
             $user = $stmt->fetch();

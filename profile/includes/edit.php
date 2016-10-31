@@ -73,7 +73,7 @@ if (isset($_GET['delavatar'])) {
             $error[] = _t('Min. nick length 2, max. 20 characters');
         }
 
-        $lat_nick = functions::rus_lat(mb_strtolower($user['name']));
+        $lat_nick = $tools->rusLat($user['name']);
 
         if (preg_match("/[^0-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $lat_nick)) {
             $error[] = _t('Nick contains invalid characters');

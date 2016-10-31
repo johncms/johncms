@@ -93,7 +93,7 @@ $out .= '<div class="phdr"><b>' . _t('Mail') . '</b></div>';
 
 if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !functions::is_ignor($id)) {
     if (!$id) {
-        $name = isset($_POST['nick']) ? functions::rus_lat(mb_strtolower(trim($_POST['nick']))) : '';
+        $name = isset($_POST['nick']) ? $tools->rusLat(trim($_POST['nick'])) : '';
     }
 
     $text = isset($_POST['text']) ? trim($_POST['text']) : '';
