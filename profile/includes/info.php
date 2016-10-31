@@ -17,7 +17,7 @@ if ($user['id'] == $user_id || ($rights >= 7 && $rights > $user['rights'])) {
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>' .
+echo '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>' .
     '<div class="list2"><p>' .
     '<h3><img src="../images/contacts.png" width="16" height="16" class="left" />&#160;' . _t('Personal info') . '</h3>' .
     '<ul>';

@@ -20,6 +20,7 @@ $config = $container->get('config')['johncms'];
 // Показываем список Online
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
 $menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . _t('History') . '</a> ';
+
 if (core::$user_rights) {
     $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="index.php?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
     $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="index.php?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
@@ -136,14 +137,16 @@ if ($total) {
         }
 
         $arg['header'] .= ')</span><br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . functions::display_place($res['id'], $res['place']);
-        echo functions::display_user($res, $arg);
+        echo $tools->displayUser($res, $arg);
         echo '</div>';
         ++$i;
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
+
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+
 if ($total > $kmess) {
     echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .

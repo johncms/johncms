@@ -134,7 +134,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                     'sub'    => $subtext,
                 ];
-                echo functions::display_user($row, $arg);
+                echo $tools->displayUser($row, $arg);
                 echo '</div>';
             }
         } else {

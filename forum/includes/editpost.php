@@ -220,7 +220,7 @@ if (!$error) {
 
                 if ($msg && !isset($_POST['submit'])) {
                     $user = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                    echo '<div class="list1">' . functions::display_user($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                    echo '<div class="list1">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>', 'body' => $msg_pre]) . '</div>';
                 }
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';

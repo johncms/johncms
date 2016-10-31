@@ -203,7 +203,7 @@ if ($set_karma['on']) {
             ];
             echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Karma') . '</div>' .
                 '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
-                '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
+                '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>';
             $karma = $user['karma_plus'] - $user['karma_minus'];
 
             if ($karma > 0) {

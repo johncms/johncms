@@ -26,7 +26,7 @@ if ($user['id'] == $user_id && $total < $max_album && empty($ban) || $rights >= 
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>';
+echo '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>';
 
 if ($total) {
     $i = 0;

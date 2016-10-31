@@ -6,13 +6,19 @@ $headmod = 'userstop';
 $textl = _t('Top Activity');
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 // Функция отображения списков
 function get_top($order = 'postforum')
 {
-    global $db;
+    global $db, $tools;
     $req = $db->query("SELECT * FROM `users` WHERE `$order` > 0 ORDER BY `$order` DESC LIMIT 9");
 
     if ($req->rowCount()) {
@@ -21,7 +27,7 @@ function get_top($order = 'postforum')
 
         while ($res = $req->fetch()) {
             $out .= $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $out .= functions::display_user($res, ['header' => ('<b>' . $res[$order]) . '</b>']) . '</div>';
+            $out .= $tools->displayUser($res, ['header' => ('<b>' . $res[$order]) . '</b>']) . '</div>';
             ++$i;
         }
 
@@ -37,9 +43,11 @@ $menu = [
     ($mod == 'guest' ? '<b>' . _t('Guestbook') . '</b>' : '<a href="index.php?act=top&amp;mod=guest">' . _t('Guestbook') . '</a>'),
     ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="index.php?act=top&amp;mod=comm">' . _t('Comments') . '</a>'),
 ];
+
 if ($set_karma['on']) {
     $menu[] = $mod == 'karma' ? '<b>' . _t('Karma') . '</b>' : '<a href="index.php?act=top&amp;mod=karma">' . _t('Karma') . '</a>';
 }
+
 switch ($mod) {
     case 'guest':
         // Топ Гостевой
@@ -67,7 +75,7 @@ switch ($mod) {
             if ($req->rowCount()) {
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo functions::display_user($res, ['header' => ('<b>' . $res['karma']) . '</b>']) . '</div>';
+                    echo $tools->displayUser($res, ['header' => ('<b>' . $res['karma']) . '</b>']) . '</div>';
                     ++$i;
                 }
             } else {

@@ -318,7 +318,7 @@ class Comments
                             'sub'    => implode(' | ', array_filter($menu)),
                             'iphide' => (\core::$user_rights ? false : true),
                         ];
-                        echo \functions::display_user($res, $user_arg);
+                        echo $this->tools->displayUser($res, $user_arg);
                         echo '</div>';
                         ++$i;
                     }

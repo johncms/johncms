@@ -24,7 +24,7 @@ if ($total) {
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res) . '</div>';
+        echo $tools->displayUser($res) . '</div>';
         ++$i;
     }
 

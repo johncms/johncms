@@ -600,7 +600,7 @@ switch ($mod) {
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;rsort=' . $res['refid'] . '">' . _t('by section') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo functions::display_user($res, [
+                    echo $tools->displayUser($res, [
                         'header' => $ttime,
                         'body'   => $text,
                         'sub'    => $subtext,
@@ -698,7 +698,7 @@ switch ($mod) {
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo functions::display_user($res, [
+                    echo $tools->displayUser($res, [
                         'header' => $posttime,
                         'body'   => $text,
                         'sub'    => $subtext,

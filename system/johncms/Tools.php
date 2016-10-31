@@ -196,6 +196,143 @@ class Tools
     }
 
     /**
+     * Отображения личных данных пользователя
+     *
+     * @param int   $user Массив запроса в таблицу `users`
+     * @param array $arg  Массив параметров отображения
+     *                    [lastvisit] (boolean)   Дата и время последнего визита
+     *                    [stshide]   (boolean)   Скрыть статус (если есть)
+     *                    [iphide]    (boolean)   Скрыть (не показывать) IP и UserAgent
+     *                    [iphist]    (boolean)   Показывать ссылку на историю IP
+     *
+     *                    [header]    (string)    Текст в строке после Ника пользователя
+     *                    [body]      (string)    Основной текст, под ником пользователя
+     *                    [sub]       (string)    Строка выводится вверху области "sub"
+     *                    [footer]    (string)    Строка выводится внизу области "sub"
+     *
+     * @return string
+     */
+    public function displayUser($user = 0, $arg = [])
+    {
+        global $mod;
+        $out = false;
+        $homeurl = $this->config['homeurl'];
+
+        if (!$user['id']) {
+            $out = '<b>' . _t('Guest') . '</b>';
+
+            if (!empty($user['name'])) {
+                $out .= ': ' . $user['name'];
+            }
+
+            if (!empty($arg['header'])) {
+                $out .= ' ' . $arg['header'];
+            }
+        } else {
+            if (\core::$user_set['avatar']) {
+                $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
+
+                if (file_exists((ROOT_PATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
+                    $out .= '<img src="' . $homeurl . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
+                } else {
+                    $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
+                }
+
+                $out .= '</td><td>';
+            }
+
+            if ($user['sex']) {
+                $out .= \functions::image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+            } else {
+                $out .= \functions::image('del.png');
+            }
+
+            $out .= !\core::$user_id || \core::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $rank = [
+                0 => '',
+                1 => '(GMod)',
+                2 => '(CMod)',
+                3 => '(FMod)',
+                4 => '(DMod)',
+                5 => '(LMod)',
+                6 => '(Smd)',
+                7 => '(Adm)',
+                9 => '(SV!)',
+            ];
+            $rights = isset($user['rights']) ? $user['rights'] : 0;
+            $out .= ' ' . $rank[$rights];
+            $out .= (time() > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
+
+            if (!empty($arg['header'])) {
+                $out .= ' ' . $arg['header'];
+            }
+
+            if (!isset($arg['stshide']) && !empty($user['status'])) {
+                $out .= '<div class="status">' . \functions::image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
+            }
+
+            if (\core::$user_set['avatar']) {
+                $out .= '</td></tr></table>';
+            }
+        }
+
+        if (isset($arg['body'])) {
+            $out .= '<div>' . $arg['body'] . '</div>';
+        }
+
+        $ipinf = !isset($arg['iphide']) && \core::$user_rights ? 1 : 0;
+        $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
+
+        if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
+            $out .= '<div class="sub">';
+
+            if (isset($arg['sub'])) {
+                $out .= '<div>' . $arg['sub'] . '</div>';
+            }
+
+            if ($lastvisit) {
+                $out .= '<div><span class="gray">' . _t('Last Visit') . ':</span> ' . $lastvisit . '</div>';
+            }
+
+            $iphist = '';
+
+            if ($ipinf) {
+                $out .= '<div><span class="gray">' . _t('Browser') . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
+                    '<div><span class="gray">' . _t('IP address') . ':</span> ';
+                $hist = $mod == 'history' ? '&amp;mod=history' : '';
+                $ip = long2ip($user['ip']);
+
+                if (\core::$user_rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
+                    $out .= '<b class="red"><a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
+                    $out .= ' / ';
+                    $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
+                } elseif (\core::$user_rights) {
+                    $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
+                    $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
+                } else {
+                    $out .= $ip . $iphist;
+                }
+
+                if (isset($arg['iphist'])) {
+                    $iptotal = $this->db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+                    $out .= '<div><span class="gray">' . _t('IP History') . ':</span> <a href="' . $homeurl . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
+                }
+
+                $out .= '</div>';
+            }
+
+            if (isset($arg['footer'])) {
+                $out .= $arg['footer'];
+            }
+            $out .= '</div>';
+        }
+
+        return $out;
+    }
+
+    /**
      * Обработка смайлов
      *
      * @param string $str

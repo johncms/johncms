@@ -112,7 +112,7 @@ if ($search && !$error) {
 
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            echo functions::display_user($res, ['iphist' => 1]);
+            echo $tools->displayUser($res, ['iphist' => 1]);
             echo '</div>';
             ++$i;
         }

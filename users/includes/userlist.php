@@ -27,7 +27,7 @@ $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, 
 
 for ($i = 0; ($res = $req->fetch()) !== false; $i++) {
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-    echo functions::display_user($res) . '</div>';
+    echo $tools->displayUser($res) . '</div>';
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';

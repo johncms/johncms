@@ -489,7 +489,7 @@ if ($id) {
                 'stshide' => 1,
             ];
             core::$user_set['avatar'] = 0;
-            $out .= functions::display_user($row, $arg);
+            $out .= $tools->displayUser($row, $arg);
             $out .= '</div>';
             ++$i;
         }

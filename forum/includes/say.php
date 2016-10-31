@@ -189,7 +189,7 @@ switch ($type1['type']) {
             echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $type1['text'] . '</div>';
 
             if ($msg && !isset($_POST['submit'])) {
-                echo '<div class="list1">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                echo '<div class="list1">' . $tools->displayUser($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
@@ -374,7 +374,7 @@ switch ($type1['type']) {
             $qt = $tools->checkout($qt, 0, 2);
 
             if (!empty($_POST['msg']) && !isset($_POST['submit'])) {
-                echo '<div class="list1">' . functions::display_user($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                echo '<div class="list1">' . $tools->displayUser($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';

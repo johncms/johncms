@@ -105,7 +105,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
                 $user['place']);
     }
 
-    echo '<div class="user"><p>' . functions::display_user($user, $arg) . '</p></div>';
+    echo '<div class="user"><p>' . $tools->displayUser($user, $arg) . '</p></div>';
 
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
     if ($rights >= 7 && !$user['preg'] && empty($user['regadm'])) {

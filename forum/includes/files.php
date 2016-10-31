@@ -130,7 +130,7 @@ if ($do || isset($_GET['new'])) {
                 'body'   => $text,
             ];
 
-            echo functions::display_user($res_u, $arg);
+            echo $tools->displayUser($res_u, $arg);
             echo '</div>';
         }
 

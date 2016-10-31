@@ -82,7 +82,7 @@ switch ($mod) {
                 $arg = [
                     'header' => '<br><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../profile/?act=ban&amp;user=' . $res['id'] . '">' . _t('Violations history') . '</a> [' . $res['bancount'] . ']</small>',
                 ];
-                echo functions::display_user($res, $arg);
+                echo $tools->displayUser($res, $arg);
                 echo '</div>';
             }
         } else {
