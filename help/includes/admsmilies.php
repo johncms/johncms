@@ -47,7 +47,7 @@ if ($total > 0) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         $smileys = (in_array($smile, $user_sm) ? ''
             : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
-        echo $smileys . '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . _t('or') . ' :' . functions::trans($smile) . ':</div>';
+        echo $smileys . '<img src="../images/smileys/admin/' . $array[$i] . '" alt="" /> - :' . $smile . ': ' . _t('or') . ' :' . $tools->trans($smile) . ':</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

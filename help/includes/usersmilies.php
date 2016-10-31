@@ -51,7 +51,7 @@ if ($total) {
             echo(in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;');
         }
 
-        echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . functions::trans($smile) . ':';
+        echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . $tools->trans($smile) . ':';
         echo '</div>';
     }
 

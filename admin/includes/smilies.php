@@ -2,7 +2,13 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-$config = App::getContainer()->get('config')['johncms'];
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
@@ -23,7 +29,7 @@ foreach (glob(ROOT_PATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY
     $file = basename($var);
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
-        $smileys['adm'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $config['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
+        $smileys['adm'][':' . $tools->trans($name[0]) . ':'] = '<img src="' . $config['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
         $smileys['adm'][':' . $name[0] . ':'] = '<img src="' . $config['homeurl'] . '/images/smileys/admin/' . $file . '" alt="" />';
     }
 }
@@ -34,7 +40,7 @@ foreach (glob(ROOT_PATH . 'images' . DIRECTORY_SEPARATOR . 'smileys' . DIRECTORY
     $name = explode(".", $file);
     if (in_array($name[1], $ext)) {
         $path = $config['homeurl'] . '/images/smileys/user/' . basename(dirname($var));
-        $smileys['usr'][':' . functions::trans($name[0]) . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
+        $smileys['usr'][':' . $tools->trans($name[0]) . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
         $smileys['usr'][':' . $name[0] . ':'] = '<img src="' . $path . '/' . $file . '" alt="" />';
     }
 }
