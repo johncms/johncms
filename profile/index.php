@@ -12,14 +12,18 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
 
 // Закрываем от неавторизованных юзеров
 if (!$user_id) {
@@ -37,6 +41,45 @@ if (!$user) {
     echo $tools->displayError(_t('This User does not exists'));
     require('../system/end.php');
     exit;
+}
+
+/**
+ * Находится ли выбранный пользователь в контактах и игноре?
+ *
+ * @param int $id Идентификатор пользователя, которого проверяем
+ * @return int Результат запроса:
+ *                0 - не в контактах
+ *                1 - в контактах
+ *                2 - в игноре у меня
+ */
+function is_contact($id = 0)
+{
+    global $db;
+
+    static $user_id = null;
+    static $return = 0;
+
+    if (!core::$user_id && !$id) {
+        return 0;
+    }
+
+    if (is_null($user_id) || $id != $user_id) {
+        $user_id = $id;
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . core::$user_id . "' AND `from_id` = '$id'");
+
+        if ($req->rowCount()) {
+            $res = $req->fetch();
+            if ($res['ban'] == 1) {
+                $return = 2;
+            } else {
+                $return = 1;
+            }
+        } else {
+            $return = 0;
+        }
+    }
+
+    return $return;
 }
 
 // Переключаем режимы работы
@@ -60,9 +103,6 @@ $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
     // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
     $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
@@ -173,15 +213,15 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     if ($user['id'] != $user_id) {
         echo '<div class="menu"><p>';
         // Контакты
-        if (functions::is_contact($user['id']) != 2) {
-            if (!functions::is_contact($user['id'])) {
+        if (is_contact($user['id']) != 2) {
+            if (!is_contact($user['id'])) {
                 echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
             } else {
                 echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
             }
         }
 
-        if (functions::is_contact($user['id']) != 2) {
+        if (is_contact($user['id']) != 2) {
             echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
         } else {
             echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
@@ -189,7 +229,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
         echo '</p>';
 
-        if (!functions::is_ignor($user['id']) && functions::is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
+        if (!functions::is_ignor($user['id']) && is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
             echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 
