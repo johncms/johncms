@@ -382,7 +382,7 @@ switch ($act) {
                     // Для зарегистрированных показываем ссылки и смайлы
                     $post = $tools->checkout($res['text'], 1, 1);
                     if ($set_user['smileys']) {
-                        $post = functions::smileys($post, $res['rights'] >= 1 ? 1 : 0);
+                        $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
                     }
                 } else {
                     // Для гостей обрабатываем имя и фильтруем ссылки
@@ -416,7 +416,7 @@ switch ($act) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     if ($set_user['smileys']) {
-                        $otvet = functions::smileys($otvet, 1);
+                        $otvet = $tools->smilies($otvet, 1);
                     }
                     $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }

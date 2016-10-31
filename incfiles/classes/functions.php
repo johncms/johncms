@@ -343,30 +343,6 @@ class functions extends core
     }
 
     /**
-     * Обработка смайлов
-     *
-     * @param string $str
-     * @param bool   $adm
-     * @return string
-     */
-    public static function smileys($str, $adm = false)
-    {
-        static $smileys_cache = [];
-        if (empty($smileys_cache)) {
-            $file = ROOT_PATH . 'files/cache/smileys.dat';
-            if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
-                $smileys_cache = unserialize($smileys);
-
-                return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
-            } else {
-                return $str;
-            }
-        } else {
-            return strtr($str, ($adm ? array_merge($smileys_cache['usr'], $smileys_cache['adm']) : $smileys_cache['usr']));
-        }
-    }
-
-    /**
      * Функция пересчета на дни, или часы
      *
      * @param int $var

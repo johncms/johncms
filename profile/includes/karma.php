@@ -242,7 +242,7 @@ if ($set_karma['on']) {
                     }
 
                     if (!empty($res['text'])) {
-                        echo '<br />' . functions::smileys($tools->checkout($res['text']));
+                        echo '<br />' . $tools->smilies($tools->checkout($res['text']));
                     }
 
                     echo '</div>';

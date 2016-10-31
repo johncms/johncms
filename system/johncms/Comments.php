@@ -292,7 +292,7 @@ class Comments
                         $text = $this->tools->checkout($res['text'], 1, 1);
 
                         if (\core::$user_set['smileys']) {
-                            $text = \functions::smileys($text, $res['rights'] >= 1 ? 1 : 0);
+                            $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
                         }
 
                         if (isset($attributes['edit_count'])) {
@@ -305,7 +305,7 @@ class Comments
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
 
                             if (\core::$user_set['smileys']) {
-                                $reply = \functions::smileys($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
+                                $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             }
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .

@@ -297,7 +297,7 @@ switch ($do) {
             $text = $tools->checkout($res['text'], 1, 1);
 
             if ($set_user['smileys']) {
-                $text = functions::smileys($text, 1);
+                $text = $tools->smilies($text, 1);
             }
 
             echo '<h3>' . $res['name'] . '</h3>' .

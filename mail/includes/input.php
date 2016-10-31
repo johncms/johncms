@@ -62,7 +62,7 @@ if ($total) {
             $text = $tools->checkout($text, 1, 1);
 
             if ($set_user['smileys']) {
-                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
+                $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
             }
 
             $text = $bbcode->notags($text);
@@ -72,7 +72,7 @@ if ($total) {
             $text = $tools->checkout($last_msg['text'], 1, 1);
 
             if ($set_user['smileys']) {
-                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
+                $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
             }
         }
 

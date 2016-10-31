@@ -360,7 +360,7 @@ if (in_array($act, $array_includes)) {
                         (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
 
                     if ($set_user['smileys']) {
-                        $text = functions::smileys($text, $rights ? 1 : 0);
+                        $text = $tools->smilies($text, $rights ? 1 : 0);
                     }
 
                     echo '<div class="list2" style="padding: 8px">';

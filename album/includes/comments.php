@@ -42,7 +42,7 @@ if ($req_obj->rowCount()) {
         '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 
     if (!empty($res_obj['description'])) {
-        $context_top .= '<div class="gray">' . functions::smileys($tools->checkout($res_obj['description'], 1)) . '</div>';
+        $context_top .= '<div class="gray">' . $tools->smilies($tools->checkout($res_obj['description'], 1)) . '</div>';
     }
 
     $context_top .= '<div class="sub">' .

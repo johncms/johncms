@@ -212,7 +212,7 @@ if (!$error) {
                 $msg_pre = $tools->checkout($msg, 1, 1);
 
                 if ($set_user['smileys']) {
-                    $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
+                    $msg_pre = $tools->smilies($msg_pre, $datauser['rights'] ? 1 : 0);
                 }
 
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
