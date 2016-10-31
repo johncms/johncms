@@ -30,7 +30,7 @@ if ($topic_vote == 0 || core::$user_rights < 7) {
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res, ['iphide' => 1]);
+        echo $tools->displayUser($res, ['iphide' => 1]);
         echo '</div>';
         ++$i;
     }

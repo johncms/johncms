@@ -24,7 +24,7 @@ switch ($mod) {
             echo $tools->displayError(_t('You do not have enought rights to ban this user'));
         } else {
             echo '<div class="phdr"><b>' . _t('Ban the User') . '</b></div>';
-            echo '<div class="rmenu"><p>' . functions::display_user($user) . '</p></div>';
+            echo '<div class="rmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
             if (isset($_POST['submit'])) {
                 $error = false;
@@ -209,7 +209,7 @@ switch ($mod) {
 
                 if (!$error) {
                     echo '<div class="phdr"><b>' . _t('Ban termination') . '</b></div>';
-                    echo '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
+                    echo '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
                     if (isset($_POST['submit'])) {
                         $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
@@ -240,7 +240,7 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><b>' . _t('Delete Ban') . '</b></div>' .
-                    '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
+                    '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
                 if (isset($_POST['submit'])) {
                     $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
@@ -267,7 +267,7 @@ switch ($mod) {
         // Очищаем историю нарушений юзера
         if ($rights == 9) {
             echo '<div class="phdr"><b>' . _t('Violations history') . '</b></div>' .
-                '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
+                '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
             if (isset($_POST['submit'])) {
                 $db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = " . $user['id']);
@@ -309,7 +309,7 @@ switch ($mod) {
         }
 
         if ($user['id'] != $user_id) {
-            echo '<div class="user"><p>' . functions::display_user($user) . '</p></div>';
+            echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>';
         } else {
             echo '<div class="list2"><p>' . _t('My Violations') . '</p></div>';
         }

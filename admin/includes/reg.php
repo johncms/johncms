@@ -103,7 +103,7 @@ switch ($mod) {
                     '<a href="index.php?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
                 ];
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo functions::display_user($res, [
+                echo $tools->displayUser($res, [
                     'header' => '<b>ID:' . $res['id'] . '</b>',
                     'sub'    => implode(' | ', $link),
                 ]);

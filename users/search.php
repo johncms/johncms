@@ -64,7 +64,7 @@ if ($search && !$error) {
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             $res['name'] = mb_strlen($search) < 2 ? $res['name'] : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $res['name']);
-            echo functions::display_user($res);
+            echo $tools->displayUser($res);
             echo '</div>';
             ++$i;
         }

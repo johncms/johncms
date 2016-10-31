@@ -30,7 +30,7 @@ $arg = array(
     'lastvisit' => 1,
     'header' => '<b>ID:' . $user['id'] . '</b>'
 );
-echo functions::display_user($user, $arg);
+echo $tools->displayUser($user, $arg);
 echo '</p></div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();

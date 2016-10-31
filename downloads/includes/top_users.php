@@ -33,7 +33,7 @@ if ($total) {
     while ($res_down = $req_down->fetch()) {
         $user = $db->query("SELECT * FROM `users` WHERE `id`=" . $res_down['user_id'])->fetch();
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            functions::display_user($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
+            $tools->displayUser($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

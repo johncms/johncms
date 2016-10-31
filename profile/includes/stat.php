@@ -2,11 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
 require('../system/head.php');
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
-    '<div class="user"><p>' . functions::display_user($user, ['iphide' => 1,]) . '</p></div>' .
+    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>' .
     '<div class="list2">' .
     '<p><h3>' . functions::image('rate.gif') . _t('Statistic') . '</h3><ul>';
 

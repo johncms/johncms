@@ -47,7 +47,7 @@ while ($res = $req->fetch()) {
 
     $link .= '<a href="../profile/?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . _t('Ban') . '</a>';
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-    echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link]);
+    echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link]);
     echo '</div>';
     ++$i;
 }

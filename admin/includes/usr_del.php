@@ -60,7 +60,7 @@ if (!$error) {
 
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
     // Выводим краткие данные
-    echo '<div class="user"><p>' . functions::display_user($user, [
+    echo '<div class="user"><p>' . $tools->displayUser($user, [
             'lastvisit' => 1,
             'iphist'    => 1,
         ]) . '</p></div>';

@@ -51,7 +51,7 @@ if ($id) {
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
-                echo functions::display_user($res, 0, ($act == 'guest' || ($rights >= 1 && $rights >= $res['rights']) ? 1 : 0));
+                echo $tools->displayUser($res, 0, ($act == 'guest' || ($rights >= 1 && $rights >= $res['rights']) ? 1 : 0));
                 echo '</div>';
             }
         } else {
@@ -166,7 +166,7 @@ if ($id) {
                 'stshide' => 1,
                 'header'  => ('<br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . $place),
             ];
-            echo functions::display_user($res, $arg);
+            echo $tools->displayUser($res, $arg);
             echo '</div>';
         }
     } else {

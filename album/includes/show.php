@@ -37,7 +37,7 @@ if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
     echo '<div class="topmenu"><a href="?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Add image') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . functions::display_user($user) . '</p></div>' .
+echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>' .
     '<div class="phdr">' . _t('Album') . ': ' .
     ($view ? '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($album['name']) . '</b></a>' : '<b>' . $tools->checkout($album['name']) . '</b>');
 

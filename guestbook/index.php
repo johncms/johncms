@@ -434,7 +434,7 @@ switch ($act) {
                     'sub'    => $subtext,
                 ];
 
-                echo functions::display_user($res, $arg);
+                echo $tools->displayUser($res, $arg);
                 echo '</div>';
             }
         } else {

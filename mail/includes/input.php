@@ -89,7 +89,7 @@ if ($total) {
             echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
         }
 
-        echo functions::display_user($row, $arg);
+        echo $tools->displayUser($row, $arg);
         echo '</div>';
     }
 } else {

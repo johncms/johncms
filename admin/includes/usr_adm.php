@@ -13,7 +13,7 @@ if ($req->rowCount()) {
     echo '<div class="bmenu">' . _t('Supervisors') . '</div>';
     while ($res = $req->fetch()) {
         echo $sw % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
+        echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
         echo '</div>';
         ++$sw;
     }
@@ -26,7 +26,7 @@ if ($req->fetch()) {
 
     while ($res = $req->fetch()) {
         echo $adm % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
+        echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
         echo '</div>';
         ++$adm;
     }
@@ -39,7 +39,7 @@ if ($req->rowCount()) {
 
     while ($res = $req->fetch()) {
         echo $smd % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
+        echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
         echo '</div>';
         ++$smd;
     }
@@ -52,7 +52,7 @@ if ($req->rowCount()) {
 
     while ($res = $req->fetch()) {
         echo $mod % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
+        echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
         echo '</div>';
         ++$mod;
     }
