@@ -42,7 +42,7 @@ if ($topic_vote == 0 || core::$user_rights < 7) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        echo '<p>' . functions::display_pagination('index.php?act=users&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
+        echo '<p>' . $tools->displayPagination('index.php?act=users&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
             '<p><form action="index.php?act=users&amp;id=' . $id . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

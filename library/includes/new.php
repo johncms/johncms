@@ -17,7 +17,7 @@ $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (t
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 $sql = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `comm_count`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
-$nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
+$nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
 echo $nav;
 if ($total) {
     $i = 0;

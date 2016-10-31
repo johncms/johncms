@@ -6,8 +6,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Files on moderation');
 
 if ($rights == 4 || $rights >= 6) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 
@@ -25,7 +31,7 @@ if ($rights == 4 || $rights >= 6) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>';
     }
 
     $i = 0;
@@ -47,7 +53,7 @@ if ($rights == 4 || $rights >= 6) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total, $kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="top_users" name="act" />' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

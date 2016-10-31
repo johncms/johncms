@@ -268,7 +268,7 @@ class Comments
                 echo '<div class="phdr"><b>' . $arg['title'] . '</b></div>';
 
                 if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . \functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
+                    echo '<div class="topmenu">' . $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>';
                 }
 
                 if ($this->total) {
@@ -329,7 +329,7 @@ class Comments
                 echo '<div class="phdr">' . _t('Total', 'system') . ': ' . $this->total . '</div>';
 
                 if ($this->total > $kmess) {
-                    echo '<div class="topmenu">' . \functions::display_pagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
+                    echo '<div class="topmenu">' . $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $kmess) . '</div>' .
                         '<p><form action="' . $this->url . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page', 'system') . ' &gt;&gt;"/>' .

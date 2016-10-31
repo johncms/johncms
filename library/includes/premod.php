@@ -49,6 +49,6 @@ if ($total) {
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
-echo ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=premod&amp;', $start, $total, $kmess) . '</div>' : '';
+echo ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total, $kmess) . '</div>' : '';
 echo $total ? '<div><a href="?act=premod&amp;all">' . _t('Approve all') . '</a></div>' : '';
 echo '<p><a href="?">' . _t('To Library') . '</a></p>' . PHP_EOL;

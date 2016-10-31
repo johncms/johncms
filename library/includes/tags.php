@@ -5,7 +5,17 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $obj = new Hashtags(0);
 
 if (isset($_GET['tag'])) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     $tag = urldecode($_GET['tag']);
+
     if ($obj->get_all_tag_stats($tag)) {
         $total = sizeof($obj->get_all_tag_stats($tag));
         $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
@@ -14,19 +24,10 @@ if (isset($_GET['tag'])) {
         echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Tags') . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         foreach (new LimitIterator(new ArrayIterator($obj->get_all_tag_stats($tag)), $start, $kmess) as $txt) {
-            /** @var Interop\Container\ContainerInterface $container */
-            $container = App::getContainer();
-
-            /** @var PDO $db */
-            $db = $container->get(PDO::class);
-
-            /** @var Johncms\Tools $tools */
-            $tools = $container->get('tools');
-
             $row = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt)->fetch();
             $obj = new Hashtags($row['id']);
             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
@@ -45,7 +46,7 @@ if (isset($_GET['tag'])) {
         echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $kmess) . '</div>';
         }
         echo '<p><a href="?">' . _t('To Library') . '</a></p>';
     }

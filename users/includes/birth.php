@@ -6,8 +6,14 @@ $textl = _t('Birthdays');
 $headmod = 'birth';
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 // Выводим список именинников
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Birthdays') . '</div>';
@@ -25,7 +31,7 @@ if ($total) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        echo '<p>' . functions::display_pagination('index.php?act=birth&amp;', $start, $total, $kmess) . '</p>';
+        echo '<p>' . $tools->displayPagination('index.php?act=birth&amp;', $start, $total, $kmess) . '</p>';
         echo '<p><form action="index.php?act=birth" method="post">' .
              '<input type="text" name="page" size="2"/>' .
              '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

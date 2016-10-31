@@ -113,7 +113,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         if ($total) {
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('index.php?', $start, $total, $kmess) . '</div>';
             }
 
             $req = $db->query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
@@ -144,7 +144,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('index.php?', $start, $total, $kmess) . '</div>';
             echo '<p><form action="index.php" method="get">
 				<input type="text" name="page" size="2"/>
 				<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

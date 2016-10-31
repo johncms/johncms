@@ -29,8 +29,14 @@ if (!empty($search) && mb_strlen($search) < 2 || mb_strlen($search) > 64) {
 
 // Выводим результаты поиска
 if ($search && !$error) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
 
     // Подготавливаем данные для запроса
     $search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
@@ -45,7 +51,7 @@ if ($search && !$error) {
 
     if ($total > $kmess) {
         $check_search = htmlspecialchars(rawurlencode($search));
-        echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     if ($total) {
@@ -63,7 +69,7 @@ if ($search && !$error) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="' . $check_search . '" name="search" />' .
             '<input type="hidden" value="search" name="act" />' .

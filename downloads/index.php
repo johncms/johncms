@@ -130,6 +130,9 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     require __DIR__ . '/classes/download.php';
     require '../system/head.php';
 
@@ -266,7 +269,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             // Постраничная навигация
             if ($total_files > $kmess) {
-                echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>';
             }
 
             // Выводи данные
@@ -300,7 +303,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     // Постраничная навигация
     if ($total_files > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
             '<p><form action="' . $url . '" method="get">' .
             '<input type="hidden" name="id" value="' . $id . '"/>' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

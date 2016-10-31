@@ -6,6 +6,13 @@ require_once '../system/head.php';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 // Обзор комментариев
@@ -14,8 +21,6 @@ if (!$config['mod_down_comm'] && $rights < 7) {
     exit;
 }
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 $textl = _t('Review comments');
 
 if (!$config['mod_down_comm']) {
@@ -32,7 +37,7 @@ if ($total) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>';
     }
 
     // Выводим список
@@ -88,7 +93,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" value="review_comments" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

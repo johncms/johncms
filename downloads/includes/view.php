@@ -4,10 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 require '../system/head.php';
 require 'classes/download.php';
@@ -121,7 +125,7 @@ if (!empty($screen)) {
             $page = $total;
         }
 
-        echo '<div class="topmenu"> ' . functions::display_pagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
+        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
             '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
             '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
     } else {
