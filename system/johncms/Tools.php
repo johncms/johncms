@@ -358,6 +358,25 @@ class Tools
         }
     }
 
+    /**
+     * Функция пересчета на дни, или часы
+     *
+     * @param int $var
+     * @return bool|string
+     */
+    public function timecount($var)
+    {
+        if ($var < 0) {
+            $var = 0;
+        }
+
+        $day = ceil($var / 86400);
+
+        return $var >= 86400
+            ? $day . ' ' . _p('Day', 'Days', $day)
+            : date("G:i:s", mktime(0, 0, $var));
+    }
+
     // Транслитерация текста
     public function trans($str)
     {

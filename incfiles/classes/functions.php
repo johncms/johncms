@@ -157,30 +157,4 @@ class functions extends core
 
         return strtr($str, $replace);
     }
-
-    /**
-     * Функция пересчета на дни, или часы
-     *
-     * @param int $var
-     * @return bool|string
-     */
-    public static function timecount($var)
-    {
-        global $lng;
-        if ($var < 0) {
-            $var = 0;
-        }
-        $day = ceil($var / 86400);
-        if ($var > 345600) {
-            return $day . ' ' . $lng['timecount_days'];
-        }
-        if ($var >= 172800) {
-            return $day . ' ' . $lng['timecount_days_r'];
-        }
-        if ($var >= 86400) {
-            return '1 ' . $lng['timecount_day'];
-        }
-
-        return date("G:i:s", mktime(0, 0, $var));
-    }
 }
