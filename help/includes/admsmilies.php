@@ -2,10 +2,12 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 // Каталог Админских Смайлов
 if ($rights < 1) {
-    /** @var Johncms\Tools $tools */
-    $tools = App::getContainer()->get('tools');
+
 
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
     require('../system/end.php');
@@ -55,7 +57,7 @@ echo '<div class="gmenu"><input type="submit" name="add" value=" ' . _t('Add') .
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('faq.php?act=smadm&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=smadm&amp;', $start, $total, $kmess) . '</div>';
     echo '<p><form action="faq.php?act=smadm" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

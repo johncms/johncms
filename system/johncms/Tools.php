@@ -131,4 +131,67 @@ class Tools
         . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
         . (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
     }
+
+    /**
+     * Постраничная навигация
+     * За основу взята доработанная функция от форума SMF 2.x.x
+     *
+     * @param string $url
+     * @param int    $start
+     * @param int    $total
+     * @param int    $kmess
+     * @return string
+     */
+    public function displayPagination($url, $start, $total, $kmess)
+    {
+        $neighbors = 2;
+        if ($start >= $total) {
+            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+        } else {
+            $start = max(0, (int)$start - ((int)$start % (int)$kmess));
+        }
+
+        $base_link = '<a class="pagenav" href="' . strtr($url, ['%' => '%%']) . 'page=%d' . '">%s</a>';
+        $out[] = $start == 0 ? '' : sprintf($base_link, $start / $kmess, '&lt;&lt;');
+
+        if ($start > $kmess * $neighbors) {
+            $out[] = sprintf($base_link, 1, '1');
+        }
+
+        if ($start > $kmess * ($neighbors + 1)) {
+            $out[] = '<span style="font-weight: bold;">...</span>';
+        }
+
+        for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
+            if ($start >= $kmess * $nCont) {
+                $tmpStart = $start - $kmess * $nCont;
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
+            }
+        }
+
+        $out[] = '<span class="currentpage"><b>' . ($start / $kmess + 1) . '</b></span>';
+        $tmpMaxPages = (int)(($total - 1) / $kmess) * $kmess;
+
+        for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
+            if ($start + $kmess * $nCont <= $tmpMaxPages) {
+                $tmpStart = $start + $kmess * $nCont;
+                $out[] = sprintf($base_link, $tmpStart / $kmess + 1, $tmpStart / $kmess + 1);
+            }
+        }
+
+        if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages) {
+            $out[] = '<span style="font-weight: bold;">...</span>';
+        }
+
+        if ($start + $kmess * $neighbors < $tmpMaxPages) {
+            $out[] = sprintf($base_link, $tmpMaxPages / $kmess + 1, $tmpMaxPages / $kmess + 1);
+        }
+
+        if ($start + $kmess < $total) {
+            $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
+            $out[] = sprintf($base_link, $display_page, '&gt;&gt;');
+        }
+
+        return implode(' ', $out);
+    }
 }

@@ -5,8 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Mail');
 require_once('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 echo '<div class="phdr"><b>' . _t('New Messages') . '</b></div>';
 //TODO: Разобраться с запросом
@@ -21,7 +27,7 @@ if ($total == 1) {
 
 if ($total) {
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
     }
 
     //Групируем по контактам
@@ -50,7 +56,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $new_mail . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
     echo '<p><form action="index.php" method="get">
 		<input type="hidden" name="act" value="new"/>
 		<input type="text" name="page" size="2"/>

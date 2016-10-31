@@ -2,6 +2,9 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\Tools $tools */
+$tools = App::getContainer()->get('tools');
+
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
 $smileys = !empty($datauser['smileys']) ? unserialize($datauser['smileys']) : [];
@@ -47,7 +50,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . ' / ' . $user_smileys . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</div>';
 }
 
 echo '<p><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></p>';

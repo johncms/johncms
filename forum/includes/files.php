@@ -138,7 +138,7 @@ if ($do || isset($_GET['new'])) {
 
         if ($total > $kmess) {
             // Постраничная навигация
-            echo '<p>' . functions::display_pagination('index.php?act=files&amp;' . (isset($_GET['new']) ? 'new'
+            echo '<p>' . $tools->displayPagination('index.php?act=files&amp;' . (isset($_GET['new']) ? 'new'
                         : 'do=' . $do) . $lnk . '&amp;', $start, $total, $kmess) . '</p>' .
                 '<p><form action="index.php" method="get">' .
                 '<input type="hidden" name="act" value="files"/>' .

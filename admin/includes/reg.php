@@ -89,7 +89,7 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'")->fetchColumn();
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>';
         }
 
         if ($total) {
@@ -117,7 +117,7 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>' .
+            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>' .
                 '<p><form action="index.php?act=reg" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

@@ -4,10 +4,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+$config = $container->get('config')['johncms'];
 
 // Открытие ZIP прхива
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/open_zip');
@@ -88,7 +92,7 @@ if (!isset($_GET['file'])) {
 
 	// Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     if ($total > 0) {
@@ -127,7 +131,7 @@ if (!isset($_GET['file'])) {
 
 	// Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=open_zip' . $isset_more . '&amp;', $start, $total, $kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="open_zip" name="act" />' .
             '<input type="hidden" value="' . $id . '" name="id" />' .

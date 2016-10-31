@@ -379,7 +379,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
                 if ($total > $kmess) {
-                    echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
                         '<p><form action="index.php?id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -430,7 +430,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Выводим название топика
                 echo '<div class="phdr"><a href="#down">' . functions::image('down.png', ['class' => '']) . '</a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
                 if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
                 }
 
                 // Метка удаления темы
@@ -788,7 +788,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                 // Постраничная навигация
                 if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .
                         '<p><form action="index.php?id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

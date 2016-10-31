@@ -439,7 +439,7 @@ if ($id) {
     if ($total) {
 
         if ($total > $kmess) {
-            $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+            $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
@@ -506,7 +506,7 @@ if ($id) {
     $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
         $out .= '<p><form action="index.php" method="get">
 			<input type="hidden" name="act" value="write"/>
 			<input type="hidden" name="id" value="' . $id . '"/>

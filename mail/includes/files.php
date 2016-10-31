@@ -6,8 +6,14 @@ $headmod = 'mail';
 $textl = _t('Mail') . ' | ' . _t('Files');
 require_once('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 
@@ -16,7 +22,7 @@ $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='$user_id'
 
 if ($total) {
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . functions::display_pagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
     }
 
     $req = $db->query("SELECT `cms_mail`.*, `users`.`name`
@@ -41,7 +47,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
     echo '<p><form action="index.php" method="get">
 		<input type="hidden" name="act" value="files"/>
 		<input type="text" name="page" size="2"/>

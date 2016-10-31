@@ -2,8 +2,14 @@
 //TODO: Доработать файл!
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 // Файлы юзера
 $textl = _t('User Files');
@@ -24,7 +30,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Список файлов
@@ -44,7 +50,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?user=' . Mobi::$USER . '&amp;act=user_files&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="USER" value="' . Mobi::$USER . '"/>' .
         '<input type="hidden" value="user_files" name="act" />' .

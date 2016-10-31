@@ -2,8 +2,15 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 require '../system/head.php';
 require 'classes/download.php';
 
@@ -30,7 +37,7 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
 }
 
 // Выводим список
@@ -49,7 +56,7 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .

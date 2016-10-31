@@ -2,8 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -53,7 +59,7 @@ if ($total) {
 }
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
          '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
          '<input type="text" name="page" size="2"/>' .
          '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
