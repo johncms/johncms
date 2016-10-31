@@ -6,6 +6,10 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 $config = $container->get('config')['johncms'];
 
 /** @var Zend\I18n\Translator\Translator $translator */
@@ -25,7 +29,7 @@ if (core::$deny_registration || !$config['mod_reg'] || core::$user_id) {
 
 $captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : null;
 $reg_nick = isset($_POST['nick']) ? trim($_POST['nick']) : '';
-$lat_nick = functions::rus_lat(mb_strtolower($reg_nick));
+$lat_nick = $tools->rusLat($reg_nick);
 $reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
 $reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
 $reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';

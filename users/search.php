@@ -36,7 +36,7 @@ if (!empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
     $error[] = _t('Nickname') . ': ' . _t('Invalid length');
 }
 
-if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", functions::rus_lat(mb_strtolower($search)))) {
+if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $tools->rusLat($search))) {
     $error[] = _t('Nickname') . ': ' . _t('Invalid characters');
 }
 
@@ -45,7 +45,7 @@ if ($search && !$error) {
     $db = $container->get(PDO::class);
 
     // Выводим результаты поиска
-    $search_db = functions::rus_lat(mb_strtolower($search));
+    $search_db = $tools->rusLat($search);
     $search_db = strtr($search_db, [
         '_' => '\\_',
         '%' => '\\%',
