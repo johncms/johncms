@@ -133,7 +133,7 @@ if ($total) {
         if ($mod == 'history') {
             $arg['header'] .= $tools->displayDate($res['sestime']);
         } else {
-            $arg['header'] .= $res['movings'] . ' - ' . functions::timecount(time() - $res['sestime']);
+            $arg['header'] .= $res['movings'] . ' - ' . $tools->timecount(time() - $res['sestime']);
         }
 
         $arg['header'] .= ')</span><br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . functions::display_place($res['id'], $res['place']);

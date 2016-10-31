@@ -345,10 +345,10 @@ switch ($mod) {
                 }
 
                 echo '<span class="gray">' . _t('Time') . ':</span> '
-                    . ($period < 86400000 ? functions::timecount($period) : _t('Till cancel'));
+                    . ($period < 86400000 ? $tools->timecount($period) : _t('Till cancel'));
 
                 if ($remain > 0) {
-                    echo '<br /><span class="gray">' . _t('Remains') . ':</span> ' . functions::timecount($remain);
+                    echo '<br /><span class="gray">' . _t('Remains') . ':</span> ' . $tools->timecount($remain);
                 }
 
                 // Меню отдельного бана

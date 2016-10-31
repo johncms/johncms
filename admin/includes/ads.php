@@ -378,10 +378,10 @@ switch ($mod) {
                 }
 
                 if (!empty($res['day'])) {
-                    $agreement[] = functions::timecount($res['day'] * 86400);
+                    $agreement[] = $tools->timecount($res['day'] * 86400);
                     $remains_count = $res['day'] * 86400 - (time() - $res['time']);
                     if ($remains_count > 0) {
-                        $remains[] = functions::timecount($remains_count);
+                        $remains[] = $tools->timecount($remains_count);
                     }
                 }
 
