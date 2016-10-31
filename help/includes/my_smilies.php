@@ -37,7 +37,7 @@ foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
     echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
         '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
-        $tools->smilies($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . functions::trans($smile) . '</div>';
+        $tools->smilies($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
     $i++;
 }
 
