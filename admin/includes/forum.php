@@ -738,7 +738,7 @@ switch ($mod) {
         $total_votes = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1'")->fetchColumn();
 
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Forum Management') . '</div>' .
-            '<div class="gmenu"><p><h3>' . functions::image('rate.gif') . _t('Statistic') . '</h3><ul>' .
+            '<div class="gmenu"><p><h3>' . $tools->image('rate.gif') . _t('Statistic') . '</h3><ul>' .
             '<li>' . _t('Categories') . ':&#160;' . $total_cat . '</li>' .
             '<li>' . _t('Sections') . ':&#160;' . $total_sub . '</li>' .
             '<li>' . _t('Topics') . ':&#160;' . $total_thm . '&#160;/&#160;<span class="red">' . $total_thm_del . '</span></li>' .

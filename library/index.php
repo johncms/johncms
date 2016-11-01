@@ -135,11 +135,11 @@ if (in_array($act, $array_includes)) {
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo functions::image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
+            echo $tools->image('new.png', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
         }
 
-        echo functions::image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('Rating articles') . '</a><br>' .
-            functions::image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
+        echo $tools->image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('Rating articles') . '</a><br>' .
+            $tools->image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
             '</p></div>';
 
         $total = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0")->fetchColumn();

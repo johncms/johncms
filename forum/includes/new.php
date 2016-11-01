@@ -99,15 +99,15 @@ if ($user_id) {
                     $nick = $colmes->fetch();
 
                     if ($res['edit']) {
-                        echo functions::image('tz.gif');
+                        echo $tools->image('tz.gif');
                     } elseif ($res['close']) {
-                        echo functions::image('dl.gif');
+                        echo $tools->image('dl.gif');
                     } else {
-                        echo functions::image('np.gif');
+                        echo $tools->image('np.gif');
                     }
 
                     if ($res['realid'] == 1) {
-                        echo functions::image('rate.gif');
+                        echo $tools->image('rate.gif');
                     }
 
                     echo '&#160;<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . $res['text'] .
@@ -174,10 +174,10 @@ if ($user_id) {
 
                     // Значки
                     $icons = [
-                        (isset($np) ? (!$res['vip'] ? functions::image('op.gif') : '') : functions::image('np.gif')),
-                        ($res['vip'] ? functions::image('pt.gif') : ''),
-                        ($res['realid'] ? functions::image('rate.gif') : ''),
-                        ($res['edit'] ? functions::image('tz.gif') : ''),
+                        (isset($np) ? (!$res['vip'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
+                        ($res['vip'] ? $tools->image('pt.gif') : ''),
+                        ($res['realid'] ? $tools->image('rate.gif') : ''),
+                        ($res['edit'] ? $tools->image('tz.gif') : ''),
                     ];
                     echo implode('', array_filter($icons));
                     echo '<a href="index.php?id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . $res['text'] .
@@ -228,9 +228,9 @@ if ($user_id) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             // Значки
             $icons = [
-                ($res['vip'] ? functions::image('pt.gif') : ''),
-                ($res['realid'] ? functions::image('rate.gif') : ''),
-                ($res['edit'] ? functions::image('tz.gif') : ''),
+                ($res['vip'] ? $tools->image('pt.gif') : ''),
+                ($res['realid'] ? $tools->image('rate.gif') : ''),
+                ($res['edit'] ? $tools->image('tz.gif') : ''),
             ];
             echo implode('', array_filter($icons));
             echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a>&#160;[' . $colmes1 . ']';

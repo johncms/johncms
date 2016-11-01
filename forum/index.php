@@ -348,10 +348,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id`='$user_id'")->fetchColumn();
                         // Значки
                         $icons = [
-                            ($np ? (!$res['vip'] ? functions::image('op.gif') : '') : functions::image('np.gif')),
-                            ($res['vip'] ? functions::image('pt.gif') : ''),
-                            ($res['realid'] ? functions::image('rate.gif') : ''),
-                            ($res['edit'] ? functions::image('tz.gif') : ''),
+                            ($np ? (!$res['vip'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
+                            ($res['vip'] ? $tools->image('pt.gif') : ''),
+                            ($res['realid'] ? $tools->image('rate.gif') : ''),
+                            ($res['edit'] ? $tools->image('tz.gif') : ''),
                         ];
                         echo implode('', array_filter($icons));
                         echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> [' . $colmes . ']';
@@ -428,7 +428,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Выводим название топика
-                echo '<div class="phdr"><a href="#down">' . functions::image('down.png', ['class' => '']) . '</a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
+                echo '<div class="phdr"><a href="#down">' . $tools->image('down.png', ['class' => '']) . '</a>&#160;&#160;<b>' . $type1['text'] . '</b></div>';
                 if ($colmes > $kmess) {
                     echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
                 }
@@ -618,9 +618,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Метка пола
                     if ($res['sex']) {
-                        echo functions::image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+                        echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
                     } else {
-                        echo functions::image('del.png');
+                        echo $tools->image('del.png');
                     }
 
                     // Ник юзера и ссылка на его анкету
@@ -656,7 +656,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Статус пользователя
                     if (!empty($res['status'])) {
-                        echo '<div class="status">' . functions::image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
+                        echo '<div class="status">' . $tools->image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
                     }
 
                     // Закрываем таблицу с аватаром
@@ -783,7 +783,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
                 }
 
-                echo '<div class="phdr"><a id="down"></a><a href="#up">' . functions::image('up.png', ['class' => '']) . '</a>' .
+                echo '<div class="phdr"><a id="down"></a><a href="#up">' . $tools->image('up.png', ['class' => '']) . '</a>' .
                     '&#160;&#160;' . _t('Total') . ': ' . $colmes . '</div>';
 
                 // Постраничная навигация

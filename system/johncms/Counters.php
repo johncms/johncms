@@ -11,11 +11,18 @@ class Counters
      */
     private $db;
 
+    /**
+     * @var \Johncms\Tools
+     */
+    private $tools;
+
     private $homeurl;
 
     public function __invoke(ContainerInterface $container)
     {
+
         $this->db = $container->get(\PDO::class);
+        $this->tools = $container->get('tools');
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 
         return $this;
@@ -231,7 +238,7 @@ class Counters
         $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
         $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
-        return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . \functions::image('menu_online.png') . $users . ' / ' . $guests . '</a>';
+        return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
     }
 
     /**

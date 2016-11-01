@@ -197,9 +197,9 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     // Меню выбора
     $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     echo '<div class="list2"><p>' .
-        '<div>' . functions::image('contacts.png') . '<a href="?act=info&amp;user=' . $user['id'] . '">' . _t('Information') . '</a></div>' .
-        '<div>' . functions::image('activity.gif') . '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Activity') . '</a></div>' .
-        '<div>' . functions::image('rate.gif') . '<a href="?act=stat&amp;user=' . $user['id'] . '">' . _t('Statistic') . '</a></div>';
+        '<div>' . $tools->image('contacts.png') . '<a href="?act=info&amp;user=' . $user['id'] . '">' . _t('Information') . '</a></div>' .
+        '<div>' . $tools->image('activity.gif') . '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Activity') . '</a></div>' .
+        '<div>' . $tools->image('rate.gif') . '<a href="?act=stat&amp;user=' . $user['id'] . '">' . _t('Statistic') . '</a></div>';
     $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     if ($bancount) {
@@ -207,8 +207,8 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 
     echo '<br />' .
-        '<div>' . functions::image('photo.gif') . '<a href="../album/index.php?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div>' . functions::image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div>' . $tools->image('photo.gif') . '<a href="../album/index.php?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
         '</p></div>';
     if ($user['id'] != $user_id) {
         echo '<div class="menu"><p>';

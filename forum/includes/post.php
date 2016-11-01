@@ -40,9 +40,9 @@ if ($set_user['avatar']) {
 }
 
 if ($res['sex']) {
-    echo functions::image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+    echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
 } else {
-    echo functions::image('del.png');
+    echo $tools->image('del.png');
 }
 
 // Ник юзера и ссылка на его анкету
@@ -76,7 +76,7 @@ echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br 
 
 // Статус юзера
 if (!empty($res['status'])) {
-    echo '<div class="status">' . functions::image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
+    echo '<div class="status">' . $tools->image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
 }
 
 if ($set_user['avatar']) {
