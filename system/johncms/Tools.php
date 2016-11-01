@@ -332,6 +332,27 @@ class Tools
         return $out;
     }
 
+    /**
+     * Получаем данные пользователя
+     *
+     * @param int $id Идентификатор пользователя
+     * @return array|bool
+     */
+    public function getUser($id = 0)
+    {
+        if ($id && $id != \core::$user_id) {
+            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
+
+            if ($req->rowCount()) {
+                return $req->fetch();
+            } else {
+                return false;
+            }
+        } else {
+            return \core::$user_data;
+        }
+    }
+
     public function image($name, $args = [])
     {
         $homeurl = $this->config['homeurl'];

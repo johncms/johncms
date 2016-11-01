@@ -17,14 +17,16 @@ class functions extends core
 
         $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
         $place = explode(",", $place);
-        $placelist = []; //TODO: Написать список местоположений
+        $placelist = [
+            'homepage' => 'Home',
+        ]; //TODO: Написать список местоположений
 
         if (array_key_exists($place[0], $placelist)) {
             if ($place[0] == 'profile') {
                 if ($place[1] == $user_id) {
                     return '<a href="' . $homeurl . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
                 } else {
-                    $user = self::get_user($place[1]);
+                    $user = App::getContainer()->get('tools')->getUser($place[1]);
 
                     return $placelist['profile'] . ': <a href="' . $homeurl . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
                 }
@@ -36,29 +38,6 @@ class functions extends core
         }
 
         return '<a href="' . $homeurl . '/index.php">' . $placelist['homepage'] . '</a>';
-    }
-
-    /**
-     * Получаем данные пользователя
-     *
-     * @param int $id Идентификатор пользователя
-     * @return array|bool
-     */
-    public static function get_user($id = 0)
-    {
-        if ($id && $id != self::$user_id) {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-            $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
-
-            if ($req->rowCount()) {
-                return $req->fetch();
-            } else {
-                return false;
-            }
-        } else {
-            return self::$user_data;
-        }
     }
 
     /**

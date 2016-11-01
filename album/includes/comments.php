@@ -16,7 +16,8 @@ if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
     // Получаем данные владельца Альбома
-    $owner = functions::get_user($res_obj['user_id']);
+    $owner = $tools->getUser($res_obj['user_id']);
+
     if (!$owner) {
         require('../system/head.php');
         echo $tools->displayError(_t('User does not exists'));
