@@ -242,9 +242,9 @@ class Tools
             }
 
             if ($user['sex']) {
-                $out .= \functions::image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+                $out .= $this->image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
             } else {
-                $out .= \functions::image('del.png');
+                $out .= $this->image('del.png');
             }
 
             $out .= !\core::$user_id || \core::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
@@ -268,7 +268,7 @@ class Tools
             }
 
             if (!isset($arg['stshide']) && !empty($user['status'])) {
-                $out .= '<div class="status">' . \functions::image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
+                $out .= '<div class="status">' . $this->image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
             }
 
             if (\core::$user_set['avatar']) {
@@ -330,6 +330,24 @@ class Tools
         }
 
         return $out;
+    }
+
+    public function image($name, $args = [])
+    {
+        $homeurl = $this->config['homeurl'];
+
+        if (is_file(ROOT_PATH . 'theme/' . \core::$user_set['skin'] . '/images/' . $name)) {
+            $src = $homeurl . '/theme/' . \core::$user_set['skin'] . '/images/' . $name;
+        } elseif (is_file(ROOT_PATH . 'images/' . $name)) {
+            $src = $homeurl . '/images/' . $name;
+        } else {
+            return false;
+        }
+
+        return '<img src="' . $src . '" alt="' . (isset($args['alt']) ? $args['alt'] : '') . '"' .
+        (isset($args['width']) ? ' width="' . $args['width'] . '"' : '') .
+        (isset($args['height']) ? ' height="' . $args['height'] . '"' : '') .
+        ' class="' . (isset($args['class']) ? $args['class'] : 'icon') . '"/>';
     }
 
     /**

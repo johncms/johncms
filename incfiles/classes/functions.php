@@ -61,24 +61,6 @@ class functions extends core
         }
     }
 
-    public static function image($name, $args = [])
-    {
-        $homeurl = App::getContainer()->get('config')['johncms']['homeurl'];
-
-        if (is_file(ROOT_PATH . 'theme/' . core::$user_set['skin'] . '/images/' . $name)) {
-            $src = $homeurl . '/theme/' . core::$user_set['skin'] . '/images/' . $name;
-        } elseif (is_file(ROOT_PATH . 'images/' . $name)) {
-            $src = $homeurl . '/images/' . $name;
-        } else {
-            return false;
-        }
-
-        return '<img src="' . $src . '" alt="' . (isset($args['alt']) ? $args['alt'] : '') . '"' .
-        (isset($args['width']) ? ' width="' . $args['width'] . '"' : '') .
-        (isset($args['height']) ? ' height="' . $args['height'] . '"' : '') .
-        ' class="' . (isset($args['class']) ? $args['class'] : 'icon') . '"/>';
-    }
-
     /**
      * Проверка на игнор у получателя
      *

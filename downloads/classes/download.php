@@ -115,7 +115,11 @@ class Download
         $out = false;
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
-        $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
+
+        /** @var Johncms\Tools $tools */
+        $tools = \App::getContainer()->get('tools');
+        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
+
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
 
         if ($res_down['time'] > $old) {
@@ -178,19 +182,20 @@ class Download
     public static function downloadLlink($array = [])
     {
         global $old;
+
+        /** @var Johncms\Tools $tools */
+        $tools = App::getContainer()->get('tools');
+
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
         $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
-        $out .= functions::image('system/' . $icon_id . '.png') . '&nbsp;';
+        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . Download::displayFileSize((isset($array['res']['size']) ? $array['res']['size'] : filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
 
         if ($array['res']['time'] > $old) {
             $out .= ' <span class="red">(NEW)</span>';
         }
-
-        /** @var Johncms\Tools $tools */
-        $tools = App::getContainer()->get('tools');
 
         $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate($array['res']['time']);
 

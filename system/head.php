@@ -82,7 +82,7 @@ if (isset($cms_ads[0])) {
 
 // Выводим логотип и переключатель языков
 echo '<table style="width: 100%;" class="logo"><tr>' .
-    '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . functions::image('logo.gif', ['class' => '']) . '</a></td>' .
+    '<td valign="bottom"><a href="' . $set['homeurl'] . '">' . $tools->image('logo.gif', ['class' => '']) . '</a></td>' .
     ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $set['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $set['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
     '</tr></table>';
 
@@ -91,9 +91,9 @@ echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($user_id ? '<b>' . $
 
 // Главное меню пользователя
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
-    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . functions::image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
-    (!$user_id && $headmod != 'login' ? functions::image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
+    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $set['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
+    ($user_id && $headmod != 'office' ? '<a href="' . $set['homeurl'] . '/profile/?act=office">' . $tools->image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
+    (!$user_id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $set['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 
 // Рекламный блок сайта

@@ -443,10 +443,22 @@ class Hashtags
 class Rating
 {
     private $lib_id = false;
-    /** @var PDO $db */
+
+    /**
+     * @var \PDO
+     */
     private $db;
 
+    /**
+     * @var \Johncms\Tools
+     */
+    private $tools;
+
     public function __construct($id) {
+        $container = App::getContainer();
+        $this->db = $container->get(PDO::class);
+        $this->tools = $container->get('tools');
+
         $this->db = App::getContainer()->get(PDO::class);
         $this->lib_id = $id;
         $this->check();
@@ -485,7 +497,7 @@ class Rating
     public function view_rate($anchor = 0) {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
-        $res = ($anchor ? '<a href="#rating">' : '') . functions::image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', ['alt' => 'rating ' . $this->lib_id . ' article']) . ($anchor ? '</a>' : '') . ' (' . $stmt->fetchColumn() . ')';
+        $res = ($anchor ? '<a href="#rating">' : '') . $this->tools->image('rating/star.' . (str_replace('.', '-', (string) $this->get_rate())) . '.gif', ['alt' => 'rating ' . $this->lib_id . ' article']) . ($anchor ? '</a>' : '') . ' (' . $stmt->fetchColumn() . ')';
         
         return $res;
     }
