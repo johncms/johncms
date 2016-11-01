@@ -38,7 +38,8 @@ if (!$user_id) {
 }
 
 // Получаем данные пользователя
-$user = functions::get_user($user);
+$user = $tools->getUser($user);
+
 if (!$user) {
     require('../system/head.php');
     echo $tools->displayError(_t('User does not exists'));

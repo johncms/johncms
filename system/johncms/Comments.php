@@ -146,7 +146,7 @@ class Comments
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
-                        $user = \functions::get_user($res['user_id']);
+                        $user = $this->tools->getUser($res['user_id']);
 
                         if ($user['rights'] > \core::$user_rights) {
                             echo $this->tools->displayError(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
