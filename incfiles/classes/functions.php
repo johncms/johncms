@@ -39,36 +39,4 @@ class functions extends core
 
         return '<a href="' . $homeurl . '/index.php">' . $placelist['homepage'] . '</a>';
     }
-
-    /**
-     * Проверка на игнор у получателя
-     *
-     * @param $id
-     * @return bool
-     */
-    public static function is_ignor($id)
-    {
-        static $user_id = null;
-        static $return = false;
-
-        if (!self::$user_id && !$id) {
-            return false;
-        }
-
-        if (is_null($user_id) || $id != $user_id) {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-            $user_id = $id;
-            $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = '" . self::$user_id . "'");
-
-            if ($req->rowCount()) {
-                $res = $req->fetch();
-                if ($res['ban'] == 1) {
-                    $return = true;
-                }
-            }
-        }
-
-        return $return;
-    }
 }

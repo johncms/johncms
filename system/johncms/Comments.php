@@ -244,7 +244,7 @@ class Comments
                 }
 
                 // Добавляем новый комментарий
-                if (!$this->ban && !\functions::is_ignor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
+                if (!$this->ban && !$this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->add_comment($message['text']);
@@ -260,7 +260,7 @@ class Comments
                 }
 
                 // Показываем форму ввода
-                if (!$this->ban && !\functions::is_ignor($this->owner)) {
+                if (!$this->ban && !$this->tools->isIgnor($this->owner)) {
                     echo $this->msg_form();
                 }
 

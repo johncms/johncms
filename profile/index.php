@@ -229,7 +229,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
         echo '</p>';
 
-        if (!functions::is_ignor($user['id']) && is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
+        if (!$tools->isIgnor($user['id']) && is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
             echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 

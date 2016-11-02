@@ -353,6 +353,11 @@ class Tools
         }
     }
 
+    /**
+     * @param string $name
+     * @param array  $args
+     * @return bool|string
+     */
     public function image($name, $args = [])
     {
         $homeurl = $this->config['homeurl'];
@@ -369,6 +374,36 @@ class Tools
         (isset($args['width']) ? ' width="' . $args['width'] . '"' : '') .
         (isset($args['height']) ? ' height="' . $args['height'] . '"' : '') .
         ' class="' . (isset($args['class']) ? $args['class'] : 'icon') . '"/>';
+    }
+
+    /**
+     * Проверка на игнор у получателя
+     *
+     * @param $id
+     * @return bool
+     */
+    public function isIgnor($id)
+    {
+        static $user_id = null;
+        static $return = false;
+
+        if (!\core::$user_id && !$id) {
+            return false;
+        }
+
+        if (is_null($user_id) || $id != $user_id) {
+            $user_id = $id;
+            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . \core::$user_id);
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                if ($res['ban'] == 1) {
+                    $return = true;
+                }
+            }
+        }
+
+        return $return;
     }
 
     /**

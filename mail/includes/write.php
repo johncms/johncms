@@ -91,7 +91,7 @@ if (empty($_SESSION['error'])) {
 
 $out .= '<div class="phdr"><b>' . _t('Mail') . '</b></div>';
 
-if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !functions::is_ignor($id)) {
+if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !$tools->isIgnor($id)) {
     if (!$id) {
         $name = isset($_POST['nick']) ? $tools->rusLat(trim($_POST['nick'])) : '';
     }
@@ -417,7 +417,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !function
     }
 }
 
-if (!functions::is_ignor($id) && empty($ban['1']) && empty($ban['3'])) {
+if (!$tools->isIgnor($id) && empty($ban['1']) && empty($ban['3'])) {
 
     $out .= isset($_SESSION['error']) ? $_SESSION['error'] : '';
     $out .= '<div class="gmenu">' .
