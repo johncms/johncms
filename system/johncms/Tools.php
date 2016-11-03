@@ -196,6 +196,40 @@ class Tools
     }
 
     /**
+     * Показываем местоположение пользователя
+     *
+     * @param int    $user_id
+     * @param string $place
+     * @return mixed|string
+     */
+    public function displayPlace($user_id = 0, $place = '', $headmod = '')
+    {
+        $place = explode(",", $place);
+
+        $placelist = [
+            'homepage' => 'Home',
+        ]; //TODO: Написать список местоположений
+
+        if (array_key_exists($place[0], $placelist)) {
+            if ($place[0] == 'profile') {
+                if ($place[1] == $user_id) {
+                    return '<a href="' . $this->config['homeurl'] . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
+                } else {
+                    $user = $this->getUser($place[1]);
+
+                    return $placelist['profile'] . ': <a href="' . $this->config['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
+                }
+            } elseif ($place[0] == 'online' && !empty($headmod) && $headmod == 'online') {
+                return $placelist['here'];
+            } else {
+                return str_replace('#home#', $this->config['homeurl'], $placelist[$place[0]]);
+            }
+        }
+
+        return '<a href="' . $this->config['homeurl'] . '/index.php">' . $placelist['homepage'] . '</a>';
+    }
+
+    /**
      * Отображения личных данных пользователя
      *
      * @param int   $user Массив запроса в таблицу `users`

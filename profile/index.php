@@ -141,7 +141,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     ];
 
     if ($user['id'] != core::$user_id) {
-        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . functions::display_place($user['id'],
+        $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($user['id'],
                 $user['place']);
     }
 
