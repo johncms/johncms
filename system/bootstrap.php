@@ -63,8 +63,7 @@ session_start();
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-
-
+//TODO: Написать смену языка
 $locale = 'ru';
 
 /** @var Zend\I18n\Translator\Translator $translator */
