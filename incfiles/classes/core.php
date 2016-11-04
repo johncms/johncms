@@ -56,12 +56,6 @@ class core
         // Получаем объект PDO
         $this->db = $this->container->get(PDO::class);
 
-        //TODO: после полного перехода на новое ядро, проверку версии PHP удалить
-        if (version_compare(PHP_VERSION, '7', '<')) {
-            // Соединяемся с базой данных mysql (старый метод)
-            $this->db_connect();
-        }
-
         // Проверяем адрес IP на бан
         $this->checkIpBan();
 
@@ -134,20 +128,6 @@ class core
         self::$core_errors[] = 'Language file <b>' . $module . '.lng</b> is missing';
 
         return false;
-    }
-
-    /**
-     * Подключаемся к базе данных (старый метод)
-     */
-    private function db_connect()
-    {
-        $db_host = isset($this->config['pdo']['db_host']) ? $this->config['pdo']['db_host'] : 'localhost';
-        $db_user = isset($this->config['pdo']['db_user']) ? $this->config['pdo']['db_user'] : 'root';
-        $db_pass = isset($this->config['pdo']['db_pass']) ? $this->config['pdo']['db_pass'] : '';
-        $db_name = isset($this->config['pdo']['db_name']) ? $this->config['pdo']['db_name'] : 'johncms';
-        $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('Error: cannot connect to database server');
-        @mysql_select_db($db_name) or die('Error: specified database does not exist');
-        @mysql_query("SET NAMES 'utf8'", $connect);
     }
 
     /**
