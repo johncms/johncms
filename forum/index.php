@@ -13,7 +13,9 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Johncms\Counters $counters */
 $counters = App::getContainer()->get('counters');
@@ -106,9 +108,9 @@ $ext_other = ['wmf'];
 // Ограничиваем доступ к Форуму
 $error = '';
 
-if (!$config['mod_forum'] && $rights < 7) {
+if (!$config->mod_forum && $rights < 7) {
     $error = _t('Forum is closed');
-} elseif ($config['mod_forum'] == 1 && !$user_id) {
+} elseif ($config->mod_forum == 1 && !$user_id) {
     $error = _t('For registered users only');
 }
 
@@ -175,9 +177,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     require('../system/head.php');
 
     // Если форум закрыт, то для Админов выводим напоминание
-    if (!$config['mod_forum']) {
+    if (!$config->mod_forum) {
         echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
-    } elseif ($config['mod_forum'] == 3) {
+    } elseif ($config->mod_forum == 3) {
         echo '<div class="rmenu">' . _t('Read only') . '</div>';
     }
 
@@ -326,7 +328,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ////////////////////////////////////////////////////////////
                 $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
 
-                if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $config['mod_forum'] != 4) || core::$user_rights) {
+                if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $config->mod_forum != 4) || core::$user_rights) {
                     // Кнопка создания новой темы
                     echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New Topic') . '" /></form></div>';
                 }
@@ -568,7 +570,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ");
 
                 // Верхнее поле "Написать"
-                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $config['mod_forum'] != 3 && $allow != 4) || ($rights >= 7 && $set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -741,11 +743,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         // Показываем IP и Useragent
                         if ($rights == 3 || $rights >= 6) {
                             if ($res['ip_via_proxy']) {
-                                echo '<div class="gray"><b class="red"><a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
-                                    '<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
+                                echo '<div class="gray"><b class="red"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
+                                    '<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
                                     ' - ' . $res['soft'] . '</div>';
                             } else {
-                                echo '<div class="gray"><a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['soft'] . '</div>';
+                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['soft'] . '</div>';
                             }
                         }
 
@@ -763,7 +765,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Нижнее поле "Написать"
-                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $config['mod_forum'] != 3 && $allow != 4) || ($rights >= 7 && !$set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($rights >= 7 && !$set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {

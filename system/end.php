@@ -11,7 +11,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Рекламный блок сайта
 if (!empty($cms_ads[2])) {
@@ -21,13 +22,13 @@ if (!empty($cms_ads[2])) {
 echo '</div><div class="fmenu">';
 
 if (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && isset($_GET['act']))) {
-    echo '<div><a href=\'' . $config['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a></div>';
+    echo '<div><a href=\'' . $config->homeurl . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a></div>';
 }
 
 echo '<div>' . $container->get('counters')->online() . '</div>' .
     '</div>' .
     '<div style="text-align:center">' .
-    '<p><b>' . $config['copyright'] . '</b></p>';
+    '<p><b>' . $config->copyright . '</b></p>';
 
 // Счетчики каталогов
 $req = $db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort` ASC');

@@ -8,7 +8,8 @@ $container = App::getContainer();
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 

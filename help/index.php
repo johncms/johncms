@@ -10,8 +10,11 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 
 require('../incfiles/core.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var Zend\I18n\Translator\Translator $translator */
-$translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+$translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = 'FAQ';
@@ -20,7 +23,8 @@ require('../system/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    $config = App::getContainer()->get('config')['johncms'];
+    /** @var Johncms\Config $config */
+    $config = $container->get(Johncms\Config::class);
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 

@@ -12,12 +12,12 @@ class PdoFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $config = $container->get('config');
+        $config = $container->get('config')['pdo'];
 
-        $dbHost = isset($config['pdo']['db_host']) ? $config['pdo']['db_host'] : 'localhost';
-        $dbUser = isset($config['pdo']['db_user']) ? $config['pdo']['db_user'] : 'root';
-        $dbPass = isset($config['pdo']['db_pass']) ? $config['pdo']['db_pass'] : '';
-        $dbName = isset($config['pdo']['db_name']) ? $config['pdo']['db_name'] : 'johncms';
+        $dbHost = isset($config['db_host']) ? $config['db_host'] : 'localhost';
+        $dbUser = isset($config['db_user']) ? $config['db_user'] : 'root';
+        $dbPass = isset($config['db_pass']) ? $config['db_pass'] : '';
+        $dbName = isset($config['db_name']) ? $config['db_name'] : 'johncms';
 
         try {
             $pdo = new \PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,

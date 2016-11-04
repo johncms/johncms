@@ -20,7 +20,8 @@ if (($user_id != $user['id'] && $rights < 7)
     exit;
 }
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 switch ($mod) {
     case 'avatar':

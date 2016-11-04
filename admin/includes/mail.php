@@ -10,7 +10,9 @@ if ($rights < 9) {
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);

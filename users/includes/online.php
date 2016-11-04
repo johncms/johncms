@@ -15,7 +15,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Показываем список Online
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
@@ -69,8 +70,8 @@ switch ($mod) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 }
 
-                echo '[' . $out[1] . ']&#160;&#160;<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-                    '&#160;&#160;<small>[<a href="' . $config['homeurl'] . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
+                echo '[' . $out[1] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+                    '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
             }
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';

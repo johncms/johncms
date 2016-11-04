@@ -7,7 +7,9 @@ require '../system/head.php';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Комментарии
 if (!$config['mod_down_comm'] && $rights < 7) {
