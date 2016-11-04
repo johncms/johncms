@@ -10,7 +10,8 @@ $container = App::getContainer();
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -21,7 +22,7 @@ $headmod = 'registration';
 require('../system/head.php');
 
 // Если регистрация закрыта, выводим предупреждение
-if (core::$deny_registration || !$config['mod_reg'] || core::$user_id) {
+if (core::$deny_registration || !$config->mod_reg || core::$user_id) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
     require('../system/end.php');
     exit;
@@ -96,7 +97,7 @@ if (isset($_POST['submit'])) {
         /** @var Johncms\Environment $env */
         $env = $container->get('env');
 
-        $preg = $config['mod_reg'] > 1 ? 1 : 0;
+        $preg = $config->mod_reg > 1 ? 1 : 0;
         $db->prepare('
           INSERT INTO `users` SET
           `name` = ?,
@@ -135,55 +136,17 @@ if (isset($_POST['submit'])) {
 
         $usid = $db->lastInsertId();
 
-        // Отправка системного сообщения
-        $set_mail = unserialize($config['setting_mail']);
-
-        if (!isset($set_mail['message_include'])) {
-            $set_mail['message_include'] = 0;
-        }
-
-        if ($set_mail['message_include']) {
-            $array = ['{LOGIN}', '{TIME}'];
-            $array_replace = [$reg_nick, '{TIME=' . time() . '}'];
-
-            if (empty($config['them_message'])) {
-                $config['them_message'] = $lng_mail['them_message'];
-            }
-
-            if (empty($config['reg_message'])) {
-                $config['reg_message'] = $lng['hi'] . ", {LOGIN}\r\n" . $lng_mail['pleased_see_you'] . "\r\n" . $lng_mail['come_my_site'] . "\r\n" . $lng_mail['respectfully_yours'];
-            }
-
-            $theme = str_replace($array, $array_replace, $config['them_message']);
-            $system = str_replace($array, $array_replace, $config['reg_message']);
-
-            $db->prepare('
-              INSERT INTO `cms_mail` SET
-              `user_id` = 0,
-              `from_id` = ?,
-              `text` = ?,
-              `time` = ?,
-              `sys` = 1,
-              `them` = ?
-            ')->execute([
-                $usid,
-                $system,
-                time(),
-                $theme,
-            ]);
-        }
-
         echo '<div class="menu"><p><h3>' . _t('Your registratiton data') . '</h3>'
             . _t('Your ID') . ': <b>' . $usid . '</b><br>'
             . _t('Your Username') . ': <b>' . $reg_nick . '</b><br>'
             . _t('Your Password') . ': <b>' . $reg_pass . '</b></p>';
 
-        if ($config['mod_reg'] == 1) {
+        if ($config->mod_reg == 1) {
             echo '<p><span class="red"><b>' . _t('Please, wait until a moderator approves your registration') . '</b></span></p>';
         } else {
             $_SESSION['uid'] = $usid;
             $_SESSION['ups'] = md5(md5($reg_pass));
-            echo '<p><a href="' . $config['homeurl'] . '">' . _t('Enter') . '</a></p>';
+            echo '<p><a href="' . $config->homeurl . '">' . _t('Enter') . '</a></p>';
         }
 
         echo '</div>';
@@ -193,7 +156,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Форма регистрации
-if ($config['mod_reg'] == 1) {
+if ($config->mod_reg == 1) {
     echo '<div class="rmenu"><p>' . _t('You can get authorized on the site after confirmation of your registration.') . '</p></div>';
 }
 

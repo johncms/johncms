@@ -6,7 +6,9 @@ require_once ('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -14,8 +16,8 @@ $db = $container->get(PDO::class);
 header('content-type: application/rss+xml');
 echo '<?xml version="1.0" encoding="utf-8"?>' .
      '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>' .
-     '<title>' . htmlspecialchars($config['copyright']) . ' | News</title>' .
-     '<link>' . $config['homeurl'] . '</link>' .
+     '<title>' . htmlspecialchars($config->copyright) . ' | News</title>' .
+     '<link>' . $config->homeurl . '</link>' .
      '<description>News</description>' .
      '<language>ru-RU</language>';
 
@@ -26,7 +28,7 @@ if ($req->rowCount()) {
     while ($res = $req->fetch()) {
         echo '<item>' .
              '<title>News: ' . $res['name'] . '</title>' .
-             '<link>' . $config['homeurl'] . '/news/index.php</link>' .
+             '<link>' . $config->homeurl . '/news/index.php</link>' .
              '<author>' . htmlspecialchars($res['avt']) . '</author>' .
              '<description>' . htmlspecialchars($res['text']) . '</description>' .
              '<pubDate>' . date('r', $res['time']) .
@@ -42,7 +44,7 @@ if ($req->rowCount()) {
     while ($res = $req->fetch()) {
         echo '<item>' .
              '<title>Library: ' . htmlspecialchars($res['name']) . '</title>' .
-             '<link>' . $config['homeurl'] . '/library/index.php?id=' . $res['id'] . '</link>' .
+             '<link>' . $config->homeurl . '/library/index.php?id=' . $res['id'] . '</link>' .
              '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
              '<description>' . htmlspecialchars($res['announce']) .
              '</description>' .

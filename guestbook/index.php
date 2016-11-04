@@ -12,7 +12,9 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Johncms\Environment $env */
 $env = App::getContainer()->get('env');
@@ -44,7 +46,7 @@ $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 require('../system/head.php');
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
-if (!$config['mod_guest'] && $rights < 7) {
+if (!$config->mod_guest && $rights < 7) {
     echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
     require('../system/end.php');
     exit;
@@ -304,7 +306,7 @@ switch ($act) {
 
     default:
         // Отображаем Гостевую, или Админ клуб
-        if (!$config['mod_guest']) {
+        if (!$config->mod_guest) {
             echo '<div class="alarm">' . _t('The guestbook is closed') . '</div>';
         }
 
@@ -320,7 +322,7 @@ switch ($act) {
         }
 
         // Форма ввода нового сообщения
-        if (($user_id || $config['mod_guest'] == 2) && !isset($ban['1']) && !isset($ban['13'])) {
+        if (($user_id || $config->mod_guest == 2) && !isset($ban['1']) && !isset($ban['13'])) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';

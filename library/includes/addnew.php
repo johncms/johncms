@@ -4,7 +4,9 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');

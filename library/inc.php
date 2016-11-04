@@ -13,7 +13,8 @@ $i = 0;
 
 function redir404()
 {
-    $config = App::getContainer()->get('config')['johncms'];
+    /** @var Johncms\Config $config */
+    $config = App::getContainer()->get(Johncms\Config::class);
 
     ob_get_level() and ob_end_clean();
     header('Location: ' . $config['homeurl'] . '/?err');

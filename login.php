@@ -17,10 +17,11 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 if (core::$user_id) {
-    echo '<div class="menu"><h2><a href="' . $config['homeurl'] . '">' . _t('Home', 'system') . '</a></h2></div>';
+    echo '<div class="menu"><h2><a href="' . $config->homeurl . '">' . _t('Home', 'system') . '</a></h2></div>';
 } else {
     echo '<div class="phdr"><b>' . _t('Login', 'system') . '</b></div>';
     $error = [];
@@ -106,9 +107,9 @@ if (core::$user_id) {
                         $set_user = unserialize($user['set_user']);
 
                         if ($user['lastdate'] < (time() - 3600) && $set_user['digest']) {
-                            header('Location: ' . $config['homeurl'] . '/index.php?act=digest&last=' . $user['lastdate']);
+                            header('Location: ' . $config->homeurl . '/index.php?act=digest&last=' . $user['lastdate']);
                         } else {
-                            header('Location: ' . $config['homeurl'] . '/index.php');
+                            header('Location: ' . $config->homeurl . '/index.php');
                         }
 
                         echo '<div class="gmenu"><p><b><a href="index.php?act=digest">' . _t('Enter site', 'system') . '</a></b></p></div>';
@@ -134,13 +135,6 @@ if (core::$user_id) {
         }
 
         $info = '';
-        if ($config['site_access'] == 0 || $config['site_access'] == 1) {
-            if ($config['site_access'] == 0) {
-                $info = '<div class="rmenu">' . _t('At the moment, access to the site is allowed only for SV!', 'system') . '</div>';
-            } elseif ($config['site_access'] == 1) {
-                $info = '<div class="rmenu">' . _t('At the moment, access to the site is allowed only for Administration of site.', 'system') . '</div>';
-            }
-        }
 
         echo $info;
         echo '<div class="gmenu"><form action="login.php" method="post"><p>' . _t('Username', 'system') . ':<br>' .

@@ -8,9 +8,11 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
 
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
 if (isset($_GET['lng'])) {
@@ -25,7 +27,7 @@ if (isset($_GET['lng'])) {
             echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
                 (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
                 $val .
-                ($key == $config['lng'] ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
+                ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
                 '</div>';
         }
 
@@ -46,7 +48,7 @@ if (isset($_GET['lng'])) {
             '<p><h3>' . _t('ATTENTION!', 'system') . '</h3>' .
             _t('You are going to leave our site and go to an external link', 'system') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
             '<p>' . _t('Administration of our site is not responsible for the content of external sites', 'system') . '.<br />' .
-            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $config['homeurl'] . '</span>') . '.</p>' .
+            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $config->homeurl . '</span>') . '.</p>' .
             '<p><input type="submit" name="submit" value="' . _t('Go to Link', 'system') . '" /></p>' .
             '</form></div>' .
             '<div class="phdr"><a href="' . $referer . '">' . _t('Back', 'system') . '</a></div>';

@@ -21,7 +21,8 @@ if ($user['id'] != $user_id) {
     exit;
 }
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),

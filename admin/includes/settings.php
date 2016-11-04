@@ -11,7 +11,8 @@ if ($rights < 9) {
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
 if (isset($_POST['submit'])) {
-    $config = App::getContainer()->get('config')['johncms'];
+    /** @var Johncms\Config $config */
+    $config = App::getContainer()->get(Johncms\Config::class);
 
     // Сохраняем настройки системы
     $config['skindef'] = isset($_POST['skindef']) ? trim($_POST['skindef']) : 'default';

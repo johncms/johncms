@@ -17,11 +17,13 @@ if (isset($_SESSION['ref'])) {
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 //Проверка авторизации
 if (!$user_id) {
-    header('Location: ' . $config['homeurl'] . '/?err');
+    header('Location: ' . $config->homeurl . '/?err');
     exit;
 }
 

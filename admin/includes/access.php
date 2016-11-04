@@ -8,7 +8,8 @@ if ($rights < 7) {
     exit;
 }
 
-$config = App::getContainer()->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Permissions') . '</div>';
 

@@ -11,7 +11,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Закрываем доступ для определенных ситуаций
 if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {

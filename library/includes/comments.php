@@ -17,7 +17,8 @@ if (!$user_id) {
     exit;
 }
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);

@@ -22,7 +22,8 @@ if ($user['id'] != $user_id) {
     exit;
 }
 
-$config = $container->get('config')['johncms'];
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Личный кабинет пользователя
 $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();

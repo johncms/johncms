@@ -15,7 +15,8 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
     /** @var Johncms\Tools $tools */
     $tools = $container->get('tools');
 
-    $config = $container->get('config')['johncms'];
+    /** @var Johncms\Config $config */
+    $config = $container->get(Johncms\Config::class);
 
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 

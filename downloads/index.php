@@ -12,7 +12,9 @@ require('../incfiles/core.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
-$config = $container->get('config')['johncms'];
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
