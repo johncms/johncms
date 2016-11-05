@@ -16,6 +16,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -55,18 +58,18 @@ if (!$user) {
  */
 function is_contact($id = 0)
 {
-    global $db;
+    global $db, $systemUser;
 
     static $user_id = null;
     static $return = 0;
 
-    if (!core::$user_id && !$id) {
+    if (!$systemUser->isValid() && !$id) {
         return 0;
     }
 
     if (is_null($user_id) || $id != $user_id) {
         $user_id = $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . core::$user_id . "' AND `from_id` = '$id'");
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $systemUser->id . "' AND `from_id` = '$id'");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -141,7 +144,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         'header'    => '<b>ID:' . $user['id'] . '</b>',
     ];
 
-    if ($user['id'] != core::$user_id) {
+    if ($user['id'] != $systemUser->id) {
         $arg['footer'] = '<span class="gray">' . _t('Where?') . ':</span> ' . $tools->displayPlace($user['id'],
                 $user['place']);
     }

@@ -16,6 +16,14 @@ class Tools
      */
     private $db;
 
+    /**
+     * @var User
+     */
+    private $systemUser;
+
+    /**
+     * @var Config
+     */
     private $config;
 
     public function __invoke(ContainerInterface $container)
@@ -23,6 +31,7 @@ class Tools
         $this->container = $container;
         $this->config = $container->get(Config::class);
         $this->db = $container->get(\PDO::class);
+        $this->systemUser = $container->get(User::class);
 
         return $this;
     }
@@ -281,7 +290,7 @@ class Tools
                 $out .= $this->image('del.png');
             }
 
-            $out .= !\core::$user_id || \core::$user_id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $out .= !$this->systemUser->isValid() || $this->systemUser->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
             $rank = [
                 0 => '',
                 1 => '(GMod)',
@@ -374,7 +383,7 @@ class Tools
      */
     public function getUser($id = 0)
     {
-        if ($id && $id != \core::$user_id) {
+        if ($id && $id != $this->systemUser->id) {
             $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
@@ -421,13 +430,13 @@ class Tools
         static $user_id = null;
         static $return = false;
 
-        if (!\core::$user_id && !$id) {
+        if (!$this->systemUser->isValid() && !$id) {
             return false;
         }
 
         if (is_null($user_id) || $id != $user_id) {
             $user_id = $id;
-            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . \core::$user_id);
+            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->systemUser->id);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();

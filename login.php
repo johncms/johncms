@@ -14,13 +14,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
-if (core::$user_id) {
+if ($systemUser->isValid()) {
     echo '<div class="menu"><h2><a href="' . $config->homeurl . '">' . _t('Home', 'system') . '</a></h2></div>';
 } else {
     echo '<div class="phdr"><b>' . _t('Login', 'system') . '</b></div>';
@@ -54,9 +57,9 @@ if (core::$user_id) {
         $stmt->execute([$tools->rusLat($user_login)]);
 
         if ($stmt->rowCount()) {
-            $user = $stmt->fetch();
+            $systemUser = $stmt->fetch();
 
-            if ($user['failed_login'] > 2) {
+            if ($systemUser['failed_login'] > 2) {
                 if ($user_code) {
                     if (mb_strlen($user_code) > 3 && $user_code == $_SESSION['code']) {
                         // Если введен правильный проверочный код
@@ -80,34 +83,34 @@ if (core::$user_id) {
                 }
             }
 
-            if ($user['failed_login'] < 3 || $captcha) {
-                if (md5(md5($user_pass)) == $user['password']) {
+            if ($systemUser['failed_login'] < 3 || $captcha) {
+                if (md5(md5($user_pass)) == $systemUser['password']) {
                     // Если логин удачный
                     $display_form = 0;
-                    $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $user['id']);
+                    $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $systemUser['id']);
 
-                    if (!$user['preg']) {
+                    if (!$systemUser['preg']) {
                         // Если регистрация не подтверждена
                         echo '<div class="rmenu"><p>' . _t('Sorry, but your request for registration is not considered yet. Please, be patient.', 'system') . '</p></div>';
                     } else {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         if (isset($_POST['mem'])) {
                             // Установка данных COOKIE
-                            $cuid = base64_encode($user['id']);
+                            $cuid = base64_encode($systemUser['id']);
                             $cups = md5($user_pass);
                             setcookie("cuid", $cuid, time() + 3600 * 24 * 365);
                             setcookie("cups", $cups, time() + 3600 * 24 * 365);
                         }
 
                         // Установка данных сессии
-                        $_SESSION['uid'] = $user['id'];
+                        $_SESSION['uid'] = $systemUser['id'];
                         $_SESSION['ups'] = md5(md5($user_pass));
 
-                        $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $user['id']);
-                        $set_user = unserialize($user['set_user']);
+                        $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $systemUser['id']);
+                        $set_user = unserialize($systemUser['set_user']);
 
-                        if ($user['lastdate'] < (time() - 3600) && $set_user['digest']) {
-                            header('Location: ' . $config->homeurl . '/index.php?act=digest&last=' . $user['lastdate']);
+                        if ($systemUser['lastdate'] < (time() - 3600) && $set_user['digest']) {
+                            header('Location: ' . $config->homeurl . '/index.php?act=digest&last=' . $systemUser['lastdate']);
                         } else {
                             header('Location: ' . $config->homeurl . '/index.php');
                         }
@@ -116,9 +119,9 @@ if (core::$user_id) {
                     }
                 } else {
                     // Если логин неудачный
-                    if ($user['failed_login'] < 3) {
+                    if ($systemUser['failed_login'] < 3) {
                         // Прибавляем к счетчику неудачных логинов
-                        $db->exec("UPDATE `users` SET `failed_login` = '" . ($user['failed_login'] + 1) . "' WHERE `id` = " . $user['id']);
+                        $db->exec("UPDATE `users` SET `failed_login` = '" . ($systemUser['failed_login'] + 1) . "' WHERE `id` = " . $systemUser['id']);
                     }
 
                     $error[] = _t('Authorization failed', 'system');

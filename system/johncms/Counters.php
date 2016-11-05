@@ -12,6 +12,11 @@ class Counters
     private $db;
 
     /**
+     * @var \Johncms\User
+     */
+    private $systemUser;
+
+    /**
      * @var \Johncms\Tools
      */
     private $tools;
@@ -22,6 +27,7 @@ class Counters
     {
 
         $this->db = $container->get(\PDO::class);
+        $this->systemUser = $container->get(\Johncms\User::class);
         $this->tools = $container->get('tools');
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 
@@ -118,7 +124,7 @@ class Counters
             file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]));
         }
 
-        if (\core::$user_id && ($new_msg = $this->forumNew()) > 0) {
+        if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
             $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/index.php?act=new">+' . $new_msg . '</a></span>';
         }
 
@@ -136,10 +142,10 @@ class Counters
      */
     public function forumNew($mod = 0)
     {
-        if (\core::$user_id) {
+        if ($this->systemUser->isValid()) {
             $total = $this->db->query("SELECT COUNT(*) FROM `forum`
-                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . \core::$user_id . "'
-                WHERE `forum`.`type` = 't'" . (\core::$user_rights >= 7 ? "" : " AND `forum`.`close` != 1") . "
+                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
+                WHERE `forum`.`type` = 't'" . ($this->systemUser->rights >= 7 ? "" : " AND `forum`.`close` != 1") . "
                 AND (`cms_forum_rdm`.`topic_id` IS NULL
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)")->fetchColumn();
 
