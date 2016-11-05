@@ -21,7 +21,7 @@ $tools = $container->get('tools');
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
-    $flood = $tools->antiflood(core::$user_data);
+    $flood = $tools->antiflood();
 
     if ($flood) {
         require('../system/head.php');

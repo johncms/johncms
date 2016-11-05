@@ -106,7 +106,7 @@ switch ($act) {
 
         if ($user_id) {
             // Антифлуд для зарегистрированных пользователей
-            $flood = $tools->antiflood(core::$user_data);
+            $flood = $tools->antiflood();
         } else {
             // Антифлуд для гостей
             $req = $db->query("SELECT `time` FROM `guest` WHERE `ip` = '" . $env->getIp() . "' AND `browser` = " . $db->quote($env->getUserAgent()) . " AND `time` > '" . (time() - 60) . "'");
