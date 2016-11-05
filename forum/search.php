@@ -23,6 +23,9 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' .
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -37,9 +40,9 @@ function ReplaceKeywords($search, $text)
 switch ($act) {
     case 'reset':
         // Очищаем историю личных поисковых запросов
-        if (core::$user_id) {
+        if ($systemUser->isValid()) {
             if (isset($_POST['submit'])) {
-                $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
+                $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
                 header('Location: search.php');
             } else {
                 echo '<form action="search.php?act=reset" method="post">' .
@@ -163,8 +166,8 @@ switch ($act) {
         }
 
         // Обрабатываем и показываем историю личных поисковых запросов
-        if (core::$user_id) {
-            $req = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
+        if ($systemUser->isValid()) {
+            $req = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -179,7 +182,7 @@ switch ($act) {
                     $history[] = $search;
                     $db->exec("UPDATE `cms_users_data` SET
                         `val` = " . $db->quote(serialize($history)) . "
-                        WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search'
+                        WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search'
                         LIMIT 1
                     ");
                 }
@@ -198,7 +201,7 @@ switch ($act) {
             } elseif ($to_history) {
                 $history[] = $search;
                 $db->exec("INSERT INTO `cms_users_data` SET
-                    `user_id` = '" . core::$user_id . "',
+                    `user_id` = '" . $systemUser->id . "',
                     `key` = 'forum_search',
                     `val` = " . $db->quote(serialize($history)) . "
                 ");

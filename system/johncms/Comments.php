@@ -9,9 +9,7 @@ class Comments
     private $comments_table;                              // Таблица с комментариями
     private $sub_id = false;                              // Идентификатор комментируемого объекта
     private $item;                                        // Локальный идентификатор
-    private $user_id = false;                             // Идентификатор авторизованного пользователя
     private $owner = false;
-    private $rights = 0;                                  // Права доступа
     private $ban = false;                                 // Находится ли юзер в бане?
     private $url;                                         // URL формируемых ссылок
 
@@ -24,6 +22,11 @@ class Comments
      * @var \Johncms\Tools
      */
     private $tools;
+
+    /**
+     * @var \Johncms\User
+     */
+    private $systemUser;
 
     // Права доступа
     private $access_reply = false;                        // Возможность отвечать на комментарий
@@ -48,6 +51,7 @@ class Comments
         $container = \App::getContainer();
         $this->tools = $container->get('tools');
         $this->db = $container->get(\PDO::class);
+        $this->systemUser = $container->get(\Johncms\User::class);
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
@@ -63,16 +67,15 @@ class Comments
         $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
 
         // Получаем данные пользователя
-        if (\core::$user_id) {
-            $this->user_id = \core::$user_id;
-            $this->rights = \core::$user_rights;
+        if ($this->systemUser->isValid()) {
             $this->ban = \core::$user_ban;
         }
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {
             $this->owner = $arg['owner'];
-            if (\core::$user_id && $arg['owner'] == \core::$user_id && !$this->ban) {
+
+            if ($this->systemUser->isValid() && $arg['owner'] == $this->systemUser->id && !$this->ban) {
                 $this->access_delete = isset($arg['owner_delete']) ? $arg['owner_delete'] : false;
                 $this->access_reply = isset($arg['owner_reply']) ? $arg['owner_reply'] : false;
                 $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
@@ -80,7 +83,7 @@ class Comments
         }
 
         // Открываем доступ для Администрации
-        if ($this->rights >= $this->access_level) {
+        if ($this->systemUser->rights >= $this->access_level) {
             $this->access_reply = true;
             $this->access_edit = true;
             $this->access_delete = true;
@@ -97,15 +100,15 @@ class Comments
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
 
-                        if (!empty($res['reply']) && $attributes['reply_rights'] > $this->rights) {
+                        if (!empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
                             if (empty($message['error'])) {
-                                $attributes['reply_id'] = $this->user_id;
-                                $attributes['reply_rights'] = $this->rights;
-                                $attributes['reply_name'] = \core::$user_data['name'];
+                                $attributes['reply_id'] = $this->systemUser->id;
+                                $attributes['reply_rights'] = $this->systemUser->rights;
+                                $attributes['reply_name'] = $this->systemUser->name;
                                 $attributes['reply_time'] = time();
 
                                 $this->db->prepare('
@@ -148,14 +151,14 @@ class Comments
                         $attributes = unserialize($res['attributes']);
                         $user = $this->tools->getUser($res['user_id']);
 
-                        if ($user['rights'] > \core::$user_rights) {
+                        if ($user['rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('You cannot edit posts of higher administration', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
 
                             if (empty($message['error'])) {
-                                $attributes['edit_id'] = $this->user_id;
-                                $attributes['edit_name'] = \core::$user_data['name'];
+                                $attributes['edit_id'] = $this->systemUser->id;
+                                $attributes['edit_name'] = $this->systemUser->name;
                                 $attributes['edit_time'] = time();
 
                                 if (isset($attributes['edit_count'])) {
@@ -370,17 +373,17 @@ class Comments
           `attributes` = ?
         ')->execute([
             intval($this->sub_id),
-            $this->user_id,
+            $this->systemUser->id,
             $message,
             time(),
             serialize($attributes),
         ]);
 
         // Обновляем статистику пользователя
-        $this->db->exec("UPDATE `users` SET `komm` = '" . (++\core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->user_id . "'");
+        $this->db->exec("UPDATE `users` SET `komm` = '" . (++\core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
 
-        if ($this->owner && $this->user_id == $this->owner) {
-            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (\core::$user_data['komm']) . "' WHERE `id` = '" . $this->user_id . "'");
+        if ($this->owner && $this->systemUser->id == $this->owner) {
+            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (\core::$user_data['komm']) . "' WHERE `id` = '" . $this->systemUser->id . "'");
         }
 
         $this->added = true;
@@ -426,7 +429,7 @@ class Comments
 
         // Проверка на повтор сообщений
         if (!$error && $rpt_check) {
-            $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `user_id` = '" . $this->user_id . "' ORDER BY `id` DESC LIMIT 1");
+            $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
             $res = $req->fetch();
 
             if (mb_strtolower($message) == mb_strtolower($res['text'])) {

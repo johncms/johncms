@@ -6,17 +6,27 @@ use Interop\Container\ContainerInterface;
 
 class Bbcode
 {
+    /**
+     * @var \Johncms\Config
+     */
     private $config;
-    private $homeUrl;
+
+    /**
+     * @var \Johncms\User
+     */
+    private $systemUser;
 
     /**
      * @var \GeSHi
      */
     private $geshi;
 
+    private $homeUrl;
+
     public function __invoke(ContainerInterface $container)
     {
-        $this->config = $container->get('config')['johncms'];
+        $this->config = $container->get(\Johncms\Config::class);
+        $this->systemUser = $container->get(\Johncms\User::class);
         $this->homeUrl = $this->config['homeurl'];
 
         return $this;
@@ -201,7 +211,7 @@ text-decoration: none;
             <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
             <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>';
 
-        if (\core::$user_id) {
+        if ($this->systemUser->isValid()) {
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
         } else {

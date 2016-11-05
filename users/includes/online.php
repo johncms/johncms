@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -122,7 +125,7 @@ if ($total) {
     $i = 0;
 
     while ($res = $req->fetch()) {
-        if ($res['id'] == core::$user_id) {
+        if ($res['id'] == $systemUser->id) {
             echo '<div class="gmenu">';
         } else {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

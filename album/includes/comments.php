@@ -6,6 +6,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -75,7 +78,7 @@ if ($req_obj->rowCount()) {
     ];
 
     // Ставим метку прочтения
-    if (core::$user_id == $user['id'] && $res_obj['unread_comments']) {
+    if ($systemUser->id == $user['id'] && $res_obj['unread_comments']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
     }
 
@@ -84,7 +87,7 @@ if ($req_obj->rowCount()) {
     $comm = new Johncms\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
-    if ($comm->added && core::$user_id != $owner['id']) {
+    if ($comm->added && $systemUser->id != $owner['id']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
     }
 } else {

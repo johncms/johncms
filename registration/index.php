@@ -7,6 +7,9 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -22,7 +25,7 @@ $headmod = 'registration';
 require('../system/head.php');
 
 // Если регистрация закрыта, выводим предупреждение
-if (core::$deny_registration || !$config->mod_reg || core::$user_id) {
+if (core::$deny_registration || !$config->mod_reg || $systemUser->isValid()) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
     require('../system/end.php');
     exit;

@@ -17,6 +17,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -96,7 +99,7 @@ if ($id) {
         $req = $db->query("SELECT * FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
-            if ($res['id'] == core::$user_id) {
+            if ($res['id'] == $systemUser->id) {
                 echo '<div class="gmenu">';
             } else {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

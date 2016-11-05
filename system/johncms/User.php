@@ -64,4 +64,15 @@ class User extends ArrayObject
     {
         parent::__construct($input, parent::ARRAY_AS_PROPS);
     }
+
+    public function isValid()
+    {
+        if ($this->offsetGet('id') > 0
+            && $this->offsetGet('preg') == 1
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }

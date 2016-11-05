@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -19,7 +22,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 switch ($mod) {
     case 'my_new_comm':
         // Непрочитанные комментарии в личных альбомах
-        if (!core::$user_id || core::$user_id != $user['id']) {
+        if (!$systemUser->isValid() || $systemUser->id != $user['id']) {
             echo $tools->displayError(_t('Wrong data'));
             require('../system/end.php');
             exit;
@@ -28,7 +31,7 @@ switch ($mod) {
         $title = _t('Unread Comments');
         $select = "";
         $join = "INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`";
-        $where = "`cms_album_files`.`user_id` = '" . core::$user_id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
+        $where = "`cms_album_files`.`user_id` = '" . $systemUser->id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
         $order = "`cms_album_comments`.`time` DESC";
         $link = '&amp;mod=my_new_comm';
         break;

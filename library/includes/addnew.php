@@ -5,14 +5,19 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
@@ -92,7 +97,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                 `announce` = " . $db->quote($announce) . ",
                 `text` = " . $db->quote($text) . ",
                 `uploader` = '" . $login . "',
-                `uploader_id` = " . core::$user_id . ",
+                `uploader_id` = " . $systemUser->id . ",
                 `premod` = $md,
                 `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ",
                 `time` = " . time() . "
