@@ -36,7 +36,7 @@ class Tools
         return $this;
     }
 
-    public function antiflood(array $userData)
+    public function antiflood()
     {
         $config = unserialize($this->config['antiflood']);
 
@@ -61,11 +61,11 @@ class Tools
         }
 
         // Для Администрации задаем лимит в 4 секунды
-        if ($userData['rights'] > 0) {
+        if ($this->systemUser->rights > 0) {
             $limit = 4;
         }
 
-        $flood = $userData['lastpost'] + $limit - time();
+        $flood = $this->systemUser->lastpost + $limit - time();
 
         return $flood > 0 ? $flood : false;
     }
@@ -379,7 +379,7 @@ class Tools
      * Получаем данные пользователя
      *
      * @param int $id Идентификатор пользователя
-     * @return array|bool
+     * @return User|bool
      */
     public function getUser($id = 0)
     {
@@ -392,7 +392,7 @@ class Tools
                 return false;
             }
         } else {
-            return \core::$user_data;
+            return $this->systemUser;
         }
     }
 

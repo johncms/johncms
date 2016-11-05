@@ -356,7 +356,7 @@ class Comments
 
         // Формируем атрибуты сообщения
         $attributes = [
-            'author_name'         => \core::$user_data['name'],
+            'author_name'         => $this->systemUser->name,
             'author_ip'           => $env->getIp(),
             'author_ip_via_proxy' => $env->getIpViaProxy(),
             'author_browser'      => $env->getUserAgent(),
@@ -380,10 +380,10 @@ class Comments
         ]);
 
         // Обновляем статистику пользователя
-        $this->db->exec("UPDATE `users` SET `komm` = '" . (++\core::$user_data['komm']) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
+        $this->db->exec("UPDATE `users` SET `komm` = '" . ++$this->systemUser->komm . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
 
         if ($this->owner && $this->systemUser->id == $this->owner) {
-            $this->db->exec("UPDATE `users` SET `comm_old` = '" . (\core::$user_data['komm']) . "' WHERE `id` = '" . $this->systemUser->id . "'");
+            $this->db->exec("UPDATE `users` SET `comm_old` = '" . $this->systemUser->komm . "' WHERE `id` = '" . $this->systemUser->id . "'");
         }
 
         $this->added = true;
@@ -420,7 +420,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = \App::getContainer()->get('tools')->antiflood(\core::$user_data);
+            $flood = \App::getContainer()->get('tools')->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');

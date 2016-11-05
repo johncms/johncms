@@ -117,7 +117,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !$tools->
         $error[] = _t('You cannot send messages to yourself');
     }
 
-    $flood = $tools->antiflood(core::$user_data);
+    $flood = $tools->antiflood();
 
     if ($flood) {
         $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d sec.'), $flood);

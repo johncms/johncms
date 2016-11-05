@@ -63,7 +63,7 @@ function forum_link($m)
 }
 
 // Проверка на флуд
-$flood = $tools->antiflood(core::$user_data);
+$flood = $tools->antiflood();
 
 if ($flood) {
     require('../system/head.php');

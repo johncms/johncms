@@ -139,7 +139,7 @@ class Bbcode
             /** @var \Johncms\Tools $tools */
             $tools = \App::getContainer()->get('tools');
 
-            $bb_smileys .= $tools->smilies($res_sm, \core::$user_data['rights'] >= 1 ? 1 : 0);
+            $bb_smileys .= $tools->smilies($res_sm, $this->systemUser->rights >= 1 ? 1 : 0);
         } else {
             $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=smilies">' . _t('Add Smilies', 'system') . '</a></small>';
         }

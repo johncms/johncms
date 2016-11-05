@@ -47,7 +47,7 @@ switch ($do) {
                     $error[] = _t('You have not entered news text');
                 }
 
-                $flood = $tools->antiflood(core::$user_data);
+                $flood = $tools->antiflood();
 
                 if ($flood) {
                     $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
