@@ -2,13 +2,19 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (($rights != 3 && $rights < 6) || !$id) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+if (($systemUser->rights != 3 && $systemUser->rights < 6) || !$id) {
     header('Location: http://johncms.com?act=404');
     exit;
 }
-
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND (`type` = 't' OR `type` = 'm')");
 

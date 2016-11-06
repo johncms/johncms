@@ -31,7 +31,7 @@ if ($id) {
         $res = $req->fetch();
         echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
 
-        if ($rights > 0) {
+        if ($systemUser->rights > 0) {
             echo '<div class="topmenu">' .
                 ($do == 'guest' ? '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Authorized') . '</a> | ' . _t('Guests') : _t('Authorized') . ' | <a href="index.php?act=who&amp;do=guest&amp;id=' . $id . '">' . _t('Guests') . '</a>') .
                 '</div>';
@@ -54,7 +54,7 @@ if ($id) {
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
-                echo $tools->displayUser($res, 0, ($act == 'guest' || ($rights >= 1 && $rights >= $res['rights']) ? 1 : 0));
+                echo $tools->displayUser($res, 0, ($act == 'guest' || ($systemUser->rights >= 1 && $systemUser->rights >= $res['rights']) ? 1 : 0));
                 echo '</div>';
             }
         } else {
@@ -79,7 +79,7 @@ if ($id) {
     // Показываем общий список тех, кто в форуме
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';
 
-    if ($rights > 0) {
+    if ($systemUser->rights > 0) {
         echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="index.php?act=who">' . _t('Users') . '</a> | <b>' . _t('Guests') . '</b>'
                 : '<b>' . _t('Users') . '</b> | <a href="index.php?act=who&amp;do=guest">' . _t('Guests') . '</a>') . '</div>';
     }

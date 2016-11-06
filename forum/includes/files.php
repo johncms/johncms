@@ -11,6 +11,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -84,7 +87,7 @@ if ($do || isset($_GET['new'])) {
             FROM `cms_forum_files`
             LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
             LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
-            WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql .
+            WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
             "ORDER BY `time` DESC LIMIT $start,$kmess");
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
@@ -150,7 +153,7 @@ if ($do || isset($_GET['new'])) {
     }
 } else {
     // Выводим список разделов, в которых есть файлы
-    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     echo '<p>' . ($countnew > 0
             ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
             : _t('No new files')) . '</p>';
@@ -158,7 +161,7 @@ if ($do || isset($_GET['new'])) {
     $link = [];
     $total = 0;
     for ($i = 1; $i < 10; $i++) {
-        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
 
         if ($count > 0) {
             $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="index.php?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';

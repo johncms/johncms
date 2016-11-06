@@ -36,11 +36,14 @@ if (!$id) {
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND `close` != '1'");
 
@@ -52,7 +55,7 @@ if (!$req->rowCount()) {
 
 if (isset($_POST['submit'])) {
     $type1 = $req->fetch();
-    $tema = $db->query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close` != '1'") . " ORDER BY `id` ASC");
+    $tema = $db->query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 'm'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'") . " ORDER BY `id` ASC");
     $mod = intval($_POST['mod']);
 
     switch ($mod) {

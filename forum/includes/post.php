@@ -10,6 +10,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -22,7 +25,7 @@ if (empty($_GET['id'])) {
 // Запрос сообщения
 $res = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . " LIMIT 1")->fetch();
+WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . " LIMIT 1")->fetch();
 
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'")->fetch();

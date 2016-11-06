@@ -2,13 +2,19 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (($rights != 3 && $rights < 6) || !$id) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+if (($systemUser->rights != 3 && $systemUser->rights < 6) || !$id) {
     header('Location: index.php');
     exit;
 }
-
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 
 if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'")->fetchColumn()) {
     if (isset($_GET['closed'])) {
