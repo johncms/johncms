@@ -5,11 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 require_once('../system/head.php');
 
@@ -17,7 +20,7 @@ $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "'
 $res = $req->fetch();
 
 if ($req->rowCount() && is_dir($res['dir'])) {
-    if (($res['field'] && $user_id) || ($rights == 4 || $rights >= 6)) {
+    if (($res['field'] && $user_id) || ($systemUser->rights == 4 || $systemUser->rights >= 6)) {
         $al_ext = $res['field'] ? explode(', ', $res['text']) : $defaultExt;
 
         if (isset($_POST['submit'])) {
@@ -81,7 +84,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                         @chmod("$load_cat/$fname", 0777);
                         echo '<div class="gmenu">' . _t('File attached');
 
-                        if ($set_down['mod'] && ($rights < 6 && $rights != 4)) {
+                        if ($set_down['mod'] && ($systemUser->rights < 6 && $systemUser->rights != 4)) {
                             echo _t('If you pass moderation, it will be added to the Downloads');
                             $type = 3;
                         } else {
@@ -142,7 +145,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             echo '<div class="rmenu">' . _t('Screenshot not attached') . '</div>';
                         }
 
-                        if (!$set_down['mod'] || $rights > 6 || $rights == 4) {
+                        if (!$set_down['mod'] || $systemUser->rights > 6 || $systemUser->rights == 4) {
                             echo '<div class="menu"><a href="?act=view&amp;id=' . $file_id . '">' . _t('Continue') . '</a></div>';
                             $dirid = $id;
                             $sql = '';

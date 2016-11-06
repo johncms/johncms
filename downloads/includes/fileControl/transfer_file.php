@@ -2,8 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 // Перенос файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -16,7 +22,7 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
 
 $do = isset($_GET['do']) ? trim($_GET['do']) : '';
 
-if ($rights > 6) {
+if ($systemUser->rights > 6) {
     $catId = isset($_GET['catId']) ? abs(intval($_GET['catId'])) : 0;
 
     if ($catId) {

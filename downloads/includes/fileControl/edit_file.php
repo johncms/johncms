@@ -2,15 +2,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 require '../system/head.php';
 
 // Редактирование файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if ($rights == 4 || $rights >= 6) {
+if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
         echo '<a href="?">' . _t('Downloads') . '</a>';
         require '../system/end.php';

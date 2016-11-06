@@ -111,15 +111,24 @@ class Download
     // Вывод файла в ЗЦ
     public static function displayFile($res_down = [], $rate = 0)
     {
-        global $old, $config, $rights;
+        global $old;
         $out = false;
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
-        /** @var Johncms\Tools $tools */
-        $tools = \App::getContainer()->get('tools');
-        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
+        /** @var Interop\Container\ContainerInterface $container */
+        $container = App::getContainer();
 
+        /** @var Johncms\User $systemUser */
+        $systemUser = $container->get(Johncms\User::class);
+
+        /** @var Johncms\Tools $tools */
+        $tools = $container->get('tools');
+
+        /** @var Johncms\Config $config */
+        $config = $container->get(Johncms\Config::class);
+
+        $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
 
         if ($res_down['time'] > $old) {
@@ -141,7 +150,7 @@ class Download
             $sub = '<div>' . htmlspecialchars($about, 2) . '</div>';
         }
 
-        if ($config['mod_down_comm'] || $rights >= 7) {
+        if ($config->mod_down_comm || $systemUser->rights >= 7) {
             $sub .= '<a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')';
         }
 

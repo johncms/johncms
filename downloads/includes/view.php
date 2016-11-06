@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -33,7 +36,7 @@ $textl = mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_p
 if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
 
-    if ($rights < 6 && $rights != 4) {
+    if ($systemUser->rights < 6 && $systemUser->rights != 4) {
         require '../system/end.php';
         exit;
     }
@@ -204,7 +207,7 @@ echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' 
 //        '<input type="submit" value="' . _t('Download') . '" /></form>';
 //}
 
-if ($config['mod_down_comm'] || $rights >= 7) {
+if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
 }
 
@@ -260,7 +263,7 @@ if ($user_id) {
 }
 
 // Управление файлами
-if ($rights > 6 || $rights == 4) {
+if ($systemUser->rights > 6 || $systemUser->rights == 4) {
     echo '<p><div class="func">' .
         '<a href="?act=edit_file&amp;id=' . $id . '">' . _t('Edit File') . '</a><br>' .
         '<a href="?act=edit_about&amp;id=' . $id . '">' . _t('Edit Description') . '</a><br>' .
@@ -268,7 +271,7 @@ if ($rights > 6 || $rights == 4) {
         '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Additional Files') . '</a><br>' .
         '<a href="?act=delete_file&amp;id=' . $id . '">' . _t('Delete File') . '</a>';
 
-    if ($rights > 6) {
+    if ($systemUser->rights > 6) {
         echo '<br><a href="?act=transfer_file&amp;id=' . $id . '">' . _t('Move File') . '</a>';
         if ($format_file == 'mp3') {
             echo '<br><a href="?act=mp3tags&amp;id=' . $id . '">' . _t('Edit MP3 Tags') . '</a>';

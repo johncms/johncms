@@ -2,12 +2,17 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 // Обновление файлов
-if ($rights == 4 || $rights >= 6) {
-    /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     require '../system/head.php';
 
     set_time_limit(99999);

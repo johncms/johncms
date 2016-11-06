@@ -2,9 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 // Скачка изображения в особом размере
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -23,7 +28,7 @@ if ($val < 50 || $val > 100) {
 if (!$req_down->rowCount()
     || !is_file($res_down['dir'] . '/' . $res_down['name'])
     || !in_array($format_file, $pic_ext)
-    || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)
+    || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)
     || empty($array[$size_img])
 ) {
     echo _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a>';

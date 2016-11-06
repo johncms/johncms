@@ -2,17 +2,19 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 require '../system/head.php';
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
 // Комментарии
-if (!$config['mod_down_comm'] && $rights < 7) {
+if (!$config['mod_down_comm'] && $systemUser->rights < 7) {
     echo _t('Comments are disabled') . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
@@ -23,7 +25,7 @@ $db = $container->get(PDO::class);
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
+if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
     require '../system/end.php';
     exit;

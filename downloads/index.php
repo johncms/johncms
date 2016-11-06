@@ -13,6 +13,9 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
@@ -45,7 +48,7 @@ if ($set_down['video_screen'] && !extension_loaded('ffmpeg')) {
 // Ограничиваем доступ к Загрузкам
 $error = '';
 
-if (!$config['mod_down'] && $rights < 7) {
+if (!$config['mod_down'] && $systemUser->rights < 7) {
     $error = _t('Downloads are closed');
 } elseif ($config['mod_down'] == 1 && !$user_id) {
     $error = _t('For registered users only');
@@ -174,7 +177,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         }
     }
 
-    if ($rights == 4 || $rights >= 6) {
+    if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         $mod_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
         if ($mod_files > 0) {
@@ -213,7 +216,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     echo '<div><small>' . _t('Allowed extensions') . ': <span class="green"><b>' . $res_down['text'] . '</b></span></small></div>';
                 }
 
-                if ($rights == 4 || $rights >= 6 || !empty($res_down['desc'])) {
+                if ($systemUser->rights == 4 || $systemUser->rights >= 6 || !empty($res_down['desc'])) {
                     $menu = [
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
@@ -222,7 +225,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     ];
                     echo '<div class="sub">' .
                         (!empty($res_down['desc']) ? '<div class="gray">' . htmlspecialchars($res_down['desc']) . '</div>' : '') .
-                        ($rights == 4 || $rights >= 6 ? implode(' | ', $menu) : '') .
+                        ($systemUser->rights == 4 || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
                         '</div>';
                 }
 
@@ -311,7 +314,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
-    if ($rights == 4 || $rights >= 6) {
+    if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         // Выводим ссылки на модерские функции
         if ($id) {
             echo '<p><div class="func">';
@@ -349,7 +352,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     if ($id) {
         echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     } else {
-        if ($rights >= 7 || isset($config['mod_down_comm']) && $config['mod_down_comm']) {
+        if ($systemUser->rights >= 7 || isset($config['mod_down_comm']) && $config['mod_down_comm']) {
             echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br>';
         }
 
