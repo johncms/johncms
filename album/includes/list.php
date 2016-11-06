@@ -15,14 +15,17 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
-$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $user_id || $rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
+$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $user_id || $systemUser->rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
 $total = $req->rowCount();
 
-if ($user['id'] == $user_id && $total < $max_album && empty($ban) || $rights >= 7) {
+if ($user['id'] == $user_id && $total < $max_album && empty($ban) || $systemUser->rights >= 7) {
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
@@ -36,7 +39,7 @@ if ($total) {
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
             '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
 
-        if ($user['id'] == $user_id || $rights >= 6 || !empty($res['description'])) {
+        if ($user['id'] == $user_id || $systemUser->rights >= 6 || !empty($res['description'])) {
             $menu = [
                 '<a href="?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Up') . '</a>',
                 '<a href="?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Down') . '</a>',
@@ -45,7 +48,7 @@ if ($total) {
             ];
             echo '<div class="sub">' .
                 (!empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1, 1) . '</div>' : '') .
-                ($user['id'] == $user_id && empty($ban) || $rights >= 6 ? implode(' | ', $menu) : '') .
+                ($user['id'] == $user_id && empty($ban) || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
                 '</div>';
         }
 

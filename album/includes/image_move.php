@@ -4,17 +4,20 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Перемещение картинки в другой альбом
-if ($img && $user['id'] == $user_id || $rights >= 6) {
-    /** @var Interop\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
-
+if ($img && $user['id'] == $user_id || $systemUser->rights >= 6) {
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
     if ($req->rowCount()) {
         $image = $req->fetch();
