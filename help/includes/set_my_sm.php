@@ -8,16 +8,22 @@ $add = isset($_POST['add']);
 $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
-/** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
-if (($adm && !$rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+if (($adm && !$systemUser->rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
     echo $tools->displayError($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
     require('../system/end.php');
     exit;
 }
 
-$smileys = unserialize($datauser['smileys']);
+$smileys = unserialize($systemUser->smileys);
 
 if (!is_array($smileys)) {
     $smileys = [];

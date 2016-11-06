@@ -2,8 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+$tools = $container->get('tools');
 
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
@@ -37,7 +43,7 @@ foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
     echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
         '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
-        $tools->smilies($smile, $rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
+        $tools->smilies($smile, $systemUser->rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
     $i++;
 }
 
