@@ -14,6 +14,15 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
@@ -23,12 +32,6 @@ $counters = App::getContainer()->get('counters');
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
@@ -108,7 +111,7 @@ $ext_other = ['wmf'];
 // Ограничиваем доступ к Форуму
 $error = '';
 
-if (!$config->mod_forum && $rights < 7) {
+if (!$config->mod_forum && $systemUser->rights < 7) {
     $error = _t('Forum is closed');
 } elseif ($config->mod_forum == 1 && !$user_id) {
     $error = _t('For registered users only');
@@ -247,7 +250,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         }
 
         // Счетчик файлов и ссылка на них
-        $sql = ($rights == 9) ? "" : " AND `del` != '1'";
+        $sql = ($systemUser->rights == 9) ? "" : " AND `del` != '1'";
 
         if ($type1['type'] == 'f') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = '$id'" . $sql)->fetchColumn();
@@ -326,7 +329,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ////////////////////////////////////////////////////////////
                 // Список топиков                                         //
                 ////////////////////////////////////////////////////////////
-                $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+                $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
 
                 if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $config->mod_forum != 4) || core::$user_rights) {
                     // Кнопка создания новой темы
@@ -334,7 +337,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 if ($total) {
-                    $req = $db->query("SELECT * FROM `forum` WHERE `type`='t'" . ($rights >= 7 ? '' : " AND `close`!='1'") . " AND `refid`='$id' ORDER BY `vip` DESC, `time` DESC LIMIT $start, $kmess");
+                    $req = $db->query("SELECT * FROM `forum` WHERE `type`='t'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " AND `refid`='$id' ORDER BY `vip` DESC, `time` DESC LIMIT $start, $kmess");
                     $i = 0;
 
                     while ($res = $req->fetch()) {
@@ -345,7 +348,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         }
 
                         $nam = $db->query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $res['id'] . "' ORDER BY `time` DESC LIMIT 1")->fetch();
-                        $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m' AND `refid`='" . $res['id'] . "'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
+                        $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m' AND `refid`='" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
                         $cpg = ceil($colmes / $kmess);
                         $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id`='$user_id'")->fetchColumn();
                         // Значки
@@ -415,14 +418,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
-                if ($rights < 6 && $type1['close'] == 1) {
+                if ($systemUser->rights < 6 && $type1['close'] == 1) {
                     echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?id=' . $type1['refid'] . '">' . _t('Go to Section') . '</a></p></div>';
                     require('../system/end.php');
                     exit;
                 }
 
                 // Счетчик постов темы
-                $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
+                $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
 
                 if ($start >= $colmes) {
                     // Исправляем запрос на несуществующую страницу
@@ -438,7 +441,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Метка удаления темы
                 if ($type1['close']) {
                     echo '<div class="rmenu">' . _t('Topic deleted by') . ': <b>' . $type1['close_who'] . '</b></div>';
-                } elseif (!empty($type1['close_who']) && $rights >= 7) {
+                } elseif (!empty($type1['close_who']) && $systemUser->rights >= 7) {
                     echo '<div class="gmenu"><small>' . _t('Undelete topic') . ': <b>' . $type1['close_who'] . '</b></small></div>';
                 }
 
@@ -495,7 +498,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 $curators = !empty($type1['curators']) ? unserialize($type1['curators']) : [];
                 $curator = false;
 
-                if ($rights < 6 && $rights != 3 && $user_id) {
+                if ($systemUser->rights < 6 && $systemUser->rights != 3 && $user_id) {
                     if (array_key_exists($user_id, $curators)) {
                         $curator = true;
                     }
@@ -505,7 +508,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($colmes - $kmess)) : $start > 0)) || isset($_GET['clip'])) {
                     $postres = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                     FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-                    WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'" . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
+                    WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
                     ORDER BY `forum`.`id` LIMIT 1")->fetch();
                     echo '<div class="topmenu"><p>';
 
@@ -565,12 +568,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                   SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                   FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
                   WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'"
-                    . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql
+                    . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql
                   ORDER BY `forum`.`id` $order LIMIT $start, $kmess
                 ");
 
                 // Верхнее поле "Написать"
-                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($rights >= 7 && $set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -590,7 +593,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Для администрации включаем форму массового удаления постов
-                if ($rights == 3 || $rights >= 6) {
+                if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                     echo '<form action="index.php?act=massdel" method="post">';
                 }
                 $i = 1;
@@ -713,7 +716,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Ссылки на редактирование / удаление постов
                     if (
-                        (($rights == 3 || $rights >= 6 || $curator) && $rights >= $res['rights'])
+                        (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
                         || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
                         || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
                         || ($i == 1 && $allow == 2 && $res['user_id'] == $user_id)
@@ -721,14 +724,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<div class="sub">';
 
                         // Чекбокс массового удаления постов
-                        if ($rights == 3 || $rights >= 6) {
+                        if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                             echo '<input type="checkbox" name="delch[]" value="' . $res['id'] . '"/>&#160;';
                         }
 
                         // Служебное меню поста
                         $menu = [
                             '<a href="index.php?act=editpost&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
-                            ($rights >= 7 && $res['close'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
+                            ($systemUser->rights >= 7 && $res['close'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
                             ($res['close'] == 1 ? '' : '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>'),
                         ];
                         echo implode(' | ', array_filter($menu));
@@ -741,7 +744,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         }
 
                         // Показываем IP и Useragent
-                        if ($rights == 3 || $rights >= 6) {
+                        if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                             if ($res['ip_via_proxy']) {
                                 echo '<div class="gray"><b class="red"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
                                     '<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
@@ -759,13 +762,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Кнопка массового удаления постов
-                if ($rights == 3 || $rights >= 6) {
+                if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                     echo '<div class="rmenu"><input type="submit" value=" ' . _t('Delete') . ' "/></div>';
                     echo '</form>';
                 }
 
                 // Нижнее поле "Написать"
-                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($rights >= 7 && !$set_forum['upfp'])) {
+                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && !$set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -811,10 +814,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Ссылки на модерские функции управления темой
-                if ($rights == 3 || $rights >= 6) {
+                if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                     echo '<p><div class="func">';
 
-                    if ($rights >= 7) {
+                    if ($systemUser->rights >= 7) {
                         echo '<a href="index.php?act=curators&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Curators of the Topic') . '</a><br />';
                     }
 
@@ -871,7 +874,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         ////////////////////////////////////////////////////////////
         // Список Категорий форума                                //
         ////////////////////////////////////////////////////////////
-        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files`" . ($rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
+        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files`" . ($systemUser->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
         echo '<p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
             '<div class="topmenu"><a href="search.php">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';

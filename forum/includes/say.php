@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -78,7 +81,7 @@ $type1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 switch ($type1['type']) {
     case 't':
         // Добавление простого сообщения
-        if (($type1['edit'] == 1 || $type1['close'] == 1) && $rights < 7) {
+        if (($type1['edit'] == 1 || $type1['close'] == 1) && $systemUser->rights < 7) {
             // Проверка, закрыта ли тема
             require('../system/head.php');
             echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>');
@@ -169,7 +172,7 @@ switch ($type1['type']) {
             ");
 
             // Вычисляем, на какую страницу попадает добавляемый пост
-            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
+            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
 
             if (isset($_POST['addfiles'])) {
                 header("Location: index.php?id=$fadd&act=addfile");
@@ -217,7 +220,7 @@ switch ($type1['type']) {
         $th = $type1['refid'];
         $th1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$th'")->fetch();
 
-        if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
+        if (($th1['edit'] == 1 || $th1['close'] == 1) && $systemUser->rights < 7) {
             require('../system/head.php');
             echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
@@ -350,7 +353,7 @@ switch ($type1['type']) {
             ");
 
             // Вычисляем, на какую страницу попадает добавляемый пост
-            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$th'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
+            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$th'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
 
             if (isset($_POST['addfiles'])) {
                 header("Location: index.php?id=$fadd&act=addfile");

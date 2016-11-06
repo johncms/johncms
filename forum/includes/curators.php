@@ -11,12 +11,15 @@ if (core::$user_rights >= 7) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
+
     /** @var Johncms\Tools $tools */
     $tools = $container->get('tools');
 
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
-    if (!$req->rowCount() || $rights < 7) {
+    if (!$req->rowCount() || $systemUser->rights < 7) {
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
         require('../system/end.php');
         exit;

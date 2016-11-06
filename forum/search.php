@@ -81,7 +81,7 @@ switch ($act) {
             $total = $db->query("
                 SELECT COUNT(*) FROM `forum`
                 WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
-                AND `type` = '" . ($search_t ? 't' : 'm') . "'" . ($rights >= 7 ? "" : " AND `close` != '1'
+                AND `type` = '" . ($search_t ? 't' : 'm') . "'" . ($systemUser->rights >= 7 ? "" : " AND `close` != '1'
             "))->fetchColumn();
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
