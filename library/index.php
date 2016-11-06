@@ -15,18 +15,21 @@ require_once('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
 
 require_once('inc.php');
 
@@ -36,7 +39,7 @@ $textl = _t('Library');
 
 $error = '';
 
-if (!$config['mod_lib'] && $rights < 7) {
+if (!$config['mod_lib'] && $systemUser->rights < 7) {
     $error = _t('Library is closed');
 } elseif ($config['mod_lib'] == 1 && !$user_id) {
     $error = _t('Access forbidden');
@@ -362,7 +365,7 @@ if (in_array($act, $array_includes)) {
                         (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
 
                     if ($set_user['smileys']) {
-                        $text = $tools->smilies($text, $rights ? 1 : 0);
+                        $text = $tools->smilies($text, $systemUser->rights ? 1 : 0);
                     }
 
                     echo '<div class="list2" style="padding: 8px">';

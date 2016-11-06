@@ -1,15 +1,10 @@
 <?php
 
-// config
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+/** @var Johncms\User $systemUser */
+$systemUser = App::getContainer()->get(Johncms\User::class);
 
-$adm = ($rights > 4) ? true : false;
-#$kmess = 10; // количество на странице
+$adm = ($systemUser->rights > 4) ? true : false;
 $i = 0;
-
-
-// func //
 
 function redir404()
 {
