@@ -2,20 +2,23 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+// Проверяем права доступа
+if ($systemUser->rights < 7) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
 
 // Задаем пользовательские настройки форума
 $set_forum = unserialize($datauser['set_forum']);
@@ -95,7 +98,7 @@ switch ($mod) {
                             '<p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
 
                         // Для супервайзоров запрос на полное удаление
-                        if ($rights == 9) {
+                        if ($systemUser->rights == 9) {
                             echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
                         }
 
@@ -127,7 +130,7 @@ switch ($mod) {
                         echo '<div class="rmenu"><p><h3>' . _t('Section deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/index.php?id=' . $subcat . '">' . _t('selected section') . '</a>.' .
                             '</p></div>';
                     } elseif (isset($_POST['delete'])) {
-                        if ($rights != 9) {
+                        if ($systemUser->rights != 9) {
                             echo $tools->displayError(_t('Access forbidden'));
                             require_once('../system/end.php');
                             exit;
@@ -180,7 +183,7 @@ switch ($mod) {
 
                         echo '</ul><small>' . _t('All the topics and files will be moved to selected section. Old section will be deleted.') . '</small></p><p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
 
-                        if ($rights == 9) {
+                        if ($systemUser->rights == 9) {
                             // Для супервайзоров запрос на полное удаление
                             echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('WARNING! All the information will be deleted');
                             echo '</p><p><input type="submit" name="delete" value="' . _t('Delete') . '" /></p></div>';
@@ -551,7 +554,7 @@ switch ($mod) {
         }
 
         if (isset($_POST['deltopic'])) {
-            if ($rights != 9) {
+            if ($systemUser->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
                 require('../system/end.php');
                 exit;
@@ -609,7 +612,7 @@ switch ($mod) {
                     ++$i;
                 }
 
-                if ($rights == 9) {
+                if ($systemUser->rights == 9) {
                     echo '<form action="index.php?act=forum&amp;mod=htopics' . $link . '" method="POST">' .
                         '<div class="rmenu">' .
                         '<input type="submit" name="deltopic" value="' . _t('Delete all') . '" />' .
@@ -648,7 +651,7 @@ switch ($mod) {
         }
 
         if (isset($_POST['delpost'])) {
-            if ($rights != 9) {
+            if ($systemUser->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
                 require('../system/end.php');
                 exit;
@@ -707,7 +710,7 @@ switch ($mod) {
                     ++$i;
                 }
 
-                if ($rights == 9) {
+                if ($systemUser->rights == 9) {
                     echo '<form action="index.php?act=forum&amp;mod=hposts' . $link . '" method="POST"><div class="rmenu"><input type="submit" name="delpost" value="' . _t('Delete all') . '" /></div></form>';
                 }
             } else {

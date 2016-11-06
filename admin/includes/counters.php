@@ -2,11 +2,7 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 9) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -14,8 +10,17 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+// Проверяем права доступа
+if ($systemUser->rights < 9) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
 
 switch ($mod) {
     case 'view':

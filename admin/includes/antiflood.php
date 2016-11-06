@@ -2,12 +2,6 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -16,6 +10,15 @@ $config = $container->get(Johncms\Config::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+// Проверяем права доступа
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+if ($systemUser->rights < 7) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
 
 $set_af = isset($config['antiflood']) ? unserialize($config['antiflood']) : [];
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';

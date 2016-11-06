@@ -2,14 +2,21 @@
 //TODO: разобраться с конфигом!!!
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 // Проверяем права доступа
-if ($rights < 9) {
+if ($systemUser->rights < 9) {
     header('Location: http://johncms.com/?err');
     exit;
 }
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 $panel_lng = core::load_lng('panel_lng');
 
 // Читаем каталог с файлами языков

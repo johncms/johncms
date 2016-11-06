@@ -2,20 +2,23 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 9) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+// Проверяем права доступа
+if ($systemUser->rights < 9) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -29,7 +32,7 @@ if ($id && $id != $user_id) {
     if ($req->rowCount()) {
         $user = $req->fetch();
 
-        if ($user['rights'] > $datauser['rights']) {
+        if ($user['rights'] > $systemUser->rights) {
             $error = _t('You cannot delete higher administration');
         }
     } else {

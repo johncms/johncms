@@ -2,14 +2,17 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 // Проверяем права доступа
-if ($rights < 7) {
+if ($systemUser->rights < 7) {
     header('Location: http://johncms.com/?err');
     exit;
 }
-
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Permissions') . '</div>';
 

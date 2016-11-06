@@ -2,14 +2,21 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 // Проверяем права доступа
-if ($rights < 7) {
+if ($systemUser->rights < 7) {
     header('Location: http://johncms.com/?err');
     exit;
 }
 
-/** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Database cleanup') . '</div>';
