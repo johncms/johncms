@@ -11,11 +11,14 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 // Проверяем права доступа
-if ($user['id'] != $user_id) {
+if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
@@ -36,7 +39,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
-        $set_mail_user = unserialize($datauser['set_mail']);
+        $set_mail_user = unserialize($systemUser->set_mail);
 
         if (isset($_POST['submit'])) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
@@ -61,7 +64,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         $set_forum = [];
-        $set_forum = unserialize($datauser['set_forum']);
+        $set_forum = unserialize($systemUser->set_forum);
 
         if (isset($_POST['submit'])) {
             $set_forum['farea'] = isset($_POST['farea']);

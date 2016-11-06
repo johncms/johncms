@@ -38,7 +38,7 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Настройки форума
-$set_forum = $user_id && !empty($datauser['set_forum']) ? unserialize($datauser['set_forum']) : [
+$set_forum = $systemUser->isValid() ? unserialize($systemUser->set_forum) : [
     'farea'    => 0,
     'upfp'     => 0,
     'preview'  => 1,

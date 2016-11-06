@@ -84,11 +84,11 @@ switch ($mod) {
                         $timeval = $timeval * 60;
                 }
 
-                if ($datauser['rights'] < 6 && $timeval > 86400) {
+                if ($systemUser->rights < 6 && $timeval > 86400) {
                     $timeval = 86400;
                 }
 
-                if ($datauser['rights'] < 7 && $timeval > 2592000) {
+                if ($systemUser->rights < 7 && $timeval > 2592000) {
                     $timeval = 2592000;
                 }
 

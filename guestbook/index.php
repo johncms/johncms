@@ -158,7 +158,7 @@ switch ($act) {
 
             // Фиксируем время последнего поста (антиспам)
             if ($user_id) {
-                $postguest = $datauser['postguest'] + 1;
+                $postguest = $systemUser->postguest + 1;
                 $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
             }
 

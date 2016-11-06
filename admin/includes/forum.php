@@ -21,7 +21,8 @@ if ($systemUser->rights < 7) {
 }
 
 // Задаем пользовательские настройки форума
-$set_forum = unserialize($datauser['set_forum']);
+$set_forum = unserialize($systemUser->set_forum);
+
 if (!isset($set_forum) || empty($set_forum)) {
     $set_forum = [
         'farea'    => 0,

@@ -116,7 +116,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !$tools->
         $error[] = _t('Message cannot be empty');
     }
 
-    if (($id && $id == $user_id) || !$id && $datauser['name_lat'] == $name) {
+    if (($id && $id == $user_id) || !$id && $systemUser->name_lat == $name) {
         $error[] = _t('You cannot send messages to yourself');
     }
 

@@ -180,11 +180,11 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
             '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
 
         if ($user['id'] != $user_id) {
-            if (!$datauser['karma_off'] && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $datauser['ip']) {
-                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'")->fetchColumn();
+            if (!$systemUser->karma_off && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $systemUser->ip) {
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
-                if (!$ban && $datauser['postforum'] >= $set_karma['forum'] && $datauser['total_on_site'] >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
+                if (!$ban && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
                     echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
                 }
             }

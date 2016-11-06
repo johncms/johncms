@@ -15,9 +15,6 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -49,9 +46,6 @@ if (!$user) {
     exit;
 }
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
 /**
  * Функция голосований за фотографии
  *
@@ -60,7 +54,16 @@ $db = $container->get(PDO::class);
  */
 function vote_photo(array $arg)
 {
-    global $datauser, $user_id, $ban, $db;
+    global $ban;
+
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
 
     $rating = $arg['vote_plus'] - $arg['vote_minus'];
 
@@ -75,9 +78,9 @@ function vote_photo(array $arg)
     $out = '<div class="gray">' . _t('Rating') . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
         '(' . _t('Against') . ': ' . $arg['vote_minus'] . ', ' . _t('For') . ': ' . $arg['vote_plus'] . ')';
 
-    if ($user_id != $arg['user_id'] && !$ban && $datauser['postforum'] > 10 && $datauser['total_on_site'] > 1200) {
+    if ($systemUser->id != $arg['user_id'] && !$ban && $systemUser->postforum > 10 && $systemUser->total_on_site > 1200) {
         // Проверяем, имеет ли юзер право голоса
-        $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
+        $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
 
         if ($req->rowCount()) {
             $out .= '<br>' . _t('Vote') . ': <a href="?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | ' .
@@ -113,6 +116,12 @@ $path = !empty($array[$act]) ? $array[$act] . '/' : '';
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     require_once($path . $act . '.php');
 } else {
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Config $config */
+    $config = $container->get(Johncms\Config::class);
+
     require('../system/head.php');
     $albumcount = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`")->fetchColumn();
     $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
