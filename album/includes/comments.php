@@ -32,7 +32,7 @@ if ($req_obj->rowCount()) {
     unset($_SESSION['ref']);
     $res_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = " . $res_obj['album_id'])->fetch();
 
-    if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 7) || ($res_a['access'] == 2 && $rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
+    if (($res_a['access'] == 1 && $owner['id'] != $user_id && $systemUser->rights < 7) || ($res_a['access'] == 2 && $systemUser->rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
         // Если доступ закрыт
         require('../system/head.php');
         echo $tools->displayError(_t('Access forbidden')) .
@@ -53,7 +53,7 @@ if ($req_obj->rowCount()) {
         '<a href="../profile/?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
         '<a href="?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . $tools->checkout($res_a['name']) . '</a>';
 
-    if ($res_obj['access'] == 4 || $rights >= 7) {
+    if ($res_obj['access'] == 4 || $systemUser->rights >= 7) {
         $context_top .= vote_photo($res_obj) .
             '<div class="gray">' . $lng['count_views'] . ': ' . $res_obj['views'] . ', ' . $lng['count_downloads'] . ': ' . $res_obj['downloads'] . '</div>' .
             '<a href="?act=image_download&amp;img=' . $res_obj['id'] . '">' . $lng['download'] . '</a>';

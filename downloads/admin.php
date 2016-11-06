@@ -1,15 +1,22 @@
 <?php
-
+//TODO: ДОРАБОТАТЬ ФАЙЛ!!!
 define('_IN_JOHNCMS', 1);
 
 require('../incfiles/core.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 $lng = core::load_lng('dl');
 
 // Проверяем права доступа
-if ($rights < 7) {
+if ($systemUser->rights < 7) {
     echo $lng['access_forbidden'];
     exit;
 }

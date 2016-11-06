@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -21,7 +24,7 @@ $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
 if ($req->rowCount()) {
     $res = $req->fetch();
     // Проверка прав доступа
-    if ($rights < 6 && $user_id != $res['user_id']) {
+    if ($systemUser->rights < 6 && $user_id != $res['user_id']) {
         $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '" . $res['album_id'] . "'");
 
         if ($req_a->rowCount()) {

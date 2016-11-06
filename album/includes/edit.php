@@ -4,17 +4,20 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Создать / изменить альбом
-if ($user['id'] == $user_id && empty($ban) || $rights >= 7) {
-    /** @var Interop\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
-
+if ($user['id'] == $user_id && empty($ban) || $systemUser->rights >= 7) {
     if ($al) {
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 
