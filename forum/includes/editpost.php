@@ -10,6 +10,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -19,7 +22,7 @@ if (!$user_id || !$id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' " . ($rights >= 7 ? "" : " AND `close` != '1'"));
+$req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' " . ($systemUser->rights >= 7 ? "" : " AND `close` != '1'"));
 
 if ($req->rowCount()) {
     // Предварительные проверки
@@ -29,15 +32,15 @@ if ($req->rowCount()) {
     $curators = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
 
     if (array_key_exists($user_id, $curators)) {
-        $rights = 3;
+        $systemUser->rights = 3;
     }
 
-    $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'" . ($rights < 7 ? " AND `close` != '1'" : ''))->fetchColumn() / $kmess);
+    $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'" . ($systemUser->rights < 7 ? " AND `close` != '1'" : ''))->fetchColumn() / $kmess);
     $posts = $db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `close` != '1'")->fetchColumn();
     $link = 'index.php?id=' . $res['refid'] . '&amp;page=' . $page;
     $error = false;
 
-    if ($rights == 3 || $rights >= 6) {
+    if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         // Проверка для Администрации
         if ($res['user_id'] != $user_id) {
             $req_u = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
@@ -119,7 +122,7 @@ if (!$error) {
                 }
             }
 
-            if ($rights == 9 && !isset($_GET['hide'])) {
+            if ($systemUser->rights == 9 && !isset($_GET['hide'])) {
                 // Удаление поста (для Супервизоров)
                 $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
 
@@ -173,7 +176,7 @@ if (!$error) {
             echo _t('Do you really want to delete?') . '</p>' .
                 '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . _t('Delete') . '</a>';
 
-            if ($rights == 9) {
+            if ($systemUser->rights == 9) {
                 echo ' | <a href="index.php?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . _t('Hide') . '</a>';
             }
 
