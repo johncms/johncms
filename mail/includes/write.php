@@ -14,6 +14,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -140,7 +143,7 @@ if (isset($_POST['submit']) && empty($ban['1']) && empty($ban['3']) && !$tools->
 
         if (empty($error)) {
             if ($set_mail) {
-                if ($rights < 1) {
+                if ($systemUser->rights < 1) {
                     if ($set_mail['access']) {
                         if ($set_mail['access'] == 1) {
                             $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "' LIMIT 1");
