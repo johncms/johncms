@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -61,7 +64,7 @@ if (isset($_GET['del'])) {
 
         //Добавляем в заблокированные
         if (isset($_POST['submit'])) {
-            if ($res['rights'] > $rights) {
+            if ($res['rights'] > $systemUser->rights) {
                 echo '<div class="rmenu">' . _t('This user can not be blocked') . '</div>';
             } else {
                 $q = $db->query("SELECT * FROM `cms_contact`
