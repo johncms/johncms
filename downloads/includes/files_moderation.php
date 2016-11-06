@@ -2,19 +2,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 // Файлы на модерации
 $textl = _t('Files on moderation');
 
-if ($rights == 4 || $rights >= 6) {
-    /** @var Interop\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
-
+if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 
     if ($id) {
@@ -37,7 +40,7 @@ if ($rights == 4 || $rights >= 6) {
     $i = 0;
 
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC " . $db->pagination());
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC LIMIT $start, $kmess");
         while ($res_down = $req_down->fetch()) {
             echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) .
                 '<div class="sub"><a href="?act=mod_files&amp;id=' . $res_down['id'] . '">' . _t('Accept') . '</a> | ' .

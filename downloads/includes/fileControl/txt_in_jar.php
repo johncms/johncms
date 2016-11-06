@@ -5,11 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 // Скачка TXT файла в JAR
 $dir_clean = opendir(ROOT_PATH . 'files/download/temp/created_java/files');
@@ -29,7 +32,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($format_file != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $rights < 6 && $rights != 4)) {
+if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($format_file != 'txt' && !isset($_GET['more'])) || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo _t('File not found') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }

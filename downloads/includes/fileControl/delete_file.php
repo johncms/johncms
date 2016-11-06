@@ -2,8 +2,15 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
 /** @var PDO $db */
-$db = App::getContainer()->get(PDO::class);
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 require '../system/head.php';
 
 // Удаление файл
@@ -16,7 +23,7 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
     exit;
 }
 
-if ($rights == 4 || $rights >= 6) {
+if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     if (isset($_GET['yes'])) {
         if (is_dir(DOWNLOADS_SCR . $id)) {
             $dir_clean = opendir(DOWNLOADS_SCR . $id);

@@ -5,11 +5,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 require '../system/head.php';
 require 'classes/download.php';
@@ -23,10 +26,10 @@ if ($id == 2) {
     $textl = _t('Popular Files');
 }
 
-$linkTopComments = $config['mod_down_comm'] || $rights >= 7 ? '<br><a href="?act=top_files&amp;id=2">' . _t('Most Commented') . '</a>' : '';
+$linkTopComments = $config['mod_down_comm'] || $systemUser->rights >= 7 ? '<br><a href="?act=top_files&amp;id=2">' . _t('Most Commented') . '</a>' : '';
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . ' (' . $set_down['top'] . ')</div>';
 
-if ($id == 2 && ($config['mod_down_comm'] || $rights >= 7)) {
+if ($id == 2 && ($config['mod_down_comm'] || $systemUser->rights >= 7)) {
     echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a><br>' .
         '<a href="?act=top_files&amp;id=1">' . _t('Most Downloaded') . '</a></div>';
     $sql = '`comm_count`';
