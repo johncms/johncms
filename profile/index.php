@@ -116,15 +116,15 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     // Меню анкеты
     $menu = [];
 
-    if ($user['id'] == $user_id || $rights == 9 || ($rights == 7 && $rights > $user['rights'])) {
+    if ($user['id'] == $user_id || $systemUser->rights == 9 || ($systemUser->rights == 7 && $systemUser->rights > $user['rights'])) {
         $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
     }
 
-    if ($user['id'] != $user_id && $rights >= 7 && $rights > $user['rights']) {
+    if ($user['id'] != $user_id && $systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
         $menu[] = '<a href="' . $config['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
     }
 
-    if ($user['id'] != $user_id && $rights > $user['rights']) {
+    if ($user['id'] != $user_id && $systemUser->rights > $user['rights']) {
         $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
     }
 
@@ -152,7 +152,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     echo '<div class="user"><p>' . $tools->displayUser($user, $arg) . '</p></div>';
 
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
-    if ($rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
+    if ($systemUser->rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
         echo '<div class="rmenu">' . _t('Pending confirmation') . '</div>';
     }
 

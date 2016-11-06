@@ -12,6 +12,9 @@ if ($set_karma['on']) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
+
     /** @var Johncms\Tools $tools */
     $tools = $container->get('tools');
 
@@ -115,7 +118,7 @@ if ($set_karma['on']) {
 
         case 'delete':
             // Удаляем отдельный голос
-            if ($rights == 9) {
+            if ($systemUser->rights == 9) {
                 $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : null;
                 $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user['id'] . "'");
 
@@ -145,7 +148,7 @@ if ($set_karma['on']) {
 
         case 'clean':
             // Очищаем все голоса за пользователя
-            if ($rights == 9) {
+            if ($systemUser->rights == 9) {
                 if (isset($_GET['yes'])) {
                     $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = " . $user['id']);
                     $db->query('OPTIMIZE TABLE `karma_users`');
@@ -238,7 +241,7 @@ if ($set_karma['on']) {
                     echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
-                    if ($rights == 9) {
+                    if ($systemUser->rights == 9) {
                         echo ' <span class="red"><a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';
                     }
 
@@ -262,7 +265,7 @@ if ($set_karma['on']) {
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
 
-            echo '<p>' . ($rights == 9 ? '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;mod=clean">' . _t('Reset Karma') . '</a><br />' : '') .
+            echo '<p>' . ($systemUser->rights == 9 ? '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;mod=clean">' . _t('Reset Karma') . '</a><br />' : '') .
                 '<a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></p>';
     }
 }

@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -21,7 +24,7 @@ $config = $container->get(Johncms\Config::class);
 switch ($mod) {
     case 'do':
         // Баним пользователя (добавляем Бан в базу)
-        if ($rights < 1 || ($rights < 6 && $user['rights']) || ($rights <= $user['rights'])) {
+        if ($systemUser->rights < 1 || ($systemUser->rights < 6 && $user['rights']) || ($systemUser->rights <= $user['rights'])) {
             echo $tools->displayError(_t('You do not have enought rights to ban this user'));
         } else {
             echo '<div class="phdr"><b>' . _t('Ban the User') . '</b></div>';
@@ -43,7 +46,7 @@ switch ($mod) {
                     $error = _t('There is no required data');
                 }
 
-                if ($rights == 1 && $term != 14 || $rights == 2 && $term != 12 || $rights == 3 && $term != 11 || $rights == 4 && $term != 16 || $rights == 5 && $term != 15) {
+                if ($systemUser->rights == 1 && $term != 14 || $systemUser->rights == 2 && $term != 12 || $systemUser->rights == 3 && $term != 11 || $systemUser->rights == 4 && $term != 16 || $systemUser->rights == 5 && $term != 15) {
                     $error = _t('You have no rights to ban in this section');
                 }
 
@@ -141,7 +144,7 @@ switch ($mod) {
                 echo '<form action="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '" method="post">' .
                     '<div class="menu"><p><h3>' . _t('Ban type') . '</h3>';
 
-                if ($rights >= 6) {
+                if ($systemUser->rights >= 6) {
                     // Блокировка
                     echo '<div><input name="term" type="radio" value="1" checked="checked" />&#160;' . _t('Full block') . '</div>';
                     // Приват
@@ -152,13 +155,13 @@ switch ($mod) {
                     echo '<div><input name="term" type="radio" value="13" />&#160;' . _t('Guestbook') . '</div>';
                 }
 
-                if ($rights == 3 || $rights >= 6) {
+                if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                     // Форум
-                    echo '<div><input name="term" type="radio" value="11" ' . ($rights == 3 ? 'checked="checked"'
+                    echo '<div><input name="term" type="radio" value="11" ' . ($systemUser->rights == 3 ? 'checked="checked"'
                             : '') . '/>&#160;' . _t('Forum') . '</div>';
                 }
 
-                if ($rights == 5 || $rights >= 6) {
+                if ($systemUser->rights == 5 || $systemUser->rights >= 6) {
                     // Библиотека
                     echo '<div><input name="term" type="radio" value="15" />&#160;' . _t('Library') . '</div>';
                 }
@@ -168,11 +171,11 @@ switch ($mod) {
                     '<input name="time" type="radio" value="1" />&#160;' . _t('Minutes (60 max.)') . '<br />' .
                     '<input name="time" type="radio" value="2" checked="checked" />&#160;' . _t('Hours (24 max.)') . '<br />';
 
-                if ($rights >= 6) {
+                if ($systemUser->rights >= 6) {
                     echo '<input name="time" type="radio" value="3" />&#160;' . _t('Days (30 max.)') . '<br />';
                 }
 
-                if ($rights >= 7) {
+                if ($systemUser->rights >= 7) {
                     echo '<input name="time" type="radio" value="4" />&#160;<span class="red">' . _t('Till cancel') . '</span>';
                 }
 
@@ -195,7 +198,7 @@ switch ($mod) {
 
     case 'cancel':
         // Разбаниваем пользователя (с сохранением истории)
-        if (!$ban || $user['id'] == $user_id || $rights < 7) {
+        if (!$ban || $user['id'] == $user_id || $systemUser->rights < 7) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
             $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
@@ -233,7 +236,7 @@ switch ($mod) {
 
     case 'delete':
         // Удаляем бан (с удалением записи из истории)
-        if (!$ban || $rights < 9) {
+        if (!$ban || $systemUser->rights < 9) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
             $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
@@ -266,7 +269,7 @@ switch ($mod) {
 
     case 'delhist':
         // Очищаем историю нарушений юзера
-        if ($rights == 9) {
+        if ($systemUser->rights == 9) {
             echo '<div class="phdr"><b>' . _t('Violations history') . '</b></div>' .
                 '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
@@ -297,11 +300,11 @@ switch ($mod) {
         // Меню
         $menu = [];
 
-        if ($rights >= 6) {
+        if ($systemUser->rights >= 6) {
             $menu[] = '<a href="../admin/index.php?act=ban_panel">' . _t('Ban Panel') . '</a>';
         }
 
-        if ($rights == 9) {
+        if ($systemUser->rights == 9) {
             $menu[] = '<a href="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . _t('Clear history') . '</a>';
         }
 
@@ -341,7 +344,7 @@ switch ($mod) {
                     '<br />' . $tools->checkout($res['ban_reason']) .
                     '<div class="sub">';
 
-                if ($rights > 0) {
+                if ($systemUser->rights > 0) {
                     echo '<span class="gray">' . _t('Who applied the Ban?') . ':</span> ' . $res['ban_who'] . '<br />';
                 }
 
@@ -355,11 +358,11 @@ switch ($mod) {
                 // Меню отдельного бана
                 $menu = [];
 
-                if ($rights >= 7 && $remain > 0) {
+                if ($systemUser->rights >= 7 && $remain > 0) {
                     $menu[] = '<a href="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Cancel Ban') . '</a>';
                 }
 
-                if ($rights == 9) {
+                if ($systemUser->rights == 9) {
                     $menu[] = '<a href="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Delete Ban') . '</a>';
                 }
 

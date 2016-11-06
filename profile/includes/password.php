@@ -2,11 +2,20 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+$tools = $container->get('tools');
 
 // Проверяем права доступа
-if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] > $rights)) {
+if ($user['id'] != $user_id && ($systemUser->rights < 7 || $user['rights'] > $systemUser->rights)) {
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
@@ -47,9 +56,6 @@ switch ($mod) {
         }
 
         if (!$error) {
-            /** @var PDO $db */
-            $db = App::getContainer()->get(PDO::class);
-
             // Записываем в базу
             $db->prepare('UPDATE `users` SET `password` = ? WHERE `id` = ?')->execute([
                 md5(md5($newpass)),
