@@ -2,15 +2,18 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Johncms\User $systemUser */
+$systemUser = App::getContainer()->get(Johncms\User::class);
+
 // Главное меню каталога смайлов
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';
 
-if ($user_id) {
+if ($systemUser->isValid()) {
     $mycount = !empty($datauser['smileys']) ? count(unserialize($datauser['smileys'])) : '0';
     echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
 }
 
-if ($rights >= 1) {
+if ($systemUser->rights >= 1) {
     echo '<div class="gmenu"><a href="?act=admsmilies">' . _t('For administration') . '</a> (' . (int)count(glob(ROOT_PATH . 'images/smileys/admin/*.gif')) . ')</div>';
 }
 

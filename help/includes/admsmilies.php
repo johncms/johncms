@@ -2,20 +2,24 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+$tools = $container->get('tools');
 
 // Каталог Админских Смайлов
-if ($rights < 1) {
-
-
+if ($systemUser->rights < 1) {
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }
 
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('For administration') . '</div>';
-$user_sm = unserialize($datauser['smileys']);
+$user_sm = unserialize($systemUser->smileys);
 
 if (!is_array($user_sm)) {
     $user_sm = [];
