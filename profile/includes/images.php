@@ -8,10 +8,13 @@ require('../system/head.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-if (($user_id != $user['id'] && $rights < 7)
+if (($user_id != $user['id'] && $systemUser->rights < 7)
     || $user['rights'] > $datauser['rights']
 ) {
     // Если не хватает прав, выводим ошибку

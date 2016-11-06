@@ -11,18 +11,21 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 // Проверяем права доступа для редактирования Профиля
-if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
+if ($user['id'] != $user_id && ($systemUser->rights < 7 || $user['rights'] >= $systemUser->rights)) {
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require('../system/end.php');
     exit;
 }
 
 // Сброс настроек
-if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
+if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
     require('../system/end.php');
@@ -64,11 +67,11 @@ if (isset($_GET['delavatar'])) {
     $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : $user['rights'];
 
     // Проводим необходимые проверки
-    if ($user['rights'] > $rights || $user['rights'] > 9 || $user['rights'] < 0) {
+    if ($user['rights'] > $systemUser->rights || $user['rights'] > 9 || $user['rights'] < 0) {
         $user['rights'] = 0;
     }
 
-    if ($rights >= 7) {
+    if ($systemUser->rights >= 7) {
         if (mb_strlen($user['name']) < 2 || mb_strlen($user['name']) > 20) {
             $error[] = _t('Min. nick length 2, max. 20 characters');
         }
@@ -124,7 +127,7 @@ if (isset($_GET['delavatar'])) {
             $user['id'],
         ]);
 
-        if ($rights >= 7) {
+        if ($systemUser->rights >= 7) {
             $stmt = $db->prepare('UPDATE `users` SET
               `name` = ?,
               `status` = ?,
@@ -158,7 +161,7 @@ echo '<form action="?act=edit&amp;user=' . $user['id'] . '" method="post">' .
     '<div class="gmenu"><p>' .
     _t('Username') . ': <b>' . $user['name_lat'] . '</b><br>';
 
-if ($rights >= 7) {
+if ($systemUser->rights >= 7) {
     echo _t('Nickname') . ': (' . _t('Min.2, Max. 20') . ')<br><input type="text" value="' . $user['name'] . '" name="name" /><br>' .
         _t('Status') . ': (' . _t('Max. 50') . ')<br><input type="text" value="' . $user['status'] . '" name="status" /><br>';
 } else {
@@ -213,12 +216,12 @@ echo '<small><a href="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"
     '</div>';
 
 // Административные функции
-if ($rights >= 7) {
+if ($systemUser->rights >= 7) {
     echo '<div class="rmenu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . _t('Administrative Functions') . '</h3><ul>';
     echo '<li><input name="karma_off" type="checkbox" value="1" ' . ($user['karma_off'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Prohibit Karma') . '</li>';
     echo '<li><a href="?act=password&amp;user=' . $user['id'] . '">' . _t('Change Password') . '</a></li>';
 
-    if ($rights > $user['rights']) {
+    if ($systemUser->rights > $user['rights']) {
         echo '<li><a href="?act=reset&amp;user=' . $user['id'] . '">' . _t('Reset User options to default') . '</a></li>';
     }
 
@@ -234,7 +237,8 @@ if ($rights >= 7) {
             '<input type="radio" value="4" name="rights" ' . ($user['rights'] == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Download Moderator') . '<br>' .
             '<input type="radio" value="5" name="rights" ' . ($user['rights'] == 5 ? 'checked="checked"' : '') . '/>&#160;' . _t('Library Moderator') . '<br>' .
             '<input type="radio" value="6" name="rights" ' . ($user['rights'] == 6 ? 'checked="checked"' : '') . '/>&#160;' . _t('Super Modererator') . '<br>';
-        if ($rights == 9) {
+
+        if ($systemUser->rights == 9) {
             echo '<input type="radio" value="7" name="rights" ' . ($user['rights'] == 7 ? 'checked="checked"' : '') . '/>&#160;' . _t('Administrator') . '<br>' .
                 '<input type="radio" value="9" name="rights" ' . ($user['rights'] == 9 ? 'checked="checked"' : '') . '/>&#160;<span class="red"><b>' . _t('Supervisor') . '</b></span><br>';
         }

@@ -2,8 +2,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+$tools = $container->get('tools');
 
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
@@ -13,7 +19,7 @@ echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile')
     '<div class="list2">' .
     '<p><h3>' . $tools->image('rate.gif') . _t('Statistic') . '</h3><ul>';
 
-if ($rights >= 7) {
+if ($systemUser->rights >= 7) {
     if (!$user['preg'] && empty($user['regadm'])) {
         echo '<li>' . _t('Pending confirmation') . '</li>';
     } elseif ($user['preg'] && !empty($user['regadm'])) {

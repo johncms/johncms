@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -35,7 +38,7 @@ echo '' .
     '<div>' . $tools->image('photo.gif') . '<a href="../album/index.php?act=list">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
     '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
-if ($rights >= 1) {
+if ($systemUser->rights >= 1) {
     $guest = $container->get('counters')->guestbook(2);
     echo '<div>' . $tools->image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
@@ -95,7 +98,7 @@ echo '<div class="bmenu"><p><h3>' . _t('Settings') . '</h3>' .
     '<div>' . $tools->image('user-edit.png') . '<a href="?act=edit">' . _t('Edit Profile') . '</a></div>' .
     '<div>' . $tools->image('lock.png') . '<a href="?act=password">' . _t('Change Password') . '</a></div>' .
     '<div>' . $tools->image('settings.png') . '<a href="?act=settings">' . _t('System Settings') . '</a></div>';
-if ($rights >= 1) {
+if ($systemUser->rights >= 1) {
     echo '<div>' . $tools->image('forbidden.png') . '<span class="red"><a href="../admin/"><b>' . _t('Admin Panel') . '</b></a></span></div>';
 }
 echo '</p></div>';

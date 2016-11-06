@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -30,14 +33,14 @@ echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
 switch ($mod) {
     case 'comments':
         // Список сообщений в Гостевой
-        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             $i = 0;
@@ -54,20 +57,20 @@ switch ($mod) {
 
     case 'topic':
         // Список тем Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Themes') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             $i = 0;
 
             while ($res = $req->fetch()) {
-                $post = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['id'] . "'" . ($rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` ASC LIMIT 1")->fetch();
+                $post = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` ASC LIMIT 1")->fetch();
                 $section = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $section['refid'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
@@ -89,14 +92,14 @@ switch ($mod) {
 
     default:
         // Список постов Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Messages') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm' " . ($rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm' " . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             $i = 0;
