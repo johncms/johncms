@@ -14,6 +14,12 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -24,13 +30,10 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $textl = _t('News');
 require('../system/head.php');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
 switch ($do) {
     case 'add':
         // Добавление новости
-        if ($rights >= 6) {
+        if ($systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
             $old = 20;
 
@@ -162,7 +165,7 @@ switch ($do) {
 
     case 'edit':
         // Редактирование новости
-        if ($rights >= 6) {
+        if ($systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (!$id) {
@@ -219,7 +222,7 @@ switch ($do) {
 
     case 'clean':
         // Чистка новостей
-        if ($rights >= 7) {
+        if ($systemUser->rights >= 7) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
 
             if (isset($_POST['submit'])) {
@@ -264,7 +267,7 @@ switch ($do) {
 
     case 'del':
         // Удаление новости
-        if ($rights >= 6) {
+        if ($systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
 
             if (isset($_GET['yes'])) {
@@ -284,7 +287,7 @@ switch ($do) {
         // Вывод списка новостей
         echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
-        if ($rights >= 6) {
+        if ($systemUser->rights >= 6) {
             echo '<div class="topmenu"><a href="index.php?do=add">' . _t('Add') . '</a> | <a href="index.php?do=clean">' . _t('Clear') . '</a></div>';
         }
 
@@ -312,7 +315,7 @@ switch ($do) {
                 }
             }
 
-            if ($rights >= 6) {
+            if ($systemUser->rights >= 6) {
                 echo '<a href="index.php?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
                     '<a href="index.php?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
             }
