@@ -13,31 +13,34 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var PDO $db */
+$db = $container->get(PDO::class);
 
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+/** @var Johncms\Environment $env */
+$env = App::getContainer()->get('env');
+
 /** @var Johncms\Bbcode $bbcode */
 $bbcode = $container->get('bbcode');
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
 // Проверяем права доступа в Админ-Клуб
-if (isset($_SESSION['ga']) && $rights < 1) {
+if (isset($_SESSION['ga']) && $systemUser->rights < 1) {
     unset($_SESSION['ga']);
 }
 
@@ -46,7 +49,7 @@ $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 require('../system/head.php');
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
-if (!$config->mod_guest && $rights < 7) {
+if (!$config->mod_guest && $systemUser->rights < 7) {
     echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
     require('../system/end.php');
     exit;
@@ -55,7 +58,7 @@ if (!$config->mod_guest && $rights < 7) {
 switch ($act) {
     case 'delpost':
         // Удаление отдельного поста
-        if ($rights >= 6 && $id) {
+        if ($systemUser->rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
                 header("Location: index.php");
@@ -168,7 +171,7 @@ switch ($act) {
     case
     'otvet':
         // Добавление "ответа Админа"
-        if ($rights >= 6 && $id) {
+        if ($systemUser->rights >= 6 && $id) {
             if (isset($_POST['submit'])
                 && isset($_POST['token'])
                 && isset($_SESSION['token'])
@@ -205,7 +208,7 @@ switch ($act) {
 
     case 'edit':
         // Редактирование поста
-        if ($rights >= 6 && $id) {
+        if ($systemUser->rights >= 6 && $id) {
             if (isset($_POST['submit'])
                 && isset($_POST['token'])
                 && isset($_SESSION['token'])
@@ -252,7 +255,7 @@ switch ($act) {
 
     case 'clean':
         // Очистка Гостевой
-        if ($rights >= 7) {
+        if ($systemUser->rights >= 7) {
             if (isset($_POST['submit'])) {
                 // Проводим очистку Гостевой, согласно заданным параметрам
                 $adm = isset($_SESSION['ga']) ? 1 : 0;
@@ -296,7 +299,7 @@ switch ($act) {
 
     case 'ga':
         // Переключение режима работы Гостевая / Админ-клуб
-        if ($rights >= 1) {
+        if ($systemUser->rights >= 1) {
             if (isset($_GET['do']) && $_GET['do'] == 'set') {
                 $_SESSION['ga'] = 1;
             } else {
@@ -312,11 +315,11 @@ switch ($act) {
 
         echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
 
-        if ($rights > 0) {
+        if ($systemUser->rights > 0) {
             $menu = [
                 isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
                 isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
-                $rights >= 7 ? '<a href="index.php?act=clean">' . _t('Clear') . '</a>' : '',
+                $systemUser->rights >= 7 ? '<a href="index.php?act=clean">' . _t('Clear') . '</a>' : '',
             ];
             echo '<div class="topmenu">' . implode(' | ', array_filter($menu)) . '</div>';
         }
@@ -354,7 +357,7 @@ switch ($act) {
         }
 
         if ($total) {
-            if (isset($_SESSION['ga']) && $rights >= "1") {
+            if (isset($_SESSION['ga']) && $systemUser->rights >= "1") {
                 // Запрос для Админ клуба
                 echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
@@ -423,9 +426,9 @@ switch ($act) {
                     $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
-                if ($rights >= 6) {
+                if ($systemUser->rights >= 6) {
                     $subtext = '<a href="index.php?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
-                        ($rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
+                        ($systemUser->rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
                 } else {
                     $subtext = '';
                 }
