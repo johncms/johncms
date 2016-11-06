@@ -3,8 +3,11 @@
 defined('_IN_JOHNADM') or die('Error: restricted access');
 define('ROOT_DIR', '..');
 
+/** @var Johncms\User $systemUser */
+$systemUser = App::getContainer()->get(Johncms\User::class);
+
 // Проверяем права доступа
-if ($rights < 7) {
+if ($systemUser->rights < 7) {
     header('Location: http://johncms.com/?err');
     exit;
 }

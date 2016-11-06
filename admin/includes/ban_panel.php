@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -15,7 +18,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 switch ($mod) {
     case 'amnesty':
-        if ($rights < 9) {
+        if ($systemUser->rights < 9) {
             echo $tools->displayError(_t('Amnesty is available for supervisors only'));
         } else {
             echo '<div class="phdr"><a href="index.php?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
@@ -96,7 +99,7 @@ switch ($mod) {
             echo '<p><form action="index.php?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p>' . ($rights == 9 && $total
+        echo '<p>' . ($systemUser->rights == 9 && $total
                 ? '<a href="index.php?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
                 : '')
             . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';

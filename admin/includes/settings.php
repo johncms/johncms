@@ -2,8 +2,17 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
 // Проверяем права доступа
-if ($rights < 9) {
+if ($systemUser->rights < 9) {
     header('Location: http://johncms.com/?err');
     exit;
 }
@@ -11,9 +20,6 @@ if ($rights < 9) {
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
 if (isset($_POST['submit'])) {
-    /** @var Johncms\Config $config */
-    $config = App::getContainer()->get(Johncms\Config::class);
-
     // Сохраняем настройки системы
     $config['skindef'] = isset($_POST['skindef']) ? trim($_POST['skindef']) : 'default';
     $config['email'] = isset($_POST['madm']) ? trim($_POST['madm']) : '@';

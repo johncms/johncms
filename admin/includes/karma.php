@@ -2,12 +2,6 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -17,7 +11,16 @@ $config = $container->get(Johncms\Config::class);
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-if ($rights == 9 && $do == 'clean') {
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+// Проверяем права доступа
+if ($systemUser->rights < 7) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
+
+if ($systemUser->rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
         $db->query("TRUNCATE TABLE `karma_users`");
         $db->query("OPTIMIZE TABLE `karma_users`");
@@ -59,5 +62,5 @@ echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
     '<input type="checkbox" name="on"' . ($settings['on'] ? ' checked="checked"' : '') . '/> ' . _t('Switch module ON') . '<br>' .
     '<input type="checkbox" name="adm"' . ($settings['adm'] ? ' checked="checked"' : '') . '/> ' . _t('Forbid to vote for the administration') . '</p>' .
     '<p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '</form><div class="phdr">' . ($rights == 9 ? '<a href="index.php?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
+    '</form><div class="phdr">' . ($systemUser->rights == 9 ? '<a href="index.php?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
     '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';

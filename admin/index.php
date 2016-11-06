@@ -61,6 +61,9 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
+
     $regtotal = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
     $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
     echo '<div class="phdr"><b>' . _t('Admin Panel') . '</b></div>';
@@ -74,7 +77,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
 
     echo '<li><a href="index.php?act=usr">' . _t('Users') . '</a>&#160;(' . $container->get('counters')->users() . ')</li>' .
         '<li><a href="index.php?act=usr_adm">' . _t('Administration') . '</a>&#160;(' . $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn() . ')</li>' .
-        ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . _t('Database cleanup') . '</a></li>' : '') .
+        ($systemUser->rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . _t('Database cleanup') . '</a></li>' : '') .
         '<li><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a>&#160;(' . $bantotal . ')</li>' .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . _t('Antiflood') . '</a></li>' : '') .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=karma">' . _t('Karma') . '</a></li>' : '') .
@@ -83,7 +86,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
         '<li><a href="index.php?act=search_ip">' . _t('Search IP') . '</a></li>' .
         '</ul></p></div>';
 
-    if ($rights >= 7) {
+    if ($systemUser->rights >= 7) {
         // Блок модулей
         $spam = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';")->fetchColumn();
 

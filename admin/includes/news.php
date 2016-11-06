@@ -2,12 +2,6 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-// Проверяем права доступа
-if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -16,6 +10,15 @@ $config = $container->get(Johncms\Config::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+// Проверяем права доступа
+if ($systemUser->rights < 7) {
+    header('Location: http://johncms.com/?err');
+    exit;
+}
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
