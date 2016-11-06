@@ -29,7 +29,6 @@ $set = $container->get(Johncms\Config::class); // Системные настр�
 $lng = core::$lng;                           // Фразы языка                        //TODO: переделать
 
 $user_id = $systemUser->id;
-$datauser = $systemUser;
 $login = $systemUser->name;
 
 $set_user = core::$user_set;                 // Пользовательские настройки         //TODO: переделать

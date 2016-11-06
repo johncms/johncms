@@ -8,6 +8,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -188,7 +191,7 @@ if (isset($_POST['submit'])
         $postid = $db->lastInsertId();
 
         // Записываем счетчик постов юзера
-        $fpst = $datauser['postforum'] + 1;
+        $fpst = $systemUser->postforum + 1;
         $db->exec("UPDATE `users` SET
             `postforum` = '$fpst',
             `lastpost` = '" . time() . "'
@@ -220,7 +223,7 @@ if (isset($_POST['submit'])
     $msg_pre = $tools->checkout($msg, 1, 1);
 
     if ($set_user['smileys']) {
-        $msg_pre = $tools->smilies($msg_pre, $datauser['rights'] ? 1 : 0);
+        $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
     }
 
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
@@ -228,7 +231,7 @@ if (isset($_POST['submit'])
 
     if ($msg && $th && !isset($_POST['submit'])) {
         echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
-            '<div class="list2">' . $tools->displayUser($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+            '<div class="list2">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
     }
 
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .

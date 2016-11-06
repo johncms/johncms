@@ -48,7 +48,7 @@ if ($req->rowCount()) {
             if ($req_u->rowCount()) {
                 $res_u = $req_u->fetch();
 
-                if ($res_u['rights'] > $datauser['rights']) {
+                if ($res_u['rights'] > $systemUser->rights) {
                     $error = _t('You cannot edit posts of higher administration') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
             }
@@ -215,7 +215,7 @@ if (!$error) {
                 $msg_pre = $tools->checkout($msg, 1, 1);
 
                 if ($set_user['smileys']) {
-                    $msg_pre = $tools->smilies($msg_pre, $datauser['rights'] ? 1 : 0);
+                    $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
                 }
 
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);

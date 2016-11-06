@@ -15,7 +15,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 if (($user_id != $user['id'] && $systemUser->rights < 7)
-    || $user['rights'] > $datauser['rights']
+    || $user['rights'] > $systemUser->rights
 ) {
     // Если не хватает прав, выводим ошибку
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));

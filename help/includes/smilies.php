@@ -9,7 +9,7 @@ $systemUser = App::getContainer()->get(Johncms\User::class);
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';
 
 if ($systemUser->isValid()) {
-    $mycount = !empty($datauser['smileys']) ? count(unserialize($datauser['smileys'])) : '0';
+    $mycount = !empty($systemUser->smileys) ? count(unserialize($systemUser->smileys)) : '0';
     echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
 }
 

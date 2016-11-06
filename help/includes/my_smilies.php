@@ -13,7 +13,7 @@ $tools = $container->get('tools');
 
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
-$smileys = !empty($datauser['smileys']) ? unserialize($datauser['smileys']) : [];
+$smileys = !empty($systemUser->smileys) ? unserialize($systemUser->smileys) : [];
 $total = count($smileys);
 
 if ($total) {

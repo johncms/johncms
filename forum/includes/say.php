@@ -166,7 +166,7 @@ switch ($type1['type']) {
 
             // Обновляем статистику юзера
             $db->exec("UPDATE `users` SET
-                `postforum`='" . ($datauser['postforum'] + 1) . "',
+                `postforum`='" . ($systemUser->postforum + 1) . "',
                 `lastpost` = '" . time() . "'
                 WHERE `id` = '$user_id'
             ");
@@ -186,14 +186,14 @@ switch ($type1['type']) {
             $msg_pre = $tools->checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
-                $msg_pre = $tools->smilies($msg_pre, $datauser['rights'] ? 1 : 0);
+                $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
             }
 
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
             echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $type1['text'] . '</div>';
 
             if ($msg && !isset($_POST['submit'])) {
-                echo '<div class="list1">' . $tools->displayUser($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                echo '<div class="list1">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
@@ -347,7 +347,7 @@ switch ($type1['type']) {
 
             // Обновляем статистику юзера
             $db->exec("UPDATE `users` SET
-                `postforum`='" . ($datauser['postforum'] + 1) . "',
+                `postforum`='" . ($systemUser->postforum + 1) . "',
                 `lastpost` = '" . time() . "'
                 WHERE `id` = '$user_id'
             ");
@@ -368,7 +368,7 @@ switch ($type1['type']) {
             $msg_pre = $tools->checkout($msg, 1, 1);
 
             if ($set_user['smileys']) {
-                $msg_pre = $tools->smilies($msg_pre, $datauser['rights'] ? 1 : 0);
+                $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
             }
 
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
@@ -378,7 +378,7 @@ switch ($type1['type']) {
             $qt = $tools->checkout($qt, 0, 2);
 
             if (!empty($_POST['msg']) && !isset($_POST['submit'])) {
-                echo '<div class="list1">' . $tools->displayUser($datauser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                echo '<div class="list1">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';

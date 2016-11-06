@@ -24,7 +24,7 @@ if ($set_karma['on']) {
     switch ($mod) {
         case 'vote':
             // Отдаем голос за пользователя
-            if (!$datauser['karma_off'] && !$ban) {
+            if (!$systemUser->karma_off && !$ban) {
                 $error = [];
 
                 if ($user['rights'] && $set_karma['adm']) {
@@ -35,7 +35,7 @@ if ($set_karma['on']) {
                     $error[] = _t('Cheating karma is forbidden');
                 }
 
-                if ($datauser['total_on_site'] < $set_karma['karma_time'] || $datauser['postforum'] < $set_karma['forum']) {
+                if ($systemUser->total_on_site < $set_karma['karma_time'] || $systemUser->postforum < $set_karma['forum']) {
                     $error[] = sprintf(
                         _t('Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.'),
                         ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . _t('hours') : ($set_karma['karma_time'] / 86400) . _t('days')),
@@ -49,10 +49,10 @@ if ($set_karma['on']) {
                     $error[] = _t('You can vote for single user just one time for 24 hours"');
                 }
 
-                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'")->fetchColumn();
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
 
                 if (($set_karma['karma_points'] - $sum) <= 0) {
-                    $error[] = sprintf(_t('You have exceeded the limit of votes. New voices will be added %s'), date('d.m.y в H:i:s', ($datauser['karma_time'] + 86400)));
+                    $error[] = sprintf(_t('You have exceeded the limit of votes. New voices will be added %s'), date('d.m.y в H:i:s', ($systemUser->karma_time + 86400)));
                 }
 
                 if ($error) {
