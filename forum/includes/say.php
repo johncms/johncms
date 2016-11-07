@@ -33,14 +33,14 @@ if (!$id
 // Вспомогательная Функция обработки ссылок форума
 function forum_link($m)
 {
-    global $set, $db;
+    global $db, $config;
 
     if (!isset($m[3])) {
         return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
     } else {
         $p = parse_url($m[3]);
 
-        if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config['homeurl'] . '/forum/index.php?id=') {
+        if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config->homeurl . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
             $req = $db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
 

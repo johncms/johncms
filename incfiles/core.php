@@ -21,9 +21,6 @@ new core;
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-$set = $container->get(Johncms\Config::class); // Системные настройки
-$lng = core::$lng;                           // Фразы языка                        //TODO: переделать
-
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 $user_id = $systemUser->id;

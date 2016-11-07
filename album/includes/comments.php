@@ -55,8 +55,8 @@ if ($req_obj->rowCount()) {
 
     if ($res_obj['access'] == 4 || $systemUser->rights >= 7) {
         $context_top .= vote_photo($res_obj) .
-            '<div class="gray">' . $lng['count_views'] . ': ' . $res_obj['views'] . ', ' . $lng['count_downloads'] . ': ' . $res_obj['downloads'] . '</div>' .
-            '<a href="?act=image_download&amp;img=' . $res_obj['id'] . '">' . $lng['download'] . '</a>';
+            '<div class="gray">' . _t('Views') . ': ' . $res_obj['views'] . ', ' . _t('Downloads') . ': ' . $res_obj['downloads'] . '</div>' .
+            '<a href="?act=image_download&amp;img=' . $res_obj['id'] . '">' . _t('Download') . '</a>';
     }
 
     $context_top .= '</div></div>';
@@ -72,7 +72,7 @@ if ($req_obj->rowCount()) {
         'owner_delete'   => true,                     // Возможность владельцу удалять комментарий
         'owner_reply'    => true,                     // Возможность владельцу отвечать на комментарий
         'owner_edit'     => false,                    // Возможность владельцу редактировать комментарий
-        'title'          => $lng['comments'],         // Название раздела
+        'title'          => _t('Comments'),         // Название раздела
         'context_top'    => $context_top,             // Выводится вверху списка
         'context_bottom' => ''                        // Выводится внизу списка
     ];
