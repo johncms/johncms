@@ -317,7 +317,7 @@ class Comments
                             'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
                             'body'   => $text,
                             'sub'    => implode(' | ', array_filter($menu)),
-                            'iphide' => (\core::$user_rights ? false : true),
+                            'iphide' => ($this->systemUser->rights ? false : true),
                         ];
                         echo $this->tools->displayUser($res, $user_arg);
                         echo '</div>';

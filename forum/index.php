@@ -480,7 +480,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                         echo '</small></div><div class="bmenu">' . _t('Total votes') . ': ';
 
-                        if (core::$user_rights > 6) {
+                        if ($systemUser->rights > 6) {
                             echo '<a href="index.php?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
                         } else {
                             echo $topic_vote['count'];

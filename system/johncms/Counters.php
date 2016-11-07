@@ -58,7 +58,7 @@ class Counters
         }
 
         $newcount = 0;
-        if (\core::$user_rights >= 6 && $new_adm) {
+        if ($this->systemUser->rights >= 6 && $new_adm) {
             $newcount = $new_adm;
         } elseif ($new) {
             $newcount = $new;
@@ -95,7 +95,7 @@ class Counters
             $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=new_files">+' . $new . '</a></span>';
         }
 
-        if (\core::$user_rights == 4 || \core::$user_rights >= 6) {
+        if ($this->systemUser->rights == 4 || $this->systemUser->rights >= 6) {
             if ($mod) {
                 $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=mod_files">м. ' . $mod . '</a></span>';
             }
@@ -183,7 +183,7 @@ class Counters
                 break;
 
             case 2:
-                if (\core::$user_rights >= 1) {
+                if ($this->systemUser->rights >= 1) {
                     $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=1 AND `time` > ' . (time() - 86400))->fetchColumn();
                     //$count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1' AND `time` > '" . (time() - 86400) . "'"), 0);
                 }
@@ -192,7 +192,7 @@ class Counters
             default:
                 $count = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
 
-                if (\core::$user_rights >= 1) {
+                if ($this->systemUser->rights >= 1) {
                     $adm = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
                     $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/index.php?act=ga&amp;do=set">' . $adm . '</a></span>';
                 }
@@ -227,7 +227,7 @@ class Counters
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=new">+' . $new . '</a></span>';
         }
 
-        if ((\core::$user_rights == 5 || \core::$user_rights >= 6) && $mod) {
+        if (($this->systemUser->rights == 5 || $this->systemUser->rights >= 6) && $mod) {
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
         }
 
