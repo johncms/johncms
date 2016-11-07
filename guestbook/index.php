@@ -96,7 +96,7 @@ switch ($act) {
             $error[] = _t('You have not entered the message');
         }
 
-        if ($ban['1'] || $ban['13']) {
+        if ($systemUser->ban['1'] || $systemUser->ban['13']) {
             $error[] = _t('Access forbidden');
         }
 
@@ -325,7 +325,7 @@ switch ($act) {
         }
 
         // Форма ввода нового сообщения
-        if (($user_id || $config->mod_guest == 2) && !isset($ban['1']) && !isset($ban['13'])) {
+        if (($systemUser->isValid() || $config->mod_guest == 2) && !isset($systemUser->ban['1']) && !isset($systemUser->ban['13'])) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';

@@ -77,7 +77,7 @@ echo '<div>' . $tools->image('mail-info.png') . '<a href="../mail/index.php?act=
 $count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `delete`!='$user_id' AND `file_name`!='';")->fetchColumn();
 echo '<div>' . $tools->image('file.gif') . '<a href="../mail/index.php?act=files">' . _t('Files') . '</a>&nbsp;(' . $count_file . ')</div>';
 
-if (empty($ban['1']) && empty($ban['3'])) {
+if (!isset($systemUser->ban['1']) && !isset($systemUser->ban['3'])) {
     echo '<p><form action="../mail/index.php?act=write" method="post"><input type="submit" value="' . _t('Write') . '"/></form></p>';
 }
 

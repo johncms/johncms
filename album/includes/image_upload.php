@@ -20,7 +20,7 @@ $tools = $container->get('tools');
 $config = $container->get(Johncms\Config::class);
 
 // Выгрузка фотографии
-if ($al && $user['id'] == $user_id && empty($ban) || $systemUser->rights >= 7) {
+if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 7) {
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 
     if (!$req_a->rowCount()) {

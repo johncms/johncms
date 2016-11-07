@@ -14,8 +14,8 @@ $tools = $container->get('tools');
 /** @var Johncms\Environment $env */
 $env = $container->get('env');
 
-/** @var Johncms\User $user */
-$user = $container->get(Johncms\User::class);
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
@@ -46,7 +46,7 @@ echo '<!DOCTYPE html>' .
 $cms_ads = [];
 
 if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
-    $view = $user->id ? 2 : 1;
+    $view = $systemUser->id ? 2 : 1;
     $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
     $req = $db->query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
 
@@ -91,13 +91,13 @@ echo '<table style="width: 100%;" class="logo"><tr>' .
     '</tr></table>';
 
 // Выводим верхний блок с приветствием
-echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($user->id ? '<b>' . $user->name . '</b>!' : _t('Guest', 'system') . '!') . '</div>';
+echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($systemUser->id ? '<b>' . $systemUser->name . '</b>!' : _t('Guest', 'system') . '!') . '</div>';
 
 // Главное меню пользователя
 echo '<div class="tmn">' .
     (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $config['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
-    ($user->id && $headmod != 'office' ? '<a href="' . $config['homeurl'] . '/profile/?act=office">' . $tools->image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
-    (!$user->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
+    ($systemUser->id && $headmod != 'office' ? '<a href="' . $config['homeurl'] . '/profile/?act=office">' . $tools->image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
+    (!$systemUser->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 
 // Рекламный блок сайта
@@ -109,39 +109,39 @@ if (!empty($cms_ads[1])) {
 $sql = '';
 $set_karma = unserialize($config['karma']);
 
-if ($user->id) {
+if ($systemUser->id) {
     // Фиксируем местоположение авторизованных
-    if (!$user->karma_off && $set_karma['on'] && $user->karma_time <= (time() - 86400)) {
+    if (!$systemUser->karma_off && $set_karma['on'] && $systemUser->karma_time <= (time() - 86400)) {
         $sql .= " `karma_time` = " . time() . ", ";
     }
 
-    $movings = $user->movings;
+    $movings = $systemUser->movings;
 
-    if ($user->lastdate < (time() - 300)) {
+    if ($systemUser->lastdate < (time() - 300)) {
         $movings = 0;
         $sql .= " `sestime` = " . time() . ", ";
     }
 
-    if ($user->place != $headmod) {
+    if ($systemUser->place != $headmod) {
         ++$movings;
         $sql .= " `place` = " . $db->quote($headmod) . ", ";
     }
 
-    if ($user->browser != $env->getUserAgent()) {
+    if ($systemUser->browser != $env->getUserAgent()) {
         $sql .= " `browser` = " . $db->quote($env->getUserAgent()) . ", ";
     }
 
-    $totalonsite = $user->total_on_site;
+    $totalonsite = $systemUser->total_on_site;
 
-    if ($user->lastdate > (time() - 300)) {
-        $totalonsite = $totalonsite + time() - $user->lastdate;
+    if ($systemUser->lastdate > (time() - 300)) {
+        $totalonsite = $totalonsite + time() - $systemUser->lastdate;
     }
 
     $db->query("UPDATE `users` SET $sql
         `movings` = '$movings',
         `total_on_site` = '$totalonsite',
         `lastdate` = '" . time() . "'
-        WHERE `id` = " . $user->id);
+        WHERE `id` = " . $systemUser->id);
 } else {
     // Фиксируем местоположение гостей
     $movings = 0;
@@ -182,25 +182,25 @@ if ($user->id) {
 }
 
 // Выводим сообщение о Бане
-if (!empty($ban)) {
+if (!empty($systemUser->ban)) {
     echo '<div class="alarm">' . _t('Ban', 'system') . '&#160;<a href="' . $config['homeurl'] . '/profile/?act=ban">' . _t('Details', 'system') . '</a></div>';
 }
 
 // Ссылки на непрочитанное
-if ($user->id) {
+if ($systemUser->id) {
     $list = [];
-    $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $user->id . "'")->fetchColumn();
+    $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
 
     if ($new_sys_mail) {
         $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $user->id . "'
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $user->id . "'
+                            AND `cms_mail`.`delete`!='" . $systemUser->id . "'
                             AND `cms_contact`.`ban`!='1'
                             AND `cms_mail`.`spam`='0'")->fetchColumn();
 
@@ -208,11 +208,11 @@ if ($user->id) {
         $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
     }
 
-    if ($user->comm_count > $user->comm_old) {
-        $list[] = '<a href="' . $config['homeurl'] . '/profile/?act=guestbook&amp;user=' . $user->id . '">' . _t('Guestbook', 'system') . '</a> (' . ($user->comm_count - $user->comm_old) . ')';
+    if ($systemUser->comm_count > $systemUser->comm_old) {
+        $list[] = '<a href="' . $config['homeurl'] . '/profile/?act=guestbook&amp;user=' . $systemUser->id . '">' . _t('Guestbook', 'system') . '</a> (' . ($systemUser->comm_count - $systemUser->comm_old) . ')';
     }
 
-    $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $user->id . ' AND `unread_comments` = 1')->fetchColumn();
+    $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $systemUser->id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
         $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
