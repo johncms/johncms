@@ -20,7 +20,7 @@ $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND (`type` = 't' OR
 
 if ($req->rowCount()) {
     $res = $req->fetch();
-    $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = '$login' WHERE `id` = '$id'");
+    $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
 
     if ($res['type'] == 't') {
         header('Location: index.php?id=' . $id);

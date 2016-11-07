@@ -54,7 +54,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             $db->exec("DELETE FROM `forum` WHERE `id`='$id'");
         } elseif ($del = 1) {
             // Скрываем топик
-            $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
+            $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
             $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
         }
         header('Location: index.php?id=' . $res['refid']);

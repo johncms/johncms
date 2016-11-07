@@ -33,13 +33,13 @@ switch ($mod) {
             exit;
         }
 
-        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($login) . ' WHERE `id` = ' . $id);
+        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `id` = ' . $id);
         echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
-        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->exec($login) . ' WHERE `preg` = 0');
+        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `preg` = 0');
         echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 

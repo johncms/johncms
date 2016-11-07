@@ -238,7 +238,7 @@ switch ($mod) {
             $ip2,
             $ban_term,
             $ban_url,
-            $login,
+            $systemUser->name,
             $reason,
             time(),
         ]);

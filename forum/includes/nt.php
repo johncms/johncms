@@ -141,7 +141,7 @@ if (isset($_POST['submit'])
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
-        $curator = $res_r['edit'] == 1 ? serialize([$user_id => $login]) : '';
+        $curator = $res_r['edit'] == 1 ? serialize([$user_id => $systemUser->name]) : '';
 
         // Добавляем тему
         $db->prepare('
@@ -159,7 +159,7 @@ if (isset($_POST['submit'])
             $id,
             time(),
             $user_id,
-            $login,
+            $systemUser->name,
             $th,
             $curator,
         ]);
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])
             $rid,
             time(),
             $user_id,
-            $login,
+            $systemUser->name,
             $env->getIp(),
             $env->getIpViaProxy(),
             $env->getUserAgent(),

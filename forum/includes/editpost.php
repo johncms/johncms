@@ -99,7 +99,7 @@ if (!$error) {
                 $db->exec("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "'");
             }
 
-            $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = " . $db->quote($login) . " WHERE `id` = '$id'");
+            $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
             $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
 
             if ($req_f->rowCount()) {
@@ -155,10 +155,10 @@ if (!$error) {
                 if ($posts == 1) {
                     // Если это был последний пост темы, то скрываем саму тему
                     $res_l = $db->query("SELECT `refid` FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '" . $res['refid'] . "' AND `type` = 't'");
+                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '" . $res['refid'] . "' AND `type` = 't'");
                     header('Location: index.php?id=' . $res_l['refid']);
                 } else {
-                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
                     header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
                 }
             }
@@ -204,7 +204,7 @@ if (!$error) {
                   WHERE `id` = ?
                 ')->execute([
                     time(),
-                    $login,
+                    $systemUser->name,
                     ($res['kedit'] + 1),
                     $msg,
                     $id,

@@ -82,7 +82,7 @@ switch ($do) {
                                     $v,
                                     time(),
                                     $user_id,
-                                    $login,
+                                    $systemUser->name,
                                     $name,
                                 ]);
 
@@ -104,7 +104,7 @@ switch ($do) {
                                     $rid,
                                     time(),
                                     $user_id,
-                                    $login,
+                                    $systemUser->name,
                                     long2ip($env->getIp()),
                                     $env->getUserAgent(),
                                     $text,
@@ -122,7 +122,7 @@ switch ($do) {
                       `kom` = ?
                     ')->execute([
                         time(),
-                        $login,
+                        $systemUser->name,
                         $name,
                         $text,
                         $rid,

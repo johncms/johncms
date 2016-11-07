@@ -22,7 +22,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         foreach ($dc as $delid) {
             $db->exec("UPDATE `forum` SET
                 `close` = '1',
-                `close_who` = '$login'
+                `close_who` = '" . $systemUser->name . "'
                 WHERE `id` = '" . intval($delid) . "'
             ");
         }
