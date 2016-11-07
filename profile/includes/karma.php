@@ -24,7 +24,7 @@ if ($set_karma['on']) {
     switch ($mod) {
         case 'vote':
             // Отдаем голос за пользователя
-            if (!$systemUser->karma_off && !$ban) {
+            if (!$systemUser->karma_off && empty($systemUser->ban)) {
                 $error = [];
 
                 if ($user['rights'] && $set_karma['adm']) {

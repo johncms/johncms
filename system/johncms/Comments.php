@@ -67,9 +67,7 @@ class Comments
         $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
 
         // Получаем данные пользователя
-        if ($this->systemUser->isValid()) {
-            $this->ban = \core::$user_ban;
-        }
+        $this->ban = !empty($this->systemUser->ban);
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {

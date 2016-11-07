@@ -331,7 +331,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ////////////////////////////////////////////////////////////
                 $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
 
-                if (($user_id && !isset($ban['1']) && !isset($ban['11']) && $config->mod_forum != 4) || core::$user_rights) {
+                if (($user_id && !isset($systemUser->ban['1']) && !isset($systemUser->ban['11']) && $config->mod_forum != 4) || $systemUser->rights) {
                     // Кнопка создания новой темы
                     echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New Topic') . '" /></form></div>';
                 }

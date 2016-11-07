@@ -54,8 +54,6 @@ if (!$user) {
  */
 function vote_photo(array $arg)
 {
-    global $ban;
-
     /** @var Interop\Container\ContainerInterface $container */
     $container = App::getContainer();
 
@@ -78,7 +76,7 @@ function vote_photo(array $arg)
     $out = '<div class="gray">' . _t('Rating') . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
         '(' . _t('Against') . ': ' . $arg['vote_minus'] . ', ' . _t('For') . ': ' . $arg['vote_plus'] . ')';
 
-    if ($systemUser->id != $arg['user_id'] && !$ban && $systemUser->postforum > 10 && $systemUser->total_on_site > 1200) {
+    if ($systemUser->id != $arg['user_id'] && empty($systemUser->ban) && $systemUser->postforum > 10 && $systemUser->total_on_site > 1200) {
         // Проверяем, имеет ли юзер право голоса
         $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
 

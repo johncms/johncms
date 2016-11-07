@@ -17,7 +17,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Создать / изменить альбом
-if ($user['id'] == $user_id && empty($ban) || $systemUser->rights >= 7) {
+if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 7) {
     if ($al) {
         $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
 

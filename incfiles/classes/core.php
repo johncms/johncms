@@ -19,7 +19,6 @@ class core
     public static $user_rights = 0;           // Права доступа
     public static $user_data = [];            // Все данные пользователя
     public static $user_set = [];             // Пользовательские настройки
-    public static $user_ban = [];             // Бан
 
     private $flood_chk = 1;                   // Включение - выключение функции IP антифлуда
     private $flood_interval = '120';          // Интервал времени в секундах
@@ -278,7 +277,6 @@ class core
                     self::$user_data = $user_data;
                     self::$user_set = !empty($user_data['set_user']) ? unserialize($user_data['set_user']) : $this->user_setings_default();
                     $this->user_ip_history();
-                    $this->user_ban_check();
                 } else {
                     // Если авторизация не прошла
                     $this->db->query("UPDATE `users` SET `failed_login` = '" . ($user_data['failed_login'] + 1) . "' WHERE `id` = '" . $user_data['id'] . "'");
@@ -291,22 +289,6 @@ class core
         } else {
             // Для неавторизованных, загружаем настройки по-умолчанию
             self::$user_set = $this->user_setings_default();
-        }
-    }
-
-    /**
-     * Проверка пользователя на Бан
-     */
-    private function user_ban_check()
-    {
-        $req = $this->db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . self::$user_id . "' AND `ban_time` > '" . time() . "'");
-
-        if ($req->rowCount()) {
-            self::$user_rights = 0;
-
-            while ($res = $req->fetch()) {
-                self::$user_ban[$res['ban_type ']] = 1;
-            }
         }
     }
 

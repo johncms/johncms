@@ -57,6 +57,7 @@ use Zend\Stdlib\ArrayObject;
  * @property $comm_count
  * @property $comm_old
  * @property $smileys
+ * @property $ban
  */
 class User extends ArrayObject
 {

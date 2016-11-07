@@ -61,9 +61,15 @@ class UserFactory
                     : false;
 
                 if ($permit && $user_ps === $userData['password']) {
-                    // Если авторизация прошла успешно
+                    // Проверяем на бан
+                    $userData['ban'] = $this->banCheck($userData['id']);
+
+                    // Если есть бан, обнуляем привилегии
+                    if (!empty($userData['ban'])) {
+                        $userData['rights'] = 0;
+                    }
+
                     //$this->user_ip_history();
-                    //$this->user_ban_check();
                     return $userData;
                 } else {
                     // Если авторизация не прошла
@@ -77,6 +83,18 @@ class UserFactory
         }
 
         return $this->userTemplate();
+    }
+
+    private function banCheck($userId)
+    {
+        $ban = [];
+        $req = $this->db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = " . $userId . " AND `ban_time` > '" . time() . "'");
+
+        while ($res = $req->fetch()) {
+            $ban[$res['ban_type ']] = 1;
+        }
+
+        return $ban;
     }
 
     private function userTemplate()
@@ -130,6 +148,7 @@ class UserFactory
             'comm_count'    => '',
             'comm_old'      => '',
             'smileys'       => '',
+            'ban'           => [],
         ];
 
         return $template;

@@ -184,7 +184,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
                 $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
-                if (!$ban && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
+                if (empty($systemUser->ban) && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
                     echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
                 }
             }
@@ -233,7 +233,11 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
         echo '</p>';
 
-        if (!$tools->isIgnor($user['id']) && is_contact($user['id']) != 2 && empty($ban['1']) && empty($ban['3'])) {
+        if (!$tools->isIgnor($user['id'])
+            && is_contact($user['id']) != 2
+            && !isset($systemUser->ban['1'])
+            && !isset($systemUser->ban['3'])
+        ) {
             echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 

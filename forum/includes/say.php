@@ -18,7 +18,12 @@ $tools = $container->get('tools');
 $config = $container->get(Johncms\Config::class);
 
 // Закрываем доступ для определенных ситуаций
-if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $config['mod_forum'] == 3)) {
+if (!$id
+    || !$systemUser->isValid()
+    || isset($systemUser->ban['1'])
+    || isset($systemUser->ban['11'])
+    || (!$systemUser->rights && $config['mod_forum'] == 3)
+) {
     require('../system/head.php');
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');

@@ -25,7 +25,7 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a
 $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $user_id || $systemUser->rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
 $total = $req->rowCount();
 
-if ($user['id'] == $user_id && $total < $max_album && empty($ban) || $systemUser->rights >= 7) {
+if ($user['id'] == $systemUser->id && $total < $max_album && empty($systemUser->ban) || $systemUser->rights >= 7) {
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
@@ -48,7 +48,7 @@ if ($total) {
             ];
             echo '<div class="sub">' .
                 (!empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1, 1) . '</div>' : '') .
-                ($user['id'] == $user_id && empty($ban) || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
+                ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
                 '</div>';
         }
 
