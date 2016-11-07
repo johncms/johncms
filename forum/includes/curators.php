@@ -4,19 +4,19 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-if (core::$user_rights >= 7) {
-    /** @var Interop\Container\ContainerInterface $container */
-    $container = App::getContainer();
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
+/** @var PDO $db */
+$db = $container->get(PDO::class);
 
-    /** @var Johncms\User $systemUser */
-    $systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
 
+if ($systemUser->rights >= 7) {
     $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
 
     if (!$req->rowCount() || $systemUser->rights < 7) {

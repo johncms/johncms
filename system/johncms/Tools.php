@@ -323,7 +323,7 @@ class Tools
             $out .= '<div>' . $arg['body'] . '</div>';
         }
 
-        $ipinf = !isset($arg['iphide']) && \core::$user_rights ? 1 : 0;
+        $ipinf = !isset($arg['iphide']) && $this->systemUser->rights ? 1 : 0;
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
@@ -345,13 +345,13 @@ class Tools
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
 
-                if (\core::$user_rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
+                if ($this->systemUser->rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
                     $out .= '<b class="red"><a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                     $out .= ' / ';
                     $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
-                } elseif (\core::$user_rights) {
+                } elseif ($this->systemUser->rights) {
                     $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {

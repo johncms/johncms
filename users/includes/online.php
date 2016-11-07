@@ -25,7 +25,7 @@ $config = $container->get(Johncms\Config::class);
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
 $menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . _t('History') . '</a> ';
 
-if (core::$user_rights) {
+if ($systemUser->rights) {
     $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="index.php?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
     $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="index.php?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
 }
@@ -58,7 +58,7 @@ switch ($mod) {
             ++$i;
         }
 
-        if ($total && core::$user_rights) {
+        if ($total && $systemUser->rights) {
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
             }

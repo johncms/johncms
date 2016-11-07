@@ -37,7 +37,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (isset($_POST['submit'])) {
         $del = isset($_POST['del']) ? intval($_POST['del']) : null;
 
-        if ($del == 2 && core::$user_rights == 9) {
+        if ($del == 2 && $systemUser->rights == 9) {
             // Удаляем топик
             $req1 = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
 
@@ -65,7 +65,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
-            (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
+            ($systemUser->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
             '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
             '<p><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .

@@ -16,7 +16,6 @@ class core
     public static $core_errors = [];          // Ошибки ядра
 
     public static $user_id = false;           // Идентификатор пользователя
-    public static $user_rights = 0;           // Права доступа
     public static $user_data = [];            // Все данные пользователя
     public static $user_set = [];             // Пользовательские настройки
 
@@ -273,7 +272,6 @@ class core
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно
                     self::$user_id = $user_data['preg'] ? $user_id : false;
-                    self::$user_rights = $user_data['rights'];
                     self::$user_data = $user_data;
                     self::$user_set = !empty($user_data['set_user']) ? unserialize($user_data['set_user']) : $this->user_setings_default();
                     $this->user_ip_history();
@@ -353,7 +351,6 @@ class core
     private function user_unset()
     {
         self::$user_id = false;
-        self::$user_rights = 0;
         self::$user_set = $this->user_setings_default();
         self::$user_data = [];
         unset($_SESSION['uid']);

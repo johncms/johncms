@@ -10,12 +10,15 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id'")->fetchColumn();
 
-if ($topic_vote == 0 || core::$user_rights < 7) {
+if ($topic_vote == 0 || $systemUser->rights < 7) {
     echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
