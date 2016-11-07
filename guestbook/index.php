@@ -79,7 +79,7 @@ switch ($act) {
         $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $from = $user_id ? $login : $name;
+        $from = $user_id ? $systemUser->name : $name;
         // Проверяем на ошибки
         $error = [];
         $flood = false;
@@ -179,7 +179,7 @@ switch ($act) {
             ) {
                 $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
                 $db->exec("UPDATE `guest` SET
-                    `admin` = '$login',
+                    `admin` = '" . $systemUser->name . "',
                     `otvet` = " . $db->quote($reply) . ",
                     `otime` = '" . time() . "'
                     WHERE `id` = '$id'
@@ -206,7 +206,8 @@ switch ($act) {
         }
         break;
 
-    case 'edit':
+    case
+        'edit':
         // Редактирование поста
         if ($systemUser->rights >= 6 && $id) {
             if (isset($_POST['submit'])
@@ -227,7 +228,7 @@ switch ($act) {
                   WHERE `id` = ?
                 ')->execute([
                     $msg,
-                    $login,
+                    $systemUser->name,
                     time(),
                     $edit_count,
                     $id,

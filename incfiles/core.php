@@ -24,7 +24,6 @@ $container = App::getContainer();
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 $user_id = $systemUser->id;
-$login = $systemUser->name;
 
 $set_user = core::$user_set;                 // Пользовательские настройки         //TODO: переделать
 $kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;  //TODO: переделать

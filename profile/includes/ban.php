@@ -108,7 +108,7 @@ switch ($mod) {
                         (time() + $timeval),
                         time(),
                         $term,
-                        $login,
+                        $systemUser->name,
                         $reason,
                     ]);
 

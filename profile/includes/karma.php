@@ -78,7 +78,7 @@ if ($set_karma['on']) {
                           `text` = ?
                         ')->execute([
                             $user_id,
-                            $login,
+                            $systemUser->name,
                             $user['id'],
                             $points,
                             $type,
