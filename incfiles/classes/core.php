@@ -8,15 +8,13 @@ class core
     public static $ip_via_proxy = 0;          // IP адрес за прокси-сервером
     public static $ip_count = [];             // Счетчик обращений с IP адреса
     public static $user_agent;                // User Agent
-    public static $system_set;                // Системные настройки
+    public static $system_set;                //TODO: Удалить
     public static $lng_iso = 'en';            // Двухбуквенный ISO код языка
     public static $lng_list = [];             // Список имеющихся языков
-    public static $lng = [];                  // Массив с фразами языка
     public static $deny_registration = false; // Запрет регистрации пользователей
-    public static $core_errors = [];          // Ошибки ядра
 
-    public static $user_id = false;           // Идентификатор пользователя
-    public static $user_data = [];            // Все данные пользователя
+    public static $user_id = false;           //TODO: Удалить
+    public static $user_data = [];            //TODO: Удалить
     public static $user_set = [];             // Пользовательские настройки
 
     private $flood_chk = 1;                   // Включение - выключение функции IP антифлуда
@@ -70,9 +68,6 @@ class core
 
         // Определяем язык системы
         $this->lng_detect();
-
-        // Загружаем язык
-        self::$lng = self::load_lng();
     }
 
     /**
@@ -86,44 +81,6 @@ class core
         if (preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
             return true;
         }
-
-        return false;
-    }
-
-    /**
-     * Загружаем фразы языка из файла
-     *
-     * @param string      $module
-     * @param null|string $lng
-     * @return array|bool
-     */
-    public static function load_lng($module = '_core', $lng = null)
-    {
-        $lng_set = $lng !== null && in_array($lng, self::$lng_list) ? $lng : self::$lng_iso;
-
-        if (!is_dir(ROOT_PATH . 'incfiles/languages/' . $lng_set)) {
-            self::$lng_iso = 'en';
-        }
-
-        $lng_file = ROOT_PATH . 'incfiles/languages/' . $lng_set . '/' . $module . '.lng';
-        $lng_file_edit = ROOT_PATH . 'files/lng_edit/' . $lng_set . '_iso.lng';
-
-        if (file_exists($lng_file)) {
-            $out = parse_ini_file($lng_file) or die('ERROR: language file');
-
-            if (file_exists($lng_file_edit)) {
-                $lng_edit = parse_ini_file($lng_file_edit, true);
-
-                if (isset($lng_edit[$module])) {
-                    $lng_module = array_diff_key($out, $lng_edit[$module]);
-                    $out = $lng_module + $lng_edit[$module];
-                }
-            }
-
-            return $out;
-        }
-
-        self::$core_errors[] = 'Language file <b>' . $module . '.lng</b> is missing';
 
         return false;
     }

@@ -18,7 +18,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 if (($adm && !$systemUser->rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
-    echo $tools->displayError($lng['error_wrong_data'], '<a href="faq.php?act=smileys">' . $lng['smileys'] . '</a>');
+    echo $tools->displayError(_t('Wrong data'), '<a href="faq.php?act=smileys">' . _t('Smilies') . '</a>');
     require('../system/end.php');
     exit;
 }
