@@ -35,7 +35,6 @@ class UserFactory
     {
         $user_id = false;
         $user_ps = false;
-        $userData = $this->userTemplate();
 
         if (isset($_SESSION['uid']) && isset($_SESSION['ups'])) {
             // Авторизация по сессии
@@ -53,24 +52,22 @@ class UserFactory
             $req = $this->db->query('SELECT * FROM `users` WHERE `id` = ' . $user_id);
 
             if ($req->rowCount()) {
-                $data = $req->fetch();
-                $permit = $data['failed_login'] < 3
-                || $data['failed_login'] > 2
-                && $data['ip'] == $this->env->getIp()
-                && $data['browser'] == $this->env->getUserAgent()
+                $userData = $req->fetch();
+                $permit = $userData['failed_login'] < 3
+                || $userData['failed_login'] > 2
+                && $userData['ip'] == $this->env->getIp()
+                && $userData['browser'] == $this->env->getUserAgent()
                     ? true
                     : false;
 
-                if ($permit && $user_ps === $data['password']) {
+                if ($permit && $user_ps === $userData['password']) {
                     // Если авторизация прошла успешно
-                    if ($data['preg']) {
-                        //$this->user_ip_history();
-                        //$this->user_ban_check();
-                        $userData = ArrayUtils::merge($userData, $data);
-                    }
+                    //$this->user_ip_history();
+                    //$this->user_ban_check();
+                    return $userData;
                 } else {
                     // Если авторизация не прошла
-                    $this->db->query("UPDATE `users` SET `failed_login` = '" . ($data['failed_login'] + 1) . "' WHERE `id` = '" . $data['id'] . "'");
+                    $this->db->query("UPDATE `users` SET `failed_login` = '" . ($userData['failed_login'] + 1) . "' WHERE `id` = " . $userData['id']);
                     $this->userUnset();
                 }
             } else {
@@ -79,7 +76,7 @@ class UserFactory
             }
         }
 
-        return $userData;
+        return $this->userTemplate();
     }
 
     private function userTemplate()
