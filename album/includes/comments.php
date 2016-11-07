@@ -32,7 +32,7 @@ if ($req_obj->rowCount()) {
     unset($_SESSION['ref']);
     $res_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = " . $res_obj['album_id'])->fetch();
 
-    if (($res_a['access'] == 1 && $owner['id'] != $user_id && $systemUser->rights < 7) || ($res_a['access'] == 2 && $systemUser->rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
+    if (($res_a['access'] == 1 && $owner['id'] != $systemUser->id && $systemUser->rights < 7) || ($res_a['access'] == 2 && $systemUser->rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $systemUser->id)) {
         // Если доступ закрыт
         require('../system/head.php');
         echo $tools->displayError(_t('Access forbidden')) .

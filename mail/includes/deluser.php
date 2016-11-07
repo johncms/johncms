@@ -7,18 +7,24 @@ $textl = _t('Mail');
 require_once('../system/head.php');
 
 if ($id) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
 
     //Проверяем наличие контакта в Вашем списке
-    $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id'")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id'")->fetchColumn();
 
     if ($total) {
         if (isset($_POST['submit'])) { //Если кнопка "Удалить" нажата
-            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id';")->fetchColumn();
+            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='$id')) AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
 
             if ($count_message) {
-                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT " . $count_message);
+                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $systemUser->id . "') OR (`cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='" . $systemUser->id . "' LIMIT " . $count_message);
 
                 while ($row = $req->fetch()) {
                     //Удаляем сообщения
@@ -32,7 +38,7 @@ if ($id) {
 
                         $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                     } else {
-                        if ($row['read'] == 0 && $row['user_id'] == $user_id) {
+                        if ($row['read'] == 0 && $row['user_id'] == $systemUser->id) {
                             if ($row['file_name']) {
                                 if (file_exists('../files/mail/' . $row['file_name']) !== false) {
                                     @unlink('../files/mail/' . $row['file_name']);
@@ -40,14 +46,14 @@ if ($id) {
                             }
                             $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                         } else {
-                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user_id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
+                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $systemUser->id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
                         }
                     }
                 }
             }
 
             //Удаляем контакт
-            $db->exec("DELETE FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id' LIMIT 1");
+            $db->exec("DELETE FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id' LIMIT 1");
             echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
         } else {
             echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>

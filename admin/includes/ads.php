@@ -166,7 +166,7 @@ switch ($mod) {
                 ]);
             }
 
-            $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
+            $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
 
             echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br>' .
                 '<a href="index.php?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';

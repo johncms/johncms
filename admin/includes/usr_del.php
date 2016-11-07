@@ -25,7 +25,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $user = false;
 $error = false;
 
-if ($id && $id != $user_id) {
+if ($id && $id != $systemUser->id) {
     // Получаем данные юзера
     $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 

@@ -41,7 +41,7 @@ $error = '';
 
 if (!$config['mod_lib'] && $systemUser->rights < 7) {
     $error = _t('Library is closed');
-} elseif ($config['mod_lib'] == 1 && !$user_id) {
+} elseif ($config['mod_lib'] == 1 && !$systemUser->isValid()) {
     $error = _t('Access forbidden');
 }
 
@@ -278,7 +278,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                     echo $nav;
 
-                    if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $user_id) {
+                    if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $systemUser->isValid()) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write Article') . '</a>'
                             . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a>') : '')
@@ -385,10 +385,9 @@ if (in_array($act, $array_includes)) {
 
                     echo '<div class="phdr">' . _t('Download file') . ' <a href="?act=download&amp;type=txt&amp;id=' . $id . '">txt</a> | <a href="?act=download&amp;type=fb2&amp;id=' . $id . '">fb2</a></div>';
 
-                    echo $nav
-                        . ($user_id && $page == 1 ? $rate->print_vote() : '');
+                    echo $nav . ($systemUser->isValid() && $page == 1 ? $rate->print_vote() : '');
 
-                    if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) {
+                    if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
                     }

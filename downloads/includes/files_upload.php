@@ -20,7 +20,7 @@ $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "'
 $res = $req->fetch();
 
 if ($req->rowCount() && is_dir($res['dir'])) {
-    if (($res['field'] && $user_id) || ($systemUser->rights == 4 || $systemUser->rights >= 6)) {
+    if (($res['field'] && $systemUser->isValid()) || ($systemUser->rights == 4 || $systemUser->rights >= 6)) {
         $al_ext = $res['field'] ? explode(', ', $res['text']) : $defaultExt;
 
         if (isset($_POST['submit'])) {
@@ -107,7 +107,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             $name_link,
                             mb_substr($name, 0, 200),
                             $type,
-                            $user_id,
+                            $systemUser->id,
                             $text,
                         ]);
                         $file_id = $db->lastInsertId();

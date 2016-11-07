@@ -113,7 +113,7 @@ $error = '';
 
 if (!$config->mod_forum && $systemUser->rights < 7) {
     $error = _t('Forum is closed');
-} elseif ($config->mod_forum == 1 && !$user_id) {
+} elseif ($config->mod_forum == 1 && !$systemUser->isValid()) {
     $error = _t('For registered users only');
 }
 
@@ -186,7 +186,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         echo '<div class="rmenu">' . _t('Read only') . '</div>';
     }
 
-    if (!$user_id) {
+    if (!$systemUser->isValid()) {
         if (isset($_GET['newup'])) {
             $_SESSION['uppost'] = 1;
         }
@@ -210,17 +210,17 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $type1 = $type->fetch();
 
         // Фиксация факта прочтения Топика
-        if ($user_id && $type1['type'] == 't') {
-            $req_r = $db->query("SELECT * FROM `cms_forum_rdm` WHERE `topic_id` = '$id' AND `user_id` = '$user_id' LIMIT 1");
+        if ($systemUser->isValid() && $type1['type'] == 't') {
+            $req_r = $db->query("SELECT * FROM `cms_forum_rdm` WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
 
             if ($req_r->rowCount()) {
                 $res_r = $req_r->fetch();
 
                 if ($type1['time'] > $res_r['time']) {
-                    $db->exec("UPDATE `cms_forum_rdm` SET `time` = '" . time() . "' WHERE `topic_id` = '$id' AND `user_id` = '$user_id' LIMIT 1");
+                    $db->exec("UPDATE `cms_forum_rdm` SET `time` = '" . time() . "' WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
                 }
             } else {
-                $db->exec("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '$user_id', `time` = '" . time() . "'");
+                $db->exec("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '" . $systemUser->id . "', `time` = '" . time() . "'");
             }
         }
 
@@ -277,7 +277,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         // Счетчик "Кто в теме?"
         $wholink = false;
 
-        if ($user_id && $type1['type'] == 't') {
+        if ($systemUser->isValid() && $type1['type'] == 't') {
             $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
             $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
             $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br>';
@@ -331,7 +331,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ////////////////////////////////////////////////////////////
                 $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
 
-                if (($user_id && !isset($systemUser->ban['1']) && !isset($systemUser->ban['11']) && $config->mod_forum != 4) || $systemUser->rights) {
+                if (($systemUser->isValid() && !isset($systemUser->ban['1']) && !isset($systemUser->ban['11']) && $config->mod_forum != 4) || $systemUser->rights) {
                     // Кнопка создания новой темы
                     echo '<div class="gmenu"><form action="index.php?act=nt&amp;id=' . $id . '" method="post"><input type="submit" value="' . _t('New Topic') . '" /></form></div>';
                 }
@@ -350,7 +350,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $nam = $db->query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $res['id'] . "' ORDER BY `time` DESC LIMIT 1")->fetch();
                         $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m' AND `refid`='" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
                         $cpg = ceil($colmes / $kmess);
-                        $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id`='$user_id'")->fetchColumn();
+                        $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id` = " . $systemUser->id)->fetchColumn();
                         // Значки
                         $icons = [
                             ($np ? (!$res['vip'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
@@ -453,12 +453,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Блок голосований
                 if ($type1['realid']) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
-                    $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='$user_id' AND `topic`='$id'")->fetchColumn();
+                    $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $systemUser->id . "' AND `topic`='$id'")->fetchColumn();
                     $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id' LIMIT 1")->fetch();
                     echo '<div  class="gmenu"><b>' . $tools->checkout($topic_vote['name']) . '</b><br />';
                     $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
 
-                    if (!$type1['edit'] && !isset($_GET['vote_result']) && $user_id && $vote_user == 0) {
+                    if (!$type1['edit'] && !isset($_GET['vote_result']) && $systemUser->isValid() && $vote_user == 0) {
                         // Выводим форму с опросами
                         echo '<form action="index.php?act=vote&amp;id=' . $id . '" method="post">';
 
@@ -488,7 +488,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                         echo '</div>';
 
-                        if ($user_id && $vote_user == 0) {
+                        if ($systemUser->isValid() && $vote_user == 0) {
                             echo '<div class="bmenu"><a href="index.php?id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . _t('Vote') . '</a></div>';
                         }
                     }
@@ -498,8 +498,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 $curators = !empty($type1['curators']) ? unserialize($type1['curators']) : [];
                 $curator = false;
 
-                if ($systemUser->rights < 6 && $systemUser->rights != 3 && $user_id) {
-                    if (array_key_exists($user_id, $curators)) {
+                if ($systemUser->rights < 6 && $systemUser->rights != 3 && $systemUser->isValid()) {
+                    if (array_key_exists($systemUser->id, $curators)) {
                         $curator = true;
                     }
                 }
@@ -518,7 +518,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<img src="../images/del.png" width="10" height="10" alt=""/>&#160;';
                     }
 
-                    if ($user_id && $user_id != $postres['user_id']) {
+                    if ($systemUser->isValid() && $systemUser->id != $postres['user_id']) {
                         echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . _t('[r]') . '</a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . _t('[q]') . '</a> ';
@@ -555,7 +555,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Задаем правила сортировки (новые внизу / вверху)
-                if ($user_id) {
+                if ($systemUser->isValid()) {
                     $order = $set_forum['upfp'] ? 'DESC' : 'ASC';
                 } else {
                     $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
@@ -573,7 +573,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ");
 
                 // Верхнее поле "Написать"
-                if (($user_id && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && $set_forum['upfp'])) {
+                if (($systemUser->isValid() && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -629,7 +629,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Ник юзера и ссылка на его анкету
-                    if ($user_id && $user_id != $res['user_id']) {
+                    if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
                         echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
                     } else {
                         echo '<b>' . $res['from'] . '</b> ';
@@ -651,7 +651,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
                     // Ссылки на ответ и цитирование
-                    if ($user_id && $user_id != $res['user_id']) {
+                    if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
                         echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
                             '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
                     }
@@ -717,9 +717,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     // Ссылки на редактирование / удаление постов
                     if (
                         (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
-                        || ($res['user_id'] == $user_id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
-                        || ($res['user_id'] == $user_id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
-                        || ($i == 1 && $allow == 2 && $res['user_id'] == $user_id)
+                        || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
+                        || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
+                        || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
                     ) {
                         echo '<div class="sub">';
 
@@ -768,7 +768,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Нижнее поле "Написать"
-                if (($user_id && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && !$set_forum['upfp'])) {
+                if (($systemUser->isValid() && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && !$set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -895,7 +895,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         }
         $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
         $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
-        echo '<div class="phdr">' . ($user_id ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online_u . '&#160;/&#160;' . $online_g . ')</div>';
+        echo '<div class="phdr">' . ($systemUser->isValid() ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online_u . '&#160;/&#160;' . $online_g . ')</div>';
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);
     }
@@ -909,7 +909,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
     echo '</p>';
 
-    if (!$user_id) {
+    if (!$systemUser->isValid()) {
         if ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) {
             echo '<a href="index.php?id=' . $id . '&amp;page=' . $page . '&amp;newup">' . _t('New at the top') . '</a>';
         } else {

@@ -15,7 +15,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Проверяем права доступа
-if ($user['id'] != $user_id && ($systemUser->rights < 7 || $user['rights'] > $systemUser->rights)) {
+if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] > $systemUser->rights)) {
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
@@ -33,7 +33,7 @@ switch ($mod) {
         $newconf = isset($_POST['newconf']) ? trim($_POST['newconf']) : '';
         $autologin = isset($_POST['autologin']) ? 1 : 0;
 
-        if ($user['id'] != $user_id) {
+        if ($user['id'] != $systemUser->id) {
             if (!$newpass || !$newconf) {
                 $error[] = _t('It is necessary to fill in all fields');
             }
@@ -43,7 +43,7 @@ switch ($mod) {
             }
         }
 
-        if (!$error && $user['id'] == $user_id && md5(md5($oldpass)) !== $user['password']) {
+        if (!$error && $user['id'] == $systemUser->id && md5(md5($oldpass)) !== $user['password']) {
             $error[] = _t('Old password entered incorrectly');
         }
 
@@ -68,7 +68,7 @@ switch ($mod) {
             }
 
             echo '<div class="gmenu"><p><b>' . _t('Password successfully changed') . '</b><br />' .
-                '<a href="' . ($user_id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . _t('Continue') . '</a></p>';
+                '<a href="' . ($systemUser->id == $user['id'] ? '../login.php' : '?user=' . $user['id']) . '">' . _t('Continue') . '</a></p>';
             echo '</div>';
         } else {
             echo $tools->displayError($error,
@@ -81,7 +81,7 @@ switch ($mod) {
         echo '<div class="phdr"><b>' . _t('Change Password') . ':</b> ' . $user['name'] . '</div>';
         echo '<form action="?act=password&amp;mod=change&amp;user=' . $user['id'] . '" method="post">';
 
-        if ($user['id'] == $user_id) {
+        if ($user['id'] == $systemUser->id) {
             echo '<div class="menu"><p>' . _t('Enter old password') . ':<br /><input type="password" name="oldpass" /></p></div>';
         }
 

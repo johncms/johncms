@@ -43,13 +43,13 @@ if ($set_karma['on']) {
                     );
                 }
 
-                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
+                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if ($count) {
                     $error[] = _t('You can vote for single user just one time for 24 hours"');
                 }
 
-                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
 
                 if (($set_karma['karma_points'] - $sum) <= 0) {
                     $error[] = sprintf(_t('You have exceeded the limit of votes. New voices will be added %s'), date('d.m.y в H:i:s', ($systemUser->karma_time + 86400)));
@@ -77,7 +77,7 @@ if ($set_karma['on']) {
                           `time` = ?,
                           `text` = ?
                         ')->execute([
-                            $user_id,
+                            $systemUser->id,
                             $systemUser->name,
                             $user['id'],
                             $points,
@@ -166,15 +166,15 @@ if ($set_karma['on']) {
         case 'new':
             // Список новых отзывов (комментариев)
             echo '<div class="phdr"><a href="?act=karma&amp;type=2"><b>' . _t('Karma') . '</b></a> | ' . _t('New responses') . '</div>';
-            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $systemUser->id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
                     if (!empty($res['text'])) {
                         echo '<div class="sub">' . $tools->checkout($res['text']) . '</div>';
@@ -238,7 +238,7 @@ if ($set_karma['on']) {
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $systemUser->id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
                     if ($systemUser->rights == 9) {

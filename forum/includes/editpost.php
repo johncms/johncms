@@ -16,7 +16,7 @@ $systemUser = $container->get(Johncms\User::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-if (!$user_id || !$id) {
+if (!$systemUser->isValid() || !$id) {
     echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
@@ -31,7 +31,7 @@ if ($req->rowCount()) {
     $topic = $db->query("SELECT `refid`, `curators` FROM `forum` WHERE `id` = " . $res['refid'])->fetch();
     $curators = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
 
-    if (array_key_exists($user_id, $curators)) {
+    if (array_key_exists($systemUser->id, $curators)) {
         $systemUser->rights = 3;
     }
 
@@ -42,7 +42,7 @@ if ($req->rowCount()) {
 
     if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         // Проверка для Администрации
-        if ($res['user_id'] != $user_id) {
+        if ($res['user_id'] != $systemUser->id) {
             $req_u = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
 
             if ($req_u->rowCount()) {
@@ -55,7 +55,7 @@ if ($req->rowCount()) {
         }
     } else {
         // Проверка для обычных юзеров
-        if ($res['user_id'] != $user_id) {
+        if ($res['user_id'] != $systemUser->id) {
             $error = _t('You are trying to change another\'s post') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
         }
 
@@ -67,7 +67,7 @@ if ($req->rowCount()) {
             if ($allow == 2) {
                 $first = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
 
-                if ($first['user_id'] == $user_id && $first['id'] == $id) {
+                if ($first['user_id'] == $systemUser->id && $first['id'] == $id) {
                     $check = false;
                 }
             }
@@ -75,7 +75,7 @@ if ($req->rowCount()) {
             if ($check) {
                 $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` DESC LIMIT 1")->fetch();
 
-                if ($res_m['user_id'] != $user_id) {
+                if ($res_m['user_id'] != $systemUser->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 } elseif ($res['time'] < time() - 300) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';

@@ -467,17 +467,17 @@ class Rating
     }
     
     public function add_vote($point) {
-        global $user_id;
+        global $systemUser;
                 
         $point = in_array($point, range(0, 5)) ? $point : 0;
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
-        $stmt->execute([$user_id, $this->lib_id]);
+        $stmt->execute([$systemUser->id, $this->lib_id]);
         if ($stmt->fetchColumn() > 0) {
             $stmt = $this->db->prepare('UPDATE `cms_library_rating` SET `point` = ? WHERE `user_id` = ? AND `st_id` = ?');
-            $stmt->execute([$point, $user_id, $this->lib_id]);
-        } elseif ($user_id && $this->lib_id > 0) {
+            $stmt->execute([$point, $systemUser->id, $this->lib_id]);
+        } elseif ($systemUser->isValid() && $this->lib_id > 0) {
             $stmt = $this->db->prepare('INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (?, ?, ?)');
-            $stmt->execute([$user_id, $this->lib_id, $point]);
+            $stmt->execute([$systemUser->id, $this->lib_id, $point]);
         }
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
@@ -499,11 +499,11 @@ class Rating
     }
     
     public function get_vote() {
-        global $user_id;
+        global $systemUser;
         
         $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
                         
-        return $stmt->execute([$user_id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
+        return $stmt->execute([$systemUser->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
     }
     
     public function print_vote() {

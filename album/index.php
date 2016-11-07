@@ -15,6 +15,9 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
@@ -29,7 +32,7 @@ $max_album = 20;
 $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
-if (!$user_id) {
+if (!$systemUser->isValid()) {
     require('../system/head.php');
     echo $tools->displayError(_t('For registered users only'));
     require('../system/end.php');
@@ -143,7 +146,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<li><a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a> (' . $total_mans . ')</li>' .
         '<li><a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a> (' . $total_womans . ')</li>';
 
-    if ($user_id) {
+    if ($systemUser->isValid()) {
         echo '<li><a href="?act=list">' . _t('My Album') . '</a></li>';
     }
 

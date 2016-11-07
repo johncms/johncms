@@ -126,7 +126,7 @@ if (isset($_POST['submit'])
         }
 
         // Проверяем, не повторяется ли сообщение?
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
+        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
-        $curator = $res_r['edit'] == 1 ? serialize([$user_id => $systemUser->name]) : '';
+        $curator = $res_r['edit'] == 1 ? serialize([$systemUser->id => $systemUser->name]) : '';
 
         // Добавляем тему
         $db->prepare('
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])
         ')->execute([
             $id,
             time(),
-            $user_id,
+            $systemUser->id,
             $systemUser->name,
             $th,
             $curator,
@@ -185,7 +185,7 @@ if (isset($_POST['submit'])
         ')->execute([
             $rid,
             time(),
-            $user_id,
+            $systemUser->id,
             $systemUser->name,
             $env->getIp(),
             $env->getIpViaProxy(),
@@ -200,13 +200,13 @@ if (isset($_POST['submit'])
         $db->exec("UPDATE `users` SET
             `postforum` = '$fpst',
             `lastpost` = '" . time() . "'
-            WHERE `id` = '$user_id'
+            WHERE `id` = '" . $systemUser->id . "'
         ");
 
         // Ставим метку о прочтении
         $db->exec("INSERT INTO `cms_forum_rdm` SET
             `topic_id`='$rid',
-            `user_id`='$user_id',
+            `user_id`='" . $systemUser->id . "',
             `time`='" . time() . "'
         ");
 

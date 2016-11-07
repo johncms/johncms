@@ -12,6 +12,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -23,18 +26,18 @@ $total = $db->query("
 	FROM `cms_mail`
 	LEFT JOIN `cms_contact`
 	ON `cms_mail`.`user_id`=`cms_contact`.`from_id`
-	AND `cms_contact`.`user_id`='$user_id'
-	WHERE `cms_mail`.`from_id`='$user_id'
-	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='$user_id'
+	AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+	WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
+	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
 
 if ($total) {
     $req = $db->query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
 		FROM `cms_mail`
 		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id'
-		WHERE `cms_mail`.`from_id`='$user_id'
-		AND `cms_mail`.`delete`!='$user_id'
+		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+		WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
+		AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 		AND `cms_mail`.`sys`='0'
 		AND `cms_contact`.`ban`!='1'
 		GROUP BY `cms_mail`.`user_id`
@@ -44,16 +47,16 @@ if ($total) {
     for ($i = 0; $row = $req->fetch(); ++$i) {
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
             WHERE `user_id`='{$row['id']}'
-            AND `from_id`='$user_id'
-            AND `delete`!='$user_id'
+            AND `from_id`='" . $systemUser->id . "'
+            AND `delete`!='" . $systemUser->id . "'
             AND `sys`!='1'
         ")->fetchColumn();
 
         $last_msg = $db->query("SELECT *
             FROM `cms_mail`
-            WHERE `from_id`='$user_id'
+            WHERE `from_id`='" . $systemUser->id . "'
             AND `user_id` = '{$row['id']}'
-            AND `delete` != '$user_id'
+            AND `delete` != '" . $systemUser->id . "'
             ORDER BY `id` DESC
             LIMIT 1")->fetch();
 

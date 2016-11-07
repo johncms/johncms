@@ -43,7 +43,7 @@ if (count($smileys) > $user_smileys) {
     $smileys = $smileys[0];
 }
 
-$db->query("UPDATE `users` SET `smileys` = " . $db->quote(serialize($smileys)) . " WHERE `id` = '$user_id'");
+$db->query("UPDATE `users` SET `smileys` = " . $db->quote(serialize($smileys)) . " WHERE `id` = " . $systemUser->id);
 
 if ($delete || isset($_GET['clean'])) {
     header('location: index.php?act=my_smilies&start=' . $start . '');

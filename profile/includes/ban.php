@@ -198,7 +198,7 @@ switch ($mod) {
 
     case 'cancel':
         // Разбаниваем пользователя (с сохранением истории)
-        if (!$ban || $user['id'] == $user_id || $systemUser->rights < 7) {
+        if (!$ban || $user['id'] == $systemUser->id || $systemUser->rights < 7) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
             $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
@@ -312,7 +312,7 @@ switch ($mod) {
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         }
 
-        if ($user['id'] != $user_id) {
+        if ($user['id'] != $systemUser->id) {
             echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>';
         } else {
             echo '<div class="list2"><p>' . _t('My Violations') . '</p></div>';

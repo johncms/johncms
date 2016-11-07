@@ -213,7 +213,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                                             time(),
                                             $name,
                                             $name,
-                                            $user_id,
+                                            $systemUser->id,
                                         ]);
 
                                         if ($start) {

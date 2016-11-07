@@ -155,7 +155,7 @@ echo '</small><p>';
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_file_' . $id]) && $user_id) {
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
     if (isset($_GET['plus'])) {
         $file_rate[0] = $file_rate[0] + 1;
     } else {
@@ -170,7 +170,7 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_fi
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 echo '<b>' . _t('Rating') . ' </b>';
 
-if (!isset($_SESSION['rate_file_' . $id]) && $user_id) {
+if (!isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
     echo '(<a href="?act=view&amp;id=' . $id . '&amp;plus">+</a>/<a href="?act=view&amp;id=' . $id . '&amp;minus">-</a>)';
 } else {
     echo '(+/-)';
@@ -240,14 +240,14 @@ if ($total_files_more) {
 }
 
 // Управление закладками
-if ($user_id) {
-    $bookmark = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = " . $id . "  AND `user_id` = " . $user_id)->fetchColumn();
+if ($systemUser->isValid()) {
+    $bookmark = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = " . $id . "  AND `user_id` = " . $systemUser->id)->fetchColumn();
 
     if (isset($_GET['addBookmark']) && !$bookmark) {
-        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id`=" . $user_id);
+        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id` = " . $systemUser->id);
         $bookmark = 1;
     } elseif (isset($_GET['delBookmark']) && $bookmark) {
-        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id`=" . $user_id);
+        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id` = " . $systemUser->id);
         $bookmark = 0;
     }
 

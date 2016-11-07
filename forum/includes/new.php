@@ -29,32 +29,32 @@ if (empty($_SESSION['uid'])) {
     }
 }
 
-if ($user_id) {
+if ($systemUser->isValid()) {
     switch ($do) {
         case 'reset':
             // Отмечаем все темы как прочитанные
             $req = $db->query("SELECT `forum`.`id`
-            FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '$user_id'
+            FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
             WHERE `forum`.`type`='t'
-            AND `cms_forum_rdm`.`topic_id` IS Null");
+            AND `cms_forum_rdm`.`topic_id` IS NULL");
 
             while ($res = $req->fetch()) {
                 $db->exec("INSERT INTO `cms_forum_rdm` SET
                     `topic_id` = '" . $res['id'] . "',
-                    `user_id` = '$user_id',
+                    `user_id` = '" . $systemUser->id . "',
                     `time` = '" . time() . "'
                 ");
             }
 
             $req = $db->query("SELECT `forum`.`id` AS `id`
-            FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '$user_id'
+            FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
             WHERE `forum`.`type`='t'
             AND `forum`.`time` > `cms_forum_rdm`.`time`");
 
             while ($res = $req->fetch()) {
                 $db->exec("UPDATE `cms_forum_rdm` SET
                     `time` = '" . time() . "'
-                    WHERE `topic_id` = '" . $res['id'] . "' AND `user_id` = '$user_id'
+                    WHERE `topic_id` = '" . $res['id'] . "' AND `user_id` = '" . $systemUser->id . "'
                 ");
             }
 
@@ -154,7 +154,7 @@ if ($user_id) {
 
             if ($total > 0) {
                 $req = $db->query("SELECT * FROM `forum`
-                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '$user_id'
+                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
                 WHERE `forum`.`type`='t'" . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
                 AND (`cms_forum_rdm`.`topic_id` Is Null
                 OR `forum`.`time` > `cms_forum_rdm`.`time`)

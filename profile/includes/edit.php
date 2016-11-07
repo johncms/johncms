@@ -18,7 +18,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Проверяем права доступа для редактирования Профиля
-if ($user['id'] != $user_id && ($systemUser->rights < 7 || $user['rights'] >= $systemUser->rights)) {
+if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] >= $systemUser->rights)) {
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require('../system/end.php');
     exit;
@@ -32,7 +32,7 @@ if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'] && $act ==
     exit;
 }
 
-echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? _t('Profile') : _t('My Profile')) . '</b></a> | ' . _t('Edit') . '</div>';
+echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . ($user['id'] != $systemUser->id ? _t('Profile') : _t('My Profile')) . '</b></a> | ' . _t('Edit') . '</div>';
 
 if (isset($_GET['delavatar'])) {
     // Удаляем аватар
@@ -179,7 +179,7 @@ if (file_exists(('../files/users/avatar/' . $user['id'] . '.png'))) {
 
 echo '<small><a href="?act=images&amp;mod=avatar&amp;user=' . $user['id'] . '">' . _t('Upload') . '</a>';
 
-if ($user['id'] == $user_id) {
+if ($user['id'] == $systemUser->id) {
     echo ' | <a href="../help/?act=avatars">' . _t('Select in Catalog') . '</a>';
 }
 
@@ -230,7 +230,7 @@ if ($systemUser->rights >= 7) {
         '<input type="radio" value="zh" name="sex" ' . ($user['sex'] == 'zh' ? 'checked="checked"' : '') . '/>&#160;' . _t('Woman') . '</li>' .
         '</ul></p>';
 
-    if ($user['id'] != $user_id) {
+    if ($user['id'] != $systemUser->id) {
         echo '<p><h3><img src="../images/forbidden.png" width="16" height="16" class="left" />&#160;' . _t('Position on the Site') . '</h3><ul>' .
             '<input type="radio" value="0" name="rights" ' . (!$user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . _t('User') . '</b><br>' .
             '<input type="radio" value="3" name="rights" ' . ($user['rights'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Forum Moderator') . '<br>' .

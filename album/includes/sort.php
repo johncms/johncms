@@ -16,7 +16,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 switch ($mod) {
     case 'up':
         // Передвигаем альбом на позицию вверх
-        if ($al && $user['id'] == $user_id || $systemUser->rights >= 7) {
+        if ($al && $user['id'] == $systemUser->id || $systemUser->rights >= 7) {
             $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -35,7 +35,7 @@ switch ($mod) {
 
     case 'down':
         // Передвигаем альбом на позицию вниз
-        if ($al && $user['id'] == $user_id || $systemUser->rights >= 7) {
+        if ($al && $user['id'] == $systemUser->id || $systemUser->rights >= 7) {
             $req = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
             if ($req->rowCount()) {
                 $res = $req->fetch();
