@@ -6,7 +6,13 @@ $headmod = 'my_guest';
 $textl = _t('Profile') . ' | ' . _t('Guestbook');
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-if ($user_id && $user['id'] == $user_id) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+if ($systemUser->isValid() && $user['id'] == $systemUser->id) {
     $datauser['comm_old'] = $datauser['comm_count'];
 }
 
@@ -18,23 +24,23 @@ $context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t(
 // Параметры Гостевой
 $arg = [
     'comments_table' => 'cms_users_guestbook', // Таблица Гостевой
-    'object_table'   => 'users',                 // Таблица комментируемых объектов
-    'script'         => '?act=guestbook',              // Имя скрипта (с параметрами вызова)
-    'sub_id_name'    => 'user',                   // Имя идентификатора комментируемого объекта
-    'sub_id'         => $user['id'],                   // Идентификатор комментируемого объекта
-    'owner'          => $user['id'],                    // Владелец объекта
-    'owner_delete'   => true,                    // Возможность владельцу удалять комментарий
-    'owner_reply'    => true,                     // Возможность владельцу отвечать на комментарий
-    'title'          => _t('Comments'),               // Название раздела
-    'context_top'    => $context_top              // Выводится вверху списка
+    'object_table'   => 'users',               // Таблица комментируемых объектов
+    'script'         => '?act=guestbook',      // Имя скрипта (с параметрами вызова)
+    'sub_id_name'    => 'user',                // Имя идентификатора комментируемого объекта
+    'sub_id'         => $user['id'],           // Идентификатор комментируемого объекта
+    'owner'          => $user['id'],           // Владелец объекта
+    'owner_delete'   => true,                  // Возможность владельцу удалять комментарий
+    'owner_reply'    => true,                  // Возможность владельцу отвечать на комментарий
+    'title'          => _t('Comments'),        // Название раздела
+    'context_top'    => $context_top           // Выводится вверху списка
 ];
 
 // Показываем комментарии
 $comm = new Johncms\Comments($arg);
 
 // Обновляем счетчик непрочитанного
-if (!$mod && $user['id'] == $user_id && $user['comm_count'] != $user['comm_old']) {
+if (!$mod && $user['id'] == $systemUser->id && $user['comm_count'] != $user['comm_old']) {
     /** @var PDO $db */
-    $db = App::getContainer()->get(PDO::class);
-    $db->query("UPDATE `users` SET `comm_old` = '" . $user['comm_count'] . "' WHERE `id` = '$user_id'");
+    $db = $container->get(PDO::class);
+    $db->query("UPDATE `users` SET `comm_old` = '" . $user['comm_count'] . "' WHERE `id` = " . $systemUser->id);
 }

@@ -79,7 +79,7 @@ switch ($act) {
         $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $from = $user_id ? $systemUser->name : $name;
+        $from = $systemUser->isValid() ? $systemUser->name : $name;
         // Проверяем на ошибки
         $error = [];
         $flood = false;
@@ -88,7 +88,7 @@ switch ($act) {
             $error[] = _t('Wrong data');
         }
 
-        if (!$user_id && empty($name)) {
+        if (!$systemUser->isValid() && empty($name)) {
             $error[] = _t('You have not entered a name');
         }
 
@@ -101,13 +101,13 @@ switch ($act) {
         }
 
         // CAPTCHA для гостей
-        if (!$user_id && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code'])) {
+        if (!$systemUser->isValid() && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code'])) {
             $error[] = _t('The security code is not correct');
         }
 
         unset($_SESSION['code']);
 
-        if ($user_id) {
+        if ($systemUser->isValid()) {
             // Антифлуд для зарегистрированных пользователей
             $flood = $tools->antiflood();
         } else {
@@ -126,7 +126,7 @@ switch ($act) {
 
         if (!$error) {
             // Проверка на одинаковые сообщения
-            $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '$user_id' ORDER BY `time` DESC");
+            $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $systemUser->id . "' ORDER BY `time` DESC");
             $res = $req->fetch();
 
             if ($res['text'] == $msg) {
@@ -149,7 +149,7 @@ switch ($act) {
             ")->execute([
                 $admset,
                 time(),
-                ($user_id ? $user_id : 0),
+                $systemUser->id,
                 $from,
                 $msg,
                 $env->getIp(),
@@ -157,9 +157,9 @@ switch ($act) {
             ]);
 
             // Фиксируем время последнего поста (антиспам)
-            if ($user_id) {
+            if ($systemUser->isValid()) {
                 $postguest = $systemUser->postguest + 1;
-                $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
+                $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = " . $systemUser->id);
             }
 
             header('location: index.php');
@@ -168,8 +168,7 @@ switch ($act) {
         }
         break;
 
-    case
-    'otvet':
+    case 'otvet':
         // Добавление "ответа Админа"
         if ($systemUser->rights >= 6 && $id) {
             if (isset($_POST['submit'])
@@ -331,7 +330,7 @@ switch ($act) {
             $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
 
-            if (!$user_id) {
+            if (!$systemUser->isValid()) {
                 echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
             }
 
@@ -339,7 +338,7 @@ switch ($act) {
             echo $bbcode->buttons('form', 'msg');
             echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br>';
 
-            if (!$user_id) {
+            if (!$systemUser->isValid()) {
                 // CAPTCHA для гостей
                 echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Symbols on the picture') . '"/><br />' .
                     '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br />';

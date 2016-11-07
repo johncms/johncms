@@ -81,7 +81,7 @@ switch ($do) {
                                 ')->execute([
                                     $v,
                                     time(),
-                                    $user_id,
+                                    $systemUser->id,
                                     $systemUser->name,
                                     $name,
                                 ]);
@@ -103,7 +103,7 @@ switch ($do) {
                                 ')->execute([
                                     $rid,
                                     time(),
-                                    $user_id,
+                                    $systemUser->id,
                                     $systemUser->name,
                                     long2ip($env->getIp()),
                                     $env->getUserAgent(),
@@ -128,7 +128,7 @@ switch ($do) {
                         $rid,
                     ]);
 
-                    $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $user_id);
+                    $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
                     echo '<p>' . _t('News added') . '<br /><a href="index.php">' . _t('Back to news') . '</a></p>';
                 } else {
                     echo $tools->displayError($error, '<a href="index.php">' . _t('Back to news') . '</a>');

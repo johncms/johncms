@@ -22,7 +22,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
-$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $user_id || $systemUser->rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
+$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $systemUser->id || $systemUser->rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
 $total = $req->rowCount();
 
 if ($user['id'] == $systemUser->id && $total < $max_album && empty($systemUser->ban) || $systemUser->rights >= 7) {
@@ -39,7 +39,7 @@ if ($total) {
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
             '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
 
-        if ($user['id'] == $user_id || $systemUser->rights >= 6 || !empty($res['description'])) {
+        if ($user['id'] == $systemUser->id || $systemUser->rights >= 6 || !empty($res['description'])) {
             $menu = [
                 '<a href="?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Up') . '</a>',
                 '<a href="?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Down') . '</a>',

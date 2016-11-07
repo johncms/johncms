@@ -15,11 +15,14 @@ if ($id) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
+    /** @var Johncms\User $systemUser */
+    $systemUser = $container->get(Johncms\User::class);
+
     /** @var Johncms\Tools $tools */
     $tools = $container->get('tools');
 
     //Проверяем наличие сообщения
-    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' AND `delete`!='$user_id' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '$id' AND `delete`!='" . $systemUser->id . "' LIMIT 1");
 
     if (!$req->rowCount()) {
         //Выводим ошибку
@@ -33,19 +36,19 @@ if ($id) {
     if (isset($_POST['submit'])) { //Если кнопка "Подвердить" нажата
         //Удаляем системное сообщение
         if ($res['sys']) {
-            $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='$user_id' AND `id` = '$id' AND `sys`='1' LIMIT 1");
+            $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `id` = '$id' AND `sys`='1' LIMIT 1");
             echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
             echo '<div class="bmenu"><a href="index.php?act=systems">' . _t('Back') . '</a></div>';
         } else {
             //Удаляем непрочитанное сообщение
-            if ($res['read'] == 0 && $res['user_id'] == $user_id) {
+            if ($res['read'] == 0 && $res['user_id'] == $systemUser->id) {
 
                 //Удаляем файл
                 if ($res['file_name']) {
                     @unlink('../files/mail/' . $res['file_name']);
                 }
 
-                $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='$user_id' AND `id` = '$id' LIMIT 1");
+                $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='" . $systemUser->id . "' AND `id` = '$id' LIMIT 1");
             } else {
                 //Удаляем остальные сообщения
                 if ($res['delete']) {
@@ -55,14 +58,14 @@ if ($id) {
                         @unlink('../files/mail/' . $res['file_name']);
                     }
 
-                    $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' LIMIT 1");
+                    $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '$id' LIMIT 1");
                 } else {
-                    $db->exec("UPDATE `cms_mail` SET `delete` = '$user_id' WHERE `id` = '$id' LIMIT 1");
+                    $db->exec("UPDATE `cms_mail` SET `delete` = '" . $systemUser->id . "' WHERE `id` = '$id' LIMIT 1");
                 }
             }
 
             echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
-            echo '<div class="bmenu"><a href="index.php?act=write&amp;id=' . ($res['user_id'] == $user_id ? $res['from_id'] : $res['user_id']) . '">' . _t('Back') . '</a></div>';
+            echo '<div class="bmenu"><a href="index.php?act=write&amp;id=' . ($res['user_id'] == $systemUser->id ? $res['from_id'] : $res['user_id']) . '">' . _t('Back') . '</a></div>';
         }
     } else {
         echo '<div class="gmenu"><form action="index.php?act=delete&amp;id=' . $id . '" method="post"><div>

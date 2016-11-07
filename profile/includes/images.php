@@ -14,7 +14,7 @@ $systemUser = $container->get(Johncms\User::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-if (($user_id != $user['id'] && $systemUser->rights < 7)
+if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
     || $user['rights'] > $systemUser->rights
 ) {
     // Если не хватает прав, выводим ошибку

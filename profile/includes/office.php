@@ -19,7 +19,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Проверяем права доступа
-if ($user['id'] != $user_id) {
+if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;
@@ -29,7 +29,7 @@ if ($user['id'] != $user_id) {
 $config = $container->get(Johncms\Config::class);
 
 // Личный кабинет пользователя
-$total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '$user_id'")->fetchColumn();
+$total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $systemUser->id . "'")->fetchColumn();
 
 echo '' .
     '<div class="gmenu"><p><h3>' . _t('My Pages') . '</h3>' .
@@ -53,28 +53,28 @@ $count_input = $db->query("
 	FROM `cms_mail` 
 	LEFT JOIN `cms_contact` 
 	ON `cms_mail`.`user_id`=`cms_contact`.`from_id` 
-	AND `cms_contact`.`user_id`='$user_id' 
-	WHERE `cms_mail`.`from_id`='$user_id' 
-	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='$user_id' 
+	AND `cms_contact`.`user_id`='" . $systemUser->id . "' 
+	WHERE `cms_mail`.`from_id`='" . $systemUser->id . "' 
+	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $systemUser->id . "' 
 	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
 echo '<div>' . $tools->image('mail-inbox.png') . '<a href="../mail/index.php?act=input">' . _t('Received') . '</a>&nbsp;(' . $count_input . ($new_mail ? '/<span class="red">+' . $new_mail . '</span>' : '') . ')</div>';
 
 //Исходящие сообщения
-$count_output = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id' 
-WHERE `cms_mail`.`user_id`='$user_id' AND `cms_mail`.`delete`!='$user_id' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
+$count_output = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "' 
+WHERE `cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`delete`!='" . $systemUser->id . "' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
 
 //Исходящие непрочитанные сообщения
-$count_output_new = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id' 
-WHERE `cms_mail`.`user_id`='$user_id' AND `cms_mail`.`delete`!='$user_id' AND `cms_mail`.`read`='0' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
+$count_output_new = $db->query("SELECT COUNT(*) FROM `cms_mail` LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "' 
+WHERE `cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`delete`!='" . $systemUser->id . "' AND `cms_mail`.`read`='0' AND `cms_mail`.`sys`='0' AND `cms_contact`.`ban`!='1'")->fetchColumn();
 echo '<div>' . $tools->image('mail-send.png') . '<a href="../mail/index.php?act=output">' . _t('Sent') . '</a>&nbsp;(' . $count_output . ($count_output_new ? '/<span class="red">+' . $count_output_new . '</span>' : '') . ')</div>';
-$count_systems = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `delete`!='$user_id' AND `sys`='1'")->fetchColumn();
+$count_systems = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `delete`!='" . $systemUser->id . "' AND `sys`='1'")->fetchColumn();
 
 //Системные сообщения
-$count_systems_new = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `delete`!='$user_id' AND `sys`='1' AND `read`='0'")->fetchColumn();
+$count_systems_new = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `delete`!='" . $systemUser->id . "' AND `sys`='1' AND `read`='0'")->fetchColumn();
 echo '<div>' . $tools->image('mail-info.png') . '<a href="../mail/index.php?act=systems">' . _t('System') . '</a>&nbsp;(' . $count_systems . ($count_systems_new ? '/<span class="red">+' . $count_systems_new . '</span>' : '') . ')</div>';
 
 //Файлы
-$count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `delete`!='$user_id' AND `file_name`!='';")->fetchColumn();
+$count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `delete`!='" . $systemUser->id . "' AND `file_name`!='';")->fetchColumn();
 echo '<div>' . $tools->image('file.gif') . '<a href="../mail/index.php?act=files">' . _t('Files') . '</a>&nbsp;(' . $count_file . ')</div>';
 
 if (!isset($systemUser->ban['1']) && !isset($systemUser->ban['3'])) {
@@ -85,11 +85,11 @@ if (!isset($systemUser->ban['1']) && !isset($systemUser->ban['3'])) {
 echo '</p></div><div class="menu"><p><h3>' . _t('Contacts') . '</h3>';
 
 //Контакты
-$count_contacts = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`!='1'")->fetchColumn();
+$count_contacts = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `ban`!='1'")->fetchColumn();
 echo '<div>' . $tools->image('user.png') . '<a href="../mail/">' . _t('Contacts') . '</a>&nbsp;(' . $count_contacts . ')</div>';
 
 //Заблокированные
-$count_ignor = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`='1'")->fetchColumn();
+$count_ignor = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `ban`='1'")->fetchColumn();
 echo '<div>' . $tools->image('user-block.png') . '<a href="../mail/index.php?act=ignor">' . _t('Blocked') . '</a>&nbsp;(' . $count_ignor . ')</div>';
 echo '</p></div>';
 

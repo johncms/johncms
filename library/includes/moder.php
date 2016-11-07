@@ -15,13 +15,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
-$author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) ? 1 : 0;
+$author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) ? 1 : 0;
 if (!$adm || !$author) {
     redir404();
 }

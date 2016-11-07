@@ -113,7 +113,7 @@ switch ($type1['type']) {
             }
 
             // Проверяем, не повторяется ли сообщение?
-            $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
+            $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -153,7 +153,7 @@ switch ($type1['type']) {
             ')->execute([
                 $id,
                 time(),
-                $user_id,
+                $systemUser->id,
                 $systemUser->name,
                 $env->getIp(),
                 $env->getIpViaProxy(),
@@ -173,7 +173,7 @@ switch ($type1['type']) {
             $db->exec("UPDATE `users` SET
                 `postforum`='" . ($systemUser->postforum + 1) . "',
                 `lastpost` = '" . time() . "'
-                WHERE `id` = '$user_id'
+                WHERE `id` = '" . $systemUser->id . "'
             ");
 
             // Вычисляем, на какую страницу попадает добавляемый пост
@@ -232,7 +232,7 @@ switch ($type1['type']) {
             exit;
         }
 
-        if ($type1['user_id'] == $user_id) {
+        if ($type1['user_id'] == $systemUser->id) {
             require('../system/head.php');
             echo $tools->displayError('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
@@ -293,7 +293,7 @@ switch ($type1['type']) {
             }
 
             // Проверяем, не повторяется ли сообщение?
-            $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC LIMIT 1");
+            $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC LIMIT 1");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -334,7 +334,7 @@ switch ($type1['type']) {
             ')->execute([
                 $th,
                 time(),
-                $user_id,
+                $systemUser->id,
                 $systemUser->name,
                 $env->getIp(),
                 $env->getIpViaProxy(),
@@ -354,7 +354,7 @@ switch ($type1['type']) {
             $db->exec("UPDATE `users` SET
                 `postforum`='" . ($systemUser->postforum + 1) . "',
                 `lastpost` = '" . time() . "'
-                WHERE `id` = '$user_id'
+                WHERE `id` = '" . $systemUser->id . "'
             ");
 
             // Вычисляем, на какую страницу попадает добавляемый пост

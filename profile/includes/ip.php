@@ -18,7 +18,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Проверяем права доступа
-if (!$systemUser->rights && $user_id != $user['id']) {
+if (!$systemUser->rights && $systemUser->id != $user['id']) {
     echo $tools->displayError(_t('Access forbidden'));
     require('../system/end.php');
     exit;

@@ -30,7 +30,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Закрываем от неавторизованных юзеров
-if (!$user_id) {
+if (!$systemUser->isValid()) {
     require('../system/head.php');
     echo $tools->displayError(_t('For registered users only'));
     require('../system/end.php');
@@ -111,20 +111,20 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     $headmod = 'profile,' . $user['id'];
     $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
     require('../system/head.php');
-    echo '<div class="phdr"><b>' . ($user['id'] != $user_id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
+    echo '<div class="phdr"><b>' . ($user['id'] != $systemUser->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты
     $menu = [];
 
-    if ($user['id'] == $user_id || $systemUser->rights == 9 || ($systemUser->rights == 7 && $systemUser->rights > $user['rights'])) {
+    if ($user['id'] == $systemUser->id || $systemUser->rights == 9 || ($systemUser->rights == 7 && $systemUser->rights > $user['rights'])) {
         $menu[] = '<a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>';
     }
 
-    if ($user['id'] != $user_id && $systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
+    if ($user['id'] != $systemUser->id && $systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
         $menu[] = '<a href="' . $config['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
     }
 
-    if ($user['id'] != $user_id && $systemUser->rights > $user['rights']) {
+    if ($user['id'] != $systemUser->id && $systemUser->rights > $user['rights']) {
         $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
     }
 
@@ -179,17 +179,17 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
             '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _t('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
             '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
 
-        if ($user['id'] != $user_id) {
+        if ($user['id'] != $systemUser->id) {
             if (!$systemUser->karma_off && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $systemUser->ip) {
-                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
-                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
+                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
                 if (empty($systemUser->ban) && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
                     echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
                 }
             }
         } else {
-            $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
+            $total_karma = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total_karma > 0) {
                 echo '<br /><a href="?act=karma&amp;mod=new">' . _t('New reviews') . '</a> (' . $total_karma . ')';
@@ -214,7 +214,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         '<div>' . $tools->image('photo.gif') . '<a href="../album/index.php?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
         '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
         '</p></div>';
-    if ($user['id'] != $user_id) {
+    if ($user['id'] != $systemUser->id) {
         echo '<div class="menu"><p>';
         // Контакты
         if (is_contact($user['id']) != 2) {

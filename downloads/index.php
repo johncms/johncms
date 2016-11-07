@@ -50,7 +50,7 @@ $error = '';
 
 if (!$config['mod_down'] && $systemUser->rights < 7) {
     $error = _t('Downloads are closed');
-} elseif ($config['mod_down'] == 1 && !$user_id) {
+} elseif ($config['mod_down'] == 1 && !$systemUser->id) {
     $error = _t('For registered users only');
 }
 
@@ -341,7 +341,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         echo '<div><a href="?act=recount&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
         echo '</div></p>';
     } else {
-        if (isset($res_down_cat['field']) && $res_down_cat['field'] && $user_id && $id) {
+        if (isset($res_down_cat['field']) && $res_down_cat['field'] && $systemUser->isValid() && $id) {
             echo '<p><div class="func"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Upload File') . '</a></div></p>';
         }
     }

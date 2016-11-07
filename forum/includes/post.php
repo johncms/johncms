@@ -49,7 +49,7 @@ if ($res['sex']) {
 }
 
 // Ник юзера и ссылка на его анкету
-if ($user_id && $user_id != $res['user_id']) {
+if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
     echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
 } else {
     echo '<b>' . $res['from'] . '</b> ';
@@ -69,7 +69,7 @@ echo(time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<sp
 echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
 // Ссылки на ответ и цитирование
-if ($user_id && $user_id != $res['user_id']) {
+if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
     echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
         '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
 }

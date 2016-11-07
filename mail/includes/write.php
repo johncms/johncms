@@ -42,10 +42,10 @@ if ($id) {
         echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
-            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id'")->fetchColumn();
+            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='$id')) AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
 
             if ($count_message) {
-                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT " . $count_message);
+                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $systemUser->id . "') OR (`cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='" . $systemUser->id . "' LIMIT " . $count_message);
 
                 while ($row = $req->fetch()) {
                     if ($row['delete']) {
@@ -57,7 +57,7 @@ if ($id) {
 
                         $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                     } else {
-                        if ($row['read'] == 0 && $row['user_id'] == $user_id) {
+                        if ($row['read'] == 0 && $row['user_id'] == $systemUser->id) {
                             if ($row['file_name']) {
                                 if (file_exists('../files/mail/' . $row['file_name']) !== false) {
                                     @unlink('../files/mail/' . $row['file_name']);
@@ -66,7 +66,7 @@ if ($id) {
 
                             $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                         } else {
-                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user_id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
+                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $systemUser->id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
                         }
                     }
                 }
@@ -116,7 +116,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
         $error[] = _t('Message cannot be empty');
     }
 
-    if (($id && $id == $user_id) || !$id && $systemUser->name_lat == $name) {
+    if (($id && $id == $systemUser->id) || !$id && $systemUser->name_lat == $name) {
         $error[] = _t('You cannot send messages to yourself');
     }
 
@@ -146,14 +146,14 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
                 if ($systemUser->rights < 1) {
                     if ($set_mail['access']) {
                         if ($set_mail['access'] == 1) {
-                            $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "' LIMIT 1");
+                            $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $systemUser->id . "' LIMIT 1");
 
                             if (!$query->rowCount()) {
                                 $error[] = _t('To this user can write only contacts');
                             }
                         } else {
                             if ($set_mail['access'] == 2) {
-                                $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "' AND `friends`='1' LIMIT 1");
+                                $query = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $id . "' AND `from_id`='" . $systemUser->id . "' AND `friends`='1' LIMIT 1");
 
                                 if (!$query->rowCount()) {
                                     $error[] = _t('To this user can write only friends');
@@ -300,7 +300,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
 
     if (empty($error)) {
         $ignor = $db->query("SELECT COUNT(*) FROM `cms_contact`
-		WHERE `user_id`='" . $user_id . "'
+		WHERE `user_id`='" . $systemUser->id . "'
 		AND `from_id`='" . $id . "'
 		AND `ban`='1';")->fetchColumn();
 
@@ -311,7 +311,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
         if (empty($error)) {
             $ignor_m = $db->query("SELECT COUNT(*) FROM `cms_contact`
 			WHERE `user_id`='" . $id . "'
-			AND `from_id`='" . $user_id . "'
+			AND `from_id`='" . $systemUser->id . "'
 			AND `ban`='1';")->fetchColumn();
 
             if ($ignor_m) {
@@ -322,23 +322,23 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
 
     if (empty($error)) {
         $q = $db->query("SELECT * FROM `cms_contact`
-		WHERE `user_id`='" . $user_id . "' AND `from_id`='" . $id . "'");
+		WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='" . $id . "'");
 
         if (!$q->rowCount()) {
             $db->exec("INSERT INTO `cms_contact` SET
-			`user_id` = '" . $user_id . "',
+			`user_id` = '" . $systemUser->id . "',
 			`from_id` = '" . $id . "',
 			`time` = '" . time() . "'");
             $ch = 1;
         }
 
         $q1 = $db->query("SELECT * FROM `cms_contact`
-		WHERE `user_id`='" . $id . "' AND `from_id`='" . $user_id . "'");
+		WHERE `user_id`='" . $id . "' AND `from_id`='" . $systemUser->id . "'");
 
         if (!$q1->rowCount()) {
             $db->exec("INSERT INTO `cms_contact` SET
 			`user_id` = '" . $id . "',
-			`from_id` = '" . $user_id . "',
+			`from_id` = '" . $systemUser->id . "',
 			`time` = '" . time() . "'");
             $ch = 1;
         }
@@ -386,7 +386,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
     // Проверяем на повтор сообщения
     if (empty($error)) {
         $rres = $db->query("SELECT * FROM `cms_mail`
-        WHERE `user_id` = $user_id
+        WHERE `user_id` = " . $systemUser->id . "
         AND `from_id` = $id
         ORDER BY `id` DESC
         LIMIT 1
@@ -400,18 +400,18 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
 
     if (empty($error)) {
         $db->query("INSERT INTO `cms_mail` SET
-		`user_id` = '" . $user_id . "',
+		`user_id` = '" . $systemUser->id . "',
 		`from_id` = '" . $id . "',
 		`text` = " . $db->quote($text) . ",
 		`time` = '" . time() . "',
 		`file_name` = " . $db->quote($newfile) . ",
 		`size` = '" . $sizefile . "'");
 
-        $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '$user_id';");
+        $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $systemUser->id . "'");
 
         if ($ch == 0) {
-            $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $user_id . "' AND `from_id` = '" . $id . "'");
-            $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $id . "' AND `from_id` = '" . $user_id . "'");
+            $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $systemUser->id . "' AND `from_id` = '" . $id . "'");
+            $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $id . "' AND `from_id` = '" . $systemUser->id . "'");
         }
 
         header('Location: index.php?act=write' . ($id ? '&id=' . $id : ''));
@@ -438,7 +438,7 @@ if (!$tools->isIgnor($id) && empty($systemUser->ban['1']) && empty($systemUser->
 
 if ($id) {
 
-    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `sys`!='1' AND `delete`!='$user_id' AND `spam`='0'")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='$id')) AND `sys`!='1' AND `delete`!='" . $systemUser->id . "' AND `spam`='0'")->fetchColumn();
 
     if ($total) {
 
@@ -449,8 +449,8 @@ if ($id) {
         $req = $db->query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
             FROM `cms_mail`
             LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-            WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id'))
-            AND `cms_mail`.`delete`!='$user_id'
+            WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $systemUser->id . "') OR (`cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`from_id`='$id'))
+            AND `cms_mail`.`delete`!='" . $systemUser->id . "'
             AND `cms_mail`.`sys`!='1'
             AND `cms_mail`.`spam`='0'
             ORDER BY `cms_mail`.`time` DESC
@@ -463,14 +463,14 @@ if ($id) {
             if (!$row['read']) {
                 $out .= '<div class="gmenu">';
             } else {
-                if ($row['from_id'] == $user_id) {
+                if ($row['from_id'] == $systemUser->id) {
                     $out .= '<div class="list2">';
                 } else {
                     $out .= '<div class="list1">';
                 }
             }
 
-            if ($row['read'] == 0 && $row['from_id'] == $user_id) {
+            if ($row['read'] == 0 && $row['from_id'] == $systemUser->id) {
                 $mass_read[] = $row['mid'];
             }
 
@@ -501,7 +501,7 @@ if ($id) {
         //Ставим метку о прочтении
         if ($mass_read) {
             $result = implode(',', $mass_read);
-            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='$user_id' AND `id` IN (" . $result . ")");
+            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $systemUser->id . "' AND `id` IN (" . $result . ")");
         }
     } else {
         $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

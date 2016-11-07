@@ -17,7 +17,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Редактировать картинку
-if ($img && $user['id'] == $user_id || $systemUser->rights >= 6) {
+if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
     $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
 
     if ($req->rowCount()) {

@@ -6,11 +6,6 @@ $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id : 'forumwho';
 require_once('../system/head.php');
 
-if (!$user_id) {
-    header('Location: index.php');
-    exit;
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -22,6 +17,11 @@ $systemUser = $container->get(Johncms\User::class);
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
+
+if (!$systemUser->isValid()) {
+    header('Location: index.php');
+    exit;
+}
 
 if ($id) {
     // Показываем общий список тех, кто в выбранной теме

@@ -45,7 +45,7 @@ switch ($mod) {
             $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
             $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
                 serialize($set_mail_user),
-                $user_id,
+                $systemUser->id,
             ]);
         }
 
@@ -78,7 +78,7 @@ switch ($mod) {
 
             $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
                 serialize($set_forum),
-                $user_id,
+                $systemUser->id,
             ]);
 
             echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
@@ -92,7 +92,7 @@ switch ($mod) {
             $set_forum['postclip'] = 1;
             $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
                 serialize($set_forum),
-                $user_id,
+                $systemUser->id,
             ]);
             echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
         }
@@ -166,13 +166,13 @@ switch ($mod) {
             }
 
             // Записываем настройки
-            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $user_id]);
+            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $systemUser->id]);
             $_SESSION['set_ok'] = 1;
             header('Location: ?act=settings');
             exit;
         } elseif (isset($_GET['reset']) || empty($set_user)) {
             // Задаем настройки по-умолчанию
-            $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = '$user_id'");
+            $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = " . $systemUser->id);
             $_SESSION['reset_ok'] = 1;
             header('Location: ?act=settings');
             exit;

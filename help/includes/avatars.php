@@ -2,17 +2,23 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+$tools = $container->get('tools');
 
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
     $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : false;
 
-    if ($user_id && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
+    if ($systemUser->isValid() && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
         if (isset($_POST['submit'])) {
             // Устанавливаем пользовательский Аватар
-            if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $user_id . '.png')) {
+            if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $systemUser->id . '.png')) {
                 echo '<div class="gmenu"><p>' . _t('Avatar has been successfully applied') . '<br />' .
                     '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -42,7 +48,7 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../images/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
 
-                if ($user_id) {
+                if ($systemUser->isValid()) {
                     echo ' - <a href="?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) . '">' . _t('Select') . '</a>';
                 }
 

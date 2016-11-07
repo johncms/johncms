@@ -19,7 +19,7 @@ $tools = $container->get('tools');
 
 
 
-if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $user_id)) {
+if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд
     $flood = $tools->antiflood();
 
@@ -161,7 +161,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                 }
 
                 echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
-                $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
+                $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $systemUser->id);
                 echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
                 require_once('../system/end.php');
                 exit;

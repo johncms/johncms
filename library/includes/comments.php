@@ -8,17 +8,20 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-if (!$user_id) {
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+if (!$systemUser->isValid()) {
     echo $tools->displayError(_t('Access forbidden'));
     require_once('../system/end.php');
     exit;
 }
-
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);

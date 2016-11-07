@@ -12,13 +12,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 
 //Отображаем список файлов
-$total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `delete`!='$user_id' AND `file_name`!=''")->fetchColumn();
+$total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `delete`!='" . $systemUser->id . "' AND `file_name`!=''")->fetchColumn();
 
 if ($total) {
     if ($total > $kmess) {
@@ -28,8 +31,8 @@ if ($total) {
     $req = $db->query("SELECT `cms_mail`.*, `users`.`name`
         FROM `cms_mail`
         LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
-	    WHERE (`cms_mail`.`user_id`='$user_id' OR `cms_mail`.`from_id`='$user_id')
-	    AND `cms_mail`.`delete`!='$user_id'
+	    WHERE (`cms_mail`.`user_id`='" . $systemUser->id . "' OR `cms_mail`.`from_id`='" . $systemUser->id . "')
+	    AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 	    AND `cms_mail`.`file_name`!=''
 	    ORDER BY `cms_mail`.`time` DESC
 	    LIMIT " . $start . "," . $kmess);

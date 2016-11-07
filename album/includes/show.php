@@ -56,7 +56,7 @@ if ($album['access'] != 2) {
 }
 
 if (($album['access'] == 1 || $album['access'] == 3)
-    && $user['id'] != $user_id
+    && $user['id'] != $systemUser->id
     && $systemUser->rights < 7
 ) {
     // Доступ закрыт
@@ -64,7 +64,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
     require('../system/end.php');
     exit;
 } elseif ($album['access'] == 2
-    && $user['id'] != $user_id
+    && $user['id'] != $systemUser->id
     && $systemUser->rights < 7
 ) {
     // Доступ через пароль
@@ -115,22 +115,22 @@ if ($total) {
         echo($i % 2 ? '<div class="list2">' : '<div class="list1">');
         if ($view) {
             // Предпросмотр отдельного изображения
-            if ($user['id'] == $user_id && isset($_GET['profile'])) {
+            if ($user['id'] == $systemUser->id && isset($_GET['profile'])) {
                 copy(
                     '../files/users/album/' . $user['id'] . '/' . $res['tmb_name'],
-                    '../files/users/photo/' . $user_id . '_small.jpg'
+                    '../files/users/photo/' . $systemUser->id . '_small.jpg'
                 );
                 copy(
                     '../files/users/album/' . $user['id'] . '/' . $res['img_name'],
-                    '../files/users/photo/' . $user_id . '.jpg'
+                    '../files/users/photo/' . $systemUser->id . '.jpg'
                 );
                 echo '<span class="green"><b>' . _t('Photo added to the profile') . '</b></span><br>';
             }
             echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
 
             // Счетчик просмотров
-            if (!$db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '$user_id' AND `file_id` = " . $res['id'])->fetchColumn()) {
-                $db->exec("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = " . time());
+            if (!$db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = " . $res['id'])->fetchColumn()) {
+                $db->exec("INSERT INTO `cms_album_views` SET `user_id` = '" . $systemUser->id . "', `file_id` = '" . $res['id'] . "', `time` = " . time());
                 $views = $db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'")->fetchColumn();
                 $db->exec("UPDATE `cms_album_files` SET `views` = '$views' WHERE `id` = " . $res['id']);
             }
@@ -145,14 +145,14 @@ if ($total) {
 
         echo '<div class="sub">';
 
-        if ($user['id'] == $user_id || $systemUser->rights >= 6) {
+        if ($user['id'] == $systemUser->id || $systemUser->rights >= 6) {
             echo implode(' | ', [
                 '<a href="?act=image_edit&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a>',
                 '<a href="?act=image_move&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Move') . '</a>',
                 '<a href="?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Delete') . '</a>',
             ]);
 
-            if ($user['id'] == $user_id && $view) {
+            if ($user['id'] == $systemUser->id && $view) {
                 echo ' | <a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;view&amp;img=' . $res['id'] . '&amp;profile">' . _t('Add to Profile') . '</a>';
             }
         }

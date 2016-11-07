@@ -16,7 +16,7 @@ $textl = htmlspecialchars($user['name']) . ': ' . _t('Information');
 require('../system/head.php');
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Information') . '</div>';
 
-if ($user['id'] == $user_id || ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'])) {
+if ($user['id'] == $systemUser->id || ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'])) {
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a></div>';
 }
 
@@ -38,7 +38,7 @@ echo '<li><span class="gray">' . _t('Name') . ':</span> ' . (empty($user['imname
     '<li><span class="gray">' . _t('Phone number') . ':</span> ' . (empty($user['mibile']) ? '' : $user['mibile']) . '</li>' .
     '<li><span class="gray">E-mail:</span> ';
 
-if (!empty($user['mail']) && $user['mailvis'] || $systemUser->rights >= 7 || $user['id'] == $user_id) {
+if (!empty($user['mail']) && $user['mailvis'] || $systemUser->rights >= 7 || $user['id'] == $systemUser->id) {
     echo $user['mail'] . ($user['mailvis'] ? '' : '<span class="gray"> [' . _t('hidden') . ']</span>');
 }
 

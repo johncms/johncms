@@ -11,6 +11,9 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
@@ -21,14 +24,14 @@ if (!$img) {
     exit;
 }
 
-$check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '$user_id' AND `file_id` = '$img' LIMIT 1");
+$check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '$img' LIMIT 1");
 
 if ($check->rowCount()) {
     header('Location: ' . $ref);
     exit;
 }
 
-$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` != '$user_id'");
+$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` != " . $systemUser->id);
 
 if ($req->rowCount()) {
     $res = $req->fetch();
@@ -39,7 +42,7 @@ if ($req->rowCount()) {
              * Отдаем положительный голос
              */
             $db->exec("INSERT INTO `cms_album_votes` SET
-                `user_id` = '$user_id',
+                `user_id` = '" . $systemUser->id . "',
                 `file_id` = '$img',
                 `vote` = '1'
             ");
@@ -51,7 +54,7 @@ if ($req->rowCount()) {
              * Отдаем отрицательный голос
              */
             $db->exec("INSERT INTO `cms_album_votes` SET
-                `user_id` = '$user_id',
+                `user_id` = '" . $systemUser->id . "',
                 `file_id` = '$img',
                 `vote` = '-1'
             ");

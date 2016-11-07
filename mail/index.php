@@ -18,11 +18,14 @@ if (isset($_SESSION['ref'])) {
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
 //Проверка авторизации
-if (!$user_id) {
+if (!$systemUser->isValid()) {
     header('Location: ' . $config->homeurl . '/?err');
     exit;
 }
@@ -86,16 +89,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         $res = $req->fetch();
 
-        if ($id == $user_id) {
+        if ($id == $systemUser->id) {
             echo '<div class="rmenu">' . _t('You cannot add yourself as a contact') . '</div>';
         } else {
             //Добавляем в заблокированные
             if (isset($_POST['submit'])) {
-                $q = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = " . $user_id . " AND `from_id` = " . $id);
+                $q = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = " . $systemUser->id . " AND `from_id` = " . $id);
 
                 if (!$q->rowCount()) {
                     $db->query("INSERT INTO `cms_contact` SET
-					`user_id` = " . $user_id . ",
+					`user_id` = " . $systemUser->id . ",
 					`from_id` = " . $id . ",
 					`time` = " . time());
                 }
@@ -111,7 +114,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     } else {
         echo '<div class="topmenu"><b>' . _t('My Contacts') . '</b> | <a href="index.php?act=ignor">' . _t('Blocklist') . '</a></div>';
         //Получаем список контактов
-        $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `ban`!='1'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `ban`!='1'")->fetchColumn();
 
         if ($total) {
             if ($total > $kmess) {
@@ -121,7 +124,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
             $req = $db->query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
                 FROM `cms_contact`
 			    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
-			    WHERE `cms_contact`.`user_id`='" . $user_id . "'
+			    WHERE `cms_contact`.`user_id`='" . $systemUser->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
 			    LIMIT $start, $kmess"
@@ -130,8 +133,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
                 echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
                 $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
-                $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id'")->rowCount();
-                $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='$user_id' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='$user_id'")->rowCount();
+                $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $systemUser->id . "'")->rowCount();
+                $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $systemUser->id . "'")->rowCount();
                 $arg = [
                     'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                     'sub'    => $subtext,

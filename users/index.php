@@ -14,6 +14,9 @@ require('../incfiles/core.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
@@ -25,7 +28,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $tools = $container->get('tools');
 
 // Закрываем от неавторизованных юзеров
-if (!$user_id && !$config->active) {
+if (!$systemUser->isValid() && !$config->active) {
     require('../system/head.php');
     echo $tools->displayError(_t('For registered users only'));
     require('../system/end.php');

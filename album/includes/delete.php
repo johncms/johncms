@@ -17,7 +17,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 // Удалить альбом
-if ($al && $user['id'] == $user_id || $systemUser->rights >= 6) {
+if ($al && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
     $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
 
     if ($req_a->rowCount()) {

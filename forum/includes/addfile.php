@@ -10,13 +10,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
-if (!$id || !$user_id) {
+if (!$id || !$systemUser->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
@@ -25,7 +28,7 @@ if (!$id || !$user_id) {
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
 $res = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
 
-if ($res['type'] != 'm' || $res['user_id'] != $user_id) {
+if ($res['type'] != 'm' || $res['user_id'] != $systemUser->id) {
     echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;

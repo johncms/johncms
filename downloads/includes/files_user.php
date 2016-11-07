@@ -8,19 +8,22 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
 // Файлы юзера
 $textl = _t('User Files');
 
-if (($user = Mobi::getUser()) === false || (!Mobi::$USER && !$user_id)) {
+if (($user = Mobi::getUser()) === false || (!Mobi::$USER && !$systemUser->id)) {
     echo _t('User does not exists');
     exit;
 }
 
 if (!Mobi::$USER) {
-    Mobi::$USER = $user_id;
+    Mobi::$USER = $systemUser->id;
 }
 
 echo '<div class="phdr"><a href="/profile?user=' . Mobi::$USER . '">' . _t('Profile') . '</a></div>' .

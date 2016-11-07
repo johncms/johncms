@@ -99,7 +99,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     $fname,
                     $name_link,
                     mb_substr($name, 0, 200),
-                    $user_id,
+                    $systemUser->id,
                     $text,
                 ]);
                 $file_id = $db->lastInsertId();
