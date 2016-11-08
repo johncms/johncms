@@ -52,7 +52,7 @@ switch ($mod) {
                 $array = explode('-', $get_ip);
                 $get_ip = trim($array[0]);
 
-                if (!core::ip_valid($get_ip)) {
+                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('First IP is entered incorrectly');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -60,7 +60,7 @@ switch ($mod) {
 
                 $get_ip = trim($array[1]);
 
-                if (!core::ip_valid($get_ip)) {
+                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('Second IP is entered incorrectly');
                 } else {
                     $ip2 = ip2long($get_ip);
@@ -88,7 +88,7 @@ switch ($mod) {
                 // Обрабатываем одиночный адрес
                 $mode = 3;
 
-                if (!core::ip_valid($get_ip)) {
+                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error = _t('Invalid IP');
                 } else {
                     $ip1 = ip2long($get_ip);

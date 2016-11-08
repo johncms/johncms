@@ -35,7 +35,7 @@ if ($search) {
         $array = explode('-', $search);
         $ip = trim($array[0]);
 
-        if (!core::ip_valid($ip)) {
+        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
             $error[] = _t('First IP is entered incorrectly');
         } else {
             $ip1 = ip2long($ip);
@@ -43,7 +43,7 @@ if ($search) {
 
         $ip = trim($array[1]);
 
-        if (!core::ip_valid($ip)) {
+        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
             $error[] = _t('Second IP is entered incorrectly');
         } else {
             $ip2 = ip2long($ip);
@@ -68,7 +68,7 @@ if ($search) {
         }
     } else {
         // Обрабатываем одиночный адрес
-        if (!core::ip_valid($search)) {
+        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $search)) {
             $error = _t('Invalid IP');
         } else {
             $ip1 = ip2long($search);
