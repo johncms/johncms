@@ -63,6 +63,42 @@ session_start();
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\Environment $env */
+$env = App::getContainer()->get('env');
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+// Проверка на IP бан
+$req = $db->query("
+            SELECT `ban_type`, `link` FROM `cms_ban_ip`
+            WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
+            " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : "") . "
+            LIMIT 1
+        ") or die('Error: table "cms_ban_ip"');
+
+if ($req->rowCount()) {
+    $res = $req->fetch();
+
+    switch ($res['ban_type']) {
+        case 2:
+            if (!empty($res['link'])) {
+                header('Location: ' . $res['link']);
+            } else {
+                header('Location: http://johncms.com');
+            }
+            exit;
+            break;
+        case 3:
+            //TODO: реализовать запрет регистрации
+            //self::$deny_registration = true;
+            break;
+        default :
+            header("HTTP/1.0 404 Not Found");
+            exit;
+    }
+}
+
 //TODO: Написать смену языка
 $locale = 'ru';
 

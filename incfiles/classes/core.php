@@ -6,7 +6,6 @@ class core
 {
     public static $ip;                        // Путь к корневой папке
     public static $ip_via_proxy = 0;          // IP адрес за прокси-сервером
-    public static $ip_count = [];             // Счетчик обращений с IP адреса
     public static $user_agent;                // User Agent
     public static $system_set;                //TODO: Удалить
     public static $lng_iso = 'en';            // Двухбуквенный ISO код языка
@@ -16,10 +15,6 @@ class core
     public static $user_id = false;           //TODO: Удалить
     public static $user_data = [];            //TODO: Удалить
     public static $user_set = [];             // Пользовательские настройки
-
-    private $flood_chk = 1;                   // Включение - выключение функции IP антифлуда
-    private $flood_interval = '120';          // Интервал времени в секундах
-    private $flood_limit = '70';              // Число разрешенных запросов за интервал
 
     /**
      * @var Interop\Container\ContainerInterface
@@ -43,17 +38,11 @@ class core
         self::$ip_via_proxy = $env->getIpViaProxy();
         self::$user_agent = $env->getUserAgent();
 
-        // Проверка адреса IP на флуд
-        $this->ip_flood();
-
         // Получаем глобальную конфигурацию
         $this->config = $this->container->get('config');
 
         // Получаем объект PDO
         $this->db = $this->container->get(PDO::class);
-
-        // Проверяем адрес IP на бан
-        $this->checkIpBan();
 
         // Получаем системные настройки
         self::$system_set = $this->container->get('config')['johncms'];
@@ -68,91 +57,6 @@ class core
 
         // Определяем язык системы
         $this->lng_detect();
-    }
-
-    /**
-     * Проверка адреса IP на флуд
-     */
-    private function ip_flood()
-    {
-        if ($this->flood_chk) {
-            //if ($this->ip_whitelist(self::$ip))
-            //    return true;
-            $file = ROOT_PATH . 'files/cache/ip_flood.dat';
-            $tmp = [];
-            $requests = 1;
-
-            if (!file_exists($file)) {
-                $in = fopen($file, "w+");
-            } else {
-                $in = fopen($file, "r+");
-            }
-
-            flock($in, LOCK_EX) or die("Cannot flock ANTIFLOOD file.");
-            $now = time();
-
-            while ($block = fread($in, 8)) {
-                $arr = unpack("Lip/Ltime", $block);
-
-                if (($now - $arr['time']) > $this->flood_interval) {
-                    continue;
-                }
-
-                if ($arr['ip'] == self::$ip) {
-                    $requests++;
-                }
-
-                $tmp[] = $arr;
-                self::$ip_count[] = $arr['ip'];
-            }
-
-            fseek($in, 0);
-            ftruncate($in, 0);
-
-            for ($i = 0; $i < count($tmp); $i++) {
-                fwrite($in, pack('LL', $tmp[$i]['ip'], $tmp[$i]['time']));
-            }
-
-            fwrite($in, pack('LL', self::$ip, $now));
-            fclose($in);
-
-            if ($requests > $this->flood_limit) {
-                die('FLOOD: exceeded limit of allowed requests');
-            }
-        }
-    }
-
-    /**
-     * Проверяем адрес IP на Бан
-     */
-    private function checkIpBan()
-    {
-        $req = $this->db->query("SELECT `ban_type`, `link` FROM `cms_ban_ip`
-            WHERE '" . self::$ip . "' BETWEEN `ip1` AND `ip2`
-            " . (self::$ip_via_proxy ? " OR '" . self::$ip_via_proxy . "' BETWEEN `ip1` AND `ip2`" : "") . "
-            LIMIT 1
-        ") or die('Error: table "cms_ban_ip"');
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-
-            switch ($res['ban_type']) {
-                case 2:
-                    if (!empty($res['link'])) {
-                        header('Location: ' . $res['link']);
-                    } else {
-                        header('Location: http://johncms.com');
-                    }
-                    exit;
-                    break;
-                case 3:
-                    self::$deny_registration = true;
-                    break;
-                default :
-                    header("HTTP/1.0 404 Not Found");
-                    exit;
-            }
-        }
     }
 
     /**
