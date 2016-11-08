@@ -231,7 +231,6 @@ class core
                     self::$user_id = $user_data['preg'] ? $user_id : false;
                     self::$user_data = $user_data;
                     self::$user_set = !empty($user_data['set_user']) ? unserialize($user_data['set_user']) : $this->user_setings_default();
-                    $this->user_ip_history();
                 } else {
                     // Если авторизация не прошла
                     $this->db->query("UPDATE `users` SET `failed_login` = '" . ($user_data['failed_login'] + 1) . "' WHERE `id` = '" . $user_data['id'] . "'");
@@ -244,39 +243,6 @@ class core
         } else {
             // Для неавторизованных, загружаем настройки по-умолчанию
             self::$user_set = $this->user_setings_default();
-        }
-    }
-
-    /**
-     * Фиксация истории IP адресов пользователя
-     */
-    private function user_ip_history()
-    {
-        if (self::$user_data['ip'] != self::$ip || self::$user_data['ip_via_proxy'] != self::$ip_via_proxy) {
-            // Удаляем из истории текущий адрес (если есть)
-            $this->db->exec("DELETE FROM `cms_users_iphistory`
-                WHERE `user_id` = '" . self::$user_id . "'
-                AND `ip` = '" . self::$ip . "'
-                AND `ip_via_proxy` = '" . self::$ip_via_proxy . "'
-                LIMIT 1
-            ");
-
-            if (!empty(self::$user_data['ip']) && self::ip_valid(long2ip(self::$user_data['ip']))) {
-                // Вставляем в историю предыдущий адрес IP
-                $this->db->exec("INSERT INTO `cms_users_iphistory` SET
-                    `user_id` = '" . self::$user_id . "',
-                    `ip` = '" . self::$user_data['ip'] . "',
-                    `ip_via_proxy` = '" . self::$user_data['ip_via_proxy'] . "',
-                    `time` = '" . self::$user_data['lastdate'] . "'
-                ");
-            }
-
-            // Обновляем текущий адрес в таблице `users`
-            $this->db->exec("UPDATE `users` SET
-                `ip` = '" . self::$ip . "',
-                `ip_via_proxy` = '" . self::$ip_via_proxy . "'
-                WHERE `id` = '" . self::$user_id . "'
-            ");
         }
     }
 

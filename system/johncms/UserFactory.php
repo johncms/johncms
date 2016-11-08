@@ -69,7 +69,11 @@ class UserFactory
                         $userData['rights'] = 0;
                     }
 
-                    //$this->user_ip_history();
+                    // Фиксируем историю IP
+                    if ($userData['ip'] != $this->env->getIp() || $userData['ip_via_proxy'] != $this->env->getIpViaProxy()) {
+                        $this->ipHistory($userData);
+                    }
+
                     return $userData;
                 } else {
                     // Если авторизация не прошла
@@ -85,6 +89,12 @@ class UserFactory
         return $this->userTemplate();
     }
 
+    /**
+     * Проверка на бан
+     *
+     * @param int $userId
+     * @return array
+     */
     private function banCheck($userId)
     {
         $ban = [];
@@ -95,6 +105,37 @@ class UserFactory
         }
 
         return $ban;
+    }
+
+    /**
+     * Фиксация истории IP адресов пользователя
+     *
+     * @param array $userData
+     */
+    private function ipHistory(array $userData)
+    {
+        // Удаляем из истории текущий адрес (если есть)
+        $this->db->exec("DELETE FROM `cms_users_iphistory`
+          WHERE `user_id` = '" . $userData['id'] . "'
+          AND `ip` = '" . $this->env->getIp() . "'
+          AND `ip_via_proxy` = '" . $this->env->getIpViaProxy() . "'
+          LIMIT 1
+        ");
+
+        // Вставляем в историю предыдущий адрес IP
+        $this->db->exec("INSERT INTO `cms_users_iphistory` SET
+          `user_id` = '" . $userData['id'] . "',
+          `ip` = '" . $userData['ip'] . "',
+          `ip_via_proxy` = '" . $userData['ip_via_proxy'] . "',
+          `time` = '" . $userData['lastdate'] . "'
+        ");
+
+        // Обновляем текущий адрес в таблице `users`
+        $this->db->exec("UPDATE `users` SET
+          `ip` = '" . $this->env->getIp() . "',
+          `ip_via_proxy` = '" . $this->env->getIpViaProxy() . "'
+          WHERE `id` = '" . $userData['id'] . "'
+        ");
     }
 
     private function userTemplate()
