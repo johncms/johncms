@@ -35,8 +35,9 @@ echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div>' .
 
 switch ($mod) {
     case 'ip':
+        $ip_count = []; //TODO: реализовать активность IP
         // Список активных IP, со счетчиком обращений
-        $ip_array = array_count_values(core::$ip_count);
+        $ip_array = array_count_values($ip_count);
         $total = count($ip_array);
 
         if ($start >= $total) {
