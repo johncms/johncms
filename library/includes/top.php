@@ -11,6 +11,9 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+use Library\Hashtags;
+use Library\Rating;
+
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'rating' ? 'rating' : (isset($_GET['sort']) && $_GET['sort'] == 'comm' ? 'comm' : 'read');
 
 $menu[] = $sort == 'read' ? '<strong>' . _t('Most readings') . '</strong>' : '<a href="?act=top&amp;sort=read">' . _t('Most readings') . '</a> ';

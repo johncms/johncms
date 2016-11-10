@@ -2,13 +2,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$obj = new Hashtags($id);
-if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
-    $type = $_GET['type'];
-} else {
-    redir404();
-}
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -24,9 +17,21 @@ $tools = $container->get('tools');
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
+use Library\Hashtags;
+use Library\Tree;
+use Library\Utils;
+
+$obj = new Hashtags($id);
+if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
+    $type = $_GET['type'];
+} else {
+    Utils::redir404();
+}
+
 $author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) ? 1 : 0;
-if (!$adm || !$author) {
-    redir404();
+
+if (!$adm || (!$author && $type == 'article')) {
+    Utils::redir404();
 }
 
 if (isset($_POST['submit'])) {
@@ -105,7 +110,7 @@ if (isset($_POST['submit'])) {
     $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
 
     if (!$row) {
-        redir404();
+        Utils::redir404();
     }
 
     echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | '

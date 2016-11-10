@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if (!$adm) {
-    redir404();
+    Library\Utils::redir404();
 }
 
 if (isset($_POST['submit'])) {

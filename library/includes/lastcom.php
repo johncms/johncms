@@ -21,7 +21,6 @@ ORDER BY `cms_library_comments`.`time` DESC
 LIMIT 20');
 
 if ($stmt->rowCount()) {
-
     $i = 0;
     while ($row = $stmt->fetch()) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'

@@ -8,7 +8,7 @@ ob_start();
 if (isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2'])) {
     $type = $_GET['type'];
 } else {
-    redir404();
+    Library\Utils::redir404();
 }
 
 $image_lib = file_exists('../files/library/images/orig/' . $id . '.png')

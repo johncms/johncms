@@ -11,6 +11,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+use Library\Tree;
+
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Moderation Articles') . '</div>';
 
 if ($id && isset($_GET['yes'])) {
@@ -34,7 +36,7 @@ if ($total) {
     $i = 0;
 
     while ($row = $stmt->fetch()) {
-        $dir_nav = new tree($row['cat_id']);
+        $dir_nav = new Tree($row['cat_id']);
         $dir_nav->process_nav_panel();
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
