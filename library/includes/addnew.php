@@ -17,7 +17,7 @@ $config = $container->get(Johncms\Config::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-
+use Library\Hashtags;
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд

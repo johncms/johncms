@@ -35,7 +35,7 @@ if ($req_obj->rowCount()) {
         exit;
     }
 
-    $obj = new Hashtags($id);
+    $obj = new Library\Hashtags($id);
     $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1")->fetch();
     $context_top =
         '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .

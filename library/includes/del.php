@@ -1,9 +1,6 @@
 <?php
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if (!$adm) {
-    redir404();
-}
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -14,12 +11,19 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+use Library\Tree;
+use Library\Utils;
+
+if (!$adm) {
+    Utils::redir404();
+}
+
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Delete') . '</div>';
 
 if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image'])) {
     $type = $_GET['type'];
 } else {
-    redir404();
+    Utils::redir404();
 }
 $change = ($type == 'dir' ? $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1 : '');
 

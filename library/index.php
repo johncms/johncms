@@ -31,7 +31,23 @@ $config = $container->get(Johncms\Config::class);
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-require_once('inc.php');
+use Library\Tree;
+use Library\Hashtags;
+use Library\Rating;
+use Library\Links;
+use Library\Utils;
+
+/*  php 7+
+use Library\{
+            Tree, 
+            Hashtags, 
+            Rating, 
+            Links
+}
+*/
+
+$adm = ($systemUser->rights > 4) ? true : false;
+$i = 0;
 
 $textl = _t('Library');
 
@@ -189,7 +205,7 @@ if (in_array($act, $array_includes)) {
                 if ($actdir['id'] > 0) {
                     $actdir = $actdir['dir'];
                 } else {
-                    redir404();
+                    Utils::redir404();
                 }
                 echo '<div class="phdr">' . $dir_nav->print_nav_panel() . '</div>';
 
@@ -309,7 +325,7 @@ if (in_array($act, $array_includes)) {
                         $text = $db->query("SELECT SUBSTRING(`text`, " . ($page == 1 ? 1 : ($page - 1) * $symbols) . ", " . ($symbols + 100) . ") FROM `library_texts` WHERE `id`='" . $id . "'")->fetchColumn();
                         $tmp = mb_substr($text, $symbols, 100);
                     } else {
-                        redir404();
+                        Utils::redir404();
                     }
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
@@ -361,8 +377,8 @@ if (in_array($act, $array_includes)) {
                         echo '</div>';
                     }
 
-                    $text = $tools->checkout(mb_substr($text, ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))),
-                        (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(position($tmp, PHP_EOL), position($tmp, ' ')) - ($page == 1 ? 0 : min(position($text, PHP_EOL), position($text, ' '))))), 1, 1);
+                    $text = $tools->checkout(mb_substr($text, ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))),
+                        (($count_pages == 1 || $page == $count_pages) ? $symbols : $symbols + min(Utils::position($tmp, PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text, PHP_EOL), Utils::position($text, ' '))))), 1, 1);
 
                     if ($set_user['smileys']) {
                         $text = $tools->smilies($text, $systemUser->rights ? 1 : 0);
@@ -392,7 +408,7 @@ if (in_array($act, $array_includes)) {
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
                     }
                 } else {
-                    redir404();
+                    Utils::redir404();
                 }
         } // end switch
     } // end else !id
