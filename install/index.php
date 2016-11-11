@@ -75,8 +75,6 @@ class install
             '/files/users/avatar/',
             '/files/users/photo/',
             '/files/mail/',
-            '/gallery/foto/',
-            '/gallery/temp/',
             '/system/config/',
         ];
         $error = [];
@@ -265,7 +263,6 @@ switch ($act) {
     case 'final':
         // Установка завершена
         //TODO: разобраться с обновлением смайлов
-        //functions::smileys(0, 2);
         echo '<span class="st">' . $lng['check_1'] . '</span><br />' .
             '<span class="st">' . $lng['database'] . '</span><br />' .
             '<span class="st">' . $lng['site_settings'] . '</span>' .
@@ -291,8 +288,7 @@ switch ($act) {
         $db_name = isset($_POST['dbname']) ? htmlentities(trim($_POST['dbname'])) : 'johncms';
         $db_user = isset($_POST['dbuser']) ? htmlentities(trim($_POST['dbuser'])) : 'root';
         $db_pass = isset($_POST['dbpass']) ? htmlentities(trim($_POST['dbpass'])) : '';
-        $site_url = isset($_POST['siteurl']) ? preg_replace("#/$#", '',
-            htmlentities(trim($_POST['siteurl']), ENT_QUOTES, 'UTF-8')) : 'http://' . $_SERVER["SERVER_NAME"];
+        $site_url = isset($_POST['siteurl']) ? preg_replace("#/$#", '', htmlentities(trim($_POST['siteurl']), ENT_QUOTES, 'UTF-8')) : 'http://' . $_SERVER["SERVER_NAME"];
         $site_mail = isset($_POST['sitemail']) ? htmlentities(trim($_POST['sitemail']), ENT_QUOTES, 'UTF-8') : '@';
         $admin_user = isset($_POST['admin']) ? trim($_POST['admin']) : 'admin';
         $admin_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
@@ -385,11 +381,10 @@ switch ($act) {
                         'db_pass' => $db_pass,
                     ],
                 ];
-
                 $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ';';
 
                 if (!file_put_contents('../system/config/database.local.php', $dbfile)) {
-                    echo 'ERROR: Can not write config database.local.php</body></html>';
+                    echo 'ERROR: Can not write database.local.php</body></html>';
                     exit;
                 }
 
@@ -404,11 +399,37 @@ switch ($act) {
                     exit;
                 }
 
-                // Записываем системные настройки
-                $stmt = $pdo->prepare('UPDATE `cms_settings` SET `val` = ? WHERE `key` = ?');
-                $stmt->execute([$language, 'lng']);
-                $stmt->execute([$site_url, 'homeurl']);
-                $stmt->execute([$site_mail, 'email']);
+                $systemSettings = [
+                    'johncms' => [
+                        'active'        => 1,
+                        'antiflood'     => 'a:5:{s:4:"mode";i:2;s:3:"day";i:10;s:5:"night";i:30;s:7:"dayfrom";i:10;s:5:"dayto";i:22;}',
+                        'clean_time'    => 0,
+                        'copyright'     => 'Powered by JohnCMS',
+                        'email'         => $site_mail,
+                        'flsz'          => '16000',
+                        'gzip'          => 1,
+                        'homeurl'       => $site_url,
+                        'karma'         => 'a:6:{s:12:"karma_points";i:5;s:10:"karma_time";i:86400;s:5:"forum";i:20;s:4:"time";i:0;s:2:"on";i:1;s:3:"adm";i:0;}',
+                        'lng'           => $language,
+                        'mod_reg'       => 2,
+                        'mod_forum'     => 2,
+                        'mod_guest'     => 2,
+                        'mod_lib'       => 2,
+                        'mod_lib_comm'  => 1,
+                        'mod_down'      => 2,
+                        'mod_down_comm' => 1,
+                        'meta_key'      => 'johncms',
+                        'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
+                        'news'          => '',
+                        'skindef'       => 'default',
+                    ],
+                ];
+                $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ';';
+
+                if (!file_put_contents('../system/config/system.local.php', $configFile)) {
+                    echo 'ERROR: Can not write system.local.php</body></html>';
+                    exit;
+                }
 
                 // Создаем Администратора
                 $stmt = $pdo->prepare("INSERT INTO `users` SET
