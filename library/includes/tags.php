@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$obj = new Hashtags(0);
+$obj = new Library\Hashtags(0);
 
 if (isset($_GET['tag'])) {
     /** @var Interop\Container\ContainerInterface $container */
@@ -29,7 +29,7 @@ if (isset($_GET['tag'])) {
 
         foreach (new LimitIterator(new ArrayIterator($obj->get_all_tag_stats($tag)), $start, $kmess) as $txt) {
             $row = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt)->fetch();
-            $obj = new Hashtags($row['id']);
+            $obj = new Library\Hashtags($row['id']);
             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
@@ -51,5 +51,5 @@ if (isset($_GET['tag'])) {
         echo '<p><a href="?">' . _t('To Library') . '</a></p>';
     }
 } else {
-    redir404();
+    Library\Utils::redir404();
 }

@@ -11,6 +11,9 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
+use Library\Hashtags;
+use Library\Rating;
+
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New Articles') . '</div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();

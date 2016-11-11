@@ -25,7 +25,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Johncms\\": "system/johncms/"
+      "Johncms\\": "system/johncms/",
+      "Library\\": "library/classes"
     }
   }
 }

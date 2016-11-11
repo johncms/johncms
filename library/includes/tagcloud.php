@@ -2,7 +2,7 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$obj = new Hashtags();
+$obj = new Library\Hashtags();
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'rel' ? 'cmprang' : 'cmpalpha';
 
