@@ -2,19 +2,41 @@
 
 namespace Library;
 
+/**
+ * Класс хештегов
+ * Class Hashtags
+ * @package Library
+ * @author  Koenig(Compolomus)
+ */
 class Hashtags
 {
+    /**
+     * не обязательный аргумент, индификатор статьи
+     * @var bool|int
+     */
     private $lib_id = false;
-    /** @var PDO $db */
+
+    /**
+     * @var PDO $db
+     */
     private $db;
 
+    /**
+     * Hashtags constructor.
+     * @param int $id
+     */
     public function __construct($id = 0)
     {
         $this->lib_id = $id;
         $this->db = \App::getContainer()->get(\PDO::class);
     }
 
-    public function get_all_tag_stats($tag)
+    /**
+     * Получение всех статей по тегу
+     * @param $tag
+     * @return array|null
+     */
+    public function getAllTagStats($tag)
     {
         $stmt = $this->db->prepare('SELECT `lib_text_id` FROM `library_tags` WHERE `tag_name` = ?');
         $stmt->execute([$tag]);
@@ -23,11 +45,16 @@ class Hashtags
         } else {
             return null;
         }
-        
+
         return $res;
     }
 
-    public function get_all_stat_tags($tpl = 0)
+    /**
+     * Получение всех тегов статьи
+     * @param int $tpl
+     * @return object|null
+     */
+    public function getAllStatTags($tpl = 0)
     {
         $stmt = $this->db->prepare('SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
@@ -35,68 +62,96 @@ class Hashtags
             $res = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
             $obj = new Links($res);
             if ($tpl == 1) {
-                return $obj->proccess('tpl_tag')->link_separator()->result();
+                return $obj->proccess('tplTag')->linkSeparator()->result();
             } else {
-                return $obj->link_separator(', ')->result();
+                return $obj->linkSeparator(', ')->result();
             }
         } else {
             return null; // у статьи нет тегов
         }
     }
 
-    public function add_tags($tags)
+    /**
+     * Добавление тега
+     * @param $tags
+     * @return int|null
+     */
+    public function addTags($tags)
     {
         if (empty($tags)) {
             return null;
         } else {
             $stmt = $this->db->prepare('INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES (?, ?)');
             foreach ($tags as $tag) {
-                if (!$this->isset_tag($this->valid_tag($tag))) {
-                    $stmt->execute([$this->lib_id, $this->valid_tag($tag)]);
+                if (!$this->issetTag($this->validTag($tag))) {
+                    $stmt->execute([$this->lib_id, $this->validTag($tag)]);
                 }
             }
         }
-        
+
         return $stmt->rowCount();
     }
 
-    public function del_tags()
+    /**
+     * Удаление тега
+     * @return int
+     */
+    public function delTags()
     {
         $stmt = $this->db->prepare('DELETE FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
         return $stmt->rowCount();
     }
 
-    public function isset_tag($tag)
+    /**
+     * Проверка существования тега
+     * @param string $tag
+     * @return bool
+     */
+    public function issetTag($tag)
     {
         $stmt = $this->db->prepare('SELECT * FROM `library_tags` WHERE `lib_text_id` = ? AND `tag_name` = ?');
         $stmt->execute([$this->lib_id, $tag]);
-        
+
         return $stmt->rowCount() > 0 ? true : false;
     }
 
-    public function valid_tag($tag)
+    /**
+     * Валидация корректности тега, замена спец символов
+     * @param string $tag
+     * @return string
+     */
+    public function validTag($tag)
     {
         return preg_replace(['/[^[:alnum:]]/ui', '/\s\s+/'], ' ', preg_quote(mb_strtolower($tag)));
     }
-    
-    public function array_cloudtags() 
+
+    /**
+     * Массив тегов с релевантностью
+     * @return array|bool
+     */
+    public function arrayCloudTags()
     {
         $result = [];
         $stmt = $this->db->query('SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;');
         if ($stmt->rowCount()) {
-            while($row = $stmt->fetch()) {
+            while ($row = $stmt->fetch()) {
                 $result[$row['tag_name']] = $row['count'];
             }
-        return $result;            
+            return $result;
         } else {
             return false;
         }
     }
-    
-    public function tag_rang($sort = 'cmpalpha') 
+
+    /**
+     * Рейтинг тегов с сортировкой по алфавиту или релевантности
+     * @param string $sort
+     * @return array|bool
+     */
+    public function tagRang($sort = 'cmpalpha')
     {
-        $array = $this->array_cloudtags();
+        $array = $this->arrayCloudTags();
         if ($array) {
             $return = [];
             $max = max(array_values($array));
@@ -110,47 +165,68 @@ class Hashtags
                     $tmp = round(($max + $value) / $max, 2);
                 }
 
-            $return[] = ['name' => $key, 'rang' => $tmp];
-        }
-        uasort($return, 'Library\Utils::' . $sort);
-        
-        return $return;
-        
+                $return[] = ['name' => $key, 'rang' => $tmp];
+            }
+            uasort($return, 'Library\Utils::' . $sort);
+
+            return $return;
+
         } else {
             return false;
         }
     }
-    
-    public function cloud($array) 
+
+    /**
+     * Получение ссылок или кэша для отображения
+     * @param $array
+     * @return string
+     */
+    public function cloud($array)
     {
         if (sizeof($array) > 0) {
             $obj = new Links($array);
-            
-            return $obj->proccess('tpl_cloud')->link_separator(PHP_EOL)->result();        
+
+            return $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
         } else {
-            return $this->get_cache();
+            return $this->getCache();
         }
     }
-    
-    public function del_cache() {
+
+    /**
+     * Удаление кэша
+     */
+    public function delCache()
+    {
         file_exists('../files/cache/cmpranglibcloud.dat') ? unlink('../files/cache/cmpranglibcloud.dat') : false;
         file_exists('../files/cache/cmpalphalibcloud.dat') ? unlink('../files/cache/cmpalphalibcloud.dat') : false;
     }
-    
-    public function get_cache($sort = 'cmpalpha') {
+
+    /**
+     * Получение кэша, если кэш отсутствует, создает его
+     * @param string $sort
+     * @return string
+     */
+    public function getCache($sort = 'cmpalpha')
+    {
         if (file_exists('../files/cache/' . $sort . 'libcloud.dat')) {
             return file_get_contents('../files/cache/' . $sort . 'libcloud.dat');
         } else {
-            return $this->set_cache($sort);
+            return $this->setCache($sort);
         }
     }
-    
-    public function set_cache($sort = 'cmpalpha') {
+
+    /**
+     * Установка кэша с сортировкой
+     * @param string $sort
+     * @return string
+     */
+    public function setCache($sort = 'cmpalpha')
+    {
         $obj = new self();
         $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();
-        $res = ($tags > 0 ? $obj->cloud($obj->tag_rang($sort)) : '<p>' . _t('The list is empty') . '</p>');
+        $res = ($tags > 0 ? $obj->cloud($obj->tagRang($sort)) : '<p>' . _t('The list is empty') . '</p>');
         file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
-        
-        return $this->get_cache($sort);
+
+        return $this->getCache($sort);
     }
 }

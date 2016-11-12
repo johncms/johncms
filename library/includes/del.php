@@ -57,7 +57,7 @@ switch ($type) {
 
                 case 'delmove':
                     $child_dir = new Tree($id);
-                    $childrens = $child_dir->get_childs_dir()->result();
+                    $childrens = $child_dir->getChildsDir()->result();
                     $list = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
                     if ($list->rowCount()) {
                         echo '<div class="menu">'
@@ -82,9 +82,11 @@ switch ($type) {
                         echo '<div class="alarm"><div>' . _t('Are you sure you want to delete content?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' . _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $childs = new Tree($id);
-                        $deleted = $childs->get_all_childs_id()->clean_dir();
-                        echo '<div class="gmenu">' . sprintf(_t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'), $deleted['dirs'], $deleted['texts'], $deleted['tags'],
-                                $deleted['comments'], $deleted['images']) . ')</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
+                        $deleted = $childs->getAllChildsId()->cleanDir();
+                        echo '<div class="gmenu">' . sprintf(_t('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
+                                $deleted['dirs'], $deleted['texts'], $deleted['tags'],
+                                $deleted['comments'],
+                                $deleted['images']) . '</div><div><a href="?">' . _t('Back') . '</a></div>' . PHP_EOL;
                     }
                     break;
 
