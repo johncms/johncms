@@ -2,13 +2,30 @@
 
 namespace Library;
 
+/**
+ * Класс помошник формирования ссылок для тегов
+ * Class Links
+ * @package Library
+ * @author  Koenig(Compolomus)
+ */
 class Links
 {
+    /**
+     * query string для ссылок
+     * @var string
+     */
     private $link_url;
+
+    /**
+     * Массив
+     * @var array
+     */
     private $in;
     private $res;
 
-    /** @var PDO $db */
+    /**
+     * @var PDO $db
+     */
     private $db;
 
     /**
@@ -25,6 +42,11 @@ class Links
         $this->tools = $container->get('tools');
     }
 
+    /**
+     * Метод для подготовки ссылок
+     * @param $tpl Имя метода для подготовки ссылок
+     * @return $this|bool
+     */
     public function proccess($tpl)
     {
         if ($this->in) {
@@ -35,18 +57,33 @@ class Links
             return false;
         }
     }
-    
-    public function tpl_tag($n) 
+
+    /**
+     * Метод для обычных ссылок
+     * @param string $n
+     * @return string
+     */
+    private function tplTag($n)
     {
         return '<a href="' . $this->link_url . $n . '">' . $this->tools->checkout($n) . '</a>';
     }
-    
-    public function tpl_cloud($n) 
+
+    /**
+     * Метод для ссылок облака
+     * @param string $n
+     * @return string
+     */
+    private function tplCloud($n)
     {
         return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . 'em;">' . $this->tools->checkout($n['name']) . '</span></a>';
     }
 
-    public function link_separator($sepatator = ' | ')
+    /**
+     * Добавление разделителя ссылкам
+     * @param string $sepatator разделитель
+     * @return $this|bool
+     */
+    public function linkSeparator($sepatator = ' | ')
     {
         if ($this->in) {
             $this->res = implode($sepatator, $this->res ? $this->res : $this->in);
@@ -57,14 +94,21 @@ class Links
         }
     }
 
+    /**
+     * Получение результата
+     * @return string
+     */
     public function result()
     {
         return $this->res;
     }
 
-    public function get_in()
+    /**
+     * Получение массива
+     * @return array
+     */
+    public function getIn()
     {
         return $this->in;
     }
-
 }
