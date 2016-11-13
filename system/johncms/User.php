@@ -61,6 +61,8 @@ use Zend\Stdlib\ArrayObject;
  */
 class User extends ArrayObject
 {
+    private $userConfigObject;
+
     /**
      * User constructor.
      *
@@ -94,6 +96,10 @@ class User extends ArrayObject
      */
     public function config()
     {
-        return new UserConfig($this);
+        if (null === $this->userConfigObject) {
+            $this->userConfigObject = new UserConfig($this);
+        }
+
+        return $this->userConfigObject;
     }
 }

@@ -19,7 +19,12 @@ class Tools
     /**
      * @var User
      */
-    private $systemUser;
+    private $user;
+
+    /**
+     * @var UserConfig
+     */
+    private $userConfig;
 
     /**
      * @var Config
@@ -31,7 +36,8 @@ class Tools
         $this->container = $container;
         $this->config = $container->get(Config::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(User::class);
+        $this->user = $container->get(User::class);
+        $this->userConfig = $this->user->config();
 
         return $this;
     }
@@ -61,11 +67,11 @@ class Tools
         }
 
         // Для Администрации задаем лимит в 4 секунды
-        if ($this->systemUser->rights > 0) {
+        if ($this->user->rights > 0) {
             $limit = 4;
         }
 
-        $flood = $this->systemUser->lastpost + $limit - time();
+        $flood = $this->user->lastpost + $limit - time();
 
         return $flood > 0 ? $flood : false;
     }
@@ -113,7 +119,7 @@ class Tools
     public function displayDate($var)
     {
         //TODO: Undefined index: timeshift
-        $shift = ($this->config['timeshift'] + \core::$user_set['timeshift']) * 3600;
+        $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
 
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {
@@ -272,17 +278,15 @@ class Tools
                 $out .= ' ' . $arg['header'];
             }
         } else {
-            if (\core::$user_set['avatar']) {
-                $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
+            $out .= '<table cellpadding="0" cellspacing="0"><tr><td>';
 
-                if (file_exists((ROOT_PATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
-                    $out .= '<img src="' . $homeurl . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
-                } else {
-                    $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
-                }
-
-                $out .= '</td><td>';
+            if (file_exists((ROOT_PATH . 'files/users/avatar/' . $user['id'] . '.png'))) {
+                $out .= '<img src="' . $homeurl . '/files/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
+            } else {
+                $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
             }
+
+            $out .= '</td><td>';
 
             if ($user['sex']) {
                 $out .= $this->image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
@@ -290,7 +294,7 @@ class Tools
                 $out .= $this->image('del.png');
             }
 
-            $out .= !$this->systemUser->isValid() || $this->systemUser->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $out .= !$this->user->isValid() || $this->user->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
             $rank = [
                 0 => '',
                 1 => '(GMod)',
@@ -314,16 +318,14 @@ class Tools
                 $out .= '<div class="status">' . $this->image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
             }
 
-            if (\core::$user_set['avatar']) {
-                $out .= '</td></tr></table>';
-            }
+            $out .= '</td></tr></table>';
         }
 
         if (isset($arg['body'])) {
             $out .= '<div>' . $arg['body'] . '</div>';
         }
 
-        $ipinf = !isset($arg['iphide']) && $this->systemUser->rights ? 1 : 0;
+        $ipinf = !isset($arg['iphide']) && $this->user->rights ? 1 : 0;
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
@@ -345,13 +347,13 @@ class Tools
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
 
-                if ($this->systemUser->rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
+                if ($this->user->rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
                     $out .= '<b class="red"><a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                     $out .= ' / ';
                     $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($user['ip_via_proxy']) . $hist . '">' . long2ip($user['ip_via_proxy']) . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . long2ip($user['ip_via_proxy']) . '">?</a>]';
-                } elseif ($this->systemUser->rights) {
+                } elseif ($this->user->rights) {
                     $out .= '<a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a>';
                     $out .= '&#160;[<a href="' . $homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]';
                 } else {
@@ -375,6 +377,14 @@ class Tools
         return $out;
     }
 
+    //TODO: Доработать!!!
+    public function getSkin()
+    {
+        $skin = 'default';
+
+        return $skin;
+    }
+
     /**
      * Получаем данные пользователя
      *
@@ -383,7 +393,7 @@ class Tools
      */
     public function getUser($id = 0)
     {
-        if ($id && $id != $this->systemUser->id) {
+        if ($id && $id != $this->user->id) {
             $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
@@ -392,7 +402,7 @@ class Tools
                 return false;
             }
         } else {
-            return $this->systemUser;
+            return $this->user;
         }
     }
 
@@ -405,8 +415,8 @@ class Tools
     {
         $homeurl = $this->config['homeurl'];
 
-        if (is_file(ROOT_PATH . 'theme/' . \core::$user_set['skin'] . '/images/' . $name)) {
-            $src = $homeurl . '/theme/' . \core::$user_set['skin'] . '/images/' . $name;
+        if (is_file(ROOT_PATH . 'theme/' . $this->getSkin() . '/images/' . $name)) {
+            $src = $homeurl . '/theme/' . $this->getSkin() . '/images/' . $name;
         } elseif (is_file(ROOT_PATH . 'images/' . $name)) {
             $src = $homeurl . '/images/' . $name;
         } else {
@@ -430,13 +440,13 @@ class Tools
         static $user_id = null;
         static $return = false;
 
-        if (!$this->systemUser->isValid() && !$id) {
+        if (!$this->user->isValid() && !$id) {
             return false;
         }
 
         if (is_null($user_id) || $id != $user_id) {
             $user_id = $id;
-            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->systemUser->id);
+            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->user->id);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();

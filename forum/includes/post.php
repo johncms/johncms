@@ -32,15 +32,13 @@ $them = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $re
 echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['text'] . '</div><div class="menu">';
 
 // Данные пользователя
-if ($set_user['avatar']) {
-    echo '<table cellpadding="0" cellspacing="0"><tr><td>';
-    if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-        echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
-    } else {
-        echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
-    }
-    echo '</td><td>';
+echo '<table cellpadding="0" cellspacing="0"><tr><td>';
+if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
+    echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+} else {
+    echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
 }
+echo '</td><td>';
 
 if ($res['sex']) {
     echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
@@ -82,17 +80,11 @@ if (!empty($res['status'])) {
     echo '<div class="status">' . $tools->image('label.png', ['class' => 'icon-inline']) . $res['status'] . '</div>';
 }
 
-if ($set_user['avatar']) {
-    echo '</td></tr></table>';
-}
+echo '</td></tr></table>';
 
 // Вывод текста поста
 $text = $tools->checkout($res['text'], 1, 1);
-
-if ($set_user['smileys']) {
-    $text = $tools->smilies($text, ($res['rights'] >= 1) ? 1 : 0);
-}
-
+$text = $tools->smilies($text, ($res['rights'] >= 1) ? 1 : 0);
 echo $text . '';
 
 // Если есть прикрепленный файл, выводим его описание

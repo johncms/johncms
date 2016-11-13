@@ -36,9 +36,9 @@ echo '<!DOCTYPE html>' .
     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com">' .
     "\n" . '<meta name="keywords" content="' . $config->meta_key . '">' .
     "\n" . '<meta name="description" content="' . $config->meta_desc . '">' .
-    "\n" . '<link rel="stylesheet" href="' . $config['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
-    "\n" . '<link rel="shortcut icon" href="' . $config['homeurl'] . '/favicon.ico">' .
-    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News', 'system') . '" href="' . $config['homeurl'] . '/rss/rss.php">' .
+    "\n" . '<link rel="stylesheet" href="' . $config->homeurl . '/theme/' . $tools->getSkin() . '/style.css">' .
+    "\n" . '<link rel="shortcut icon" href="' . $config->homeurl . '/favicon.ico">' .
+    "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News', 'system') . '" href="' . $config->homeurl . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
     "\n" . '</head><body>';
 

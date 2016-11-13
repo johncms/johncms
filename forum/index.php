@@ -513,7 +513,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo '<div class="topmenu"><p>';
 
                     if ($postres['sex']) {
-                        echo '<img src="../theme/' . $set_user['skin'] . '/images/' . ($postres['sex'] == 'm' ? 'm' : 'w') . ($postres['datereg'] > time() - 86400 ? '_new.png" width="14"' : '.png" width="10"') . ' height="10"/>&#160;';
+                        echo '<img src="../theme/' . $tools->getSkin() . '/images/' . ($postres['sex'] == 'm' ? 'm' : 'w') . ($postres['datereg'] > time() - 86400 ? '_new.png" width="14"' : '.png" width="10"') . ' height="10"/>&#160;';
                     } else {
                         echo '<img src="../images/del.png" width="10" height="10" alt=""/>&#160;';
                     }
@@ -581,7 +581,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $_SESSION['token'] = $token;
                         echo '<p>' .
                             $container->get('bbcode')->buttons('form1', 'msg') .
-                            '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea></p>' .
+                            '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="msg"></textarea></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
                             (isset($set_forum['preview']) && $set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
@@ -610,16 +610,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Пользовательский аватар
-                    if ($set_user['avatar']) {
-                        echo '<table cellpadding="0" cellspacing="0"><tr><td>';
+                    echo '<table cellpadding="0" cellspacing="0"><tr><td>';
 
-                        if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-                            echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
-                        } else {
-                            echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
-                        }
-                        echo '</td><td>';
+                    if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
+                        echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+                    } else {
+                        echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
                     }
+                    echo '</td><td>';
 
                     // Метка пола
                     if ($res['sex']) {
@@ -665,20 +663,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Закрываем таблицу с аватаром
-                    if ($set_user['avatar']) {
-                        echo '</td></tr></table>';
-                    }
+                    echo '</td></tr></table>';
 
                     ////////////////////////////////////////////////////////////
                     // Вывод текста поста                                     //
                     ////////////////////////////////////////////////////////////
                     $text = $res['text'];
                     $text = $tools->checkout($text, 1, 1);
-
-                    if ($set_user['smileys']) {
-                        $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
-                    }
-
+                    $text = $tools->smilies($text, $res['rights'] ? 1 : 0);
                     echo $text;
 
                     // Если пост редактировался, показываем кем и когда
@@ -776,7 +768,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $_SESSION['token'] = $token;
                         echo '<p>';
                         echo $container->get('bbcode')->buttons('form2', 'msg');
-                        echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br></p>' .
+                        echo '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="msg"></textarea><br></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 
                         echo '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .

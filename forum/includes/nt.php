@@ -226,11 +226,7 @@ if (isset($_POST['submit'])
     $res_c = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'")->fetch();
     require('../system/head.php');
     $msg_pre = $tools->checkout($msg, 1, 1);
-
-    if ($set_user['smileys']) {
-        $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
-    }
-
+    $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
     echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
@@ -247,7 +243,7 @@ if (isset($_POST['submit'])
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
     echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
-    echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
+    echo '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
     $token = mt_rand(1000, 100000);

@@ -188,7 +188,7 @@ switch ($mod) {
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
 
-                echo '&#160;<textarea rows="' . $set_user['field_h'] . '" name="reason"></textarea>' .
+                echo '&#160;<textarea rows="' . $systemUser->config()->fieldHeight . '" name="reason"></textarea>' .
                     '</p><p><input type="submit" value="' . _t('Apply Ban') . '" name="submit" />' .
                     '</p></div></form>';
             }

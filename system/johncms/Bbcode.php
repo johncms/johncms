@@ -12,9 +12,14 @@ class Bbcode
     private $config;
 
     /**
-     * @var \Johncms\User
+     * @var User
      */
-    private $systemUser;
+    private $user;
+
+    /**
+     * @var UserConfig
+     */
+    private $userConfig;
 
     /**
      * @var \GeSHi
@@ -25,8 +30,9 @@ class Bbcode
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->config = $container->get(\Johncms\Config::class);
-        $this->systemUser = $container->get(\Johncms\User::class);
+        $this->config = $container->get(Config::class);
+        $this->user = $container->get(User::class);
+        $this->userConfig = $this->user->config();
         $this->homeUrl = $this->config['homeurl'];
 
         return $this;
@@ -139,7 +145,7 @@ class Bbcode
             /** @var \Johncms\Tools $tools */
             $tools = \App::getContainer()->get('tools');
 
-            $bb_smileys .= $tools->smilies($res_sm, $this->systemUser->rights >= 1 ? 1 : 0);
+            $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         } else {
             $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=smilies">' . _t('Add Smilies', 'system') . '</a></small>';
         }
@@ -211,7 +217,7 @@ text-decoration: none;
             <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
             <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>';
 
-        if ($this->systemUser->isValid()) {
+        if ($this->user->isValid()) {
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
         } else {
@@ -247,7 +253,7 @@ text-decoration: none;
         return preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
             function ($matches) {
-                $shift = ($this->config['timeshift'] + \core::$user_set['timeshift']) * 3600;
+                $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
 
                 if (($out = strtotime($matches[1])) !== false) {
                     return date("d.m.Y / H:i", $out + $shift);
@@ -362,7 +368,7 @@ text-decoration: none;
 
             case 2:
                 $text = $short_url;
-                if (!isset(\core::$user_set['direct_url']) || !\core::$user_set['direct_url']) {
+                if (!$this->userConfig->directUrl) {
                     $url = $this->homeUrl . '/go.php?url=' . rawurlencode($url);
                 }
                 break;
@@ -441,7 +447,7 @@ text-decoration: none;
                 $home = parse_url($this->homeUrl);
                 $tmp = parse_url($url[1]);
 
-                if ($home['host'] == $tmp['host'] || isset(\core::$user_set['direct_url']) && \core::$user_set['direct_url']) {
+                if ($home['host'] == $tmp['host'] || $this->userConfig->directUrl) {
                     return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
                 } else {
                     return '<a href="' . $this->homeUrl . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
