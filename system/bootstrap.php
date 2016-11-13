@@ -71,11 +71,11 @@ $db = $container->get(PDO::class);
 
 // Проверка на IP бан
 $req = $db->query("
-            SELECT `ban_type`, `link` FROM `cms_ban_ip`
-            WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
-            " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : "") . "
-            LIMIT 1
-        ") or die('Error: table "cms_ban_ip"');
+  SELECT `ban_type`, `link` FROM `cms_ban_ip`
+  WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
+  " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . "
+  LIMIT 1
+");
 
 if ($req->rowCount()) {
     $res = $req->fetch();

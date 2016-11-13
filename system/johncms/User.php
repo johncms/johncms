@@ -61,11 +61,21 @@ use Zend\Stdlib\ArrayObject;
  */
 class User extends ArrayObject
 {
+    /**
+     * User constructor.
+     *
+     * @param array $input
+     */
     public function __construct(array $input)
     {
         parent::__construct($input, parent::ARRAY_AS_PROPS);
     }
 
+    /**
+     * User validation
+     *
+     * @return bool
+     */
     public function isValid()
     {
         if ($this->offsetGet('id') > 0
@@ -75,5 +85,15 @@ class User extends ArrayObject
         }
 
         return false;
+    }
+
+    /**
+     * Get User config
+     *
+     * @return UserConfig
+     */
+    public function config()
+    {
+        return new UserConfig($this);
     }
 }
