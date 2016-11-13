@@ -9,6 +9,9 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
@@ -20,12 +23,12 @@ if (isset($_GET['lng'])) {
     require('system/head.php');
     echo '<div class="menu"><form action="' . $referer . '" method="post"><p>';
 
-    if (count(core::$lng_list) > 1) {
+    if (count($config->lng_list) > 1) {
         echo '<p><h3>' . _t('Select language', 'system') . '</h3>';
 
-        foreach (core::$lng_list as $key => $val) {
-            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
-                (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
+        foreach ($config->lng_list as $key => $val) {
+            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $config->lng ? 'checked="checked"' : '') . '/>&#160;' .
+                $tools->getFlag($key) .
                 $val .
                 ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
                 '</div>';

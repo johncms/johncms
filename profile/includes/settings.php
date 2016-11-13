@@ -224,7 +224,7 @@ switch ($mod) {
 
             foreach ($config->lng_list as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
-                    (file_exists('../images/flags/' . $key . '.gif') ? '<img src="../images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
+                    $tools->getFlag($key) .
                     $val .
                     ($key == $config['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
                     '</div>';
