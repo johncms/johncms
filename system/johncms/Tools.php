@@ -377,6 +377,20 @@ class Tools
         return $out;
     }
 
+    /**
+     * Получение флага для выбранной локали
+     *
+     * @param string $locale
+     * @return string
+     */
+    public function getFlag($locale)
+    {
+        $file = ROOT_PATH . 'system' . DIRECTORY_SEPARATOR . 'locale' . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . 'lng.png';
+        $flag = is_file($file) ? 'data:image/png;base64,' . base64_encode(file_get_contents($file)) : false;
+
+        return $flag !== false ? '<img src="' . $flag . '" style="margin-right: 8px; vertical-align: middle">' : '';
+    }
+
     //TODO: Доработать!!!
     public function getSkin()
     {

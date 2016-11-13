@@ -87,7 +87,7 @@ if (isset($cms_ads[0])) {
 // Выводим логотип и переключатель языков
 echo '<table style="width: 100%;" class="logo"><tr>' .
     '<td valign="bottom"><a href="' . $config['homeurl'] . '">' . $tools->image('logo.gif', ['class' => '']) . '</a></td>' .
-    ($headmod == 'mainpage' && count(core::$lng_list) > 1 ? '<td align="right"><a href="' . $config['homeurl'] . '/go.php?lng"><b>' . strtoupper(core::$lng_iso) . '</b></a>&#160;<img src="' . $config['homeurl'] . '/images/flags/' . core::$lng_iso . '.gif" alt=""/>&#160;</td>' : '') .
+    ($headmod == 'mainpage' && count($config->lng_list) > 1 ? '<td align="right"><a href="' . $config->homeurl . '/go.php?lng"><b>' . strtoupper($config->lng) . '</b></a>&#160;<a href="' . $config->homeurl . '/go.php?lng">' . $tools->getFlag($config->lng) . '</a></td>' : '') .
     '</tr></table>';
 
 // Выводим верхний блок с приветствием
