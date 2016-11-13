@@ -164,7 +164,7 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
                 '<p><h3>' . _t('Image') . '</h3>' .
                 '<img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
-                '<textarea name="description" rows="' . $set_user['field_h'] . '">' . $tools->checkout($res['description']) . '</textarea><br>' .
+                '<textarea name="description" rows="' . $systemUser->config()->fieldHeight . '">' . $tools->checkout($res['description']) . '</textarea><br>' .
                 '<small>' . _t('Optional field') . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .

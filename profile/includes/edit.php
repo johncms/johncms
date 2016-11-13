@@ -202,7 +202,7 @@ echo '<small><a href="?act=images&amp;mod=up_photo&amp;user=' . $user['id'] . '"
     '<input type="text" value="' . $user['monthb'] . '" size="2" maxlength="2" name="monthb" />.' .
     '<input type="text" value="' . $user['yearofbirth'] . '" size="4" maxlength="4" name="yearofbirth" /></p>' .
     '<p>' . _t('City, Country') . ':<br><input type="text" value="' . $user['live'] . '" name="live" /></p>' .
-    '<p>' . _t('About myself') . ':<br><textarea rows="' . $set_user['field_h'] . '" name="about">' . strip_tags($user['about']) . '</textarea></p>' .
+    '<p>' . _t('About myself') . ':<br><textarea rows="' . $systemUser->config()->fieldHeight . '" name="about">' . strip_tags($user['about']) . '</textarea></p>' .
     '<p><h3><img src="../images/mail.png" width="16" height="16" class="left" />&#160;' . _t('Contacts') . '</h3>' .
     _t('Phone number') . ':<br><input type="text" value="' . $user['mibile'] . '" name="mibile" /><br>' .
     '</p><p>E-mail<br>' .

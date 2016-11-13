@@ -196,7 +196,7 @@ switch ($act) {
                     '<br />' . $tools->checkout($res['text']) . '</div>' .
                     '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
-                    '<textarea rows="' . $set_user['field_h'] . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
+                    '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -206,7 +206,7 @@ switch ($act) {
         break;
 
     case
-        'edit':
+    'edit':
         // Редактирование поста
         if ($systemUser->rights >= 6 && $id) {
             if (isset($_POST['submit'])
@@ -244,7 +244,7 @@ switch ($act) {
                     '<form name="form" action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
                     '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
                 echo $bbcode->buttons('form', 'msg');
-                echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . $text . '</textarea></p>' .
+                echo '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -336,7 +336,7 @@ switch ($act) {
 
             echo '<b>' . _t('Message') . '</b> <small>(max 5000)</small>:<br>';
             echo $bbcode->buttons('form', 'msg');
-            echo '<textarea rows="' . $set_user['field_h'] . '" name="msg"></textarea><br>';
+            echo '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="msg"></textarea><br>';
 
             if (!$systemUser->isValid()) {
                 // CAPTCHA для гостей
@@ -386,9 +386,7 @@ switch ($act) {
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
                     $post = $tools->checkout($res['text'], 1, 1);
-                    if ($set_user['smileys']) {
-                        $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
-                    }
+                    $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
                 } else {
                     // Для гостей обрабатываем имя и фильтруем ссылки
                     $res['name'] = $tools->checkout($res['name']);
@@ -420,9 +418,7 @@ switch ($act) {
                 if (!empty($res['otvet'])) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
-                    if ($set_user['smileys']) {
-                        $otvet = $tools->smilies($otvet, 1);
-                    }
+                    $otvet = $tools->smilies($otvet, 1);
                     $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 

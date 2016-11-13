@@ -138,7 +138,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $set_user['field_h'] . '" name="text"></textarea></p>' .
+                    '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="text"></textarea></p>' .
                     '<p><h3>' . _t('Discussion') . '</h3>';
                 $fr = $db->query("SELECT * FROM `forum` WHERE `type` = 'f'");
                 echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
@@ -210,7 +210,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $set_user['field_h'] . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
+                    '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '</form></div>' .
                     '<div class="phdr"><a href="index.php">' . _t('Back to news') . '</a></div>';
@@ -298,11 +298,7 @@ switch ($do) {
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             $text = $tools->checkout($res['text'], 1, 1);
-
-            if ($set_user['smileys']) {
-                $text = $tools->smilies($text, 1);
-            }
-
+            $text = $tools->smilies($text, 1);
             echo '<h3>' . $res['name'] . '</h3>' .
                 '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate($res['time']) . ')</small></span>' .
                 '<br />' . $text . '<div class="sub">';

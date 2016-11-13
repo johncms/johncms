@@ -64,17 +64,13 @@ if ($total) {
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = $tools->checkout($text, 1, 1);
-            if ($set_user['smileys']) {
-                $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
-            }
+            $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
             $text = $bbcode->notags($text);
             $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
             $text = $tools->checkout($last_msg['text'], 1, 1);
-            if ($set_user['smileys']) {
-                $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
-            }
+            $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
         }
 
         $arg = [

@@ -18,7 +18,6 @@ function autoload($name)
 // Инициализируем заглушку старого ядра системы
 new core;
 
-$set_user = core::$user_set;                 // Пользовательские настройки         //TODO: переделать
-$kmess = $set_user['kmess'] > 4 && $set_user['kmess'] < 100 ? $set_user['kmess'] : 10;  //TODO: переделать
+$kmess = 10;  //TODO: переделать
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);

@@ -291,10 +291,7 @@ class Comments
                             $this->access_delete ? '<a href="' . $this->url . '&amp;mod=del&amp;item=' . $res['subid'] . '">' . _t('Delete', 'system') . '</a>' : '',
                         ];
                         $text = $this->tools->checkout($res['text'], 1, 1);
-
-                        if (\core::$user_set['smileys']) {
-                            $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
-                        }
+                        $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
 
                         if (isset($attributes['edit_count'])) {
                             $text .= '<br /><span class="gray"><small>' . _t('Edited', 'system') . ': <b>' . $attributes['edit_name'] . '</b>' .
@@ -304,10 +301,7 @@ class Comments
 
                         if (!empty($res['reply'])) {
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
-
-                            if (\core::$user_set['smileys']) {
-                                $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
-                            }
+                            $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
                                 ' (' . $this->tools->displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
@@ -394,7 +388,7 @@ class Comments
         (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
         '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
         '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
-        '<textarea rows="' . \core::$user_set['field_h'] . '" name="message">' . $reply . '</textarea><br>' .
+        '<textarea rows="' . $this->systemUser->config()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
         '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
 

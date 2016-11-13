@@ -19,6 +19,7 @@ use Zend\Stdlib\ArrayObject;
  * @property $homeurl
  * @property $karma
  * @property $lng
+ * @property $lng_list
  * @property $mod_reg
  * @property $mod_forum
  * @property $mod_guest

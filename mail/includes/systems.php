@@ -72,11 +72,7 @@ if ($mod == 'clear') {
 
             $post = $row['text'];
             $post = $tools->checkout($post, 1, 1);
-
-            if ($set_user['smileys']) {
-                $post = $tools->smilies($post);
-            }
-
+            $post = $tools->smilies($post);
             $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate($row['time']) . ')<br />';
             $post = preg_replace_callback("/{TIME=(.+?)}/usi", 'time_parce', $post);
             $out .= $post;

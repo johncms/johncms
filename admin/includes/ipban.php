@@ -201,7 +201,7 @@ switch ($mod) {
                 '&nbsp;<input type="text" name="url"/><br>' .
                 '<small>&nbsp;' . _t('If the ban on Redirect, then specify the URL') . '</small></p>' .
                 '<p><h3>' . _t('Reason') . '</h3>' .
-                '&nbsp;<textarea rows="' . core::$user_set['field_h'] . '" name="reason"></textarea></small></p>' .
+                '&nbsp;<textarea rows="' . $systemUser->config()->fieldHeight . '" name="reason"></textarea></small></p>' .
                 '<p><input type="submit" name="submit" value=" ' . _t('Add Ban') . ' "/></p></div>' .
                 '<div class="phdr"><small>' . _t('Example:<br><span class=\'red\'>10.5.7.1</span> - Ban one address<br><span class=\'red\'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class=\'red\'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255') . '</small></div>' .
                 '</form>' .
