@@ -399,6 +399,15 @@ switch ($act) {
                     exit;
                 }
 
+                // Читаем каталог с файлами языков
+                $lng_list = [];
+
+                foreach (glob('../system/locale/*/lng.ini') as $val) {
+                    $iso = array_pop(explode('/', dirname($val)));
+                    $desc = parse_ini_file($val);
+                    $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
+                }
+
                 $systemSettings = [
                     'johncms' => [
                         'active'        => 1,
@@ -411,6 +420,7 @@ switch ($act) {
                         'homeurl'       => $site_url,
                         'karma'         => 'a:6:{s:12:"karma_points";i:5;s:10:"karma_time";i:86400;s:5:"forum";i:20;s:4:"time";i:0;s:2:"on";i:1;s:3:"adm";i:0;}',
                         'lng'           => $language,
+                        'lng_list'      => $lng_list,
                         'mod_reg'       => 2,
                         'mod_forum'     => 2,
                         'mod_guest'     => 2,
