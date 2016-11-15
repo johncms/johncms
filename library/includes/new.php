@@ -20,7 +20,8 @@ $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (t
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 $sql = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `comm_count`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
-$nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
+$nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
+        $kmess) . '</div>' : '';
 echo $nav;
 if ($total) {
     $i = 0;
@@ -42,7 +43,7 @@ if ($total) {
             . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
-            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+            . ($obj->getAllStatTags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->getAllStatTags(1) . '</td></tr>' : '')
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . _t('Who added') . ':</td>'
@@ -51,7 +52,7 @@ if ($total) {
             // Рейтинг
             . '<tr>'
             . '<td class="caption">' . _t('Rating') . ':</td>'
-            . '<td>' . $rate->view_rate() . '</td>'
+            . '<td>' . $rate->viewRate() . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'

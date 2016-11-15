@@ -26,7 +26,8 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
     if ($flood) {
         require('../system/head.php');
 
-        echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood), '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
+        echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
+            '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
         require('../system/end.php');
         exit;
     }
@@ -155,8 +156,8 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $tags = array_map('trim', explode(',', $_POST['tags']));
                     if (sizeof($tags > 0)) {
                         $obj = new Hashtags($cid);
-                        $obj->add_tags($tags);
-                        $obj->del_cache();
+                        $obj->addTags($tags);
+                        $obj->delCache();
                     }
                 }
 
@@ -179,7 +180,8 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
         . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
-        . $container->get('bbcode')->buttons('form', 'text') . '<textarea name="text" rows="' . $systemUser->getConfig()->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
+        . $container->get('bbcode')->buttons('form',
+            'text') . '<textarea name="text" rows="' . $systemUser->config()->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
         . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
         . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'

@@ -43,22 +43,33 @@ if ($req_obj->rowCount()) {
         '<p><b><a href="index.php?id=' . $id . '">' . $tools->checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . $tools->smilies($tools->checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
-        ($obj->get_all_stat_tags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->get_all_stat_tags(1) . ' ]<br>' : '') .
+        ($obj->getAllStatTags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .
         '<span class="gray">' . _t('Who added') . ':</span> <a href="' . $config['homeurl'] . '/profile/?user=' . $res_obj['uploader_id'] . '">' . $tools->checkout($res_obj['uploader']) . '</a> (' . $tools->displayDate($res_obj['time']) . ')<br>' .
         '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res_obj['count_views'] .
         '</div></div>';
     $arg = [
-        'comments_table' => 'cms_library_comments',  // Таблица с комментариями
-        'object_table'   => 'library_texts',         // Таблица комментируемых объектов
-        'script'         => '?act=comments',         // Имя скрипта (с параметрами вызова)
-        'sub_id_name'    => 'id',                    // Имя идентификатора комментируемого объекта
-        'sub_id'         => $id,                     // Идентификатор комментируемого объекта
-        'owner'          => $res_obj['uploader_id'], // Владелец объекта (ID того юзера, который может управлять каментами, если разрешено ниже)
-        'owner_delete'   => true,                    // Возможность владельцу удалять комментарий
-        'owner_reply'    => true,                    // Возможность владельцу отвечать на комментарий
-        'owner_edit'     => false,                   // Возможность владельцу редактировать комментарий
-        'title'          => _t('Comments'),        // Название раздела
-        'context_top'    => $context_top,            // Выводится вверху списка
+        'comments_table' => 'cms_library_comments',
+        // Таблица с комментариями
+        'object_table' => 'library_texts',
+        // Таблица комментируемых объектов
+        'script' => '?act=comments',
+        // Имя скрипта (с параметрами вызова)
+        'sub_id_name' => 'id',
+        // Имя идентификатора комментируемого объекта
+        'sub_id' => $id,
+        // Идентификатор комментируемого объекта
+        'owner' => $res_obj['uploader_id'],
+        // Владелец объекта (ID того юзера, который может управлять каментами, если разрешено ниже)
+        'owner_delete' => true,
+        // Возможность владельцу удалять комментарий
+        'owner_reply' => true,
+        // Возможность владельцу отвечать на комментарий
+        'owner_edit' => false,
+        // Возможность владельцу редактировать комментарий
+        'title' => _t('Comments'),
+        // Название раздела
+        'context_top' => $context_top,
+        // Выводится вверху списка
     ];
     $comm = new Johncms\Comments($arg);
 
