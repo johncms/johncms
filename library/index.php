@@ -416,9 +416,7 @@ if (in_array($act, $array_includes)) {
                                 PHP_EOL), Utils::position($tmp, ' ')) - ($page == 1 ? 0 : min(Utils::position($text,
                                 PHP_EOL), Utils::position($text, ' '))))), 1, 1);
 
-                    if ($set_user['smileys']) {
-                        $text = $tools->smilies($text, $systemUser->rights ? 1 : 0);
-                    }
+                    $text = $tools->smilies($text, $systemUser->rights ? 1 : 0);
 
                     echo '<div class="list2" style="padding: 8px">';
 
