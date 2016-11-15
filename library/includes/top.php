@@ -27,7 +27,7 @@ echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> |
 if ($sort == 'read' || $sort == 'comm') {
     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
 } else {
-    $total = $db->query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20")->fetchColumn();
+    $total = $db->query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20")->fetchColumn(0);
 }
 
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
@@ -63,7 +63,7 @@ if (!$total) {
             . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
-            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+            . ($obj->getAllStatTags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->getAllStatTags(1) . '</td></tr>' : '')
             // Кто добавил?
             . '<tr>'
             . '<td class="caption">' . _t('Who added') . ':</td>'
@@ -72,7 +72,7 @@ if (!$total) {
             // Рейтинг
             . '<tr>'
             . '<td class="caption">' . _t('Rating') . ':</td>'
-            . '<td>' . $rate->view_rate(1) . '</td>'
+            . '<td>' . $rate->viewRate(1) . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'
