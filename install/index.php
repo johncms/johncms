@@ -430,7 +430,7 @@ switch ($act) {
                         'mod_down_comm' => 1,
                         'meta_key'      => 'johncms',
                         'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
-                        'news'          => '',
+                        'news'          => 'a:8:{s:4:"view";i:1;s:4:"size";i:200;s:8:"quantity";i:3;s:4:"days";i:7;s:6:"breaks";b:1;s:7:"smileys";b:1;s:4:"tags";b:1;s:3:"kom";b:1;}',
                         'skindef'       => 'default',
                     ],
                 ];

@@ -5,14 +5,10 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
+
+$config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {
@@ -23,25 +19,7 @@ if ($systemUser->rights < 7) {
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
 // Настройки Новостей
-if (empty($config['news']) || isset($_GET['reset'])) {
-    // Задаем настройки по умолчанию
-    $settings = [
-        'view'     => '1',
-        'size'     => '200',
-        'quantity' => '3',
-        'days'     => '7',
-        'breaks'   => '1',
-        'smileys'  => '0',
-        'tags'     => '1',
-        'kom'      => '1',
-    ];
-    @$db->exec("DELETE FROM `cms_settings` WHERE `key` = 'news'");
-    $db->exec("INSERT INTO `cms_settings` SET
-        `key` = 'news',
-        `val` = " . $db->quote(serialize($settings)) . "
-    ");
-    echo '<div class="rmenu"><p>' . _t('Default settings are set') . '</p></div>';
-} elseif (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     // Принимаем настройки из формы
     $settings['view'] = isset($_POST['view']) && $_POST['view'] >= 0 && $_POST['view'] < 4 ? intval($_POST['view']) : 1;
     $settings['size'] = isset($_POST['size']) && $_POST['size'] > 50 && $_POST['size'] < 500 ? intval($_POST['size']) : 200;
@@ -51,11 +29,17 @@ if (empty($config['news']) || isset($_GET['reset'])) {
     $settings['smileys'] = isset($_POST['smileys']);
     $settings['tags'] = isset($_POST['tags']);
     $settings['kom'] = isset($_POST['kom']);
-    $db->exec("UPDATE `cms_settings` SET
-        `val` = " . $db->quote(serialize($settings)) . "
-        WHERE `key` = 'news'
-    ");
+
+    $config['news'] = serialize($settings);
+    $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
+
+    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+        echo 'ERROR: Can not write system.local.php</body></html>';
+        exit;
+    }
+
     echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
+    opcache_reset();
 } else {
     // Получаем сохраненные настройки
     $settings = unserialize($config['news']);
