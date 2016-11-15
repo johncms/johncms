@@ -8,8 +8,7 @@ $container = App::getContainer();
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+$config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
@@ -31,9 +30,15 @@ if (isset($_POST['submit'])) {
     $config['meta_key'] = isset($_POST['meta_key']) ? trim($_POST['meta_key']) : 'johncms';
     $config['meta_desc'] = isset($_POST['meta_desc']) ? trim($_POST['meta_desc']) : 'johncms';
 
-    //TODO: записать настройки в файл!!!
+    $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
+
+    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+        echo 'ERROR: Can not write system.local.php</body></html>';
+        exit;
+    }
 
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    opcache_reset();
 }
 
 // Форма ввода параметров системы
