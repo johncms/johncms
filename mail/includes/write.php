@@ -429,7 +429,7 @@ if (!$tools->isIgnor($id) && empty($systemUser->ban['1']) && empty($systemUser->
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
     $out .= $container->get('bbcode')->buttons('form', 'text');
-    $out .= '<textarea rows="' . $systemUser->config()->fieldHeight . '" name="text"></textarea></p>';
+    $out .= '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text"></textarea></p>';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
     $out .= '<p><input type="submit" name="submit" value="' . _t('Sent') . '"/></p>' .
         '</form></div>' .

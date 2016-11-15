@@ -381,7 +381,7 @@ switch ($act) {
                         'db_pass' => $db_pass,
                     ],
                 ];
-                $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ';';
+                $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ";\n";
 
                 if (!file_put_contents('../system/config/database.local.php', $dbfile)) {
                     echo 'ERROR: Can not write database.local.php</body></html>';
@@ -434,7 +434,7 @@ switch ($act) {
                         'skindef'       => 'default',
                     ],
                 ];
-                $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ';';
+                $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
 
                 if (!file_put_contents('../system/config/system.local.php', $configFile)) {
                     echo 'ERROR: Can not write system.local.php</body></html>';

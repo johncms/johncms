@@ -37,7 +37,7 @@ class Tools
         $this->config = $container->get(Config::class);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(User::class);
-        $this->userConfig = $this->user->config();
+        $this->userConfig = $this->user->getConfig();
 
         return $this;
     }

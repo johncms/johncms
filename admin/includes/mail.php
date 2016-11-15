@@ -66,7 +66,7 @@ echo '<form action="index.php?act=mail" method="post"><div class="menu">';
 // Общие настройки
 echo '<h3>' . _t('System message upon registration') . '</h3>' . _t('Subject of the system message') . ':<br>' .
     '<input type="text" name="them_message" value="' . (!empty($config['them_message']) ? htmlentities($config['them_message'], ENT_QUOTES, 'UTF-8') : '') . '"/><br>' .
-    _t('Message') . ':<br><textarea rows="' . $systemUser->config()->fieldHeight . '" name="reg_message">' . (!empty($config['reg_message']) ? htmlentities($config['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
+    _t('Message') . ':<br><textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="reg_message">' . (!empty($config['reg_message']) ? htmlentities($config['reg_message'], ENT_QUOTES, 'UTF-8') : '') . '</textarea><br>' .
     '<br><h3>' . _t('Send a message') . '</h3>' .
     '<input type="radio" value="1" name="message_include" ' . ($set_mail['message_include'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('ON') . '<br>' .
     '<input type="radio" value="0" name="message_include" ' . (empty($set_mail['message_include']) ? 'checked="checked"' : '') . '/>&#160;' . _t('OFF') . '<br>' .
