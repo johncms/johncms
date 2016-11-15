@@ -41,12 +41,12 @@ if (isset($_POST['submit'])) {
             break;
 
         case 'article':
-            $obj->del_tags();
+            $obj->delTags();
             if (isset($_POST['tags'])) {
-                $obj->del_cache();
+                $obj->delCache();
                 $tags = array_map('trim', explode(',', $_POST['tags']));
                 if (sizeof($tags > 0)) {
-                    $obj->add_tags($tags);
+                    $obj->addTags($tags);
                 }
             }
 
@@ -103,11 +103,12 @@ if (isset($_POST['submit'])) {
 
 } else {
     $child_dir = new Tree($id);
-    $childrens = $child_dir->get_childs_dir()->result();
-    $sqlsel = $db->query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ',
-                $childrens) . ')' : ''));
+    $childrens = $child_dir->getChildsDir()->result();
+    $sqlsel = $db->query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` "
+        . "WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
     $row = $db->query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id)->fetch();
-    $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
+    $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0
+            || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
 
     if (!$row) {
         Utils::redir404();
@@ -133,13 +134,14 @@ if (isset($_POST['submit'])) {
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form', 'text') . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
+            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form',
+                'text') . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000
                 ? '<div class="alarm">' . _t('The text of the Article can not be edited, a large amount of data !!!') . '</div><input type="hidden" name="text" value="do_not_change" /></div>'
                 : ''))
         . ($type == 'article'
-            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout($obj->get_all_stat_tags()) . '" /></div>'
+            ? '<h3>' . _t('Tags') . '</h3><div><input name="tags" type="text" value="' . $tools->checkout($obj->getAllStatTags()) . '" /></div>'
             : '');
     if ($adm) {
         if ($sqlsel->rowCount() > 1) {

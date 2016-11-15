@@ -37,20 +37,21 @@ if ($total) {
 
     while ($row = $stmt->fetch()) {
         $dir_nav = new Tree($row['cat_id']);
-        $dir_nav->process_nav_panel();
+        $dir_nav->processNavPanel();
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></div>'
             . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($row['uploader']) . ' (' . $tools->displayDate($row['time']) . ')</div>'
-            . '<div>' . $dir_nav->print_nav_panel() . '</div>'
+            . '<div>' . $dir_nav->printNavPanel() . '</div>'
             . '<a href="?act=premod&amp;yes&amp;id=' . $row['id'] . '">' . _t('Approve') . '</a> | <a href="?act=del&amp;type=article&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a>'
             . '</div>';
     }
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
-echo ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total, $kmess) . '</div>' : '';
+echo ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total,
+        $kmess) . '</div>' : '';
 echo $total ? '<div><a href="?act=premod&amp;all">' . _t('Approve all') . '</a></div>' : '';
 echo '<p><a href="?">' . _t('To Library') . '</a></p>' . PHP_EOL;
