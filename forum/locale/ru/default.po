@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-09-11 15:27+0400\n"
-"PO-Revision-Date: 2016-09-11 07:46-0400\n"
+"POT-Creation-Date: 2016-11-15 19:15+0400\n"
+"PO-Revision-Date: 2016-11-15 10:27-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,805 +19,800 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /forum/default.pot\n"
 
-#: includes/addfile.php:8 includes/addfile.php:20 includes/addvote.php:14
-#: includes/deltema.php:8 includes/delvote.php:13 includes/editpost.php:8
-#: includes/editvote.php:13 includes/files.php:64 includes/filter.php:8
-#: includes/filter.php:66 includes/loadtem.php:7 includes/loadtem.php:28
-#: includes/nt.php:70 includes/per.php:8 includes/per.php:20
-#: includes/per.php:30 includes/per.php:39 includes/post.php:8
-#: includes/ren.php:8 includes/ren.php:17 includes/tema.php:28
-#: includes/tema.php:39 includes/users.php:12 includes/vip.php:8
-#: includes/vip.php:21 includes/vote.php:16 index.php:849
+#: includes/addfile.php:23 includes/addfile.php:32 includes/addvote.php:23
+#: includes/deltema.php:20 includes/delvote.php:22 includes/editpost.php:20
+#: includes/editvote.php:22 includes/files.php:73 includes/filter.php:14
+#: includes/filter.php:72 includes/loadtem.php:13 includes/loadtem.php:34
+#: includes/nt.php:87 includes/per.php:20 includes/per.php:29
+#: includes/per.php:39 includes/per.php:48 includes/post.php:20
+#: includes/ren.php:20 includes/ren.php:29 includes/tema.php:31
+#: includes/tema.php:51 includes/users.php:22 includes/vip.php:20
+#: includes/vip.php:30 includes/vote.php:25 index.php:862
 msgid "Wrong data"
 msgstr "Неверные данные"
 
-#: includes/addfile.php:27
+#: includes/addfile.php:39
 msgid "The time allotted for the file upload has expired"
 msgstr "Время отведенное для выгрузки файла истекло"
 
-#: includes/addfile.php:27 includes/addvote.php:14 includes/addvote.php:82
-#: includes/curators.php:62 includes/editpost.php:42 includes/editpost.php:49
-#: includes/editpost.php:69 includes/editpost.php:71 includes/editpost.php:227
-#: includes/filter.php:26 includes/massdel.php:24 includes/massdel.php:27
-#: includes/nt.php:61 includes/nt.php:241 includes/per.php:86
-#: includes/ren.php:53 includes/say.php:61 includes/say.php:76
-#: includes/say.php:94 includes/say.php:106 includes/say.php:201
-#: includes/say.php:211 includes/say.php:218 includes/say.php:271
-#: includes/say.php:284 includes/say.php:397 includes/vote.php:24
+#: includes/addfile.php:39 includes/addvote.php:23 includes/addvote.php:91
+#: includes/curators.php:71 includes/editpost.php:52 includes/editpost.php:59
+#: includes/editpost.php:79 includes/editpost.php:81 includes/editpost.php:233
+#: includes/filter.php:32 includes/massdel.php:30 includes/massdel.php:33
+#: includes/nt.php:78 includes/nt.php:256 includes/per.php:95
+#: includes/ren.php:65 includes/say.php:78 includes/say.php:92
+#: includes/say.php:110 includes/say.php:122 includes/say.php:216
+#: includes/say.php:226 includes/say.php:233 includes/say.php:286
+#: includes/say.php:299 includes/say.php:411 includes/vote.php:33
 msgid "Back"
 msgstr "Назад"
 
-#: includes/addfile.php:36
+#: includes/addfile.php:48
 msgid "File is already uploaded"
 msgstr "Файл уже загружен"
 
-#: includes/addfile.php:62
+#: includes/addfile.php:74
 msgid "File size exceed"
 msgstr "Вес файла превышает"
 
-#: includes/addfile.php:67
+#: includes/addfile.php:79
 msgid "You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden."
 msgstr "К отправке разрешены только файлы имеющие имя и одно расширение (<b>name.ext</b>). Запрещены файлы не имеющие имени, расширения, или с двойным расширением."
 
-#: includes/addfile.php:72
+#: includes/addfile.php:84
 msgid "The forbidden file format.<br>You can upload files of the following extension"
 msgstr "Запрещенный тип файла!<br>К отправке разрешены только файлы, имеющие следующее расширения"
 
-#: includes/addfile.php:85
+#: includes/addfile.php:97
 msgid "File name contains invalid characters"
 msgstr "В названии файла присутствуют недопустимые символы"
 
-#: includes/addfile.php:99
+#: includes/addfile.php:111
 msgid "File attached"
 msgstr "Файл прикреплен"
 
-#: includes/addfile.php:101 includes/addfile.php:147
+#: includes/addfile.php:113 includes/addfile.php:159
 msgid "Error uploading file"
 msgstr "Ошибка выгрузки файла"
 
-#: includes/addfile.php:144 includes/addvote.php:55 includes/editpost.php:183
-#: includes/nt.php:202 includes/ren.php:27 includes/ren.php:37
-#: includes/say.php:263
+#: includes/addfile.php:156 includes/addvote.php:64 includes/editpost.php:193
+#: includes/nt.php:221 includes/ren.php:39 includes/ren.php:49
+#: includes/say.php:278
 msgid "Repeat"
 msgstr "Повторить"
 
-#: includes/addfile.php:152 includes/addvote.php:53 includes/delvote.php:22
-#: includes/editvote.php:70
+#: includes/addfile.php:164 includes/addvote.php:62 includes/delvote.php:31
+#: includes/editvote.php:79
 msgid "Continue"
 msgstr "Продолжить"
 
-#: includes/addfile.php:155 includes/nt.php:232 includes/say.php:189
-#: includes/say.php:386 index.php:564 index.php:759
+#: includes/addfile.php:167 includes/nt.php:247 includes/say.php:204
+#: includes/say.php:400 index.php:585 index.php:772
 msgid "Add File"
 msgstr "Добавить файл"
 
-#: includes/addfile.php:159
-msgid "Select File"
-msgstr "Выбрать файл"
-
-#: includes/addfile.php:164
+#: includes/addfile.php:170
 msgid "Upload"
 msgstr "Выгрузить"
 
-#: includes/addfile.php:165
+#: includes/addfile.php:171
 msgid "Max. Size"
 msgstr "Макс. размер"
 
-#: includes/addvote.php:53
+#: includes/addvote.php:62
 msgid "Poll added"
 msgstr "Опрос добавлен"
 
-#: includes/addvote.php:55
+#: includes/addvote.php:64
 msgid "The required fields are not filled"
 msgstr "Не заполнены обязательные поля"
 
-#: includes/addvote.php:59 includes/editvote.php:78
+#: includes/addvote.php:68 includes/editvote.php:87
 msgid "Poll (max. 150)"
 msgstr "Опрос (max. 150)"
 
-#: includes/addvote.php:75 includes/editvote.php:85 includes/tema.php:56
+#: includes/addvote.php:84 includes/editvote.php:94 includes/tema.php:68
 msgid "Answer"
 msgstr "Ответ"
 
-#: includes/addvote.php:79
+#: includes/addvote.php:88
 msgid "Add Answer"
 msgstr "Добавить ответ"
 
-#: includes/addvote.php:80 includes/editvote.php:114
+#: includes/addvote.php:89 includes/editvote.php:123
 msgid "Delete last"
 msgstr "Удалить последнее"
 
-#: includes/addvote.php:81 includes/editpost.php:223 includes/editvote.php:117
-#: includes/nt.php:236 includes/ren.php:51
+#: includes/addvote.php:90 includes/editpost.php:229 includes/editvote.php:126
+#: includes/nt.php:251 includes/ren.php:63
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/curators.php:14 includes/deltema.php:21 includes/say.php:402
-#: index.php:184
+#: includes/curators.php:23 includes/deltema.php:30 includes/say.php:416
+#: index.php:205
 msgid "Topic has been deleted or does not exists"
 msgstr "Тема удалена, или не существует"
 
-#: includes/curators.php:24 includes/deltema.php:55 includes/editpost.php:77
-#: includes/editpost.php:159 includes/editpost.php:212 includes/editvote.php:75
-#: includes/file.php:29 includes/files.php:64 includes/files.php:173
-#: includes/filter.php:8 includes/filter.php:51 includes/new.php:5
-#: includes/new.php:52 includes/new.php:67 includes/new.php:140
-#: includes/new.php:211 includes/new.php:249 includes/nt.php:216
-#: includes/per.php:62 includes/post.php:124 includes/ren.php:47
-#: includes/say.php:348 includes/say.php:402 includes/tema.php:74
-#: includes/tema.php:80 includes/tema.php:123 includes/who.php:71
-#: includes/who.php:179 index.php:110 index.php:184 index.php:224 index.php:858
-#: index.php:883 search.php:17 search.php:210
+#: includes/curators.php:33 includes/deltema.php:64 includes/editpost.php:87
+#: includes/editpost.php:169 includes/editpost.php:218 includes/editvote.php:84
+#: includes/file.php:36 includes/files.php:73 includes/files.php:182
+#: includes/filter.php:14 includes/filter.php:57 includes/new.php:5
+#: includes/new.php:61 includes/new.php:76 includes/new.php:149
+#: includes/new.php:220 includes/new.php:258 includes/nt.php:231
+#: includes/per.php:71 includes/post.php:123 includes/ren.php:59
+#: includes/say.php:366 includes/say.php:416 includes/tema.php:86
+#: includes/tema.php:92 includes/tema.php:135 includes/who.php:80
+#: includes/who.php:188 index.php:131 index.php:205 index.php:245 index.php:871
+#: index.php:896 search.php:21 search.php:220
 msgid "Forum"
 msgstr "Форум"
 
-#: includes/curators.php:24 index.php:792
+#: includes/curators.php:33 index.php:805
 msgid "Curators"
 msgstr "Кураторы"
 
-#: includes/curators.php:52
+#: includes/curators.php:61
 msgid "Assign"
 msgstr "Назначить"
 
-#: includes/curators.php:59 includes/files.php:143 includes/new.php:190
-#: includes/new.php:247 includes/who.php:52 includes/who.php:167
+#: includes/curators.php:68 includes/files.php:152 includes/new.php:199
+#: includes/new.php:256 includes/who.php:61 includes/who.php:176
 msgid "The list is empty"
 msgstr "Список пуст"
 
-#: includes/curators.php:61 includes/files.php:131 includes/files.php:168
-#: includes/new.php:127 includes/new.php:193 includes/users.php:35
-#: includes/who.php:58 includes/who.php:170 index.php:304 index.php:363
-#: index.php:771 search.php:149
+#: includes/curators.php:70 includes/files.php:140 includes/files.php:177
+#: includes/new.php:136 includes/new.php:202 includes/users.php:45
+#: includes/who.php:67 includes/who.php:179 index.php:325 index.php:384
+#: index.php:784 search.php:159
 msgid "Total"
 msgstr "Всего"
 
-#: includes/deltema.php:55 index.php:820
+#: includes/deltema.php:64 index.php:833
 msgid "Delete Topic"
 msgstr "Удалить тему"
 
-#: includes/deltema.php:57 includes/editpost.php:166 includes/massdel.php:38
+#: includes/deltema.php:66 includes/editpost.php:176 includes/massdel.php:44
 msgid "Do you really want to delete?"
 msgstr "Действительно хотите удалить?"
 
-#: includes/deltema.php:58 includes/editpost.php:170
+#: includes/deltema.php:67 includes/editpost.php:180
 msgid "Hide"
 msgstr "Скрыть"
 
-#: includes/deltema.php:59 includes/delvote.php:25 includes/editpost.php:167
-#: includes/editvote.php:38 includes/massdel.php:38 index.php:714 index.php:745
+#: includes/deltema.php:68 includes/delvote.php:34 includes/editpost.php:177
+#: includes/editvote.php:47 includes/massdel.php:44 index.php:727 index.php:758
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/deltema.php:60
+#: includes/deltema.php:69
 msgid "Perform"
 msgstr "Выполнить"
 
-#: includes/deltema.php:61 includes/delvote.php:26 includes/editpost.php:167
-#: includes/editvote.php:39 includes/editvote.php:119 includes/massdel.php:39
-#: search.php:42
+#: includes/deltema.php:70 includes/delvote.php:35 includes/editpost.php:177
+#: includes/editvote.php:48 includes/editvote.php:128 includes/massdel.php:45
+#: search.php:52
 msgid "Cancel"
 msgstr "Отмена"
 
-#: includes/deltema.php:66 includes/nt.php:8 includes/ren.php:57
-#: includes/say.php:8
-msgid "Access forbidden"
-msgstr "Доступ запрещен"
-
-#: includes/delvote.php:22
+#: includes/delvote.php:31
 msgid "Poll deleted"
 msgstr "Опрос удален"
 
-#: includes/delvote.php:24
+#: includes/delvote.php:33
 msgid "Do you really want to delete a poll?"
 msgstr "Вы действительно хотите удалить опрос?"
 
-#: includes/editpost.php:42
+#: includes/editpost.php:52
 msgid "You cannot edit posts of higher administration"
 msgstr "Вы не можете редактировать сообщение старшего Вас по должности"
 
-#: includes/editpost.php:49
+#: includes/editpost.php:59
 msgid "You are trying to change another's post"
 msgstr "Вы пытаетесь изменить чужой пост"
 
-#: includes/editpost.php:69
+#: includes/editpost.php:79
 msgid "Your message not already latest, you cannot change it"
 msgstr "Ваш пост уже не последний и Вы не можете его менять"
 
-#: includes/editpost.php:71
+#: includes/editpost.php:81
 msgid "You cannot edit your posts after 5 minutes"
 msgstr "С момента создания поста прошло более 5 минут и Вы не можете его редактировать"
 
-#: includes/editpost.php:77
+#: includes/editpost.php:87
 msgid "Message does not exists or has been deleted"
 msgstr "Пост не существует, или был удален"
 
-#: includes/editpost.php:159
+#: includes/editpost.php:169
 msgid "Delete Message"
 msgstr "Удалить сообщение"
 
-#: includes/editpost.php:163
+#: includes/editpost.php:173
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
 msgstr "ВНИМАНИЕ!<br>Это последний пост темы. Вместе с ним будет удалена (или скрыта) и сама тема"
 
-#: includes/editpost.php:174
+#: includes/editpost.php:184
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
 msgstr "В случае удаления, из счетчика постов форума будет вычтен один балл"
 
-#: includes/editpost.php:183 includes/nt.php:96 includes/say.php:263
+#: includes/editpost.php:193 includes/nt.php:113 includes/say.php:278
 msgid "You have not entered the message"
 msgstr "Вы не ввели сообщение"
 
-#: includes/editpost.php:212
+#: includes/editpost.php:218
 msgid "Edit Message"
 msgstr "Изменить сообщение"
 
-#: includes/editpost.php:224 includes/nt.php:237 includes/say.php:195
-#: includes/say.php:391 index.php:566 index.php:762
+#: includes/editpost.php:230 includes/nt.php:252 includes/say.php:210
+#: includes/say.php:405 index.php:587 index.php:775
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: includes/editpost.php:226 includes/nt.php:240 includes/say.php:200
-#: includes/say.php:396
+#: includes/editpost.php:232 includes/nt.php:255 includes/say.php:215
+#: includes/say.php:410
 msgid "Smilies"
 msgstr "Смайлы"
 
-#: includes/editvote.php:37
+#: includes/editvote.php:46
 msgid "Do you really want to delete the answer?"
 msgstr "Вы действительно хотите удалить вариант ответа?"
 
-#: includes/editvote.php:70
+#: includes/editvote.php:79
 msgid "Poll changed"
 msgstr "Опрос изменен"
 
-#: includes/editvote.php:75 index.php:804
+#: includes/editvote.php:84 index.php:817
 msgid "Edit Poll"
 msgstr "Изменить опрос"
 
-#: includes/editvote.php:113
+#: includes/editvote.php:122
 msgid "Add"
 msgstr "Добавить"
 
-#: includes/file.php:29
+#: includes/file.php:36
 msgid "File does not exist"
 msgstr "Файла не существует"
 
-#: includes/files.php:12
+#: includes/files.php:21
 msgid "Windows applications"
 msgstr "Приложения Windows"
 
-#: includes/files.php:13
+#: includes/files.php:22
 msgid "Java applications"
 msgstr "Приложения Java"
 
-#: includes/files.php:14
+#: includes/files.php:23
 msgid "SIS"
 msgstr "Приложения SIS"
 
-#: includes/files.php:15
+#: includes/files.php:24
 msgid "txt"
 msgstr "Текстовые файлы"
 
-#: includes/files.php:16
+#: includes/files.php:25
 msgid "Pictures"
 msgstr "Картинки"
 
-#: includes/files.php:17
+#: includes/files.php:26
 msgid "Archive"
 msgstr "Архивы"
 
-#: includes/files.php:18
+#: includes/files.php:27
 msgid "Videos"
 msgstr "Видео"
 
-#: includes/files.php:19
+#: includes/files.php:28
 msgid "MP3"
 msgstr "MP3"
 
-#: includes/files.php:20
+#: includes/files.php:29
 msgid "Other"
 msgstr "Другое"
 
-#: includes/files.php:34 index.php:238
+#: includes/files.php:43 index.php:259
 msgid "Category Files"
 msgstr "Файлы категории"
 
-#: includes/files.php:40
+#: includes/files.php:49
 msgid "Section files"
 msgstr "Файлы раздела"
 
-#: includes/files.php:46 index.php:250
+#: includes/files.php:55 index.php:271
 msgid "Topic Files"
 msgstr "Файлы топика"
 
-#: includes/files.php:52
+#: includes/files.php:61
 msgid "Forum Files"
 msgstr "Файлы Форума"
 
-#: includes/files.php:76 includes/files.php:149
+#: includes/files.php:85 includes/files.php:158
 msgid "New Files"
 msgstr "Новые файлы"
 
-#: includes/files.php:95 index.php:525 search.php:138
+#: includes/files.php:104 index.php:546 search.php:148
 msgid "Read more"
 msgstr "Читать все"
 
-#: includes/files.php:112 includes/post.php:109 index.php:686
+#: includes/files.php:121 includes/post.php:108 index.php:699
 msgid "Click to view image"
 msgstr "Нажмите для просмотра изображения"
 
-#: includes/files.php:120
+#: includes/files.php:129
 msgid "Size"
 msgstr "Размер"
 
-#: includes/files.php:120
+#: includes/files.php:129
 msgid "Downloaded"
 msgstr "Скачан"
 
-#: includes/files.php:120 index.php:692
+#: includes/files.php:129 index.php:705
 msgid "Time"
 msgstr "раз"
 
-#: includes/files.php:140 includes/new.php:133 includes/new.php:200
-#: includes/users.php:41 includes/who.php:64 includes/who.php:176 index.php:369
-#: index.php:778 search.php:206
+#: includes/files.php:149 includes/new.php:142 includes/new.php:209
+#: includes/users.php:51 includes/who.php:73 includes/who.php:185 index.php:390
+#: index.php:791 search.php:216
 msgid "To Page"
 msgstr "На страницу"
 
-#: includes/files.php:150
+#: includes/files.php:159
 msgid "No new files"
 msgstr "Новых файлов нет"
 
-#: includes/files.php:172
+#: includes/files.php:181
 msgid "List of sections"
 msgstr "Список разделов"
 
-#: includes/filter.php:26
+#: includes/filter.php:32
 msgid "You have not selected any author"
 msgstr "Вы не выбрали ни одного автора"
 
-#: includes/filter.php:51 index.php:840
+#: includes/filter.php:57 index.php:853
 msgid "Filter by author"
 msgstr "Фильтр по автору"
 
-#: includes/filter.php:62
+#: includes/filter.php:68
 msgid "Filter"
 msgstr "Фильтровать"
 
-#: includes/filter.php:63
+#: includes/filter.php:69
 msgid "Filter will be display posts from selected authors only"
 msgstr "Фильтрация позволит отображать посты только от выбранных авторов"
 
-#: includes/filter.php:70 includes/post.php:123
+#: includes/filter.php:76 includes/post.php:122
 msgid "Back to topic"
 msgstr "Вернуться в тему"
 
-#: includes/massdel.php:24
+#: includes/massdel.php:30
 msgid "Marked posts are deleted"
 msgstr "Отмеченные посты удалены"
 
-#: includes/massdel.php:27
+#: includes/massdel.php:33
 msgid "You did not choose something to delete"
 msgstr "Вы ничего не выбрали для удаления"
 
-#: includes/new.php:5 includes/new.php:140
+#: includes/new.php:5 includes/new.php:149
 msgid "Unread"
 msgstr "Непрочитанные"
 
-#: includes/new.php:52
+#: includes/new.php:61
 msgid "All topics marked as read"
 msgstr "Все темы отмечены как прочитанные"
 
-#: includes/new.php:67
+#: includes/new.php:76
 #, php-format
 msgid "All for period %d hours"
 msgstr "Всего за период %d часов"
 
-#: includes/new.php:72
+#: includes/new.php:81
 msgid "Show period"
 msgstr "Показать за период"
 
-#: includes/new.php:124
+#: includes/new.php:133
 msgid "There is nothing new in this forum for selected period"
 msgstr "За выбранный период нового на форуме нет"
 
-#: includes/new.php:205
+#: includes/new.php:214
 msgid "Mark as read"
 msgstr "Отметить как прочитанное"
 
-#: includes/new.php:211
+#: includes/new.php:220
 msgid "Last 10"
 msgstr "Последние 10 тем"
 
-#: includes/nt.php:61 includes/say.php:61
+#: includes/nt.php:28 includes/say.php:28
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: includes/nt.php:78 includes/say.php:78
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
 
-#: includes/nt.php:88 includes/ren.php:27
+#: includes/nt.php:105 includes/ren.php:39
 msgid "You have not entered topic name"
 msgstr "Вы не ввели название темы"
 
-#: includes/nt.php:92
+#: includes/nt.php:109
 msgid "Topic name too short"
 msgstr "Название темы слишком короткое"
 
-#: includes/nt.php:100 includes/say.php:94 includes/say.php:271
+#: includes/nt.php:117 includes/say.php:110 includes/say.php:286
 msgid "Text is too short"
 msgstr "Слишком короткий текст"
 
-#: includes/nt.php:108 includes/ren.php:37
+#: includes/nt.php:125 includes/ren.php:49
 msgid "Topic with same name already exists in this section"
 msgstr "Тема с таким названием уже есть в этом разделе"
 
-#: includes/nt.php:118 includes/say.php:106 includes/say.php:284
+#: includes/nt.php:135 includes/say.php:122 includes/say.php:299
 msgid "Message already exists"
 msgstr "Такое сообщение уже было"
 
-#: includes/nt.php:216 index.php:315 index.php:810
+#: includes/nt.php:231 index.php:336 index.php:823
 msgid "New Topic"
 msgstr "Новая тема"
 
-#: includes/nt.php:225 includes/per.php:66
+#: includes/nt.php:240 includes/per.php:75
 msgid "Section"
 msgstr "Раздел"
 
-#: includes/nt.php:227
+#: includes/nt.php:242
 msgid "Title(max. 100)"
 msgstr "Название (max. 100)"
 
-#: includes/nt.php:229 includes/say.php:186 includes/say.php:383
+#: includes/nt.php:244 includes/say.php:201 includes/say.php:397
 msgid "Message"
 msgstr "Сообщение"
 
-#: includes/per.php:62 index.php:828
+#: includes/per.php:71 index.php:841
 msgid "Move Topic"
 msgstr "Переместить тему"
 
-#: includes/per.php:65
+#: includes/per.php:74
 msgid "Category"
 msgstr "Категория"
 
-#: includes/per.php:75
+#: includes/per.php:84
 msgid "Move"
 msgstr "Переместить"
 
-#: includes/per.php:77
+#: includes/per.php:86
 msgid "Other categories"
 msgstr "Другие категории"
 
-#: includes/post.php:23 includes/say.php:179 includes/say.php:358
+#: includes/post.php:32 includes/say.php:194 includes/say.php:372
 msgid "Topic"
 msgstr "Тема"
 
-#: includes/post.php:64 index.php:502 index.php:634
+#: includes/post.php:71 index.php:523 index.php:653
 msgid "[r]"
 msgstr "[о]"
 
-#: includes/post.php:65 index.php:503 index.php:635
+#: includes/post.php:72 index.php:524 index.php:654
 msgid "[q]"
 msgstr "[ц]"
 
-#: includes/post.php:97 index.php:674
+#: includes/post.php:96 index.php:687
 msgid "Attachment"
 msgstr "Прикреплённый файл"
 
-#: includes/post.php:115 index.php:692
+#: includes/post.php:114 index.php:705
 msgid "Downloads"
 msgstr "Скачано"
 
-#: includes/ren.php:47 index.php:806
+#: includes/ren.php:59 index.php:819
 msgid "Rename Topic"
 msgstr "Переименовать тему"
 
-#: includes/ren.php:49
+#: includes/ren.php:61
 msgid "Topic name"
 msgstr "Название темы"
 
-#: includes/say.php:76 includes/say.php:211
+#: includes/say.php:92 includes/say.php:226
 msgid "You cannot write in a closed topic"
 msgstr "Вы не можете писать в закрытую тему"
 
-#: includes/say.php:194 includes/say.php:390
+#: includes/say.php:209 includes/say.php:404
 msgid "Send"
 msgstr "Отправить"
 
-#: includes/say.php:240 includes/say.php:379
+#: includes/say.php:255 includes/say.php:393
 msgid "I am glad to answer you"
 msgstr "с удовольствием тебе отвечу"
 
-#: includes/say.php:244 includes/say.php:380
+#: includes/say.php:259 includes/say.php:394
 msgid "respond to Your message"
 msgstr "ответ на Ваше сообщение"
 
-#: includes/say.php:372 includes/tema.php:55
+#: includes/say.php:386 includes/tema.php:67
 msgid "Quote"
 msgstr "Цитата"
 
-#: includes/say.php:374
+#: includes/say.php:388
 msgid "Only allowed 200 characters, other text will be cropped."
 msgstr "Допустимо макс. 200 символов, весь лишний текст обрезается."
 
-#: includes/say.php:377
+#: includes/say.php:391
 msgid "Appeal"
 msgstr "Обращение"
 
-#: includes/tema.php:74 includes/tema.php:123 includes/tema.php:131
+#: includes/tema.php:86 includes/tema.php:135 includes/tema.php:143
 msgid "Download"
 msgstr "Скачать"
 
-#: includes/tema.php:74 includes/tema.php:123
+#: includes/tema.php:86 includes/tema.php:135
 msgid "Link active 5 minutes"
 msgstr "Ссылка активна 5 минут"
 
-#: includes/tema.php:113
+#: includes/tema.php:125
 msgid "This theme was downloaded from the forum site"
 msgstr "Данная тема была скачана с форума сайта"
 
-#: includes/tema.php:127
+#: includes/tema.php:139
 msgid "Select format"
 msgstr "Выберите формат"
 
-#: includes/users.php:17
+#: includes/users.php:27
 msgid "Who voted in the poll"
 msgstr "Пользователи, принявшие участие в опросе"
 
-#: includes/users.php:32
+#: includes/users.php:42
 msgid "No one has voted in this poll yet"
 msgstr "В этом опросе пока никто не участвовал"
 
-#: includes/users.php:44 includes/who.php:68 search.php:141
+#: includes/users.php:54 includes/who.php:77 search.php:151
 msgid "Go to Topic"
 msgstr "В тему"
 
-#: includes/vote.php:24
+#: includes/vote.php:33
 msgid "Vote accepted"
 msgstr "Ваш голос принят"
 
-#: includes/vote.php:26 index.php:94
-msgid "For registered users only"
-msgstr "Только для зарегистрированных посетителей"
-
-#: includes/who.php:5 includes/who.php:71 index.php:877
+#: includes/who.php:5 includes/who.php:80 index.php:890
 msgid "Who in Forum"
 msgstr "Кто в форуме"
 
-#: includes/who.php:23
+#: includes/who.php:32
 msgid "Who in Topic"
 msgstr "Кто в теме"
 
-#: includes/who.php:27
+#: includes/who.php:36
 msgid "Authorized"
 msgstr "Авторизованные"
 
-#: includes/who.php:27 includes/who.php:74 includes/who.php:75
+#: includes/who.php:36 includes/who.php:83 includes/who.php:84
 msgid "Guests"
 msgstr "Гости"
 
-#: includes/who.php:74 includes/who.php:75
+#: includes/who.php:83 includes/who.php:84
 msgid "Users"
 msgstr "Пользователи"
 
-#: includes/who.php:104
+#: includes/who.php:113
 msgid "In the forum Main"
 msgstr "На главной форума"
 
-#: includes/who.php:108
+#: includes/who.php:117
 msgid "Here, in the List"
 msgstr "Тут, в списке"
 
-#: includes/who.php:112
+#: includes/who.php:121
 msgid "Looking forum files"
 msgstr "Смотрит файлы форума"
 
-#: includes/who.php:116
+#: includes/who.php:125
 msgid "In the unreads"
 msgstr "Смотрит непрочитанное"
 
-#: includes/who.php:120 search.php:15
+#: includes/who.php:129 search.php:19
 msgid "Forum search"
 msgstr "Поиск форума"
 
-#: includes/who.php:134
+#: includes/who.php:143
 msgid "In the Category"
 msgstr "В категории"
 
-#: includes/who.php:138
+#: includes/who.php:147
 msgid "In the Section"
 msgstr "В разделе"
 
-#: includes/who.php:142
+#: includes/who.php:151
 msgid "Writes in the Topic"
 msgstr "Пишет в тему"
 
-#: includes/who.php:142 includes/who.php:150
+#: includes/who.php:151 includes/who.php:159
 msgid "In the Topic"
 msgstr "В теме"
 
-#: includes/who.php:150
+#: includes/who.php:159
 msgid "Answers in the Topic"
 msgstr "Отвечает в теме"
 
-#: index.php:92 index.php:163
+#: index.php:115 index.php:184
 msgid "Forum is closed"
 msgstr "Форум закрыт"
 
-#: index.php:165
+#: index.php:117
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: index.php:186
 msgid "Read only"
 msgstr "Только для чтения"
 
-#: index.php:244
+#: index.php:265
 msgid "Section Files"
 msgstr "Файлы раздела"
 
-#: index.php:262
+#: index.php:283
 msgid "Who is here"
 msgstr "Кто здесь"
 
-#: index.php:268 index.php:859 search.php:17 search.php:59
+#: index.php:289 index.php:872 search.php:21 search.php:69
 msgid "Search"
 msgstr "Поиск"
 
-#: index.php:301
+#: index.php:322
 msgid "There are no sections in this category"
 msgstr "В данной категории разделов нет"
 
-#: index.php:360
+#: index.php:381
 msgid "No topics in this section"
 msgstr "В данном разделе нет ни одной темы"
 
-#: index.php:401
+#: index.php:422
 msgid "Topic deleted"
 msgstr "Тема удалена"
 
-#: index.php:401
+#: index.php:422
 msgid "Go to Section"
 msgstr "В раздел"
 
-#: index.php:422
+#: index.php:443
 msgid "Topic deleted by"
 msgstr "Тему удалил"
 
-#: index.php:424
+#: index.php:445
 msgid "Undelete topic"
 msgstr "Отменил удаление темы"
 
-#: index.php:429
+#: index.php:450
 msgid "Topic closed"
 msgstr "Тема закрыта"
 
-#: index.php:448 index.php:471
+#: index.php:469 index.php:492
 msgid "Vote"
 msgstr "Голосовать"
 
-#: index.php:449
+#: index.php:470
 msgid "Results"
 msgstr "Результаты"
 
-#: index.php:457
+#: index.php:478
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: index.php:460
+#: index.php:481
 msgid "Total votes"
 msgstr "Всего голосов"
 
-#: index.php:519 index.php:720
+#: index.php:540 index.php:733
 msgid "Post deleted"
 msgstr "Пост удалил"
 
-#: index.php:533
+#: index.php:554
 msgid "Filter by author is activated"
 msgstr "Активирован фильтр по автору"
 
-#: index.php:565 index.php:570 index.php:761 index.php:766
+#: index.php:586 index.php:591 index.php:774 index.php:779
 msgid "Write"
 msgstr "Написать"
 
-#: index.php:665
+#: index.php:678
 msgid "Edited"
 msgstr "Изм."
 
-#: index.php:712
+#: index.php:725
 msgid "Edit"
 msgstr "Изменить"
 
-#: index.php:713
+#: index.php:726
 msgid "Restore"
 msgstr "Восстановить"
 
-#: index.php:722
+#: index.php:735
 msgid "Post restored by"
 msgstr "Пост восстановил"
 
-#: index.php:800
+#: index.php:813
 msgid "Curators of the Topic"
 msgstr "Кураторы темы"
 
-#: index.php:804
+#: index.php:817
 msgid "Delete Poll"
 msgstr "Удалить опрос"
 
-#: index.php:805
+#: index.php:818
 msgid "Add Poll"
 msgstr "Добавить опрос"
 
-#: index.php:812
+#: index.php:825
 msgid "Close Topic"
 msgstr "Закрыть тему"
 
-#: index.php:817
+#: index.php:830
 msgid "Restore Topic"
 msgstr "Восстановить тему"
 
-#: index.php:823
+#: index.php:836
 msgid "Unfix Topic"
 msgstr "Открепить тему"
 
-#: index.php:825
+#: index.php:838
 msgid "Pin Topic"
 msgstr "Закрепить тему"
 
-#: index.php:838
+#: index.php:851
 msgid "Cancel Filter"
 msgstr "Отменить фильтрацию"
 
-#: index.php:844
+#: index.php:857
 msgid "Download Topic"
 msgstr "Скачать тему"
 
-#: index.php:859
+#: index.php:872
 msgid "Files"
 msgstr "Файлы"
 
-#: index.php:886
+#: index.php:899
 msgid "Forum rules"
 msgstr "Правила форума"
 
-#: index.php:893
+#: index.php:906
 msgid "New at the top"
 msgstr "Новые вверху"
 
-#: index.php:895
+#: index.php:908
 msgid "New at the bottom"
 msgstr "Новые внизу"
 
-#: search.php:40
+#: search.php:50
 msgid "Do you really want to clear the search history?"
 msgstr "Вы действительно хотите очистить историю поиска?"
 
-#: search.php:41
+#: search.php:51
 msgid "Clear"
 msgstr "Очистить"
 
-#: search.php:60
+#: search.php:70
 msgid "Search in the topic names"
 msgstr "Искать в названиях тем"
 
-#: search.php:76
+#: search.php:86
 msgid "Search results"
 msgstr "Результаты поиска"
 
-#: search.php:142
+#: search.php:152
 msgid "Go to Message"
 msgstr "Перейти к сообщению"
 
-#: search.php:147
+#: search.php:157
 msgid "Your search did not match any results"
 msgstr "По Вашему запросу ничего не найдено"
 
-#: search.php:152
+#: search.php:162
 msgid "Invalid length"
 msgstr "Недопустимая длина"
 
-#: search.php:155
+#: search.php:165
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
 msgstr "Длина запроса: 4 мин., 64 макс.<br>Поиск нечувствителен к регистру букв<br>Результаты выводятся с сортировкой по релевантности."
 
-#: search.php:188
+#: search.php:198
 msgid "Search History"
 msgstr "История поисковых запросов"
 
-#: search.php:210
+#: search.php:220
 msgid "New Search"
 msgstr "Новый поиск"
 

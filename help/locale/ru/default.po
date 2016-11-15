@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-08-26 04:29-0400\n"
+"PO-Revision-Date: 2016-11-15 10:27-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,98 +19,99 @@ msgstr ""
 "X-Crowdin-File: /help/default.pot\n"
 "Language: ru_RU\n"
 
-#: includes/admsmilies.php:7
+#: includes/admsmilies.php:16 includes/set_my_sm.php:21
 msgid "Wrong data"
 msgstr "Неверные данные"
 
-#: includes/admsmilies.php:7 includes/admsmilies.php:61 includes/avatars.php:16
-#: includes/avatars.php:62 includes/avatars.php:80 includes/forum.php:51
-#: includes/my_smilies.php:53 includes/smilies.php:40 includes/tags.php:71
-#: includes/usersmilies.php:71 index.php:63
+#: includes/admsmilies.php:16 includes/admsmilies.php:70
+#: includes/avatars.php:25 includes/avatars.php:71 includes/avatars.php:89
+#: includes/forum.php:51 includes/my_smilies.php:62 includes/smilies.php:43
+#: includes/tags.php:71 includes/usersmilies.php:80 index.php:74
 msgid "Back"
 msgstr "Назад"
 
-#: includes/admsmilies.php:12 includes/my_smilies.php:6 includes/smilies.php:6
-#: includes/usersmilies.php:22 index.php:62
+#: includes/admsmilies.php:21 includes/my_smilies.php:15
+#: includes/set_my_sm.php:21 includes/smilies.php:9 includes/usersmilies.php:31
+#: index.php:73
 msgid "Smilies"
 msgstr "Смайлы"
 
-#: includes/admsmilies.php:12 includes/smilies.php:14
+#: includes/admsmilies.php:21 includes/smilies.php:17
 msgid "For administration"
 msgstr "Для администрации"
 
-#: includes/admsmilies.php:19 includes/my_smilies.php:6 includes/smilies.php:10
-#: includes/usersmilies.php:35
+#: includes/admsmilies.php:28 includes/my_smilies.php:15
+#: includes/smilies.php:13 includes/usersmilies.php:44
 msgid "My smilies"
 msgstr "Мои смайлы"
 
-#: includes/admsmilies.php:45 includes/my_smilies.php:37
-#: includes/usersmilies.php:51
+#: includes/admsmilies.php:54 includes/my_smilies.php:46
+#: includes/usersmilies.php:60
 msgid "or"
 msgstr "или"
 
-#: includes/admsmilies.php:48 includes/avatars.php:49
-#: includes/my_smilies.php:44 includes/usersmilies.php:59
+#: includes/admsmilies.php:57 includes/avatars.php:58
+#: includes/my_smilies.php:53 includes/usersmilies.php:68
 msgid "The list is empty"
 msgstr "Список пуст"
 
-#: includes/admsmilies.php:51 includes/usersmilies.php:56
+#: includes/admsmilies.php:60 includes/usersmilies.php:65
 msgid "Add"
 msgstr "Добавить"
 
-#: includes/admsmilies.php:52 includes/avatars.php:52 includes/avatars.php:79
-#: includes/my_smilies.php:47 includes/usersmilies.php:62
+#: includes/admsmilies.php:61 includes/avatars.php:61 includes/avatars.php:88
+#: includes/my_smilies.php:56 includes/usersmilies.php:71
 msgid "Total"
 msgstr "Всего"
 
-#: includes/admsmilies.php:58 includes/avatars.php:58
-#: includes/usersmilies.php:68
+#: includes/admsmilies.php:67 includes/avatars.php:67
+#: includes/usersmilies.php:77
 msgid "To Page"
 msgstr "На страницу"
 
-#: includes/avatars.php:13
+#: includes/avatars.php:22
 msgid "Avatar has been successfully applied"
 msgstr "Аватар успешно установлен"
 
-#: includes/avatars.php:14
+#: includes/avatars.php:23
 msgid "Continue"
 msgstr "Продолжить"
 
-#: includes/avatars.php:16
+#: includes/avatars.php:25
 msgid "An error occurred"
 msgstr "Произошла ошибка"
 
-#: includes/avatars.php:19 includes/avatars.php:28 includes/avatars.php:66
-#: index.php:61
+#: includes/avatars.php:28 includes/avatars.php:37 includes/avatars.php:75
+#: index.php:72
 msgid "Avatars"
 msgstr "Аватары"
 
-#: includes/avatars.php:19
+#: includes/avatars.php:28
 msgid "Set to Profile"
 msgstr "Установить в анкету"
 
-#: includes/avatars.php:20
+#: includes/avatars.php:29
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr "Вы действительно хотите установить себе этот аватар?"
 
-#: includes/avatars.php:22
+#: includes/avatars.php:31
 msgid "Save"
 msgstr "Сохранить"
 
-#: includes/avatars.php:24
+#: includes/avatars.php:33
 msgid "Cancel"
 msgstr "Отмена"
 
-#: includes/avatars.php:43
+#: includes/avatars.php:52
 msgid "Select"
 msgstr "Выбрать"
 
-#: includes/avatars.php:66 includes/forum.php:6 includes/smilies.php:6
-#: includes/tags.php:8 index.php:58
+#: includes/avatars.php:75 includes/forum.php:6 includes/smilies.php:9
+#: includes/tags.php:8 index.php:69
 msgid "Information, FAQ"
 msgstr "Информация, FAQ"
 
-#: includes/forum.php:6 index.php:59
+#: includes/forum.php:6 index.php:70
 msgid "Forum rules"
 msgstr "Правила форума"
 
@@ -190,15 +191,15 @@ msgstr "Сообщения, опубликованные несмотря на �
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr "Это правило распространяется на всех участников и модераторов, повторные действия могут привести к бану, или даже блокировке Вашей учетной записи."
 
-#: includes/my_smilies.php:42
+#: includes/my_smilies.php:51
 msgid "Delete"
 msgstr "Удалить"
 
-#: includes/my_smilies.php:44
+#: includes/my_smilies.php:53
 msgid "Add Smilies"
 msgstr "Добавить Смайлы"
 
-#: includes/tags.php:8 index.php:60
+#: includes/tags.php:8 index.php:71
 msgid "bbCode Tags"
 msgstr "bbCode Теги"
 
@@ -270,51 +271,51 @@ msgstr "Текст"
 msgid "Spoiler"
 msgstr "Спойлер"
 
-#: index.php:27
+#: index.php:38
 msgid "Animals"
 msgstr "Животные"
 
-#: index.php:28
+#: index.php:39
 msgid "Brawl, Weapons"
 msgstr "Драки, Оружие"
 
-#: index.php:29
+#: index.php:40
 msgid "Emotions"
 msgstr "Эмоции"
 
-#: index.php:30
+#: index.php:41
 msgid "Flowers"
 msgstr "Цветы"
 
-#: index.php:31
+#: index.php:42
 msgid "Food, Alcohol"
 msgstr "Еда, алкоголь"
 
-#: index.php:32
+#: index.php:43
 msgid "Gestures"
 msgstr "Жесты"
 
-#: index.php:33
+#: index.php:44
 msgid "Holidays"
 msgstr "Праздники"
 
-#: index.php:34
+#: index.php:45
 msgid "Love"
 msgstr "Любовь"
 
-#: index.php:35
+#: index.php:46
 msgid "Miscellaneous"
 msgstr "Разное"
 
-#: index.php:36
+#: index.php:47
 msgid "Music, Dancing"
 msgstr "Музыка, танцы"
 
-#: index.php:37
+#: index.php:48
 msgid "Sports"
 msgstr "Спорт"
 
-#: index.php:38
+#: index.php:49
 msgid "Technology"
 msgstr "Техника"
 
