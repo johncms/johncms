@@ -29,7 +29,20 @@ class PdoFactory
                 ]
             );
         } catch (\PDOException $e) {
-            throw new \RuntimeException($e->getMessage());
+            echo '<h2>MySQL ERROR: ' . $e->getCode() . '</h2>';
+
+            switch ($e->getCode()) {
+                case 1045:
+                    exit('Access credentials (username or password) to a database are incorrect');
+
+                case 1049:
+                    exit('The name of a database is specified incorrectly');
+
+                case 2002:
+                    exit('Invalid database server');
+            }
+
+            exit;
         }
 
         return $pdo;
