@@ -9,608 +9,606 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/activity.php:6 includes/activity.php:12 includes/stat.php:32
-#: index.php:150
+#: includes/activity.php:6 includes/activity.php:24 includes/stat.php:41
+#: index.php:205
 msgid "Activity"
 msgstr ""
 
-#: includes/activity.php:12 includes/ban.php:183 includes/ban.php:287
-#: includes/edit.php:26 includes/guestbook.php:5 includes/guestbook.php:11
-#: includes/images.php:19 includes/images.php:60 includes/info.php:8
-#: includes/ip.php:16 includes/karma.php:98 includes/karma.php:185
-#: includes/karma.php:196 includes/karma.php:257 includes/office.php:24
-#: includes/password.php:84 includes/reset.php:17 includes/stat.php:8
-#: index.php:57
+#: includes/activity.php:24 includes/ban.php:195 includes/ban.php:299
+#: includes/edit.php:35 includes/guestbook.php:6 includes/guestbook.php:21
+#: includes/images.php:32 includes/images.php:73 includes/info.php:17
+#: includes/ip.php:31 includes/karma.php:110 includes/karma.php:197
+#: includes/karma.php:208 includes/karma.php:269 includes/office.php:36
+#: includes/password.php:93 includes/reset.php:23 includes/stat.php:17
+#: index.php:112
 msgid "Profile"
 msgstr ""
 
-#: includes/activity.php:14 includes/activity.php:84
+#: includes/activity.php:26 includes/activity.php:96
 msgid "Messages"
 msgstr ""
 
-#: includes/activity.php:15 includes/activity.php:49
+#: includes/activity.php:27 includes/activity.php:61
 msgid "Themes"
 msgstr ""
 
-#: includes/activity.php:16 includes/activity.php:25 includes/ban.php:141
-#: includes/guestbook.php:24 includes/stat.php:35 includes/stat.php:48
+#: includes/activity.php:28 includes/activity.php:37 includes/ban.php:153
+#: includes/guestbook.php:34 includes/stat.php:44 includes/stat.php:57
 msgid "Comments"
 msgstr ""
 
-#: includes/activity.php:42 includes/activity.php:77 includes/activity.php:114
-#: includes/ban.php:365 includes/ip.php:40 includes/karma.php:174
-#: includes/karma.php:244
+#: includes/activity.php:54 includes/activity.php:89 includes/activity.php:126
+#: includes/ban.php:377 includes/ip.php:53 includes/karma.php:186
+#: includes/karma.php:256
 msgid "The list is empty"
 msgstr ""
 
-#: includes/activity.php:49 includes/activity.php:84 includes/ban.php:149
-#: includes/settings.php:20 includes/settings.php:52 includes/stat.php:33
-#: includes/stat.php:46
+#: includes/activity.php:61 includes/activity.php:96 includes/ban.php:161
+#: includes/settings.php:35 includes/stat.php:42 includes/stat.php:55
 msgid "Forum"
 msgstr ""
 
-#: includes/activity.php:118 includes/ban.php:275 includes/ban.php:368
-#: includes/ip.php:43 includes/karma.php:176 includes/karma.php:247
+#: includes/activity.php:130 includes/ban.php:287 includes/ban.php:380
+#: includes/ip.php:56 includes/karma.php:188 includes/karma.php:259
 msgid "Total"
 msgstr ""
 
-#: includes/activity.php:124 includes/ban.php:374 includes/ip.php:49
-#: includes/karma.php:182 includes/karma.php:253
+#: includes/activity.php:136 includes/ban.php:386 includes/ip.php:62
+#: includes/karma.php:194 includes/karma.php:265
 msgid "To Page"
 msgstr ""
 
-#: includes/ban.php:16
+#: includes/ban.php:28
 msgid "You do not have enought rights to ban this user"
 msgstr ""
 
-#: includes/ban.php:18
+#: includes/ban.php:30
 msgid "Ban the User"
 msgstr ""
 
-#: includes/ban.php:30
+#: includes/ban.php:42
 msgid "Reason not specified"
 msgstr ""
 
-#: includes/ban.php:34
+#: includes/ban.php:46
 msgid "There is no required data"
 msgstr ""
 
-#: includes/ban.php:38
+#: includes/ban.php:50
 msgid "You have no rights to ban in this section"
 msgstr ""
 
-#: includes/ban.php:42
+#: includes/ban.php:54
 msgid "Ban already active"
 msgstr ""
 
-#: includes/ban.php:116 includes/office.php:62
+#: includes/ban.php:128 includes/office.php:74
 msgid "System"
 msgstr ""
 
-#: includes/ban.php:120 index.php:73
+#: includes/ban.php:132 index.php:128
 msgid "Ban"
 msgstr ""
 
-#: includes/ban.php:126
+#: includes/ban.php:138
 msgid "User banned"
 msgstr ""
 
-#: includes/ban.php:133
+#: includes/ban.php:145
 msgid "Ban type"
 msgstr ""
 
-#: includes/ban.php:137
+#: includes/ban.php:149
 msgid "Full block"
 msgstr ""
 
-#: includes/ban.php:139
+#: includes/ban.php:151
 msgid "Private messages"
 msgstr ""
 
-#: includes/ban.php:143 includes/guestbook.php:5 includes/guestbook.php:11
-#: includes/office.php:27 includes/stat.php:34 includes/stat.php:47
-#: index.php:160
+#: includes/ban.php:155 includes/guestbook.php:6 includes/guestbook.php:21
+#: includes/office.php:39 includes/stat.php:43 includes/stat.php:56
+#: index.php:215
 msgid "Guestbook"
 msgstr ""
 
-#: includes/ban.php:154
+#: includes/ban.php:166
 msgid "Library"
 msgstr ""
 
-#: includes/ban.php:157
+#: includes/ban.php:169
 msgid "Ban time"
 msgstr ""
 
-#: includes/ban.php:159
+#: includes/ban.php:171
 msgid "Minutes (60 max.)"
 msgstr ""
 
-#: includes/ban.php:160
+#: includes/ban.php:172
 msgid "Hours (24 max.)"
 msgstr ""
 
-#: includes/ban.php:163
+#: includes/ban.php:175
 msgid "Days (30 max.)"
 msgstr ""
 
-#: includes/ban.php:167 includes/ban.php:340
+#: includes/ban.php:179 includes/ban.php:352
 msgid "Till cancel"
 msgstr ""
 
-#: includes/ban.php:170
+#: includes/ban.php:182
 msgid "Reason"
 msgstr ""
 
-#: includes/ban.php:175
+#: includes/ban.php:187
 msgid "Violation"
 msgstr ""
 
-#: includes/ban.php:180
+#: includes/ban.php:192
 msgid "Apply Ban"
 msgstr ""
 
-#: includes/ban.php:190 includes/ban.php:220 includes/ban.php:228
-#: includes/ban.php:253 skl.php:97
+#: includes/ban.php:202 includes/ban.php:232 includes/ban.php:240
+#: includes/ban.php:265 skl.php:106
 msgid "Wrong data"
 msgstr ""
 
-#: includes/ban.php:199
+#: includes/ban.php:211
 msgid "Ban not active"
 msgstr ""
 
-#: includes/ban.php:203
+#: includes/ban.php:215
 msgid "Ban termination"
 msgstr ""
 
-#: includes/ban.php:208
+#: includes/ban.php:220
 msgid "Ban terminated"
 msgstr ""
 
-#: includes/ban.php:211
+#: includes/ban.php:223
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: includes/ban.php:212
+#: includes/ban.php:224
 msgid "Terminate Ban"
 msgstr ""
 
-#: includes/ban.php:214 includes/ban.php:250 includes/edit.php:21
-#: includes/info.php:42 includes/karma.php:47 includes/karma.php:102
-#: includes/stat.php:65 skl.php:87
+#: includes/ban.php:226 includes/ban.php:262 includes/edit.php:30
+#: includes/info.php:51 includes/karma.php:59 includes/karma.php:114
+#: includes/stat.php:74 skl.php:96
 msgid "Back"
 msgstr ""
 
-#: includes/ban.php:234 includes/ban.php:354
+#: includes/ban.php:246 includes/ban.php:366
 msgid "Delete Ban"
 msgstr ""
 
-#: includes/ban.php:244
+#: includes/ban.php:256
 msgid "Ban deleted"
 msgstr ""
 
-#: includes/ban.php:244 includes/images.php:40 includes/images.php:91
-#: includes/karma.php:79 includes/password.php:62
+#: includes/ban.php:256 includes/images.php:53 includes/images.php:104
+#: includes/karma.php:91 includes/password.php:71
 msgid "Continue"
 msgstr ""
 
-#: includes/ban.php:247
+#: includes/ban.php:259
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: includes/ban.php:248 includes/edit.php:168 includes/edit.php:183
-#: includes/karma.php:130 includes/karma.php:147 index.php:69
+#: includes/ban.php:260 includes/edit.php:177 includes/edit.php:192
+#: includes/karma.php:142 includes/karma.php:159 index.php:124
 msgid "Delete"
 msgstr ""
 
-#: includes/ban.php:261 includes/ban.php:277
+#: includes/ban.php:273 includes/ban.php:289
 msgid "Violations history"
 msgstr ""
 
-#: includes/ban.php:266
+#: includes/ban.php:278
 msgid "Violations history cleared"
 msgstr ""
 
-#: includes/ban.php:269
+#: includes/ban.php:281
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: includes/ban.php:270
+#: includes/ban.php:282
 msgid "Clear"
 msgstr ""
 
-#: includes/ban.php:279 includes/ban.php:292
+#: includes/ban.php:291 includes/ban.php:304
 msgid "Ban Panel"
 msgstr ""
 
-#: includes/ban.php:281
+#: includes/ban.php:293
 msgid "Violations history can be cleared by Supervisor only"
 msgstr ""
 
-#: includes/ban.php:287
+#: includes/ban.php:299
 msgid "Violations History"
 msgstr ""
 
-#: includes/ban.php:296
+#: includes/ban.php:308
 msgid "Clear history"
 msgstr ""
 
-#: includes/ban.php:306
+#: includes/ban.php:318
 msgid "My Violations"
 msgstr ""
 
-#: includes/ban.php:336
+#: includes/ban.php:348
 msgid "Who applied the Ban?"
 msgstr ""
 
-#: includes/ban.php:339
+#: includes/ban.php:351
 msgid "Time"
 msgstr ""
 
-#: includes/ban.php:343
+#: includes/ban.php:355
 msgid "Remains"
 msgstr ""
 
-#: includes/ban.php:350
+#: includes/ban.php:362
 msgid "Cancel Ban"
 msgstr ""
 
-#: includes/edit.php:5 includes/images.php:5 includes/office.php:86
-#: includes/reset.php:10
+#: includes/edit.php:5 includes/images.php:5 includes/office.php:98
+#: includes/reset.php:16
 msgid "Edit Profile"
 msgstr ""
 
-#: includes/edit.php:10 includes/images.php:12
+#: includes/edit.php:22 includes/images.php:21
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: includes/edit.php:21 includes/settings.php:85 includes/settings.php:177
+#: includes/edit.php:30 includes/settings.php:191
 msgid "Default settings are set"
 msgstr ""
 
-#: includes/edit.php:26 index.php:59
+#: includes/edit.php:35 index.php:114
 msgid "My Profile"
 msgstr ""
 
-#: includes/edit.php:26 includes/info.php:11 index.php:65
+#: includes/edit.php:35 includes/info.php:20 index.php:120
 msgid "Edit"
 msgstr ""
 
-#: includes/edit.php:31
+#: includes/edit.php:40
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: includes/edit.php:36
+#: includes/edit.php:45
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: includes/edit.php:67
+#: includes/edit.php:76
 msgid "Min. nick length 2, max. 20 characters"
 msgstr ""
 
-#: includes/edit.php:73
+#: includes/edit.php:82
 msgid "Nick contains invalid characters"
 msgstr ""
 
-#: includes/edit.php:78
+#: includes/edit.php:87
 msgid "Invalid format date of birth"
 msgstr ""
 
-#: includes/edit.php:83
+#: includes/edit.php:92
 msgid "ICQ number must be at least 5 digits and max. 10"
 msgstr ""
 
-#: includes/edit.php:141
+#: includes/edit.php:150
 msgid "Data saved"
 msgstr ""
 
-#: includes/edit.php:153 skl.php:146
+#: includes/edit.php:162 skl.php:155
 msgid "Username"
 msgstr ""
 
-#: includes/edit.php:156 includes/edit.php:159
+#: includes/edit.php:165 includes/edit.php:168
 msgid "Nickname"
 msgstr ""
 
-#: includes/edit.php:156
+#: includes/edit.php:165
 msgid "Min.2, Max. 20"
 msgstr ""
 
-#: includes/edit.php:157 includes/edit.php:160
+#: includes/edit.php:166 includes/edit.php:169
 msgid "Status"
 msgstr ""
 
-#: includes/edit.php:157
+#: includes/edit.php:166
 msgid "Max. 50"
 msgstr ""
 
-#: includes/edit.php:163
+#: includes/edit.php:172
 msgid "Avatar"
 msgstr ""
 
-#: includes/edit.php:171 includes/edit.php:186 includes/images.php:51
-#: includes/images.php:104
+#: includes/edit.php:180 includes/edit.php:195 includes/images.php:64
+#: includes/images.php:117
 msgid "Upload"
 msgstr ""
 
-#: includes/edit.php:174
+#: includes/edit.php:183
 msgid "Select in Catalog"
 msgstr ""
 
-#: includes/edit.php:178
+#: includes/edit.php:187
 msgid "Photo"
 msgstr ""
 
-#: includes/edit.php:189 includes/info.php:16
+#: includes/edit.php:198 includes/info.php:25
 msgid "Personal info"
 msgstr ""
 
-#: includes/edit.php:190
+#: includes/edit.php:199
 msgid "Your name"
 msgstr ""
 
-#: includes/edit.php:191
+#: includes/edit.php:200
 msgid "Date of birth (d.m.y)"
 msgstr ""
 
-#: includes/edit.php:195 includes/info.php:25
+#: includes/edit.php:204 includes/info.php:34
 msgid "City, Country"
 msgstr ""
 
-#: includes/edit.php:196 includes/info.php:26
+#: includes/edit.php:205 includes/info.php:35
 msgid "About myself"
 msgstr ""
 
-#: includes/edit.php:197 includes/info.php:28 includes/office.php:73
-#: includes/office.php:77
+#: includes/edit.php:206 includes/info.php:37 includes/office.php:85
+#: includes/office.php:89
 msgid "Contacts"
 msgstr ""
 
-#: includes/edit.php:198 includes/info.php:29
+#: includes/edit.php:207 includes/info.php:38
 msgid "Phone number"
 msgstr ""
 
-#: includes/edit.php:199
-msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
-msgstr ""
-
-#: includes/edit.php:201
+#: includes/edit.php:210
 msgid "Show in Profile"
 msgstr ""
 
-#: includes/edit.php:205 includes/info.php:40
+#: includes/edit.php:211
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr ""
+
+#: includes/edit.php:215 includes/info.php:49
 msgid "Site"
 msgstr ""
 
-#: includes/edit.php:210
+#: includes/edit.php:220
 msgid "Administrative Functions"
 msgstr ""
 
-#: includes/edit.php:211
+#: includes/edit.php:221
 msgid "Prohibit Karma"
 msgstr ""
 
-#: includes/edit.php:212 includes/office.php:87 includes/password.php:12
-#: includes/password.php:72
+#: includes/edit.php:222 includes/office.php:99 includes/password.php:24
+#: includes/password.php:81
 msgid "Change Password"
 msgstr ""
 
-#: includes/edit.php:215
+#: includes/edit.php:225
 msgid "Reset User options to default"
 msgstr ""
 
-#: includes/edit.php:218
+#: includes/edit.php:228
 msgid "Select gender"
 msgstr ""
 
-#: includes/edit.php:219
+#: includes/edit.php:229
 msgid "Man"
 msgstr ""
 
-#: includes/edit.php:220
+#: includes/edit.php:230
 msgid "Woman"
 msgstr ""
 
-#: includes/edit.php:224
+#: includes/edit.php:234
 msgid "Position on the Site"
 msgstr ""
 
-#: includes/edit.php:225
+#: includes/edit.php:235
 msgid "User"
 msgstr ""
 
-#: includes/edit.php:226
+#: includes/edit.php:236
 msgid "Forum Moderator"
 msgstr ""
 
-#: includes/edit.php:227
+#: includes/edit.php:237
 msgid "Download Moderator"
 msgstr ""
 
-#: includes/edit.php:228
+#: includes/edit.php:238
 msgid "Library Moderator"
 msgstr ""
 
-#: includes/edit.php:229
+#: includes/edit.php:239
 msgid "Super Modererator"
 msgstr ""
 
-#: includes/edit.php:231
+#: includes/edit.php:242
 msgid "Administrator"
 msgstr ""
 
-#: includes/edit.php:232
+#: includes/edit.php:243
 msgid "Supervisor"
 msgstr ""
 
-#: includes/edit.php:239 includes/password.php:82 includes/settings.php:46
-#: includes/settings.php:97 includes/settings.php:222
+#: includes/edit.php:250 includes/password.php:91 includes/settings.php:236
 msgid "Save"
 msgstr ""
 
-#: includes/images.php:19
+#: includes/images.php:32
 msgid "Upload Avatar"
 msgstr ""
 
-#: includes/images.php:39
+#: includes/images.php:52
 msgid "The avatar is successfully uploaded"
 msgstr ""
 
-#: includes/images.php:48
+#: includes/images.php:61
 msgid "Select Image"
 msgstr ""
 
-#: includes/images.php:54 includes/images.php:106
+#: includes/images.php:67 includes/images.php:119
 #, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 
-#: includes/images.php:60
+#: includes/images.php:73
 msgid "Upload Photo"
 msgstr ""
 
-#: includes/images.php:91
+#: includes/images.php:104
 msgid "The photo is successfully uploaded"
 msgstr ""
 
-#: includes/images.php:101
+#: includes/images.php:114
 msgid "Select image"
 msgstr ""
 
-#: includes/info.php:6 includes/info.php:8 index.php:149
+#: includes/info.php:15 includes/info.php:17 index.php:204
 msgid "Information"
 msgstr ""
 
-#: includes/info.php:23
+#: includes/info.php:32
 msgid "Name"
 msgstr ""
 
-#: includes/info.php:24 index.php:82
+#: includes/info.php:33 index.php:137
 msgid "Birthday"
 msgstr ""
 
-#: includes/info.php:33
+#: includes/info.php:42
 msgid "hidden"
 msgstr ""
 
-#: includes/ip.php:5 includes/ip.php:16
+#: includes/ip.php:5 includes/ip.php:31
 msgid "IP History"
 msgstr ""
 
-#: includes/ip.php:10 includes/office.php:11 includes/password.php:7
-#: includes/settings.php:10
+#: includes/ip.php:22 includes/office.php:23 includes/password.php:19
+#: includes/settings.php:25
 msgid "Access forbidden"
 msgstr ""
 
-#: includes/karma.php:5 includes/karma.php:156 includes/karma.php:196
-#: includes/karma.php:215 index.php:122
+#: includes/karma.php:5 includes/karma.php:168 includes/karma.php:208
+#: includes/karma.php:227 index.php:177
 msgid "Karma"
 msgstr ""
 
-#: includes/karma.php:19
+#: includes/karma.php:31
 msgid "It is forbidden to vote for administration"
 msgstr ""
 
-#: includes/karma.php:23
+#: includes/karma.php:35
 msgid "Cheating karma is forbidden"
 msgstr ""
 
-#: includes/karma.php:28
+#: includes/karma.php:40
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
 msgstr ""
 
-#: includes/karma.php:29
+#: includes/karma.php:41
 msgid "hours"
 msgstr ""
 
-#: includes/karma.php:29
+#: includes/karma.php:41
 msgid "days"
 msgstr ""
 
-#: includes/karma.php:37
+#: includes/karma.php:49
 msgid "You can vote for single user just one time for 24 hours\""
 msgstr ""
 
-#: includes/karma.php:43
+#: includes/karma.php:55
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: includes/karma.php:79
+#: includes/karma.php:91
 msgid "You have successfully voted"
 msgstr ""
 
-#: includes/karma.php:81
+#: includes/karma.php:93
 msgid "Vote for"
 msgstr ""
 
-#: includes/karma.php:83
+#: includes/karma.php:95
 msgid "Type of vote"
 msgstr ""
 
-#: includes/karma.php:84 includes/karma.php:193
+#: includes/karma.php:96 includes/karma.php:205
 msgid "Positive"
 msgstr ""
 
-#: includes/karma.php:85 includes/karma.php:194
+#: includes/karma.php:97 includes/karma.php:206
 msgid "Negative"
 msgstr ""
 
-#: includes/karma.php:86
+#: includes/karma.php:98
 msgid "Votes quantity"
 msgstr ""
 
-#: includes/karma.php:93
+#: includes/karma.php:105
 msgid "Comment"
 msgstr ""
 
-#: includes/karma.php:95
+#: includes/karma.php:107
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: includes/karma.php:96 index.php:133
+#: includes/karma.php:108 index.php:188
 msgid "Vote"
 msgstr ""
 
-#: includes/karma.php:102
+#: includes/karma.php:114
 msgid "You are not allowed to vote for users"
 msgstr ""
 
-#: includes/karma.php:129
+#: includes/karma.php:141
 msgid "Do you really want to delete comment?"
 msgstr ""
 
-#: includes/karma.php:131 includes/karma.php:148
+#: includes/karma.php:143 includes/karma.php:160
 msgid "Cancel"
 msgstr ""
 
-#: includes/karma.php:146
+#: includes/karma.php:158
 msgid "Do you really want to delete all reviews about user?"
 msgstr ""
 
-#: includes/karma.php:156
+#: includes/karma.php:168
 msgid "New responses"
 msgstr ""
 
-#: includes/karma.php:192
+#: includes/karma.php:204
 msgid "All"
 msgstr ""
 
-#: includes/karma.php:217 index.php:124
+#: includes/karma.php:229 index.php:179
 msgid "For"
 msgstr ""
 
-#: includes/karma.php:218 index.php:125
+#: includes/karma.php:230 index.php:180
 msgid "Against"
 msgstr ""
 
-#: includes/karma.php:256
+#: includes/karma.php:268
 msgid "Reset Karma"
 msgstr ""
 
@@ -618,321 +616,260 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: includes/office.php:23
+#: includes/office.php:35
 msgid "My Pages"
 msgstr ""
 
-#: includes/office.php:25
+#: includes/office.php:37
 msgid "Statistics"
 msgstr ""
 
-#: includes/office.php:26 index.php:159
+#: includes/office.php:38 index.php:214
 msgid "Photo Album"
 msgstr ""
 
-#: includes/office.php:31
+#: includes/office.php:43
 msgid "Admin-Club"
 msgstr ""
 
-#: includes/office.php:36
+#: includes/office.php:48
 msgid "My Mailbox"
 msgstr ""
 
-#: includes/office.php:48
+#: includes/office.php:60
 msgid "Received"
 msgstr ""
 
-#: includes/office.php:57
+#: includes/office.php:69
 msgid "Sent"
 msgstr ""
 
-#: includes/office.php:66
+#: includes/office.php:78
 msgid "Files"
 msgstr ""
 
-#: includes/office.php:69 index.php:182
+#: includes/office.php:81 index.php:241
 msgid "Write"
 msgstr ""
 
-#: includes/office.php:81
+#: includes/office.php:93
 msgid "Blocked"
 msgstr ""
 
-#: includes/office.php:85 includes/settings.php:5 includes/settings.php:27
-#: includes/settings.php:52 includes/settings.php:102
+#: includes/office.php:97 includes/settings.php:5 includes/settings.php:117
 msgid "Settings"
 msgstr ""
 
-#: includes/office.php:88
+#: includes/office.php:100
 msgid "System Settings"
 msgstr ""
 
-#: includes/office.php:90
+#: includes/office.php:102
 msgid "Admin Panel"
 msgstr ""
 
-#: includes/office.php:95
+#: includes/office.php:107
 msgid "Exit"
 msgstr ""
 
-#: includes/password.php:26 includes/password.php:30
+#: includes/password.php:38 includes/password.php:42
 msgid "It is necessary to fill in all fields"
 msgstr ""
 
-#: includes/password.php:35
+#: includes/password.php:47
 msgid "Old password entered incorrectly"
 msgstr ""
 
-#: includes/password.php:39
+#: includes/password.php:51
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
-#: includes/password.php:43
+#: includes/password.php:55
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: includes/password.php:61
+#: includes/password.php:70
 msgid "Password successfully changed"
 msgstr ""
 
-#: includes/password.php:66
+#: includes/password.php:75
 msgid "Repeat"
 msgstr ""
 
-#: includes/password.php:76
+#: includes/password.php:85
 msgid "Enter old password"
 msgstr ""
 
-#: includes/password.php:79
+#: includes/password.php:88
 msgid "Enter new password"
 msgstr ""
 
-#: includes/password.php:80
+#: includes/password.php:89
 msgid "Repeat password"
 msgstr ""
 
-#: includes/reset.php:15
+#: includes/reset.php:21
 #, php-format
 msgid "For user %s default settings were set."
 msgstr ""
 
-#: includes/settings.php:19 includes/settings.php:102
+#: includes/settings.php:34 includes/settings.php:117
 msgid "General setting"
 msgstr ""
 
-#: includes/settings.php:21 includes/settings.php:27
+#: includes/settings.php:36
 msgid "Mail"
 msgstr ""
 
-#: includes/settings.php:42
-msgid "Who can write you?"
-msgstr ""
-
-#: includes/settings.php:43
-msgid "All can write"
-msgstr ""
-
-#: includes/settings.php:44
-msgid "Only my contacts"
-msgstr ""
-
-#: includes/settings.php:45
-msgid "Only my friends"
-msgstr ""
-
-#: includes/settings.php:72 includes/settings.php:172
+#: includes/settings.php:186
 msgid "Settings saved successfully"
 msgstr ""
 
-#: includes/settings.php:89
-msgid "Basic settings"
-msgstr ""
-
-#: includes/settings.php:90
-msgid "Inverse sorting"
-msgstr ""
-
-#: includes/settings.php:91
-msgid "Use the form of a quick answer"
-msgstr ""
-
-#: includes/settings.php:92
-msgid "Preview of messages"
-msgstr ""
-
-#: includes/settings.php:93
-msgid "Attach first post"
-msgstr ""
-
-#: includes/settings.php:94
-msgid "Always"
-msgstr ""
-
-#: includes/settings.php:95
-msgid "In unread topics"
-msgstr ""
-
-#: includes/settings.php:96
-msgid "Never"
-msgstr ""
-
-#: includes/settings.php:98
-msgid "Reset settings"
-msgstr ""
-
-#: includes/settings.php:182
+#: includes/settings.php:196
 msgid "Time settings"
 msgstr ""
 
-#: includes/settings.php:183
+#: includes/settings.php:197
 msgid "Shift of time"
 msgstr ""
 
-#: includes/settings.php:185
+#: includes/settings.php:199
 msgid "System time"
 msgstr ""
 
-#: includes/settings.php:186
+#: includes/settings.php:200
 msgid "System Functions"
 msgstr ""
 
-#: includes/settings.php:187
+#: includes/settings.php:201
 msgid "Direct URL"
 msgstr ""
 
-#: includes/settings.php:188
-msgid "Avatars"
-msgstr ""
-
-#: includes/settings.php:189
-msgid "Smilies"
-msgstr ""
-
-#: includes/settings.php:190
+#: includes/settings.php:202
 msgid "Text entering"
 msgstr ""
 
-#: includes/settings.php:191
+#: includes/settings.php:203
 msgid "Height of field"
 msgstr ""
 
-#: includes/settings.php:193
+#: includes/settings.php:205
 msgid "Appearance"
 msgstr ""
 
-#: includes/settings.php:194
+#: includes/settings.php:206
 msgid "Size of Lists"
 msgstr ""
 
-#: includes/settings.php:198
+#: includes/settings.php:210
 msgid "Theme"
 msgstr ""
 
-#: includes/settings.php:210
+#: includes/settings.php:222
 msgid "Select Language"
 msgstr ""
 
-#: includes/settings.php:216
+#: includes/settings.php:229
 msgid "Site Default"
 msgstr ""
 
-#: includes/settings.php:223
+#: includes/settings.php:237
 msgid "Reset Settings"
 msgstr ""
 
-#: includes/stat.php:6 includes/stat.php:8 includes/stat.php:11 index.php:151
+#: includes/stat.php:15 includes/stat.php:17 includes/stat.php:20 index.php:206
 msgid "Statistic"
 msgstr ""
 
-#: includes/stat.php:15 index.php:101
+#: includes/stat.php:24 index.php:156
 msgid "Pending confirmation"
 msgstr ""
 
-#: includes/stat.php:17
+#: includes/stat.php:26
 msgid "Registration confirmed"
 msgstr ""
 
-#: includes/stat.php:19
+#: includes/stat.php:28
 msgid "Free registration"
 msgstr ""
 
-#: includes/stat.php:23
+#: includes/stat.php:32
 msgid "Registered"
 msgstr ""
 
-#: includes/stat.php:28
+#: includes/stat.php:37
 msgid "Last visit"
 msgstr ""
 
-#: includes/stat.php:37
+#: includes/stat.php:46
 msgid "Achievements"
 msgstr ""
 
-#: index.php:17
+#: index.php:35
 msgid "For registered users only"
 msgstr ""
 
-#: index.php:26
+#: index.php:45
 msgid "This User does not exists"
 msgstr ""
 
-#: index.php:59
+#: index.php:114
 msgid "User Profile"
 msgstr ""
 
-#: index.php:93
+#: index.php:148
 msgid "Where?"
 msgstr ""
 
-#: index.php:140
+#: index.php:195
 msgid "New reviews"
 msgstr ""
 
-#: index.php:155
+#: index.php:210
 msgid "Violations"
 msgstr ""
 
-#: index.php:167
+#: index.php:222
 msgid "Add to Contacts"
 msgstr ""
 
-#: index.php:169
+#: index.php:224
 msgid "Remove from Contacts"
 msgstr ""
 
-#: index.php:174
+#: index.php:229
 msgid "Block User"
 msgstr ""
 
-#: index.php:176
+#: index.php:231
 msgid "Unlock User"
 msgstr ""
 
-#: skl.php:17 skl.php:70 skl.php:144
+#: skl.php:26 skl.php:79 skl.php:153
 msgid "Password recovery"
 msgstr ""
 
-#: skl.php:41
+#: skl.php:50
 msgid "The required fields are not filled"
 msgstr ""
 
-#: skl.php:43
+#: skl.php:52
 msgid "Incorrect code"
 msgstr ""
 
-#: skl.php:56
+#: skl.php:65
 msgid "Invalid Email address"
 msgstr ""
 
-#: skl.php:60
+#: skl.php:69
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: skl.php:63 skl.php:114
+#: skl.php:72 skl.php:123
 msgid "User does not exists"
 msgstr ""
 
-#: skl.php:72
+#: skl.php:81
 #, php-format
 msgid ""
 "Hello %s!\n"
@@ -943,27 +880,27 @@ msgid ""
 "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: skl.php:81
+#: skl.php:90
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: skl.php:83
+#: skl.php:92
 msgid "Error sending E-mail"
 msgstr ""
 
-#: skl.php:106
+#: skl.php:115
 msgid "Password recovery is impossible"
 msgstr ""
 
-#: skl.php:110
+#: skl.php:119
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: skl.php:120
+#: skl.php:129
 msgid "Your new password"
 msgstr ""
 
-#: skl.php:122
+#: skl.php:131
 #, php-format
 msgid ""
 "Hello %s\n"
@@ -974,34 +911,34 @@ msgid ""
 "After logging in, you can change your password to new one."
 msgstr ""
 
-#: skl.php:131
+#: skl.php:140
 msgid "Change password"
 msgstr ""
 
-#: skl.php:132
+#: skl.php:141
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
-#: skl.php:134
+#: skl.php:143
 msgid "Error sending Email"
 msgstr ""
 
-#: skl.php:147
+#: skl.php:156
 msgid "Your E-mail"
 msgstr ""
 
-#: skl.php:148
+#: skl.php:157
 msgid "Verification code"
 msgstr ""
 
-#: skl.php:149
+#: skl.php:158
 msgid "Enter code"
 msgstr ""
 
-#: skl.php:150
+#: skl.php:159
 msgid "Send"
 msgstr ""
 
-#: skl.php:151
+#: skl.php:160
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""

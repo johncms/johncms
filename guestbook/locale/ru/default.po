@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-09-07 07:22-0400\n"
+"PO-Revision-Date: 2016-11-15 10:27-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -19,149 +19,149 @@ msgstr ""
 "X-Crowdin-File: /guestbook/default.pot\n"
 "Language: ru_RU\n"
 
-#: index.php:27 index.php:300
+#: index.php:48 index.php:321
 msgid "Admin Club"
 msgstr "Админ клуб"
 
-#: index.php:27 index.php:45 index.php:168 index.php:221 index.php:262
-#: index.php:265 index.php:295 index.php:299
+#: index.php:48 index.php:66 index.php:188 index.php:242 index.php:283
+#: index.php:286 index.php:316 index.php:320
 msgid "Guestbook"
 msgstr "Гостевая"
 
-#: index.php:32
+#: index.php:53
 msgid "Guestbook is closed"
 msgstr "Гостевая закрыта"
 
-#: index.php:45
+#: index.php:66
 msgid "Delete message"
 msgstr "Удалить сообщение"
 
-#: index.php:46
+#: index.php:67
 msgid "Do you really want to delete?"
 msgstr "Действительно хотите удалить?"
 
-#: index.php:47 index.php:394
+#: index.php:68 index.php:427
 msgid "Delete"
 msgstr "Удалить"
 
-#: index.php:48 index.php:274
+#: index.php:69 index.php:295
 msgid "Cancel"
 msgstr "Отмена"
 
-#: index.php:67
+#: index.php:88
 msgid "Wrong data"
 msgstr "Неверные данные"
 
-#: index.php:71
+#: index.php:92
 msgid "You have not entered a name"
 msgstr "Вы не ввели имя"
 
-#: index.php:75
+#: index.php:96
 msgid "You have not entered the message"
 msgstr "Вы не ввели сообщение"
 
-#: index.php:79
+#: index.php:100
 msgid "Access forbidden"
 msgstr "Доступ запрещен"
 
-#: index.php:84
+#: index.php:105
 msgid "The security code is not correct"
 msgstr "Проверочный код введен неверно"
 
-#: index.php:103
+#: index.php:124
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
 msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
 
-#: index.php:146 index.php:183 index.php:230
+#: index.php:167 index.php:203 index.php:251
 msgid "Back"
 msgstr "Назад"
 
-#: index.php:168 index.php:178 index.php:180 index.php:393
+#: index.php:188 index.php:198 index.php:200 index.php:426
 msgid "Reply"
 msgstr "Ответить"
 
-#: index.php:221 index.php:394
+#: index.php:242 index.php:427
 msgid "Edit"
 msgstr "Изменить"
 
-#: index.php:224
+#: index.php:245
 msgid "Author"
 msgstr "Автор"
 
-#: index.php:227
+#: index.php:248
 msgid "Save"
 msgstr "Сохранить"
 
-#: index.php:247
+#: index.php:268
 msgid "All messages older than 1 day were deleted"
 msgstr "Удалены все сообщения, старше 1 дня"
 
-#: index.php:253
+#: index.php:274
 msgid "Full clearing is finished"
 msgstr "Проведена полная очистка"
 
-#: index.php:258
+#: index.php:279
 msgid "All messages older than 1 week were deleted"
 msgstr "Удалены все сообщения, старше 1 недели"
 
-#: index.php:265 index.php:272 index.php:302
+#: index.php:286 index.php:293 index.php:322
 msgid "Clear"
 msgstr "Очистить"
 
-#: index.php:268
+#: index.php:289
 msgid "Clearing parameters"
 msgstr "Параметры очистки"
 
-#: index.php:269
+#: index.php:290
 msgid "Older than 1 week"
 msgstr "Старше 1 недели"
 
-#: index.php:270
+#: index.php:291
 msgid "Older than 1 day"
 msgstr "Старше 1 дня"
 
-#: index.php:271
+#: index.php:292
 msgid "Clear all"
 msgstr "Очищаем все"
 
-#: index.php:292
+#: index.php:313
 msgid "The guestbook is closed"
 msgstr "Гостевая закрыта"
 
-#: index.php:314
+#: index.php:334
 msgid "Name"
 msgstr "Имя"
 
-#: index.php:317
+#: index.php:337
 msgid "Message"
 msgstr "Сообщение"
 
-#: index.php:323 index.php:324
+#: index.php:343 index.php:344
 msgid "Symbols on the picture"
 msgstr "Код с картинки"
 
-#: index.php:327
+#: index.php:347
 msgid "Sent"
-msgstr "Отправленные"
+msgstr "Отправить"
 
-#: index.php:329
+#: index.php:349
 msgid "For registered users only"
 msgstr "Только для зарегистрированных посетителей"
 
-#: index.php:333
+#: index.php:353
 msgid "Comments"
 msgstr "Комментарии"
 
-#: index.php:409
+#: index.php:442
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr "В Гостевой сообщений нет<br><strong>Будь первым! :)</strong>"
 
-#: index.php:412
+#: index.php:445
 msgid "Total"
 msgstr "Всего"
 
-#: index.php:417
+#: index.php:450
 msgid "To Page"
 msgstr "На страницу"
 
