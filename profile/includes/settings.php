@@ -15,7 +15,7 @@ $db = $container->get(PDO::class);
 $systemUser = $container->get(Johncms\User::class);
 
 /** @var Johncms\UserConfig $userConfig */
-$userConfig = $systemUser->config();
+$userConfig = $systemUser->getConfig();
 
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');

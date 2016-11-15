@@ -111,7 +111,7 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
             '<div class="menu"><p><h3>' . _t('Image') . '</h3>' .
             '<input type="file" name="imagefile" value="" /></p>' .
             '<p><h3>' . _t('Description') . '</h3>' .
-            '<textarea name="description" rows="' . $systemUser->config()->fieldHeight . '"></textarea><br>' .
+            '<textarea name="description" rows="' . $systemUser->getConfig()->fieldHeight . '"></textarea><br>' .
             '<small>' . _t('Optional field') . ', max. 500</small></p>' .
             '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" />' .
             '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .

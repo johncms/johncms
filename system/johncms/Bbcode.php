@@ -32,7 +32,7 @@ class Bbcode
     {
         $this->config = $container->get(Config::class);
         $this->user = $container->get(User::class);
-        $this->userConfig = $this->user->config();
+        $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];
 
         return $this;

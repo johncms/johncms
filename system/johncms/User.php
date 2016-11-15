@@ -94,7 +94,7 @@ class User extends ArrayObject
      *
      * @return UserConfig
      */
-    public function config()
+    public function getConfig()
     {
         if (null === $this->userConfigObject) {
             $this->userConfigObject = new UserConfig($this);
