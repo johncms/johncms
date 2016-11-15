@@ -14,11 +14,18 @@ class NewsWidget
      */
     private $db;
 
+    /**
+     * @var \Johncms\Tools
+     */
+    private $tools;
+
     public function __construct()
     {
         /** @var \Interop\Container\ContainerInterface $container */
         $container = \App::getContainer();
+
         $this->db = $container->get(\PDO::class);
+        $this->tools = $container->get('tools');
         $this->settings = unserialize($container->get('config')['johncms']['news']);
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();
@@ -43,25 +50,16 @@ class NewsWidget
                         $text = mb_substr($text, 0, $this->settings['size']);
                         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
                         $text .= ' <a href="news/index.php">' . _t('show more', 'system') . '...</a>';
-                    } else {
-                        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
                     }
 
-                    // Если включены переносы, то обрабатываем
-                    if ($this->settings['breaks']) {
-                        $text = str_replace("\r\n", "<br>", $text);
-                    }
+                    $text = $this->tools->checkout(
+                        $text,
+                        $this->settings['breaks'] ? 1 : 2,
+                        $this->settings['tags'] ? 1 : 2
+                    );
 
-                    // Обрабатываем тэги
-                    if ($this->settings['tags']) {
-                        $text = bbcode::tags($text);
-                    } else {
-                        $text = \App::getContainer()->get('bbcode')->notags($text);
-                    }
-
-                    // Обрабатываем смайлы
                     if ($this->settings['smileys']) {
-                        $text = functions::smileys($text);
+                        $text = $this->tools->smilies($text);
                     }
 
                     // Определяем режим просмотра заголовка - текста
