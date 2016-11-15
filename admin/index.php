@@ -97,8 +97,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '<li><a href="index.php?act=ads">' . _t('Advertisement') . '</a></li>';
 
         if ($systemUser->rights == 9) {
-            echo '<li><a href="index.php?act=counters">' . _t('Counters') . '</a></li>' .
-                '<li><a href="index.php?act=mail">' . _t('Mail') . '</a></li>';
+            echo '<li><a href="index.php?act=counters">' . _t('Counters') . '</a></li>';
         }
 
         echo '</ul></p></div>';

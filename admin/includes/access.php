@@ -2,11 +2,13 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
+
+$config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {
@@ -27,9 +29,15 @@ if (isset($_POST['submit'])) {
     $config['active'] = isset($_POST['active']) ? intval($_POST['active']) : 0;
     $config['site_access'] = isset($_POST['access']) ? intval($_POST['access']) : 0;
 
-    //TODO: записать настройки в файл!!!
+    $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
+
+    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+        echo 'ERROR: Can not write system.local.php</body></html>';
+        exit;
+    }
 
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    opcache_reset();
 }
 
 $color = ['red', 'yelow', 'green', 'gray'];
@@ -84,15 +92,6 @@ echo '<div class="gmenu"><h3><img src="../images/' . $color[$config['mod_reg']] 
     '<input type="radio" value="2" name="reg" ' . ($config['mod_reg'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Access is allowed') . '<br>' .
     '<input type="radio" value="1" name="reg" ' . ($config['mod_reg'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('With moderation') . '<br>' .
     '<input type="radio" value="0" name="reg" ' . (!$config['mod_reg'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Access denied') .
-    '</div></div>';
-
-// Управление доступом к Сайту (Закрытие сайта)
-echo '<div class="rmenu">' .
-    '<h3><img src="../images/' . $color[$config['site_access']] . '.gif" width="16" height="16" class="left"/>&#160;' . _t('Site access') . '</h3>' .
-    '<div style="font-size: x-small">' .
-    '<input class="btn btn-large" type="radio" value="2" name="access" ' . ($config['site_access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Access is allowed') . '<br>' .
-    '<input class="btn btn-large" type="radio" value="1" name="access" ' . ($config['site_access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('It is closed for all, except Administration') . '<br>' .
-    '<input class="btn btn-large" type="radio" value="0" name="access" ' . (!$config['site_access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('It is closed for all, except SV') . '<br>' .
     '</div></div>';
 
 echo '<div class="phdr"><small>' . _t('Administrators always have access to all closed modules and comments') . '</small></div>' .
