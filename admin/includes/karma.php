@@ -52,6 +52,7 @@ if (isset($_POST['submit'])) {
     }
 
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    opcache_reset();
 }
 
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;

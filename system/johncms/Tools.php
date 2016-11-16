@@ -44,7 +44,7 @@ class Tools
 
     public function antiflood()
     {
-        $config = unserialize($this->config['antiflood']);
+        $config = $this->config['antiflood'];
 
         switch ($config['mode']) {
             // Адаптивный режим
