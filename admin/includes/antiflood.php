@@ -5,9 +5,6 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 // Проверяем права доступа
@@ -15,12 +12,14 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
+$config = $container->get('config')['johncms'];
+
 if ($systemUser->rights < 7) {
     header('Location: http://johncms.com/?err');
     exit;
 }
 
-$set_af = isset($config['antiflood']) ? unserialize($config['antiflood']) : [];
+$set_af = $config['antiflood'];
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';
 
 if (isset($_POST['submit']) || isset($_POST['save'])) {
@@ -64,19 +63,16 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
         $set_af['dayto'] = 23;
     }
 
-    $db->exec("UPDATE `cms_settings` SET `val` = '" . serialize($set_af) . "' WHERE `key` = 'antiflood' LIMIT 1");
-    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
-} elseif (empty($set_af) || isset($_GET['reset'])) {
-    // Устанавливаем настройки по умолчанию (если не заданы в системе)
-    echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
-    $set_af['mode'] = 2;
-    $set_af['day'] = 10;
-    $set_af['night'] = 30;
-    $set_af['dayfrom'] = 10;
-    $set_af['dayto'] = 22;
+    $config['antiflood'] = $set_af;
+    $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    @$db->query("DELETE FROM `cms_settings` WHERE `key` = 'antiflood' LIMIT 1");
-    $db->query("INSERT INTO `cms_settings` SET `key` = 'antiflood', `val` = '" . serialize($set_af) . "'");
+    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+        echo 'ERROR: Can not write system.local.php</body></html>';
+        exit;
+    }
+
+    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    opcache_reset();
 }
 
 // Форма ввода параметров Антифлуда
@@ -98,5 +94,4 @@ echo '<form action="index.php?act=antiflood" method="post">'
     . '<input name="dayfrom" size="2" value="' . $set_af['dayfrom'] . '" maxlength="2" style="text-align:right"/>:00&#160;' . _t('Beginning of day') . ' <span class="gray">(6-12)</span><br>'
     . '<input name="dayto" size="2" value="' . $set_af['dayto'] . '" maxlength="2" style="text-align:right"/>:00&#160;' . _t('End of day') . ' <span class="gray">(17-23)</span>'
     . '</p><p><br><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>'
-    . '<div class="phdr"><a href="index.php?act=antiflood&amp;reset">' . _t('Reset Settings') . '</a></div>'
-    . '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    . '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>';

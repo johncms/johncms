@@ -411,7 +411,13 @@ switch ($act) {
                 $systemSettings = [
                     'johncms' => [
                         'active'        => 1,
-                        'antiflood'     => 'a:5:{s:4:"mode";i:2;s:3:"day";i:10;s:5:"night";i:30;s:7:"dayfrom";i:10;s:5:"dayto";i:22;}',
+                        'antiflood'     => [
+                            'mode'    => 2,
+                            'day'     => 10,
+                            'night'   => 30,
+                            'dayfrom' => 10,
+                            'dayto'   => 22,
+                        ],
                         'clean_time'    => 0,
                         'copyright'     => 'Powered by JohnCMS',
                         'email'         => $site_mail,
