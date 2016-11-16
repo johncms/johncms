@@ -13,7 +13,6 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 error_reporting(E_ALL & ~E_NOTICE);
-//ini_set('display_errors', 'Off');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
@@ -104,7 +103,6 @@ $locale = 'ru';
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
-//$translator->setCache(App::getContainer()->get(Zend\Cache\Storage\StorageInterface::class));
 $translator->setLocale($locale);
 unset($translator);
 
