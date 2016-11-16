@@ -2,7 +2,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';

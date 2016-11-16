@@ -2,7 +2,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

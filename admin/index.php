@@ -11,7 +11,7 @@ $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

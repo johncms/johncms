@@ -266,7 +266,6 @@ class Download
     // Навигация по папкам
     public static function navigation($array = [])
     {
-        $lng = core::load_lng('dl');
         $category = ['<a href="?"><b>' . _t('Downloads') . '</b></a>'];
 
         if ($array['refid']) {

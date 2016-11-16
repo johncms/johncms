@@ -2,7 +2,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-require('incfiles/core.php');
+require('system/bootstrap.php');
 
 /** @var Johncms\Config $config */
 $config = App::getContainer()->get(Johncms\Config::class);

@@ -2,7 +2,7 @@
 //TODO: ДОРАБОТАТЬ ФАЙЛ!!!
 define('_IN_JOHNCMS', 1);
 
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -12,8 +12,6 @@ $db = $container->get(PDO::class);
 
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
-
-$lng = core::load_lng('dl');
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {

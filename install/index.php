@@ -182,7 +182,7 @@ $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : false;
 
 //TODO: запилить проверку имеющейся инсталляции
 //if (file_exists('../incfiles/db.php') && $act == 'final') {
-//    require('../incfiles/core.php');
+//    require('../system/bootstrap.php');
 //} else {
 session_name('SESID');
 session_start();
