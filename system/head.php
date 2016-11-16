@@ -107,7 +107,7 @@ if (!empty($cms_ads[1])) {
 
 // Фиксация местоположений посетителей
 $sql = '';
-$set_karma = unserialize($config['karma']);
+$set_karma = $config['karma'];
 
 if ($systemUser->id) {
     // Фиксируем местоположение авторизованных
