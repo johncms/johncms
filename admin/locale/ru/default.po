@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-11-15 19:12+0400\n"
-"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"POT-Creation-Date: 2016-11-16 22:26+0400\n"
+"PO-Revision-Date: 2016-11-16 13:35-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -20,21 +20,21 @@ msgstr ""
 "X-Crowdin-File: /admin/default.pot\n"
 
 #: includes/access.php:19 includes/access.php:99 includes/ads.php:212
-#: includes/ads.php:311 includes/ads.php:417 includes/antiflood.php:24
-#: includes/antiflood.php:102 includes/antispy.php:437 includes/antispy.php:448
-#: includes/ban_panel.php:57 includes/ban_panel.php:63
-#: includes/ban_panel.php:105 includes/counters.php:292
-#: includes/counters.php:313 includes/forum.php:744 includes/forum.php:761
-#: includes/ip_whois.php:6 includes/ipban.php:130 includes/ipban.php:186
-#: includes/ipban.php:208 includes/ipban.php:321 includes/ipban.php:350
-#: includes/ipban.php:355 includes/ipban.php:402 includes/karma.php:37
-#: includes/karma.php:66 includes/languages.php:75 includes/languages.php:98
-#: includes/news.php:19 includes/news.php:66 includes/reg.php:25
-#: includes/reg.php:138 includes/search_ip.php:25 includes/search_ip.php:132
-#: includes/search_ip.php:141 includes/settings.php:19 includes/settings.php:88
-#: includes/smilies.php:14 includes/smilies.php:57 includes/usr.php:17
-#: includes/usr.php:65 includes/usr_adm.php:9 includes/usr_adm.php:62
-#: includes/usr_clean.php:22 includes/usr_del.php:64 index.php:36 index.php:69
+#: includes/ads.php:311 includes/ads.php:417 includes/antiflood.php:23
+#: includes/antispy.php:437 includes/antispy.php:448 includes/ban_panel.php:57
+#: includes/ban_panel.php:63 includes/ban_panel.php:105
+#: includes/counters.php:292 includes/counters.php:313 includes/forum.php:744
+#: includes/forum.php:761 includes/ip_whois.php:6 includes/ipban.php:130
+#: includes/ipban.php:186 includes/ipban.php:208 includes/ipban.php:321
+#: includes/ipban.php:350 includes/ipban.php:355 includes/ipban.php:402
+#: includes/karma.php:34 includes/karma.php:72 includes/languages.php:26
+#: includes/languages.php:76 includes/news.php:19 includes/news.php:66
+#: includes/reg.php:25 includes/reg.php:138 includes/search_ip.php:25
+#: includes/search_ip.php:132 includes/search_ip.php:141
+#: includes/settings.php:19 includes/settings.php:88 includes/smilies.php:14
+#: includes/smilies.php:57 includes/usr.php:17 includes/usr.php:65
+#: includes/usr_adm.php:9 includes/usr_adm.php:62 includes/usr_clean.php:22
+#: includes/usr_del.php:64 index.php:36 index.php:69
 msgid "Admin Panel"
 msgstr "Админ панель"
 
@@ -42,8 +42,8 @@ msgstr "Админ панель"
 msgid "Permissions"
 msgstr "Права доступа"
 
-#: includes/access.php:39 includes/antiflood.php:68 includes/karma.php:49
-#: includes/news.php:41 includes/settings.php:40
+#: includes/access.php:39 includes/antiflood.php:74 includes/karma.php:54
+#: includes/news.php:44 includes/settings.php:40
 msgid "Settings are saved successfully"
 msgstr "Настройки успешно сохранены"
 
@@ -104,9 +104,9 @@ msgstr "С модерацией"
 msgid "Administrators always have access to all closed modules and comments"
 msgstr "У Администратора всегда остается доступ ко всем закрытым модулям и комментариям"
 
-#: includes/access.php:98 includes/antiflood.php:100 includes/counters.php:176
-#: includes/forum.php:415 includes/karma.php:64 includes/languages.php:94
-#: includes/news.php:63 includes/settings.php:86
+#: includes/access.php:98 includes/antiflood.php:96 includes/counters.php:176
+#: includes/forum.php:415 includes/karma.php:70 includes/news.php:63
+#: includes/settings.php:86
 msgid "Save"
 msgstr "Сохранить"
 
@@ -133,13 +133,14 @@ msgstr "Добавить ссылку"
 msgid "Wrong data"
 msgstr "Неверные данные"
 
-#: includes/ads.php:35 includes/ads.php:86 includes/counters.php:119
-#: includes/counters.php:140 includes/counters.php:156
-#: includes/counters.php:196 includes/counters.php:230 includes/forum.php:208
-#: includes/forum.php:312 includes/forum.php:417 includes/ip_whois.php:107
-#: includes/ipban.php:39 includes/ipban.php:130 includes/ipban.php:189
-#: includes/ipban.php:222 includes/ipban.php:275 includes/ipban.php:283
-#: includes/ipban.php:290 includes/ipban.php:350 includes/usr_clean.php:81
+#: includes/ads.php:35 includes/ads.php:86 includes/antiflood.php:97
+#: includes/counters.php:119 includes/counters.php:140
+#: includes/counters.php:156 includes/counters.php:196
+#: includes/counters.php:230 includes/forum.php:208 includes/forum.php:312
+#: includes/forum.php:417 includes/ip_whois.php:107 includes/ipban.php:39
+#: includes/ipban.php:130 includes/ipban.php:189 includes/ipban.php:222
+#: includes/ipban.php:275 includes/ipban.php:283 includes/ipban.php:290
+#: includes/ipban.php:350 includes/usr_clean.php:81
 msgid "Back"
 msgstr "Назад"
 
@@ -212,7 +213,7 @@ msgstr "Переходы"
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
 msgstr "Количество переходов, после которого ссылка автоматически уберется<br>0 - без ограничений"
 
-#: includes/ads.php:189 includes/karma.php:60
+#: includes/ads.php:189 includes/karma.php:66
 msgid "Days"
 msgstr "дней"
 
@@ -314,7 +315,7 @@ msgstr "Вы действительно хотите удалить ссылку
 
 #: includes/ads.php:275 includes/ads.php:292 includes/counters.php:137
 #: includes/ipban.php:186 includes/ipban.php:208 includes/ipban.php:257
-#: includes/ipban.php:336 includes/karma.php:33 includes/usr_del.php:132
+#: includes/ipban.php:336 includes/karma.php:30 includes/usr_del.php:132
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -368,7 +369,7 @@ msgstr "Список пуст"
 
 #: includes/ads.php:406 includes/antispy.php:383 includes/antispy.php:414
 #: includes/ban_panel.php:95 includes/forum.php:626 includes/forum.php:721
-#: includes/ipban.php:129 includes/ipban.php:388 includes/languages.php:97
+#: includes/ipban.php:129 includes/ipban.php:388 includes/languages.php:74
 #: includes/reg.php:122 includes/search_ip.php:123 includes/smilies.php:56
 #: includes/usr.php:58 includes/usr_adm.php:61 includes/usr_clean.php:79
 msgid "Total"
@@ -380,63 +381,55 @@ msgstr "Всего"
 msgid "To Page"
 msgstr "На страницу"
 
-#: includes/antiflood.php:24
+#: includes/antiflood.php:23
 msgid "Antiflood Settings"
 msgstr "Настройка антифлуда"
 
-#: includes/antiflood.php:71
-msgid "Default settings are set"
-msgstr "Установлены настройки по умолчанию"
-
-#: includes/antiflood.php:84
+#: includes/antiflood.php:80
 msgid "Operation mode"
 msgstr "Режим работы"
 
-#: includes/antiflood.php:85 includes/antiflood.php:87
-#: includes/antiflood.php:94
+#: includes/antiflood.php:81 includes/antiflood.php:83
+#: includes/antiflood.php:90
 msgid "Day"
 msgstr "День"
 
-#: includes/antiflood.php:86 includes/antiflood.php:87
-#: includes/antiflood.php:95
+#: includes/antiflood.php:82 includes/antiflood.php:83
+#: includes/antiflood.php:91
 msgid "Night"
 msgstr "Ночь"
 
-#: includes/antiflood.php:88
+#: includes/antiflood.php:84
 msgid "Automatic change from day to night mode, according to specified time set"
 msgstr "Автоматический переход с дневного на ночной режим, согласно заданному в настройках времени"
 
-#: includes/antiflood.php:90
+#: includes/antiflood.php:86
 msgid "Adaptive"
 msgstr "Адаптивный"
 
-#: includes/antiflood.php:91
+#: includes/antiflood.php:87
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
 msgstr "Если на сайте есть кто-то из Администрации, система работает в &quot;дневном&quot; режиме, иначе переходит в &quot;ночной&quot;"
 
-#: includes/antiflood.php:93
+#: includes/antiflood.php:89
 msgid "Time limit"
 msgstr "Лимит времени"
 
-#: includes/antiflood.php:96
+#: includes/antiflood.php:92
 msgid "Min. 4, max. 300 seconds"
 msgstr "Минимум 4, максимум 300 секунд"
 
-#: includes/antiflood.php:97
+#: includes/antiflood.php:93
 msgid "Day mode"
 msgstr "Дневной режим"
 
-#: includes/antiflood.php:98
+#: includes/antiflood.php:94
 msgid "Beginning of day"
 msgstr "Начало дня"
 
-#: includes/antiflood.php:99
+#: includes/antiflood.php:95
 msgid "End of day"
 msgstr "Конец дня"
-
-#: includes/antiflood.php:101 includes/news.php:64
-msgid "Reset Settings"
-msgstr "Сбросить настройки"
 
 #: includes/antispy.php:374 includes/antispy.php:394 includes/antispy.php:420
 #: includes/antispy.php:437 index.php:120
@@ -630,7 +623,7 @@ msgstr "Код для Главной страницы"
 msgid "Code for other pages"
 msgstr "Код для остальных страниц"
 
-#: includes/counters.php:207 includes/ipban.php:166
+#: includes/counters.php:207 includes/ipban.php:166 includes/languages.php:67
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -1043,69 +1036,77 @@ msgstr "Бан"
 msgid "Unban all IP"
 msgstr "Разбанить все IP"
 
-#: includes/karma.php:29
+#: includes/karma.php:26
 msgid "Karma is cleared"
 msgstr "Карма очищена"
 
-#: includes/karma.php:31
+#: includes/karma.php:28
 msgid "You really want to clear the Karma?"
 msgstr "Вы действительно хотите очистить карму?"
 
-#: includes/karma.php:32
+#: includes/karma.php:29
 msgid "Clear"
 msgstr "Очистить"
 
-#: includes/karma.php:37 index.php:83
+#: includes/karma.php:34 index.php:83
 msgid "Karma"
 msgstr "Карма"
 
-#: includes/karma.php:54
+#: includes/karma.php:60
 msgid "Voices per day"
 msgstr "Голосов в сутки"
 
-#: includes/karma.php:56
+#: includes/karma.php:62
 msgid "Restriction for vote"
 msgstr "Ограничения для голосования"
 
-#: includes/karma.php:57
+#: includes/karma.php:63
 msgid "Forum posts"
 msgstr "Постов на форуме"
 
-#: includes/karma.php:58
+#: includes/karma.php:64
 msgid "Stay on site"
 msgstr "Провел на сайте"
 
-#: includes/karma.php:59
+#: includes/karma.php:65
 msgid "Hours"
 msgstr "Часов"
 
-#: includes/karma.php:61
+#: includes/karma.php:67
 msgid "General Settings"
 msgstr "Общие настройки"
 
-#: includes/karma.php:62
+#: includes/karma.php:68
 msgid "Switch module ON"
 msgstr "Включить модуль"
 
-#: includes/karma.php:63
+#: includes/karma.php:69
 msgid "Forbid to vote for the administration"
 msgstr "Запретить голосовать за администрацию"
 
-#: includes/karma.php:65
+#: includes/karma.php:71
 msgid "Clear Karma"
 msgstr "Очистить Карму"
 
-#: includes/languages.php:38
-msgid "Descriptions have been updated successfully"
-msgstr "Описания были успешно обновлены"
-
-#: includes/languages.php:75
+#: includes/languages.php:26
 msgid "Default language"
 msgstr "Язык по умолчанию"
 
-#: includes/languages.php:98
-msgid "Update Descriptions"
-msgstr "Обновить описания"
+#: includes/languages.php:46
+msgid "Descriptions have been updated successfully"
+msgstr "Описания были успешно обновлены"
+
+#: includes/languages.php:61
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: includes/languages.php:72
+msgid "Apply"
+msgstr "Применить"
+
+#: includes/languages.php:75
+msgid "Update List"
+msgstr "Обновить список"
 
 #: includes/news.php:19
 msgid "News on the mainpage"
@@ -1150,6 +1151,10 @@ msgstr "Количество новостей"
 #: includes/news.php:62
 msgid "How many days to show?"
 msgstr "Сколько дней показывать?"
+
+#: includes/news.php:64
+msgid "Reset Settings"
+msgstr "Сбросить настройки"
 
 #: includes/reg.php:25
 msgid "Registration confirmation"
