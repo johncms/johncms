@@ -32,7 +32,7 @@ if ($systemUser->rights == 9 && $do == 'clean') {
 }
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Karma') . '</div>';
-$settings = unserialize($config['karma']);
+$settings = $config['karma'];
 
 if (isset($_POST['submit'])) {
     $settings['karma_points'] = isset($_POST['karma_points']) ? abs(intval($_POST['karma_points'])) : 0;
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
     $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
 
-    $config['karma'] = serialize($settings);
+    $config['karma'] = $settings;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
     if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
