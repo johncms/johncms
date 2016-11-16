@@ -26,7 +26,7 @@ class NewsWidget
 
         $this->db = $container->get(\PDO::class);
         $this->tools = $container->get('tools');
-        $this->settings = unserialize($container->get('config')['johncms']['news']);
+        $this->settings = $container->get('config')['johncms']['news'];
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();
     }

@@ -18,6 +18,9 @@ if ($systemUser->rights < 7) {
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
+// Получаем сохраненные настройки
+$settings = $config['news'];
+
 // Настройки Новостей
 if (isset($_POST['submit'])) {
     // Принимаем настройки из формы
@@ -30,7 +33,7 @@ if (isset($_POST['submit'])) {
     $settings['tags'] = isset($_POST['tags']);
     $settings['kom'] = isset($_POST['kom']);
 
-    $config['news'] = serialize($settings);
+    $config['news'] = $settings;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
     if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
@@ -40,9 +43,6 @@ if (isset($_POST['submit'])) {
 
     echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
     opcache_reset();
-} else {
-    // Получаем сохраненные настройки
-    $settings = unserialize($config['news']);
 }
 
 // Форма ввода настроек
