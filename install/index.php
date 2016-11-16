@@ -70,7 +70,6 @@ class install
             '/files/library/images/big',
             '/files/library/images/orig',
             '/files/library/images/small',
-            '/files/lng_edit/',
             '/files/users/album/',
             '/files/users/avatar/',
             '/files/users/photo/',
