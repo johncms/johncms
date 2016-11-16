@@ -25,9 +25,9 @@ if ($systemUser->rights < 9) {
 // Выводим список доступных языков
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
 
-if (isset($_POST['setlng']) || isset($_GET['refresh'])) {
-    if (isset($_POST['setlng'])) {
-        $select = trim($_POST['setlng']);
+if (isset($_POST['lng']) || isset($_GET['refresh'])) {
+    if (isset($_POST['lng'])) {
+        $select = trim($_POST['lng']);
 
         if(isset($config['lng_list'][$select])){
             $config['lng'] = $select;
@@ -61,7 +61,7 @@ echo '<div class="menu">'
     . '<p><h3>' . _t('Select language') . '</h3>';
 
 foreach ($config['lng_list'] as $key => $val) {
-    echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $config['lng'] ? 'checked="checked"' : '') . '/>&#160;' .
+    echo '<div><input type="radio" value="' . $key . '" name="lng" ' . ($key == $config['lng'] ? 'checked="checked"' : '') . '/>&#160;' .
         $tools->getFlag($key) .
         $val .
         ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .

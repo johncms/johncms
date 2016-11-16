@@ -356,7 +356,9 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `cms_ban_ip`")->fetchColumn();
 
         if ($total) {
-            $start = isset($_GET['page']) ? $page * $kmess - $kmess : $start;
+            $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
+            $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+
             $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT $start,$kmess");
             $i = 0;
 

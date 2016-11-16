@@ -27,7 +27,7 @@ if (isset($_GET['lng'])) {
         echo '<p><h3>' . _t('Select language', 'system') . '</h3>';
 
         foreach ($config->lng_list as $key => $val) {
-            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $config->lng ? 'checked="checked"' : '') . '/>&#160;' .
+            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $locale ? 'checked="checked"' : '') . '/>&#160;' .
                 $tools->getFlag($key) .
                 $val .
                 ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .

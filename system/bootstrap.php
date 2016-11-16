@@ -98,8 +98,21 @@ if ($req->rowCount()) {
     }
 }
 
-//TODO: Написать смену языка
-$locale = 'ru';
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+/** @var Johncms\UserConfig $userConfig */
+$userConfig = $container->get(Johncms\User::class)->getConfig();
+
+//TODO: Добавить пользовательский выбор языка
+if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
+    $locale = trim($_POST['setlng']);
+    $_SESSION['lng'] = $locale;
+} elseif (isset($_SESSION['lng']) && array_key_exists($_SESSION['lng'], $config->lng_list)) {
+    $locale = $_SESSION['lng'];
+} else {
+    $locale = $config->lng;
+}
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -144,6 +157,10 @@ function _p($singular, $plural, $number)
 
     return $translator->translatePlural($singular, $plural, $number);
 }
+
+$kmess = $userConfig->kmess;
+$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
+$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
 if (extension_loaded('zlib')) {
     ob_start('ob_gzhandler');
