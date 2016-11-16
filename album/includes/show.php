@@ -91,6 +91,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
 // Просмотр альбома и фотографий
 if ($view) {
     $kmess = 1;
+    $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
     $start = isset($_REQUEST['page']) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al' AND `id` > '$img'")->fetchColumn());
 
     // Обрабатываем ссылку для возврата
