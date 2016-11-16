@@ -3,7 +3,7 @@
 define('_IN_JOHNCMS', 1);
 
 $headmod = 'news';
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';

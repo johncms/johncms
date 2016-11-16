@@ -25,7 +25,7 @@ $headmod = isset($headmod) ? $headmod : '';
 $textl = isset($textl) ? $textl : $config['copyright'];
 
 echo '<!DOCTYPE html>' .
-    "\n" . '<html lang="' . core::$lng_iso . '">' .
+    "\n" . '<html lang="' . $config->lng . '">' .
     "\n" . '<head>' .
     "\n" . '<meta charset="utf-8">' .
     "\n" . '<meta http-equiv="X-UA-Compatible" content="IE=edge">' .

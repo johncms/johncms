@@ -1,4 +1,3 @@
-<?php $lng = core::load_lng('dl') ?>
 <!-- Заголовок раздела -->
 <ul class="title admin">
     <li class="left"><a href="<?= App::cfg()->sys->homeurl ?>/admin"><span class="icn icn-back"></span></a></li>

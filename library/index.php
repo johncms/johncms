@@ -10,7 +10,7 @@ $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['pa
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
 $headmod = 'library';
-require_once('../incfiles/core.php');
+require_once('../system/bootstrap.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();

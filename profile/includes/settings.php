@@ -220,6 +220,7 @@ switch ($mod) {
         // Выбор языка
         if (count($config->lng_list) > 1) {
             echo '<p><h3>' . _t('Select Language') . '</h3>';
+            //TODO: доработать переключатель языков
             $user_lng = isset(core::$user_set['lng']) ? core::$user_set['lng'] : core::$lng_iso;
 
             foreach ($config->lng_list as $key => $val) {

@@ -10,7 +10,7 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 $al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
 $img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
 
-require('../incfiles/core.php');
+require('../system/bootstrap.php');
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
