@@ -5,14 +5,13 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
-
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
+
+$config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {
@@ -23,9 +22,7 @@ if ($systemUser->rights < 7) {
 if ($systemUser->rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
         $db->query("TRUNCATE TABLE `karma_users`");
-        $db->query("OPTIMIZE TABLE `karma_users`");
-        $db->exec("UPDATE `users` SET `karma`='0', `plus_minus`='0|0'");
-        $db->query("OPTIMIZE TABLE `users`");
+        $db->exec("UPDATE `users` SET `karma_plus` = 0, `karma_minus` = 0");
         echo '<div class="gmenu">' . _t('Karma is cleared') . '</div>';
     } else {
         echo '<div class="rmenu"><p>' . _t('You really want to clear the Karma?') . '<br>' .
@@ -45,7 +42,15 @@ if (isset($_POST['submit'])) {
     $settings['on'] = isset($_POST['on']) ? 1 : 0;
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
     $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
-    $db->query("UPDATE `cms_settings` SET `val` = " . $db->quote(serialize($settings)) . " WHERE `key` = 'karma'");
+
+    $config['karma'] = serialize($settings);
+    $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
+
+    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+        echo 'ERROR: Can not write system.local.php</body></html>';
+        exit;
+    }
+
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
 }
 

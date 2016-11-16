@@ -5,10 +5,15 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Karma');
 require('../system/head.php');
 
-if ($set_karma['on']) {
-    /** @var Interop\Container\ContainerInterface $container */
-    $container = App::getContainer();
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+$set_karma = unserialize($config['karma']);
+
+if ($set_karma['on']) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
@@ -17,9 +22,6 @@ if ($set_karma['on']) {
 
     /** @var Johncms\Tools $tools */
     $tools = $container->get('tools');
-
-    /** @var Johncms\Config $config */
-    $config = $container->get(Johncms\Config::class);
 
     switch ($mod) {
         case 'vote':
@@ -90,7 +92,7 @@ if ($set_karma['on']) {
                         $db->query("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
                         echo '<div class="gmenu">' . _t('You have successfully voted') . '!<br /><a href="?user=' . $user['id'] . '">' . _t('Continue') . '</a></div>';
                     } else {
-                        echo '<div class="phdr"><b>' . _t('Vote for') . ' ' . $res['name'] . '</b>: ' . $tools->checkout($user['name']) . '</div>' .
+                        echo '<div class="phdr"><b>' . _t('Vote for') . '</b>: ' . $tools->checkout($user['name']) . '</div>' .
                             '<form action="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '" method="post">' .
                             '<div class="gmenu"><b>' . _t('Type of vote') . ':</b><br />' .
                             '<input name="type" type="radio" value="1" checked="checked"/> ' . _t('Positive') . '<br />' .
