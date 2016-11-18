@@ -19,7 +19,7 @@ require('../incfiles/head.php');
 Проверяем права доступа для редактирования Профиля
 -----------------------------------------------------------------
 */
-if ($user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
+if (!empty($ban) || $user['id'] != $user_id && ($rights < 7 || $user['rights'] >= $rights)) {
     echo functions::display_error($lng_profile['error_rights']);
     require('../incfiles/end.php');
     exit;
@@ -36,7 +36,9 @@ if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
     require('../incfiles/end.php');
     exit;
 }
+
 echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
+
 if (isset($_GET['delavatar'])) {
     /*
     -----------------------------------------------------------------
