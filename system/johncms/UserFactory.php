@@ -101,7 +101,7 @@ class UserFactory
         $req = $this->db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = " . $userId . " AND `ban_time` > '" . time() . "'");
 
         while ($res = $req->fetch()) {
-            $ban[$res['ban_type ']] = 1;
+            $ban[$res['ban_type']] = 1;
         }
 
         return $ban;

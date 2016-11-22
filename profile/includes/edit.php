@@ -24,6 +24,11 @@ if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'
     exit;
 }
 
+if(!empty($systemUser->ban)){
+    require('../system/end.php');
+    exit;
+}
+
 // Сброс настроек
 if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);

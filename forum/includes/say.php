@@ -20,8 +20,8 @@ $config = $container->get(Johncms\Config::class);
 // Закрываем доступ для определенных ситуаций
 if (!$id
     || !$systemUser->isValid()
-    || isset($systemUser->ban['1'])
-    || isset($systemUser->ban['11'])
+    || isset($systemUser->ban[1])
+    || isset($systemUser->ban[11])
     || (!$systemUser->rights && $config['mod_forum'] == 3)
 ) {
     require('../system/head.php');

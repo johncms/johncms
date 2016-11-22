@@ -25,7 +25,7 @@ $headmod = 'registration';
 require('../system/head.php');
 
 // Если регистрация закрыта, выводим предупреждение
-if (core::$deny_registration || !$config->mod_reg || $systemUser->isValid()) {
+if (!$config->mod_reg || $systemUser->isValid()) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
     require('../system/end.php');
     exit;
