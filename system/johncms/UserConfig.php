@@ -20,7 +20,7 @@ class UserConfig extends ArrayObject
 {
     public function __construct(User $user)
     {
-        $input = empty($user->set_user) ? $this->getDefaults() : $this->unserialize($user->set_user);
+        $input = empty($user->set_user) ? $this->getDefaults() : unserialize($user->set_user);
         parent::__construct($input, parent::ARRAY_AS_PROPS);
     }
 
