@@ -660,8 +660,7 @@ CREATE TABLE IF NOT EXISTS `cms_library_rating` (
   KEY `user_id` (`user_id`, `st_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8
-  AUTO_INCREMENT = 1;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `news`
