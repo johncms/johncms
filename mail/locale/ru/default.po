@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-11-15 19:16+0400\n"
-"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"PO-Revision-Date: 2016-11-28 04:57-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "Вы действительно хотите удалить сообще
 #: includes/output.php:79 includes/systems.php:44 includes/systems.php:79
 #: includes/write.php:80 includes/write.php:485 index.php:135
 msgid "Delete"
-msgstr "Удалить бан"
+msgstr "Удалить"
 
 #: includes/delete.php:77
 msgid "The message for removal isn't chosen"
