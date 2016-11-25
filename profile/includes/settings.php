@@ -32,8 +32,8 @@ $config = $container->get(Johncms\Config::class);
 
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
-    ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
-    ($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
+    //($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
+    //($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
 ];
 
 // Пользовательские настройки
@@ -118,61 +118,58 @@ switch ($mod) {
             '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
         if (isset($_POST['submit'])) {
-//            // Записываем новые настройки, заданные пользователем
-//            $set_user['timeshift'] = isset($_POST['timeshift']) ? intval($_POST['timeshift']) : 0;
-//            $set_user['avatar'] = isset($_POST['avatar']);
-//            $set_user['smileys'] = isset($_POST['smileys']);
-//            $set_user['translit'] = isset($_POST['translit']);
-//            $set_user['digest'] = isset($_POST['digest']);
-//            $set_user['direct_url'] = isset($_POST['direct_url']);
-//            $set_user['field_h'] = isset($_POST['field_h']) ? abs(intval($_POST['field_h'])) : 3;
-//            $set_user['kmess'] = isset($_POST['kmess']) ? abs(intval($_POST['kmess'])) : 10;
-//            $set_user['quick_go'] = isset($_POST['quick_go']);
-//
-//            if ($set_user['timeshift'] < -12) {
-//                $set_user['timeshift'] = -12;
-//            } elseif ($set_user['timeshift'] > 12) {
-//                $set_user['timeshift'] = 12;
-//            }
-//
-//            if ($set_user['kmess'] < 5) {
-//                $set_user['kmess'] = 5;
-//            } elseif ($set_user['kmess'] > 99) {
-//                $set_user['kmess'] = 99;
-//            }
-//
-//            if ($set_user['field_w'] < 10) {
-//                $set_user['field_w'] = 10;
-//            } elseif ($set_user['field_w'] > 80) {
-//                $set_user['field_w'] = 80;
-//            }
-//
-//            if ($set_user['field_h'] < 1) {
-//                $set_user['field_h'] = 1;
-//            } elseif ($set_user['field_h'] > 9) {
-//                $set_user['field_h'] = 9;
-//            }
-//
-//            // Устанавливаем скин
-//            foreach (glob('../theme/*/*.css') as $val) {
-//                $theme_list[] = array_pop(explode('/', dirname($val)));
-//            }
-//
-//            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
-//
-//            // Устанавливаем язык
-//            $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
-//
-//            if ($lng_select && array_key_exists($lng_select, core::$lng_list)) {
-//                $set_user['lng'] = $lng_select;
-//                unset($_SESSION['lng']);
-//            }
-//
-//            // Записываем настройки
-//            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $systemUser->id]);
-//            $_SESSION['set_ok'] = 1;
-//            header('Location: ?act=settings');
-//            exit;
+            $set_user = $userConfig->getArrayCopy();
+
+            // Записываем новые настройки, заданные пользователем
+            $set_user['timeshift'] = isset($_POST['timeshift']) ? intval($_POST['timeshift']) : 0;
+            $set_user['directUrl'] = isset($_POST['directUrl']);
+            $set_user['fieldHeight'] = isset($_POST['fieldHeight']) ? abs(intval($_POST['fieldHeight'])) : 3;
+            $set_user['kmess'] = isset($_POST['kmess']) ? abs(intval($_POST['kmess'])) : 10;
+
+            if ($set_user['timeshift'] < -12) {
+                $set_user['timeshift'] = -12;
+            } elseif ($set_user['timeshift'] > 12) {
+                $set_user['timeshift'] = 12;
+            }
+
+            if ($set_user['kmess'] < 5) {
+                $set_user['kmess'] = 5;
+            } elseif ($set_user['kmess'] > 99) {
+                $set_user['kmess'] = 99;
+            }
+
+            if ($set_user['field_w'] < 10) {
+                $set_user['field_w'] = 10;
+            } elseif ($set_user['field_w'] > 80) {
+                $set_user['field_w'] = 80;
+            }
+
+            if ($set_user['field_h'] < 1) {
+                $set_user['field_h'] = 1;
+            } elseif ($set_user['field_h'] > 9) {
+                $set_user['field_h'] = 9;
+            }
+
+            // Устанавливаем скин
+            foreach (glob('../theme/*/*.css') as $val) {
+                $theme_list[] = array_pop(explode('/', dirname($val)));
+            }
+
+            //$set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
+
+            // Устанавливаем язык
+            $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
+
+            if ($lng_select && array_key_exists($lng_select, $config->lng_list)) {
+                $set_user['lng'] = $lng_select;
+                $_SESSION['lng'] = $lng_select;
+            }
+
+            // Записываем настройки
+            $db->prepare('UPDATE `users` SET `set_user` = ? WHERE `id` = ?')->execute([serialize($set_user), $systemUser->id]);
+            $_SESSION['set_ok'] = 1;
+            header('Location: ?act=settings');
+            exit;
         } elseif (isset($_GET['reset'])) {
             // Задаем настройки по-умолчанию
             $db->exec("UPDATE `users` SET `set_user` = '' WHERE `id` = " . $systemUser->id);
@@ -207,26 +204,24 @@ switch ($mod) {
             '</p>';
 
         // Выбор темы оформления
-        echo '<p><h3>' . _t('Theme') . '</h3><select name="skin">';
-
-        foreach (glob('../theme/*/*.css') as $val) {
-            $dir = explode('/', dirname($val));
-            $theme = array_pop($dir);
-            echo '<option' . ($userConfig->skin == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
-        }
-
-        echo '</select></p>';
+//        echo '<p><h3>' . _t('Theme') . '</h3><select name="skin">';
+//
+//        foreach (glob('../theme/*/*.css') as $val) {
+//            $dir = explode('/', dirname($val));
+//            $theme = array_pop($dir);
+//            echo '<option' . ($userConfig->skin == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
+//        }
+//
+//        echo '</select></p>';
 
         // Выбор языка
         if (count($config->lng_list) > 1) {
             echo '<p><h3>' . _t('Select Language') . '</h3>';
-            //TODO: доработать переключатель языков
-            $user_lng = isset(core::$user_set['lng']) ? core::$user_set['lng'] : core::$lng_iso;
+            $user_lng = isset($userConfig['lng']) ? $userConfig['lng'] : $config->lng;
 
             foreach ($config->lng_list as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .
-                    $tools->getFlag($key) .
-                    $val .
+                    $tools->getFlag($key) . $val .
                     ($key == $config['lng'] ? ' <small class="red">[' . _t('Site Default') . ']</small>' : '') .
                     '</div>';
             }

@@ -110,6 +110,9 @@ if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_l
     $_SESSION['lng'] = $locale;
 } elseif (isset($_SESSION['lng']) && array_key_exists($_SESSION['lng'], $config->lng_list)) {
     $locale = $_SESSION['lng'];
+} elseif (isset($userConfig['lng']) && array_key_exists($userConfig['lng'], $config->lng_list)) {
+    $locale = $userConfig['lng'];
+    $_SESSION['lng'] = $locale;
 } else {
     $locale = $config->lng;
 }
@@ -143,7 +146,7 @@ function _t($message, $textDomain = 'default')
  *
  * @param string $singular
  * @param string $plural
- * @param int    $number
+ * @param int $number
  * @return string
  */
 function _p($singular, $plural, $number)
