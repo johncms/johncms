@@ -122,12 +122,10 @@ class CleanUser
         if ($req->rowCount()) {
             $res = $req->fetch();
 
-            // Удаляем из Галреи
-            $this->db->exec("DELETE FROM `gallery` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'km'");
             // Удаляем из Библиотеки
             $this->db->exec("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем из Загрузок
-            //$this->db->exec("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
+            //TODO: написать удаление из загрузок
             // Удаляем комментарии из личных гостевых
             $this->db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем комментарии из личных фотоальбомов

@@ -43,17 +43,15 @@ if ($id && $id != $systemUser->id) {
 }
 
 if (!$error) {
-    // Считаем комментарии в галерее
-    $comm_gal = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'km'")->fetchColumn();
     // Считаем комментарии в библиотеке
     $comm_lib = $db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем комментарии к загрузкам
-    $comm_dl = $db->query("SELECT COUNT(*) FROM `download` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'komm'")->fetchColumn();
+    $comm_dl = 0; //TODO: посчитать каменты к загрузкам
     // Считаем посты в личных гостевых
     $comm_gb = $db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем комментарии в личных альбомах
     $comm_al = $db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
-    $comm_count = $comm_gal + $comm_lib + $comm_dl + $comm_gb + $comm_al;
+    $comm_count = $comm_lib + $comm_dl + $comm_gb + $comm_al;
     // Считаем посты в Гостевой
     $guest_count = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем созданные темы на Форуме
