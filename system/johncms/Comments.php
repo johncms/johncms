@@ -90,7 +90,7 @@ class Comments
         switch ($mod) {
             case 'reply':
                 // Отвечаем на комментарий
-                if ($this->item && $this->access_reply && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_reply && !$this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply', 'system') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
@@ -140,7 +140,7 @@ class Comments
 
             case 'edit':
                 // Редактируем комментарий
-                if ($this->item && $this->access_edit && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_edit && !$this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit', 'system') . '</div>';
                     $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
@@ -196,7 +196,7 @@ class Comments
 
             case 'del':
                 // Удаляем комментарий
-                if ($this->item && $this->access_delete && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_delete && !$this->ban) {
                     if (isset($_GET['yes'])) {
                         $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
@@ -245,7 +245,7 @@ class Comments
                 }
 
                 // Добавляем новый комментарий
-                if (!$this->ban && !$this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
+                if ($this->systemUser->isValid() && !$this->ban && !$this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->add_comment($message['text']);
@@ -261,7 +261,7 @@ class Comments
                 }
 
                 // Показываем форму ввода
-                if (!$this->ban && !$this->tools->isIgnor($this->owner)) {
+                if ($this->systemUser->isValid() && !$this->ban && !$this->tools->isIgnor($this->owner)) {
                     echo $this->msg_form();
                 }
 
@@ -309,8 +309,8 @@ class Comments
 
                         $user_arg = [
                             'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
-                            'body'   => $text,
-                            'sub'    => implode(' | ', array_filter($menu)),
+                            'body' => $text,
+                            'sub' => implode(' | ', array_filter($menu)),
                             'iphide' => ($this->systemUser->rights ? false : true),
                         ];
                         echo $this->tools->displayUser($res, $user_arg);
@@ -348,10 +348,10 @@ class Comments
 
         // Формируем атрибуты сообщения
         $attributes = [
-            'author_name'         => $this->systemUser->name,
-            'author_ip'           => $env->getIp(),
+            'author_name' => $this->systemUser->name,
+            'author_ip' => $env->getIp(),
             'author_ip_via_proxy' => $env->getIpViaProxy(),
-            'author_browser'      => $env->getUserAgent(),
+            'author_browser' => $env->getUserAgent(),
         ];
 
         // Записываем комментарий в базу
@@ -385,11 +385,11 @@ class Comments
     private function msg_form($submit_link = '', $text = '', $reply = '')
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
-        (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
-        '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-        '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
-        '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
-        '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
+            (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
+            '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
+            '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
+            '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
+            '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
 
     // Проверка текста сообщения
@@ -431,8 +431,8 @@ class Comments
 
         // Возвращаем результат
         return [
-            'code'  => $code,
-            'text'  => $message,
+            'code' => $code,
+            'text' => $message,
             'error' => $error,
         ];
     }
