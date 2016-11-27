@@ -35,8 +35,8 @@ echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $te
 $total = $db->query("SELECT COUNT(*) FROM `download__comments`")->fetchColumn();
 
 if ($total) {
-    $req = $db->query("SELECT `download__comments`.*, `download__comments`.`id` AS `cid`, `user__`.`rights`, `user__`.`last_visit`, `user__`.`sex`, `user__`.`status`, `user__`.`join_date`, `user__`.`id`, `download__files`.`rus_name`
-	FROM `download__comments` LEFT JOIN `user__` ON `download__comments`.`user_id` = `user__`.`id` LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id` ORDER BY `download__comments`.`time` DESC " . $db->pagination());
+    $req = $db->query("SELECT `download__comments`.*, `download__comments`.`id` AS `cid`, `users`.`rights`, `users`.`name`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `download__files`.`rus_name`
+	FROM `download__comments` LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id` LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id` ORDER BY `download__comments`.`time` DESC LIMIT $start, $kmess");
     $i = 0;
 
     // Навигация
@@ -48,12 +48,9 @@ if ($total) {
     while ($res = $req->fetch()) {
         $text = '';
         echo ($i++ % 2) ? '<div class="list2">' : '<div class="list1">';
-        $text = ' <span class="gray">(' . Functions::displayDate($res['time']) . ')</span>';
-        $post = htmlspecialchars($res['text'], 1, 1);
-
-        if (App::user()->settings['smilies']) {
-            $post = Functions::smilies($post, $res['rights'] >= 1 ? 1 : 0);
-        }
+        $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
+        $post = $tools->checkout($res['text'], 1, 1);
+        $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
 
         $subtext = '<a href="index.php?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="?act=comments&amp;id=' . $res['sub_id'] . '">' . _t('Comments') . '</a>';
         $attributes = unserialize($res['attributes']);
@@ -64,21 +61,18 @@ if ($total) {
 
         if (isset($attributes['edit_count'])) {
             $post .= '<br><span class="gray"><small>Изменен: <b>' . $attributes['edit_name'] . '</b>' .
-                ' (' . functions::displayDate($attributes['edit_time']) . ') <b>' .
+                ' (' . $tools->displayDate($attributes['edit_time']) . ') <b>' .
                 '[' . $attributes['edit_count'] . ']</b></small></span>';
         }
 
         if (!empty($res['reply'])) {
             $reply = htmlspecialchars($res['reply'], 1, 1);
-
-            if (App::user()->settings['smilies']) {
-                $reply = functions::smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
-            }
+            $reply = $tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
 
             $post .= '<div class="reply"><small>' .
                 //TODO: Переделать ссылку
                 '<a href="' . $config['homeurl'] . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                ' (' . functions::displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                ' (' . $tools->displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
         }
 
         $arg = [
@@ -87,7 +81,7 @@ if ($total) {
             'sub'    => $subtext,
         ];
 
-        echo functions::displayUser($res, $arg) . '</div>';
+        echo $tools->displayUser($res, $arg) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
