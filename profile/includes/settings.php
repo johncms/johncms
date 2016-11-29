@@ -138,16 +138,10 @@ switch ($mod) {
                 $set_user['kmess'] = 99;
             }
 
-            if ($set_user['field_w'] < 10) {
-                $set_user['field_w'] = 10;
-            } elseif ($set_user['field_w'] > 80) {
-                $set_user['field_w'] = 80;
-            }
-
-            if ($set_user['field_h'] < 1) {
-                $set_user['field_h'] = 1;
-            } elseif ($set_user['field_h'] > 9) {
-                $set_user['field_h'] = 9;
+            if ($set_user['fieldHeight'] < 1) {
+                $set_user['fieldHeight'] = 1;
+            } elseif ($set_user['fieldHeight'] > 9) {
+                $set_user['fieldHeight'] = 9;
             }
 
             // Устанавливаем скин
@@ -195,9 +189,9 @@ switch ($mod) {
             '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
                 time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
-            '<input name="direct_url" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
+            '<input name="directUrl" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
             '</p><p><h3>' . _t('Text entering') . '</h3>' .
-            '<input type="text" name="field_h" size="2" maxlength="1" value="' . $userConfig->fieldHeight . '"/> ' . _t('Height of field') . ' (1-9)<br />';
+            '<input type="text" name="fieldHeight" size="2" maxlength="1" value="' . $userConfig->fieldHeight . '"/> ' . _t('Height of field') . ' (1-9)<br />';
 
         echo '</p><p><h3>' . _t('Appearance') . '</h3>' .
             '<input type="text" name="kmess" size="2" maxlength="2" value="' . $userConfig->kmess . '"/> ' . _t('Size of Lists') . ' (5-99)' .

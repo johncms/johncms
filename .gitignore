@@ -4,8 +4,6 @@
 !/files/downloads/files/index.php
 /system/vendor
 /system/config/*.local.php
-/system/config/local.php
 /dist
 /distributive
 /node_modules
-incfiles/db.php
