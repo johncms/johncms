@@ -37,7 +37,7 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
         $lng_list = [];
 
         foreach (glob(ROOT_PATH . 'system/locale/*/lng.ini') as $val) {
-            $iso = array_pop(explode('/', dirname($val)));
+            $iso = basename(dirname($val));
             $desc = parse_ini_file($val);
             $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
         }
