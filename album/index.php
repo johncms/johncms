@@ -40,7 +40,7 @@ if (!$systemUser->isValid()) {
 }
 
 // Получаем данные пользователя
-$user = $tools->getUser($user);
+$user = $tools->getUser(isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : 0);
 
 if (!$user) {
     require('../system/head.php');
