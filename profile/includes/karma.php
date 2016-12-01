@@ -11,7 +11,7 @@ $container = App::getContainer();
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
-$set_karma = unserialize($config['karma']);
+$set_karma = $config->karma;
 
 if ($set_karma['on']) {
     /** @var PDO $db */
@@ -225,7 +225,7 @@ if ($set_karma['on']) {
                 }
             }
 
-            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
+            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config->homeurl . '/images/k_' . $images . '.gif"/></td><td>' .
                 '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
                 '<div class="sub">' .
                 '<span class="green">' . _t('For') . ' (' . $user['karma_plus'] . ')</span> | ' .
