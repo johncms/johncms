@@ -16,6 +16,7 @@ $tools = $container->get('tools');
 
 // Закладки
 $textl = _t('Favorites');
+require 'classes/download.php';
 require '../system/head.php';
 
 if (!$systemUser->isValid()) {
