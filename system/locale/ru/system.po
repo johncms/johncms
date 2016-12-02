@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -162,7 +162,7 @@ msgstr "Новости ресурса"
 msgid "Hi"
 msgstr "Привет"
 
-#: system/head.php:94 system/johncms/Tools.php:271
+#: system/head.php:94 system/johncms/Tools.php:290
 msgid "Guest"
 msgstr "Гость"
 
@@ -186,7 +186,7 @@ msgstr "Система"
 msgid "Mail"
 msgstr "Почта"
 
-#: system/head.php:212 system/mainmenu.php:32
+#: system/head.php:212 system/johncms/Tools.php:233 system/mainmenu.php:32
 msgid "Guestbook"
 msgstr "Гостевая"
 
@@ -359,23 +359,99 @@ msgstr "Вчера"
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: system/johncms/Tools.php:339
+#: system/johncms/Tools.php:225
+msgid "List of Admins"
+msgstr "Список админов"
+
+#: system/johncms/Tools.php:226
+msgid "Watching the photo album"
+msgstr "Смотрит фотоальбомы"
+
+#: system/johncms/Tools.php:227
+msgid "List of birthdays"
+msgstr "Список именинников"
+
+#: system/johncms/Tools.php:228 system/mainmenu.php:47
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: system/johncms/Tools.php:229
+msgid "Reading the FAQ"
+msgstr "Читает справку"
+
+#: system/johncms/Tools.php:230 system/mainmenu.php:37
+msgid "Forum"
+msgstr "Форум"
+
+#: system/johncms/Tools.php:231
+msgid "Forum Files"
+msgstr "Файлы Форума"
+
+#: system/johncms/Tools.php:232
+msgid "Looking, who in Forum?"
+msgstr "Смотрит, кто в Форуме?"
+
+#: system/johncms/Tools.php:234
+msgid "Here, in the list"
+msgstr "Тут, в списке"
+
+#: system/johncms/Tools.php:235
+msgid "On the Homepage"
+msgstr "На Главной"
+
+#: system/johncms/Tools.php:236 system/mainmenu.php:52
+msgid "Library"
+msgstr "Библиотека"
+
+#: system/johncms/Tools.php:237
+msgid "Personal correspondence"
+msgstr "Личная переписка"
+
+#: system/johncms/Tools.php:238
+msgid "Reading the news"
+msgstr "Читает новости"
+
+#: system/johncms/Tools.php:239
+msgid "Who is online?"
+msgstr "Кто на сайте?"
+
+#: system/johncms/Tools.php:240
+msgid "Profile"
+msgstr "Профиль"
+
+#: system/johncms/Tools.php:241
+msgid "Personal Profile"
+msgstr "В своей Анкете"
+
+#: system/johncms/Tools.php:242
+msgid "Registered on the site"
+msgstr "Регистрируется на сайте"
+
+#: system/johncms/Tools.php:243
+msgid "List of users"
+msgstr "Список пользователей"
+
+#: system/johncms/Tools.php:244
+msgid "Watching Top 10 Users"
+msgstr "Смотрит Топ 10 Пользователей"
+
+#: system/johncms/Tools.php:358
 msgid "Last Visit"
 msgstr "Последний визит"
 
-#: system/johncms/Tools.php:345
+#: system/johncms/Tools.php:364
 msgid "Browser"
 msgstr "Браузер"
 
-#: system/johncms/Tools.php:346
+#: system/johncms/Tools.php:365
 msgid "IP address"
 msgstr "IP адрес"
 
-#: system/johncms/Tools.php:365
+#: system/johncms/Tools.php:384
 msgid "IP History"
 msgstr "История IP"
 
-#: system/johncms/Tools.php:564
+#: system/johncms/Tools.php:583
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] "День"
@@ -398,21 +474,9 @@ msgstr "Информация, FAQ"
 msgid "Communication"
 msgstr "Общение"
 
-#: system/mainmenu.php:37
-msgid "Forum"
-msgstr "Форум"
-
 #: system/mainmenu.php:43
 msgid "Useful"
 msgstr "Полезное"
-
-#: system/mainmenu.php:47
-msgid "Downloads"
-msgstr "Загрузки"
-
-#: system/mainmenu.php:52
-msgid "Library"
-msgstr "Библиотека"
 
 #: system/mainmenu.php:59
 msgid "Community"

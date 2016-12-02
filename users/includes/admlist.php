@@ -3,7 +3,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Administration');
-$headmod = "admlist";
+$headmod = 'admlist';
 require('../system/head.php');
 
 /** @var Interop\Container\ContainerInterface $container */

@@ -26,6 +26,7 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $url = $config['homeurl'] . '/downloads/';
 
 $textl = _t('Downloads');
+$headmod = 'downloads';
 const DOWNLOADS = ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
 $files_path = '../files/downloads/files'; //TODO: переделать на константы
