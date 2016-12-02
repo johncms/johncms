@@ -1,4 +1,4 @@
-<?
+<?php
 
 define('_IN_JOHNCMS', 1);
 
