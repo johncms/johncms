@@ -38,7 +38,7 @@ class Environment
         } elseif (filter_has_var(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR')
             && preg_match_all(
                 '#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s',
-                filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_SANITIZE_STRING),
+                filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_SANITIZE_STRING),
                 $vars
             )
         ) {
