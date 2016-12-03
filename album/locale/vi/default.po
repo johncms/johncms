@@ -2,60 +2,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-11-15 19:13+0400\n"
-"PO-Revision-Date: 2016-12-03 13:26-0500\n"
+"PO-Revision-Date: 2016-11-15 10:28-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
-"Language-Team: Russian\n"
+"Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: vi\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: johncms\n"
-"X-Crowdin-Language: ru\n"
+"X-Crowdin-Language: vi\n"
 "X-Crowdin-File: /album/default.pot\n"
 
 #: includes/comments.php:26 index.php:47
 msgid "User does not exists"
-msgstr "Такого пользователя не существует"
+msgstr "Người dùng không tồn tại"
 
 #: includes/comments.php:38 includes/image_download.php:34 includes/show.php:63
 msgid "Access forbidden"
-msgstr "Доступ запрещен"
+msgstr "Truy cập bị từ chối"
 
 #: includes/comments.php:39 includes/show.php:63 includes/show.php:85
 #: includes/show.php:182
 msgid "Album List"
-msgstr "Список альбомов"
+msgstr "Danh sách Album"
 
 #: includes/comments.php:44 includes/list.php:24 includes/show.php:37
 #: includes/top.php:113 includes/users.php:36 index.php:139
 msgid "Photo Albums"
-msgstr "Фотоальбомы"
+msgstr "Albums hình ảnh"
 
 #: includes/comments.php:45 includes/list.php:24 includes/show.php:37
 msgid "Personal"
-msgstr "Персональные"
+msgstr "Cá nhân"
 
 #: includes/comments.php:58 includes/show.php:161 includes/top.php:158
 msgid "Views"
-msgstr "Просмотров"
+msgstr "Lượt xem"
 
 #: includes/comments.php:58 includes/show.php:161 includes/top.php:158
 msgid "Downloads"
-msgstr "Скачано"
+msgstr "Tải xuống"
 
 #: includes/comments.php:59 includes/show.php:164 includes/top.php:161
 msgid "Download"
-msgstr "Скачать"
+msgstr "Tải"
 
 #: includes/comments.php:75 includes/show.php:163 includes/top.php:160
 msgid "Comments"
-msgstr "Комментарии"
+msgstr "Bình luận"
 
 #: includes/comments.php:94 includes/delete.php:55 includes/edit.php:32
 #: includes/edit.php:69 includes/image_delete.php:47
@@ -65,352 +65,352 @@ msgstr "Комментарии"
 #: includes/show.php:28 includes/top.php:26 includes/vote.php:22
 #: includes/vote.php:67
 msgid "Wrong data"
-msgstr "Неверные данные"
+msgstr "Lỗi dữ liệu"
 
 #: includes/delete.php:25 includes/image_delete.php:26
 #: includes/image_edit.php:26 includes/image_move.php:24
 #: includes/image_upload.php:34
 msgid "Photo Album"
-msgstr "Фотоальбом"
+msgstr "Albums hình ảnh"
 
 #: includes/delete.php:25 includes/delete.php:50 includes/image_delete.php:42
 #: includes/list.php:47 includes/show.php:152
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Xóa"
 
 #: includes/delete.php:44
 msgid "Album deleted"
-msgstr "Альбом удален"
+msgstr "Album bị xóa"
 
 #: includes/delete.php:45 includes/edit.php:127 includes/image_edit.php:159
 #: includes/image_move.php:36 includes/image_move.php:57
 #: includes/image_upload.php:99
 msgid "Continue"
-msgstr "Продолжить"
+msgstr "Tiếp tục"
 
 #: includes/delete.php:48 includes/show.php:44 index.php:28
 msgid "Album"
-msgstr "Альбом"
+msgstr "Album"
 
 #: includes/delete.php:49
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
-msgstr "Вы действительно хотите удалить альбом? Если в нем есть фотографии, они тоже будут удалены."
+msgstr "Bạn có chắc chắn muốn xóa album này? Nếu nó có chứa hình ảnh, họ cũng sẽ bị xóa."
 
 #: includes/delete.php:52 includes/edit.php:154 includes/image_delete.php:44
 #: includes/image_edit.php:205 includes/image_move.php:55
 msgid "Cancel"
-msgstr "Отмена"
+msgstr "Hủy bỏ"
 
 #: includes/edit.php:25
 msgid "Edit Album"
-msgstr "Изменить альбом"
+msgstr "Chỉnh sửa Album"
 
 #: includes/edit.php:37 includes/list.php:29
 msgid "Create Album"
-msgstr "Создать альбом"
+msgstr "Tạo Album"
 
 #: includes/edit.php:55
 msgid "You have not entered Title"
-msgstr "Вы не ввели название"
+msgstr "Bạn chưa nhập vào tiêu đề"
 
 #: includes/edit.php:57 includes/edit.php:139
 msgid "Title"
-msgstr "Заголовок"
+msgstr "Tiêu đề"
 
 #: includes/edit.php:57 includes/edit.php:65
 msgid "Invalid length"
-msgstr "Недопустимая длина"
+msgstr "Chiều dài không hợp lệ"
 
 #: includes/edit.php:63
 msgid "You have not entered password"
-msgstr "Вы не ввели пароль"
+msgstr "Bạn chưa nhập mật khẩu"
 
 #: includes/edit.php:65 includes/edit.php:145
 msgid "Password"
-msgstr "Пароль"
+msgstr "Mật khẩu"
 
 #: includes/edit.php:74
 msgid "The album already exists"
-msgstr "Такой альбом уже есть"
+msgstr "Album này đã tồn tại"
 
 #: includes/edit.php:126
 msgid "Album successfully changed"
-msgstr "Альбом успешно изменен"
+msgstr "Album thay đổi thành công"
 
 #: includes/edit.php:126
 msgid "Album successfully created"
-msgstr "Альбом успешно создан"
+msgstr "Album tạo thành công"
 
 #: includes/edit.php:141
 msgid "Min. 2, Max. 30"
-msgstr "Мин.2, макс. 20"
+msgstr "Min. 2, Max. 30"
 
 #: includes/edit.php:142 includes/image_edit.php:166
 #: includes/image_upload.php:113
 msgid "Description"
-msgstr "Описание"
+msgstr "Mô tả"
 
 #: includes/edit.php:144 includes/image_edit.php:168
 #: includes/image_upload.php:115
 msgid "Optional field"
-msgstr "Необязательное поле"
+msgstr "Tùy chọn trường"
 
 #: includes/edit.php:144
 msgid "Max. 500"
-msgstr "Макс. 500"
+msgstr "Max. 500"
 
 #: includes/edit.php:147
 msgid "This field is required if the password access is activated"
-msgstr "Если включен доступ по паролю, то данное поле обязательно"
+msgstr "Trường này là bắt buộc nếu truy cập các mật khẩu được kích hoạt"
 
 #: includes/edit.php:148
 msgid "Access"
-msgstr "Доступ"
+msgstr "Truy cập"
 
 #: includes/edit.php:149
 msgid "Everyone"
-msgstr "Всем"
+msgstr "Tất cả mọi người"
 
 #: includes/edit.php:150
 msgid "With Password"
-msgstr "По паролю"
+msgstr "Bởi mật khẩu"
 
 #: includes/edit.php:151
 msgid "Only for me"
-msgstr "Только для меня"
+msgstr "Chỉ cho tôi"
 
 #: includes/edit.php:152 includes/image_edit.php:203
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Lưu"
 
 #: includes/image_delete.php:26
 msgid "Delete image"
-msgstr "Удалить фото"
+msgstr "Xóa hình ảnh"
 
 #: includes/image_delete.php:41
 msgid "Are you sure you want to delete this image?"
-msgstr "Вы действительно хотите удалить изображение?"
+msgstr "Bạn có chắc chắn muốn xóa hình ảnh này?"
 
 #: includes/image_download.php:43
 msgid "File does not exist"
-msgstr "Файла не существует"
+msgstr "Tập tin không tồn tại"
 
 #: includes/image_download.php:59 includes/image_upload.php:120
 msgid "Back"
-msgstr "Назад"
+msgstr "Quay lại"
 
 #: includes/image_edit.php:26
 msgid "Edit image"
-msgstr "Изменить картинку"
+msgstr "Chỉnh sửa hình ảnh"
 
 #: includes/image_edit.php:158
 msgid "Image successfully changed"
-msgstr "Картинка изменена"
+msgstr "Hình ảnh thay đổi thành công"
 
 #: includes/image_edit.php:164 includes/image_upload.php:111
 msgid "Image"
-msgstr "Картинка"
+msgstr "Chọn hình ảnh"
 
 #: includes/image_edit.php:198
 msgid "Rotate"
-msgstr "Повернуть"
+msgstr "Xoay"
 
 #: includes/image_edit.php:199
 msgid "do not rotate"
-msgstr "не поворачивать"
+msgstr "không xoay"
 
 #: includes/image_edit.php:200
 msgid "clockwise"
-msgstr "по часовой стрелке"
+msgstr "chiều kim đồng hồ"
 
 #: includes/image_edit.php:201
 msgid "counterclockwise"
-msgstr "против часовой стрелки"
+msgstr "ngược chiều kim đồng"
 
 #: includes/image_edit.php:202
 msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
-msgstr "Учтите, что при частом изменении яркости, контрастности и повороте, теряется качество изображения. Не пользуйтесь этими функциями без необходимости."
+msgstr "ưu ý, bạn có thể mất đi chất lượng hình ảnh nếu bạn thay đổi độ sáng, độ tương phản và xoay nó nhiều lần. Không thực hiện bất kỳ thay đổi mà không cần."
 
 #: includes/image_move.php:24
 msgid "Move image"
-msgstr "Переместить изображение"
+msgstr "Di chuyển hình ảnh"
 
 #: includes/image_move.php:35
 msgid "Image successfully moved to the selected album"
-msgstr "Фотография перемещена в выбранный альбом"
+msgstr "Hình ảnh thành công chuyển đến album chọn"
 
 #: includes/image_move.php:45
 msgid "Select Album"
-msgstr "Выберите альбом"
+msgstr "Chọn Album"
 
 #: includes/image_move.php:53 includes/show.php:151
 msgid "Move"
-msgstr "Переместить"
+msgstr "Di chuyển"
 
 #: includes/image_move.php:57
 msgid "You must create at least one additional album in order to move the image"
-msgstr "Для того, чтобы перемещать фотографии, у Вас должен быть создан еще один альбом"
+msgstr "Bạn phải tạo ít nhất một album nữa để di chuyển hình ảnh"
 
 #: includes/image_upload.php:34
 msgid "Upload image"
-msgstr "Загрузить изображение"
+msgstr "Tải Ảnh lên"
 
 #: includes/image_upload.php:98
 msgid "Image uploaded"
-msgstr "Изображение загружено"
+msgstr "Ảnh tải lên"
 
 #: includes/image_upload.php:100
 msgid "Profile"
-msgstr "Профиль"
+msgstr "Hồ sơ"
 
 #: includes/image_upload.php:117
 msgid "Upload"
-msgstr "Загрузить"
+msgstr "Tải lên"
 
 #: includes/image_upload.php:119
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
-msgstr "Для выгрузки разрешены файлы JPG, JPEG, PNG, GIF<br>Размер файла не должен превышать %d kb."
+msgstr "Cho phép định dạng hình ảnh JPG, JPEG, PNG, GIF<br>Kích thước nên được vượt quá %d kb."
 
 #: includes/list.php:44
 msgid "Up"
-msgstr "Вверх"
+msgstr "Lên trên"
 
 #: includes/list.php:45
 msgid "Down"
-msgstr "Вниз"
+msgstr "Dưới"
 
 #: includes/list.php:46 includes/show.php:150
 msgid "Edit"
-msgstr "Изменить"
+msgstr "Chỉnh sửa"
 
 #: includes/list.php:59 includes/show.php:169 includes/top.php:167
 #: includes/users.php:58
 msgid "The list is empty"
-msgstr "Список пуст"
+msgstr "Danh sách này là trống rỗng"
 
 #: includes/list.php:62 includes/show.php:172 includes/top.php:170
 #: includes/users.php:60
 msgid "Total"
-msgstr "Всего"
+msgstr "Tổng số"
 
 #: includes/show.php:40
 msgid "Add image"
-msgstr "Добавить фото"
+msgstr "Thêm một hình ảnh"
 
 #: includes/show.php:75
 msgid "Incorrect Password"
-msgstr "Пароль неверный"
+msgstr "Sai mật khẩu"
 
 #: includes/show.php:81
 msgid "You must type a password to view this album"
-msgstr "Для доступа к данному альбому, необходимо ввести пароль"
+msgstr "Bạn phải nhập một mật khẩu để xem album này"
 
 #: includes/show.php:83
 msgid "Login"
-msgstr "Логин"
+msgstr "Đăng nhập"
 
 #: includes/show.php:127
 msgid "Photo added to the profile"
-msgstr "Фото установлено в анкету"
+msgstr "Hình ảnh tìm thấy trong bảng câu hỏi"
 
 #: includes/show.php:156
 msgid "Add to Profile"
-msgstr "В анкету"
+msgstr "Thêm vào hồ sơ cá nhân"
 
 #: includes/show.php:162 includes/top.php:159
 msgid "Date"
-msgstr "Дата"
+msgstr "Ngày"
 
 #: includes/show.php:178 includes/top.php:176 includes/users.php:65
 msgid "To Page"
-msgstr "На страницу"
+msgstr "Đến trang"
 
 #: includes/top.php:31
 msgid "Unread Comments"
-msgstr "Непрочитанные комментарии"
+msgstr "Bình luận mới"
 
 #: includes/top.php:42
 msgid "Recent comments"
-msgstr "Последние комментарии"
+msgstr "Ý kiến gần đây"
 
 #: includes/top.php:52 index.php:157
 msgid "Top Views"
-msgstr "ТОП просмотров"
+msgstr "Top Lượt xem"
 
 #: includes/top.php:62 index.php:156
 msgid "Top Downloads"
-msgstr "ТОП загрузок"
+msgstr "Đầu Tải Xuống"
 
 #: includes/top.php:72 index.php:158
 msgid "Top Comments"
-msgstr "ТОП комментариев"
+msgstr "Top bình luận"
 
 #: includes/top.php:82 index.php:155
 msgid "Top Votes"
-msgstr "ТОП голосов"
+msgstr "Top bình chọn"
 
 #: includes/top.php:92 index.php:159
 msgid "Top Worst"
-msgstr "Топ Худших"
+msgstr "Đầu Tồi Tệ Nhất"
 
 #: includes/top.php:102
 msgid "New photos"
-msgstr "Новые фото"
+msgstr "Ảnh mới"
 
 #: includes/users.php:32
 msgid "All"
-msgstr "Все"
+msgstr "Tất cả"
 
 #: includes/users.php:33 index.php:146
 msgid "Guys"
-msgstr "Парни"
+msgstr "Mans"
 
 #: includes/users.php:34 index.php:147
 msgid "Girls"
-msgstr "Девушки"
+msgstr "Người phụ nữ"
 
 #: includes/users.php:36
 msgid "List"
-msgstr "Список"
+msgstr "Danh sách"
 
 #: index.php:37
 msgid "For registered users only"
-msgstr "Только для зарегистрированных посетителей"
+msgstr "Cho người dùng đăng ký"
 
 #: index.php:79 index.php:154
 msgid "Rating"
-msgstr "Рейтинг"
+msgstr "Đánh giá"
 
 #: index.php:80
 msgid "Against"
-msgstr "Против"
+msgstr "Bỏ phiếu chống lại"
 
 #: index.php:80
 msgid "For"
-msgstr "За"
+msgstr "Đối với"
 
 #: index.php:87
 msgid "Vote"
-msgstr "Голосовать"
+msgstr "Bình chọn"
 
 #: index.php:141
 msgid "New Photos"
-msgstr "Новые фото"
+msgstr "Ảnh mới"
 
 #: index.php:142
 msgid "New Comments"
-msgstr "Новые комментарии"
+msgstr "Ý Kiến Mới"
 
 #: index.php:145
 msgid "Albums"
-msgstr "Альбомы"
+msgstr "Album"
 
 #: index.php:150
 msgid "My Album"
-msgstr "Мой альбом"
+msgstr "Album của tôi"
 
 #: index.php:162
 msgid "Users"
-msgstr "Пользователи"
+msgstr "Thành viên"
 

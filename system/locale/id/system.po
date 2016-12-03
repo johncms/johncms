@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-11-16 13:34-0500\n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -162,7 +162,7 @@ msgstr "Berita Situs"
 msgid "Hi"
 msgstr "Hai"
 
-#: system/head.php:94 system/johncms/Tools.php:271
+#: system/head.php:94 system/johncms/Tools.php:290
 msgid "Guest"
 msgstr "Pengunjung"
 
@@ -186,7 +186,7 @@ msgstr "Sistem"
 msgid "Mail"
 msgstr "Pesan"
 
-#: system/head.php:212 system/mainmenu.php:32
+#: system/head.php:212 system/johncms/Tools.php:233 system/mainmenu.php:32
 msgid "Guestbook"
 msgstr "Buku Tamu"
 
@@ -359,23 +359,99 @@ msgstr ""
 msgid "ERROR"
 msgstr ""
 
-#: system/johncms/Tools.php:339
+#: system/johncms/Tools.php:225
+msgid "List of Admins"
+msgstr ""
+
+#: system/johncms/Tools.php:226
+msgid "Watching the photo album"
+msgstr ""
+
+#: system/johncms/Tools.php:227
+msgid "List of birthdays"
+msgstr ""
+
+#: system/johncms/Tools.php:228 system/mainmenu.php:47
+msgid "Downloads"
+msgstr "Unduhan"
+
+#: system/johncms/Tools.php:229
+msgid "Reading the FAQ"
+msgstr ""
+
+#: system/johncms/Tools.php:230 system/mainmenu.php:37
+msgid "Forum"
+msgstr "Forum"
+
+#: system/johncms/Tools.php:231
+msgid "Forum Files"
+msgstr ""
+
+#: system/johncms/Tools.php:232
+msgid "Looking, who in Forum?"
+msgstr ""
+
+#: system/johncms/Tools.php:234
+msgid "Here, in the list"
+msgstr ""
+
+#: system/johncms/Tools.php:235
+msgid "On the Homepage"
+msgstr ""
+
+#: system/johncms/Tools.php:236 system/mainmenu.php:52
+msgid "Library"
+msgstr "Perpustakaan"
+
+#: system/johncms/Tools.php:237
+msgid "Personal correspondence"
+msgstr ""
+
+#: system/johncms/Tools.php:238
+msgid "Reading the news"
+msgstr ""
+
+#: system/johncms/Tools.php:239
+msgid "Who is online?"
+msgstr ""
+
+#: system/johncms/Tools.php:240
+msgid "Profile"
+msgstr ""
+
+#: system/johncms/Tools.php:241
+msgid "Personal Profile"
+msgstr ""
+
+#: system/johncms/Tools.php:242
+msgid "Registered on the site"
+msgstr ""
+
+#: system/johncms/Tools.php:243
+msgid "List of users"
+msgstr ""
+
+#: system/johncms/Tools.php:244
+msgid "Watching Top 10 Users"
+msgstr ""
+
+#: system/johncms/Tools.php:358
 msgid "Last Visit"
 msgstr ""
 
-#: system/johncms/Tools.php:345
+#: system/johncms/Tools.php:364
 msgid "Browser"
 msgstr ""
 
-#: system/johncms/Tools.php:346
+#: system/johncms/Tools.php:365
 msgid "IP address"
 msgstr ""
 
-#: system/johncms/Tools.php:365
+#: system/johncms/Tools.php:384
 msgid "IP History"
 msgstr ""
 
-#: system/johncms/Tools.php:564
+#: system/johncms/Tools.php:583
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
@@ -396,21 +472,9 @@ msgstr "Informasi, FAQ"
 msgid "Communication"
 msgstr "Komunikasi"
 
-#: system/mainmenu.php:37
-msgid "Forum"
-msgstr "Forum"
-
 #: system/mainmenu.php:43
 msgid "Useful"
 msgstr "Gadget"
-
-#: system/mainmenu.php:47
-msgid "Downloads"
-msgstr "Unduhan"
-
-#: system/mainmenu.php:52
-msgid "Library"
-msgstr "Perpustakaan"
 
 #: system/mainmenu.php:59
 msgid "Community"

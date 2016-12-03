@@ -1,0 +1,818 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-11-15 19:15+0400\n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Indonesian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: id\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /forum/default.pot\n"
+
+#: includes/addfile.php:23 includes/addfile.php:32 includes/addvote.php:23
+#: includes/deltema.php:20 includes/delvote.php:22 includes/editpost.php:20
+#: includes/editvote.php:22 includes/files.php:73 includes/filter.php:14
+#: includes/filter.php:72 includes/loadtem.php:13 includes/loadtem.php:34
+#: includes/nt.php:87 includes/per.php:20 includes/per.php:29
+#: includes/per.php:39 includes/per.php:48 includes/post.php:20
+#: includes/ren.php:20 includes/ren.php:29 includes/tema.php:31
+#: includes/tema.php:51 includes/users.php:22 includes/vip.php:20
+#: includes/vip.php:30 includes/vote.php:25 index.php:862
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: includes/addfile.php:39
+msgid "The time allotted for the file upload has expired"
+msgstr "Batas waktu untuk mengunggah berkas telah habis"
+
+#: includes/addfile.php:39 includes/addvote.php:23 includes/addvote.php:91
+#: includes/curators.php:71 includes/editpost.php:52 includes/editpost.php:59
+#: includes/editpost.php:79 includes/editpost.php:81 includes/editpost.php:233
+#: includes/filter.php:32 includes/massdel.php:30 includes/massdel.php:33
+#: includes/nt.php:78 includes/nt.php:256 includes/per.php:95
+#: includes/ren.php:65 includes/say.php:78 includes/say.php:92
+#: includes/say.php:110 includes/say.php:122 includes/say.php:216
+#: includes/say.php:226 includes/say.php:233 includes/say.php:286
+#: includes/say.php:299 includes/say.php:411 includes/vote.php:33
+msgid "Back"
+msgstr "Kembali"
+
+#: includes/addfile.php:48
+msgid "File is already uploaded"
+msgstr "Berkas telah diunggah"
+
+#: includes/addfile.php:74
+msgid "File size exceed"
+msgstr "Ukuran berkas melebihi batas"
+
+#: includes/addfile.php:79
+msgid "You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Anda hanya boleh mengunggah berkas dengan nama dan satu ekstensi. <b>(name.ext</b>) Berkas tanpa nama, ekstensi dan banyak ekstensi akan ditolak."
+
+#: includes/addfile.php:84
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Format berkas tidak diizinkan.<br> Anda dapat mengunggah berkas dengan ekstensi berikut"
+
+#: includes/addfile.php:97
+msgid "File name contains invalid characters"
+msgstr "Nama berkas terdapat karakter tidak valid"
+
+#: includes/addfile.php:111
+msgid "File attached"
+msgstr "Berkas dilampirkan"
+
+#: includes/addfile.php:113 includes/addfile.php:159
+msgid "Error uploading file"
+msgstr "Gagal mengunggah berkas"
+
+#: includes/addfile.php:156 includes/addvote.php:64 includes/editpost.php:193
+#: includes/nt.php:221 includes/ren.php:39 includes/ren.php:49
+#: includes/say.php:278
+msgid "Repeat"
+msgstr "Ulangi"
+
+#: includes/addfile.php:164 includes/addvote.php:62 includes/delvote.php:31
+#: includes/editvote.php:79
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: includes/addfile.php:167 includes/nt.php:247 includes/say.php:204
+#: includes/say.php:400 index.php:585 index.php:772
+msgid "Add File"
+msgstr "Tambahkan Berkas"
+
+#: includes/addfile.php:170
+msgid "Upload"
+msgstr "Unggah"
+
+#: includes/addfile.php:171
+msgid "Max. Size"
+msgstr "Ukuran Maks"
+
+#: includes/addvote.php:62
+msgid "Poll added"
+msgstr "Tanggapan ditambahkan"
+
+#: includes/addvote.php:64
+msgid "The required fields are not filled"
+msgstr "Kolom yang dibutuhkan kosong"
+
+#: includes/addvote.php:68 includes/editvote.php:87
+msgid "Poll (max. 150)"
+msgstr "Tanggapan (Maks. 150)"
+
+#: includes/addvote.php:84 includes/editvote.php:94 includes/tema.php:68
+msgid "Answer"
+msgstr "Balasan"
+
+#: includes/addvote.php:88
+msgid "Add Answer"
+msgstr "Tambahkan Balasan"
+
+#: includes/addvote.php:89 includes/editvote.php:123
+msgid "Delete last"
+msgstr "Hapus pos terakhir"
+
+#: includes/addvote.php:90 includes/editpost.php:229 includes/editvote.php:126
+#: includes/nt.php:251 includes/ren.php:63
+msgid "Save"
+msgstr "Simpan"
+
+#: includes/curators.php:23 includes/deltema.php:30 includes/say.php:416
+#: index.php:205
+msgid "Topic has been deleted or does not exists"
+msgstr "Topik tidak tersedia"
+
+#: includes/curators.php:33 includes/deltema.php:64 includes/editpost.php:87
+#: includes/editpost.php:169 includes/editpost.php:218 includes/editvote.php:84
+#: includes/file.php:36 includes/files.php:73 includes/files.php:182
+#: includes/filter.php:14 includes/filter.php:57 includes/new.php:5
+#: includes/new.php:61 includes/new.php:76 includes/new.php:149
+#: includes/new.php:220 includes/new.php:258 includes/nt.php:231
+#: includes/per.php:71 includes/post.php:123 includes/ren.php:59
+#: includes/say.php:366 includes/say.php:416 includes/tema.php:86
+#: includes/tema.php:92 includes/tema.php:135 includes/who.php:80
+#: includes/who.php:188 index.php:131 index.php:205 index.php:245 index.php:871
+#: index.php:896 search.php:21 search.php:220
+msgid "Forum"
+msgstr "Forum"
+
+#: includes/curators.php:33 index.php:805
+msgid "Curators"
+msgstr "Kurator"
+
+#: includes/curators.php:61
+msgid "Assign"
+msgstr "Terapkan"
+
+#: includes/curators.php:68 includes/files.php:152 includes/new.php:199
+#: includes/new.php:256 includes/who.php:61 includes/who.php:176
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: includes/curators.php:70 includes/files.php:140 includes/files.php:177
+#: includes/new.php:136 includes/new.php:202 includes/users.php:45
+#: includes/who.php:67 includes/who.php:179 index.php:325 index.php:384
+#: index.php:784 search.php:159
+msgid "Total"
+msgstr "Total"
+
+#: includes/deltema.php:64 index.php:833
+msgid "Delete Topic"
+msgstr "Hapus Topik"
+
+#: includes/deltema.php:66 includes/editpost.php:176 includes/massdel.php:44
+msgid "Do you really want to delete?"
+msgstr "Anda yakin ingin menghapus?"
+
+#: includes/deltema.php:67 includes/editpost.php:180
+msgid "Hide"
+msgstr "Sembunyikan"
+
+#: includes/deltema.php:68 includes/delvote.php:34 includes/editpost.php:177
+#: includes/editvote.php:47 includes/massdel.php:44 index.php:727 index.php:758
+msgid "Delete"
+msgstr "Hapus"
+
+#: includes/deltema.php:69
+msgid "Perform"
+msgstr "Tampilkan"
+
+#: includes/deltema.php:70 includes/delvote.php:35 includes/editpost.php:177
+#: includes/editvote.php:48 includes/editvote.php:128 includes/massdel.php:45
+#: search.php:52
+msgid "Cancel"
+msgstr "Batal"
+
+#: includes/delvote.php:31
+msgid "Poll deleted"
+msgstr "Tanggapan dihapus"
+
+#: includes/delvote.php:33
+msgid "Do you really want to delete a poll?"
+msgstr "Anda yakin menghapus tanggapan?"
+
+#: includes/editpost.php:52
+msgid "You cannot edit posts of higher administration"
+msgstr "Anda tidak bisa menyunting pos lebih tinggi dari Pengurus"
+
+#: includes/editpost.php:59
+msgid "You are trying to change another's post"
+msgstr "Anda mencoba menyunting post orang lain"
+
+#: includes/editpost.php:79
+msgid "Your message not already latest, you cannot change it"
+msgstr "Pesan Anda sudah lama, Anda tidak bisa menyuntingnya"
+
+#: includes/editpost.php:81
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "Anda tidak bisa menyunting pos setelah 5 menit"
+
+#: includes/editpost.php:87
+msgid "Message does not exists or has been deleted"
+msgstr "Pesan tidak tersedia"
+
+#: includes/editpost.php:169
+msgid "Delete Message"
+msgstr "Hapus pesan"
+
+#: includes/editpost.php:173
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "PERINGATAN! Ini adalah pos terakhir dari topik. Jika dihapus topik akan terhapus."
+
+#: includes/editpost.php:184
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "Setelah menghapus, jumlah poin posting forum akan dikurangi"
+
+#: includes/editpost.php:193 includes/nt.php:113 includes/say.php:278
+msgid "You have not entered the message"
+msgstr "Anda belum memasukkan pesan"
+
+#: includes/editpost.php:218
+msgid "Edit Message"
+msgstr "Sunting Pesan"
+
+#: includes/editpost.php:230 includes/nt.php:252 includes/say.php:210
+#: includes/say.php:405 index.php:587 index.php:775
+msgid "Preview"
+msgstr "Tinjauan"
+
+#: includes/editpost.php:232 includes/nt.php:255 includes/say.php:215
+#: includes/say.php:410
+msgid "Smilies"
+msgstr "Smile"
+
+#: includes/editvote.php:46
+msgid "Do you really want to delete the answer?"
+msgstr "Apakah Anda yakin menghapus jawaban ini?"
+
+#: includes/editvote.php:79
+msgid "Poll changed"
+msgstr "Tanggah disunting"
+
+#: includes/editvote.php:84 index.php:817
+msgid "Edit Poll"
+msgstr "Sunting tanggapan"
+
+#: includes/editvote.php:122
+msgid "Add"
+msgstr "Tambahkan"
+
+#: includes/file.php:36
+msgid "File does not exist"
+msgstr "Berkas tidak ada"
+
+#: includes/files.php:21
+msgid "Windows applications"
+msgstr "Aplikasi Windows"
+
+#: includes/files.php:22
+msgid "Java applications"
+msgstr "Aplikasi Java"
+
+#: includes/files.php:23
+msgid "SIS"
+msgstr "SIS"
+
+#: includes/files.php:24
+msgid "txt"
+msgstr "txt"
+
+#: includes/files.php:25
+msgid "Pictures"
+msgstr "Gambar"
+
+#: includes/files.php:26
+msgid "Archive"
+msgstr "Arsip"
+
+#: includes/files.php:27
+msgid "Videos"
+msgstr "Video"
+
+#: includes/files.php:28
+msgid "MP3"
+msgstr "MP3"
+
+#: includes/files.php:29
+msgid "Other"
+msgstr "Lainnya"
+
+#: includes/files.php:43 index.php:259
+msgid "Category Files"
+msgstr "Kategori Berkas"
+
+#: includes/files.php:49
+msgid "Section files"
+msgstr "Bagian Berkas"
+
+#: includes/files.php:55 index.php:271
+msgid "Topic Files"
+msgstr "Berkas Topik"
+
+#: includes/files.php:61
+msgid "Forum Files"
+msgstr "Berkas Forum"
+
+#: includes/files.php:85 includes/files.php:158
+msgid "New Files"
+msgstr "Berkas Baru"
+
+#: includes/files.php:104 index.php:546 search.php:148
+msgid "Read more"
+msgstr "Selengkapnya"
+
+#: includes/files.php:121 includes/post.php:108 index.php:699
+msgid "Click to view image"
+msgstr "Klik untuk melihat gambar"
+
+#: includes/files.php:129
+msgid "Size"
+msgstr "Ukuran"
+
+#: includes/files.php:129
+msgid "Downloaded"
+msgstr "Diunduh"
+
+#: includes/files.php:129 index.php:705
+msgid "Time"
+msgstr "Pada"
+
+#: includes/files.php:149 includes/new.php:142 includes/new.php:209
+#: includes/users.php:51 includes/who.php:73 includes/who.php:185 index.php:390
+#: index.php:791 search.php:216
+msgid "To Page"
+msgstr "Ke halaman"
+
+#: includes/files.php:159
+msgid "No new files"
+msgstr "Tidak ada berkas baru"
+
+#: includes/files.php:181
+msgid "List of sections"
+msgstr "Daftar Bagian"
+
+#: includes/filter.php:32
+msgid "You have not selected any author"
+msgstr "Anda belum memilih penulis"
+
+#: includes/filter.php:57 index.php:853
+msgid "Filter by author"
+msgstr "Saring berdasarkan penulis"
+
+#: includes/filter.php:68
+msgid "Filter"
+msgstr "Saring"
+
+#: includes/filter.php:69
+msgid "Filter will be display posts from selected authors only"
+msgstr "Penyaringan hanya menampilkan pos dari penulis yang dipilih"
+
+#: includes/filter.php:76 includes/post.php:122
+msgid "Back to topic"
+msgstr "Kembali ke Topik"
+
+#: includes/massdel.php:30
+msgid "Marked posts are deleted"
+msgstr "Pos ditandai berhasil dihapus"
+
+#: includes/massdel.php:33
+msgid "You did not choose something to delete"
+msgstr "Anda tidak memilih pos yang akan dihapus"
+
+#: includes/new.php:5 includes/new.php:149
+msgid "Unread"
+msgstr "Belum dibaca"
+
+#: includes/new.php:61
+msgid "All topics marked as read"
+msgstr "Semua topik ditandai telah dibaca"
+
+#: includes/new.php:76
+#, php-format
+msgid "All for period %d hours"
+msgstr "Semua riwayat untuk %d jam"
+
+#: includes/new.php:81
+msgid "Show period"
+msgstr "Tampilkan Riwayat"
+
+#: includes/new.php:133
+msgid "There is nothing new in this forum for selected period"
+msgstr "Untuk jangka waktu yang dipilih tidak ada yang baru di forum"
+
+#: includes/new.php:214
+msgid "Mark as read"
+msgstr "Tandai telah dibaca"
+
+#: includes/new.php:220
+msgid "Last 10"
+msgstr "10 topik terakhir"
+
+#: includes/nt.php:28 includes/say.php:28
+msgid "Access forbidden"
+msgstr "Akses ditolak"
+
+#: includes/nt.php:78 includes/say.php:78
+#, php-format
+msgid "You cannot add the message so often<br>Please, wait %d sec."
+msgstr "Anda tidak dapat mengirim pesan terlalu sering<br> mohon tunggu %d detik."
+
+#: includes/nt.php:105 includes/ren.php:39
+msgid "You have not entered topic name"
+msgstr "Anda belum memasukkan judul topik"
+
+#: includes/nt.php:109
+msgid "Topic name too short"
+msgstr "Judul topik terlalu pendek"
+
+#: includes/nt.php:117 includes/say.php:110 includes/say.php:286
+msgid "Text is too short"
+msgstr "Isi terlalu pendek"
+
+#: includes/nt.php:125 includes/ren.php:49
+msgid "Topic with same name already exists in this section"
+msgstr "Judul topik sudah ada di bagian ini"
+
+#: includes/nt.php:135 includes/say.php:122 includes/say.php:299
+msgid "Message already exists"
+msgstr "Pesan sudah ada"
+
+#: includes/nt.php:231 index.php:336 index.php:823
+msgid "New Topic"
+msgstr "Topik baru"
+
+#: includes/nt.php:240 includes/per.php:75
+msgid "Section"
+msgstr "Bagian"
+
+#: includes/nt.php:242
+msgid "Title(max. 100)"
+msgstr "Judul (Maks. 100)"
+
+#: includes/nt.php:244 includes/say.php:201 includes/say.php:397
+msgid "Message"
+msgstr "Pesan"
+
+#: includes/per.php:71 index.php:841
+msgid "Move Topic"
+msgstr "Pindh topik"
+
+#: includes/per.php:74
+msgid "Category"
+msgstr "Kategori"
+
+#: includes/per.php:84
+msgid "Move"
+msgstr "Pindah"
+
+#: includes/per.php:86
+msgid "Other categories"
+msgstr "Kategori lain"
+
+#: includes/post.php:32 includes/say.php:194 includes/say.php:372
+msgid "Topic"
+msgstr "Topik"
+
+#: includes/post.php:71 index.php:523 index.php:653
+msgid "[r]"
+msgstr "[b]"
+
+#: includes/post.php:72 index.php:524 index.php:654
+msgid "[q]"
+msgstr "[k]"
+
+#: includes/post.php:96 index.php:687
+msgid "Attachment"
+msgstr "Lampiran"
+
+#: includes/post.php:114 index.php:705
+msgid "Downloads"
+msgstr "Unduhan"
+
+#: includes/ren.php:59 index.php:819
+msgid "Rename Topic"
+msgstr "Ganti judul topik"
+
+#: includes/ren.php:61
+msgid "Topic name"
+msgstr "Judul topik"
+
+#: includes/say.php:92 includes/say.php:226
+msgid "You cannot write in a closed topic"
+msgstr "Anda tidak dapat menulis di topik tertutup"
+
+#: includes/say.php:209 includes/say.php:404
+msgid "Send"
+msgstr "Kirim"
+
+#: includes/say.php:255 includes/say.php:393
+msgid "I am glad to answer you"
+msgstr "Senang hati menjawab Anda"
+
+#: includes/say.php:259 includes/say.php:394
+msgid "respond to Your message"
+msgstr "menanggapi pesan Anda"
+
+#: includes/say.php:386 includes/tema.php:67
+msgid "Quote"
+msgstr "Kutipan"
+
+#: includes/say.php:388
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Diizinkan maks. 200 karakter, jika lebih teks tambahan akan terpotong."
+
+#: includes/say.php:391
+msgid "Appeal"
+msgstr "Desak"
+
+#: includes/tema.php:86 includes/tema.php:135 includes/tema.php:143
+msgid "Download"
+msgstr "Unduh"
+
+#: includes/tema.php:86 includes/tema.php:135
+msgid "Link active 5 minutes"
+msgstr "Tautan aktif 5 menit"
+
+#: includes/tema.php:125
+msgid "This theme was downloaded from the forum site"
+msgstr "Tema ini diunduh dari situs forum"
+
+#: includes/tema.php:139
+msgid "Select format"
+msgstr "Pilih format"
+
+#: includes/users.php:27
+msgid "Who voted in the poll"
+msgstr "Yang menanggapi tanggapan"
+
+#: includes/users.php:42
+msgid "No one has voted in this poll yet"
+msgstr "Tidak ada tanggapan"
+
+#: includes/users.php:54 includes/who.php:77 search.php:151
+msgid "Go to Topic"
+msgstr "Ke Topik"
+
+#: includes/vote.php:33
+msgid "Vote accepted"
+msgstr "Tanggapan diterima"
+
+#: includes/who.php:5 includes/who.php:80 index.php:890
+msgid "Who in Forum"
+msgstr "Yang di Forum"
+
+#: includes/who.php:32
+msgid "Who in Topic"
+msgstr "Yang di topik"
+
+#: includes/who.php:36
+msgid "Authorized"
+msgstr "Otorisasi"
+
+#: includes/who.php:36 includes/who.php:83 includes/who.php:84
+msgid "Guests"
+msgstr "Tamu"
+
+#: includes/who.php:83 includes/who.php:84
+msgid "Users"
+msgstr "Pengguna"
+
+#: includes/who.php:113
+msgid "In the forum Main"
+msgstr "Di Forum Utama"
+
+#: includes/who.php:117
+msgid "Here, in the List"
+msgstr "Disini, di daftar aktif"
+
+#: includes/who.php:121
+msgid "Looking forum files"
+msgstr "Melihat berkas forum"
+
+#: includes/who.php:125
+msgid "In the unreads"
+msgstr "Di belum dibaca"
+
+#: includes/who.php:129 search.php:19
+msgid "Forum search"
+msgstr "Pencarian forum"
+
+#: includes/who.php:143
+msgid "In the Category"
+msgstr "Di kategori"
+
+#: includes/who.php:147
+msgid "In the Section"
+msgstr "Di bagian"
+
+#: includes/who.php:151
+msgid "Writes in the Topic"
+msgstr "Menulis topik"
+
+#: includes/who.php:151 includes/who.php:159
+msgid "In the Topic"
+msgstr "Di topik"
+
+#: includes/who.php:159
+msgid "Answers in the Topic"
+msgstr "Balasan di topik"
+
+#: index.php:115 index.php:184
+msgid "Forum is closed"
+msgstr "Forum ditutup"
+
+#: index.php:117
+msgid "For registered users only"
+msgstr "Hanya untuk pengguna terdaftar"
+
+#: index.php:186
+msgid "Read only"
+msgstr "Hanya Baca"
+
+#: index.php:265
+msgid "Section Files"
+msgstr "Bagian Berkas"
+
+#: index.php:283
+msgid "Who is here"
+msgstr "Yang di sini"
+
+#: index.php:289 index.php:872 search.php:21 search.php:69
+msgid "Search"
+msgstr "Cari"
+
+#: index.php:322
+msgid "There are no sections in this category"
+msgstr "Tidak ada bagian di kategori"
+
+#: index.php:381
+msgid "No topics in this section"
+msgstr "Tidak ada topik di bagian"
+
+#: index.php:422
+msgid "Topic deleted"
+msgstr "Topik dihapus"
+
+#: index.php:422
+msgid "Go to Section"
+msgstr "Ke bagian"
+
+#: index.php:443
+msgid "Topic deleted by"
+msgstr "Topik dihapus oleh"
+
+#: index.php:445
+msgid "Undelete topic"
+msgstr "Batalkan menghapus topik"
+
+#: index.php:450
+msgid "Topic closed"
+msgstr "Topik ditutup"
+
+#: index.php:469 index.php:492
+msgid "Vote"
+msgstr "Beri Nilai"
+
+#: index.php:470
+msgid "Results"
+msgstr "Hasil"
+
+#: index.php:478
+msgid "Rating"
+msgstr "Rating"
+
+#: index.php:481
+msgid "Total votes"
+msgstr "Total penilai"
+
+#: index.php:540 index.php:733
+msgid "Post deleted"
+msgstr "Pos dihapus"
+
+#: index.php:554
+msgid "Filter by author is activated"
+msgstr "Saring berdasarkan penulis diaktifkan"
+
+#: index.php:586 index.php:591 index.php:774 index.php:779
+msgid "Write"
+msgstr "Tulis"
+
+#: index.php:678
+msgid "Edited"
+msgstr "Disunting"
+
+#: index.php:725
+msgid "Edit"
+msgstr "Sunting"
+
+#: index.php:726
+msgid "Restore"
+msgstr "Pulihkan"
+
+#: index.php:735
+msgid "Post restored by"
+msgstr "Pos dipulihkan oleh"
+
+#: index.php:813
+msgid "Curators of the Topic"
+msgstr "Kurator Topik"
+
+#: index.php:817
+msgid "Delete Poll"
+msgstr "Hapus tanggapan"
+
+#: index.php:818
+msgid "Add Poll"
+msgstr "Tambahkan tanggapan"
+
+#: index.php:825
+msgid "Close Topic"
+msgstr "Tutup Topik"
+
+#: index.php:830
+msgid "Restore Topic"
+msgstr "Pulihkan Topik"
+
+#: index.php:836
+msgid "Unfix Topic"
+msgstr "Lepas topik disematkan"
+
+#: index.php:838
+msgid "Pin Topic"
+msgstr "Sematkan topik"
+
+#: index.php:851
+msgid "Cancel Filter"
+msgstr "Batal saring"
+
+#: index.php:857
+msgid "Download Topic"
+msgstr "Unduh Topik"
+
+#: index.php:872
+msgid "Files"
+msgstr "Berkas"
+
+#: index.php:899
+msgid "Forum rules"
+msgstr "Ketentuan Forum"
+
+#: index.php:906
+msgid "New at the top"
+msgstr "Pos baru di atas"
+
+#: index.php:908
+msgid "New at the bottom"
+msgstr "Pos baru di bawah"
+
+#: search.php:50
+msgid "Do you really want to clear the search history?"
+msgstr "Apakah Anda yakin menghapus riwayat pencarian?"
+
+#: search.php:51
+msgid "Clear"
+msgstr "Hapus"
+
+#: search.php:70
+msgid "Search in the topic names"
+msgstr "Cari berdasarkan judul topik"
+
+#: search.php:86
+msgid "Search results"
+msgstr "Hasil pencarian"
+
+#: search.php:152
+msgid "Go to Message"
+msgstr "Ke Pesan"
+
+#: search.php:157
+msgid "Your search did not match any results"
+msgstr "Pencarian Anda tidak ditemukan"
+
+#: search.php:162
+msgid "Invalid length"
+msgstr "Panjang tidak valid"
+
+#: search.php:165
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr "Panjang teks pencarian: 4min., 64maks.<br>Pencarian tidak sensitif huruf <br>Hasil diurutkan berdasarkan relevansi."
+
+#: search.php:198
+msgid "Search History"
+msgstr "Riwayat Pencarian"
+
+#: search.php:220
+msgid "New Search"
+msgstr "Cari lagi"
+

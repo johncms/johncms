@@ -1,0 +1,729 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-11-15 19:14+0400\n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Indonesian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: id\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /downloads/default.pot\n"
+
+#: admin.php:93 includes/comments.php:55
+#: includes/fileControl/delete_file.php:80
+#: includes/fileControl/edit_about.php:44 includes/fileControl/edit_file.php:56
+#: includes/fileControl/edit_screen.php:66
+#: includes/fileControl/edit_screen.php:106
+#: includes/fileControl/files_more.php:61
+#: includes/fileControl/files_more.php:166
+#: includes/fileControl/files_more.php:222 includes/fileControl/mp3tags.php:58
+#: includes/fileControl/open_zip.php:71 includes/fileControl/open_zip.php:154
+#: includes/fileControl/open_zip.php:278
+#: includes/fileControl/transfer_file.php:36
+#: includes/fileControl/transfer_file.php:42
+#: includes/fileControl/transfer_file.php:121
+#: includes/fileControl/txt_in_jar.php:137
+#: includes/fileControl/txt_in_zip.php:85 includes/files_import.php:154
+#: includes/files_import.php:171 includes/files_upload.php:166
+#: includes/files_upload.php:187 includes/files_upload.php:190
+#: includes/folder_add.php:120 includes/folder_add.php:123
+#: includes/folder_delete.php:73 includes/folder_edit.php:118
+#: includes/scan_dir.php:73 includes/scan_dir.php:292
+msgid "Back"
+msgstr "Kembali"
+
+#: classes/download.php:140 includes/view.php:171 includes/view.php:180
+msgid "Rating"
+msgstr "Rating"
+
+#: classes/download.php:154 includes/comments.php:39 includes/comments.php:53
+#: includes/comments_review.php:58 includes/view.php:211
+msgid "Comments"
+msgstr "Komentar"
+
+#: classes/download.php:209
+msgid "Uploaded"
+msgstr ""
+
+#: classes/download.php:215
+msgid "Open Archive"
+msgstr ""
+
+#: classes/download.php:270 includes/bookmark.php:26 includes/bookmark.php:58
+#: includes/comments.php:18 includes/comments.php:29
+#: includes/comments_review.php:24 includes/comments_review.php:34
+#: includes/comments_review.php:106 includes/fileControl/custom_size.php:34
+#: includes/fileControl/delete_file.php:21
+#: includes/fileControl/edit_about.php:19 includes/fileControl/edit_file.php:22
+#: includes/fileControl/edit_screen.php:22
+#: includes/fileControl/files_more.php:27 includes/fileControl/jad_file.php:22
+#: includes/fileControl/jad_file.php:31 includes/fileControl/mp3tags.php:19
+#: includes/fileControl/open_zip.php:38 includes/fileControl/open_zip.php:48
+#: includes/fileControl/open_zip.php:167 includes/fileControl/open_zip.php:281
+#: includes/fileControl/transfer_file.php:19
+#: includes/fileControl/txt_in_jar.php:36
+#: includes/fileControl/txt_in_jar.php:47
+#: includes/fileControl/txt_in_zip.php:35
+#: includes/fileControl/txt_in_zip.php:45 includes/files_import.php:21
+#: includes/files_moderation.php:21 includes/files_moderation.php:65
+#: includes/files_new.php:26 includes/files_new.php:35
+#: includes/files_new.php:66 includes/files_top.php:30
+#: includes/files_top.php:52 includes/files_upload.php:193
+#: includes/files_user.php:63 includes/folder_add.php:24
+#: includes/folder_delete.php:23 includes/folder_edit.php:22
+#: includes/scan_dir.php:84 includes/search.php:16 includes/search.php:89
+#: includes/top_users.php:18 includes/top_users.php:52 includes/view.php:28
+#: includes/view.php:148 index.php:28 index.php:156 index.php:169 index.php:353
+msgid "Downloads"
+msgstr "Unduhan"
+
+#: includes/bookmark.php:18 index.php:359
+msgid "Favorites"
+msgstr "Favorit"
+
+#: includes/bookmark.php:22 index.php:54
+msgid "For registered users only"
+msgstr "Hanya untuk pengguna"
+
+#: includes/bookmark.php:45 includes/comments_review.php:93
+#: includes/fileControl/open_zip.php:130
+#: includes/fileControl/transfer_file.php:111 includes/files_moderation.php:52
+#: includes/files_new.php:52 includes/files_user.php:49
+#: includes/top_users.php:39 index.php:290
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: includes/bookmark.php:48 includes/comments_review.php:96
+#: includes/fileControl/files_more.php:220
+#: includes/fileControl/open_zip.php:134 includes/fileControl/open_zip.php:253
+#: includes/fileControl/transfer_file.php:114 includes/files_moderation.php:55
+#: includes/files_new.php:55 includes/files_user.php:52 includes/search.php:68
+#: includes/top_users.php:42
+msgid "Total"
+msgstr "Total"
+
+#: includes/bookmark.php:55 includes/comments_review.php:103
+#: includes/fileControl/open_zip.php:143 includes/files_moderation.php:62
+#: includes/files_new.php:63 includes/files_user.php:60 includes/search.php:77
+#: includes/top_users.php:49 index.php:314
+msgid "To Page"
+msgstr "Ke halaman"
+
+#: includes/comments.php:18 includes/comments.php:35
+#: includes/comments_review.php:24 includes/comments_review.php:31
+msgid "Comments are disabled"
+msgstr "Komentar dinonaktifkan"
+
+#: includes/comments.php:29 includes/fileControl/custom_size.php:34
+#: includes/fileControl/delete_file.php:21 includes/fileControl/jad_file.php:22
+#: includes/fileControl/jad_file.php:31 includes/fileControl/open_zip.php:38
+#: includes/fileControl/open_zip.php:48 includes/fileControl/open_zip.php:154
+#: includes/fileControl/open_zip.php:167
+#: includes/fileControl/transfer_file.php:19
+#: includes/fileControl/txt_in_jar.php:36
+#: includes/fileControl/txt_in_jar.php:47
+#: includes/fileControl/txt_in_zip.php:35
+#: includes/fileControl/txt_in_zip.php:45 includes/view.php:28
+msgid "File not found"
+msgstr "Berkas tidak ditemukan"
+
+#: includes/comments_review.php:28 index.php:356
+msgid "Review comments"
+msgstr "Tinjauan komentar"
+
+#: includes/fileControl/delete_file.php:78 includes/view.php:272
+msgid "Delete File"
+msgstr "Hapus Berkas"
+
+#: includes/fileControl/delete_file.php:79
+#: includes/fileControl/edit_screen.php:102
+#: includes/fileControl/files_more.php:78
+#: includes/fileControl/files_more.php:217 includes/files_moderation.php:47
+#: includes/folder_delete.php:71 index.php:224
+msgid "Delete"
+msgstr "Hapus"
+
+#: includes/fileControl/edit_about.php:39 includes/files_import.php:168
+#: includes/files_upload.php:182 includes/folder_add.php:106
+#: includes/folder_edit.php:107 includes/view.php:151
+msgid "Description"
+msgstr "Deskripsi"
+
+#: includes/fileControl/edit_about.php:41
+msgid "Maximum 500 characters"
+msgstr "Maksimal 500 karakter"
+
+#: includes/fileControl/edit_about.php:43 includes/fileControl/edit_file.php:55
+#: includes/fileControl/files_more.php:60 includes/fileControl/mp3tags.php:57
+#: includes/folder_edit.php:115
+msgid "Save"
+msgstr "Simpan"
+
+#: includes/fileControl/edit_file.php:47
+#: includes/fileControl/files_more.php:124 includes/files_import.php:59
+#: includes/files_upload.php:54 includes/folder_add.php:40
+#: includes/folder_edit.php:53
+msgid "The required fields are not filled"
+msgstr "Kolom yang dibutuhkan kosong"
+
+#: includes/fileControl/edit_file.php:47
+#: includes/fileControl/files_more.php:103
+#: includes/fileControl/files_more.php:144
+#: includes/fileControl/files_more.php:182
+#: includes/fileControl/files_more.php:186 includes/files_import.php:78
+#: includes/files_import.php:156 includes/files_upload.php:74
+#: includes/files_upload.php:168 includes/files_upload.php:172
+#: includes/folder_add.php:58 includes/folder_add.php:98
+#: includes/folder_edit.php:78
+msgid "Repeat"
+msgstr "Ulangi"
+
+#: includes/fileControl/edit_file.php:53
+msgid "Name for display"
+msgstr ""
+
+#: includes/fileControl/edit_file.php:54 includes/fileControl/files_more.php:58
+#: includes/fileControl/files_more.php:195 includes/files_import.php:166
+#: includes/files_upload.php:181
+msgid "Link to download file"
+msgstr "Tautan unduh berkas"
+
+#: includes/fileControl/edit_screen.php:57 includes/files_import.php:132
+#: includes/files_upload.php:140
+msgid "Screenshot is attached"
+msgstr "Cuplikan dilampirkan"
+
+#: includes/fileControl/edit_screen.php:59
+#: includes/fileControl/edit_screen.php:62 includes/files_import.php:134
+#: includes/files_upload.php:142 includes/files_upload.php:145
+msgid "Screenshot not attached"
+msgstr "Cuplikan tidak dilampirkan"
+
+#: includes/fileControl/edit_screen.php:65
+#: includes/fileControl/files_more.php:166 includes/files_import.php:154
+#: includes/files_upload.php:166
+msgid "Upload more"
+msgstr "Upload lagi"
+
+#: includes/fileControl/edit_screen.php:69 includes/files_import.php:164
+#: includes/files_upload.php:179 includes/view.php:133 includes/view.php:136
+msgid "Screenshot"
+msgstr "Cuplikan"
+
+#: includes/fileControl/edit_screen.php:71
+#: includes/fileControl/files_more.php:197 includes/files_import.php:169
+#: includes/files_upload.php:183
+msgid "Upload"
+msgstr "Unggah"
+
+#: includes/fileControl/edit_screen.php:72
+#: includes/fileControl/files_more.php:199 includes/files_upload.php:184
+msgid "File weight should not exceed"
+msgstr "Ukuran berkas tidak boleh melebihi batas"
+
+#: includes/fileControl/edit_screen.php:73
+#: includes/fileControl/files_more.php:200 includes/files_import.php:170
+#: includes/files_upload.php:186
+msgid "A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)"
+msgstr "Cuplikan secara otomatis dikonversi ke gambar, dengan lebar tidak melebihi 240px (tinggi akan dihitung secara otomatis)"
+
+#: includes/fileControl/files_more.php:56 includes/view.php:268
+msgid "Edit File"
+msgstr "Sunting berkas"
+
+#: includes/fileControl/files_more.php:78 includes/folder_delete.php:70
+msgid "Do you really want to delete?"
+msgstr "Apakah Anda yakin menghapus ini?"
+
+#: includes/fileControl/files_more.php:78
+msgid "Cancel"
+msgstr "Batal"
+
+#: includes/fileControl/files_more.php:89
+#: includes/fileControl/files_more.php:98 includes/files_import.php:35
+#: includes/files_import.php:74
+msgid "Invalid Link"
+msgstr "Tautan tidak valid"
+
+#: includes/fileControl/files_more.php:128 includes/files_upload.php:58
+msgid "The weight of the file exceeds"
+msgstr "Ukuran berkas melebihi batas"
+
+#: includes/fileControl/files_more.php:132 includes/files_import.php:63
+#: includes/files_upload.php:62
+msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
+msgstr "Jenis berkas tidak diizinkan<br>Unggah berkas diizinkan dengan ekstensi berikut"
+
+#: includes/fileControl/files_more.php:136 includes/files_import.php:67
+#: includes/files_upload.php:66
+msgid "The file name length must not exceed 100 characters"
+msgstr "Nama berkas tidak boleh melebihi 100 karakter"
+
+#: includes/fileControl/files_more.php:140 includes/files_import.php:71
+#: includes/files_upload.php:70
+msgid "The file name contains invalid characters"
+msgstr "Nama berkas terdapat karakter tidak valid"
+
+#: includes/fileControl/files_more.php:165 includes/files_import.php:87
+#: includes/files_upload.php:85
+msgid "File attached"
+msgstr "Berkas dilampirkan"
+
+#: includes/fileControl/files_more.php:182
+#: includes/fileControl/files_more.php:186 includes/files_import.php:156
+#: includes/files_upload.php:168 includes/files_upload.php:172
+msgid "File not attached"
+msgstr "Berkas tidak dilampirkan"
+
+#: includes/fileControl/files_more.php:190 includes/scan_dir.php:275
+#: includes/view.php:271
+msgid "Additional Files"
+msgstr "Berkas tambahan"
+
+#: includes/fileControl/files_more.php:192 includes/files_upload.php:177
+msgid "Select File"
+msgstr "Pilih berkas"
+
+#: includes/fileControl/files_more.php:193
+msgid "Or link to it"
+msgstr "Atau tautan untuk itu"
+
+#: includes/fileControl/files_more.php:194 includes/files_import.php:163
+#: includes/files_upload.php:178
+msgid "Save as (max. 30, without extension)"
+msgstr "Simpan sebagai (maks. 30, tanpa ekstensi)"
+
+#: includes/fileControl/files_more.php:196
+msgid "Download the additional file"
+msgstr "Unduh berkas tambahan"
+
+#: includes/fileControl/files_more.php:200 includes/files_import.php:170
+#: includes/files_upload.php:185 includes/folder_add.php:110
+#: includes/folder_edit.php:111 index.php:216
+msgid "Allowed extensions"
+msgstr "Ekstensi diizinkan"
+
+#: includes/fileControl/files_more.php:216 index.php:223
+msgid "Edit"
+msgstr "Sunting"
+
+#: includes/fileControl/mp3tags.php:23 includes/view.php:277
+msgid "Edit MP3 Tags"
+msgstr "Sunting tag MP3"
+
+#: includes/fileControl/mp3tags.php:48
+msgid "Tags saved"
+msgstr "Tag berhasil disimpan"
+
+#: includes/fileControl/mp3tags.php:52 includes/view.php:89
+msgid "Artist"
+msgstr "Artis"
+
+#: includes/fileControl/mp3tags.php:53 includes/view.php:92
+msgid "Title"
+msgstr "Judul"
+
+#: includes/fileControl/mp3tags.php:54 includes/view.php:95
+msgid "Album"
+msgstr "Album"
+
+#: includes/fileControl/mp3tags.php:55 includes/view.php:98
+msgid "Genre"
+msgstr "Aliran"
+
+#: includes/fileControl/mp3tags.php:56 includes/view.php:101
+msgid "Year"
+msgstr "Tahun"
+
+#: includes/fileControl/open_zip.php:62 includes/fileControl/open_zip.php:92
+msgid "Open archive"
+msgstr "Buka arsip"
+
+#: includes/fileControl/open_zip.php:71
+msgid "Failed to open archive or selected file is not a ZIP archive"
+msgstr "Gagal membuka arsip atau berkas dipilih bukan sebuah arsip ZIP"
+
+#: includes/fileControl/open_zip.php:93
+msgid "You can download individual files from the archive or view the code"
+msgstr "Anda dapat mengunduh setiap berkas dari arsip atau melihat kode"
+
+#: includes/fileControl/open_zip.php:124
+msgid "Code"
+msgstr "Kode"
+
+#: includes/fileControl/open_zip.php:124
+#: includes/fileControl/txt_in_jar.php:135 includes/files_upload.php:181
+#: includes/scan_dir.php:191
+msgid "Download"
+msgstr "Unduh"
+
+#: includes/fileControl/open_zip.php:133
+msgid "Weight unpacked"
+msgstr "Arsip dibongkar"
+
+#: includes/fileControl/open_zip.php:275
+msgid "Failed to save the file on the server"
+msgstr "Gagal menyimpan berkas di server"
+
+#: includes/fileControl/transfer_file.php:36
+#: includes/fileControl/transfer_file.php:87 includes/view.php:275
+msgid "Move File"
+msgstr "Pindah berkas"
+
+#: includes/fileControl/transfer_file.php:84
+msgid "The file has been moved"
+msgstr "Berkas berhasil dipindah"
+
+#: includes/fileControl/transfer_file.php:85 includes/scan_dir.php:279
+#: index.php:341
+msgid "Update counters"
+msgstr "Perbarui konter"
+
+#: includes/fileControl/transfer_file.php:105
+#: includes/fileControl/transfer_file.php:117
+msgid "Move to this folder"
+msgstr "Pindah ke folder ini"
+
+#: includes/fileControl/txt_in_jar.php:107
+msgid "Error creating the JAR file"
+msgstr "Gagal membuat berkas JAR"
+
+#: includes/fileControl/txt_in_jar.php:136
+#: includes/fileControl/txt_in_zip.php:84
+msgid "The file will be available for download within 5 minutes"
+msgstr "Berkas akan tersedia untuk diunduh dalam waktu 5 menit"
+
+#: includes/fileControl/txt_in_zip.php:82
+msgid "Download to ZIP"
+msgstr "Unduh ZIP"
+
+#: includes/files_import.php:21 includes/files_new.php:26
+#: includes/files_upload.php:193 includes/folder_add.php:24
+#: includes/folder_delete.php:23 includes/folder_edit.php:22
+#: includes/scan_dir.php:84 index.php:156
+msgid "The directory does not exist"
+msgstr "Folder tidak ada"
+
+#: includes/files_import.php:86 includes/files_import.php:160
+msgid "File import"
+msgstr "Impor berkas"
+
+#: includes/files_import.php:138 includes/files_upload.php:149
+#: includes/folder_add.php:96
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: includes/files_import.php:162
+msgid "Link to file"
+msgstr "Tautan berkas"
+
+#: includes/files_import.php:165 includes/files_upload.php:180
+#: includes/search.php:18
+msgid "File Name"
+msgstr "Nama berkas"
+
+#: includes/files_moderation.php:18 index.php:184
+msgid "Files on moderation"
+msgstr "Berkas dimoderasi"
+
+#: includes/files_moderation.php:25
+msgid "File accepted"
+msgstr "Berkas diterima"
+
+#: includes/files_moderation.php:29
+msgid "All files accepted"
+msgstr "Semua berkas diterima"
+
+#: includes/files_moderation.php:46
+msgid "Accept"
+msgstr "Terima"
+
+#: includes/files_moderation.php:50
+msgid "Accept all files"
+msgstr "Terima semua berkas"
+
+#: includes/files_new.php:18 includes/files_new.php:31 index.php:166
+#: index.php:176
+msgid "New Files"
+msgstr "Berkas baru"
+
+#: includes/files_top.php:22 includes/files_top.php:29
+msgid "Most Commented"
+msgstr "Komentar paling banyak"
+
+#: includes/files_top.php:24 includes/files_top.php:34
+#: includes/files_top.php:40
+msgid "Most Downloaded"
+msgstr "Unduh paling banyak"
+
+#: includes/files_top.php:26 includes/files_top.php:33
+#: includes/files_top.php:37
+msgid "Popular Files"
+msgstr "Berkas populer"
+
+#: includes/files_upload.php:82 includes/files_upload.php:175 index.php:321
+#: index.php:345
+msgid "Upload File"
+msgstr "Unggah berkas"
+
+#: includes/files_upload.php:88
+msgid "If you pass moderation, it will be added to the Downloads"
+msgstr "Jika Anda melewati moderasi, berkas akan ditambahkan ke Unduhan"
+
+#: includes/files_upload.php:190
+msgid "Access forbidden"
+msgstr "Akses ditolak"
+
+#: includes/files_user.php:18 includes/files_user.php:31
+#: includes/top_users.php:36
+msgid "User Files"
+msgstr "Berkas pengguna"
+
+#: includes/files_user.php:21
+msgid "User does not exists"
+msgstr "Pengguna tidak ada"
+
+#: includes/files_user.php:29
+msgid "Profile"
+msgstr "Profil"
+
+#: includes/folder_add.php:44
+msgid "Invalid characters"
+msgstr "Karakter tidak valid"
+
+#: includes/folder_add.php:50 includes/folder_add.php:111
+#: includes/folder_edit.php:74 includes/folder_edit.php:112
+msgid "You can write only the following extensions"
+msgstr "Anda dapat menbuat hanya dengan ekstensi berikut"
+
+#: includes/folder_add.php:57 includes/folder_add.php:95
+#: includes/folder_add.php:102 index.php:329
+msgid "Create Folder"
+msgstr "Buat Folder"
+
+#: includes/folder_add.php:96
+msgid "The Folder is created"
+msgstr "Folder berhasil dibuat"
+
+#: includes/folder_add.php:98
+msgid "Error creating categories"
+msgstr "Gagal membuat kategori"
+
+#: includes/folder_add.php:104
+msgid "Folder Name"
+msgstr "Nama Folder"
+
+#: includes/folder_add.php:105 includes/folder_edit.php:106
+msgid "Title to display"
+msgstr "Judul untuk ditampilkan"
+
+#: includes/folder_add.php:109 includes/folder_edit.php:110
+msgid "Allow users to upload files"
+msgstr "Izinkan pengguna untuk mengunggah berkas"
+
+#: includes/folder_add.php:114
+msgid "Create"
+msgstr "Buat"
+
+#: includes/folder_delete.php:23
+msgid "Before removing, delete subdirectories"
+msgstr "Sebelum menghapus, hapus sub-kategori"
+
+#: includes/folder_delete.php:68 index.php:333
+msgid "Delete Folder"
+msgstr "Hapus Folder"
+
+#: includes/folder_edit.php:104 index.php:332
+msgid "Change Folder"
+msgstr "Ubah folder"
+
+#: includes/scan_dir.php:71 includes/scan_dir.php:278 index.php:340
+msgid "Remove missing files"
+msgstr "Hapus berkas hilang"
+
+#: includes/scan_dir.php:72
+msgid "Database successfully updated"
+msgstr "Basis data berhasil diperbarui"
+
+#: includes/scan_dir.php:91 index.php:339
+msgid "Update Files"
+msgstr "Perbarui berkas"
+
+#: includes/scan_dir.php:272
+msgid "Added"
+msgstr "Ditambahkan"
+
+#: includes/scan_dir.php:273
+msgid "Categories"
+msgstr "Kategori"
+
+#: includes/scan_dir.php:274 index.php:304
+msgid "Files"
+msgstr "Berkas"
+
+#: includes/scan_dir.php:282
+msgid "Update"
+msgstr "Perbarui"
+
+#: includes/scan_dir.php:285
+msgid "Current folder"
+msgstr "Folder saat ini"
+
+#: includes/scan_dir.php:286
+msgid "Current folder and all subfolders"
+msgstr "Folder saat ini dan sub-folder"
+
+#: includes/scan_dir.php:289
+msgid "Entire Downloads"
+msgstr "Seluruh Unduhan"
+
+#: includes/search.php:16 includes/search.php:20 index.php:170
+msgid "Search"
+msgstr "Cari"
+
+#: includes/search.php:19
+msgid "Search in description"
+msgstr "Cari berdasarkan deskripsi"
+
+#: includes/search.php:27
+msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
+msgstr "Panjang nama berkas tidak valid. Diizinkan min. 3 dan maks. 64 karakter."
+
+#: includes/search.php:49
+msgid "Search results"
+msgstr "Hasil pencarian"
+
+#: includes/search.php:65
+msgid "No items found"
+msgstr "Tidak ada item ditemukan"
+
+#: includes/search.php:79
+msgid "New Search"
+msgstr "Cari lagi"
+
+#: includes/search.php:86
+msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
+msgstr "Cari berdasarkan nama berkas dan huruf sensitif. <br>Panjang min. 2 dan mask. 64."
+
+#: includes/top_users.php:17 index.php:172
+msgid "Top Users"
+msgstr "Pengguna terbaik"
+
+#: includes/view.php:37
+msgid "The file is on moderation"
+msgstr "Berkas ini dimoderasi"
+
+#: includes/view.php:82
+msgid "Channels"
+msgstr "Saluran"
+
+#: includes/view.php:83
+msgid "Sample rate"
+msgstr "Laju sampel"
+
+#: includes/view.php:84
+msgid "Bitrate"
+msgstr "Bitrate"
+
+#: includes/view.php:85
+msgid "Duration"
+msgstr "Durasi"
+
+#: includes/view.php:119
+msgid "Resolution"
+msgstr "Resolusi"
+
+#: includes/view.php:146
+msgid "File name"
+msgstr ""
+
+#: includes/view.php:147
+msgid "Uploaded by"
+msgstr "Diunggah oleh"
+
+#: includes/view.php:166
+msgid "Voice adopted"
+msgstr "Suara diadopsi"
+
+#: includes/view.php:221
+msgid "Files for Download"
+msgstr "Berkas untuk Unduh"
+
+#: includes/view.php:257
+msgid "Add to Favorites"
+msgstr "Tambahkan ke Favorit"
+
+#: includes/view.php:259
+msgid "Remove from Favorites"
+msgstr "Hapus dari Favorit"
+
+#: includes/view.php:269
+msgid "Edit Description"
+msgstr "Sunting Deskripsi"
+
+#: includes/view.php:270
+msgid "Managing Screenshots"
+msgstr "Kelola cuplikan"
+
+#: index.php:52 index.php:145
+msgid "Downloads are closed"
+msgstr "Unduhan ditutup"
+
+#: index.php:171
+msgid "Top Files"
+msgstr "Berkas terbaik"
+
+#: index.php:205
+msgid "List of category"
+msgstr "Daftar kategori"
+
+#: index.php:221
+msgid "Up"
+msgstr "Naik"
+
+#: index.php:222
+msgid "Down"
+msgstr "Turun"
+
+#: index.php:239
+msgid "List of Files"
+msgstr "Daftar berkas"
+
+#: index.php:263
+msgid "Sorting"
+msgstr "Mengurutkan"
+
+#: index.php:265
+msgid "by time"
+msgstr "berdasarkan waktu"
+
+#: index.php:266
+msgid "by name"
+msgstr "berdasarkan nama"
+
+#: index.php:268
+msgid "descending"
+msgstr "menurun"
+
+#: index.php:269
+msgid "ascending"
+msgstr "naik"
+
+#: index.php:296
+msgid "Folders"
+msgstr "Folder"
+
+#: index.php:322
+msgid "Import File"
+msgstr "Impor berkas"
+
