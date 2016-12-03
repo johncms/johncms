@@ -61,8 +61,8 @@ echo '<div class="gmenu"><input type="submit" name="add" value=" ' . _t('Add') .
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=smadm&amp;', $start, $total, $kmess) . '</div>';
-    echo '<p><form action="faq.php?act=smadm" method="post">' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=admsmilies&amp;', $start, $total, $kmess) . '</div>';
+    echo '<p><form action="?act=admsmilies" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }

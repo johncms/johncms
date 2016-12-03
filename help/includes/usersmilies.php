@@ -46,7 +46,7 @@ if ($total) {
     }
 
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=smusr&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=usersmilies&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $kmess) . '</div>';
     }
 
     for ($i = $start; $i < $end; $i++) {
@@ -71,8 +71,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=smusr&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $kmess) . '</div>';
-    echo '<p><form action="faq.php?act=smusr&amp;cat=' . urlencode($cat) . '" method="post">' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=usersmilies&amp;cat=' . urlencode($cat) . '&amp;', $start, $total, $kmess) . '</div>';
+    echo '<p><form action="?act=usersmilies&amp;cat=' . urlencode($cat) . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
