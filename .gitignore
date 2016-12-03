@@ -2,6 +2,14 @@
 !/files/cache/.htaccess
 /files/downloads/files/*
 !/files/downloads/files/index.php
+/files/mail/*
+!/files/mail/index.php
+/files/users/album/*
+!/files/users/album/index.php
+/files/users/avatar/*
+!/files/users/avatar/index.php
+/files/users/photo/*
+!/files/users/photo/index.php
 /system/vendor
 /system/config/*.local.php
 /dist
