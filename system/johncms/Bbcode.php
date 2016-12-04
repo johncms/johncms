@@ -131,8 +131,7 @@ class Bbcode
         }
 
         // Смайлы
-        //$smileys = !empty(self::$user_data['smileys']) ? unserialize(self::$user_data['smileys']) : [];
-        $smileys = []; //TODO: убрать!
+        $smileys = !empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
 
         if (!empty($smileys)) {
             $res_sm = '';
