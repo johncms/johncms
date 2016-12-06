@@ -54,7 +54,7 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
 
     while ($file = readdir($dir)) {
         if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
-            $screen[] = DOWNLOADS_SCR . $id . '/' . $file;
+            $screen[] = '../files/downloads/screen/' . $id . '/' . $file;
         }
     }
 
@@ -129,9 +129,9 @@ if (!empty($screen)) {
             $page = $total;
         }
 
-        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>' .
-            '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
+        echo '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
             '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
+        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>';
     } else {
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ':</b><br>' .
             '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';

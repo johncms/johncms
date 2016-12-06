@@ -80,6 +80,7 @@ if ($image && file_exists($image)) {
         $two_image = imagecreatetruecolor($w, $h);
         imagecopyresampled($two_image, $image_file, 0, 0, 0, 0, $w, $h, $w_or, $h_or);
 
+        /*
         if ($w > 30 && $h > 30) {
             if ($type != 1 && $w > 100 && $h > 50) {
                 $file_copyright = '../images/download/copyright_2.png';
@@ -94,15 +95,16 @@ if ($image && file_exists($image)) {
             $copyright = imagecreatefrompng($file_copyright);
             imagecopy($two_image, $copyright, 1, ($h - $h_copyright - 2), 0, 0, $w_copyright, $h_copyright);
         }
+        */
 
         ob_start();
         imagejpeg($two_image, null, 80);
         imagedestroy($image_file);
         imagedestroy($two_image);
 
-        if ($copyright) {
-            imagedestroy($copyright);
-        }
+        //if ($copyright) {
+        //    imagedestroy($copyright);
+        //}
 
         header("Content-Type: image/jpeg");
         header('Content-Disposition: inline; filename=preview.jpg');
