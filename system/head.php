@@ -201,8 +201,7 @@ if ($systemUser->id) {
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
                             AND `cms_mail`.`delete`!='" . $systemUser->id . "'
-                            AND `cms_contact`.`ban`!='1'
-                            AND `cms_mail`.`spam`='0'")->fetchColumn();
+                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
 
     if ($new_mail) {
         $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';

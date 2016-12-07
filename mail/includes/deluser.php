@@ -16,57 +16,35 @@ if ($id) {
     /** @var Johncms\User $systemUser */
     $systemUser = $container->get(Johncms\User::class);
 
-    //Проверяем наличие контакта в Вашем списке
-    $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id'")->fetchColumn();
+    if (isset($_POST['submit'])) {
+        $req = $db->query('SELECT * FROM `cms_mail` WHERE ((`user_id` = ' . $id . ' AND `from_id` = ' . $systemUser->id . ') OR (`user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ')) AND `delete` != ' . $systemUser->id);
 
-    if ($total) {
-        if (isset($_POST['submit'])) { //Если кнопка "Удалить" нажата
-            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='$id')) AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
-
-            if ($count_message) {
-                $req = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='" . $systemUser->id . "') OR (`cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='" . $systemUser->id . "' LIMIT " . $count_message);
-
-                while ($row = $req->fetch()) {
-                    //Удаляем сообщения
-                    if ($row['delete']) {
-                        //Удаляем файлы
-                        if ($row['file_name']) {
-                            if (file_exists('../files/mail/' . $row['file_name']) !== false) {
-                                @unlink('../files/mail/' . $row['file_name']);
-                            }
-                        }
-
-                        $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
-                    } else {
-                        if ($row['read'] == 0 && $row['user_id'] == $systemUser->id) {
-                            if ($row['file_name']) {
-                                if (file_exists('../files/mail/' . $row['file_name']) !== false) {
-                                    @unlink('../files/mail/' . $row['file_name']);
-                                }
-                            }
-                            $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
-                        } else {
-                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $systemUser->id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
-                        }
-                    }
+        while ($row = $req->fetch()) {
+            //Удаляем сообщения
+            if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $systemUser->id)) {
+                //Удаляем файлы
+                if (!empty($row['file_name']) && file_exists('../files/mail/' . $row['file_name'])) {
+                    @unlink('../files/mail/' . $row['file_name']);
                 }
-            }
 
-            //Удаляем контакт
-            $db->exec("DELETE FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id' LIMIT 1");
-            echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
-        } else {
-            echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>
+                $db->exec('DELETE FROM `cms_mail` WHERE `id` = ' . $row['id']);
+            } else {
+                $db->exec('UPDATE `cms_mail` SET `delete` = ' . $systemUser->id . ' WHERE `id` = ' . $row['id']);
+            }
+        }
+
+        //Удаляем контакт
+        $db->exec('DELETE FROM `cms_contact` WHERE `user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ' LIMIT 1');
+        echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
+    } else {
+        echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>
 			<div class="rmenu">
 			<form action="index.php?act=deluser&amp;id=' . $id . '" method="post">
 			<p>' . _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?') . '</p>
 			<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>
 			</form>
 			</div>';
-            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
-        }
-    } else {
-        echo '<div class="rmenu"><p>' . _t('Contact does not exist') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
     }
 } else {
     echo '<div class="rmenu"><p>' . _t('Contact for removal isn\'t chosen') . '</p></div>';
