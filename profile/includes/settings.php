@@ -32,7 +32,7 @@ $config = $container->get(Johncms\Config::class);
 
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
-    //($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
+    ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
     //($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
 ];
 
@@ -61,57 +61,59 @@ switch ($mod) {
 //            '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
 //            '<div class="phdr">&#160;</div>';
 //        break;
-//
-//    case 'forum':
-//        // Настройки Форума
-//        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
-//            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-//        $set_forum = [];
-//        $set_forum = unserialize($systemUser->set_forum);
-//
-//        if (isset($_POST['submit'])) {
-//            $set_forum['farea'] = isset($_POST['farea']);
-//            $set_forum['upfp'] = isset($_POST['upfp']);
-//            $set_forum['preview'] = isset($_POST['preview']);
-//            $set_forum['postclip'] = isset($_POST['postclip']) ? intval($_POST['postclip']) : 1;
-//
-//            if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2) {
-//                $set_forum['postclip'] = 1;
-//            }
-//
-//            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
-//                serialize($set_forum),
-//                $systemUser->id,
-//            ]);
-//
-//            echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
-//        }
-//
-//        if (isset($_GET['reset']) || empty($set_forum)) {
-//            $set_forum = [];
-//            $set_forum['farea'] = 0;
-//            $set_forum['upfp'] = 0;
-//            $set_forum['preview'] = 1;
-//            $set_forum['postclip'] = 1;
-//            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
-//                serialize($set_forum),
-//                $systemUser->id,
-//            ]);
-//            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
-//        }
-//
-//        echo '<form action="?act=settings&amp;mod=forum" method="post">' .
-//            '<div class="menu"><p><h3>' . _t('Basic settings') . '</h3>' .
-//            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br>' .
-//            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br>' .
-//            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br>' .
-//            '</p><p><h3>' . _t('Attach first post') . '</h3>' .
-//            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
-//            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
-//            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
-//            '</p><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-//            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _t('Reset settings') . '</a></div>';
-//        break;
+
+    case 'forum':
+        // Настройки Форума
+        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Forum') . '</div>' .
+            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
+        $set_forum = [];
+        $set_forum = unserialize($systemUser->set_forum);
+
+        if (isset($_POST['submit'])) {
+            $set_forum['farea'] = isset($_POST['farea']);
+            $set_forum['upfp'] = isset($_POST['upfp']);
+            $set_forum['preview'] = isset($_POST['preview']);
+            $set_forum['postclip'] = isset($_POST['postclip']) ? intval($_POST['postclip']) : 1;
+
+            if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2) {
+                $set_forum['postclip'] = 1;
+            }
+
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
+                serialize($set_forum),
+                $systemUser->id,
+            ]);
+
+            echo '<div class="gmenu">' . _t('Settings saved successfully') . '</div>';
+        }
+
+        if (isset($_GET['reset']) || empty($set_forum)) {
+            $set_forum = [];
+            $set_forum['farea'] = 0;
+            $set_forum['upfp'] = 0;
+            $set_forum['preview'] = 1;
+            $set_forum['postclip'] = 1;
+
+            $db->prepare('UPDATE `users` SET `set_forum` = ? WHERE `id` = ?')->execute([
+                serialize($set_forum),
+                $systemUser->id,
+            ]);
+
+            echo '<div class="rmenu">' . _t('Default settings are set') . '</div>';
+        }
+
+        echo '<form action="?act=settings&amp;mod=forum" method="post">' .
+            '<div class="menu"><p><h3>' . _t('Basic settings') . '</h3>' .
+            '<input name="upfp" type="checkbox" value="1" ' . ($set_forum['upfp'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Inverse sorting') . '<br>' .
+            '<input name="farea" type="checkbox" value="1" ' . ($set_forum['farea'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Use the form of a quick answer') . '<br>' .
+            '<input name="preview" type="checkbox" value="1" ' . ($set_forum['preview'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Preview of messages') . '<br>' .
+            '</p><p><h3>' . _t('Attach first post') . '</h3>' .
+            '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
+            '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
+            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
+            '</p><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+            '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _t('Reset settings') . '</a></div>';
+        break;
 
     default:
         echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('General setting') . '</div>' .
