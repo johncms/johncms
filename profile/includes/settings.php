@@ -33,34 +33,33 @@ $config = $container->get(Johncms\Config::class);
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
     ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
-    //($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
+    ($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
 ];
 
 // Пользовательские настройки
 switch ($mod) {
-//    case 'mail':
-//        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
-//            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-//
-//        $set_mail_user = unserialize($systemUser->set_mail);
-//
-//        if (isset($_POST['submit'])) {
-//            $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
-//            $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
-//                serialize($set_mail_user),
-//                $systemUser->id,
-//            ]);
-//        }
-//
-//        echo '<form method="post" action="?act=settings&amp;mod=mail">' .
-//            '<div class="menu">' .
-//            '<strong>' . _t('Who can write you?') . '</strong><br />' .
-//            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
-//            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') . '<br />' .
-//            '<input type="radio" value="2" name="access" ' . ($set_mail_user['access'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my friends') .
-//            '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
-//            '<div class="phdr">&#160;</div>';
-//        break;
+    case 'mail':
+        echo '<div class="phdr"><b>' . _t('Settings') . '</b> | ' . _t('Mail') . '</div>' .
+            '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
+
+        $set_mail_user = unserialize($systemUser->set_mail);
+
+        if (isset($_POST['submit'])) {
+            $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
+            $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
+                serialize($set_mail_user),
+                $systemUser->id,
+            ]);
+        }
+
+        echo '<form method="post" action="?act=settings&amp;mod=mail">' .
+            '<div class="menu">' .
+            '<strong>' . _t('Who can write you?') . '</strong><br />' .
+            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
+            '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') .
+            '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
+            '<div class="phdr">&#160;</div>';
+        break;
 
     case 'forum':
         // Настройки Форума

@@ -29,8 +29,8 @@ if ($systemUser->rights >= 7) {
     }
 }
 
-echo '<li><span class="gray">' . _t('Registered') . ':</span> ' . date("d.m.Y",
-        $user['datereg']) . '</li>';
+echo '<li><span class="gray">' . _t('Registered') . ':</span> ' . date("d.m.Y", $user['datereg']) . '</li>';
+echo '<li><span class="gray">' . ($user['sex'] == 'm' ? _t('He stay on the site') : _t('She stay on the site')) . ':</span> ' . $tools->timecount($user['total_on_site']) . '</li>';
 $lastvisit = time() > $user['lastdate'] + 300 ? date("d.m.Y (H:i)", $user['lastdate']) : false;
 
 if ($lastvisit) {
@@ -66,9 +66,12 @@ echo '<td></td></tr>';
 
 foreach ($query as $key => $val) {
     echo '<tr>';
+
     foreach ($num as $achieve) {
         echo '<td align="center">' . $tools->image(($user[$key] >= $achieve ? 'green' : 'red') . '.gif') . '</td>';
     }
+
     echo '<td><small><b>' . $val . '</b></small></td></tr>';
 }
+
 echo '</table></p></div><div class="phdr"><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></div>';
