@@ -43,7 +43,8 @@ if ($res_down['type'] == 3) {
 }
 
 echo '<div class="phdr">' . Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]) . '</div>';
-$format_file = array_pop(explode('.', $res_down['name']));
+$format = explode('.', $res_down['name']);
+$format_file = array_pop($format);
 
 // Получаем список скриншотов
 $text_info = '';

@@ -125,7 +125,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                                 'image/gif',
                                 'image/png',
                             ];
-                            $handle->file_max_size = 1024 * App::cfg()->sys->filesize;
+                            $handle->file_max_size = 1024 * $config->flsz;
                             $handle->file_overwrite = true;
 
                             if ($set_down['screen_resize']) {

@@ -11,6 +11,9 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     require '../system/head.php';
 
@@ -117,7 +120,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                         'image/gif',
                         'image/png',
                     ];
-                    $handle->file_max_size = 1024 * App::cfg()->sys->filesize;
+                    $handle->file_max_size = 1024 * $config->flsz;
                     $handle->file_overwrite = true;
 
                     if ($set_down['screen_resize']) {
