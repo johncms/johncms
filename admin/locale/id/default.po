@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-11-16 22:26+0400\n"
-"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"PO-Revision-Date: 2016-12-07 11:02-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -1302,19 +1302,19 @@ msgstr ""
 
 #: includes/usr_adm.php:51
 msgid "Moderators"
-msgstr ""
+msgstr "Moderator"
 
 #: includes/usr_clean.php:22 index.php:80
 msgid "Database cleanup"
-msgstr ""
+msgstr "Pembersihan basis data"
 
 #: includes/usr_clean.php:65
 msgid "Inactive profiles deleted"
-msgstr ""
+msgstr "Profil nonaktif dihapus"
 
 #: includes/usr_clean.php:77
 msgid "Inactive profiles"
-msgstr ""
+msgstr "Profil nonaktif"
 
 #: includes/usr_clean.php:78
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
@@ -1326,15 +1326,15 @@ msgstr ""
 
 #: includes/usr_del.php:39
 msgid "User does not exists"
-msgstr ""
+msgstr "Pengguna tidak ada"
 
 #: includes/usr_del.php:64
 msgid "Delete user"
-msgstr ""
+msgstr "Hapus pengguna"
 
 #: includes/usr_del.php:113
 msgid "Cleaning activities"
-msgstr ""
+msgstr "Aktivitas pembersihan"
 
 #: includes/usr_del.php:121
 msgid "All threads and posts created by the user go in the hidden state"
@@ -1342,41 +1342,41 @@ msgstr ""
 
 #: includes/usr_del.php:124
 msgid "Are you sure that you want to delete this user?"
-msgstr ""
+msgstr "Apakah Anda yakin ingin menghapus pengguna ini?"
 
 #: index.php:75
 msgid "On registration"
-msgstr ""
+msgstr "Pada pendaftaran"
 
 #: index.php:82
 msgid "Antiflood"
-msgstr ""
+msgstr "Antiflood"
 
 #: index.php:85
 msgid "Search by Nickname"
-msgstr ""
+msgstr "Cari berdasar nama pengguna"
 
 #: index.php:94
 msgid "Modules"
-msgstr ""
+msgstr "Modul"
 
 #: index.php:96
 msgid "News"
-msgstr ""
+msgstr "Berita"
 
 #: index.php:107
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: index.php:110
 msgid "Update Smilies"
-msgstr ""
+msgstr "Perbarui Smile"
 
 #: index.php:111
 msgid "Language Settings"
-msgstr ""
+msgstr "Pengaturan bahasa"
 
 #: index.php:118
 msgid "Security"
-msgstr ""
+msgstr "Keamanan"
 

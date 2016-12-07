@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"PO-Revision-Date: 2016-12-07 11:15-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: index.php:23 index.php:42 index.php:197
 msgid "Registration"
-msgstr "Registrasi"
+msgstr "Pendaftaran"
 
 #: index.php:29
 msgid "Registration is temporarily closed"
@@ -49,7 +49,7 @@ msgstr "Panjang tidak valid"
 
 #: index.php:71
 msgid "You have not selected genger"
-msgstr "Ands belum memilih jenis kelamin"
+msgstr "Anda belum memilih jenis kelamin"
 
 #: index.php:80
 msgid "The security code is not correct"
@@ -61,7 +61,7 @@ msgstr "Nama pengguna sudah digunakan"
 
 #: index.php:142
 msgid "Your registratiton data"
-msgstr "Data diri Anda"
+msgstr "Data pendaftaran Anda"
 
 #: index.php:143
 msgid "Your ID"
@@ -77,7 +77,7 @@ msgstr "Kata Sandi"
 
 #: index.php:148
 msgid "Please, wait until a moderator approves your registration"
-msgstr "Mohon tunggu sampai Moderator menerima Registrasi Anda"
+msgstr "Mohon tunggu hingga Moderator menerima Pendaftaran Anda"
 
 #: index.php:152
 msgid "Enter"
@@ -85,7 +85,7 @@ msgstr "Masuk"
 
 #: index.php:163
 msgid "You can get authorized on the site after confirmation of your registration."
-msgstr "Anda bisa masuk setelah Registrasi Anda dikonfirmasi."
+msgstr "Anda bisa masuk setelah Pendaftaran Anda dikonfirmasi."
 
 #: index.php:167
 msgid "Choose Nickname"
@@ -137,9 +137,9 @@ msgstr "Kode verifikasi"
 
 #: index.php:196
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr "Jika gambar verifikasi tidak tampil, aktifkan gambar di browser dan muat ulang halaman ini"
+msgstr "Jika gambar verifikasi tidak tampil, aktifkan fitur gambar di browser dan muat ulang halaman ini"
 
 #: index.php:198
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
-msgstr "Mohon, tidak menggunakan nama seperti 111, shhhh, uuuu, dll dan mendaftar dengan server proksi. Jika seperti itu akun akan dihapus"
+msgstr "Mohon, tidak menggunakan nama seperti 111, shhhh, uuuu, dll dan mendaftar dengan server proxy atau akun akan dihapus"
 

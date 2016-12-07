@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-11-15 19:18+0400\n"
-"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"PO-Revision-Date: 2016-12-07 11:15-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Riwayat"
 
 #: includes/online.php:29
 msgid "Guests"
-msgstr "Tamu"
+msgstr "Pengunjung"
 
 #: includes/online.php:30
 msgid "IP Activity"
@@ -131,7 +131,7 @@ msgstr "Hanya untuk pengguna"
 
 #: index.php:66
 msgid "Look for the User"
-msgstr ""
+msgstr "Carilah pengguna"
 
 #: index.php:68 search.php:29
 msgid "Search"
@@ -139,7 +139,7 @@ msgstr "Cari"
 
 #: index.php:69
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr "Pencarian dengan kata kunci nama pengguna dan tidak sensitif."
+msgstr "Pencarian berdasarkan nama pengguna dan huruf tidak sensitif."
 
 #: index.php:74
 msgid "Photo Albums"
@@ -167,7 +167,7 @@ msgstr "Pencarian Anda tidak ditemukan"
 
 #: search.php:88
 msgid "Search by Nickname are case insensitive. For example <strong>UsEr</strong> and <strong>user</strong> are identical."
-msgstr "Pencarian nama pengguna tidak sensitif. Misal <strong>AditYa</strong> dan <strong>aditya</strong> hasil akan sama."
+msgstr "Pencarian nama pengguna huruf tidak sensitif. Misal <strong>AditYa</strong> dan <strong>aditya</strong> hasilnya akan sama."
 
 #: search.php:91
 msgid "New search"

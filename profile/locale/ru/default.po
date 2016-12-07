@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-07 06:51-0500\n"
+"PO-Revision-Date: 2016-12-07 11:02-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgid "The list is empty"
 msgstr "Список пуст"
 
 #: includes/activity.php:61 includes/activity.php:96 includes/ban.php:161
-#: includes/settings.php:35 includes/settings.php:67 includes/stat.php:42
+#: includes/settings.php:35 includes/settings.php:66 includes/stat.php:42
 #: includes/stat.php:55
 msgid "Forum"
 msgstr "Форум"
@@ -186,7 +186,7 @@ msgstr "Отменить бан"
 
 #: includes/ban.php:226 includes/ban.php:262 includes/edit.php:35
 #: includes/info.php:51 includes/karma.php:61 includes/karma.php:116
-#: includes/stat.php:74 skl.php:96
+#: includes/stat.php:77 skl.php:96
 msgid "Back"
 msgstr "Назад"
 
@@ -273,7 +273,7 @@ msgstr "Редактировать анкету"
 msgid "You cannot edit profile of higher administration"
 msgstr "Вы не можете редактировать анкету старшего Вас по должности"
 
-#: includes/edit.php:35 includes/settings.php:102 includes/settings.php:184
+#: includes/edit.php:35 includes/settings.php:101 includes/settings.php:183
 msgid "Default settings are set"
 msgstr "Установлены настройки по умолчанию"
 
@@ -452,8 +452,8 @@ msgstr "Администратор"
 msgid "Supervisor"
 msgstr "Супервайзор"
 
-#: includes/edit.php:255 includes/password.php:91 includes/settings.php:114
-#: includes/settings.php:228
+#: includes/edit.php:255 includes/password.php:91 includes/settings.php:60
+#: includes/settings.php:113 includes/settings.php:227
 msgid "Save"
 msgstr "Сохранить"
 
@@ -662,8 +662,8 @@ msgstr "Написать"
 msgid "Blocked"
 msgstr "Заблокированные"
 
-#: includes/office.php:97 includes/settings.php:5 includes/settings.php:67
-#: includes/settings.php:119
+#: includes/office.php:97 includes/settings.php:5 includes/settings.php:42
+#: includes/settings.php:66 includes/settings.php:118
 msgid "Settings"
 msgstr "Настройки"
 
@@ -720,95 +720,111 @@ msgstr "Повторите пароль"
 msgid "For user %s default settings were set."
 msgstr "Для пользователя %s были установлены настройки по умолчанию."
 
-#: includes/settings.php:34 includes/settings.php:119
+#: includes/settings.php:34 includes/settings.php:118
 msgid "General setting"
 msgstr "Общие настройки"
 
-#: includes/settings.php:87 includes/settings.php:179
+#: includes/settings.php:36 includes/settings.php:42
+msgid "Mail"
+msgstr "Почта"
+
+#: includes/settings.php:57
+msgid "Who can write you?"
+msgstr "Кто может писать вам?"
+
+#: includes/settings.php:58
+msgid "All can write"
+msgstr "Могут писать все"
+
+#: includes/settings.php:59
+msgid "Only my contacts"
+msgstr "Только мои контакты"
+
+#: includes/settings.php:86 includes/settings.php:178
 msgid "Settings saved successfully"
 msgstr "Настройки успешно сохранены"
 
-#: includes/settings.php:106
+#: includes/settings.php:105
 msgid "Basic settings"
 msgstr "Основные настройки"
 
-#: includes/settings.php:107
+#: includes/settings.php:106
 msgid "Inverse sorting"
 msgstr "Обратная сортировка"
 
-#: includes/settings.php:108
+#: includes/settings.php:107
 msgid "Use the form of a quick answer"
 msgstr "Использовать форму быстрого ответа"
 
-#: includes/settings.php:109
+#: includes/settings.php:108
 msgid "Preview of messages"
 msgstr "Предварительный просмотр сообщений"
 
-#: includes/settings.php:110
+#: includes/settings.php:109
 msgid "Attach first post"
 msgstr "Прикрепить первый пост"
 
-#: includes/settings.php:111
+#: includes/settings.php:110
 msgid "Always"
 msgstr "Всегда"
 
-#: includes/settings.php:112
+#: includes/settings.php:111
 msgid "In unread topics"
 msgstr "В непрочитанных темах"
 
-#: includes/settings.php:113
+#: includes/settings.php:112
 msgid "Never"
 msgstr "Никогда"
 
-#: includes/settings.php:115
+#: includes/settings.php:114
 msgid "Reset settings"
 msgstr "Сброс настроек"
 
-#: includes/settings.php:189
+#: includes/settings.php:188
 msgid "Time settings"
 msgstr "Настройки времени"
 
-#: includes/settings.php:190
+#: includes/settings.php:189
 msgid "Shift of time"
 msgstr "Сдвиг времени"
 
-#: includes/settings.php:192
+#: includes/settings.php:191
 msgid "System time"
 msgstr "Системное время"
 
-#: includes/settings.php:193
+#: includes/settings.php:192
 msgid "System Functions"
 msgstr "Системные функции"
 
-#: includes/settings.php:194
+#: includes/settings.php:193
 msgid "Direct URL"
 msgstr "Прямые ссылки"
 
-#: includes/settings.php:195
+#: includes/settings.php:194
 msgid "Text entering"
 msgstr "Ввод текста"
 
-#: includes/settings.php:196
+#: includes/settings.php:195
 msgid "Height of field"
 msgstr "Высота поля"
 
-#: includes/settings.php:198
+#: includes/settings.php:197
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: includes/settings.php:199
+#: includes/settings.php:198
 msgid "Size of Lists"
 msgstr "Размер списков"
 
-#: includes/settings.php:215
+#: includes/settings.php:214
 msgid "Select Language"
 msgstr "Выбрать Язык"
 
-#: includes/settings.php:221
+#: includes/settings.php:220
 msgid "Site Default"
 msgstr "По умолчанию"
 
-#: includes/settings.php:229
+#: includes/settings.php:228
 msgid "Reset Settings"
 msgstr "Сбросить настройки"
 
@@ -831,6 +847,14 @@ msgstr "Свободная регистрация"
 #: includes/stat.php:32
 msgid "Registered"
 msgstr "Дата регистрации"
+
+#: includes/stat.php:33
+msgid "He stay on the site"
+msgstr "Пробыл на сайте"
+
+#: includes/stat.php:33
+msgid "She stay on the site"
+msgstr "Пробыла на сайте"
 
 #: includes/stat.php:37
 msgid "Last visit"
