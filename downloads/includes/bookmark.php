@@ -21,6 +21,7 @@ require '../system/head.php';
 
 if (!$systemUser->isValid()) {
     echo _t('For registered users only');
+    require '../system/end.php';
     exit;
 }
 

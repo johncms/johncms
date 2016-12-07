@@ -37,7 +37,6 @@ $set_down =
         'mod'           => 1,
         'theme_screen'  => 1,
         'top'           => 25,
-        'icon_java'     => 1,
         'video_screen'  => 1,
         'screen_resize' => 1,
     ];
