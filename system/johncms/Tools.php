@@ -123,10 +123,10 @@ class Tools
 
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {
-                return _t('Today') . ', ' . date("H:i", $var + $shift);
+                return _t('Today', 'system') . ', ' . date("H:i", $var + $shift);
             }
             if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
-                return _t('Yesterday') . ', ' . date("H:i", $var + $shift);
+                return _t('Yesterday', 'system') . ', ' . date("H:i", $var + $shift);
             }
         }
 
