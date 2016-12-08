@@ -11,12 +11,15 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
+require '../system/head.php';
+
 // Перенос файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
+    require '../system/end.php';
     exit;
 }
 
@@ -40,6 +43,7 @@ if ($systemUser->rights > 6) {
             if ($catId) {
                 if ($catId == $res_down['refid']) {
                     echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
+                    require '../system/end.php';
                     exit;
                 }
 
@@ -98,8 +102,7 @@ if ($systemUser->rights > 6) {
             if ($totalCat > 0) {
                 while ($resCat = $queryCat->fetch()) {
                     echo ($i++ % 2) ? '<div class="list2">' : '<div class="list1">';
-                    echo Functions::loadModuleImage('folder.png') . '&#160;' .
-                        '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '">' . htmlspecialchars($resCat['rus_name']) . '</a>';
+                    echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '">' . htmlspecialchars($resCat['rus_name']) . '</a>';
 
                     if ($resCat['id'] != $res_down['refid']) {
                         echo '<br><small><a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $resCat['id'] . '&amp;do=transfer">' . _t('Move to this folder') . '</a></small>';
@@ -120,3 +123,5 @@ if ($systemUser->rights > 6) {
 
     echo '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
 }
+
+require '../system/end.php';
