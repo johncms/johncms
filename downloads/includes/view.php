@@ -142,17 +142,18 @@ if (!empty($screen)) {
 // Выводим данные
 $user = $db->query("SELECT `name`, `id` FROM `users` WHERE `id` = " . $res_down['user_id'])->fetch();
 echo '<div class="list1">'
-    . '<h3>' . $res_down['rus_name'] . '</h3>'
-    . '<small>'
+    . '<p><h3>' . $res_down['rus_name'] . '</h3></p>'
     . '<span class="gray">' . _t('File name') . ':</span> ' . $res_down['name'] . '<br>'
     . '<span class="gray">' . _t('Uploaded by') . ':</span> ' . $user['name'] . '<br>' . $text_info
-    . '<span class="gray">' . _t('Downloads') . ':</span> ' . $res_down['field'] . '<br>';
+    . '<span class="gray">' . _t('Downloads') . ':</span> ' . $res_down['field'];
 
-if ($res_down['about']) {
-    echo '<b>' . _t('Description') . ':</b> ' . htmlspecialchars($res_down['about']);
+echo '</div>';
+
+if (!empty($res_down['about'])) {
+    echo '<div class="topmenu" style="font-size: small">' . $tools->checkout($res_down['about'],1 ,1) . '</div>';
 }
 
-echo '</small><p>';
+echo '<div class="list1"><p>';
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
@@ -179,34 +180,6 @@ if (!isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
 
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
     '<img src="rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
-
-// Скачка изображения в особом размере
-//if ($format_file == 'jpg' || $format_file == 'jpeg' || $format_file == 'gif' || $format_file == 'png') {
-//    $array = ['240x320', '320x240', '320x480', '480x360', '360x640', '480x800', '768x1024', '640x960', '1280x800'];
-//    echo '<div class="sub"></div>' .
-//        '<form action="?" method="get">' .
-//        '<input name="id" type="hidden" value="' . $id . '" />' .
-//        '<input name="act" type="hidden" value="custom_size" />' .
-//        _t('Custom size') . ': ' . '<select name="img_size">';
-//    $img = 0;
-//
-//    foreach ($array as $v) {
-//        echo '<option value="' . $img . '">' . $v . '</option>';
-//        ++$img;
-//    }
-//
-//    echo '</select><br>' .
-//        _t('Quality') . ': <select name="val">' .
-//        '<option value="100">100</option>' .
-//        '<option value="90">90</option>' .
-//        '<option value="80">80</option>' .
-//        '<option value="70">70</option>' .
-//        '<option value="60">60</option>' .
-//        '<option value="50">50</option>' .
-//        '</select><br>' .
-//        '<input name="proportion" type="checkbox" value="1" />&nbsp;' . _t('Keep aspect ratio') . '<br>' .
-//        '<input type="submit" value="' . _t('Download') . '" /></form>';
-//}
 
 if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
