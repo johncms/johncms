@@ -207,15 +207,6 @@ class Download
         }
 
         $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate($array['res']['time']);
-
-        if ($array['format'] == 'txt') {
-            $out .= ', <a href="?act=txt_in_zip&amp;id=' . $id . $morelink . '">ZIP</a> / <a href="?act=txt_in_jar&amp;id=' . $id . $morelink . '">JAR</a>';
-        } else {
-            if ($array['format'] == 'zip') {
-                $out .= ', <a href="?act=open_zip&amp;id=' . $id . $morelink . '">' . _t('Open Archive') . '</a>';
-            }
-        }
-
         $out .= '</div></td></tr></table>';
 
         return $out;

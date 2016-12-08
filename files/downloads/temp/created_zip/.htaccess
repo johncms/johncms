@@ -1,5 +1,0 @@
-deny from all
-<Files ~ "\.zip$">
-Order deny,allow
-allow from All
-</Files>

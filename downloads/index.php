@@ -114,7 +114,6 @@ $actions = [
     'mod_files'       => 'files_moderation.php',
     'mp3tags'         => 'fileControl/mp3tags.php',
     'new_files'       => 'files_new.php',
-    'open_zip'        => 'fileControl/open_zip.php',
     'recount'         => 'recount.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
@@ -123,8 +122,6 @@ $actions = [
     'top_files'       => 'files_top.php',
     'top_users'       => 'top_users.php',
     'transfer_file'   => 'fileControl/transfer_file.php',
-    'txt_in_jar'      => 'fileControl/txt_in_jar.php',
-    'txt_in_zip'      => 'fileControl/txt_in_zip.php',
     'user_files'      => 'files_user.php',
     'view'            => 'view.php',
 ];
