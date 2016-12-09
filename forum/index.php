@@ -820,7 +820,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Закрыть - открыть тему
                     if ($type1['edit'] == 1) {
-                        echo '<a href="index.php?act=close&amp;id=' . $id . '">' . _t('New Topic') . '</a><br>';
+                        echo '<a href="index.php?act=close&amp;id=' . $id . '">' . _t('Open Topic') . '</a><br>';
                     } else {
                         echo '<a href="index.php?act=close&amp;id=' . $id . '&amp;closed">' . _t('Close Topic') . '</a><br>';
                     }

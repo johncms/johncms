@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-11-15 19:15+0400\n"
-"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"POT-Creation-Date: 2016-12-09 23:09+0400\n"
+"PO-Revision-Date: 2016-12-09 14:13-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -448,7 +448,7 @@ msgstr "Тема с таким названием уже есть в этом р
 msgid "Message already exists"
 msgstr "Такое сообщение уже было"
 
-#: includes/nt.php:231 index.php:336 index.php:823
+#: includes/nt.php:231 index.php:336
 msgid "New Topic"
 msgstr "Новая тема"
 
@@ -735,6 +735,10 @@ msgstr "Удалить опрос"
 #: index.php:818
 msgid "Add Poll"
 msgstr "Добавить опрос"
+
+#: index.php:823
+msgid "Open Topic"
+msgstr "Открыть тему"
 
 #: index.php:825
 msgid "Close Topic"
