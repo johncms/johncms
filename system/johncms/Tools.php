@@ -580,7 +580,7 @@ class Tools
         $day = ceil($var / 86400);
 
         return $var >= 86400
-            ? $day . ' ' . _p('Day', 'Days', $day)
+            ? $day . ' ' . _p('Day', 'Days', $day, 'system')
             : date("G:i:s", mktime(0, 0, $var));
     }
 

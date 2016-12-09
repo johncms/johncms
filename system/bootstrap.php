@@ -147,9 +147,10 @@ function _t($message, $textDomain = 'default')
  * @param string $singular
  * @param string $plural
  * @param int $number
+ * @param string $textDomain
  * @return string
  */
-function _p($singular, $plural, $number)
+function _p($singular, $plural, $number, $textDomain = 'default')
 {
     /** @var Zend\I18n\Translator\Translator $translator */
     static $translator;
@@ -158,7 +159,7 @@ function _p($singular, $plural, $number)
         $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
     }
 
-    return $translator->translatePlural($singular, $plural, $number);
+    return $translator->translatePlural($singular, $plural, $number, $textDomain);
 }
 
 $kmess = $userConfig->kmess;
