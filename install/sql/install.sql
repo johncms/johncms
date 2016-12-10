@@ -23,7 +23,7 @@ CREATE TABLE `cms_ads` (
   PRIMARY KEY (`id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_cat`
@@ -42,7 +42,7 @@ CREATE TABLE `cms_album_cat` (
   KEY `access` (`access`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_comments`
@@ -61,7 +61,7 @@ CREATE TABLE `cms_album_comments` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_downloads`
@@ -74,7 +74,7 @@ CREATE TABLE `cms_album_downloads` (
   PRIMARY KEY (`user_id`, `file_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_files`
@@ -102,7 +102,7 @@ CREATE TABLE `cms_album_files` (
   KEY `access` (`access`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_views`
@@ -115,7 +115,7 @@ CREATE TABLE `cms_album_views` (
   PRIMARY KEY (`user_id`, `file_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_album_votes`
@@ -131,7 +131,7 @@ CREATE TABLE `cms_album_votes` (
   KEY `file_id` (`file_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_ban_ip`
@@ -142,16 +142,16 @@ CREATE TABLE `cms_ban_ip` (
   `ip1`      BIGINT(11)       NOT NULL DEFAULT '0',
   `ip2`      BIGINT(11)       NOT NULL DEFAULT '0',
   `ban_type` TINYINT(4)       NOT NULL DEFAULT '0',
-  `link`     VARCHAR(100)     NOT NULL,
-  `who`      VARCHAR(25)      NOT NULL,
+  `link`     VARCHAR(100)     NOT NULL DEFAULT '',
+  `who`      VARCHAR(25)      NOT NULL DEFAULT '',
   `reason`   TEXT             NOT NULL,
-  `date`     INT(11)          NOT NULL,
+  `date`     INT(11)          NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ip1` (`ip1`),
   UNIQUE KEY `ip2` (`ip2`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_ban_users`
@@ -172,7 +172,7 @@ CREATE TABLE `cms_ban_users` (
   KEY `ban_time` (`ban_time`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_contact`
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `cms_contact` (
   KEY `ban` (`ban`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_counters`
@@ -202,7 +202,7 @@ DROP TABLE IF EXISTS `cms_counters`;
 CREATE TABLE `cms_counters` (
   `id`     INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sort`   INT(10)          NOT NULL DEFAULT '1',
-  `name`   VARCHAR(30)      NOT NULL,
+  `name`   VARCHAR(30)      NOT NULL DEFAULT '',
   `link1`  TEXT             NOT NULL,
   `link2`  TEXT             NOT NULL,
   `mode`   TINYINT(4)       NOT NULL DEFAULT '1',
@@ -210,7 +210,7 @@ CREATE TABLE `cms_counters` (
   PRIMARY KEY (`id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_forum_files`
@@ -234,7 +234,7 @@ CREATE TABLE `cms_forum_files` (
   KEY `post` (`post`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_forum_rdm`
@@ -248,7 +248,7 @@ CREATE TABLE `cms_forum_rdm` (
   KEY `time` (`time`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_forum_vote`
@@ -266,7 +266,7 @@ CREATE TABLE `cms_forum_vote` (
   KEY `topic` (`topic`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_forum_vote_users`
@@ -281,7 +281,7 @@ CREATE TABLE `cms_forum_vote_users` (
   KEY `topic` (`topic`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_mail`
@@ -310,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `cms_mail` (
   KEY `delete` (`delete`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_sessions`
@@ -331,7 +331,7 @@ CREATE TABLE `cms_sessions` (
   KEY `place` (`place`(10))
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_users_data`
@@ -347,7 +347,7 @@ CREATE TABLE `cms_users_data` (
   KEY `key` (`key`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_users_guestbook`
@@ -366,7 +366,7 @@ CREATE TABLE `cms_users_guestbook` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_users_iphistory`
@@ -383,7 +383,7 @@ CREATE TABLE `cms_users_iphistory` (
   KEY `user_ip` (`ip`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `download__bookmark`
@@ -398,8 +398,7 @@ CREATE TABLE `download__bookmark` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8
-  AUTO_INCREMENT = 1;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `download__category`
@@ -421,7 +420,7 @@ CREATE TABLE `download__category` (
   KEY `total` (`total`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `download__comments`
@@ -440,8 +439,7 @@ CREATE TABLE `download__comments` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8
-  AUTO_INCREMENT = 1;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `download__files`
@@ -470,7 +468,7 @@ CREATE TABLE `download__files` (
   KEY `time` (`time`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `download__more`
@@ -488,8 +486,7 @@ CREATE TABLE `download__more` (
   KEY `time` (`time`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8
-  AUTO_INCREMENT = 1;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `forum`
@@ -523,7 +520,7 @@ CREATE TABLE `forum` (
   FULLTEXT KEY `text` (`text`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `guest`
@@ -541,7 +538,7 @@ CREATE TABLE `guest` (
   `admin`      VARCHAR(25)         NOT NULL DEFAULT '',
   `otvet`      TEXT                NOT NULL,
   `otime`      INT(10) UNSIGNED    NOT NULL DEFAULT '0',
-  `edit_who`   VARCHAR(20)         NOT NULL DEFAULT '',
+  `edit_who`   VARCHAR(25)         NOT NULL DEFAULT '',
   `edit_time`  INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `edit_count` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -550,7 +547,7 @@ CREATE TABLE `guest` (
   KEY `adm` (`adm`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `karma_users`
@@ -571,7 +568,7 @@ CREATE TABLE `karma_users` (
   KEY `type` (`type`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `library_cats`
@@ -588,7 +585,7 @@ CREATE TABLE `library_cats` (
   PRIMARY KEY (`id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `library_texts`
@@ -598,7 +595,7 @@ CREATE TABLE `library_texts` (
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `cat_id`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `text`        MEDIUMTEXT       NOT NULL,
-  `name`        VARCHAR(255)     NOT NULL DEFAULT '',
+  `name`        VARCHAR(250)     NOT NULL DEFAULT '',
   `announce`    TEXT,
   `uploader`    VARCHAR(100)     NOT NULL DEFAULT '',
   `uploader_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -608,10 +605,11 @@ CREATE TABLE `library_texts` (
   `comm_count`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `time`        INT(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  FULLTEXT KEY `text` (`text`, `name`)
+  FULLTEXT KEY `text` (`text`),
+  KEY `name` (`name`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `library_tags`
@@ -620,13 +618,13 @@ DROP TABLE IF EXISTS `library_tags`;
 CREATE TABLE `library_tags` (
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `lib_text_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `tag_name`    VARCHAR(255)     NOT NULL DEFAULT '',
+  `tag_name`    VARCHAR(250)     NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `lib_text_id` (`lib_text_id`),
   KEY `tag_name` (`tag_name`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_library_comments`
@@ -645,7 +643,7 @@ CREATE TABLE `cms_library_comments` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `cms_library_rating`
@@ -660,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `cms_library_rating` (
   KEY `user_id` (`user_id`, `st_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `news`
@@ -676,7 +674,7 @@ CREATE TABLE `news` (
   PRIMARY KEY (`id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 --
 -- Структура таблицы `users`
@@ -737,4 +735,4 @@ CREATE TABLE `users` (
   KEY `place` (`place`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
