@@ -136,7 +136,7 @@ if ($id) {
 
                         if ($req_t->rowCount()) {
                             $res_t = $req_t->fetch();
-                            $link = '<a href="index.php?id=' . $where[1] . '">' . $res_t['text'] . '</a>';
+                            $link = '<a href="index.php?id=' . $where[1] . '">' . (empty($res_t['text']) ? '-----' : $res_t['text']) . '</a>';
 
                             switch ($res_t['type']) {
                                 case 'f':
@@ -156,7 +156,7 @@ if ($id) {
 
                                     if ($req_m->rowCount()) {
                                         $res_m = $req_m->fetch();
-                                        $place = (isset($where[2]) ? _t('Answers in the Topic') : _t('In the Topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . $res_m['text'] . '</a>&quot;';
+                                        $place = (isset($where[2]) ? _t('Answers in the Topic') : _t('In the Topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . (empty($res_m['text']) ? '-----' : $res_m['text']) . '</a>&quot;';
                                     }
 
                                     break;
