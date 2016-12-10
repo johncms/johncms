@@ -329,9 +329,9 @@ class getid3_id3v2 extends getid3_handler
 					break; // skip rest of ID3v2 header
 				}
 
-				if ($frame_name == 'COM ') {
-					$info['warning'][] = 'error parsing "'.$frame_name.'" ('.$framedataoffset.' bytes into the ID3v2.'.$id3v2_majorversion.' tag). (ERROR: IsValidID3v2FrameName("'.str_replace("\x00", ' ', $frame_name).'", '.$id3v2_majorversion.'))). [Note: this particular error has been known to happen with tags edited by iTunes (versions "X v2.0.3", "v3.0.1" are known-guilty, probably others too)]';
-					$frame_name = 'COMM';
+				if ($iTunesBrokenFrameNameFixed = self::ID3v22iTunesBrokenFrameName($frame_name)) {
+					$info['warning'][] = 'error parsing "'.$frame_name.'" ('.$framedataoffset.' bytes into the ID3v2.'.$id3v2_majorversion.' tag). (ERROR: IsValidID3v2FrameName("'.str_replace("\x00", ' ', $frame_name).'", '.$id3v2_majorversion.'))). [Note: this particular error has been known to happen with tags edited by iTunes (versions "X v2.0.3", "v3.0.1", "v7.0.0.70" are known-guilty, probably others too)]. Translated frame name from "'.str_replace("\x00", ' ', $frame_name).'" to "'.$iTunesBrokenFrameNameFixed.'" for parsing.';
+					$frame_name = $iTunesBrokenFrameNameFixed;
 				}
 				if (($frame_size <= strlen($framedata)) && ($this->IsValidID3v2FrameName($frame_name, $id3v2_majorversion))) {
 
@@ -504,18 +504,27 @@ class getid3_id3v2 extends getid3_handler
 		// ID3v2.2.x, ID3v2.3.x: '(21)' or '(4)Eurodisco' or '(51)(39)' or '(55)((I think...)'
 		// ID3v2.4.x: '21' $00 'Eurodisco' $00
 		$clean_genres = array();
+
+		// hack-fixes for some badly-written ID3v2.3 taggers, while trying not to break correctly-written tags
+		if (($this->getid3->info['id3v2']['majorversion'] == 3) && !preg_match('#[\x00]#', $genrestring)) {
+			// note: MusicBrainz Picard incorrectly stores plaintext genres separated by "/" when writing in ID3v2.3 mode, hack-fix here:
+			// replace / with NULL, then replace back the two ID3v1 genres that legitimately have "/" as part of the single genre name
+			if (preg_match('#/#', $genrestring)) {
+				$genrestring = str_replace('/', "\x00", $genrestring);
+				$genrestring = str_replace('Pop'."\x00".'Funk', 'Pop/Funk', $genrestring);
+				$genrestring = str_replace('Rock'."\x00".'Rock', 'Folk/Rock', $genrestring);
+			}
+
+			// some other taggers separate multiple genres with semicolon, e.g. "Heavy Metal;Thrash Metal;Metal"
+			if (preg_match('#;#', $genrestring)) {
+				$genrestring = str_replace(';', "\x00", $genrestring);
+			}
+		}
+
+
 		if (strpos($genrestring, "\x00") === false) {
 			$genrestring = preg_replace('#\(([0-9]{1,3})\)#', '$1'."\x00", $genrestring);
 		}
-
-		// note: MusicBrainz Picard incorrectly stores plaintext genres separated by "/" when writing in ID3v2.3 mode, hack-fix here:
-		// replace / with NULL, then replace back the two ID3v1 genres that legitimately have "/" as part of the single genre name
-		$genrestring = str_replace('/', "\x00", $genrestring);
-		$genrestring = str_replace('Pop'."\x00".'Funk', 'Pop/Funk', $genrestring);
-		$genrestring = str_replace('Rock'."\x00".'Rock', 'Folk/Rock', $genrestring);
-
-		// some other taggers separate multiple genres with semicolon, e.g. "Heavy Metal;Thrash Metal;Metal"
-		$genrestring = str_replace(';', "\x00", $genrestring);
 
 		$genre_elements = explode("\x00", $genrestring);
 		foreach ($genre_elements as $element) {
@@ -1744,7 +1753,7 @@ class getid3_id3v2 extends getid3_handler
 			$parsedFrame['pricepaid']['value']      = substr($frame_pricepaid, 3);
 
 			$parsedFrame['purchasedate'] = substr($parsedFrame['data'], $frame_offset, 8);
-			if (!$this->IsValidDateStampString($parsedFrame['purchasedate'])) {
+			if ($this->IsValidDateStampString($parsedFrame['purchasedate'])) {
 				$parsedFrame['purchasedateunix'] = mktime (0, 0, 0, substr($parsedFrame['purchasedate'], 4, 2), substr($parsedFrame['purchasedate'], 6, 2), substr($parsedFrame['purchasedate'], 0, 4));
 			}
 			$frame_offset += 8;
@@ -3642,6 +3651,91 @@ class getid3_id3v2 extends getid3_handler
 
 	public static function ID3v2HeaderLength($majorversion) {
 		return (($majorversion == 2) ? 6 : 10);
+	}
+
+	public static function ID3v22iTunesBrokenFrameName($frame_name) {
+		// iTunes (multiple versions) has been known to write ID3v2.3 style frames
+		// but use ID3v2.2 frame names, right-padded using either [space] or [null]
+		// to make them fit in the 4-byte frame name space of the ID3v2.3 frame.
+		// This function will detect and translate the corrupt frame name into ID3v2.3 standard.
+		static $ID3v22_iTunes_BrokenFrames = array(
+			'BUF' => 'RBUF', // Recommended buffer size
+			'CNT' => 'PCNT', // Play counter
+			'COM' => 'COMM', // Comments
+			'CRA' => 'AENC', // Audio encryption
+			'EQU' => 'EQUA', // Equalisation
+			'ETC' => 'ETCO', // Event timing codes
+			'GEO' => 'GEOB', // General encapsulated object
+			'IPL' => 'IPLS', // Involved people list
+			'LNK' => 'LINK', // Linked information
+			'MCI' => 'MCDI', // Music CD identifier
+			'MLL' => 'MLLT', // MPEG location lookup table
+			'PIC' => 'APIC', // Attached picture
+			'POP' => 'POPM', // Popularimeter
+			'REV' => 'RVRB', // Reverb
+			'RVA' => 'RVAD', // Relative volume adjustment
+			'SLT' => 'SYLT', // Synchronised lyric/text
+			'STC' => 'SYTC', // Synchronised tempo codes
+			'TAL' => 'TALB', // Album/Movie/Show title
+			'TBP' => 'TBPM', // BPM (beats per minute)
+			'TCM' => 'TCOM', // Composer
+			'TCO' => 'TCON', // Content type
+			'TCP' => 'TCMP', // Part of a compilation
+			'TCR' => 'TCOP', // Copyright message
+			'TDA' => 'TDAT', // Date
+			'TDY' => 'TDLY', // Playlist delay
+			'TEN' => 'TENC', // Encoded by
+			'TFT' => 'TFLT', // File type
+			'TIM' => 'TIME', // Time
+			'TKE' => 'TKEY', // Initial key
+			'TLA' => 'TLAN', // Language(s)
+			'TLE' => 'TLEN', // Length
+			'TMT' => 'TMED', // Media type
+			'TOA' => 'TOPE', // Original artist(s)/performer(s)
+			'TOF' => 'TOFN', // Original filename
+			'TOL' => 'TOLY', // Original lyricist(s)/text writer(s)
+			'TOR' => 'TORY', // Original release year
+			'TOT' => 'TOAL', // Original album/movie/show title
+			'TP1' => 'TPE1', // Lead performer(s)/Soloist(s)
+			'TP2' => 'TPE2', // Band/orchestra/accompaniment
+			'TP3' => 'TPE3', // Conductor/performer refinement
+			'TP4' => 'TPE4', // Interpreted, remixed, or otherwise modified by
+			'TPA' => 'TPOS', // Part of a set
+			'TPB' => 'TPUB', // Publisher
+			'TRC' => 'TSRC', // ISRC (international standard recording code)
+			'TRD' => 'TRDA', // Recording dates
+			'TRK' => 'TRCK', // Track number/Position in set
+			'TS2' => 'TSO2', // Album-Artist sort order
+			'TSA' => 'TSOA', // Album sort order
+			'TSC' => 'TSOC', // Composer sort order
+			'TSI' => 'TSIZ', // Size
+			'TSP' => 'TSOP', // Performer sort order
+			'TSS' => 'TSSE', // Software/Hardware and settings used for encoding
+			'TST' => 'TSOT', // Title sort order
+			'TT1' => 'TIT1', // Content group description
+			'TT2' => 'TIT2', // Title/songname/content description
+			'TT3' => 'TIT3', // Subtitle/Description refinement
+			'TXT' => 'TEXT', // Lyricist/Text writer
+			'TXX' => 'TXXX', // User defined text information frame
+			'TYE' => 'TYER', // Year
+			'UFI' => 'UFID', // Unique file identifier
+			'ULT' => 'USLT', // Unsynchronised lyric/text transcription
+			'WAF' => 'WOAF', // Official audio file webpage
+			'WAR' => 'WOAR', // Official artist/performer webpage
+			'WAS' => 'WOAS', // Official audio source webpage
+			'WCM' => 'WCOM', // Commercial information
+			'WCP' => 'WCOP', // Copyright/Legal information
+			'WPB' => 'WPUB', // Publishers official webpage
+			'WXX' => 'WXXX', // User defined URL link frame
+		);
+		if (strlen($frame_name) == 4) {
+			if ((substr($frame_name, 3, 1) == ' ') || (substr($frame_name, 3, 1) == "\x00")) {
+				if (isset($ID3v22_iTunes_BrokenFrames[substr($frame_name, 0, 3)])) {
+					return $ID3v22_iTunes_BrokenFrames[substr($frame_name, 0, 3)];
+				}
+			}
+		}
+		return false;
 	}
 
 }
