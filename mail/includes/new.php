@@ -22,8 +22,8 @@ $total = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_mail` WHERE `fro
 
 if ($total == 1) {
     //Если все новые сообщения от одного итого же чела показываем сразу переписку
-    $max = $db->query("SELECT `user_id`, count(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `spam`='0' GROUP BY `user_id`")->fetchColumn();
-    header('Location: index.php?act=write&id=' . $max);
+    $res = $db->query("SELECT `user_id` FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`='0' AND `delete` != " . $systemUser->id)->fetch();
+    header('Location: index.php?act=write&id=' . $res['user_id']);
     exit();
 }
 
