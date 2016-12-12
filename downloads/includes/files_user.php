@@ -1,5 +1,15 @@
 <?php
-//TODO: Доработать файл!
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
+
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Interop\Container\ContainerInterface $container */

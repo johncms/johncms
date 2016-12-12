@@ -1,6 +1,6 @@
 <?php
 /*
- * JohnCMS Mobile Content Management System (http://johncms.com)
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
  *
  * For copyright and license information, please see the LICENSE.md
  * Installing the system or redistributions of files must retain the above copyright notice.
