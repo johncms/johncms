@@ -1,8 +1,9 @@
 # JohnCMS 6.2.1  
-`Release Date: under development`
+`Release Date: 15.12.2016 Деда Гришу с днем рожденья :)`
 
 ### Features
   * Папки языков переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+  * Кодировка соединения с MySQL заменена на utf8mb4 (спасибо ramzes за сигнал)
   * Добавлен Киргизский язык
 
 ### Bug Fixes
