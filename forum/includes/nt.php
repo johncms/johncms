@@ -80,7 +80,7 @@ if (!mysql_num_rows($req_r)) {
 $res_r = mysql_fetch_assoc($req_r);
 
 $th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
+    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, array('flag' => FILTER_FLAG_ENCODE_HIGH)), 0, 100)
     : '';
 
 $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';

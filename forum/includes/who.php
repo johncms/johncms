@@ -146,10 +146,10 @@ if ($id) {
                         }
                     }
             }
-            $arg = [
+            $arg = array(
                 'stshide' => 1,
                 'header'  => ('<br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . $place),
-            ];
+            );
             echo functions::display_user($res, $arg);
             echo '</div>';
         }
