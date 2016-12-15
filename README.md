@@ -26,7 +26,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ## System Requirements
 - PHP version is not low than 5.3
-- MySQL version is not low than 5.1
+- MySQL version is not low than 5.5
 - .htaccess support
 
 ## Installation
@@ -61,7 +61,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ## Системные требования
 - Версия PHP не ниже 5.3
-- MySQL версии не ниже 5.1
+- MySQL версии не ниже 5.5
 - Поддержка .htaccess
 
 ## Установка
