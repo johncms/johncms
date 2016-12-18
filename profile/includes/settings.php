@@ -160,7 +160,7 @@ switch ($mod) {
                 $theme_list[] = array_pop(explode('/', dirname($val)));
             }
 
-            //$set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
+            $set_user['skin'] = isset($_POST['skin']) && in_array($_POST['skin'], $theme_list) ? htmlspecialchars(trim($_POST['skin'])) : $config['skindef'];
 
             // Устанавливаем язык
             $lng_select = isset($_POST['iso']) ? trim($_POST['iso']) : false;
@@ -204,20 +204,19 @@ switch ($mod) {
             '</p><p><h3>' . _t('Text entering') . '</h3>' .
             '<input type="text" name="fieldHeight" size="2" maxlength="1" value="' . $userConfig->fieldHeight . '"/> ' . _t('Height of field') . ' (1-9)<br />';
 
-        echo '</p><p><h3>' . _t('Appearance') . '</h3>' .
-            '<input type="text" name="kmess" size="2" maxlength="2" value="' . $userConfig->kmess . '"/> ' . _t('Size of Lists') . ' (5-99)' .
-            '</p>';
-
+        echo '</p><p><h3>' . _t('Appearance') . '</h3>';
         // Выбор темы оформления
-//        echo '<p><h3>' . _t('Theme') . '</h3><select name="skin">';
-//
-//        foreach (glob('../theme/*/*.css') as $val) {
-//            $dir = explode('/', dirname($val));
-//            $theme = array_pop($dir);
-//            echo '<option' . ($userConfig->skin == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
-//        }
-//
-//        echo '</select></p>';
+        echo '<select name="skin">';
+
+        foreach (glob('../theme/*/*.css') as $val) {
+            $dir = explode('/', dirname($val));
+            $theme = array_pop($dir);
+            echo '<option' . ($userConfig->skin == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
+        }
+
+        echo '</select> ' . _t('Theme') . '</p>';
+        echo '<p><input type="text" name="kmess" size="2" maxlength="2" value="' . $userConfig->kmess . '"/> ' . _t('Size of Lists') . ' (5-99)' .
+            '</p>';
 
         // Выбор языка
         if (count($config->lng_list) > 1) {

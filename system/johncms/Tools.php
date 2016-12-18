@@ -420,12 +420,14 @@ class Tools
         return $flag !== false ? '<img src="' . $flag . '" style="margin-right: 8px; vertical-align: middle">' : '';
     }
 
-    //TODO: Доработать!!!
+    /**
+     * @return string
+     */
     public function getSkin()
     {
-        $skin = 'default';
-
-        return $skin;
+        return $this->user->isValid() && !empty($this->userConfig->skin)
+            ? $this->userConfig->skin
+            : $this->config->skindef;
     }
 
     /**
