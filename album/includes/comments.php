@@ -101,5 +101,6 @@ if ($req_obj->rowCount()) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
     }
 } else {
+    require('../system/head.php');
     echo $tools->displayError(_t('Wrong data'));
 }
