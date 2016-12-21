@@ -115,6 +115,8 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
                 echo $tools->displayError($handle->error);
             }
             $handle->clean();
+        } else {
+            echo $tools->displayError(_t('File not selected'));
         }
     } else {
         echo '<form enctype="multipart/form-data" method="post" action="?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' .

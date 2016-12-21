@@ -152,7 +152,7 @@ class Tools
      */
     public function displayError($error = '', $link = '')
     {
-        return '<div class="rmenu"><p><b>' . _t('ERROR') . '!</b><br>'
+        return '<div class="rmenu"><p><b>' . _t('ERROR', 'system') . '!</b><br>'
             . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
             . (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
     }
