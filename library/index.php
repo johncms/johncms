@@ -43,9 +43,18 @@ switch ($do) {
         $tab = 'library_texts';
 }
 
-$hdr = $id > 0 ? htmlentities(mysql_result(mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1"), 0), ENT_QUOTES, 'UTF-8') : '';
-if ($hdr) {
-    $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+if ($id > 0) { 
+    $hdrsql = mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1");
+
+    $hdrres = '';
+    if (mysql_num_rows($hdrsql)) {
+        $hdrres = mysql_result($hdrsql, 0);
+    }
+
+    $hdr = $id > 0 ? htmlentities($hdrres, ENT_QUOTES, 'UTF-8') : '';
+    if ($hdr) {
+        $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+    }
 }
 
 require_once('../incfiles/head.php');
