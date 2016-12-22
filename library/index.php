@@ -88,10 +88,18 @@ switch ($do) {
         $tab = 'library_texts';
 }
 
-$hdr = $id > 0 ? htmlentities($db->query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn(), ENT_QUOTES, 'UTF-8') : '';
+if ($id > 0) { 
+    $hdrsql = $db->query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1");
 
-if ($hdr) {
-    $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+    $hdrres = '';
+    if ($hdrsql->rowCount()) {
+        $hdrres = $hdrsql->fetchColumn();
+    }
+
+    $hdr = htmlentities($hdrres, ENT_QUOTES, 'UTF-8');
+    if ($hdr) {
+        $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+    }
 }
 
 require_once('../system/head.php');
