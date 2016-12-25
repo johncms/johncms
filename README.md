@@ -1,4 +1,4 @@
-# [JohnCMS 6.2.0](http://johncms.com)
+# [JohnCMS 6.2.1](http://johncms.com)
 
 [![SemVer](http://img.shields.io/badge/semver-✓-brightgreen.svg?style=plastic)](http://semver.org)
 [![License](https://img.shields.io/badge/license-GPL%20v.3-blue.svg?style=plastic)](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
@@ -26,7 +26,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ## System Requirements
 - PHP version is not low than 5.3
-- MySQL version is not low than 5.1
+- MySQL version is not low than 5.5
 - .htaccess support
 
 ## Installation
@@ -38,7 +38,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ---
 
-# [JohnCMS 6.2.0](http://johncms.com)
+# [JohnCMS 6.2.1](http://johncms.com)
 
 Система управления сайтом JohnCMS предназначена для построения сайтов, которые будут просматриваться с мобильных телефонов.
 
@@ -61,7 +61,7 @@ JohnCMS Content Management System is for the construction of the sites that will
 
 ## Системные требования
 - Версия PHP не ниже 5.3
-- MySQL версии не ниже 5.1
+- MySQL версии не ниже 5.5
 - Поддержка .htaccess
 
 ## Установка

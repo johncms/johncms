@@ -149,7 +149,7 @@ class core
         $db_name = isset($db_name) ? $db_name : '';
         $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('Error: cannot connect to database server');
         @mysql_select_db($db_name) or die('Error: specified database does not exist');
-        @mysql_query("SET NAMES 'utf8'", $connect);
+        @mysql_query("SET NAMES 'utf8mb4'", $connect);
     }
 
     /*

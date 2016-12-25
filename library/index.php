@@ -34,19 +34,26 @@ if ($error) {
 }
 
 // Заголовки библиотеки
-if ($do) {
-    switch ($do) {
-        case 'dir':
-            $tab = 'library_cats';
-            break;
+switch ($do) {
+    case 'dir':
+        $tab = 'library_cats';
+        break;
 
-        default:
-            $tab = 'library_texts';
+    default:
+        $tab = 'library_texts';
+}
+
+if ($id > 0) { 
+    $hdrsql = mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1");
+
+    $hdrres = '';
+    if (mysql_num_rows($hdrsql)) {
+        $hdrres = mysql_result($hdrsql, 0);
     }
 
-    $hdr = $id > 0 ? htmlentities(mb_substr(mysql_result(mysql_query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1"), 0), 0, 30), ENT_QUOTES, 'UTF-8') : '';
+    $hdr = $id > 0 ? htmlentities($hdrres, ENT_QUOTES, 'UTF-8') : '';
     if ($hdr) {
-        $textl = mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr;
+        $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }
 

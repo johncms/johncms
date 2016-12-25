@@ -436,7 +436,7 @@ margin-bottom: 3px;
 text-decoration: none;
 }
 </style>
-            <script language="JavaScript" type="text/javascript">
+            <script>
             function tag(text1, text2) {
               if ((document.selection)) {
                 document.' . $form . '.' . $field . '.focus();
@@ -460,21 +460,20 @@ text-decoration: none;
               }
             }
             </script>
-            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/bold.gif" alt="b" title="' . self::$lng['tag_bold'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/italics.gif" alt="i" title="' . self::$lng['tag_italic'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/underline.gif" alt="u" title="' . self::$lng['tag_underline'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/strike.gif" alt="s" title="' . self::$lng['tag_strike'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/list.gif" alt="s" title="' . self::$lng['tag_list'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" border="0"/></a>
-            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" border="0"/></a>
-            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" border="0"/></a>
-            <a href="javascript:show_hide(\'code\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" title="' . Code . '" border="0"/></a>
-            <a href="javascript:show_hide(\'color\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" border="0"/></a>
-            <a href="javascript:show_hide(\'bg\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" border="0"/></a>';
+            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/bold.gif" alt="b" title="' . self::$lng['tag_bold'] . '" /></a>
+            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/italics.gif" alt="i" title="' . self::$lng['tag_italic'] . '" /></a>
+            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/underline.gif" alt="u" title="' . self::$lng['tag_underline'] . '" /></a>
+            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/strike.gif" alt="s" title="' . self::$lng['tag_strike'] . '" /></a>
+            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/list.gif" alt="s" title="' . self::$lng['tag_list'] . '" /></a>
+            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/sp.gif" alt="spoiler" title="Спойлер" /></a>
+            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/quote.gif" alt="quote" title="' . self::$lng['tag_quote'] . '" /></a>
+            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/link.gif" alt="url" title="' . self::$lng['tag_link'] . '" /></a>
+            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/php.gif" title="Code" alt="Code" /></a>
+            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/color.gif" title="' . self::$lng['color_text'] . '" alt="color" /></a>
+            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/color_bg.gif" title="' . self::$lng['color_bg'] . '" alt="bg color" /></a>';
 
         if (self::$user_id) {
-            $out .= ' <a href="javascript:show_hide(\'sm\');"><img src="' . self::$system_set['homeurl'] . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" border="0"/></a><br />
-                <table id="sm" style="display:none"><tr><td>' . $bb_smileys . '</td></tr></table>
+            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . self::$system_set['homeurl'] . '/images/bb/smileys.gif" alt="sm" title="' . self::$lng['smileys'] . '" /></a><br />
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
         } else {
             $out .= '<br />';
