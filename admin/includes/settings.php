@@ -48,7 +48,10 @@ if (isset($_POST['submit'])) {
     }
 
     echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
-    opcache_reset();
+
+    if (function_exists('opcache_reset')) {
+        opcache_reset();
+    }
 }
 
 // Форма ввода параметров системы

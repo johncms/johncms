@@ -52,7 +52,10 @@ if (isset($_POST['submit'])) {
     }
 
     echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
-    opcache_reset();
+
+    if (function_exists('opcache_reset')) {
+        opcache_reset();
+    }
 }
 
 // Форма ввода настроек
