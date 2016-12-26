@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-07 11:15-0500\n"
+"PO-Revision-Date: 2016-12-26 06:06-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -19,127 +19,127 @@ msgstr ""
 "X-Crowdin-File: /registration/default.pot\n"
 "Language: id_ID\n"
 
-#: index.php:23 index.php:42 index.php:197
+#: index.php:33 index.php:52 index.php:207
 msgid "Registration"
 msgstr "Pendaftaran"
 
-#: index.php:29
+#: index.php:39
 msgid "Registration is temporarily closed"
 msgstr "Registrasi ditutup sementara"
 
-#: index.php:53
+#: index.php:63
 msgid "You have not entered Nickname"
 msgstr "Anda belum memasukkan nama pengguna"
 
-#: index.php:55
+#: index.php:65
 msgid "Nickname wrong length"
 msgstr "Nama pengguna terlalu panjang"
 
-#: index.php:59
+#: index.php:69
 msgid "Invalid characters"
 msgstr "Karakter salah"
 
-#: index.php:64
+#: index.php:74
 msgid "You have not entered password"
 msgstr "Anda belum memasukkan kata sandi"
 
-#: index.php:66
+#: index.php:76
 msgid "Invalid length"
 msgstr "Panjang tidak valid"
 
-#: index.php:71
+#: index.php:81
 msgid "You have not selected genger"
 msgstr "Anda belum memilih jenis kelamin"
 
-#: index.php:80
+#: index.php:90
 msgid "The security code is not correct"
 msgstr "Kode verifikasi salah"
 
-#: index.php:95
+#: index.php:105
 msgid "Selected Nickname is already in use"
 msgstr "Nama pengguna sudah digunakan"
 
-#: index.php:142
+#: index.php:152
 msgid "Your registratiton data"
 msgstr "Data pendaftaran Anda"
 
-#: index.php:143
+#: index.php:153
 msgid "Your ID"
 msgstr "ID Anda"
 
-#: index.php:144
+#: index.php:154
 msgid "Your Username"
 msgstr "Nama Pengguna"
 
-#: index.php:145
+#: index.php:155
 msgid "Your Password"
 msgstr "Kata Sandi"
 
-#: index.php:148
+#: index.php:158
 msgid "Please, wait until a moderator approves your registration"
 msgstr "Mohon tunggu hingga Moderator menerima Pendaftaran Anda"
 
-#: index.php:152
+#: index.php:162
 msgid "Enter"
 msgstr "Masuk"
 
-#: index.php:163
+#: index.php:173
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr "Anda bisa masuk setelah Pendaftaran Anda dikonfirmasi."
 
-#: index.php:167
+#: index.php:177
 msgid "Choose Nickname"
 msgstr "Nama pengguna"
 
-#: index.php:171
+#: index.php:181
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr "Min. 2, Maks. 20 karakter <br />Hanya gunakan huruf alfabet, angka dan simbol - = @ ! ? ~ _ ( ) [ ] . * (Kecuali angka Nol)"
 
-#: index.php:172
+#: index.php:182
 msgid "Assign a password"
 msgstr "Tetapkan kata sandi"
 
-#: index.php:176
+#: index.php:186
 msgid "Min. 3 characters"
 msgstr "Min. 3 karakter"
 
-#: index.php:177
+#: index.php:187
 msgid "Select Gender"
 msgstr "Pilih Jenis Kelamin"
 
-#: index.php:181
+#: index.php:191
 msgid "Man"
 msgstr "Pria"
 
-#: index.php:182
+#: index.php:192
 msgid "Woman"
 msgstr "Wanita"
 
-#: index.php:185
+#: index.php:195
 msgid "Your name"
 msgstr "Nama Anda"
 
-#: index.php:187
+#: index.php:197
 msgid "Max. 50 characters"
 msgstr "Maks. 50 karakter"
 
-#: index.php:188
+#: index.php:198
 msgid "Tell us a little about yourself"
 msgstr "Ceritakan sedikit tentang diri Anda"
 
-#: index.php:190
+#: index.php:200
 msgid "Max. 1000 characters"
 msgstr "Maks. 1000 karakter"
 
-#: index.php:192 index.php:193
+#: index.php:202 index.php:203
 msgid "Verification code"
 msgstr "Kode verifikasi"
 
-#: index.php:196
+#: index.php:206
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr "Jika gambar verifikasi tidak tampil, aktifkan fitur gambar di browser dan muat ulang halaman ini"
 
-#: index.php:198
+#: index.php:208
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr "Mohon, tidak menggunakan nama seperti 111, shhhh, uuuu, dll dan mendaftar dengan server proxy atau akun akan dihapus"
 
