@@ -297,7 +297,7 @@ class Tools
         $homeurl = $this->config['homeurl'];
 
         if (!$user['id']) {
-            $out = '<b>' . _t('Guest') . '</b>';
+            $out = '<b>' . _t('Guest', 'system') . '</b>';
 
             if (!empty($user['name'])) {
                 $out .= ': ' . $user['name'];
@@ -365,14 +365,14 @@ class Tools
             }
 
             if ($lastvisit) {
-                $out .= '<div><span class="gray">' . _t('Last Visit') . ':</span> ' . $lastvisit . '</div>';
+                $out .= '<div><span class="gray">' . _t('Last Visit', 'system') . ':</span> ' . $lastvisit . '</div>';
             }
 
             $iphist = '';
 
             if ($ipinf) {
-                $out .= '<div><span class="gray">' . _t('Browser') . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
-                    '<div><span class="gray">' . _t('IP address') . ':</span> ';
+                $out .= '<div><span class="gray">' . _t('Browser', 'system') . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
+                    '<div><span class="gray">' . _t('IP address', 'system') . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
                 $ip = long2ip($user['ip']);
 
@@ -391,7 +391,7 @@ class Tools
 
                 if (isset($arg['iphist'])) {
                     $iptotal = $this->db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
-                    $out .= '<div><span class="gray">' . _t('IP History') . ':</span> <a href="' . $homeurl . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
+                    $out .= '<div><span class="gray">' . _t('IP History', 'system') . ':</span> <a href="' . $homeurl . '/profile/?act=ip&amp;user=' . $user['id'] . '">[' . $iptotal . ']</a></div>';
                 }
 
                 $out .= '</div>';
