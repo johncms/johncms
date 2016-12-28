@@ -81,6 +81,98 @@ module.exports = function (grunt) {
                         dest: 'distributive/'
                     }
                 ]
+            },
+            lng_id: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/id/**',
+                            'album/locale/id/**',
+                            'downloads/locale/id/**',
+                            'forum/locale/id/**',
+                            'guestbook/locale/id/**',
+                            'help/locale/id/**',
+                            'library/locale/id/**',
+                            'mail/locale/id/**',
+                            'news/locale/id/**',
+                            'profile/locale/id/**',
+                            'registration/locale/id/**',
+                            'system/locale/id/**',
+                            'users/locale/id/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
+            lng_pl: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/pl/**',
+                            'album/locale/pl/**',
+                            'downloads/locale/pl/**',
+                            'forum/locale/pl/**',
+                            'guestbook/locale/pl/**',
+                            'help/locale/pl/**',
+                            'library/locale/pl/**',
+                            'mail/locale/pl/**',
+                            'news/locale/pl/**',
+                            'profile/locale/pl/**',
+                            'registration/locale/pl/**',
+                            'system/locale/pl/**',
+                            'users/locale/pl/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
+            lng_ru: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/ru/**',
+                            'album/locale/ru/**',
+                            'downloads/locale/ru/**',
+                            'forum/locale/ru/**',
+                            'guestbook/locale/ru/**',
+                            'help/locale/ru/**',
+                            'library/locale/ru/**',
+                            'mail/locale/ru/**',
+                            'news/locale/ru/**',
+                            'profile/locale/ru/**',
+                            'registration/locale/ru/**',
+                            'system/locale/ru/**',
+                            'users/locale/ru/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
+            lng_vi: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/vi/**',
+                            'album/locale/vi/**',
+                            'downloads/locale/vi/**',
+                            'forum/locale/vi/**',
+                            'guestbook/locale/vi/**',
+                            'help/locale/vi/**',
+                            'library/locale/vi/**',
+                            'mail/locale/vi/**',
+                            'news/locale/vi/**',
+                            'profile/locale/vi/**',
+                            'registration/locale/vi/**',
+                            'system/locale/vi/**',
+                            'users/locale/vi/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
             }
         },
 
@@ -95,6 +187,62 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     archive: 'dist/johncms-<%= pkg.version %>.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
+            lng_id: {
+                options: {
+                    archive: 'dist/locales/id.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
+            lng_pl: {
+                options: {
+                    archive: 'dist/locales/pl.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
+            lng_ru: {
+                options: {
+                    archive: 'dist/locales/ru.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
+            lng_vi: {
+                options: {
+                    archive: 'dist/locales/vi.zip'
                 },
 
                 files: [
@@ -132,6 +280,26 @@ module.exports = function (grunt) {
         'clean:dist',
         'copy:distributive',
         'compress:dist',
+        'clean:distributive'
+    ]);
+
+    grunt.registerTask('locales', [
+        'clean:dist',
+
+        'copy:lng_id',
+        'compress:lng_id',
+        'clean:distributive',
+
+        'copy:lng_pl',
+        'compress:lng_pl',
+        'clean:distributive',
+
+        'copy:lng_ru',
+        'compress:lng_ru',
+        'clean:distributive',
+
+        'copy:lng_vi',
+        'compress:lng_vi',
         'clean:distributive'
     ]);
 
