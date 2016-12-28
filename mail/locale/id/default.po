@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"PO-Revision-Date: 2016-12-28 17:08-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -178,7 +178,7 @@ msgstr "Tulis pesan"
 
 #: includes/new.php:59
 msgid "Block Sender"
-msgstr ""
+msgstr "Blok Pengirim"
 
 #: includes/output.php:17
 msgid "Sent messages"

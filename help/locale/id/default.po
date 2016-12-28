@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:06-0500\n"
+"PO-Revision-Date: 2016-12-28 17:08-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -137,7 +137,7 @@ msgstr "Pesan jelas menyinggung seseorang, terutama pengguna forum"
 
 #: includes/forum.php:36
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr ""
+msgstr "Sengaja untuk merusak penulisan nama panggilan pengguna lain untuk memberikan pesan naungan ofensif"
 
 #: includes/forum.php:37
 msgid "Publishing deleted by moderator messages repeatedly"
@@ -157,11 +157,11 @@ msgstr "SANGAT DILARANG"
 
 #: includes/forum.php:44
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr ""
+msgstr "Menulis di topik umum yang tidak puas dengan tindakan yang tidak pantas dari pengguna lain dan membahas tentang moderator bekerja. Menggunakan pesan pribadi untuk tujuan ini"
 
 #: includes/forum.php:45
 msgid "Register the nicknames having offensive tone for other users"
-msgstr ""
+msgstr "Daftar julukan yang memiliki nada ofensif untuk pengguna lain"
 
 #: includes/forum.php:48
 msgid "UNACCEPTABLE"
@@ -169,7 +169,7 @@ msgstr "TIDAK DAPAT DITERIMA"
 
 #: includes/forum.php:50
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
-msgstr ""
+msgstr "Mengutip penuh pesan pengguna sebelumnya dan mengutip pesan yang sudah yang berisi kutipan lain"
 
 #: includes/forum.php:51
 msgid "Post messages only contains external link"
@@ -181,7 +181,7 @@ msgstr "Mengirim pesan yang diterjemahkan"
 
 #: includes/forum.php:53
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
-msgstr ""
+msgstr "Posting pesan yang memiliki tujuan: terdiri hanya dari Smiley atau posting seperti \"Ok\", \"Apa?\", \"Siapa disana?\", dll."
 
 #: includes/forum.php:58
 msgid "Message posted despite the above warnings will be changed or deleted."

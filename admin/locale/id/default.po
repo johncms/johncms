@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"PO-Revision-Date: 2016-12-28 17:08-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -479,11 +479,11 @@ msgstr "Foto berhasil dibuat"
 
 #: includes/antispy.php:438
 msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
+msgstr "PERINGATAN! <br>Sebelum melanjutkan pastikan bahwa semua file yang telah diidentifikasi dalam pemindaian distribusi mode handal dan tidak berisi modifikasi yang tidak sah."
 
 #: includes/antispy.php:441
 msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
+msgstr "Prosedur ini menciptakan daftar semua file script ke situs Anda, menghitung checksum dan menulis ke database, untuk kemudian dibandingkan."
 
 #: includes/antispy.php:448
 msgid "Scan mode"
@@ -491,23 +491,23 @@ msgstr "Mode Pindai"
 
 #: includes/antispy.php:450
 msgid "Files identification which are not included in the original distributive"
-msgstr ""
+msgstr "Identifikasi file, yang tidak termasuk dalam distribusi asli"
 
 #: includes/antispy.php:452
 msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
+msgstr "Bandingkan daftar file dan checksum dengan pra-cara membuat. Mengijinkan anda mengidentifikasi file yang tidak diketahui, dan perubahan yang tidak sah."
 
 #: includes/antispy.php:454
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
+msgstr "Mengambil snapshot dari semua file script dari situs menghitung checksum mereka dan disimpan dalam database."
 
 #: includes/antispy.php:458
 msgid "Scanner menu"
-msgstr ""
+msgstr "Menu Scanner"
 
 #: includes/ban_panel.php:32
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "Pengampunan ini tersedia hanya untuk supervisor"
 
 #: includes/ban_panel.php:34 includes/ban_panel.php:67
 #: includes/ban_panel.php:73 index.php:91
@@ -537,7 +537,7 @@ msgstr "Hapus basis data pemblokiran"
 
 #: includes/ban_panel.php:64
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
-msgstr ""
+msgstr "&quot;Unban semua&quot; - berakhir semua Ban aktif<br>&quot;Hapus database&quot; - berakhir semua larangan dan membersihkan sejarah pelanggaran"
 
 #: includes/ban_panel.php:74 includes/usr.php:29
 msgid "Sort"
@@ -613,7 +613,7 @@ msgstr "Tinjauan"
 
 #: includes/counters.php:173
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
+msgstr "Jika kode counter yang akan ditampilkan sudah benar dan tanpa kesalahan, klik &quot;Simpan&quot;.<br>Jika tidak, klik tombol kembali di browser dan memperbaiki kesalahan."
 
 #: includes/counters.php:213
 msgid "Code for main page"
@@ -629,11 +629,11 @@ msgstr "Default"
 
 #: includes/counters.php:216
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
+msgstr "Pada Opsi-1 menampilkan dihalaman utama,pada halaman lain Opsi-2.<br> Jika &quot;Option 2 &quot;tidak diisi, maka counter hanya akan muncul pada halaman utama."
 
 #: includes/counters.php:219
 msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
+msgstr "PEMBERITAHUAN!<br>Pastikan Anda telah memasukkan kode dengan benar. Hal ini harus memenuhi standar XML <br> Jika Anda klik &quot;Lihat&quot; kesalahan terjadi XHTML, kemudian klik tombol &quot;kembali&quot; pada browser, kembali ke formulir ini dan memperbaiki kesalahan."
 
 #: includes/counters.php:295
 msgid "Counter successfully changed"
@@ -997,7 +997,7 @@ msgstr "Alamat ini tidak ada dalam database"
 
 #: includes/ipban.php:325
 msgid "Who applied the ban?"
-msgstr ""
+msgstr "Siapa yang menerapkan ban?"
 
 #: includes/ipban.php:326
 msgid "Date"
@@ -1017,7 +1017,7 @@ msgstr "Ban berhasil dihapus"
 
 #: includes/ipban.php:342
 msgid "re you sure to remove ban?"
-msgstr ""
+msgstr "Apakah anda yakin untuk menghapus Ban?"
 
 #: includes/ipban.php:351 includes/ipban.php:355 includes/ipban.php:409
 #: includes/search_ip.php:39
@@ -1026,7 +1026,7 @@ msgstr "Cari"
 
 #: includes/ipban.php:356
 msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
+msgstr "Masukkan alamat tunggal, masker dan rentang tidak diperbolehkan"
 
 #: includes/ipban.php:397 includes/usr.php:61
 msgid "Ban"
@@ -1082,75 +1082,75 @@ msgstr "Beralih modul ON"
 
 #: includes/karma.php:82
 msgid "Forbid to vote for the administration"
-msgstr ""
+msgstr "Melarang suara untuk administrasi"
 
 #: includes/karma.php:84
 msgid "Clear Karma"
-msgstr ""
+msgstr "Menghapus Karma"
 
 #: includes/languages.php:36
 msgid "Default language"
-msgstr ""
+msgstr "Bahasa bawaan"
 
 #: includes/languages.php:56
 msgid "Descriptions have been updated successfully"
-msgstr ""
+msgstr "Deskripsi telah berhasil diperbarui"
 
 #: includes/languages.php:73
 msgid "Select language"
-msgstr ""
+msgstr "Pilih bahasa"
 
 #: includes/languages.php:84
 msgid "Apply"
-msgstr ""
+msgstr "Terapkan"
 
 #: includes/languages.php:87
 msgid "Update List"
-msgstr ""
+msgstr "Perbarui daftar"
 
 #: includes/news.php:29
 msgid "News on the mainpage"
-msgstr ""
+msgstr "Berita di mainpage"
 
 #: includes/news.php:63
 msgid "Appearance"
-msgstr ""
+msgstr "Tampilan"
 
 #: includes/news.php:64
 msgid "Title + Text"
-msgstr ""
+msgstr "Judul + Teks"
 
 #: includes/news.php:66
 msgid "Text"
-msgstr ""
+msgstr "Teks"
 
 #: includes/news.php:67
 msgid "Not to show"
-msgstr ""
+msgstr "Bukan untuk menunjukkan"
 
 #: includes/news.php:68
 msgid "Line breaks"
-msgstr ""
+msgstr "Jeda baris"
 
 #: includes/news.php:69 includes/smilies.php:24
 msgid "Smilies"
-msgstr ""
+msgstr "Smile"
 
 #: includes/news.php:70
 msgid "bbCode Tags"
-msgstr ""
+msgstr "Tag bbCode"
 
 #: includes/news.php:72
 msgid "Text size"
-msgstr ""
+msgstr "Ukuran Teks"
 
 #: includes/news.php:74
 msgid "Quantity of news"
-msgstr ""
+msgstr "Kuantitas berita"
 
 #: includes/news.php:75
 msgid "How many days to show?"
-msgstr ""
+msgstr "Berapa hari untuk menampilkan?"
 
 #: includes/news.php:77
 msgid "Reset Settings"
@@ -1158,19 +1158,19 @@ msgstr "Atur Ulang Pengaturan"
 
 #: includes/reg.php:33
 msgid "Registration confirmation"
-msgstr ""
+msgstr "Konfirmasi Pendaftaran"
 
 #: includes/reg.php:45 includes/reg.php:51
 msgid "Registration is confirmed"
-msgstr ""
+msgstr "Pendaftaran dikonfirmasi"
 
 #: includes/reg.php:69 includes/usr_del.php:116
 msgid "User deleted"
-msgstr ""
+msgstr "Pengguna sudah dihapus"
 
 #: includes/reg.php:75
 msgid "All unconfirmed registrations were removed"
-msgstr ""
+msgstr "Semua pendaftaran dalam konfirmasi dihapus"
 
 #: includes/reg.php:91
 msgid "All unconfirmed registrations with selected IP were deleted"
@@ -1322,7 +1322,7 @@ msgstr ""
 
 #: includes/usr_del.php:46
 msgid "You cannot delete higher administration"
-msgstr ""
+msgstr "Anda tidak dapat menghapus administrasi yang lebih tinggi"
 
 #: includes/usr_del.php:49
 msgid "User does not exists"
@@ -1338,7 +1338,7 @@ msgstr "Aktivitas pembersihan"
 
 #: includes/usr_del.php:129
 msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
+msgstr "Semua thread dan posting yang dibuat oleh pengguna pergi dalam keadaan tersembunyi"
 
 #: includes/usr_del.php:132
 msgid "Are you sure that you want to delete this user?"
