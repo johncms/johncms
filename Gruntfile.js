@@ -256,6 +256,78 @@ module.exports = function (grunt) {
             }
         },
 
+        exec: {
+            // Компилируем .mo файлы
+            compile_mo: {
+                command: 'msgfmt -o admin/locale/id/default.mo admin/locale/id/default.po' +
+                '& msgfmt -o admin/locale/pl/default.mo admin/locale/pl/default.po' +
+                '& msgfmt -o admin/locale/ru/default.mo admin/locale/ru/default.po' +
+                '& msgfmt -o admin/locale/vi/default.mo admin/locale/vi/default.po' +
+
+                '& msgfmt -o album/locale/id/default.mo album/locale/id/default.po' +
+                '& msgfmt -o album/locale/pl/default.mo album/locale/pl/default.po' +
+                '& msgfmt -o album/locale/ru/default.mo album/locale/ru/default.po' +
+                '& msgfmt -o album/locale/vi/default.mo album/locale/vi/default.po' +
+
+                '& msgfmt -o downloads/locale/id/default.mo downloads/locale/id/default.po' +
+                '& msgfmt -o downloads/locale/pl/default.mo downloads/locale/pl/default.po' +
+                '& msgfmt -o downloads/locale/ru/default.mo downloads/locale/ru/default.po' +
+                '& msgfmt -o downloads/locale/vi/default.mo downloads/locale/vi/default.po' +
+
+                '& msgfmt -o forum/locale/id/default.mo forum/locale/id/default.po' +
+                '& msgfmt -o forum/locale/pl/default.mo forum/locale/pl/default.po' +
+                '& msgfmt -o forum/locale/ru/default.mo forum/locale/ru/default.po' +
+                '& msgfmt -o forum/locale/vi/default.mo forum/locale/vi/default.po' +
+
+                '& msgfmt -o guestbook/locale/id/default.mo guestbook/locale/id/default.po' +
+                '& msgfmt -o guestbook/locale/pl/default.mo guestbook/locale/pl/default.po' +
+                '& msgfmt -o guestbook/locale/ru/default.mo guestbook/locale/ru/default.po' +
+                '& msgfmt -o guestbook/locale/vi/default.mo guestbook/locale/vi/default.po' +
+
+                '& msgfmt -o help/locale/id/default.mo help/locale/id/default.po' +
+                '& msgfmt -o help/locale/pl/default.mo help/locale/pl/default.po' +
+                '& msgfmt -o help/locale/ru/default.mo help/locale/ru/default.po' +
+                '& msgfmt -o help/locale/vi/default.mo help/locale/vi/default.po' +
+
+                '& msgfmt -o library/locale/id/default.mo library/locale/id/default.po' +
+                '& msgfmt -o library/locale/pl/default.mo library/locale/pl/default.po' +
+                '& msgfmt -o library/locale/ru/default.mo library/locale/ru/default.po' +
+                '& msgfmt -o library/locale/vi/default.mo library/locale/vi/default.po' +
+
+                '& msgfmt -o mail/locale/id/default.mo mail/locale/id/default.po' +
+                '& msgfmt -o mail/locale/pl/default.mo mail/locale/pl/default.po' +
+                '& msgfmt -o mail/locale/ru/default.mo mail/locale/ru/default.po' +
+                '& msgfmt -o mail/locale/vi/default.mo mail/locale/vi/default.po' +
+
+                '& msgfmt -o news/locale/id/default.mo news/locale/id/default.po' +
+                '& msgfmt -o news/locale/pl/default.mo news/locale/pl/default.po' +
+                '& msgfmt -o news/locale/ru/default.mo news/locale/ru/default.po' +
+                '& msgfmt -o news/locale/vi/default.mo news/locale/vi/default.po' +
+
+                '& msgfmt -o profile/locale/id/default.mo profile/locale/id/default.po' +
+                '& msgfmt -o profile/locale/pl/default.mo profile/locale/pl/default.po' +
+                '& msgfmt -o profile/locale/ru/default.mo profile/locale/ru/default.po' +
+                '& msgfmt -o profile/locale/vi/default.mo profile/locale/vi/default.po' +
+
+                '& msgfmt -o registration/locale/id/default.mo registration/locale/id/default.po' +
+                '& msgfmt -o registration/locale/pl/default.mo registration/locale/pl/default.po' +
+                '& msgfmt -o registration/locale/ru/default.mo registration/locale/ru/default.po' +
+                '& msgfmt -o registration/locale/vi/default.mo registration/locale/vi/default.po' +
+
+                '& msgfmt -o system/locale/id/system.mo system/locale/id/system.po' +
+                '& msgfmt -o system/locale/pl/system.mo system/locale/pl/system.po' +
+                '& msgfmt -o system/locale/ru/system.mo system/locale/ru/system.po' +
+                '& msgfmt -o system/locale/vi/system.mo system/locale/vi/system.po' +
+
+                '& msgfmt -o users/locale/id/default.mo users/locale/id/default.po' +
+                '& msgfmt -o users/locale/pl/default.mo users/locale/pl/default.po' +
+                '& msgfmt -o users/locale/ru/default.mo users/locale/ru/default.po' +
+                '& msgfmt -o users/locale/vi/default.mo users/locale/vi/default.po',
+                stdout: false,
+                stderr: true
+            }
+        },
+
         // Обновляем зависимости
         devUpdate: {
             main: {
@@ -271,6 +343,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-dev-update');
 
     // Общая задача
@@ -281,6 +354,10 @@ module.exports = function (grunt) {
         'copy:distributive',
         'compress:dist',
         'clean:distributive'
+    ]);
+
+    grunt.registerTask('makemo', [
+        'exec:compile_mo'
     ]);
 
     grunt.registerTask('locales', [
