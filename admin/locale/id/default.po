@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-28 17:08-0500\n"
+"PO-Revision-Date: 2016-12-31 10:06-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -442,11 +442,11 @@ msgstr "Pemindai Distributif"
 
 #: includes/antispy.php:387
 msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
-msgstr ""
+msgstr "Distributif file yang saling melengkapi <br> Peringatan! Jika file tercantum di bawah ini tidak berhubungan dengan modul tambahan Anda dan Anda tidak yakin keselamatan mereka, maka menghapusnya. Mereka dapat membahayakan situs Anda."
 
 #: includes/antispy.php:395
 msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
-msgstr ""
+msgstr "<h3>SANGAT BAGUS</h3>Daftar file sesuai dengan yang di distribusikan"
 
 #: includes/antispy.php:398
 msgid "Rescan"
@@ -467,11 +467,11 @@ msgstr "Buat foto"
 
 #: includes/antispy.php:413
 msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
+msgstr "Snapshot Inconsistency<br>Peringatan! Kamu harus memperhatikan semua file dari daftar. Mereka telah ditambahkan atau dimodifikasi sejak gambar yang dibuat."
 
 #: includes/antispy.php:421
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "Sangat bagus<br>Semua file sesuai dengan gambar yang sebelumnya dibuat."
 
 #: includes/antispy.php:434
 msgid "Snapshot successfully created"
@@ -672,7 +672,7 @@ msgstr "kategori terpilih"
 
 #: includes/forum.php:100
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
+msgstr "<h3>PERHATIAN!</h3>Ada subbagian. Pindahkan ke kategori yang lain."
 
 #: includes/forum.php:101
 msgid "Select category"
@@ -692,7 +692,7 @@ msgstr "Penghapusan lengkap"
 
 #: includes/forum.php:113
 msgid "If you want to destroy all the information, first remove"
-msgstr ""
+msgstr "Jika kamu ingin menghancurkan semua infomasi, hapus terlebih dahulu"
 
 #: includes/forum.php:113
 msgid "subsections"
@@ -720,7 +720,7 @@ msgstr "Ke kategori"
 
 #: includes/forum.php:179
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
+msgstr "<h3>PERINGATAN!</h3>Terdapat topik yang sama di kategori ini. Kamu harus pindahkan ke kategori yang lain."
 
 #: includes/forum.php:179
 msgid "Select section"
@@ -732,11 +732,11 @@ msgstr "Kategori lain"
 
 #: includes/forum.php:195
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
+msgstr "Semua Topik dan file akan dipindahkan ke Katogori yang dipilih. Kategori yang lama akan di hapus."
 
 #: includes/forum.php:199
 msgid "WARNING! All the information will be deleted"
-msgstr ""
+msgstr "PERHATIAN! Semua Infomasi akan dihapus"
 
 #: includes/forum.php:251 includes/forum.php:357
 msgid "You have not entered Title"
@@ -788,7 +788,7 @@ msgstr "Izinkan penulis menyunting pos pertama"
 
 #: includes/forum.php:317 includes/forum.php:415
 msgid "Assign the newly created authors as curators"
-msgstr ""
+msgstr "Menetapkan penulis baru sebagai curators"
 
 #: includes/forum.php:351 includes/forum.php:353
 msgid "Category is not chosen"
@@ -937,11 +937,11 @@ msgstr "Blokir tidak berhasil. IP Anda masuk dalam jangkauan"
 
 #: includes/ipban.php:159
 msgid "Ban range address"
-msgstr ""
+msgstr "Ban range address"
 
 #: includes/ipban.php:163
 msgid "Ban on the subnet mask"
-msgstr ""
+msgstr "Ban on the subnet mask"
 
 #: includes/ipban.php:167
 msgid "Ban IP address"
@@ -973,11 +973,11 @@ msgstr "Alamat IP"
 
 #: includes/ipban.php:210
 msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
+msgstr "Jika Ban mengarakan, kemudian menentukan URL"
 
 #: includes/ipban.php:214
 msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
+msgstr "Contoh:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. Akan dilarang dari seluruh subnet, dimulai dengan alamat 0 dan diakhiri dengan 255"
 
 #: includes/ipban.php:263
 msgid "Are you sure you wan to unban all IP?"
@@ -1214,7 +1214,7 @@ msgstr "Pencarian baru"
 
 #: includes/search_ip.php:150
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "<b>Contoh query:</b><br><span class=\"red\">10.5.7.1</span> - Cari untuk single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - cari range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Cari mask. Akan menemukan semua alamat subnet dimulai dengan 0 dan diakhiri dengan 255"
 
 #: includes/settings.php:29 index.php:119
 msgid "System Settings"
@@ -1318,7 +1318,7 @@ msgstr "Profil nonaktif"
 
 #: includes/usr_clean.php:88
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
+msgstr "Kategori ini meliputi profil, tercatat lebih dari 6 bulan yang lalu, dengan tanggal kunjungan terakhir selama lebih dari 5 bulan yang lalu dan dengan nol aktivitas.<br>Situs dapat dengan aman menghapus mereka."
 
 #: includes/usr_del.php:46
 msgid "You cannot delete higher administration"
