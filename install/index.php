@@ -12,6 +12,11 @@
 
 const JOHNCMS = '7.0.0';
 
+// Check the current PHP version
+if (version_compare(PHP_VERSION, '5.6', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 5.6 or higher</div>');
+}
+
 require '../system/vendor/autoload.php';
 
 class install

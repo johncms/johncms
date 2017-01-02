@@ -16,6 +16,11 @@ error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
+// Check the current PHP version
+if (version_compare(PHP_VERSION, '5.6', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 5.6 or higher</div>');
+}
+
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
