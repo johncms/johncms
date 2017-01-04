@@ -244,7 +244,7 @@ switch ($mod) {
             // Режим редактирования
             $req = $db->query('SELECT * FROM `cms_counters` WHERE `id` = ' . $id);
 
-            if (mysql_num_rows($req) != 1) {
+            if (!$req->rowCount()) {
                 echo $tools->displayError(_t('Wrong data'));
                 require_once('../system/end.php');
                 exit;
