@@ -1,8 +1,4 @@
 Options -Indexes
-ErrorDocument 402 http://johncms.com/?err
-ErrorDocument 403 http://johncms.com/?err
-ErrorDocument 404 http://johncms.com/?err
-ErrorDocument 500 http://johncms.com/?err
 DirectoryIndex index.php
 
 RemoveHandler .phtml .php3 .php4 .php5 .php6 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .jsp .py
