@@ -523,12 +523,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     ORDER BY `forum`.`id` LIMIT 1")->fetch();
                     echo '<div class="topmenu"><p>';
 
-                    if ($postres['sex']) {
-                        echo '<img src="../theme/' . $tools->getSkin() . '/images/' . ($postres['sex'] == 'm' ? 'm' : 'w') . ($postres['datereg'] > time() - 86400 ? '_new.png" width="14"' : '.png" width="10"') . ' height="10"/>&#160;';
-                    } else {
-                        echo '<img src="../images/del.png" width="10" height="10" alt=""/>&#160;';
-                    }
-
                     if ($systemUser->isValid() && $systemUser->id != $postres['user_id']) {
                         echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . _t('[r]') . '</a> ' .
