@@ -1,5 +1,5 @@
 # JohnCMS 7.0.0  
-`Release Date: development`
+`Release Date: 22.01.2017`
 
 ### NEW
   * Новое ядро системы, построенное на DI контейнере zend-servicemanager
