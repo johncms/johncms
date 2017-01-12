@@ -54,22 +54,29 @@ if ($id && $id != $systemUser->id) {
 
 if (!$error) {
     // Считаем комментарии в библиотеке
-    $comm_lib = $db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_lib = (int)$db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+
     // Считаем комментарии к загрузкам
-    $comm_dl = 0; //TODO: посчитать каменты к загрузкам
+    $comm_dl = (int)$db->query("SELECT COUNT(*) FROM `download__comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+
     // Считаем посты в личных гостевых
-    $comm_gb = $db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_gb = (int)$db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+
     // Считаем комментарии в личных альбомах
-    $comm_al = $db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_al = (int)$db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     $comm_count = $comm_lib + $comm_dl + $comm_gb + $comm_al;
+
     // Считаем посты в Гостевой
     $guest_count = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+
     // Считаем созданные темы на Форуме
     $forumt_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't' AND `close` != '1'")->fetchColumn();
+
     // Считаем посты на Форуме
     $forump_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'")->fetchColumn();
 
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
+
     // Выводим краткие данные
     echo '<div class="user"><p>' . $tools->displayUser($user, [
             'lastvisit' => 1,
