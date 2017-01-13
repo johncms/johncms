@@ -128,8 +128,7 @@ class Tools
      */
     public function displayDate($var)
     {
-        //TODO: Undefined index: timeshift
-        $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
+        $shift = ($this->config->timeshift + $this->userConfig->timeshift) * 3600;
 
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {

@@ -41,6 +41,7 @@ use Zend\Stdlib\ArrayObject;
  * @property $meta_desc
  * @property $news
  * @property $skindef
+ * @property $timeshift
  */
 class Config extends ArrayObject
 {
