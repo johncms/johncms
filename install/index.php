@@ -74,10 +74,12 @@ class install
      */
     public static function check_folders_rights()
     {
-        //TODO: добавить для проверки папки нового загруза
         $folders = [
             '/files/cache/',
+            '/files/downloads/files/',
+            '/files/downloads/screen/',
             '/files/forum/attach/',
+            '/files/forum/topics/',
             '/files/library/',
             '/files/library/tmp',
             '/files/library/images',
@@ -154,7 +156,6 @@ class install
             for ($i = 0; $i < count($ret); $i++) {
                 $ret[$i] = trim($ret[$i]);
                 if (!empty($ret[$i]) && $ret[$i] != "#") {
-                    //TODO: проверить показ ошибок
                     try {
                         $pdo->query($ret[$i]);
                     } catch (PDOException $e) {
@@ -194,14 +195,8 @@ function show_errors($error)
 */
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : false;
 
-//TODO: запилить проверку имеющейся инсталляции
-//if (file_exists('../incfiles/db.php') && $act == 'final') {
-//    require('../system/bootstrap.php');
-//} else {
 session_name('SESID');
 session_start();
-//}
-
 
 // Загружаем язык интерфейса
 if (isset($_POST['lng']) && ($_POST['lng'] == 'ru' || $_POST['lng'] == 'en')) {
@@ -574,61 +569,68 @@ switch ($act) {
         break;
 
     default:
-        // Проверка настроек PHP и прав доступа
-        echo '<p>' . $lng['install_note'] . '</p>';
-        echo '<p><h3 class="green">' . $lng['check_1'] . '</h3>';
-
-        // Проверка критических ошибок PHP
-        if (($php_errors = install::checkPhpErrors()) !== false) {
-            echo '<h3>' . $lng['php_critical_error'] . '</h3><ul>';
-            foreach ($php_errors as $val) {
-                echo '<li>' . $val . '</li>';
-            }
-            echo '</ul>';
-        }
-
-        // Проверка предупреждений PHP
-        if (($php_warnings = install::check_php_warnings()) !== false) {
-            echo '<h3>' . $lng['php_warnings'] . '</h3><ul>';
-            foreach ($php_warnings as $val) {
-                echo '<li>' . $val . '</li>';
-            }
-            echo '</ul>';
-        }
-
-        // Проверка прав доступа к папкам
-        if (($folders = install::check_folders_rights()) !== false) {
-            echo '<h3>' . $lng['access_rights'] . ' 777</h3><ul>';
-            foreach ($folders as $val) {
-                echo '<li>' . $val . '</li>';
-            }
-            echo '</ul>';
-        }
-
-        // Проверка прав доступа к файлам
-        if (($files = install::check_files_rights()) !== false) {
-            echo '<h3>' . $lng['access_rights'] . ' 666</h3><ul>';
-            foreach ($files as $val) {
-                echo '<li>' . $val . '</li>';
-            }
-            echo '</ul>';
-        }
-
-        if (!$php_errors && !$php_warnings && !$folders && !$files) {
-            echo '<div class="pgl">' . $lng['configuration_successful'] . '</div>';
-        }
-
-        echo '</p>';
-
-        if ($php_errors || $folders || $files) {
-            echo '<h3 class="red">' . $lng['critical_errors'] . '</h3>' .
-                '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>';
-        } elseif ($php_warnings) {
-            echo '<h3 class="red">' . $lng['are_warnings'] . '</h3>' .
-                '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>' .
-                '<a href="index.php?act=set">' . $lng['ignore_warnings'] . '</a>';
+        if (is_file('../system/config/database.local.php') || is_file('../system/config/system.local.php')) {
+            echo '<h1 class="red">' . $lng['error'] . '</h1>';
+            echo '<h2 class="red">' . $lng['already_installed'] . '</h2>';
+            echo '<p>' . $lng['to_install_again'] . '.</p>';
+            echo '<ul><li>/system/config/<strong class="red">database.local.php</strong></li><li>/system/config/<strong class="red">system.local.php</strong></li></ul>';
         } else {
-            echo '<form action="index.php?act=set" method="post"><p><input type="submit" value="' . $lng['install'] . '"/></p></form>';
+            // Проверка настроек PHP и прав доступа
+            echo '<p>' . $lng['install_note'] . '</p>';
+            echo '<p><h3 class="green">' . $lng['check_1'] . '</h3>';
+
+            // Проверка критических ошибок PHP
+            if (($php_errors = install::checkPhpErrors()) !== false) {
+                echo '<h3>' . $lng['php_critical_error'] . '</h3><ul>';
+                foreach ($php_errors as $val) {
+                    echo '<li>' . $val . '</li>';
+                }
+                echo '</ul>';
+            }
+
+            // Проверка предупреждений PHP
+            if (($php_warnings = install::check_php_warnings()) !== false) {
+                echo '<h3>' . $lng['php_warnings'] . '</h3><ul>';
+                foreach ($php_warnings as $val) {
+                    echo '<li>' . $val . '</li>';
+                }
+                echo '</ul>';
+            }
+
+            // Проверка прав доступа к папкам
+            if (($folders = install::check_folders_rights()) !== false) {
+                echo '<h3>' . $lng['access_rights'] . ' 777</h3><ul>';
+                foreach ($folders as $val) {
+                    echo '<li>' . $val . '</li>';
+                }
+                echo '</ul>';
+            }
+
+            // Проверка прав доступа к файлам
+            if (($files = install::check_files_rights()) !== false) {
+                echo '<h3>' . $lng['access_rights'] . ' 666</h3><ul>';
+                foreach ($files as $val) {
+                    echo '<li>' . $val . '</li>';
+                }
+                echo '</ul>';
+            }
+
+            if (!$php_errors && !$php_warnings && !$folders && !$files) {
+                echo '<div class="pgl">' . $lng['configuration_successful'] . '</div>';
+            }
+
+            echo '</p>';
+
+            if ($php_errors || $folders || $files) {
+                echo '<h3 class="red">' . $lng['critical_errors'] . '</h3>' .
+                    '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>';
+            } elseif ($php_warnings) {
+                echo '<h3 class="red">' . $lng['are_warnings'] . '</h3>' .
+                    '<h3><a href="index.php">' . $lng['check_again'] . '</a></h3>' .
+                    '<a href="index.php?act=set">' . $lng['ignore_warnings'] . '</a>';
+            } else {
+                echo '<form action="index.php?act=set" method="post"><p><input type="submit" value="' . $lng['install'] . '"/></p></form>';
+            }
         }
 }
 
