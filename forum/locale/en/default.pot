@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
+"POT-Creation-Date: 2017-01-22 16:45+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: includes/per.php:49 includes/per.php:58 includes/post.php:30
 #: includes/ren.php:30 includes/ren.php:39 includes/tema.php:41
 #: includes/tema.php:61 includes/users.php:32 includes/vip.php:30
-#: includes/vip.php:40 includes/vote.php:35 index.php:873
+#: includes/vip.php:40 includes/vote.php:35 index.php:867
 msgid "Wrong data"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgid "Continue"
 msgstr ""
 
 #: includes/addfile.php:177 includes/nt.php:261 includes/say.php:214
-#: includes/say.php:410 index.php:596 index.php:783
+#: includes/say.php:410 index.php:590 index.php:777
 msgid "Add File"
 msgstr ""
 
@@ -140,12 +140,12 @@ msgstr ""
 #: includes/per.php:81 includes/post.php:133 includes/ren.php:69
 #: includes/say.php:376 includes/say.php:426 includes/tema.php:96
 #: includes/tema.php:102 includes/tema.php:145 includes/who.php:90
-#: includes/who.php:198 index.php:141 index.php:215 index.php:255 index.php:882
-#: index.php:907 search.php:31 search.php:230
+#: includes/who.php:198 index.php:141 index.php:215 index.php:255 index.php:876
+#: index.php:901 search.php:31 search.php:230
 msgid "Forum"
 msgstr ""
 
-#: includes/curators.php:43 index.php:816
+#: includes/curators.php:43 index.php:810
 msgid "Curators"
 msgstr ""
 
@@ -161,11 +161,11 @@ msgstr ""
 #: includes/curators.php:80 includes/files.php:150 includes/files.php:187
 #: includes/new.php:146 includes/new.php:212 includes/users.php:55
 #: includes/who.php:77 includes/who.php:189 index.php:335 index.php:394
-#: index.php:795 search.php:169
+#: index.php:789 search.php:169
 msgid "Total"
 msgstr ""
 
-#: includes/deltema.php:74 index.php:844
+#: includes/deltema.php:74 index.php:838
 msgid "Delete Topic"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgid "Hide"
 msgstr ""
 
 #: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:187
-#: includes/editvote.php:57 includes/massdel.php:54 index.php:738 index.php:769
+#: includes/editvote.php:57 includes/massdel.php:54 index.php:732 index.php:763
 msgid "Delete"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgid "Edit Message"
 msgstr ""
 
 #: includes/editpost.php:240 includes/nt.php:266 includes/say.php:220
-#: includes/say.php:415 index.php:598 index.php:786
+#: includes/say.php:415 index.php:592 index.php:780
 msgid "Preview"
 msgstr ""
 
@@ -258,7 +258,7 @@ msgstr ""
 msgid "Poll changed"
 msgstr ""
 
-#: includes/editvote.php:94 index.php:828
+#: includes/editvote.php:94 index.php:822
 msgid "Edit Poll"
 msgstr ""
 
@@ -326,11 +326,11 @@ msgstr ""
 msgid "New Files"
 msgstr ""
 
-#: includes/files.php:114 index.php:557 search.php:158
+#: includes/files.php:114 index.php:551 search.php:158
 msgid "Read more"
 msgstr ""
 
-#: includes/files.php:131 includes/post.php:118 index.php:710
+#: includes/files.php:131 includes/post.php:118 index.php:704
 msgid "Click to view image"
 msgstr ""
 
@@ -342,13 +342,13 @@ msgstr ""
 msgid "Downloaded"
 msgstr ""
 
-#: includes/files.php:139 index.php:716
+#: includes/files.php:139 index.php:710
 msgid "Time"
 msgstr ""
 
 #: includes/files.php:159 includes/new.php:152 includes/new.php:219
 #: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:400
-#: index.php:802 search.php:226
+#: index.php:796 search.php:226
 msgid "To Page"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "You have not selected any author"
 msgstr ""
 
-#: includes/filter.php:67 index.php:864
+#: includes/filter.php:67 index.php:858
 msgid "Filter by author"
 msgstr ""
 
@@ -462,7 +462,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: includes/per.php:81 index.php:852
+#: includes/per.php:81 index.php:846
 msgid "Move Topic"
 msgstr ""
 
@@ -482,23 +482,23 @@ msgstr ""
 msgid "Topic"
 msgstr ""
 
-#: includes/post.php:81 index.php:534 index.php:664
+#: includes/post.php:81 index.php:528 index.php:658
 msgid "[r]"
 msgstr ""
 
-#: includes/post.php:82 index.php:535 index.php:665
+#: includes/post.php:82 index.php:529 index.php:659
 msgid "[q]"
 msgstr ""
 
-#: includes/post.php:106 index.php:698
+#: includes/post.php:106 index.php:692
 msgid "Attachment"
 msgstr ""
 
-#: includes/post.php:124 index.php:716
+#: includes/post.php:124 index.php:710
 msgid "Downloads"
 msgstr ""
 
-#: includes/ren.php:69 index.php:830
+#: includes/ren.php:69 index.php:824
 msgid "Rename Topic"
 msgstr ""
 
@@ -566,7 +566,7 @@ msgstr ""
 msgid "Vote accepted"
 msgstr ""
 
-#: includes/who.php:15 includes/who.php:90 index.php:901
+#: includes/who.php:15 includes/who.php:90 index.php:895
 msgid "Who in Forum"
 msgstr ""
 
@@ -646,7 +646,7 @@ msgstr ""
 msgid "Who is here"
 msgstr ""
 
-#: index.php:299 index.php:883 search.php:31 search.php:79
+#: index.php:299 index.php:877 search.php:31 search.php:79
 msgid "Search"
 msgstr ""
 
@@ -694,87 +694,87 @@ msgstr ""
 msgid "Total votes"
 msgstr ""
 
-#: index.php:551 index.php:744
+#: index.php:545 index.php:738
 msgid "Post deleted"
 msgstr ""
 
-#: index.php:565
+#: index.php:559
 msgid "Filter by author is activated"
 msgstr ""
 
-#: index.php:597 index.php:602 index.php:785 index.php:790
+#: index.php:591 index.php:596 index.php:779 index.php:784
 msgid "Write"
 msgstr ""
 
-#: index.php:689
+#: index.php:683
 msgid "Edited"
 msgstr ""
 
-#: index.php:736
+#: index.php:730
 msgid "Edit"
 msgstr ""
 
-#: index.php:737
+#: index.php:731
 msgid "Restore"
 msgstr ""
 
-#: index.php:746
+#: index.php:740
 msgid "Post restored by"
 msgstr ""
 
-#: index.php:824
+#: index.php:818
 msgid "Curators of the Topic"
 msgstr ""
 
-#: index.php:828
+#: index.php:822
 msgid "Delete Poll"
 msgstr ""
 
-#: index.php:829
+#: index.php:823
 msgid "Add Poll"
 msgstr ""
 
-#: index.php:834
+#: index.php:828
 msgid "Open Topic"
 msgstr ""
 
-#: index.php:836
+#: index.php:830
 msgid "Close Topic"
 msgstr ""
 
-#: index.php:841
+#: index.php:835
 msgid "Restore Topic"
 msgstr ""
 
-#: index.php:847
+#: index.php:841
 msgid "Unfix Topic"
 msgstr ""
 
-#: index.php:849
+#: index.php:843
 msgid "Pin Topic"
 msgstr ""
 
-#: index.php:862
+#: index.php:856
 msgid "Cancel Filter"
 msgstr ""
 
-#: index.php:868
+#: index.php:862
 msgid "Download Topic"
 msgstr ""
 
-#: index.php:883
+#: index.php:877
 msgid "Files"
 msgstr ""
 
-#: index.php:910
+#: index.php:904
 msgid "Forum rules"
 msgstr ""
 
-#: index.php:917
+#: index.php:911
 msgid "New at the top"
 msgstr ""
 
-#: index.php:919
+#: index.php:913
 msgid "New at the bottom"
 msgstr ""
 

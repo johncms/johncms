@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
+"POT-Creation-Date: 2017-01-22 16:45+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -40,12 +40,12 @@ msgstr ""
 #: includes/fileControl/files_more.php:37 includes/fileControl/jad_file.php:32
 #: includes/fileControl/jad_file.php:41 includes/fileControl/mp3tags.php:33
 #: includes/fileControl/transfer_file.php:31 includes/files_import.php:34
-#: includes/files_moderation.php:31 includes/files_moderation.php:75
+#: includes/files_moderation.php:33 includes/files_moderation.php:77
 #: includes/files_new.php:36 includes/files_new.php:45
 #: includes/files_new.php:76 includes/files_top.php:40
 #: includes/files_top.php:62 includes/files_upload.php:203
 #: includes/files_user.php:74 includes/folder_add.php:34
-#: includes/folder_delete.php:33 includes/folder_edit.php:32
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
 #: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
 #: includes/view.php:158 index.php:38 index.php:163 index.php:176 index.php:360
@@ -61,7 +61,7 @@ msgid "For registered users only"
 msgstr ""
 
 #: includes/bookmark.php:57 includes/comments_review.php:97
-#: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:62
+#: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
 #: includes/files_new.php:62 includes/files_user.php:60
 #: includes/top_users.php:49 index.php:297
 msgid "The list is empty"
@@ -69,14 +69,14 @@ msgstr ""
 
 #: includes/bookmark.php:60 includes/comments_review.php:100
 #: includes/fileControl/files_more.php:230
-#: includes/fileControl/transfer_file.php:127 includes/files_moderation.php:65
+#: includes/fileControl/transfer_file.php:127 includes/files_moderation.php:67
 #: includes/files_new.php:65 includes/files_user.php:63 includes/search.php:78
 #: includes/top_users.php:52
 msgid "Total"
 msgstr ""
 
 #: includes/bookmark.php:67 includes/comments_review.php:107
-#: includes/files_moderation.php:72 includes/files_new.php:73
+#: includes/files_moderation.php:74 includes/files_new.php:73
 #: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
 #: index.php:321
 msgid "To Page"
@@ -107,7 +107,7 @@ msgstr ""
 #: includes/files_import.php:184 includes/files_upload.php:176
 #: includes/files_upload.php:197 includes/files_upload.php:200
 #: includes/folder_add.php:130 includes/folder_add.php:133
-#: includes/folder_delete.php:83 includes/folder_edit.php:128
+#: includes/folder_delete.php:85 includes/folder_edit.php:128
 #: includes/scan_dir.php:83 includes/scan_dir.php:302
 msgid "Back"
 msgstr ""
@@ -123,8 +123,8 @@ msgstr ""
 #: includes/fileControl/delete_file.php:89
 #: includes/fileControl/edit_screen.php:117
 #: includes/fileControl/files_more.php:88
-#: includes/fileControl/files_more.php:227 includes/files_moderation.php:57
-#: includes/folder_delete.php:81 index.php:231
+#: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
+#: includes/folder_delete.php:83 index.php:231
 msgid "Delete"
 msgstr ""
 
@@ -216,7 +216,7 @@ msgstr ""
 msgid "Edit File"
 msgstr ""
 
-#: includes/fileControl/files_more.php:88 includes/folder_delete.php:80
+#: includes/fileControl/files_more.php:88 includes/folder_delete.php:82
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 
 #: includes/files_import.php:34 includes/files_new.php:36
 #: includes/files_upload.php:203 includes/folder_add.php:34
-#: includes/folder_delete.php:33 includes/folder_edit.php:32
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 index.php:163
 msgid "The directory does not exist"
 msgstr ""
@@ -364,23 +364,23 @@ msgstr ""
 msgid "File Name"
 msgstr ""
 
-#: includes/files_moderation.php:28 index.php:191
+#: includes/files_moderation.php:30 index.php:191
 msgid "Files on moderation"
 msgstr ""
 
-#: includes/files_moderation.php:35
+#: includes/files_moderation.php:37
 msgid "File accepted"
 msgstr ""
 
-#: includes/files_moderation.php:39
+#: includes/files_moderation.php:41
 msgid "All files accepted"
 msgstr ""
 
-#: includes/files_moderation.php:56
+#: includes/files_moderation.php:58
 msgid "Accept"
 msgstr ""
 
-#: includes/files_moderation.php:60
+#: includes/files_moderation.php:62
 msgid "Accept all files"
 msgstr ""
 
@@ -471,11 +471,11 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: includes/folder_delete.php:33
+#: includes/folder_delete.php:34
 msgid "Before removing, delete subdirectories"
 msgstr ""
 
-#: includes/folder_delete.php:78 index.php:340
+#: includes/folder_delete.php:80 index.php:340
 msgid "Delete Folder"
 msgstr ""
 
