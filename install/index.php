@@ -462,6 +462,7 @@ switch ($act) {
                             'kom'      => true,
                         ],
                         'skindef'       => 'default',
+                        'timeshift' => 0,
                     ],
                 ];
                 $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
