@@ -44,7 +44,7 @@ return [
     'error'                    => 'ERROR!',
     'errors'                   => 'Errors',
     'final_note'               => 'Do not forget to delete the folder <span class="red"><b>/install</b></span>',
-    'final_warning'            => '<h3 class="red">WARNING!</h3>After installation, you must:<p><ul><li>Delete folder <b class="blue">/install</b></li><li>Change rights of folder <b class="blue">/incfiles</b> to <b class="blue">755</b></li><li>Change rights of file <b class="blue">/incfiles/db.php</b> to <b class="blue">644</b></li></ul></p>',
+    'final_warning'            => '<h2 class="red">WARNING!</h2><h3>After installation, you must delete folder /<span class="red">install</span></h3>',
     'go_to_site'               => 'Go to Site',
     'home'                     => 'Home',
     'ignore_warnings'          => 'Ignore all the warnings and start the installation',

@@ -45,7 +45,7 @@ return [
     'errors'                   => 'Ошибки',
     'final'                    => 'Финиш',
     'final_note'               => 'Не забудьте удалить папку <span class="red"><b>/install</b></span>',
-    'final_warning'            => '<h3 class="red">ВНИМАНИЕ!</h3>После завершения процедуры установки необходимо:<p><ul><li>Удалить папку <b class="blue">/install</b></li><li>Сменить права папки <b class="blue">/incfiles</b> на <b class="blue">755</b></li><li>Сменить права файла <b class="blue">/incfiles/db.php</b> на <b class="blue">644</b></li></ul></p>',
+    'final_warning'            => '<h2 class="red">ВНИМАНИЕ!</h2><h3>После завершения процедуры установки необходимо удалить папку /<span class="red">install</span></h3>',
     'go_to_site'               => 'Перейти на сайт',
     'home'                     => 'К началу',
     'ignore_warnings'          => 'Игнорировать предупреждения и начать установку',
