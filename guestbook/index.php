@@ -33,7 +33,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 /** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+$env = $container->get('env');
 
 /** @var Johncms\Bbcode $bbcode */
 $bbcode = $container->get('bbcode');
