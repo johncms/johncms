@@ -54,12 +54,13 @@ class NewsWidget
 
                 while ($res = $req->fetch()) {
                     $text = $res['text'];
+                    $moreLink = '';
 
                     // Если текст больше заданного предела, обрезаем
                     if (mb_strlen($text) > $this->settings['size']) {
                         $text = mb_substr($text, 0, $this->settings['size']);
                         $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-                        $text .= ' <a href="news/index.php">' . _t('show more', 'system') . '...</a>';
+                        $moreLink = ' &gt;&gt; <a href="news/index.php">' . _t('show more', 'system') . '...</a>';
                     }
 
                     $text = $this->tools->checkout(
@@ -71,6 +72,8 @@ class NewsWidget
                     if ($this->settings['smileys']) {
                         $text = $this->tools->smilies($text);
                     }
+
+                    $text = $text . $moreLink;
 
                     // Определяем режим просмотра заголовка - текста
                     $news .= '<div class="news">';
