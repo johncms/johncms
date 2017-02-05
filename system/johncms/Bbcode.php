@@ -19,24 +19,24 @@ class Bbcode
     /**
      * @var \Johncms\Config
      */
-    private $config;
+    protected $config;
 
     /**
      * @var User
      */
-    private $user;
+    protected $user;
 
     /**
      * @var UserConfig
      */
-    private $userConfig;
+    protected $userConfig;
 
     /**
      * @var \GeSHi
      */
-    private $geshi;
+    protected $geshi;
 
-    private $homeUrl;
+    protected $homeUrl;
 
     public function __invoke(ContainerInterface $container)
     {
@@ -257,7 +257,7 @@ text-decoration: none;
      * @param string $var
      * @return string
      */
-    private function parseTime($var)
+    protected function parseTime($var)
     {
         return preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
@@ -281,7 +281,7 @@ text-decoration: none;
      * @param $text
      * @return mixed
      */
-    private function highlightUrl($text)
+    protected function highlightUrl($text)
     {
         $homeurl = $this->homeUrl;
 
@@ -400,7 +400,7 @@ text-decoration: none;
      * @param string $var
      * @return mixed
      */
-    private function highlightCode($var)
+    protected function highlightCode($var)
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', [$this, 'phpCodeCallback'], $var);
         $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', [$this, 'codeCallback'], $var);
@@ -449,7 +449,7 @@ text-decoration: none;
      * @param $var
      * @return mixed
      */
-    private function highlightBbcodeUrl($var)
+    protected function highlightBbcodeUrl($var)
     {
         return preg_replace_callback('~\[url=(https?://.+?|//.+?)](.+?)\[/url]~iu',
             function ($url) {
@@ -471,7 +471,7 @@ text-decoration: none;
      * @param string $var
      * @return string
      */
-    private function highlightBb($var)
+    protected function highlightBb($var)
     {
         // Список поиска
         $search = [
@@ -521,7 +521,7 @@ text-decoration: none;
             '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
             // Спойлер
         ];
-
+    
         return preg_replace($search, $replace, $var);
     }
 }
