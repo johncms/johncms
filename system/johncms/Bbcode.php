@@ -466,6 +466,87 @@ text-decoration: none;
     }
 
     /**
+     * Список замен для основных тегов BB-кода.
+     *
+     * @return array
+     */
+    protected function replacements()
+    {
+        return [
+            // Жирный
+            'b' => [
+                'from' => '#\[b](.+?)\[/b]#is',
+                'to' => '<span style="font-weight: bold">$1</span>'
+            ],
+            // Курсив
+            'i' => [
+                'from' => '#\[i](.+?)\[/i]#is',
+                'to' => '<span style="font-style:italic">$1</span>'
+            ],
+            // Подчёркнутый
+            'u' => [
+                'from' => '#\[u](.+?)\[/u]#is',
+                'to' => '<span style="text-decoration:underline">$1</span>'
+            ],
+            // Зачёркнутый
+            's' => [
+                'from' => '#\[s](.+?)\[/s]#is',
+                'to' => '<span style="text-decoration:line-through">$1</span>'
+            ],
+            // Маленький шрифт
+            'small' => [
+                'from' => '#\[small](.+?)\[/small]#is',
+                'to' => '<span style="font-size:x-small">$1</span>'
+            ],
+            // Большой шрифт
+            'big' => [
+                'from' => '#\[big](.+?)\[/big]#is',
+                'to' => '<span style="font-size:large">$1</span>'
+            ],
+            // Красный
+            'red' => [
+                'from' => '#\[red](.+?)\[/red]#is',
+                'to' => '<span style="color:red">$1</span>'
+            ],
+            // Зеленый
+            'green' => [
+                'from' => '#\[green](.+?)\[/green]#is',
+                'to' => '<span style="color:green">$1</span>'
+            ],
+            // Синий
+            'blue' => [
+                'from' => '#\[blue](.+?)\[/blue]#is',
+                'to' => '<span style="color:blue">$1</span>'
+            ],
+            // Цвет шрифта
+            'color' => [
+                'from' => '!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/color]!is',
+                'to' => '<span style="color:$1">$2</span>'
+            ],
+            // Цвет фона
+            'bg' => [
+                'from' => '!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is',
+                'to' => '<span style="background-color:$1">$2</span>'
+            ],
+            // Цитата
+            'quote' => [
+                'from' => '#\[(quote|c)](.+?)\[/(quote|c)]#is',
+                'to' => '<span class="quote" style="display:block">$2</span>'
+            ],
+            // Список
+            'list' => [
+                'from' => '#\[\*](.+?)\[/\*]#is',
+                'to' => '<span class="bblist">$1</span>'
+            ],
+            // Спойлер
+            'spoiler' => [
+                'from' => '#\[spoiler=(.+?)](.+?)\[/spoiler]#is',
+                'to' => '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
+            ]
+        ];
+    }
+
+    /**
      * Обработка bbCode
      *
      * @param string $var
@@ -473,55 +554,10 @@ text-decoration: none;
      */
     protected function highlightBb($var)
     {
-        // Список поиска
-        $search = [
-            '#\[b](.+?)\[/b]#is', // Жирный
-            '#\[i](.+?)\[/i]#is', // Курсив
-            '#\[u](.+?)\[/u]#is', // Подчеркнутый
-            '#\[s](.+?)\[/s]#is', // Зачеркнутый
-            '#\[small](.+?)\[/small]#is', // Маленький шрифт
-            '#\[big](.+?)\[/big]#is', // Большой шрифт
-            '#\[red](.+?)\[/red]#is', // Красный
-            '#\[green](.+?)\[/green]#is', // Зеленый
-            '#\[blue](.+?)\[/blue]#is', // Синий
-            '!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/color]!is', // Цвет шрифта
-            '!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', // Цвет фона
-            '#\[(quote|c)](.+?)\[/(quote|c)]#is', // Цитата
-            '#\[\*](.+?)\[/\*]#is', // Список
-            '#\[spoiler=(.+?)](.+?)\[/spoiler]#is' // Спойлер
-        ];
-        // Список замены
-        $replace = [
-            '<span style="font-weight: bold">$1</span>',
-            // Жирный
-            '<span style="font-style:italic">$1</span>',
-            // Курсив
-            '<span style="text-decoration:underline">$1</span>',
-            // Подчеркнутый
-            '<span style="text-decoration:line-through">$1</span>',
-            // Зачеркнутый
-            '<span style="font-size:x-small">$1</span>',
-            // Маленький шрифт
-            '<span style="font-size:large">$1</span>',
-            // Большой шрифт
-            '<span style="color:red">$1</span>',
-            // Красный
-            '<span style="color:green">$1</span>',
-            // Зеленый
-            '<span style="color:blue">$1</span>',
-            // Синий
-            '<span style="color:$1">$2</span>',
-            // Цвет шрифта
-            '<span style="background-color:$1">$2</span>',
-            // Цвет фона
-            '<span class="quote" style="display:block">$2</span>',
-            // Цитата
-            '<span class="bblist">$1</span>',
-            // Список
-            '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
-            // Спойлер
-        ];
-    
+        $replacements = $this->replacements();
+        $replacements = array_values($replacements);
+        $search = array_column($replacements, 'from');
+        $replace = array_column($replacements, 'to');
         return preg_replace($search, $replace, $var);
     }
 }
