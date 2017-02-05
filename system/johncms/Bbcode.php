@@ -95,86 +95,6 @@ class Bbcode
      */
     public function buttons($form, $field)
     {
-        $colors = [
-            'ffffff',
-            'bcbcbc',
-            '708090',
-            '6c6c6c',
-            '454545',
-            'fcc9c9',
-            'fe8c8c',
-            'fe5e5e',
-            'fd5b36',
-            'f82e00',
-            'ffe1c6',
-            'ffc998',
-            'fcad66',
-            'ff9331',
-            'ff810f',
-            'd8ffe0',
-            '92f9a7',
-            '34ff5d',
-            'b2fb82',
-            '89f641',
-            'b7e9ec',
-            '56e5ed',
-            '21cad3',
-            '03939b',
-            '039b80',
-            'cac8e9',
-            '9690ea',
-            '6a60ec',
-            '4866e7',
-            '173bd3',
-            'f3cafb',
-            'e287f4',
-            'c238dd',
-            'a476af',
-            'b53dd2',
-        ];
-        $font_color = '';
-        $bg_color = '';
-
-        foreach ($colors as $value) {
-            $font_color .= '<a href="javascript:tag(\'[color=#' . $value . ']\', \'[/color]\'); show_hide(\'color\');" style="background-color:#' . $value . ';"></a>';
-            $bg_color .= '<a href="javascript:tag(\'[bg=#' . $value . ']\', \'[/bg]\'); show_hide(\'bg\');" style="background-color:#' . $value . ';"></a>';
-        }
-
-        // Смайлы
-        $smileys = !empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
-
-        if (!empty($smileys)) {
-            $res_sm = '';
-            $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=my_smilies">' . _t('Edit List', 'system') . '</a></small><br />';
-
-            foreach ($smileys as $value) {
-                $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
-            }
-
-            /** @var \Johncms\Tools $tools */
-            $tools = \App::getContainer()->get('tools');
-
-            $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
-        } else {
-            $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=smilies">' . _t('Add Smilies', 'system') . '</a></small>';
-        }
-
-        // Код
-        $code = [
-            'php',
-            'css',
-            'js',
-            'html',
-            'sql',
-            'xml',
-        ];
-
-        $codebtn = '';
-
-        foreach ($code as $val) {
-            $codebtn .= '<a href="javascript:tag(\'[code=' . $val . ']\', \'[/code]\'); show_hide(\'code\');">' . strtoupper($val) . '</a>';
-        }
-
         $out = '<style>
 .codepopup {margin-top: 3px;}
 .codepopup a {
@@ -213,30 +133,147 @@ text-decoration: none;
                 obj.style.display = "none";
               }
             }
-            </script>
-            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/bold.gif" alt="b" title="' . _t('Bold', 'system') . '" /></a>
-            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/italics.gif" alt="i" title="' . _t('Italic', 'system') . '" /></a>
-            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/underline.gif" alt="u" title="' . _t('Underline', 'system') . '" /></a>
-            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/strike.gif" alt="s" title="' . _t('Strike', 'system') . '" /></a>
-            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/list.gif" alt="li" title="' . _t('List', 'system') . '" /></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/sp.gif" alt="spoiler" title="' . _t('Spoiler', 'system') . '" /></a>
-            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/quote.gif" alt="quote" title="' . _t('Quote', 'system') . '" /></a>
-            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/link.gif" alt="url" title="' . _t('URL', 'system') . '" /></a>
-            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/php.gif" title="' . _t('Code', 'system') . '" alt="Code" /></a>
-            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
-            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>';
-
-        if ($this->user->isValid()) {
-            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
-                <div id="sm" style="display:none">' . $bb_smileys . '</div>';
-        } else {
-            $out .= '<br />';
-        }
-        $out .= '<div id="code" class="codepopup" style="display:none;">' . $codebtn . '</div>' .
-            '<div id="color" class="bbpopup" style="display:none;">' . $font_color . '</div>' .
-            '<div id="bg" class="bbpopup" style="display:none">' . $bg_color . '</div>';
-
+            </script>';
+        $out .= join('', array_values($this->toolbarButtons()));
         return $out;
+    }
+
+    /**
+     * Список контента для панели BB-кодов
+     * 
+     * @return array
+     */
+    protected function toolbarButtons()
+    {
+        $result = [
+            'b' => '<a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/bold.gif" alt="b" title="' . _t('Bold', 'system') . '" /></a>',
+            'i' => '<a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/italics.gif" alt="i" title="' . _t('Italic', 'system') . '" /></a>',
+            'u' => '<a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/underline.gif" alt="u" title="' . _t('Underline', 'system') . '" /></a>',
+            's' => '<a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/strike.gif" alt="s" title="' . _t('Strike', 'system') . '" /></a>',
+            'list' => '<a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/list.gif" alt="li" title="' . _t('List', 'system') . '" /></a>',
+            'spoiler' => '<a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/sp.gif" alt="spoiler" title="' . _t('Spoiler', 'system') . '" /></a>',
+            'quote' => '<a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/quote.gif" alt="quote" title="' . _t('Quote', 'system') . '" /></a>',
+            'url' => '<a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/link.gif" alt="url" title="' . _t('URL', 'system') . '" /></a>',
+            'code' => '<a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/php.gif" title="' . _t('Code', 'system') . '" alt="Code" /></a>',
+            'color' => '<a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>',
+            'bg' => '<a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>'
+        ];
+        $result['smileys'] = $this->toolbarSmileys();
+        $result['codepopup'] = $this->toolbarCodesPopup();
+        $result['colorpopup'] = $this->toolbarColorsPopup();
+        return $result;
+    }
+
+    /**
+     * Контент для смайлов на панели
+     *
+     * @return string
+     */
+    protected function toolbarSmileys()
+    {
+        if (!$this->user->isValid()) {
+            return '<br />';
+        }
+        
+        $bb_smileys = '';
+        $smileys = !empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
+        if (empty($smileys)) {
+            $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=smilies">' . _t('Add Smilies', 'system') . '</a></small>';
+        } else {
+            $res_sm = '';
+            $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=my_smilies">' . _t('Edit List', 'system') . '</a></small><br />';
+
+            foreach ($smileys as $value) {
+                $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
+            }
+
+            /** @var \Johncms\Tools $tools */
+            $tools = \App::getContainer()->get('tools');
+
+            $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
+        }
+
+        return ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
+            <div id="sm" style="display:none">' . $bb_smileys . '</div>';
+    }
+
+    /**
+     * Контент для всплывающей панели кода
+     *
+     * @return string
+     */
+    protected function toolbarCodesPopup()
+    {
+        $code = [
+            'php',
+            'css',
+            'js',
+            'html',
+            'sql',
+            'xml',
+        ];
+
+        $codepopup = '';
+        foreach ($code as $val) {
+            $codepopup .= '<a href="javascript:tag(\'[code=' . $val . ']\', \'[/code]\'); show_hide(\'code\');">' . strtoupper($val) . '</a>';
+        }
+        return '<div id="code" class="codepopup" style="display:none;">' . $codepopup . '</div>';
+    }
+
+    /**
+     * Контент для всплывающей панели цвета текста и фона
+     * 
+     * @return array
+     */
+    protected function toolbarColorsPopup()
+    {
+        $colors = [
+            'ffffff',
+            'bcbcbc',
+            '708090',
+            '6c6c6c',
+            '454545',
+            'fcc9c9',
+            'fe8c8c',
+            'fe5e5e',
+            'fd5b36',
+            'f82e00',
+            'ffe1c6',
+            'ffc998',
+            'fcad66',
+            'ff9331',
+            'ff810f',
+            'd8ffe0',
+            '92f9a7',
+            '34ff5d',
+            'b2fb82',
+            '89f641',
+            'b7e9ec',
+            '56e5ed',
+            '21cad3',
+            '03939b',
+            '039b80',
+            'cac8e9',
+            '9690ea',
+            '6a60ec',
+            '4866e7',
+            '173bd3',
+            'f3cafb',
+            'e287f4',
+            'c238dd',
+            'a476af',
+            'b53dd2',
+        ];
+
+        $font_color = '';
+        $bg_color = '';
+        foreach ($colors as $value) {
+            $font_color .= '<a href="javascript:tag(\'[color=#' . $value . ']\', \'[/color]\'); show_hide(\'color\');" style="background-color:#' . $value . ';"></a>';
+            $bg_color .= '<a href="javascript:tag(\'[bg=#' . $value . ']\', \'[/bg]\'); show_hide(\'bg\');" style="background-color:#' . $value . ';"></a>';
+        }
+
+        return '<div id="color" class="bbpopup" style="display:none;">' . $font_color . '</div>' .
+            '<div id="bg" class="bbpopup" style="display:none">' . $bg_color . '</div>';
     }
 
     // Обработка тэгов и ссылок
