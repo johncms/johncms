@@ -233,7 +233,7 @@ if (!$error) {
                 }
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
-                echo App::getContainer()->get('bbcode')->buttons('form', 'msg');
+                echo App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
                 echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
 
                 echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .

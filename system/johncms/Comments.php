@@ -397,7 +397,7 @@ class Comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
+            '</p><p>' . \App::getContainer()->get(Api\BbcodeInterface::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
             '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }

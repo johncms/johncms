@@ -112,9 +112,9 @@ class Tools
         }
 
         if ($tags == 1) {
-            $str = $this->container->get('bbcode')->tags($str);
+            $str = $this->container->get(Api\BbcodeInterface::class)->tags($str);
         } elseif ($tags == 2) {
-            $str = $this->container->get('bbcode')->notags($str);
+            $str = $this->container->get(Api\BbcodeInterface::class)->notags($str);
         }
 
         return trim($str);

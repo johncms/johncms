@@ -36,7 +36,7 @@ $tools = $container->get('tools');
 $env = $container->get('env');
 
 /** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);

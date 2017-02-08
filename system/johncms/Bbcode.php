@@ -14,7 +14,7 @@ namespace Johncms;
 
 use Interop\Container\ContainerInterface;
 
-class Bbcode
+class Bbcode implements Api\BbcodeInterface
 {
     /**
      * @var \Johncms\Config
@@ -46,6 +46,18 @@ class Bbcode
         $this->homeUrl = $this->config['homeurl'];
 
         return $this;
+    }
+
+    // Обработка тэгов и ссылок
+    public function tags($var)
+    {
+        $var = $this->parseTime($var);               // Обработка тэга времени
+        $var = $this->highlightCode($var);           // Подсветка кода
+        $var = $this->highlightBb($var);               // Обработка ссылок
+        $var = $this->highlightUrl($var);            // Обработка ссылок
+        $var = $this->highlightBbcodeUrl($var);       // Обработка ссылок в BBcode
+
+        return $var;
     }
 
     public function notags($var = '')
@@ -223,7 +235,7 @@ text-decoration: none;
     /**
      * Контент для всплывающей панели цвета текста и фона
      * 
-     * @return array
+     * @return string
      */
     protected function toolbarColorsPopup()
     {
@@ -274,18 +286,6 @@ text-decoration: none;
 
         return '<div id="color" class="bbpopup" style="display:none;">' . $font_color . '</div>' .
             '<div id="bg" class="bbpopup" style="display:none">' . $bg_color . '</div>';
-    }
-
-    // Обработка тэгов и ссылок
-    public function tags($var)
-    {
-        $var = $this->parseTime($var);               // Обработка тэга времени
-        $var = $this->highlightCode($var);           // Подсветка кода
-        $var = $this->highlightBb($var);               // Обработка ссылок
-        $var = $this->highlightUrl($var);            // Обработка ссылок
-        $var = $this->highlightBbcodeUrl($var);       // Обработка ссылок в BBcode
-
-        return $var;
     }
 
     /**

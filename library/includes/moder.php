@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
             . '</textarea></div>'
             : '')
         . ($type == 'article' && mb_strlen($row['text']) < 500000
-            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get('bbcode')->buttons('form',
+            ? '<h3>' . _t('Text') . '</h3><div>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form',
                 'text') . '<textarea rows="5" cols="20" name="text">' . $tools->checkout($row['text'])
             . '</textarea></div>'
             : ($type == 'article' && mb_strlen($row['text']) > 500000

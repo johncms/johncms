@@ -29,7 +29,7 @@ $systemUser = $container->get(Johncms\User::class);
 $tools = $container->get('tools');
 
 /** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 $total = $db->query("
 	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)

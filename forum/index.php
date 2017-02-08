@@ -585,7 +585,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>' .
-                            $container->get('bbcode')->buttons('form1', 'msg') .
+                            $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form1', 'msg') .
                             '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg"></textarea></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
@@ -772,7 +772,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>';
-                        echo $container->get('bbcode')->buttons('form2', 'msg');
+                        echo $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form2', 'msg');
                         echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg"></textarea><br></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 

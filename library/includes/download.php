@@ -34,7 +34,7 @@ $container = App::getContainer();
 $db = $container->get(PDO::class);
 
 /** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 switch ($type) {
     case 'txt':

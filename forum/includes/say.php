@@ -209,7 +209,7 @@ switch ($type1['type']) {
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
@@ -253,7 +253,7 @@ switch ($type1['type']) {
         if (!empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = $container->get('bbcode')->notags($citata);
+            $citata = $container->get(Johncms\Api\BbcodeInterface::class)->notags($citata);
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date("d.m.Y H:i", $type1['time']);
@@ -405,7 +405,7 @@ switch ($type1['type']) {
             }
 
             echo '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
