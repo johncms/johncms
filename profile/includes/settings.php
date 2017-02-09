@@ -27,8 +27,8 @@ $systemUser = $container->get(Johncms\User::class);
 /** @var Johncms\UserConfig $userConfig */
 $userConfig = $systemUser->getConfig();
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {

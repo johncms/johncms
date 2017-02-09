@@ -24,8 +24,8 @@ $systemUser = $container->get(Johncms\User::class);
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 use Library\Hashtags;
 

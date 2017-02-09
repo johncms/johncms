@@ -14,7 +14,7 @@ namespace Johncms;
 
 use Interop\Container\ContainerInterface;
 
-class Tools
+class Tools implements Api\ToolsInterface
 {
     /**
      * @var ContainerInterface
@@ -289,7 +289,7 @@ class Tools
      *
      * @return string
      */
-    public function displayUser($user = 0, $arg = [])
+    public function displayUser($user = 0, array $arg = [])
     {
         global $mod;
         $out = false;
@@ -455,7 +455,7 @@ class Tools
      * @param array  $args
      * @return bool|string
      */
-    public function image($name, $args = [])
+    public function image($name, array $args = [])
     {
         $homeurl = $this->config['homeurl'];
 

@@ -18,8 +18,8 @@ $container = App::getContainer();
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {

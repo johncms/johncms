@@ -33,7 +33,7 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Bbcode $bbcode */
+/** @var Johncms\Api\BbcodeInterface $bbcode */
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 switch ($type) {

@@ -18,8 +18,8 @@ $container = App::getContainer();
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';

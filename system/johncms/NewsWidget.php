@@ -35,7 +35,7 @@ class NewsWidget
         $container = \App::getContainer();
 
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(Api\ToolsInterface::class);
         $this->settings = $container->get('config')['johncms']['news'];
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();

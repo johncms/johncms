@@ -12,8 +12,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
 require('../system/head.php');
 $delf = opendir('../files/forum/topics');

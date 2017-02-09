@@ -38,7 +38,7 @@ class Counters
 
         $this->db = $container->get(\PDO::class);
         $this->systemUser = $container->get(\Johncms\User::class);
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(Api\ToolsInterface::class);
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 
         return $this;

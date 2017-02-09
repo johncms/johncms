@@ -199,8 +199,8 @@ text-decoration: none;
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
 
-            /** @var \Johncms\Tools $tools */
-            $tools = \App::getContainer()->get('tools');
+            /** @var Api\ToolsInterface::class $tools */
+            $tools = \App::getContainer()->get(Api\ToolsInterface::class);
 
             $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         }

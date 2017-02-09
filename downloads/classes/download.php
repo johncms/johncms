@@ -132,8 +132,8 @@ class Download
         /** @var Johncms\User $systemUser */
         $systemUser = $container->get(Johncms\User::class);
 
-        /** @var Johncms\Tools $tools */
-        $tools = $container->get('tools');
+        /** @var Johncms\Api\ToolsInterface $tools */
+        $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
         /** @var Johncms\Config $config */
         $config = $container->get(Johncms\Config::class);
@@ -202,8 +202,8 @@ class Download
     {
         global $old;
 
-        /** @var Johncms\Tools $tools */
-        $tools = App::getContainer()->get('tools');
+        /** @var Johncms\Api\ToolsInterface $tools */
+        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';

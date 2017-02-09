@@ -15,8 +15,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)

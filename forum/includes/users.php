@@ -23,8 +23,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id'")->fetchColumn();
 

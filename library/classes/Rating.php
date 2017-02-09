@@ -32,7 +32,7 @@ class Rating
     private $db;
 
     /**
-     * @var \Johncms\Tools
+     * @var \Johncms\Api\ToolsInterface
      */
     private $tools;
 
@@ -44,7 +44,7 @@ class Rating
     {
         $container = \App::getContainer();
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(\Johncms\Api\ToolsInterface::class);
 
         $this->lib_id = $id;
         $this->check();

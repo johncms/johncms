@@ -19,8 +19,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");

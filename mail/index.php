@@ -85,8 +85,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+    /** @var Johncms\Api\ToolsInterface $tools */
+    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     if ($id) {
         $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");

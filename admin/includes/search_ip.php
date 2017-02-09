@@ -20,8 +20,8 @@ $search = $search_post ? $search_post : $search_get;
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (isset($_GET['ip'])) {
     $search = trim($_GET['ip']);

@@ -25,10 +25,10 @@ $db = $container->get(PDO::class);
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Bbcode $bbcode */
+/** @var Johncms\Api\BbcodeInterface $bbcode */
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 $total = $db->query("

@@ -21,8 +21,8 @@ $container = App::getContainer();
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
     || $user['rights'] > $systemUser->rights

@@ -22,8 +22,8 @@ if ($systemUser->isValid()) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+    /** @var Johncms\Api\ToolsInterface $tools */
+    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     $topic = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `id` = '$id' AND `edit` != '1'")->fetchColumn();
     $vote = abs(intval($_POST['vote']));

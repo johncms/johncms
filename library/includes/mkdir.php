@@ -23,8 +23,8 @@ if (isset($_POST['submit'])) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+    /** @var Johncms\Api\ToolsInterface $tools */
+    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     if (empty($_POST['name'])) {
         echo $tools->displayError(_t('You have not entered the name'),

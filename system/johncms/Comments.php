@@ -59,7 +59,7 @@ class Comments
 
         /** @var \Interop\Container\ContainerInterface $container */
         $container = \App::getContainer();
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(Api\ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
         $this->systemUser = $container->get(\Johncms\User::class);
 
@@ -422,7 +422,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = \App::getContainer()->get('tools')->antiflood();
+            $flood = \App::getContainer()->get(Api\ToolsInterface::class)->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');
