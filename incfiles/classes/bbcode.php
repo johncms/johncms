@@ -278,7 +278,7 @@ class bbcode extends core
             }
         }
 
-        return preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]~', 'process_url', $var);
+        return preg_replace_callback('~\\[url=(.+?)\\](.+?)\\[/url\\]~', 'process_url', $var);
     }
 
     /*
