@@ -12,25 +12,13 @@
 
 namespace Johncms;
 
-use Interop\Container\ContainerInterface;
-
 class Cleanup
 {
-    private $cacheFile = 'cleanup.dat';
-
-    public function __invoke(ContainerInterface $container)
+    public function __construct(\PDO $db)
     {
-        /** @var \PDO $db */
-        $db = $container->get(\PDO::class);
-        $file = CACHE_PATH . $this->cacheFile;
-
-        if (!file_exists($file) || filemtime($file) < (time() - 86400)) {
-            $db->exec('DELETE FROM `cms_sessions` WHERE `lastdate` < ' . (time() - 86400));
-            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < " . (time() - 7776000));
-            $db->query('OPTIMIZE TABLE `cms_sessions`, `cms_users_iphistory`, `cms_mail`, `cms_contact`');
-
-            file_put_contents($file, time());
-        }
+        $db->exec('DELETE FROM `cms_sessions` WHERE `lastdate` < ' . (time() - 86400));
+        $db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < " . (time() - 7776000));
+        $db->query('OPTIMIZE TABLE `cms_sessions`, `cms_users_iphistory`, `cms_mail`, `cms_contact`');
 
         return true;
     }

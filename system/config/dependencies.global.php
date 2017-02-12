@@ -5,8 +5,8 @@ return [
         'factories' => [
             Johncms\Api\BbcodeInterface::class => Johncms\Bbcode::class,
             Johncms\Api\ToolsInterface::class  => Johncms\Tools::class,
-            Johncms\Cleanup::class             => Johncms\Cleanup::class,
             PDO::class                         => Johncms\PdoFactory::class,
+
             Johncms\Config::class              => Johncms\ConfigFactory::class,
             Johncms\User::class                => Johncms\UserFactory::class,
             'counters'                         => Johncms\Counters::class,

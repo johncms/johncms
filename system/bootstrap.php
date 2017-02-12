@@ -68,9 +68,6 @@ session_start();
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-// Автоочистка системы
-$container->get(Johncms\Cleanup::class);
-
 /** @var Johncms\Environment $env */
 $env = App::getContainer()->get('env');
 
@@ -105,6 +102,14 @@ if ($req->rowCount()) {
             header("HTTP/1.0 404 Not Found");
             exit;
     }
+}
+
+// Автоочистка системы
+$cacheFile = CACHE_PATH . 'cleanup.dat';
+
+if (!file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
+    new Johncms\Cleanup($db);
+    file_put_contents($cacheFile, time());
 }
 
 /** @var Johncms\Config $config */
