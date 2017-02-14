@@ -20,7 +20,7 @@ interface ToolsInterface
 
     public function displayDate($var);
 
-    public function displayError($error, $link);
+    public function displayError($error, $link = '');
 
     public function displayPagination($url, $start, $total, $kmess);
 

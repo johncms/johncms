@@ -38,8 +38,8 @@ $env = $container->get('env');
 /** @var Johncms\Api\BbcodeInterface $bbcode */
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);

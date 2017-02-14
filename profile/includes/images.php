@@ -33,8 +33,8 @@ if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
     exit;
 }
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 switch ($mod) {
     case 'avatar':

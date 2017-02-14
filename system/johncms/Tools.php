@@ -37,14 +37,14 @@ class Tools implements Api\ToolsInterface
     private $userConfig;
 
     /**
-     * @var Config
+     * @var Api\ConfigInterface
      */
     private $config;
 
     public function __invoke(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->config = $container->get(Config::class);
+        $this->config = $container->get(Api\ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(User::class);
         $this->userConfig = $this->user->getConfig();

@@ -17,7 +17,7 @@ use Interop\Container\ContainerInterface;
 class Bbcode implements Api\BbcodeInterface
 {
     /**
-     * @var \Johncms\Config
+     * @var Api\ConfigInterface
      */
     protected $config;
 
@@ -40,7 +40,7 @@ class Bbcode implements Api\BbcodeInterface
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->config = $container->get(Config::class);
+        $this->config = $container->get(Api\ConfigInterface::class);
         $this->user = $container->get(User::class);
         $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];

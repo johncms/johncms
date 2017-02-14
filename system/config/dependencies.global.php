@@ -4,10 +4,10 @@ return [
     'dependencies' => [
         'factories' => [
             Johncms\Api\BbcodeInterface::class => Johncms\Bbcode::class,
+            Johncms\Api\ConfigInterface::class => Johncms\ConfigFactory::class,
             Johncms\Api\ToolsInterface::class  => Johncms\Tools::class,
             PDO::class                         => Johncms\PdoFactory::class,
 
-            Johncms\Config::class              => Johncms\ConfigFactory::class,
             Johncms\User::class                => Johncms\UserFactory::class,
             'counters'                         => Johncms\Counters::class,
             'env'                              => Johncms\Environment::class,

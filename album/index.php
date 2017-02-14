@@ -129,8 +129,8 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\Config $config */
-    $config = $container->get(Johncms\Config::class);
+    /** @var Johncms\Api\ConfigInterface $config */
+    $config = $container->get(Johncms\Api\ConfigInterface::class);
 
     require('../system/head.php');
     $albumcount = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`")->fetchColumn();

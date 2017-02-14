@@ -135,8 +135,8 @@ class Download
         /** @var Johncms\Api\ToolsInterface $tools */
         $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-        /** @var Johncms\Config $config */
-        $config = $container->get(Johncms\Config::class);
+        /** @var Johncms\Api\ConfigInterface $config */
+        $config = $container->get(Johncms\Api\ConfigInterface::class);
 
         $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';

@@ -33,8 +33,8 @@ require('../system/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    /** @var Johncms\Config $config */
-    $config = $container->get(Johncms\Config::class);
+    /** @var Johncms\Api\ConfigInterface $config */
+    $config = $container->get(Johncms\Api\ConfigInterface::class);
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 
