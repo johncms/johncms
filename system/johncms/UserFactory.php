@@ -23,7 +23,7 @@ class UserFactory
     private $db;
 
     /**
-     * @var Environment
+     * @var Api\EnvironmentInterface::class
      */
     private $env;
 
@@ -32,7 +32,7 @@ class UserFactory
     public function __invoke(ContainerInterface $container)
     {
         $this->db = $container->get(\PDO::class);
-        $this->env = $container->get('env');
+        $this->env = $container->get(Api\EnvironmentInterface::class);
         $this->userData = $this->authorize();
 
         return new User($this->userData, User::ARRAY_AS_PROPS);

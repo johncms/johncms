@@ -68,8 +68,8 @@ session_start();
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);

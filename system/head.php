@@ -21,8 +21,8 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Environment $env */
-$env = $container->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = $container->get(Johncms\Api\EnvironmentInterface::class);
 
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);

@@ -14,7 +14,7 @@ namespace Johncms;
 
 use Interop\Container\ContainerInterface;
 
-class Environment
+class Environment implements Api\EnvironmentInterface
 {
     private $ip;
     private $ipViaProxy;

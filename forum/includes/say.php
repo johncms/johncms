@@ -143,8 +143,8 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Environment $env */
-            $env = App::getContainer()->get('env');
+            /** @var Johncms\Api\EnvironmentInterface $env */
+            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
             // Добавляем сообщение в базу
             $db->prepare('
@@ -320,8 +320,8 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Environment $env */
-            $env = App::getContainer()->get('env');
+            /** @var Johncms\Api\EnvironmentInterface $env */
+            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
             // Добавляем сообщение в базу
             $db->prepare('

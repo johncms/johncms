@@ -178,8 +178,8 @@ if (isset($_POST['submit'])
             $curator,
         ]);
 
-        /** @var Johncms\Environment $env */
-        $env = App::getContainer()->get('env');
+        /** @var Johncms\Api\EnvironmentInterface $env */
+        $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
         $rid = $db->lastInsertId();
 
         // Добавляем текст поста

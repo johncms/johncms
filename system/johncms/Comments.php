@@ -353,8 +353,8 @@ class Comments
         /** @var \Interop\Container\ContainerInterface $container */
         $container = \App::getContainer();
 
-        /** @var \Johncms\Environment $env */
-        $env = $container->get('env');
+        /** @var Api\EnvironmentInterface $env */
+        $env = $container->get(Api\EnvironmentInterface::class);
 
         // Формируем атрибуты сообщения
         $attributes = [

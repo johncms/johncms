@@ -107,8 +107,8 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        /** @var Johncms\Environment $env */
-        $env = $container->get('env');
+        /** @var Johncms\Api\EnvironmentInterface $env */
+        $env = $container->get(Johncms\Api\EnvironmentInterface::class);
 
         $preg = $config->mod_reg > 1 ? 1 : 0;
         $db->prepare('

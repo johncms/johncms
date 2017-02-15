@@ -22,8 +22,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
 /** @var Johncms\User $systemUser */
 $systemUser = $container->get(Johncms\User::class);
@@ -80,7 +80,7 @@ switch ($mod) {
                 $out = each($ip_list[$i]);
                 $ip = long2ip($out[0]);
 
-                if ($out[0] == $container->get('env')->getIp()) {
+                if ($out[0] == $container->get(Johncms\Api\EnvironmentInterface::class)->getIp()) {
                     echo '<div class="gmenu">';
                 } else {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

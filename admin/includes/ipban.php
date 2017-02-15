@@ -143,8 +143,8 @@ switch ($mod) {
 
             // Проверяем, не попадает ли IP администратора в диапазон
 
-            /** @var Johncms\Environment $env */
-            $env = App::getContainer()->get('env');
+            /** @var Johncms\Api\EnvironmentInterface $env */
+            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
             if (($env->getIp() >= $ip1 && $env->getIp() <= $ip2) || ($env->getIpViaProxy() >= $ip1 && $env->getIpViaProxy() <= $ip2)) {
                 $error = _t('Ban impossible. Your own IP address in the range');
