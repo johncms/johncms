@@ -2,7 +2,7 @@
 `Release Date: under construction`
 
 ### NEW
-- Nothing
+- Добавлен пакет интерфейсов Core API
   
 ### CHANGED
 - Доработан класс BBcode
