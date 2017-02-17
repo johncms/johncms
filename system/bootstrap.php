@@ -116,7 +116,7 @@ if (!file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Johncms\UserConfig $userConfig */
-$userConfig = $container->get(Johncms\User::class)->getConfig();
+$userConfig = $container->get(Johncms\Api\UserInterface::class)->getConfig();
 
 if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
     $locale = trim($_POST['setlng']);

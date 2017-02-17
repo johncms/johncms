@@ -27,7 +27,7 @@ class Tools implements Api\ToolsInterface
     private $db;
 
     /**
-     * @var User
+     * @var Api\UserInterface::class
      */
     private $user;
 
@@ -46,7 +46,7 @@ class Tools implements Api\ToolsInterface
         $this->container = $container;
         $this->config = $container->get(Api\ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->user = $container->get(User::class);
+        $this->user = $container->get(Api\UserInterface::class );
         $this->userConfig = $this->user->getConfig();
 
         return $this;
@@ -433,7 +433,7 @@ class Tools implements Api\ToolsInterface
      * Получаем данные пользователя
      *
      * @param int $id Идентификатор пользователя
-     * @return User|bool
+     * @return array|bool
      */
     public function getUser($id = 0)
     {

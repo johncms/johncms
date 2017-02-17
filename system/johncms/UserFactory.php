@@ -41,7 +41,7 @@ class UserFactory
     /**
      * Авторизация пользователя и получение его данных из базы
      */
-    private function authorize()
+    protected function authorize()
     {
         $user_id = false;
         $user_ps = false;
@@ -105,7 +105,7 @@ class UserFactory
      * @param int $userId
      * @return array
      */
-    private function banCheck($userId)
+    protected function banCheck($userId)
     {
         $ban = [];
         $req = $this->db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = " . $userId . " AND `ban_time` > '" . time() . "'");
@@ -122,7 +122,7 @@ class UserFactory
      *
      * @param array $userData
      */
-    private function ipHistory(array $userData)
+    protected function ipHistory(array $userData)
     {
         // Удаляем из истории текущий адрес (если есть)
         $this->db->exec("DELETE FROM `cms_users_iphistory`
@@ -148,7 +148,7 @@ class UserFactory
         ");
     }
 
-    private function userTemplate()
+    protected function userTemplate()
     {
         $template = [
             'id'            => 0,
@@ -208,7 +208,7 @@ class UserFactory
     /**
      * Уничтожаем данные авторизации юзера
      */
-    private function userUnset()
+    protected function userUnset()
     {
         unset($_SESSION['uid']);
         unset($_SESSION['ups']);

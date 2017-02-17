@@ -12,8 +12,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Johncms\User $systemUser */
-$systemUser = App::getContainer()->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class );
 
 // Главное меню каталога смайлов
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';

@@ -25,8 +25,8 @@ require('../system/bootstrap.php');
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -73,8 +73,8 @@ function vote_photo(array $arg)
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\User $systemUser */
-    $systemUser = $container->get(Johncms\User::class);
+    /** @var Johncms\Api\UserInterface $systemUser */
+    $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
     $rating = $arg['vote_plus'] - $arg['vote_minus'];
 

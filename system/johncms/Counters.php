@@ -22,7 +22,7 @@ class Counters
     private $db;
 
     /**
-     * @var \Johncms\User
+     * @var Api\UserInterface::class
      */
     private $systemUser;
 
@@ -37,7 +37,7 @@ class Counters
     {
 
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(\Johncms\User::class);
+        $this->systemUser = $container->get(Api\UserInterface::class );
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 

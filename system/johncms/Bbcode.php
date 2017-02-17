@@ -22,7 +22,7 @@ class Bbcode implements Api\BbcodeInterface
     protected $config;
 
     /**
-     * @var User
+     * @var Api\UserInterface::class
      */
     protected $user;
 
@@ -41,7 +41,7 @@ class Bbcode implements Api\BbcodeInterface
     public function __invoke(ContainerInterface $container)
     {
         $this->config = $container->get(Api\ConfigInterface::class);
-        $this->user = $container->get(User::class);
+        $this->user = $container->get(Api\UserInterface::class );
         $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];
 

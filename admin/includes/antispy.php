@@ -13,8 +13,8 @@
 defined('_IN_JOHNADM') or die('Error: restricted access');
 define('ROOT_DIR', '..');
 
-/** @var Johncms\User $systemUser */
-$systemUser = App::getContainer()->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {

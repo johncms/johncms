@@ -34,7 +34,7 @@ class Comments
     private $tools;
 
     /**
-     * @var \Johncms\User
+     * @var Api\UserInterface::class
      */
     private $systemUser;
 
@@ -61,7 +61,7 @@ class Comments
         $container = \App::getContainer();
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(\Johncms\User::class);
+        $this->systemUser = $container->get(Api\UserInterface::class );
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
