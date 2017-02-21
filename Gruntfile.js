@@ -82,6 +82,29 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_ar: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/ar/**',
+                            'album/locale/ar/**',
+                            'downloads/locale/ar/**',
+                            'forum/locale/ar/**',
+                            'guestbook/locale/ar/**',
+                            'help/locale/ar/**',
+                            'library/locale/ar/**',
+                            'mail/locale/ar/**',
+                            'news/locale/ar/**',
+                            'profile/locale/ar/**',
+                            'registration/locale/ar/**',
+                            'system/locale/ar/**',
+                            'users/locale/ar/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
             lng_id: {
                 files: [
                     {
@@ -187,6 +210,20 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     archive: 'dist/johncms-<%= pkg.version %>.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
+            lng_ar: {
+                options: {
+                    archive: 'dist/locales/ar.zip'
                 },
 
                 files: [
@@ -375,6 +412,11 @@ module.exports = function (grunt) {
 
     grunt.registerTask('locales', [
         'clean:dist',
+        'clean:distributive',
+
+        'copy:lng_ar',
+        'compress:lng_ar',
+        'clean:distributive',
 
         'copy:lng_id',
         'compress:lng_id',
