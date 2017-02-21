@@ -16,7 +16,7 @@ require('incfiles/core.php');
 require('incfiles/head.php');
 
 if(core::$user_id){
-    echo '<div class="menu"><h2><a href="' . $set['homeurl'] . '">' . $lng['homepage'] . '</a></h2></div>';
+    header('Location: index.php');
 } else {
     echo '<div class="phdr"><b>' . $lng['login'] . '</b></div>';
     $error = array();
