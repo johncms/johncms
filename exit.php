@@ -14,6 +14,10 @@ define('_IN_JOHNCMS', 1);
 require('incfiles/core.php');
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
 
+if (!$user_id) {
+    header('Location: index.php');
+}
+
 if (isset($_POST['submit'])) {
     setcookie('cuid', '');
     setcookie('cups', '');
