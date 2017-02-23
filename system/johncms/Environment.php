@@ -36,9 +36,13 @@ class Environment implements Api\EnvironmentInterface
 
     public function getIp()
     {
-        return null === $this->ip
-            ? sprintf("%u", ip2long(filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP)))
-            : $this->ip;
+        if (null === $this->ip) {
+            $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+            $ip = ip2long($ip);
+            $this->ip = sprintf("%u", $ip);
+        }
+
+        return $this->ip;
     }
 
     public function getIpViaProxy()
