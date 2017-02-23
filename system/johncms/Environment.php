@@ -37,7 +37,7 @@ class Environment implements Api\EnvironmentInterface
     public function getIp()
     {
         if (null === $this->ip) {
-            $ip = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+            $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
             $ip = ip2long($ip);
             $this->ip = sprintf("%u", $ip);
         }
@@ -49,10 +49,10 @@ class Environment implements Api\EnvironmentInterface
     {
         if ($this->ipViaProxy !== null) {
             return $this->ipViaProxy;
-        } elseif (filter_has_var(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR')
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
             && preg_match_all(
                 '#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s',
-                filter_input(INPUT_SERVER, 'HTTP_X_FORWARDED_FOR', FILTER_SANITIZE_STRING),
+                filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_SANITIZE_STRING),
                 $vars
             )
         ) {
@@ -72,10 +72,10 @@ class Environment implements Api\EnvironmentInterface
     {
         if ($this->userAgent !== null) {
             return $this->userAgent;
-        } elseif (filter_has_var(INPUT_SERVER, 'HTTP_X_OPERAMINI_PHONE_UA') && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
-            return $this->userAgent = 'Opera Mini: ' . mb_substr(filter_input(INPUT_SERVER, 'HTTP_X_OPERAMINI_PHONE_UA', FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
-        } elseif (filter_has_var(INPUT_SERVER, 'HTTP_USER_AGENT')) {
-            return $this->userAgent = mb_substr(filter_input(INPUT_SERVER, 'HTTP_USER_AGENT', FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
+        } elseif (isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
+            return $this->userAgent = 'Opera Mini: ' . mb_substr(filter_var($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'], FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
+        } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
+            return $this->userAgent = mb_substr(filter_var($_SERVER['HTTP_USER_AGENT'], FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
         } else {
             return $this->userAgent = 'Not Recognised';
         }

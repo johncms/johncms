@@ -102,7 +102,7 @@ if (!$req_r->rowCount()) {
 $res_r = $req_r->fetch();
 
 $th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
+    ? mb_substr(filter_var($_POST['th'], FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
     : '';
 
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
