@@ -87,7 +87,10 @@ switch ($do) {
                                   `time` = ?,
                                   `user_id` = ?,
                                   `from` = ?,
-                                  `text` = ?
+                                  `text` = ?,
+                                  `soft` = \'\',
+                                  `edit` = \'\',
+                                  `curators` = \'\'
                                 ')->execute([
                                     $v,
                                     time(),
@@ -97,7 +100,7 @@ switch ($do) {
                                 ]);
 
                                 /** @var Johncms\Api\EnvironmentInterface $env */
-                                $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+                                $env = $container->get(Johncms\Api\EnvironmentInterface::class);
                                 $rid = $db->lastInsertId();
 
                                 $db->prepare('
@@ -109,13 +112,15 @@ switch ($do) {
                                   `from` = ?,
                                   `ip` = ?,
                                   `soft` = ?,
-                                  `text` = ?
+                                  `text` = ?,
+                                  `edit` = \'\',
+                                  `curators` = \'\'
                                 ')->execute([
                                     $rid,
                                     time(),
                                     $systemUser->id,
                                     $systemUser->name,
-                                    long2ip($env->getIp()),
+                                    $env->getIp(),
                                     $env->getUserAgent(),
                                     $text,
                                 ]);
