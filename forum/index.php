@@ -141,7 +141,8 @@ if (empty($id)) {
     $textl = _t('Forum');
 } else {
     $res = $db->query("SELECT `text` FROM `forum` WHERE `id`= " . $id)->fetch();
-    $hdr = strtr($res['text'], [
+    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['text']);
+    $hdr = strtr($hdr, [
         '&laquo;' => '',
         '&raquo;' => '',
         '&quot;'  => '',
@@ -151,8 +152,8 @@ if (empty($id)) {
         '&#039;'  => '',
     ]);
     $hdr = mb_substr($hdr, 0, 30);
-    $hdr = $tools->checkout($hdr);
-    $textl = mb_strlen($res['text']) > 30 ? $hdr . '...' : $hdr;
+    $hdr = $tools->checkout($hdr, 2, 2);
+    $textl = empty($hdr) ? _t('Forum') : $hdr;
 }
 
 // Переключаем режимы работы
