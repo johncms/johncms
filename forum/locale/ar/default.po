@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2017-01-22 16:45+0400\n"
-"PO-Revision-Date: 2017-02-21 11:27-0500\n"
+"PO-Revision-Date: 2017-02-24 05:42-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -364,105 +364,105 @@ msgstr "قائمة الأقسام"
 
 #: includes/filter.php:42
 msgid "You have not selected any author"
-msgstr ""
+msgstr "لم تقم بتحديد أي كاتب"
 
 #: includes/filter.php:67 index.php:858
 msgid "Filter by author"
-msgstr ""
+msgstr "تصفية حسب المؤلف"
 
 #: includes/filter.php:78
 msgid "Filter"
-msgstr ""
+msgstr "عامل التصفية"
 
 #: includes/filter.php:79
 msgid "Filter will be display posts from selected authors only"
-msgstr ""
+msgstr "سوف يكون عامل تصفية عرض الوظائف من الكتاب المحدد فقط"
 
 #: includes/filter.php:86 includes/post.php:132
 msgid "Back to topic"
-msgstr ""
+msgstr "عودة إلى الموضوع"
 
 #: includes/massdel.php:40
 msgid "Marked posts are deleted"
-msgstr ""
+msgstr "ملحوظة يتم حذف المشاركات"
 
 #: includes/massdel.php:43
 msgid "You did not choose something to delete"
-msgstr ""
+msgstr "لا تختار شيئا لحذف"
 
 #: includes/new.php:15 includes/new.php:159
 msgid "Unread"
-msgstr ""
+msgstr "لم يُقرأ بعد"
 
 #: includes/new.php:71
 msgid "All topics marked as read"
-msgstr ""
+msgstr "وضع علامة مقروء لكافة المواضيع"
 
 #: includes/new.php:86
 #, php-format
 msgid "All for period %d hours"
-msgstr ""
+msgstr "كل شيء لساعات %d الفترة"
 
 #: includes/new.php:91
 msgid "Show period"
-msgstr ""
+msgstr "إظهار الفترة"
 
 #: includes/new.php:143
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
+msgstr "لا يوجد شيء جديد في هذا المنتدى للفترة المحددة"
 
 #: includes/new.php:224
 msgid "Mark as read"
-msgstr ""
+msgstr "وضع علامة مقروء"
 
 #: includes/new.php:230
 msgid "Last 10"
-msgstr ""
+msgstr "آخر 10"
 
 #: includes/nt.php:38 includes/say.php:38
 msgid "Access forbidden"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: includes/nt.php:88 includes/say.php:88
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "لا يمكنك إضافة هذه المادة في كثير من الأحيان <br>الرجاء الانتظار %d ثانية."
 
 #: includes/nt.php:119 includes/ren.php:49
 msgid "You have not entered topic name"
-msgstr ""
+msgstr "لم تقم بادخال العضوية"
 
 #: includes/nt.php:123
 msgid "Topic name too short"
-msgstr ""
+msgstr "اسم المستخدم قصير جداً"
 
 #: includes/nt.php:131 includes/say.php:120 includes/say.php:296
 msgid "Text is too short"
-msgstr ""
+msgstr "النص قصير جداً"
 
 #: includes/nt.php:139 includes/ren.php:59
 msgid "Topic with same name already exists in this section"
-msgstr ""
+msgstr "موضوع بنفس الاسم موجود مسبقا في هذا القسم"
 
 #: includes/nt.php:149 includes/say.php:132 includes/say.php:309
 msgid "Message already exists"
-msgstr ""
+msgstr "الرسالة موجوده بالفعل"
 
 #: includes/nt.php:245 index.php:346
 msgid "New Topic"
-msgstr ""
+msgstr "موضوع جديد"
 
 #: includes/nt.php:254 includes/per.php:85
 msgid "Section"
-msgstr ""
+msgstr "قسم"
 
 #: includes/nt.php:256
 msgid "Title(max. 100)"
-msgstr ""
+msgstr "العنوان (بحد أقصى 100)"
 
 #: includes/nt.php:258 includes/say.php:211 includes/say.php:407
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
 #: includes/per.php:81 index.php:846
 msgid "Move Topic"
