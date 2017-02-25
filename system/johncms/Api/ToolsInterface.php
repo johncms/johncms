@@ -26,7 +26,7 @@ interface ToolsInterface
 
     public function displayPlace($user_id, $place, $headmod);
 
-    public function displayUser($user, array $arg);
+    public function displayUser($user, array $arg = []);
 
     public function getFlag($locale);
 

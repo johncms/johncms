@@ -46,7 +46,7 @@ class Tools implements Api\ToolsInterface
         $this->container = $container;
         $this->config = $container->get(Api\ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->user = $container->get(Api\UserInterface::class );
+        $this->user = $container->get(Api\UserInterface::class);
         $this->userConfig = $this->user->getConfig();
 
         return $this;
@@ -353,7 +353,7 @@ class Tools implements Api\ToolsInterface
             $out .= '<div>' . $arg['body'] . '</div>';
         }
 
-        $ipinf = !isset($arg['iphide']) && $this->user->rights ? 1 : 0;
+        $ipinf = isset($arg['iphide']) ? !$arg['iphide'] : ($this->user->rights ? 1 : 0);
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
