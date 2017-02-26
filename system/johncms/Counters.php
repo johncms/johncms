@@ -37,7 +37,7 @@ class Counters
     {
 
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(Api\UserInterface::class );
+        $this->systemUser = $container->get(Api\UserInterface::class);
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->homeurl = $container->get('config')['johncms']['homeurl'];
 
@@ -75,7 +75,7 @@ class Counters
         }
 
         return $album . '&#160;/&#160;' . $photo .
-        ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
+            ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
     }
 
     /**
@@ -161,7 +161,7 @@ class Counters
 
             if ($mod) {
                 return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
-                ($total ? '<br><a href="index.php?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+                    ($total ? '<br><a href="index.php?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
             } else {
                 return $total;
             }
@@ -251,8 +251,18 @@ class Counters
      */
     public function online()
     {
-        $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-        $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+        $file = ROOT_PATH . 'files/cache/count_online.dat';
+
+        if (file_exists($file) && filemtime($file) > (time() - 10)) {
+            $res = unserialize(file_get_contents($file));
+            $users = $res['users'];
+            $guests = $res['guests'];
+        } else {
+            $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+            $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+
+            file_put_contents($file, serialize(['users' => $users, 'guests' => $guests]));
+        }
 
         return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
     }
