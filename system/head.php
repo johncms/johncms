@@ -33,6 +33,8 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 $headmod = isset($headmod) ? $headmod : '';
 $textl = isset($textl) ? $textl : $config['copyright'];
+$keywords = isset($keywords) ? htmlspecialchars($keywords) : $config->meta_key;
+$descriptions = isset($descriptions) ? htmlspecialchars($descriptions) : $config->meta_desc;
 
 echo '<!DOCTYPE html>' .
     "\n" . '<html lang="' . $config->lng . '">' .
@@ -44,8 +46,8 @@ echo '<!DOCTYPE html>' .
     "\n" . '<meta name="MobileOptimized" content="width">' .
     "\n" . '<meta content="yes" name="apple-mobile-web-app-capable">' .
     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com">' .
-    "\n" . '<meta name="keywords" content="' . $config->meta_key . '">' .
-    "\n" . '<meta name="description" content="' . $config->meta_desc . '">' .
+    "\n" . '<meta name="keywords" content="' . $keywords . '">' .
+    "\n" . '<meta name="description" content="' . $descriptions . '">' .
     "\n" . '<link rel="stylesheet" href="' . $config->homeurl . '/theme/' . $tools->getSkin() . '/style.css">' .
     "\n" . '<link rel="shortcut icon" href="' . $config->homeurl . '/favicon.ico">' .
     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News', 'system') . '" href="' . $config->homeurl . '/rss/rss.php">' .
