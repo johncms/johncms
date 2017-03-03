@@ -3,6 +3,7 @@
 
 ### NEW
 - Добавлен пакет интерфейсов Core API
+- Использование [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md) интерфейса контейнера
 - Добавлен Арабский язык
 - Добавлен Украинский язык
   
