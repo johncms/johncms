@@ -19,7 +19,7 @@ require_once('../system/head.php');
 echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 
 if ($id) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */

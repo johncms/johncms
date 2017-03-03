@@ -16,7 +16,7 @@ $textl = _t('Mail');
 require_once('../system/head.php');
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

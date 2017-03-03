@@ -65,7 +65,7 @@ class App
 session_name('SESID');
 session_start();
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\EnvironmentInterface $env */

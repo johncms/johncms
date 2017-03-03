@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

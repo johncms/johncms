@@ -17,7 +17,7 @@ require('../system/bootstrap.php');
 $id = isset($_GET['id']) ? abs(intval($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\ConfigInterface $config */

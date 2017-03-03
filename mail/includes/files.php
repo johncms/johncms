@@ -16,7 +16,7 @@ $headmod = 'mail';
 $textl = _t('Mail') . ' | ' . _t('Files');
 require_once('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

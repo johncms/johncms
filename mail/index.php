@@ -25,7 +25,7 @@ if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */

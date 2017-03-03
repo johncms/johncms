@@ -17,7 +17,7 @@ if (!$adm) {
 }
 
 if (isset($_POST['submit'])) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */

@@ -16,7 +16,7 @@ $headmod = 'my_guest';
 $textl = _t('Profile') . ' | ' . _t('Guestbook');
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */

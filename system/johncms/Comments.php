@@ -57,7 +57,7 @@ class Comments
     {
         global $mod, $start, $kmess;
 
-        /** @var \Interop\Container\ContainerInterface $container */
+        /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
@@ -350,7 +350,7 @@ class Comments
     // Добавляем комментарий в базу
     private function add_comment($message)
     {
-        /** @var \Interop\Container\ContainerInterface $container */
+        /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
 
         /** @var Api\EnvironmentInterface $env */

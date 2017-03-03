@@ -19,7 +19,7 @@ $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['star
 $headmod = 'forumsearch';
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Zend\I18n\Translator\Translator $translator */

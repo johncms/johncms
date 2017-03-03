@@ -39,7 +39,7 @@ if (!empty($search) && mb_strlen($search) < 2 || mb_strlen($search) > 64) {
 
 // Выводим результаты поиска
 if ($search && !$error) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */

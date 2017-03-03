@@ -22,7 +22,7 @@ $img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
 
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */
@@ -67,7 +67,7 @@ if (!$user) {
  */
 function vote_photo(array $arg)
 {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */

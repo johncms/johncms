@@ -16,7 +16,7 @@ $headmod = 'userban';
 require('../system/head.php');
 $ban = isset($_GET['ban']) ? intval($_GET['ban']) : 0;
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

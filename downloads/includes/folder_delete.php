@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 //TODO: Добавить проверку, пустой ли каталог, если нет, выводить предупреждение
 //TODO: Добавить рекурсивное удаление
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

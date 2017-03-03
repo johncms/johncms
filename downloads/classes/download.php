@@ -126,7 +126,7 @@ class Download
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
-        /** @var Interop\Container\ContainerInterface $container */
+        /** @var Psr\Container\ContainerInterface $container */
         $container = App::getContainer();
 
         /** @var Johncms\Api\UserInterface $systemUser */

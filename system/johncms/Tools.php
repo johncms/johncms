@@ -12,7 +12,7 @@
 
 namespace Johncms;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class Tools implements Api\ToolsInterface
 {

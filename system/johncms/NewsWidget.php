@@ -31,7 +31,7 @@ class NewsWidget
 
     public function __construct()
     {
-        /** @var \Interop\Container\ContainerInterface $container */
+        /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
 
         $this->db = $container->get(\PDO::class);

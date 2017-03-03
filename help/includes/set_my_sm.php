@@ -18,7 +18,7 @@ $add = isset($_POST['add']);
 $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */

@@ -15,7 +15,7 @@ define('_IN_JOHNCMS', 1);
 $headmod = 'usersearch';
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Zend\I18n\Translator\Translator $translator */

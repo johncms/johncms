@@ -18,7 +18,7 @@ $total = 0;
 $ch = 0;
 $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

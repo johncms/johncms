@@ -14,7 +14,7 @@ define('_IN_JOHNCMS', 1);
 
 require_once ('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\ConfigInterface $config */

@@ -43,7 +43,7 @@ if (!$id) {
     exit;
 }
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Johncms\Api\UserInterface $systemUser */

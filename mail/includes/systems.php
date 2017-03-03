@@ -16,7 +16,7 @@ $out = '';
 $total = 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

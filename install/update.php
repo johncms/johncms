@@ -13,7 +13,7 @@
 define('_IN_JOHNCMS', 1);
 require 'system/bootstrap.php';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */

@@ -16,7 +16,7 @@ $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id : 'forumwho';
 require_once('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
