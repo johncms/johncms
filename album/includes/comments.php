@@ -88,7 +88,7 @@ if ($req_obj->rowCount()) {
     ];
 
     // Ставим метку прочтения
-    if ($systemUser->id == $user['id'] && $res_obj['unread_comments']) {
+    if ($systemUser->id == $owner['id'] && $res_obj['unread_comments']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
     }
 
