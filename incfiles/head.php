@@ -13,6 +13,8 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $headmod = isset($headmod) ? mysql_real_escape_string($headmod) : '';
 $textl = isset($textl) ? $textl : $set['copyright'];
+$keywords = isset($keywords) ? htmlspecialchars($keywords) : $set['meta_key'];
+$description = isset($description) ? htmlspecialchars($description) : $set['meta_desc'];
 
 echo'<!DOCTYPE html>' .
     "\n" . '<html lang="' . core::$lng_iso . '">' .
@@ -24,8 +26,8 @@ echo'<!DOCTYPE html>' .
     "\n" . '<meta name="MobileOptimized" content="width">' .
     "\n" . '<meta content="yes" name="apple-mobile-web-app-capable">' .
     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com">' .
-    (!empty($set['meta_key']) ? "\n" . '<meta name="keywords" content="' . $set['meta_key'] . '">' : '') .
-    (!empty($set['meta_desc']) ? "\n" . '<meta name="description" content="' . $set['meta_desc'] . '">' : '') .
+    "\n" . '<meta name="keywords" content="' . $keywords . '">' : '') .
+    "\n" . '<meta name="description" content="' . $description . '">' : '') .
     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
