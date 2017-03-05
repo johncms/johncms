@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"POT-Creation-Date: 2017-01-22 16:45+0400\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: vi\n"
+"Language: vi_VN\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: includes/per.php:49 includes/per.php:58 includes/post.php:30
 #: includes/ren.php:30 includes/ren.php:39 includes/tema.php:41
 #: includes/tema.php:61 includes/users.php:32 includes/vip.php:30
-#: includes/vip.php:40 includes/vote.php:35 index.php:873
+#: includes/vip.php:40 includes/vote.php:35 index.php:867
 msgid "Wrong data"
 msgstr "Lỗi dữ liệu"
 
@@ -87,7 +87,7 @@ msgid "Continue"
 msgstr "Tiếp tục"
 
 #: includes/addfile.php:177 includes/nt.php:261 includes/say.php:214
-#: includes/say.php:410 index.php:596 index.php:783
+#: includes/say.php:410 index.php:590 index.php:777
 msgid "Add File"
 msgstr "Thêm tập tin"
 
@@ -142,12 +142,12 @@ msgstr "Chủ đề đã được loại bỏ, hoặc không tồn tại"
 #: includes/per.php:81 includes/post.php:133 includes/ren.php:69
 #: includes/say.php:376 includes/say.php:426 includes/tema.php:96
 #: includes/tema.php:102 includes/tema.php:145 includes/who.php:90
-#: includes/who.php:198 index.php:141 index.php:215 index.php:255 index.php:882
-#: index.php:907 search.php:31 search.php:230
+#: includes/who.php:198 index.php:141 index.php:215 index.php:255 index.php:876
+#: index.php:901 search.php:31 search.php:230
 msgid "Forum"
 msgstr "Diễn đàn"
 
-#: includes/curators.php:43 index.php:816
+#: includes/curators.php:43 index.php:810
 msgid "Curators"
 msgstr "Giám Tuyển"
 
@@ -163,11 +163,11 @@ msgstr "Danh sách này là trống rỗng"
 #: includes/curators.php:80 includes/files.php:150 includes/files.php:187
 #: includes/new.php:146 includes/new.php:212 includes/users.php:55
 #: includes/who.php:77 includes/who.php:189 index.php:335 index.php:394
-#: index.php:795 search.php:169
+#: index.php:789 search.php:169
 msgid "Total"
 msgstr "Tổng số"
 
-#: includes/deltema.php:74 index.php:844
+#: includes/deltema.php:74 index.php:838
 msgid "Delete Topic"
 msgstr "Xóa chủ đề này"
 
@@ -180,7 +180,7 @@ msgid "Hide"
 msgstr "Ẩn đi"
 
 #: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:187
-#: includes/editvote.php:57 includes/massdel.php:54 index.php:738 index.php:769
+#: includes/editvote.php:57 includes/massdel.php:54 index.php:732 index.php:763
 msgid "Delete"
 msgstr "Xóa"
 
@@ -243,7 +243,7 @@ msgid "Edit Message"
 msgstr "Chỉnh sửa Tin nhắn"
 
 #: includes/editpost.php:240 includes/nt.php:266 includes/say.php:220
-#: includes/say.php:415 index.php:598 index.php:786
+#: includes/say.php:415 index.php:592 index.php:780
 msgid "Preview"
 msgstr "Xem trước"
 
@@ -260,7 +260,7 @@ msgstr "Bạn có thực sự muốn xóa câu trả lời?"
 msgid "Poll changed"
 msgstr "Thay đổi bỏ phiếu"
 
-#: includes/editvote.php:94 index.php:828
+#: includes/editvote.php:94 index.php:822
 msgid "Edit Poll"
 msgstr "Sửa Thăm dò"
 
@@ -328,11 +328,11 @@ msgstr "Diễn Tập Tin"
 msgid "New Files"
 msgstr "Các Tập Tin Mới"
 
-#: includes/files.php:114 index.php:557 search.php:158
+#: includes/files.php:114 index.php:551 search.php:158
 msgid "Read more"
 msgstr "Đọc xem tiết"
 
-#: includes/files.php:131 includes/post.php:118 index.php:710
+#: includes/files.php:131 includes/post.php:118 index.php:704
 msgid "Click to view image"
 msgstr "Click để xem ảnh gốc"
 
@@ -344,13 +344,13 @@ msgstr "Kích thước"
 msgid "Downloaded"
 msgstr "Đã tải xuống"
 
-#: includes/files.php:139 index.php:716
+#: includes/files.php:139 index.php:710
 msgid "Time"
 msgstr "Thời gian"
 
 #: includes/files.php:159 includes/new.php:152 includes/new.php:219
 #: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:400
-#: index.php:802 search.php:226
+#: index.php:796 search.php:226
 msgid "To Page"
 msgstr "Đến trang"
 
@@ -366,7 +366,7 @@ msgstr "Danh sách các phần"
 msgid "You have not selected any author"
 msgstr "Bạn chưa chọn tác giả muốn xem"
 
-#: includes/filter.php:67 index.php:864
+#: includes/filter.php:67 index.php:858
 msgid "Filter by author"
 msgstr "Lọc theo tác giả"
 
@@ -450,7 +450,7 @@ msgstr "Bài viết đã tồn tại"
 
 #: includes/nt.php:245 index.php:346
 msgid "New Topic"
-msgstr "Chủ đề mới"
+msgstr "Viết bài mới"
 
 #: includes/nt.php:254 includes/per.php:85
 msgid "Section"
@@ -458,13 +458,13 @@ msgstr "Mục"
 
 #: includes/nt.php:256
 msgid "Title(max. 100)"
-msgstr "Tiêu đề (kí tự nhiều nhất 100)"
+msgstr "Tiêu đề (tối đa 100 kí tự)"
 
 #: includes/nt.php:258 includes/say.php:211 includes/say.php:407
 msgid "Message"
 msgstr "Mặt cười"
 
-#: includes/per.php:81 index.php:852
+#: includes/per.php:81 index.php:846
 msgid "Move Topic"
 msgstr "Di chuyển chủ đề"
 
@@ -484,23 +484,23 @@ msgstr "Các chuyên mục"
 msgid "Topic"
 msgstr "Chủ đề"
 
-#: includes/post.php:81 index.php:534 index.php:664
+#: includes/post.php:81 index.php:528 index.php:658
 msgid "[r]"
 msgstr "[r]"
 
-#: includes/post.php:82 index.php:535 index.php:665
+#: includes/post.php:82 index.php:529 index.php:659
 msgid "[q]"
 msgstr "[q]"
 
-#: includes/post.php:106 index.php:698
+#: includes/post.php:106 index.php:692
 msgid "Attachment"
 msgstr "Tập tin đính kèm"
 
-#: includes/post.php:124 index.php:716
+#: includes/post.php:124 index.php:710
 msgid "Downloads"
 msgstr "Tải xuống"
 
-#: includes/ren.php:69 index.php:830
+#: includes/ren.php:69 index.php:824
 msgid "Rename Topic"
 msgstr "Đổi tên chủ đề"
 
@@ -568,7 +568,7 @@ msgstr "Tới chủ đề"
 msgid "Vote accepted"
 msgstr "Bình chọn chấp nhận"
 
-#: includes/who.php:15 includes/who.php:90 index.php:901
+#: includes/who.php:15 includes/who.php:90 index.php:895
 msgid "Who in Forum"
 msgstr "Ai đang ở diễn đàn"
 
@@ -648,7 +648,7 @@ msgstr "Tập tin phần"
 msgid "Who is here"
 msgstr "Ai đang ở đây"
 
-#: index.php:299 index.php:883 search.php:31 search.php:79
+#: index.php:299 index.php:877 search.php:31 search.php:79
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -658,7 +658,7 @@ msgstr "Trong thể loại này không có phân vùng"
 
 #: index.php:391
 msgid "No topics in this section"
-msgstr "Không có chủ đề trong phần này"
+msgstr "Không có bài viết trong chuyên mục này!"
 
 #: index.php:432
 msgid "Topic deleted"
@@ -696,87 +696,87 @@ msgstr "Đánh giá"
 msgid "Total votes"
 msgstr "Tổng số bình chọn"
 
-#: index.php:551 index.php:744
+#: index.php:545 index.php:738
 msgid "Post deleted"
 msgstr "Bài đã bị xóa"
 
-#: index.php:565
+#: index.php:559
 msgid "Filter by author is activated"
 msgstr "Bộ lọc của tác giả được kích hoạt"
 
-#: index.php:597 index.php:602 index.php:785 index.php:790
+#: index.php:591 index.php:596 index.php:779 index.php:784
 msgid "Write"
 msgstr "Soạn thảo"
 
-#: index.php:689
+#: index.php:683
 msgid "Edited"
 msgstr "Đã chỉnh sửa"
 
-#: index.php:736
+#: index.php:730
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
-#: index.php:737
+#: index.php:731
 msgid "Restore"
 msgstr "Khôi phục"
 
-#: index.php:746
+#: index.php:740
 msgid "Post restored by"
 msgstr "Ai phục hồi chủ đề"
 
-#: index.php:824
+#: index.php:818
 msgid "Curators of the Topic"
 msgstr "Giám tuyển chủ đề"
 
-#: index.php:828
+#: index.php:822
 msgid "Delete Poll"
 msgstr "Xóa bình chọn"
 
-#: index.php:829
+#: index.php:823
 msgid "Add Poll"
 msgstr "Thêm Thăm dò"
 
-#: index.php:834
+#: index.php:828
 msgid "Open Topic"
-msgstr ""
+msgstr "Mở cửa chủ đề"
 
-#: index.php:836
+#: index.php:830
 msgid "Close Topic"
 msgstr "Đóng cửa chủ đề"
 
-#: index.php:841
+#: index.php:835
 msgid "Restore Topic"
 msgstr "Khôi phục chủ đề"
 
-#: index.php:847
+#: index.php:841
 msgid "Unfix Topic"
 msgstr "Tháo chủ đề"
 
-#: index.php:849
+#: index.php:843
 msgid "Pin Topic"
 msgstr "Pin Chủ Đề"
 
-#: index.php:862
+#: index.php:856
 msgid "Cancel Filter"
 msgstr "Huỷ bộ lọc"
 
-#: index.php:868
+#: index.php:862
 msgid "Download Topic"
 msgstr "Xem chủ để ngoại tuyến (Offline)"
 
-#: index.php:883
+#: index.php:877
 msgid "Files"
 msgstr "Tập tin"
 
-#: index.php:910
+#: index.php:904
 msgid "Forum rules"
 msgstr "Nội quy diễn đàn"
 
-#: index.php:917
+#: index.php:911
 msgid "New at the top"
 msgstr "Sắp xếp theo thứ tự từ trên xuống"
 
-#: index.php:919
+#: index.php:913
 msgid "New at the bottom"
 msgstr "Sắp xếp theo thứ tự từ dưới lên"
 

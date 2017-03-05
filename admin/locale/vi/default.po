@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"POT-Creation-Date: 2017-01-22 16:44+0400\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: vi\n"
+"Language: vi_VN\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -34,7 +34,7 @@ msgstr ""
 #: includes/settings.php:29 includes/settings.php:101 includes/smilies.php:24
 #: includes/smilies.php:67 includes/usr.php:27 includes/usr.php:75
 #: includes/usr_adm.php:19 includes/usr_adm.php:72 includes/usr_clean.php:32
-#: includes/usr_del.php:72 index.php:46 index.php:79
+#: includes/usr_del.php:78 index.php:46 index.php:79
 msgid "Admin Panel"
 msgstr "Quản Trị Viên"
 
@@ -47,7 +47,7 @@ msgstr "Quyền truy cập"
 msgid "Settings are saved successfully"
 msgstr "Lưu Cài Đặt Thành Công"
 
-#: includes/access.php:61 includes/usr_del.php:128 index.php:105
+#: includes/access.php:61 includes/usr_del.php:135 index.php:105
 msgid "Forum"
 msgstr "Diễn đàn"
 
@@ -79,7 +79,7 @@ msgid "Library"
 msgstr "Thư viện"
 
 #: includes/access.php:83 includes/access.php:92 includes/news.php:71
-#: includes/usr_del.php:124
+#: includes/usr_del.php:131
 msgid "Comments"
 msgstr "Bình luận"
 
@@ -305,7 +305,7 @@ msgstr "Thêm"
 #: includes/counters.php:144 includes/counters.php:313 includes/forum.php:200
 #: includes/forum.php:214 includes/forum.php:509 includes/forum.php:536
 #: includes/ipban.php:343 includes/reg.php:115 includes/usr.php:58
-#: includes/usr_clean.php:90 includes/usr_del.php:133
+#: includes/usr_clean.php:90 includes/usr_del.php:140
 msgid "Delete"
 msgstr "Xóa"
 
@@ -315,7 +315,7 @@ msgstr "Bạn có chắc chắn muốn xóa liên kết?"
 
 #: includes/ads.php:285 includes/ads.php:302 includes/counters.php:145
 #: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:265
-#: includes/ipban.php:344 includes/karma.php:40 includes/usr_del.php:140
+#: includes/ipban.php:344 includes/karma.php:40 includes/usr_del.php:147
 msgid "Cancel"
 msgstr "Hủy bỏ"
 
@@ -1098,15 +1098,15 @@ msgstr "Mô tả đã được cập nhật thành công"
 
 #: includes/languages.php:73
 msgid "Select language"
-msgstr ""
+msgstr "Chọn ngôn ngữ"
 
 #: includes/languages.php:84
 msgid "Apply"
-msgstr ""
+msgstr "Áp dụng"
 
 #: includes/languages.php:87
 msgid "Update List"
-msgstr ""
+msgstr "Cập nhật danh sách"
 
 #: includes/news.php:29
 msgid "News on the mainpage"
@@ -1164,7 +1164,7 @@ msgstr "Đăng ký xác nhận"
 msgid "Registration is confirmed"
 msgstr "Đăng ký được xác nhận"
 
-#: includes/reg.php:69 includes/usr_del.php:116
+#: includes/reg.php:69 includes/usr_del.php:123
 msgid "User deleted"
 msgstr "Người dùng đã bị xóa"
 
@@ -1328,19 +1328,19 @@ msgstr "Bạn không thể xóa bài cũ của bạn"
 msgid "User does not exists"
 msgstr "Người dùng không tồn tại"
 
-#: includes/usr_del.php:72
+#: includes/usr_del.php:78
 msgid "Delete user"
 msgstr "Xoá người dùng"
 
-#: includes/usr_del.php:121
+#: includes/usr_del.php:128
 msgid "Cleaning activities"
 msgstr "Làm sạch hoạt động của thành viên"
 
-#: includes/usr_del.php:129
+#: includes/usr_del.php:136
 msgid "All threads and posts created by the user go in the hidden state"
 msgstr "Chủ đề và bài viết được tạo ra bởi những người đi trong nước"
 
-#: includes/usr_del.php:132
+#: includes/usr_del.php:139
 msgid "Are you sure that you want to delete this user?"
 msgstr "Bạn có chắc chắn rằng bạn muốn xóa người dùng này?"
 

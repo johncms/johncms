@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -87,11 +87,11 @@ msgstr "Không có yêu cầu dữ liệu"
 
 #: includes/ban.php:60
 msgid "You have no rights to ban in this section"
-msgstr "Bạn không có quyền cấm không có trong phần của mình"
+msgstr "Bạn không có quyền cấm thành viên ngoài thẩm quyền"
 
 #: includes/ban.php:64
 msgid "Ban already active"
-msgstr "Lệnh cấm đã hoạt động rồi"
+msgstr "Người dùng đã bị cấm từ trước"
 
 #: includes/ban.php:138 includes/office.php:84
 msgid "System"
@@ -107,15 +107,15 @@ msgstr "Thành viên đã bị cấm"
 
 #: includes/ban.php:155
 msgid "Ban type"
-msgstr "Ban loại"
+msgstr "Loại lệnh cấm"
 
 #: includes/ban.php:159
 msgid "Full block"
-msgstr "Đầy đủ khối"
+msgstr "Thành viên bị chặn"
 
 #: includes/ban.php:161
 msgid "Private messages"
-msgstr "Các tin nhắn riêng"
+msgstr "Tin nhắn riêng"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
@@ -129,23 +129,23 @@ msgstr "Thư viện"
 
 #: includes/ban.php:179
 msgid "Ban time"
-msgstr "Thời gian ban"
+msgstr "Thời gian cấm"
 
 #: includes/ban.php:181
 msgid "Minutes (60 max.)"
-msgstr "Phút (tối đa 60)"
+msgstr "Phút (tối đa 60p)"
 
 #: includes/ban.php:182
 msgid "Hours (24 max.)"
-msgstr "Giờ (tối đa 24)"
+msgstr "Giờ (tối đa 24g)"
 
 #: includes/ban.php:185
 msgid "Days (30 max.)"
-msgstr "Ngày (tối đa 30)"
+msgstr "Ngày (tối đa 30n)"
 
 #: includes/ban.php:189 includes/ban.php:362
 msgid "Till cancel"
-msgstr "Cho đến khi hủy"
+msgstr "Vô thời hạn (đến khi hủy lệnh cấm)"
 
 #: includes/ban.php:192
 msgid "Reason"
@@ -157,16 +157,16 @@ msgstr "Hành vi vi phạm"
 
 #: includes/ban.php:202
 msgid "Apply Ban"
-msgstr "Áp Dụng Cấm"
+msgstr "Áp Dụng Lệnh Cấm"
 
 #: includes/ban.php:212 includes/ban.php:242 includes/ban.php:250
 #: includes/ban.php:275 skl.php:116
 msgid "Wrong data"
-msgstr "Lỗi dữ liệu"
+msgstr "Dữ liệu bị lỗi"
 
 #: includes/ban.php:221
 msgid "Ban not active"
-msgstr "Lệnh cấm không thể hoạt động"
+msgstr "Lệnh cấm vô hiệu lực"
 
 #: includes/ban.php:225
 msgid "Ban termination"
@@ -414,11 +414,11 @@ msgstr "Chọn giới tính"
 
 #: includes/edit.php:244
 msgid "Man"
-msgstr "Hot Boy"
+msgstr "Nam"
 
 #: includes/edit.php:245
 msgid "Woman"
-msgstr "Hot Girl"
+msgstr "Nữ"
 
 #: includes/edit.php:249
 msgid "Position on the Site"
@@ -514,7 +514,7 @@ msgstr "Truy cập bị từ chối"
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
 #: includes/karma.php:239 index.php:187
 msgid "Karma"
-msgstr "Nghiệp chướng"
+msgstr "Đã vi phạm"
 
 #: includes/karma.php:43
 msgid "It is forbidden to vote for administration"
@@ -656,7 +656,7 @@ msgstr "Tập tin"
 
 #: includes/office.php:91 index.php:251
 msgid "Write"
-msgstr "Soạn thảo"
+msgstr "Gửi tin nhắn"
 
 #: includes/office.php:103
 msgid "Blocked"
@@ -726,19 +726,19 @@ msgstr "Tùy chỉnh chung"
 
 #: includes/settings.php:46 includes/settings.php:52
 msgid "Mail"
-msgstr ""
+msgstr "Hòm thư"
 
 #: includes/settings.php:67
 msgid "Who can write you?"
-msgstr ""
+msgstr "Ai có thể gửi tin nhắn cho bạn?"
 
 #: includes/settings.php:68
 msgid "All can write"
-msgstr ""
+msgstr "Mọi người"
 
 #: includes/settings.php:69
 msgid "Only my contacts"
-msgstr ""
+msgstr "Chỉ bạn bè của tôi"
 
 #: includes/settings.php:96 includes/settings.php:188
 msgid "Settings saved successfully"
@@ -746,39 +746,39 @@ msgstr "Cài đặt đã lưu thành công"
 
 #: includes/settings.php:115
 msgid "Basic settings"
-msgstr ""
+msgstr "Cài đặt cơ bản"
 
 #: includes/settings.php:116
 msgid "Inverse sorting"
-msgstr ""
+msgstr "Phân loại ngược"
 
 #: includes/settings.php:117
 msgid "Use the form of a quick answer"
-msgstr ""
+msgstr "Sử dụng các hình thức của một câu trả lời nhanh"
 
 #: includes/settings.php:118
 msgid "Preview of messages"
-msgstr ""
+msgstr "Xem trước các tin nhắn"
 
 #: includes/settings.php:119
 msgid "Attach first post"
-msgstr ""
+msgstr "Đính kèm bài viết đầu tiên"
 
 #: includes/settings.php:120
 msgid "Always"
-msgstr ""
+msgstr "Luôn cho phép"
 
 #: includes/settings.php:121
 msgid "In unread topics"
-msgstr ""
+msgstr "Trong các bài viết chưa đọc"
 
 #: includes/settings.php:122
 msgid "Never"
-msgstr ""
+msgstr "Không bao giờ"
 
 #: includes/settings.php:124
 msgid "Reset settings"
-msgstr ""
+msgstr "Khôi phục cài đặt gốc"
 
 #: includes/settings.php:198
 msgid "Time settings"
@@ -814,7 +814,7 @@ msgstr "Xuất hiện"
 
 #: includes/settings.php:217
 msgid "Theme"
-msgstr ""
+msgstr "Giao diện"
 
 #: includes/settings.php:218
 msgid "Size of Lists"
@@ -854,11 +854,11 @@ msgstr "Đã đăng ký"
 
 #: includes/stat.php:43
 msgid "He stay on the site"
-msgstr ""
+msgstr "Thời gian trên trang"
 
 #: includes/stat.php:43
 msgid "She stay on the site"
-msgstr ""
+msgstr "Thời gian trên trang"
 
 #: includes/stat.php:47
 msgid "Last visit"

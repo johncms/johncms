@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: vi\n"
+"Language: vi_VN\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: classes/Hashtags.php:237 includes/lastcom.php:46 includes/top.php:47
 #: index.php:214 index.php:273 index.php:328
 msgid "The list is empty"
-msgstr "Danh sách này là trống rỗng"
+msgstr "Danh sách này trống"
 
 #: classes/Rating.php:140
 msgid "Vote"
@@ -296,153 +296,153 @@ msgstr "Thay đổi"
 
 #: includes/moder.php:128
 msgid "Edit Section"
-msgstr ""
+msgstr "Chỉnh sửa chuyên mục"
 
 #: includes/moder.php:128
 msgid "Edit Article"
-msgstr ""
+msgstr "Chỉnh sửa bài viết"
 
 #: includes/moder.php:151
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "Bài viết có thể không sửa được, dữ liệu quá lớn!!!"
 
 #: includes/moder.php:164
 msgid "The ROOT"
-msgstr ""
+msgstr "Thư mục gốc (ROOT)"
 
 #: includes/moder.php:184
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "Cho phép người dùng thêm bài Viết của mình?"
 
 #: includes/moder.php:185
 msgid "Yes"
-msgstr ""
+msgstr "Có"
 
 #: includes/moder.php:186
 msgid "No"
-msgstr ""
+msgstr "Không"
 
 #: includes/moder.php:188
 msgid "Verified"
-msgstr ""
+msgstr "Đã xác nhận"
 
 #: includes/new.php:27 index.php:178
 msgid "New Articles"
-msgstr ""
+msgstr "Bài Viết Mới"
 
 #: includes/new.php:52 includes/top.php:72
 msgid "Section"
-msgstr ""
+msgstr "Mục"
 
 #: includes/new.php:64 includes/top.php:84 index.php:322 index.php:405
 msgid "Rating"
-msgstr ""
+msgstr "Đánh giá"
 
 #: includes/new.php:77 includes/top.php:97 index.php:420
 msgid "Comments are closed"
-msgstr ""
+msgstr "Bình luận đã đóng cửa"
 
 #: includes/new.php:84 includes/premod.php:63 includes/search.php:114
 #: includes/tags.php:57 index.php:217 index.php:276 index.php:331
 msgid "Total"
-msgstr ""
+msgstr "Tổng cộng"
 
 #: includes/new.php:86 includes/premod.php:67 includes/search.php:133
 #: includes/tagcloud.php:26 includes/tags.php:63
 msgid "To Library"
-msgstr ""
+msgstr "Đến Thư viện"
 
 #: includes/premod.php:26
 msgid "Moderation Articles"
-msgstr ""
+msgstr "Kiểm duyệt bài viết"
 
 #: includes/premod.php:30
 msgid "Article"
-msgstr ""
+msgstr "Bài viết"
 
 #: includes/premod.php:30
 msgid "Added to the database"
-msgstr ""
+msgstr "Đã thêm vào CSDL"
 
 #: includes/premod.php:33
 msgid "All Articles added in database"
-msgstr ""
+msgstr "Tất cả bài viết đã được thêm vào CSDL"
 
 #: includes/premod.php:66
 msgid "Approve all"
-msgstr ""
+msgstr "Chấp nhận tất cả"
 
 #: includes/search.php:35 includes/search.php:38 index.php:160
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: includes/search.php:39
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "Tìm kiếm trong tiêu đề bài viết"
 
 #: includes/search.php:46 includes/search.php:129
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "Chiều dài của truy vấn: tối thiểu 4, tối 64 ký tự <br>Tìm kiếm là trường hợp nhạy cảm <br>Kết quả được sắp xếp theo mức độ liên quan"
 
 #: includes/search.php:61
 msgid "Search results"
-msgstr ""
+msgstr "Kết quả tìm kiếm"
 
 #: includes/search.php:111
 msgid "Your search did not match any results"
-msgstr ""
+msgstr "Tìm kiếm của bạn không phù hợp"
 
 #: includes/search.php:121
 msgid "To Page"
-msgstr ""
+msgstr "Đến trang"
 
 #: includes/search.php:132
 msgid "New Search"
-msgstr ""
+msgstr "Tìm kiếm mới"
 
 #: includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "Sắp xếp theo thứ tự chữ cái"
 
 #: includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "Sắp xếp theo mức độ liên quan"
 
 #: includes/tagcloud.php:23 index.php:160
 msgid "Tag Cloud"
-msgstr ""
+msgstr "Tag Đám Mây"
 
 #: includes/tagcloud.php:24 includes/top.php:35
 msgid "Sort"
-msgstr ""
+msgstr "Săp xếp"
 
 #: includes/top.php:29
 msgid "Most readings"
-msgstr ""
+msgstr "Đọc nhiều nhất"
 
 #: includes/top.php:30
 msgid "By rating"
-msgstr ""
+msgstr "Bằng cách đánh giá"
 
 #: includes/top.php:31
 msgid "By comments"
-msgstr ""
+msgstr "Bởi bình luận"
 
 #: includes/top.php:34 index.php:182
 msgid "Rating articles"
-msgstr ""
+msgstr "Đánh giá bài viết"
 
 #: index.php:69 index.php:134
 msgid "Library is closed"
-msgstr ""
+msgstr "Thư viện đã đóng cửa"
 
 #: index.php:168
 msgid "On moderation"
-msgstr ""
+msgstr "Kiểm duyệt"
 
 #: index.php:205 index.php:261 index.php:262
 msgid "Up"
-msgstr ""
+msgstr "Lên"
 
 #: index.php:206 index.php:264 index.php:265
 msgid "Down"

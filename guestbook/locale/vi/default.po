@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: index.php:58 index.php:331
 msgid "Admin Club"
-msgstr "Admin-Club"
+msgstr "Dành cho BQT"
 
 #: index.php:58 index.php:76 index.php:198 index.php:252 index.php:293
 #: index.php:296 index.php:326 index.php:330
@@ -143,7 +143,7 @@ msgstr "Các ký hiệu trên hình ảnh"
 
 #: index.php:357
 msgid "Sent"
-msgstr "Hộp thư đã gửi"
+msgstr "GỬI"
 
 #: index.php:359
 msgid "For registered users only"

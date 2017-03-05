@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"PO-Revision-Date: 2017-03-07 10:05-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #: exit.php:30
 msgid "Are you sure you want to leave the site?"
-msgstr "Bạn có chắc chắn muốn rời khỏi Hadpro?"
+msgstr "Bạn có chắc chắn muốn đăng xuất khỏi trang?"
 
 #: exit.php:31
 msgid "Logout"
@@ -162,7 +162,7 @@ msgstr "Trang web Tin tức"
 msgid "Hi"
 msgstr "Xin chào"
 
-#: system/head.php:104 system/johncms/Tools.php:300
+#: system/head.php:104 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr "Phòng khách"
 
@@ -186,9 +186,9 @@ msgstr "Hệ thống"
 msgid "Mail"
 msgstr "Thư"
 
-#: system/head.php:221 system/johncms/Tools.php:243 system/mainmenu.php:42
+#: system/head.php:221 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
-msgstr "Lưu bút Của Bạn"
+msgstr "Phòng trò truyện"
 
 #: system/head.php:227
 msgid "Comments"
@@ -200,261 +200,261 @@ msgstr "Chưa đọc"
 
 #: system/johncms/Bbcode.php:148
 msgid "Edit List"
-msgstr ""
+msgstr "Danh sách chỉnh sửa"
 
 #: system/johncms/Bbcode.php:159
 msgid "Add Smilies"
-msgstr ""
+msgstr "Thêm biểu tượng mặt cười"
 
 #: system/johncms/Bbcode.php:217
 msgid "Bold"
-msgstr ""
+msgstr "Dữ liệu bị lỗi"
 
 #: system/johncms/Bbcode.php:218
 msgid "Italic"
-msgstr ""
+msgstr "In nghiêng"
 
 #: system/johncms/Bbcode.php:219
 msgid "Underline"
-msgstr ""
+msgstr "Gạch chân"
 
 #: system/johncms/Bbcode.php:220
 msgid "Strike"
-msgstr ""
+msgstr "Đánh"
 
 #: system/johncms/Bbcode.php:221
 msgid "List"
-msgstr ""
+msgstr "Danh sách"
 
 #: system/johncms/Bbcode.php:222
 msgid "Spoiler"
-msgstr ""
+msgstr "Nút nhanh"
 
 #: system/johncms/Bbcode.php:223
 msgid "Quote"
-msgstr ""
+msgstr "Trích dẫn"
 
 #: system/johncms/Bbcode.php:224
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: system/johncms/Bbcode.php:225
 msgid "Code"
-msgstr ""
+msgstr "Mã code"
 
 #: system/johncms/Bbcode.php:226
 msgid "Text Color"
-msgstr ""
+msgstr "Màu chữ"
 
 #: system/johncms/Bbcode.php:227
 msgid "Background Color"
-msgstr ""
+msgstr "Màu nền"
 
 #: system/johncms/Bbcode.php:230
 msgid "Smilies"
-msgstr ""
+msgstr "Biểu tượng mặt cười"
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
 msgid "Reply"
-msgstr ""
+msgstr "Phản hồi"
 
 #: system/johncms/Comments.php:112
 msgid "Administrator already replied to this message"
-msgstr ""
+msgstr "Quản trị viên đã trả lời thư này"
 
 #: system/johncms/Comments.php:146 system/johncms/Comments.php:200
 msgid "Wrong data"
-msgstr ""
+msgstr "Dữ liệu bị lỗi"
 
 #: system/johncms/Comments.php:154 system/johncms/Comments.php:300
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: system/johncms/Comments.php:163
 msgid "You cannot edit posts of higher administration"
-msgstr ""
+msgstr "Bạn không thể sửa bài viết của người chức cao hơn"
 
 #: system/johncms/Comments.php:240 system/johncms/Comments.php:242
 #: system/johncms/Comments.php:301
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: system/johncms/Comments.php:241
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa không?"
 
 #: system/johncms/Comments.php:244
 msgid "Clear all messages from this user"
-msgstr ""
+msgstr "Xóa tất cả các tin nhắn từ người dùng này"
 
 #: system/johncms/Comments.php:245
 msgid "Clear"
-msgstr ""
+msgstr "Xoá"
 
 #: system/johncms/Comments.php:307
 msgid "Edited"
-msgstr ""
+msgstr "Đã chỉnh sửa"
 
 #: system/johncms/Comments.php:331
 msgid "The list is empty"
-msgstr ""
+msgstr "Danh sách này trống"
 
 #: system/johncms/Comments.php:334
 msgid "Total"
-msgstr ""
+msgstr "Tổng cộng"
 
 #: system/johncms/Comments.php:340
 msgid "To Page"
-msgstr ""
+msgstr "Đến trang"
 
 #: system/johncms/Comments.php:399
 msgid "Message"
-msgstr ""
+msgstr "Nội dung tin nhắn"
 
 #: system/johncms/Comments.php:402
 msgid "Send"
-msgstr ""
+msgstr "Gửi"
 
 #: system/johncms/Comments.php:422
 msgid "Text is too short"
-msgstr ""
+msgstr "Văn bản này quá ngắn"
 
 #: system/johncms/Comments.php:428
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr ""
+msgstr "Bạn có thể không liên tục thêm các tin nhắn<br>Hãy chờ"
 
 #: system/johncms/Comments.php:428
 msgid "seconds"
-msgstr ""
+msgstr "giây"
 
 #: system/johncms/Comments.php:438
 msgid "Message already exists"
-msgstr ""
+msgstr "Bài viết đã tồn tại"
 
 #: system/johncms/Counters.php:163
 msgid "Show for Period"
-msgstr ""
+msgstr "Hiển thị theo thời gian"
 
 #: system/johncms/Counters.php:170
 msgid "Last activity"
-msgstr ""
+msgstr "Lần hoạt động cuối"
 
 #: system/johncms/NewsWidget.php:62
 msgid "show more"
-msgstr ""
+msgstr "xem thêm"
 
 #: system/johncms/NewsWidget.php:95
 msgid "Discuss"
-msgstr ""
+msgstr "Thảo luận"
 
-#: system/johncms/Tools.php:136
+#: system/johncms/Tools.php:135
 msgid "Today"
-msgstr ""
+msgstr "Hôm nay"
 
-#: system/johncms/Tools.php:139
+#: system/johncms/Tools.php:138
 msgid "Yesterday"
-msgstr ""
+msgstr "Hôm qua"
 
-#: system/johncms/Tools.php:155
+#: system/johncms/Tools.php:154
 msgid "ERROR"
-msgstr ""
+msgstr "LỖI"
+
+#: system/johncms/Tools.php:234
+msgid "List of Admins"
+msgstr "Danh sách các quản trị viên"
 
 #: system/johncms/Tools.php:235
-msgid "List of Admins"
-msgstr ""
+msgid "Watching the photo album"
+msgstr "Xem album ảnh"
 
 #: system/johncms/Tools.php:236
-msgid "Watching the photo album"
-msgstr ""
-
-#: system/johncms/Tools.php:237
 msgid "List of birthdays"
-msgstr ""
+msgstr "Danh sách ngày sinh nhật (Khải Phan Dịch)"
 
-#: system/johncms/Tools.php:238 system/mainmenu.php:57
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
 msgid "Downloads"
 msgstr "Tải xuống"
 
-#: system/johncms/Tools.php:239
+#: system/johncms/Tools.php:238
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Đọc câu hỏi thường gặp"
 
-#: system/johncms/Tools.php:240 system/mainmenu.php:47
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
 msgid "Forum"
 msgstr "Diễn đàn"
 
-#: system/johncms/Tools.php:241
+#: system/johncms/Tools.php:240
 msgid "Forum Files"
-msgstr ""
+msgstr "Tập tin diễn đàn"
 
-#: system/johncms/Tools.php:242
+#: system/johncms/Tools.php:241
 msgid "Looking, who in Forum?"
-msgstr ""
+msgstr "Tìm kiếm, người dùng trong diễn đàn?"
+
+#: system/johncms/Tools.php:243
+msgid "Here, in the list"
+msgstr "Tại đây, trong danh sách"
 
 #: system/johncms/Tools.php:244
-msgid "Here, in the list"
-msgstr ""
-
-#: system/johncms/Tools.php:245
 msgid "On the Homepage"
-msgstr ""
+msgstr "Trên trang chủ"
 
-#: system/johncms/Tools.php:246 system/mainmenu.php:62
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
 msgid "Library"
 msgstr "Thư viện"
 
-#: system/johncms/Tools.php:247
+#: system/johncms/Tools.php:246
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Thư cá nhân"
+
+#: system/johncms/Tools.php:247
+msgid "Reading the news"
+msgstr "Đọc tin tức"
 
 #: system/johncms/Tools.php:248
-msgid "Reading the news"
-msgstr ""
+msgid "Who is online?"
+msgstr "Ai đang online?"
 
 #: system/johncms/Tools.php:249
-msgid "Who is online?"
-msgstr ""
+msgid "Profile"
+msgstr "Hồ sơ"
 
 #: system/johncms/Tools.php:250
-msgid "Profile"
-msgstr ""
+msgid "Personal Profile"
+msgstr "Hồ sơ cá nhân"
 
 #: system/johncms/Tools.php:251
-msgid "Personal Profile"
-msgstr ""
+msgid "Registered on the site"
+msgstr "Đăng ký trên trang"
 
 #: system/johncms/Tools.php:252
-msgid "Registered on the site"
-msgstr ""
+msgid "List of users"
+msgstr "Danh sách người dùng"
 
 #: system/johncms/Tools.php:253
-msgid "List of users"
-msgstr ""
-
-#: system/johncms/Tools.php:254
 msgid "Watching Top 10 Users"
-msgstr ""
+msgstr "Xem Top 10 người dùng"
 
-#: system/johncms/Tools.php:368
+#: system/johncms/Tools.php:367
 msgid "Last Visit"
-msgstr ""
+msgstr "Lần đăng nhập cuối"
+
+#: system/johncms/Tools.php:373
+msgid "Browser"
+msgstr "Trình duyệt"
 
 #: system/johncms/Tools.php:374
-msgid "Browser"
-msgstr ""
-
-#: system/johncms/Tools.php:375
 msgid "IP address"
-msgstr ""
+msgstr "Địa chỉ IP"
 
-#: system/johncms/Tools.php:394
+#: system/johncms/Tools.php:393
 msgid "IP History"
-msgstr ""
+msgstr "Lịch sử IP"
 
-#: system/johncms/Tools.php:595
+#: system/johncms/Tools.php:594
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
+msgstr[0] "Ngày"
 
 #: system/mainmenu.php:30
 msgid "Information"
