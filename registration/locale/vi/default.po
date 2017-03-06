@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-07 10:05-0500\n"
+"PO-Revision-Date: 2017-03-08 07:21-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Bạn chưa nhập Tên"
 
 #: index.php:65
 msgid "Nickname wrong length"
-msgstr "Kýw"
+msgstr "Chiều dài sai biệt hiệu"
 
 #: index.php:69
 msgid "Invalid characters"

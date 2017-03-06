@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: 2017-01-22 16:44+0400\n"
-"PO-Revision-Date: 2017-03-07 10:05-0500\n"
+"PO-Revision-Date: 2017-03-08 07:21-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -72,7 +72,7 @@ msgstr "Truy cập bị từ chối"
 
 #: includes/access.php:70
 msgid "Guestbook"
-msgstr "Lưu bút Của Bạn"
+msgstr "Phòng trò truyện"
 
 #: includes/access.php:78
 msgid "Library"
@@ -98,7 +98,7 @@ msgstr "Đăng ký Thành Viên"
 
 #: includes/access.php:106
 msgid "With moderation"
-msgstr "Với kiểm duyệt"
+msgstr "Với sự kiểm duyệt"
 
 #: includes/access.php:110
 msgid "Administrators always have access to all closed modules and comments"
@@ -271,7 +271,7 @@ msgstr "Chỉ trên trang chủ"
 
 #: includes/ads.php:215 includes/ads.php:325
 msgid "On all, except Homepage"
-msgstr "Trên tất cả, ngoại trừ Chủ"
+msgstr "Trên tất cả, ngoại trừ trang chủ"
 
 #: includes/ads.php:216
 msgid "Styling links"
@@ -553,7 +553,7 @@ msgstr "Hành vi vi phạm"
 
 #: includes/ban_panel.php:96
 msgid "Violations history"
-msgstr "Hành vi vi phạm lịch sử"
+msgstr "Lịch sử vi phạm"
 
 #: includes/counters.php:49 includes/counters.php:142 includes/counters.php:169
 #: includes/counters.php:211 includes/counters.php:300
@@ -593,7 +593,7 @@ msgstr "Tại trang chính hiển thị tùy chọn 1, vào tùy chọn các tra
 
 #: includes/counters.php:70
 msgid "Disable"
-msgstr "Désactiver"
+msgstr "Vô hiệu hóa"
 
 #: includes/counters.php:71
 msgid "Enable"
