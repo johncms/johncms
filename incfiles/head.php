@@ -26,8 +26,8 @@ echo'<!DOCTYPE html>' .
     "\n" . '<meta name="MobileOptimized" content="width">' .
     "\n" . '<meta content="yes" name="apple-mobile-web-app-capable">' .
     "\n" . '<meta name="Generator" content="JohnCMS, http://johncms.com">' .
-    "\n" . '<meta name="keywords" content="' . $keywords . '">' : '') .
-    "\n" . '<meta name="description" content="' . $description . '">' : '') .
+    "\n" . '<meta name="keywords" content="' . $keywords . '">'.
+    "\n" . '<meta name="description" content="' . $description . '">'.
     "\n" . '<link rel="stylesheet" href="' . $set['homeurl'] . '/theme/' . $set_user['skin'] . '/style.css">' .
     "\n" . '<link rel="shortcut icon" href="' . $set['homeurl'] . '/favicon.ico">' .
     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . $lng['site_news'] . '" href="' . $set['homeurl'] . '/rss/rss.php">' .
