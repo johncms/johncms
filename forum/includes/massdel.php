@@ -29,11 +29,11 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         $dc = $_SESSION['dc'];
         $prd = $_SESSION['prd'];
 
-        foreach ($dc as $delid) {
+        if (!empty($dc)) {
             $db->exec("UPDATE `forum` SET
                 `close` = '1',
                 `close_who` = '" . $systemUser->name . "'
-                WHERE `id` = '" . intval($delid) . "'
+                WHERE `id` IN (" . implode(',', $dc) . ")
             ");
         }
 

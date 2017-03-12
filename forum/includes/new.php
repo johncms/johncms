@@ -43,28 +43,21 @@ if ($systemUser->isValid()) {
     switch ($do) {
         case 'reset':
             // Отмечаем все темы как прочитанные
-            $req = $db->query("SELECT `forum`.`id`
+            $db->exec("INSERT INTO `cms_forum_rdm` (`topic_id`, `user_id`, `time`)
+            SELECT `forum`.`id`, '" . $systemUser->id . "', '" . time() . "'
             FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
             WHERE `forum`.`type`='t'
             AND `cms_forum_rdm`.`topic_id` IS NULL");
 
-            while ($res = $req->fetch()) {
-                $db->exec("INSERT INTO `cms_forum_rdm` SET
-                    `topic_id` = '" . $res['id'] . "',
-                    `user_id` = '" . $systemUser->id . "',
-                    `time` = '" . time() . "'
-                ");
-            }
-
-            $req = $db->query("SELECT `forum`.`id` AS `id`
+            $ids = $db->query("SELECT `forum`.`id`
             FROM `forum` LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
             WHERE `forum`.`type`='t'
-            AND `forum`.`time` > `cms_forum_rdm`.`time`");
+            AND `forum`.`time` > `cms_forum_rdm`.`time`")->fetchAll(PDO::FETCH_COLUMN);
 
-            while ($res = $req->fetch()) {
+            if (!empty($ids)) {
                 $db->exec("UPDATE `cms_forum_rdm` SET
                     `time` = '" . time() . "'
-                    WHERE `topic_id` = '" . $res['id'] . "' AND `user_id` = '" . $systemUser->id . "'
+                    WHERE `topic_id` IN (" . implode(',', $ids) . ") AND `user_id` = '" . $systemUser->id . "'
                 ");
             }
 
