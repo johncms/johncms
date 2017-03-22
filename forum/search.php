@@ -13,8 +13,6 @@
 define('_IN_JOHNCMS', 1);
 
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
 $headmod = 'forumsearch';
 require('../system/bootstrap.php');
