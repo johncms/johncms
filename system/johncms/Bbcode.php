@@ -88,6 +88,8 @@ class Bbcode implements Api\BbcodeInterface
             '[/s]'     => '',
             '[quote]'  => '',
             '[/quote]' => '',
+            '[youtube]'  => '',
+            '[/youtube]' => '',
             '[php]'    => '',
             '[/php]'   => '',
             '[c]'      => '',
@@ -191,16 +193,16 @@ class Bbcode implements Api\BbcodeInterface
         $out = '<style>
 .codepopup {margin-top: 3px;}
 .codepopup a {
-border: 1px solid #a7a7a7;
-border-radius: 3px;
-background-color: #dddddd;
-color: black;
-font-weight: bold;
-padding: 2px 6px 2px 6px;
-display: inline-block;
-margin-right: 6px;
-margin-bottom: 3px;
-text-decoration: none;
+    border: 1px solid #a7a7a7;
+    border-radius: 3px;
+    background-color: #dddddd;
+    color: black;
+    font-weight: bold;
+    padding: 2px 6px 2px 6px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 3px;
+    text-decoration: none;
 }
 </style>
             <script>
@@ -581,7 +583,26 @@ text-decoration: none;
                     $valuesto = explode('&', $matches[1]);
                 }
 
-                return '<p align="center"><div><iframe width="auto" height="auto" src="http://www.youtube.com/embed/' . $valuesto[0] . '?feature=player_detailpage" frameborder="0"></iframe></div></p>';
+                return '
+<style>.video-container {
+	position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+}
+.video-container iframe, .video-container object, .video-container embed {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+</style>
+<div style="max-width: 500px">
+<div class="video-container">
+<iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $valuesto[0] . '" frameborder="0"></iframe>
+</div></div>';
             },
             $var
         );
