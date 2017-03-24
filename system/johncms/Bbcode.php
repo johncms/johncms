@@ -240,7 +240,7 @@ class Bbcode implements Api\BbcodeInterface
             <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/quote.gif" alt="quote" title="' . _t('Quote', 'system') . '" /></a>
             <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/link.gif" alt="url" title="' . _t('URL', 'system') . '" /></a>
             <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/php.gif" title="' . _t('Code', 'system') . '" alt="Code" /></a>
-            <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/youtube.gif" title="BBcode Youtube" alt="bg youtube" /></a>';
+            <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/youtube.gif" title="Youtube" alt="bg youtube" /></a>';
 
         if ($this->user->isValid()) {
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
