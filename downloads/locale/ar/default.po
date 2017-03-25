@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-01-22 16:45+0400\n"
-"PO-Revision-Date: 2017-02-24 05:42-0500\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -50,22 +50,22 @@ msgstr "تم التحميل"
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
 #: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
-#: includes/view.php:158 index.php:38 index.php:163 index.php:176 index.php:360
+#: includes/view.php:158 index.php:36 index.php:161 index.php:174 index.php:358
 msgid "Downloads"
 msgstr "التنزيلات"
 
-#: includes/bookmark.php:28 index.php:366
+#: includes/bookmark.php:28 index.php:364
 msgid "Favorites"
 msgstr "المفضلة"
 
-#: includes/bookmark.php:33 index.php:64
+#: includes/bookmark.php:33 index.php:62
 msgid "For registered users only"
 msgstr "للمستخدمين المسجلين فقط"
 
 #: includes/bookmark.php:57 includes/comments_review.php:97
 #: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
 #: includes/files_new.php:62 includes/files_user.php:60
-#: includes/top_users.php:49 index.php:297
+#: includes/top_users.php:49 index.php:295
 msgid "The list is empty"
 msgstr "القائمة فارغة"
 
@@ -80,7 +80,7 @@ msgstr "المجموع"
 #: includes/bookmark.php:67 includes/comments_review.php:107
 #: includes/files_moderation.php:74 includes/files_new.php:73
 #: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
-#: index.php:321
+#: index.php:319
 msgid "To Page"
 msgstr "على الصفحة"
 
@@ -114,7 +114,7 @@ msgstr "لم يتم العثور على الملف"
 msgid "Back"
 msgstr "الرجوع"
 
-#: includes/comments_review.php:38 index.php:363
+#: includes/comments_review.php:38 index.php:361
 msgid "Review comments"
 msgstr "مراجعة التعليقات"
 
@@ -126,7 +126,7 @@ msgstr "حذف ملف"
 #: includes/fileControl/edit_screen.php:117
 #: includes/fileControl/files_more.php:88
 #: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
-#: includes/folder_delete.php:83 index.php:231
+#: includes/folder_delete.php:83 index.php:229
 msgid "Delete"
 msgstr "حذف"
 
@@ -286,11 +286,11 @@ msgstr "تحميل ملف إضافي"
 
 #: includes/fileControl/files_more.php:210 includes/files_import.php:183
 #: includes/files_upload.php:195 includes/folder_add.php:120
-#: includes/folder_edit.php:121 index.php:223
+#: includes/folder_edit.php:121 index.php:221
 msgid "Allowed extensions"
 msgstr "ملحقات مسموح بها"
 
-#: includes/fileControl/files_more.php:226 index.php:230
+#: includes/fileControl/files_more.php:226 index.php:228
 msgid "Edit"
 msgstr "تحرير"
 
@@ -332,7 +332,7 @@ msgid "The file has been moved"
 msgstr "وقد تم نقل الملف بنجاح"
 
 #: includes/fileControl/transfer_file.php:99 includes/scan_dir.php:289
-#: index.php:348
+#: index.php:346
 msgid "Update counters"
 msgstr "تحديث العدادات"
 
@@ -344,7 +344,7 @@ msgstr "إضافة الي هذا المجلد"
 #: includes/files_import.php:34 includes/files_new.php:36
 #: includes/files_upload.php:203 includes/folder_add.php:34
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
-#: includes/scan_dir.php:94 index.php:163
+#: includes/scan_dir.php:94 index.php:161
 msgid "The directory does not exist"
 msgstr "هذا الدليل غير موجود"
 
@@ -366,7 +366,7 @@ msgstr "رابط الملف"
 msgid "File Name"
 msgstr "اسم الملفّ"
 
-#: includes/files_moderation.php:30 index.php:191
+#: includes/files_moderation.php:30 index.php:189
 msgid "Files on moderation"
 msgstr "الاشراف"
 
@@ -386,8 +386,8 @@ msgstr "موافق"
 msgid "Accept all files"
 msgstr "قبول جميع الملفات"
 
-#: includes/files_new.php:28 includes/files_new.php:41 index.php:173
-#: index.php:183
+#: includes/files_new.php:28 includes/files_new.php:41 index.php:171
+#: index.php:181
 msgid "New Files"
 msgstr "ملف جديد"
 
@@ -405,8 +405,8 @@ msgstr "الأكثر تحميلاً"
 msgid "Popular Files"
 msgstr "شعبية الملفات"
 
-#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:328
-#: index.php:352
+#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:326
+#: index.php:350
 msgid "Upload File"
 msgstr "رفع ملف"
 
@@ -445,7 +445,7 @@ msgid "You can write only the following extensions"
 msgstr "يمكنك كتابة فقط الامتدادات التالية"
 
 #: includes/folder_add.php:67 includes/folder_add.php:105
-#: includes/folder_add.php:112 index.php:336
+#: includes/folder_add.php:112 index.php:334
 msgid "Create Folder"
 msgstr "انشاء مجلّد"
 
@@ -477,15 +477,15 @@ msgstr "إنشاء"
 msgid "Before removing, delete subdirectories"
 msgstr "قبل إزالة وحذف الدلائل"
 
-#: includes/folder_delete.php:80 index.php:340
+#: includes/folder_delete.php:80 index.php:338
 msgid "Delete Folder"
 msgstr "حذف مجلد"
 
-#: includes/folder_edit.php:114 index.php:339
+#: includes/folder_edit.php:114 index.php:337
 msgid "Change Folder"
 msgstr "تغيير المجلد"
 
-#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:347
+#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:345
 msgid "Remove missing files"
 msgstr "إزالة الملفات المفقودة"
 
@@ -493,7 +493,7 @@ msgstr "إزالة الملفات المفقودة"
 msgid "Database successfully updated"
 msgstr "تحديث قاعدة البيانات بنجاح"
 
-#: includes/scan_dir.php:101 index.php:346
+#: includes/scan_dir.php:101 index.php:344
 msgid "Update Files"
 msgstr "تحديث الملفات"
 
@@ -505,7 +505,7 @@ msgstr "تمت الاضافة"
 msgid "Categories"
 msgstr "الفئات"
 
-#: includes/scan_dir.php:284 index.php:311
+#: includes/scan_dir.php:284 index.php:309
 msgid "Files"
 msgstr "ملفات"
 
@@ -525,7 +525,7 @@ msgstr "المجلد الحالي وكافة المجلدات الفرعية"
 msgid "Entire Downloads"
 msgstr "كامل التنزيلات"
 
-#: includes/search.php:26 includes/search.php:30 index.php:177
+#: includes/search.php:26 includes/search.php:30 index.php:175
 msgid "Search"
 msgstr "ابـحث"
 
@@ -553,7 +553,7 @@ msgstr "بحث جديد"
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
 msgstr "البحث عن طريق اسم الملف و هو قضية حساسة.<br>The طول الطلب: 2دقيقة. 64حد اقصى."
 
-#: includes/top_users.php:27 index.php:179
+#: includes/top_users.php:27 index.php:177
 msgid "Top Users"
 msgstr "افضل المستخدمين"
 
@@ -613,55 +613,55 @@ msgstr "تعديل الوصف"
 msgid "Managing Screenshots"
 msgstr "إدارة صور لقطات الشاشه"
 
-#: index.php:62 index.php:152
+#: index.php:60 index.php:150
 msgid "Downloads are closed"
 msgstr "التنزيل مغلق"
 
-#: index.php:178
+#: index.php:176
 msgid "Top Files"
 msgstr "اعلى المواقع"
 
-#: index.php:212
+#: index.php:210
 msgid "List of category"
 msgstr "قائمة الفئة"
 
-#: index.php:228
+#: index.php:226
 msgid "Up"
 msgstr "فوق"
 
-#: index.php:229
+#: index.php:227
 msgid "Down"
 msgstr "تحت"
 
-#: index.php:246
+#: index.php:244
 msgid "List of Files"
 msgstr "قائمة الملفات"
 
-#: index.php:270
+#: index.php:268
 msgid "Sorting"
 msgstr "الفرز"
 
-#: index.php:272
+#: index.php:270
 msgid "by time"
 msgstr "بحسب الوقت"
 
-#: index.php:273
+#: index.php:271
 msgid "by name"
 msgstr "حسب الاسم"
 
-#: index.php:275
+#: index.php:273
 msgid "descending"
 msgstr "تنازلي"
 
-#: index.php:276
+#: index.php:274
 msgid "ascending"
 msgstr "تصاعدي"
 
-#: index.php:303
+#: index.php:301
 msgid "Folders"
 msgstr "المجلدات"
 
-#: index.php:329
+#: index.php:327
 msgid "Import File"
 msgstr "استيراد ملفّ"
 

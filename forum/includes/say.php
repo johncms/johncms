@@ -240,7 +240,7 @@ switch ($type1['type']) {
 
         if ($type1['user_id'] == $systemUser->id) {
             require('../system/head.php');
-            echo $tools->displayError('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You can not reply to your own message'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }

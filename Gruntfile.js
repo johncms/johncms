@@ -128,6 +128,29 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_lt: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/lt/**',
+                            'album/locale/lt/**',
+                            'downloads/locale/lt/**',
+                            'forum/locale/lt/**',
+                            'guestbook/locale/lt/**',
+                            'help/locale/lt/**',
+                            'library/locale/lt/**',
+                            'mail/locale/lt/**',
+                            'news/locale/lt/**',
+                            'profile/locale/lt/**',
+                            'registration/locale/lt/**',
+                            'system/locale/lt/**',
+                            'users/locale/lt/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
             lng_pl: {
                 files: [
                     {
@@ -272,6 +295,20 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_lt: {
+                options: {
+                    archive: 'dist/locales/lt.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
             lng_pl: {
                 options: {
                     archive: 'dist/locales/pl.zip'
@@ -363,6 +400,23 @@ module.exports = function (grunt) {
                 '& msgfmt -o registration/locale/id/default.mo registration/locale/id/default.po' +
                 '& msgfmt -o system/locale/id/system.mo system/locale/id/system.po' +
                 '& msgfmt -o users/locale/id/default.mo users/locale/id/default.po',
+                stdout: false,
+                stderr: true
+            },
+            makemo_lt: {
+                command: 'msgfmt -o admin/locale/lt/default.mo admin/locale/lt/default.po' +
+                '& msgfmt -o album/locale/lt/default.mo album/locale/lt/default.po' +
+                '& msgfmt -o downloads/locale/lt/default.mo downloads/locale/lt/default.po' +
+                '& msgfmt -o forum/locale/lt/default.mo forum/locale/lt/default.po' +
+                '& msgfmt -o guestbook/locale/lt/default.mo guestbook/locale/lt/default.po' +
+                '& msgfmt -o help/locale/lt/default.mo help/locale/lt/default.po' +
+                '& msgfmt -o library/locale/lt/default.mo library/locale/lt/default.po' +
+                '& msgfmt -o mail/locale/lt/default.mo mail/locale/lt/default.po' +
+                '& msgfmt -o news/locale/lt/default.mo news/locale/lt/default.po' +
+                '& msgfmt -o profile/locale/lt/default.mo profile/locale/lt/default.po' +
+                '& msgfmt -o registration/locale/lt/default.mo registration/locale/lt/default.po' +
+                '& msgfmt -o system/locale/lt/system.mo system/locale/lt/system.po' +
+                '& msgfmt -o users/locale/lt/default.mo users/locale/lt/default.po',
                 stdout: false,
                 stderr: true
             },
@@ -467,6 +521,7 @@ module.exports = function (grunt) {
     grunt.registerTask('makemo', [
         'exec:makemo_ar',
         'exec:makemo_id',
+        'exec:makemo_lt',
         'exec:makemo_pl',
         'exec:makemo_ru',
         'exec:makemo_uk',
@@ -483,6 +538,10 @@ module.exports = function (grunt) {
 
         'copy:lng_id',
         'compress:lng_id',
+        'clean:distributive',
+
+        'copy:lng_lt',
+        'compress:lng_lt',
         'clean:distributive',
 
         'copy:lng_pl',

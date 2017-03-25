@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2017-03-03 09:56-0500\n"
+"POT-Creation-Date: 2017-03-25 19:15+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: includes/ignor.php:16 includes/input.php:15 includes/load.php:15
 #: includes/new.php:15 includes/output.php:15 includes/systems.php:113
 #: includes/write.php:40 includes/write.php:50 includes/write.php:106
-#: includes/write.php:528 index.php:81
+#: includes/write.php:528 index.php:79
 msgid "Mail"
 msgstr "Пошта"
 
@@ -51,7 +51,7 @@ msgstr "Ви дійсно бажаєте видалити повідомленн
 #: includes/delete.php:83 includes/deluser.php:50 includes/deluser.php:54
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
 #: includes/output.php:89 includes/systems.php:54 includes/systems.php:89
-#: includes/write.php:90 includes/write.php:495 index.php:145
+#: includes/write.php:90 includes/write.php:495 index.php:143
 msgid "Delete"
 msgstr "Видалити"
 
@@ -62,7 +62,7 @@ msgstr "Повідомлення для видалення не обрано"
 #: includes/delete.php:90 includes/files.php:70 includes/ignor.php:152
 #: includes/input.php:115 includes/new.php:83 includes/output.php:116
 #: includes/systems.php:123 includes/write.php:96 includes/write.php:537
-#: index.php:168
+#: index.php:166
 msgid "Personal"
 msgstr "Персональні"
 
@@ -71,7 +71,7 @@ msgid "Contact deleted"
 msgstr "Контакт видалено"
 
 #: includes/deluser.php:48 includes/input.php:78 includes/output.php:79
-#: index.php:115
+#: index.php:113
 msgid "Continue"
 msgstr "Продовжити"
 
@@ -89,29 +89,29 @@ msgstr "Файли"
 
 #: includes/files.php:56 includes/ignor.php:138 includes/input.php:102
 #: includes/new.php:70 includes/output.php:103 includes/systems.php:99
-#: includes/write.php:513 index.php:156
+#: includes/write.php:513 index.php:154
 msgid "The list is empty"
 msgstr "Список порожній"
 
 #: includes/files.php:60 includes/ignor.php:141 includes/input.php:105
 #: includes/new.php:73 includes/output.php:106 includes/systems.php:102
-#: includes/write.php:516 index.php:159
+#: includes/write.php:516 index.php:157
 msgid "Total"
 msgstr "Разом"
 
 #: includes/files.php:67 includes/ignor.php:148 includes/input.php:112
 #: includes/new.php:80 includes/output.php:113 includes/systems.php:109
-#: includes/write.php:524 index.php:165
+#: includes/write.php:524 index.php:163
 msgid "To Page"
 msgstr "На сторінку"
 
 #: includes/ignor.php:31 includes/ignor.php:107 includes/output.php:89
-#: index.php:125
+#: index.php:123
 msgid "Blocklist"
 msgstr "Список блокування"
 
 #: includes/ignor.php:39 includes/ignor.php:68 includes/write.php:42
-#: includes/write.php:144 index.php:95
+#: includes/write.php:144 index.php:93
 msgid "User does not exists"
 msgstr "Користувача не існує"
 
@@ -151,12 +151,12 @@ msgstr "Ви дійсно бажаєте заблокувати контакт?"
 msgid "Block"
 msgstr "Заблокувати"
 
-#: includes/ignor.php:107 index.php:125
+#: includes/ignor.php:107 index.php:123
 msgid "My Contacts"
 msgstr "Мої контакти"
 
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
-#: includes/output.php:89 index.php:145
+#: includes/output.php:89 index.php:143
 msgid "Correspondence"
 msgstr "Листування"
 
@@ -282,27 +282,27 @@ msgstr "Надіслати повідомлення"
 msgid "File"
 msgstr "Файл"
 
-#: index.php:83
+#: index.php:81
 msgid "Contacts"
 msgstr "Контакти"
 
-#: index.php:103
+#: index.php:101
 msgid "You cannot add yourself as a contact"
 msgstr "Самого себе не можна додати в контакт"
 
-#: index.php:115
+#: index.php:113
 msgid "User has been added to your contact list"
 msgstr "Користувач доданий у Ваш список контактів"
 
-#: index.php:119
+#: index.php:117
 msgid "You really want to add contact?"
 msgstr "Ви дійсно хочете додати контакт?"
 
-#: index.php:120
+#: index.php:118
 msgid "Add"
 msgstr "Додати"
 
-#: index.php:145
+#: index.php:143
 msgid "Block User"
 msgstr "Заблокувати користувача"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-02-24 05:42-0500\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: ar_SA\n"
 
 #: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
-#: index.php:215
+#: index.php:213
 msgid "Activity"
 msgstr "النشاط"
 
@@ -30,7 +30,7 @@ msgstr "النشاط"
 #: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
 #: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
 #: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
-#: index.php:122
+#: index.php:120
 msgid "Profile"
 msgstr "الملف الشخصي"
 
@@ -97,7 +97,7 @@ msgstr "الحظر نشط بالفعل"
 msgid "System"
 msgstr "نظام"
 
-#: includes/ban.php:142 index.php:138
+#: includes/ban.php:142 index.php:136
 msgid "Ban"
 msgstr "الحظر"
 
@@ -119,7 +119,7 @@ msgstr "الرسائل الخاصة"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
-#: index.php:225
+#: index.php:223
 msgid "Guestbook"
 msgstr "سجل الزوار"
 
@@ -208,7 +208,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr "إزالة الحظر جنبا إلى جنب مع سجل الحظر التاريخ"
 
 #: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
-#: includes/karma.php:154 includes/karma.php:171 index.php:134
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
 msgid "Delete"
 msgstr "حذف"
 
@@ -273,15 +273,15 @@ msgstr "تعديل الملف الشخصي"
 msgid "You cannot edit profile of higher administration"
 msgstr "لا يمكنك تحرير مناصب الإدارة العليا"
 
-#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:193
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
 msgid "Default settings are set"
 msgstr "يتم تعيين الإعدادات الافتراضية"
 
-#: includes/edit.php:50 index.php:124
+#: includes/edit.php:50 index.php:122
 msgid "My Profile"
 msgstr "ملفي الشخصي"
 
-#: includes/edit.php:50 includes/info.php:30 index.php:130
+#: includes/edit.php:50 includes/info.php:30 index.php:128
 msgid "Edit"
 msgstr "تحرير"
 
@@ -453,7 +453,7 @@ msgid "Supervisor"
 msgstr "مشرف"
 
 #: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
-#: includes/settings.php:123 includes/settings.php:236
+#: includes/settings.php:123 includes/settings.php:238
 msgid "Save"
 msgstr "حفظ"
 
@@ -486,7 +486,7 @@ msgstr "تم تحميل الصورة الرمزية بنجاح"
 msgid "Select image"
 msgstr "حدد الصورة"
 
-#: includes/info.php:25 includes/info.php:27 index.php:214
+#: includes/info.php:25 includes/info.php:27 index.php:212
 msgid "Information"
 msgstr "المعلومات"
 
@@ -494,7 +494,7 @@ msgstr "المعلومات"
 msgid "Name"
 msgstr "الاسم"
 
-#: includes/info.php:43 index.php:147
+#: includes/info.php:43 index.php:145
 msgid "Birthday"
 msgstr "عيد ميلاد"
 
@@ -512,7 +512,7 @@ msgid "Access forbidden"
 msgstr "ممنوع الوصول"
 
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
-#: includes/karma.php:239 index.php:187
+#: includes/karma.php:239 index.php:185
 msgid "Karma"
 msgstr "الاعجاب"
 
@@ -578,7 +578,7 @@ msgstr "أضف تعليق"
 msgid "Min. 2, Max. 500 characters"
 msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
 
-#: includes/karma.php:120 index.php:198
+#: includes/karma.php:120 index.php:196
 msgid "Vote"
 msgstr "تصويت"
 
@@ -606,11 +606,11 @@ msgstr "ردود جديدة"
 msgid "All"
 msgstr "جميع"
 
-#: includes/karma.php:241 index.php:189
+#: includes/karma.php:241 index.php:187
 msgid "For"
 msgstr "لـ :"
 
-#: includes/karma.php:242 index.php:190
+#: includes/karma.php:242 index.php:188
 msgid "Against"
 msgstr "ضد"
 
@@ -630,7 +630,7 @@ msgstr "صفحاتي"
 msgid "Statistics"
 msgstr "الإحصائيات"
 
-#: includes/office.php:48 index.php:224
+#: includes/office.php:48 index.php:222
 msgid "Photo Album"
 msgstr "ألبوم الصور"
 
@@ -654,7 +654,7 @@ msgstr "مرسلة"
 msgid "Files"
 msgstr "الملفات"
 
-#: includes/office.php:91 index.php:251
+#: includes/office.php:91 index.php:249
 msgid "Write"
 msgstr "اكتب"
 
@@ -740,7 +740,7 @@ msgstr "كل ما يمكن أن يكتب"
 msgid "Only my contacts"
 msgstr "فقط الأصدقاء"
 
-#: includes/settings.php:96 includes/settings.php:188
+#: includes/settings.php:96 includes/settings.php:189
 msgid "Settings saved successfully"
 msgstr "تم حفظ الإعدادات بنجاح"
 
@@ -780,63 +780,67 @@ msgstr "ابدًا"
 msgid "Reset settings"
 msgstr "استعادة الخيارات الإفتراضية"
 
-#: includes/settings.php:198
+#: includes/settings.php:199
 msgid "Time settings"
 msgstr "استعادة الخيارات الإفتراضية"
 
-#: includes/settings.php:199
+#: includes/settings.php:200
 msgid "Shift of time"
 msgstr "تحول في الوقت"
 
-#: includes/settings.php:201
+#: includes/settings.php:202
 msgid "System time"
 msgstr "وقت النظام"
 
-#: includes/settings.php:202
+#: includes/settings.php:203
 msgid "System Functions"
 msgstr "وظائف النظام"
 
-#: includes/settings.php:203
+#: includes/settings.php:204
 msgid "Direct URL"
 msgstr "رابط مباشر"
 
-#: includes/settings.php:204
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "مشغل Youtube"
+
+#: includes/settings.php:206
 msgid "Text entering"
 msgstr "إدخال النص"
 
-#: includes/settings.php:205
+#: includes/settings.php:207
 msgid "Height of field"
 msgstr "ارتفاع حقل"
 
-#: includes/settings.php:207
+#: includes/settings.php:209
 msgid "Appearance"
 msgstr "المظهر"
 
-#: includes/settings.php:217
+#: includes/settings.php:219
 msgid "Theme"
 msgstr "المظهر"
 
-#: includes/settings.php:218
+#: includes/settings.php:220
 msgid "Size of Lists"
 msgstr "حجم قوائم"
 
-#: includes/settings.php:223
+#: includes/settings.php:225
 msgid "Select Language"
 msgstr "اختر اللغة"
 
-#: includes/settings.php:229
+#: includes/settings.php:231
 msgid "Site Default"
 msgstr "الموقع الافتراضي"
 
-#: includes/settings.php:237
+#: includes/settings.php:239
 msgid "Reset Settings"
 msgstr "إعادة تعيين الإعدادات"
 
-#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:216
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
 msgid "Statistic"
 msgstr "الإحصائيات"
 
-#: includes/stat.php:34 index.php:166
+#: includes/stat.php:34 index.php:164
 msgid "Pending confirmation"
 msgstr "في انتظار التأكيد"
 
@@ -868,43 +872,43 @@ msgstr "آخر زيارة:"
 msgid "Achievements"
 msgstr "الإنجازات"
 
-#: index.php:45
+#: index.php:43
 msgid "For registered users only"
 msgstr "للمستخدمين المسجلين فقط"
 
-#: index.php:55
+#: index.php:53
 msgid "This User does not exists"
 msgstr "هذا المستخدم غير موجود"
 
-#: index.php:124
+#: index.php:122
 msgid "User Profile"
 msgstr "ملف تعريف المستخدم"
 
-#: index.php:158
+#: index.php:156
 msgid "Where?"
 msgstr "أين؟"
 
-#: index.php:205
+#: index.php:203
 msgid "New reviews"
 msgstr "ملاحظات جديدة"
 
-#: index.php:220
+#: index.php:218
 msgid "Violations"
 msgstr "الانتهاكات"
 
-#: index.php:232
+#: index.php:230
 msgid "Add to Contacts"
 msgstr "إضافة إلى جهات الاتصال"
 
-#: index.php:234
+#: index.php:232
 msgid "Remove from Contacts"
 msgstr "إزالة من جهات الاتصال"
 
-#: index.php:239
+#: index.php:237
 msgid "Block User"
 msgstr "حظر مستخدم"
 
-#: index.php:241
+#: index.php:239
 msgid "Unlock User"
 msgstr "فتح المستخدم"
 

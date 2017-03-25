@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:59+0400\n"
-"PO-Revision-Date: 2017-03-03 09:56-0500\n"
+"POT-Creation-Date: 2017-03-25 19:18+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 "X-Crowdin-Language: uk\n"
 "X-Crowdin-File: /users/default.pot\n"
 
-#: includes/admlist.php:15 includes/admlist.php:29 index.php:82
+#: includes/admlist.php:15 includes/admlist.php:29 index.php:80
 msgid "Administration"
 msgstr "Адміністрація"
 
 #: includes/admlist.php:29 includes/birth.php:29 includes/top.php:64
 #: includes/top.php:72 includes/top.php:81 includes/top.php:101
-#: includes/userlist.php:30 index.php:68 index.php:74 search.php:35
+#: includes/userlist.php:30 index.php:66 index.php:72 search.php:35
 msgid "Community"
 msgstr "Спільнота"
 
@@ -44,11 +44,11 @@ msgid "User Search"
 msgstr "Пошук користувача"
 
 #: includes/admlist.php:49 includes/birth.php:54 includes/top.php:107
-#: includes/userlist.php:54 index.php:87 search.php:102
+#: includes/userlist.php:54 index.php:85 search.php:102
 msgid "Back"
 msgstr "Повернутися"
 
-#: includes/birth.php:15 includes/birth.php:29 index.php:83
+#: includes/birth.php:15 includes/birth.php:29 index.php:81
 msgid "Birthdays"
 msgstr "Іменинники"
 
@@ -61,7 +61,7 @@ msgstr "Список порожній"
 msgid "Online"
 msgstr "В мережі"
 
-#: includes/online.php:38 index.php:81
+#: includes/online.php:38 index.php:79
 msgid "Users"
 msgstr "Користувачі"
 
@@ -81,7 +81,7 @@ msgstr "IP Активність"
 msgid "Who is online?"
 msgstr "Хто в мережі?"
 
-#: includes/top.php:16 index.php:85
+#: includes/top.php:16 index.php:83
 msgid "Top Activity"
 msgstr "Топ активності"
 
@@ -125,23 +125,23 @@ msgstr "Найактивніші на форумі"
 msgid "List of users"
 msgstr "Список користувачів"
 
-#: index.php:43
+#: index.php:41
 msgid "For registered users only"
 msgstr "Тільки для зареєстрованих користувачів"
 
-#: index.php:76
+#: index.php:74
 msgid "Look for the User"
 msgstr "Подивіться для користувача"
 
-#: index.php:78 search.php:39
+#: index.php:76 search.php:39
 msgid "Search"
 msgstr "Пошук"
 
-#: index.php:79
+#: index.php:77
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr "Пошук здійснюється по ніку і не залежить від регістру."
 
-#: index.php:84
+#: index.php:82
 msgid "Photo Albums"
 msgstr "Фотоальбоми"
 

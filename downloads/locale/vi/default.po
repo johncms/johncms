@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-01-22 16:45+0400\n"
-"PO-Revision-Date: 2017-03-08 07:21-0500\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -50,22 +50,22 @@ msgstr "Tải lên"
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
 #: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
-#: includes/view.php:158 index.php:38 index.php:163 index.php:176 index.php:360
+#: includes/view.php:158 index.php:36 index.php:161 index.php:174 index.php:358
 msgid "Downloads"
 msgstr "Tải về"
 
-#: includes/bookmark.php:28 index.php:366
+#: includes/bookmark.php:28 index.php:364
 msgid "Favorites"
 msgstr "Ưa thích"
 
-#: includes/bookmark.php:33 index.php:64
+#: includes/bookmark.php:33 index.php:62
 msgid "For registered users only"
 msgstr "Chỉ dành cho người dùng đã đăng nhập"
 
 #: includes/bookmark.php:57 includes/comments_review.php:97
 #: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
 #: includes/files_new.php:62 includes/files_user.php:60
-#: includes/top_users.php:49 index.php:297
+#: includes/top_users.php:49 index.php:295
 msgid "The list is empty"
 msgstr "Danh sách trống"
 
@@ -80,7 +80,7 @@ msgstr "Tổng số"
 #: includes/bookmark.php:67 includes/comments_review.php:107
 #: includes/files_moderation.php:74 includes/files_new.php:73
 #: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
-#: index.php:321
+#: index.php:319
 msgid "To Page"
 msgstr "Đến trang"
 
@@ -114,7 +114,7 @@ msgstr "Tập tin không tồn tại"
 msgid "Back"
 msgstr "Quay lại"
 
-#: includes/comments_review.php:38 index.php:363
+#: includes/comments_review.php:38 index.php:361
 msgid "Review comments"
 msgstr "Ý kiến nhận xét"
 
@@ -126,7 +126,7 @@ msgstr "Xóa tập tin"
 #: includes/fileControl/edit_screen.php:117
 #: includes/fileControl/files_more.php:88
 #: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
-#: includes/folder_delete.php:83 index.php:231
+#: includes/folder_delete.php:83 index.php:229
 msgid "Delete"
 msgstr "Xóa"
 
@@ -286,11 +286,11 @@ msgstr "Tải về các tập tin bổ sung"
 
 #: includes/fileControl/files_more.php:210 includes/files_import.php:183
 #: includes/files_upload.php:195 includes/folder_add.php:120
-#: includes/folder_edit.php:121 index.php:223
+#: includes/folder_edit.php:121 index.php:221
 msgid "Allowed extensions"
 msgstr "Đuôi tập tin (phần mở rộng) được cho phép"
 
-#: includes/fileControl/files_more.php:226 index.php:230
+#: includes/fileControl/files_more.php:226 index.php:228
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
@@ -332,7 +332,7 @@ msgid "The file has been moved"
 msgstr "Các tập tin đã được chuyển"
 
 #: includes/fileControl/transfer_file.php:99 includes/scan_dir.php:289
-#: index.php:348
+#: index.php:346
 msgid "Update counters"
 msgstr "Cập nhật bộ đếm"
 
@@ -344,7 +344,7 @@ msgstr "Di chuyển tới thư mục này"
 #: includes/files_import.php:34 includes/files_new.php:36
 #: includes/files_upload.php:203 includes/folder_add.php:34
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
-#: includes/scan_dir.php:94 index.php:163
+#: includes/scan_dir.php:94 index.php:161
 msgid "The directory does not exist"
 msgstr "Thư mục không tồn tại"
 
@@ -366,7 +366,7 @@ msgstr "Liên kết đến tập tin"
 msgid "File Name"
 msgstr "Tên Tệp"
 
-#: includes/files_moderation.php:30 index.php:191
+#: includes/files_moderation.php:30 index.php:189
 msgid "Files on moderation"
 msgstr "Các tập tin kiểm duyệt"
 
@@ -386,8 +386,8 @@ msgstr "Chấp nhận"
 msgid "Accept all files"
 msgstr "Chấp nhận tất cả các tập tin"
 
-#: includes/files_new.php:28 includes/files_new.php:41 index.php:173
-#: index.php:183
+#: includes/files_new.php:28 includes/files_new.php:41 index.php:171
+#: index.php:181
 msgid "New Files"
 msgstr "Tệp mới"
 
@@ -405,8 +405,8 @@ msgstr "Tải về nhiều nhất"
 msgid "Popular Files"
 msgstr "Tập tin phổ biến"
 
-#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:328
-#: index.php:352
+#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:326
+#: index.php:350
 msgid "Upload File"
 msgstr "Tải lên Tập tin"
 
@@ -445,7 +445,7 @@ msgid "You can write only the following extensions"
 msgstr "Bạn chỉ có thể viết sau mở rộng sau"
 
 #: includes/folder_add.php:67 includes/folder_add.php:105
-#: includes/folder_add.php:112 index.php:336
+#: includes/folder_add.php:112 index.php:334
 msgid "Create Folder"
 msgstr "Tạo Thư mục"
 
@@ -477,15 +477,15 @@ msgstr "Tạo"
 msgid "Before removing, delete subdirectories"
 msgstr "Trước khi xóa danh mục này, bạn cần xóa danh mục con"
 
-#: includes/folder_delete.php:80 index.php:340
+#: includes/folder_delete.php:80 index.php:338
 msgid "Delete Folder"
 msgstr "Xóa thư mục"
 
-#: includes/folder_edit.php:114 index.php:339
+#: includes/folder_edit.php:114 index.php:337
 msgid "Change Folder"
 msgstr "Thay đổi thư mục"
 
-#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:347
+#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:345
 msgid "Remove missing files"
 msgstr "Loại bỏ tệp bị thiếu"
 
@@ -493,7 +493,7 @@ msgstr "Loại bỏ tệp bị thiếu"
 msgid "Database successfully updated"
 msgstr "Cơ sở dữ liệu cập nhật thành công"
 
-#: includes/scan_dir.php:101 index.php:346
+#: includes/scan_dir.php:101 index.php:344
 msgid "Update Files"
 msgstr "Cập nhật tệp"
 
@@ -505,7 +505,7 @@ msgstr "Đã Thêm"
 msgid "Categories"
 msgstr "Thể loại"
 
-#: includes/scan_dir.php:284 index.php:311
+#: includes/scan_dir.php:284 index.php:309
 msgid "Files"
 msgstr "Tập tin"
 
@@ -525,7 +525,7 @@ msgstr "Thư mục hiện tại và tất cả các con"
 msgid "Entire Downloads"
 msgstr "Toàn bộ lượt tải"
 
-#: includes/search.php:26 includes/search.php:30 index.php:177
+#: includes/search.php:26 includes/search.php:30 index.php:175
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -553,7 +553,7 @@ msgstr "Tìm kiếm mới"
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
 msgstr "Tìm kiếm theo tên tập tin và trường hợp nhạy cảm.<br>Chiều dài yêu cầu: 2phút. 64giây."
 
-#: includes/top_users.php:27 index.php:179
+#: includes/top_users.php:27 index.php:177
 msgid "Top Users"
 msgstr "Top người dùng"
 
@@ -613,55 +613,55 @@ msgstr "Chỉnh sửa mô tả"
 msgid "Managing Screenshots"
 msgstr "Quản lý các ảnh chụp màn hình"
 
-#: index.php:62 index.php:152
+#: index.php:60 index.php:150
 msgid "Downloads are closed"
 msgstr "Tải về tạm thời đóng cửa"
 
-#: index.php:178
+#: index.php:176
 msgid "Top Files"
 msgstr "Top tập tin"
 
-#: index.php:212
+#: index.php:210
 msgid "List of category"
 msgstr "Danh sách các chuyên mục"
 
-#: index.php:228
+#: index.php:226
 msgid "Up"
 msgstr "Lên"
 
-#: index.php:229
+#: index.php:227
 msgid "Down"
 msgstr "Xuống"
 
-#: index.php:246
+#: index.php:244
 msgid "List of Files"
 msgstr "Danh sách tập tin"
 
-#: index.php:270
+#: index.php:268
 msgid "Sorting"
 msgstr "Sắp xếp"
 
-#: index.php:272
+#: index.php:270
 msgid "by time"
 msgstr "theo thời gian"
 
-#: index.php:273
+#: index.php:271
 msgid "by name"
 msgstr "bởi tên"
 
-#: index.php:275
+#: index.php:273
 msgid "descending"
 msgstr "giảm dần"
 
-#: index.php:276
+#: index.php:274
 msgid "ascending"
 msgstr "tăng dần"
 
-#: index.php:303
+#: index.php:301
 msgid "Folders"
 msgstr "Thư mục"
 
-#: index.php:329
+#: index.php:327
 msgid "Import File"
 msgstr "Tải lên tệp từ xa (Import)"
 

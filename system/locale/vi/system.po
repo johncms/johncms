@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-08 07:21-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -82,11 +82,11 @@ msgstr "Đó là đề nghị không để xác định dữ liệu của liên 
 msgid "Go to Link"
 msgstr "Vào liên kết"
 
-#: login.php:37 system/end.php:35 system/head.php:108
+#: login.php:37 system/end.php:35 system/head.php:110
 msgid "Home"
 msgstr "Trang chủ"
 
-#: login.php:39 login.php:158 system/head.php:110
+#: login.php:39 login.php:158 system/head.php:112
 msgid "Login"
 msgstr "Đăng nhập"
 
@@ -154,103 +154,103 @@ msgstr "Đăng ký Thành Viên"
 msgid "Forgot password?"
 msgstr "Quên mật khẩu?"
 
-#: system/head.php:51
+#: system/head.php:53
 msgid "Site News"
 msgstr "Trang web Tin tức"
 
-#: system/head.php:104
+#: system/head.php:106
 msgid "Hi"
 msgstr "Xin chào"
 
-#: system/head.php:104 system/johncms/Tools.php:299
+#: system/head.php:106 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr "Phòng khách"
 
-#: system/head.php:109
+#: system/head.php:111
 msgid "Personal"
 msgstr "Cá nhân"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Ban"
 msgstr "Cấm"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Details"
 msgstr "Thông tin chi tiết"
 
-#: system/head.php:205
+#: system/head.php:207
 msgid "System"
 msgstr "Hệ thống"
 
-#: system/head.php:217
+#: system/head.php:219
 msgid "Mail"
 msgstr "Thư"
 
-#: system/head.php:221 system/johncms/Tools.php:242 system/mainmenu.php:42
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr "Phòng trò truyện"
 
-#: system/head.php:227
+#: system/head.php:229
 msgid "Comments"
 msgstr "Bình luận"
 
-#: system/head.php:231 system/johncms/Counters.php:164
+#: system/head.php:233 system/johncms/Counters.php:164
 msgid "Unread"
 msgstr "Chưa đọc"
 
-#: system/johncms/Bbcode.php:148
+#: system/johncms/Bbcode.php:163
 msgid "Edit List"
 msgstr "Danh sách chỉnh sửa"
 
-#: system/johncms/Bbcode.php:159
+#: system/johncms/Bbcode.php:174
 msgid "Add Smilies"
 msgstr "Thêm biểu tượng mặt cười"
 
-#: system/johncms/Bbcode.php:217
+#: system/johncms/Bbcode.php:232
 msgid "Bold"
 msgstr "In đậm"
 
-#: system/johncms/Bbcode.php:218
+#: system/johncms/Bbcode.php:233
 msgid "Italic"
 msgstr "In nghiêng"
 
-#: system/johncms/Bbcode.php:219
+#: system/johncms/Bbcode.php:234
 msgid "Underline"
 msgstr "Gạch chân"
 
-#: system/johncms/Bbcode.php:220
+#: system/johncms/Bbcode.php:235
 msgid "Strike"
 msgstr "Đánh"
 
-#: system/johncms/Bbcode.php:221
-msgid "List"
-msgstr "Danh sách"
-
-#: system/johncms/Bbcode.php:222
-msgid "Spoiler"
-msgstr "Nút nhanh"
-
-#: system/johncms/Bbcode.php:223
-msgid "Quote"
-msgstr "Trích dẫn"
-
-#: system/johncms/Bbcode.php:224
-msgid "URL"
-msgstr "URL"
-
-#: system/johncms/Bbcode.php:225
-msgid "Code"
-msgstr "Mã code"
-
-#: system/johncms/Bbcode.php:226
+#: system/johncms/Bbcode.php:236
 msgid "Text Color"
 msgstr "Màu chữ"
 
-#: system/johncms/Bbcode.php:227
+#: system/johncms/Bbcode.php:237
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: system/johncms/Bbcode.php:230
+#: system/johncms/Bbcode.php:238
+msgid "List"
+msgstr "Danh sách"
+
+#: system/johncms/Bbcode.php:239
+msgid "Spoiler"
+msgstr "Nút nhanh"
+
+#: system/johncms/Bbcode.php:240
+msgid "Quote"
+msgstr "Trích dẫn"
+
+#: system/johncms/Bbcode.php:241
+msgid "URL"
+msgstr "URL"
+
+#: system/johncms/Bbcode.php:242
+msgid "Code"
+msgstr "Mã code"
+
+#: system/johncms/Bbcode.php:246
 msgid "Smilies"
 msgstr "Biểu tượng mặt cười"
 
@@ -339,11 +339,11 @@ msgstr "Hiển thị theo thời gian"
 msgid "Last activity"
 msgstr "Lần hoạt động cuối"
 
-#: system/johncms/NewsWidget.php:62
+#: system/johncms/NewsWidget.php:63
 msgid "show more"
 msgstr "xem thêm"
 
-#: system/johncms/NewsWidget.php:95
+#: system/johncms/NewsWidget.php:98
 msgid "Discuss"
 msgstr "Thảo luận"
 

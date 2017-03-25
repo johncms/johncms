@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: ru_RU\n"
 
 #: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
-#: index.php:215
+#: index.php:213
 msgid "Activity"
 msgstr "Активность"
 
@@ -30,7 +30,7 @@ msgstr "Активность"
 #: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
 #: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
 #: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
-#: index.php:122
+#: index.php:120
 msgid "Profile"
 msgstr "Анкета"
 
@@ -97,7 +97,7 @@ msgstr "Такой бан уже есть"
 msgid "System"
 msgstr "Система"
 
-#: includes/ban.php:142 index.php:138
+#: includes/ban.php:142 index.php:136
 msgid "Ban"
 msgstr "Бан"
 
@@ -119,7 +119,7 @@ msgstr "Личные сообщения"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
-#: index.php:225
+#: index.php:223
 msgid "Guestbook"
 msgstr "Гостевая"
 
@@ -208,7 +208,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr "Удаляется бан вместе с записью в истории нарушений"
 
 #: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
-#: includes/karma.php:154 includes/karma.php:171 index.php:134
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
 msgid "Delete"
 msgstr "Удалить"
 
@@ -273,15 +273,15 @@ msgstr "Редактировать анкету"
 msgid "You cannot edit profile of higher administration"
 msgstr "Вы не можете редактировать анкету старшего Вас по должности"
 
-#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:193
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
 msgid "Default settings are set"
 msgstr "Установлены настройки по умолчанию"
 
-#: includes/edit.php:50 index.php:124
+#: includes/edit.php:50 index.php:122
 msgid "My Profile"
 msgstr "Мой профиль"
 
-#: includes/edit.php:50 includes/info.php:30 index.php:130
+#: includes/edit.php:50 includes/info.php:30 index.php:128
 msgid "Edit"
 msgstr "Изменить"
 
@@ -453,7 +453,7 @@ msgid "Supervisor"
 msgstr "Супервайзор"
 
 #: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
-#: includes/settings.php:123 includes/settings.php:236
+#: includes/settings.php:123 includes/settings.php:238
 msgid "Save"
 msgstr "Сохранить"
 
@@ -486,7 +486,7 @@ msgstr "Фотография успешно загружена"
 msgid "Select image"
 msgstr "Выбрать картинку"
 
-#: includes/info.php:25 includes/info.php:27 index.php:214
+#: includes/info.php:25 includes/info.php:27 index.php:212
 msgid "Information"
 msgstr "Информация"
 
@@ -494,7 +494,7 @@ msgstr "Информация"
 msgid "Name"
 msgstr "Имя"
 
-#: includes/info.php:43 index.php:147
+#: includes/info.php:43 index.php:145
 msgid "Birthday"
 msgstr "День рождения"
 
@@ -512,7 +512,7 @@ msgid "Access forbidden"
 msgstr "Доступ запрещен"
 
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
-#: includes/karma.php:239 index.php:187
+#: includes/karma.php:239 index.php:185
 msgid "Karma"
 msgstr "Карма"
 
@@ -578,7 +578,7 @@ msgstr "Комментарий"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Мин. 2, макс. 500 символов"
 
-#: includes/karma.php:120 index.php:198
+#: includes/karma.php:120 index.php:196
 msgid "Vote"
 msgstr "Голосовать"
 
@@ -606,11 +606,11 @@ msgstr "Новые отзывы"
 msgid "All"
 msgstr "Все"
 
-#: includes/karma.php:241 index.php:189
+#: includes/karma.php:241 index.php:187
 msgid "For"
 msgstr "За"
 
-#: includes/karma.php:242 index.php:190
+#: includes/karma.php:242 index.php:188
 msgid "Against"
 msgstr "Против"
 
@@ -630,7 +630,7 @@ msgstr "Мои Страницы"
 msgid "Statistics"
 msgstr "Статистика"
 
-#: includes/office.php:48 index.php:224
+#: includes/office.php:48 index.php:222
 msgid "Photo Album"
 msgstr "Фотоальбом"
 
@@ -654,7 +654,7 @@ msgstr "Отправленные"
 msgid "Files"
 msgstr "Файлы"
 
-#: includes/office.php:91 index.php:251
+#: includes/office.php:91 index.php:249
 msgid "Write"
 msgstr "Написать"
 
@@ -740,7 +740,7 @@ msgstr "Могут писать все"
 msgid "Only my contacts"
 msgstr "Только мои контакты"
 
-#: includes/settings.php:96 includes/settings.php:188
+#: includes/settings.php:96 includes/settings.php:189
 msgid "Settings saved successfully"
 msgstr "Настройки успешно сохранены"
 
@@ -780,63 +780,67 @@ msgstr "Никогда"
 msgid "Reset settings"
 msgstr "Сброс настроек"
 
-#: includes/settings.php:198
+#: includes/settings.php:199
 msgid "Time settings"
 msgstr "Настройки времени"
 
-#: includes/settings.php:199
+#: includes/settings.php:200
 msgid "Shift of time"
 msgstr "Сдвиг времени"
 
-#: includes/settings.php:201
+#: includes/settings.php:202
 msgid "System time"
 msgstr "Системное время"
 
-#: includes/settings.php:202
+#: includes/settings.php:203
 msgid "System Functions"
 msgstr "Системные функции"
 
-#: includes/settings.php:203
+#: includes/settings.php:204
 msgid "Direct URL"
 msgstr "Прямые ссылки"
 
-#: includes/settings.php:204
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "Проигрыватель YouTube"
+
+#: includes/settings.php:206
 msgid "Text entering"
 msgstr "Ввод текста"
 
-#: includes/settings.php:205
+#: includes/settings.php:207
 msgid "Height of field"
 msgstr "Высота поля"
 
-#: includes/settings.php:207
+#: includes/settings.php:209
 msgid "Appearance"
 msgstr "Внешний вид"
 
-#: includes/settings.php:217
+#: includes/settings.php:219
 msgid "Theme"
 msgstr "Тема оформления"
 
-#: includes/settings.php:218
+#: includes/settings.php:220
 msgid "Size of Lists"
 msgstr "Размер списков"
 
-#: includes/settings.php:223
+#: includes/settings.php:225
 msgid "Select Language"
 msgstr "Выбрать Язык"
 
-#: includes/settings.php:229
+#: includes/settings.php:231
 msgid "Site Default"
 msgstr "По умолчанию"
 
-#: includes/settings.php:237
+#: includes/settings.php:239
 msgid "Reset Settings"
 msgstr "Сбросить настройки"
 
-#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:216
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
 msgid "Statistic"
 msgstr "Статистика"
 
-#: includes/stat.php:34 index.php:166
+#: includes/stat.php:34 index.php:164
 msgid "Pending confirmation"
 msgstr "Ожидает подтверждения регистрации"
 
@@ -868,43 +872,43 @@ msgstr "Последний визит"
 msgid "Achievements"
 msgstr "Достижения"
 
-#: index.php:45
+#: index.php:43
 msgid "For registered users only"
 msgstr "Только для зарегистрированных посетителей"
 
-#: index.php:55
+#: index.php:53
 msgid "This User does not exists"
 msgstr "Такого пользователя не существует"
 
-#: index.php:124
+#: index.php:122
 msgid "User Profile"
 msgstr "Анкета пользователя"
 
-#: index.php:158
+#: index.php:156
 msgid "Where?"
 msgstr "Где?"
 
-#: index.php:205
+#: index.php:203
 msgid "New reviews"
 msgstr "Новые отзывы"
 
-#: index.php:220
+#: index.php:218
 msgid "Violations"
 msgstr "Нарушения"
 
-#: index.php:232
+#: index.php:230
 msgid "Add to Contacts"
 msgstr "Добавить в контакты"
 
-#: index.php:234
+#: index.php:232
 msgid "Remove from Contacts"
 msgstr "Удалить из контактов"
 
-#: index.php:239
+#: index.php:237
 msgid "Block User"
 msgstr "Заблокировать пользователя"
 
-#: index.php:241
+#: index.php:239
 msgid "Unlock User"
 msgstr "Разблокировать пользователя"
 

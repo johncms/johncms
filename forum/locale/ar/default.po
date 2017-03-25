@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-01-22 16:45+0400\n"
-"PO-Revision-Date: 2017-02-24 05:42-0500\n"
+"POT-Creation-Date: 2017-03-25 19:43+0400\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: includes/per.php:49 includes/per.php:58 includes/post.php:30
 #: includes/ren.php:30 includes/ren.php:39 includes/tema.php:41
 #: includes/tema.php:61 includes/users.php:32 includes/vip.php:30
-#: includes/vip.php:40 includes/vote.php:35 index.php:867
+#: includes/vip.php:40 includes/vote.php:35 index.php:866
 msgid "Wrong data"
 msgstr "بيانات خاطئة"
 
@@ -87,7 +87,7 @@ msgid "Continue"
 msgstr "متابعه"
 
 #: includes/addfile.php:177 includes/nt.php:261 includes/say.php:214
-#: includes/say.php:410 index.php:590 index.php:777
+#: includes/say.php:410 index.php:589 index.php:776
 msgid "Add File"
 msgstr "إضافة ملف"
 
@@ -129,7 +129,7 @@ msgid "Save"
 msgstr "حفظ"
 
 #: includes/curators.php:33 includes/deltema.php:40 includes/say.php:426
-#: index.php:215
+#: index.php:214
 msgid "Topic has been deleted or does not exists"
 msgstr "تم حذف الموضوع أو غير موجود"
 
@@ -137,17 +137,17 @@ msgstr "تم حذف الموضوع أو غير موجود"
 #: includes/editpost.php:179 includes/editpost.php:228 includes/editvote.php:94
 #: includes/file.php:46 includes/files.php:83 includes/files.php:192
 #: includes/filter.php:24 includes/filter.php:67 includes/new.php:15
-#: includes/new.php:71 includes/new.php:86 includes/new.php:159
-#: includes/new.php:230 includes/new.php:268 includes/nt.php:245
+#: includes/new.php:64 includes/new.php:79 includes/new.php:152
+#: includes/new.php:223 includes/new.php:261 includes/nt.php:245
 #: includes/per.php:81 includes/post.php:133 includes/ren.php:69
 #: includes/say.php:376 includes/say.php:426 includes/tema.php:96
 #: includes/tema.php:102 includes/tema.php:145 includes/who.php:90
-#: includes/who.php:198 index.php:141 index.php:215 index.php:255 index.php:876
-#: index.php:901 search.php:31 search.php:230
+#: includes/who.php:198 index.php:139 index.php:154 index.php:214 index.php:254
+#: index.php:875 index.php:900 search.php:29 search.php:228
 msgid "Forum"
 msgstr "منتديات"
 
-#: includes/curators.php:43 index.php:810
+#: includes/curators.php:43 index.php:809
 msgid "Curators"
 msgstr "القيمين"
 
@@ -155,19 +155,19 @@ msgstr "القيمين"
 msgid "Assign"
 msgstr "تعيين"
 
-#: includes/curators.php:78 includes/files.php:162 includes/new.php:209
-#: includes/new.php:266 includes/who.php:71 includes/who.php:186
+#: includes/curators.php:78 includes/files.php:162 includes/new.php:202
+#: includes/new.php:259 includes/who.php:71 includes/who.php:186
 msgid "The list is empty"
 msgstr "القائمة فارغة"
 
 #: includes/curators.php:80 includes/files.php:150 includes/files.php:187
-#: includes/new.php:146 includes/new.php:212 includes/users.php:55
-#: includes/who.php:77 includes/who.php:189 index.php:335 index.php:394
-#: index.php:789 search.php:169
+#: includes/new.php:139 includes/new.php:205 includes/users.php:55
+#: includes/who.php:77 includes/who.php:189 index.php:334 index.php:393
+#: index.php:788 search.php:167
 msgid "Total"
 msgstr "مجموع"
 
-#: includes/deltema.php:74 index.php:838
+#: includes/deltema.php:74 index.php:837
 msgid "Delete Topic"
 msgstr "حذف الموضوع"
 
@@ -180,7 +180,7 @@ msgid "Hide"
 msgstr "اخفي"
 
 #: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:187
-#: includes/editvote.php:57 includes/massdel.php:54 index.php:732 index.php:763
+#: includes/editvote.php:57 includes/massdel.php:54 index.php:731 index.php:762
 msgid "Delete"
 msgstr "حذف"
 
@@ -190,7 +190,7 @@ msgstr "أداء"
 
 #: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:187
 #: includes/editvote.php:58 includes/editvote.php:138 includes/massdel.php:55
-#: search.php:62
+#: search.php:60
 msgid "Cancel"
 msgstr "إلغاء الأمر"
 
@@ -243,7 +243,7 @@ msgid "Edit Message"
 msgstr "تحرير الرسالة"
 
 #: includes/editpost.php:240 includes/nt.php:266 includes/say.php:220
-#: includes/say.php:415 index.php:592 index.php:780
+#: includes/say.php:415 index.php:591 index.php:779
 msgid "Preview"
 msgstr "معاينة"
 
@@ -260,7 +260,7 @@ msgstr "هل تريد حقاً أن حذف الجواب؟"
 msgid "Poll changed"
 msgstr "تغيير استطلاع"
 
-#: includes/editvote.php:94 index.php:822
+#: includes/editvote.php:94 index.php:821
 msgid "Edit Poll"
 msgstr "تعديل الاستطلاع"
 
@@ -308,7 +308,7 @@ msgstr "صوتيات"
 msgid "Other"
 msgstr "اخرى"
 
-#: includes/files.php:53 index.php:269
+#: includes/files.php:53 index.php:268
 msgid "Category Files"
 msgstr "ملفات الفئة"
 
@@ -316,7 +316,7 @@ msgstr "ملفات الفئة"
 msgid "Section files"
 msgstr "ملفات القسم"
 
-#: includes/files.php:65 index.php:281
+#: includes/files.php:65 index.php:280
 msgid "Topic Files"
 msgstr "ملفات الموضوع"
 
@@ -328,11 +328,11 @@ msgstr "ملفات المنتدى"
 msgid "New Files"
 msgstr "ملف جديد"
 
-#: includes/files.php:114 index.php:551 search.php:158
+#: includes/files.php:114 index.php:550 search.php:156
 msgid "Read more"
 msgstr "قراءة المزيد"
 
-#: includes/files.php:131 includes/post.php:118 index.php:704
+#: includes/files.php:131 includes/post.php:118 index.php:703
 msgid "Click to view image"
 msgstr "انقر لعرض الصورة"
 
@@ -344,13 +344,13 @@ msgstr "حجم"
 msgid "Downloaded"
 msgstr "تم التحميل"
 
-#: includes/files.php:139 index.php:710
+#: includes/files.php:139 index.php:709
 msgid "Time"
 msgstr "الوقت"
 
-#: includes/files.php:159 includes/new.php:152 includes/new.php:219
-#: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:400
-#: index.php:796 search.php:226
+#: includes/files.php:159 includes/new.php:145 includes/new.php:212
+#: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:399
+#: index.php:795 search.php:224
 msgid "To Page"
 msgstr "على الصفحة"
 
@@ -366,7 +366,7 @@ msgstr "قائمة الأقسام"
 msgid "You have not selected any author"
 msgstr "لم تقم بتحديد أي كاتب"
 
-#: includes/filter.php:67 index.php:858
+#: includes/filter.php:67 index.php:857
 msgid "Filter by author"
 msgstr "تصفية حسب المؤلف"
 
@@ -390,32 +390,32 @@ msgstr "ملحوظة يتم حذف المشاركات"
 msgid "You did not choose something to delete"
 msgstr "لا تختار شيئا لحذف"
 
-#: includes/new.php:15 includes/new.php:159
+#: includes/new.php:15 includes/new.php:152
 msgid "Unread"
 msgstr "لم يُقرأ بعد"
 
-#: includes/new.php:71
+#: includes/new.php:64
 msgid "All topics marked as read"
 msgstr "وضع علامة مقروء لكافة المواضيع"
 
-#: includes/new.php:86
+#: includes/new.php:79
 #, php-format
 msgid "All for period %d hours"
 msgstr "كل شيء لساعات %d الفترة"
 
-#: includes/new.php:91
+#: includes/new.php:84
 msgid "Show period"
 msgstr "إظهار الفترة"
 
-#: includes/new.php:143
+#: includes/new.php:136
 msgid "There is nothing new in this forum for selected period"
 msgstr "لا يوجد شيء جديد في هذا المنتدى للفترة المحددة"
 
-#: includes/new.php:224
+#: includes/new.php:217
 msgid "Mark as read"
 msgstr "وضع علامة مقروء"
 
-#: includes/new.php:230
+#: includes/new.php:223
 msgid "Last 10"
 msgstr "آخر 10"
 
@@ -448,7 +448,7 @@ msgstr "موضوع بنفس الاسم موجود مسبقا في هذا الق�
 msgid "Message already exists"
 msgstr "الرسالة موجوده بالفعل"
 
-#: includes/nt.php:245 index.php:346
+#: includes/nt.php:245 index.php:345
 msgid "New Topic"
 msgstr "موضوع جديد"
 
@@ -464,7 +464,7 @@ msgstr "العنوان (بحد أقصى 100)"
 msgid "Message"
 msgstr "الرسالة"
 
-#: includes/per.php:81 index.php:846
+#: includes/per.php:81 index.php:845
 msgid "Move Topic"
 msgstr "نقل الموضوع"
 
@@ -484,23 +484,23 @@ msgstr "الفئات الأخرى"
 msgid "Topic"
 msgstr "مواضيع"
 
-#: includes/post.php:81 index.php:528 index.php:658
+#: includes/post.php:81 index.php:527 index.php:657
 msgid "[r]"
 msgstr "[r]"
 
-#: includes/post.php:82 index.php:529 index.php:659
+#: includes/post.php:82 index.php:528 index.php:658
 msgid "[q]"
 msgstr "[q]"
 
-#: includes/post.php:106 index.php:692
+#: includes/post.php:106 index.php:691
 msgid "Attachment"
 msgstr "المرفقات"
 
-#: includes/post.php:124 index.php:710
+#: includes/post.php:124 index.php:709
 msgid "Downloads"
 msgstr "التنزيلات"
 
-#: includes/ren.php:69 index.php:824
+#: includes/ren.php:69 index.php:823
 msgid "Rename Topic"
 msgstr "قم بإعادة تسمية الموضوع"
 
@@ -515,6 +515,10 @@ msgstr "لا يمكنك الكتابة في موضوع مغلق"
 #: includes/say.php:219 includes/say.php:414
 msgid "Send"
 msgstr "إرسال"
+
+#: includes/say.php:243
+msgid "You can not reply to your own message"
+msgstr "أنت لا تستطيع الرد على الرسالة الخاصة بك"
 
 #: includes/say.php:265 includes/say.php:403
 msgid "I am glad to answer you"
@@ -560,7 +564,7 @@ msgstr "الذين صوتوا في الانتخابات"
 msgid "No one has voted in this poll yet"
 msgstr "لا أحد قد صوتوا في هذا الاستطلاع حتى الآن"
 
-#: includes/users.php:64 includes/who.php:87 search.php:161
+#: includes/users.php:64 includes/who.php:87 search.php:159
 msgid "Go to Topic"
 msgstr "الانتقال إلى موضوع"
 
@@ -568,7 +572,7 @@ msgstr "الانتقال إلى موضوع"
 msgid "Vote accepted"
 msgstr "قبل التصويت"
 
-#: includes/who.php:15 includes/who.php:90 index.php:895
+#: includes/who.php:15 includes/who.php:90 index.php:894
 msgid "Who in Forum"
 msgstr "الذين في المنتدى"
 
@@ -604,7 +608,7 @@ msgstr "يبحث ملفات المنتدى"
 msgid "In the unreads"
 msgstr "في غير مقرؤه"
 
-#: includes/who.php:139 search.php:29
+#: includes/who.php:139 search.php:27
 msgid "Forum search"
 msgstr "البحث في المنتدى"
 
@@ -628,195 +632,195 @@ msgstr "في هذا الموضوع"
 msgid "Answers in the Topic"
 msgstr "الإجابات في هذا الموضوع"
 
-#: index.php:125 index.php:194
+#: index.php:123 index.php:193
 msgid "Forum is closed"
 msgstr "المنتدى مُـقفل"
 
-#: index.php:127
+#: index.php:125
 msgid "For registered users only"
 msgstr "للمستخدمين المسجلين فقط"
 
-#: index.php:196
+#: index.php:195
 msgid "Read only"
 msgstr "للقراءة فقط"
 
-#: index.php:275
+#: index.php:274
 msgid "Section Files"
 msgstr "ملفات القسم"
 
-#: index.php:293
+#: index.php:292
 msgid "Who is here"
 msgstr "وهو هنا"
 
-#: index.php:299 index.php:877 search.php:31 search.php:79
+#: index.php:298 index.php:876 search.php:29 search.php:77
 msgid "Search"
 msgstr "ابـحث"
 
-#: index.php:332
+#: index.php:331
 msgid "There are no sections in this category"
 msgstr ". لا توجد قوائم في هذه الفئة"
 
-#: index.php:391
+#: index.php:390
 msgid "No topics in this section"
 msgstr "لا توجد مواضيع في هذا القسم"
 
-#: index.php:432
+#: index.php:431
 msgid "Topic deleted"
 msgstr "تم حذف الموضوع"
 
-#: index.php:432
+#: index.php:431
 msgid "Go to Section"
 msgstr "الانتقال إلى مقطع"
 
-#: index.php:454
+#: index.php:453
 msgid "Topic deleted by"
 msgstr "تم حذف الموضوع"
 
-#: index.php:456
+#: index.php:455
 msgid "Undelete topic"
 msgstr "لم يحذف الموضوع"
 
-#: index.php:461
+#: index.php:460
 msgid "Topic closed"
 msgstr "تم إغلاق هذا الموضوع"
 
-#: index.php:480 index.php:503
+#: index.php:479 index.php:502
 msgid "Vote"
 msgstr "صوت"
 
-#: index.php:481
+#: index.php:480
 msgid "Results"
 msgstr "نتائج"
 
-#: index.php:489
+#: index.php:488
 msgid "Rating"
 msgstr "تصنيف"
 
-#: index.php:492
+#: index.php:491
 msgid "Total votes"
 msgstr "مجموع الأصوات"
 
-#: index.php:545 index.php:738
+#: index.php:544 index.php:737
 msgid "Post deleted"
 msgstr "تم حذف المشاركات"
 
-#: index.php:559
+#: index.php:558
 msgid "Filter by author is activated"
 msgstr "يتم تنشيط عامل تصفية حسب الكاتب"
 
-#: index.php:591 index.php:596 index.php:779 index.php:784
+#: index.php:590 index.php:595 index.php:778 index.php:783
 msgid "Write"
 msgstr "اكتب"
 
-#: index.php:683
+#: index.php:682
 msgid "Edited"
 msgstr "تم التعديل"
 
-#: index.php:730
+#: index.php:729
 msgid "Edit"
 msgstr "تحرير"
 
-#: index.php:731
+#: index.php:730
 msgid "Restore"
 msgstr "استعادة"
 
-#: index.php:740
+#: index.php:739
 msgid "Post restored by"
 msgstr "تم استعادة المشاركات من قبل"
 
-#: index.php:818
+#: index.php:817
 msgid "Curators of the Topic"
 msgstr "القيمين الموضوع"
 
-#: index.php:822
+#: index.php:821
 msgid "Delete Poll"
 msgstr "حذف استطلاع الرأي"
 
-#: index.php:823
+#: index.php:822
 msgid "Add Poll"
 msgstr "اضافة استطلاع الرأي"
 
-#: index.php:828
+#: index.php:827
 msgid "Open Topic"
 msgstr "فتح الموضوع"
 
-#: index.php:830
+#: index.php:829
 msgid "Close Topic"
 msgstr "اغلاق الموضوع"
 
-#: index.php:835
+#: index.php:834
 msgid "Restore Topic"
 msgstr "استعادة الموضوع"
 
-#: index.php:841
+#: index.php:840
 msgid "Unfix Topic"
 msgstr "لا اصلاح الموضوع"
 
-#: index.php:843
+#: index.php:842
 msgid "Pin Topic"
 msgstr "تثبيت الموضوع"
 
-#: index.php:856
+#: index.php:855
 msgid "Cancel Filter"
 msgstr "إلغاء عامل التصفية"
 
-#: index.php:862
+#: index.php:861
 msgid "Download Topic"
 msgstr "تحميل الموضوع"
 
-#: index.php:877
+#: index.php:876
 msgid "Files"
 msgstr "الملفّات"
 
-#: index.php:904
+#: index.php:903
 msgid "Forum rules"
 msgstr "قواعد المنتدى"
 
-#: index.php:911
+#: index.php:910
 msgid "New at the top"
 msgstr "الجديد في الجزء العلوي"
 
-#: index.php:913
+#: index.php:912
 msgid "New at the bottom"
 msgstr "الجديد في الجزء السفلي"
 
-#: search.php:60
+#: search.php:58
 msgid "Do you really want to clear the search history?"
 msgstr "هل تريد حقاً مسح محفوظات البحث؟"
 
-#: search.php:61
+#: search.php:59
 msgid "Clear"
 msgstr "مسح"
 
-#: search.php:80
+#: search.php:78
 msgid "Search in the topic names"
 msgstr "البحث في موضوع الأسماء"
 
-#: search.php:96
+#: search.php:94
 msgid "Search results"
 msgstr "نتائج البحث"
 
-#: search.php:162
+#: search.php:160
 msgid "Go to Message"
 msgstr "اذهب إلى الرسالة"
 
-#: search.php:167
+#: search.php:165
 msgid "Your search did not match any results"
 msgstr "البحث الخاص بك لا يتطابق مع أي نتائج"
 
-#: search.php:172
+#: search.php:170
 msgid "Invalid length"
 msgstr "طول غير صالح"
 
-#: search.php:175
+#: search.php:173
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
 msgstr "طول الاستعلام: 4 كحد أدنى، 64حداقصى. <br>هو بحث الحالة يتم فرز النتائج <br>غير حساسة حسب أهميتها."
 
-#: search.php:208
+#: search.php:206
 msgid "Search History"
 msgstr "سجل البحث"
 
-#: search.php:230
+#: search.php:228
 msgid "New Search"
 msgstr "بحث جديد"
 

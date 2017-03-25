@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2017-02-24 05:42-0500\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Crowdin-Language: ar\n"
 "X-Crowdin-File: /album/default.pot\n"
 
-#: includes/comments.php:36 index.php:57
+#: includes/comments.php:36 index.php:55
 msgid "User does not exists"
 msgstr "المستخدم غير موجود"
 
@@ -33,7 +33,7 @@ msgid "Album List"
 msgstr "قائمة الألبومات"
 
 #: includes/comments.php:54 includes/list.php:34 includes/show.php:47
-#: includes/top.php:123 includes/users.php:46 index.php:148
+#: includes/top.php:123 includes/users.php:46 index.php:146
 msgid "Photo Albums"
 msgstr "ألبومات الصور"
 
@@ -88,7 +88,7 @@ msgstr "حذف الألبوم"
 msgid "Continue"
 msgstr "متابعه"
 
-#: includes/delete.php:58 includes/show.php:54 index.php:38
+#: includes/delete.php:58 includes/show.php:54 index.php:36
 msgid "Album"
 msgstr "الألبوم"
 
@@ -338,23 +338,23 @@ msgstr "تعليقات غير مقروءة"
 msgid "Recent comments"
 msgstr "التعليقات الأخيرة"
 
-#: includes/top.php:62 index.php:166
+#: includes/top.php:62 index.php:164
 msgid "Top Views"
 msgstr "أعلى المشاهدات"
 
-#: includes/top.php:72 index.php:165
+#: includes/top.php:72 index.php:163
 msgid "Top Downloads"
 msgstr "أعلى 5 تنزيل"
 
-#: includes/top.php:82 index.php:167
+#: includes/top.php:82 index.php:165
 msgid "Top Comments"
 msgstr "أعلى تعليقات"
 
-#: includes/top.php:92 index.php:164
+#: includes/top.php:92 index.php:162
 msgid "Top Votes"
 msgstr "أعلى الأصوات"
 
-#: includes/top.php:102 index.php:168
+#: includes/top.php:102 index.php:166
 msgid "Top Worst"
 msgstr "أعلى أسوأ"
 
@@ -366,11 +366,11 @@ msgstr "صور جديدة"
 msgid "All"
 msgstr "كـُـلّها"
 
-#: includes/users.php:43 index.php:155
+#: includes/users.php:43 index.php:153
 msgid "Guys"
 msgstr "الرجال"
 
-#: includes/users.php:44 index.php:156
+#: includes/users.php:44 index.php:154
 msgid "Girls"
 msgstr "البنات"
 
@@ -378,43 +378,43 @@ msgstr "البنات"
 msgid "List"
 msgstr "قائمة"
 
-#: index.php:47
+#: index.php:45
 msgid "For registered users only"
 msgstr "للمستخدمين المسجلين فقط"
 
-#: index.php:89 index.php:163
+#: index.php:87 index.php:161
 msgid "Rating"
 msgstr "تصنيف"
 
-#: index.php:90
+#: index.php:88
 msgid "Against"
 msgstr "ضد"
 
-#: index.php:90
+#: index.php:88
 msgid "For"
 msgstr "لـ"
 
-#: index.php:97
+#: index.php:95
 msgid "Vote"
 msgstr "صوت"
 
-#: index.php:150
+#: index.php:148
 msgid "New Photos"
 msgstr "صور جديدة"
 
-#: index.php:151
+#: index.php:149
 msgid "New Comments"
 msgstr "تعليق جديد"
 
-#: index.php:154
+#: index.php:152
 msgid "Albums"
 msgstr "ألبومات"
 
-#: index.php:159
+#: index.php:157
 msgid "My Album"
 msgstr "ألبومي"
 
-#: index.php:171
+#: index.php:169
 msgid "Users"
 msgstr "الاعضاء"
 

@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-12-26 14:59+0400\n"
+"POT-Creation-Date: 2017-03-25 19:18+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -17,13 +17,13 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/admlist.php:15 includes/admlist.php:29 index.php:82
+#: includes/admlist.php:15 includes/admlist.php:29 index.php:80
 msgid "Administration"
 msgstr ""
 
 #: includes/admlist.php:29 includes/birth.php:29 includes/top.php:64
 #: includes/top.php:72 includes/top.php:81 includes/top.php:101
-#: includes/userlist.php:30 index.php:68 index.php:74 search.php:35
+#: includes/userlist.php:30 index.php:66 index.php:72 search.php:35
 msgid "Community"
 msgstr ""
 
@@ -42,11 +42,11 @@ msgid "User Search"
 msgstr ""
 
 #: includes/admlist.php:49 includes/birth.php:54 includes/top.php:107
-#: includes/userlist.php:54 index.php:87 search.php:102
+#: includes/userlist.php:54 index.php:85 search.php:102
 msgid "Back"
 msgstr ""
 
-#: includes/birth.php:15 includes/birth.php:29 index.php:83
+#: includes/birth.php:15 includes/birth.php:29 index.php:81
 msgid "Birthdays"
 msgstr ""
 
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Online"
 msgstr ""
 
-#: includes/online.php:38 index.php:81
+#: includes/online.php:38 index.php:79
 msgid "Users"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 msgid "Who is online?"
 msgstr ""
 
-#: includes/top.php:16 index.php:85
+#: includes/top.php:16 index.php:83
 msgid "Top Activity"
 msgstr ""
 
@@ -123,23 +123,23 @@ msgstr ""
 msgid "List of users"
 msgstr ""
 
-#: index.php:43
+#: index.php:41
 msgid "For registered users only"
 msgstr ""
 
-#: index.php:76
+#: index.php:74
 msgid "Look for the User"
 msgstr ""
 
-#: index.php:78 search.php:39
+#: index.php:76 search.php:39
 msgid "Search"
 msgstr ""
 
-#: index.php:79
+#: index.php:77
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr ""
 
-#: index.php:84
+#: index.php:82
 msgid "Photo Albums"
 msgstr ""
 

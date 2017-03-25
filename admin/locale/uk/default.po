@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-01-22 16:44+0400\n"
-"PO-Revision-Date: 2017-03-03 09:56-0500\n"
+"POT-Creation-Date: 2017-03-25 19:12+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -34,11 +34,11 @@ msgstr ""
 #: includes/settings.php:29 includes/settings.php:101 includes/smilies.php:24
 #: includes/smilies.php:67 includes/usr.php:27 includes/usr.php:75
 #: includes/usr_adm.php:19 includes/usr_adm.php:72 includes/usr_clean.php:32
-#: includes/usr_del.php:78 index.php:46 index.php:79
+#: includes/usr_del.php:78 index.php:44 index.php:77
 msgid "Admin Panel"
 msgstr "Панель адміністратора"
 
-#: includes/access.php:29 index.php:122
+#: includes/access.php:29 index.php:120
 msgid "Permissions"
 msgstr "Права доступу"
 
@@ -47,7 +47,7 @@ msgstr "Права доступу"
 msgid "Settings are saved successfully"
 msgstr "Налаштування успішно збережено"
 
-#: includes/access.php:61 includes/usr_del.php:135 index.php:105
+#: includes/access.php:61 includes/usr_del.php:135 index.php:103
 msgid "Forum"
 msgstr "Форум"
 
@@ -111,7 +111,7 @@ msgid "Save"
 msgstr "Зберегти"
 
 #: includes/ads.php:36 includes/ads.php:221 includes/ads.php:279
-#: includes/ads.php:297 includes/ads.php:321 index.php:107
+#: includes/ads.php:297 includes/ads.php:321 index.php:105
 msgid "Advertisement"
 msgstr "Реклама"
 
@@ -233,7 +233,7 @@ msgstr "Усі"
 msgid "Guests"
 msgstr "Гості"
 
-#: includes/ads.php:206 includes/ads.php:330 index.php:82 index.php:88
+#: includes/ads.php:206 includes/ads.php:330 index.php:80 index.php:86
 msgid "Users"
 msgstr "Користувачі"
 
@@ -432,7 +432,7 @@ msgid "End of day"
 msgstr "Кінець дня"
 
 #: includes/antispy.php:384 includes/antispy.php:404 includes/antispy.php:430
-#: includes/antispy.php:447 index.php:130
+#: includes/antispy.php:447 index.php:128
 msgid "Anti-Spyware"
 msgstr "Антишпигун"
 
@@ -510,7 +510,7 @@ msgid "Amnesty is available for supervisors only"
 msgstr "Амністія доступна тільки для Супервізорів"
 
 #: includes/ban_panel.php:34 includes/ban_panel.php:67
-#: includes/ban_panel.php:73 index.php:91
+#: includes/ban_panel.php:73 index.php:89
 msgid "Ban Panel"
 msgstr "Бан панель"
 
@@ -557,7 +557,7 @@ msgstr "Історія порушень"
 
 #: includes/counters.php:49 includes/counters.php:142 includes/counters.php:169
 #: includes/counters.php:211 includes/counters.php:300
-#: includes/counters.php:321 index.php:110
+#: includes/counters.php:321 index.php:108
 msgid "Counters"
 msgstr "Лічильники"
 
@@ -895,7 +895,7 @@ msgid "Go to Forum"
 msgstr "Перейти до форуму"
 
 #: includes/ipban.php:36 includes/ipban.php:271 includes/ipban.php:351
-#: includes/ipban.php:363 index.php:131
+#: includes/ipban.php:363 index.php:129
 msgid "Ban by IP"
 msgstr "Бан по IP"
 
@@ -1048,7 +1048,7 @@ msgstr "Ви дійсно хочете очистити карму?"
 msgid "Clear"
 msgstr "Очистити"
 
-#: includes/karma.php:44 index.php:93
+#: includes/karma.php:44 index.php:91
 msgid "Karma"
 msgstr "Карма"
 
@@ -1196,7 +1196,7 @@ msgstr "Фактичний IP"
 msgid "IP history"
 msgstr "Історія IP"
 
-#: includes/search_ip.php:35 index.php:96
+#: includes/search_ip.php:35 index.php:94
 msgid "Search IP"
 msgstr "Пошук IP"
 
@@ -1216,7 +1216,7 @@ msgstr "Новий пошук"
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
 msgstr "<b>Приклади запитів:</b><br><span class=\"red\">10.5.7.1</span> - Пошук однієї адреси<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Пошук по діапазону адрес (знак маски * використовувати не можна)<br><span class=\"red\">10.5.*.*</span> - Пошук по масці. Буде знайдена вся підмережа, починаючи з адреси 0 і закінчуючи 255"
 
-#: includes/settings.php:29 index.php:119
+#: includes/settings.php:29 index.php:117
 msgid "System Settings"
 msgstr "Системні налаштування"
 
@@ -1284,7 +1284,7 @@ msgstr "Список користувачів"
 msgid "Nickname"
 msgstr "Нікнейм"
 
-#: includes/usr_adm.php:19 index.php:89
+#: includes/usr_adm.php:19 index.php:87
 msgid "Administration"
 msgstr "Адміністрація"
 
@@ -1304,7 +1304,7 @@ msgstr "Супермодератори"
 msgid "Moderators"
 msgstr "Модератори"
 
-#: includes/usr_clean.php:32 index.php:90
+#: includes/usr_clean.php:32 index.php:88
 msgid "Database cleanup"
 msgstr "Очищення бази даних"
 
@@ -1344,39 +1344,39 @@ msgstr "Всі теми і пости, створені користувачем
 msgid "Are you sure that you want to delete this user?"
 msgstr "Ви дійсно хочете видалити цього користувача?"
 
-#: index.php:85
+#: index.php:83
 msgid "On registration"
 msgstr "На реєстрації"
 
-#: index.php:92
+#: index.php:90
 msgid "Antiflood"
 msgstr "Антифлуд"
 
-#: index.php:95
+#: index.php:93
 msgid "Search by Nickname"
 msgstr "Пошук за ніком"
 
-#: index.php:104
+#: index.php:102
 msgid "Modules"
 msgstr "Модулі"
 
-#: index.php:106
+#: index.php:104
 msgid "News"
 msgstr "Новини"
 
-#: index.php:117
+#: index.php:115
 msgid "System"
 msgstr "Система"
 
-#: index.php:120
+#: index.php:118
 msgid "Update Smilies"
 msgstr "Оновлення смайли"
 
-#: index.php:121
+#: index.php:119
 msgid "Language Settings"
 msgstr "Налаштування мови"
 
-#: index.php:128
+#: index.php:126
 msgid "Security"
 msgstr "Безпека"
 

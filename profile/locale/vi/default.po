@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-08 07:21-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: vi_VN\n"
 
 #: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
-#: index.php:215
+#: index.php:213
 msgid "Activity"
 msgstr "Hoạt động"
 
@@ -30,7 +30,7 @@ msgstr "Hoạt động"
 #: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
 #: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
 #: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
-#: index.php:122
+#: index.php:120
 msgid "Profile"
 msgstr "Hồ sơ"
 
@@ -97,7 +97,7 @@ msgstr "Người dùng đã bị cấm từ trước"
 msgid "System"
 msgstr "Hệ thống"
 
-#: includes/ban.php:142 index.php:138
+#: includes/ban.php:142 index.php:136
 msgid "Ban"
 msgstr "Cấm"
 
@@ -119,7 +119,7 @@ msgstr "Tin nhắn riêng"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
-#: index.php:225
+#: index.php:223
 msgid "Guestbook"
 msgstr "Lưu bút"
 
@@ -208,7 +208,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr "Loại bỏ lệnh cấm cùng với ghi lại vào trong lịch sử của hành vi vi phạm"
 
 #: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
-#: includes/karma.php:154 includes/karma.php:171 index.php:134
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
 msgid "Delete"
 msgstr "Xóa"
 
@@ -273,15 +273,15 @@ msgstr "Chỉnh sửa hồ sơ"
 msgid "You cannot edit profile of higher administration"
 msgstr "Bạn không thể chỉnh sửa tiểu sử của hành chính cao hơn"
 
-#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:193
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
 msgid "Default settings are set"
 msgstr "Mặc định được cài đặt"
 
-#: includes/edit.php:50 index.php:124
+#: includes/edit.php:50 index.php:122
 msgid "My Profile"
 msgstr "Hồ sơ Cá nhân"
 
-#: includes/edit.php:50 includes/info.php:30 index.php:130
+#: includes/edit.php:50 includes/info.php:30 index.php:128
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
@@ -453,7 +453,7 @@ msgid "Supervisor"
 msgstr "Người giám sát"
 
 #: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
-#: includes/settings.php:123 includes/settings.php:236
+#: includes/settings.php:123 includes/settings.php:238
 msgid "Save"
 msgstr "Lưu"
 
@@ -486,7 +486,7 @@ msgstr "Ảnh là tải lên thành công"
 msgid "Select image"
 msgstr "Chọn hình ảnh"
 
-#: includes/info.php:25 includes/info.php:27 index.php:214
+#: includes/info.php:25 includes/info.php:27 index.php:212
 msgid "Information"
 msgstr "Thông tin"
 
@@ -494,7 +494,7 @@ msgstr "Thông tin"
 msgid "Name"
 msgstr "Tên"
 
-#: includes/info.php:43 index.php:147
+#: includes/info.php:43 index.php:145
 msgid "Birthday"
 msgstr "Sinh Nhật"
 
@@ -512,7 +512,7 @@ msgid "Access forbidden"
 msgstr "Truy cập bị từ chối"
 
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
-#: includes/karma.php:239 index.php:187
+#: includes/karma.php:239 index.php:185
 msgid "Karma"
 msgstr "Đã vi phạm"
 
@@ -578,7 +578,7 @@ msgstr "Bình luận"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Ít nhất. 2, nhiều nhất. 500 ký tự"
 
-#: includes/karma.php:120 index.php:198
+#: includes/karma.php:120 index.php:196
 msgid "Vote"
 msgstr "Bình chọn"
 
@@ -606,11 +606,11 @@ msgstr "Mới trả lời"
 msgid "All"
 msgstr "Tất cả"
 
-#: includes/karma.php:241 index.php:189
+#: includes/karma.php:241 index.php:187
 msgid "For"
 msgstr "Đối với"
 
-#: includes/karma.php:242 index.php:190
+#: includes/karma.php:242 index.php:188
 msgid "Against"
 msgstr "Bỏ phiếu chống lại"
 
@@ -630,7 +630,7 @@ msgstr "Trang web của tôi"
 msgid "Statistics"
 msgstr "Thống kê"
 
-#: includes/office.php:48 index.php:224
+#: includes/office.php:48 index.php:222
 msgid "Photo Album"
 msgstr "Album hình ảnh"
 
@@ -654,7 +654,7 @@ msgstr "Hộp thư đã gửi"
 msgid "Files"
 msgstr "Tập tin"
 
-#: includes/office.php:91 index.php:251
+#: includes/office.php:91 index.php:249
 msgid "Write"
 msgstr "Gửi tin nhắn"
 
@@ -740,7 +740,7 @@ msgstr "Mọi người"
 msgid "Only my contacts"
 msgstr "Chỉ bạn bè của tôi"
 
-#: includes/settings.php:96 includes/settings.php:188
+#: includes/settings.php:96 includes/settings.php:189
 msgid "Settings saved successfully"
 msgstr "Cài đặt đã lưu thành công"
 
@@ -780,63 +780,67 @@ msgstr "Không bao giờ"
 msgid "Reset settings"
 msgstr "Khôi phục cài đặt gốc"
 
-#: includes/settings.php:198
+#: includes/settings.php:199
 msgid "Time settings"
 msgstr "Đặt thời gian"
 
-#: includes/settings.php:199
+#: includes/settings.php:200
 msgid "Shift of time"
 msgstr "Sự thay đổi của thời gian"
 
-#: includes/settings.php:201
+#: includes/settings.php:202
 msgid "System time"
 msgstr "Hệ thống thời gian"
 
-#: includes/settings.php:202
+#: includes/settings.php:203
 msgid "System Functions"
 msgstr "Cài đặt chức năng"
 
-#: includes/settings.php:203
+#: includes/settings.php:204
 msgid "Direct URL"
 msgstr "Liên kết trực tiếp"
 
-#: includes/settings.php:204
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "YouTube Player"
+
+#: includes/settings.php:206
 msgid "Text entering"
 msgstr "Văn bản nhập vào"
 
-#: includes/settings.php:205
+#: includes/settings.php:207
 msgid "Height of field"
 msgstr "Chiều cao của trường"
 
-#: includes/settings.php:207
+#: includes/settings.php:209
 msgid "Appearance"
 msgstr "Xuất hiện"
 
-#: includes/settings.php:217
+#: includes/settings.php:219
 msgid "Theme"
 msgstr "Giao diện"
 
-#: includes/settings.php:218
+#: includes/settings.php:220
 msgid "Size of Lists"
 msgstr "Kích thước của danh sách"
 
-#: includes/settings.php:223
+#: includes/settings.php:225
 msgid "Select Language"
 msgstr "Chọn một ngôn ngữ"
 
-#: includes/settings.php:229
+#: includes/settings.php:231
 msgid "Site Default"
 msgstr "Trang web mặc định"
 
-#: includes/settings.php:237
+#: includes/settings.php:239
 msgid "Reset Settings"
 msgstr "Phục hồi cài đặt"
 
-#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:216
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
 msgid "Statistic"
 msgstr "Số liệu thống kê"
 
-#: includes/stat.php:34 index.php:166
+#: includes/stat.php:34 index.php:164
 msgid "Pending confirmation"
 msgstr "Đang chờ xác nhận"
 
@@ -868,43 +872,43 @@ msgstr "Truy cập cuối"
 msgid "Achievements"
 msgstr "Huy hiệu"
 
-#: index.php:45
+#: index.php:43
 msgid "For registered users only"
 msgstr "Cho người dùng đăng ký"
 
-#: index.php:55
+#: index.php:53
 msgid "This User does not exists"
 msgstr "Người dùng này không tồn tại"
 
-#: index.php:124
+#: index.php:122
 msgid "User Profile"
 msgstr "Thông tin thành viên"
 
-#: index.php:158
+#: index.php:156
 msgid "Where?"
 msgstr "Ở đâu?"
 
-#: index.php:205
+#: index.php:203
 msgid "New reviews"
 msgstr "Nhận xét mới"
 
-#: index.php:220
+#: index.php:218
 msgid "Violations"
 msgstr "Hành vi vi phạm"
 
-#: index.php:232
+#: index.php:230
 msgid "Add to Contacts"
 msgstr "Thêm vào Danh bạ"
 
-#: index.php:234
+#: index.php:232
 msgid "Remove from Contacts"
 msgstr "Xóa khỏi Danh bạ"
 
-#: index.php:239
+#: index.php:237
 msgid "Block User"
 msgstr "Chặn người dùng"
 
-#: index.php:241
+#: index.php:239
 msgid "Unlock User"
 msgstr "Mở khóa người dùng"
 

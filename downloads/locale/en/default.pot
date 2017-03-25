@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2017-01-22 16:45+0400\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -48,22 +48,22 @@ msgstr ""
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
 #: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
-#: includes/view.php:158 index.php:38 index.php:163 index.php:176 index.php:360
+#: includes/view.php:158 index.php:36 index.php:161 index.php:174 index.php:358
 msgid "Downloads"
 msgstr ""
 
-#: includes/bookmark.php:28 index.php:366
+#: includes/bookmark.php:28 index.php:364
 msgid "Favorites"
 msgstr ""
 
-#: includes/bookmark.php:33 index.php:64
+#: includes/bookmark.php:33 index.php:62
 msgid "For registered users only"
 msgstr ""
 
 #: includes/bookmark.php:57 includes/comments_review.php:97
 #: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
 #: includes/files_new.php:62 includes/files_user.php:60
-#: includes/top_users.php:49 index.php:297
+#: includes/top_users.php:49 index.php:295
 msgid "The list is empty"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 #: includes/bookmark.php:67 includes/comments_review.php:107
 #: includes/files_moderation.php:74 includes/files_new.php:73
 #: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
-#: index.php:321
+#: index.php:319
 msgid "To Page"
 msgstr ""
 
@@ -112,7 +112,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: includes/comments_review.php:38 index.php:363
+#: includes/comments_review.php:38 index.php:361
 msgid "Review comments"
 msgstr ""
 
@@ -124,7 +124,7 @@ msgstr ""
 #: includes/fileControl/edit_screen.php:117
 #: includes/fileControl/files_more.php:88
 #: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
-#: includes/folder_delete.php:83 index.php:231
+#: includes/folder_delete.php:83 index.php:229
 msgid "Delete"
 msgstr ""
 
@@ -284,11 +284,11 @@ msgstr ""
 
 #: includes/fileControl/files_more.php:210 includes/files_import.php:183
 #: includes/files_upload.php:195 includes/folder_add.php:120
-#: includes/folder_edit.php:121 index.php:223
+#: includes/folder_edit.php:121 index.php:221
 msgid "Allowed extensions"
 msgstr ""
 
-#: includes/fileControl/files_more.php:226 index.php:230
+#: includes/fileControl/files_more.php:226 index.php:228
 msgid "Edit"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgid "The file has been moved"
 msgstr ""
 
 #: includes/fileControl/transfer_file.php:99 includes/scan_dir.php:289
-#: index.php:348
+#: index.php:346
 msgid "Update counters"
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 #: includes/files_import.php:34 includes/files_new.php:36
 #: includes/files_upload.php:203 includes/folder_add.php:34
 #: includes/folder_delete.php:34 includes/folder_edit.php:32
-#: includes/scan_dir.php:94 index.php:163
+#: includes/scan_dir.php:94 index.php:161
 msgid "The directory does not exist"
 msgstr ""
 
@@ -364,7 +364,7 @@ msgstr ""
 msgid "File Name"
 msgstr ""
 
-#: includes/files_moderation.php:30 index.php:191
+#: includes/files_moderation.php:30 index.php:189
 msgid "Files on moderation"
 msgstr ""
 
@@ -384,8 +384,8 @@ msgstr ""
 msgid "Accept all files"
 msgstr ""
 
-#: includes/files_new.php:28 includes/files_new.php:41 index.php:173
-#: index.php:183
+#: includes/files_new.php:28 includes/files_new.php:41 index.php:171
+#: index.php:181
 msgid "New Files"
 msgstr ""
 
@@ -403,8 +403,8 @@ msgstr ""
 msgid "Popular Files"
 msgstr ""
 
-#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:328
-#: index.php:352
+#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:326
+#: index.php:350
 msgid "Upload File"
 msgstr ""
 
@@ -443,7 +443,7 @@ msgid "You can write only the following extensions"
 msgstr ""
 
 #: includes/folder_add.php:67 includes/folder_add.php:105
-#: includes/folder_add.php:112 index.php:336
+#: includes/folder_add.php:112 index.php:334
 msgid "Create Folder"
 msgstr ""
 
@@ -475,15 +475,15 @@ msgstr ""
 msgid "Before removing, delete subdirectories"
 msgstr ""
 
-#: includes/folder_delete.php:80 index.php:340
+#: includes/folder_delete.php:80 index.php:338
 msgid "Delete Folder"
 msgstr ""
 
-#: includes/folder_edit.php:114 index.php:339
+#: includes/folder_edit.php:114 index.php:337
 msgid "Change Folder"
 msgstr ""
 
-#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:347
+#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:345
 msgid "Remove missing files"
 msgstr ""
 
@@ -491,7 +491,7 @@ msgstr ""
 msgid "Database successfully updated"
 msgstr ""
 
-#: includes/scan_dir.php:101 index.php:346
+#: includes/scan_dir.php:101 index.php:344
 msgid "Update Files"
 msgstr ""
 
@@ -503,7 +503,7 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: includes/scan_dir.php:284 index.php:311
+#: includes/scan_dir.php:284 index.php:309
 msgid "Files"
 msgstr ""
 
@@ -523,7 +523,7 @@ msgstr ""
 msgid "Entire Downloads"
 msgstr ""
 
-#: includes/search.php:26 includes/search.php:30 index.php:177
+#: includes/search.php:26 includes/search.php:30 index.php:175
 msgid "Search"
 msgstr ""
 
@@ -551,7 +551,7 @@ msgstr ""
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
 msgstr ""
 
-#: includes/top_users.php:27 index.php:179
+#: includes/top_users.php:27 index.php:177
 msgid "Top Users"
 msgstr ""
 
@@ -611,54 +611,54 @@ msgstr ""
 msgid "Managing Screenshots"
 msgstr ""
 
-#: index.php:62 index.php:152
+#: index.php:60 index.php:150
 msgid "Downloads are closed"
 msgstr ""
 
-#: index.php:178
+#: index.php:176
 msgid "Top Files"
 msgstr ""
 
-#: index.php:212
+#: index.php:210
 msgid "List of category"
 msgstr ""
 
-#: index.php:228
+#: index.php:226
 msgid "Up"
 msgstr ""
 
-#: index.php:229
+#: index.php:227
 msgid "Down"
 msgstr ""
 
-#: index.php:246
+#: index.php:244
 msgid "List of Files"
 msgstr ""
 
-#: index.php:270
+#: index.php:268
 msgid "Sorting"
 msgstr ""
 
-#: index.php:272
+#: index.php:270
 msgid "by time"
 msgstr ""
 
-#: index.php:273
+#: index.php:271
 msgid "by name"
 msgstr ""
 
-#: index.php:275
+#: index.php:273
 msgid "descending"
 msgstr ""
 
-#: index.php:276
+#: index.php:274
 msgid "ascending"
 msgstr ""
 
-#: index.php:303
+#: index.php:301
 msgid "Folders"
 msgstr ""
 
-#: index.php:329
+#: index.php:327
 msgid "Import File"
 msgstr ""

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-01-22 16:44+0400\n"
-"PO-Revision-Date: 2017-03-08 07:21-0500\n"
+"POT-Creation-Date: 2017-03-25 19:12+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -34,11 +34,11 @@ msgstr ""
 #: includes/settings.php:29 includes/settings.php:101 includes/smilies.php:24
 #: includes/smilies.php:67 includes/usr.php:27 includes/usr.php:75
 #: includes/usr_adm.php:19 includes/usr_adm.php:72 includes/usr_clean.php:32
-#: includes/usr_del.php:78 index.php:46 index.php:79
+#: includes/usr_del.php:78 index.php:44 index.php:77
 msgid "Admin Panel"
 msgstr "Quản Trị Viên"
 
-#: includes/access.php:29 index.php:122
+#: includes/access.php:29 index.php:120
 msgid "Permissions"
 msgstr "Quyền truy cập"
 
@@ -47,7 +47,7 @@ msgstr "Quyền truy cập"
 msgid "Settings are saved successfully"
 msgstr "Lưu Cài Đặt Thành Công"
 
-#: includes/access.php:61 includes/usr_del.php:135 index.php:105
+#: includes/access.php:61 includes/usr_del.php:135 index.php:103
 msgid "Forum"
 msgstr "Diễn đàn"
 
@@ -111,7 +111,7 @@ msgid "Save"
 msgstr "Lưu"
 
 #: includes/ads.php:36 includes/ads.php:221 includes/ads.php:279
-#: includes/ads.php:297 includes/ads.php:321 index.php:107
+#: includes/ads.php:297 includes/ads.php:321 index.php:105
 msgid "Advertisement"
 msgstr "Quảng cáo"
 
@@ -233,7 +233,7 @@ msgstr "Tất cả mọi người"
 msgid "Guests"
 msgstr "Khách"
 
-#: includes/ads.php:206 includes/ads.php:330 index.php:82 index.php:88
+#: includes/ads.php:206 includes/ads.php:330 index.php:80 index.php:86
 msgid "Users"
 msgstr "Thành viên"
 
@@ -432,7 +432,7 @@ msgid "End of day"
 msgstr "Cuối của ngày"
 
 #: includes/antispy.php:384 includes/antispy.php:404 includes/antispy.php:430
-#: includes/antispy.php:447 index.php:130
+#: includes/antispy.php:447 index.php:128
 msgid "Anti-Spyware"
 msgstr "Chống Gián Điệp"
 
@@ -510,7 +510,7 @@ msgid "Amnesty is available for supervisors only"
 msgstr "Tổ chức Ân xá chỉ có sẵn cho người giám sát"
 
 #: includes/ban_panel.php:34 includes/ban_panel.php:67
-#: includes/ban_panel.php:73 index.php:91
+#: includes/ban_panel.php:73 index.php:89
 msgid "Ban Panel"
 msgstr "Bảng điều khiển ban"
 
@@ -557,7 +557,7 @@ msgstr "Lịch sử vi phạm"
 
 #: includes/counters.php:49 includes/counters.php:142 includes/counters.php:169
 #: includes/counters.php:211 includes/counters.php:300
-#: includes/counters.php:321 index.php:110
+#: includes/counters.php:321 index.php:108
 msgid "Counters"
 msgstr "Đếm"
 
@@ -895,7 +895,7 @@ msgid "Go to Forum"
 msgstr "Tới diễn đàn"
 
 #: includes/ipban.php:36 includes/ipban.php:271 includes/ipban.php:351
-#: includes/ipban.php:363 index.php:131
+#: includes/ipban.php:363 index.php:129
 msgid "Ban by IP"
 msgstr "Cấm IP"
 
@@ -1048,7 +1048,7 @@ msgstr "Bạn thực sự muốn xóa Nghiệp?"
 msgid "Clear"
 msgstr "Xoá"
 
-#: includes/karma.php:44 index.php:93
+#: includes/karma.php:44 index.php:91
 msgid "Karma"
 msgstr "Karma"
 
@@ -1196,7 +1196,7 @@ msgstr "Thứ hai IP được nhập sai"
 msgid "IP history"
 msgstr "Lịch sử của IP"
 
-#: includes/search_ip.php:35 index.php:96
+#: includes/search_ip.php:35 index.php:94
 msgid "Search IP"
 msgstr "Tìm kiếm IP"
 
@@ -1216,7 +1216,7 @@ msgstr "Tìm kiếm mới"
 msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
 msgstr "<small><b>Các truy vấn mẫu:</b><br><span class=\"red\">10.5.7.1</span> - Tìm kiếm một địa chỉ duy nhất<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Tìm kiếm một địa chỉ phạm vi (Đăng ký không thể sử dụng IP *)<br><span class=\"red\">10.5.*.*</span> - Tìm kiếm IP. Nó được tìm thấy tất cả các địa chỉ subnet đầu từ 0 và kết thúc với 255</small>"
 
-#: includes/settings.php:29 index.php:119
+#: includes/settings.php:29 index.php:117
 msgid "System Settings"
 msgstr "Cài đặt hệ thống"
 
@@ -1284,7 +1284,7 @@ msgstr "Danh sách người dùng"
 msgid "Nickname"
 msgstr "Tên Bạn"
 
-#: includes/usr_adm.php:19 index.php:89
+#: includes/usr_adm.php:19 index.php:87
 msgid "Administration"
 msgstr "Dành cho quản trị"
 
@@ -1304,7 +1304,7 @@ msgstr "SuperMod"
 msgid "Moderators"
 msgstr "Ban quản trị"
 
-#: includes/usr_clean.php:32 index.php:90
+#: includes/usr_clean.php:32 index.php:88
 msgid "Database cleanup"
 msgstr "Dọn dẹp cơ sở dữ liệu"
 
@@ -1344,39 +1344,39 @@ msgstr "Chủ đề và bài viết được tạo ra bởi những người đi
 msgid "Are you sure that you want to delete this user?"
 msgstr "Bạn có chắc chắn rằng bạn muốn xóa người dùng này?"
 
-#: index.php:85
+#: index.php:83
 msgid "On registration"
 msgstr "Tại đăng ký"
 
-#: index.php:92
+#: index.php:90
 msgid "Antiflood"
 msgstr "Antiflood"
 
-#: index.php:95
+#: index.php:93
 msgid "Search by Nickname"
 msgstr "Tìm kiếm bằng Tài Khoản"
 
-#: index.php:104
+#: index.php:102
 msgid "Modules"
 msgstr "Các Mô-Đun"
 
-#: index.php:106
+#: index.php:104
 msgid "News"
 msgstr "Tin tức"
 
-#: index.php:117
+#: index.php:115
 msgid "System"
 msgstr "Hệ thống"
 
-#: index.php:120
+#: index.php:118
 msgid "Update Smilies"
 msgstr "Cập Nhật biểu tượng mặt cười"
 
-#: index.php:121
+#: index.php:119
 msgid "Language Settings"
 msgstr "Thiết Lập Ngôn Ngữ"
 
-#: index.php:128
+#: index.php:126
 msgid "Security"
 msgstr "Bảo mật"
 

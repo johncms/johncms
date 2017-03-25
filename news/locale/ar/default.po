@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:58+0400\n"
-"PO-Revision-Date: 2017-02-24 05:42-0500\n"
+"POT-Creation-Date: 2017-03-25 19:16+0400\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -19,138 +19,138 @@ msgstr ""
 "X-Crowdin-Language: ar\n"
 "X-Crowdin-File: /news/default.pot\n"
 
-#: index.php:40 index.php:47 index.php:179 index.php:236 index.php:281
-#: index.php:298
+#: index.php:38 index.php:45 index.php:182 index.php:239 index.php:284
+#: index.php:301
 msgid "News"
 msgstr "اخبار الموقع"
 
-#: index.php:47 index.php:301
+#: index.php:45 index.php:304
 msgid "Add"
 msgstr "اضافة"
 
-#: index.php:56 index.php:191
+#: index.php:54 index.php:194
 msgid "You have not entered news title"
 msgstr "قم بادخال عنوان الخبر"
 
-#: index.php:60 index.php:195
+#: index.php:58 index.php:198
 msgid "You have not entered news text"
 msgstr "قم بادخال نص الخبر"
 
-#: index.php:66
+#: index.php:64
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
 msgstr "لا يمكنك الاضافة فضلا انتظر %d ثانيه لتستطيع اضافة خبر جديد."
 
-#: index.php:142
+#: index.php:145
 msgid "News added"
 msgstr "تم اضافة الخبر"
 
-#: index.php:142 index.php:144 index.php:169 index.php:182 index.php:226
-#: index.php:247 index.php:254 index.php:261 index.php:286
+#: index.php:145 index.php:147 index.php:172 index.php:185 index.php:229
+#: index.php:250 index.php:257 index.php:264 index.php:289
 msgid "Back to news"
 msgstr "رجوع"
 
-#: index.php:148 index.php:220
+#: index.php:151 index.php:223
 msgid "Title"
 msgstr "عنوان"
 
-#: index.php:150 index.php:222
+#: index.php:153 index.php:225
 msgid "Text"
 msgstr "النص"
 
-#: index.php:152
+#: index.php:155
 msgid "Discussion"
 msgstr "مناقشة"
 
-#: index.php:154
+#: index.php:157
 msgid "Do not discuss"
 msgstr "لا تناقشني"
 
-#: index.php:167 index.php:224
+#: index.php:170 index.php:227
 msgid "Save"
 msgstr "حفظ"
 
-#: index.php:179 index.php:325
+#: index.php:182 index.php:328
 msgid "Edit"
 msgstr "تحرير"
 
-#: index.php:182
+#: index.php:185
 msgid "Wrong data"
 msgstr "بيانات خاطئة"
 
-#: index.php:213
+#: index.php:216
 msgid "Repeat"
 msgstr "التكرار"
 
-#: index.php:215
+#: index.php:218
 msgid "Article changed"
 msgstr "تم تغيير المقال"
 
-#: index.php:215
+#: index.php:218
 msgid "Continue"
 msgstr "متابعة"
 
-#: index.php:236 index.php:269 index.php:301
+#: index.php:239 index.php:272 index.php:304
 msgid "Clear"
 msgstr "تنظيف"
 
-#: index.php:247
+#: index.php:250
 msgid "Delete all news older than 1 week"
 msgstr "حذف جميع الأخبار التي مضى عليها أكثر من أسبوع واحد"
 
-#: index.php:254
+#: index.php:257
 msgid "Delete all news"
 msgstr "حذف كل الاخبار"
 
-#: index.php:261
+#: index.php:264
 msgid "Delete all news older than 1 month"
 msgstr "حذف جميع الأخبار التي مضى عليها أكثر من شهر"
 
-#: index.php:265
+#: index.php:268
 msgid "Clearing parameters"
 msgstr "مسح المعلمات"
 
-#: index.php:266
+#: index.php:269
 msgid "Older than 1 month"
 msgstr "اقدم من شهر"
 
-#: index.php:267
+#: index.php:270
 msgid "Older than 1 week"
 msgstr "اقدم من اسبوع"
 
-#: index.php:268
+#: index.php:271
 msgid "Clear all"
 msgstr "تنظيف الكل"
 
-#: index.php:271 index.php:289
+#: index.php:274 index.php:292
 msgid "Cancel"
 msgstr "الغاء"
 
-#: index.php:281 index.php:289 index.php:326
+#: index.php:284 index.php:292 index.php:329
 msgid "Delete"
 msgstr "حذف"
 
-#: index.php:286
+#: index.php:289
 msgid "Article deleted"
 msgstr "تم الحذف"
 
-#: index.php:288
+#: index.php:291
 msgid "Do you really want to delete?"
 msgstr "هل تريد الحذف؟"
 
-#: index.php:313
+#: index.php:316
 msgid "Author"
 msgstr "الكاتب"
 
-#: index.php:320
+#: index.php:323
 msgid "Discuss in Forum"
 msgstr "النقاش بالمنتديات"
 
-#: index.php:332
+#: index.php:335
 msgid "Total"
 msgstr "مجموع"
 
-#: index.php:338
+#: index.php:341
 msgid "To Page"
 msgstr "الى صفحه"
 

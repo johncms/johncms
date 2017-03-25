@@ -1,29 +1,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2016-12-29 02:18+0400\n"
+"POT-Creation-Date: 2017-03-25 19:15+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: pl\n"
+"Language: pl_PL\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: /mail/default.pot\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #: includes/delete.php:16 includes/deluser.php:16 includes/files.php:16
 #: includes/ignor.php:16 includes/input.php:15 includes/load.php:15
 #: includes/new.php:15 includes/output.php:15 includes/systems.php:113
 #: includes/write.php:40 includes/write.php:50 includes/write.php:106
-#: includes/write.php:528 index.php:81
+#: includes/write.php:528 index.php:79
 msgid "Mail"
 msgstr "Wiadomości"
 
@@ -51,7 +51,7 @@ msgstr "Czy chcesz usunąć tę wiadomość?"
 #: includes/delete.php:83 includes/deluser.php:50 includes/deluser.php:54
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
 #: includes/output.php:89 includes/systems.php:54 includes/systems.php:89
-#: includes/write.php:90 includes/write.php:495 index.php:145
+#: includes/write.php:90 includes/write.php:495 index.php:143
 msgid "Delete"
 msgstr "Usuń"
 
@@ -62,7 +62,7 @@ msgstr "Wiadomość do usuwania nie jest wybrana"
 #: includes/delete.php:90 includes/files.php:70 includes/ignor.php:152
 #: includes/input.php:115 includes/new.php:83 includes/output.php:116
 #: includes/systems.php:123 includes/write.php:96 includes/write.php:537
-#: index.php:168
+#: index.php:166
 msgid "Personal"
 msgstr "Panel"
 
@@ -71,7 +71,7 @@ msgid "Contact deleted"
 msgstr "Kontakt usunięty"
 
 #: includes/deluser.php:48 includes/input.php:78 includes/output.php:79
-#: index.php:115
+#: index.php:113
 msgid "Continue"
 msgstr "Kontynuuj"
 
@@ -89,29 +89,29 @@ msgstr "Pliki"
 
 #: includes/files.php:56 includes/ignor.php:138 includes/input.php:102
 #: includes/new.php:70 includes/output.php:103 includes/systems.php:99
-#: includes/write.php:513 index.php:156
+#: includes/write.php:513 index.php:154
 msgid "The list is empty"
 msgstr "Lista jest pusta"
 
 #: includes/files.php:60 includes/ignor.php:141 includes/input.php:105
 #: includes/new.php:73 includes/output.php:106 includes/systems.php:102
-#: includes/write.php:516 index.php:159
+#: includes/write.php:516 index.php:157
 msgid "Total"
 msgstr "Wszystkich"
 
 #: includes/files.php:67 includes/ignor.php:148 includes/input.php:112
 #: includes/new.php:80 includes/output.php:113 includes/systems.php:109
-#: includes/write.php:524 index.php:165
+#: includes/write.php:524 index.php:163
 msgid "To Page"
 msgstr "Do strony"
 
 #: includes/ignor.php:31 includes/ignor.php:107 includes/output.php:89
-#: index.php:125
+#: index.php:123
 msgid "Blocklist"
 msgstr "Czarna lista"
 
 #: includes/ignor.php:39 includes/ignor.php:68 includes/write.php:42
-#: includes/write.php:144 index.php:95
+#: includes/write.php:144 index.php:93
 msgid "User does not exists"
 msgstr "Użytkownik nie istnieje"
 
@@ -151,12 +151,12 @@ msgstr "Czy na pewno chcesz zablokować kontakt?"
 msgid "Block"
 msgstr "Zablokuj"
 
-#: includes/ignor.php:107 index.php:125
+#: includes/ignor.php:107 index.php:123
 msgid "My Contacts"
 msgstr "Moje kontakty"
 
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
-#: includes/output.php:89 index.php:145
+#: includes/output.php:89 index.php:143
 msgid "Correspondence"
 msgstr "Korespondencja"
 
@@ -215,7 +215,7 @@ msgstr "Nie możesz wysyłać wiadomości do siebie"
 #: includes/write.php:136
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
-msgstr ""
+msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać."
 
 #: includes/write.php:162
 msgid "To this user can write only contacts"
@@ -282,26 +282,27 @@ msgstr "Wyślij prywatną wiadomość"
 msgid "File"
 msgstr "Plik"
 
-#: index.php:83
+#: index.php:81
 msgid "Contacts"
 msgstr "Kontakty"
 
-#: index.php:103
+#: index.php:101
 msgid "You cannot add yourself as a contact"
 msgstr "Nie można dodać siebie do znajomych"
 
-#: index.php:115
+#: index.php:113
 msgid "User has been added to your contact list"
 msgstr "Użytkownik został dodany do listy kontaktów"
 
-#: index.php:119
+#: index.php:117
 msgid "You really want to add contact?"
 msgstr "Czy na pewno chcesz dodać ten kontakt?"
 
-#: index.php:120
+#: index.php:118
 msgid "Add"
 msgstr "Dodaj"
 
-#: index.php:145
+#: index.php:143
 msgid "Block User"
 msgstr "Blokuj użytkownika"
+

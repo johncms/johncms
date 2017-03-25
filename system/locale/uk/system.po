@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-03 09:56-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -82,11 +82,11 @@ msgstr "Не рекомедується вказувати ваші дані, щ
 msgid "Go to Link"
 msgstr "Перейти за посиланням"
 
-#: login.php:37 system/end.php:35 system/head.php:108
+#: login.php:37 system/end.php:35 system/head.php:110
 msgid "Home"
 msgstr "На головну"
 
-#: login.php:39 login.php:158 system/head.php:110
+#: login.php:39 login.php:158 system/head.php:112
 msgid "Login"
 msgstr "Увійти"
 
@@ -154,103 +154,103 @@ msgstr "Реєстрація"
 msgid "Forgot password?"
 msgstr "Забули пароль?"
 
-#: system/head.php:51
+#: system/head.php:53
 msgid "Site News"
 msgstr "Новини сайту"
 
-#: system/head.php:104
+#: system/head.php:106
 msgid "Hi"
 msgstr "Привіт"
 
-#: system/head.php:104 system/johncms/Tools.php:299
+#: system/head.php:106 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr "Гість"
 
-#: system/head.php:109
+#: system/head.php:111
 msgid "Personal"
 msgstr "Особисте"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Ban"
 msgstr "Бан"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Details"
 msgstr "Деталі"
 
-#: system/head.php:205
+#: system/head.php:207
 msgid "System"
 msgstr "Система"
 
-#: system/head.php:217
+#: system/head.php:219
 msgid "Mail"
 msgstr "Пошта"
 
-#: system/head.php:221 system/johncms/Tools.php:242 system/mainmenu.php:42
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr "Гостьова книга"
 
-#: system/head.php:227
+#: system/head.php:229
 msgid "Comments"
 msgstr "Коментарі"
 
-#: system/head.php:231 system/johncms/Counters.php:164
+#: system/head.php:233 system/johncms/Counters.php:164
 msgid "Unread"
 msgstr "Непрочитане"
 
-#: system/johncms/Bbcode.php:148
+#: system/johncms/Bbcode.php:163
 msgid "Edit List"
 msgstr "Редагувати список"
 
-#: system/johncms/Bbcode.php:159
+#: system/johncms/Bbcode.php:174
 msgid "Add Smilies"
 msgstr "Додати смайли"
 
-#: system/johncms/Bbcode.php:217
+#: system/johncms/Bbcode.php:232
 msgid "Bold"
 msgstr "Жирний"
 
-#: system/johncms/Bbcode.php:218
+#: system/johncms/Bbcode.php:233
 msgid "Italic"
 msgstr "Курсив"
 
-#: system/johncms/Bbcode.php:219
+#: system/johncms/Bbcode.php:234
 msgid "Underline"
 msgstr "Підкреслений"
 
-#: system/johncms/Bbcode.php:220
+#: system/johncms/Bbcode.php:235
 msgid "Strike"
 msgstr "Закреслений"
 
-#: system/johncms/Bbcode.php:221
-msgid "List"
-msgstr "Список"
-
-#: system/johncms/Bbcode.php:222
-msgid "Spoiler"
-msgstr "Спойлер"
-
-#: system/johncms/Bbcode.php:223
-msgid "Quote"
-msgstr "Цитата"
-
-#: system/johncms/Bbcode.php:224
-msgid "URL"
-msgstr "Посилання"
-
-#: system/johncms/Bbcode.php:225
-msgid "Code"
-msgstr "Код"
-
-#: system/johncms/Bbcode.php:226
+#: system/johncms/Bbcode.php:236
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: system/johncms/Bbcode.php:227
+#: system/johncms/Bbcode.php:237
 msgid "Background Color"
 msgstr "Колір фону"
 
-#: system/johncms/Bbcode.php:230
+#: system/johncms/Bbcode.php:238
+msgid "List"
+msgstr "Список"
+
+#: system/johncms/Bbcode.php:239
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: system/johncms/Bbcode.php:240
+msgid "Quote"
+msgstr "Цитата"
+
+#: system/johncms/Bbcode.php:241
+msgid "URL"
+msgstr "Посилання"
+
+#: system/johncms/Bbcode.php:242
+msgid "Code"
+msgstr "Код"
+
+#: system/johncms/Bbcode.php:246
 msgid "Smilies"
 msgstr "Смайли"
 
@@ -339,11 +339,11 @@ msgstr "Показати за період"
 msgid "Last activity"
 msgstr "Остання активність"
 
-#: system/johncms/NewsWidget.php:62
+#: system/johncms/NewsWidget.php:63
 msgid "show more"
 msgstr "показати більше"
 
-#: system/johncms/NewsWidget.php:95
+#: system/johncms/NewsWidget.php:98
 msgid "Discuss"
 msgstr "Обговорити"
 

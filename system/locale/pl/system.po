@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-28 17:08-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
@@ -82,11 +82,11 @@ msgstr "Zaleca się, aby nie podawać swoje dane, odnoszące się do %s (login, 
 msgid "Go to Link"
 msgstr "Przejdź do linku"
 
-#: login.php:37 system/end.php:35 system/head.php:108
+#: login.php:37 system/end.php:35 system/head.php:110
 msgid "Home"
 msgstr "Strona główna"
 
-#: login.php:39 login.php:158 system/head.php:110
+#: login.php:39 login.php:158 system/head.php:112
 msgid "Login"
 msgstr "Login"
 
@@ -154,103 +154,103 @@ msgstr "Rejestracja"
 msgid "Forgot password?"
 msgstr "Nie pamiętasz hasła?"
 
-#: system/head.php:51
+#: system/head.php:53
 msgid "Site News"
 msgstr "Nowości na stronie"
 
-#: system/head.php:104
+#: system/head.php:106
 msgid "Hi"
 msgstr "Cześć"
 
-#: system/head.php:104 system/johncms/Tools.php:300
+#: system/head.php:106 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr "Gość"
 
-#: system/head.php:109
+#: system/head.php:111
 msgid "Personal"
 msgstr "Panel"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Ban"
 msgstr "Banuj"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Details"
 msgstr "Szczegóły"
 
-#: system/head.php:205
+#: system/head.php:207
 msgid "System"
 msgstr "System"
 
-#: system/head.php:217
+#: system/head.php:219
 msgid "Mail"
 msgstr "Wiadomości"
 
-#: system/head.php:221 system/johncms/Tools.php:243 system/mainmenu.php:42
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr "Księga gości"
 
-#: system/head.php:227
+#: system/head.php:229
 msgid "Comments"
 msgstr "Komentarze"
 
-#: system/head.php:231 system/johncms/Counters.php:164
+#: system/head.php:233 system/johncms/Counters.php:164
 msgid "Unread"
 msgstr "Nieprzeczytane"
 
-#: system/johncms/Bbcode.php:148
+#: system/johncms/Bbcode.php:163
 msgid "Edit List"
 msgstr "Edycja listy"
 
-#: system/johncms/Bbcode.php:159
+#: system/johncms/Bbcode.php:174
 msgid "Add Smilies"
 msgstr "Dodaj emotikone"
 
-#: system/johncms/Bbcode.php:217
+#: system/johncms/Bbcode.php:232
 msgid "Bold"
 msgstr "Pogrubienie"
 
-#: system/johncms/Bbcode.php:218
+#: system/johncms/Bbcode.php:233
 msgid "Italic"
 msgstr "Pochylenie"
 
-#: system/johncms/Bbcode.php:219
+#: system/johncms/Bbcode.php:234
 msgid "Underline"
 msgstr "Podkreślenie"
 
-#: system/johncms/Bbcode.php:220
+#: system/johncms/Bbcode.php:235
 msgid "Strike"
 msgstr "Strajk"
 
-#: system/johncms/Bbcode.php:221
-msgid "List"
-msgstr "Lista"
-
-#: system/johncms/Bbcode.php:222
-msgid "Spoiler"
-msgstr "Spoiler"
-
-#: system/johncms/Bbcode.php:223
-msgid "Quote"
-msgstr "Cytat"
-
-#: system/johncms/Bbcode.php:224
-msgid "URL"
-msgstr "Link"
-
-#: system/johncms/Bbcode.php:225
-msgid "Code"
-msgstr "Kod"
-
-#: system/johncms/Bbcode.php:226
+#: system/johncms/Bbcode.php:236
 msgid "Text Color"
 msgstr "Kolor tekstu"
 
-#: system/johncms/Bbcode.php:227
+#: system/johncms/Bbcode.php:237
 msgid "Background Color"
 msgstr "Kolor tła"
 
-#: system/johncms/Bbcode.php:230
+#: system/johncms/Bbcode.php:238
+msgid "List"
+msgstr "Lista"
+
+#: system/johncms/Bbcode.php:239
+msgid "Spoiler"
+msgstr "Spoiler"
+
+#: system/johncms/Bbcode.php:240
+msgid "Quote"
+msgstr "Cytat"
+
+#: system/johncms/Bbcode.php:241
+msgid "URL"
+msgstr "Link"
+
+#: system/johncms/Bbcode.php:242
+msgid "Code"
+msgstr "Kod"
+
+#: system/johncms/Bbcode.php:246
 msgid "Smilies"
 msgstr "Emotikonki"
 
@@ -339,119 +339,119 @@ msgstr "Pokaż za okres"
 msgid "Last activity"
 msgstr "Ostatnia aktywność"
 
-#: system/johncms/NewsWidget.php:62
+#: system/johncms/NewsWidget.php:63
 msgid "show more"
 msgstr "pokaż więcej"
 
-#: system/johncms/NewsWidget.php:95
+#: system/johncms/NewsWidget.php:98
 msgid "Discuss"
 msgstr "Dyskutuj"
 
-#: system/johncms/Tools.php:136
+#: system/johncms/Tools.php:135
 msgid "Today"
 msgstr "Dzisiaj"
 
-#: system/johncms/Tools.php:139
+#: system/johncms/Tools.php:138
 msgid "Yesterday"
 msgstr "Wczoraj"
 
-#: system/johncms/Tools.php:155
+#: system/johncms/Tools.php:154
 msgid "ERROR"
 msgstr "BŁĄD"
 
-#: system/johncms/Tools.php:235
+#: system/johncms/Tools.php:234
 msgid "List of Admins"
 msgstr "Lista adminów"
 
-#: system/johncms/Tools.php:236
+#: system/johncms/Tools.php:235
 msgid "Watching the photo album"
 msgstr "Zobacz album fotograficzny"
 
-#: system/johncms/Tools.php:237
+#: system/johncms/Tools.php:236
 msgid "List of birthdays"
 msgstr "Lista urodzin"
 
-#: system/johncms/Tools.php:238 system/mainmenu.php:57
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
 msgid "Downloads"
 msgstr "Pliki do pobrania"
 
-#: system/johncms/Tools.php:239
+#: system/johncms/Tools.php:238
 msgid "Reading the FAQ"
 msgstr "Przeczytaj FAQ"
 
-#: system/johncms/Tools.php:240 system/mainmenu.php:47
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
 msgid "Forum"
 msgstr "Forum"
 
-#: system/johncms/Tools.php:241
+#: system/johncms/Tools.php:240
 msgid "Forum Files"
 msgstr "Pliki forum"
 
-#: system/johncms/Tools.php:242
+#: system/johncms/Tools.php:241
 msgid "Looking, who in Forum?"
 msgstr "Patrzy kto jest na forum?"
 
-#: system/johncms/Tools.php:244
+#: system/johncms/Tools.php:243
 msgid "Here, in the list"
 msgstr "Tutaj, na liście"
 
-#: system/johncms/Tools.php:245
+#: system/johncms/Tools.php:244
 msgid "On the Homepage"
 msgstr "Na stronie głównej"
 
-#: system/johncms/Tools.php:246 system/mainmenu.php:62
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
 msgid "Library"
 msgstr "Biblioteka"
 
-#: system/johncms/Tools.php:247
+#: system/johncms/Tools.php:246
 msgid "Personal correspondence"
 msgstr "Prywatne wiadomości"
 
-#: system/johncms/Tools.php:248
+#: system/johncms/Tools.php:247
 msgid "Reading the news"
 msgstr "Czyta Faq"
 
-#: system/johncms/Tools.php:249
+#: system/johncms/Tools.php:248
 msgid "Who is online?"
 msgstr "Kto jest online?"
 
-#: system/johncms/Tools.php:250
+#: system/johncms/Tools.php:249
 msgid "Profile"
 msgstr "Profil"
 
-#: system/johncms/Tools.php:251
+#: system/johncms/Tools.php:250
 msgid "Personal Profile"
 msgstr "Wasny profil"
 
-#: system/johncms/Tools.php:252
+#: system/johncms/Tools.php:251
 msgid "Registered on the site"
 msgstr "Zarejestrowany na stronie"
 
-#: system/johncms/Tools.php:253
+#: system/johncms/Tools.php:252
 msgid "List of users"
 msgstr "Lista użytkowników"
 
-#: system/johncms/Tools.php:254
+#: system/johncms/Tools.php:253
 msgid "Watching Top 10 Users"
 msgstr "Ogląda Top 10 użytkowników"
 
-#: system/johncms/Tools.php:368
+#: system/johncms/Tools.php:367
 msgid "Last Visit"
 msgstr "Ostatnia wizyta"
 
-#: system/johncms/Tools.php:374
+#: system/johncms/Tools.php:373
 msgid "Browser"
 msgstr "Przeglądarka"
 
-#: system/johncms/Tools.php:375
+#: system/johncms/Tools.php:374
 msgid "IP address"
 msgstr "Adres IP"
 
-#: system/johncms/Tools.php:394
+#: system/johncms/Tools.php:393
 msgid "IP History"
 msgstr "Historia IP"
 
-#: system/johncms/Tools.php:595
+#: system/johncms/Tools.php:594
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] "Dzień"
