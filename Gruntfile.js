@@ -552,6 +552,10 @@ module.exports = function (grunt) {
         'compress:lng_ru',
         'clean:distributive',
 
+        'copy:lng_uk',
+        'compress:lng_uk',
+        'clean:distributive',
+
         'copy:lng_vi',
         'compress:lng_vi',
         'clean:distributive'
