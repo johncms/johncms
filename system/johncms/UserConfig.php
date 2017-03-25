@@ -23,8 +23,9 @@ use Zend\Stdlib\ArrayObject;
  * @property $fieldHeight
  * @property $fieldWidth
  * @property $kmess
- * @property $timeshift
  * @property $skin
+ * @property $timeshift
+ * @property $youtube
  */
 class UserConfig extends ArrayObject
 {
@@ -41,8 +42,9 @@ class UserConfig extends ArrayObject
             'fieldHeight' => 3,  // Высота текстового поля ввода
             'fieldWidth'  => 40, // Ширина текстового поля ввода
             'kmess'       => 20, // Число сообщений на страницу
-            'timeshift'   => 0,  // Временной сдвиг
             'skin'        => '', // Тема оформления
+            'timeshift'   => 0,  // Временной сдвиг
+            'youtube'     => 1,  // Покалывать ли Youtube player
         ];
     }
 }

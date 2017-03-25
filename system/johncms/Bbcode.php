@@ -68,34 +68,34 @@ class Bbcode implements Api\BbcodeInterface
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = [
-            '[small]'  => '',
-            '[/small]' => '',
-            '[big]'    => '',
-            '[/big]'   => '',
-            '[green]'  => '',
-            '[/green]' => '',
-            '[red]'    => '',
-            '[/red]'   => '',
-            '[blue]'   => '',
-            '[/blue]'  => '',
-            '[b]'      => '',
-            '[/b]'     => '',
-            '[i]'      => '',
-            '[/i]'     => '',
-            '[u]'      => '',
-            '[/u]'     => '',
-            '[s]'      => '',
-            '[/s]'     => '',
-            '[quote]'  => '',
-            '[/quote]' => '',
+            '[small]'    => '',
+            '[/small]'   => '',
+            '[big]'      => '',
+            '[/big]'     => '',
+            '[green]'    => '',
+            '[/green]'   => '',
+            '[red]'      => '',
+            '[/red]'     => '',
+            '[blue]'     => '',
+            '[/blue]'    => '',
+            '[b]'        => '',
+            '[/b]'       => '',
+            '[i]'        => '',
+            '[/i]'       => '',
+            '[u]'        => '',
+            '[/u]'       => '',
+            '[s]'        => '',
+            '[/s]'       => '',
+            '[quote]'    => '',
+            '[/quote]'   => '',
             '[youtube]'  => '',
             '[/youtube]' => '',
-            '[php]'    => '',
-            '[/php]'   => '',
-            '[c]'      => '',
-            '[/c]'     => '',
-            '[*]'      => '',
-            '[/*]'     => '',
+            '[php]'      => '',
+            '[/php]'     => '',
+            '[c]'        => '',
+            '[/c]'       => '',
+            '[*]'        => '',
+            '[/*]'       => '',
         ];
 
         return strtr($var, $replace);
@@ -583,7 +583,8 @@ class Bbcode implements Api\BbcodeInterface
                     $valuesto = explode('&', $matches[1]);
                 }
 
-                return '
+                if ($this->userConfig->youtube) {
+                    return '
 <style>.video-container {
 	position:relative;
 	padding-bottom:56.25%;
@@ -603,6 +604,9 @@ class Bbcode implements Api\BbcodeInterface
 <div class="video-container">
 <iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $valuesto[0] . '" frameborder="0"></iframe>
 </div></div>';
+                } else {
+                    return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $valuesto[0] . '"><img src="//img.youtube.com/vi/' . $valuesto[0] . '/1.jpg" border="0" alt="youtube.com/embed/' . $valuesto[0] . '"></a></div>';
+                }
             },
             $var
         );
