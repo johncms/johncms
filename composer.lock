@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "40fc277727d366d2a621ce4ff64f9315",
+    "content-hash": "5d5477f4cfb7719cff4e9e5a6f0f9ae3",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -85,13 +85,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "57e2186cea10332de1e59d03834a0863f981e1a4"
+                "reference": "c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/57e2186cea10332de1e59d03834a0863f981e1a4",
-                "reference": "57e2186cea10332de1e59d03834a0863f981e1a4",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329",
+                "reference": "c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329",
                 "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "autoload": {
@@ -114,7 +117,7 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
-            "time": "2016-10-09 19:25:28"
+            "time": "2017-03-17 06:35:45"
         },
         {
             "name": "psr/container",
@@ -171,12 +174,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/verot/class.upload.php.git",
-                "reference": "b983e880969d0d980b77881cb82139361d4e0c63"
+                "reference": "f266dc964f417f2d24a33a7c9efee1d05f6bfc6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/verot/class.upload.php/zipball/b983e880969d0d980b77881cb82139361d4e0c63",
-                "reference": "b983e880969d0d980b77881cb82139361d4e0c63",
+                "url": "https://api.github.com/repos/verot/class.upload.php/zipball/f266dc964f417f2d24a33a7c9efee1d05f6bfc6e",
+                "reference": "f266dc964f417f2d24a33a7c9efee1d05f6bfc6e",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +207,7 @@
                 "gd",
                 "upload"
             ],
-            "time": "2017-01-24 00:19:49"
+            "time": "2017-03-18 00:16:06"
         },
         {
             "name": "zendframework/zend-i18n",
