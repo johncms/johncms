@@ -6,6 +6,7 @@
 - Использование [PSR-11](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md) интерфейса контейнера
 - BBcode для вставки Youtube видео (доработанный метод от Gabriel)
 - Добавлен Украинский язык
+- Добавлен Литовский язык
 - Добавлен Арабский язык
   
 ### CHANGED
