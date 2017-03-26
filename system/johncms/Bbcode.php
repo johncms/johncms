@@ -579,12 +579,24 @@ class Bbcode implements Api\BbcodeInterface
                 if (preg_match('/youtube.com/', $matches[1])) {
                     $values = explode('=', $matches[1]);
                     $valuesto = explode('&', $values[1]);
+
+                    return $this->youtubePlayer($valuesto[0]);
+                } elseif (preg_match('/youtu.be/', $matches[1])) {
+                    return $this->youtubePlayer(trim(parse_url($matches[1])['path'], '//'));
                 } else {
                     $valuesto = explode('&', $matches[1]);
-                }
 
-                if ($this->userConfig->youtube) {
-                    return '
+                    return $this->youtubePlayer($valuesto[0]);
+                }
+            },
+            $var, 3
+        );
+    }
+
+    protected function youtubePlayer($result)
+    {
+        if ($this->userConfig->youtube) {
+            return '
 <style>.video-container {
 	position:relative;
 	padding-bottom:56.25%;
@@ -602,13 +614,10 @@ class Bbcode implements Api\BbcodeInterface
 </style>
 <div style="max-width: 500px">
 <div class="video-container">
-<iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $valuesto[0] . '" frameborder="0"></iframe>
+<iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $result . '" frameborder="0"></iframe>
 </div></div>';
-                } else {
-                    return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $valuesto[0] . '"><img src="//img.youtube.com/vi/' . $valuesto[0] . '/1.jpg" border="0" alt="youtube.com/embed/' . $valuesto[0] . '"></a></div>';
-                }
-            },
-            $var
-        );
+        } else {
+            return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $result . '"><img src="//img.youtube.com/vi/' . $result . '/1.jpg" border="0" alt="youtube.com/embed/' . $result . '"></a></div>';
+        }
     }
 }
