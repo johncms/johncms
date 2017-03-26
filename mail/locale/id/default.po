@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-03-25 19:15+0400\n"
-"PO-Revision-Date: 2017-03-25 11:48-0400\n"
+"POT-Creation-Date: 2017-03-26 17:27+0400\n"
+"PO-Revision-Date: 2017-03-26 09:42-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -267,8 +267,8 @@ msgid "To Whom"
 msgstr "Kepada"
 
 #: includes/write.php:444
-msgid "Sent"
-msgstr "Terkirim"
+msgid "Send"
+msgstr "Kirim"
 
 #: includes/write.php:446
 msgid "Personal correspondence with"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"PO-Revision-Date: 2017-03-26 09:42-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgid "Symbols on the picture"
 msgstr "Код с картинки"
 
 #: index.php:355
-msgid "Sent"
+msgid "Send"
 msgstr "Отправить"
 
 #: index.php:357

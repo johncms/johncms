@@ -138,7 +138,7 @@ msgid "Symbols on the picture"
 msgstr ""
 
 #: index.php:355
-msgid "Sent"
+msgid "Send"
 msgstr ""
 
 #: index.php:357
