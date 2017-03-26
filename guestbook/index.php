@@ -352,7 +352,7 @@ switch ($act) {
                     '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br />';
             }
             echo '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '<input type="submit" name="submit" value="' . _t('Sent') . '"/></form></div>';
+                '<input type="submit" name="submit" value="' . _t('Send') . '"/></form></div>';
         } else {
             echo '<div class="rmenu">' . _t('For registered users only') . '</div>';
         }
