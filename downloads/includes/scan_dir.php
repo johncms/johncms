@@ -269,13 +269,13 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
                 if ($id) {
                     $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down_cat['dir'] . '/' . $res_down_cat['name']) . "%'")->fetchColumn();
-                    $db->exec("UPDATE `download__files` SET `total` = '$dir_files' WHERE `id` = '" . $id . "'");
+                    $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $id . "'");
                 } else {
                     $req_down = $db->query("SELECT `dir`, `name`, `id` FROM `download__files` WHERE `type` = 1");
 
                     while ($res_down = $req_down->fetch()) {
                         $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir'] . '/' . $res_down['name']) . "%'")->fetchColumn();
-                        $db->exec("UPDATE `download__files` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
+                        $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
                     }
                 }
 
