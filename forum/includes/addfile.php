@@ -45,17 +45,8 @@ if ($res['type'] != 'm' || $res['user_id'] != $systemUser->id) {
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
-if ($res['time'] < (time() - 180)) {
+if ($res['time'] < (time() - 3600)) {
     echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
-    require('../system/end.php');
-    exit;
-}
-
-// Проверяем, был ли файл уже загружен
-$exist = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'")->fetchColumn();
-
-if ($exist) {
-    echo $tools->displayError(_t('File is already uploaded'));
     require('../system/end.php');
     exit;
 }

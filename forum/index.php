@@ -564,6 +564,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 } else {
                     $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
                 }
+                
+                // Данные последнего поста темы
+                $editAccessReq = $db->query("SELECT * FROM `forum` WHERE `forum`.`type` = 'm' AND `forum`.`refid` = " . $id . " AND `forum`.`close` != 1  ORDER BY `forum`.`id` DESC LIMIT 1");
+                $editAccessRes = $editAccessReq->fetch();
 
                 ////////////////////////////////////////////////////////////
                 // Основной запрос в базу, получаем список постов темы    //
@@ -682,32 +686,39 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . $tools->displayDate($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
                     }
 
-                    // Если есть прикрепленный файл, выводим его описание
+                    // Если есть прикрепленные файлы, выводим их
                     $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 
                     if ($freq->rowCount()) {
-                        $fres = $freq->fetch();
-                        $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
-                        echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
-                        // Предпросмотр изображений
-                        $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
-                        $pic_ext = [
-                            'gif',
-                            'jpg',
-                            'jpeg',
-                            'png',
-                        ];
+                        echo '<div class="post-files">';
+                        while ($fres = $freq->fetch()) {
+                            $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
+                            echo '<div class="gray" style="font-size: x-small;background-color: rgba(128, 128, 128, 0.1);padding: 2px 4px;float: left;margin: 4px 4px 0 0;">' . _t('Attachment') . ':';
+                            // Предпросмотр изображений
+                            $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
+                            $pic_ext = [
+                                'gif',
+                                'jpg',
+                                'jpeg',
+                                'png',
+                            ];
 
-                        if (in_array($att_ext, $pic_ext)) {
-                            echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
-                            echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
-                        } else {
-                            echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+                            if (in_array($att_ext, $pic_ext)) {
+                                echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+                                echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
+                            } else {
+                                echo '<br><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+                            }
+
+                            echo ' (' . $fls . ' кб.)<br>';
+                            echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time');
+                            if ($editAccessRes['user_id'] == $systemUser->id && $editAccessRes['time'] + 3600 < strtotime('+ 1 hour')) {
+                                echo '<br><a href="?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
+                            }
+                            echo '</div>';
+                            $file_id = $fres['id'];
                         }
-
-                        echo ' (' . $fls . ' кб.)<br>';
-                        echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time') . '</div>';
-                        $file_id = $fres['id'];
+                        echo '<div style="clear: both;"></div></div>';
                     }
 
                     // Ссылки на редактирование / удаление постов
@@ -716,6 +727,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
                         || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
                         || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
+                        || ($editAccessRes['user_id'] == $systemUser->id && $editAccessRes['time'] + 3600 < strtotime('+ 1 hour'))
                     ) {
                         echo '<div class="sub">';
 

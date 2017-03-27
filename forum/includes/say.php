@@ -142,36 +142,54 @@ switch ($type1['type']) {
             }
 
             unset($_SESSION['token']);
+            
+            // Проверяем, было ли последнее сообщение от того же автора?
+            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) as `strlen` FROM `forum` WHERE `type` = 'm' AND `refid` = " . $id . " AND `close` != 1 ORDER BY `time` DESC LIMIT 1");
 
-            /** @var Johncms\Api\EnvironmentInterface $env */
-            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+            $update = false;
+            
+            if ($req->rowCount()) {
+                $update = true;
+                $res = $req->fetch();
+                if ($res['time'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
+                    $newpost = $res['text'] . PHP_EOL . PHP_EOL . '[color=#586776]' . $tools->displayDate(time()) . '[/color]' .  PHP_EOL . $msg;
+                    // Обновляем пост
+                    $db->prepare('UPDATE `forum` SET `text` = ? WHERE `id` = ' . $res['id']
+                    )->execute([$newpost]);
+                } else {
+                    $update = false;
+                    
+                    /** @var Johncms\Api\EnvironmentInterface $env */
+                    $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
-            // Добавляем сообщение в базу
-            $db->prepare('
-              INSERT INTO `forum` SET
-              `refid` = ?,
-              `type` = \'m\',
-              `time` = ?,
-              `user_id` = ?,
-              `from` = ?,
-              `ip` = ?,
-              `ip_via_proxy` = ?,
-              `soft` = ?,
-              `text` = ?,
-              `edit` = \'\',
-              `curators` = \'\'
-            ')->execute([
-                $id,
-                time(),
-                $systemUser->id,
-                $systemUser->name,
-                $env->getIp(),
-                $env->getIpViaProxy(),
-                $env->getUserAgent(),
-                $msg,
-            ]);
+                    // Добавляем сообщение в базу
+                    $db->prepare('
+                      INSERT INTO `forum` SET
+                      `refid` = ?,
+                      `type` = \'m\',
+                      `time` = ?,
+                      `user_id` = ?,
+                      `from` = ?,
+                      `ip` = ?,
+                      `ip_via_proxy` = ?,
+                      `soft` = ?,
+                      `text` = ?,
+                      `edit` = \'\',
+                      `curators` = \'\'
+                    ')->execute([
+                        $id,
+                        time(),
+                        $systemUser->id,
+                        $systemUser->name,
+                        $env->getIp(),
+                        $env->getIpViaProxy(),
+                        $env->getUserAgent(),
+                        $msg,
+                    ]);
 
-            $fadd = $db->lastInsertId();
+                    $fadd = $db->lastInsertId();
+                }
+            }
 
             // Обновляем время топика
             $db->exec("UPDATE `forum` SET
@@ -190,11 +208,14 @@ switch ($type1['type']) {
             $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
 
             if (isset($_POST['addfiles'])) {
-                header("Location: index.php?id=$fadd&act=addfile");
+                if ($update) {
+                    header("Location: index.php?id=" . $res['id'] . "&act=addfile");
+                } else {
+                    header("Location: index.php?id=" . $fadd . "&act=addfile");
+                }
             } else {
-                header("Location: index.php?id=$id&page=$page");
+                header("Location: index.php?id=" . $id . "&page=" . $page);
             }
-
             exit;
         } else {
             require('../system/head.php');

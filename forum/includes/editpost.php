@@ -83,11 +83,13 @@ if ($req->rowCount()) {
             }
 
             if ($check) {
-                $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` DESC LIMIT 1")->fetch();
+                $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `close` != 1 ORDER BY `id` DESC LIMIT 1")->fetch();
 
                 if ($res_m['user_id'] != $systemUser->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
-                } elseif ($res['time'] < time() - 300) {
+                } elseif ($res['time'] < time() - 300
+                        && $res_m['user_id'] != $systemUser->id && $res_m['time'] + 3600 > strtotime('+ 1 hour')
+                ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
             }
@@ -96,6 +98,8 @@ if ($req->rowCount()) {
 } else {
     $error = _t('Message does not exists or has been deleted') . '<br /><a href="index.php">' . _t('Forum') . '</a>';
 }
+
+$fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs(intval($_GET['fid'])) : false;
 
 if (!$error) {
     switch ($do) {
@@ -110,14 +114,39 @@ if (!$error) {
             }
 
             $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
-            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
             if ($req_f->rowCount()) {
-                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id' LIMIT 1");
+                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id'");
             }
 
             header('Location: ' . $link);
             break;
+            
+        case 'delfile':
+             // Удаление поста, предварительное напоминание
+             // TODO: нужно добавить языковые фразы
+             #echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>' .
+             echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . 'Удалить файл' . '</div>' .
+                 '<div class="rmenu"><p>';
+             echo _t('Do you really want to delete?') . '</p>' .
+                 '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '">' . _t('Delete') . '</a>';
+             echo '</p></div>';
+             break;
+             
+        case 'deletefile':
+             $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = " . $fid);
+             $res_f = $req_f->fetch();
+             if ($req_f->rowCount()) {
+                 $db->exec("DELETE FROM `cms_forum_files` WHERE `id` = " . $fid);
+                 unlink('../files/forum/attach/' . $res_f['filename']);
+                 header('Location: ' . $link);
+             } else {
+                 echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
+                 require('../system/end.php');
+                 exit;
+             }
+             break;
 
         case 'delete':
             // Удаление поста и прикрепленного файла
@@ -134,14 +163,15 @@ if (!$error) {
 
             if ($systemUser->rights == 9 && !isset($_GET['hide'])) {
                 // Удаление поста (для Супервизоров)
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
-                    // Если есть прикрепленный файл, удаляем его
-                    $res_f = $req_f->fetch();
-                    unlink('../files/forum/attach/' . $res_f['filename']);
-                    $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                    // Если есть прикрепленные файлы, удаляем их
+                    while ($res_f = $req_f->fetch()) {
+                        unlink('../files/forum/attach/' . $res_f['filename']);
+                    }
                 }
+                $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = " . $id);
 
                 // Формируем ссылку на нужную страницу темы
                 $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">" : "<") . " '$id'")->fetchColumn() / $kmess);
@@ -155,11 +185,11 @@ if (!$error) {
                 }
             } else {
                 // Скрытие поста
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
-                    // Если есть прикрепленный файл, скрываем его
-                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id' LIMIT 1");
+                    // Если есть прикрепленные файлы, скрываем их
+                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id'");
                 }
 
                 if ($posts == 1) {
