@@ -64,6 +64,7 @@ class Bbcode implements Api\BbcodeInterface
     public function notags($var = '')
     {
         $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
+        $var = preg_replace('#\[timestamp\](.+?)\[/timestamp]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
@@ -263,7 +264,7 @@ class Bbcode implements Api\BbcodeInterface
      */
     protected function parseTime($var)
     {
-        return preg_replace_callback(
+        $var = preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
             function ($matches) {
                 $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
@@ -276,6 +277,22 @@ class Bbcode implements Api\BbcodeInterface
             },
             $var
         );
+
+        $var = preg_replace_callback(
+            '#\[timestamp\](.+?)\[\/timestamp\]#s',
+            function ($matches) {
+                $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
+
+                if (($out = strtotime($matches[1])) !== false) {
+                    return '<small class="gray">' . _t('Added', 'system') . ': ' . date("d.m.Y / H:i", $out + $shift) . '</small>';
+                } else {
+                    return $matches[1];
+                }
+            },
+            $var
+        );
+
+        return $var;
     }
 
     /**
