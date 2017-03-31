@@ -142,23 +142,34 @@ switch ($type1['type']) {
             }
 
             unset($_SESSION['token']);
-            
+
             // Проверяем, было ли последнее сообщение от того же автора?
-            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) as `strlen` FROM `forum` WHERE `type` = 'm' AND `refid` = " . $id . " AND `close` != 1 ORDER BY `time` DESC LIMIT 1");
+            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum` WHERE `type` = 'm' AND `refid` = " . $id . " AND `close` != 1 ORDER BY `time` DESC LIMIT 1");
 
             $update = false;
-            
+
             if ($req->rowCount()) {
                 $update = true;
                 $res = $req->fetch();
+
                 if ($res['time'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
-                    $newpost = $res['text'] . PHP_EOL . PHP_EOL . '[color=#586776]' . $tools->displayDate(time()) . '[/color]' .  PHP_EOL . $msg;
+                    $newpost = $res['text'];
+
+                    if (strpos($newpost, '[timestamp]') === false) {
+                        $newpost = '[timestamp]' . date("d.m.Y H:i", $res['time']) . '[/timestamp]' . PHP_EOL . $newpost;
+                    }
+
+                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date("d.m.Y H:i", time()) . '[/timestamp]' . PHP_EOL . $msg;
+
                     // Обновляем пост
-                    $db->prepare('UPDATE `forum` SET `text` = ? WHERE `id` = ' . $res['id']
-                    )->execute([$newpost]);
+                    $db->prepare('UPDATE `forum` SET
+                      `text` = ?,
+                      `time` = ?
+                      WHERE `id` = ' . $res['id']
+                    )->execute([$newpost, time()]);
                 } else {
                     $update = false;
-                    
+
                     /** @var Johncms\Api\EnvironmentInterface $env */
                     $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
