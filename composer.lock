@@ -39,16 +39,16 @@
         },
         {
             "name": "erusev/parsedown",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/erusev/parsedown.git",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb"
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/erusev/parsedown/zipball/20ff8bbb57205368b4b42d094642a3e52dac85fb",
-                "reference": "20ff8bbb57205368b4b42d094642a3e52dac85fb",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
+                "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
                 "shasum": ""
             },
             "require": {
@@ -77,7 +77,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2016-11-02T15:56:58+00:00"
+            "time": "2017-03-29T16:04:15+00:00"
         },
         {
             "name": "geshi/geshi",
@@ -85,12 +85,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329"
+                "reference": "871d465a82b47e492b55eb69b991f68a92ceaf3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329",
-                "reference": "c71a0d7aa7520aa2abc1b2d10c8fed1301ea8329",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/871d465a82b47e492b55eb69b991f68a92ceaf3c",
+                "reference": "871d465a82b47e492b55eb69b991f68a92ceaf3c",
                 "shasum": ""
             },
             "require-dev": {
@@ -117,7 +117,7 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
-            "time": "2017-03-17 06:35:45"
+            "time": "2017-03-30 19:52:09"
         },
         {
             "name": "psr/container",
