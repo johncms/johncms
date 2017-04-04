@@ -564,7 +564,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 } else {
                     $order = ((empty($_SESSION['uppost'])) || ($_SESSION['uppost'] == 0)) ? 'ASC' : 'DESC';
                 }
-                
+
                 ////////////////////////////////////////////////////////////
                 // Основной запрос в базу, получаем список постов темы    //
                 ////////////////////////////////////////////////////////////
@@ -682,6 +682,18 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . $tools->displayDate($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
                     }
 
+                    // Задаем права на редактирование постов
+                    if (
+                        (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
+                        || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
+                        || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
+                        || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
+                    ) {
+                        $allowEdit = true;
+                    } else {
+                        $allowEdit = false;
+                    }
+
                     // Если есть прикрепленные файлы, выводим их
                     $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 
@@ -708,9 +720,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                             echo ' (' . $fls . ' кб.)<br>';
                             echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time');
-                            if ($res['user_id'] == $systemUser->id && $res['time'] + 3600 < strtotime('+ 1 hour') || $systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) {
+
+                            if ($allowEdit) {
                                 echo '<br><a href="?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
                             }
+
                             echo '</div>';
                             $file_id = $fres['id'];
                         }
@@ -718,13 +732,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Ссылки на редактирование / удаление постов
-                    if (
-                        (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
-                        || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
-                        || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
-                        || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
-                        || ($res['user_id'] == $systemUser->id && $res['time'] + 3600 < strtotime('+ 1 hour'))
-                    ) {
+                    if ($allowEdit) {
                         echo '<div class="sub">';
 
                         // Чекбокс массового удаления постов
