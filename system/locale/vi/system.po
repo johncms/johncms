@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"PO-Revision-Date: 2017-04-05 06:23-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -198,61 +198,65 @@ msgstr "Bình luận"
 msgid "Unread"
 msgstr "Chưa đọc"
 
-#: system/johncms/Bbcode.php:163
+#: system/johncms/Bbcode.php:164
 msgid "Edit List"
 msgstr "Danh sách chỉnh sửa"
 
-#: system/johncms/Bbcode.php:174
+#: system/johncms/Bbcode.php:175
 msgid "Add Smilies"
 msgstr "Thêm biểu tượng mặt cười"
 
-#: system/johncms/Bbcode.php:232
+#: system/johncms/Bbcode.php:233
 msgid "Bold"
 msgstr "In đậm"
 
-#: system/johncms/Bbcode.php:233
+#: system/johncms/Bbcode.php:234
 msgid "Italic"
 msgstr "In nghiêng"
 
-#: system/johncms/Bbcode.php:234
+#: system/johncms/Bbcode.php:235
 msgid "Underline"
 msgstr "Gạch chân"
 
-#: system/johncms/Bbcode.php:235
+#: system/johncms/Bbcode.php:236
 msgid "Strike"
 msgstr "Đánh"
 
-#: system/johncms/Bbcode.php:236
+#: system/johncms/Bbcode.php:237
 msgid "Text Color"
 msgstr "Màu chữ"
 
-#: system/johncms/Bbcode.php:237
+#: system/johncms/Bbcode.php:238
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: system/johncms/Bbcode.php:238
+#: system/johncms/Bbcode.php:239
 msgid "List"
 msgstr "Danh sách"
 
-#: system/johncms/Bbcode.php:239
+#: system/johncms/Bbcode.php:240
 msgid "Spoiler"
 msgstr "Nút nhanh"
 
-#: system/johncms/Bbcode.php:240
+#: system/johncms/Bbcode.php:241
 msgid "Quote"
 msgstr "Trích dẫn"
 
-#: system/johncms/Bbcode.php:241
+#: system/johncms/Bbcode.php:242
 msgid "URL"
 msgstr "URL"
 
-#: system/johncms/Bbcode.php:242
+#: system/johncms/Bbcode.php:243
 msgid "Code"
 msgstr "Mã code"
 
-#: system/johncms/Bbcode.php:246
+#: system/johncms/Bbcode.php:247
 msgid "Smilies"
 msgstr "Biểu tượng mặt cười"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Thêm vào"
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
 msgid "Reply"

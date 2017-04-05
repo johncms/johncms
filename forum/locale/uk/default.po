@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-03-25 19:43+0400\n"
-"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"POT-Creation-Date: 2017-04-05 13:59+0400\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: includes/per.php:49 includes/per.php:58 includes/post.php:30
 #: includes/ren.php:30 includes/ren.php:39 includes/tema.php:41
 #: includes/tema.php:61 includes/users.php:32 includes/vip.php:30
-#: includes/vip.php:40 includes/vote.php:35 index.php:866
+#: includes/vip.php:40 includes/vote.php:35 index.php:882
 msgid "Wrong data"
 msgstr "Невірні дані"
 
@@ -37,65 +37,62 @@ msgstr "Час відведений для вивантаження файлу �
 
 #: includes/addfile.php:49 includes/addvote.php:33 includes/addvote.php:101
 #: includes/curators.php:81 includes/editpost.php:62 includes/editpost.php:69
-#: includes/editpost.php:89 includes/editpost.php:91 includes/editpost.php:243
-#: includes/filter.php:42 includes/massdel.php:40 includes/massdel.php:43
-#: includes/nt.php:88 includes/nt.php:270 includes/per.php:105
-#: includes/ren.php:75 includes/say.php:88 includes/say.php:102
-#: includes/say.php:120 includes/say.php:132 includes/say.php:226
-#: includes/say.php:236 includes/say.php:243 includes/say.php:296
-#: includes/say.php:309 includes/say.php:421 includes/vote.php:43
+#: includes/editpost.php:89 includes/editpost.php:93 includes/editpost.php:145
+#: includes/editpost.php:273 includes/filter.php:42 includes/massdel.php:40
+#: includes/massdel.php:43 includes/nt.php:88 includes/nt.php:270
+#: includes/per.php:105 includes/ren.php:75 includes/say.php:88
+#: includes/say.php:102 includes/say.php:120 includes/say.php:132
+#: includes/say.php:258 includes/say.php:268 includes/say.php:275
+#: includes/say.php:328 includes/say.php:341 includes/say.php:453
+#: includes/vote.php:43
 msgid "Back"
 msgstr "Повернутися"
 
-#: includes/addfile.php:58
-msgid "File is already uploaded"
-msgstr "Файл вже завантажений"
-
-#: includes/addfile.php:84
+#: includes/addfile.php:75
 msgid "File size exceed"
 msgstr "Вага файлу перевищує"
 
-#: includes/addfile.php:89
+#: includes/addfile.php:80
 msgid "You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden."
 msgstr "Ви можете долучити файли тільки з ім'ям і розширенням одного <b>(name.ext</b>). Файли без імені, розширення, або з подвійним розширенням заборонені."
 
-#: includes/addfile.php:94
+#: includes/addfile.php:85
 msgid "The forbidden file format.<br>You can upload files of the following extension"
 msgstr "Заборонений тип файлу!<br>Дозволені типи"
 
-#: includes/addfile.php:107
+#: includes/addfile.php:98
 msgid "File name contains invalid characters"
 msgstr "У назві файлу присутні неприпустимі символи"
 
-#: includes/addfile.php:121
+#: includes/addfile.php:112
 msgid "File attached"
 msgstr "Файл прикріплено"
 
-#: includes/addfile.php:123 includes/addfile.php:169
+#: includes/addfile.php:114 includes/addfile.php:160
 msgid "Error uploading file"
 msgstr "Помилка додавання файлу"
 
-#: includes/addfile.php:166 includes/addvote.php:74 includes/editpost.php:203
-#: includes/nt.php:235 includes/ren.php:49 includes/ren.php:59
-#: includes/say.php:288
+#: includes/addfile.php:157 includes/addfile.php:160 includes/addvote.php:74
+#: includes/editpost.php:233 includes/nt.php:235 includes/ren.php:49
+#: includes/ren.php:59 includes/say.php:320
 msgid "Repeat"
 msgstr "Повторити"
 
-#: includes/addfile.php:174 includes/addvote.php:72 includes/delvote.php:41
+#: includes/addfile.php:165 includes/addvote.php:72 includes/delvote.php:41
 #: includes/editvote.php:89
 msgid "Continue"
 msgstr "Продовжити"
 
-#: includes/addfile.php:177 includes/nt.php:261 includes/say.php:214
-#: includes/say.php:410 index.php:589 index.php:776
+#: includes/addfile.php:168 includes/nt.php:261 includes/say.php:246
+#: includes/say.php:442 index.php:589 index.php:792
 msgid "Add File"
 msgstr "Додати файл"
 
-#: includes/addfile.php:180
+#: includes/addfile.php:171
 msgid "Upload"
 msgstr "Завантаження"
 
-#: includes/addfile.php:181
+#: includes/addfile.php:172
 msgid "Max. Size"
 msgstr "Макс. розмір"
 
@@ -123,31 +120,32 @@ msgstr "Додати відповідь"
 msgid "Delete last"
 msgstr "Видалити останній"
 
-#: includes/addvote.php:100 includes/editpost.php:239 includes/editvote.php:136
+#: includes/addvote.php:100 includes/editpost.php:269 includes/editvote.php:136
 #: includes/nt.php:265 includes/ren.php:73
 msgid "Save"
 msgstr "Зберегти"
 
-#: includes/curators.php:33 includes/deltema.php:40 includes/say.php:426
+#: includes/curators.php:33 includes/deltema.php:40 includes/say.php:458
 #: index.php:214
 msgid "Topic has been deleted or does not exists"
 msgstr "Тема була видалена або не існує"
 
-#: includes/curators.php:43 includes/deltema.php:74 includes/editpost.php:97
-#: includes/editpost.php:179 includes/editpost.php:228 includes/editvote.php:94
-#: includes/file.php:46 includes/files.php:83 includes/files.php:192
-#: includes/filter.php:24 includes/filter.php:67 includes/new.php:15
-#: includes/new.php:64 includes/new.php:79 includes/new.php:152
-#: includes/new.php:223 includes/new.php:261 includes/nt.php:245
-#: includes/per.php:81 includes/post.php:133 includes/ren.php:69
-#: includes/say.php:376 includes/say.php:426 includes/tema.php:96
-#: includes/tema.php:102 includes/tema.php:145 includes/who.php:90
-#: includes/who.php:198 index.php:139 index.php:154 index.php:214 index.php:254
-#: index.php:875 index.php:900 search.php:29 search.php:228
+#: includes/curators.php:43 includes/deltema.php:74 includes/editpost.php:99
+#: includes/editpost.php:130 includes/editpost.php:209
+#: includes/editpost.php:258 includes/editvote.php:94 includes/file.php:46
+#: includes/files.php:83 includes/files.php:192 includes/filter.php:24
+#: includes/filter.php:67 includes/new.php:15 includes/new.php:64
+#: includes/new.php:79 includes/new.php:152 includes/new.php:223
+#: includes/new.php:261 includes/nt.php:245 includes/per.php:81
+#: includes/post.php:133 includes/ren.php:69 includes/say.php:408
+#: includes/say.php:458 includes/tema.php:96 includes/tema.php:102
+#: includes/tema.php:145 includes/who.php:90 includes/who.php:198 index.php:139
+#: index.php:154 index.php:214 index.php:254 index.php:891 index.php:916
+#: search.php:29 search.php:228
 msgid "Forum"
 msgstr "Форум"
 
-#: includes/curators.php:43 index.php:809
+#: includes/curators.php:43 index.php:825
 msgid "Curators"
 msgstr "Куратори"
 
@@ -163,24 +161,26 @@ msgstr "Список порожній"
 #: includes/curators.php:80 includes/files.php:150 includes/files.php:187
 #: includes/new.php:139 includes/new.php:205 includes/users.php:55
 #: includes/who.php:77 includes/who.php:189 index.php:334 index.php:393
-#: index.php:788 search.php:167
+#: index.php:804 search.php:167
 msgid "Total"
 msgstr "Всього"
 
-#: includes/deltema.php:74 index.php:837
+#: includes/deltema.php:74 index.php:853
 msgid "Delete Topic"
 msgstr "Видалити тему"
 
-#: includes/deltema.php:76 includes/editpost.php:186 includes/massdel.php:54
+#: includes/deltema.php:76 includes/editpost.php:132 includes/editpost.php:216
+#: includes/massdel.php:54
 msgid "Do you really want to delete?"
 msgstr "Ви дійсно бажаєте видалити?"
 
-#: includes/deltema.php:77 includes/editpost.php:190
+#: includes/deltema.php:77 includes/editpost.php:220
 msgid "Hide"
 msgstr "Приховати"
 
-#: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:187
-#: includes/editvote.php:57 includes/massdel.php:54 index.php:731 index.php:762
+#: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:133
+#: includes/editpost.php:217 includes/editvote.php:57 includes/massdel.php:54
+#: index.php:725 index.php:747 index.php:778
 msgid "Delete"
 msgstr "Видалити"
 
@@ -188,9 +188,9 @@ msgstr "Видалити"
 msgid "Perform"
 msgstr "Виконати"
 
-#: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:187
-#: includes/editvote.php:58 includes/editvote.php:138 includes/massdel.php:55
-#: search.php:60
+#: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:133
+#: includes/editpost.php:217 includes/editvote.php:58 includes/editvote.php:138
+#: includes/massdel.php:55 search.php:60
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -214,41 +214,41 @@ msgstr "Ви намагаєтеся змінити чужий пост"
 msgid "Your message not already latest, you cannot change it"
 msgstr "Ваше повідомлення вже не останнє, Ви не можете змінити його"
 
-#: includes/editpost.php:91
+#: includes/editpost.php:93 includes/editpost.php:145
 msgid "You cannot edit your posts after 5 minutes"
 msgstr "З моменту створення повідомлення пройшло більше 5 хвилин і Ви не можете його редагувати"
 
-#: includes/editpost.php:97
+#: includes/editpost.php:99
 msgid "Message does not exists or has been deleted"
 msgstr "Пост не існує, або був видалений"
 
-#: includes/editpost.php:179
+#: includes/editpost.php:209
 msgid "Delete Message"
 msgstr "Видалити повідомлення"
 
-#: includes/editpost.php:183
+#: includes/editpost.php:213
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
 msgstr "УВАГА!<br>Це останній пост теми. Разом з ним буде видалена (або прихована) і сама тема"
 
-#: includes/editpost.php:194
+#: includes/editpost.php:224
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
 msgstr "У разі видалення, з лічильника постів форуму зніметься один бал"
 
-#: includes/editpost.php:203 includes/nt.php:127 includes/say.php:288
+#: includes/editpost.php:233 includes/nt.php:127 includes/say.php:320
 msgid "You have not entered the message"
 msgstr "Ви не ввели повідомлення"
 
-#: includes/editpost.php:228
+#: includes/editpost.php:258
 msgid "Edit Message"
 msgstr "Редагувати повідомлення"
 
-#: includes/editpost.php:240 includes/nt.php:266 includes/say.php:220
-#: includes/say.php:415 index.php:591 index.php:779
+#: includes/editpost.php:270 includes/nt.php:266 includes/say.php:252
+#: includes/say.php:447 index.php:591 index.php:795
 msgid "Preview"
 msgstr "Прев'ю"
 
-#: includes/editpost.php:242 includes/nt.php:269 includes/say.php:225
-#: includes/say.php:420
+#: includes/editpost.php:272 includes/nt.php:269 includes/say.php:257
+#: includes/say.php:452
 msgid "Smilies"
 msgstr "Смайли"
 
@@ -260,7 +260,7 @@ msgstr "Ви дійсно бажаєте видалити цю відповід�
 msgid "Poll changed"
 msgstr "Опитування змінено"
 
-#: includes/editvote.php:94 index.php:821
+#: includes/editvote.php:94 index.php:837
 msgid "Edit Poll"
 msgstr "Редагувати опитування"
 
@@ -332,7 +332,7 @@ msgstr "Нові файли"
 msgid "Read more"
 msgstr "Детальніше"
 
-#: includes/files.php:131 includes/post.php:118 index.php:703
+#: includes/files.php:131 includes/post.php:118 index.php:716
 msgid "Click to view image"
 msgstr "Для перегляду натисніть на зображення"
 
@@ -344,13 +344,13 @@ msgstr "Розмір"
 msgid "Downloaded"
 msgstr "Завантажено"
 
-#: includes/files.php:139 index.php:709
+#: includes/files.php:139 index.php:722
 msgid "Time"
 msgstr "Час"
 
 #: includes/files.php:159 includes/new.php:145 includes/new.php:212
 #: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:399
-#: index.php:795 search.php:224
+#: index.php:811 search.php:224
 msgid "To Page"
 msgstr "До сторінки"
 
@@ -366,7 +366,7 @@ msgstr "Список розділів"
 msgid "You have not selected any author"
 msgstr "Ви не вибрали жодного автора"
 
-#: includes/filter.php:67 index.php:857
+#: includes/filter.php:67 index.php:873
 msgid "Filter by author"
 msgstr "Фільтр по автору"
 
@@ -436,7 +436,7 @@ msgstr "Ви не ввели назву теми"
 msgid "Topic name too short"
 msgstr "Назва теми дуже коротка"
 
-#: includes/nt.php:131 includes/say.php:120 includes/say.php:296
+#: includes/nt.php:131 includes/say.php:120 includes/say.php:328
 msgid "Text is too short"
 msgstr "Занадто короткий текст"
 
@@ -444,7 +444,7 @@ msgstr "Занадто короткий текст"
 msgid "Topic with same name already exists in this section"
 msgstr "Тема з такою назвою вже є в цьому розділі"
 
-#: includes/nt.php:149 includes/say.php:132 includes/say.php:309
+#: includes/nt.php:149 includes/say.php:132 includes/say.php:341
 msgid "Message already exists"
 msgstr "Повідомлення вже існує"
 
@@ -460,11 +460,11 @@ msgstr "Розділ"
 msgid "Title(max. 100)"
 msgstr "Назва(макс. 100)"
 
-#: includes/nt.php:258 includes/say.php:211 includes/say.php:407
+#: includes/nt.php:258 includes/say.php:243 includes/say.php:439
 msgid "Message"
 msgstr "Повідомлення"
 
-#: includes/per.php:81 index.php:845
+#: includes/per.php:81 index.php:861
 msgid "Move Topic"
 msgstr "Перемістити тему"
 
@@ -480,7 +480,7 @@ msgstr "Перемістити"
 msgid "Other categories"
 msgstr "Інші категорії"
 
-#: includes/post.php:42 includes/say.php:204 includes/say.php:382
+#: includes/post.php:42 includes/say.php:236 includes/say.php:414
 msgid "Topic"
 msgstr "Тема"
 
@@ -492,15 +492,15 @@ msgstr "[r]"
 msgid "[q]"
 msgstr "[q]"
 
-#: includes/post.php:106 index.php:691
+#: includes/post.php:106 index.php:704
 msgid "Attachment"
 msgstr "Вкладення"
 
-#: includes/post.php:124 index.php:709
+#: includes/post.php:124 index.php:722
 msgid "Downloads"
 msgstr "Завантаження"
 
-#: includes/ren.php:69 index.php:823
+#: includes/ren.php:69 index.php:839
 msgid "Rename Topic"
 msgstr "Перейменувати тему"
 
@@ -508,35 +508,35 @@ msgstr "Перейменувати тему"
 msgid "Topic name"
 msgstr "Назва теми"
 
-#: includes/say.php:102 includes/say.php:236
+#: includes/say.php:102 includes/say.php:268
 msgid "You cannot write in a closed topic"
 msgstr "Ви не можете писати в закритій темі"
 
-#: includes/say.php:219 includes/say.php:414
+#: includes/say.php:251 includes/say.php:446
 msgid "Send"
 msgstr "Відправити"
 
-#: includes/say.php:243
+#: includes/say.php:275
 msgid "You can not reply to your own message"
 msgstr "Ви не можете відповідати на власне повідомлення"
 
-#: includes/say.php:265 includes/say.php:403
+#: includes/say.php:297 includes/say.php:435
 msgid "I am glad to answer you"
 msgstr "Із задоволенням тобі відповім"
 
-#: includes/say.php:269 includes/say.php:404
+#: includes/say.php:301 includes/say.php:436
 msgid "respond to Your message"
 msgstr "відповісти на Ваше повідомлення"
 
-#: includes/say.php:396 includes/tema.php:77
+#: includes/say.php:428 includes/tema.php:77
 msgid "Quote"
 msgstr "Цитата"
 
-#: includes/say.php:398
+#: includes/say.php:430
 msgid "Only allowed 200 characters, other text will be cropped."
 msgstr "Допустимо макс. 200 символів, весь зайвий текст обрізається."
 
-#: includes/say.php:401
+#: includes/say.php:433
 msgid "Appeal"
 msgstr "Звернення"
 
@@ -572,7 +572,7 @@ msgstr "Перейти в тему"
 msgid "Vote accepted"
 msgstr "Ваш голос прийнятий"
 
-#: includes/who.php:15 includes/who.php:90 index.php:894
+#: includes/who.php:15 includes/who.php:90 index.php:910
 msgid "Who in Forum"
 msgstr "Хто на форумі"
 
@@ -652,7 +652,7 @@ msgstr "Файли розділу"
 msgid "Who is here"
 msgstr "Хто тут"
 
-#: index.php:298 index.php:876 search.php:29 search.php:77
+#: index.php:298 index.php:892 search.php:29 search.php:77
 msgid "Search"
 msgstr "Пошук"
 
@@ -700,7 +700,7 @@ msgstr "Рейтинг"
 msgid "Total votes"
 msgstr "Всього голосів"
 
-#: index.php:544 index.php:737
+#: index.php:544 index.php:753
 msgid "Post deleted"
 msgstr "Пост видалено"
 
@@ -708,7 +708,7 @@ msgstr "Пост видалено"
 msgid "Filter by author is activated"
 msgstr "Фільтр по автору активовано"
 
-#: index.php:590 index.php:595 index.php:778 index.php:783
+#: index.php:590 index.php:595 index.php:794 index.php:799
 msgid "Write"
 msgstr "Написати"
 
@@ -716,71 +716,71 @@ msgstr "Написати"
 msgid "Edited"
 msgstr "Відредаговано"
 
-#: index.php:729
+#: index.php:745
 msgid "Edit"
 msgstr "Редагувати"
 
-#: index.php:730
+#: index.php:746
 msgid "Restore"
 msgstr "Відновити"
 
-#: index.php:739
+#: index.php:755
 msgid "Post restored by"
 msgstr "Пост відновив"
 
-#: index.php:817
+#: index.php:833
 msgid "Curators of the Topic"
 msgstr "Куратори теми"
 
-#: index.php:821
+#: index.php:837
 msgid "Delete Poll"
 msgstr "Видалити опитування"
 
-#: index.php:822
+#: index.php:838
 msgid "Add Poll"
 msgstr "Додати опитування"
 
-#: index.php:827
+#: index.php:843
 msgid "Open Topic"
 msgstr "Відкрити тему"
 
-#: index.php:829
+#: index.php:845
 msgid "Close Topic"
 msgstr "Закрити тему"
 
-#: index.php:834
+#: index.php:850
 msgid "Restore Topic"
 msgstr "Відновити тему"
 
-#: index.php:840
+#: index.php:856
 msgid "Unfix Topic"
 msgstr "Відкріпити тему"
 
-#: index.php:842
+#: index.php:858
 msgid "Pin Topic"
 msgstr "Закріпити тему"
 
-#: index.php:855
+#: index.php:871
 msgid "Cancel Filter"
 msgstr "Відмінити фільтрацію"
 
-#: index.php:861
+#: index.php:877
 msgid "Download Topic"
 msgstr "Завантажити тему"
 
-#: index.php:876
+#: index.php:892
 msgid "Files"
 msgstr "Файли"
 
-#: index.php:903
+#: index.php:919
 msgid "Forum rules"
 msgstr "Правила форуму"
 
-#: index.php:910
+#: index.php:926
 msgid "New at the top"
 msgstr "Нові вгорі"
 
-#: index.php:912
+#: index.php:928
 msgid "New at the bottom"
 msgstr "Нові внизу"
 

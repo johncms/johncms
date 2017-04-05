@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-03-25 19:12+0400\n"
-"PO-Revision-Date: 2017-03-25 11:48-0400\n"
+"POT-Creation-Date: 2017-04-05 13:59+0400\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,8 @@ msgstr ""
 #: includes/ads.php:321 includes/ads.php:427 includes/antiflood.php:33
 #: includes/antispy.php:447 includes/antispy.php:458 includes/ban_panel.php:67
 #: includes/ban_panel.php:73 includes/ban_panel.php:115
-#: includes/counters.php:300 includes/counters.php:321 includes/forum.php:754
-#: includes/forum.php:771 includes/ip_whois.php:16 includes/ipban.php:138
+#: includes/counters.php:300 includes/counters.php:321 includes/forum.php:755
+#: includes/forum.php:772 includes/ip_whois.php:16 includes/ipban.php:138
 #: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:329
 #: includes/ipban.php:358 includes/ipban.php:363 includes/ipban.php:412
 #: includes/karma.php:44 includes/karma.php:85 includes/languages.php:36
@@ -362,13 +362,13 @@ msgid "Remains"
 msgstr "متبقى"
 
 #: includes/ads.php:413 includes/ban_panel.php:102 includes/forum.php:514
-#: includes/forum.php:633 includes/forum.php:728 includes/ipban.php:394
+#: includes/forum.php:633 includes/forum.php:729 includes/ipban.php:394
 #: includes/reg.php:127
 msgid "The list is empty"
 msgstr "فارغة"
 
 #: includes/ads.php:416 includes/antispy.php:393 includes/antispy.php:424
-#: includes/ban_panel.php:105 includes/forum.php:636 includes/forum.php:731
+#: includes/ban_panel.php:105 includes/forum.php:636 includes/forum.php:732
 #: includes/ipban.php:137 includes/ipban.php:398 includes/languages.php:86
 #: includes/reg.php:130 includes/search_ip.php:133 includes/smilies.php:66
 #: includes/usr.php:68 includes/usr_adm.php:71 includes/usr_clean.php:89
@@ -376,7 +376,7 @@ msgid "Total"
 msgstr "مجموع"
 
 #: includes/ads.php:422 includes/ban_panel.php:109 includes/forum.php:642
-#: includes/forum.php:737 includes/ipban.php:403 includes/reg.php:136
+#: includes/forum.php:738 includes/ipban.php:403 includes/reg.php:136
 #: includes/search_ip.php:139 includes/usr.php:72
 msgid "To Page"
 msgstr "الى صفحه"
@@ -646,7 +646,7 @@ msgstr "تم اضافة الرابط بنجاح"
 #: includes/forum.php:51 includes/forum.php:125 includes/forum.php:133
 #: includes/forum.php:235 includes/forum.php:329 includes/forum.php:484
 #: includes/forum.php:546 includes/forum.php:551 includes/forum.php:650
-#: includes/forum.php:754
+#: includes/forum.php:755
 msgid "Forum Management"
 msgstr "إدارة المنتدى"
 
@@ -806,7 +806,7 @@ msgstr "تحرير فئة"
 msgid "Category"
 msgstr "فئة"
 
-#: includes/forum.php:484 includes/forum.php:764
+#: includes/forum.php:484 includes/forum.php:765
 msgid "Forum structure"
 msgstr "هيكل المنتدى"
 
@@ -818,7 +818,7 @@ msgstr "قائمة الأقسام"
 msgid "List of categories"
 msgstr "قائمة الفئات"
 
-#: includes/forum.php:551 includes/forum.php:766
+#: includes/forum.php:551 includes/forum.php:767
 msgid "Hidden topics"
 msgstr "المواضيع المخفية"
 
@@ -830,7 +830,7 @@ msgstr "البحث عن طريق كلمة المرور"
 msgid "Filter by section"
 msgstr "الترتيب حسب القسم"
 
-#: includes/forum.php:613 includes/forum.php:711
+#: includes/forum.php:613 includes/forum.php:712
 msgid "Filter"
 msgstr "فلترة"
 
@@ -838,15 +838,15 @@ msgstr "فلترة"
 msgid "by section"
 msgstr "قسم"
 
-#: includes/forum.php:615 includes/forum.php:713
+#: includes/forum.php:615 includes/forum.php:714
 msgid "by author"
 msgstr "حسب الكاتب"
 
-#: includes/forum.php:629 includes/forum.php:725 includes/reg.php:143
+#: includes/forum.php:629 includes/forum.php:726 includes/reg.php:143
 msgid "Delete all"
 msgstr "حذف جميع"
 
-#: includes/forum.php:650 includes/forum.php:765
+#: includes/forum.php:650 includes/forum.php:766
 msgid "Hidden posts"
 msgstr "المشاركات المخفية"
 
@@ -854,43 +854,43 @@ msgstr "المشاركات المخفية"
 msgid "Filter by topic"
 msgstr "تصفية حسب الموضوع"
 
-#: includes/forum.php:712
+#: includes/forum.php:713
 msgid "by topic"
 msgstr "حسب الموضوع"
 
-#: includes/forum.php:755
+#: includes/forum.php:756
 msgid "Statistic"
 msgstr "الإحصائيات"
 
-#: includes/forum.php:756
+#: includes/forum.php:757
 msgid "Categories"
 msgstr "التصنيفات"
 
-#: includes/forum.php:757
+#: includes/forum.php:758
 msgid "Sections"
 msgstr "الأقسام"
 
-#: includes/forum.php:758
+#: includes/forum.php:759
 msgid "Topics"
 msgstr "مواضيع"
 
-#: includes/forum.php:759
+#: includes/forum.php:760
 msgid "Messages"
 msgstr "الرسائل"
 
-#: includes/forum.php:760
+#: includes/forum.php:761
 msgid "Files"
 msgstr "الملفات"
 
-#: includes/forum.php:761
+#: includes/forum.php:762
 msgid "Votes"
 msgstr "الأصوات"
 
-#: includes/forum.php:763
+#: includes/forum.php:764
 msgid "Settings"
 msgstr "الإعدادات"
 
-#: includes/forum.php:768
+#: includes/forum.php:769
 msgid "Go to Forum"
 msgstr "اذهب إلى المنتدى"
 

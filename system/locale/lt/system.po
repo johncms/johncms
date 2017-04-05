@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Lithuanian\n"
 "MIME-Version: 1.0\n"
@@ -198,61 +198,65 @@ msgstr "Komentarai"
 msgid "Unread"
 msgstr "Neskaityta"
 
-#: system/johncms/Bbcode.php:163
+#: system/johncms/Bbcode.php:164
 msgid "Edit List"
 msgstr "Redaguoti sąrašą"
 
-#: system/johncms/Bbcode.php:174
+#: system/johncms/Bbcode.php:175
 msgid "Add Smilies"
 msgstr "Pridėti Šypsenėles"
 
-#: system/johncms/Bbcode.php:232
+#: system/johncms/Bbcode.php:233
 msgid "Bold"
 msgstr "Paryškintas"
 
-#: system/johncms/Bbcode.php:233
+#: system/johncms/Bbcode.php:234
 msgid "Italic"
 msgstr "Kursyvinis"
 
-#: system/johncms/Bbcode.php:234
+#: system/johncms/Bbcode.php:235
 msgid "Underline"
 msgstr "Pabrauktas"
 
-#: system/johncms/Bbcode.php:235
+#: system/johncms/Bbcode.php:236
 msgid "Strike"
 msgstr "Perbrauktas"
 
-#: system/johncms/Bbcode.php:236
+#: system/johncms/Bbcode.php:237
 msgid "Text Color"
 msgstr "Teksto spalva"
 
-#: system/johncms/Bbcode.php:237
+#: system/johncms/Bbcode.php:238
 msgid "Background Color"
 msgstr "Fono spalva"
 
-#: system/johncms/Bbcode.php:238
+#: system/johncms/Bbcode.php:239
 msgid "List"
 msgstr "Sąrašas"
 
-#: system/johncms/Bbcode.php:239
+#: system/johncms/Bbcode.php:240
 msgid "Spoiler"
 msgstr "Paslėptukas"
 
-#: system/johncms/Bbcode.php:240
+#: system/johncms/Bbcode.php:241
 msgid "Quote"
 msgstr "Cituoti"
 
-#: system/johncms/Bbcode.php:241
+#: system/johncms/Bbcode.php:242
 msgid "URL"
 msgstr "URL"
 
-#: system/johncms/Bbcode.php:242
+#: system/johncms/Bbcode.php:243
 msgid "Code"
 msgstr "Kodas"
 
-#: system/johncms/Bbcode.php:246
+#: system/johncms/Bbcode.php:247
 msgid "Smilies"
 msgstr "Šypsenėlės"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Pridėta"
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
 msgid "Reply"

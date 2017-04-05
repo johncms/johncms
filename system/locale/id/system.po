@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-25 11:48-0400\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -198,61 +198,65 @@ msgstr "Komentar"
 msgid "Unread"
 msgstr "Belum dibaca"
 
-#: system/johncms/Bbcode.php:163
+#: system/johncms/Bbcode.php:164
 msgid "Edit List"
 msgstr "Sunting Daftar"
 
-#: system/johncms/Bbcode.php:174
+#: system/johncms/Bbcode.php:175
 msgid "Add Smilies"
 msgstr "Tambahkan Smile"
 
-#: system/johncms/Bbcode.php:232
+#: system/johncms/Bbcode.php:233
 msgid "Bold"
 msgstr "Tebal"
 
-#: system/johncms/Bbcode.php:233
+#: system/johncms/Bbcode.php:234
 msgid "Italic"
 msgstr "Miring"
 
-#: system/johncms/Bbcode.php:234
+#: system/johncms/Bbcode.php:235
 msgid "Underline"
 msgstr "Garis Bawah"
 
-#: system/johncms/Bbcode.php:235
+#: system/johncms/Bbcode.php:236
 msgid "Strike"
 msgstr "Coret"
 
-#: system/johncms/Bbcode.php:236
+#: system/johncms/Bbcode.php:237
 msgid "Text Color"
 msgstr "Warna Teks"
 
-#: system/johncms/Bbcode.php:237
+#: system/johncms/Bbcode.php:238
 msgid "Background Color"
 msgstr "Warna Latar belakang"
 
-#: system/johncms/Bbcode.php:238
+#: system/johncms/Bbcode.php:239
 msgid "List"
 msgstr "Daftar"
 
-#: system/johncms/Bbcode.php:239
+#: system/johncms/Bbcode.php:240
 msgid "Spoiler"
 msgstr "Spoiler"
 
-#: system/johncms/Bbcode.php:240
+#: system/johncms/Bbcode.php:241
 msgid "Quote"
 msgstr "Kutipan"
 
-#: system/johncms/Bbcode.php:241
+#: system/johncms/Bbcode.php:242
 msgid "URL"
 msgstr "URL"
 
-#: system/johncms/Bbcode.php:242
+#: system/johncms/Bbcode.php:243
 msgid "Code"
 msgstr "Kode"
 
-#: system/johncms/Bbcode.php:246
+#: system/johncms/Bbcode.php:247
 msgid "Smilies"
 msgstr "Smile"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Ditambahkan"
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
 msgid "Reply"
