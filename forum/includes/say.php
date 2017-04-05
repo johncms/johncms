@@ -152,7 +152,7 @@ switch ($type1['type']) {
                 $update = true;
                 $res = $req->fetch();
 
-                if ($res['time'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
+                if (!isset($_POST['addfiles']) && $res['time'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
                     $newpost = $res['text'];
 
                     if (strpos($newpost, '[timestamp]') === false) {
