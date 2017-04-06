@@ -10,7 +10,7 @@
  * @license     GPL-3
  */
 
-const JOHNCMS = '7.0.0';
+const JOHNCMS = '7.1.0';
 
 // Check the current PHP version
 if (version_compare(PHP_VERSION, '5.6', '<')) {
