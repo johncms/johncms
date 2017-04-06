@@ -88,7 +88,7 @@ if ($req->rowCount()) {
                 if ($res_m['user_id'] != $systemUser->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 } elseif ($res['time'] < time() - 300
-                        && $res_m['user_id'] != $systemUser->id && $res_m['time'] + 3600 > strtotime('+ 1 hour')
+                    && $res_m['user_id'] != $systemUser->id && $res_m['time'] + 3600 > strtotime('+ 1 hour')
                 ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
@@ -122,31 +122,33 @@ if (!$error) {
 
             header('Location: ' . $link);
             break;
-            
+
         case 'delfile':
-             // Удаление поста, предварительное напоминание
-             // TODO: нужно добавить языковые фразы
-             #echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>' .
-             echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . 'Удалить файл' . '</div>' .
-                 '<div class="rmenu"><p>';
-             echo _t('Do you really want to delete?') . '</p>' .
-                 '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '">' . _t('Delete') . '</a>';
-             echo '</p></div>';
-             break;
-             
+            // Удаление поста, предварительное напоминание
+            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>'
+                . '<div class="rmenu"><p>'
+                . _t('Do you really want to delete?') . '</p>'
+                . '<form method="post" action="index.php?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '"><input type="submit" name="delfile" value="' . _t('Delete') . '" /></form>'
+                . '<p><a href="' . $link . '">' . _t('Cancel') . '</a></p>'
+                . '</div>';
+            break;
+
         case 'deletefile':
-             $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = " . $fid);
-             $res_f = $req_f->fetch();
-             if ($req_f->rowCount()) {
-                 $db->exec("DELETE FROM `cms_forum_files` WHERE `id` = " . $fid);
-                 unlink('../files/forum/attach/' . $res_f['filename']);
-                 header('Location: ' . $link);
-             } else {
-                 echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
-                 require('../system/end.php');
-                 exit;
-             }
-             break;
+            if (isset($_POST['delfile'])) {
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = " . $fid);
+                $res_f = $req_f->fetch();
+
+                if ($req_f->rowCount()) {
+                    $db->exec("DELETE FROM `cms_forum_files` WHERE `id` = " . $fid);
+                    unlink('../files/forum/attach/' . $res_f['filename']);
+                    header('Location: ' . $link);
+                } else {
+                    echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
+                    require('../system/end.php');
+                    exit;
+                }
+            }
+            break;
 
         case 'delete':
             // Удаление поста и прикрепленного файла
