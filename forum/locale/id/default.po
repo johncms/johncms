@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2017-04-05 13:59+0400\n"
-"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"POT-Creation-Date: 2017-04-06 13:58+0400\n"
+"PO-Revision-Date: 2017-04-06 06:10-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -37,8 +37,8 @@ msgstr "Batas waktu untuk mengunggah berkas telah habis"
 
 #: includes/addfile.php:49 includes/addvote.php:33 includes/addvote.php:101
 #: includes/curators.php:81 includes/editpost.php:62 includes/editpost.php:69
-#: includes/editpost.php:89 includes/editpost.php:93 includes/editpost.php:145
-#: includes/editpost.php:273 includes/filter.php:42 includes/massdel.php:40
+#: includes/editpost.php:89 includes/editpost.php:93 includes/editpost.php:146
+#: includes/editpost.php:275 includes/filter.php:42 includes/massdel.php:40
 #: includes/massdel.php:43 includes/nt.php:88 includes/nt.php:270
 #: includes/per.php:105 includes/ren.php:75 includes/say.php:88
 #: includes/say.php:102 includes/say.php:120 includes/say.php:132
@@ -73,7 +73,7 @@ msgid "Error uploading file"
 msgstr "Gagal mengunggah berkas"
 
 #: includes/addfile.php:157 includes/addfile.php:160 includes/addvote.php:74
-#: includes/editpost.php:233 includes/nt.php:235 includes/ren.php:49
+#: includes/editpost.php:235 includes/nt.php:235 includes/ren.php:49
 #: includes/ren.php:59 includes/say.php:320
 msgid "Repeat"
 msgstr "Ulangi"
@@ -120,7 +120,7 @@ msgstr "Tambahkan Balasan"
 msgid "Delete last"
 msgstr "Hapus pos terakhir"
 
-#: includes/addvote.php:100 includes/editpost.php:269 includes/editvote.php:136
+#: includes/addvote.php:100 includes/editpost.php:271 includes/editvote.php:136
 #: includes/nt.php:265 includes/ren.php:73
 msgid "Save"
 msgstr "Simpan"
@@ -131,8 +131,8 @@ msgid "Topic has been deleted or does not exists"
 msgstr "Topik tidak tersedia"
 
 #: includes/curators.php:43 includes/deltema.php:74 includes/editpost.php:99
-#: includes/editpost.php:130 includes/editpost.php:209
-#: includes/editpost.php:258 includes/editvote.php:94 includes/file.php:46
+#: includes/editpost.php:128 includes/editpost.php:211
+#: includes/editpost.php:260 includes/editvote.php:94 includes/file.php:46
 #: includes/files.php:83 includes/files.php:192 includes/filter.php:24
 #: includes/filter.php:67 includes/new.php:15 includes/new.php:64
 #: includes/new.php:79 includes/new.php:152 includes/new.php:223
@@ -169,17 +169,17 @@ msgstr "Total"
 msgid "Delete Topic"
 msgstr "Hapus Topik"
 
-#: includes/deltema.php:76 includes/editpost.php:132 includes/editpost.php:216
+#: includes/deltema.php:76 includes/editpost.php:130 includes/editpost.php:218
 #: includes/massdel.php:54
 msgid "Do you really want to delete?"
 msgstr "Anda yakin ingin menghapus?"
 
-#: includes/deltema.php:77 includes/editpost.php:220
+#: includes/deltema.php:77 includes/editpost.php:222
 msgid "Hide"
 msgstr "Sembunyikan"
 
-#: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:133
-#: includes/editpost.php:217 includes/editvote.php:57 includes/massdel.php:54
+#: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:131
+#: includes/editpost.php:219 includes/editvote.php:57 includes/massdel.php:54
 #: index.php:725 index.php:747 index.php:778
 msgid "Delete"
 msgstr "Hapus"
@@ -188,8 +188,8 @@ msgstr "Hapus"
 msgid "Perform"
 msgstr "Tampilkan"
 
-#: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:133
-#: includes/editpost.php:217 includes/editvote.php:58 includes/editvote.php:138
+#: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:132
+#: includes/editpost.php:219 includes/editvote.php:58 includes/editvote.php:138
 #: includes/massdel.php:55 search.php:60
 msgid "Cancel"
 msgstr "Batal"
@@ -214,7 +214,7 @@ msgstr "Anda mencoba menyunting post orang lain"
 msgid "Your message not already latest, you cannot change it"
 msgstr "Pesan Anda sudah lama, Anda tidak bisa menyuntingnya"
 
-#: includes/editpost.php:93 includes/editpost.php:145
+#: includes/editpost.php:93 includes/editpost.php:146
 msgid "You cannot edit your posts after 5 minutes"
 msgstr "Anda tidak bisa menyunting pos setelah 5 menit"
 
@@ -222,32 +222,36 @@ msgstr "Anda tidak bisa menyunting pos setelah 5 menit"
 msgid "Message does not exists or has been deleted"
 msgstr "Pesan tidak tersedia"
 
-#: includes/editpost.php:209
+#: includes/editpost.php:128
+msgid "Delete file"
+msgstr "Menghapus file"
+
+#: includes/editpost.php:211
 msgid "Delete Message"
 msgstr "Hapus pesan"
 
-#: includes/editpost.php:213
+#: includes/editpost.php:215
 msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
 msgstr "PERINGATAN! Ini adalah pos terakhir dari topik. Jika dihapus topik akan terhapus."
 
-#: includes/editpost.php:224
+#: includes/editpost.php:226
 msgid "After deleting, one point will be subtracted from the counter of forum posts"
 msgstr "Setelah menghapus, jumlah poin posting forum akan dikurangi"
 
-#: includes/editpost.php:233 includes/nt.php:127 includes/say.php:320
+#: includes/editpost.php:235 includes/nt.php:127 includes/say.php:320
 msgid "You have not entered the message"
 msgstr "Anda belum memasukkan pesan"
 
-#: includes/editpost.php:258
+#: includes/editpost.php:260
 msgid "Edit Message"
 msgstr "Sunting Pesan"
 
-#: includes/editpost.php:270 includes/nt.php:266 includes/say.php:252
+#: includes/editpost.php:272 includes/nt.php:266 includes/say.php:252
 #: includes/say.php:447 index.php:591 index.php:795
 msgid "Preview"
 msgstr "Tinjauan"
 
-#: includes/editpost.php:272 includes/nt.php:269 includes/say.php:257
+#: includes/editpost.php:274 includes/nt.php:269 includes/say.php:257
 #: includes/say.php:452
 msgid "Smilies"
 msgstr "Smile"
