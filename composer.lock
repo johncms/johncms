@@ -85,12 +85,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GeSHi/geshi-1.0.git",
-                "reference": "871d465a82b47e492b55eb69b991f68a92ceaf3c"
+                "reference": "66e94d3b274cee8aaab221caf199117542d31a4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/871d465a82b47e492b55eb69b991f68a92ceaf3c",
-                "reference": "871d465a82b47e492b55eb69b991f68a92ceaf3c",
+                "url": "https://api.github.com/repos/GeSHi/geshi-1.0/zipball/66e94d3b274cee8aaab221caf199117542d31a4e",
+                "reference": "66e94d3b274cee8aaab221caf199117542d31a4e",
                 "shasum": ""
             },
             "require-dev": {
@@ -117,7 +117,7 @@
             ],
             "description": "Generic Syntax Highlighter",
             "homepage": "http://qbnz.com/highlighter/",
-            "time": "2017-03-30 19:52:09"
+            "time": "2017-04-04 05:32:42"
         },
         {
             "name": "psr/container",
