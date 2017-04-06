@@ -1,5 +1,5 @@
 # JohnCMS 7.1.0  
-`Release Date: under construction`
+`Release Date: 07.04.2017`
 
 ### NEW
 - Добавлен пакет интерфейсов Core API
