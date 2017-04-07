@@ -64,7 +64,7 @@ class Counters
             $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
             $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
             $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, serialize(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]));
+            file_put_contents($file, serialize(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
         }
 
         $newcount = 0;
@@ -98,7 +98,7 @@ class Counters
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
             $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]));
+            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
         }
 
         if ($new > 0) {
@@ -131,7 +131,7 @@ class Counters
         } else {
             $top = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `close` != '1'")->fetchColumn();
             $msg = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` != '1'")->fetchColumn();
-            file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]));
+            file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]), LOCK_EX);
         }
 
         if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
@@ -230,7 +230,7 @@ class Counters
             $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
             $mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]));
+            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
         }
 
         if ($new) {
@@ -261,7 +261,7 @@ class Counters
             $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
             $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
-            file_put_contents($file, serialize(['users' => $users, 'guests' => $guests]));
+            file_put_contents($file, serialize(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
 
         return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
@@ -284,7 +284,7 @@ class Counters
             $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
             $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new]));
+            file_put_contents($file, serialize(['total' => $total, 'new' => $new]), LOCK_EX);
         }
 
         return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
