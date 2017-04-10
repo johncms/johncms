@@ -1,5 +1,5 @@
 # JohnCMS 6.2.2  
-`Release Date: under construction`
+`Release Date: 20.04.2017`
 
 ### Features
   * Добавлена возможность задания meta-тегов keywords и description
@@ -13,7 +13,7 @@
   
 ____________________________________________________________
 # JohnCMS 6.2.1  
-`Release Date: 15.12.2016 Деда Гришу с днем рожденья :)`
+`Release Date: 15.12.2016`
 
 ### Features
   * Папки языков переименованы в соответствие со стандартом [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
