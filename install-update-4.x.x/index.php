@@ -11,7 +11,7 @@
 
 define('_IN_JOHNCMS', 1);
 
-define('VERSION', '6.2.1'); // Инсталлируемая версия
+define('VERSION', '6.2.2'); // Инсталлируемая версия
 define('UPDATE_VERSION', '4.x.x'); // Обновление с версии
 
 class install

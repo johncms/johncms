@@ -48,7 +48,7 @@ switch ($mod) {
             mysql_query("
                 OPTIMIZE TABLE
                 `users`,
-                `cms_album_cat,
+                `cms_album_cat`,
                 `cms_album_files`,
                 `cms_album_comments`,
                 `cms_album_downloads`,
