@@ -44,9 +44,9 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
 } elseif (isset($_POST['submit'])) {
     // Принимаем настройки из формы
     $settings['view'] = isset($_POST['view']) && $_POST['view'] >= 0 && $_POST['view'] < 4 ? intval($_POST['view']) : 1;
-    $settings['size'] = isset($_POST['size']) && $_POST['size'] >= 50 && $_POST['size'] < 500 ? intval($_POST['size']) : 200;
+    $settings['size'] = isset($_POST['size']) && $_POST['size'] > 50 && $_POST['size'] < 500 ? intval($_POST['size']) : 200;
     $settings['quantity'] = isset($_POST['quantity']) && $_POST['quantity'] > 0 && $_POST['quantity'] < 16 ? intval($_POST['quantity']) : 3;
-    $settings['days'] = isset($_POST['days']) && $_POST['days'] >= 0 && $_POST['days'] < 16 ? intval($_POST['days']) : 7;
+    $settings['days'] = isset($_POST['days']) && $_POST['days'] > 0 && $_POST['days'] < 16 ? intval($_POST['days']) : 7;
     $settings['breaks'] = isset($_POST['breaks']);
     $settings['smileys'] = isset($_POST['smileys']);
     $settings['tags'] = isset($_POST['tags']);

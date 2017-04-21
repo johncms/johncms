@@ -74,7 +74,7 @@ if (mysql_num_rows($req_obj)) {
     Ставим метку прочтения
     -----------------------------------------------------------------
     */
-    if(core::$user_id == $owner['id'] && $res_obj['unread_comments'])
+    if(core::$user_id == $user['id'] && $res_obj['unread_comments'])
         mysql_query("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
 
     /*

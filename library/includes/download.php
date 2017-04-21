@@ -42,10 +42,11 @@ case 'fb2':
   . '</author>' . PHP_EOL 
   . '<book-title>' . $lng_lib['bookname'] . '</book-title>' . PHP_EOL 
   . '<annotation></annotation>' . PHP_EOL 
-  . '<date>' . $lng['date'] . '</date>' . PHP_EOL;
+  . '<date>' . $lng['date'] . '</date>' . PHP_EOL 
+  . '<coverpage>' . PHP_EOL;
   
   if ($image_lib) {
-    $out.= '<coverpage><image l:href="#cover.png"/></coverpage>' . PHP_EOL;
+    $out.= '<image l:href="#cover.png"/></coverpage>' . PHP_EOL;
   }
   
   $out.= '<lang>ru</lang>' . PHP_EOL 

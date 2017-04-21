@@ -79,19 +79,13 @@ if (!mysql_num_rows($req_r)) {
 }
 $res_r = mysql_fetch_assoc($req_r);
 
-$th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, array('flag' => FILTER_FLAG_ENCODE_HIGH)), 0, 100)
-    : '';
-
+$th = isset($_POST['th']) ? functions::check(mb_substr(trim($_POST['th']), 0, 100)) : '';
 $msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
-
 if (isset($_POST['msgtrans'])) {
     $th = functions::trans($th);
     $msg = functions::trans($msg);
 }
-
 $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
-
 if (isset($_POST['submit'])
     && isset($_POST['token'])
     && isset($_SESSION['token'])

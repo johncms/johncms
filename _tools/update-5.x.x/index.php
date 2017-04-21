@@ -11,8 +11,8 @@
 
 define('_IN_JOHNCMS', 1);
 
-define('VERSION', '6.2.2'); // Инсталлируемая версия
-define('UPDATE_VERSION', '4.x.x'); // Обновление с версии
+define('VERSION', '6.2.0'); // Инсталлируемая версия
+define('UPDATE_VERSION', '5.x.x'); // Обновление с версии
 
 class install
 {
@@ -24,7 +24,7 @@ class install
     static function check_php_errors()
     {
         $error = array();
-        if (version_compare(phpversion(), '5.3.0', '<')) $error[] = 'PHP ' . phpversion();
+        if (version_compare(phpversion(), '5.2.0', '<')) $error[] = 'PHP ' . phpversion();
         if (!extension_loaded('mysql')) $error[] = 'mysql';
         if (!extension_loaded('gd')) $error[] = 'gd';
         if (!extension_loaded('zlib')) $error[] = 'zlib';
@@ -286,7 +286,7 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         if (!isset($_SESSION['updated'])) {
-            install::parse_sql('update.4.x.x.sql');
+            install::parse_sql('update.5.x.x.sql');
 
             // Переносим структуру каталогов
             $sql = mysql_query("SELECT `id`, `refid`, `text`, `ip` FROM `lib` WHERE `type`='cat'");

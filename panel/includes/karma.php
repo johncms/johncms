@@ -21,7 +21,7 @@ if ($rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
         mysql_query("TRUNCATE TABLE `karma_users`");
         mysql_query("OPTIMIZE TABLE `karma_users`");
-        mysql_query("UPDATE `users` SET `karma_plus`='0', `karma_minus`='0'");
+        mysql_query("UPDATE `users` SET `karma`='0', `plus_minus`='0|0'");
         mysql_query("OPTIMIZE TABLE `users`");
         echo '<div class="gmenu">' . $lng['karma_cleared'] . '</div>';
     } else {

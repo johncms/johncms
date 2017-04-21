@@ -31,21 +31,19 @@ UPDATE `users` SET `lastpost` = '0';
 DROP TABLE IF EXISTS `cms_guests`;
 DROP TABLE IF EXISTS `cms_sessions`;
 CREATE TABLE `cms_sessions` (
-  `session_id`   CHAR(32)             NOT NULL DEFAULT '',
-  `ip`           BIGINT(11)           NOT NULL DEFAULT '0',
-  `ip_via_proxy` BIGINT(11)           NOT NULL DEFAULT '0',
-  `browser`      VARCHAR(255)         NOT NULL DEFAULT '',
-  `lastdate`     INT(10) UNSIGNED     NOT NULL DEFAULT '0',
-  `sestime`      INT(10) UNSIGNED     NOT NULL DEFAULT '0',
-  `views`        INT(10) UNSIGNED     NOT NULL DEFAULT '0',
-  `movings`      SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
-  `place`        VARCHAR(100)         NOT NULL DEFAULT '',
+  `session_id` char(32) NOT NULL DEFAULT '',
+  `ip` bigint(11) NOT NULL DEFAULT '0',
+  `ip_via_proxy` bigint(11) NOT NULL DEFAULT '0',
+  `browser` varchar(255) NOT NULL DEFAULT '',
+  `lastdate` int(10) unsigned NOT NULL DEFAULT '0',
+  `sestime` int(10) unsigned NOT NULL DEFAULT '0',
+  `views` int(10) unsigned NOT NULL DEFAULT '0',
+  `movings` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `place` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`session_id`),
   KEY `lastdate` (`lastdate`),
   KEY `place` (`place`(10))
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 ALTER TABLE `cms_album_files` ADD `unread_comments` BOOLEAN NOT NULL DEFAULT '0';
 
@@ -76,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `cms_contact` (
   KEY `ban` (`ban`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `cms_mail`
@@ -106,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `cms_mail` (
   KEY `delete` (`delete`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 INSERT INTO `cms_settings` (`key`, `val`) VALUES
   ('them_message', ''),
@@ -135,7 +133,7 @@ CREATE TABLE `library_cats` (
   PRIMARY KEY (`id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `library_texts`
@@ -158,7 +156,7 @@ CREATE TABLE `library_texts` (
   FULLTEXT KEY `text` (`text`, `name`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `library_tags`
@@ -173,7 +171,7 @@ CREATE TABLE `library_tags` (
   KEY `tag_name` (`tag_name`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `cms_library_comments`
@@ -192,19 +190,17 @@ CREATE TABLE `cms_library_comments` (
   KEY `user_id` (`user_id`)
 )
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  DEFAULT CHARSET = utf8;
 
 --
 -- Структура таблицы `cms_library_rating`
 --
-DROP TABLE IF EXISTS `cms_library_rating`;
+DROP TABLE IF EXISTS `cms_library_rating`;  
 CREATE TABLE IF NOT EXISTS `cms_library_rating` (
-  `id`      INT(11)    NOT NULL AUTO_INCREMENT,
-  `user_id` INT(11)    NOT NULL,
-  `st_id`   INT(11)    NOT NULL,
-  `point`   TINYINT(1) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `st_id` int(11) NOT NULL,
+  `point` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`, `st_id`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
+  KEY `user_id` (`user_id`,`st_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;  

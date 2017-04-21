@@ -131,7 +131,6 @@ really_offer_friendship       =   "Вы действительно хотите 
 friendship                    =   "Дружба"
 user_already_friend           =   "Пользователь уже Ваш друг"
 not_demand_friendship         =   "Заявки на дружбу не существует"
-not_friends                   =   "Нет друзей"
 demand_cancelled              =   "Заявка на дружбу отменена"
 really_demand_cancelled       =   "Вы действительно хотите отменить предложение дружить?"
 not_offers_friendship         =   "Приглашения дружить не существует"

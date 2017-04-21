@@ -17,9 +17,6 @@ $headmod = 'registration';
 require('incfiles/head.php');
 $lng_reg = core::load_lng('registration');
 
-if(core::$user_id){
-    header('Location: index.php');
-}
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
     echo '<p>' . $lng_reg['registration_closed'] . '</p>';
