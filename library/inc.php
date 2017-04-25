@@ -438,6 +438,7 @@ class Hashtags
 class Rating
 {
     private $lib_id = false;
+    private $user_vote = -2;
 
     public function __construct($id) {
         $this->lib_id = $id;
@@ -446,7 +447,8 @@ class Rating
     
     public function check() {
         if (isset($_POST['rating_submit'])) {
-            $this->add_vote($_POST['vote']);
+            $point = isset($_POST['vote']) ? abs(intval($_POST['vote'])) : 0;
+            $this->add_vote($point);
         }    
     }
     
@@ -475,11 +477,12 @@ class Rating
     }
     
     public function get_vote() {
-        global $user_id;
+        if ($this->user_vote == -2) {
+            global $user_id;
+            $this->user_vote = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0 ? mysql_result(mysql_query("SELECT `point` FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id . " LIMIT 1"), 0) : -1;
+        }
         
-        $res = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id), 0) > 0 ? mysql_result(mysql_query("SELECT `point` FROM `cms_library_rating` WHERE `user_id` = " . $user_id . " AND `st_id` = " . $this->lib_id . " LIMIT 1"), 0) : -1;
-        
-        return $res;
+        return $this->user_vote;
     }
     
     public function print_vote() {
