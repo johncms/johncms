@@ -25,18 +25,6 @@ if (!empty($ban) || $user['id'] != $user_id && ($rights < 7 || $user['rights'] >
     exit;
 }
 
-/*
------------------------------------------------------------------
-Сброс настроек
------------------------------------------------------------------
-*/
-if ($rights >= 7 && $rights > $user['rights'] && $act == 'reset') {
-    mysql_query("UPDATE `users` SET `set_user` = '', `set_forum` = '', `set_chat` = '' WHERE `id` = '" . $user['id'] . "'");
-    echo '<div class="gmenu"><p>' . $lng['settings_default'] . '<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['to_form'] . '</a></p></div>';
-    require('../incfiles/end.php');
-    exit;
-}
-
 echo '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '"><b>' . ($user['id'] != $user_id ? $lng['profile'] : $lng_profile['my_profile']) . '</b></a> | ' . $lng['edit'] . '</div>';
 
 if (isset($_GET['delavatar'])) {
