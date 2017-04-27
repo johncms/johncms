@@ -14,7 +14,7 @@ define('ROOT_DIR', '..');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
+    header('Location: ' . $set['homeurl'] . '/?err');
     exit;
 }
 class scaner {
