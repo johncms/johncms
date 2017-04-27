@@ -19,7 +19,7 @@ $lng = array_merge($lng, core::load_lng('admin'));
 
 // Проверяем права доступа
 if (core::$user_rights < 1) {
-    header('Location: http://johncms.com/?err');
+    header('Location: ' . $set['home_url'] . '/?err');
     exit;
 }
 
