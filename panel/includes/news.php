@@ -13,7 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: http://johncms.com/?err');
+    header('Location: ' . $set['homeurl'] . '/?err');
     exit;
 }
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['news_on_frontpage'] . '</div>';
