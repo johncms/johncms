@@ -53,7 +53,7 @@ class Rating
     /**
      * Чекер события нажатия кнопки
      */
-    public function check()
+    private function check()
     {
         if (isset($_POST['rating_submit'])) {
             $this->addVote($_POST['vote']);
@@ -65,7 +65,7 @@ class Rating
      * @param $point (0 - 5)
      * @return redirect на страницу для голосования
      */
-    public function addVote($point)
+    private function addVote($point)
     {
         global $systemUser;
 
@@ -87,7 +87,7 @@ class Rating
      * Получение средней оценки (количество закрашенных звезд)
      * @return float|int
      */
-    public function getRate()
+    private function getRate()
     {
         $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
@@ -105,22 +105,10 @@ class Rating
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
         $res = ($anchor ? '<a href="#rating">' : '') . $this->tools->image('rating/star.' . (str_replace('.', '-',
-                    (string)$this->getRate())) . '.gif',
+                    (string) $this->getRate())) . '.gif',
                 ['alt' => 'rating ' . $this->lib_id . ' article']) . ($anchor ? '</a>' : '') . ' (' . $stmt->fetchColumn() . ')';
 
         return $res;
-    }
-
-    /** Получение голоса юзера
-     * @return int|string
-     */
-    public function getVote()
-    {
-        global $systemUser;
-
-        $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
-
-        return $stmt->execute([$systemUser->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
     }
 
     /**
@@ -129,17 +117,21 @@ class Rating
      */
     public function printVote()
     {
+        global $systemUser;
 
+        $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
+        $userVote = $stmt->execute([$systemUser->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
+        
         $return = PHP_EOL;
 
         $return .= '<form action="index.php?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
         $return .= '<a id="rating"></a>';
         for ($r = 0; $r < 6; $r++) {
-            $return .= ' <input type="radio" ' . ($r == $this->getVote() ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
+            $return .= ' <input type="radio" ' . ($r == $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;
         }
         $return .= '<br><input type="submit" name="rating_submit" value="' . _t('Vote') . '" />' . PHP_EOL;
         $return .= '</div></form>' . PHP_EOL;
 
-        return $return . PHP_EOL;
+        return $return;
     }
 }
