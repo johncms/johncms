@@ -1,0 +1,496 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-04-30 13:45-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Romanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: login.php\n"
+"X-Poedit-SearchPath-1: go.php\n"
+"X-Poedit-SearchPath-2: exit.php\n"
+"X-Poedit-SearchPath-3: system/johncms\n"
+"X-Poedit-SearchPath-4: system/head.php\n"
+"X-Poedit-SearchPath-5: system/end.php\n"
+"X-Poedit-SearchPath-6: system/mainmenu.php\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /system/system.pot\n"
+"Language: ro_RO\n"
+
+#: exit.php:30
+msgid "Are you sure you want to leave the site?"
+msgstr "Esti sigur ca vrei sa parasesti site-ul?"
+
+#: exit.php:31
+msgid "Logout"
+msgstr "Iesire"
+
+#: exit.php:32 system/johncms/Comments.php:243
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: go.php:37
+msgid "Select language"
+msgstr "Selecteaza Limba"
+
+#: go.php:43
+msgid "Default"
+msgstr "Default"
+
+#: go.php:50
+msgid "Apply"
+msgstr "Aplica"
+
+#: go.php:50 go.php:67 system/johncms/Comments.php:112
+#: system/johncms/Comments.php:135 system/johncms/Comments.php:143
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:163
+#: system/johncms/Comments.php:191 system/johncms/Comments.php:200
+#: system/johncms/Comments.php:203 system/johncms/Comments.php:247
+msgid "Back"
+msgstr "Inapoi"
+
+#: go.php:58
+msgid "External Link"
+msgstr "Link extern"
+
+#: go.php:61
+msgid "ATTENTION!"
+msgstr "ATENTIE"
+
+#: go.php:62
+msgid "You are going to leave our site and go to an external link"
+msgstr "Esti pe cale sa paraseti acest site"
+
+#: go.php:63
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Administratorul site-ului nu este responsabil de continutul link-uri-lor externe"
+
+#: go.php:64
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Este recomandat sa nu divulgi date,precum %s (Numele si/sau Parola), pe alte site-uri"
+
+#: go.php:65
+msgid "Go to Link"
+msgstr "Du-te pe site"
+
+#: login.php:37 system/end.php:35 system/head.php:110
+msgid "Home"
+msgstr "Acasa"
+
+#: login.php:39 login.php:158 system/head.php:112
+msgid "Login"
+msgstr "Logare"
+
+#: login.php:49
+msgid "You have not entered login"
+msgstr "Nu ai introdus nimic"
+
+#: login.php:53
+msgid "You have not entered password"
+msgstr "Nu ai introdus nici o parola"
+
+#: login.php:57
+msgid "Nickname"
+msgstr "Nume"
+
+#: login.php:57 login.php:61
+msgid "Invalid length"
+msgstr "Lungime invalida"
+
+#: login.php:61 login.php:155
+msgid "Password"
+msgstr "Parola"
+
+#: login.php:81
+msgid "The security code is not correct"
+msgstr "Codul de securitate este incorect"
+
+#: login.php:87
+msgid "Verification code"
+msgstr "Cod de verificare"
+
+#: login.php:88
+msgid "Enter verification code"
+msgstr "Introdu codul de verificare"
+
+#: login.php:92
+msgid "Continue"
+msgstr "Continua"
+
+#: login.php:104
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Ne pare rau, dar inregistrarea nu a fost facuta. Te rugam sa astepti"
+
+#: login.php:128
+msgid "Enter site"
+msgstr "Intra pe site"
+
+#: login.php:137 login.php:141
+msgid "Authorization failed"
+msgstr "Nu ai autorizatie"
+
+#: login.php:153
+msgid "Username"
+msgstr "Nume"
+
+#: login.php:157
+msgid "Remember"
+msgstr "Tine minte"
+
+#: login.php:160
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: login.php:161
+msgid "Forgot password?"
+msgstr "Parola uitata?"
+
+#: system/head.php:53
+msgid "Site News"
+msgstr "Stiri"
+
+#: system/head.php:106
+msgid "Hi"
+msgstr "Salut"
+
+#: system/head.php:106 system/johncms/Tools.php:299
+msgid "Guest"
+msgstr "Oaspete"
+
+#: system/head.php:111
+msgid "Personal"
+msgstr "Personal"
+
+#: system/head.php:198
+msgid "Ban"
+msgstr "Ban"
+
+#: system/head.php:198
+msgid "Details"
+msgstr "Detalii"
+
+#: system/head.php:207
+msgid "System"
+msgstr "Sistem"
+
+#: system/head.php:219
+msgid "Mail"
+msgstr "Mail"
+
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
+msgid "Guestbook"
+msgstr "Guestbook"
+
+#: system/head.php:229
+msgid "Comments"
+msgstr "Comentarii"
+
+#: system/head.php:233 system/johncms/Counters.php:164
+msgid "Unread"
+msgstr "Necitite"
+
+#: system/johncms/Bbcode.php:164
+msgid "Edit List"
+msgstr "Editeaza Lista"
+
+#: system/johncms/Bbcode.php:175
+msgid "Add Smilies"
+msgstr "Adauga Smilies"
+
+#: system/johncms/Bbcode.php:233
+msgid "Bold"
+msgstr "Ingrosat"
+
+#: system/johncms/Bbcode.php:234
+msgid "Italic"
+msgstr "Italic"
+
+#: system/johncms/Bbcode.php:235
+msgid "Underline"
+msgstr "Subliniat"
+
+#: system/johncms/Bbcode.php:236
+msgid "Strike"
+msgstr "Taiat"
+
+#: system/johncms/Bbcode.php:237
+msgid "Text Color"
+msgstr "Culoare Text"
+
+#: system/johncms/Bbcode.php:238
+msgid "Background Color"
+msgstr "Culoare Fundal"
+
+#: system/johncms/Bbcode.php:239
+msgid "List"
+msgstr "Lista"
+
+#: system/johncms/Bbcode.php:240
+msgid "Spoiler"
+msgstr "Spoiler"
+
+#: system/johncms/Bbcode.php:241
+msgid "Quote"
+msgstr "Citat"
+
+#: system/johncms/Bbcode.php:242
+msgid "URL"
+msgstr "URL"
+
+#: system/johncms/Bbcode.php:243
+msgid "Code"
+msgstr "Cod"
+
+#: system/johncms/Bbcode.php:247
+msgid "Smilies"
+msgstr "Emoticon"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Adaugat"
+
+#: system/johncms/Comments.php:104 system/johncms/Comments.php:299
+msgid "Reply"
+msgstr "Raspunde"
+
+#: system/johncms/Comments.php:112
+msgid "Administrator already replied to this message"
+msgstr "Administratorul a raspund deja la acest mesaj"
+
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:200
+msgid "Wrong data"
+msgstr "Eroare date"
+
+#: system/johncms/Comments.php:154 system/johncms/Comments.php:300
+msgid "Edit"
+msgstr "Editeaza"
+
+#: system/johncms/Comments.php:163
+msgid "You cannot edit posts of higher administration"
+msgstr "Nu poti edita postarile celor cu functii mai mari"
+
+#: system/johncms/Comments.php:240 system/johncms/Comments.php:242
+#: system/johncms/Comments.php:301
+msgid "Delete"
+msgstr "Sterge"
+
+#: system/johncms/Comments.php:241
+msgid "Do you really want to delete?"
+msgstr "Sigur vrei sa stergi?"
+
+#: system/johncms/Comments.php:244
+msgid "Clear all messages from this user"
+msgstr "Sterge toate mesajele de la acest user"
+
+#: system/johncms/Comments.php:245
+msgid "Clear"
+msgstr "Sterge"
+
+#: system/johncms/Comments.php:307
+msgid "Edited"
+msgstr "Editat"
+
+#: system/johncms/Comments.php:331
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: system/johncms/Comments.php:334
+msgid "Total"
+msgstr "Total"
+
+#: system/johncms/Comments.php:340
+msgid "To Page"
+msgstr "La Pagina"
+
+#: system/johncms/Comments.php:399
+msgid "Message"
+msgstr "Mesaj"
+
+#: system/johncms/Comments.php:402
+msgid "Send"
+msgstr "Trimite"
+
+#: system/johncms/Comments.php:422
+msgid "Text is too short"
+msgstr "Textul este prea scurt"
+
+#: system/johncms/Comments.php:428
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Nu poti adauga alt mesaj asa de repede<br>Te rugam sa astepti"
+
+#: system/johncms/Comments.php:428
+msgid "seconds"
+msgstr "secunde"
+
+#: system/johncms/Comments.php:438
+msgid "Message already exists"
+msgstr "Mesajul deja exista"
+
+#: system/johncms/Counters.php:163
+msgid "Show for Period"
+msgstr "Arata pe perioade"
+
+#: system/johncms/Counters.php:170
+msgid "Last activity"
+msgstr "Ultima activitate"
+
+#: system/johncms/NewsWidget.php:63
+msgid "show more"
+msgstr "arata mai multe"
+
+#: system/johncms/NewsWidget.php:98
+msgid "Discuss"
+msgstr "Discuta"
+
+#: system/johncms/Tools.php:135
+msgid "Today"
+msgstr "Astazi"
+
+#: system/johncms/Tools.php:138
+msgid "Yesterday"
+msgstr "Ieri"
+
+#: system/johncms/Tools.php:154
+msgid "ERROR"
+msgstr "EROARE"
+
+#: system/johncms/Tools.php:234
+msgid "List of Admins"
+msgstr "Lista Admini"
+
+#: system/johncms/Tools.php:235
+msgid "Watching the photo album"
+msgstr "Se uita in albume foto"
+
+#: system/johncms/Tools.php:236
+msgid "List of birthdays"
+msgstr "Lista zilelor de nastere"
+
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
+msgid "Downloads"
+msgstr "Descarcari"
+
+#: system/johncms/Tools.php:238
+msgid "Reading the FAQ"
+msgstr "Cisteste Regulile"
+
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
+msgid "Forum"
+msgstr "Forum"
+
+#: system/johncms/Tools.php:240
+msgid "Forum Files"
+msgstr "Fisiere Forum"
+
+#: system/johncms/Tools.php:241
+msgid "Looking, who in Forum?"
+msgstr "Cine este in Forum?"
+
+#: system/johncms/Tools.php:243
+msgid "Here, in the list"
+msgstr "Aici,in lista"
+
+#: system/johncms/Tools.php:244
+msgid "On the Homepage"
+msgstr "Pe pagina principala"
+
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
+msgid "Library"
+msgstr "Librarie"
+
+#: system/johncms/Tools.php:246
+msgid "Personal correspondence"
+msgstr "Corespondenta personala"
+
+#: system/johncms/Tools.php:247
+msgid "Reading the news"
+msgstr "Citeste stirile"
+
+#: system/johncms/Tools.php:248
+msgid "Who is online?"
+msgstr "Cine este online?"
+
+#: system/johncms/Tools.php:249
+msgid "Profile"
+msgstr "Profil"
+
+#: system/johncms/Tools.php:250
+msgid "Personal Profile"
+msgstr "Profil personal"
+
+#: system/johncms/Tools.php:251
+msgid "Registered on the site"
+msgstr "Inregistrati pe site"
+
+#: system/johncms/Tools.php:252
+msgid "List of users"
+msgstr "Lista de utilizatori"
+
+#: system/johncms/Tools.php:253
+msgid "Watching Top 10 Users"
+msgstr "Priveste primii 10 Utilizatori"
+
+#: system/johncms/Tools.php:367
+msgid "Last Visit"
+msgstr "Ultima Vizita"
+
+#: system/johncms/Tools.php:373
+msgid "Browser"
+msgstr "Browser"
+
+#: system/johncms/Tools.php:374
+msgid "IP address"
+msgstr "Adresa IP"
+
+#: system/johncms/Tools.php:393
+msgid "IP History"
+msgstr "Istoric IP"
+
+#: system/johncms/Tools.php:594
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "Ziua"
+msgstr[1] "Zile"
+msgstr[2] "Zilele"
+
+#: system/mainmenu.php:30
+msgid "Information"
+msgstr "Informatii"
+
+#: system/mainmenu.php:32
+msgid "News archive"
+msgstr "Arhiva Stiri"
+
+#: system/mainmenu.php:33
+msgid "Information, FAQ"
+msgstr "Informatii, Reguli"
+
+#: system/mainmenu.php:38
+msgid "Communication"
+msgstr "Comunicare"
+
+#: system/mainmenu.php:53
+msgid "Useful"
+msgstr "Utile"
+
+#: system/mainmenu.php:69
+msgid "Community"
+msgstr "Comunitate"
+
+#: system/mainmenu.php:70
+msgid "Users"
+msgstr "Utilizatori"
+
+#: system/mainmenu.php:71
+msgid "Photo Albums"
+msgstr "Albume Foto"
+
