@@ -411,7 +411,8 @@ switch ($act) {
                 $lng_list = [];
 
                 foreach (glob('../system/locale/*/lng.ini') as $val) {
-                    $iso = array_pop(explode('/', dirname($val)));
+                    $tmp = explode('/', dirname($val));
+                    $iso = array_pop($tmp);
                     $desc = parse_ini_file($val);
                     $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
                 }
