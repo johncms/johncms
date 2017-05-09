@@ -67,40 +67,19 @@ class Bbcode implements Api\BbcodeInterface
 
     public function notags($var = '')
     {
-        $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
+        $replacements = array_values($this->tags);
+        $search = array_column($replacements, 'from');
+        $replace = array_column($replacements, 'data');
+        $var = preg_replace($search, $replace, $var);
+
         $var = preg_replace('#\[timestamp\](.+?)\[/timestamp]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
-        $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
-        $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
+
         $replace = [
-            '[small]'    => '',
-            '[/small]'   => '',
-            '[big]'      => '',
-            '[/big]'     => '',
-            '[green]'    => '',
-            '[/green]'   => '',
-            '[red]'      => '',
-            '[/red]'     => '',
-            '[blue]'     => '',
-            '[/blue]'    => '',
-            '[b]'        => '',
-            '[/b]'       => '',
-            '[i]'        => '',
-            '[/i]'       => '',
-            '[u]'        => '',
-            '[/u]'       => '',
-            '[s]'        => '',
-            '[/s]'       => '',
-            '[quote]'    => '',
-            '[/quote]'   => '',
             '[youtube]'  => '',
             '[/youtube]' => '',
             '[php]'      => '',
             '[/php]'     => '',
-            '[c]'        => '',
-            '[/c]'       => '',
-            '[*]'        => '',
-            '[/*]'       => '',
         ];
 
         return strtr($var, $replace);
