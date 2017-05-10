@@ -31,7 +31,6 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Zend\ServiceManager\ServiceManager;
 use Zend\ServiceManager\Config;
-use Zend\Stdlib\ArrayObject as ConfigObject;
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;
 
@@ -54,7 +53,7 @@ class App
 
             $container = new ServiceManager;
             (new Config($config['dependencies']))->configureServiceManager($container);
-            $container->setService('config', new ConfigObject($config, ConfigObject::ARRAY_AS_PROPS));
+            $container->setService('config', $config);
             self::$container = $container;
         }
 
