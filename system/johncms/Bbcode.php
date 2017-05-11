@@ -38,6 +38,9 @@ class Bbcode implements Api\BbcodeInterface
 
     protected $tags;
     protected $homeUrl;
+    protected $codeId;
+    protected $codeIndex;
+    protected $codeParts;
 
     public function __invoke(ContainerInterface $container)
     {
@@ -49,18 +52,23 @@ class Bbcode implements Api\BbcodeInterface
         $globalcnf = $container->get('config');
         $this->tags = isset($globalcnf['bbcode']) ? $globalcnf['bbcode'] : [];
 
+        $this->codeId = uniqid();
+        $this->codeIndex = 0;
+        $this->codeParts = [];
+
         return $this;
     }
 
     // Обработка тэгов и ссылок
     public function tags($var)
     {
-        $var = $this->parseTime($var);               // Обработка тэга времени
         $var = $this->highlightCode($var);           // Подсветка кода
+        $var = $this->parseTime($var);               // Обработка тэга времени
         $var = $this->highlightBb($var);             // Обработка ссылок
         $var = $this->highlightUrl($var);            // Обработка ссылок
         $var = $this->highlightBbcodeUrl($var);      // Обработка ссылок в BBcode
         $var = $this->youtube($var);
+        $var = $this->postprocessCode($var);         // Окончательная обработка кода
 
         return $var;
     }
@@ -401,6 +409,9 @@ class Bbcode implements Api\BbcodeInterface
     /**
      * Подсветка кода
      *
+     * Вырезает содержимое тега code и помещает в отдельный массив
+     * во избежание последующей обработки другими тегами
+     *
      * @param string $var
      * @return mixed
      */
@@ -408,6 +419,25 @@ class Bbcode implements Api\BbcodeInterface
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', [$this, 'phpCodeCallback'], $var);
         $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', [$this, 'codeCallback'], $var);
+
+        return $var;
+    }
+
+     /**
+     * Постобработка кода
+     *
+     * Собирает ранее распарсенное содержимое тега code в результирующую строку
+     *
+     * @param string $var
+     * @return mixed
+     */
+    protected function postprocessCode($var)
+    {
+        $var = preg_replace_callback(
+                '#\[code\|' . $this->codeId . '\](\d+)\[\/code\]#s',
+                [$this, 'postprocessCodeCallback'], $var);
+        $this->codeIndex = 0;
+        $this->codeParts = [];
 
         return $var;
     }
@@ -443,8 +473,17 @@ class Bbcode implements Api\BbcodeInterface
         $php = strtr($code[2], ['<br />' => '']);
         $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
         $this->geshi->set_source($php);
+        $this->codeIndex++;
+        $this->codeParts[$this->codeIndex] = $this->geshi->parse_code();
 
-        return '<div class="phpcode" style="overflow-x: auto">' . $this->geshi->parse_code() . '</div>';
+        return '[code|' . $this->codeId . ']' . $this->codeIndex . '[/code]';
+    }
+
+    protected function postprocessCodeCallback($code)
+    {
+        $part = $this->codeParts[$code[1]];
+        unset($this->codeParts[$code[1]]);
+        return '<div class="phpcode" style="overflow-x: auto">' . $part . '</div>';
     }
 
     /**
