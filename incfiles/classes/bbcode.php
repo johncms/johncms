@@ -13,6 +13,9 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class bbcode extends core
 {
+    private static $code_id;
+    private static $code_index;
+    private static $code_parts;
     /*
     -----------------------------------------------------------------
     Обработка тэгов и ссылок
@@ -20,11 +23,12 @@ class bbcode extends core
     */
     public static function tags($var)
     {
-        $var = self::parse_time($var);               // Обработка тэга времени
         $var = self::highlight_code($var);           // Подсветка кода
+        $var = self::parse_time($var);               // Обработка тэга времени
         $var = self::highlight_bb($var);               // Обработка ссылок
         $var = self::highlight_url($var);            // Обработка ссылок
         $var = self::highlight_bbcode_url($var);       // Обработка ссылок в BBcode
+        $var = self::process_code($var);
         return $var;
     }
 
@@ -214,6 +218,9 @@ class bbcode extends core
     */
     private static function highlight_code($var)
     {
+        self::$code_id = uniqid();
+        self::$code_index = 0;
+        self::$code_parts = array();
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', 'self::phpCodeCallback', $var);
         $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', 'self::codeCallback', $var);
 
@@ -254,8 +261,28 @@ class bbcode extends core
         $php = strtr($code[2], array('<br />' => ''));
         $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
         self::$geshi->set_source($php);
+        self::$code_index++;
+        self::$code_parts[self::$code_index] = array(
+            'type'   => $parser, // can reuse if needed
+            'source' => self::$geshi->parse_code()
+        );
 
-        return '<div class="phpcode" style="overflow-x: auto">' . self::$geshi->parse_code() . '</div>';
+        return '[code|' . self::$code_id . ']' . self::$code_index . '[/code]';
+    }
+
+    private static function process_code($var)
+    {
+        $var = preg_replace_callback(
+            '#\[code\|' . self::$code_id . '\](\d+)\[\/code\]#s',
+            function ($code)
+            {
+                $part = self::$code_parts[$code[1]];
+                unset(self::$code_parts[$code[1]]);
+                return '<div class="phpcode" style="overflow-x: auto">' . $part['source'] . '</div>';
+            },
+            $var);
+
+        return $var;
     }
 
     /*
