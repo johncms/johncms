@@ -39,9 +39,11 @@ if (isset($_GET['tag'])) {
         }
 
         foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), $start, $kmess) as $txt) {
-            $row = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt)->fetch();
-            $obj = new Library\Hashtags($row['id']);
-            echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
+            $query = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt);
+            if ($query->rowCount()) {
+                $row = $query->fetch();
+                $obj = new Library\Hashtags($row['id']);
+                echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                 . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')
@@ -52,6 +54,7 @@ if (isset($_GET['tag'])) {
                 . '<div>' . ($obj->getAllStatTags() ? _t('Tags') . ' [ ' . $obj->getAllStatTags(1) . ' ]' : '') . '</div>'
                 . ($row['comments'] ? '<div><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a> (' . $row['comm_count'] . ')</div>' : '')
                 . '</div>';
+            }
         }
 
         echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
@@ -61,6 +64,8 @@ if (isset($_GET['tag'])) {
                     $start, $total, $kmess) . '</div>';
         }
         echo '<p><a href="?">' . _t('To Library') . '</a></p>';
+    } else {
+        echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
 } else {
     Library\Utils::redir404();
