@@ -77,25 +77,6 @@ class Tree
         $this->start_id = $id;
     }
     /**
-    * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
-    * 
-    * @param integer $id
-    * @return Tree
-    */
-    public function process_nav_panel($id = 0)
-    {
-        $id = $id == 0 ? $this->start_id : $id;
-        $this->parent = mysql_fetch_assoc(mysql_query("SELECT `id`, `name`, `parent` FROM `library_cats` WHERE id='" . $id . "' LIMIT 1"));
-        $this->result[$this->parent['id']] = $this->parent['name'];
-        if ($this->parent['parent'] != 0) {
-            $this->process_nav_panel($this->parent['parent']);
-        } else {
-            ksort($this->result);
-        }
-        
-        return $this;
-    }
-    /**
     * Рекурсивно проходит по дереву собирая в массив типы и уникальные иды каталогов
     * 
     * @param integer $id
@@ -190,6 +171,25 @@ class Tree
         return $this;
     }
     /**
+    * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
+    * 
+    * @param integer $id
+    * @return Tree
+    */
+    public function process_nav_panel($id = 0)
+    {
+        $id = $id == 0 ? $this->start_id : $id;
+        $this->parent = mysql_fetch_assoc(mysql_query("SELECT `id`, `name`, `parent` FROM `library_cats` WHERE id='" . $id . "' LIMIT 1"));
+        $this->result[] = array('id' => $this->parent['id'], 'name' => $this->parent['name']);
+        if ($this->parent['parent'] != 0) {
+            $this->process_nav_panel($this->parent['parent']);
+        } else {
+            krsort($this->result);
+        }
+        
+        return $this;
+    }
+    /**
     * Собирает ссылки в верхнюю панель навигации
     * 
     * @param void
@@ -202,11 +202,10 @@ class Tree
         $cnt = count($array);
         $return = array();
         $x = 1;
-        foreach ($array as $k => $v) {
-            $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . functions::checkout($v) . '</a>';
+        foreach ($array as $cat) {
+            $return[] = $x == $cnt ? '<strong>' . functions::checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . functions::checkout($cat['name']) . '</a>';
             $x++;
         }
-
         return '<a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . implode(' | ', $return);
     }
 
