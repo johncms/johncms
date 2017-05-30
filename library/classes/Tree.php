@@ -57,27 +57,6 @@ class Tree
     }
 
     /**
-     * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
-     * @param integer $id
-     * @return Tree
-     */
-    public function processNavPanel($id = 0)
-    {
-        $id = $id == 0 ? $this->start_id : $id;
-        $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
-        $stmt->execute([$id]);
-        $this->parent = $stmt->fetch();
-        $this->result[$this->parent['id']] = $this->parent['name'];
-        if ($this->parent['parent'] != 0) {
-            $this->processNavPanel($this->parent['parent']);
-        } else {
-            ksort($this->result);
-        }
-
-        return $this;
-    }
-
-    /**
      * Рекурсивно проходит по дереву собирая в массив типы и уникальные иды каталогов
      * @param int $id
      * @return Tree
@@ -178,6 +157,25 @@ class Tree
     }
 
     /**
+     * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
+     * @param integer $id
+     * @return Tree
+     */
+    public function processNavPanel($id = 0)
+    {
+        $id = $id == 0 ? $this->start_id : $id;
+        $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
+        $stmt->execute([$id]);
+        $this->parent = $stmt->fetch();
+        $this->result[] = array('id' => $this->parent['id'], 'name' => $this->parent['name']);
+        if ($this->parent['parent'] != 0) {
+            $this->processNavPanel($this->parent['parent']);
+        } else {
+            krsort($this->result);
+        }
+        return $this;
+    }
+    /**
      * Собирает ссылки в верхнюю панель навигации
      * @param void
      * @return string
@@ -188,11 +186,10 @@ class Tree
         $cnt = count($array);
         $return = [];
         $x = 1;
-        foreach ($array as $k => $v) {
-            $return[] = $x == $cnt ? '<strong>' . $v . '</strong>' : '<a href="?do=dir&amp;id=' . $k . '">' . $this->tools->checkout($v) . '</a>';
+        foreach ($array as $cat) {
+            $return[] = $x == $cnt ? '<strong>' . $this->tools->checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . $this->tools->checkout($cat['name']) . '</a>';
             $x++;
         }
-
         return '<a href="?"><strong>' . _t('Library') . '</strong></a> | ' . implode(' | ', $return);
     }
 
