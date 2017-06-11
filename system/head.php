@@ -121,7 +121,7 @@ if (!empty($cms_ads[1])) {
 $sql = '';
 $set_karma = $config['karma'];
 
-if ($systemUser->id) {
+if ($systemUser->isValid()) {
     // Фиксируем местоположение авторизованных
     if (!$systemUser->karma_off && $set_karma['on'] && $systemUser->karma_time <= (time() - 86400)) {
         $sql .= " `karma_time` = " . time() . ", ";
