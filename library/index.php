@@ -289,9 +289,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a>' . ($page > 1 ? ' | ' . functions::checkout($res['name']) : '') . '</div>';
 
                     // Верхняя постраничная навигация
-                    if ($count_pages > 1) {
-                        echo '<div class="topmenu">' . functions::display_pagination('index.php?id=' . $id . '&amp;', $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
-                    }
+                    echo $nav;
 
                     if ($page == 1) {
                         echo '<div class="list2">';
