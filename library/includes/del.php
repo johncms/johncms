@@ -123,11 +123,14 @@ if (isset($_GET['yes']) && $type == 'image') {
     echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
   if (mysql_query($sql)) {
+   if ($type == 'article') {
     if (file_exists('../files/library/images/small/' . $id . '.png')) {
       @unlink('../files/library/images/big/' . $id . '.png');
       @unlink('../files/library/images/orig/' . $id . '.png');
       @unlink('../files/library/images/small/' . $id . '.png');
     }
+    mysql_query('DELETE FROM `library_tags` WHERE `lib_text_id` = "' . $id . '"');
+   }
     echo '<div class="gmenu">' . $lng_lib['deleted'] . '</div><p><a href="?">' . $lng['back'] . '</a></p>' . PHP_EOL;
   }
 }
