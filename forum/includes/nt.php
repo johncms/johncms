@@ -171,11 +171,12 @@ if (isset($_POST['submit'])
             `time`='" . time() . "'
         ");
 
-        if ($_POST['addfiles'] == 1) {
+        if (isset($_POST['addfiles'])) {
             header("Location: index.php?id=$postid&act=addfile");
         } else {
             header("Location: index.php?id=$rid");
         }
+        exit;
     } else {
         // Выводим сообщение об ошибке
         require('../incfiles/head.php');
