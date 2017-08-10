@@ -16,7 +16,7 @@ require('incfiles/core.php');
 require('incfiles/head.php');
 
 if(core::$user_id){
-    header('Location: index.php');
+    header('Location: index.php'); exit;
 } else {
     echo '<div class="phdr"><b>' . $lng['login'] . '</b></div>';
     $error = array();
@@ -82,13 +82,7 @@ if(core::$user_id){
                         // Установка данных сессии
                         $_SESSION['uid'] = $user['id'];
                         $_SESSION['ups'] = md5(md5($user_pass));
-                        mysql_query("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = '" . $user['id'] . "'");
-                        $set_user = unserialize($user['set_user']);
-                        if ($user['lastdate'] < (time() - 3600) && $set_user['digest'])
-                            header('Location: ' . $set['homeurl'] . '/index.php?act=digest&last=' . $user['lastdate']);
-                        else
-                            header('Location: ' . $set['homeurl'] . '/index.php');
-                        echo '<div class="gmenu"><p><b><a href="index.php?act=digest">' . $lng['enter_on_site'] . '</a></b></p></div>';
+                        header('Location: ' . $set['homeurl'] . '/index.php'); exit;
                     }
                 } else {
                     // Если логин неудачный
