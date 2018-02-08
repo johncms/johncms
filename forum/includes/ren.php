@@ -29,7 +29,7 @@ if ($rights == 3 || $rights >= 6) {
         exit;
     }
     if (isset($_POST['submit'])) {
-        $nn = isset($_POST['nn']) ? functions::check($_POST['nn']) : false;
+        $nn = isset($_POST['nn']) ? mysql_real_escape_string(functions::check($_POST['nn'])) : false;
         if (!$nn) {
             require('../incfiles/head.php');
             echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
