@@ -338,7 +338,7 @@ class core
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно
                     self::$user_id = $user_data['preg'] ? $user_id : false;
-                    self::$user_rights = $user_data['rights'];
+                    self::$user_rights = $user_data['preg'] ? $user_data['rights'] : 0;
                     self::$user_data = $user_data;
                     self::$user_set = !empty($user_data['set_user']) ? unserialize($user_data['set_user']) : $this->user_setings_default();
                     $this->user_ip_history();
