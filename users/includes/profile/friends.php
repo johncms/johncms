@@ -403,8 +403,11 @@ if ($id && $id != $user_id && $do) {
     } else {
         switch ($do) {
             case 'demands':
+                $off = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'"), 0);
+                $dem = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'"), 0);
+
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <b>' . $lng_profile['my_demand'] . '</b> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
+                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <b>' . $lng_profile['my_demand'] . '</b>' . ($dem ? ' (<span class="red">' . $dem . '</span>)' : '') . ' | <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a>' . ($off ? ' (<span class="red">' . $off . '</span>)' : '') . '</div>';
 
                 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`!='1'"), 0);
 
@@ -417,8 +420,8 @@ if ($id && $id != $user_id && $do) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
 
                         $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a href="profile.php?act=friends&amp;do=cancel&amp;id=' . $row['id'] . '">' . $lng_profile['cancel_demand'] . '</a>';
-                        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `delete`!='$user_id';"), 0);
-                        $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `delete`!='$user_id';"), 0);
+                        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `sys`='0' AND `delete`!='$user_id';"), 0);
+                        $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `sys`='0' AND `delete`!='$user_id';"), 0);
 
                         $arg = array(
                             'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
@@ -442,8 +445,11 @@ if ($id && $id != $user_id && $do) {
                 break;
 
             case 'offers':
+                $off = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'"), 0);
+                $dem = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'"), 0);
+
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <b>' . $lng_profile['my_offers'] . '</b></div>';
+                echo '<div class="topmenu"><a href="profile.php?act=friends">' . $lng_profile['my_friends'] . '</a> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <b>' . $lng_profile['my_offers'] . '</b>' . ($off ? ' (<span class="red">' . $off . '</span>)' : '') . '</div>';
 
                 $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `from_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`!='1'"), 0);
 
@@ -455,8 +461,8 @@ if ($id && $id != $user_id && $do) {
                     for ($i = 0; ($row = mysql_fetch_assoc($req)) !== FALSE; ++$i) {
                         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
                         $subtext = '<a href="../mail/index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['write'] . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=ok&amp;id=' . $row['id'] . '">' . $lng_profile['confirm_friendship'] . '</a> | <a class="underline" href="profile.php?act=friends&amp;do=no&amp;id=' . $row['id'] . '">' . $lng_profile['decline_friendship'] . '</a>';
-                        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['from_id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['user_id']}')) AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';"), 0);
-                        $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['from_id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';"), 0);
+                        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['user_id']}')) AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';"), 0);
+                        $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`from_id`='{$row['id']}' AND `cms_mail`.`user_id`='$user_id' AND `read`='0' AND `delete`!='$user_id' AND `spam`='0' AND `sys`='0';"), 0);
                         $arg = array(
                             'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                             'sub'    => $subtext
@@ -523,7 +529,7 @@ if ($id && $id != $user_id && $do) {
                 $dem = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `type`='2' AND `friends`='0' AND `ban`='0'"), 0);
 
                 echo '<div class="phdr"><b>' . $lng_profile['friends'] . '</b></div>';
-                echo '<div class="topmenu"><b>' . $lng_profile['my_friends'] . '</b> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a> ' . ($dem ? '(<span class="red">' . $dem . '</span>)' : '') . '| <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a> ' . ($off ? '(<span class="red">' . $off . '</span>)' : '') . '</div>';
+                echo '<div class="topmenu"><b>' . $lng_profile['my_friends'] . '</b> | <a href="profile.php?act=friends&amp;do=demands">' . $lng_profile['my_demand'] . '</a>' . ($dem ? ' (<span class="red">' . $dem . '</span>)' : '') . ' | <a href="profile.php?act=friends&amp;do=offers">' . $lng_profile['my_offers'] . '</a>' . ($off ? ' (<span class="red">' . $off . '</span>)' : '') . '</div>';
 
                 if ($set_mail['cat_friends']) {
                     $sort = isset($_REQUEST['sort']) && $_REQUEST['sort'] >= 0 && $_REQUEST['sort'] <= 6 ? abs(intval($_REQUEST['sort'])) : 0;
