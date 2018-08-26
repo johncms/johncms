@@ -18,18 +18,18 @@ require_once('../incfiles/head.php');
 echo '<div class="phdr"><h3>' . $lng_mail['deleted_messages'] . '</h3></div>';
 if ($id) {
     //Проверяем наличие сообщения
-    $req = mysql_query("SELECT * FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' AND `delete`!='$user_id' LIMIT 1;");
-    if (mysql_num_rows($req) == 0) {
+    $stmt = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' AND `delete`!='$user_id' LIMIT 1;");
+    if (!$stmt->rowCount()) {
         //Выводим ошибку
         echo functions::display_error($lng_mail['messages_does_not_exist']);
         require_once("../incfiles/end.php");
         exit;
     }
-    $res = mysql_fetch_assoc($req);
+    $res = $stmt->fetch();
     if (isset($_POST['submit'])) { //Если кнопка "Подвердить" нажата
         //Удаляем системное сообщение
         if ($res['sys']) {
-            mysql_query("DELETE FROM `cms_mail` WHERE `from_id`='$user_id' AND `id` = '$id' AND `sys`='1' LIMIT 1");
+            $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='$user_id' AND `id` = '$id' AND `sys`='1' LIMIT 1");
             echo '<div class="gmenu">' . $lng_mail['messages_delete_ok'] . '</div>';
             echo '<div class="bmenu"><a href="index.php?act=systems">' . $lng['back'] . '</a></div>';
         } else {
@@ -38,16 +38,16 @@ if ($id) {
                 //Удаляем файл
                 if ($res['file_name'])
                     @unlink('../files/mail/' . $res['file_name']);
-                mysql_query("DELETE FROM `cms_mail` WHERE `user_id`='$user_id' AND `id` = '$id' LIMIT 1");
+                $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='$user_id' AND `id` = '$id' LIMIT 1");
             } else {
                 //Удаляем остальные сообщения
                 if ($res['delete']) {
                     //Удаляем файл
                     if ($res['file_name'])
                         @unlink('../files/mail/' . $res['file_name']);
-                    mysql_query("DELETE FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' LIMIT 1");
+                    $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='$user_id' OR `from_id`='$user_id') AND `id` = '$id' LIMIT 1");
                 } else {
-                    mysql_query("UPDATE `cms_mail` SET `delete` = '$user_id' WHERE `id` = '$id' LIMIT 1");
+                    $db->exec("UPDATE `cms_mail` SET `delete` = '$user_id' WHERE `id` = '$id' LIMIT 1");
                 }
             }
             echo '<div class="gmenu">' . $lng_mail['messages_delete_ok'] . '</div>';

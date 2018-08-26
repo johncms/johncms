@@ -18,12 +18,12 @@ if (!empty($cms_ads[2])) {
 
 echo '</div><div class="fmenu">';
 if (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act)) {
-    echo '<div><a href=\'' . $set['homeurl'] . '\'>' . functions::image('menu_home.png') . $lng['homepage'] . '</a></div>';
+    echo '<div><a href="' . $set['homeurl'] . '">' . functions::image('menu_home.png') . $lng['homepage'] . '</a></div>';
 }
 echo '<div>' . counters::online() . '</div>' .
     '</div>' .
     '<div style="text-align:center">' .
-    '<p><b>' . $set['copyright'] . '</b></p>';
+    '<p><b>' . _e($set['copyright']) . '</b></p>';
 
 // Счетчики каталогов
 functions::display_counters();

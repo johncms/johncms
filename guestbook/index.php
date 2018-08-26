@@ -16,8 +16,9 @@ if (isset($_SESSION['ref']))
     unset($_SESSION['ref']);
 
 // Проверяем права доступа в Админ-Клуб
-if (isset($_SESSION['ga']) && $rights < 1)
+if (isset($_SESSION['ga']) && $rights < 1) {
     unset($_SESSION['ga']);
+}
 
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? $lng['admin_club'] : $lng['guestbook'];
@@ -38,8 +39,8 @@ switch ($act) {
         */
         if ($rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
-                mysql_query("DELETE FROM `guest` WHERE `id`='" . $id . "'");
-                header("Location: index.php");
+                $db->exec("DELETE FROM `guest` WHERE `id`='" . $id . "'");
+                header("Location: index.php"); exit;
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['delete_message'] . '</div>' .
                     '<div class="rmenu"><p>' . $lng['delete_confirmation'] . '?<br/>' .
@@ -61,7 +62,7 @@ switch ($act) {
         $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $from = $user_id ? $login : mysql_real_escape_string($name);
+        $from = $user_id ? $login : $name;
         // Транслит сообщения
         if ($trans)
             $msg = functions::trans($msg);
@@ -75,7 +76,7 @@ switch ($act) {
             $error[] = $lng['error_empty_name'];
         if (empty($msg))
             $error[] = $lng['error_empty_message'];
-        if ($ban['1'] || $ban['13'])
+        if (isset($ban['1']) || isset($ban['13']))
             $error[] = $lng['access_forbidden'];
         // CAPTCHA для гостей
         if (!$user_id && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code']))
@@ -86,9 +87,12 @@ switch ($act) {
             $flood = functions::antiflood();
         } else {
             // Антифлуд для гостей
-            $req = mysql_query("SELECT `time` FROM `guest` WHERE `ip` = '$ip' AND `browser` = '" . mysql_real_escape_string($agn) . "' AND `time` > '" . (time() - 60) . "'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->prepare("SELECT `time` FROM `guest` WHERE `ip` = '$ip' AND `browser` = ? AND `time` > '" . (time() - 60) . "' LIMIT 1");
+            $stmt->execute([
+                $agn
+            ]);
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $flood = time() - $res['time'];
             }
         }
@@ -96,31 +100,34 @@ switch ($act) {
             $error = $lng['error_flood'] . ' ' . $flood . '&#160;' . $lng['seconds'];
         if (!$error) {
             // Проверка на одинаковые сообщения
-            $req = mysql_query("SELECT * FROM `guest` WHERE `user_id` = '$user_id' ORDER BY `time` DESC");
-            $res = mysql_fetch_array($req);
+            $res = $db->query("SELECT `text` FROM `guest` WHERE `user_id` = '$user_id' ORDER BY `time` DESC LIMIT 1")->fetch();
             if ($res['text'] == $msg) {
-                header("location: index.php");
-                exit;
+                header("location: index.php"); exit;
             }
         }
         if (!$error) {
             // Вставляем сообщение в базу
-            mysql_query("INSERT INTO `guest` SET
+            $stmt = $db->prepare("INSERT INTO `guest` SET
                 `adm` = '$admset',
                 `time` = '" . time() . "',
                 `user_id` = '" . ($user_id ? $user_id : 0) . "',
-                `name` = '$from',
-                `text` = '" . mysql_real_escape_string($msg) . "',
+                `name` = ?,
+                `text` = ?,
                 `ip` = '" . core::$ip . "',
-                `browser` = '" . mysql_real_escape_string($agn) . "',
+                `browser` = ?,
                 `otvet` = ''
             ");
+            $stmt->execute([
+                $from,
+                $msg,
+                $agn
+            ]);
             // Фиксируем время последнего поста (антиспам)
             if ($user_id) {
                 $postguest = $datauser['postguest'] + 1;
-                mysql_query("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
+                $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
             }
-            header('location: index.php');
+            header('location: index.php'); exit;
         } else {
             echo functions::display_error($error, '<a href="index.php">' . $lng['back'] . '</a>');
         }
@@ -139,17 +146,20 @@ switch ($act) {
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $reply = isset($_POST['otv']) ? functions::checkin(mb_substr(trim($_POST['otv']), 0, 5000)) : '';
-                mysql_query("UPDATE `guest` SET
-                    `admin` = '$login',
-                    `otvet` = '" . mysql_real_escape_string($reply) . "',
+                $stmt = $db->prepare("UPDATE `guest` SET
+                    `admin` = ?,
+                    `otvet` = ?,
                     `otime` = '" . time() . "'
-                    WHERE `id` = '$id'
+                    WHERE `id` = '$id' LIMIT 1
                 ");
-                header("location: index.php");
+                $stmt->execute([
+                    $login,
+                    $reply
+                ]);
+                header("location: index.php"); exit;
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['reply'] . '</div>';
-                $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
-                $res = mysql_fetch_assoc($req);
+                $res = $db->query("SELECT * FROM `guest` WHERE `id` = '$id' LIMIT 1")->fetch();
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
                 echo '<div class="menu">' .
@@ -178,23 +188,25 @@ switch ($act) {
                 && isset($_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
-                $req = mysql_query("SELECT `edit_count` FROM `guest` WHERE `id`='$id'");
-                $res = mysql_fetch_array($req);
+                $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='$id' LIMIT 1")->fetch();
                 $edit_count = $res['edit_count'] + 1;
                 $msg = isset($_POST['msg']) ? functions::checkin(mb_substr(trim($_POST['msg']), 0, 5000)) : '';
-                mysql_query("UPDATE `guest` SET
-                    `text` = '" . mysql_real_escape_string($msg) . "',
-                    `edit_who` = '$login',
+                $stmt = $db->prepare("UPDATE `guest` SET
+                    `text` = ?,
+                    `edit_who` = ?,
                     `edit_time` = '" . time() . "',
                     `edit_count` = '$edit_count'
-                    WHERE `id` = '$id'
+                    WHERE `id` = '$id' LIMIT 1
                 ");
-                header("location: index.php");
+                $stmt->execute([
+                    $msg,
+                    $login
+                ]);
+                header("location: index.php"); exit;
             } else {
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
-                $req = mysql_query("SELECT * FROM `guest` WHERE `id` = '$id'");
-                $res = mysql_fetch_assoc($req);
+                $res = $db->query("SELECT * FROM `guest` WHERE `id` = '$id' LIMIT 1")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
                 echo '<div class="phdr"><a href="index.php"><b>' . $lng['guestbook'] . '</b></a> | ' . $lng['edit'] . '</div>' .
                     '<div class="rmenu">' .
@@ -224,21 +236,21 @@ switch ($act) {
                 switch ($cl) {
                     case '1':
                         // Чистим сообщения, старше 1 дня
-                        mysql_query("DELETE FROM `guest` WHERE `adm`='$adm' AND `time` < '" . (time() - 86400) . "'");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time` < '" . (time() - 86400) . "'");
                         echo '<p>' . $lng['clear_day_ok'] . '</p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
-                        mysql_query("DELETE FROM `guest` WHERE `adm`='$adm'");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm'");
                         echo '<p>' . $lng['clear_full_ok'] . '</p>';
                         break;
                     default :
                         // Чистим сообщения, старше 1 недели
-                        mysql_query("DELETE FROM `guest` WHERE `adm`='$adm' AND `time`<='" . (time() - 604800) . "';");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time`<='" . (time() - 604800) . "';");
                         echo '<p>' . $lng['clear_week_ok'] . '</p>';
                 }
-                mysql_query("OPTIMIZE TABLE `guest`");
+                $db->query("OPTIMIZE TABLE `guest`");
                 echo '<p><a href="index.php">' . $lng['guestbook'] . '</a></p>';
             } else {
                 // Запрос параметров очистки
@@ -309,35 +321,29 @@ switch ($act) {
         } else {
             echo '<div class="rmenu">' . $lng['access_guest_forbidden'] . '</div>';
         }
-        if (isset($_SESSION['ga']) && $rights >= "1") {
-            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='1'");
-        } else {
-            $req = mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='0'");
-        }
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `adm`='" . (isset($_SESSION['ga']) ? 1 : 0) . "'"), 0);
+        $total = $db->query("SELECT COUNT(*) FROM `guest` WHERE `adm`='" . (isset($_SESSION['ga']) ? 1 : 0) . "'")->fetchColumn();
         echo '<div class="phdr"><b>' . $lng['comments'] . '</b></div>';
         if ($total > $kmess) echo '<div class="topmenu">' . functions::display_pagination('index.php?', $start, $total, $kmess) . '</div>';
         if ($total) {
             if (isset($_SESSION['ga']) && $rights >= "1") {
                 // Запрос для Админ клуба
-                echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
-                $req = mysql_query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                echo '<div class="rmenu"><b>Admin Club</b></div>';
+                $stmt = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
                 WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
             } else {
                 // Запрос для обычной Гастивухи
-                $req = mysql_query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                $stmt = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
                 WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
             }
-
-            for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
+            $i = 0;
+            while ($res = $stmt->fetch()) {
                 $text = '';
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                echo ++$i % 2 ? '<div class="list2">' : '<div class="list1">';
                 if (!$res['id']) {
                     // Запрос по гостям
-                    $req_g = mysql_query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1");
-                    $res_g = mysql_fetch_assoc($req_g);
+                    $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
                     $res['lastdate'] = $res_g['lastdate'];
                 }
                 // Время создания поста

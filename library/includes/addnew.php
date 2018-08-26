@@ -11,7 +11,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $lng_gal = core::load_lng('gallery');
 
-if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0) && isset($id) && $user_id)) {
+if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0) && isset($id) && $user_id)) {
     // Проверка на флуд
     $flood = functions::antiflood();
     if ($flood) {
@@ -80,87 +80,87 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                 echo functions::display_error($e);
             }
         } else {
-            $sql = "
+            $stmt = $db->prepare("
               INSERT INTO `library_texts`
               SET
                 `cat_id` = $id,
-                `name` = '" . mysql_real_escape_string($name) . "',
-                `announce` = '" . mysql_real_escape_string($announce) . "',
-                `text` = '" . mysql_real_escape_string($text) . "',
-                `uploader` = '" . $login . "',
+                `name` = ?,
+                `announce` = ?,
+                `text` = ?,
+                `uploader` = ?,
                 `uploader_id` = " . core::$user_id . ",
                 `premod` = $md,
                 `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ",
                 `time` = " . time() . "
-            ";
+            ");
+            $stmt->execute([
+                $name,
+                $announce,
+                $text,
+                $login
+            ]);
+            $cid = $db->lastInsertId();
+            require('../incfiles/lib/class.upload.php');
 
-            if (mysql_query($sql)) {
-                $cid = mysql_insert_id();
-                require('../incfiles/lib/class.upload.php');
+            $handle = new upload($_FILES['image']);
+            if ($handle->uploaded) {
+                // Обрабатываем фото
+                $handle->file_new_name_body = $cid;
+                $handle->allowed = array(
+                    'image/jpeg',
+                    'image/gif',
+                    'image/png'
+                );
+                $handle->file_max_size = 1024 * $set['flsz'];
+                $handle->file_overwrite = true;
+                $handle->image_x = $handle->image_src_x;
+                $handle->image_y = $handle->image_src_y;
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/orig/');
+                $err_image = $handle->error;
+                $handle->file_new_name_body = $cid;
+                $handle->file_overwrite = true;
 
-                $handle = new upload($_FILES['image']);
-                if ($handle->uploaded) {
-                    // Обрабатываем фото
-                    $handle->file_new_name_body = $cid;
-                    $handle->allowed = array(
-                        'image/jpeg',
-                        'image/gif',
-                        'image/png'
-                    );
-                    $handle->file_max_size = 1024 * $set['flsz'];
-                    $handle->file_overwrite = true;
+                if ($handle->image_src_y > 240) {
+                    $handle->image_resize = true;
+                    $handle->image_x = 240;
+                    $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
+                } else {
                     $handle->image_x = $handle->image_src_x;
                     $handle->image_y = $handle->image_src_y;
-                    $handle->image_convert = 'png';
-                    $handle->process('../files/library/images/orig/');
-                    $err_image = $handle->error;
-                    $handle->file_new_name_body = $cid;
-                    $handle->file_overwrite = true;
-
-                    if ($handle->image_src_y > 240) {
-                        $handle->image_resize = true;
-                        $handle->image_x = 240;
-                        $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
-                    } else {
-                        $handle->image_x = $handle->image_src_x;
-                        $handle->image_y = $handle->image_src_y;
-                    }
-
-                    $handle->image_convert = 'png';
-                    $handle->process('../files/library/images/big/');
-                    $err_image = $handle->error;
-                    $handle->file_new_name_body = $cid;
-                    $handle->file_overwrite = true;
-                    $handle->image_resize = true;
-                    $handle->image_x = 32;
-                    $handle->image_y = 32;
-                    $handle->image_convert = 'png';
-                    $handle->process('../files/library/images/small/');
-
-                    if ($err_image) {
-                        echo functions::display_error($lng_gal['error_uploading_photo'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-                    }
-                    $handle->clean();
                 }
 
-                if (!empty($_POST['tags'])) {
-                    $tags = array_map('trim', explode(',', $_POST['tags']));
-                    if (sizeof($tags > 0)) {
-                        $obj = new Hashtags($cid);
-                        $obj->add_tags($tags);
-                        $obj->del_cache();
-                    }
-                }
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/big/');
+                $err_image = $handle->error;
+                $handle->file_new_name_body = $cid;
+                $handle->file_overwrite = true;
+                $handle->image_resize = true;
+                $handle->image_x = 32;
+                $handle->image_y = 32;
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/small/');
 
-                echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
-                mysql_query("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
-                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
-                require_once('../incfiles/end.php');
-                exit;
-            } else {
-                echo mysql_error();
-//                exit;
+                if ($err_image) {
+                    echo functions::display_error($lng_gal['error_uploading_photo'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                }
+                $handle->clean();
             }
+
+            if (!empty($_POST['tags'])) {
+                $tags = array_map('trim', explode(',', $_POST['tags']));
+                if (sizeof($tags > 0)) {
+                    $obj = new Hashtags($cid);
+                    $obj->add_tags($tags);
+                    $obj->del_cache();
+                }
+            }
+
+            echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
+            $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
+            echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+            require_once('../incfiles/end.php');
+            exit;
         }
     }
     echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['write_article'] . '</div>'
@@ -183,5 +183,5 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
         . '</div></form>'
         . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
 } else {
-    header('location: ?');
+    header('location: ?'); exit;
 }

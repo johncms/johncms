@@ -21,7 +21,7 @@ $out = '';
 
 switch ($type) {
 case 'txt':
-  $out .= bbcode::notags(mysql_result(mysql_query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0));
+  $out .= bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn());
   break;
 
 case 'fb2':
@@ -62,9 +62,9 @@ case 'fb2':
   . '</description>' . PHP_EOL 
   . '<body>' . PHP_EOL . '<title>';
   
-  $out.= '<p>' . mysql_result(mysql_query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0) . '</p>' . PHP_EOL;
+  $out.= '<p>' . $db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn() . '</p>' . PHP_EOL;
   $out.= '</title>' . PHP_EOL . '<section>';
-  $out.= '<p>' . str_replace('<p></p>', '<empty-line/>', str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', bbcode::notags(mysql_result(mysql_query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1") , 0)))) . '</p>' . PHP_EOL;
+  $out.= '<p>' . str_replace('<p></p>', '<empty-line/>', str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', bbcode::notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn()))) . '</p>' . PHP_EOL;
   $out.= '</section>' . PHP_EOL . '</body>' . PHP_EOL;
   
   if ($image_lib) {

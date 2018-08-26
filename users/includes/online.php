@@ -92,7 +92,7 @@ switch ($mod) {
         $sql_list = "SELECT * FROM `users` WHERE `lastdate` > " . (time() - 300) . " ORDER BY `name` ASC LIMIT ";
 }
 
-$total = mysql_result(mysql_query($sql_total), 0);
+$total = $db->query($sql_total)->fetchColumn();
 if ($start >= $total) {
     // Исправляем запрос на несуществующую страницу
     $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
@@ -102,9 +102,9 @@ if ($total > $kmess) {
     echo '<div class="topmenu">' . functions::display_pagination('index.php?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>';
 }
 if ($total) {
-    $req = mysql_query($sql_list . "$start, $kmess");
+    $stmt = $db->query($sql_list . "$start, $kmess");
     $i = 0;
-    while ($res = mysql_fetch_assoc($req)) {
+    while ($res = $stmt->fetch()) {
         if (!isset($res['id'])) {
             $res['id'] = 0;
         }

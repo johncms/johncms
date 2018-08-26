@@ -285,11 +285,14 @@ switch ($act) {
             $smileys = array_chunk($smileys, $user_smileys, TRUE);
             $smileys = $smileys[0];
         }
-        mysql_query("UPDATE `users` SET `smileys` = '" . mysql_real_escape_string(serialize($smileys)) . "' WHERE `id` = '$user_id'");
+        $stmt = $db->prepare("UPDATE `users` SET `smileys` = ? WHERE `id` = '$user_id' LIMIT 1");
+        $stmt->execute([
+            serialize($smileys)
+        ]);
         if ($delete || isset($_GET['clean'])) {
-            header('location: faq.php?act=my_smileys&start=' . $start . '');
+            header('location: faq.php?act=my_smileys&start=' . $start); exit;
         } else {
-            header('location: faq.php?act=' . ($adm ? 'smadm' : 'smusr&cat=' . urlencode($cat) . '') . '&start=' . $start . '');
+            header('location: faq.php?act=' . ($adm ? 'smadm' : 'smusr&cat=' . urlencode($cat) . '') . '&start=' . $start); exit;
         }
         break;
 

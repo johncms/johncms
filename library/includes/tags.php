@@ -26,14 +26,14 @@ if (isset($_GET['tag'])) {
         }
         
         foreach (new LimitIterator(new ArrayIterator($obj->get_all_tag_stats($tag)), $start, $kmess) as $txt) {
-            $row = mysql_fetch_assoc(mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments` FROM `library_texts` WHERE `id` = " . $txt));
+            $row = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `count_comments`, `comments` FROM `library_texts` WHERE `id` = " . $txt . " LIMIT 1")->fetch();
             $obj = new Hashtags($row['id']);
             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png') 
             ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
             : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a>'
-            . '<div>' . functions::checkout(bbcode::notags(mysql_result(mysql_query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id']) , 0))) . '</div></div>'
+            . '<div>' . functions::checkout(bbcode::notags($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn())) . '</div></div>'
             . '<div class="sub">' . $lng_lib['added'] . ': ' . '<a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a>' . ' (' . functions::display_date($row['time']) . ')</div>'
             . '<div><span class="gray">' . $lng_lib['reads'] . ':</span> ' . $row['count_views'] . '</div>'
             . '<div>' . ($obj->get_all_stat_tags() ? $lng_lib['tags'] . ' [ ' . $obj->get_all_stat_tags(1) . ' ]' : '') . '</div>'

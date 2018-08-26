@@ -19,15 +19,16 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 if ($img && $user['id'] == $user_id || $rights >= 6) {
-    $req = mysql_query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    $stmt = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "'");
+    if ($stmt->rowCount()) {
+        $res = $stmt->fetch();
         $album = $res['album_id'];
         echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['image_edit'] . '</div>';
         if (isset($_POST['submit'])) {
             if (!isset($_SESSION['post'])) {
                 $_SESSION['post'] = true;
                 $sql = '';
+                $ph = [];
                 $rotate = isset($_POST['rotate']) ? intval($_POST['rotate']) : 0;
                 $brightness = isset($_POST['brightness']) ? intval($_POST['brightness']) : 0;
                 $contrast = isset($_POST['contrast']) ? intval($_POST['contrast']) : 0;
@@ -134,12 +135,16 @@ if ($img && $user['id'] == $user_id || $rights >= 6) {
                     $handle->clean();
                     @unlink('../files/users/album/' . $user['id'] . '/' . $res['img_name']);
                     @unlink('../files/users/album/' . $user['id'] . '/' . $res['tmb_name']);
-                    $sql = "`img_name` = '" . mysql_real_escape_string($img_name) . "', `tmb_name` = '" . mysql_real_escape_string($tmb_name) . "',";
+                    $sql = "`img_name` = ?, `tmb_name` = ?,";
+                    $ph[] = $img_name;
+                    $ph[] = $tmb_name;
                 }
-                mysql_query("UPDATE `cms_album_files` SET $sql
-                    `description` = '" . mysql_real_escape_string($description) . "'
+                $ph[] = $description;
+                $stmt = $db->prepare("UPDATE `cms_album_files` SET $sql
+                    `description` = ?
                     WHERE `id` = '$img'
                 ");
+                $stmt->execute($ph);
             }
             echo '<div class="gmenu"><p>' . $lng_profile['image_edited'] . '<br />' .
                 '<a href="album.php?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';

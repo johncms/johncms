@@ -40,7 +40,7 @@ switch ($mod) {
                     $error = $lng_ban['error_data'];
                 if ($rights == 1 && $term != 14 || $rights == 2 && $term != 12 || $rights == 3 && $term != 11 || $rights == 4 && $term != 16 || $rights == 5 && $term != 15)
                     $error = $lng_ban['error_rights_section'];
-                if (mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '$term'"), 0))
+                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '$term'")->fetchColumn())
                     $error = $lng_ban['error_ban_exist'];
                 switch ($time) {
                     case 2:
@@ -74,26 +74,34 @@ switch ($mod) {
                     $timeval = 2592000;
                 if (!$error) {
                     // Заносим в базу
-                    mysql_query("INSERT INTO `cms_ban_users` SET
+                    $stmt = $db->prepare("INSERT INTO `cms_ban_users` SET
                         `user_id` = '" . $user['id'] . "',
                         `ban_time` = '" . (time() + $timeval) . "',
                         `ban_while` = '" . time() . "',
                         `ban_type` = '$term',
-                        `ban_who` = '$login',
-                        `ban_reason` = '" . mysql_real_escape_string($reason) . "'
+                        `ban_who` = ?,
+                        `ban_reason` = ?
                     ");
+                    $stmt->execute([
+                        $login,
+                        $reason
+                    ]);
                     if ($set_karma['on']) {
                         $points = $set_karma['karma_points'] * 2;
-                        mysql_query("INSERT INTO `karma_users` SET
+                        $stmt = $db->prepare("INSERT INTO `karma_users` SET
                             `user_id` = '0',
-                            `name` = '" . $lng_ban['system'] . "',
+                            `name` = ?,
                             `karma_user` = '" . $user['id'] . "',
                             `points` = '$points',
                             `type` = '0',
                             `time` = '" . time() . "',
-                            `text` = '" . $lng['ban'] . " (" . $lng_ban['ban_' . $term] . ")'
+                            `text` = ?
                         ");
-                        mysql_query("UPDATE `users` SET
+                        $stmt->execute([
+                            $lng_ban['system'],
+                            $lng['ban'] . ' (' . $lng_ban['ban_' . $term] . ')'
+                        ]);
+                        $db->exec("UPDATE `users` SET
                             `karma_minus` = '" . ($user['karma_minus'] + $points) . "'
                             WHERE `id` = '" . $user['id'] . "'
                         ");
@@ -163,20 +171,21 @@ switch ($mod) {
         Разбаниваем пользователя (с сохранением истории)
         -----------------------------------------------------------------
         */
-        if (!$ban || $user['id'] == $user_id || $rights < 7)
+        if (!$ban || $user['id'] == $user_id || $rights < 7) {
             echo functions::display_error($lng['error_wrong_data']);
-        else {
-            $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = '" . $user['id'] . "'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+        } else {
+            $stmt = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = '" . $user['id'] . "'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $error = false;
-                if ($res['ban_time'] < time())
+                if ($res['ban_time'] < time()) {
                     $error = $lng_ban['error_ban_not_active'];
+                }
                 if (!$error) {
                     echo '<div class="phdr"><b>' . $lng_ban['ban_cancel'] . '</b></div>';
                     echo '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
                     if (isset($_POST['submit'])) {
-                        mysql_query("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
+                        $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
                         echo '<div class="gmenu"><p><h3>' . $lng_ban['ban_cancel_confirmation'] . '</h3></p></div>';
                     } else {
                         echo '<form action="profile.php?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
@@ -200,22 +209,22 @@ switch ($mod) {
         Удаляем бан (с удалением записи из истории)
         -----------------------------------------------------------------
         */
-        if (!$ban || $rights < 9)
+        if (!$ban || $rights < 9) {
             echo functions::display_error($lng['error_wrong_data']);
-        else {
-            $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = '" . $user['id'] . "'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+        } else {
+            $stmt = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = '" . $user['id'] . "'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 echo '<div class="phdr"><b>' . $lng_ban['ban_delete'] . '</b></div>' .
                      '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
                 if (isset($_POST['submit'])) {
-                    mysql_query("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
+                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "' AND `user_id` = '0' AND `time` = '" . $res['ban_while'] . "' LIMIT 1");
                     $points = $set_karma['karma_points'] * 2;
-                    mysql_query("UPDATE `users` SET
+                    $db->exec("UPDATE `users` SET
                         `karma_minus` = '" . ($user['karma_minus'] > $points ? $user['karma_minus'] - $points : 0) . "'
                         WHERE `id` = '" . $user['id'] . "'
                     ");
-                    mysql_query("DELETE FROM `cms_ban_users` WHERE `id` = '$ban'");
+                    $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '$ban'");
                     echo '<div class="gmenu"><p><h3>' . $lng_ban['ban_deleted'] . '</h3><a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>';
                 } else {
                     echo '<form action="profile.php?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
@@ -240,7 +249,7 @@ switch ($mod) {
             echo '<div class="phdr"><b>' . $lng_ban['infringements_history'] . '</b></div>' .
                  '<div class="gmenu"><p>' . functions::display_user($user) . '</p></div>';
             if (isset($_POST['submit'])) {
-                mysql_query("DELETE FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'");
+                $db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'");
                 echo '<div class="gmenu"><h3>' . $lng_ban['history_cleared'] . '</h3></div>';
             } else {
                 echo '<form action="profile.php?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '" method="post">' .
@@ -248,7 +257,7 @@ switch ($mod) {
                      '<p><input type="submit" value="' . $lng['clear'] . '" name="submit" />' .
                      '</p></div></form>';
             }
-            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+            $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
             echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>' .
                  '<p>' . ($total
                     ? '<a href="profile.php?act=ban&amp;user=' . $user['id'] . '">' . $lng_ban['infringements_history'] . '</a><br />'
@@ -272,17 +281,19 @@ switch ($mod) {
             $menu[] = '<a href="../' . $set['admp'] . '/index.php?act=ban_panel">' . $lng_ban['ban_panel'] . '</a>';
         if ($rights == 9)
             $menu[] = '<a href="profile.php?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . $lng_ban['clear_history'] . '</a>';
-        if (!empty($menu))
+        if (!empty($menu)) {
             echo '<div class="topmenu">' . functions::display_menu($menu) . '</div>';
-        if ($user['id'] != $user_id)
+        }
+        if ($user['id'] != $user_id) {
             echo '<div class="user"><p>' . functions::display_user($user) . '</p></div>';
-        else
+        } else {
             echo '<div class="list2"><p>' . $lng_ban['my_infringements'] . '</p></div>';
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+        }
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
         if ($total) {
-            $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT $start, $kmess");
+            $stmt = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT $start, $kmess");
             $i = 0;
-            while ($res = mysql_fetch_assoc($req)) {
+            while ($res = $stmt->rowCount()) {
                 $remain = $res['ban_time'] - time();
                 $period = $res['ban_time'] - $res['ban_while'];
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

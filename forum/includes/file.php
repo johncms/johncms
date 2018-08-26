@@ -20,13 +20,13 @@ if ($id) {
     Скачивание прикрепленного файла Форума
     -----------------------------------------------------------------
     */
-    $req = mysql_query("SELECT * FROM `cms_forum_files` WHERE `id` = '$id'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_array($req);
+    $stmt = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '$id'");
+    if ($stmt->rowCount()) {
+        $res = $stmt->fetch();
         if (file_exists('../files/forum/attach/' . $res['filename'])) {
             $dlcount = $res['dlcount'] + 1;
-            mysql_query("UPDATE `cms_forum_files` SET  `dlcount` = '$dlcount' WHERE `id` = '$id'");
-            header('location: ../files/forum/attach/' . $res['filename']);
+            $db->exec("UPDATE `cms_forum_files` SET  `dlcount` = '$dlcount' WHERE `id` = '$id'");
+            header('location: ../files/forum/attach/' . $res['filename']); exit;
         } else {
             $error = true;
         }
@@ -40,5 +40,5 @@ if ($id) {
         exit;
     }
 } else {
-    header('location: index.php');
+    header('location: index.php'); exit;
 }

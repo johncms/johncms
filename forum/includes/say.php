@@ -37,20 +37,13 @@ function forum_link($m)
         $p = parse_url($m[3]);
         if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $set['homeurl'] . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
-                $name = strtr($res['text'], array(
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => ''
-                ));
-                if (mb_strlen($name) > 40)
+            $stmt = core::$db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1' LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
+                $name = $res['text'];
+                if (mb_strlen($name) > 40) {
                     $name = mb_substr($name, 0, 40) . '...';
+                }
 
                 return '[url=' . $m[3] . ']' . $name . '[/url]';
             } else {
@@ -72,8 +65,7 @@ if ($flood) {
 
 $headmod = 'forum,' . $id . ',1';
 $agn1 = strtok($agn, ' ');
-$type = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
-$type1 = mysql_fetch_assoc($type);
+$type1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' LIMIT 1")->fetch();
 switch ($type1['type']) {
     case 't':
         /*
@@ -107,9 +99,9 @@ switch ($type1['type']) {
                 exit;
             }
             // Проверяем, не повторяется ли сообщение?
-            $req = mysql_query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
+            $stmt = $db->query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
                     echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
@@ -126,39 +118,43 @@ switch ($type1['type']) {
             unset($_SESSION['token']);
 
             // Добавляем сообщение в базу
-            mysql_query("INSERT INTO `forum` SET
+            $stmt = $db->prepare("INSERT INTO `forum` SET
                 `refid` = '$id',
                 `type` = 'm' ,
                 `time` = '" . time() . "',
                 `user_id` = '$user_id',
-                `from` = '$login',
+                `from` = ?,
                 `ip` = '" . core::$ip . "',
                 `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-                `soft` = '" . mysql_real_escape_string($agn1) . "',
-                `text` = '" . mysql_real_escape_string($msg) . "',
+                `soft` = ?,
+                `text` = ?,
                 `edit` = '',
                 `curators` = ''
             ");
-            $fadd = mysql_insert_id();
+            $stmt->execute([
+                $login,
+                $agn1,
+                $msg
+            ]);
+            $fadd = $db->lastInsertId();
             // Обновляем время топика
-            mysql_query("UPDATE `forum` SET
+            $db->exec("UPDATE `forum` SET
                 `time` = '" . time() . "'
                 WHERE `id` = '$id'
             ");
             // Обновляем статистику юзера
-            mysql_query("UPDATE `users` SET
+            $db->exec("UPDATE `users` SET
                 `postforum`='" . ($datauser['postforum'] + 1) . "',
                 `lastpost` = '" . time() . "'
                 WHERE `id` = '$user_id'
             ");
             // Вычисляем, на какую страницу попадает добавляемый пост
-            $page = $set_forum['upfp'] ? 1 : ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0) / $kmess);
+            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
             if (isset($_POST['addfiles'])) {
-                header("Location: index.php?id=$fadd&act=addfile");
+                header("Location: index.php?id=$fadd&act=addfile"); exit;
             } else {
-                header("Location: index.php?id=$id&page=$page");
+                header("Location: index.php?id=$id&page=$page"); exit;
             }
-            exit;
         } else {
             require('../incfiles/head.php');
             if ($datauser['postforum'] == 0) {
@@ -176,7 +172,7 @@ switch ($type1['type']) {
                 $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
             }
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $type1['text'] . '</div>';
+            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . _e($type1['text']) . '</div>';
             if ($msg && !isset($_POST['submit'])) {
                 echo '<div class="list1">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
             }
@@ -209,8 +205,7 @@ switch ($type1['type']) {
         -----------------------------------------------------------------
         */
         $th = $type1['refid'];
-        $th2 = mysql_query("SELECT * FROM `forum` WHERE `id` = '$th'");
-        $th1 = mysql_fetch_array($th2);
+        $th1 = $db->query("SELECT * FROM `forum` WHERE `id` = '$th' LIMIT 1")->fetch();
         if (($th1['edit'] == 1 || $th1['close'] == 1) && $rights < 7) {
             require('../incfiles/head.php');
             echo functions::display_error($lng_forum['error_topic_closed'], '<a href="index.php?id=' . $th1['id'] . '">' . $lng['back'] . '</a>');
@@ -279,9 +274,9 @@ switch ($type1['type']) {
                 exit;
             }
             // Проверяем, не повторяется ли сообщение?
-            $req = mysql_query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC LIMIT 1");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
+            $stmt = $db->query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 if ($msg == $res['text']) {
                     require('../incfiles/head.php');
                     echo functions::display_error($lng['error_message_exists'], '<a href="index.php?id=' . $th . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
@@ -298,44 +293,47 @@ switch ($type1['type']) {
             unset($_SESSION['token']);
 
             // Добавляем сообщение в базу
-            mysql_query("INSERT INTO `forum` SET
+            $stmt = $db->prepare("INSERT INTO `forum` SET
                 `refid` = '$th',
                 `type` = 'm',
                 `time` = '" . time() . "',
                 `user_id` = '$user_id',
-                `from` = '$login',
+                `from` = ?,
                 `ip` = '" . core::$ip . "',
                 `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-                `soft` = '" . mysql_real_escape_string($agn1) . "',
-                `text` = '" . mysql_real_escape_string($msg) . "',
+                `soft` = ?,
+                `text` = ?,
                 `edit` = '',
                 `curators` = ''
             ");
-            $fadd = mysql_insert_id();
+            $stmt->execute([
+                $login,
+                $agn1,
+                $msg
+            ]);
+            $fadd = $db->lastInsertId();
             // Обновляем время топика
-            mysql_query("UPDATE `forum`
+            $db->exec("UPDATE `forum`
                 SET `time` = '" . time() . "'
                 WHERE `id` = '$th'
             ");
             // Обновляем статистику юзера
-            mysql_query("UPDATE `users` SET
+            $db->exec("UPDATE `users` SET
                 `postforum`='" . ($datauser['postforum'] + 1) . "',
                 `lastpost` = '" . time() . "'
                 WHERE `id` = '$user_id'
             ");
             // Вычисляем, на какую страницу попадает добавляемый пост
-            $page = $set_forum['upfp'] ? 1 : ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$th'" . ($rights >= 7 ? '' : " AND `close` != '1'")), 0) / $kmess);
+            $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$th'" . ($rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
             if (isset($_POST['addfiles'])) {
-                header("Location: index.php?id=$fadd&act=addfile");
+                header("Location: index.php?id=$fadd&act=addfile"); exit;
             } else {
-                header("Location: index.php?id=$th&page=$page");
+                header("Location: index.php?id=$th&page=$page"); exit;
             }
-            exit;
         } else {
             $textl = $lng['forum'];
             require('../incfiles/head.php');
-            $qt = " $type1[text]";
-            if (($datauser['postforum'] == "" || $datauser['postforum'] == 0)) {
+            if ($datauser['postforum'] == 0) {
                 if (!isset($_GET['yes'])) {
                     $lng_faq = core::load_lng('faq');
                     echo '<p>' . $lng_faq['forum_rules_text'] . '</p>';
@@ -349,9 +347,8 @@ switch ($type1['type']) {
                 $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
             }
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $th1['text'] . '</div>';
-            $qt = str_replace("<br/>", "\r\n", $qt);
-            $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
+            echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . _e($th1['text']) . '</div>';
+            $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $type1['text']));
             $qt = functions::checkout($qt, 0, 2);
             if (!empty($_POST['msg']) && !isset($_POST['submit'])) {
                 echo '<div class="list1">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';

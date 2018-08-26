@@ -15,14 +15,13 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if (($rights != 3 && $rights < 6) || !$id) {
-    header('Location: index.php');
-    exit;
+    header('Location: index.php'); exit;
 }
-if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'"), 0)) {
+if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'")->fetchColumn()) {
     if (isset($_GET['closed']))
-        mysql_query("UPDATE `forum` SET `edit` = '1' WHERE `id` = '$id'");
+        $db->exec("UPDATE `forum` SET `edit` = '1' WHERE `id` = '$id'");
     else
-        mysql_query("UPDATE `forum` SET `edit` = '0' WHERE `id` = '$id'");
+        $db->exec("UPDATE `forum` SET `edit` = '0' WHERE `id` = '$id'");
 }
 
-header("Location: index.php?id=$id");
+header("Location: index.php?id=$id"); exit;

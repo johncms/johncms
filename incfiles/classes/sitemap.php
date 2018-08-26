@@ -55,19 +55,22 @@ class sitemap {
     public function forum_contents() {
         global $set, $id, $lng;
         $file = ROOTPATH . 'files/cache/' . $this->cache_forum_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
-        if (!$id)
+        if (!$id) {
             return functions::display_error($lng['error_wrong_data']);
+        }
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_contents * 3600)) {
             return file_get_contents($file);
         } else {
-            $req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r'");
-            if (mysql_num_rows($req)) {
+            $stmt = core::$db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
+            if ($stmt->rowCount()) {
                 $row = array();
-                $res = mysql_fetch_assoc($req);
-                $req_t = mysql_query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 't' AND `close` != '1' ORDER BY `time` DESC LIMIT " . ($this->page * $this->links_count) . ", " . $this->links_count);
-                if (mysql_num_rows($req_t)) {
-                    while (($res_t = mysql_fetch_assoc($req_t)) !== false) $row[] = '<a href="' . $set['homeurl'] . '/forum/index.php?id=' . $res_t['id'] . '">' . $res_t['text'] . '</a>';
-                    $out = '<div class="phdr"><b>' . $lng['forum'] . '</b> | ' . $res['text'] . '</div><div class="menu">' . implode('<br />' . "\r\n", $row) . '</div>';
+                $res = $stmt->fetch();
+                $stmt = core::$db->query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 't' AND `close` != '1' ORDER BY `time` DESC LIMIT " . ($this->page * $this->links_count) . ", " . $this->links_count);
+                if ($stmt->rowCount()) {
+                    while ($res_t = $stmt->fetch()) {
+                        $row[] = '<a href="' . $set['homeurl'] . '/forum/index.php?id=' . $res_t['id'] . '">' . _e($res_t['text']) . '</a>';
+                    }
+                    $out = '<div class="phdr"><b>' . $lng['forum'] . '</b> | ' . _e($res['text']) . '</div><div class="menu">' . implode('<br />' . "\r\n", $row) . '</div>';
                     return file_put_contents($file, $out) ? $out : 'Forum Contents cache error';
                 }
             }
@@ -83,18 +86,21 @@ class sitemap {
     public function library_contents() {
         global $set, $id, $lng;
         $file = ROOTPATH . 'files/cache/' . $this->cache_lib_file . '_' . $id . ($this->page ? '_' . $this->page : '') . '.dat';
-        if (!$id)
+        if (!$id) {
             return functions::display_error($lng['error_wrong_data']);
+        }
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_contents * 3600)) {
             return file_get_contents($file);
         } else {
-            $req = mysql_query("SELECT * FROM `library_cats` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
+            $stmt = core::$db->query("SELECT * FROM `library_cats` WHERE `id` = '$id' LIMIT 1");
+            if ($stmt->rowCount()) {
                 $row = array();
-                $res = mysql_fetch_assoc($req);
-                $req_a = mysql_query("SELECT * FROM `library_texts` WHERE `cat_id` = '$id' AND `premod` = '1' ORDER BY `time` ASC LIMIT " . ($this->page * $this->links_count) . ", " . $this->links_count);
-                if (mysql_num_rows($req_a)) {
-                    while (($res_a = mysql_fetch_assoc($req_a)) !== false) $row[] = '<a href="' . $set['homeurl'] . '/library/index.php?do=text&amp;id=' . $res_a['id'] . '">' . functions::checkout($res_a['name']) . '</a>';
+                $res = $stmt->fetch();
+                $stmt = core::$db->query("SELECT * FROM `library_texts` WHERE `cat_id` = '$id' AND `premod` = '1' ORDER BY `time` ASC LIMIT " . ($this->page * $this->links_count) . ", " . $this->links_count);
+                if ($stmt->rowCount()) {
+                    while ($res_a = $stmt->fetch()) {
+                        $row[] = '<a href="' . $set['homeurl'] . '/library/index.php?do=text&amp;id=' . $res_a['id'] . '">' . _e($res_a['name']) . '</a>';
+                    }
                     $out = '<div class="phdr"><b>' . $lng['library'] . '</b> | ' . $res['name'] . '</div><div class="menu">' . implode('<br />' . "\r\n", $row) . '</div>';
                     return file_put_contents($file, $out) ? $out : 'Library Contents cache error';
                 }
@@ -114,25 +120,26 @@ class sitemap {
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_forum_map * 3600)) {
             return file_get_contents($file);
         } else {
-            $req = mysql_query("SELECT * FROM `forum` WHERE `type` = 'r'");
-            if (mysql_num_rows($req)) {
-                while (($res = mysql_fetch_assoc($req)) !== false) {
-                    $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['id'] . "' AND `type` = 't' AND `close` != '1'"), 0);
+            $stmt = core::$db->query("SELECT * FROM `forum` WHERE `type` = 'r'");
+            if ($stmt->rowCount()) {
+                $out = [];
+                while ($res = $stmt->fetch()) {
+                    $count = core::$db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['id'] . "' AND `type` = 't' AND `close` != '1'")->fetchColumn();
                     if ($count) {
-                        $text = html_entity_decode($res['text']);
-                        $text = mb_substr($text, 0, 40);
+                        $text = mb_substr($res['text'], 0, 40);
                         $pages = ceil($count / $this->links_count);
                         if ($pages > 1) {
                             for ($i = 0; $i < $pages; $i++) {
-                                $out[] = '<a href="' . $set['homeurl'] . '/forum/contents.php?id=' . $res['id'] . '&amp;p=' . $i . '">' . functions::checkout($text) . ' (' . ($i + 1) . ')</a>';
+                                $out[] = '<a href="' . $set['homeurl'] . '/forum/contents.php?id=' . $res['id'] . '&amp;p=' . $i . '">' . _e($text) . ' (' . ($i + 1) . ')</a>';
                             }
                         } else {
-                            $out[] = '<a href="' . $set['homeurl'] . '/forum/contents.php?id=' . $res['id'] . '">' . functions::checkout($text) . '</a>';
+                            $out[] = '<a href="' . $set['homeurl'] . '/forum/contents.php?id=' . $res['id'] . '">' . _e($text) . '</a>';
                         }
                     }
                 }
-                if(isset($out))
+                if ($out) {
                     return file_put_contents($file, implode('<br />' . "\r\n", $out)) ? implode('<br />', $out) : 'Forum cache error';
+                }
             }
         }
         return false;
@@ -149,20 +156,19 @@ class sitemap {
         if (file_exists($file) && filemtime($file) > (time() - $this->cache_lib_map * 3600)) {
             return file_get_contents($file);
         } else {
-            $req = mysql_query("SELECT * FROM `library_cats` WHERE `dir` = '0'");
-            if (mysql_num_rows($req)) {
-                while (($res = mysql_fetch_assoc($req)) !== false) {
-                    $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id` = '" . $res['id'] . "' AND `premod` = '1'"), 0);
+            $stmt = core::$db->query("SELECT * FROM `library_cats` WHERE `dir` = '0'");
+            if ($stmt->rowCount()) {
+                while ($res = $stmt->fetch()) {
+                    $count = core::$db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id` = '" . $res['id'] . "' AND `premod` = '1'")->fetchColumn();
                     if ($count) {
-                        $text = html_entity_decode($res['name']);
-                        $text = mb_substr($text, 0, 40);
+                        $text = mb_substr($res['name'], 0, 40);
                         $pages = ceil($count / $this->links_count);
                         if ($pages > 1) {
                             for ($i = 0; $i < $pages; $i++) {
-                                $out[] = '<a href="' . $set['homeurl'] . '/library/contents.php?id=' . $res['id'] . '&amp;p=' . $i . '">' . functions::checkout($text) . ' (' . ($i + 1) . ')</a>';
+                                $out[] = '<a href="' . $set['homeurl'] . '/library/contents.php?id=' . $res['id'] . '&amp;p=' . $i . '">' . _e($text) . ' (' . ($i + 1) . ')</a>';
                             }
                         } else {
-                            $out []= '<a href="' . $set['homeurl'] . '/library/contents.php?id=' . $res['id'] . '">' . functions::checkout($text) . '</a>';
+                            $out []= '<a href="' . $set['homeurl'] . '/library/contents.php?id=' . $res['id'] . '">' . _e($text) . '</a>';
                         }
                     }
                 }

@@ -13,19 +13,19 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 $user = false;
 $error = false;
 if ($id && $id != $user_id) {
     // Получаем данные юзера
-    $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id'");
-    if (mysql_num_rows($req)) {
-        $user = mysql_fetch_assoc($req);
-        if ($user['rights'] > $datauser['rights'])
+    $stmt = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
+    if ($stmt->rowCount()) {
+        $user = $stmt->fetch();
+        if ($user['rights'] > $datauser['rights']) {
             $error = $lng['error_usrdel_rights'];
+        }
     } else {
         $error = $lng['error_user_not_exist'];
     }
@@ -34,22 +34,22 @@ if ($id && $id != $user_id) {
 }
 if (!$error) {
     // Считаем комментарии в галерее
-    $comm_gal = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'km'"), 0);
+    $comm_gal = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'km'")->fetchColumn();
     // Считаем комментарии в библиотеке
-    $comm_lib = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+    $comm_lib = $db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем комментарии к загрузкам
-    $comm_dl = mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'komm'"), 0);
+    $comm_dl = $db->query("SELECT COUNT(*) FROM `download` WHERE `avtor` = '" . $user['name'] . "' AND `type` = 'komm'")->fetchColumn();
     // Считаем посты в личных гостевых
-    $comm_gb = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+    $comm_gb = $db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем комментарии в личных альбомах
-    $comm_al = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+    $comm_al = $db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     $comm_count = $comm_gal + $comm_lib + $comm_dl + $comm_gb + $comm_al;
     // Считаем посты в Гостевой
-    $guest_count = mysql_result(mysql_query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'"), 0);
+    $guest_count = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     // Считаем созданные темы на Форуме
-    $forumt_count = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't' AND `close` != '1'"), 0);
+    $forumt_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't' AND `close` != '1'")->fetchColumn();
     // Считаем посты на Форуме
-    $forump_count = mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'"), 0);
+    $forump_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'")->fetchColumn();
     echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['user_del'] . '</div>';
     // Выводим краткие данные
     echo '<div class="user"><p>' . functions::display_user($user, array(
@@ -82,8 +82,7 @@ if (!$error) {
             $del->removeUser($user['id']);          // Удаляем пользователя
 
             // Оптимизируем таблицы
-            mysql_query("
-                OPTIMIZE TABLE
+            $db->query("OPTIMIZE TABLE
                 `cms_users_iphistory`,
                 `cms_ban_users`,
                 `guest`,
@@ -106,8 +105,9 @@ if (!$error) {
             // Форма параметров удаления                              //
             ////////////////////////////////////////////////////////////
             echo '<form action="index.php?act=usr_del&amp;mod=del&amp;id=' . $user['id'] . '" method="post"><div class="menu"><p><h3>' . $lng['user_del_activity'] . '</h3>';
-            if ($comm_count)
+            if ($comm_count) {
                 echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . $lng['comments'] . ' <span class="red">(' . $comm_count . ')</span></div>';
+            }
             if ($forumt_count || $forump_count) {
                 echo '<div><input type="checkbox" value="1" name="forum" checked="checked" />&#160;' . $lng['forum'] . ' <span class="red">(' . $forumt_count . '&nbsp;/&nbsp;' . $forump_count . ')</span></div>';
                 echo '<small><span class="gray">' . $lng['user_del_forumnote'] . '</span></small>';

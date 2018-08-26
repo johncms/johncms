@@ -22,17 +22,17 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($al && $user['id'] == $user_id || $rights >= 7) {
-            $req = mysql_query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $sort = $res['sort'];
-                $req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $stmt = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    mysql_query("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
-                    mysql_query("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
@@ -45,22 +45,21 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($al && $user['id'] == $user_id || $rights >= 7) {
-            $req = mysql_query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT `sort` FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $sort = $res['sort'];
-                $req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $stmt = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' AND `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    mysql_query("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
-                    mysql_query("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort2' WHERE `id` = '$al'");
+                    $db->exec("UPDATE `cms_album_cat` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
         break;
 }
 
-header('Location: album.php?act=list&user=' . $user['id']);
-?>
+header('Location: album.php?act=list&user=' . $user['id']); exit;

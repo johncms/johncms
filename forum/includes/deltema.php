@@ -21,14 +21,14 @@ if ($rights == 3 || $rights >= 6) {
         exit;
     }
     // Проверяем, существует ли тема
-    $req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
-    if (!mysql_num_rows($req)) {
+    $stmt = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' LIMIT 1");
+    if (!$stmt->rowCount()) {
         require('../incfiles/head.php');
         echo functions::display_error($lng_forum['error_topic_deleted']);
         require('../incfiles/end.php');
         exit;
     }
-    $res = mysql_fetch_assoc($req);
+    $res = $stmt->fetch();
     if (isset($_POST['submit'])) {
         $del = isset($_POST['del']) ? intval($_POST['del']) : NULL;
         if ($del == 2 && core::$user_rights == 9) {
@@ -37,26 +37,26 @@ if ($rights == 3 || $rights >= 6) {
             Удаляем топик
             -----------------------------------------------------------------
             */
-            $req1 = mysql_query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
-            if (mysql_num_rows($req1)) {
-                while ($res1 = mysql_fetch_assoc($req1)) {
+            $stmt = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
+            if ($stmt->rowCount()) {
+                while ($res1 = $stmt->fetch()) {
                     unlink('../files/forum/attach/' . $res1['filename']);
                 }
-                mysql_query("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
-                mysql_query("OPTIMIZE TABLE `cms_forum_files`");
+                $db->exec("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
+                $db->query("OPTIMIZE TABLE `cms_forum_files`");
             }
-            mysql_query("DELETE FROM `forum` WHERE `refid` = '$id'");
-            mysql_query("DELETE FROM `forum` WHERE `id`='$id'");
+            $db->exec("DELETE FROM `forum` WHERE `refid` = '$id'");
+            $db->exec("DELETE FROM `forum` WHERE `id`='$id'");
         } elseif ($del = 1) {
             /*
             -----------------------------------------------------------------
             Скрываем топик
             -----------------------------------------------------------------
             */
-            mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
-            mysql_query("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
+            $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
+            $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
         }
-        header('Location: index.php?id=' . $res['refid']);
+        header('Location: index.php?id=' . $res['refid']); exit;
     } else {
         /*
         -----------------------------------------------------------------

@@ -15,16 +15,16 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights == 3 || $rights >= 6) {
-    if (empty($_GET['id'])) {
+    if (!$id) {
         require('../incfiles/head.php');
         echo functions::display_error($lng['error_wrong_data']);
         require('../incfiles/end.php');
         exit;
     }
-    $req = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `id` = '" . $id . "' AND `type` = 't'");
-    if (mysql_result($req, 0) > 0) {
-        mysql_query("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id'");
-        header('Location: index.php?id=' . $id);
+    $stmt = $db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '" . $id . "' AND `type` = 't'");
+    if ($stmt->fetchColumn()) {
+        $db->exec("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id' LIMIT 1");
+        header('Location: index.php?id=' . $id); exit;
     } else {
         require('../incfiles/head.php');
         echo functions::display_error($lng['error_wrong_data']);

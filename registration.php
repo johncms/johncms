@@ -17,8 +17,8 @@ $headmod = 'registration';
 require('incfiles/head.php');
 $lng_reg = core::load_lng('registration');
 
-if(core::$user_id){
-    header('Location: index.php');
+if (core::$user_id){
+    header('Location: index.php'); exit;
 }
 // Если регистрация закрыта, выводим предупреждение
 if (core::$deny_registration || !$set['mod_reg'] || core::$user_id) {
@@ -31,9 +31,9 @@ $captcha = isset($_POST['captcha']) ? trim($_POST['captcha']) : NULL;
 $reg_nick = isset($_POST['nick']) ? trim($_POST['nick']) : '';
 $lat_nick = functions::rus_lat(mb_strtolower($reg_nick));
 $reg_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
-$reg_name = isset($_POST['imname']) ? trim($_POST['imname']) : '';
-$reg_about = isset($_POST['about']) ? trim($_POST['about']) : '';
-$reg_sex = isset($_POST['sex']) ? functions::check(mb_substr(trim($_POST['sex']), 0, 2)) : '';
+$reg_name = isset($_POST['imname']) ? trim(mb_substr($_POST['imname'], 0, 30)) : '';
+$reg_about = isset($_POST['about']) ? trim(mb_substr($_POST['about'], 0, 500)) : '';
+$reg_sex = isset($_POST['sex']) ? trim(mb_substr($_POST['sex'], 0, 2)) : '';
 
 echo '<div class="phdr"><b>' . $lng['registration'] . '</b></div>';
 if (isset($_POST['submit'])) {
@@ -43,23 +43,19 @@ if (isset($_POST['submit'])) {
     // Проверка Логина
     if (empty($reg_nick)) {
         $error['login'][] = $lng_reg['error_nick_empty'];
-    } elseif (mb_strlen($reg_nick) < 2 || mb_strlen($reg_nick) > 15) {
+    } elseif (mb_strlen($reg_nick) < 5 || mb_strlen($reg_nick) > 20) {
         $error['login'][] = $lng_reg['error_nick_lenght'];
     }
 
-    if (preg_match('/[^\da-z\-\@\*\(\)\?\!\~\_\=\[\]]+/', $lat_nick)) {
+    if (preg_match('/[^[:alnum:]_.]/', $lat_nick)) {
         $error['login'][] = $lng['error_wrong_symbols'];
     }
 
     // Проверка пароля
     if (empty($reg_pass)) {
         $error['password'][] = $lng['error_empty_password'];
-    } elseif (mb_strlen($reg_pass) < 3 || mb_strlen($reg_pass) > 10) {
+    } elseif (mb_strlen($reg_pass) < 6) {
         $error['password'][] = $lng['error_wrong_lenght'];
-    }
-
-    if (preg_match('/[^\dA-Za-z]+/', $reg_pass)) {
-        $error['password'][] = $lng['error_wrong_symbols'];
     }
 
     // Проверка пола
@@ -80,27 +76,28 @@ if (isset($_POST['submit'])) {
     // Проверка переменных
     if (empty($error)) {
         $pass = md5(md5($reg_pass));
-        $reg_name = functions::check(mb_substr($reg_name, 0, 20));
-        $reg_about = functions::check(mb_substr($reg_about, 0, 500));
         // Проверка, занят ли ник
-        $req = mysql_query("SELECT * FROM `users` WHERE `name_lat`='" . mysql_real_escape_string($lat_nick) . "'");
-        if (mysql_num_rows($req) != 0) {
+        $stmt = $db->prepare('SELECT `id` FROM `users` WHERE `name_lat` = ? LIMIT 1');
+        $stmt->execute([
+            $lat_nick
+        ]);
+        if ($stmt->rowCount()) {
             $error['login'][] = $lng_reg['error_nick_occupied'];
         }
     }
     if (empty($error)) {
         $preg = $set['mod_reg'] > 1 ? 1 : 0;
-        mysql_query("INSERT INTO `users` SET
-            `name` = '" . mysql_real_escape_string($reg_nick) . "',
-            `name_lat` = '" . mysql_real_escape_string($lat_nick) . "',
-            `password` = '" . mysql_real_escape_string($pass) . "',
-            `imname` = '$reg_name',
-            `about` = '$reg_about',
+        $stmt = $db->prepare("INSERT INTO `users` SET
+            `name` = ?,
+            `name_lat` = ?,
+            `password` = ?,
+            `imname` = ?,
+            `about` = ?,
             `sex` = '$reg_sex',
             `rights` = '0',
             `ip` = '" . core::$ip . "',
             `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `browser` = '" . mysql_real_escape_string($agn) . "',
+            `browser` = ?,
             `datereg` = '" . time() . "',
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
@@ -109,8 +106,16 @@ if (isset($_POST['submit'])) {
             `set_forum` = '',
             `set_mail` = '',
             `smileys` = ''
-        ") or exit(__LINE__ . ': ' . mysql_error());
-        $usid = mysql_insert_id();
+        ");
+        $stmt->execute([
+            $reg_nick,
+            $lat_nick,
+            $pass,
+            $reg_name,
+            $reg_about,
+            $agn
+        ]);
+        $usid = $db->lastInsertId();
 
         // Отправка системного сообщения
         $set_mail = unserialize($set['setting_mail']);
@@ -133,17 +138,21 @@ if (isset($_POST['submit'])) {
 
             $theme = str_replace($array, $array_replace, $set['them_message']);
             $system = str_replace($array, $array_replace, $set['reg_message']);
-            mysql_query("INSERT INTO `cms_mail` SET
+            $stmt = $db->prepare("INSERT INTO `cms_mail` SET
 			    `user_id` = '0',
 			    `from_id` = '" . $usid . "',
-			    `text` = '" . mysql_real_escape_string($system) . "',
+			    `text` = ?,
 			    `time` = '" . time() . "',
 			    `sys` = '1',
-			    `them` = '" . mysql_real_escape_string($theme) . "'
+			    `them` = ?
 			");
+            $stmt->execute([
+                $system,
+                $theme
+            ]);
         }
 
-        echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . $reg_pass . '</b></p>';
+        echo '<div class="menu"><p><h3>' . $lng_reg['you_registered'] . '</h3>' . $lng_reg['your_id'] . ': <b>' . $usid . '</b><br/>' . $lng_reg['your_login'] . ': <b>' . $reg_nick . '</b><br/>' . $lng_reg['your_password'] . ': <b>' . _e($reg_pass) . '</b></p>';
 
         if ($set['mod_reg'] == 1) {
             echo '<p><span class="red"><b>' . $lng_reg['moderation_note'] . '</b></span></p>';
@@ -168,11 +177,11 @@ if ($set['mod_reg'] == 1) echo '<div class="rmenu"><p>' . $lng_reg['moderation_w
 echo '<form action="registration.php" method="post"><div class="gmenu">' .
     '<p><h3>' . $lng_reg['login'] . '</h3>' .
     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />', $error['login']) . '</small></span><br />' : '') .
-    '<input type="text" name="nick" maxlength="15" value="' . htmlspecialchars($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
+    '<input type="text" name="nick" maxlength="15" value="' . _e($reg_nick) . '"' . (isset($error['login']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
     '<small>' . $lng_reg['login_help'] . '</small></p>' .
     '<p><h3>' . $lng_reg['password'] . '</h3>' .
     (isset($error['password']) ? '<span class="red"><small>' . implode('<br />', $error['password']) . '</small></span><br />' : '') .
-    '<input type="text" name="password" maxlength="20" value="' . htmlspecialchars($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
+    '<input type="text" name="password" maxlength="20" value="' . _e($reg_pass) . '"' . (isset($error['password']) ? ' style="background-color: #FFCCCC"' : '') . '/><br/>' .
     '<small>' . $lng_reg['password_help'] . '</small></p>' .
     '<p><h3>' . $lng_reg['sex'] . '</h3>' .
     (isset($error['sex']) ? '<span class="red"><small>' . $error['sex'] . '</small></span><br />' : '') .
@@ -183,10 +192,10 @@ echo '<form action="registration.php" method="post"><div class="gmenu">' .
     '</select></p></div>' .
     '<div class="menu">' .
     '<p><h3>' . $lng_reg['name'] . '</h3>' .
-    '<input type="text" name="imname" maxlength="30" value="' . htmlspecialchars($reg_name) . '" /><br />' .
+    '<input type="text" name="imname" maxlength="30" value="' . _e($reg_name) . '" /><br />' .
     '<small>' . $lng_reg['name_help'] . '</small></p>' .
     '<p><h3>' . $lng_reg['about'] . '</h3>' .
-    '<textarea rows="3" name="about">' . htmlspecialchars($reg_about) . '</textarea><br />' .
+    '<textarea rows="3" name="about">' . _e($reg_about) . '</textarea><br />' .
     '<small>' . $lng_reg['about_help'] . '</small></p></div>' .
     '<div class="gmenu"><p>' .
     '<h3>' . $lng_reg['captcha'] . '</h3>' .

@@ -16,6 +16,7 @@ class mainpage {
     public $newscount;    // Общее к-во новостей
     public $lastnewsdate; // Дата последней новости
     private $settings = array ();
+
     function __construct() {
         global $set;
         $this->settings = unserialize($set['news']);
@@ -28,74 +29,63 @@ class mainpage {
         global $lng;
         if ($this->settings['view'] > 0) {
             $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
-            $req = mysql_query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
-            if (mysql_num_rows($req) > 0) {
+            $stmt = core::$db->query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
+            if ($stmt->rowCount()) {
                 $i = 0;
                 $news = '';
-                while (($res = mysql_fetch_array($req)) !== false) {
+                while ($res = $stmt->fetch()) {
                     $text = $res['text'];
                     // Если текст больше заданного предела, обрезаем
                     if (mb_strlen($text) > $this->settings['size']) {
                         $text = mb_substr($text, 0, $this->settings['size']);
-                        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-                        $text .= ' <a href="news/index.php">' . $lng['next'] . '...</a>';
-                    } else {
-                        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
                     }
-                    // Если включены переносы, то обрабатываем
-                    if ($this->settings['breaks'])
-                        $text = str_replace("\r\n", "<br/>", $text);
-                    // Обрабатываем тэги
-                    if ($this->settings['tags']) {
-                        $text = bbcode::tags($text);
-                    } else {
-                        $text = bbcode::notags($text);
-                    }
+                    $text = functions::checkout($text, ($this->settings['breaks'] ? 1 : 0), ($this->settings['tags'] ? 1 : 2));
                     // Обрабатываем смайлы
                     if ($this->settings['smileys']) {
                         $text = functions::smileys($text);
+                    }
+                    if (mb_strlen($text) > $this->settings['size']) {
+                        $text .= ' <a href="news/index.php">' . $lng['next'] . '...</a>';
                     }
                     // Определяем режим просмотра заголовка - текста
                     $news .= '<div class="news">';
                     switch ($this->settings['view']) {
                         case 2:
-                            $news .= '<a href="news/index.php">' . $res['name'] . '</a>';
+                            $news .= '<a href="news/index.php">' . _e($res['name']) . '</a>';
                             break;
 
                         case 3:
                             $news .= $text;
                             break;
                             default :
-                        $news .= '<b>' . $res['name'] . '</b><br />' . $text;
+                        $news .= '<b>' . _e($res['name']) . '</b><br />' . $text;
                     }
                     // Ссылка на каменты
                     if (!empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
-                        $mes = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'");
-                        $komm = mysql_result($mes, 0) - 1;
-                        if ($komm >= 0)
+                        $komm = core::$db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'")->fetchColumn() - 1;
+                        if ($komm >= 0) {
                             $news .= '<br /><a href="../forum/?id=' . $res['kom'] . '">' . $lng['discuss'] . '</a> (' . $komm . ')';
+                        }
                     }
                     $news .= '</div>';
                     ++$i;
                 }
                 return $news;
             } else {
-                return false;
+                return '';
             }
         }
     }
 
     // Счетчик всех новостей
     private function newscount() {
-        $req = mysql_query("SELECT COUNT(*) FROM `news`");
-        $res = mysql_result($req, 0);
+        $res = core::$db->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
         return ($res > 0 ? $res : '0');
     }
 
     // Счетчик свежих новостей
     private function lastnewscount() {
-        $req = mysql_query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'");
-        $res = mysql_result($req, 0);
-        return ($res > 0 ? '/<span class="red">+' . $res . '</span>' : false);
+        $res = core::$db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
+        return ($res > 0 ? '/<span class="red">+' . $res . '</span>' : '');
     }
 }

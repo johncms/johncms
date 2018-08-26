@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 $panel_lng = core::load_lng('panel_lng');
 
@@ -38,8 +37,8 @@ foreach (glob('../incfiles/languages/*/_core.ini') as $val) {
 Автоустановка языков
 -----------------------------------------------------------------
 */
-if(isset($_GET['refresh'])){
-    mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'lng_list'");
+if(isset($_GET['refresh'])) {
+    $db->exec("DELETE FROM `cms_settings` WHERE `key` = 'lng_list'");
     core::$lng_list = array();
     echo '<div class="gmenu"><p>' . $lng['refresh_descriptions_ok'] . '</p></div>';
 }
@@ -48,13 +47,19 @@ $lng_del = array_diff(array_keys(core::$lng_list), array_keys($lng_list));
 if (!empty($lng_add) || !empty($lng_del)) {
     if (!empty($lng_del) && in_array($set['lng'], $lng_del)) {
         // Если удаленный язык был системный, то меняем на первый доступный
-        mysql_query("UPDATE `cms_settings` SET `val` = '" . key($lng_list[]) . "' WHERE `key` = 'lng' LIMIT 1");
+        $db->exec("UPDATE `cms_settings` SET `val` = '" . key($lng_list[]) . "' WHERE `key` = 'lng' LIMIT 1");
     }
-    $req = mysql_query("SELECT * FROM `cms_settings` WHERE `key` = 'lng_list'");
-    if (mysql_num_rows($req)) {
-        mysql_query("UPDATE `cms_settings` SET `val` = '" . mysql_real_escape_string(serialize($lng_list)) . "' WHERE `key` = 'lng_list' LIMIT 1");
+    $stmt = $db->query("SELECT COUNT(*) FROM `cms_settings` WHERE `key` = 'lng_list'");
+    if ($stmt->fetchColumn()) {
+        $stmt = $db->prepare("UPDATE `cms_settings` SET `val` = ? WHERE `key` = 'lng_list' LIMIT 1");
+        $stmt->execute([
+            serialize($lng_list)
+        ]);
     } else {
-        mysql_query("INSERT INTO `cms_settings` SET `key` = 'lng_list', `val` = '" . mysql_real_escape_string(serialize($lng_list)) . "'");
+        $stmt = $db->prepare("INSERT INTO `cms_settings` SET `key` = 'lng_list', `val` = ?");
+        $stmt->execute([
+            serialize($lng_list)
+        ]);
     }
 }
 
@@ -148,9 +153,12 @@ switch ($mod) {
         */
         $iso = isset($_POST['iso']) ? trim($_POST['iso']) : false;
         if ($iso && array_key_exists($iso, $lng_list)) {
-            mysql_query("UPDATE `cms_settings` SET `val` = '" . mysql_real_escape_string($iso) . "' WHERE `key` = 'lng'");
+            $stmt = $db->prepare("UPDATE `cms_settings` SET `val` = ? WHERE `key` = 'lng'");
+            $stmt->execute([
+                $iso
+            ]);
         }
-        header('Location: index.php?act=languages');
+        header('Location: index.php?act=languages'); exit;
         break;
 
     case 'module':
@@ -160,8 +168,7 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if (!$language || !array_key_exists($language, $lng_list)) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $array_module = glob('../incfiles/languages/' . $language . '/*.lng');
         $total = count($array_module);
@@ -209,8 +216,7 @@ switch ($mod) {
         $lng_module_standart = ini_file::parser($language, $name_module);
         $lng_edit = ini_file::parser_edit($language);
         if (!$lng_module_standart) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);
         echo '<div class="phdr"><b>' . $lng_list[$language] . '</b>: <a href="index.php?act=languages&amp;mod=module&amp;language=' . $language . '"><b>' . $lng['modules'] . '</b></a> | ' . $panel_lng['information'] . '</div>' .
@@ -231,8 +237,7 @@ switch ($mod) {
         */
         $name_module = isset($_GET['module']) ? ini_file::key_filter($_GET['module']) : false;
         if (!$name_module) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         if (isset($_GET['yes'])) {
             $lng_edit = ini_file::parser_edit($language);
@@ -240,8 +245,7 @@ switch ($mod) {
                 unset($lng_edit[$name_module]);
                 ini_file::save_file($language, $lng_edit);
             }
-            header('Location: index.php?act=languages&mod=module&language=' . $language . '&start=' . $start . '&do=reset');
-            exit;
+            header('Location: index.php?act=languages&mod=module&language=' . $language . '&start=' . $start . '&do=reset'); exit;
         } else {
             echo '<div class="phdr"><b>' . $lng_list[$language] . '</b>: <a href="index.php?act=languages&amp;mod=module&amp;language=' . $language . '"><b>' . $lng['modules'] . '</b></a> | ' . $panel_lng['reset'] . '</div>' .
                  '<div class="rmenu"><p>' . $panel_lng['module_resets'] . '</p>' .
@@ -265,8 +269,7 @@ switch ($mod) {
         $lng_module_standart = ini_file::parser($language, $name_module);
         $lng_edit = ini_file::parser_edit($language);
         if (!$lng_module_standart) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);
         $total = 0;
@@ -350,8 +353,7 @@ switch ($mod) {
         $symbol = isset($_GET['symbol']) ? trim(mb_substr($_GET['symbol'], 0, 1)) : 0;
         $lng_module_standart = ini_file::parser($language, $name_module);
         if (!$lng_module_standart) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $lng_edit = ini_file::parser_edit($language);
         $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);
@@ -432,19 +434,16 @@ switch ($mod) {
         $lng_module_standart = ini_file::parser($language, $name_module);
         $lng_edit = ini_file::parser_edit($language);
         if (!$lng_module_standart) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);
         if (!in_array($key, array_keys($lng_module))) {
-            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $module . '&symbol=' . $symbol . '&start=' . $start . '&do=error');
-            exit;
+            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $module . '&symbol=' . $symbol . '&start=' . $start . '&do=error'); exit;
         }
         if (isset($_POST['submit']) && isset($_POST['value'])) {
             $value_edit = ini_file::value_filter($_POST['value']);                
             if (!isset($value_edit)) {
-                header('Location: index.php?act=languages&mod=edit_phrase&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&key=' . $key . '&start=' . $start);
-                exit;
+                header('Location: index.php?act=languages&mod=edit_phrase&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&key=' . $key . '&start=' . $start); exit;
             }
             if ($lng_module[$key] != $value_edit) {
                 if (!$lng_module_standart[$key] || $lng_module_standart[$key] != $value_edit) {
@@ -457,8 +456,7 @@ switch ($mod) {
                 }
                 ini_file::save_file($language, $lng_edit);
             }
-            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=edit');
-            exit;
+            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=edit'); exit;
         } else {
             echo '<div class="phdr"><b>' . $lng_list[$language] . '</b>: <a href="index.php?act=languages&amp;mod=phrases&amp;language=' . $language . '&amp;module=' . $name_module . '&amp;symbol=' . $symbol . '"><b>' . $panel_lng['phrases'] . '</b></a> | ' . $lng['edit'] . '</div>' .
                  '<form name="form" action="?act=languages&amp;mod=edit_phrase&amp;language=' . $language . '&amp;module=' . $name_module . '&amp;key=' . $key . '&amp;symbol=' . $symbol . '&amp;start=' . $start . '" method="POST"><div class="menu">' .
@@ -483,13 +481,11 @@ switch ($mod) {
         $lng_module_standart = ini_file::parser($language, $name_module);
         $lng_edit = ini_file::parser_edit($language);
         if (!$lng_module_standart) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         $lng_module = ini_file::update_lng($name_module, $lng_edit, $lng_module_standart);
         if (!in_array($key, array_keys($lng_module))) {
-            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $module . '&symbol=' . $symbol . '&start=' . $start . '&do=error');
-            exit;
+            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $module . '&symbol=' . $symbol . '&start=' . $start . '&do=error'); exit;
         }
         if (isset($_GET['yes'])) {
             if (count($lng_edit[$name_module]) > 1)
@@ -497,8 +493,7 @@ switch ($mod) {
             elseif (count($lng_edit[$name_module]))
                 unset($lng_edit[$name_module]);
             ini_file::save_file($language, $lng_edit);
-            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=reset');
-            exit;
+            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=reset'); exit;
         } else {
             echo '<div class="phdr"><b>' . $lng_list[$language] . '</b>: <a href="index.php?act=languages&amp;mod=phrases&amp;language=' . $language . '&amp;module=' . $name_module . '&amp;symbol=' . $symbol . '"><b>' . $panel_lng['phrases'] . '</b></a> | ' . $panel_lng['reset'] . '</div>' .
                  '<div class="rmenu"><p>';
@@ -523,8 +518,7 @@ switch ($mod) {
         $symbol = isset($_GET['symbol']) ? trim(mb_substr($_GET['symbol'], 0, 1)) : 0;
         $lng_edit = ini_file::parser_edit($language);
         if (!$name_module) {
-            header('Location: index.php?act=languages&do=error');
-            exit;
+            header('Location: index.php?act=languages&do=error'); exit;
         }
         if (isset($_GET['yes'])) {
             $mass_dell = $_SESSION['mass_dell'];
@@ -535,12 +529,10 @@ switch ($mod) {
             if (!count($lng_edit[$name_module]))
                 unset($lng_edit[$name_module]);
             ini_file::save_file($language, $lng_edit);
-            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=massdel');
-            exit;
+            header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start . '&do=massdel'); exit;
         } else {
             if (!$_POST['delch']) {
-                header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start);
-                exit;
+                header('Location: index.php?act=languages&mod=phrases&language=' . $language . '&module=' . $name_module . '&symbol=' . $symbol . '&start=' . $start); exit;
             }
             foreach ($_POST['delch'] as $key) {
                 $mass_dell[] = ini_file::key_filter($key);

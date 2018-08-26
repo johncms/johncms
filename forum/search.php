@@ -38,8 +38,8 @@ switch ($act) {
         */
         if (core::$user_id) {
             if (isset($_POST['submit'])) {
-                mysql_query("DELETE FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
-                header('Location: search.php');
+                $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
+                header('Location: search.php'); exit;
             } else {
                 echo '<form action="search.php?act=reset" method="post">' .
                      '<div class="rmenu">' .
@@ -58,15 +58,12 @@ switch ($act) {
         Принимаем данные, выводим форму поиска
         -----------------------------------------------------------------
         */
-        $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-        $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
-        $search = $search_post ? $search_post : $search_get;
-        //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
+        $search = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
-        echo '<div class="gmenu"><form action="search.php" method="post"><p>' .
-             '<input type="text" value="' . ($search ? functions::checkout($search) : '') . '" name="search" />' .
-             '<input type="submit" value="' . $lng['search'] . '" name="submit" /><br />' .
+        echo '<div class="gmenu"><form action="search.php" method="get"><p>' .
+             '<input type="text" value="' . ($search ? _e($search) : '') . '" name="search" />' .
+             '<input type="submit" value="' . $lng['search'] . '" /><br />' .
              '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . $lng_forum['search_topic_name'] .
              '</p></form></div>';
 
@@ -85,37 +82,45 @@ switch ($act) {
             */
             $array = explode(' ', $search);
             $count = count($array);
-            $query = mysql_real_escape_string($search);
-            $total = mysql_result(mysql_query("
+            $query = $db->quote($search);
+            $stmt = $db->query("
                 SELECT COUNT(*) FROM `forum`
-                WHERE MATCH (`text`) AGAINST ('$query' IN BOOLEAN MODE)
+                WHERE MATCH (`text`) AGAINST (? IN BOOLEAN MODE)
                 AND `type` = '" . ($search_t ? 't' : 'm') . "'" . ($rights >= 7 ? "" : " AND `close` != '1'
-            ")), 0);
+            "));
+            $stmt->execute([
+                $query
+            ]);
+            $total = $stmt->fetchColumn()
             echo '<div class="phdr">' . $lng['search_results'] . '</div>';
-            if ($total > $kmess)
+            if ($total > $kmess) {
                 echo '<div class="topmenu">' . functions::display_pagination('search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+            }
             if ($total) {
                 $to_history = true;
-                $req = mysql_query("
-                    SELECT *, MATCH (`text`) AGAINST ('$query' IN BOOLEAN MODE) as `rel`
+                $stmt = $db->prepare("
+                    SELECT *, MATCH (`text`) AGAINST (? IN BOOLEAN MODE) as `rel`
                     FROM `forum`
-                    WHERE MATCH (`text`) AGAINST ('$query' IN BOOLEAN MODE)
+                    WHERE MATCH (`text`) AGAINST (? IN BOOLEAN MODE)
                     AND `type` = '" . ($search_t ? 't' : 'm') . "'
                     ORDER BY `rel` DESC
                     LIMIT $start, $kmess
                 ");
+                $stmt->execute([
+                    $query,
+                    $query
+                ]);
                 $i = 0;
-                while (($res = mysql_fetch_assoc($req)) !== false) {
+                while ($res = $stmt->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     if (!$search_t) {
                         // Поиск только в тексте
-                        $req_t = mysql_query("SELECT `id`,`text` FROM `forum` WHERE `id` = '" . $res['refid'] . "'");
-                        $res_t = mysql_fetch_assoc($req_t);
-                        echo '<b>' . $res_t['text'] . '</b><br />';
+                        $res_t = $db->query("SELECT `id`,`text` FROM `forum` WHERE `id` = '" . $res['refid'] . "' LIMIT 1")->fetch();
+                        echo '<b>' . _e($res_t['text']) . '</b><br />';
                     } else {
                         // Поиск в названиях тем
-                        $req_p = mysql_query("SELECT `text` FROM `forum` WHERE `refid` = '" . $res['id'] . "' ORDER BY `id` ASC LIMIT 1");
-                        $res_p = mysql_fetch_assoc($req_p);
+                        $res_p = $db->query("SELECT `text` FROM `forum` WHERE `refid` = '" . $res['id'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
+                        $res['text'] = _e($res['text']);
                         foreach ($array as $val) {
                             $res['text'] = ReplaceKeywords($val, $res['text']);
                         }
@@ -124,8 +129,14 @@ switch ($act) {
                     echo '<a href="../users/profile.php?user=' . $res['user_id'] . '">' . $res['from'] . '</a> ';
                     echo ' <span class="gray">(' . functions::display_date($res['time']) . ')</span><br/>';
                     $text = $search_t ? $res_p['text'] : $res['text'];
-                    foreach ($array as $srch) if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) break;
-                    if (!isset($pos) || $pos < 100) $pos = 100;
+                    foreach ($array as $srch) {
+                        if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {
+                            break;
+                        }
+                    }
+                    if (!isset($pos) || $pos < 100) {
+                        $pos = 100;
+                    }
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                     $text = functions::checkout(mb_substr($text, ($pos - 100), 400), 1);
                     if (!$search_t) {
@@ -134,8 +145,9 @@ switch ($act) {
                         }
                     }
                     echo $text;
-                    if (mb_strlen($res['text']) > 500)
+                    if (mb_strlen($res['text']) > 500) {
                         echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+                    }
                     echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . $lng_forum['to_topic'] . '</a>' . ($search_t ? ''
                             : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . $lng_forum['to_post'] . '</a>');
                     echo '</div>';
@@ -156,22 +168,27 @@ switch ($act) {
         -----------------------------------------------------------------
         */
         if (core::$user_id) {
-            $req = mysql_query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search' LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $history = unserialize($res['val']);
                 // Добавляем запрос в историю
                 if ($to_history && !in_array($search, $history)) {
                     if (count($history) > 20) array_shift($history);
                     $history[] = $search;
-                    mysql_query("UPDATE `cms_users_data` SET
-                        `val` = '" . mysql_real_escape_string(serialize($history)) . "'
+                    $stmt = $db->prepare("UPDATE `cms_users_data` SET
+                        `val` = ?
                         WHERE `user_id` = '" . core::$user_id . "' AND `key` = 'forum_search'
                         LIMIT 1
                     ");
+                    $stmt->execute([
+                        serialize($history)
+                    ]);
                 }
                 sort($history);
-                foreach ($history as $val) $history_list[] = '<a href="search.php?search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
+                foreach ($history as $val) {
+                    $history_list[] = '<a href="search.php?search=' . urlencode($val) . '">' . _e($val) . '</a>';
+                }
                 // Показываем историю запросов
                 echo '<div class="topmenu">' .
                      '<b>' . core::$lng['search_history'] . '</b> <span class="red"><a href="search.php?act=reset">[x]</a></span><br />' .
@@ -179,11 +196,14 @@ switch ($act) {
                      '</div>';
             } elseif ($to_history) {
                 $history[] = $search;
-                mysql_query("INSERT INTO `cms_users_data` SET
+                $stmt = $db->prepare("INSERT INTO `cms_users_data` SET
                     `user_id` = '" . core::$user_id . "',
                     `key` = 'forum_search',
-                    `val` = '" . mysql_real_escape_string(serialize($history)) . "'
+                    `val` = ?
                 ");
+                $stmt->execute([
+                    serialize($history)
+                ]);
             }
         }
 

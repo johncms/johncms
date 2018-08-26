@@ -65,8 +65,11 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
         echo '<p><font color="#FF0000"><b>' . $lng_gal['gallery_closed'] . '</b></font></p>';
     }
     if ($id) {
-        $type = mysql_query("SELECT * FROM `gallery` WHERE `id` = '$id' LIMIT 1");
-        $ms = mysql_fetch_assoc($type);
+        $stmt = $db->query("SELECT * FROM `gallery` WHERE `id` = '$id' LIMIT 1");
+        if (!$stmt->rowCount()) {
+            header('Location: index.php'); exit;
+        }
+        $ms = $stmt->fetch();
         switch ($ms['type']) {
             case 'rz':
                 /*
@@ -74,16 +77,14 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 Просмотр раздела
                 -----------------------------------------------------------------
                 */
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | ' . $ms['text'] . '</div>';
-                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id'"),
-                    0);
+                echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | ' . _e($ms['text']) . '</div>';
+                $total = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id'")->fetchColumn();
                 if ($total) {
-                    $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
-                    while ($res = mysql_fetch_assoc($req)) {
+                    $stmt = $db->query("SELECT * FROM `gallery` WHERE `type` = 'al' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
+                    while ($res = $stmt->fetch()) {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        $total_f = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '" . $res['id'] . "'"),
-                            0);
-                        echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> (' . $total_f . ')</div>';
+                        $total_f = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '" . $res['id'] . "'")->fetchColumn();
+                        echo '<a href="index.php?id=' . $res['id'] . '">' . _e($res['text']) . '</a> (' . $total_f . ')</div>';
                         ++$i;
                     }
                 } else {
@@ -103,7 +104,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                     echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_section'] . "</a><br/>";
                     echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_section'] . "</a><br/>";
                 }
-                echo "<a href='index.php'>В галерею</a></p>";
+                echo "<a href='index.php'>" . $lng['back'] . "</a></p>";
                 break;
 
             case 'al':
@@ -128,13 +129,11 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                     }
                 }
 
-                $rz = mysql_query("SELECT * FROM `gallery` WHERE type='rz' AND  id='" . $ms['refid'] . "';");
-                $rz1 = mysql_fetch_array($rz);
-                echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | <a href="index.php?id=' . $ms['refid'] . '">' . $rz1['text'] . '</a> | ' . $ms['text'] . '</div>';
-                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id'"),
-                    0);
-                $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
-                while ($fot1 = mysql_fetch_array($req)) {
+                $rz1 = $db->query("SELECT * FROM `gallery` WHERE type='rz' AND  id='" . $ms['refid'] . "' LIMIT 1;")->fetch();
+                echo '<div class="phdr"><a href="index.php"><b>' . $lng['gallery'] . '</b></a> | <a href="index.php?id=' . $ms['refid'] . '">' . _e($rz1['text']) . '</a> | ' . _e($ms['text']) . '</div>';
+                $total = $db->query("SELECT COUNT(*) FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id'")->fetchColumn();
+                $stmt = $db->query("SELECT * FROM `gallery` WHERE `type` = 'ft' AND `refid` = '$id' ORDER BY `time` DESC LIMIT $start, $kmess");
+                while ($fot1 = $stmt->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     if (file_exists('foto/' . $fot1['name'])) {
                         echo '<a href="index.php?id=' . $fot1['id'] . '">';
@@ -207,7 +206,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         $fotsz = filesize("foto/$ms[name]");
                         echo '</a>';
                         if (!empty($fot1['text'])) {
-                            echo "$fot1[text]<br/>";
+                            echo _e($fot1['text']) . '<br/>';
                         }
                         if ($rights >= 6) {
                             echo "<a href='index.php?act=edf&amp;id=" . $fot1['id'] . "'>" . $lng['edit'] . "</a> | <a href='index.php?act=delf&amp;id=" . $fot1['id'] . "'>" . $lng['delete'] . "</a><br/>";
@@ -227,10 +226,8 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                         '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
-                if (($user_id && $rz1['user'] == 1 && $ms['text'] == $login && !$ban['1'] && !$ban['14']) || $rights >= 6) {
-                    echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br/>';
-                }
                 if ($rights >= 6) {
+                    echo '<a href="index.php?act=upl&amp;id=' . $id . '">' . $lng_gal['upload_photo'] . '</a><br/>';
                     echo "<a href='index.php?act=del&amp;id=" . $id . "'>" . $lng_gal['delete_album'] . "</a><br/>";
                     echo "<a href='index.php?act=edit&amp;id=" . $id . "'>" . $lng_gal['edit_album'] . "</a><br/>";
                 }
@@ -303,9 +300,9 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 $sizs = GetImageSize("foto/$ms[name]");
                 $fwidth = $sizs[0];
                 $fheight = $sizs[1];
-                echo "<p>" . $lng['description'] . ": $ms[text]<br/>";
-                echo $lng_gal['dimensions'] . ": $fwidth*$fheight пкс.<br/>";
-                echo $lng_gal['weight'] . ": $fotsz кб.<br/>";
+                echo "<p>" . $lng['description'] . ": " . _e($ms['text']) . "<br/>";
+                echo $lng_gal['dimensions'] . ": $fwidth*$fheight pixel.<br/>";
+                echo $lng_gal['weight'] . ": $fotsz KB.<br/>";
                 echo $lng['date'] . ': ' . functions::display_date($ms['time']) . '<br/>';
                 echo $lng_gal['posted_by'] . ": $ms[avtor]<br/>";
                 echo "<a href='foto/$ms[name]'>" . $lng['download'] . "</a><br /><br />";
@@ -313,7 +310,7 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
                 echo "<a href='index.php'>" . $lng_gal['to_gallery'] . "</a></p>";
                 break;
             default :
-                header("location: index.php");
+                header("location: index.php"); exit;
                 break;
         }
     } else {
@@ -324,13 +321,12 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
         */
         echo '<p><a href="index.php?act=new">' . $lng_gal['new_photo'] . '</a> (' . counters::gallery(1) . ')</p>';
         echo '<div class="phdr"><b>' . $lng['gallery'] . '</b></div>';
-        $req = mysql_query("SELECT * FROM `gallery` WHERE `type` = 'rz'");
-        $total = mysql_num_rows($req);
-        while ($res = mysql_fetch_assoc($req)) {
+        $stmt = $db->query("SELECT * FROM `gallery` WHERE `type` = 'rz'");
+        $total = $stmt->rowCount();
+        while ($res = $stmt->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $al = mysql_query("SELECT * FROM `gallery` WHERE type='al' AND  refid='" . $res['id'] . "'");
-            $countal = mysql_num_rows($al);
-            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> (' . $countal . ')</div>';
+            $countal = $db->query("SELECT COUNT(*) FROM `gallery` WHERE type='al' AND  refid='" . $res['id'] . "'")->fetchColumn();
+            echo '<a href="index.php?id=' . $res['id'] . '">' . _e($res['text']) . '</a> (' . $countal . ')</div>';
             ++$i;
         }
         echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div><p>';
@@ -342,4 +338,3 @@ if (in_array($act, $array) && file_exists($act . '.php')) {
 }
 
 require('../incfiles/end.php');
-?>

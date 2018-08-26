@@ -12,23 +12,26 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../incfiles/head.php');
-if (empty($_GET['id'])) {
+if (!$id) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
     exit;
 }
 
-
-
 // Запрос сообщения
-$req = mysql_query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+$stmt = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
 WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($rights >= 7 ? "" : " AND `forum`.`close` != '1'") . " LIMIT 1");
-$res = mysql_fetch_array($req);
+if (!$stmt->rowCount()) {
+    echo functions::display_error($lng['error_wrong_data']);
+    require('../incfiles/end.php');
+    exit;
+}
+$res = $stmt->fetch();
 
 // Запрос темы
-$them = mysql_fetch_assoc(mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'"));
-echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . $them['text'] . '</div><div class="menu">';
+$them = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "' LIMIT 1")->fetch();
+echo '<div class="phdr"><b>' . $lng_forum['topic'] . ':</b> ' . _e($them['text']) . '</div><div class="menu">';
 
 // Данные пользователя
 if ($set_user['avatar']) {
@@ -74,17 +77,16 @@ if ($set_user['avatar'])
     echo '</td></tr></table>';
 
 // Вывод текста поста
-$text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-$text = nl2br($text);
-$text = bbcode::tags($text);
-if ($set_user['smileys'])
+$text = functions::checkout($res['text'], 1, 1);
+if ($set_user['smileys']) {
     $text = functions::smileys($text, ($res['rights'] >= 1) ? 1 : 0);
-echo $text . '';
+}
+echo $text;
 
 // Если есть прикрепленный файл, выводим его описание
-$freq = mysql_query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
-if (mysql_num_rows($freq) > 0) {
-    $fres = mysql_fetch_assoc($freq);
+$stmt = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
+if ($stmt->rowCount()) {
+    $fres = $stmt->fetch();
     $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
     echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . $lng_forum['attached_file'] . ':';
     // Предпросмотр изображений
@@ -101,7 +103,7 @@ if (mysql_num_rows($freq) > 0) {
     } else {
         echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
     }
-    echo ' (' . $fls . ' кб.)<br/>';
+    echo ' (' . $fls . ' KB.)<br/>';
     echo $lng_forum['downloads'] . ': ' . $fres['dlcount'] . ' ' . $lng_forum['time'] . '</div>';
     $file_id = $fres['id'];
 }
@@ -109,6 +111,6 @@ if (mysql_num_rows($freq) > 0) {
 echo '</div>';
 
 // Вычисляем, на какой странице сообщение?
-$page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'"), 0) / $kmess);
+$page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'")->fetchColumn() / $kmess);
 echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng_forum['back_to_topic'] . '</a></div>';
 echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';

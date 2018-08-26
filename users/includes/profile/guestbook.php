@@ -54,7 +54,5 @@ $comm = new comments($arg);
 -----------------------------------------------------------------
 */
 if(!$mod && $user['id'] == $user_id && $user['comm_count'] != $user['comm_old']){
-    mysql_query("UPDATE `users` SET `comm_old` = '" . $user['comm_count'] . "' WHERE `id` = '$user_id'");
+    $db->exec("UPDATE `users` SET `comm_old` = '" . $user['comm_count'] . "' WHERE `id` = '$user_id' LIMIT 1");
 }
-
-?>

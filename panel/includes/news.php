@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['news_on_frontpage'] . '</div>';
 
@@ -35,11 +34,13 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
         'tags' => '1',
         'kom' => '1'
     );
-    @mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'news'");
-    mysql_query("INSERT INTO `cms_settings` SET
-        `key` = 'news',
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+    $stmt = $db->prepare("UPDATE `cms_settings` SET
+        `val` = ?
+        WHERE `key` = 'news'
     ");
+    $stmt->execute([
+        serialize($settings)
+    ]);
     echo '<div class="rmenu"><p>' . $lng['settings_default'] . '</p></div>';
 } elseif (isset($_POST['submit'])) {
     // Принимаем настройки из формы
@@ -51,10 +52,13 @@ if (!isset($set['news']) || isset($_GET['reset'])) {
     $settings['smileys'] = isset($_POST['smileys']);
     $settings['tags'] = isset($_POST['tags']);
     $settings['kom'] = isset($_POST['kom']);
-    mysql_query("UPDATE `cms_settings` SET
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+    $stmt = $db->prepare("UPDATE `cms_settings` SET
+        `val` = ?
         WHERE `key` = 'news'
     ");
+    $stmt->execute([
+        serialize($settings)
+    ]);
     echo '<div class="gmenu"><p>' . $lng['settings_saved'] . '</p></div>';
 } else {
     // Получаем сохраненные настройки

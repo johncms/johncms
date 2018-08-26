@@ -1,9 +1,10 @@
 <?php
+defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 // Проверяем наличие комментируемого объекта
-$req_obj = mysql_query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
-if (mysql_num_rows($req_obj)) {
-    $res_obj = mysql_fetch_assoc($req_obj);
+$stmt = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' LIMIT 1");
+if ($stmt->rowCount()) {
+    $res_obj = $stmt->fetch();
 
     /*
     -----------------------------------------------------------------
@@ -24,8 +25,7 @@ if (mysql_num_rows($req_obj)) {
     -----------------------------------------------------------------
     */
     unset($_SESSION['ref']);
-    $req_a = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '" . $res_obj['album_id'] . "'");
-    $res_a = mysql_fetch_assoc($req_a);
+    $res_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '" . $res_obj['album_id'] . "' LIMIT 1")->fetch();
     if (($res_a['access'] == 1 && $owner['id'] != $user_id && $rights < 7) || ($res_a['access'] == 2 && $rights < 7 && (!isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user_id)) {
         // Если доступ закрыт
         require('../incfiles/head.php');
@@ -75,7 +75,7 @@ if (mysql_num_rows($req_obj)) {
     -----------------------------------------------------------------
     */
     if(core::$user_id == $owner['id'] && $res_obj['unread_comments'])
-        mysql_query("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
+        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
 
     /*
     -----------------------------------------------------------------
@@ -91,7 +91,7 @@ if (mysql_num_rows($req_obj)) {
     -----------------------------------------------------------------
     */
     if($comm->added && core::$user_id != $owner['id'])
-        mysql_query("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
+        $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '$img' LIMIT 1");
 } else {
     echo functions::display_error($lng['error_wrong_data']);
 }

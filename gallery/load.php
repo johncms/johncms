@@ -11,11 +11,10 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (!$user_id || $ban['1'] || $ban['14']) {
-    header("location: index.php");
-    exit;
+if (!$user_id || isset($ban['1']) || isset($ban['14'])) {
+    header("location: index.php"); exit;
 }
-if (empty($_GET['id'])) {
+if (!$id) {
     echo "ERROR<br/><a href='index.php'>Back</a><br/>";
     require_once('../incfiles/end.php');
     exit;
@@ -29,17 +28,16 @@ if ($flood) {
     exit;
 }
 
-$type = mysql_query("select * from `gallery` where id='" . $id . "';");
-$ms = mysql_fetch_array($type);
-if ($ms['type'] != "al") {
+$stmt = $db->query("select * from `gallery` where id='" . $id . "' AND `type` = 'al' LIMIT 1;");
+if ($stmt->rowCount()) {
     echo "ERROR<br/><a href='index.php'>Back</a><br/>";
     require_once('../incfiles/end.php');
     exit;
 }
-$rz = mysql_query("select * from `gallery` where type='rz' and id='" . $ms['refid'] . "';");
-$rz1 = mysql_fetch_array($rz);
-if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || $rights >= 6) {
-    $text = functions::check($_POST['text']);
+$ms = $stmt->fetch();
+$rz1 = $db->query("select * from `gallery` where type='rz' and id='" . $ms['refid'] . "' LIMIT 1;")->fetch();
+if ($rights >= 6) {
+    $text = isset($_POST['text']) ? functions::checkin($_POST['text']) : '';
     $dopras = array (
         "gif",
         "jpg",
@@ -72,9 +70,6 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
             require_once('../incfiles/end.php');
             exit;
         }
-        if ($rz1['user'] == 1 && $ms['text'] == $login) {
-            $fname = "$_SESSION[pid].$fname";
-        }
         if (file_exists("foto/$fname")) {
             $fname = time() . $fname;
         }
@@ -83,14 +78,23 @@ if ((!empty($_SESSION['uid']) && $rz1['user'] == 1 && $ms['text'] == $login) || 
             @chmod("$ch", 0777);
             @chmod("foto/$ch", 0777);
             echo "Фото загружено!<br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_album'] . "</a><br/>";
-            mysql_query("insert into `gallery` values(0,'" . $id . "','" . time() . "','ft','" . $login . "','" . $text . "','" . $ch . "','','','');");
-            mysql_query("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user_id . "'");
+            $stmt = $db->prepare("INSERT INTO `gallery` SET 
+                `refid` = '" . $id . "',
+                `time`  = '" . time() . "',
+                `type`  = 'ft',
+                `avtor` = ?,
+                `text`  = ?,
+                `name`  = '" . $ch . "'
+            ");
+            $stmt->execute([
+                $login,
+                $text
+            ]);
+            $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '" . $user_id . "'");
         } else {
             echo $lng_gal['error_uploading_photo'] . "<br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_album'] . "</a><br/>";
         }
     }
 } else {
-    header("location: index.php");
+    header("location: index.php"); exit;
 }
-
-?>

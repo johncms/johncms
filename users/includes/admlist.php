@@ -20,11 +20,11 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['administration'] . '</div>';
-$req = mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= 1");
-$total = mysql_result($req, 0);
-$req = mysql_query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT $start, $kmess");
-for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
-    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+$total = $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= 1")->fetchColumn();
+$stmt = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT $start, $kmess");
+$i = 0;
+while ($res = $stmt->fetch()) {
+    echo ++$i % 2 ? '<div class="list2">' : '<div class="list1">';
     echo functions::display_user($res) . '</div>';
 }
 echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';

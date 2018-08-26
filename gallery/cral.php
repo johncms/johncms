@@ -12,28 +12,40 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
-    if (empty($_GET['id'])) {
-        echo "ERROR<br/><a href='index.php'>Back</a><br/>";
-        require_once('../incfiles/end.php');
-        exit;
+    $error = true;
+    if ($id) {
+        $stmt = $db->query("SELECT * from `gallery` where `id`='" . $id . "' AND `type` = 'rz' LIMIT 1;");
+        if ($stmt->rowCount()) {
+            $error = false;
+            $ms = $stmt->fetch();
+        }
     }
-    $type = mysql_query("select * from `gallery` where id='" . $id . "';");
-    $ms = mysql_fetch_array($type);
-    if ($ms['type'] != "rz") {
-        echo "ERROR<br/><a href='index.php'>Back</a><br/>";
-        require_once('../incfiles/end.php');
-        exit;
-    }
-    if (isset($_POST['submit'])) {
-        $text = functions::check($_POST['text']);
-        mysql_query("insert into `gallery` values(0,'" . $id . "','" . time() . "','al','','" . $text . "','','','','');");
-        header("location: index.php?id=$id");
+    if (!$error) {
+        if (isset($_POST['submit'])) {
+            $text = isset($_POST['text']) ? functions::checkin($_POST['text']) : '';
+            if ($text) {
+                $stmt = $db->prepare("INSERT INTO `gallery` SET 
+                    `refid` = '" . $id . "',
+                    `time`  = '" . time() . "',
+                    `type`  = 'al',
+                    `avtor` = '',
+                    `text`  = ?,
+                    `name`  = ''
+                ");
+                $stmt->execute([
+                    $text
+                ]);
+                header("location: index.php?id=$id"); exit;
+            } else {
+                echo functions::display_error($lng['error_empty_fields']);
+            }
+        } else {
+            echo $lng_gal['create_album'] . "<br/><form action='index.php?act=cral&amp;id=" . $id .
+                "' method='post'>" . $lng['title'] . ":<br/><input type='text' name='text'/><br/><input type='submit' name='submit' value='" . $lng['save'] . "'/></form><br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_section'] . "</a><br/>";
+        }
     } else {
-        echo $lng_gal['create_album'] . "<br/><form action='index.php?act=cral&amp;id=" . $id .
-            "' method='post'>" . $lng['title'] . ":<br/><input type='text' name='text'/><br/><input type='submit' name='submit' value='" . $lng['save'] . "'/></form><br/><a href='index.php?id=" . $id . "'>" . $lng_gal['to_section'] . "</a><br/>";
+        echo "ERROR<br/><a href='index.php'>Back</a><br/>";
     }
 } else {
-    header("location: index.php");
+    header("location: index.php"); exit;
 }
-
-?>

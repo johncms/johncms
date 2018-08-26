@@ -12,13 +12,13 @@
 define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+$referer = isset($_SERVER['HTTP_REFERER']) ? _e($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
 
 if (isset($_POST['submit'])) {
     setcookie('cuid', '');
     setcookie('cups', '');
     session_destroy();
-    header('Location: index.php');
+    header('Location: index.php'); exit;
 } else {
     require('incfiles/head.php');
     echo'<div class="rmenu">' .

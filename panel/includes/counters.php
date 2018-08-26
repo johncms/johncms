@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 switch ($mod) {
@@ -25,18 +24,18 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
+            $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
+            if ($stmt->rowCount()) {
                 if (isset($_GET['go']) && $_GET['go'] == 'on') {
-                    mysql_query("UPDATE `cms_counters` SET `switch` = '1' WHERE `id` = '$id'");
-                    $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `switch` = '1' WHERE `id` = '$id' LIMIT 1");
+                    $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
                 } elseif (isset($_GET['go']) && $_GET['go'] == 'off') {
-                    mysql_query("UPDATE `cms_counters` SET `switch` = '0' WHERE `id` = '$id'");
-                    $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `switch` = '0' WHERE `id` = '$id'");
+                    $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
                 }
-                $res = mysql_fetch_array($req);
+                $res = $stmt->fetch();
                 echo '<div class="phdr"><a href="index.php?act=counters"><b>' . $lng['counters'] . '</b></a> | ' . $lng['viewing'] . '</div>';
-                echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
+                echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . _e($res['name']) . '</b></div>';
                 echo ($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . $lng['counter_mod1'] . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . $lng['counter_mod2'] . '</h3>' . $res['link2'] . '</p>';
                 echo '<p><h3>' . $lng['display_mode'] . '</h3>';
@@ -70,21 +69,21 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT `sort` FROM `cms_counters` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT `sort` FROM `cms_counters` WHERE `id` = '$id'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $sort = $res['sort'];
-                $req = mysql_query("SELECT * FROM `cms_counters` WHERE `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    mysql_query("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
-                    mysql_query("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
-        header('Location: index.php?act=counters');
+        header('Location: index.php?act=counters'); exit;
         break;
 
     case 'down':
@@ -94,21 +93,21 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT `sort` FROM `cms_counters` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT `sort` FROM `cms_counters` WHERE `id` = '$id'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $sort = $res['sort'];
-                $req = mysql_query("SELECT * FROM `cms_counters` WHERE `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    mysql_query("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
-                    mysql_query("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
                 }
             }
         }
-        header('Location: index.php?act=counters');
+        header('Location: index.php?act=counters'); exit;
         break;
 
     case 'del':
@@ -122,18 +121,18 @@ switch ($mod) {
             require('../incfiles/end.php');
             exit;
         }
-        $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
-        if (mysql_num_rows($req)) {
+        $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
+        if ($stmt->rowCount()) {
             if (isset($_POST['submit'])) {
-                mysql_query("DELETE FROM `cms_counters` WHERE `id` = '$id'");
+                $db->exec("DELETE FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
                 echo '<p>' . $lng['counter_deleted'] . '<br/><a href="index.php?act=counters">' . $lng['continue'] . '</a></p>';
                 require('../incfiles/end.php');
                 exit;
             } else {
                 echo '<form action="index.php?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
                 echo '<div class="phdr"><a href="index.php?act=counters"><b>' . $lng['counters'] . '</b></a> | ' . $lng['delete'] . '</div>';
-                $res = mysql_fetch_array($req);
-                echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . $lng['delete_confirmation'] . '</p><p><input type="submit" value="' . $lng['delete'] . '" name="submit" /></p></div>';
+                $res = $stmt->fetch();
+                echo '<div class="rmenu"><p><h3>' . _e($res['name']) . '</h3>' . $lng['delete_confirmation'] . '</p><p><input type="submit" value="' . $lng['delete'] . '" name="submit" /></p></div>';
                 echo '<div class="phdr"><a href="index.php?act=counters">' . $lng['cancel'] . '</a></div></form>';
             }
         } else {
@@ -151,7 +150,7 @@ switch ($mod) {
         */
         if (isset($_POST['submit'])) {
             // Предварительный просмотр
-            $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 25) : '';
+            $name = isset($_POST['name']) ? trim(mb_substr($_POST['name'], 0, 25)) : '';
             $link1 = isset($_POST['link1']) ? trim($_POST['link1']) : '';
             $link2 = isset($_POST['link2']) ? trim($_POST['link2']) : '';
             $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
@@ -161,14 +160,14 @@ switch ($mod) {
                 exit;
             }
             echo '<div class="phdr"><a href="index.php?act=counters"><b>' . $lng['counters'] . '</b></a> | ' . $lng['preview'] . '</div>' .
-                '<div class="menu"><p><h3>' . $lng['title'] . '</h3><b>' . functions::check($name) . '</b></p>' .
+                '<div class="menu"><p><h3>' . $lng['title'] . '</h3><b>' . _e($name) . '</b></p>' .
                 '<p><h3>' . $lng['counter_mod1'] . '</h3>' . $link1 . '</p>' .
                 '<p><h3>' . $lng['counter_mod2'] . '</h3>' . $link2 . '</p></div>' .
                 '<div class="rmenu">' . $lng['counter_preview_help'] . '</div>' .
                 '<form action="index.php?act=counters&amp;mod=add" method="post">' .
-                '<input type="hidden" value="' . $name . '" name="name" />' .
-                '<input type="hidden" value="' . htmlspecialchars($link1) . '" name="link1" />' .
-                '<input type="hidden" value="' . htmlspecialchars($link2) . '" name="link2" />' .
+                '<input type="hidden" value="' . _e($name) . '" name="name" />' .
+                '<input type="hidden" value="' . _e($link1) . '" name="link1" />' .
+                '<input type="hidden" value="' . _e($link2) . '" name="link2" />' .
                 '<input type="hidden" value="' . $mode . '" name="mode" />';
             if ($id)
                 echo '<input type="hidden" value="' . $id . '" name="id" />';
@@ -181,12 +180,12 @@ switch ($mod) {
             $mode = 0;
             if ($id) {
                 // запрос к базе, если счетчик редактируется
-                $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
-                if (mysql_num_rows($req) > 0) {
-                    $res = mysql_fetch_array($req);
+                $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $name = $res['name'];
-                    $link1 = htmlspecialchars($res['link1']);
-                    $link2 = htmlspecialchars($res['link2']);
+                    $link1 = $res['link1'];
+                    $link2 = $res['link2'];
                     $mode = $res['mode'];
                     $switch = 1;
                 } else {
@@ -197,9 +196,9 @@ switch ($mod) {
             }
             echo '<form action="index.php?act=counters&amp;mod=edit" method="post">' .
                 '<div class="phdr"><a href="index.php?act=counters"><b>' . $lng['counters'] . '</b></a> | ' . $lng['add'] . '</div>' .
-                '<div class="menu"><p><h3>' . $lng['title'] . '</h3><input type="text" name="name" value="' . $name . '" /></p>' .
-                '<p><h3>' . $lng['counter_mod1'] . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br /><small>' . $lng['counter_mod1_description'] . '</small></p>' .
-                '<p><h3>' . $lng['counter_mod2'] . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br /><small>' . $lng['counter_mod2_description'] . '</small></p>' .
+                '<div class="menu"><p><h3>' . $lng['title'] . '</h3><input type="text" name="name" value="' . _e($name) . '" /></p>' .
+                '<p><h3>' . $lng['counter_mod1'] . '</h3><textarea rows="3" name="link1">' . _e($link1) . '</textarea><br /><small>' . $lng['counter_mod1_description'] . '</small></p>' .
+                '<p><h3>' . $lng['counter_mod2'] . '</h3><textarea rows="3" name="link2">' . _e($link2) . '</textarea><br /><small>' . $lng['counter_mod2_description'] . '</small></p>' .
                 '<p><h3>' . $lng['view_mode'] . '</h3>' . '<input type="radio" value="1" ' . ($mode == 0 || $mode == 1 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . $lng['default'] . '<br />' .
                 '<small>' . $lng['counter_mod_default_help'] . '</small></p><p>' .
                 '<input type="radio" value="2" ' . ($mode == 2 ? 'checked="checked" ' : '') . 'name="mode" />&#160;' . $lng['counter_mod1'] . '<br />' .
@@ -218,7 +217,7 @@ switch ($mod) {
         Запись счетчика в базу
         -----------------------------------------------------------------
         */
-        $name = isset($_POST['name']) ? mb_substr($_POST['name'], 0, 25) : '';
+        $name = isset($_POST['name']) ? trim(mb_substr($_POST['name'], 0, 25)) : '';
         $link1 = isset($_POST['link1']) ? $_POST['link1'] : '';
         $link2 = isset($_POST['link2']) ? $_POST['link2'] : '';
         $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
@@ -229,34 +228,44 @@ switch ($mod) {
         }
         if ($id) {
             // Режим редактирования
-            $req = mysql_query("SELECT * FROM `cms_counters` WHERE `id` = '$id'");
-            if (mysql_num_rows($req) != 1) {
+            $stmt = $db->query("SELECT * FROM `cms_counters` WHERE `id` = '$id' LIMIT 1");
+            if (!$stmt->rowCount()) {
                 echo functions::display_error($lng['error_wrong_data']);
                 require_once('../incfiles/end.php');
                 exit;
             }
-            mysql_query("UPDATE `cms_counters` SET
-            `name` = '" . functions::check($name) . "',
-            `link1` = '" . mysql_real_escape_string($link1) . "',
-            `link2` = '" . mysql_real_escape_string($link2) . "',
+            $stmt = $db->prepare("UPDATE `cms_counters` SET
+            `name` = ?,
+            `link1` = ?,
+            `link2` = ?,
             `mode` = '$mode'
             WHERE `id` = '$id'");
+            $stmt->execute([
+                $name,
+                $link1,
+                $link2
+            ]);
         } else {
             // Получаем значение сортировки
-            $req = mysql_query("SELECT `sort` FROM `cms_counters` ORDER BY `sort` DESC LIMIT 1");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
+            $stmt = $db->query("SELECT `sort` FROM `cms_counters` ORDER BY `sort` DESC LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $sort = $res['sort'] + 1;
             } else {
                 $sort = 1;
             }
             // Режим добавления
-            mysql_query("INSERT INTO `cms_counters` SET
-            `name` = '" . functions::check($name) . "',
+            $stmt = $db->prepare("INSERT INTO `cms_counters` SET
+            `name` = ?,
             `sort` = '$sort',
-            `link1` = '" . mysql_real_escape_string($link1) . "',
-            `link2` = '" . mysql_real_escape_string($link2) . "',
+            `link1` = ?,
+            `link2` = ?,
             `mode` = '$mode'");
+            $stmt->execute([
+                $name,
+                $link1,
+                $link2
+            ]);
         }
         echo '<div class="gmenu"><p>' . ($id ? $lng['counter_edit_conf'] : $lng['counter_add_conf']) . '</p></div>';
         break;
@@ -268,13 +277,13 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['counters'] . '</div>';
-        $req = mysql_query("SELECT * FROM `cms_counters` ORDER BY `sort` ASC");
-        if (mysql_num_rows($req)) {
+        $stmt = $db->query("SELECT * FROM `cms_counters` ORDER BY `sort` ASC");
+        if ($stmt->rowCount()) {
             $i = 0;
-            while ($res = mysql_fetch_assoc($req)) {
+            while ($res = $stmt->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../images/' . ($res['switch'] == 1 ? 'green' : 'red') . '.gif" width="16" height="16" class="left"/>&#160;';
-                echo '<a href="index.php?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br />';
+                echo '<a href="index.php?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . _e($res['name']) . '</b></a><br />';
                 echo '<div class="sub"><a href="index.php?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . $lng['up'] . '</a> | ';
                 echo '<a href="index.php?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . $lng['down'] . '</a> | ';
                 echo '<a href="index.php?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . $lng['edit'] . '</a> | ';
@@ -285,4 +294,3 @@ switch ($mod) {
         echo '<div class="phdr"><a href="index.php?act=counters&amp;mod=edit">' . $lng['add'] . '</a></div>';
 }
 echo '<p>' . ($mod ? '<a href="index.php?act=counters">' . $lng['counters'] . '</a><br />' : '') . '<a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>

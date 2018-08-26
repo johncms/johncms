@@ -13,13 +13,12 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
-$set_af = isset($set['antiflood']) ? unserialize($set['antiflood']) : array ();
+$set_af = isset($set['antiflood']) ? unserialize($set['antiflood']) : array();
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['antiflood_settings'] . '</div>';
-if (isset($_POST['submit']) || isset($_POST['save'])) {
+if (isset($_POST['submit'])) {
     // Принимаем данные из формы
     $set_af['mode'] = isset($_POST['mode']) && $_POST['mode'] > 0 && $_POST['mode'] < 5 ? intval($_POST['mode']) : 1;
     $set_af['day'] = isset($_POST['day']) ? intval($_POST['day']) : 10;
@@ -27,25 +26,36 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
     $set_af['dayfrom'] = isset($_POST['dayfrom']) ? intval($_POST['dayfrom']) : 10;
     $set_af['dayto'] = isset($_POST['dayto']) ? intval($_POST['dayto']) : 22;
     // Проверяем правильность ввода данных
-    if ($set_af['day'] < 4)
+    if ($set_af['day'] < 4) {
         $set_af['day'] = 4;
-    if ($set_af['day'] > 300)
+    }
+    if ($set_af['day'] > 300) {
         $set_af['day'] = 300;
-    if ($set_af['night'] < 4)
+    }
+    if ($set_af['night'] < 4) {
         $set_af['night'] = 4;
-    if ($set_af['night'] > 300)
+    }
+    if ($set_af['night'] > 300) {
         $set_af['night'] = 300;
-    if ($set_af['dayfrom'] < 6)
+    }
+    if ($set_af['dayfrom'] < 6) {
         $set_af['dayfrom'] = 6;
-    if ($set_af['dayfrom'] > 12)
+    }
+    if ($set_af['dayfrom'] > 12) {
         $set_af['dayfrom'] = 12;
-    if ($set_af['dayto'] < 17)
+    }
+    if ($set_af['dayto'] < 17) {
         $set_af['dayto'] = 17;
-    if ($set_af['dayto'] > 23)
+    }
+    if ($set_af['dayto'] > 23) {
         $set_af['dayto'] = 23;
-    mysql_query("UPDATE `cms_settings` SET `val` = '" . serialize($set_af) . "' WHERE `key` = 'antiflood' LIMIT 1");
+    }
+    $stmt = $db->prepare("UPDATE `cms_settings` SET `val` = ? WHERE `key` = 'antiflood' LIMIT 1");
+    $stmt->execute([
+        serialize($set_af)
+    ]);
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
-} elseif (empty($set_af) || isset($_GET['reset'])) {
+} elseif (isset($_GET['reset'])) {
     // Устанавливаем настройки по умолчанию (если не заданы в системе)
     echo '<div class="rmenu">' . $lng['settings_default'] . '</div>';
     $set_af['mode'] = 2;
@@ -53,8 +63,10 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
     $set_af['night'] = 30;
     $set_af['dayfrom'] = 10;
     $set_af['dayto'] = 22;
-    @mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'antiflood' LIMIT 1");
-    mysql_query("INSERT INTO `cms_settings` SET `key` = 'antiflood', `val` = '" . serialize($set_af) . "'");
+    $stmt = $db->prepare("UPDATE `cms_settings` SET `val` = ? WHERE `key` = 'antiflood' LIMIT 1");
+    $stmt->execute([
+        serialize($set_af)
+    ]);
 }
 
 /*
@@ -80,4 +92,3 @@ echo '<form action="index.php?act=antiflood" method="post">' .
     '</p><p><br /><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
     '<div class="phdr"><a href="index.php?act=antiflood&amp;reset">' . $lng['reset_settings'] . '</a></div>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>

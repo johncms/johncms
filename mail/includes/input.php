@@ -15,7 +15,7 @@ $textl = $lng['mail'];
 require_once('../incfiles/head.php');
 echo '<div class="phdr"><b>' . $lng_mail['input_messages'] . '</b></div>';
 
-$total = mysql_result(mysql_query("
+$total = $db->query("
 	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)
 	FROM `cms_mail`
 	LEFT JOIN `cms_contact`
@@ -23,10 +23,10 @@ $total = mysql_result(mysql_query("
 	AND `cms_contact`.`user_id`='$user_id'
 	WHERE `cms_mail`.`from_id`='$user_id'
 	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='$user_id'
-	AND `cms_contact`.`ban`!='1' AND `spam`='0'"), 0);
+	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
 
 if ($total) {
-    $req = mysql_query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
+    $stmt = $db->query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
 		FROM `cms_mail`
 		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
 		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id'
@@ -37,22 +37,22 @@ if ($total) {
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY MAX(`cms_mail`.`time`) DESC
 		LIMIT " . $start . "," . $kmess);
-
-    for ($i = 0; $row = mysql_fetch_assoc($req); ++$i) {
-        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail`
+    $i = 0;
+    while ($row = $stmt->fetch()) {
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
             WHERE `user_id`='{$row['id']}'
             AND `from_id`='$user_id'
             AND `delete`!='$user_id'
             AND `sys`!='1'
-        "), 0);
+        ")->fetchColumn();
 
-        $last_msg = mysql_fetch_assoc(mysql_query("SELECT *
+        $last_msg = $db->query("SELECT *
             FROM `cms_mail`
             WHERE `from_id`='$user_id'
             AND `user_id` = '{$row['id']}'
             AND `delete` != '$user_id'
             ORDER BY `id` DESC
-            LIMIT 1"));
+            LIMIT 1")->fetch();
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = functions::checkout($text, 1, 1);
@@ -78,7 +78,7 @@ if ($total) {
         if (!$last_msg['read']) {
             echo '<div class="gmenu">';
         } else {
-            echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
+            echo ++$i % 2 ? '<div class="list1">' : '<div class="list2">';
         }
         echo functions::display_user($row, $arg);
         echo '</div>';

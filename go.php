@@ -13,8 +13,8 @@ define('_IN_JOHNCMS', 1);
 
 require('incfiles/core.php');
 
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
-$url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
+$referer = isset($_SERVER['HTTP_REFERER']) ? _e($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+$url = isset($_REQUEST['url']) ? rawurldecode(trim($_REQUEST['url'])) : false;
 
 if (isset($_GET['lng'])) {
     /*
@@ -45,13 +45,13 @@ if (isset($_GET['lng'])) {
     -----------------------------------------------------------------
     */
     if (isset($_POST['submit'])) {
-        header('Location: ' . $url);
+        header('Location: ' . $url); exit;
     } else {
         require('incfiles/head.php');
         echo '<div class="phdr"><b>' . $lng['external_link'] . '</b></div>' .
              '<div class="rmenu">' .
              '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
-             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
+             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . _e($url) . '</span></p>' .
              '<p>' . $lng['redirect_2'] . '.<br />' .
              $lng['redirect_3'] . ' <span class="green">' . $set['homeurl'] . '</span> ' . $lng['redirect_4'] . '.</p>' .
              '<p><input type="submit" name="submit" value="' . $lng['redirect_5'] . '" /></p>' .
@@ -65,13 +65,13 @@ if (isset($_GET['lng'])) {
     Редирект по рекламной ссылке
     -----------------------------------------------------------------
     */
-    $req = mysql_query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id' LIMIT 1");
+    if ($stmt->rowCount()) {
+        $res = $stmt->fetch();
         $count_link = $res['count'] + 1;
-        mysql_query("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
-        header('Location: ' . $res['link']);
+        $db->exec("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
+        header('Location: ' . $res['link']); exit;
     } else {
-        header("Location: http://johncms.com/index.php?act=404");
+        header("Location: " . $homeurl . "/?err"); exit;
     }
 }

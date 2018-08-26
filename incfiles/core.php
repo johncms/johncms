@@ -13,12 +13,13 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 //Error_Reporting(E_ALL & ~E_NOTICE);
 ini_set('session.use_trans_sid', '0');
 ini_set('arg_separator.output', '&amp;');
-ini_set('display_errors', 'Off');
+// ini_set('display_errors', 'Off');
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
 // Корневая папка
-define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOTPATH', dirname(dirname(__FILE__)) . DS);
 
 /*
 -----------------------------------------------------------------
@@ -28,10 +29,13 @@ define('ROOTPATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
 spl_autoload_register('autoload');
 function autoload($name)
 {
-    $file = ROOTPATH . 'incfiles/classes/' . $name . '.php';
-    if (file_exists($file))
+    $file = ROOTPATH . 'incfiles' . DS . 'classes' . DS . $name . '.php';
+    if (file_exists($file)) {
         require_once($file);
+    }
 }
+
+require_once(ROOTPATH . 'incfiles' . DS . 'functions.php');
 
 /*
 -----------------------------------------------------------------
@@ -45,13 +49,13 @@ new core;
 Получаем системные переменные для совместимости со старыми модулями
 -----------------------------------------------------------------
 */
-$rootpath = ROOTPATH;
 $ip = core::$ip; // Адрес IP
 $agn = core::$user_agent; // User Agent
 $set = core::$system_set; // Системные настройки
 $lng = core::$lng; // Фразы языка
 $is_mobile = core::$is_mobile; // Определение мобильного браузера
 $home = $set['homeurl']; // Домашняя страница
+$db = core::$db;
 
 /*
 -----------------------------------------------------------------
@@ -100,7 +104,7 @@ $headmod = isset($headmod) ? $headmod : '';
 -----------------------------------------------------------------
 */
 if ((core::$system_set['site_access'] == 0 || core::$system_set['site_access'] == 1) && $headmod != 'login' && !core::$user_id) {
-    header('Location: ' . core::$system_set['homeurl'] . '/closed.php');
+    header('Location: ' . core::$system_set['homeurl'] . '/closed.php'); exit;
 }
 
 /*

@@ -25,9 +25,9 @@ echo '<?xml version="1.0" encoding="utf-8"?>' .
      '<language>ru-RU</language>';
 
 // Новости
-$req = mysql_query('SELECT * FROM `news` ORDER BY `time` DESC LIMIT 15;');
-if (mysql_num_rows($req)) {
-    while ($res = mysql_fetch_assoc($req)) {
+$stmt = $db->query('SELECT * FROM `news` ORDER BY `time` DESC LIMIT 15;');
+if ($stmt->rowCount()) {
+    while ($res = $stmt->fetch()) {
         echo '<item>' .
              '<title>News: ' . $res['name'] . '</title>' .
              '<link>' . $set['homeurl'] . '/news/index.php</link>' .
@@ -40,13 +40,13 @@ if (mysql_num_rows($req)) {
 }
 
 // Библиотека
-$req = mysql_query("select * from `lib` where `type`='bk' and `moder`='1' order by `time` desc LIMIT 15;");
-if (mysql_num_rows($req)) {
-    while ($res = mysql_fetch_array($req)) {
+$stmt = $db->query("select * from `library_texts` where `premod`='1' order by `time` desc LIMIT 15;");
+if ($stmt->rowCount()) {
+    while ($res = $stmt->fetch()) {
         echo '<item>' .
              '<title>Library: ' . htmlspecialchars($res['name']) . '</title>' .
              '<link>' . $set['homeurl'] . '/library/index.php?id=' . $res['id'] . '</link>' .
-             '<author>' . htmlspecialchars($res['avtor']) . '</author>' .
+             '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
              '<description>' . htmlspecialchars($res['announce']) .
              '</description>' .
              '<pubDate>' . date('r', $res['time']) . '</pubDate>' .

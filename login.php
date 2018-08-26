@@ -22,23 +22,30 @@ if(core::$user_id){
     $error = array();
     $captcha = FALSE;
     $display_form = 1;
-    $user_login = isset($_POST['n']) ? functions::check($_POST['n']) : NULL;
-    $user_pass = isset($_POST['p']) ? functions::check($_POST['p']) : NULL;
+    $user_login = isset($_POST['n']) ? trim($_POST['n']) : NULL;
+    $user_pass = isset($_POST['p']) ? trim($_POST['p']) : NULL;
     $user_mem = isset($_POST['mem']) ? 1 : 0;
     $user_code = isset($_POST['code']) ? trim($_POST['code']) : NULL;
-    if ($user_pass && !$user_login)
+    if ($user_pass && !$user_login) {
         $error[] = $lng['error_login_empty'];
-    if ($user_login && !$user_pass)
+    }
+    if ($user_login && !$user_pass) {
         $error[] = $lng['error_empty_password'];
-    if ($user_login && (mb_strlen($user_login) < 2 || mb_strlen($user_login) > 20))
+    }
+    if ($user_login && (mb_strlen($user_login) < 2 || mb_strlen($user_login) > 20)) {
         $error[] = $lng['nick'] . ': ' . $lng['error_wrong_lenght'];
-    if ($user_pass && (mb_strlen($user_pass) < 3 || mb_strlen($user_pass) > 15))
+    }
+    if ($user_pass && (mb_strlen($user_pass) < 3 || mb_strlen($user_pass) > 15)) {
         $error[] = $lng['password'] . ': ' . $lng['error_wrong_lenght'];
+    }
     if (!$error && $user_pass && $user_login) {
         // Запрос в базу на юзера
-        $req = mysql_query("SELECT * FROM `users` WHERE `name_lat`='" . functions::rus_lat(mb_strtolower($user_login)) . "' LIMIT 1");
-        if (mysql_num_rows($req)) {
-            $user = mysql_fetch_assoc($req);
+        $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat`= ? LIMIT 1');
+        $stmt->execute([
+            functions::rus_lat(mb_strtolower($user_login))
+        ]);
+        if ($stmt->rowCount()) {
+            $user = $stmt->fetch();
             if ($user['failed_login'] > 2) {
                 if ($user_code) {
                     if (mb_strlen($user_code) > 3 && $user_code == $_SESSION['code']) {
@@ -56,8 +63,8 @@ if(core::$user_id){
                     echo '<form action="login.php' . ($id ? '?id=' . $id : '') . '" method="post">' .
                         '<div class="menu"><p><img src="captcha.php?r=' . rand(1000, 9999) . '" alt="' . $lng['verifying_code'] . '"/><br />' .
                         $lng['enter_code'] . ':<br/><input type="text" size="5" maxlength="5"  name="code"/>' .
-                        '<input type="hidden" name="n" value="' . $user_login . '"/>' .
-                        '<input type="hidden" name="p" value="' . $user_pass . '"/>' .
+                        '<input type="hidden" name="n" value="' . _e($user_login) . '"/>' .
+                        '<input type="hidden" name="p" value="' . _e($user_pass) . '"/>' .
                         '<input type="hidden" name="mem" value="' . $user_mem . '"/>' .
                         '<input type="submit" name="submit" value="' . $lng['continue'] . '"/></p></div></form>';
                 }
@@ -66,7 +73,7 @@ if(core::$user_id){
                 if (md5(md5($user_pass)) == $user['password']) {
                     // Если логин удачный
                     $display_form = 0;
-                    mysql_query("UPDATE `users` SET `failed_login` = '0' WHERE `id` = '" . $user['id'] . "'");
+                    $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = '" . $user['id'] . "'");
                     if (!$user['preg']) {
                         // Если регистрация не подтверждена
                         echo '<div class="rmenu"><p>' . $lng['registration_not_approved'] . '</p></div>';
@@ -88,7 +95,7 @@ if(core::$user_id){
                     // Если логин неудачный
                     if ($user['failed_login'] < 3) {
                         // Прибавляем к счетчику неудачных логинов
-                        mysql_query("UPDATE `users` SET `failed_login` = '" . ($user['failed_login'] + 1) . "' WHERE `id` = '" . $user['id'] . "'");
+                        $db->exec("UPDATE `users` SET `failed_login` = '" . ($user['failed_login'] + 1) . "' WHERE `id` = '" . $user['id'] . "'");
                     }
                     $error[] = $lng['authorisation_not_passed'];
                 }
@@ -113,7 +120,7 @@ if(core::$user_id){
         echo $info;
 
         echo '<div class="gmenu"><form action="login.php" method="post"><p>' . $lng['login_name'] . ':<br/>' .
-            '<input type="text" name="n" value="' . htmlentities($user_login, ENT_QUOTES, 'UTF-8') . '" maxlength="20"/>' .
+            '<input type="text" name="n" value="' . _e($user_login) . '" maxlength="20"/>' .
             '<br/>' . $lng['password'] . ':<br/>' .
             '<input type="password" name="p" maxlength="20"/></p>' .
             '<p><input type="checkbox" name="mem" value="1" checked="checked"/>' . $lng['remember'] . '</p>' .

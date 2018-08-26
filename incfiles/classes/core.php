@@ -13,8 +13,7 @@ defined('_IN_JOHNCMS') or die('Restricted access');
 
 class core
 {
-    public static $root = '../';
-    public static $ip; // Путь к корневой папке
+    public static $ip; // IP адрес
     public static $ip_via_proxy = 0; // IP адрес за прокси-сервером
     public static $ip_count = array(); // Счетчик обращений с IP адреса
     public static $user_agent; // User Agent
@@ -25,6 +24,7 @@ class core
     public static $deny_registration = false; // Запрет регистрации пользователей
     public static $is_mobile = false; // Мобильный браузер
     public static $core_errors = array(); // Ошибки ядра
+    public static $db;
 
     public static $user_id = false; // Идентификатор пользователя
     public static $user_rights = 0; // Права доступа
@@ -33,8 +33,8 @@ class core
     public static $user_ban = array(); // Бан
 
     private $flood_chk = 1; // Включение - выключение функции IP антифлуда
-    private $flood_interval = '120'; // Интервал времени в секундах
-    private $flood_limit = '70'; // Число разрешенных запросов за интервал
+    private $flood_interval = 120; // Интервал времени в секундах
+    private $flood_limit = 70; // Число разрешенных запросов за интервал
 
     function __construct()
     {
@@ -54,15 +54,17 @@ class core
 
         // Получаем UserAgent
         if (isset($_SERVER["HTTP_X_OPERAMINI_PHONE_UA"]) && strlen(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'])) > 5) {
-            self::$user_agent = 'Opera Mini: ' . htmlspecialchars(mb_substr(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']), 0, 150));
+            self::$user_agent = 'Opera Mini: ' . mb_substr(trim($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']), 0, 150);
         } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
-            self::$user_agent = htmlspecialchars(mb_substr(trim($_SERVER['HTTP_USER_AGENT']), 0, 150));
+            self::$user_agent = mb_substr(trim($_SERVER['HTTP_USER_AGENT']), 0, 150);
         } else {
             self::$user_agent = 'Not Recognised';
         }
 
         $this->ip_flood(); // Проверка адреса IP на флуд
-        if (get_magic_quotes_gpc()) $this->del_slashes(); // Удаляем слэши
+        if (get_magic_quotes_gpc()) {
+            $this->del_slashes(); // Удаляем слэши
+        }
         $this->db_connect(); // Соединяемся с базой данных
         $this->ip_ban(); // Проверяем адрес IP на бан
         $this->session_start(); // Стартуем сессию
@@ -74,7 +76,9 @@ class core
         $this->lng_detect(); // Определяем язык системы
         self::$lng = self::load_lng(); // Загружаем язык
         // Оставляем транслит только для Русского
-        if (self::$lng_iso != 'ru' && self::$lng_iso != 'uk') self::$user_set['translit'] = 0;
+        if (self::$lng_iso != 'ru' && self::$lng_iso != 'uk') {
+            self::$user_set['translit'] = 0;
+        }
     }
 
     /*
@@ -144,12 +148,30 @@ class core
     {
         require(ROOTPATH . 'incfiles/db.php');
         $db_host = isset($db_host) ? $db_host : 'localhost';
-        $db_user = isset($db_user) ? $db_user : '';
+        $db_user = isset($db_user) ? $db_user : 'root';
         $db_pass = isset($db_pass) ? $db_pass : '';
-        $db_name = isset($db_name) ? $db_name : '';
-        $connect = @mysql_connect($db_host, $db_user, $db_pass) or die('Error: cannot connect to database server');
-        @mysql_select_db($db_name) or die('Error: specified database does not exist');
-        @mysql_query("SET NAMES 'utf8mb4'", $connect);
+        $db_name = isset($db_name) ? $db_name : 'johncms';
+        try {
+            $pdo = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name . ';charset=utf8mb4', $db_user, $db_pass,
+                array (
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
+                )
+            );
+        } catch (PDOException $e) {
+            echo '<h2>MySQL ERROR: ' . $e->getCode() . '</h2>';
+            switch ($e->getCode()) {
+                case 1045:
+                    exit('Access credentials (username or password) to a database are incorrect');
+                case 1049:
+                    exit('The name of a database is specified incorrectly');
+                case 2002:
+                    exit('Invalid database server');
+            }
+            exit;
+        }
+        self::$db = $pdo;
     }
 
     /*
@@ -165,20 +187,29 @@ class core
             $file = ROOTPATH . 'files/cache/ip_flood.dat';
             $tmp = array();
             $requests = 1;
-            if (!file_exists($file)) $in = fopen($file, "w+");
-            else $in = fopen($file, "r+");
+            if (!file_exists($file)) {
+                $in = fopen($file, 'w+');
+            } else {
+                $in = fopen($file, 'r+');
+            }
             flock($in, LOCK_EX) or die("Cannot flock ANTIFLOOD file.");
             $now = time();
             while ($block = fread($in, 8)) {
-                $arr = unpack("Lip/Ltime", $block);
-                if (($now - $arr['time']) > $this->flood_interval) continue;
-                if ($arr['ip'] == self::$ip) $requests++;
+                $arr = unpack('Lip/Ltime', $block);
+                if (($now - $arr['time']) > $this->flood_interval) {
+                    continue;
+                }
+                if ($arr['ip'] == self::$ip) {
+                    $requests++;
+                }
                 $tmp[] = $arr;
                 self::$ip_count[] = $arr['ip'];
             }
             fseek($in, 0);
             ftruncate($in, 0);
-            for ($i = 0; $i < count($tmp); $i++) fwrite($in, pack('LL', $tmp[$i]['ip'], $tmp[$i]['time']));
+            for ($i = 0; $i < count($tmp); $i++) {
+                fwrite($in, pack('LL', $tmp[$i]['ip'], $tmp[$i]['time']));
+            }
             fwrite($in, pack('LL', self::$ip, $now));
             fclose($in);
             if ($requests > $this->flood_limit) {
@@ -228,7 +259,11 @@ class core
             }
         }
         unset($in);
-        if (!empty($_FILES)) foreach ($_FILES as $k => $v) $_FILES[$k]['name'] = stripslashes((string)$v['name']);
+        if (!empty($_FILES)) {
+            foreach ($_FILES as $k => $v) {
+                $_FILES[$k]['name'] = stripslashes((string)$v['name']);
+            }
+        }
     }
 
     /*
@@ -238,24 +273,26 @@ class core
     */
     private function ip_ban()
     {
-        $req = mysql_query("SELECT `ban_type`, `link` FROM `cms_ban_ip`
-            WHERE '" . self::$ip . "' BETWEEN `ip1` AND `ip2`
-            " . (self::$ip_via_proxy ? " OR '" . self::$ip_via_proxy . "' BETWEEN `ip1` AND `ip2`" : "") . "
+        $stmt = self::$db->query('SELECT `ban_type`, `link` FROM `cms_ban_ip`
+            WHERE "' . self::$ip . '" BETWEEN `ip1` AND `ip2`
+            ' . (self::$ip_via_proxy ? ' OR "' . self::$ip_via_proxy . '" BETWEEN `ip1` AND `ip2`' : '') . '
             LIMIT 1
-        ") or die('Error: table "cms_ban_ip"');
-        if (mysql_num_rows($req)) {
-            $res = mysql_fetch_array($req);
+        ');
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetch();
             switch ($res['ban_type']) {
                 case 2:
-                    if (!empty($res['link'])) header('Location: ' . $res['link']);
-                    else header('Location: http://johncms.com');
-                    exit;
+                    if (!empty($res['link'])) {
+                        header('Location: ' . $res['link']); exit;
+                    } else {
+                        header('Location: http://johncms.com'); exit;
+                    }
                     break;
                 case 3:
                     self::$deny_registration = true;
                     break;
                 default :
-                    header("HTTP/1.0 404 Not Found");
+                    header('HTTP/1.1 404 Not Found');
                     exit;
             }
         }
@@ -280,10 +317,16 @@ class core
     private function system_settings()
     {
         $set = array();
-        $req = mysql_query("SELECT * FROM `cms_settings`");
-        while (($res = mysql_fetch_row($req)) !== false) $set[$res[0]] = $res[1];
-        if (isset($set['lng']) && !empty($set['lng'])) self::$lng_iso = $set['lng'];
-        if (isset($set['lng_list'])) self::$lng_list = unserialize($set['lng_list']);
+        $stmt = self::$db->query('SELECT * FROM `cms_settings`');
+        while ($res = $stmt->fetch()) {
+            $set[$res['key']] = $res['val'];
+        }
+        if (isset($set['lng']) && !empty($set['lng'])) {
+            self::$lng_iso = $set['lng'];
+        }
+        if (isset($set['lng_list'])) {
+            self::$lng_list = unserialize($set['lng_list']);
+        }
         self::$system_set = $set;
     }
 
@@ -331,9 +374,9 @@ class core
             $_SESSION['ups'] = $user_ps;
         }
         if ($user_id && $user_ps) {
-            $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$user_id'");
-            if (mysql_num_rows($req)) {
-                $user_data = mysql_fetch_assoc($req);
+            $stmt = self::$db->query('SELECT * FROM `users` WHERE `id` = "' . $user_id . '" LIMIT 1');
+            if ($stmt->rowCount()) {
+                $user_data = $stmt->fetch();
                 $permit = $user_data['failed_login'] < 3 || $user_data['failed_login'] > 2 && $user_data['ip'] == self::$ip && $user_data['browser'] == self::$user_agent ? true : false;
                 if ($permit && $user_ps === $user_data['password']) {
                     // Если авторизация прошла успешно
@@ -345,7 +388,7 @@ class core
                     $this->user_ban_check();
                 } else {
                     // Если авторизация не прошла
-                    mysql_query("UPDATE `users` SET `failed_login` = '" . ($user_data['failed_login'] + 1) . "' WHERE `id` = '" . $user_data['id'] . "'");
+                    self::$db->exec("UPDATE `users` SET `failed_login` = '" . ($user_data['failed_login'] + 1) . "' WHERE `id` = '" . $user_data['id'] . "' LIMIT 1");
                     $this->user_unset();
                 }
             } else {
@@ -365,10 +408,12 @@ class core
     */
     private function user_ban_check()
     {
-        $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . self::$user_id . "' AND `ban_time` > '" . time() . "'");
-        if (mysql_num_rows($req)) {
+        $stmt = self::$db->query("SELECT `ban_type` FROM `cms_ban_users` WHERE `user_id` = '" . self::$user_id . "' AND `ban_time` > '" . time() . "'");
+        if ($stmt->rowCount()) {
             self::$user_rights = 0;
-            while (($res = mysql_fetch_row($req)) !== false) self::$user_ban[$res[4]] = 1;
+            while ($res = $stmt->fetch()) {
+                self::$user_ban[$res['ban_type']] = 1;
+            }
         }
     }
 
@@ -381,7 +426,7 @@ class core
     {
         if (self::$user_data['ip'] != self::$ip || self::$user_data['ip_via_proxy'] != self::$ip_via_proxy) {
             // Удаляем из истории текущий адрес (если есть)
-            @mysql_query("DELETE FROM `cms_users_iphistory`
+            self::$db->exec("DELETE FROM `cms_users_iphistory`
                 WHERE `user_id` = '" . self::$user_id . "'
                 AND `ip` = '" . self::$ip . "'
                 AND `ip_via_proxy` = '" . self::$ip_via_proxy . "'
@@ -389,7 +434,7 @@ class core
             ");
             if (!empty(self::$user_data['ip']) && self::ip_valid(long2ip(self::$user_data['ip']))) {
                 // Вставляем в историю предыдущий адрес IP
-                mysql_query("INSERT INTO `cms_users_iphistory` SET
+                self::$db->exec("INSERT INTO `cms_users_iphistory` SET
                     `user_id` = '" . self::$user_id . "',
                     `ip` = '" . self::$user_data['ip'] . "',
                     `ip_via_proxy` = '" . self::$user_data['ip_via_proxy'] . "',
@@ -397,10 +442,10 @@ class core
                 ");
             }
             // Обновляем текущий адрес в таблице `users`
-            mysql_query("UPDATE `users` SET
+            self::$db->exec("UPDATE `users` SET
                 `ip` = '" . self::$ip . "',
                 `ip_via_proxy` = '" . self::$ip_via_proxy . "'
-                WHERE `id` = '" . self::$user_id . "'
+                WHERE `id` = '" . self::$user_id . "' LIMIT 1
             ");
         }
     }
@@ -414,12 +459,9 @@ class core
     {
         return array(
             'avatar'     => 1, // Показывать аватары
-            'digest'     => 0, // Показывать Дайджест
             'direct_url' => 0, // Внешние ссылки
             'field_h'    => 3, // Высота текстового поля ввода
-            'field_w'    => (self::$is_mobile ? 20 : 40), // Ширина текстового поля ввода
             'kmess'      => 20, // Число сообщений на страницу
-            'quick_go'   => 1, // Быстрый переход
             'timeshift'  => 0, // Временной сдвиг
             'skin'       => self::$system_set['skindef'], // Тема оформления
             'smileys'    => 1, // Включить(1) выключить(0) смайлы
@@ -452,10 +494,10 @@ class core
     private function auto_clean()
     {
         if (self::$system_set['clean_time'] < time() - 86400) {
-            mysql_query("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
-            mysql_query("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
-            mysql_query("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
-            mysql_query("OPTIMIZE TABLE `cms_sessions` , `cms_users_iphistory`, `cms_mail`, `cms_contact`");
+            self::$db->exec("DELETE FROM `cms_sessions` WHERE `lastdate` < '" . (time() - 86400) . "'");
+            self::$db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < '" . (time() - 2592000) . "'");
+            self::$db->exec("UPDATE `cms_settings` SET  `val` = '" . time() . "' WHERE `key` = 'clean_time' LIMIT 1");
+            self::$db->query("OPTIMIZE TABLE `cms_sessions`, `cms_users_iphistory`, `cms_mail`, `cms_contact`");
         }
     }
 
@@ -505,14 +547,14 @@ class core
         {
             self::user_unset();
             session_destroy();
-            header('Location: ' . self::$system_set['homeurl'] . '/closed.php');
+            header('Location: ' . self::$system_set['homeurl'] . '/closed.php'); exit;
         }
 
         if (self::$system_set['site_access'] == 1 && (self::$user_id && self::$user_rights == 0))   // выгоняем всех, кроме администрации
         {
             self::user_unset();
             session_destroy();
-            header('Location: ' . self::$system_set['homeurl'] . '/closed.php');
+            header('Location: ' . self::$system_set['homeurl'] . '/closed.php'); exit;
         }
     }
 

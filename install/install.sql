@@ -498,9 +498,6 @@ CREATE TABLE `gallery` (
   `avtor` VARCHAR(25)      NOT NULL DEFAULT '',
   `text`  TEXT             NOT NULL,
   `name`  TEXT             NOT NULL,
-  `user`  BINARY(1)        NOT NULL DEFAULT '\0',
-  `ip`    TEXT             NOT NULL,
-  `soft`  TEXT             NOT NULL,
   PRIMARY KEY (`id`),
   KEY `refid` (`refid`),
   KEY `type` (`type`),
@@ -605,7 +602,7 @@ DROP TABLE IF EXISTS `library_tags`;
 CREATE TABLE `library_tags` (
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `lib_text_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `tag_name`    VARCHAR(255)     NOT NULL DEFAULT '',
+  `tag_name`    VARCHAR(127)     NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `lib_text_id` (`lib_text_id`),
   KEY `tag_name` (`tag_name`)

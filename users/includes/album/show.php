@@ -18,13 +18,13 @@ if (!$al) {
     require('../incfiles/end.php');
     exit;
 }
-$req = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
-if (!mysql_num_rows($req)) {
+$stmt = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al'");
+if (!$stmt->rowCount()) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
     exit;
 }
-$album = mysql_fetch_assoc($req);
+$album = $stmt->fetch();
 $view = isset($_GET['view']);
 
 /*
@@ -102,20 +102,20 @@ if ($album['access'] == 1
 */
 if ($view) {
     $kmess = 1;
-    $start = isset($_REQUEST['page']) ? $page - 1 : (mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al' AND `id` > '$img'"), 0));
+    $start = isset($_REQUEST['page']) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al' AND `id` > '$img'")->fetchColumn());
     // Обрабатываем ссылку для возврата
     if (empty($_SESSION['ref']))
         $_SESSION['ref'] = htmlspecialchars($_SERVER['HTTP_REFERER']);
 } else {
     unset($_SESSION['ref']);
 }
-$total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al'"), 0);
+$total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '$al'")->fetchColumn();
 if ($total > $kmess)
     echo '<div class="topmenu">' . functions::display_pagination('album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($view ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>';
 if ($total) {
-    $req = mysql_query("SELECT * FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "' AND `album_id` = '$al' ORDER BY `id` DESC LIMIT $start, $kmess");
+    $stmt = $db->query("SELECT * FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "' AND `album_id` = '$al' ORDER BY `id` DESC LIMIT $start, $kmess");
     $i = 0;
-    while (($res = mysql_fetch_assoc($req)) !== FALSE) {
+    while ($res = $stmt->fetch()) {
         echo($i % 2 ? '<div class="list2">' : '<div class="list1">');
         if ($view) {
             /*
@@ -136,10 +136,10 @@ if ($total) {
             }
             echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
             // Счетчик просмотров
-            if (!mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '$user_id' AND `file_id` = '" . $res['id'] . "'"), 0)) {
-                mysql_query("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = '" . time() . "'");
-                $views = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'"), 0);
-                mysql_query("UPDATE `cms_album_files` SET `views` = '$views' WHERE `id` = '" . $res['id'] . "'");
+            if (!$db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '$user_id' AND `file_id` = '" . $res['id'] . "'")->fetchColumn()) {
+                $db->exec("INSERT INTO `cms_album_views` SET `user_id` = '$user_id', `file_id` = '" . $res['id'] . "', `time` = '" . time() . "'");
+                $views = $db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'")->fetchColumn();
+                $db->exec("UPDATE `cms_album_files` SET `views` = '$views' WHERE `id` = '" . $res['id'] . "'");
             }
         } else {
             /*

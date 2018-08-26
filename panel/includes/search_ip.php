@@ -86,27 +86,27 @@ if ($search && !$error) {
     */
     echo '<div class="phdr">' . $lng['search_results'] . '</div>';
     if ($mod == 'history')
-        $total = mysql_result(mysql_query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
+        $total = $db->query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
     else
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2"), 0);
+        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
     if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('index.php?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
     }
     if ($total) {
         if ($mod == 'history') {
-            $req = mysql_query("SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
+            $stmt = $db->query("SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
                 WHERE `cms_users_iphistory`.`ip` BETWEEN $ip1 AND $ip2 OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN $ip1 AND $ip2
                 GROUP BY `users`.`id`
                 ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess
             ");
         } else {
-            $req = mysql_query("SELECT * FROM `users`
+            $stmt = $db->query("SELECT * FROM `users`
             WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2
             ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess");
         }
         $i = 0;
-        while (($res = mysql_fetch_assoc($req)) !== false) {
+        while ($res = $stmt->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             echo functions::display_user($res, array ('iphist' => 1));
             echo '</div>';

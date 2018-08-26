@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 6) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['reg_approve'] . '</div>';
@@ -30,7 +29,7 @@ switch ($mod) {
             require('../incfiles/end.php');
             exit;
         }
-        @mysql_query("UPDATE `users` SET `preg` = '1', `regadm` = '$login' WHERE `id` = '$id'");
+        $db->exec("UPDATE `users` SET `preg` = '1', `regadm` = '$login' WHERE `id` = '$id'");
         echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
@@ -40,7 +39,7 @@ switch ($mod) {
         Подтверждение всех регистраций
         -----------------------------------------------------------------
         */
-        mysql_query("UPDATE `users` SET `preg` = '1', `regadm` = '$login' WHERE `preg` = '0'");
+        $db->exec("UPDATE `users` SET `preg` = '1', `regadm` = '$login' WHERE `preg` = '0'");
         echo '<div class="menu"><p>' . $lng['reg_approved'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
@@ -55,10 +54,10 @@ switch ($mod) {
             require('../incfiles/end.php');
             exit;
         }
-        $req = mysql_query("SELECT `id` FROM `users` WHERE `id` = '$id' AND `preg` = '0'");
-        if (mysql_num_rows($req)) {
-            mysql_query("DELETE FROM `users` WHERE `id` = '$id'");
-            mysql_query("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '$id' LIMIT 1");
+        $stmt = $db->query("SELECT `id` FROM `users` WHERE `id` = '$id' AND `preg` = '0'");
+        if ($stmt->rowCount()) {
+            $db->exec("DELETE FROM `users` WHERE `id` = '$id'");
+            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '$id' LIMIT 1");
         }
         echo '<div class="menu"><p>' . $lng['user_deleted'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
@@ -69,12 +68,12 @@ switch ($mod) {
         Удаление всех регистраций
         -----------------------------------------------------------------
         */
-        $req = mysql_query("SELECT `id` FROM `users` WHERE `preg` = '0'");
-        while ($res = mysql_fetch_assoc($req)) {
-            mysql_query("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
+        $stmt = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0'");
+        while ($res = $stmt->fetch()) {
+            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
         }
-        mysql_query("DELETE FROM `users` WHERE `preg` = '0'");
-        mysql_query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
+        $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
+        $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
         echo '<div class="menu"><p>' . $lng['reg_deleted_all'] . '<br /><a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         break;
 
@@ -86,12 +85,12 @@ switch ($mod) {
         */
         $ip = isset($_GET['ip']) ? intval($_GET['ip']) : false;
         if ($ip) {
-            $req = mysql_query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
-            while ($res = mysql_fetch_assoc($req)) {
-                mysql_query("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
+            $stmt = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
+            while ($res = $stmt->fetch()) {
+                $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
             }
-            mysql_query("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
-            mysql_query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
+            $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
+            $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
             echo '<div class="menu"><p>' . $lng['reg_del_ip_done'] . '<br />' .
                 '<a href="index.php?act=reg">' . $lng['continue'] . '</a></p></div>';
         } else {
@@ -107,12 +106,12 @@ switch ($mod) {
         Выводим список пользователей, ожидающих подтверждения регистрации
         -----------------------------------------------------------------
         */
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'"), 0);
+        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'")->fetchColumn();
         if ($total > $kmess) echo'<div class="topmenu">' . functions::display_pagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>';
         if ($total) {
-            $req = mysql_query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT $start,$kmess");
+            $stmt = $db->query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT $start,$kmess");
             $i = 0;
-            while (($res = mysql_fetch_assoc($req)) !== false) {
+            while ($res = $stmt->fetch()) {
                 $link = array(
                     '<a href="index.php?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . $lng['approve'] . '</a>',
                     '<a href="index.php?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a>',

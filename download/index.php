@@ -17,15 +17,16 @@ require_once('../incfiles/lib/mp3.php');
 require_once('../incfiles/lib/pclzip.lib.php');
 $textl = $lng['downloads'];
 $filesroot = '../download';
-$screenroot = "$filesroot/screen";
-$loadroot = "$filesroot/files";
+$screenroot = $filesroot . '/screen';
+$loadroot = $filesroot . '/files';
 
 // Ограничиваем доступ к Загрузкам
 $error = '';
-if (!$set['mod_down'] && $rights < 7)
+if (!$set['mod_down'] && $rights < 7) {
     $error = $lng_dl['downloads_closed'];
-elseif ($set['mod_down'] == 1 && !$user_id)
+} elseif ($set['mod_down'] == 1 && !$user_id) {
     $error = $lng['access_guest_forbidden'];
+}
 if ($error) {
     require_once('../incfiles/head.php');
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
@@ -33,60 +34,56 @@ if ($error) {
     exit;
 }
 
-function provcat($catalog)
-{
-    $cat1 = mysql_query("select * from `download` where type = 'cat' and id = '" . $catalog . "';");
-    $cat2 = mysql_num_rows($cat1);
-    $adrdir = mysql_fetch_array($cat1);
-    if (($cat2 == 0) || (!is_dir("$adrdir[adres]/$adrdir[name]"))) {
-        echo 'ERROR<br/><a href="?">Back</a><br/>';
-        require_once('../incfiles/end.php');
-        exit;
-    }
-}
+$cat = isset($_GET['cat']) ? abs(intval($_GET['cat'])) : 0;
+$file = isset($_GET['file']) ? abs(intval($_GET['file'])) : 0;
 
 $array = array (
-    'scan_dir',
-    'rat',
-    'delmes',
-    'search',
     'addkomm',
-    'komm',
-    'new',
-    'zip',
     'arc',
-    'down',
+    'delcat',
+    'delmes',
     'dfile',
-    'opis',
-    'screen',
-    'ren',
+    'down',
     'import',
+    'komm',
+    'makdir',
+    'new',
+    'opis',
+    'preview',
+    'rat',
     'refresh',
+    'ren',
+    'screen',
+    'search',
+    'select',
     'upl',
     'view',
-    'makdir',
-    'select',
-    'preview',
-    'delcat',
-    'mp3'
+    'zip'
 );
 if (in_array($act, $array)) {
-    require_once($act . '.php');
+    require_once('includes/' . $act . '.php');
 } else {
     require_once('../incfiles/head.php');
-    if (!$set['mod_down'])
+    if (!$set['mod_down']) {
         echo '<p><font color="#FF0000"><b>' . $lng_dl['downloads_closed'] . '</b></font></p>';
+    }
     // Ссылка на новые файлы
-    echo '<p><a href="?act=new">' . $lng['new_files'] . '</a> (' . mysql_result(mysql_query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file'"), 0) . ')</p>';
+    echo '<p><a href="?act=new">' . $lng['new_files'] . '</a> (' . $db->query("SELECT COUNT(*) FROM `download` WHERE `time` > '" . (time() - 259200) . "' AND `type` = 'file'")->fetchColumn() . ')</p>';
     $cat = isset($_GET['cat']) ? intval($_GET['cat']) : '';
-    if (empty($_GET['cat'])) {
+    if (!$cat) {
         // Заголовок начальной страницы загрузок
         echo '<div class="phdr">' . $lng['downloads'] . '</div>';
     } else {
         // Заголовок страниц категорий
-        $req = mysql_query("SELECT * FROM `download` WHERE `type` = 'cat' AND `id` = '" . $cat . "' LIMIT 1");
-        $res = mysql_fetch_array($req);
-        if (mysql_num_rows($req) == 0 || !is_dir($res['adres'] . '/' . $res['name'])) {
+        $error = true;
+        $stmt = $db->query("SELECT * FROM `download` WHERE `type` = 'cat' AND `id` = '" . $cat . "' LIMIT 1");
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetch();
+            if (is_dir($res['adres'] . '/' . $res['name'])) {
+                $error = false;
+            }
+        }
+        if ($error) {
             // Если неправильно выбран каталог, выводим ошибку
             echo functions::display_error($lng_dl['folder_does_not_exist'], '<a href="index.php">' . $lng['back'] . '</a>');
             require_once('../incfiles/end.php');
@@ -98,8 +95,7 @@ if (in_array($act, $array)) {
         $tree = array ();
         $dirid = $cat;
         while ($dirid != '0' && $dirid != "") {
-            $req = mysql_query("SELECT * FROM `download` WHERE `type` = 'cat' and `id` = '" . $dirid . "' LIMIT 1");
-            $res = mysql_fetch_array($req);
+            $res = $db->query("SELECT * FROM `download` WHERE `type` = 'cat' and `id` = '" . $dirid . "' LIMIT 1")->fetch();
             $tree[] = '<a href="index.php?cat=' . $dirid . '">' . $res['text'] . '</a>';
             $dirid = $res['refid'];
         }
@@ -112,15 +108,13 @@ if (in_array($act, $array)) {
         echo strip_tags($cdir) . '</div>';
     }
     // Подсчитываем число папок
-    $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `refid` = '$cat' AND `type` = 'cat'");
-    $totalcat = mysql_result($req, 0);
+    $totalcat = $db->query("SELECT COUNT(*) FROM `download` WHERE `refid` = '$cat' AND `type` = 'cat'")->fetchColumn();
     // Подсчитываем число файлов
-    $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `refid` = '$cat' AND `type` = 'file'");
-    $totalfile = mysql_result($req, 0);
+    $totalfile = $db->query("SELECT COUNT(*) FROM `download` WHERE `refid` = '$cat' AND `type` = 'file'")->fetchColumn();
     $total = $totalcat + $totalfile;
     if ($total > 0) {
-        $zap = mysql_query("SELECT * FROM `download` WHERE `refid` = '$cat' ORDER BY `type` ASC, `text` ASC, `name` ASC LIMIT " . $start . "," . $kmess);
-        while ($zap2 = mysql_fetch_array($zap)) {
+        $stmt = $db->query("SELECT * FROM `download` WHERE `refid` = '$cat' ORDER BY `type` ASC, `text` ASC, `name` ASC LIMIT " . $start . "," . $kmess);
+        while ($zap2 = $stmt->fetch()) {
             ////////////////////////////////////////////////////////////
             // Выводим список папок                                   //
             ////////////////////////////////////////////////////////////
@@ -129,11 +123,9 @@ if (in_array($act, $array)) {
                 echo '<a href="?cat=' . $zap2['id'] . '">' . $zap2['text'] . '</a>';
                 $g1 = 0;
                 // Считаем число файлов в подкаталогах
-                $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%'");
-                $g = mysql_result($req, 0);
+                $g = $db->query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%'")->fetchColumn();
                 // Считаем новые файлы в подкаталогах
-                $req = mysql_query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%' AND `time` > '" . (time() - 259200) . "'");
-                $g1 = mysql_result($req, 0);
+                $g1 = $db->query("SELECT COUNT(*) FROM `download` WHERE `type` = 'file' AND `adres` LIKE '" . ($zap2['adres'] . '/' . $zap2['name']) . "%' AND `time` > '" . (time() - 259200) . "'")->fetchColumn();
                 echo "($g";
                 if ($g1 != 0) {
                     echo "/+$g1)</div>";
@@ -192,11 +184,13 @@ if (in_array($act, $array)) {
         echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
     }
     echo '<div class="phdr">';
-    if ($totalcat > 0)
+    if ($totalcat > 0) {
         echo $lng_dl['folders'] . ': ' . $totalcat;
+    }
     echo '&#160;&#160;';
-    if ($totalfile > 0)
+    if ($totalfile > 0) {
         echo $lng_dl['files'] . ': ' . $totalfile;
+    }
     echo '</div>';
     // Постраничная навигация
     if ($total > $kmess) {
@@ -208,10 +202,9 @@ if (in_array($act, $array)) {
         ////////////////////////////////////////////////////////////
         echo '<p><div class="func">';
         echo '<a href="?act=makdir&amp;cat=' . $cat . '">' . $lng_dl['make_folder'] . '</a><br/>';
-        if (!empty($_GET['cat'])) {
-            $delcat = mysql_query("select * from `download` where type = 'cat' and refid = '" . $cat . "';");
-            $delcat1 = mysql_num_rows($delcat);
-            if ($delcat1 == 0) {
+        if ($cat) {
+            $delcat1 = $db->query("select COUNT(*) from `download` where type = 'cat' and refid = '" . $cat . "';")->fetchColumn();
+            if (!$delcat1) {
                 echo '<a href="index.php?act=delcat&amp;cat=' . $cat . '">' . $lng_dl['delete_folder'] . '</a><br />';
             }
             echo '<a href="index.php?act=ren&amp;cat=' . $cat . '">' . $lng_dl['rename_folder'] . '</a><br />';

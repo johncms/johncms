@@ -25,7 +25,7 @@ switch ($do) {
         */
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);
-        header("Location: index.php?id=$id");
+        header("Location: index.php?id=$id"); exit;
         break;
 
     case 'set':
@@ -46,7 +46,7 @@ switch ($do) {
         }
         $_SESSION['fsort_id'] = $id;
         $_SESSION['fsort_users'] = serialize($array);
-        header("Location: index.php?id=$id");
+        header("Location: index.php?id=$id"); exit;
         break;
 
     default :
@@ -55,14 +55,13 @@ switch ($do) {
         Показываем список авторов темы, с возможностью выбора
         -----------------------------------------------------------------
         */
-        $req = mysql_query("SELECT *, COUNT(`from`) AS `count` FROM `forum` WHERE `refid` = '$id' GROUP BY `from` ORDER BY `from`");
-        $req = mysql_query("SELECT *, COUNT(`from`) AS `count` FROM `forum` WHERE `refid` = '$id' GROUP BY `from` ORDER BY `from`");
-        $total = mysql_num_rows($req);
+        $stmt = $db->query("SELECT *, COUNT(`from`) AS `count` FROM `forum` WHERE `refid` = '$id' GROUP BY `from` ORDER BY `from`");
+        $total = $stmt->rowCount();
         if ($total > 0) {
             echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['filter_on_author'] . '</div>' .
                 '<form action="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
             $i = 0;
-            while ($res = mysql_fetch_array($req)) {
+            while ($res = $stmt->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<input type="checkbox" name="users[]" value="' . $res['user_id'] . '"/>&#160;' .
                     '<a href="../users/profile.php?user=' . $res['user_id'] . '">' . $res['from'] . '</a> [' . $res['count'] . ']</div>';

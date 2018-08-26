@@ -63,10 +63,10 @@ if ($c) {
 }
 if ($c || $s || $t) {
     // Получаем имя нужной категории форума
-    $req = mysql_query("SELECT `text` FROM `forum` WHERE `id` = '$id'");
-    if (mysql_num_rows($req) > 0) {
-        $res = mysql_fetch_array($req);
-        $caption .= $res['text'];
+    $stmt = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' LIMIT 1");
+    if ($stmt->rowCount()) {
+        $res = $stmt->fetch();
+        $caption .= _e($res['text']);
     } else {
         echo functions::display_error($lng['error_wrong_data'], '<a href="index.php">' . $lng['to_forum'] . '</a>');
         require('../incfiles/end.php');
@@ -79,31 +79,32 @@ if ($do || isset($_GET['new'])) {
     Выводим список файлов нужного раздела
     -----------------------------------------------------------------
     */
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE " . (isset($_GET['new'])
-                                              ? " `time` > '$new'" : " `filetype` = '$do'") . $sql), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE " . (isset($_GET['new'])
+                                              ? " `time` > '$new'" : " `filetype` = '$do'") . $sql)->fetchColumn();
     if ($total > 0) {
         // Заголовок раздела
         echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . $lng['new_files']
                 : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
-        $req = mysql_query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
+        $stmt = $db->query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
             FROM `cms_forum_files`
             LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
             LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
             WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($rights >= 7 ? '' : " AND `del` != '1'") . $sql .
             "ORDER BY `time` DESC LIMIT $start,$kmess");
-        for($i = 0; $res = mysql_fetch_assoc($req); ++$i){
-            $req_u = mysql_query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
-            $res_u = mysql_fetch_assoc($req_u);
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+        $i = 0;
+        while ($res = $stmt->fetch()) {
+            $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
+            echo ++$i % 2 ? '<div class="list2">' : '<div class="list1">';
             // Выводим текст поста
             $text = mb_substr($res['text'], 0, 500);
             $text = functions::checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil(mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp']
-                                                          ? ">=" : "<=") . " '" . $res['post'] . "'"), 0) / $kmess);
-            $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
-            if (mb_strlen($res['text']) > 500)
+            $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp']
+                                                          ? ">=" : "<=") . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
+            $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . _e($res['topicname']) . '</a></b><br />' . $text;
+            if (mb_strlen($res['text']) > 500) {
                 $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . $lng_forum['read_all'] . ' &gt;&gt;</a>';
+            }
             // Формируем ссылку на файл
             $fls = @filesize('../files/forum/attach/' . $res['filename']);
             $fls = round($fls / 1024, 0);
@@ -152,8 +153,8 @@ if ($do || isset($_GET['new'])) {
     Выводим список разделов, в которых есть файлы
     -----------------------------------------------------------------
     */
-    $countnew = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7
-                                                 ? '' : " AND `del` != '1'") . $sql), 0);
+    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($rights >= 7
+                                                 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     echo '<p>' . ($countnew > 0
             ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . $lng['new_files'] . ' (' . $countnew . ')</a>'
             : $lng_forum['new_files_empty']) . '</p>';
@@ -161,8 +162,8 @@ if ($do || isset($_GET['new'])) {
     $link = array();
     $total = 0;
     for ($i = 1; $i < 10; $i++) {
-        $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($rights >= 7
-                                                  ? '' : " AND `del` != '1'") . $sql), 0);
+        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($rights >= 7
+                                                  ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
         if ($count > 0) {
             $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="index.php?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
             $total = $total + $count;

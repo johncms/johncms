@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 $lng_mail = core::load_lng('mail');
 
@@ -27,20 +26,18 @@ if (isset($_POST['submit'])) {
     */
 	$set_mail['cat_friends'] = isset($_POST['cat_friends']) && $_POST['cat_friends'] == 1 ? 1 : 0;
 	$set_mail['message_include'] = isset($_POST['message_include']) && $_POST['message_include'] == 1 ? 1 : 0;
-	mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($_POST['them_message']) . "' WHERE `key` = 'them_message'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($_POST['reg_message']) . "' WHERE `key` = 'reg_message'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . (isset($_POST['message_include']) && $_POST['message_include'] == 1 ? 1 : 0) . "' WHERE `key` = 'setting_mail'");
-	mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string(serialize($set_mail)) . "' WHERE `key` = 'setting_mail'");
-	$req = mysql_query("SELECT * FROM `cms_settings`");
-    $set = array ();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
+    $stmt = $db->prepare("UPDATE `cms_settings` SET `val`= ? WHERE `key` = ?");
+	$stmt->execute([$_POST['them_message'], 'them_message']);
+    $stmt->execute([$_POST['reg_message'], 'reg_message']);
+	$stmt->execute([serialize($set_mail), 'setting_mail']);
+	$stmt = $db->query("SELECT * FROM `cms_settings`");
+    $set = array();
+    while ($res = $stmt->fetch()) {
+        $set[$res[0]] = $res[1];
+    }
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 $set_mail = unserialize($set['setting_mail']);
-if(!isset($set_mail['cat_friends']))
-	$set_mail['cat_friends'] = 0;
-if(!isset($set_mail['message_include']))
-	$set_mail['message_include'] = 0;
 /*
 -----------------------------------------------------------------
 Форма ввода параметров системы
@@ -65,4 +62,3 @@ echo '<h3>' . $lng_mail['system_message_reg'] . '</h3>' . $lng_mail['theme_syste
     '<input type="radio" value="0" name="cat_friends" ' . (empty($set_mail['cat_friends']) ? 'checked="checked"' : '') . '/>&#160;' . $lng['lng_off'] . '<br />' .
 	'<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
     '<div class="phdr"><a href="index.php">' . $lng['admin_panel'] . '</a></div>';
-?>

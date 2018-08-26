@@ -31,14 +31,14 @@ switch ($sort) {
         echo 'ID | <a href="index.php?act=usr&amp;sort=nick">' . $lng['nick'] . '</a> | <a href="index.php?act=usr&amp;sort=ip">IP</a></div>';
         $order = '`id` ASC';
 }
-$req = mysql_query("SELECT COUNT(*) FROM `users`");
-$total = mysql_result($req, 0);
-$req = mysql_query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY $order LIMIT " . $start . ", " . $kmess);
+$total = $db->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+$stmt = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY $order LIMIT " . $start . ", " . $kmess);
 $i = 0;
-while (($res = mysql_fetch_assoc($req)) !== false) {
+while ($res = $stmt->fetch()) {
     $link = '';
-    if ($rights >= 7)
+    if ($rights >= 7) {
         $link .= '<a href="../users/profile.php?act=edit&amp;user=' . $res['id'] . '">' . $lng['edit'] . '</a> | <a href="index.php?act=usr_del&amp;id=' . $res['id'] . '">' . $lng['delete'] . '</a> | ';
+    }
     $link .= '<a href="../users/profile.php?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . $lng['ban_do'] . '</a>';
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
     echo functions::display_user($res, array('header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link));
@@ -51,5 +51,3 @@ if ($total > $kmess) {
     echo '<p><form action="index.php?act=usr&amp;sort=' . $sort . '" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
 }
 echo '<p><a href="index.php?act=search_user">' . $lng['search_user'] . '</a><br /><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-
-?>

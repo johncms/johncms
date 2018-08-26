@@ -1,6 +1,9 @@
 /.idea
 /files/cache/*.dat
+/gallery/foto
+/gallery/temp
 /incfiles/db.php
+/john.todo
 /dist
 /distributive
 /node_modules

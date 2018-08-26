@@ -298,6 +298,9 @@ class bbcode extends core
                 $home = parse_url(core::$system_set['homeurl']);
                 $tmp = parse_url($url[1]);
                 if ($home['host'] == $tmp['host'] || isset(core::$user_set['direct_url']) && core::$user_set['direct_url']) {
+                    if (mb_strpos($url[1], 'javascript') === 0) {
+                        return '[url=' . $url[1] . ']' . $url[1] . '[/url]';
+                    }
                     return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
                 } else {
                     return '<a href="' . core::$system_set['homeurl'] . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';

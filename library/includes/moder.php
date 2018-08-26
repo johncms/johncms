@@ -12,89 +12,109 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $lng_gal = core::load_lng('gallery');
 
-  $obj = new Hashtags($id);  
-  $type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
-  
-  $author = ($type == 'article' && mysql_result(mysql_query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id), 0) == $user_id && $user_id) ? 1 : 0;
-  $adm || $author ?: redir404();
-  
-  if (isset($_POST['submit'])) {
+$obj = new Hashtags($id);  
+$type = isset($_GET['type']) && in_array($_GET['type'], array('dir', 'article')) ? $_GET['type'] : redir404();
+
+$author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $user_id && $user_id) ? 1 : 0;
+$adm || $author ?: redir404();
+
+if (isset($_POST['submit'])) {
     switch ($type) {
-    case 'dir':
-      $sql = "UPDATE `library_cats` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', `description`='" . mysql_real_escape_string($_POST['description']) . "' " . (isset($_POST['move']) && mysql_result(mysql_query("SELECT count(*) FROM `library_cats`") , 0) > 1 ? ', `parent`=' . intval($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . intval($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . intval($_POST['user_add']) : '') . " WHERE `id`=" . $id;
-      break;
+        case 'dir':
+            $stmt = $db->prepare('UPDATE `library_cats` SET
+                `name`= ?,
+                `description`= ? ' .
+                (isset($_POST['move']) && $db->query("SELECT count(*) FROM `library_cats`")->fetchColumn() > 1 ? ', `parent`=' . intval($_POST['move']) : '') .
+                (isset($_POST['dir']) ? ', `dir`=' . intval($_POST['dir']) : '') .
+                (isset($_POST['user_add']) ? ' , `user_add`=' . intval($_POST['user_add']) : '') .
+                ' WHERE `id`="' . $id . '" LIMIT 1');
+            $stmt->execute([
+                $_POST['name'],
+                $_POST['description']
+            ]);
+            break;
 
-    case 'article':
-      $obj->del_tags();
-      if (isset($_POST['tags'])) {
-        $obj->del_cache();  
-        $tags = array_map('trim', explode(',', $_POST['tags']));
-        if (sizeof($tags > 0)) {
-            $obj->add_tags($tags);
-        }
-      }
-    
-      $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
-      require ('../incfiles/lib/class.upload.php');
+        case 'article':
+            $obj->del_tags();
+            if (isset($_POST['tags'])) {
+                $obj->del_cache();  
+                $tags = array_map('trim', explode(',', $_POST['tags']));
+                if (sizeof($tags > 0)) {
+                    $obj->add_tags($tags);
+                }
+            }
+        
+            $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
+            require ('../incfiles/lib/class.upload.php');
 
-      $handle = new upload($image);
-      if ($handle->uploaded) {
-        // Обрабатываем фото
-        $handle->file_new_name_body = $id;
-        $handle->allowed = array(
-          'image/jpeg',
-          'image/gif',
-          'image/png'
-        );
-        $handle->file_max_size = 1024 * $set['flsz'];
-        $handle->file_overwrite = true;
-        $handle->image_x = $handle->image_src_x;
-        $handle->image_y = $handle->image_src_y;
-        $handle->image_convert = 'png';
-        $handle->process('../files/library/images/orig/');
-        $err_image = $handle->error;
-        $handle->file_new_name_body = $id;
-        $handle->file_overwrite = true;
-        if ($handle->image_src_y > 240) {
-          $handle->image_resize = true;
-          $handle->image_x = 240;
-          $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
-        }
-        else {
-          $handle->image_x = $handle->image_src_x;
-          $handle->image_y = $handle->image_src_y;
-        }
-        $handle->image_convert = 'png';
-        $handle->process('../files/library/images/big/');
-        $err_image = $handle->error;
-        $handle->file_new_name_body = $id;
-        $handle->file_overwrite = true;
-        $handle->image_resize = true;
-        $handle->image_x = 32;
-        $handle->image_y = 32;
-        $handle->image_convert = 'png';
-        $handle->process('../files/library/images/small/');
-        if ($err_image) {
-          echo functions::display_error($lng_gal['error_uploading_photo']);
-        }
-        $handle->clean();
-      }
-      $sql = "UPDATE `library_texts` SET `name`='" . mysql_real_escape_string($_POST['name']) . "', " . ($_POST['text'] != 'do_not_change' ? " `text`='" . mysql_real_escape_string($_POST['text']) . "', " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) . ', ' : '') . " `announce`='" . mysql_real_escape_string(mb_substr(trim($_POST['announce']), 0, 500)) . "' " . ($adm ? ", `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . " WHERE `id`=" . $id;
-      break;
+            $handle = new upload($image);
+            if ($handle->uploaded) {
+                // Обрабатываем фото
+                $handle->file_new_name_body = $id;
+                $handle->allowed = array(
+                    'image/jpeg',
+                    'image/gif',
+                    'image/png'
+                );
+                $handle->file_max_size = 1024 * $set['flsz'];
+                $handle->file_overwrite = true;
+                $handle->image_x = $handle->image_src_x;
+                $handle->image_y = $handle->image_src_y;
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/orig/');
+                $err_image = $handle->error;
+                $handle->file_new_name_body = $id;
+                $handle->file_overwrite = true;
+                if ($handle->image_src_y > 240) {
+                    $handle->image_resize = true;
+                    $handle->image_x = 240;
+                    $handle->image_y = $handle->image_src_y * (240 / $handle->image_src_x);
+                } else {
+                    $handle->image_x = $handle->image_src_x;
+                    $handle->image_y = $handle->image_src_y;
+                }
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/big/');
+                $err_image = $handle->error;
+                $handle->file_new_name_body = $id;
+                $handle->file_overwrite = true;
+                $handle->image_resize = true;
+                $handle->image_x = 32;
+                $handle->image_y = 32;
+                $handle->image_convert = 'png';
+                $handle->process('../files/library/images/small/');
+                if ($err_image) {
+                    echo functions::display_error($lng_gal['error_uploading_photo']);
+                }
+                $handle->clean();
+            }
+            $sql = '';
+            $ph = [
+                $_POST['name'],
+                trim(mb_substr($_POST['announce']), 0, 500)
+            ];
+            if ($_POST['text'] != 'do_not_change') {
+                $sql .= ', `text` = ? '
+                $ph[] = $_POST['text']
+            }
+            $stmt = $db->prepare('UPDATE `library_texts` SET
+                `name` = ?,
+                `announce` = ?' . $sql .
+                (isset($_POST['move']) ? ', `cat_id`="' . intval($_POST['move']) . '"' : '') .
+                ($adm ? ', `count_views`="' . intval($_POST['count_views']) . '", `premod`="' . intval($_POST['premod']) . '", `comments`="' . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . '" WHERE `id`="' . $id . ' LIMIT 1');
+            $stmt->execute($ph);
+            break;
     }
-    if (mysql_query($sql)) {
-      echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
-    }
-  }
-  else {
+    echo '<div>' . $lng_lib['changed'] . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></div>' . PHP_EOL;
+} else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->get_childs_dir()->result();
-    $sqlsel = mysql_query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
-    $row = mysql_fetch_assoc(mysql_query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id));
-    $empty = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id) , 0) > 0 || mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id) , 0) > 0 ? 0 : 1;
+    $sqlsel = $db->query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
+    $row = $db->query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id . " LIMIT 1")->fetch();
+    $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
     
     if (!$row) {
-      redir404();
+        redir404();
     }
     
     echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | '
@@ -126,7 +146,7 @@ $lng_gal = core::load_lng('gallery');
     ? '<h3>' . $lng_lib['tags'] . '</h3><div><input name="tags" type="text" value="' . functions::checkout($obj->get_all_stat_tags()) . '" /></div>'
     : '');
     if ($adm) {
-    if (mysql_num_rows($sqlsel) > 1) { 
+    if ($sqlsel->rowCount() > 1) { 
         echo '<h3>' . $lng_lib['move_dir'] . '</h3>'
         . '<div><select name="move">'
         . ($type == 'dir' 
@@ -135,8 +155,8 @@ $lng_gal = core::load_lng('gallery');
         : '')
         . ' value="0">' . $lng_lib['root'] . '</option>'
         : '');
-        while ($res = mysql_fetch_assoc($sqlsel)) {
-            if ($row['name'] != $res['name']) {
+        while ($res = $sqlsel->fetch()) {
+            if ($row['id'] != $res['id']) {
                 echo '<option '
                 . (($type == 'dir' && $row['parent'] == $res['id']) || ($type == 'article' && $row['cat_id'] == $res['id'])
                 ? 'selected="selected" '
@@ -169,4 +189,4 @@ $lng_gal = core::load_lng('gallery');
     echo '<div class="bmenu"><input type="submit" name="submit" value="' . $lng['save'] . '" />' 
     . '</div></div></form>' . PHP_EOL 
     . '<p><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . $lng['back'] . '</a></p>' . PHP_EOL;
-  }
+}

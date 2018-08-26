@@ -19,13 +19,13 @@ if (!$id || !$user_id) {
 }
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
-$req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
-$res = mysql_fetch_assoc($req);
-if ($res['type'] != 'm' || $res['user_id'] != $user_id) {
+$stmt = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' AND `user_id` = '" . $user_id . "' LIMIT 1");
+if (!$stmt->rowCount()) {
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
     exit;
 }
+$res = $stmt->fetch();
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['time'] < (time() - 180)) {
@@ -35,7 +35,7 @@ if ($res['time'] < (time() - 180)) {
 }
 
 // Проверяем, был ли файл уже загружен
-$exist = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'"), 0);
+$exist = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'")->fetchColumn();
 if ($exist) {
     echo functions::display_error($lng_forum['error_file_uploaded']);
     require('../incfiles/end.php');
@@ -110,29 +110,29 @@ if (isset($_POST['submit'])) {
             elseif (in_array($ext, $ext_java)) $type = 2; elseif (in_array($ext, $ext_sis)) $type = 3; elseif (in_array($ext, $ext_doc)) $type = 4; elseif (in_array($ext, $ext_pic)) $type = 5; elseif (in_array($ext, $ext_arch)) $type = 6; elseif (in_array($ext, $ext_video)) $type = 7; elseif (in_array($ext, $ext_audio)) $type = 8; else $type = 9;
 
             // Определяем ID субкатегории и категории
-            $req2 = mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'");
-            $res2 = mysql_fetch_array($req2);
-            $req3 = mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res2['refid'] . "'");
-            $res3 = mysql_fetch_array($req3);
+            $res2 = $db->query("SELECT `refid` FROM `forum` WHERE `id` = '" . $res['refid'] . "' LIMIT 1")->fetch();
+            $res3 = $db->query("SELECT `refid` FROM `forum` WHERE `id` = '" . $res2['refid'] . "' LIMIT 1")->fetch();
 
             // Заносим данные в базу
-            mysql_query("INSERT INTO `cms_forum_files` SET
-                        `cat` = '" . $res3['refid'] . "',
-                        `subcat` = '" . $res2['refid'] . "',
-                        `topic` = '" . $res['refid'] . "',
-                        `post` = '$id',
-                        `time` = '" . $res['time'] . "',
-                        `filename` = '" . mysql_real_escape_string($fname) . "',
-                        `filetype` = '$type'
-                    ");
+            $stmt = $db->prepare("INSERT INTO `cms_forum_files` SET
+                `cat` = '" . $res3['refid'] . "',
+                `subcat` = '" . $res2['refid'] . "',
+                `topic` = '" . $res['refid'] . "',
+                `post` = '$id',
+                `time` = '" . $res['time'] . "',
+                `filename` = '?,
+                `filetype` = '$type'
+            ");
+            $stmt->execute([
+                $fname
+            ]);
         } else {
             echo functions::display_error($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
         }
     } else {
         echo $lng_forum['error_upload_error'] . '<br />';
     }
-    $pa = mysql_query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'");
-    $pa2 = mysql_num_rows($pa);
+    $pa2 = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'")->fetchColumn();
     $page = ceil($pa2 / $kmess);
     echo '<br/><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . $lng['continue'] . '</a><br/>';
 } else {
@@ -143,11 +143,7 @@ if (isset($_POST['submit'])) {
     */
     echo '<div class="phdr"><b>' . $lng_forum['add_file'] . '</b></div>' .
         '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>';
-    if (stristr($agn, 'Opera/8.01')) {
-        echo '<input name="fail1" value =""/>&#160;<br/><a href="op:fileselect">' . $lng_forum['select_file'] . '</a>';
-    } else {
-        echo '<input type="file" name="fail"/>';
-    }
+    echo '<input type="file" name="fail"/>';
     echo '</p><p><input type="submit" name="submit" value="' . $lng_forum['upload'] . '"/></p></form></div>' .
         '<div class="phdr">' . $lng_forum['max_size'] . ': ' . $set['flsz'] . 'kb.</div>';
 }

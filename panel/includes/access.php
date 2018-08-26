@@ -13,28 +13,29 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['access_rights'] . '</div>';
 if (isset($_POST['submit'])) {
     // Записываем настройки в базу
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['reg']) ? intval($_POST['reg']) : 0) . "', `key`='mod_reg'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['forum']) ? intval($_POST['forum']) : 0) . "', `key`='mod_forum'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['guest']) ? intval($_POST['guest']) : 0) . "', `key`='mod_guest'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['lib']) ? intval($_POST['lib']) : 0) . "', `key`='mod_lib'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['gal']) ? intval($_POST['gal']) : 0) . "', `key`='mod_gal'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['down']) ? intval($_POST['down']) : 0) . "', `key`='mod_down'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . isset($_POST['libcomm']) . "', `key`='mod_lib_comm'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . isset($_POST['galcomm']) . "', `key`='mod_gal_comm'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . isset($_POST['downcomm']) . "', `key`='mod_down_comm'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['active']) ? intval($_POST['active']) : 0) . "', `key`='active'");
-    mysql_query("REPLACE `cms_settings` SET `val`='" . (isset($_POST['access']) ? intval($_POST['access']) : 0) . "', `key`='site_access'");
-    $req = mysql_query("SELECT * FROM `cms_settings`");
+    $stmt = $db->prepare('UPDATE `cms_settings` SET `val` = ? WHERE `key` = ?');
+    $stmt->execute([(isset($_POST['reg']) ? intval($_POST['reg']) : 0), 'mod_reg']);
+    $stmt->execute([(isset($_POST['forum']) ? intval($_POST['forum']) : 0), 'mod_forum']);
+    $stmt->execute([(isset($_POST['guest']) ? intval($_POST['guest']) : 0), 'mod_guest']);
+    $stmt->execute([(isset($_POST['lib']) ? intval($_POST['lib']) : 0), 'mod_lib']);
+    $stmt->execute([(isset($_POST['gal']) ? intval($_POST['gal']) : 0), 'mod_gal']);
+    $stmt->execute([(isset($_POST['down']) ? intval($_POST['down']) : 0), 'mod_down']);
+    $stmt->execute([(isset($_POST['libcomm']) ? 1 : 0), 'mod_lib_comm']);
+    $stmt->execute([(isset($_POST['galcomm']) ? 1 : 0), 'mod_gal_comm']);
+    $stmt->execute([(isset($_POST['downcomm']) ? 1 : 0), 'mod_down_comm']);
+    $stmt->execute([(isset($_POST['active']) ? intval($_POST['active']) : 0), 'active']);
+    $stmt->execute([(isset($_POST['access']) ? intval($_POST['access']) : 0), 'site_access']);
+    $stmt = $db->query("SELECT * FROM `cms_settings`");
     $set = array();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
-    mysql_free_result($req);
+    while ($res = $stmt->fetch()) {
+        $set[$res['key']] = $res['val'];
+    }
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 

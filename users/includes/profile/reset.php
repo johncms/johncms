@@ -22,11 +22,9 @@ if ($rights >= 7 && $rights > $user['rights']) {
     */
     $textl = htmlspecialchars($user['name']) . ': ' . $lng_profile['profile_edit'];
     require('../incfiles/head.php');
-    mysql_query("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = '" . $user['id'] . "'");
+    $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = '" . $user['id'] . "' LIMIT 1");
     echo '<div class="gmenu"><p>' . $lng_profile['reset1'] . ' <b>' . $user['name'] . '</b> ' . $lng_profile['reset2'] . '<br />' .
     '<a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p></div>';
     require_once ('../incfiles/end.php');
     exit;
 }
-  
-?>

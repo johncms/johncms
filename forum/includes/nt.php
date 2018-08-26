@@ -37,20 +37,13 @@ function forum_link($m)
         $p = parse_url($m[3]);
         if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $set['homeurl'] . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
-                $name = strtr($res['text'], array(
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => ''
-                ));
-                if (mb_strlen($name) > 40)
+            $stmt = core::$db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1' LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
+                $name = $res['text'];
+                if (mb_strlen($name) > 40) {
                     $name = mb_substr($name, 0, 40) . '...';
+                }
 
                 return '[url=' . $m[3] . ']' . $name . '[/url]';
             } else {
@@ -70,20 +63,17 @@ if ($flood) {
     exit;
 }
 
-$req_r = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
-if (!mysql_num_rows($req_r)) {
+$stmt = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
+if (!$stmt->rowCount()) {
     require('../incfiles/head.php');
     echo functions::display_error($lng['error_wrong_data']);
     require('../incfiles/end.php');
     exit;
 }
-$res_r = mysql_fetch_assoc($req_r);
+$res_r = $stmt->fetch();
 
-$th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, array('flag' => FILTER_FLAG_ENCODE_HIGH)), 0, 100)
-    : '';
-
-$msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
+$th = isset($_POST['th']) ? trim(mb_substr(functions::checkin($_POST['th'], 1), 0, 255)) : '';
+$msg = isset($_POST['msg']) ? functions::checkin($_POST['msg']) : '';
 
 if (isset($_POST['msgtrans'])) {
     $th = functions::trans($th);
@@ -98,25 +88,35 @@ if (isset($_POST['submit'])
     && $_POST['token'] == $_SESSION['token']
 ) {
     $error = array();
-    if (empty($th))
+    if (empty($th)) {
         $error[] = $lng_forum['error_topic_name'];
-    if (mb_strlen($th) < 2)
+    }
+    if (mb_strlen($th) < 2) {
         $error[] = $lng_forum['error_topic_name_lenght'];
-    if (empty($msg))
+    }
+    if (empty($msg)) {
         $error[] = $lng['error_empty_message'];
-    if (mb_strlen($msg) < 4)
+    }
+    if (mb_strlen($msg) < 4) {
         $error[] = $lng['error_message_short'];
+    }
     if (!$error) {
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
         // Прверяем, есть ли уже такая тема в текущем разделе?
-        if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'"), 0) > 0)
+        $stmt = $db->prepare("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = ?");
+        $stmt->execute([
+            $th
+        ]);
+        if ($stmt->fetchColumn()) {
             $error[] = $lng_forum['error_topic_exists'];
+        }
         // Проверяем, не повторяется ли сообщение?
-        $req = mysql_query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
-        if (mysql_num_rows($req) > 0) {
-            $res = mysql_fetch_array($req);
-            if ($msg == $res['text'])
+        $stmt = $db->query("SELECT `text` FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC LIMIT 1");
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetch();
+            if ($msg == $res['text']) {
                 $error[] = $lng['error_message_exists'];
+            }
         }
     }
     if (!$error) {
@@ -126,57 +126,65 @@ if (isset($_POST['submit'])
         $curator = $res_r['edit'] == 1 ? serialize(array($user_id => $login)) : '';
 
         // Добавляем тему
-        mysql_query("INSERT INTO `forum` SET
+        $stmt = $db->prepare("INSERT INTO `forum` SET
             `refid` = '$id',
             `type` = 't',
             `time` = '" . time() . "',
             `user_id` = '$user_id',
-            `from` = '$login',
-            `text` = '$th',
+            `from` = ?,
+            `text` = ?,
             `soft` = '',
             `edit` = '',
-            `curators` = '$curator'
+            `curators` = ?
         ");
-        $rid = mysql_insert_id();
+        $stmt->execute([
+            $login,
+            $th,
+            $curator
+        ]);
+        $rid = $db->lastInsertId();
 
         // Добавляем текст поста
-        mysql_query("INSERT INTO `forum` SET
+        $stmt = $db->prepare("INSERT INTO `forum` SET
             `refid` = '$rid',
             `type` = 'm',
             `time` = '" . time() . "',
             `user_id` = '$user_id',
-            `from` = '$login',
+            `from` = ?,
             `ip` = '" . core::$ip . "',
             `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `soft` = '" . mysql_real_escape_string($agn) . "',
-            `text` = '" . mysql_real_escape_string($msg) . "',
+            `soft` = ?,
+            `text` = ?,
             `edit` = '',
             `curators` = ''
         ");
-
-        $postid = mysql_insert_id();
+        $stmt->execute([
+            $login,
+            $agn,
+            $msg
+        ]);
+        $postid = $db->lastInsertId();
 
         // Записываем счетчик постов юзера
         $fpst = $datauser['postforum'] + 1;
-        mysql_query("UPDATE `users` SET
+        $db->exec("UPDATE `users` SET
             `postforum` = '$fpst',
             `lastpost` = '" . time() . "'
             WHERE `id` = '$user_id'
         ");
 
         // Ставим метку о прочтении
-        mysql_query("INSERT INTO `cms_forum_rdm` SET
+        $db->exec("INSERT INTO `cms_forum_rdm` SET
             `topic_id`='$rid',
             `user_id`='$user_id',
             `time`='" . time() . "'
         ");
 
         if (isset($_POST['addfiles'])) {
-            header("Location: index.php?id=$postid&act=addfile");
+            header("Location: index.php?id=$postid&act=addfile"); exit;
         } else {
-            header("Location: index.php?id=$rid");
+            header("Location: index.php?id=$rid"); exit;
         }
-        exit;
     } else {
         // Выводим сообщение об ошибке
         require('../incfiles/head.php');
@@ -185,8 +193,7 @@ if (isset($_POST['submit'])
         exit;
     }
 } else {
-    $req_c = mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'");
-    $res_c = mysql_fetch_assoc($req_c);
+    $res_c = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "' LIMIT 1")->fetch();
     require('../incfiles/head.php');
     if ($datauser['postforum'] == 0) {
         if (!isset($_GET['yes'])) {
@@ -198,19 +205,21 @@ if (isset($_POST['submit'])
         }
     }
     $msg_pre = functions::checkout($msg, 1, 1);
-    if ($set_user['smileys'])
+    if ($set_user['smileys']) {
         $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
+    }
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
     echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['new_topic'] . '</div>';
-    if ($msg && $th && !isset($_POST['submit']))
-        echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
+    if ($msg && $th && !isset($_POST['submit'])) {
+        echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . _e($th) . '</span></div>' .
             '<div class="list2">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
-    echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
+    }
+    echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . (isset($_GET['yes']) ? '&yes' : '') . '" method="post">' .
         '<div class="gmenu">' .
         '<p><h3>' . $lng['section'] . '</h3>' .
-        '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
+        '<a href="index.php?id=' . $res_c['id'] . '">' . _e($res_c['text']) . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . _e($res_r['text']) . '</a></p>' .
         '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
-        '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
+        '<input type="text" size="20" maxlength="255" name="th" value="' . _e($th) . '"/></p>' .
         '<p><h3>' . $lng_forum['post'] . '</h3>';
     echo '</p><p>' . bbcode::auto_bb('form', 'msg');
     echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .

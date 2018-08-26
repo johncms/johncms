@@ -19,19 +19,19 @@ echo '<div class="phdr"><b>' . $lng_mail['blocklist'] . '</b></div>';
 if (isset($_GET['del'])) {
     if ($id) {
         //Проверяем существование пользователя
-        $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
-        if (mysql_num_rows($req) == 0) {
+        $stmt = $db->query("SELECT COUNT(*) FROM `users` WHERE `id` = '$id'");
+        if (!$stmt->fetchColumn()) {
             echo functions::display_error($lng['error_user_not_exist']);
             require_once("../incfiles/end.php");
             exit;
         }
         //Удаляем из заблокированных
         if (isset($_POST['submit'])) {
-            $q = mysql_query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `from_id`='" . $id . "' AND `ban`='1'");
-            if (mysql_num_rows($q) == 0) {
+            $stmt = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `from_id`='" . $id . "' AND `ban`='1'");
+            if (!$stmt->fetchColumn()) {
                 echo '<div class="rmenu">' . $lng_mail['user_not_block'] . '</div>';
             } else {
-                mysql_query("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='$user_id' AND `from_id`='$id' AND `ban`='1';");
+                $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='$user_id' AND `from_id`='$id' AND `ban`='1';");
                 echo '<div class="rmenu">' . $lng_mail['user_enabled'] . '</div>';
             }
         } else {
@@ -45,29 +45,28 @@ if (isset($_GET['del'])) {
     }
 } elseif (isset($_GET['add'])) {
     if ($id) {
-        $req = mysql_query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1;");
-        if (mysql_num_rows($req) == 0) {
+        $stmt = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1;");
+        if (!$stmt->rowCount()) {
             echo functions::display_error($lng['error_user_not_exist']);
             require_once("../incfiles/end.php");
             exit;
         }
-        $res = mysql_fetch_assoc($req);
+        $res = $stmt->fetch();
         //Добавляем в заблокированные
         if (isset($_POST['submit'])) {
             if ($res['rights'] > $rights) {
                 echo '<div class="rmenu">' . $lng_mail['user_impossible_block'] . '</div>';
             } else {
-                $q = mysql_query("SELECT * FROM `cms_contact`
-				WHERE `user_id`='" . $user_id . "' AND `from_id`='" . $id . "';");
-                if (mysql_num_rows($q) == 0) {
-                    mysql_query("INSERT INTO `cms_contact` SET
+                $stmt = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user_id . "' AND `from_id`='" . $id . "';");
+                if (!$stmt->fetchColumn()) {
+                    $db->exec("INSERT INTO `cms_contact` SET
 					`user_id` = '" . $user_id . "',
 					`from_id` = '" . $id . "',
 					`time` = '" . time() . "',
 					`ban`='1';");
                 } else {
-                    mysql_query("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='$user_id' AND `from_id`='$id';");
-                    mysql_query("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='$id' AND `from_id`='$user_id';");
+                    $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='$user_id' AND `from_id`='$id';");
+                    $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='$id' AND `from_id`='$user_id';");
                 }
                 echo '<div class="rmenu">' . $lng_mail['user_block'] . '</div>';
             }
@@ -85,25 +84,25 @@ if (isset($_GET['del'])) {
     echo '<div class="topmenu"><a href="index.php">' . $lng_mail['my_contacts'] . '</a> | <b>' . $lng_mail['blocklist'] . '</b></div>';
 
     //Отображаем список заблокированных контактов
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id` = '" . $user_id . "' AND `ban`='1'"), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id` = '" . $user_id . "' AND `ban`='1'")->fetchColumn();
     if ($total) {
         if ($total > $kmess) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?act=ignor&amp;', $start, $total, $kmess) . '</div>';
         }
-        $req = mysql_query("SELECT `users`.* FROM `cms_contact`
+        $stmt = $db->query("SELECT `users`.* FROM `cms_contact`
 		    LEFT JOIN `users` ON `cms_contact`.`from_id`=`users`.`id`
 		    WHERE `cms_contact`.`user_id`='" . $user_id . "'
 		    AND `ban`='1'
 		    ORDER BY `cms_contact`.`time` DESC
 		    LIMIT $start, $kmess"
         );
-
-        for ($i = 0; ($row = mysql_fetch_assoc($req)) !== FALSE; ++$i) {
-            echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
+        $i = 0;
+        while ($row = $stmt->fetch()) {
+            echo ++$i % 2 ? '<div class="list1">' : '<div class="list2">';
 
             $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng_mail['correspondence'] . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . $lng_mail['enabled'] . '</a>';
-            $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `delete`!='$user_id' AND `sys`!='1' AND `spam`!='1';"), 0);
-            $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='$user_id' AND `sys`!='1' AND `spam`!='1';"), 0);
+            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='{$row['id']}')) AND `delete`!='$user_id' AND `sys`!='1' AND `spam`!='1';")->fetchColumn();
+            $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='$user_id' AND `sys`!='1' AND `spam`!='1';")->fetchColumn();
             $arg = array(
                 'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
                 'sub'    => $subtext

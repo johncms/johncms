@@ -12,18 +12,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 */
 
-//TODO: Поставить настраиваемый по вызову (через ссылку) размер изображений
-function format($name) {
-    $f1 = strrpos($name, ".");
-    $f2 = substr($name, $f1 + 1, 999);
-    $fname = strtolower($f2);
-    return $fname;
-}
-
 $u = isset($_GET['u']) ? abs(intval($_GET['u'])) : NULL;
 $file = isset($_GET['f']) ? htmlspecialchars(urldecode($_GET['f'])) : NULL;
-if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
-    $att_ext = strtolower(format('../files/users/album/' . $u . '/' . $file));
+$filepath = '../files/users/album/' . $u . '/' . $file;
+if ($u && $file && file_exists($filepath)) {
+    $att_ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     $pic_ext = array (
         'gif',
         'jpg',
@@ -31,7 +24,7 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         'png'
     );
     if (in_array($att_ext, $pic_ext)) {
-        $sizs = GetImageSize('../files/users/album/' . $u . '/' . $file);
+        $sizs = GetImageSize($filepath);
         $razm = 230;
         $width = $sizs[0];
         $height = $sizs[1];
@@ -48,20 +41,17 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
             $tn_height = $razm;
         }
         switch ($att_ext) {
-            case "gif":
-                $im = ImageCreateFromGIF('../files/users/album/' . $u . '/' . $file);
+            case 'gif':
+                $im = ImageCreateFromGIF($filepath);
                 break;
 
-            case "jpg":
-                $im = ImageCreateFromJPEG('../files/users/album/' . $u . '/' . $file);
+            case 'jpg':
+            case 'jpeg':
+                $im = ImageCreateFromJPEG($filepath);
                 break;
 
-            case "jpeg":
-                $im = ImageCreateFromJPEG('../files/users/album/' . $u . '/' . $file);
-                break;
-
-            case "png":
-                $im = ImageCreateFromPNG('../files/users/album/' . $u . '/' . $file);
+            case 'png':
+                $im = ImageCreateFromPNG($filepath);
                 break;
         }
         $im1 = imagecreatetruecolor($tn_width, $tn_height);
@@ -77,5 +67,3 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         ob_end_flush();
     }
 }
-
-?>

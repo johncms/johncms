@@ -15,27 +15,26 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
-    if ($_GET['id'] == "") {
+    if (!$id) {
         echo "ERROR<br/><a href='index.php'>Back</a><br/>";
         require_once('../incfiles/end.php');
         exit;
     }
-    $id = intval($_GET['id']);
-    $typ = mysql_query("select * from `gallery` where id='" . $id . "';");
-    $ms = mysql_fetch_array($typ);
-    if ($ms['type'] != "ft") {
+    $stmt = $db->query("select * from `gallery` where id='" . $id . "' AND `type` = 'ft' LIMIT 1;");
+    if (!$stmt->rowCount()) {
         echo "ERROR<br/><a href='index.php'>Back</a><br/>";
         require_once('../incfiles/end.php');
         exit;
     }
+    $ms = $stmt->fetch();
     if (isset($_GET['yes'])) {
-        $km = mysql_query("select * from `gallery` where type='km' and refid='" . $id . "';");
-        while ($km1 = mysql_fetch_array($km)) {
-            mysql_query("delete from `gallery` where `id`='" . $km1['id'] . "';");
+        $stmt = $db->query("select * from `gallery` where type='km' and refid='" . $id . "';");
+        while ($km1 = $stmt->fetch()) {
+            $db->exec("delete from `gallery` where `id`='" . $km1['id'] . "';");
         }
         unlink("foto/$ms[name]");
-        mysql_query("delete from `gallery` where `id`='" . $id . "';");
-        header("location: index.php?id=$ms[refid]");
+        $db->exec("delete from `gallery` where `id`='" . $id . "';");
+        header("location: index.php?id=$ms[refid]"); exit;
     } else {
         echo $lng['delete_confirmation'] . "<br/>";
         echo "<a href='index.php?act=delf&amp;id=" . $id . "&amp;yes'>" . $lng['delete'] . "</a> | <a href='index.php?id=" . $ms['refid'] . "'>" . $lng['cancel'] . "</a><br/>";

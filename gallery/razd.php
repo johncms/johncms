@@ -13,10 +13,23 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($rights >= 6) {
     if (isset($_POST['submit'])) {
-        $user = 0;
-        $text = functions::check($_POST['text']);
-        mysql_query("insert into `gallery` values(0,'0','" . time() . "','rz','','" . $text . "','','" . $user . "','','');");
-        header("location: index.php");
+        $text = isset($_POST['text']) ? functions::checkin($_POST['text']) : '';
+        if ($text) {
+            $stmt = $db->prepare("INSERT INTO `gallery` SET 
+                `refid` = '0',
+                `time`  = '" . time() . "',
+                `type`  = 'rz',
+                `avtor` = '',
+                `text`  = ?,
+                `name`  = ''
+            ");
+            $db->execute([
+                $text
+            ]);
+            header("location: index.php"); exit;
+        } else {
+            echo functions::display_error($lng['error_empty_fields']);
+        }
     } else {
         echo '<div class="phdr"><b>' . $lng_gal['create_section'] . '</b></div>' .
             '<form action="index.php?act=razd" method="post">' .

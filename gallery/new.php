@@ -12,21 +12,21 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 echo '<div class="phdr">' . $lng_gal['new_photo'] . '</div>';
-$newfile = mysql_query("select * from `gallery` where time > '" . (time() - 259200) . "' and type='ft' order by time desc;");
-$totalnew = mysql_num_rows($newfile);
+$stmt = $db->query("select * from `gallery` where time > '" . (time() - 259200) . "' and type='ft' order by time desc;");
+$totalnew = $stmt->rowCount();
 if (empty($_GET['page'])) {
     $page = 1;
 } else {
     $page = intval($_GET['page']);
 }
-$start = $page * 10 - 10;
-if ($totalnew < $start + 10) {
+$start = $page * $kmess - $kmess;
+if ($totalnew < $start + $kmess) {
     $end = $totalnew;
 } else {
-    $end = $start + 10;
+    $end = $start + $kmess;
 }
 if ($totalnew != 0) {
-    while ($newf = mysql_fetch_array($newfile)) {
+    while ($newf = $stmt->fetch()) {
         if ($i >= $start && $i < $end) {
             $d = $i / 2;
             $d1 = ceil($d);
@@ -110,64 +110,18 @@ if ($totalnew != 0) {
             }
             imagedestroy($im);
             imagedestroy($im1);
-            $kom = mysql_query("select * from `gallery` where type='km' and refid='" . $newf['id'] . "';");
-            $kom1 = mysql_num_rows($kom);
-            echo "</a><br/>" . $lng['date'] . ': ' . functions::display_date($newf['time']) . '<br/>' . $lng['description'] . ": $newf[text]<br/>";
-            $al = mysql_query("select * from `gallery` where type = 'al' and id = '" . $newf['refid'] . "';");
-            $al1 = mysql_fetch_array($al);
-            $rz = mysql_query("select * from `gallery` where type = 'rz' and id = '" . $al1['refid'] . "';");
-            $rz1 = mysql_fetch_array($rz);
-            echo '<a href="index.php?id=' . $al1['id'] . '">' . $rz1['text'] . '&#160;/&#160;' . $al1['text'] . '</a></div>';
+            $kom1 = $db->query("select COUNT(*) from `gallery` where type='km' and refid='" . $newf['id'] . "';")->fetchColumn();
+            echo "</a><br/>" . $lng['date'] . ': ' . functions::display_date($newf['time']) . '<br/>' . $lng['description'] . ": " . _e($newf['text']) . "<br/>";
+            $al1 = $db->query("select * from `gallery` where type = 'al' and id = '" . $newf['refid'] . "' LIMIT 1;")->fetch();
+            $rz1 = $db->query("select * from `gallery` where type = 'rz' and id = '" . $al1['refid'] . "' LIMIT 1;")->fetch();
+            echo '<a href="index.php?id=' . $al1['id'] . '">' . _e($rz1['text']) . '&#160;/&#160;' . _e($al1['text']) . '</a></div>';
         }
         ++$i;
     }
     if ($totalnew > 10) //TODO: Переделать на новый листинг по страницам
     {
         echo "<hr/>";
-        $ba = ceil($totalnew / 10);
-        if ($start != 0) {
-            echo '<a href="index.php?act=new&amp;page=' . ($page - 1) . '">&lt;&lt;</a> ';
-        }
-        $asd = $start - 10;
-        $asd2 = $start + 20;
-        if ($asd < $totalnew && $asd > 0) {
-            echo ' <a href="index.php?act=new&amp;page=1">1</a> .. ';
-        }
-        $page2 = $ba - $page;
-        $pa = ceil($page / 2);
-        $paa = ceil($page / 3);
-        $pa2 = $page + floor($page2 / 2);
-        $paa2 = $page + floor($page2 / 3);
-        $paa3 = $page + (floor($page2 / 3) * 2);
-        if ($page > 13) {
-            echo ' <a href="index.php?act=new&amp;page=' . $paa . '">' . $paa . '</a> <a href="index.php?act=new&amp;page=' . ($paa + 1) . '">' . ($paa + 1) . '</a> .. <a href="index.php?act=new&amp;page=' . ($paa * 2) . '">' . ($paa * 2) .
-                '</a> <a href="index.php?act=new&amp;page=' . ($paa * 2 + 1) . '">' . ($paa * 2 + 1) . '</a> .. ';
-        } elseif ($page > 7) {
-            echo ' <a href="index.php?act=new&amp;page=' . $pa . '">' . $pa . '</a> <a href="index.php?act=new&amp;page=' . ($pa + 1) . '">' . ($pa + 1) . '</a> .. ';
-        }
-        for ($i = $asd; $i < $asd2; ) {
-            if ($i < $totalnew && $i >= 0) {
-                $ii = floor(1 + $i / 10);
-                if ($start == $i) {
-                    echo " <b>$ii</b>";
-                } else {
-                    echo ' <a href="index.php?act=new&amp;page=' . $ii . '">' . $ii . '</a> ';
-                }
-            }
-            $i = $i + 10;
-        }
-        if ($page2 > 12) {
-            echo ' .. <a href="index.php?act=new&amp;page=' . $paa2 . '">' . $paa2 . '</a> <a href="index.php?act=new&amp;page=' . ($paa2 + 1) . '">' . ($paa2 + 1) . '</a> .. <a href="index.php?act=new&amp;page=' . ($paa3) . '">' . ($paa3)
-                . '</a> <a href="index.php?act=new&amp;page=' . ($paa3 + 1) . '">' . ($paa3 + 1) . '</a> ';
-        } elseif ($page2 > 6) {
-            echo ' .. <a href="index.php?act=new&amp;page=' . $pa2 . '">' . $pa2 . '</a> <a href="?act=new&amp;page=' . ($pa2 + 1) . '">' . ($pa2 + 1) . '</a> ';
-        }
-        if ($asd2 < $totalnew) {
-            echo ' .. <a href="index.php?act=new&amp;page=' . $ba . '">' . $ba . '</a>';
-        }
-        if ($totalnew > $start + 10) {
-            echo ' <a href="index.php?act=new&amp;page=' . ($page + 1) . '">&gt;&gt;</a>';
-        }
+        echo functions::display_pagination('index.php?act=new&amp;', $start, $total, $kmess);
         echo
             "<form action='index.php'>" . $lng['to_page'] . ":<br/><input type='hidden' name='act' value='new'/><input type='text' name='page'/><br/><input type='submit' value='Go!'/></form>";
     }
@@ -176,5 +130,3 @@ if ($totalnew != 0) {
     echo '<p>' . $lng['list_empty'] . '</p>';
 }
 echo "<br/><a href='index.php?'>" . $lng['to_gallery'] . "</a><br/>";
-
-?>

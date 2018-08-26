@@ -21,10 +21,9 @@ echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong>
      '<div class="topmenu">' . $lng_lib['sort'] . ': ' . functions::display_menu($menu) . '</div>';
 
 if ($sort == 'read' || $sort == 'comm') {
-    $total = mysql_result(mysql_query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT 20'), 0);
+    $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT 20')->fetchColumn();
 } else {
-    $sql = mysql_query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20");
-    $total = mysql_num_rows($sql);
+    $total = $db->query("SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20")->fetchColumn();
 }
 
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
@@ -33,13 +32,13 @@ if (!$total) {
     echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
 } else {
     if ($sort == 'read' || $sort == 'comm') {
-        $sql = mysql_query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
+        $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `count_comments`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`count_comments`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
     } else {
-        $sql = mysql_query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
+        $stmt = $db->query("SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT " . $start . ',' . $kmess);
     }
 
     $i = 0;
-    while ($row = mysql_fetch_assoc($sql)) {
+    while ($row = $stmt->fetch()) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
@@ -55,7 +54,7 @@ if (!$total) {
             // Раздел
             . '<tr>'
             . '<td class="caption">' . $lng['section'] . ':</td>'
-            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . functions::checkout(mysql_result(mysql_query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id']), 0)) . '</a></td>'
+            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . functions::checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
             . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')

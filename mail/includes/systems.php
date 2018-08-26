@@ -15,16 +15,16 @@ $total = 0;
 
 if ($mod == 'clear') {
     if (isset($_POST['clear'])) {
-        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1';"), 0);
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1';")->fetchColumn();
         if ($count_message) {
-            $req = mysql_query("SELECT `id` FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' LIMIT " . $count_message);
+            $stmt = $db->query("SELECT `id` FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' LIMIT " . $count_message);
             $mass_del = array();
-            while (($row = mysql_fetch_assoc($req)) !== FALSE) {
+            while ($row = $stmt->fetch()) {
                 $mass_del[] = $row['id'];
             }
             if ($mass_del) {
                 $result = implode(',', $mass_del);
-                mysql_query("DELETE FROM `cms_mail` WHERE `id` IN (" . $result . ")");
+                $db->exec("DELETE FROM `cms_mail` WHERE `id` IN (" . $result . ")");
             }
         }
         $out .= '<div class="gmenu">' . $lng_mail['messages_are_removed'] . '</div>';
@@ -38,7 +38,7 @@ if ($mod == 'clear') {
 		</div>';
     }
 } else {
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' AND `delete`!='$user_id';"), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' AND `delete`!='$user_id';")->fetchColumn();
     if ($total) {
         function time_parce($var)
         {
@@ -48,16 +48,19 @@ if ($mod == 'clear') {
         if ($total > $kmess) {
             $out .= '<div class="topmenu">' . functions::display_pagination('index.php?act=systems&amp;', $start, $total, $kmess) . '</div>';
         }
-        $req = mysql_query("SELECT * FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' AND `delete`!='$user_id' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+        $stmt = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='$user_id' AND `sys`='1' AND `delete`!='$user_id' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
         $mass_read = array();
-        for ($i = 0; ($row = mysql_fetch_assoc($req)) !== FALSE; ++$i) {
-            $out .= $i % 2 ? '<div class="list1">' : '<div class="list2">';
-            if ($row['read'] == 0 && $row['from_id'] == $user_id)
+        $i = 0;
+        while ($row = $stmt->fetch()) {
+            $out .= ++$i % 2 ? '<div class="list1">' : '<div class="list2">';
+            if ($row['read'] == 0 && $row['from_id'] == $user_id) {
                 $mass_read[] = $row['id'];
+            }
             $post = $row['text'];
             $post = functions::checkout($post, 1, 1);
-            if ($set_user['smileys'])
+            if ($set_user['smileys']) {
                 $post = functions::smileys($post);
+            }
             $out .= '<strong>' . functions::checkout($row['them']) . '</strong> (' . functions::display_date($row['time']) . ')<br />';
             $post = preg_replace_callback("/{TIME=(.+?)}/usi", 'time_parce', $post);
             //print_r($outmass);
@@ -68,7 +71,7 @@ if ($mod == 'clear') {
         //Ставим метку о прочтении
         if ($mass_read) {
             $result = implode(',', $mass_read);
-            mysql_query("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='$user_id' AND `sys`='1' AND `id` IN (" . $result . ")");
+            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='$user_id' AND `sys`='1' AND `id` IN (" . $result . ")");
         }
     } else {
         $out .= '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';

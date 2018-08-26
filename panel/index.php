@@ -19,7 +19,7 @@ $lng = array_merge($lng, core::load_lng('admin'));
 
 // Проверяем права доступа
 if (core::$user_rights < 1) {
-    header('Location: http://johncms.com/?err');
+    header('Location: ' . $homeurl . '/?err'); exit;
     exit;
 }
 
@@ -54,8 +54,8 @@ $array = array(
 if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
     require('includes/' . $array[$key] . '.php');
 } else {
-    $regtotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'"), 0);
-    $bantotal = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'"), 0);
+    $regtotal = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
+    $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['admin_panel'] . '</b></div>';
 
     /*
@@ -66,7 +66,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     echo '<div class="user"><p><h3>' . $lng['users'] . '</h3><ul>';
     if ($regtotal && core::$user_rights >= 6) echo '<li><span class="red"><b><a href="index.php?act=reg">' . $lng['users_reg'] . '</a>&#160;(' . $regtotal . ')</b></span></li>';
     echo '<li><a href="index.php?act=usr">' . $lng['users'] . '</a>&#160;(' . counters::users() . ')</li>' .
-        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'"), 0) . ')</li>' .
+        '<li><a href="index.php?act=usr_adm">' . $lng['users_administration'] . '</a>&#160;(' . $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` >= '1'")->fetchColumn() . ')</li>' .
         ($rights >= 7 ? '<li><a href="index.php?act=usr_clean">' . $lng['users_clean'] . '</a></li>' : '') .
         '<li><a href="index.php?act=ban_panel">' . $lng['ban_panel'] . '</a>&#160;(' . $bantotal . ')</li>' .
         (core::$user_rights >= 7 ? '<li><a href="index.php?act=antiflood">' . $lng['antiflood'] . '</a></li>' : '') .
@@ -78,7 +78,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     if ($rights >= 7) {
 
         // Блок модулей
-        $spam = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';"), 0);
+        $spam = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `spam`='1';")->fetchColumn();
         echo '<div class="gmenu"><p>';
         echo '<h3>' . $lng['modules'] . '</h3><ul>' .
             '<li><a href="index.php?act=forum">' . $lng['forum'] . '</a></li>' .

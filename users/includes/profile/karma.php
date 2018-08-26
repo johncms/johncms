@@ -31,32 +31,37 @@ if ($set_karma['on']) {
                     $error[] = $lng_karma['error_terms_1'] . ' '
                         . ($set_karma['time'] ? ($set_karma['karma_time'] / 3600) . $lng['hours'] : ($set_karma['karma_time'] / 86400) . $lng['days']) . ' ' . $lng_karma['error_terms_2'] . ' ' . $set_karma['forum'] . ' '
                         . $lng_karma['posts'];
-                $count = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'"), 0);
+                $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '$user_id' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
                 if ($count)
                     $error[] = $lng_karma['error_terms_3'];
-                $sum = mysql_result(mysql_query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'"), 0);
+                $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '$user_id' AND `time` >= '" . $datauser['karma_time'] . "'")->fetchColumn();
                 if (($set_karma['karma_points'] - $sum) <= 0)
-                    $error[] = $lng_karma['error_limit'] . ' ' . date('d.m.y в H:i:s', ($datauser['karma_time'] + 86400));
+                    $error[] = $lng_karma['error_limit'] . ' ' . date('d.m.y / H:i:s', ($datauser['karma_time'] + 86400));
                 if ($error) {
                     echo functions::display_error($error, '<a href="profile.php?user=' . $user['id'] . '">' . $lng['back'] . '</a>');
                 } else {
                     if (isset($_POST['submit'])) {
-                        $text = isset($_POST['text']) ? mysql_real_escape_string(mb_substr(trim($_POST['text']), 0, 500)) : '';
+                        $text = isset($_POST['text']) ? mb_substr(trim($_POST['text']), 0, 500) : '';
                         $type = intval($_POST['type']) ? 1 : 0;
                         $points = abs(intval($_POST['points']));
-                        if (!$points || $points > ($set_karma['karma_points'] - $sum))
+                        if (!$points || $points > ($set_karma['karma_points'] - $sum)) {
                             $points = 1;
-                        mysql_query("INSERT INTO `karma_users` SET
+                        }
+                        $stmt = $db->prepare("INSERT INTO `karma_users` SET
                             `user_id` = '$user_id',
-                            `name` = '$login',
+                            `name` = ?,
                             `karma_user` = '" . $user['id'] . "',
                             `points` = '$points',
                             `type` = '$type',
                             `time` = '" . time() . "',
-                            `text` = '$text'
+                            `text` = ?
                         ");
+                        $stmt->execute([
+                            $login,
+                            $text
+                        ]);
                         $sql = $type ? "`karma_plus` = '" . ($user['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user['karma_minus'] + $points) . "'";
-                        mysql_query("UPDATE `users` SET $sql WHERE `id` = '" . $user['id'] . "'");
+                        $db->exec("UPDATE `users` SET $sql WHERE `id` = '" . $user['id'] . "'");
                         echo '<div class="gmenu">' . $lng_karma['done'] . '!<br /><a href="profile.php?user=' . $user['id'] . '">' . $lng['continue'] . '</a></div>';
                     } else {
                         echo '<div class="phdr"><b>' . $lng_karma['vote_to'] . ' ' . $res['name'] . '</b>: ' . functions::checkout($user['name']) . '</div>' .
@@ -90,19 +95,19 @@ if ($set_karma['on']) {
             */
             if ($rights == 9) {
                 $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : NULL;
-                $req = mysql_query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user['id'] . "'");
-                if (mysql_num_rows($req)) {
-                    $res = mysql_fetch_assoc($req);
+                $stmt = $db->query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user['id'] . "'");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     if (isset($_GET['yes'])) {
-                        mysql_query("DELETE FROM `karma_users` WHERE `id` = '$id'");
+                        $db->exec("DELETE FROM `karma_users` WHERE `id` = '$id'");
                         //TODO: Доработать калькуляцию
                         if($res['type']){
                             $sql = "`karma_plus` = '" . ($user['karma_plus'] > $res['points'] ? $user['karma_plus'] - $res['points'] : 0) . "'";
                         } else {
                             $sql = "`karma_minus` = '" . ($user['karma_minus'] > $res['points'] ? $user['karma_minus'] - $res['points'] : 0) . "'";
                         }
-                        mysql_query("UPDATE `users` SET $sql WHERE `id` = '" . $user['id'] . "'");
-                        header('Location: profile.php?act=karma&user=' . $user['id'] . '&type=' . $type);
+                        $db->exec("UPDATE `users` SET $sql WHERE `id` = '" . $user['id'] . "'");
+                        header('Location: profile.php?act=karma&user=' . $user['id'] . '&type=' . $type); exit;
                     } else {
                         echo '<div class="rmenu"><p>' . $lng_karma['deletion_warning'] . '?<br/>' .
                             '<a href="profile.php?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $id . '&amp;type=' . $type . '&amp;yes">' . $lng['delete'] . '</a> | ' .
@@ -120,10 +125,10 @@ if ($set_karma['on']) {
             */
             if ($rights == 9) {
                 if (isset($_GET['yes'])) {
-                    mysql_query("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'");
-                    mysql_query("OPTIMIZE TABLE `karma_users`");
-                    mysql_query("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = '" . $user['id'] . "'");
-                    header('Location: profile.php?user=' . $user['id']);
+                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'");
+                    $db->query("OPTIMIZE TABLE `karma_users`");
+                    $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = '" . $user['id'] . "'");
+                    header('Location: profile.php?user=' . $user['id']); exit;
                 } else {
                     echo '<div class="rmenu"><p>' . $lng_karma['clear_warning'] . '?<br/>' .
                         '<a href="profile.php?act=karma&amp;mod=clean&amp;user=' . $user['id'] . '&amp;yes">' . $lng['delete'] . '</a> | ' .
@@ -139,10 +144,10 @@ if ($set_karma['on']) {
             -----------------------------------------------------------------
             */
             echo '<div class="phdr"><a href="profile.php?act=karma&amp;type=2"><b>' . $lng['karma'] . '</b></a> | ' . $lng_karma['new_responses'] . '</div>';
-            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400)), 0);
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400))->fetchColumn();
             if ($total) {
-                $req = mysql_query("SELECT * FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
-                while ($res = mysql_fetch_assoc($req)) {
+                $stmt = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '$user_id' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                while ($res = $stmt->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
@@ -197,11 +202,11 @@ if ($set_karma['on']) {
                 '<span class="green">' . $lng['vote_for'] . ' (' . $user['karma_plus'] . ')</span> | ' .
                 '<span class="red">' . $lng['vote_against'] . ' (' . $user['karma_minus'] . ')</span>';
             echo '</div></td></tr></table></div>';
-            $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'")), 0);
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'"))->fetchColumn();
             if ($total) {
-                $req = mysql_query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'") . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                $stmt = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'") . " ORDER BY `time` DESC LIMIT $start, $kmess");
                 $i = 0;
-                while ($res = mysql_fetch_assoc($req)) {
+                while ($res = $stmt->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $user_id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="profile.php?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
@@ -227,4 +232,3 @@ if ($set_karma['on']) {
                 '<a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></p>';
     }
 }
-?>

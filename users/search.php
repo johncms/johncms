@@ -21,14 +21,12 @@ require('../incfiles/head.php');
 Принимаем данные, выводим форму поиска
 -----------------------------------------------------------------
 */
-$search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
-$search = $search_post ? $search_post : $search_get;
+$search = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['search_user'] . '</div>' .
-    '<form action="search.php" method="post">' .
+    '<form action="search.php" method="get">' .
     '<div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . functions::checkout($search) . '" />' .
-    '<input type="submit" value="' . $lng['search'] . '" name="submit" />' .
+    '<input type="submit" value="' . $lng['search'] . '" />' .
     '</p></div></form>';
 
 /*
@@ -37,10 +35,12 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a>
 -----------------------------------------------------------------
 */
 $error = array();
-if (!empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20))
+if (!empty($search) && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
     $error[] = $lng['nick'] . ': ' . $lng['error_wrong_lenght'];
-if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", functions::rus_lat(mb_strtolower($search))))
+}
+if (preg_match("/[^1-9a-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", functions::rus_lat(mb_strtolower($search)))) {
     $error[] = $lng['nick'] . ': ' . $lng['error_wrong_symbols'];
+}
 if ($search && !$error) {
     /*
     -----------------------------------------------------------------
@@ -52,15 +52,23 @@ if ($search && !$error) {
         '_' => '\\_',
         '%' => '\\%'
     ));
-    $search_db = '%' . $search_db . '%';
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `name_lat` LIKE '" . mysql_real_escape_string($search_db) . "'"), 0);
+    $search_db = $db->quote('%' . $search_db . '%');
+    $stmt = $db->prepare("SELECT COUNT(*) FROM `users` WHERE `name_lat` LIKE ?");
+    $stmt->execute([
+        $search_db
+    ]);
+    $total = $stmt->fetchColumn();
     echo '<div class="phdr"><b>' . $lng['search_results'] . '</b></div>';
-    if ($total > $kmess)
+    if ($total > $kmess) {
         echo '<div class="topmenu">' . functions::display_pagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+    }
     if ($total > 0) {
-        $req = mysql_query("SELECT * FROM `users` WHERE `name_lat` LIKE '" . mysql_real_escape_string($search_db) . "' ORDER BY `name` ASC LIMIT $start, $kmess");
+        $stmt = $db->prepare("SELECT * FROM `users` WHERE `name_lat` LIKE ? ORDER BY `name` ASC LIMIT $start, $kmess");
+        $stmt->execute([
+            $search_db
+        ]);
         $i = 0;
-        while ($res = mysql_fetch_assoc($req)) {
+        while ($res = $stmt->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             $res['name'] = mb_strlen($search) < 2 ? $res['name'] : preg_replace('|('.preg_quote($search, '/').')|siu','<span style="background-color: #FFFF33">$1</span>', $res['name']);
             echo functions::display_user($res);
@@ -86,5 +94,3 @@ echo '<p>' . ($search && !$error ? '<a href="search.php">' . $lng['search_new'] 
      '<a href="index.php">' . $lng['back'] . '</a></p>';
 
 require('../incfiles/end.php');
-
-?>

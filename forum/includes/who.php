@@ -15,8 +15,7 @@ $textl = $lng_forum['who_in_forum'];
 $headmod = $id ? 'forum,' . $id : 'forumwho';
 require_once('../incfiles/head.php');
 if (!$user_id) {
-    header('Location: index.php');
-    exit;
+    header('Location: index.php'); exit;
 }
 
 if ($id) {
@@ -25,16 +24,16 @@ if ($id) {
     Показываем общий список тех, кто в выбранной теме
     -----------------------------------------------------------------
     */
-    $req = mysql_query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
-        echo '<div class="phdr"><b>' . $lng_forum['who_in_topic'] . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
+    $stmt = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 't' LIMIT 1");
+    if ($stmt->rowCount()) {
+        $res = $stmt->fetch();
+        echo '<div class="phdr"><b>' . $lng_forum['who_in_topic'] . ':</b> <a href="index.php?id=' . $id . '">' . _e($res['text']) . '</a></div>';
         if ($rights > 0) {
             echo '<div class="topmenu">' .
                 ($do == 'guest' ? '<a href="index.php?act=who&amp;id=' . $id . '">' . $lng['authorized'] . '</a> | ' . $lng['guests'] : $lng['authorized'] . ' | <a href="index.php?act=who&amp;do=guest&amp;id=' . $id . '">' . $lng['guests'] . '</a>') .
                 '</div>';
         }
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'"), 0);
+        $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
             $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
@@ -43,10 +42,12 @@ if ($id) {
             echo '<div class="topmenu">' . functions::display_pagination('index.php?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>';
         }
         if ($total) {
-            $req = mysql_query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
-            for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            $stmt = $db->query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
+            $i = 0;
+            while($res = $stmt->fetch()) {
+                echo ++$i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
+                // todo: edit
                 echo functions::display_user($res, 0, ($act == 'guest' || ($rights >= 1 && $rights >= $res['rights']) ? 1 : 0));
                 echo '</div>';
             }
@@ -54,7 +55,7 @@ if ($id) {
             echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
         }
     } else {
-        header('Location: index.php');
+        header('Location: index.php'); exit;
     }
     echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
     if ($total > $kmess) {
@@ -76,7 +77,7 @@ if ($id) {
         echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="index.php?act=who">' . $lng['users'] . '</a> | <b>' . $lng['guests'] . '</b>'
                 : '<b>' . $lng['users'] . '</b> | <a href="index.php?act=who&amp;do=guest">' . $lng['guests'] . '</a>') . '</div>';
     }
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'"), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
     if ($start >= $total) {
         // Исправляем запрос на несуществующую страницу
         $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
@@ -85,12 +86,13 @@ if ($id) {
         echo '<div class="topmenu">' . functions::display_pagination('index.php?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>';
     }
     if ($total) {
-        $req = mysql_query("SELECT * FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
-        for ($i = 0; $res = mysql_fetch_assoc($req); ++$i) {
+        $stmt = $db->query("SELECT * FROM `" . ($do == 'guest' ? "cms_sessions" : "users") . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
+        $i = 0;
+        while ($res = $stmt->fetch()) {
             if ($res['id'] == core::$user_id) {
                 echo '<div class="gmenu">';
             } else {
-                echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                echo ++$i % 2 ? '<div class="list2">' : '<div class="list1">';
             }
             // Вычисляем местоположение
             $place = '';
@@ -116,12 +118,12 @@ if ($id) {
                     break;
 
                 default:
-                    $where = explode(",", $res['place']);
+                    $where = explode(',', $res['place']);
                     if ($where[0] == 'forum' && intval($where[1])) {
-                        $req_t = mysql_query("SELECT `type`, `refid`, `text` FROM `forum` WHERE `id` = '$where[1]'");
-                        if (mysql_num_rows($req_t)) {
-                            $res_t = mysql_fetch_assoc($req_t);
-                            $link = '<a href="index.php?id=' . $where[1] . '">' . (empty($res_t['text']) ? '-----' : $res_t['text']) . '</a>';
+                        $stmt_t = $db->query("SELECT `type`, `refid`, `text` FROM `forum` WHERE `id` = '$where[1]' LIMIT 1");
+                        if ($stmt_t->rowCount()) {
+                            $res_t = $stmt_t->fetch();
+                            $link = '<a href="index.php?id=' . $where[1] . '">' . _e($res_t['text']) . '</a>';
                             switch ($res_t['type']) {
                                 case 'f':
                                     $place = $lng_forum['place_category'] . ' &quot;' . $link . '&quot;';
@@ -136,10 +138,10 @@ if ($id) {
                                     break;
 
                                 case 'm':
-                                    $req_m = mysql_query("SELECT `text` FROM `forum` WHERE `id` = '" . $res_t['refid'] . "' AND `type` = 't'");
-                                    if (mysql_num_rows($req_m)) {
-                                        $res_m = mysql_fetch_assoc($req_m);
-                                        $place = (isset($where[2]) ? $lng_forum['place_answer'] : $lng_forum['place_topic']) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . (empty($res_m['text']) ? '-----' : $res_m['text']) . '</a>&quot;';
+                                    $stmt_m = $db->query("SELECT `text` FROM `forum` WHERE `id` = '" . $res_t['refid'] . "' AND `type` = 't' LIMIT 1");
+                                    if ($stmt_m->rowCount()) {
+                                        $res_m = $stmt_m->fetch();
+                                        $place = (isset($where[2]) ? $lng_forum['place_answer'] : $lng_forum['place_topic']) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . _e($res_m['text']) . '</a>&quot;';
                                     }
                                     break;
                             }
@@ -166,4 +168,3 @@ if ($id) {
     }
     echo '<p><a href="index.php">' . $lng['to_forum'] . '</a></p>';
 }
-?>

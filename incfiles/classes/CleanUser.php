@@ -21,11 +21,11 @@ class CleanUser
     public function removeUser($clean_id)
     {
         // Удаляем историю нарушений
-        mysql_query("DELETE FROM `cms_ban_users` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = '" . $clean_id . "'");
         // Удаляем историю IP
-        mysql_query("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $clean_id . "'");
         // Удаляем пользователя
-        mysql_query("DELETE FROM `users` WHERE `id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `users` WHERE `id` = '" . $clean_id . "' LIMIT 1");
     }
 
     /**
@@ -42,21 +42,21 @@ class CleanUser
         }
 
         // Чистим таблицы
-        $req = mysql_query("SELECT `id` FROM `cms_album_files` WHERE `user_id` = '" . $clean_id . "'");
-        if (mysql_num_rows($req)) {
-            while ($res = mysql_fetch_assoc($req)) {
-                mysql_query("DELETE FROM `cms_album_comments` WHERE `sub_id` = '" . $res['id'] . "'");
-                mysql_query("DELETE FROM `cms_album_downloads` WHERE `file_id` = '" . $res['id'] . "'");
-                mysql_query("DELETE FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'");
-                mysql_query("DELETE FROM `cms_album_votes` WHERE `file_id` = '" . $res['id'] . "'");
+        $stmt = core::$db->query("SELECT `id` FROM `cms_album_files` WHERE `user_id` = '" . $clean_id . "'");
+        if ($stmt->rowCount()) {
+            while ($res = $stmt->fetch()) {
+                core::$db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '" . $res['id'] . "'");
+                core::$db->exec("DELETE FROM `cms_album_downloads` WHERE `file_id` = '" . $res['id'] . "'");
+                core::$db->exec("DELETE FROM `cms_album_views` WHERE `file_id` = '" . $res['id'] . "'");
+                core::$db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '" . $res['id'] . "'");
             }
         }
 
-        mysql_query("DELETE FROM `cms_album_cat` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_album_files` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_album_downloads` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_album_views` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_album_votes` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_album_cat` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_album_files` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_album_downloads` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_album_views` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_album_votes` WHERE `user_id` = '" . $clean_id . "'");
     }
 
     /**
@@ -67,21 +67,20 @@ class CleanUser
     public function removeMail($clean_id)
     {
         // Удаляем файлы юзера из почты
-        $req = mysql_query("SELECT * FROM `cms_mail` WHERE (`user_id` OR `from_id` = '" . $clean_id . "') AND `file_name` != ''");
-
-        if (mysql_num_rows($req)) {
-            while ($res = mysql_fetch_assoc($req)) {
+        $stmt = core::$db->query("SELECT * FROM `cms_mail` WHERE (`user_id` OR `from_id` = '" . $clean_id . "') AND `file_name` != ''");
+        if ($stmt->rowCount()) {
+            while ($res = $stmt->fetch()) {
                 // Удаляем файлы почты
                 if (is_file(ROOTPATH . 'files/mail/' . $res['file_name'])) {
-                    @unlink('../files/mail/' . $res['file_name']);
+                    unlink('../files/mail/' . $res['file_name']);
                 }
             }
         }
 
-        mysql_query("DELETE FROM `cms_mail` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_mail` WHERE `from_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_contact` WHERE `user_id` = '" . $clean_id . "'");
-        mysql_query("DELETE FROM `cms_contact` WHERE `from_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_mail` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_mail` WHERE `from_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_contact` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_contact` WHERE `from_id` = '" . $clean_id . "'");
     }
 
     /**
@@ -91,17 +90,17 @@ class CleanUser
      */
     public function removeKarma($clean_id)
     {
-        mysql_query("DELETE FROM `karma_users` WHERE `karma_user` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `karma_users` WHERE `karma_user` = '" . $clean_id . "'");
     }
 
     public function cleanForum($clean_id)
     {
         // Скрываем темы на форуме
-        mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 't' AND `user_id` = '" . $clean_id . "'");
+        core::$db->exec("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 't' AND `user_id` = '" . $clean_id . "'");
         // Скрываем посты на форуме
-        mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 'm' AND `user_id` = '" . $clean_id . "'");
+        core::$db->exec("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 'm' AND `user_id` = '" . $clean_id . "'");
         // Удаляем метки прочтения на Форуме
-        mysql_query("DELETE FROM `cms_forum_rdm` WHERE `user_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_forum_rdm` WHERE `user_id` = '" . $clean_id . "'");
     }
 
     /**
@@ -111,7 +110,7 @@ class CleanUser
      */
     public function removeGuestbook($clean_id)
     {
-        mysql_query("DELETE FROM `cms_users_guestbook` WHERE `sub_id` = '" . $clean_id . "'");
+        core::$db->exec("DELETE FROM `cms_users_guestbook` WHERE `sub_id` = '" . $clean_id . "'");
     }
 
     /**
@@ -121,22 +120,22 @@ class CleanUser
      */
     public function cleanComments($clean_id)
     {
-        $req = mysql_query("SELECT `name` FROM `users` WHERE `id` = " . $clean_id);
-        if (mysql_num_rows($req)) {
-            $res = mysql_fetch_assoc($req);
+        $stmt = core::$db->query("SELECT `name` FROM `users` WHERE `id` = " . $clean_id);
+        if ($stmt->rowCount()) {
+            $res = $stmt->fetch();
 
             // Удаляем из Галреи
-            mysql_query("DELETE FROM `gallery` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'km'");
+            core::$db->exec("DELETE FROM `gallery` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'km'");
             // Удаляем из Библиотеки
-            mysql_query("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $clean_id . "'");
+            core::$db->exec("DELETE FROM `cms_library_comments` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем из Загрузок
-            mysql_query("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
+            core::$db->exec("DELETE FROM `download` WHERE `avtor` = '" . $res['name'] . "' AND `type` = 'komm'");
             // Удаляем комментарии из личных гостевых
-            mysql_query("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $clean_id . "'");
+            core::$db->exec("DELETE FROM `cms_users_guestbook` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем комментарии из личных фотоальбомов
-            mysql_query("DELETE FROM `cms_album_comments` WHERE `user_id` = '" . $clean_id . "'");
+            core::$db->exec("DELETE FROM `cms_album_comments` WHERE `user_id` = '" . $clean_id . "'");
             // Удаляем посты из гостевой
-            mysql_query("DELETE FROM `guest` WHERE `user_id` = '" . $clean_id . "'");
+            core::$db->exec("DELETE FROM `guest` WHERE `user_id` = '" . $clean_id . "'");
         }
     }
 

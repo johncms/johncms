@@ -21,16 +21,19 @@ switch ($mod) {
                 $term = isset($_POST['term']) && $_POST['term'] == 1 ? 1 : 0;
                 if ($term) {
                     // Очищаем таблицу Банов
-                    mysql_query("TRUNCATE TABLE `cms_ban_users`");
+                    $db->exec("TRUNCATE TABLE `cms_ban_users`");
                     echo '<div class="gmenu"><p>' . $lng_ban['amnesty_clean_confirm'] . '</p></div>';
                 } else {
                     // Разбаниваем активные Баны
-                    $req = mysql_query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'");
-                    while ($res = mysql_fetch_array($req)) {
+                    $stmt = $db->query("SELECT * FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'");
+                    while ($res = $stmt->fetch()) {
                         $ban_left = $res['ban_time'] - time();
                         if ($ban_left < 2592000) {
-                            $amnesty_msg = isset($lng_ban['amnesty']) ? mysql_real_escape_string($lng_ban['amnesty']) : 'Amnesty';
-                            mysql_query("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--$amnesty_msg--' WHERE `id` = '" . $res['id'] . "'");
+                            $amnesty_msg = isset($lng_ban['amnesty']) ? $lng_ban['amnesty'] : 'Amnesty';
+                            $stmt = $db->prepare("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`= ? WHERE `id` = '" . $res['id'] . "'");
+                            $stmt->execute([
+                                '--' . $amnesty_msg . '--'
+                            ]);
                         }
                     }
                     echo '<div class="gmenu"><p>' . $lng_ban['amnesty_delban_confirm'] . '</p></div>';
@@ -60,15 +63,14 @@ switch ($mod) {
         else
             echo $lng['term'] . ' | <a href="index.php?act=ban_panel&amp;count">' . $lng['infringements'] . '</a></div>';
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
-        $req = mysql_query("SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`");
-        $total = mysql_num_rows($req);
-        $req = mysql_query("SELECT COUNT(`cms_ban_users`.`user_id`) AS `bancount`, MAX(`cms_ban_users`.`ban_time`) AS `bantime`, `cms_ban_users`.`id` AS `ban_id`, `users`.*
+        $total = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_ban_users`")->fetchColumn();
+        $stmt = $db->query("SELECT COUNT(`cms_ban_users`.`user_id`) AS `bancount`, MAX(`cms_ban_users`.`ban_time`) AS `bantime`, `cms_ban_users`.`id` AS `ban_id`, `users`.*
         FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
         GROUP BY `user_id`
         ORDER BY `$sort` DESC
         LIMIT $start, $kmess");
-        if (mysql_num_rows($req)) {
-            while ($res = mysql_fetch_array($req)) {
+        if ($stmt->rowCount()) {
+            while ($res = $stmt->fetch()) {
                 echo '<div class="' . ($res['bantime'] > time() ? 'r' : '') . 'menu">';
                 $arg = array (
                     'header' => '<br /><img src="../images/block.gif" width="16" height="16" align="middle" />&#160;<small><a href="../users/profile.php?act=ban&amp;user=' . $res['id'] . '">' . $lng_ban['infringements_history'] . '</a> [' . $res['bancount'] . ']</small>'

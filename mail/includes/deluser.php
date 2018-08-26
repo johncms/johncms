@@ -17,13 +17,13 @@ require_once('../incfiles/head.php');
 
 if ($id) {
     //Проверяем наличие контакта в Вашем списке
-    $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id';"), 0);
+    $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id';")->fetchColumn();
     if ($total) {
         if (isset($_POST['submit'])) { //Если кнопка "Удалить" нажата
-            $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id';"), 0);
+            $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='$id' AND `from_id`='$user_id') OR (`user_id`='$user_id' AND `from_id`='$id')) AND `delete`!='$user_id';")->fetchColumn();
             if ($count_message) {
-                $req = mysql_query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT " . $count_message);
-                while (($row = mysql_fetch_assoc($req)) !== FALSE) {
+                $stmt = $db->query("SELECT `cms_mail`.* FROM `cms_mail` WHERE ((`cms_mail`.`user_id`='$id' AND `cms_mail`.`from_id`='$user_id') OR (`cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='$id')) AND `cms_mail`.`delete`!='$user_id' LIMIT " . $count_message);
+                while ($row = $stmt->fetch()) {
                     //Удаляем сообщения
                     if ($row['delete']) {
                         //Удаляем файлы
@@ -32,7 +32,7 @@ if ($id) {
                                 @unlink('../files/mail/' . $row['file_name']);
                             }
                         }
-                        mysql_query("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
+                        $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                     } else {
                         if ($row['read'] == 0 && $row['user_id'] == $user_id) {
                             if ($row['file_name']) {
@@ -40,15 +40,15 @@ if ($id) {
                                     @unlink('../files/mail/' . $row['file_name']);
                                 }
                             }
-                            mysql_query("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
+                            $db->exec("DELETE FROM `cms_mail` WHERE `id`='{$row['id']}' LIMIT 1");
                         } else {
-                            mysql_query("UPDATE `cms_mail` SET `delete` = '" . $user_id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
+                            $db->exec("UPDATE `cms_mail` SET `delete` = '" . $user_id . "' WHERE `id` = '" . $row['id'] . "' LIMIT 1");
                         }
                     }
                 }
             }
             //Удаляем контакт
-            mysql_query("DELETE FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id' LIMIT 1");
+            $db->exec("DELETE FROM `cms_contact` WHERE `user_id`='$user_id' AND `from_id`='$id' LIMIT 1");
             echo '<div class="gmenu"><p>' . $lng_mail['contact_delete'] . '</p><p><a href="index.php">' . $lng['continue'] . '</a></p></div>';
         } else {
             echo '<div class="phdr"><b>' . $lng['delete'] . '</b></div>

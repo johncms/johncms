@@ -23,8 +23,8 @@ class install
     static function check_php_errors()
     {
         $error = array();
-        if (version_compare(phpversion(), '5.3.0', '<')) $error[] = 'PHP ' . phpversion();
-        if (!extension_loaded('mysql')) $error[] = 'mysql';
+        if (version_compare(phpversion(), '5.5.0', '<')) $error[] = 'PHP ' . phpversion();
+        if (!class_exists('PDO')) $error[] = 'PDO';
         if (!extension_loaded('gd')) $error[] = 'gd';
         if (!extension_loaded('zlib')) $error[] = 'zlib';
         if (!extension_loaded('mbstring')) $error[] = 'mbstring';
@@ -111,6 +111,8 @@ class install
     */
     static function parse_sql($file = false)
     {
+        global $pdo;
+
         $errors = array();
         if ($file && file_exists($file)) {
             $query = fread(fopen($file, 'r'), filesize($file));
@@ -141,8 +143,10 @@ class install
             for ($i = 0; $i < count($ret); $i++) {
                 $ret[$i] = trim($ret[$i]);
                 if (!empty($ret[$i]) && $ret[$i] != "#") {
-                    if (!mysql_query($ret[$i])) {
-                        $errors[] = mysql_error();
+                    try {
+                        $pdo->query($ret[$i]);
+                    } catch (PDOException $e) {
+                        $errors[] = $e->getMessage();
                     }
                 }
             }
@@ -259,7 +263,6 @@ switch ($act) {
         Установка завершена
         -----------------------------------------------------------------
         */
-        functions::smileys(0, 2);
         echo '<span class="st">' . $lng['check_1'] . '</span><br />' .
             '<span class="st">' . $lng['database'] . '</span><br />' .
             '<span class="st">' . $lng['site_settings'] . '</span>' .
@@ -293,7 +296,6 @@ switch ($act) {
         $site_mail = isset($_POST['sitemail']) ? htmlentities(trim($_POST['sitemail']), ENT_QUOTES, 'UTF-8') : '@';
         $admin_user = isset($_POST['admin']) ? trim($_POST['admin']) : 'admin';
         $admin_pass = isset($_POST['password']) ? trim($_POST['password']) : '';
-        $demo = isset($_POST['demo']);
 
         // Проверяем заполнение реквизитов базы данных
         if (isset($_POST['check']) || isset($_POST['install'])) {
@@ -311,28 +313,34 @@ switch ($act) {
 
             // Проверяем подключение к серверу базы данных
             if (empty($db_error)) {
-                $con_err = false;
-                @mysql_connect($db_host, $db_user, $db_pass) or $con_err = mysql_error();
-
-                if ($con_err && stristr($con_err, 'no such host')) {
-                    $db_error['host'] = $lng['error_db_host'];
-                } elseif ($con_err && stristr($con_err, 'access denied for user')) {
-                    $db_error['access'] = $lng['error_db_user'];
-                } elseif ($con_err) {
-                    $db_error['unknown'] = $lng['error_db_unknown'];
+                try {
+                    $pdo = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_name . ';charset=utf8mb4', $db_user, $db_pass,
+                        array (
+                            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
+                        )
+                    );
+                } catch (PDOException $e) {
+                    switch ($e->getCode()) {
+                        case 1045:
+                            $db_error['access'] = $lng['error_db_user'];
+                            break;
+                        case 1049:
+                            $db_error['name'] = $lng['error_db_name'];
+                            break;
+                        case 2002:
+                            $db_error['host'] = $lng['error_db_host'];
+                            break;
+                        default:
+                            $db_error['unknown'] = $lng['error_db_unknown'];
+                    }
                 }
-            }
-
-            // Проверяем наличие базы данных
-            if (empty($db_error) && @mysql_select_db($db_name) == false) {
-                $db_error['name'] = $lng['error_db_name'];
             }
 
             if (empty($db_error)) {
                 $db_check = true;
             }
-
-            @mysql_close();
         }
 
         if ($db_check && isset($_POST['install'])) {
@@ -347,12 +355,12 @@ switch ($act) {
             }
 
             // Проверяем ник Админа на длину
-            if (mb_strlen($admin_user) < 2 || mb_strlen($admin_user) > 15) {
+            if (mb_strlen($admin_user) < 5 || mb_strlen($admin_user) > 20) {
                 $admin_error['admin'] = $lng['error_admin_lenght'];
             }
 
             // Проверяем ник Админа на допустимые символы
-            if (preg_match("/[^\dA-Za-z\-\@\*\(\)\?\!\~\_\=\[\]]+/", $admin_user)) {
+            if (preg_match('/[^[:alnum:]_.]/', $admin_user)) {
                 $admin_error['admin'] = $lng['error_nick_symbols'];
             }
 
@@ -362,19 +370,14 @@ switch ($act) {
             }
 
             // Проверяем длину пароля Админа
-            if (mb_strlen($admin_pass) < 5) {
+            if (mb_strlen($admin_pass) < 6) {
                 $admin_error['pass'] = $lng['error_password_lenght'];
-            }
-
-            // Проверяем пароль Админа на допустимые символы
-            if (preg_match("/[^\dA-Za-z]+/", $admin_pass)) {
-                $admin_error['pass'] = $lng['error_pass_symbols'];
             }
 
             // Если предварительные проверки прошли, заливаем базу данных
             if ($db_check && empty($site_error) && empty($admin_error)) {
                 // Создаем системный файл db.php
-                $dbfile = "<?php\r\n\r\n" .
+                $dbfile = "<?php\r\n" .
                     "defined('_IN_JOHNCMS') or die ('Error: restricted access');\r\n\r\n" .
                     '$db_host = ' . "'$db_host';\r\n" .
                     '$db_name = ' . "'$db_name';\r\n" .
@@ -385,11 +388,6 @@ switch ($act) {
                     exit;
                 }
 
-                // Соединяемся с базой данных
-                $connect = mysql_connect($db_host, $db_user, $db_pass) or die('ERROR: cannot connect to DB server</body></html>');
-                mysql_select_db($db_name) or die('ERROR: cannot select DB</body></html>');
-                mysql_query("SET NAMES 'utf8'", $connect);
-
                 // Заливаем базу данных
                 $sql = install::parse_sql('install.sql');
                 if (!empty($sql)) {
@@ -399,20 +397,21 @@ switch ($act) {
                 }
 
                 // Записываем системные настройки
-                mysql_query("UPDATE `cms_settings` SET `val`='$language' WHERE `key`='lng'");
-                mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($site_url) . "' WHERE `key`='homeurl'");
-                mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($site_mail) . "' WHERE `key`='email'");
+                $stmt = $pdo->prepare('UPDATE `cms_settings` SET `val` = ? WHERE `key` = ? LIMIT 1');
+                $stmt->execute([$language, 'lng']);
+                $stmt->execute([$site_url, 'homeurl']);
+                $stmt->execute([$site_mail, 'email']);
 
                 // Создаем Администратора
-                mysql_query("INSERT INTO `users` SET
-                    `name` = '" . mysql_real_escape_string($admin_user) . "',
-                    `name_lat` = '" . mysql_real_escape_string(mb_strtolower($admin_user)) . "',
+                $stmt = $pdo->prepare("INSERT INTO `users` SET
+                    `name` = ?,
+                    `name_lat` = ?,
                     `password` = '" . md5(md5($admin_pass)) . "',
                     `sex` = 'm',
                     `datereg` = '" . time() . "',
                     `lastdate` = '" . time() . "',
-                    `mail` = '" . mysql_real_escape_string($site_mail) . "',
-                    `www` = '" . mysql_real_escape_string($site_url) . "',
+                    `mail` = ?,
+                    `www` = ?,
                     `about` = '',
                     `set_user` = '',
                     `set_forum` = '',
@@ -420,10 +419,17 @@ switch ($act) {
                     `smileys` = '',
                     `rights` = '9',
                     `ip` = '" . ip2long($_SERVER["REMOTE_ADDR"]) . "',
-                    `browser` = '" . mysql_real_escape_string(htmlentities($_SERVER["HTTP_USER_AGENT"])) . "',
+                    `browser` = ?,
                     `preg` = '1'
-                ") or die('ERROR: Administrator setup<br/>' . mysql_error() . '</body></html>');
-                $user_id = mysql_insert_id();
+                ");
+                $stmt->execute([
+                    $admin_user,
+                    mb_strtolower($admin_user),
+                    $site_mail,
+                    $site_url,
+                    $_SERVER['HTTP_USER_AGENT']
+                ]);
+                $user_id = $pdo->lastInsertId();
 
                 // Устанавливаем сессию и COOKIE c данными администратора
                 $_SESSION['uid'] = $user_id;
@@ -431,13 +437,8 @@ switch ($act) {
                 setcookie("cuid", base64_encode($user_id), time() + 3600 * 24 * 365);
                 setcookie("cups", md5($admin_pass), time() + 3600 * 24 * 365);
 
-                // Установка ДЕМО данных
-                if ($demo) {
-                    $demo_data = install::parse_sql('demo.sql');
-                }
-
                 // Установка завершена
-                header('Location: index.php?act=final');
+                header('Location: index.php?act=final'); exit;
             }
         }
 
@@ -478,10 +479,8 @@ switch ($act) {
                 '<input type="text" name="admin" value="' . $admin_user . '"' . (isset($admin_error['admin']) ? ' style="background-color: #FFCCCC"' : '') . '><br />' .
                 '<small class="gray">' . $lng['admin_login_help'] . '</small><br />' .
                 '<small class="blue"><b>' . $lng['admin_password'] . ':</b></small><br />' .
-                '<input type="text" name="password" value="' . $admin_pass . '"' . (isset($admin_error['pass']) ? ' style="background-color: #FFCCCC"' : '') . '><br />' .
+                '<input type="text" name="password" value="' . htmlspecialchars($admin_pass, ENT_QUOTES, 'UTF-8') . '"' . (isset($admin_error['pass']) ? ' style="background-color: #FFCCCC"' : '') . '><br />' .
                 '<small class="gray">' . $lng['admin_password_help'] . '</small></p>' .
-                '<p><input type="checkbox" name="demo" value="1"><small class="blue">&#160;<b>' . $lng['install_demo'] . '</b></small><br />' .
-                '<small class="gray">' . $lng['install_demo_help'] . '</small></p>' .
                 '<p><input type="submit" name="install" value="' . $lng['setup'] . '"></p>';
         } else {
             echo '<p><input type="submit" name="check" value="' . $lng['check'] . '"></p>';

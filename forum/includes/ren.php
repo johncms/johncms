@@ -14,22 +14,22 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 if ($rights == 3 || $rights >= 6) {
-    if (!$id) {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
-        exit;
+    $error = true;
+    if ($id) {
+        $stmt = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' LIMIT 1");
+        if ($stmt->rowCount()) {
+            $error = false;
+            $ms = $stmt->fetch();
+        }
     }
-    $typ = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
-    $ms = mysql_fetch_assoc($typ);
-    if ($ms[type] != "t") {
+    if ($error) {
         require('../incfiles/head.php');
         echo functions::display_error($lng['error_wrong_data']);
         require('../incfiles/end.php');
         exit;
     }
     if (isset($_POST['submit'])) {
-        $nn = isset($_POST['nn']) ? functions::check($_POST['nn']) : false;
+        $nn = isset($_POST['nn']) ? trim(mb_substr(functions::checkin($_POST['nn'], 1), 0, 255)) : false;
         if (!$nn) {
             require('../incfiles/head.php');
             echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
@@ -37,15 +37,21 @@ if ($rights == 3 || $rights >= 6) {
             exit;
         }
         // Проверяем, есть ли тема с таким же названием?
-        $pt = mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and text='$nn' LIMIT 1");
-        if (mysql_num_rows($pt) != 0) {
+        $stmt = $db->prepare("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and `text`= ?");
+        $stmt->execute([
+            $nn
+        ]);
+        if ($stmt->fetchColumn()) {
             require('../incfiles/head.php');
             echo functions::display_error($lng_forum['error_topic_exists'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
             require('../incfiles/end.php');
             exit;
         }
-        mysql_query("update `forum` set  text='" . $nn . "' where id='" . $id . "';");
-        header("Location: index.php?id=$id");
+        $stmt = $db->prepare("update `forum` set  text= ?  where id='" . $id . "' LIMIT 1;");
+        $stmt->execute([
+            $nn
+        ]);
+        header("Location: index.php?id=$id"); exit;
     } else {
         /*
         -----------------------------------------------------------------
@@ -56,7 +62,7 @@ if ($rights == 3 || $rights >= 6) {
         echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_rename'] . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . $lng_forum['topic_name'] . '</h3>' .
-            '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
+            '<input type="text" name="nn" value="' . _e($ms['text']) . '"/></p>' .
             '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
             '</form></div>' .
             '<div class="phdr"><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></div>';

@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['site_settings'] . '</div>';
 if (isset($_POST['submit'])) {
@@ -23,18 +22,28 @@ if (isset($_POST['submit'])) {
     Сохраняем настройки системы
     -----------------------------------------------------------------
     */
-    mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['skindef']) . "' WHERE `key` = 'skindef'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string(htmlspecialchars($_POST['madm'])) . "' WHERE `key` = 'email'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['timeshift']) . "' WHERE `key` = 'timeshift'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['copyright']) . "' WHERE `key` = 'copyright'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check(preg_replace("#/$#", '', trim($_POST['homeurl']))) . "' WHERE `key` = 'homeurl'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . intval($_POST['flsz']) . "' WHERE `key` = 'flsz'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . isset($_POST['gz']) . "' WHERE `key` = 'gzip'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['meta_key']) . "' WHERE `key` = 'meta_key'");
-    mysql_query("UPDATE `cms_settings` SET `val`='" . functions::check($_POST['meta_desc']) . "' WHERE `key` = 'meta_desc'");
-    $req = mysql_query("SELECT * FROM `cms_settings`");
+    $stmt = $db->prepare("UPDATE `cms_settings` SET `val`= ? WHERE `key` = ?");
+    $theme_list = [];
+    foreach (glob('../theme/*/*.css') as $val) {
+        $dir = explode('/', dirname($val));
+        $theme_list[] = array_pop($dir);
+    }
+    if (isset($_POST['skindef']) && in_array($_POST['skindef'], $theme_list)) {
+        $stmt->execute([$_POST['skindef'], 'skindef']);
+    }
+    $stmt->execute([htmlspecialchars($_POST['madm']), 'email']);
+    $stmt->execute([intval($_POST['timeshift']), 'timeshift']);
+    $stmt->execute([trim($_POST['copyright']), 'copyright']);
+    $stmt->execute([preg_replace("#/$#", '', _e(trim($_POST['homeurl']))), 'homeurl']);
+    $stmt->execute([intval($_POST['flsz']), 'flsz']);
+    $stmt->execute([(isset($_POST['gz']) ? 1 : 0), 'gzip']);
+    $stmt->execute([trim($_POST['meta_key']), 'meta_key']);
+    $stmt->execute([trim($_POST['meta_desc']), 'meta_desc']);
+    $stmt = $db->query("SELECT * FROM `cms_settings`");
     $set = array ();
-    while ($res = mysql_fetch_row($req)) $set[$res[0]] = $res[1];
+    while ($res = $stmt->fetch()) {
+        $set[$res['key']] = $res['val'];
+    }
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 /*
@@ -46,8 +55,8 @@ echo '<form action="index.php?act=settings" method="post"><div class="menu">';
 // Общие настройки
 echo '<p>' .
     '<h3>' . $lng['common_settings'] . '</h3>' .
-    $lng['site_url'] . ':<br/>' . '<input type="text" name="homeurl" value="' . htmlentities($set['homeurl']) . '"/><br/>' .
-    $lng['site_copyright'] . ':<br/>' . '<input type="text" name="copyright" value="' . htmlentities($set['copyright'], ENT_QUOTES, 'UTF-8') . '"/><br/>' .
+    $lng['site_url'] . ':<br/>' . '<input type="text" name="homeurl" value="' . $set['homeurl'] . '"/><br/>' .
+    $lng['site_copyright'] . ':<br/>' . '<input type="text" name="copyright" value="' . _e($set['copyright']) . '"/><br/>' .
     $lng['site_email'] . ':<br/>' . '<input name="madm" maxlength="50" value="' . htmlentities($set['email']) . '"/><br />' .
     $lng['file_maxsize'] . ' (kb):<br />' . '<input type="text" name="flsz" value="' . intval($set['flsz']) . '"/><br />' .
     '<input name="gz" type="checkbox" value="1" ' . ($set['gzip'] ? 'checked="checked"' : '') . ' />&#160;' . $lng['gzip_compress'] .
@@ -62,19 +71,16 @@ echo '<p>' .
 // META тэги
 echo '<p>' .
     '<h3>' . $lng['meta_tags'] . '</h3>' .
-    '&#160;' . $lng['meta_keywords'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_key">' . $set['meta_key'] . '</textarea><br />' .
-    '&#160;' . $lng['meta_description'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_desc">' . $set['meta_desc'] . '</textarea>' .
+    '&#160;' . $lng['meta_keywords'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_key">' . _e($set['meta_key']) . '</textarea><br />' .
+    '&#160;' . $lng['meta_description'] . ':<br />&#160;<textarea rows="' . $set_user['field_h'] . '" name="meta_desc">' . _e($set['meta_desc']) . '</textarea>' .
     '</p>';
 // Выбор темы оформления
 echo '<p><h3>' . $lng['design_template'] . '</h3>&#160;<select name="skindef">';
-$dir = opendir('../theme');
-while ($skindef = readdir($dir)) {
-    if (($skindef != '.') && ($skindef != '..') && ($skindef != '.svn')) {
-        $skindef = str_replace('.css', '', $skindef);
-        echo '<option' . ($set['skindef'] == $skindef ? ' selected="selected">' : '>') . $skindef . '</option>';
-    }
+foreach (glob('../theme/*/*.css') as $val) {
+    $dir = explode('/', dirname($val));
+    $theme = array_pop($dir);
+    echo '<option' . ($set['skindef'] == $theme ? ' selected="selected">' : '>') . $theme . '</option>';
 }
-closedir($dir);
 echo '</select>' .
     '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p></div></form>' .
     '<div class="phdr">&#160;</div>' .

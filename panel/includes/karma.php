@@ -13,16 +13,14 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 if ($rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
-        mysql_query("TRUNCATE TABLE `karma_users`");
-        mysql_query("OPTIMIZE TABLE `karma_users`");
-        mysql_query("UPDATE `users` SET `karma_plus`='0', `karma_minus`='0'");
-        mysql_query("OPTIMIZE TABLE `users`");
+        $db->exec("TRUNCATE TABLE `karma_users`");
+        $db->exec("UPDATE `users` SET `karma_plus`='0', `karma_minus`='0'");
+        $db->query("OPTIMIZE TABLE `karma_users`, `users`");
         echo '<div class="gmenu">' . $lng['karma_cleared'] . '</div>';
     } else {
         echo '<div class="rmenu"><p>' . $lng['karma_clear_confirmation'] . '<br/>' .
@@ -40,7 +38,10 @@ if (isset($_POST['submit'])) {
     $settings['on'] = isset($_POST['on']) ? 1 : 0;
     $settings['adm'] = isset($_POST['adm']) ? 1 : 0;
     $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] * 3600 : $settings['karma_time'] * 86400;
-    mysql_query("UPDATE `cms_settings` SET `val` = '" . mysql_real_escape_string(serialize($settings)) . "' WHERE `key` = 'karma'");
+    $stmt = $db->prepare("UPDATE `cms_settings` SET `val` = ? WHERE `key` = 'karma'");
+    $stmt->execute([
+        serialize($settings)
+    ]);
     echo '<div class="rmenu">' . $lng['settings_saved'] . '</div>';
 }
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
@@ -58,4 +59,3 @@ echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
     '<p><input type="submit" value="' . $lng['save'] . '" name="submit" /></p></div>' .
     '</form><div class="phdr">' . ($rights == 9 ? '<a href="index.php?act=karma&amp;do=clean">' . $lng['karma_reset'] . '</a>' : '<br />') . '</div>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>

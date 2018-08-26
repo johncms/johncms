@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 7) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 
 switch ($mod) {
@@ -27,9 +26,9 @@ switch ($mod) {
         echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . ($id ? $lng['link_edit'] : $lng['link_add']) . '</div>';
         if ($id) {
             // Если ссылка редактироется, запрашиваем ее данные в базе
-            $req = mysql_query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
+            $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
             } else {
                 echo functions::display_error($lng['error_wrong_data'], '<a href="index.php?act=ads">' . $lng['back'] . '</a>');
                 require('../incfiles/end.php');
@@ -39,13 +38,12 @@ switch ($mod) {
             $res = array('link' => 'http://');
         }
         if (isset($_POST['submit'])) {
-            $link = isset($_POST['link']) ? mysql_real_escape_string(trim($_POST['link'])) : '';
-            $name = isset($_POST['name']) ? mysql_real_escape_string(trim($_POST['name'])) : '';
-            $bold = isset($_POST['bold']);
-            $italic = isset($_POST['italic']);
-            $underline = isset($_POST['underline']);
-            $show = isset($_POST['show']);
-            $font = $font_1 + $font_2 + $font_3;
+            $link = isset($_POST['link']) ? trim($_POST['link']) : '';
+            $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+            $bold = isset($_POST['bold']) ? 1 : 0;
+            $italic = isset($_POST['italic']) ? 1 : 0;
+            $underline = isset($_POST['underline']) ? 1 : 0;
+            $show = isset($_POST['show']) ? 1 : 0;
             $view = isset($_POST['view']) ? abs(intval($_POST['view'])) : 0;
             $day = isset($_POST['day']) ? abs(intval($_POST['day'])) : 0;
             $count = isset($_POST['count']) ? abs(intval($_POST['count'])) : 0;
@@ -55,20 +53,25 @@ switch ($mod) {
             $mesto = isset($_POST['mesto']) ? abs(intval($_POST['mesto'])) : 0;
             $color = isset($_POST['color']) ? mb_substr(trim($_POST['color']), 0, 6) : '';
             $error = array();
-            if (!$link || !$name)
+            if (!$link || !$name) {
                 $error[] = $lng['error_empty_fields'];
-            if ($type > 3 || $type < 0)
+            }
+            if ($type > 3 || $type < 0) {
                 $type = 0;
+            }
             if (!$mesto) {
-                $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ads` WHERE `mesto` = '" . $mesto . "' AND `type` = '" . $type . "'"), 0);
-                if ($total != 0)
+                $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `mesto` = '" . $mesto . "' AND `type` = '" . $type . "'")->fetchColumn();
+                if ($total != 0) {
                     $error[] = $lng['links_place_occupied'];
+                }
             }
             if ($color) {
-                if (preg_match("/[^\da-fA-F_]+/", $color))
+                if (preg_match('/[^\da-fA-F_]+/', $color)) {
                     $error[] = $lng['error_wrong_symbols'];
-                if (strlen($color) < 6)
+                }
+                if (strlen($color) < 6) {
                     $error[] = $lng['error_color'];
+                }
             }
             if ($error) {
                 echo functions::display_error($error, '<a href="index.php?act=ads&amp;from=addlink">' . $lng['back'] . '</a>');
@@ -77,11 +80,11 @@ switch ($mod) {
             }
             if ($id) {
                 // Обновляем ссылку после редактирования
-                mysql_query("UPDATE `cms_ads` SET
+                $stmt = $db->prepare("UPDATE `cms_ads` SET
                     `type` = '$type',
                     `view` = '$view',
-                    `link` = '$link',
-                    `name` = '$name',
+                    `link` = ?,
+                    `name` = ?,
                     `color` = '$color',
                     `count_link` = '$count',
                     `day` = '$day',
@@ -92,21 +95,25 @@ switch ($mod) {
                     `underline` = '$underline'
                     WHERE `id` = '$id'
                 ");
+                $stmt->execute([
+                    $link,
+                    $name
+                ]);
             } else {
                 // Добавляем новую ссылку
-                $req = mysql_query("SELECT `mesto` FROM `cms_ads` ORDER BY `mesto` DESC LIMIT 1");
-                if (mysql_num_rows($req) > 0) {
-                    $res = mysql_fetch_array($req);
+                $stmt = $db->query("SELECT `mesto` FROM `cms_ads` ORDER BY `mesto` DESC LIMIT 1");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $mesto = $res['mesto'] + 1;
                 } else {
                     $mesto = 1;
                 }
-                mysql_query("INSERT INTO `cms_ads` SET
+                $stmt = $db->prepare("INSERT INTO `cms_ads` SET
                     `type` = '$type',
                     `view` = '$view',
                     `mesto` = '$mesto',
-                    `link` = '$link',
-                    `name` = '$name',
+                    `link` = ?,
+                    `name` = ?,
                     `color` = '$color',
                     `count_link` = '$count',
                     `day` = '$day',
@@ -117,20 +124,24 @@ switch ($mod) {
                     `bold` = '$bold',
                     `italic` = '$italic',
                     `underline` = '$underline'
-                ") or die (mysql_error());
+                ");
+                $stmt->execute([
+                    $link,
+                    $name
+                ]);
             }
-            mysql_query("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
+            $db->exec("UPDATE `users` SET `lastpost` = '" . time() . "' WHERE `id` = '$user_id'");
             echo '<div class="menu"><p>' . ($id ? $lng['link_edit_ok'] : $lng['link_add_ok']) . '<br />' .
                  '<a href="index.php?act=ads&amp;sort=' . $type . '">' . $lng['continue'] . '</a></p></div>';
         } else {
             // Форма добавления / изменения ссылки
             echo '<form action="index.php?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
                  '<div class="menu"><p><h3>' . $lng['link'] . '</h3>' .
-                 '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
+                 '<input type="text" name="link" value="' . _e($res['link']) . '"/><br />' .
                  '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . $lng['link_direct'] . '<br />' .
                  '<small>' . $lng['link_direct_help'] . '</small></p>' .
                  '<p><h3>' . $lng['title'] . '</h3>' .
-                 '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br />' .
+                 '<input type="text" name="name" value="' . _e($res['name']) . '"/><br />' .
                  '<small>' . $lng['link_add_name_help'] . '</small></p>' .
                  '<p><h3>' . $lng['color'] . '</h3>' .
                  '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br />' .
@@ -172,21 +183,21 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
+            $stmt = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $mesto = $res['mesto'];
-                $req = mysql_query("SELECT * FROM `cms_ads` WHERE `mesto` > '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
-                if (mysql_num_rows($req) > 0) {
-                    $res = mysql_fetch_array($req);
+                $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` > '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    mysql_query("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
-                    mysql_query("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
                 }
             }
         }
-        header('Location: ' . getenv("HTTP_REFERER"));
+        header('Location: ' . getenv("HTTP_REFERER")); exit;
         break;
 
     case 'up':
@@ -196,21 +207,21 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
+            $stmt = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
                 $mesto = $res['mesto'];
-                $req = mysql_query("SELECT * FROM `cms_ads` WHERE `mesto` < '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
-                if (mysql_num_rows($req) > 0) {
-                    $res = mysql_fetch_array($req);
+                $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` < '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
+                if ($stmt->rowCount()) {
+                    $res = $stmt->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    mysql_query("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
-                    mysql_query("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
                 }
             }
         }
-        header('Location: ' . getenv("HTTP_REFERER") . '');
+        header('Location: ' . getenv("HTTP_REFERER") . ''); exit;
         break;
 
     case 'del':
@@ -221,8 +232,8 @@ switch ($mod) {
         */
         if ($id) {
             if (isset($_POST['submit'])) {
-                mysql_query("DELETE FROM `cms_ads` WHERE `id` = '$id'");
-                header('Location: ' . $_POST['ref']);
+                $db->exec("DELETE FROM `cms_ads` WHERE `id` = '$id'");
+                header('Location: ' . $_POST['ref']); exit;
             } else {
                 echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['delete'] . '</div>' .
                      '<div class="rmenu"><form action="index.php?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
@@ -242,9 +253,9 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if (isset($_POST['submit'])) {
-            mysql_query("DELETE FROM `cms_ads` WHERE `to` = '1'");
-            mysql_query("OPTIMIZE TABLE `cms_ads`");
-            header('location: index.php?act=ads');
+            $db->exec("DELETE FROM `cms_ads` WHERE `to` = '1'");
+            $db->query("OPTIMIZE TABLE `cms_ads`");
+            header('location: index.php?act=ads'); exit;
         } else {
             echo '<div class="phdr"><a href="index.php?act=ads"><b>' . $lng['advertisement'] . '</b></a> | ' . $lng['links_delete_hidden'] . '</div>' .
                  '<div class="menu"><form method="post" action="index.php?act=ads&amp;mod=clear">' .
@@ -262,13 +273,13 @@ switch ($mod) {
         -----------------------------------------------------------------
         */
         if ($id) {
-            $req = mysql_query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
-            if (mysql_num_rows($req)) {
-                $res = mysql_fetch_assoc($req);
-                mysql_query("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '$id'");
+            $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id' LIMIT 1");
+            if ($stmt->rowCount()) {
+                $res = $stmt->fetch();
+                $db->exec("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '$id'");
             }
         }
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . $_SERVER['HTTP_REFERER']); exit;
         break;
 
     default:
@@ -302,14 +313,14 @@ switch ($mod) {
             ($type == 3 ? $lng['links_armt_under_counters'] : '<a href="index.php?act=ads&amp;type=3">' . $lng['links_armt_under_counters'] . '</a>')
         );
         echo '<div class="topmenu">' . functions::display_menu($array_menu) . '</div>';
-        $total = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '$type'"), 0);
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '$type'")->fetchColumn();
         if ($total) {
-            $req = mysql_query("SELECT * FROM `cms_ads` WHERE `type` = '$type' ORDER BY `mesto` ASC LIMIT $start,$kmess");
+            $stmt = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '$type' ORDER BY `mesto` ASC LIMIT $start,$kmess");
             $i = 0;
-            while ($res = mysql_fetch_assoc($req)) {
+            while ($res = $stmt->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $name = str_replace('|', '; ', $res['name']);
-                $name = htmlentities($name, ENT_QUOTES, 'UTF-8');
+                $name = _e($name);
                 // Если был задан цвет, то применяем
                 if (!empty($res['color']))
                     $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
@@ -317,8 +328,9 @@ switch ($mod) {
                 $font = $res['bold'] ? 'font-weight: bold;' : false;
                 $font .= $res['italic'] ? ' font-style:italic;' : false;
                 $font .= $res['underline'] ? ' text-decoration:underline;' : false;
-                if ($font)
+                if ($font) {
                     $name = '<span style="' . $font . '">' . $name . '</span>';
+                }
                 ////////////////////////////////////////////////////////////
                 // Выводим рекламмную ссылку с атрибутами                 //
                 ////////////////////////////////////////////////////////////

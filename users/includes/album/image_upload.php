@@ -19,14 +19,14 @@ require('../incfiles/head.php');
 -----------------------------------------------------------------
 */
 if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
-    $req_a = mysql_query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "'");
-    if (!mysql_num_rows($req_a)) {
+    $stmt = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
+    if (!$stmt->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo functions::display_error($lng['error_wrong_data']);
         require('../incfiles/end.php');
         exit;
     }
-    $res_a = mysql_fetch_assoc($req_a);
+    $res_a = $stmt->fetch();
     require('../incfiles/lib/class.upload.php');
     echo '<div class="phdr"><a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $lng['photo_album'] . '</b></a> | ' . $lng_profile['upload_photo'] . '</div>';
     if (isset($_POST['submit'])) {
@@ -68,15 +68,20 @@ if ($al && $user['id'] == $user_id && empty($ban) || $rights >= 7) {
                 if ($handle->processed) {
                     $description = isset($_POST['description']) ? trim($_POST['description']) : '';
                     $description = mb_substr($description, 0, 500);
-                    mysql_query("INSERT INTO `cms_album_files` SET
+                    $stmt = $db->prepare("INSERT INTO `cms_album_files` SET
                         `album_id` = '$al',
                         `user_id` = '" . $user['id'] . "',
-                        `img_name` = '" . mysql_real_escape_string($img_name) . "',
-                        `tmb_name` = '" . mysql_real_escape_string($tmb_name) . "',
-                        `description` = '" . mysql_real_escape_string($description) . "',
+                        `img_name` = ?,
+                        `tmb_name` = ?,
+                        `description` = ?,
                         `time` = '" . time() . "',
                         `access` = '" . $res_a['access'] . "'
                     ");
+                    $stmt->execute([
+                        $img_name,
+                        $tmb_name,
+                        $description
+                    ]);
                     echo '<div class="gmenu"><p>' . $lng_profile['photo_uploaded'] . '<br />' .
                          '<a href="album.php?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . $lng['continue'] . '</a></p></div>' .
                          '<div class="phdr"><a href="profile.php?user=' . $user['id'] . '">' . $lng['profile'] . '</a></div>';

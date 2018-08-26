@@ -17,10 +17,10 @@ if (!$user_id) {
 }
 
 // Проверяем наличие комментируемого объекта
-$req_obj = mysql_query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
+$stmt = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1");
 
-if (mysql_num_rows($req_obj)) {
-    $res_obj = mysql_fetch_assoc($req_obj);
+if ($stmt->rowCount()) {
+    $res_obj = $stmt->fetch();
 
     if (!$res_obj['comments']) {
         echo functions::display_error($lng['access_forbidden']);
@@ -29,7 +29,7 @@ if (mysql_num_rows($req_obj)) {
     }
 
     $obj = new Hashtags($id);
-    $catalog = mysql_fetch_assoc(mysql_query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1"));
+    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1")->fetch();
     $context_top =
         '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . functions::checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
@@ -56,7 +56,7 @@ if (mysql_num_rows($req_obj)) {
     $comm = new comments($arg);
 
     if ($comm->added) {
-        mysql_query("UPDATE `library_texts` SET `count_comments`=" . ($res_obj['count_comments'] > 0 ? ++$res_obj['count_comments'] : 1) . " WHERE `id`=" . $id);
+        $db->exec("UPDATE `library_texts` SET `count_comments`=" . ($res_obj['count_comments'] > 0 ? ++$res_obj['count_comments'] : 1) . " WHERE `id`=" . $id);
     }
 } else {
     echo functions::display_error($lng['error_wrong_data']);

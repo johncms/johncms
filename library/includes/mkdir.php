@@ -11,26 +11,24 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 $adm ?: redir404();
 
-  if (isset($_POST['submit'])) {
-    if (empty($_POST['name'])) {
-      echo functions::display_error($lng['error_empty_title'], '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-      require_once ('../incfiles/end.php');
-      exit;
-    }
-    $lastinsert = mysql_result(mysql_query("SELECT MAX(`id`) FROM `library_cats`") , 0);
-    ++$lastinsert;
-    $name = functions::check($_POST['name']);
-    $desc = functions::check($_POST['description']);
+if (isset($_POST['submit'])) {
+    $name = isset($_POST['name']) ? functions::checkin($_POST['name']) : '';
+    $desc = isset($_POST['description']) ? functions::checkin($_POST['description']) : '';
     $type = intval($_POST['type']);
-    $sql = "INSERT INTO `library_cats`
-        (`parent`, `name`, `description`, `dir`, `pos`) 
-    VALUES
-        (" . $id . ", '" . $name . "', '" . $desc . "', " . $type . ", " . $lastinsert . ")";
-    if (mysql_query($sql)) {
-      echo '<div>' . $lng_lib['category_created'] . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+    if (empty($name)) {
+       echo functions::display_error($lng['error_empty_title'], '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+       require_once ('../incfiles/end.php');
+       exit;
     }
-  }
-  else {
+    $lastinsert = $db->query("SELECT MAX(`id`) FROM `library_cats`")->fetchColumn();
+    ++$lastinsert;
+    $stmt = $db->prepare("INSERT INTO `library_cats` (`parent`, `name`, `description`, `dir`, `pos`)  VALUES (" . $id . ", ?, ?, " . $type . ", " . $lastinsert . ")");
+    $stmt->execute([
+        $name,
+        $desc
+    ]);
+  echo '<div>' . $lng_lib['category_created'] . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+} else {
     echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['create_category'] . '</div>'  
     . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">' 
     . '<div class="menu">'
@@ -46,4 +44,4 @@ $adm ?: redir404();
     . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
     . '</div></form>' 
     . '<p><a href ="?">' . $lng['back'] . '</a></p>';
-  }
+}

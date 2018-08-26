@@ -41,6 +41,6 @@ for ($i = 0; $i < $tt; $i++) {
     $tf = functions::format($a[$i]);
     $tf1 = str_replace(".$tf", "", $a[$i]);
     if ($n == $tf1) {
-        header("Location: ../files/forum/topics/$n.$tf");
+        header("Location: ../files/forum/topics/$n.$tf"); exit;
     }
 }

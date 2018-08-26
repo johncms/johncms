@@ -53,25 +53,33 @@ if ($search && !$error) {
     */
     $array = explode(' ', $search);
     $count = count($array);
-    $query = mysql_real_escape_string($search);
-    $total = mysql_result(mysql_query("
+    $query = $db->quote($search);
+    $stmt = $db->prepare("
         SELECT COUNT(*) FROM `library_texts`
-        WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)"), 0);
+        WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST (? IN BOOLEAN MODE)"), 0);
+    $stmt->execute([
+        $query
+    ]);
+    $total = $stmt->fetchColumn();
         
     echo '<div class="phdr"><a href="?"><strong>' . $lng['library'] . '</strong></a> | ' . $lng['search_results'] . '</div>';
     
     if ($total > $kmess)
         echo '<div class="topmenu">' . functions::display_pagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
     if ($total) {
-        $req = mysql_query("
-            SELECT *, MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE) AS `rel`
+        $stmt = $db->prepare("
+            SELECT *, MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST (? IN BOOLEAN MODE) AS `rel`
             FROM `library_texts`
-            WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST ('" . $query . "' IN BOOLEAN MODE)
+            WHERE MATCH (`" . ($search_t ? 'name' : 'text') . "`) AGAINST (? IN BOOLEAN MODE)
             ORDER BY `rel` DESC
             LIMIT " . $start . ", " . $kmess
         );
+        $stmt->execute([
+            $query,
+            $query
+        ]);
         $i = 0;
-        while (($res = mysql_fetch_assoc($req)) !== false) {
+        while ($res = $stmt->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
             foreach ($array as $srch) {
                 if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {

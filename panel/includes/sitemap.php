@@ -13,8 +13,7 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 
 // Проверяем права доступа
 if ($rights < 9) {
-    header('Location: ' . $set['homeurl'] . '/?err');
-    exit;
+    header('Location: ' . $set['homeurl'] . '/?err'); exit;
 }
 echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></a> | ' . $lng['site_map'] . '</div>';
 
@@ -23,7 +22,7 @@ echo '<div class="phdr"><a href="index.php"><b>' . $lng['admin_panel'] . '</b></
 Настройки карты сайта
 -----------------------------------------------------------------
 */
-if (!isset($set['sitemap']) || isset($_GET['reset'])) {
+if (isset($_GET['reset'])) {
     // Задаем настройки по умолчанию
     $settings = array (
         'forum' => 1,
@@ -31,11 +30,13 @@ if (!isset($set['sitemap']) || isset($_GET['reset'])) {
         'users' => 0,
         'browsers' => 0
     );
-    @mysql_query("DELETE FROM `cms_settings` WHERE `key` = 'sitemap'");
-    mysql_query("INSERT INTO `cms_settings` SET
-        `key` = 'sitemap',
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+    $stmt = $db->prepare("UPDATE `cms_settings` SET
+        `val` = ?
+        WHERE `key` = 'sitemap'
     ");
+    $stmt->execute([
+        serialize($settings)
+    ]);
     echo '<div class="rmenu"><p>' . $lng['settings_default'] . '</p></div>';
 } elseif (isset($_POST['submit'])) {
     // Принимаем настройки из формы
@@ -43,10 +44,13 @@ if (!isset($set['sitemap']) || isset($_GET['reset'])) {
     $settings['lib'] = isset($_POST['lib']);
     $settings['users'] = isset($_POST['users']) && $_POST['users'] == 1 ? 1 : 0;
     $settings['browsers'] = isset($_POST['browsers']) && $_POST['browsers'] == 1 ? 1 : 0;
-    mysql_query("UPDATE `cms_settings` SET
-        `val` = '" . mysql_real_escape_string(serialize($settings)) . "'
+    $stmt = $db->prepare("UPDATE `cms_settings` SET
+        `val` = ?
         WHERE `key` = 'sitemap'
     ");
+    $stmt->execute([
+        serialize($settings)
+    ]);
     echo '<div class="gmenu"><p>' . $lng['settings_saved'] . '</p></div>';
 } else {
     // Получаем сохраненные настройки
@@ -72,4 +76,3 @@ echo '<form action="index.php?act=sitemap" method="post"><div class="menu"><p>' 
     '</div></form>' .
     '<div class="phdr"><a href="index.php?act=sitemap&amp;reset">' . $lng['reset_settings'] . '</a></div>' .
     '<p><a href="index.php">' . $lng['admin_panel'] . '</a></p>';
-?>
