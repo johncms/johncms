@@ -67,7 +67,7 @@ class CleanUser
     public function removeMail($clean_id)
     {
         // Удаляем файлы юзера из почты
-        $req = mysql_query("SELECT * FROM `cms_mail` WHERE (`user_id` OR `from_id` = '" . $clean_id . "') AND `file_name` != ''");
+        $req = mysql_query("SELECT * FROM `cms_mail` WHERE (`user_id` = '" . $clean_id . "' OR `from_id` = '" . $clean_id . "') AND `file_name` != ''");
 
         if (mysql_num_rows($req)) {
             while ($res = mysql_fetch_assoc($req)) {
