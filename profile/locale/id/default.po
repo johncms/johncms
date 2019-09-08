@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-31 10:06-0500\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Language: id_ID\n"
 
 #: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
-#: index.php:215
+#: index.php:213
 msgid "Activity"
 msgstr "Aktivitas"
 
@@ -30,7 +30,7 @@ msgstr "Aktivitas"
 #: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
 #: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
 #: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
-#: index.php:122
+#: index.php:120
 msgid "Profile"
 msgstr "Profil"
 
@@ -97,7 +97,7 @@ msgstr "Blokir telah aktif"
 msgid "System"
 msgstr "Sistem"
 
-#: includes/ban.php:142 index.php:138
+#: includes/ban.php:142 index.php:136
 msgid "Ban"
 msgstr "Blokir"
 
@@ -119,7 +119,7 @@ msgstr "Pesan Pribadi"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
-#: index.php:225
+#: index.php:223
 msgid "Guestbook"
 msgstr "Buku Tamu"
 
@@ -208,7 +208,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr "Hapus blokir dengan riwayat pemblokiran"
 
 #: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
-#: includes/karma.php:154 includes/karma.php:171 index.php:134
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
 msgid "Delete"
 msgstr "Hapus"
 
@@ -273,15 +273,15 @@ msgstr "Sunting Profil"
 msgid "You cannot edit profile of higher administration"
 msgstr "Anda tidak dapat menyunting profil Pengurus yang lebih tinggi"
 
-#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:193
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
 msgid "Default settings are set"
 msgstr "Pengaturan berhasil disetel ulang"
 
-#: includes/edit.php:50 index.php:124
+#: includes/edit.php:50 index.php:122
 msgid "My Profile"
 msgstr "Profil Saya"
 
-#: includes/edit.php:50 includes/info.php:30 index.php:130
+#: includes/edit.php:50 includes/info.php:30 index.php:128
 msgid "Edit"
 msgstr "Sunting"
 
@@ -453,7 +453,7 @@ msgid "Supervisor"
 msgstr "Supervisor"
 
 #: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
-#: includes/settings.php:123 includes/settings.php:236
+#: includes/settings.php:123 includes/settings.php:238
 msgid "Save"
 msgstr "Simpan"
 
@@ -486,7 +486,7 @@ msgstr "Foto berhasil diunggah"
 msgid "Select image"
 msgstr "Pilih Gambar"
 
-#: includes/info.php:25 includes/info.php:27 index.php:214
+#: includes/info.php:25 includes/info.php:27 index.php:212
 msgid "Information"
 msgstr "Informasi"
 
@@ -494,7 +494,7 @@ msgstr "Informasi"
 msgid "Name"
 msgstr "Nama"
 
-#: includes/info.php:43 index.php:147
+#: includes/info.php:43 index.php:145
 msgid "Birthday"
 msgstr "Ulang Tahun"
 
@@ -512,7 +512,7 @@ msgid "Access forbidden"
 msgstr "Akses ditolak"
 
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
-#: includes/karma.php:239 index.php:187
+#: includes/karma.php:239 index.php:185
 msgid "Karma"
 msgstr "Karma"
 
@@ -578,7 +578,7 @@ msgstr "Komentar"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Min. 2, maks. 500 karakter"
 
-#: includes/karma.php:120 index.php:198
+#: includes/karma.php:120 index.php:196
 msgid "Vote"
 msgstr "Voting"
 
@@ -606,11 +606,11 @@ msgstr "Tanggapan baru"
 msgid "All"
 msgstr "Semua"
 
-#: includes/karma.php:241 index.php:189
+#: includes/karma.php:241 index.php:187
 msgid "For"
 msgstr "Untuk"
 
-#: includes/karma.php:242 index.php:190
+#: includes/karma.php:242 index.php:188
 msgid "Against"
 msgstr "Buruk"
 
@@ -630,7 +630,7 @@ msgstr "Halaman Saya"
 msgid "Statistics"
 msgstr "Statistik"
 
-#: includes/office.php:48 index.php:224
+#: includes/office.php:48 index.php:222
 msgid "Photo Album"
 msgstr "Album Foto"
 
@@ -654,7 +654,7 @@ msgstr "Terkirim"
 msgid "Files"
 msgstr "Berkas"
 
-#: includes/office.php:91 index.php:251
+#: includes/office.php:91 index.php:249
 msgid "Write"
 msgstr "Tulis"
 
@@ -740,7 +740,7 @@ msgstr "Semua dapat menulis"
 msgid "Only my contacts"
 msgstr "Hanya kontak saya"
 
-#: includes/settings.php:96 includes/settings.php:188
+#: includes/settings.php:96 includes/settings.php:189
 msgid "Settings saved successfully"
 msgstr "Pengaturan berhasil disimpan"
 
@@ -780,63 +780,67 @@ msgstr "Tidak pernah"
 msgid "Reset settings"
 msgstr "Mengatur ulang pengaturan"
 
-#: includes/settings.php:198
+#: includes/settings.php:199
 msgid "Time settings"
 msgstr "Pengaturan waktu"
 
-#: includes/settings.php:199
+#: includes/settings.php:200
 msgid "Shift of time"
 msgstr "Pergeseran waktu"
 
-#: includes/settings.php:201
+#: includes/settings.php:202
 msgid "System time"
 msgstr "Waktu sistem"
 
-#: includes/settings.php:202
+#: includes/settings.php:203
 msgid "System Functions"
 msgstr "Fungsi sistem"
 
-#: includes/settings.php:203
+#: includes/settings.php:204
 msgid "Direct URL"
 msgstr "URL langsung"
 
-#: includes/settings.php:204
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "Pemutar YouTube"
+
+#: includes/settings.php:206
 msgid "Text entering"
 msgstr "Menulis teks"
 
-#: includes/settings.php:205
+#: includes/settings.php:207
 msgid "Height of field"
 msgstr "Tinggi kolom"
 
-#: includes/settings.php:207
+#: includes/settings.php:209
 msgid "Appearance"
 msgstr "Tampilan"
 
-#: includes/settings.php:217
+#: includes/settings.php:219
 msgid "Theme"
 msgstr "Tema"
 
-#: includes/settings.php:218
+#: includes/settings.php:220
 msgid "Size of Lists"
 msgstr "Ukuran daftar"
 
-#: includes/settings.php:223
+#: includes/settings.php:225
 msgid "Select Language"
 msgstr "Pilih bahasa"
 
-#: includes/settings.php:229
+#: includes/settings.php:231
 msgid "Site Default"
 msgstr "Situs default"
 
-#: includes/settings.php:237
+#: includes/settings.php:239
 msgid "Reset Settings"
 msgstr "Atur ulang pengaturan"
 
-#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:216
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
 msgid "Statistic"
 msgstr "Statistik"
 
-#: includes/stat.php:34 index.php:166
+#: includes/stat.php:34 index.php:164
 msgid "Pending confirmation"
 msgstr "Konfirmasi tertunda"
 
@@ -868,43 +872,43 @@ msgstr "Kunjungan terakhir"
 msgid "Achievements"
 msgstr "Penghargaan"
 
-#: index.php:45
+#: index.php:43
 msgid "For registered users only"
 msgstr "Hanya untuk pengguna terdaftar"
 
-#: index.php:55
+#: index.php:53
 msgid "This User does not exists"
 msgstr "Pengguna ini tidak ada"
 
-#: index.php:124
+#: index.php:122
 msgid "User Profile"
 msgstr "Profil pengguna"
 
-#: index.php:158
+#: index.php:156
 msgid "Where?"
 msgstr "Dimana?"
 
-#: index.php:205
+#: index.php:203
 msgid "New reviews"
 msgstr "Ulasan baru"
 
-#: index.php:220
+#: index.php:218
 msgid "Violations"
 msgstr "Pelanggaran"
 
-#: index.php:232
+#: index.php:230
 msgid "Add to Contacts"
 msgstr "Tambahkan kontak"
 
-#: index.php:234
+#: index.php:232
 msgid "Remove from Contacts"
 msgstr "Hapus kontak"
 
-#: index.php:239
+#: index.php:237
 msgid "Block User"
 msgstr "Blokir pengguna"
 
-#: index.php:241
+#: index.php:239
 msgid "Unlock User"
 msgstr "Buka pengguna"
 

@@ -17,11 +17,11 @@ require('../system/bootstrap.php');
 $id = isset($_GET['id']) ? abs(intval($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -30,8 +30,8 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $textl = _t('Password recovery');
 require('../system/head.php');

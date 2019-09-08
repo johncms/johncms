@@ -1,0 +1,420 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: uk_UA\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /album/default.pot\n"
+
+#: includes/comments.php:36 index.php:55
+msgid "User does not exists"
+msgstr "Такого користувача не існує"
+
+#: includes/comments.php:48 includes/image_download.php:44 includes/show.php:73
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: includes/comments.php:49 includes/show.php:73 includes/show.php:95
+#: includes/show.php:193
+msgid "Album List"
+msgstr "Список альбомів"
+
+#: includes/comments.php:54 includes/list.php:34 includes/show.php:47
+#: includes/top.php:123 includes/users.php:46 index.php:146
+msgid "Photo Albums"
+msgstr "Фотоальбоми"
+
+#: includes/comments.php:55 includes/list.php:34 includes/show.php:47
+msgid "Personal"
+msgstr "Персональні"
+
+#: includes/comments.php:68 includes/show.php:172 includes/top.php:168
+msgid "Views"
+msgstr "Переглядів"
+
+#: includes/comments.php:68 includes/show.php:172 includes/top.php:168
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: includes/comments.php:69 includes/show.php:175 includes/top.php:171
+msgid "Download"
+msgstr "Завантажити"
+
+#: includes/comments.php:85 includes/show.php:174 includes/top.php:170
+msgid "Comments"
+msgstr "Коментарі"
+
+#: includes/comments.php:105 includes/delete.php:65 includes/edit.php:42
+#: includes/edit.php:79 includes/image_delete.php:57
+#: includes/image_download.php:47 includes/image_download.php:56
+#: includes/image_edit.php:218 includes/image_move.php:48
+#: includes/image_move.php:71 includes/image_upload.php:38 includes/show.php:30
+#: includes/show.php:38 includes/top.php:36 includes/vote.php:32
+#: includes/vote.php:77
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: includes/delete.php:35 includes/image_delete.php:36
+#: includes/image_edit.php:36 includes/image_move.php:34
+#: includes/image_upload.php:44
+msgid "Photo Album"
+msgstr "Фотоальбом"
+
+#: includes/delete.php:35 includes/delete.php:60 includes/image_delete.php:52
+#: includes/list.php:57 includes/show.php:163
+msgid "Delete"
+msgstr "Видалити"
+
+#: includes/delete.php:54
+msgid "Album deleted"
+msgstr "Альбом видалено"
+
+#: includes/delete.php:55 includes/edit.php:137 includes/image_edit.php:169
+#: includes/image_move.php:46 includes/image_move.php:67
+#: includes/image_upload.php:109
+msgid "Continue"
+msgstr "Продовжити"
+
+#: includes/delete.php:58 includes/show.php:54 index.php:36
+msgid "Album"
+msgstr "Альбом"
+
+#: includes/delete.php:59
+msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
+msgstr "Ви впевнені, що хочете видалити цей альбом? Якщо він містить фотографії, вони також будуть видалені."
+
+#: includes/delete.php:62 includes/edit.php:164 includes/image_delete.php:54
+#: includes/image_edit.php:215 includes/image_move.php:65
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: includes/edit.php:35
+msgid "Edit Album"
+msgstr "Редагувати альбом"
+
+#: includes/edit.php:47 includes/list.php:39
+msgid "Create Album"
+msgstr "Створити альбом"
+
+#: includes/edit.php:65
+msgid "You have not entered Title"
+msgstr "Ви не ввели назву"
+
+#: includes/edit.php:67 includes/edit.php:149
+msgid "Title"
+msgstr "Назва"
+
+#: includes/edit.php:67 includes/edit.php:75
+msgid "Invalid length"
+msgstr "Невірна довжина"
+
+#: includes/edit.php:73
+msgid "You have not entered password"
+msgstr "Ви не ввели пароль"
+
+#: includes/edit.php:75 includes/edit.php:155
+msgid "Password"
+msgstr "Пароль"
+
+#: includes/edit.php:84
+msgid "The album already exists"
+msgstr "Такий альбом вже є"
+
+#: includes/edit.php:136
+msgid "Album successfully changed"
+msgstr "Альбом успішно змінено"
+
+#: includes/edit.php:136
+msgid "Album successfully created"
+msgstr "Альбом успішно створено"
+
+#: includes/edit.php:151
+msgid "Min. 2, Max. 30"
+msgstr "Мін. 2, Макс. 30"
+
+#: includes/edit.php:152 includes/image_edit.php:176
+#: includes/image_upload.php:125
+msgid "Description"
+msgstr "Опис"
+
+#: includes/edit.php:154 includes/image_edit.php:178
+#: includes/image_upload.php:127
+msgid "Optional field"
+msgstr "Необов'язкове поле"
+
+#: includes/edit.php:154
+msgid "Max. 500"
+msgstr "Макс. 500"
+
+#: includes/edit.php:157
+msgid "This field is required if the password access is activated"
+msgstr "Це поле є обов'язковим, якщо увімкнено доступ по паролю"
+
+#: includes/edit.php:158
+msgid "Access"
+msgstr "Доступ"
+
+#: includes/edit.php:159
+msgid "Everyone"
+msgstr "Усі"
+
+#: includes/edit.php:160
+msgid "With Password"
+msgstr "По паролю"
+
+#: includes/edit.php:161
+msgid "Only for me"
+msgstr "Тільки для мене"
+
+#: includes/edit.php:162 includes/image_edit.php:213
+msgid "Save"
+msgstr "Зберегти"
+
+#: includes/image_delete.php:36
+msgid "Delete image"
+msgstr "Видалити зображення"
+
+#: includes/image_delete.php:51
+msgid "Are you sure you want to delete this image?"
+msgstr "Ви дійсно хочете видалити це зображення?"
+
+#: includes/image_download.php:53
+msgid "File does not exist"
+msgstr "Файл не існує"
+
+#: includes/image_download.php:69 includes/image_upload.php:132
+msgid "Back"
+msgstr "Назад"
+
+#: includes/image_edit.php:36
+msgid "Edit image"
+msgstr "Редагування зображення"
+
+#: includes/image_edit.php:168
+msgid "Image successfully changed"
+msgstr "Зображення успішно змінено"
+
+#: includes/image_edit.php:174 includes/image_upload.php:123
+msgid "Image"
+msgstr "Зображення"
+
+#: includes/image_edit.php:208
+msgid "Rotate"
+msgstr "Повернути"
+
+#: includes/image_edit.php:209
+msgid "do not rotate"
+msgstr "не повертати"
+
+#: includes/image_edit.php:210
+msgid "clockwise"
+msgstr "за годинниковою стрілкою"
+
+#: includes/image_edit.php:211
+msgid "counterclockwise"
+msgstr "проти годинникової стрілки"
+
+#: includes/image_edit.php:212
+msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
+msgstr "Зверніть увагу на те, що при частій зміні яскравості, контрастності і повороті, втрачається якість зображення. Не користуйтеся цими функціями без необхідності."
+
+#: includes/image_move.php:34
+msgid "Move image"
+msgstr "Перемістити зображення"
+
+#: includes/image_move.php:45
+msgid "Image successfully moved to the selected album"
+msgstr "Зображення успішно перенесено в обраний альбом"
+
+#: includes/image_move.php:55
+msgid "Select Album"
+msgstr "Виберіть альбом"
+
+#: includes/image_move.php:63 includes/show.php:162
+msgid "Move"
+msgstr "Перемістити"
+
+#: includes/image_move.php:67
+msgid "You must create at least one additional album in order to move the image"
+msgstr "Ви повинні створити принаймні один додатковий альбом для того, щоб перемістити зображення"
+
+#: includes/image_upload.php:44
+msgid "Upload image"
+msgstr "Завантажити зображення"
+
+#: includes/image_upload.php:108
+msgid "Image uploaded"
+msgstr "Зображення завантажено"
+
+#: includes/image_upload.php:110
+msgid "Profile"
+msgstr "Профіль"
+
+#: includes/image_upload.php:119
+msgid "File not selected"
+msgstr "Файл не вибрано"
+
+#: includes/image_upload.php:129
+msgid "Upload"
+msgstr "Завантажити"
+
+#: includes/image_upload.php:131
+#, php-format
+msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
+msgstr "Для додавання дозволені зображення JPG, JPEG, PNG, GIF<br>Розмір файлу не повинен перевищувати %d kb."
+
+#: includes/list.php:54
+msgid "Up"
+msgstr "Вгору"
+
+#: includes/list.php:55
+msgid "Down"
+msgstr "Вниз"
+
+#: includes/list.php:56 includes/show.php:161
+msgid "Edit"
+msgstr "Редагувати"
+
+#: includes/list.php:69 includes/show.php:180 includes/top.php:177
+#: includes/users.php:68
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: includes/list.php:72 includes/show.php:183 includes/top.php:180
+#: includes/users.php:70
+msgid "Total"
+msgstr "Всього"
+
+#: includes/show.php:50
+msgid "Add image"
+msgstr "Додати зображення"
+
+#: includes/show.php:85
+msgid "Incorrect Password"
+msgstr "Невірний пароль"
+
+#: includes/show.php:91
+msgid "You must type a password to view this album"
+msgstr "Для доступу до цього альбому необхідно ввести пароль"
+
+#: includes/show.php:93
+msgid "Login"
+msgstr "Увійти"
+
+#: includes/show.php:138
+msgid "Photo added to the profile"
+msgstr "Фото додано до профілю"
+
+#: includes/show.php:167
+msgid "Add to Profile"
+msgstr "Додати до профілю"
+
+#: includes/show.php:173 includes/top.php:169
+msgid "Date"
+msgstr "Дата"
+
+#: includes/show.php:189 includes/top.php:186 includes/users.php:75
+msgid "To Page"
+msgstr "До сторінки"
+
+#: includes/top.php:41
+msgid "Unread Comments"
+msgstr "Непрочитані коментарі"
+
+#: includes/top.php:52
+msgid "Recent comments"
+msgstr "Останні коментарі"
+
+#: includes/top.php:62 index.php:164
+msgid "Top Views"
+msgstr "ТОП переглядів"
+
+#: includes/top.php:72 index.php:163
+msgid "Top Downloads"
+msgstr "ТОП завантажень"
+
+#: includes/top.php:82 index.php:165
+msgid "Top Comments"
+msgstr "ТОП коментарів"
+
+#: includes/top.php:92 index.php:162
+msgid "Top Votes"
+msgstr "ТОП голосів"
+
+#: includes/top.php:102 index.php:166
+msgid "Top Worst"
+msgstr "ТОП найгірших"
+
+#: includes/top.php:112
+msgid "New photos"
+msgstr "Нові фото"
+
+#: includes/users.php:42
+msgid "All"
+msgstr "Всі"
+
+#: includes/users.php:43 index.php:153
+msgid "Guys"
+msgstr "Хлопці"
+
+#: includes/users.php:44 index.php:154
+msgid "Girls"
+msgstr "Дівчата"
+
+#: includes/users.php:46
+msgid "List"
+msgstr "Список"
+
+#: index.php:45
+msgid "For registered users only"
+msgstr "Тільки для зареєстрованих користувачів"
+
+#: index.php:87 index.php:161
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: index.php:88
+msgid "Against"
+msgstr "Проти"
+
+#: index.php:88
+msgid "For"
+msgstr "Для"
+
+#: index.php:95
+msgid "Vote"
+msgstr "Голосувати"
+
+#: index.php:148
+msgid "New Photos"
+msgstr "Нові фото"
+
+#: index.php:149
+msgid "New Comments"
+msgstr "Нові коментарі"
+
+#: index.php:152
+msgid "Albums"
+msgstr "Альбоми"
+
+#: index.php:157
+msgid "My Album"
+msgstr "Мій альбом"
+
+#: index.php:169
+msgid "Users"
+msgstr "Користувачі"
+

@@ -16,23 +16,23 @@ $headmod = 'online';
 $textl = _t('Online');
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Показываем список Online
 $menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
@@ -80,7 +80,7 @@ switch ($mod) {
                 $out = each($ip_list[$i]);
                 $ip = long2ip($out[0]);
 
-                if ($out[0] == $container->get('env')->getIp()) {
+                if ($out[0] == $container->get(Johncms\Api\EnvironmentInterface::class)->getIp()) {
                     echo '<div class="gmenu">';
                 } else {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

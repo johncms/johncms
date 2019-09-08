@@ -14,20 +14,20 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 if (!$id || !$systemUser->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
@@ -45,17 +45,8 @@ if ($res['type'] != 'm' || $res['user_id'] != $systemUser->id) {
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
-if ($res['time'] < (time() - 180)) {
+if ($res['time'] < (time() - 3600)) {
     echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
-    require('../system/end.php');
-    exit;
-}
-
-// Проверяем, был ли файл уже загружен
-$exist = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = '$id'")->fetchColumn();
-
-if ($exist) {
-    echo $tools->displayError(_t('File is already uploaded'));
     require('../system/end.php');
     exit;
 }
@@ -166,7 +157,7 @@ if (isset($_POST['submit'])) {
             echo $tools->displayError($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         }
     } else {
-        echo _t('Error uploading file') . '<br />';
+        echo  $tools->displayError(_t('Error uploading file'), '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
     }
 
     $pa2 = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'")->rowCount();

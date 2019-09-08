@@ -12,14 +12,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Обновление файлов
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
@@ -269,13 +269,13 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
                 if ($id) {
                     $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down_cat['dir'] . '/' . $res_down_cat['name']) . "%'")->fetchColumn();
-                    $db->exec("UPDATE `download__files` SET `total` = '$dir_files' WHERE `id` = '" . $id . "'");
+                    $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $id . "'");
                 } else {
                     $req_down = $db->query("SELECT `dir`, `name`, `id` FROM `download__files` WHERE `type` = 1");
 
                     while ($res_down = $req_down->fetch()) {
                         $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir'] . '/' . $res_down['name']) . "%'")->fetchColumn();
-                        $db->exec("UPDATE `download__files` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
+                        $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
                     }
                 }
 

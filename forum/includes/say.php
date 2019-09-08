@@ -12,20 +12,20 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Закрываем доступ для определенных ситуаций
 if (!$id
@@ -143,35 +143,64 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Environment $env */
-            $env = App::getContainer()->get('env');
+            // Проверяем, было ли последнее сообщение от того же автора?
+            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum` WHERE `type` = 'm' AND `refid` = " . $id . " AND `close` != 1 ORDER BY `time` DESC LIMIT 1");
 
-            // Добавляем сообщение в базу
-            $db->prepare('
-              INSERT INTO `forum` SET
-              `refid` = ?,
-              `type` = \'m\',
-              `time` = ?,
-              `user_id` = ?,
-              `from` = ?,
-              `ip` = ?,
-              `ip_via_proxy` = ?,
-              `soft` = ?,
-              `text` = ?,
-              `edit` = \'\',
-              `curators` = \'\'
-            ')->execute([
-                $id,
-                time(),
-                $systemUser->id,
-                $systemUser->name,
-                $env->getIp(),
-                $env->getIpViaProxy(),
-                $env->getUserAgent(),
-                $msg,
-            ]);
+            $update = false;
 
-            $fadd = $db->lastInsertId();
+            if ($req->rowCount()) {
+                $update = true;
+                $res = $req->fetch();
+
+                if (!isset($_POST['addfiles']) && $res['time'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
+                    $newpost = $res['text'];
+
+                    if (strpos($newpost, '[timestamp]') === false) {
+                        $newpost = '[timestamp]' . date("d.m.Y H:i", $res['time']) . '[/timestamp]' . PHP_EOL . $newpost;
+                    }
+
+                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date("d.m.Y H:i", time()) . '[/timestamp]' . PHP_EOL . $msg;
+
+                    // Обновляем пост
+                    $db->prepare('UPDATE `forum` SET
+                      `text` = ?,
+                      `time` = ?
+                      WHERE `id` = ' . $res['id']
+                    )->execute([$newpost, time()]);
+                } else {
+                    $update = false;
+
+                    /** @var Johncms\Api\EnvironmentInterface $env */
+                    $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+
+                    // Добавляем сообщение в базу
+                    $db->prepare('
+                      INSERT INTO `forum` SET
+                      `refid` = ?,
+                      `type` = \'m\',
+                      `time` = ?,
+                      `user_id` = ?,
+                      `from` = ?,
+                      `ip` = ?,
+                      `ip_via_proxy` = ?,
+                      `soft` = ?,
+                      `text` = ?,
+                      `edit` = \'\',
+                      `curators` = \'\'
+                    ')->execute([
+                        $id,
+                        time(),
+                        $systemUser->id,
+                        $systemUser->name,
+                        $env->getIp(),
+                        $env->getIpViaProxy(),
+                        $env->getUserAgent(),
+                        $msg,
+                    ]);
+
+                    $fadd = $db->lastInsertId();
+                }
+            }
 
             // Обновляем время топика
             $db->exec("UPDATE `forum` SET
@@ -190,11 +219,14 @@ switch ($type1['type']) {
             $page = $set_forum['upfp'] ? 1 : ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn() / $kmess);
 
             if (isset($_POST['addfiles'])) {
-                header("Location: index.php?id=$fadd&act=addfile");
+                if ($update) {
+                    header("Location: index.php?id=" . $res['id'] . "&act=addfile");
+                } else {
+                    header("Location: index.php?id=" . $fadd . "&act=addfile");
+                }
             } else {
-                header("Location: index.php?id=$id&page=$page");
+                header("Location: index.php?id=" . $id . "&page=" . $page);
             }
-
             exit;
         } else {
             require('../system/head.php');
@@ -209,7 +241,7 @@ switch ($type1['type']) {
 
             echo '<form name="form" action="index.php?act=say&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
@@ -240,7 +272,7 @@ switch ($type1['type']) {
 
         if ($type1['user_id'] == $systemUser->id) {
             require('../system/head.php');
-            echo $tools->displayError('Нельзя отвечать на свое же сообщение', '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You can not reply to your own message'), '<a href="index.php?id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require('../system/end.php');
             exit;
         }
@@ -253,7 +285,7 @@ switch ($type1['type']) {
         if (!empty($_POST['citata'])) {
             // Если была цитата, форматируем ее и обрабатываем
             $citata = isset($_POST['citata']) ? trim($_POST['citata']) : '';
-            $citata = $container->get('bbcode')->notags($citata);
+            $citata = $container->get(Johncms\Api\BbcodeInterface::class)->notags($citata);
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date("d.m.Y H:i", $type1['time']);
@@ -320,8 +352,8 @@ switch ($type1['type']) {
 
             unset($_SESSION['token']);
 
-            /** @var Johncms\Environment $env */
-            $env = App::getContainer()->get('env');
+            /** @var Johncms\Api\EnvironmentInterface $env */
+            $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
             // Добавляем сообщение в базу
             $db->prepare('
@@ -405,7 +437,7 @@ switch ($type1['type']) {
             }
 
             echo '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 

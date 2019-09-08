@@ -15,20 +15,20 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Settings');
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\UserConfig $userConfig */
 $userConfig = $systemUser->getConfig();
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
@@ -37,8 +37,8 @@ if ($user['id'] != $systemUser->id) {
     exit;
 }
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 $menu = [
     (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
@@ -134,6 +134,7 @@ switch ($mod) {
             // Записываем новые настройки, заданные пользователем
             $set_user['timeshift'] = isset($_POST['timeshift']) ? intval($_POST['timeshift']) : 0;
             $set_user['directUrl'] = isset($_POST['directUrl']);
+            $set_user['youtube'] = isset($_POST['youtube']);
             $set_user['fieldHeight'] = isset($_POST['fieldHeight']) ? abs(intval($_POST['fieldHeight'])) : 3;
             $set_user['kmess'] = isset($_POST['kmess']) ? abs(intval($_POST['kmess'])) : 10;
 
@@ -201,6 +202,7 @@ switch ($mod) {
                 time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
             '<input name="directUrl" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
+            '<input name="youtube" type="checkbox" value="1" ' . ($userConfig->youtube ? 'checked="checked"' : '') . ' />&#160;' . _t('Youtube Player') . '<br />' .
             '</p><p><h3>' . _t('Text entering') . '</h3>' .
             '<input type="text" name="fieldHeight" size="2" maxlength="1" value="' . $userConfig->fieldHeight . '"/> ' . _t('Height of field') . ' (1-9)<br />';
 

@@ -1,25 +1,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-29 02:23+0400\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: pl\n"
+"Language: pl_PL\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: /album/default.pot\n"
-"X-Poedit-SearchPath-0: .\n"
 
-#: includes/comments.php:36 index.php:57
+#: includes/comments.php:36 index.php:55
 msgid "User does not exists"
 msgstr "Użytkownik nie istnieje"
 
@@ -33,7 +33,7 @@ msgid "Album List"
 msgstr "Lista albumów"
 
 #: includes/comments.php:54 includes/list.php:34 includes/show.php:47
-#: includes/top.php:123 includes/users.php:46 index.php:148
+#: includes/top.php:123 includes/users.php:46 index.php:146
 msgid "Photo Albums"
 msgstr "Albumy zdjęć"
 
@@ -88,7 +88,7 @@ msgstr "Album usunięty"
 msgid "Continue"
 msgstr "Kontynuuj"
 
-#: includes/delete.php:58 includes/show.php:54 index.php:38
+#: includes/delete.php:58 includes/show.php:54 index.php:36
 msgid "Album"
 msgstr "Album"
 
@@ -274,7 +274,7 @@ msgstr "Prześlij"
 #: includes/image_upload.php:131
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
-msgstr ""
+msgstr "Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać."
 
 #: includes/list.php:54
 msgid "Up"
@@ -338,23 +338,23 @@ msgstr "Nieprzeczytane komentarze"
 msgid "Recent comments"
 msgstr "Ostatnio dodane komentarze"
 
-#: includes/top.php:62 index.php:166
+#: includes/top.php:62 index.php:164
 msgid "Top Views"
 msgstr "Najczęściej wyświetlane "
 
-#: includes/top.php:72 index.php:165
+#: includes/top.php:72 index.php:163
 msgid "Top Downloads"
 msgstr "Najczęściej pobierane"
 
-#: includes/top.php:82 index.php:167
+#: includes/top.php:82 index.php:165
 msgid "Top Comments"
 msgstr "Najczęściej komentowane"
 
-#: includes/top.php:92 index.php:164
+#: includes/top.php:92 index.php:162
 msgid "Top Votes"
 msgstr "Najczęściej głosowane"
 
-#: includes/top.php:102 index.php:168
+#: includes/top.php:102 index.php:166
 msgid "Top Worst"
 msgstr "Top najgorsze"
 
@@ -366,11 +366,11 @@ msgstr "Nowe zdjęcia"
 msgid "All"
 msgstr "Wszystko"
 
-#: includes/users.php:43 index.php:155
+#: includes/users.php:43 index.php:153
 msgid "Guys"
 msgstr "Faceci"
 
-#: includes/users.php:44 index.php:156
+#: includes/users.php:44 index.php:154
 msgid "Girls"
 msgstr "Dziewczyny"
 
@@ -378,42 +378,43 @@ msgstr "Dziewczyny"
 msgid "List"
 msgstr "Lista"
 
-#: index.php:47
+#: index.php:45
 msgid "For registered users only"
 msgstr "Tylko dla zarejestrowanych"
 
-#: index.php:89 index.php:163
+#: index.php:87 index.php:161
 msgid "Rating"
 msgstr "Ocena"
 
-#: index.php:90
+#: index.php:88
 msgid "Against"
 msgstr "Negatywy"
 
-#: index.php:90
+#: index.php:88
 msgid "For"
 msgstr "Pozytywy"
 
-#: index.php:97
+#: index.php:95
 msgid "Vote"
 msgstr "Głosuj"
 
-#: index.php:150
+#: index.php:148
 msgid "New Photos"
 msgstr "Nowe zdjęcia"
 
-#: index.php:151
+#: index.php:149
 msgid "New Comments"
 msgstr "Nowe komentarze"
 
-#: index.php:154
+#: index.php:152
 msgid "Albums"
 msgstr "Albumy"
 
-#: index.php:159
+#: index.php:157
 msgid "My Album"
 msgstr "Mój album"
 
-#: index.php:171
+#: index.php:169
 msgid "Users"
 msgstr "Użytkownicy"
+

@@ -16,17 +16,17 @@ $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id : 'forumwho';
 require_once('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (!$systemUser->isValid()) {
     header('Location: index.php');
@@ -64,7 +64,7 @@ if ($id) {
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
-                echo $tools->displayUser($res, 0, ($act == 'guest' || ($systemUser->rights >= 1 && $systemUser->rights >= $res['rights']) ? 1 : 0));
+                echo $tools->displayUser($res, ['iphide' => ($act == 'guest' || ($systemUser->rights >= 1 && $systemUser->rights >= $res['rights']) ? 0 : 1)]);
                 echo '</div>';
             }
         } else {

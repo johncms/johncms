@@ -27,8 +27,8 @@ if (isset($_GET['err'])) {
 
 switch ($act) {
     case '404':
-        /** @var Johncms\Tools $tools */
-        $tools = App::getContainer()->get('tools');
+        /** @var Johncms\Api\ToolsInterface $tools */
+        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
         $headmod = 'error404';
         require('system/head.php');

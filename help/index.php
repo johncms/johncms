@@ -15,12 +15,10 @@ define('_IN_JOHNCMS', 1);
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 
 require('../system/bootstrap.php');
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Zend\I18n\Translator\Translator $translator */
@@ -33,8 +31,8 @@ require('../system/head.php');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    /** @var Johncms\Config $config */
-    $config = $container->get(Johncms\Config::class);
+    /** @var Johncms\Api\ConfigInterface $config */
+    $config = $container->get(Johncms\Api\ConfigInterface::class);
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "JohnCMS",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "JohnCMS Mobile Content Management System",
   "homepage": "http://johncms.com",
   "license": "GPL-3.0",
@@ -26,8 +26,8 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-compress": "^1.4.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-dev-update": "^2.0.0",
-    "grunt-exec": "^1.0.1",
+    "grunt-dev-update": "^2.1.0",
+    "grunt-exec": "^2.0.0",
     "time-grunt": "^1.2.2"
   }
 }

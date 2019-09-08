@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -26,13 +26,13 @@ msgstr "Lỗi dữ liệu"
 #: includes/admsmilies.php:26 includes/admsmilies.php:80
 #: includes/avatars.php:35 includes/avatars.php:81 includes/avatars.php:99
 #: includes/forum.php:61 includes/my_smilies.php:72 includes/smilies.php:53
-#: includes/tags.php:81 includes/usersmilies.php:90 index.php:84
+#: includes/tags.php:81 includes/usersmilies.php:90 index.php:82
 msgid "Back"
 msgstr "Quay lại"
 
 #: includes/admsmilies.php:31 includes/my_smilies.php:25
 #: includes/set_my_sm.php:31 includes/smilies.php:19
-#: includes/usersmilies.php:41 index.php:83
+#: includes/usersmilies.php:41 index.php:81
 msgid "Smilies"
 msgstr "Biểu tượng mặt cười"
 
@@ -82,7 +82,7 @@ msgid "An error occurred"
 msgstr "Đã xảy ra lỗi"
 
 #: includes/avatars.php:38 includes/avatars.php:47 includes/avatars.php:85
-#: index.php:82
+#: index.php:80
 msgid "Avatars"
 msgstr "Avatar"
 
@@ -107,11 +107,11 @@ msgid "Select"
 msgstr "Chọn"
 
 #: includes/avatars.php:85 includes/forum.php:16 includes/smilies.php:19
-#: includes/tags.php:18 index.php:79
+#: includes/tags.php:18 index.php:77
 msgid "Information, FAQ"
 msgstr "Thông tin, câu hỏi thường gặp"
 
-#: includes/forum.php:16 index.php:80
+#: includes/forum.php:16 index.php:78
 msgid "Forum rules"
 msgstr "Nội quy diễn đàn"
 
@@ -199,7 +199,7 @@ msgstr "Xóa"
 msgid "Add Smilies"
 msgstr "Thêm biểu tượng mặt cười"
 
-#: includes/tags.php:18 index.php:81
+#: includes/tags.php:18 index.php:79
 msgid "bbCode Tags"
 msgstr "Hướng Dẫn Sử Dụng BBcode"
 
@@ -271,51 +271,51 @@ msgstr "Văn bản"
 msgid "Spoiler"
 msgstr "Spoiler"
 
-#: index.php:48
+#: index.php:46
 msgid "Animals"
 msgstr "Động vật"
 
-#: index.php:49
+#: index.php:47
 msgid "Brawl, Weapons"
 msgstr "Cuộc Ẩu Đả, Vũ Khí"
 
-#: index.php:50
+#: index.php:48
 msgid "Emotions"
 msgstr "Cảm xúc"
 
-#: index.php:51
+#: index.php:49
 msgid "Flowers"
 msgstr "Hoa"
 
-#: index.php:52
+#: index.php:50
 msgid "Food, Alcohol"
 msgstr "Thức Ăn, Rượu"
 
-#: index.php:53
+#: index.php:51
 msgid "Gestures"
 msgstr "Cử chỉ"
 
-#: index.php:54
+#: index.php:52
 msgid "Holidays"
 msgstr "Ngày nghỉ"
 
-#: index.php:55
+#: index.php:53
 msgid "Love"
 msgstr "Tình yêu"
 
-#: index.php:56
+#: index.php:54
 msgid "Miscellaneous"
 msgstr "Linh tinh"
 
-#: index.php:57
+#: index.php:55
 msgid "Music, Dancing"
 msgstr "Âm nhạc, khiêu vũ"
 
-#: index.php:58
+#: index.php:56
 msgid "Sports"
 msgstr "Thể thao"
 
-#: index.php:59
+#: index.php:57
 msgid "Technology"
 msgstr "Công nghệ"
 

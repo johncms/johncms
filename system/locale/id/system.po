@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-31 10:06-0500\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -82,11 +82,11 @@ msgstr "Disarankan untuk tidak memasukkan data yang berkaitan dengan %s(Nama pen
 msgid "Go to Link"
 msgstr "Buka tautan"
 
-#: login.php:37 system/end.php:35 system/head.php:108
+#: login.php:37 system/end.php:35 system/head.php:110
 msgid "Home"
 msgstr "Beranda"
 
-#: login.php:39 login.php:158 system/head.php:110
+#: login.php:39 login.php:158 system/head.php:112
 msgid "Login"
 msgstr "Masuk"
 
@@ -154,105 +154,109 @@ msgstr "Pendaftaran"
 msgid "Forgot password?"
 msgstr "Lupa kata sandi?"
 
-#: system/head.php:51
+#: system/head.php:53
 msgid "Site News"
 msgstr "Berita Situs"
 
-#: system/head.php:104
+#: system/head.php:106
 msgid "Hi"
 msgstr "Hai"
 
-#: system/head.php:104 system/johncms/Tools.php:300
+#: system/head.php:106 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr "Pengunjung"
 
-#: system/head.php:109
+#: system/head.php:111
 msgid "Personal"
 msgstr "Pribadi"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Ban"
 msgstr "Blokir"
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Details"
 msgstr "Detail"
 
-#: system/head.php:205
+#: system/head.php:207
 msgid "System"
 msgstr "Sistem"
 
-#: system/head.php:217
+#: system/head.php:219
 msgid "Mail"
 msgstr "Pesan"
 
-#: system/head.php:221 system/johncms/Tools.php:243 system/mainmenu.php:42
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr "Buku Tamu"
 
-#: system/head.php:227
+#: system/head.php:229
 msgid "Comments"
 msgstr "Komentar"
 
-#: system/head.php:231 system/johncms/Counters.php:164
+#: system/head.php:233 system/johncms/Counters.php:164
 msgid "Unread"
 msgstr "Belum dibaca"
 
-#: system/johncms/Bbcode.php:148
+#: system/johncms/Bbcode.php:164
 msgid "Edit List"
 msgstr "Sunting Daftar"
 
-#: system/johncms/Bbcode.php:159
+#: system/johncms/Bbcode.php:175
 msgid "Add Smilies"
 msgstr "Tambahkan Smile"
 
-#: system/johncms/Bbcode.php:217
+#: system/johncms/Bbcode.php:233
 msgid "Bold"
 msgstr "Tebal"
 
-#: system/johncms/Bbcode.php:218
+#: system/johncms/Bbcode.php:234
 msgid "Italic"
 msgstr "Miring"
 
-#: system/johncms/Bbcode.php:219
+#: system/johncms/Bbcode.php:235
 msgid "Underline"
 msgstr "Garis Bawah"
 
-#: system/johncms/Bbcode.php:220
+#: system/johncms/Bbcode.php:236
 msgid "Strike"
 msgstr "Coret"
 
-#: system/johncms/Bbcode.php:221
-msgid "List"
-msgstr "Daftar"
-
-#: system/johncms/Bbcode.php:222
-msgid "Spoiler"
-msgstr "Spoiler"
-
-#: system/johncms/Bbcode.php:223
-msgid "Quote"
-msgstr "Kutipan"
-
-#: system/johncms/Bbcode.php:224
-msgid "URL"
-msgstr "URL"
-
-#: system/johncms/Bbcode.php:225
-msgid "Code"
-msgstr "Kode"
-
-#: system/johncms/Bbcode.php:226
+#: system/johncms/Bbcode.php:237
 msgid "Text Color"
 msgstr "Warna Teks"
 
-#: system/johncms/Bbcode.php:227
+#: system/johncms/Bbcode.php:238
 msgid "Background Color"
 msgstr "Warna Latar belakang"
 
-#: system/johncms/Bbcode.php:230
+#: system/johncms/Bbcode.php:239
+msgid "List"
+msgstr "Daftar"
+
+#: system/johncms/Bbcode.php:240
+msgid "Spoiler"
+msgstr "Spoiler"
+
+#: system/johncms/Bbcode.php:241
+msgid "Quote"
+msgstr "Kutipan"
+
+#: system/johncms/Bbcode.php:242
+msgid "URL"
+msgstr "URL"
+
+#: system/johncms/Bbcode.php:243
+msgid "Code"
+msgstr "Kode"
+
+#: system/johncms/Bbcode.php:247
 msgid "Smilies"
 msgstr "Smile"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Ditambahkan"
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
 msgid "Reply"
@@ -339,119 +343,119 @@ msgstr "Lihat Riwayat"
 msgid "Last activity"
 msgstr "Aktivitas Terakhir"
 
-#: system/johncms/NewsWidget.php:62
+#: system/johncms/NewsWidget.php:63
 msgid "show more"
 msgstr "selengkapnya"
 
-#: system/johncms/NewsWidget.php:95
+#: system/johncms/NewsWidget.php:98
 msgid "Discuss"
 msgstr "Diskusi"
 
-#: system/johncms/Tools.php:136
+#: system/johncms/Tools.php:135
 msgid "Today"
 msgstr "Hari ini"
 
-#: system/johncms/Tools.php:139
+#: system/johncms/Tools.php:138
 msgid "Yesterday"
 msgstr "Kemarin"
 
-#: system/johncms/Tools.php:155
+#: system/johncms/Tools.php:154
 msgid "ERROR"
 msgstr "KESALAHAN"
 
-#: system/johncms/Tools.php:235
+#: system/johncms/Tools.php:234
 msgid "List of Admins"
 msgstr "Daftar Pengurus"
 
-#: system/johncms/Tools.php:236
+#: system/johncms/Tools.php:235
 msgid "Watching the photo album"
 msgstr "Melihat Album Foto"
 
-#: system/johncms/Tools.php:237
+#: system/johncms/Tools.php:236
 msgid "List of birthdays"
 msgstr "Daftar ulang tahun"
 
-#: system/johncms/Tools.php:238 system/mainmenu.php:57
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
 msgid "Downloads"
 msgstr "Unduhan"
 
-#: system/johncms/Tools.php:239
+#: system/johncms/Tools.php:238
 msgid "Reading the FAQ"
 msgstr "Membaca FAQ"
 
-#: system/johncms/Tools.php:240 system/mainmenu.php:47
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
 msgid "Forum"
 msgstr "Forum"
 
-#: system/johncms/Tools.php:241
+#: system/johncms/Tools.php:240
 msgid "Forum Files"
 msgstr "Berkas forum"
 
-#: system/johncms/Tools.php:242
+#: system/johncms/Tools.php:241
 msgid "Looking, who in Forum?"
 msgstr "Melihat, siapa di Forum?"
 
-#: system/johncms/Tools.php:244
+#: system/johncms/Tools.php:243
 msgid "Here, in the list"
 msgstr "Disini, di daftar aktif"
 
-#: system/johncms/Tools.php:245
+#: system/johncms/Tools.php:244
 msgid "On the Homepage"
 msgstr "Di Beranda"
 
-#: system/johncms/Tools.php:246 system/mainmenu.php:62
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
 msgid "Library"
 msgstr "Perpustakaan"
 
-#: system/johncms/Tools.php:247
+#: system/johncms/Tools.php:246
 msgid "Personal correspondence"
 msgstr "Pesan Pribadi"
 
-#: system/johncms/Tools.php:248
+#: system/johncms/Tools.php:247
 msgid "Reading the news"
 msgstr "Membaca berita"
 
-#: system/johncms/Tools.php:249
+#: system/johncms/Tools.php:248
 msgid "Who is online?"
 msgstr "Siapa yang Aktif?"
 
-#: system/johncms/Tools.php:250
+#: system/johncms/Tools.php:249
 msgid "Profile"
 msgstr "Profil"
 
-#: system/johncms/Tools.php:251
+#: system/johncms/Tools.php:250
 msgid "Personal Profile"
 msgstr "Profil Pribadi"
 
-#: system/johncms/Tools.php:252
+#: system/johncms/Tools.php:251
 msgid "Registered on the site"
 msgstr "Terdaftar di situs"
 
-#: system/johncms/Tools.php:253
+#: system/johncms/Tools.php:252
 msgid "List of users"
 msgstr "Daftar Pengguna"
 
-#: system/johncms/Tools.php:254
+#: system/johncms/Tools.php:253
 msgid "Watching Top 10 Users"
 msgstr "Melihat 10 pengguna terbaik"
 
-#: system/johncms/Tools.php:368
+#: system/johncms/Tools.php:367
 msgid "Last Visit"
 msgstr "Kunjungan Terakhir"
 
-#: system/johncms/Tools.php:374
+#: system/johncms/Tools.php:373
 msgid "Browser"
 msgstr "Peramban"
 
-#: system/johncms/Tools.php:375
+#: system/johncms/Tools.php:374
 msgid "IP address"
 msgstr "Alamat IP"
 
-#: system/johncms/Tools.php:394
+#: system/johncms/Tools.php:393
 msgid "IP History"
 msgstr "Riwayat IP"
 
-#: system/johncms/Tools.php:595
+#: system/johncms/Tools.php:594
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] "Hari"

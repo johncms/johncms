@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `cms_settings`;
 DROP TABLE IF EXISTS `download`;
 
 ALTER TABLE `users` CHANGE `imname` `imname` VARCHAR(100) NOT NULL DEFAULT '';
-ALTER TABLE `library_texts` CHANGE `count_comments` `comm_count` INT(11) UNSIGNED NOT NULL DEFAULT '0';
 
 --
 -- Структура таблицы `download__category`

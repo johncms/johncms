@@ -1,0 +1,499 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Arabic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: login.php\n"
+"X-Poedit-SearchPath-1: go.php\n"
+"X-Poedit-SearchPath-2: exit.php\n"
+"X-Poedit-SearchPath-3: system/johncms\n"
+"X-Poedit-SearchPath-4: system/head.php\n"
+"X-Poedit-SearchPath-5: system/end.php\n"
+"X-Poedit-SearchPath-6: system/mainmenu.php\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /system/system.pot\n"
+"Language: ar_SA\n"
+
+#: exit.php:30
+msgid "Are you sure you want to leave the site?"
+msgstr "هل ترغب حقّا بمغادرة هذه الصفحة؟"
+
+#: exit.php:31
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: exit.php:32 system/johncms/Comments.php:243
+msgid "Cancel"
+msgstr "إلغاء الأمر"
+
+#: go.php:37
+msgid "Select language"
+msgstr "حدد اللغة"
+
+#: go.php:43
+msgid "Default"
+msgstr "افتراضي"
+
+#: go.php:50
+msgid "Apply"
+msgstr "تطبيق"
+
+#: go.php:50 go.php:67 system/johncms/Comments.php:112
+#: system/johncms/Comments.php:135 system/johncms/Comments.php:143
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:163
+#: system/johncms/Comments.php:191 system/johncms/Comments.php:200
+#: system/johncms/Comments.php:203 system/johncms/Comments.php:247
+msgid "Back"
+msgstr "رجوع"
+
+#: go.php:58
+msgid "External Link"
+msgstr "رابط خارجي"
+
+#: go.php:61
+msgid "ATTENTION!"
+msgstr "مهم"
+
+#: go.php:62
+msgid "You are going to leave our site and go to an external link"
+msgstr "انت على وشك مغادرة موقعنا للذهاب الى رابط خارجي"
+
+#: go.php:63
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "إدارة الموقع ليست مسؤولة عن محتويات المواقع الخارجية"
+
+#: go.php:64
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "فمن المستحسن عدم تحديد البيانات المتعلقة %s (تسجيل الدخول وكلمة المرور) على مواقع الطرف الثالث"
+
+#: go.php:65
+msgid "Go to Link"
+msgstr "الذهاب إلى الرابط"
+
+#: login.php:37 system/end.php:35 system/head.php:110
+msgid "Home"
+msgstr "الصفحة الرّئيسية"
+
+#: login.php:39 login.php:158 system/head.php:112
+msgid "Login"
+msgstr "تسجيل دخول"
+
+#: login.php:49
+msgid "You have not entered login"
+msgstr "لم تقم بادخال العضوية"
+
+#: login.php:53
+msgid "You have not entered password"
+msgstr "لم تدخل كلمة المرور"
+
+#: login.php:57
+msgid "Nickname"
+msgstr "الكنية"
+
+#: login.php:57 login.php:61
+msgid "Invalid length"
+msgstr "طول غير صالح"
+
+#: login.php:61 login.php:155
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: login.php:81
+msgid "The security code is not correct"
+msgstr "رمز الأمان غير صحيح"
+
+#: login.php:87
+msgid "Verification code"
+msgstr "رمز التحقق"
+
+#: login.php:88
+msgid "Enter verification code"
+msgstr "رمز التحقق الخاص بك"
+
+#: login.php:92
+msgid "Continue"
+msgstr "متابعه"
+
+#: login.php:104
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "لم يتم تفعيل اسمك حتى الان"
+
+#: login.php:128
+msgid "Enter site"
+msgstr "أدخل الموقع"
+
+#: login.php:137 login.php:141
+msgid "Authorization failed"
+msgstr "التصريح مرفوض !"
+
+#: login.php:153
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: login.php:157
+msgid "Remember"
+msgstr "تذكّر"
+
+#: login.php:160
+msgid "Registration"
+msgstr "تسجيل"
+
+#: login.php:161
+msgid "Forgot password?"
+msgstr "نسيت كلمة المرور ؟"
+
+#: system/head.php:53
+msgid "Site News"
+msgstr "موقع الأخبار"
+
+#: system/head.php:106
+msgid "Hi"
+msgstr "مرحباً"
+
+#: system/head.php:106 system/johncms/Tools.php:299
+msgid "Guest"
+msgstr "زائر"
+
+#: system/head.php:111
+msgid "Personal"
+msgstr "الملف الشخصي"
+
+#: system/head.php:198
+msgid "Ban"
+msgstr "حظر"
+
+#: system/head.php:198
+msgid "Details"
+msgstr "التفاصيل"
+
+#: system/head.php:207
+msgid "System"
+msgstr "النظام"
+
+#: system/head.php:219
+msgid "Mail"
+msgstr "البريـــد"
+
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
+msgid "Guestbook"
+msgstr "سجل الزوار"
+
+#: system/head.php:229
+msgid "Comments"
+msgstr "التعليقات"
+
+#: system/head.php:233 system/johncms/Counters.php:164
+msgid "Unread"
+msgstr "غير مقروءة"
+
+#: system/johncms/Bbcode.php:164
+msgid "Edit List"
+msgstr "تعديل القائمة "
+
+#: system/johncms/Bbcode.php:175
+msgid "Add Smilies"
+msgstr "إضافة الابتسامات"
+
+#: system/johncms/Bbcode.php:233
+msgid "Bold"
+msgstr "عريض"
+
+#: system/johncms/Bbcode.php:234
+msgid "Italic"
+msgstr "مائل"
+
+#: system/johncms/Bbcode.php:235
+msgid "Underline"
+msgstr "تسطير"
+
+#: system/johncms/Bbcode.php:236
+msgid "Strike"
+msgstr "ضربة"
+
+#: system/johncms/Bbcode.php:237
+msgid "Text Color"
+msgstr "لون الخط"
+
+#: system/johncms/Bbcode.php:238
+msgid "Background Color"
+msgstr "لون الخلفية"
+
+#: system/johncms/Bbcode.php:239
+msgid "List"
+msgstr "قائمة"
+
+#: system/johncms/Bbcode.php:240
+msgid "Spoiler"
+msgstr "تالف"
+
+#: system/johncms/Bbcode.php:241
+msgid "Quote"
+msgstr "اقتباس"
+
+#: system/johncms/Bbcode.php:242
+msgid "URL"
+msgstr "الرابط"
+
+#: system/johncms/Bbcode.php:243
+msgid "Code"
+msgstr "الكود"
+
+#: system/johncms/Bbcode.php:247
+msgid "Smilies"
+msgstr "الابتسامات"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "تمت الاضافة"
+
+#: system/johncms/Comments.php:104 system/johncms/Comments.php:299
+msgid "Reply"
+msgstr "رد "
+
+#: system/johncms/Comments.php:112
+msgid "Administrator already replied to this message"
+msgstr "مدير بالفعل رد على هذه الرسالة"
+
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:200
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: system/johncms/Comments.php:154 system/johncms/Comments.php:300
+msgid "Edit"
+msgstr "تحرير"
+
+#: system/johncms/Comments.php:163
+msgid "You cannot edit posts of higher administration"
+msgstr "لا يمكنك تحرير مناصب الإدارة العليا"
+
+#: system/johncms/Comments.php:240 system/johncms/Comments.php:242
+#: system/johncms/Comments.php:301
+msgid "Delete"
+msgstr "حذف"
+
+#: system/johncms/Comments.php:241
+msgid "Do you really want to delete?"
+msgstr "هل ترغب بالحذف ؟"
+
+#: system/johncms/Comments.php:244
+msgid "Clear all messages from this user"
+msgstr "مسح جميع رسائل من هذا المستخدم"
+
+#: system/johncms/Comments.php:245
+msgid "Clear"
+msgstr "تنظيف"
+
+#: system/johncms/Comments.php:307
+msgid "Edited"
+msgstr "تحرير"
+
+#: system/johncms/Comments.php:331
+msgid "The list is empty"
+msgstr "فارغة"
+
+#: system/johncms/Comments.php:334
+msgid "Total"
+msgstr "مجموع"
+
+#: system/johncms/Comments.php:340
+msgid "To Page"
+msgstr "الى صفحه"
+
+#: system/johncms/Comments.php:399
+msgid "Message"
+msgstr "الرسالة"
+
+#: system/johncms/Comments.php:402
+msgid "Send"
+msgstr "إرسال"
+
+#: system/johncms/Comments.php:422
+msgid "Text is too short"
+msgstr "النص قصير جداً"
+
+#: system/johncms/Comments.php:428
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "لا يمكنك إضافة الرسالة في كثير من الأحيان <br>من فضلك، الانتظار"
+
+#: system/johncms/Comments.php:428
+msgid "seconds"
+msgstr "ثانية"
+
+#: system/johncms/Comments.php:438
+msgid "Message already exists"
+msgstr "الرسالة موجوده بالفعل"
+
+#: system/johncms/Counters.php:163
+msgid "Show for Period"
+msgstr "إظهار للفترة"
+
+#: system/johncms/Counters.php:170
+msgid "Last activity"
+msgstr "آخر نشاط"
+
+#: system/johncms/NewsWidget.php:63
+msgid "show more"
+msgstr "اعرض المزيد"
+
+#: system/johncms/NewsWidget.php:98
+msgid "Discuss"
+msgstr "مناقشة"
+
+#: system/johncms/Tools.php:135
+msgid "Today"
+msgstr "اليوم"
+
+#: system/johncms/Tools.php:138
+msgid "Yesterday"
+msgstr "بالأمس"
+
+#: system/johncms/Tools.php:154
+msgid "ERROR"
+msgstr "خطأ"
+
+#: system/johncms/Tools.php:234
+msgid "List of Admins"
+msgstr "قائمة المسؤولين"
+
+#: system/johncms/Tools.php:235
+msgid "Watching the photo album"
+msgstr "مشاهدة ألبوم الصور"
+
+#: system/johncms/Tools.php:236
+msgid "List of birthdays"
+msgstr "قائمة أعياد الميلاد"
+
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
+msgid "Downloads"
+msgstr "التنزيلات"
+
+#: system/johncms/Tools.php:238
+msgid "Reading the FAQ"
+msgstr "قراءة أسئلة وأجوبة"
+
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
+msgid "Forum"
+msgstr "منتديات"
+
+#: system/johncms/Tools.php:240
+msgid "Forum Files"
+msgstr "ملفات المنتدى"
+
+#: system/johncms/Tools.php:241
+msgid "Looking, who in Forum?"
+msgstr "يبحث، الذين في المنتدى؟"
+
+#: system/johncms/Tools.php:243
+msgid "Here, in the list"
+msgstr "هنا، في قائمة"
+
+#: system/johncms/Tools.php:244
+msgid "On the Homepage"
+msgstr "على الصفحة الرئيسية"
+
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
+msgid "Library"
+msgstr "مَكتبَة"
+
+#: system/johncms/Tools.php:246
+msgid "Personal correspondence"
+msgstr "المراسلات الشخصية"
+
+#: system/johncms/Tools.php:247
+msgid "Reading the news"
+msgstr "قراءة الأخبار"
+
+#: system/johncms/Tools.php:248
+msgid "Who is online?"
+msgstr "المتواجدون الآن؟"
+
+#: system/johncms/Tools.php:249
+msgid "Profile"
+msgstr "الملفّ الشّخصي"
+
+#: system/johncms/Tools.php:250
+msgid "Personal Profile"
+msgstr "معلوماتك الشخصية"
+
+#: system/johncms/Tools.php:251
+msgid "Registered on the site"
+msgstr "التسجيل في الموقع"
+
+#: system/johncms/Tools.php:252
+msgid "List of users"
+msgstr "قائمة المستخدمين"
+
+#: system/johncms/Tools.php:253
+msgid "Watching Top 10 Users"
+msgstr "مشاهدة أعلى 10 مستخدمين"
+
+#: system/johncms/Tools.php:367
+msgid "Last Visit"
+msgstr "آخر زيارة:"
+
+#: system/johncms/Tools.php:373
+msgid "Browser"
+msgstr "المُتصفّح"
+
+#: system/johncms/Tools.php:374
+msgid "IP address"
+msgstr "عنوان الـ IP"
+
+#: system/johncms/Tools.php:393
+msgid "IP History"
+msgstr "سجل ip"
+
+#: system/johncms/Tools.php:594
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "ايام"
+msgstr[1] "اليوم"
+msgstr[2] "ايام"
+msgstr[3] "يوم"
+msgstr[4] "يوم"
+msgstr[5] "يوم"
+
+#: system/mainmenu.php:30
+msgid "Information"
+msgstr "المعلومات"
+
+#: system/mainmenu.php:32
+msgid "News archive"
+msgstr "أرشيف الأخبار"
+
+#: system/mainmenu.php:33
+msgid "Information, FAQ"
+msgstr "معلومات، أسئلة وأجوبة"
+
+#: system/mainmenu.php:38
+msgid "Communication"
+msgstr "الاتصالات"
+
+#: system/mainmenu.php:53
+msgid "Useful"
+msgstr "مفيدة"
+
+#: system/mainmenu.php:69
+msgid "Community"
+msgstr "المجتمع"
+
+#: system/mainmenu.php:70
+msgid "Users"
+msgstr "الاعضاء"
+
+#: system/mainmenu.php:71
+msgid "Photo Albums"
+msgstr "ألبومات الصور"
+

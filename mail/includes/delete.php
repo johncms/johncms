@@ -19,17 +19,17 @@ require_once('../system/head.php');
 echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 
 if ($id) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\User $systemUser */
-    $systemUser = $container->get(Johncms\User::class);
+    /** @var Johncms\Api\UserInterface $systemUser */
+    $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+    /** @var Johncms\Api\ToolsInterface $tools */
+    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     //Проверяем наличие сообщения
     $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '$id' AND `delete`!='" . $systemUser->id . "' LIMIT 1");

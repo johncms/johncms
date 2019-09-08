@@ -13,13 +13,11 @@
 define('_IN_JOHNCMS', 1);
 
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
 $headmod = 'forumsearch';
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Zend\I18n\Translator\Translator $translator */
@@ -33,11 +31,11 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' .
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)

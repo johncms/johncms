@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-12-26 14:57+0400\n"
+"POT-Creation-Date: 2017-03-25 19:15+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: classes/Hashtags.php:237 includes/lastcom.php:46 includes/top.php:47
-#: index.php:214 index.php:273 index.php:328
+#: index.php:212 index.php:271 index.php:326
 msgid "The list is empty"
 msgstr ""
 
@@ -30,8 +30,8 @@ msgstr ""
 #: includes/del.php:31 includes/lastcom.php:24 includes/mkdir.php:48
 #: includes/moder.php:127 includes/new.php:27 includes/premod.php:26
 #: includes/search.php:35 includes/search.php:61 includes/tagcloud.php:23
-#: includes/tags.php:34 includes/top.php:34 index.php:62 index.php:159
-#: index.php:371
+#: includes/tags.php:34 includes/top.php:34 index.php:60 index.php:157
+#: index.php:369
 msgid "Library"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "To Section"
 msgstr ""
 
-#: includes/addnew.php:185 index.php:335
+#: includes/addnew.php:185 index.php:333
 msgid "Write Article"
 msgstr ""
 
@@ -138,25 +138,25 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: includes/comments.php:31 includes/comments.php:43 index.php:71
+#: includes/comments.php:31 includes/comments.php:43 index.php:69
 msgid "Access forbidden"
 msgstr ""
 
 #: includes/comments.php:57 includes/lastcom.php:42 includes/new.php:59
 #: includes/premod.php:56 includes/search.php:104 includes/tags.php:50
-#: includes/top.php:79 index.php:317 index.php:400
+#: includes/top.php:79 index.php:315 index.php:398
 msgid "Who added"
 msgstr ""
 
 #: includes/comments.php:58 includes/moder.php:192 includes/new.php:69
 #: includes/search.php:106 includes/tags.php:51 includes/top.php:89
-#: index.php:410
+#: index.php:408
 msgid "Number of readings"
 msgstr ""
 
 #: includes/comments.php:79 includes/new.php:75 includes/new.php:77
-#: includes/tags.php:53 includes/top.php:95 includes/top.php:97 index.php:416
-#: index.php:419
+#: includes/tags.php:53 includes/top.php:95 includes/top.php:97 index.php:414
+#: index.php:417
 msgid "Comments"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 
 #: includes/del.php:31 includes/del.php:92 includes/del.php:117
 #: includes/del.php:128 includes/del.php:134 includes/premod.php:58
-#: index.php:208 index.php:267 index.php:281 index.php:337 index.php:459
+#: index.php:206 index.php:265 index.php:279 index.php:335 index.php:457
 msgid "Delete"
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: includes/lastcom.php:24 index.php:184
+#: includes/lastcom.php:24 index.php:182
 msgid "Latest comments"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Section created"
 msgstr ""
 
-#: includes/mkdir.php:48 index.php:220
+#: includes/mkdir.php:48 index.php:218
 msgid "Create Section"
 msgstr ""
 
@@ -280,11 +280,11 @@ msgstr ""
 msgid "Section type"
 msgstr ""
 
-#: includes/mkdir.php:57 includes/moder.php:181 index.php:256
+#: includes/mkdir.php:57 includes/moder.php:181 index.php:254
 msgid "Sections"
 msgstr ""
 
-#: includes/mkdir.php:58 includes/moder.php:182 index.php:256
+#: includes/mkdir.php:58 includes/moder.php:182 index.php:254
 msgid "Articles"
 msgstr ""
 
@@ -324,7 +324,7 @@ msgstr ""
 msgid "Verified"
 msgstr ""
 
-#: includes/new.php:27 index.php:178
+#: includes/new.php:27 index.php:176
 msgid "New Articles"
 msgstr ""
 
@@ -332,16 +332,16 @@ msgstr ""
 msgid "Section"
 msgstr ""
 
-#: includes/new.php:64 includes/top.php:84 index.php:322 index.php:405
+#: includes/new.php:64 includes/top.php:84 index.php:320 index.php:403
 msgid "Rating"
 msgstr ""
 
-#: includes/new.php:77 includes/top.php:97 index.php:420
+#: includes/new.php:77 includes/top.php:97 index.php:418
 msgid "Comments are closed"
 msgstr ""
 
 #: includes/new.php:84 includes/premod.php:63 includes/search.php:114
-#: includes/tags.php:57 index.php:217 index.php:276 index.php:331
+#: includes/tags.php:57 index.php:215 index.php:274 index.php:329
 msgid "Total"
 msgstr ""
 
@@ -370,7 +370,7 @@ msgstr ""
 msgid "Approve all"
 msgstr ""
 
-#: includes/search.php:35 includes/search.php:38 index.php:160
+#: includes/search.php:35 includes/search.php:38 index.php:158
 msgid "Search"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgstr ""
 msgid "Sorted by relevance"
 msgstr ""
 
-#: includes/tagcloud.php:23 index.php:160
+#: includes/tagcloud.php:23 index.php:158
 msgid "Tag Cloud"
 msgstr ""
 
@@ -426,38 +426,38 @@ msgstr ""
 msgid "By comments"
 msgstr ""
 
-#: includes/top.php:34 index.php:182
+#: includes/top.php:34 index.php:180
 msgid "Rating articles"
 msgstr ""
 
-#: index.php:69 index.php:134
+#: index.php:67 index.php:132
 msgid "Library is closed"
 msgstr ""
 
-#: index.php:168
+#: index.php:166
 msgid "On moderation"
 msgstr ""
 
-#: index.php:205 index.php:261 index.php:262
+#: index.php:203 index.php:259 index.php:260
 msgid "Up"
 msgstr ""
 
-#: index.php:206 index.php:264 index.php:265
+#: index.php:204 index.php:262 index.php:263
 msgid "Down"
 msgstr ""
 
-#: index.php:207 index.php:266 index.php:280 index.php:336 index.php:458
+#: index.php:205 index.php:264 index.php:278 index.php:334 index.php:456
 msgid "Edit"
 msgstr ""
 
-#: index.php:282
+#: index.php:280
 msgid "Create"
 msgstr ""
 
-#: index.php:312 index.php:395
+#: index.php:310 index.php:393
 msgid "The Tags"
 msgstr ""
 
-#: index.php:452
+#: index.php:450
 msgid "Download file"
 msgstr ""

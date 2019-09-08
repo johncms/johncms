@@ -34,7 +34,7 @@ class Comments
     private $tools;
 
     /**
-     * @var \Johncms\User
+     * @var Api\UserInterface::class
      */
     private $systemUser;
 
@@ -57,11 +57,11 @@ class Comments
     {
         global $mod, $start, $kmess;
 
-        /** @var \Interop\Container\ContainerInterface $container */
+        /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(Api\ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(\Johncms\User::class);
+        $this->systemUser = $container->get(Api\UserInterface::class );
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
@@ -350,11 +350,11 @@ class Comments
     // Добавляем комментарий в базу
     private function add_comment($message)
     {
-        /** @var \Interop\Container\ContainerInterface $container */
+        /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
 
-        /** @var \Johncms\Environment $env */
-        $env = $container->get('env');
+        /** @var Api\EnvironmentInterface $env */
+        $env = $container->get(Api\EnvironmentInterface::class);
 
         // Формируем атрибуты сообщения
         $attributes = [
@@ -397,7 +397,7 @@ class Comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . \App::getContainer()->get('bbcode')->buttons('form', 'message') .
+            '</p><p>' . \App::getContainer()->get(Api\BbcodeInterface::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
             '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
@@ -422,7 +422,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = \App::getContainer()->get('tools')->antiflood();
+            $flood = \App::getContainer()->get(Api\ToolsInterface::class)->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');

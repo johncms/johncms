@@ -12,8 +12,8 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
 require('../system/head.php');
 $delf = opendir('../files/forum/topics');
@@ -43,17 +43,17 @@ if (!$id) {
     exit;
 }
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't' AND `close` != '1'");
 
@@ -125,7 +125,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 }
 
                 $txt_tmp = htmlentities($arr['text'], ENT_QUOTES, 'UTF-8');
-                $txt_tmp = App::getContainer()->get('bbcode')->tags($txt_tmp);
+                $txt_tmp = App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->tags($txt_tmp);
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
                 $txt_tmp = str_replace("\r\n", "<br>", $txt_tmp);
                 $stroka = "$div <b>$arr[from]</b>(" . date("d.m.Y/H:i", $arr['time']) . ")<br>$txt_tmp</div>";

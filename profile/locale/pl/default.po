@@ -2,25 +2,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-12-29 02:16+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Polish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: crowdin.com\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Language: pl\n"
 "X-Crowdin-File: /profile/default.pot\n"
 "Language: pl_PL\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
-#: index.php:215
+#: index.php:213
 msgid "Activity"
 msgstr "Aktywność"
 
@@ -30,7 +30,7 @@ msgstr "Aktywność"
 #: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
 #: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
 #: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
-#: index.php:122
+#: index.php:120
 msgid "Profile"
 msgstr "Profil"
 
@@ -97,7 +97,7 @@ msgstr "Ban jest już aktywny"
 msgid "System"
 msgstr "System"
 
-#: includes/ban.php:142 index.php:138
+#: includes/ban.php:142 index.php:136
 msgid "Ban"
 msgstr "Banuj"
 
@@ -119,7 +119,7 @@ msgstr "Prywatne wiadomości"
 
 #: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
 #: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
-#: index.php:225
+#: index.php:223
 msgid "Guestbook"
 msgstr "Księga gości"
 
@@ -208,7 +208,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr "Usuwanie zakazu wraz z rekordem w historii zakazu"
 
 #: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
-#: includes/karma.php:154 includes/karma.php:171 index.php:134
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
 msgid "Delete"
 msgstr "Usuń"
 
@@ -273,15 +273,15 @@ msgstr "Edytuj profil"
 msgid "You cannot edit profile of higher administration"
 msgstr "Nie możesz edytować profilu administracji"
 
-#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:193
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
 msgid "Default settings are set"
 msgstr "Domyślne ustawienia zostały ustawione"
 
-#: includes/edit.php:50 index.php:124
+#: includes/edit.php:50 index.php:122
 msgid "My Profile"
 msgstr "Mój profil"
 
-#: includes/edit.php:50 includes/info.php:30 index.php:130
+#: includes/edit.php:50 includes/info.php:30 index.php:128
 msgid "Edit"
 msgstr "Edytuj"
 
@@ -453,7 +453,7 @@ msgid "Supervisor"
 msgstr "Szef portalu"
 
 #: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
-#: includes/settings.php:123 includes/settings.php:236
+#: includes/settings.php:123 includes/settings.php:238
 msgid "Save"
 msgstr "Zapisz"
 
@@ -486,7 +486,7 @@ msgstr "Avatar pomyślnie przesłany"
 msgid "Select image"
 msgstr "Wybierz zdjęcie"
 
-#: includes/info.php:25 includes/info.php:27 index.php:214
+#: includes/info.php:25 includes/info.php:27 index.php:212
 msgid "Information"
 msgstr "Informacja"
 
@@ -494,7 +494,7 @@ msgstr "Informacja"
 msgid "Name"
 msgstr "Imię"
 
-#: includes/info.php:43 index.php:147
+#: includes/info.php:43 index.php:145
 msgid "Birthday"
 msgstr "Urodziny"
 
@@ -512,7 +512,7 @@ msgid "Access forbidden"
 msgstr "Dostęp zabroniony"
 
 #: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
-#: includes/karma.php:239 index.php:187
+#: includes/karma.php:239 index.php:185
 msgid "Karma"
 msgstr "Karma"
 
@@ -578,7 +578,7 @@ msgstr "Komentarz"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Min. 2, Max. 500 znaków"
 
-#: includes/karma.php:120 index.php:198
+#: includes/karma.php:120 index.php:196
 msgid "Vote"
 msgstr "Głosuj"
 
@@ -606,11 +606,11 @@ msgstr "Nowe odpowiedzi"
 msgid "All"
 msgstr "Wszystko"
 
-#: includes/karma.php:241 index.php:189
+#: includes/karma.php:241 index.php:187
 msgid "For"
 msgstr "Pozytywy"
 
-#: includes/karma.php:242 index.php:190
+#: includes/karma.php:242 index.php:188
 msgid "Against"
 msgstr "Negatywy"
 
@@ -630,7 +630,7 @@ msgstr "Moje Strony"
 msgid "Statistics"
 msgstr "Statystyka"
 
-#: includes/office.php:48 index.php:224
+#: includes/office.php:48 index.php:222
 msgid "Photo Album"
 msgstr "Album zdjęć"
 
@@ -654,7 +654,7 @@ msgstr "Nadane"
 msgid "Files"
 msgstr "Pliki"
 
-#: includes/office.php:91 index.php:251
+#: includes/office.php:91 index.php:249
 msgid "Write"
 msgstr "Napisz"
 
@@ -740,7 +740,7 @@ msgstr "Każdy może napisać"
 msgid "Only my contacts"
 msgstr "Tylko moje kontakty"
 
-#: includes/settings.php:96 includes/settings.php:188
+#: includes/settings.php:96 includes/settings.php:189
 msgid "Settings saved successfully"
 msgstr "Ustawienia zostały zapisane"
 
@@ -780,63 +780,67 @@ msgstr "Nigdy"
 msgid "Reset settings"
 msgstr "Resetowanie ustawień"
 
-#: includes/settings.php:198
+#: includes/settings.php:199
 msgid "Time settings"
 msgstr "Ustawienia czasu"
 
-#: includes/settings.php:199
+#: includes/settings.php:200
 msgid "Shift of time"
 msgstr "Cofanie czasu"
 
-#: includes/settings.php:201
+#: includes/settings.php:202
 msgid "System time"
 msgstr "Czas systemu"
 
-#: includes/settings.php:202
+#: includes/settings.php:203
 msgid "System Functions"
 msgstr "Funkcje systemu"
 
-#: includes/settings.php:203
+#: includes/settings.php:204
 msgid "Direct URL"
 msgstr "Bezpośredni adres URL"
 
-#: includes/settings.php:204
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "Odtwarzacz YouTube"
+
+#: includes/settings.php:206
 msgid "Text entering"
 msgstr "Wprowadzanie tekstu"
 
-#: includes/settings.php:205
+#: includes/settings.php:207
 msgid "Height of field"
 msgstr "Wysokość pola"
 
-#: includes/settings.php:207
+#: includes/settings.php:209
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: includes/settings.php:217
+#: includes/settings.php:219
 msgid "Theme"
 msgstr "Temat"
 
-#: includes/settings.php:218
+#: includes/settings.php:220
 msgid "Size of Lists"
 msgstr "Rozmiar bazy danych"
 
-#: includes/settings.php:223
+#: includes/settings.php:225
 msgid "Select Language"
 msgstr "Wybierz język"
 
-#: includes/settings.php:229
+#: includes/settings.php:231
 msgid "Site Default"
 msgstr "Użyj domyślnych dla witryny"
 
-#: includes/settings.php:237
+#: includes/settings.php:239
 msgid "Reset Settings"
 msgstr "Resetowanie ustawień"
 
-#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:216
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
 msgid "Statistic"
 msgstr "Statystyka"
 
-#: includes/stat.php:34 index.php:166
+#: includes/stat.php:34 index.php:164
 msgid "Pending confirmation"
 msgstr "Oczekiwanie na potwierdzenie"
 
@@ -868,43 +872,43 @@ msgstr "Ostatnia wizyta"
 msgid "Achievements"
 msgstr "Osiągnięcia"
 
-#: index.php:45
+#: index.php:43
 msgid "For registered users only"
 msgstr "Tylko dla zarejestrowanych"
 
-#: index.php:55
+#: index.php:53
 msgid "This User does not exists"
 msgstr "Ten użytkownik nie istnieje"
 
-#: index.php:124
+#: index.php:122
 msgid "User Profile"
 msgstr "Profil użytkownika"
 
-#: index.php:158
+#: index.php:156
 msgid "Where?"
 msgstr "Gdzie?"
 
-#: index.php:205
+#: index.php:203
 msgid "New reviews"
 msgstr "Nowe opinie"
 
-#: index.php:220
+#: index.php:218
 msgid "Violations"
 msgstr "Nieprawidłowości"
 
-#: index.php:232
+#: index.php:230
 msgid "Add to Contacts"
 msgstr "Dodaj do kontaktów"
 
-#: index.php:234
+#: index.php:232
 msgid "Remove from Contacts"
 msgstr "Usuń z kontaktów"
 
-#: index.php:239
+#: index.php:237
 msgid "Block User"
 msgstr "Blokuj użytkownika"
 
-#: index.php:241
+#: index.php:239
 msgid "Unlock User"
 msgstr "Odblokuj użytkownika"
 
@@ -934,19 +938,15 @@ msgstr "Użytkownik nie istnieje"
 
 #: skl.php:91
 #, php-format
-msgid ""
-"Hello %s!\n"
+msgid "Hello %s!\n"
 "You start process of password recovery on the site %s\n"
 "In order to recover your password, you must click on the link: %s\n"
-"Link valid for 1 hour\n"
-"\n"
+"Link valid for 1 hour\n\n"
 "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
-"Witaj %s!\n"
+msgstr "Witaj %s!\n"
 "Rozpoczełeś proces odzyskiwania hasła na stronie %s\n"
 "Aby odzyskać hasło, należy kliknąć na link: %s\n"
-"Link ważny jest 1 godzinę\n"
-"\n"
+"Link ważny jest 1 godzinę\n\n"
 "Jeśli otrzymałeś tą wiadomość przez pomyłkę, zignoruj ten list"
 
 #: skl.php:100
@@ -971,14 +971,12 @@ msgstr "Twoje nowe hasło"
 
 #: skl.php:141
 #, php-format
-msgid ""
-"Hello %s\n"
-"You have changed your password on the site %s\n"
-"\n"
-"Your new password: %s\n"
-"\n"
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
 "After logging in, you can change your password to new one."
-msgstr ""
+msgstr "Cześć %s \n"
+"Twoje nowe hasło to: %s."
 
 #: skl.php:150
 msgid "Change password"
@@ -1011,3 +1009,4 @@ msgstr "Wyslij"
 #: skl.php:170
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr "Hasło zostanie wysłane na adres e-mail podany w twoim profilu.<br>UWAGA!! Jeśli adres e-mail nie został podany w profilu, nie będziesz w stanie odzyskać hasła."
+

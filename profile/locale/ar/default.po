@@ -1,0 +1,1014 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Arabic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /profile/default.pot\n"
+"Language: ar_SA\n"
+
+#: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
+#: index.php:213
+msgid "Activity"
+msgstr "النشاط"
+
+#: includes/activity.php:34 includes/ban.php:205 includes/ban.php:309
+#: includes/edit.php:50 includes/guestbook.php:16 includes/guestbook.php:31
+#: includes/images.php:42 includes/images.php:83 includes/info.php:27
+#: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
+#: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
+#: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
+#: index.php:120
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: includes/activity.php:36 includes/activity.php:106
+msgid "Messages"
+msgstr "الرسائل"
+
+#: includes/activity.php:37 includes/activity.php:71
+msgid "Themes"
+msgstr "الثيمات"
+
+#: includes/activity.php:38 includes/activity.php:47 includes/ban.php:163
+#: includes/guestbook.php:44 includes/stat.php:54 includes/stat.php:67
+msgid "Comments"
+msgstr "التعليقات"
+
+#: includes/activity.php:64 includes/activity.php:99 includes/activity.php:136
+#: includes/ban.php:387 includes/ip.php:63 includes/karma.php:198
+#: includes/karma.php:268
+msgid "The list is empty"
+msgstr "فارغة"
+
+#: includes/activity.php:71 includes/activity.php:106 includes/ban.php:171
+#: includes/settings.php:45 includes/settings.php:76 includes/stat.php:52
+#: includes/stat.php:65
+msgid "Forum"
+msgstr "منتديات"
+
+#: includes/activity.php:140 includes/ban.php:297 includes/ban.php:390
+#: includes/ip.php:66 includes/karma.php:200 includes/karma.php:271
+msgid "Total"
+msgstr "مجموع"
+
+#: includes/activity.php:146 includes/ban.php:396 includes/ip.php:72
+#: includes/karma.php:206 includes/karma.php:277
+msgid "To Page"
+msgstr "الى صفحه"
+
+#: includes/ban.php:38
+msgid "You do not have enought rights to ban this user"
+msgstr "ليس لديك حقوق كافية لحظر هذا المستخدم"
+
+#: includes/ban.php:40
+msgid "Ban the User"
+msgstr "حظر المستخدم"
+
+#: includes/ban.php:52
+msgid "Reason not specified"
+msgstr "لم يتم تحديد السبب"
+
+#: includes/ban.php:56
+msgid "There is no required data"
+msgstr "لا توجد أي بيانات مطلوبة"
+
+#: includes/ban.php:60
+msgid "You have no rights to ban in this section"
+msgstr "لديك أية حقوق لحظر في هذا للقسم"
+
+#: includes/ban.php:64
+msgid "Ban already active"
+msgstr "الحظر نشط بالفعل"
+
+#: includes/ban.php:138 includes/office.php:84
+msgid "System"
+msgstr "نظام"
+
+#: includes/ban.php:142 index.php:136
+msgid "Ban"
+msgstr "الحظر"
+
+#: includes/ban.php:148
+msgid "User banned"
+msgstr "تم حظر المستخدم"
+
+#: includes/ban.php:155
+msgid "Ban type"
+msgstr "نوع الحظر"
+
+#: includes/ban.php:159
+msgid "Full block"
+msgstr "حظر دائم"
+
+#: includes/ban.php:161
+msgid "Private messages"
+msgstr "الرسائل الخاصة"
+
+#: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
+#: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
+#: index.php:223
+msgid "Guestbook"
+msgstr "سجل الزوار"
+
+#: includes/ban.php:176
+msgid "Library"
+msgstr "مَكتبَة"
+
+#: includes/ban.php:179
+msgid "Ban time"
+msgstr "وقت الحظر"
+
+#: includes/ban.php:181
+msgid "Minutes (60 max.)"
+msgstr "دقيقة (60 كحد أقصى)."
+
+#: includes/ban.php:182
+msgid "Hours (24 max.)"
+msgstr "ساعات (24 كحد أقصى)."
+
+#: includes/ban.php:185
+msgid "Days (30 max.)"
+msgstr "يوما (30 كحد أقصى.)"
+
+#: includes/ban.php:189 includes/ban.php:362
+msgid "Till cancel"
+msgstr "حتى إلغاء الأمر"
+
+#: includes/ban.php:192
+msgid "Reason"
+msgstr "السبب"
+
+#: includes/ban.php:197
+msgid "Violation"
+msgstr "انتهاك"
+
+#: includes/ban.php:202
+msgid "Apply Ban"
+msgstr "تطبيق الحظر"
+
+#: includes/ban.php:212 includes/ban.php:242 includes/ban.php:250
+#: includes/ban.php:275 skl.php:116
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: includes/ban.php:221
+msgid "Ban not active"
+msgstr "الحظر غير فعال"
+
+#: includes/ban.php:225
+msgid "Ban termination"
+msgstr "إنهاء الحظر"
+
+#: includes/ban.php:230
+msgid "Ban terminated"
+msgstr "تم إنهاء الحظر"
+
+#: includes/ban.php:233
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr "ستكون النهاية وقت الحظر. سيتم حفظ في تاريخ الحظر"
+
+#: includes/ban.php:234
+msgid "Terminate Ban"
+msgstr "إنهاء الحظر"
+
+#: includes/ban.php:236 includes/ban.php:272 includes/edit.php:45
+#: includes/info.php:61 includes/karma.php:71 includes/karma.php:126
+#: includes/stat.php:87 skl.php:106
+msgid "Back"
+msgstr "رجوع"
+
+#: includes/ban.php:256 includes/ban.php:376
+msgid "Delete Ban"
+msgstr "حذف الحظر"
+
+#: includes/ban.php:266
+msgid "Ban deleted"
+msgstr "تم حذف الحظر"
+
+#: includes/ban.php:266 includes/images.php:63 includes/images.php:114
+#: includes/karma.php:103 includes/password.php:81
+msgid "Continue"
+msgstr "متابعه"
+
+#: includes/ban.php:269
+msgid "Removing ban along with a record in the bans history"
+msgstr "إزالة الحظر جنبا إلى جنب مع سجل الحظر التاريخ"
+
+#: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
+msgid "Delete"
+msgstr "حذف"
+
+#: includes/ban.php:283 includes/ban.php:299
+msgid "Violations history"
+msgstr "تاريخ الانتهاكات"
+
+#: includes/ban.php:288
+msgid "Violations history cleared"
+msgstr "تم مسح سجل الانتهاكات"
+
+#: includes/ban.php:291
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "هل تريد بالتأكيد لتنظيف تاريخ الانتهاكات المستخدم بأكمله؟"
+
+#: includes/ban.php:292
+msgid "Clear"
+msgstr "تنظيف"
+
+#: includes/ban.php:301 includes/ban.php:314
+msgid "Ban Panel"
+msgstr "لوحة الحظر"
+
+#: includes/ban.php:303
+msgid "Violations history can be cleared by Supervisor only"
+msgstr "يمكنك مسح محفوظات انتهاكات من المشرف فقط"
+
+#: includes/ban.php:309
+msgid "Violations History"
+msgstr "سجل الانتهاكات"
+
+#: includes/ban.php:318
+msgid "Clear history"
+msgstr "مسح المحفوظات"
+
+#: includes/ban.php:328
+msgid "My Violations"
+msgstr "مخالفاتي"
+
+#: includes/ban.php:358
+msgid "Who applied the Ban?"
+msgstr "الذين تنطبق الحظر؟"
+
+#: includes/ban.php:361
+msgid "Time"
+msgstr "الوقت"
+
+#: includes/ban.php:365
+msgid "Remains"
+msgstr "متبقى"
+
+#: includes/ban.php:372
+msgid "Cancel Ban"
+msgstr "إلغاء الحظر"
+
+#: includes/edit.php:15 includes/images.php:15 includes/office.php:108
+#: includes/reset.php:26
+msgid "Edit Profile"
+msgstr "تعديل الملف الشخصي"
+
+#: includes/edit.php:32 includes/images.php:31
+msgid "You cannot edit profile of higher administration"
+msgstr "لا يمكنك تحرير مناصب الإدارة العليا"
+
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
+msgid "Default settings are set"
+msgstr "يتم تعيين الإعدادات الافتراضية"
+
+#: includes/edit.php:50 index.php:122
+msgid "My Profile"
+msgstr "ملفي الشخصي"
+
+#: includes/edit.php:50 includes/info.php:30 index.php:128
+msgid "Edit"
+msgstr "تحرير"
+
+#: includes/edit.php:55
+msgid "Avatar is successfully removed"
+msgstr "يتم بنجاح إزالة الصورة الرمزية"
+
+#: includes/edit.php:60
+msgid "Photo is successfully removed"
+msgstr "تتم إزالة الصور بنجاح"
+
+#: includes/edit.php:91
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "أدنى طول نك 2، كحد أقصى. 20 حرفاً"
+
+#: includes/edit.php:97
+msgid "Nick contains invalid characters"
+msgstr "نك يحتوي على أحرف غير صالحة"
+
+#: includes/edit.php:102
+msgid "Invalid format date of birth"
+msgstr "تنسيق غير صحيح تاريخ الميلاد"
+
+#: includes/edit.php:107
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "ICQ الرقم يجب أن يكون على الأقل 5 أرقام كحد أقصى. 10"
+
+#: includes/edit.php:165
+msgid "Data saved"
+msgstr "تم حفظ البيانات بنجاح "
+
+#: includes/edit.php:177 skl.php:165
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: includes/edit.php:180 includes/edit.php:183
+msgid "Nickname"
+msgstr "الكنية"
+
+#: includes/edit.php:180
+msgid "Min.2, Max. 20"
+msgstr "الحد الأدنى 2، الحد. 30"
+
+#: includes/edit.php:181 includes/edit.php:184
+msgid "Status"
+msgstr "الحالة"
+
+#: includes/edit.php:181
+msgid "Max. 50"
+msgstr "الحد. 500"
+
+#: includes/edit.php:187
+msgid "Avatar"
+msgstr "الصورة الشخصية"
+
+#: includes/edit.php:195 includes/edit.php:210 includes/images.php:74
+#: includes/images.php:127
+msgid "Upload"
+msgstr "رفع"
+
+#: includes/edit.php:198
+msgid "Select in Catalog"
+msgstr "حدد في الكتالوج"
+
+#: includes/edit.php:202
+msgid "Photo"
+msgstr "صورة"
+
+#: includes/edit.php:213 includes/info.php:35
+msgid "Personal info"
+msgstr "المعلومات الشخصية"
+
+#: includes/edit.php:214
+msgid "Your name"
+msgstr "اسمك"
+
+#: includes/edit.php:215
+msgid "Date of birth (d.m.y)"
+msgstr "تاريخ الميلاد (d.m.y)"
+
+#: includes/edit.php:219 includes/info.php:44
+msgid "City, Country"
+msgstr "المدينة / الدولة"
+
+#: includes/edit.php:220 includes/info.php:45
+msgid "About myself"
+msgstr "عن نفسي"
+
+#: includes/edit.php:221 includes/info.php:47 includes/office.php:95
+#: includes/office.php:99
+msgid "Contacts"
+msgstr "جهات الاتصال"
+
+#: includes/edit.php:222 includes/info.php:48
+msgid "Phone number"
+msgstr "رقم الهاتف"
+
+#: includes/edit.php:225
+msgid "Show in Profile"
+msgstr "عرض الملف الشخصي"
+
+#: includes/edit.php:226
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr "تحذير! كتابة البريد الإلكتروني الخاص بك بشكل صحيح. سيتم إرسال كلمة المرور الخاصة بك إلى عنوان البريد الإلكتروني في سجل لهذا الحساب."
+
+#: includes/edit.php:230 includes/info.php:59
+msgid "Site"
+msgstr "الموقع"
+
+#: includes/edit.php:235
+msgid "Administrative Functions"
+msgstr "المهام الإدارية"
+
+#: includes/edit.php:236
+msgid "Prohibit Karma"
+msgstr "حظر الاعجاب"
+
+#: includes/edit.php:237 includes/office.php:109 includes/password.php:34
+#: includes/password.php:91
+msgid "Change Password"
+msgstr "تغيير كلمة السر"
+
+#: includes/edit.php:240
+msgid "Reset User options to default"
+msgstr "إعادة تعيين خيارات المستخدم الافتراضية"
+
+#: includes/edit.php:243
+msgid "Select gender"
+msgstr "حدد نوع الجنس"
+
+#: includes/edit.php:244
+msgid "Man"
+msgstr "ذكـــر"
+
+#: includes/edit.php:245
+msgid "Woman"
+msgstr "انثـــــى"
+
+#: includes/edit.php:249
+msgid "Position on the Site"
+msgstr "موقف بشأن الموقع"
+
+#: includes/edit.php:250
+msgid "User"
+msgstr "مستخدم"
+
+#: includes/edit.php:251
+msgid "Forum Moderator"
+msgstr "مشرف المنتدى"
+
+#: includes/edit.php:252
+msgid "Download Moderator"
+msgstr "تحميل مشرف"
+
+#: includes/edit.php:253
+msgid "Library Moderator"
+msgstr "مكتبة مشرف"
+
+#: includes/edit.php:254
+msgid "Super Modererator"
+msgstr "سوابر الاداره"
+
+#: includes/edit.php:257
+msgid "Administrator"
+msgstr "مدير النظام"
+
+#: includes/edit.php:258
+msgid "Supervisor"
+msgstr "مشرف"
+
+#: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
+#: includes/settings.php:123 includes/settings.php:238
+msgid "Save"
+msgstr "حفظ"
+
+#: includes/images.php:42
+msgid "Upload Avatar"
+msgstr "رفع صورة رمزية"
+
+#: includes/images.php:62
+msgid "The avatar is successfully uploaded"
+msgstr "تم تحميل الصورة الرمزية بنجاح"
+
+#: includes/images.php:71
+msgid "Select Image"
+msgstr "تحديد صور"
+
+#: includes/images.php:77 includes/images.php:129
+#, php-format
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr "يسمح تنسيقات الصور: JPG، PNG، GIF. يجب إلا يتجاوز حجم الملف %d kb. <br>صورة جديدة سوف تحل محل القديمة (إذا كان)."
+
+#: includes/images.php:83
+msgid "Upload Photo"
+msgstr "تحميل صورة"
+
+#: includes/images.php:114
+msgid "The photo is successfully uploaded"
+msgstr "تم تحميل الصورة الرمزية بنجاح"
+
+#: includes/images.php:124
+msgid "Select image"
+msgstr "حدد الصورة"
+
+#: includes/info.php:25 includes/info.php:27 index.php:212
+msgid "Information"
+msgstr "المعلومات"
+
+#: includes/info.php:42
+msgid "Name"
+msgstr "الاسم"
+
+#: includes/info.php:43 index.php:145
+msgid "Birthday"
+msgstr "عيد ميلاد"
+
+#: includes/info.php:52
+msgid "hidden"
+msgstr "أُخْفِيَتْ"
+
+#: includes/ip.php:15 includes/ip.php:41
+msgid "IP History"
+msgstr "سجل ip"
+
+#: includes/ip.php:32 includes/office.php:33 includes/password.php:29
+#: includes/settings.php:35
+msgid "Access forbidden"
+msgstr "ممنوع الوصول"
+
+#: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
+#: includes/karma.php:239 index.php:185
+msgid "Karma"
+msgstr "الاعجاب"
+
+#: includes/karma.php:43
+msgid "It is forbidden to vote for administration"
+msgstr "يمنع التصويت للإدارة"
+
+#: includes/karma.php:47
+msgid "Cheating karma is forbidden"
+msgstr "يمنع الغش بالاعجاب"
+
+#: includes/karma.php:52
+#, php-format
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "يمكن للمستخدمين المشاركة في التصويت إذا كانوا أقاموا على الموقع لا تقل %s و تقدمهم في المنتدى %d الوظائف."
+
+#: includes/karma.php:53
+msgid "hours"
+msgstr "ساعات"
+
+#: includes/karma.php:53
+msgid "days"
+msgstr "أيام"
+
+#: includes/karma.php:61
+msgid "You can vote for single user just one time for 24 hours\""
+msgstr "يمكنك التصويت لمستخدم واحد فقط مرة واحدة لمدة 24 ساعة \""
+
+#: includes/karma.php:67
+#, php-format
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "لقد تجاوزت الحد الأقصى للتصويت. سيتم إضافة أصوات جديدة %s"
+
+#: includes/karma.php:103
+msgid "You have successfully voted"
+msgstr "قمت بالتصويت بنجاح."
+
+#: includes/karma.php:105
+msgid "Vote for"
+msgstr "صوت لـ"
+
+#: includes/karma.php:107
+msgid "Type of vote"
+msgstr "نوع من الأصوات"
+
+#: includes/karma.php:108 includes/karma.php:217
+msgid "Positive"
+msgstr "إيجابية"
+
+#: includes/karma.php:109 includes/karma.php:218
+msgid "Negative"
+msgstr "السلبية"
+
+#: includes/karma.php:110
+msgid "Votes quantity"
+msgstr "كمية الأصوات"
+
+#: includes/karma.php:117
+msgid "Comment"
+msgstr "أضف تعليق"
+
+#: includes/karma.php:119
+msgid "Min. 2, Max. 500 characters"
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
+
+#: includes/karma.php:120 index.php:196
+msgid "Vote"
+msgstr "تصويت"
+
+#: includes/karma.php:126
+msgid "You are not allowed to vote for users"
+msgstr "غير مسموح لك بالتصويت لصالح المستخدمين"
+
+#: includes/karma.php:153
+msgid "Do you really want to delete comment?"
+msgstr "هل تريد حقاً حذف التعليق؟"
+
+#: includes/karma.php:155 includes/karma.php:172
+msgid "Cancel"
+msgstr "الغاء"
+
+#: includes/karma.php:170
+msgid "Do you really want to delete all reviews about user?"
+msgstr "هل تريد حذف كافة ملاحظات حول المستخدم حقاً؟"
+
+#: includes/karma.php:180
+msgid "New responses"
+msgstr "ردود جديدة"
+
+#: includes/karma.php:216
+msgid "All"
+msgstr "جميع"
+
+#: includes/karma.php:241 index.php:187
+msgid "For"
+msgstr "لـ :"
+
+#: includes/karma.php:242 index.php:188
+msgid "Against"
+msgstr "ضد"
+
+#: includes/karma.php:280
+msgid "Reset Karma"
+msgstr "اعادة تعيين المعجبين"
+
+#: includes/office.php:16
+msgid "My Account"
+msgstr "حسابي"
+
+#: includes/office.php:45
+msgid "My Pages"
+msgstr "صفحاتي"
+
+#: includes/office.php:47
+msgid "Statistics"
+msgstr "الإحصائيات"
+
+#: includes/office.php:48 index.php:222
+msgid "Photo Album"
+msgstr "ألبوم الصور"
+
+#: includes/office.php:53
+msgid "Admin-Club"
+msgstr "نادي المشرفين"
+
+#: includes/office.php:58
+msgid "My Mailbox"
+msgstr "صندوق بريدي"
+
+#: includes/office.php:70
+msgid "Received"
+msgstr "المستلمة"
+
+#: includes/office.php:79
+msgid "Sent"
+msgstr "مرسلة"
+
+#: includes/office.php:88
+msgid "Files"
+msgstr "الملفات"
+
+#: includes/office.php:91 index.php:249
+msgid "Write"
+msgstr "اكتب"
+
+#: includes/office.php:103
+msgid "Blocked"
+msgstr "تم الحظر"
+
+#: includes/office.php:107 includes/settings.php:15 includes/settings.php:52
+#: includes/settings.php:76 includes/settings.php:128
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: includes/office.php:110
+msgid "System Settings"
+msgstr "إعدادات النظام"
+
+#: includes/office.php:112
+msgid "Admin Panel"
+msgstr "لوحة الادارة"
+
+#: includes/office.php:117
+msgid "Exit"
+msgstr "خروج"
+
+#: includes/password.php:48 includes/password.php:52
+msgid "It is necessary to fill in all fields"
+msgstr "من الضروري تعبئة كافة الحقول"
+
+#: includes/password.php:57
+msgid "Old password entered incorrectly"
+msgstr "كلمة المرور القديمة دخلت بشكل غير صحيح"
+
+#: includes/password.php:61
+msgid "The password confirmation you entered is wrong"
+msgstr "تأكيد كلمة المرور الذي أدخلته خاطئ"
+
+#: includes/password.php:65
+msgid "The password must contain at least 3 characters"
+msgstr "كلمة المرور يجب أن تحتوي على الأقل 3 أحرف"
+
+#: includes/password.php:80
+msgid "Password successfully changed"
+msgstr "تم تغيير كلمة المرور بنجاح"
+
+#: includes/password.php:85
+msgid "Repeat"
+msgstr "التكرار"
+
+#: includes/password.php:95
+msgid "Enter old password"
+msgstr "أدخل كلمة المرور القديمة"
+
+#: includes/password.php:98
+msgid "Enter new password"
+msgstr "أدخل كلمة مرور جديدة"
+
+#: includes/password.php:99
+msgid "Repeat password"
+msgstr "تكرار كلمة المرور"
+
+#: includes/reset.php:31
+#, php-format
+msgid "For user %s default settings were set."
+msgstr "تم تعيين الإعدادات الافتراضية للمستخدم %s."
+
+#: includes/settings.php:44 includes/settings.php:128
+msgid "General setting"
+msgstr "الإعدادات العامة"
+
+#: includes/settings.php:46 includes/settings.php:52
+msgid "Mail"
+msgstr "البريـــد"
+
+#: includes/settings.php:67
+msgid "Who can write you?"
+msgstr "الذين يمكن أن يكتب لك؟"
+
+#: includes/settings.php:68
+msgid "All can write"
+msgstr "كل ما يمكن أن يكتب"
+
+#: includes/settings.php:69
+msgid "Only my contacts"
+msgstr "فقط الأصدقاء"
+
+#: includes/settings.php:96 includes/settings.php:189
+msgid "Settings saved successfully"
+msgstr "تم حفظ الإعدادات بنجاح"
+
+#: includes/settings.php:115
+msgid "Basic settings"
+msgstr "الإعدادات الأساسية"
+
+#: includes/settings.php:116
+msgid "Inverse sorting"
+msgstr "فرز معكوس"
+
+#: includes/settings.php:117
+msgid "Use the form of a quick answer"
+msgstr "استخدم النموذج لإجابة سريعة"
+
+#: includes/settings.php:118
+msgid "Preview of messages"
+msgstr "معاينة الرسائل"
+
+#: includes/settings.php:119
+msgid "Attach first post"
+msgstr "إرفاق المشاركة الأولى"
+
+#: includes/settings.php:120
+msgid "Always"
+msgstr "دومًا"
+
+#: includes/settings.php:121
+msgid "In unread topics"
+msgstr "في مواضيع غير مقروءة"
+
+#: includes/settings.php:122
+msgid "Never"
+msgstr "ابدًا"
+
+#: includes/settings.php:124
+msgid "Reset settings"
+msgstr "استعادة الخيارات الإفتراضية"
+
+#: includes/settings.php:199
+msgid "Time settings"
+msgstr "استعادة الخيارات الإفتراضية"
+
+#: includes/settings.php:200
+msgid "Shift of time"
+msgstr "تحول في الوقت"
+
+#: includes/settings.php:202
+msgid "System time"
+msgstr "وقت النظام"
+
+#: includes/settings.php:203
+msgid "System Functions"
+msgstr "وظائف النظام"
+
+#: includes/settings.php:204
+msgid "Direct URL"
+msgstr "رابط مباشر"
+
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "مشغل Youtube"
+
+#: includes/settings.php:206
+msgid "Text entering"
+msgstr "إدخال النص"
+
+#: includes/settings.php:207
+msgid "Height of field"
+msgstr "ارتفاع حقل"
+
+#: includes/settings.php:209
+msgid "Appearance"
+msgstr "المظهر"
+
+#: includes/settings.php:219
+msgid "Theme"
+msgstr "المظهر"
+
+#: includes/settings.php:220
+msgid "Size of Lists"
+msgstr "حجم قوائم"
+
+#: includes/settings.php:225
+msgid "Select Language"
+msgstr "اختر اللغة"
+
+#: includes/settings.php:231
+msgid "Site Default"
+msgstr "الموقع الافتراضي"
+
+#: includes/settings.php:239
+msgid "Reset Settings"
+msgstr "إعادة تعيين الإعدادات"
+
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
+msgid "Statistic"
+msgstr "الإحصائيات"
+
+#: includes/stat.php:34 index.php:164
+msgid "Pending confirmation"
+msgstr "في انتظار التأكيد"
+
+#: includes/stat.php:36
+msgid "Registration confirmed"
+msgstr "التسجيل أكتمل"
+
+#: includes/stat.php:38
+msgid "Free registration"
+msgstr "التسجيل مجاني"
+
+#: includes/stat.php:42
+msgid "Registered"
+msgstr "تم التسجيل"
+
+#: includes/stat.php:43
+msgid "He stay on the site"
+msgstr "أنه يبقى على الموقع"
+
+#: includes/stat.php:43
+msgid "She stay on the site"
+msgstr "تبقى على الموقع"
+
+#: includes/stat.php:47
+msgid "Last visit"
+msgstr "آخر زيارة:"
+
+#: includes/stat.php:56
+msgid "Achievements"
+msgstr "الإنجازات"
+
+#: index.php:43
+msgid "For registered users only"
+msgstr "للمستخدمين المسجلين فقط"
+
+#: index.php:53
+msgid "This User does not exists"
+msgstr "هذا المستخدم غير موجود"
+
+#: index.php:122
+msgid "User Profile"
+msgstr "ملف تعريف المستخدم"
+
+#: index.php:156
+msgid "Where?"
+msgstr "أين؟"
+
+#: index.php:203
+msgid "New reviews"
+msgstr "ملاحظات جديدة"
+
+#: index.php:218
+msgid "Violations"
+msgstr "الانتهاكات"
+
+#: index.php:230
+msgid "Add to Contacts"
+msgstr "إضافة إلى جهات الاتصال"
+
+#: index.php:232
+msgid "Remove from Contacts"
+msgstr "إزالة من جهات الاتصال"
+
+#: index.php:237
+msgid "Block User"
+msgstr "حظر مستخدم"
+
+#: index.php:239
+msgid "Unlock User"
+msgstr "فتح المستخدم"
+
+#: skl.php:36 skl.php:89 skl.php:163
+msgid "Password recovery"
+msgstr "استعادة كلمة السر"
+
+#: skl.php:60
+msgid "The required fields are not filled"
+msgstr "لا يتم ملء الحقول المطلوبة"
+
+#: skl.php:62
+msgid "Incorrect code"
+msgstr "رمز غير صحيح!"
+
+#: skl.php:75
+msgid "Invalid Email address"
+msgstr "عنوان البريد الإلكتروني غير صالح"
+
+#: skl.php:79
+msgid "Password can be recovered 1 time per day"
+msgstr "كلمة المرور يمكن استردادها 1 مره في اليوم الواحد"
+
+#: skl.php:82 skl.php:133
+msgid "User does not exists"
+msgstr "المستخدم غير موجود"
+
+#: skl.php:91
+#, php-format
+msgid "Hello %s!\n"
+"You start process of password recovery on the site %s\n"
+"In order to recover your password, you must click on the link: %s\n"
+"Link valid for 1 hour\n\n"
+"If you receive this mail by mistake, just ignore this letter"
+msgstr "مرحبا %s!\n"
+"You تبدأ عملية استعادة كلمة المرور على الموقع %s\n"
+"من أجل استرداد كلمة المرور الخاصة بك, يجب الضغط على الرابط: %s\n"
+"Link صالحة لمدة 1 ساعة\n\n"
+"إذا كنت تتلقى هذا البريد الإلكتروني عن طريق الخطأ ، فقط تجاهل هذه الرسالة"
+
+#: skl.php:100
+msgid "Check your e-mail for further information"
+msgstr "التحقق من البريد الإلكتروني الخاص بك للحصول على مزيد من المعلومات"
+
+#: skl.php:102
+msgid "Error sending E-mail"
+msgstr "خطأ في إرسال البريد الإلكتروني"
+
+#: skl.php:125
+msgid "Password recovery is impossible"
+msgstr "عفوا! لقد قمت باستعادة كلمة المرور مسبقآ"
+
+#: skl.php:129
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "تم تجاوز الوقت المخصص لاسترداد كلمة المرور"
+
+#: skl.php:139
+msgid "Your new password"
+msgstr "كلمة المرور الجديدة"
+
+#: skl.php:141
+#, php-format
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
+"After logging in, you can change your password to new one."
+msgstr "مرحبا %s\n"
+"You تم تغيير كلمة المرور الخاصة بك في موقع %s\n\n"
+"Your كلمة المرور الجديدة: %s\n\n"
+"After تسجيل الدخول، يمكنك تغيير كلمة المرور الخاصة بك إلى واحدة جديدة."
+
+#: skl.php:150
+msgid "Change password"
+msgstr "تغيير كلمة السر"
+
+#: skl.php:151
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "تغيير كلمة المرور بنجاح. <br>كلمة المرور الجديدة أرسلت إلى عنوان البريد الإلكتروني الخاص بك."
+
+#: skl.php:153
+msgid "Error sending Email"
+msgstr "خطأ في إرسال البريد الإلكتروني"
+
+#: skl.php:166
+msgid "Your E-mail"
+msgstr "البريد الإلكتروني الخاص بك"
+
+#: skl.php:167
+msgid "Verification code"
+msgstr "رمز التحقق"
+
+#: skl.php:168
+msgid "Enter code"
+msgstr "أدخل رمز"
+
+#: skl.php:169
+msgid "Send"
+msgstr "إرسال"
+
+#: skl.php:170
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "كلمة المرور سيتم إرسالها إلى عنوان البريد الإلكتروني المحدد في ملف التعريف الخاص بك.<br />تحذير!! إذا كان عنوان البريد الإلكتروني لم يتم تحديده في ملف التعريف الخاص بك, سوف لا تكون قادرة على استرداد كلمة المرور الخاصة بك."
+

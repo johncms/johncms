@@ -10,17 +10,17 @@
  * @license     GPL-3
  */
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем наличие комментируемого объекта
 $req_obj = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img'");
@@ -88,7 +88,7 @@ if ($req_obj->rowCount()) {
     ];
 
     // Ставим метку прочтения
-    if ($systemUser->id == $user['id'] && $res_obj['unread_comments']) {
+    if ($systemUser->id == $owner['id'] && $res_obj['unread_comments']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '$img' LIMIT 1");
     }
 

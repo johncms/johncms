@@ -12,20 +12,20 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Закрываем доступ для определенных ситуаций
 if (!$id
@@ -102,7 +102,7 @@ if (!$req_r->rowCount()) {
 $res_r = $req_r->fetch();
 
 $th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
+    ? mb_substr(filter_var($_POST['th'], FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
     : '';
 
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
@@ -178,8 +178,8 @@ if (isset($_POST['submit'])
             $curator,
         ]);
 
-        /** @var Johncms\Environment $env */
-        $env = App::getContainer()->get('env');
+        /** @var Johncms\Api\EnvironmentInterface $env */
+        $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
         $rid = $db->lastInsertId();
 
         // Добавляем текст поста
@@ -256,7 +256,7 @@ if (isset($_POST['submit'])
         '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
-    echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+    echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
     echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 

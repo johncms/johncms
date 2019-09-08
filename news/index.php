@@ -18,20 +18,18 @@ require('../system/bootstrap.php');
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -87,7 +85,10 @@ switch ($do) {
                                   `time` = ?,
                                   `user_id` = ?,
                                   `from` = ?,
-                                  `text` = ?
+                                  `text` = ?,
+                                  `soft` = \'\',
+                                  `edit` = \'\',
+                                  `curators` = \'\'
                                 ')->execute([
                                     $v,
                                     time(),
@@ -96,8 +97,8 @@ switch ($do) {
                                     $name,
                                 ]);
 
-                                /** @var Johncms\Environment $env */
-                                $env = App::getContainer()->get('env');
+                                /** @var Johncms\Api\EnvironmentInterface $env */
+                                $env = $container->get(Johncms\Api\EnvironmentInterface::class);
                                 $rid = $db->lastInsertId();
 
                                 $db->prepare('
@@ -109,13 +110,15 @@ switch ($do) {
                                   `from` = ?,
                                   `ip` = ?,
                                   `soft` = ?,
-                                  `text` = ?
+                                  `text` = ?,
+                                  `edit` = \'\',
+                                  `curators` = \'\'
                                 ')->execute([
                                     $rid,
                                     time(),
                                     $systemUser->id,
                                     $systemUser->name,
-                                    long2ip($env->getIp()),
+                                    $env->getIp(),
                                     $env->getUserAgent(),
                                     $text,
                                 ]);

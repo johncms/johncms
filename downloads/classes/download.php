@@ -126,17 +126,17 @@ class Download
         $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
         $icon_id = isset(self::$extensions[$format_file]) ? self::$extensions[$format_file] : 9;
 
-        /** @var Interop\Container\ContainerInterface $container */
+        /** @var Psr\Container\ContainerInterface $container */
         $container = App::getContainer();
 
-        /** @var Johncms\User $systemUser */
-        $systemUser = $container->get(Johncms\User::class);
+        /** @var Johncms\Api\UserInterface $systemUser */
+        $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-        /** @var Johncms\Tools $tools */
-        $tools = $container->get('tools');
+        /** @var Johncms\Api\ToolsInterface $tools */
+        $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-        /** @var Johncms\Config $config */
-        $config = $container->get(Johncms\Config::class);
+        /** @var Johncms\Api\ConfigInterface $config */
+        $config = $container->get(Johncms\Api\ConfigInterface::class);
 
         $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
         $out .= '<a href="?act=view&amp;id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['field'] . ')';
@@ -202,8 +202,8 @@ class Download
     {
         global $old;
 
-        /** @var Johncms\Tools $tools */
-        $tools = App::getContainer()->get('tools');
+        /** @var Johncms\Api\ToolsInterface $tools */
+        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
         $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';

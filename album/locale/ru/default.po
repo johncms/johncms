@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
+"Language: ru_RU\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /album/default.pot\n"
 
-#: includes/comments.php:36 index.php:57
+#: includes/comments.php:36 index.php:55
 msgid "User does not exists"
 msgstr "Такого пользователя не существует"
 
@@ -33,7 +33,7 @@ msgid "Album List"
 msgstr "Список альбомов"
 
 #: includes/comments.php:54 includes/list.php:34 includes/show.php:47
-#: includes/top.php:123 includes/users.php:46 index.php:148
+#: includes/top.php:123 includes/users.php:46 index.php:146
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
 
@@ -88,7 +88,7 @@ msgstr "Альбом удален"
 msgid "Continue"
 msgstr "Продолжить"
 
-#: includes/delete.php:58 includes/show.php:54 index.php:38
+#: includes/delete.php:58 includes/show.php:54 index.php:36
 msgid "Album"
 msgstr "Альбом"
 
@@ -338,23 +338,23 @@ msgstr "Непрочитанные комментарии"
 msgid "Recent comments"
 msgstr "Последние комментарии"
 
-#: includes/top.php:62 index.php:166
+#: includes/top.php:62 index.php:164
 msgid "Top Views"
 msgstr "ТОП просмотров"
 
-#: includes/top.php:72 index.php:165
+#: includes/top.php:72 index.php:163
 msgid "Top Downloads"
 msgstr "ТОП загрузок"
 
-#: includes/top.php:82 index.php:167
+#: includes/top.php:82 index.php:165
 msgid "Top Comments"
 msgstr "ТОП комментариев"
 
-#: includes/top.php:92 index.php:164
+#: includes/top.php:92 index.php:162
 msgid "Top Votes"
 msgstr "ТОП голосов"
 
-#: includes/top.php:102 index.php:168
+#: includes/top.php:102 index.php:166
 msgid "Top Worst"
 msgstr "Топ Худших"
 
@@ -366,11 +366,11 @@ msgstr "Новые фото"
 msgid "All"
 msgstr "Все"
 
-#: includes/users.php:43 index.php:155
+#: includes/users.php:43 index.php:153
 msgid "Guys"
 msgstr "Парни"
 
-#: includes/users.php:44 index.php:156
+#: includes/users.php:44 index.php:154
 msgid "Girls"
 msgstr "Девушки"
 
@@ -378,43 +378,43 @@ msgstr "Девушки"
 msgid "List"
 msgstr "Список"
 
-#: index.php:47
+#: index.php:45
 msgid "For registered users only"
 msgstr "Только для зарегистрированных посетителей"
 
-#: index.php:89 index.php:163
+#: index.php:87 index.php:161
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: index.php:90
+#: index.php:88
 msgid "Against"
 msgstr "Против"
 
-#: index.php:90
+#: index.php:88
 msgid "For"
 msgstr "За"
 
-#: index.php:97
+#: index.php:95
 msgid "Vote"
 msgstr "Голосовать"
 
-#: index.php:150
+#: index.php:148
 msgid "New Photos"
 msgstr "Новые фото"
 
-#: index.php:151
+#: index.php:149
 msgid "New Comments"
 msgstr "Новые комментарии"
 
-#: index.php:154
+#: index.php:152
 msgid "Albums"
 msgstr "Альбомы"
 
-#: index.php:159
+#: index.php:157
 msgid "My Album"
 msgstr "Мой альбом"
 
-#: index.php:171
+#: index.php:169
 msgid "Users"
 msgstr "Пользователи"
 

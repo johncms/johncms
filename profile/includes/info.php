@@ -12,14 +12,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Подробная информация, контактные данные
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Information');
@@ -30,7 +30,7 @@ if ($user['id'] == $systemUser->id || ($systemUser->rights >= 7 && $systemUser->
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Edit') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>' .
+echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>' .
     '<div class="list2"><p>' .
     '<h3><img src="../images/contacts.png" width="16" height="16" class="left" />&#160;' . _t('Personal info') . '</h3>' .
     '<ul>';

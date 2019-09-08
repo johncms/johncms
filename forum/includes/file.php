@@ -13,14 +13,14 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 if ($id) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\Tools $tools */
-    $tools = $container->get('tools');
+    /** @var Johncms\Api\ToolsInterface $tools */
+    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     $error = false;
 

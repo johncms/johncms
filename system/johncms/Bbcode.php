@@ -12,75 +12,91 @@
 
 namespace Johncms;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
-class Bbcode
+class Bbcode implements Api\BbcodeInterface
 {
     /**
-     * @var \Johncms\Config
+     * @var Api\ConfigInterface
      */
-    private $config;
+    protected $config;
 
     /**
-     * @var User
+     * @var Api\UserInterface::class
      */
-    private $user;
+    protected $user;
 
     /**
      * @var UserConfig
      */
-    private $userConfig;
+    protected $userConfig;
 
     /**
      * @var \GeSHi
      */
-    private $geshi;
+    protected $geshi;
 
-    private $homeUrl;
+    protected $homeUrl;
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->config = $container->get(Config::class);
-        $this->user = $container->get(User::class);
+        $this->config = $container->get(Api\ConfigInterface::class);
+        $this->user = $container->get(Api\UserInterface::class);
         $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];
 
         return $this;
     }
 
+    // Обработка тэгов и ссылок
+    public function tags($var)
+    {
+        $var = $this->parseTime($var);               // Обработка тэга времени
+        $var = $this->highlightCode($var);           // Подсветка кода
+        $var = $this->highlightBb($var);             // Обработка ссылок
+        $var = $this->highlightUrl($var);            // Обработка ссылок
+        $var = $this->highlightBbcodeUrl($var);      // Обработка ссылок в BBcode
+        $var = $this->youtube($var);
+
+        return $var;
+    }
+
     public function notags($var = '')
     {
         $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
+        $var = preg_replace('#\[timestamp\](.+?)\[/timestamp]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
         $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
         $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
         $replace = [
-            '[small]'  => '',
-            '[/small]' => '',
-            '[big]'    => '',
-            '[/big]'   => '',
-            '[green]'  => '',
-            '[/green]' => '',
-            '[red]'    => '',
-            '[/red]'   => '',
-            '[blue]'   => '',
-            '[/blue]'  => '',
-            '[b]'      => '',
-            '[/b]'     => '',
-            '[i]'      => '',
-            '[/i]'     => '',
-            '[u]'      => '',
-            '[/u]'     => '',
-            '[s]'      => '',
-            '[/s]'     => '',
-            '[quote]'  => '',
-            '[/quote]' => '',
-            '[php]'    => '',
-            '[/php]'   => '',
-            '[c]'      => '',
-            '[/c]'     => '',
-            '[*]'      => '',
-            '[/*]'     => '',
+            '[small]'    => '',
+            '[/small]'   => '',
+            '[big]'      => '',
+            '[/big]'     => '',
+            '[green]'    => '',
+            '[/green]'   => '',
+            '[red]'      => '',
+            '[/red]'     => '',
+            '[blue]'     => '',
+            '[/blue]'    => '',
+            '[b]'        => '',
+            '[/b]'       => '',
+            '[i]'        => '',
+            '[/i]'       => '',
+            '[u]'        => '',
+            '[/u]'       => '',
+            '[s]'        => '',
+            '[/s]'       => '',
+            '[quote]'    => '',
+            '[/quote]'   => '',
+            '[youtube]'  => '',
+            '[/youtube]' => '',
+            '[php]'      => '',
+            '[/php]'     => '',
+            '[c]'        => '',
+            '[/c]'       => '',
+            '[*]'        => '',
+            '[/*]'       => '',
         ];
 
         return strtr($var, $replace);
@@ -151,8 +167,8 @@ class Bbcode
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
 
-            /** @var \Johncms\Tools $tools */
-            $tools = \App::getContainer()->get('tools');
+            /** @var Api\ToolsInterface::class $tools */
+            $tools = \App::getContainer()->get(Api\ToolsInterface::class);
 
             $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         } else {
@@ -178,16 +194,16 @@ class Bbcode
         $out = '<style>
 .codepopup {margin-top: 3px;}
 .codepopup a {
-border: 1px solid #a7a7a7;
-border-radius: 3px;
-background-color: #dddddd;
-color: black;
-font-weight: bold;
-padding: 2px 6px 2px 6px;
-display: inline-block;
-margin-right: 6px;
-margin-bottom: 3px;
-text-decoration: none;
+    border: 1px solid #a7a7a7;
+    border-radius: 3px;
+    background-color: #dddddd;
+    color: black;
+    font-weight: bold;
+    padding: 2px 6px 2px 6px;
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 3px;
+    text-decoration: none;
 }
 </style>
             <script>
@@ -218,13 +234,14 @@ text-decoration: none;
             <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/italics.gif" alt="i" title="' . _t('Italic', 'system') . '" /></a>
             <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/underline.gif" alt="u" title="' . _t('Underline', 'system') . '" /></a>
             <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/strike.gif" alt="s" title="' . _t('Strike', 'system') . '" /></a>
+            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
+            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>
             <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/list.gif" alt="li" title="' . _t('List', 'system') . '" /></a>
             <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/sp.gif" alt="spoiler" title="' . _t('Spoiler', 'system') . '" /></a>
             <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/quote.gif" alt="quote" title="' . _t('Quote', 'system') . '" /></a>
             <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/link.gif" alt="url" title="' . _t('URL', 'system') . '" /></a>
             <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/php.gif" title="' . _t('Code', 'system') . '" alt="Code" /></a>
-            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
-            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>';
+            <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/youtube.gif" title="Youtube" alt="bg youtube" /></a>';
 
         if ($this->user->isValid()) {
             $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
@@ -239,27 +256,15 @@ text-decoration: none;
         return $out;
     }
 
-    // Обработка тэгов и ссылок
-    public function tags($var)
-    {
-        $var = $this->parseTime($var);               // Обработка тэга времени
-        $var = $this->highlightCode($var);           // Подсветка кода
-        $var = $this->highlightBb($var);               // Обработка ссылок
-        $var = $this->highlightUrl($var);            // Обработка ссылок
-        $var = $this->highlightBbcodeUrl($var);       // Обработка ссылок в BBcode
-
-        return $var;
-    }
-
     /**
      * Обработка тэга [time]
      *
      * @param string $var
      * @return string
      */
-    private function parseTime($var)
+    protected function parseTime($var)
     {
-        return preg_replace_callback(
+        $var = preg_replace_callback(
             '#\[time\](.+?)\[\/time\]#s',
             function ($matches) {
                 $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
@@ -272,6 +277,22 @@ text-decoration: none;
             },
             $var
         );
+
+        $var = preg_replace_callback(
+            '#\[timestamp\](.+?)\[\/timestamp\]#s',
+            function ($matches) {
+                $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
+
+                if (($out = strtotime($matches[1])) !== false) {
+                    return '<small class="gray">' . _t('Added', 'system') . ': ' . date("d.m.Y / H:i", $out + $shift) . '</small>';
+                } else {
+                    return $matches[1];
+                }
+            },
+            $var
+        );
+
+        return $var;
     }
 
     /**
@@ -281,7 +302,7 @@ text-decoration: none;
      * @param $text
      * @return mixed
      */
-    private function highlightUrl($text)
+    protected function highlightUrl($text)
     {
         $homeurl = $this->homeUrl;
 
@@ -400,7 +421,7 @@ text-decoration: none;
      * @param string $var
      * @return mixed
      */
-    private function highlightCode($var)
+    protected function highlightCode($var)
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', [$this, 'phpCodeCallback'], $var);
         $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', [$this, 'codeCallback'], $var);
@@ -449,7 +470,7 @@ text-decoration: none;
      * @param $var
      * @return mixed
      */
-    private function highlightBbcodeUrl($var)
+    protected function highlightBbcodeUrl($var)
     {
         return preg_replace_callback('~\[url=(https?://.+?|//.+?)](.+?)\[/url]~iu',
             function ($url) {
@@ -466,62 +487,154 @@ text-decoration: none;
     }
 
     /**
+     * Список замен для основных тегов BB-кода.
+     *
+     * @return array
+     */
+    protected function replacements()
+    {
+        return [
+            // Жирный
+            'b'       => [
+                'from' => '#\[b](.+?)\[/b]#is',
+                'to'   => '<span style="font-weight: bold">$1</span>',
+            ],
+            // Курсив
+            'i'       => [
+                'from' => '#\[i](.+?)\[/i]#is',
+                'to'   => '<span style="font-style:italic">$1</span>',
+            ],
+            // Подчёркнутый
+            'u'       => [
+                'from' => '#\[u](.+?)\[/u]#is',
+                'to'   => '<span style="text-decoration:underline">$1</span>',
+            ],
+            // Зачёркнутый
+            's'       => [
+                'from' => '#\[s](.+?)\[/s]#is',
+                'to'   => '<span style="text-decoration:line-through">$1</span>',
+            ],
+            // Маленький шрифт
+            'small'   => [
+                'from' => '#\[small](.+?)\[/small]#is',
+                'to'   => '<span style="font-size:x-small">$1</span>',
+            ],
+            // Большой шрифт
+            'big'     => [
+                'from' => '#\[big](.+?)\[/big]#is',
+                'to'   => '<span style="font-size:large">$1</span>',
+            ],
+            // Красный
+            'red'     => [
+                'from' => '#\[red](.+?)\[/red]#is',
+                'to'   => '<span style="color:red">$1</span>',
+            ],
+            // Зеленый
+            'green'   => [
+                'from' => '#\[green](.+?)\[/green]#is',
+                'to'   => '<span style="color:green">$1</span>',
+            ],
+            // Синий
+            'blue'    => [
+                'from' => '#\[blue](.+?)\[/blue]#is',
+                'to'   => '<span style="color:blue">$1</span>',
+            ],
+            // Цвет шрифта
+            'color'   => [
+                'from' => '!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/color]!is',
+                'to'   => '<span style="color:$1">$2</span>',
+            ],
+            // Цвет фона
+            'bg'      => [
+                'from' => '!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is',
+                'to'   => '<span style="background-color:$1">$2</span>',
+            ],
+            // Цитата
+            'quote'   => [
+                'from' => '#\[(quote|c)](.+?)\[/(quote|c)]#is',
+                'to'   => '<span class="quote" style="display:block">$2</span>',
+            ],
+            // Список
+            'list'    => [
+                'from' => '#\[\*](.+?)\[/\*]#is',
+                'to'   => '<span class="bblist">$1</span>',
+            ],
+            // Спойлер
+            'spoiler' => [
+                'from' => '#\[spoiler=(.+?)](.+?)\[/spoiler]#is',
+                'to'   => '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>',
+            ],
+        ];
+    }
+
+    /**
      * Обработка bbCode
      *
      * @param string $var
      * @return string
      */
-    private function highlightBb($var)
+    protected function highlightBb($var)
     {
-        // Список поиска
-        $search = [
-            '#\[b](.+?)\[/b]#is', // Жирный
-            '#\[i](.+?)\[/i]#is', // Курсив
-            '#\[u](.+?)\[/u]#is', // Подчеркнутый
-            '#\[s](.+?)\[/s]#is', // Зачеркнутый
-            '#\[small](.+?)\[/small]#is', // Маленький шрифт
-            '#\[big](.+?)\[/big]#is', // Большой шрифт
-            '#\[red](.+?)\[/red]#is', // Красный
-            '#\[green](.+?)\[/green]#is', // Зеленый
-            '#\[blue](.+?)\[/blue]#is', // Синий
-            '!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/color]!is', // Цвет шрифта
-            '!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', // Цвет фона
-            '#\[(quote|c)](.+?)\[/(quote|c)]#is', // Цитата
-            '#\[\*](.+?)\[/\*]#is', // Список
-            '#\[spoiler=(.+?)](.+?)\[/spoiler]#is' // Спойлер
-        ];
-        // Список замены
-        $replace = [
-            '<span style="font-weight: bold">$1</span>',
-            // Жирный
-            '<span style="font-style:italic">$1</span>',
-            // Курсив
-            '<span style="text-decoration:underline">$1</span>',
-            // Подчеркнутый
-            '<span style="text-decoration:line-through">$1</span>',
-            // Зачеркнутый
-            '<span style="font-size:x-small">$1</span>',
-            // Маленький шрифт
-            '<span style="font-size:large">$1</span>',
-            // Большой шрифт
-            '<span style="color:red">$1</span>',
-            // Красный
-            '<span style="color:green">$1</span>',
-            // Зеленый
-            '<span style="color:blue">$1</span>',
-            // Синий
-            '<span style="color:$1">$2</span>',
-            // Цвет шрифта
-            '<span style="background-color:$1">$2</span>',
-            // Цвет фона
-            '<span class="quote" style="display:block">$2</span>',
-            // Цитата
-            '<span class="bblist">$1</span>',
-            // Список
-            '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>'
-            // Спойлер
-        ];
+        $replacements = array_values($this->replacements());
+        $search = array_column($replacements, 'from');
+        $replace = array_column($replacements, 'to');
 
         return preg_replace($search, $replace, $var);
+    }
+
+    /**
+     * Youtube bbcode
+     *
+     * @param string $var
+     * @return string
+     */
+    protected function youtube($var)
+    {
+        return preg_replace_callback(
+            '#\[youtube\](.+?)\[\/youtube\]#s',
+            function ($matches) {
+                if (preg_match('/youtube.com/', $matches[1])) {
+                    $values = explode('=', $matches[1]);
+                    $valuesto = explode('&', $values[1]);
+
+                    return $this->youtubePlayer($valuesto[0]);
+                } elseif (preg_match('/youtu.be/', $matches[1])) {
+                    return $this->youtubePlayer(trim(parse_url($matches[1])['path'], '//'));
+                } else {
+                    $valuesto = explode('&', $matches[1]);
+
+                    return $this->youtubePlayer($valuesto[0]);
+                }
+            },
+            $var, 3
+        );
+    }
+
+    protected function youtubePlayer($result)
+    {
+        if ($this->userConfig->youtube) {
+            return '
+<style>.video-container {
+	position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+}
+.video-container iframe, .video-container object, .video-container embed {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+</style>
+<div style="max-width: 500px">
+<div class="video-container">
+<iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $result . '" frameborder="0"></iframe>
+</div></div>';
+        } else {
+            return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $result . '"><img src="//img.youtube.com/vi/' . $result . '/1.jpg" border="0" alt="youtube.com/embed/' . $result . '"></a></div>';
+        }
     }
 }

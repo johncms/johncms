@@ -17,14 +17,14 @@ $textl = _t('Mail');
 require_once('../system/head.php');
 
 if ($id) {
-    /** @var Interop\Container\ContainerInterface $container */
+    /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
-    /** @var Johncms\User $systemUser */
-    $systemUser = $container->get(Johncms\User::class);
+    /** @var Johncms\Api\UserInterface $systemUser */
+    $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
     if (isset($_POST['submit'])) {
         $req = $db->query('SELECT * FROM `cms_mail` WHERE ((`user_id` = ' . $id . ' AND `from_id` = ' . $systemUser->id . ') OR (`user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ')) AND `delete` != ' . $systemUser->id);

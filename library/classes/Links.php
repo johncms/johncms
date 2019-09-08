@@ -39,7 +39,7 @@ class Links
     private $db;
 
     /**
-     * @var Johncms\Tools
+     * @var \Johncms\Api\ToolsInterface
      */
     private $tools;
 
@@ -49,7 +49,7 @@ class Links
         $this->in = $in;
         $container = \App::getContainer();
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(\Johncms\Api\ToolsInterface::class);
     }
 
     /**

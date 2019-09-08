@@ -12,9 +12,9 @@
 
 namespace Johncms;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
-class Tools
+class Tools implements Api\ToolsInterface
 {
     /**
      * @var ContainerInterface
@@ -27,7 +27,7 @@ class Tools
     private $db;
 
     /**
-     * @var User
+     * @var Api\UserInterface::class
      */
     private $user;
 
@@ -37,16 +37,16 @@ class Tools
     private $userConfig;
 
     /**
-     * @var Config
+     * @var Api\ConfigInterface
      */
     private $config;
 
     public function __invoke(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->config = $container->get(Config::class);
+        $this->config = $container->get(Api\ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->user = $container->get(User::class);
+        $this->user = $container->get(Api\UserInterface::class);
         $this->userConfig = $this->user->getConfig();
 
         return $this;
@@ -112,9 +112,9 @@ class Tools
         }
 
         if ($tags == 1) {
-            $str = $this->container->get('bbcode')->tags($str);
+            $str = $this->container->get(Api\BbcodeInterface::class)->tags($str);
         } elseif ($tags == 2) {
-            $str = $this->container->get('bbcode')->notags($str);
+            $str = $this->container->get(Api\BbcodeInterface::class)->notags($str);
         }
 
         return trim($str);
@@ -289,7 +289,7 @@ class Tools
      *
      * @return string
      */
-    public function displayUser($user = 0, $arg = [])
+    public function displayUser($user = 0, array $arg = [])
     {
         global $mod;
         $out = false;
@@ -353,7 +353,7 @@ class Tools
             $out .= '<div>' . $arg['body'] . '</div>';
         }
 
-        $ipinf = !isset($arg['iphide']) && $this->user->rights ? 1 : 0;
+        $ipinf = isset($arg['iphide']) ? !$arg['iphide'] : ($this->user->rights ? 1 : 0);
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
         if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
@@ -433,7 +433,7 @@ class Tools
      * Получаем данные пользователя
      *
      * @param int $id Идентификатор пользователя
-     * @return User|bool
+     * @return array|bool
      */
     public function getUser($id = 0)
     {
@@ -455,7 +455,7 @@ class Tools
      * @param array  $args
      * @return bool|string
      */
-    public function image($name, $args = [])
+    public function image($name, array $args = [])
     {
         $homeurl = $this->config['homeurl'];
 

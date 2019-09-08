@@ -14,17 +14,17 @@ define('_IN_JOHNCMS', 1);
 
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -107,8 +107,8 @@ if (isset($_POST['submit'])) {
     }
 
     if (empty($error)) {
-        /** @var Johncms\Environment $env */
-        $env = $container->get('env');
+        /** @var Johncms\Api\EnvironmentInterface $env */
+        $env = $container->get(Johncms\Api\EnvironmentInterface::class);
 
         $preg = $config->mod_reg > 1 ? 1 : 0;
         $db->prepare('

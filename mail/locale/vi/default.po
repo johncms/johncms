@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2016-12-26 06:08-0500\n"
+"POT-Creation-Date: 2017-03-26 17:27+0400\n"
+"PO-Revision-Date: 2017-03-26 09:43-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Vietnamese\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: vi\n"
+"Language: vi_VN\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: includes/ignor.php:16 includes/input.php:15 includes/load.php:15
 #: includes/new.php:15 includes/output.php:15 includes/systems.php:113
 #: includes/write.php:40 includes/write.php:50 includes/write.php:106
-#: includes/write.php:528 index.php:81
+#: includes/write.php:528 index.php:79
 msgid "Mail"
 msgstr "Thư"
 
@@ -51,7 +51,7 @@ msgstr "Bạn thực sự muốn loại bỏ các tin nhắn?"
 #: includes/delete.php:83 includes/deluser.php:50 includes/deluser.php:54
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
 #: includes/output.php:89 includes/systems.php:54 includes/systems.php:89
-#: includes/write.php:90 includes/write.php:495 index.php:145
+#: includes/write.php:90 includes/write.php:495 index.php:143
 msgid "Delete"
 msgstr "Xóa"
 
@@ -62,7 +62,7 @@ msgstr "Thư để loại bỏ không phải là lựa chọn"
 #: includes/delete.php:90 includes/files.php:70 includes/ignor.php:152
 #: includes/input.php:115 includes/new.php:83 includes/output.php:116
 #: includes/systems.php:123 includes/write.php:96 includes/write.php:537
-#: index.php:168
+#: index.php:166
 msgid "Personal"
 msgstr "Cá nhân"
 
@@ -71,7 +71,7 @@ msgid "Contact deleted"
 msgstr "Đã xóa các địa chỉ liên hệ"
 
 #: includes/deluser.php:48 includes/input.php:78 includes/output.php:79
-#: index.php:115
+#: index.php:113
 msgid "Continue"
 msgstr "Tiếp tục"
 
@@ -89,29 +89,29 @@ msgstr "Tập tin"
 
 #: includes/files.php:56 includes/ignor.php:138 includes/input.php:102
 #: includes/new.php:70 includes/output.php:103 includes/systems.php:99
-#: includes/write.php:513 index.php:156
+#: includes/write.php:513 index.php:154
 msgid "The list is empty"
 msgstr "Danh sách này là trống rỗng"
 
 #: includes/files.php:60 includes/ignor.php:141 includes/input.php:105
 #: includes/new.php:73 includes/output.php:106 includes/systems.php:102
-#: includes/write.php:516 index.php:159
+#: includes/write.php:516 index.php:157
 msgid "Total"
 msgstr "Tổng số"
 
 #: includes/files.php:67 includes/ignor.php:148 includes/input.php:112
 #: includes/new.php:80 includes/output.php:113 includes/systems.php:109
-#: includes/write.php:524 index.php:165
+#: includes/write.php:524 index.php:163
 msgid "To Page"
 msgstr "Đến trang"
 
 #: includes/ignor.php:31 includes/ignor.php:107 includes/output.php:89
-#: index.php:125
+#: index.php:123
 msgid "Blocklist"
 msgstr "Chặn tất cả"
 
 #: includes/ignor.php:39 includes/ignor.php:68 includes/write.php:42
-#: includes/write.php:144 index.php:95
+#: includes/write.php:144 index.php:93
 msgid "User does not exists"
 msgstr "Người dùng không tồn tại"
 
@@ -151,12 +151,12 @@ msgstr "Bạn thực sự muốn bỏ chặn liên lạc?"
 msgid "Block"
 msgstr "Danh sách bỏ qua"
 
-#: includes/ignor.php:107 index.php:125
+#: includes/ignor.php:107 index.php:123
 msgid "My Contacts"
 msgstr "Danh bạ của tôi"
 
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
-#: includes/output.php:89 index.php:145
+#: includes/output.php:89 index.php:143
 msgid "Correspondence"
 msgstr "Thư"
 
@@ -178,7 +178,7 @@ msgstr "Tin nhắn Mới"
 
 #: includes/new.php:59
 msgid "Block Sender"
-msgstr ""
+msgstr "Chặn người gửi"
 
 #: includes/output.php:17
 msgid "Sent messages"
@@ -267,8 +267,8 @@ msgid "To Whom"
 msgstr "Mà"
 
 #: includes/write.php:444
-msgid "Sent"
-msgstr "Hộp thư đã gửi"
+msgid "Send"
+msgstr "Gửi"
 
 #: includes/write.php:446
 msgid "Personal correspondence with"
@@ -282,27 +282,27 @@ msgstr "Gửi Tin nhắn"
 msgid "File"
 msgstr "Tệp"
 
-#: index.php:83
+#: index.php:81
 msgid "Contacts"
 msgstr "Danh bạ"
 
-#: index.php:103
+#: index.php:101
 msgid "You cannot add yourself as a contact"
 msgstr "Bạn không thể thêm chính mình, như là một liên hệ"
 
-#: index.php:115
+#: index.php:113
 msgid "User has been added to your contact list"
 msgstr "{0} đã được thêm vào danh bạ của bạn"
 
-#: index.php:119
+#: index.php:117
 msgid "You really want to add contact?"
 msgstr "Bạn thực sự muốn thêm liên lạc?"
 
-#: index.php:120
+#: index.php:118
 msgid "Add"
 msgstr "Thêm"
 
-#: index.php:145
+#: index.php:143
 msgid "Block User"
 msgstr "Chặn người dùng"
 

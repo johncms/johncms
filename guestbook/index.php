@@ -14,32 +14,30 @@ define('_IN_JOHNCMS', 1);
 
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
 $headmod = 'guestbook';
 require('../system/bootstrap.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = $container->get(Johncms\Api\EnvironmentInterface::class);
 
-/** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+/** @var Johncms\Api\BbcodeInterface $bbcode */
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
@@ -354,7 +352,7 @@ switch ($act) {
                     '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br />';
             }
             echo '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '<input type="submit" name="submit" value="' . _t('Sent') . '"/></form></div>';
+                '<input type="submit" name="submit" value="' . _t('Send') . '"/></form></div>';
         } else {
             echo '<div class="rmenu">' . _t('For registered users only') . '</div>';
         }

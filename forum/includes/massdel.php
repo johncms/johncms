@@ -12,14 +12,14 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     // Массовое удаление выбранных постов форума
@@ -29,11 +29,11 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         $dc = $_SESSION['dc'];
         $prd = $_SESSION['prd'];
 
-        foreach ($dc as $delid) {
+        if (!empty($dc)) {
             $db->exec("UPDATE `forum` SET
                 `close` = '1',
                 `close_who` = '" . $systemUser->name . "'
-                WHERE `id` = '" . intval($delid) . "'
+                WHERE `id` IN (" . implode(',', $dc) . ")
             ");
         }
 

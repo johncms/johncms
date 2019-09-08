@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:57+0400\n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"POT-Creation-Date: 2017-03-26 17:27+0400\n"
+"PO-Revision-Date: 2017-03-26 09:42-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
+"Language: ru_RU\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: includes/ignor.php:16 includes/input.php:15 includes/load.php:15
 #: includes/new.php:15 includes/output.php:15 includes/systems.php:113
 #: includes/write.php:40 includes/write.php:50 includes/write.php:106
-#: includes/write.php:528 index.php:81
+#: includes/write.php:528 index.php:79
 msgid "Mail"
 msgstr "Почта"
 
@@ -51,7 +51,7 @@ msgstr "Вы действительно хотите удалить сообще
 #: includes/delete.php:83 includes/deluser.php:50 includes/deluser.php:54
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
 #: includes/output.php:89 includes/systems.php:54 includes/systems.php:89
-#: includes/write.php:90 includes/write.php:495 index.php:145
+#: includes/write.php:90 includes/write.php:495 index.php:143
 msgid "Delete"
 msgstr "Удалить"
 
@@ -62,7 +62,7 @@ msgstr "Не выбрано сообщение для удаления"
 #: includes/delete.php:90 includes/files.php:70 includes/ignor.php:152
 #: includes/input.php:115 includes/new.php:83 includes/output.php:116
 #: includes/systems.php:123 includes/write.php:96 includes/write.php:537
-#: index.php:168
+#: index.php:166
 msgid "Personal"
 msgstr "Личное"
 
@@ -71,7 +71,7 @@ msgid "Contact deleted"
 msgstr "Контакт удален"
 
 #: includes/deluser.php:48 includes/input.php:78 includes/output.php:79
-#: index.php:115
+#: index.php:113
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -89,29 +89,29 @@ msgstr "Файлы"
 
 #: includes/files.php:56 includes/ignor.php:138 includes/input.php:102
 #: includes/new.php:70 includes/output.php:103 includes/systems.php:99
-#: includes/write.php:513 index.php:156
+#: includes/write.php:513 index.php:154
 msgid "The list is empty"
 msgstr "Список пуст"
 
 #: includes/files.php:60 includes/ignor.php:141 includes/input.php:105
 #: includes/new.php:73 includes/output.php:106 includes/systems.php:102
-#: includes/write.php:516 index.php:159
+#: includes/write.php:516 index.php:157
 msgid "Total"
 msgstr "Всего"
 
 #: includes/files.php:67 includes/ignor.php:148 includes/input.php:112
 #: includes/new.php:80 includes/output.php:113 includes/systems.php:109
-#: includes/write.php:524 index.php:165
+#: includes/write.php:524 index.php:163
 msgid "To Page"
 msgstr "На страницу"
 
 #: includes/ignor.php:31 includes/ignor.php:107 includes/output.php:89
-#: index.php:125
+#: index.php:123
 msgid "Blocklist"
 msgstr "Заблокированные"
 
 #: includes/ignor.php:39 includes/ignor.php:68 includes/write.php:42
-#: includes/write.php:144 index.php:95
+#: includes/write.php:144 index.php:93
 msgid "User does not exists"
 msgstr "Такого пользователя не существует"
 
@@ -151,12 +151,12 @@ msgstr "Вы действительно хотите заблокировать 
 msgid "Block"
 msgstr "Заблокировать"
 
-#: includes/ignor.php:107 index.php:125
+#: includes/ignor.php:107 index.php:123
 msgid "My Contacts"
 msgstr "Мои контакты"
 
 #: includes/ignor.php:127 includes/input.php:88 includes/new.php:59
-#: includes/output.php:89 index.php:145
+#: includes/output.php:89 index.php:143
 msgid "Correspondence"
 msgstr "Переписка"
 
@@ -267,7 +267,7 @@ msgid "To Whom"
 msgstr "Кому"
 
 #: includes/write.php:444
-msgid "Sent"
+msgid "Send"
 msgstr "Отправить"
 
 #: includes/write.php:446
@@ -282,27 +282,27 @@ msgstr "Отправка сообщения"
 msgid "File"
 msgstr "Файл"
 
-#: index.php:83
+#: index.php:81
 msgid "Contacts"
 msgstr "Контакты"
 
-#: index.php:103
+#: index.php:101
 msgid "You cannot add yourself as a contact"
 msgstr "Самого себя нельзя добавить в контакт"
 
-#: index.php:115
+#: index.php:113
 msgid "User has been added to your contact list"
 msgstr "Пользователь добавлен в список контактов"
 
-#: index.php:119
+#: index.php:117
 msgid "You really want to add contact?"
 msgstr "Вы действительно хотите добавить контакт?"
 
-#: index.php:120
+#: index.php:118
 msgid "Add"
 msgstr "Добавить"
 
-#: index.php:145
+#: index.php:143
 msgid "Block User"
 msgstr "Заблокировать пользователя"
 

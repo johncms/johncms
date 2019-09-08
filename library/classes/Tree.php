@@ -44,7 +44,7 @@ class Tree
     private $db;
 
     /**
-     * @var Johncms\Tools
+     * @var \Johncms\Api\ToolsInterface
      */
     private $tools;
 
@@ -53,7 +53,7 @@ class Tree
         $this->start_id = $id;
         $container = \App::getContainer();
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get('tools');
+        $this->tools = $container->get(\Johncms\Api\ToolsInterface::class);
     }
 
     /**

@@ -1,0 +1,145 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /registration/default.pot\n"
+"Language: uk_UA\n"
+
+#: index.php:33 index.php:52 index.php:207
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: index.php:39
+msgid "Registration is temporarily closed"
+msgstr "Реєстрація тимчасово закрита"
+
+#: index.php:63
+msgid "You have not entered Nickname"
+msgstr "Ви не ввели Логін"
+
+#: index.php:65
+msgid "Nickname wrong length"
+msgstr "Помилкова довжина нікнейму"
+
+#: index.php:69
+msgid "Invalid characters"
+msgstr "Неприпустимі символи"
+
+#: index.php:74
+msgid "You have not entered password"
+msgstr "Ви не ввели пароль"
+
+#: index.php:76
+msgid "Invalid length"
+msgstr "Неприпустима кількість символів"
+
+#: index.php:81
+msgid "You have not selected genger"
+msgstr "Не вказана стать"
+
+#: index.php:90
+msgid "The security code is not correct"
+msgstr "Захисний код введено не вірно"
+
+#: index.php:105
+msgid "Selected Nickname is already in use"
+msgstr "Обраний вами логін вже використовується"
+
+#: index.php:152
+msgid "Your registratiton data"
+msgstr "Ваші реєстраційні дані"
+
+#: index.php:153
+msgid "Your ID"
+msgstr "Ваш ID"
+
+#: index.php:154
+msgid "Your Username"
+msgstr "Ваш логін"
+
+#: index.php:155
+msgid "Your Password"
+msgstr "Ваш пароль"
+
+#: index.php:158
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Будь ласка, зачекайте підтвердження Вашої реєстрації адміністратором"
+
+#: index.php:162
+msgid "Enter"
+msgstr "Вхід"
+
+#: index.php:173
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Ви зможете авторизуватися на сайті після підтвердження Вашої реєстрації."
+
+#: index.php:177
+msgid "Choose Nickname"
+msgstr "Виберіть нік"
+
+#: index.php:181
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Мін. 2, макс. 20 символів.<br />Дозволені букви Кирилиці і Латиниці, цифри і знаки - = @ ! ? ~ _ ( ) [ ] . * (окрім нуля)"
+
+#: index.php:182
+msgid "Assign a password"
+msgstr "Встановити пароль"
+
+#: index.php:186
+msgid "Min. 3 characters"
+msgstr "Мін. 3 символи"
+
+#: index.php:187
+msgid "Select Gender"
+msgstr "Виберіть стать"
+
+#: index.php:191
+msgid "Man"
+msgstr "Чоловік"
+
+#: index.php:192
+msgid "Woman"
+msgstr "Жінка"
+
+#: index.php:195
+msgid "Your name"
+msgstr "Ваше ім'я"
+
+#: index.php:197
+msgid "Max. 50 characters"
+msgstr "Макс. 50 символів"
+
+#: index.php:198
+msgid "Tell us a little about yourself"
+msgstr "Розкажіть нам трохи про себе"
+
+#: index.php:200
+msgid "Max. 1000 characters"
+msgstr "Макс. 1000 символів"
+
+#: index.php:202 index.php:203
+msgid "Verification code"
+msgstr "Перевірочний код"
+
+#: index.php:206
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Якщо Ви не бачите малюнок з кодом, увімкніть підтримку графіки в налаштуваннях браузера та перезавантажте сторінку"
+
+#: index.php:208
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Будь ласка, не реєструйте імена, як 111, shhhh, uuuu і т. д. Вони будуть видалені. <br /> Також будуть видалені всі профілі, зареєстровані через проксі-сервери"
+

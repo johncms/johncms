@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:56+0400\n"
-"PO-Revision-Date: 2016-12-31 10:06-0500\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-03-25 11:48-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: id\n"
+"Language: id_ID\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -42,45 +42,45 @@ msgstr "Terunggah"
 #: includes/fileControl/files_more.php:37 includes/fileControl/jad_file.php:32
 #: includes/fileControl/jad_file.php:41 includes/fileControl/mp3tags.php:33
 #: includes/fileControl/transfer_file.php:31 includes/files_import.php:34
-#: includes/files_moderation.php:31 includes/files_moderation.php:75
+#: includes/files_moderation.php:33 includes/files_moderation.php:77
 #: includes/files_new.php:36 includes/files_new.php:45
 #: includes/files_new.php:76 includes/files_top.php:40
 #: includes/files_top.php:62 includes/files_upload.php:203
 #: includes/files_user.php:74 includes/folder_add.php:34
-#: includes/folder_delete.php:33 includes/folder_edit.php:32
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
 #: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
 #: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
-#: includes/view.php:158 index.php:38 index.php:163 index.php:176 index.php:360
+#: includes/view.php:158 index.php:36 index.php:161 index.php:174 index.php:358
 msgid "Downloads"
 msgstr "Unduhan"
 
-#: includes/bookmark.php:28 index.php:366
+#: includes/bookmark.php:28 index.php:364
 msgid "Favorites"
 msgstr "Favorit"
 
-#: includes/bookmark.php:33 index.php:64
+#: includes/bookmark.php:33 index.php:62
 msgid "For registered users only"
 msgstr "Hanya untuk pengguna"
 
 #: includes/bookmark.php:57 includes/comments_review.php:97
-#: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:62
+#: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
 #: includes/files_new.php:62 includes/files_user.php:60
-#: includes/top_users.php:49 index.php:297
+#: includes/top_users.php:49 index.php:295
 msgid "The list is empty"
 msgstr "Daftar ini kosong"
 
 #: includes/bookmark.php:60 includes/comments_review.php:100
 #: includes/fileControl/files_more.php:230
-#: includes/fileControl/transfer_file.php:127 includes/files_moderation.php:65
+#: includes/fileControl/transfer_file.php:127 includes/files_moderation.php:67
 #: includes/files_new.php:65 includes/files_user.php:63 includes/search.php:78
 #: includes/top_users.php:52
 msgid "Total"
 msgstr "Total"
 
 #: includes/bookmark.php:67 includes/comments_review.php:107
-#: includes/files_moderation.php:72 includes/files_new.php:73
+#: includes/files_moderation.php:74 includes/files_new.php:73
 #: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
-#: index.php:321
+#: index.php:319
 msgid "To Page"
 msgstr "Ke halaman"
 
@@ -109,12 +109,12 @@ msgstr "Berkas tidak ditemukan"
 #: includes/files_import.php:184 includes/files_upload.php:176
 #: includes/files_upload.php:197 includes/files_upload.php:200
 #: includes/folder_add.php:130 includes/folder_add.php:133
-#: includes/folder_delete.php:83 includes/folder_edit.php:128
+#: includes/folder_delete.php:85 includes/folder_edit.php:128
 #: includes/scan_dir.php:83 includes/scan_dir.php:302
 msgid "Back"
 msgstr "Kembali"
 
-#: includes/comments_review.php:38 index.php:363
+#: includes/comments_review.php:38 index.php:361
 msgid "Review comments"
 msgstr "Tinjauan komentar"
 
@@ -125,8 +125,8 @@ msgstr "Hapus Berkas"
 #: includes/fileControl/delete_file.php:89
 #: includes/fileControl/edit_screen.php:117
 #: includes/fileControl/files_more.php:88
-#: includes/fileControl/files_more.php:227 includes/files_moderation.php:57
-#: includes/folder_delete.php:81 index.php:231
+#: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
+#: includes/folder_delete.php:83 index.php:229
 msgid "Delete"
 msgstr "Hapus"
 
@@ -218,7 +218,7 @@ msgstr "Cuplikan secara otomatis dikonversi ke gambar, dengan lebar tidak melebi
 msgid "Edit File"
 msgstr "Sunting berkas"
 
-#: includes/fileControl/files_more.php:88 includes/folder_delete.php:80
+#: includes/fileControl/files_more.php:88 includes/folder_delete.php:82
 msgid "Do you really want to delete?"
 msgstr "Apakah Anda yakin menghapus ini?"
 
@@ -286,11 +286,11 @@ msgstr "Unduh berkas tambahan"
 
 #: includes/fileControl/files_more.php:210 includes/files_import.php:183
 #: includes/files_upload.php:195 includes/folder_add.php:120
-#: includes/folder_edit.php:121 index.php:223
+#: includes/folder_edit.php:121 index.php:221
 msgid "Allowed extensions"
 msgstr "Ekstensi diizinkan"
 
-#: includes/fileControl/files_more.php:226 index.php:230
+#: includes/fileControl/files_more.php:226 index.php:228
 msgid "Edit"
 msgstr "Sunting"
 
@@ -332,7 +332,7 @@ msgid "The file has been moved"
 msgstr "Berkas berhasil dipindah"
 
 #: includes/fileControl/transfer_file.php:99 includes/scan_dir.php:289
-#: index.php:348
+#: index.php:346
 msgid "Update counters"
 msgstr "Perbarui konter"
 
@@ -343,8 +343,8 @@ msgstr "Pindah ke folder ini"
 
 #: includes/files_import.php:34 includes/files_new.php:36
 #: includes/files_upload.php:203 includes/folder_add.php:34
-#: includes/folder_delete.php:33 includes/folder_edit.php:32
-#: includes/scan_dir.php:94 index.php:163
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
+#: includes/scan_dir.php:94 index.php:161
 msgid "The directory does not exist"
 msgstr "Folder tidak ada"
 
@@ -366,28 +366,28 @@ msgstr "Tautan berkas"
 msgid "File Name"
 msgstr "Nama berkas"
 
-#: includes/files_moderation.php:28 index.php:191
+#: includes/files_moderation.php:30 index.php:189
 msgid "Files on moderation"
 msgstr "Berkas dimoderasi"
 
-#: includes/files_moderation.php:35
+#: includes/files_moderation.php:37
 msgid "File accepted"
 msgstr "Berkas diterima"
 
-#: includes/files_moderation.php:39
+#: includes/files_moderation.php:41
 msgid "All files accepted"
 msgstr "Semua berkas diterima"
 
-#: includes/files_moderation.php:56
+#: includes/files_moderation.php:58
 msgid "Accept"
 msgstr "Terima"
 
-#: includes/files_moderation.php:60
+#: includes/files_moderation.php:62
 msgid "Accept all files"
 msgstr "Terima semua berkas"
 
-#: includes/files_new.php:28 includes/files_new.php:41 index.php:173
-#: index.php:183
+#: includes/files_new.php:28 includes/files_new.php:41 index.php:171
+#: index.php:181
 msgid "New Files"
 msgstr "Berkas baru"
 
@@ -405,8 +405,8 @@ msgstr "Unduh paling banyak"
 msgid "Popular Files"
 msgstr "Berkas populer"
 
-#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:328
-#: index.php:352
+#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:326
+#: index.php:350
 msgid "Upload File"
 msgstr "Unggah berkas"
 
@@ -445,7 +445,7 @@ msgid "You can write only the following extensions"
 msgstr "Anda dapat menbuat hanya dengan ekstensi berikut"
 
 #: includes/folder_add.php:67 includes/folder_add.php:105
-#: includes/folder_add.php:112 index.php:336
+#: includes/folder_add.php:112 index.php:334
 msgid "Create Folder"
 msgstr "Buat Folder"
 
@@ -473,19 +473,19 @@ msgstr "Izinkan pengguna untuk mengunggah berkas"
 msgid "Create"
 msgstr "Buat"
 
-#: includes/folder_delete.php:33
+#: includes/folder_delete.php:34
 msgid "Before removing, delete subdirectories"
 msgstr "Sebelum menghapus, hapus sub-kategori"
 
-#: includes/folder_delete.php:78 index.php:340
+#: includes/folder_delete.php:80 index.php:338
 msgid "Delete Folder"
 msgstr "Hapus Folder"
 
-#: includes/folder_edit.php:114 index.php:339
+#: includes/folder_edit.php:114 index.php:337
 msgid "Change Folder"
 msgstr "Ubah folder"
 
-#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:347
+#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:345
 msgid "Remove missing files"
 msgstr "Hapus berkas hilang"
 
@@ -493,7 +493,7 @@ msgstr "Hapus berkas hilang"
 msgid "Database successfully updated"
 msgstr "Basis data berhasil diperbarui"
 
-#: includes/scan_dir.php:101 index.php:346
+#: includes/scan_dir.php:101 index.php:344
 msgid "Update Files"
 msgstr "Perbarui berkas"
 
@@ -505,7 +505,7 @@ msgstr "Ditambahkan"
 msgid "Categories"
 msgstr "Kategori"
 
-#: includes/scan_dir.php:284 index.php:311
+#: includes/scan_dir.php:284 index.php:309
 msgid "Files"
 msgstr "Berkas"
 
@@ -525,7 +525,7 @@ msgstr "Folder saat ini dan sub-folder"
 msgid "Entire Downloads"
 msgstr "Seluruh Unduhan"
 
-#: includes/search.php:26 includes/search.php:30 index.php:177
+#: includes/search.php:26 includes/search.php:30 index.php:175
 msgid "Search"
 msgstr "Cari"
 
@@ -553,7 +553,7 @@ msgstr "Cari lagi"
 msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
 msgstr "Cari berdasarkan nama berkas dan huruf sensitif. <br>Panjang min. 2 dan mask. 64."
 
-#: includes/top_users.php:27 index.php:179
+#: includes/top_users.php:27 index.php:177
 msgid "Top Users"
 msgstr "Pengguna terbaik"
 
@@ -613,55 +613,55 @@ msgstr "Sunting Deskripsi"
 msgid "Managing Screenshots"
 msgstr "Kelola cuplikan"
 
-#: index.php:62 index.php:152
+#: index.php:60 index.php:150
 msgid "Downloads are closed"
 msgstr "Unduhan ditutup"
 
-#: index.php:178
+#: index.php:176
 msgid "Top Files"
 msgstr "Berkas terbaik"
 
-#: index.php:212
+#: index.php:210
 msgid "List of category"
 msgstr "Daftar kategori"
 
-#: index.php:228
+#: index.php:226
 msgid "Up"
 msgstr "Naik"
 
-#: index.php:229
+#: index.php:227
 msgid "Down"
 msgstr "Turun"
 
-#: index.php:246
+#: index.php:244
 msgid "List of Files"
 msgstr "Daftar berkas"
 
-#: index.php:270
+#: index.php:268
 msgid "Sorting"
 msgstr "Mengurutkan"
 
-#: index.php:272
+#: index.php:270
 msgid "by time"
 msgstr "berdasarkan waktu"
 
-#: index.php:273
+#: index.php:271
 msgid "by name"
 msgstr "berdasarkan nama"
 
-#: index.php:275
+#: index.php:273
 msgid "descending"
 msgstr "menurun"
 
-#: index.php:276
+#: index.php:274
 msgid "ascending"
 msgstr "naik"
 
-#: index.php:303
+#: index.php:301
 msgid "Folders"
 msgstr "Folder"
 
-#: index.php:329
+#: index.php:327
 msgid "Import File"
 msgstr "Impor berkas"
 

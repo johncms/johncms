@@ -1,0 +1,167 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-03-26 09:42-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Arabic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /guestbook/default.pot\n"
+"Language: ar_SA\n"
+
+#: index.php:56 index.php:329
+msgid "Admin Club"
+msgstr "نادي المشرفين"
+
+#: index.php:56 index.php:74 index.php:196 index.php:250 index.php:291
+#: index.php:294 index.php:324 index.php:328
+msgid "Guestbook"
+msgstr "سجل الزوار"
+
+#: index.php:61
+msgid "Guestbook is closed"
+msgstr "سجل الزوار مغلق"
+
+#: index.php:74
+msgid "Delete message"
+msgstr "حذف الرسالة"
+
+#: index.php:75
+msgid "Do you really want to delete?"
+msgstr "هل ترغب بالحذف ؟"
+
+#: index.php:76 index.php:435
+msgid "Delete"
+msgstr "حذف"
+
+#: index.php:77 index.php:303
+msgid "Cancel"
+msgstr "إلغاء الأمر"
+
+#: index.php:96
+msgid "Wrong data"
+msgstr "بيانات خاطئة"
+
+#: index.php:100
+msgid "You have not entered a name"
+msgstr "لم تقم بإدخال اسم"
+
+#: index.php:104
+msgid "You have not entered the message"
+msgstr "لم تقم بإدخال الرسالة"
+
+#: index.php:108
+msgid "Access forbidden"
+msgstr "ممنوع الوصول"
+
+#: index.php:113
+msgid "The security code is not correct"
+msgstr "رمز الأمان غير صحيح"
+
+#: index.php:132
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %d ثانية."
+
+#: index.php:175 index.php:211 index.php:259
+msgid "Back"
+msgstr "الرجوع"
+
+#: index.php:196 index.php:206 index.php:208 index.php:434
+msgid "Reply"
+msgstr "رد "
+
+#: index.php:250 index.php:435
+msgid "Edit"
+msgstr "تحرير"
+
+#: index.php:253
+msgid "Author"
+msgstr "الكاتب"
+
+#: index.php:256
+msgid "Save"
+msgstr "حفظ"
+
+#: index.php:276
+msgid "All messages older than 1 day were deleted"
+msgstr "تم حذف جميع الرسائل الأقدم من يوم 1"
+
+#: index.php:282
+msgid "Full clearing is finished"
+msgstr "الانتهاء من تطهير كامل"
+
+#: index.php:287
+msgid "All messages older than 1 week were deleted"
+msgstr "جميع رسائل أقدم من 1 أسبوع تم حذفها"
+
+#: index.php:294 index.php:301 index.php:330
+msgid "Clear"
+msgstr "مسح"
+
+#: index.php:297
+msgid "Clearing parameters"
+msgstr "مسح المعلمات"
+
+#: index.php:298
+msgid "Older than 1 week"
+msgstr "اقدم من اسبوع"
+
+#: index.php:299
+msgid "Older than 1 day"
+msgstr "اقدم من اسبوع"
+
+#: index.php:300
+msgid "Clear all"
+msgstr "تنظيف الكل"
+
+#: index.php:321
+msgid "The guestbook is closed"
+msgstr "سجل الزوار مغلق"
+
+#: index.php:342
+msgid "Name"
+msgstr "الاسم"
+
+#: index.php:345
+msgid "Message"
+msgstr "الرسالة"
+
+#: index.php:351 index.php:352
+msgid "Symbols on the picture"
+msgstr "الرموز في الصورة"
+
+#: index.php:355
+msgid "Send"
+msgstr "إرسال"
+
+#: index.php:357
+msgid "For registered users only"
+msgstr "للمستخدمين المسجلين فقط"
+
+#: index.php:361
+msgid "Comments"
+msgstr "تعليقات"
+
+#: index.php:450
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "سجل الزوار فارغ. <br><strong>أن تكون الأول!:)</strong>"
+
+#: index.php:453
+msgid "Total"
+msgstr "مجموع"
+
+#: index.php:458
+msgid "To Page"
+msgstr "على الصفحة"
+

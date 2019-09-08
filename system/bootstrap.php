@@ -65,14 +65,11 @@ class App
 session_name('SESID');
 session_start();
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-// Автоочистка системы
-$container->get(Johncms\Cleanup::class);
-
-/** @var Johncms\Environment $env */
-$env = App::getContainer()->get('env');
+/** @var Johncms\Api\EnvironmentInterface $env */
+$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -107,11 +104,19 @@ if ($req->rowCount()) {
     }
 }
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+// Автоочистка системы
+$cacheFile = CACHE_PATH . 'cleanup.dat';
+
+if (!file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
+    new Johncms\Cleanup($db);
+    file_put_contents($cacheFile, time());
+}
+
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Johncms\UserConfig $userConfig */
-$userConfig = $container->get(Johncms\User::class)->getConfig();
+$userConfig = $container->get(Johncms\Api\UserInterface::class)->getConfig();
 
 if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
     $locale = trim($_POST['setlng']);

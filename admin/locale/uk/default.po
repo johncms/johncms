@@ -1,0 +1,1382 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-04-05 13:59+0400\n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: uk_UA\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /admin/default.pot\n"
+
+#: includes/access.php:29 includes/access.php:112 includes/ads.php:222
+#: includes/ads.php:321 includes/ads.php:427 includes/antiflood.php:33
+#: includes/antispy.php:447 includes/antispy.php:458 includes/ban_panel.php:67
+#: includes/ban_panel.php:73 includes/ban_panel.php:115
+#: includes/counters.php:300 includes/counters.php:321 includes/forum.php:755
+#: includes/forum.php:772 includes/ip_whois.php:16 includes/ipban.php:138
+#: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:329
+#: includes/ipban.php:358 includes/ipban.php:363 includes/ipban.php:412
+#: includes/karma.php:44 includes/karma.php:85 includes/languages.php:36
+#: includes/languages.php:88 includes/news.php:29 includes/news.php:79
+#: includes/reg.php:33 includes/reg.php:146 includes/search_ip.php:35
+#: includes/search_ip.php:142 includes/search_ip.php:151
+#: includes/settings.php:29 includes/settings.php:101 includes/smilies.php:24
+#: includes/smilies.php:67 includes/usr.php:27 includes/usr.php:75
+#: includes/usr_adm.php:19 includes/usr_adm.php:72 includes/usr_clean.php:32
+#: includes/usr_del.php:78 index.php:44 index.php:77
+msgid "Admin Panel"
+msgstr "Панель адміністратора"
+
+#: includes/access.php:29 index.php:120
+msgid "Permissions"
+msgstr "Права доступу"
+
+#: includes/access.php:49 includes/antiflood.php:84 includes/karma.php:64
+#: includes/news.php:54 includes/settings.php:50
+msgid "Settings are saved successfully"
+msgstr "Налаштування успішно збережено"
+
+#: includes/access.php:61 includes/usr_del.php:135 index.php:103
+msgid "Forum"
+msgstr "Форум"
+
+#: includes/access.php:63 includes/access.php:72 includes/access.php:80
+#: includes/access.php:89 includes/access.php:98 includes/access.php:105
+msgid "Access is allowed"
+msgstr "Доступ дозволено"
+
+#: includes/access.php:64 includes/access.php:73 includes/access.php:81
+#: includes/access.php:90 includes/access.php:99
+msgid "Only for authorized"
+msgstr "Тільки для авторизованих"
+
+#: includes/access.php:65
+msgid "Read only"
+msgstr "Лише для читання"
+
+#: includes/access.php:66 includes/access.php:74 includes/access.php:82
+#: includes/access.php:91 includes/access.php:107
+msgid "Access denied"
+msgstr "У доступі відмовлено"
+
+#: includes/access.php:70
+msgid "Guestbook"
+msgstr "Гостьова книга"
+
+#: includes/access.php:78
+msgid "Library"
+msgstr "Бібліотека"
+
+#: includes/access.php:83 includes/access.php:92 includes/news.php:71
+#: includes/usr_del.php:131
+msgid "Comments"
+msgstr "Коментарі"
+
+#: includes/access.php:87
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: includes/access.php:96
+msgid "Community"
+msgstr "Спільнота"
+
+#: includes/access.php:103 includes/ipban.php:127 includes/ipban.php:178
+#: includes/ipban.php:206 includes/ipban.php:313 includes/ipban.php:384
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: includes/access.php:106
+msgid "With moderation"
+msgstr "З модерацією"
+
+#: includes/access.php:110
+msgid "Administrators always have access to all closed modules and comments"
+msgstr "Адміністратори завжди мають доступ до всіх закритих модулів та коментарів"
+
+#: includes/access.php:111 includes/antiflood.php:109 includes/counters.php:184
+#: includes/forum.php:425 includes/karma.php:83 includes/news.php:76
+#: includes/settings.php:99
+msgid "Save"
+msgstr "Зберегти"
+
+#: includes/ads.php:36 includes/ads.php:221 includes/ads.php:279
+#: includes/ads.php:297 includes/ads.php:321 index.php:105
+msgid "Advertisement"
+msgstr "Реклама"
+
+#: includes/ads.php:36
+msgid "Edit link"
+msgstr "Редагувати посилання"
+
+#: includes/ads.php:36 includes/ads.php:425
+msgid "Add link"
+msgstr "Додати посилання"
+
+#: includes/ads.php:45 includes/counters.php:74 includes/counters.php:127
+#: includes/counters.php:148 includes/counters.php:204
+#: includes/counters.php:248 includes/forum.php:51 includes/forum.php:71
+#: includes/forum.php:79 includes/forum.php:125 includes/forum.php:133
+#: includes/forum.php:235 includes/forum.php:329 includes/ip_whois.php:113
+#: includes/reg.php:39 includes/reg.php:57 includes/reg.php:94
+#: includes/usr_del.php:52
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: includes/ads.php:45 includes/ads.php:96 includes/antiflood.php:110
+#: includes/counters.php:127 includes/counters.php:148
+#: includes/counters.php:164 includes/counters.php:204
+#: includes/counters.php:238 includes/forum.php:218 includes/forum.php:322
+#: includes/forum.php:427 includes/ip_whois.php:117 includes/ipban.php:47
+#: includes/ipban.php:138 includes/ipban.php:197 includes/ipban.php:230
+#: includes/ipban.php:283 includes/ipban.php:291 includes/ipban.php:298
+#: includes/ipban.php:358 includes/usr_clean.php:91
+msgid "Back"
+msgstr "Повернутися"
+
+#: includes/ads.php:71 includes/counters.php:164 includes/counters.php:238
+msgid "The required fields are not filled"
+msgstr "Не заповнені обов'язкові поля"
+
+#: includes/ads.php:82
+msgid "This place is occupied"
+msgstr "Дане місце зайняте"
+
+#: includes/ads.php:88
+msgid "Invalid characters"
+msgstr "Неприпустимі символи"
+
+#: includes/ads.php:91
+msgid "Color is specified incorrectly"
+msgstr "Колір зазначено не вірно"
+
+#: includes/ads.php:181
+msgid "Link successfully changed"
+msgstr "Посилання успішно змінене"
+
+#: includes/ads.php:181
+msgid "Link successfully added"
+msgstr "Посилання успішно додане"
+
+#: includes/ads.php:182 includes/antispy.php:435 includes/counters.php:137
+#: includes/ipban.php:340 includes/reg.php:45 includes/reg.php:51
+#: includes/reg.php:69 includes/reg.php:75 includes/reg.php:92
+#: includes/usr_clean.php:75
+msgid "Continue"
+msgstr "Продовжити"
+
+#: includes/ads.php:186
+msgid "Link"
+msgstr "Посилання"
+
+#: includes/ads.php:188 includes/ads.php:409
+msgid "Direct Link"
+msgstr "Пряме посилання"
+
+#: includes/ads.php:189
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr "Якщо включене \"Пряме посилання\", то статистика переходів не ведеться"
+
+#: includes/ads.php:190 includes/counters.php:170 includes/counters.php:212
+#: includes/forum.php:255 includes/forum.php:306 includes/forum.php:361
+#: includes/forum.php:403 includes/news.php:65
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/ads.php:192
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "Для зміни назви при оновленні сторінки перерахуйте їх через знак |"
+
+#: includes/ads.php:193
+msgid "Color"
+msgstr "Колір"
+
+#: includes/ads.php:195
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "У форматі FFFFFF, якщо не хочете виділяти посилання кольором, то просто не заповнюйте це поле"
+
+#: includes/ads.php:196
+msgid "Hits"
+msgstr "Переходи"
+
+#: includes/ads.php:198
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Кількість переходів за посиланням, після досягнення якого посилання буде видалено зі сторінкі<br>0 - Необмежено"
+
+#: includes/ads.php:199 includes/karma.php:79
+msgid "Days"
+msgstr "Дні"
+
+#: includes/ads.php:201
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Кількість днів показу посилання<br>0 - Необмежено"
+
+#: includes/ads.php:203 includes/ads.php:374 includes/ads.php:380
+msgid "Show"
+msgstr "Показати"
+
+#: includes/ads.php:204 includes/ads.php:328
+msgid "Everyone"
+msgstr "Усі"
+
+#: includes/ads.php:205 includes/ads.php:329
+msgid "Guests"
+msgstr "Гості"
+
+#: includes/ads.php:206 includes/ads.php:330 index.php:80 index.php:86
+msgid "Users"
+msgstr "Користувачі"
+
+#: includes/ads.php:207
+msgid "Location"
+msgstr "Розташування"
+
+#: includes/ads.php:208 includes/ads.php:334
+msgid "Above logo"
+msgstr "Над логотипом"
+
+#: includes/ads.php:209 includes/ads.php:335
+msgid "Under menu"
+msgstr "Під меню"
+
+#: includes/ads.php:210 includes/ads.php:336
+msgid "Over the counter"
+msgstr "Над лічильником"
+
+#: includes/ads.php:211 includes/ads.php:337
+msgid "Under counter"
+msgstr "Під лічильником"
+
+#: includes/ads.php:212
+msgid "Layout"
+msgstr "Стиль"
+
+#: includes/ads.php:213 includes/ads.php:323
+msgid "All pages"
+msgstr "Усі сторінки"
+
+#: includes/ads.php:214 includes/ads.php:324
+msgid "Only on Homepage"
+msgstr "Тільки на головній сторінці"
+
+#: includes/ads.php:215 includes/ads.php:325
+msgid "On all, except Homepage"
+msgstr "На всіх, крім головної сторінки"
+
+#: includes/ads.php:216
+msgid "Styling links"
+msgstr "Стиль посилань"
+
+#: includes/ads.php:217
+msgid "Bold"
+msgstr "Жирний"
+
+#: includes/ads.php:218
+msgid "Italic"
+msgstr "Курсив"
+
+#: includes/ads.php:219
+msgid "Underline"
+msgstr "Підкреслений"
+
+#: includes/ads.php:220 includes/ads.php:372 includes/counters.php:72
+#: includes/counters.php:312 includes/forum.php:508 includes/forum.php:535
+#: includes/usr.php:58
+msgid "Edit"
+msgstr "Редагувати"
+
+#: includes/ads.php:220 includes/counters.php:211 includes/counters.php:318
+#: includes/forum.php:320 includes/forum.php:544
+msgid "Add"
+msgstr "Додати"
+
+#: includes/ads.php:279 includes/ads.php:282 includes/ads.php:300
+#: includes/ads.php:373 includes/counters.php:72 includes/counters.php:142
+#: includes/counters.php:144 includes/counters.php:313 includes/forum.php:200
+#: includes/forum.php:214 includes/forum.php:509 includes/forum.php:536
+#: includes/ipban.php:343 includes/reg.php:115 includes/usr.php:58
+#: includes/usr_clean.php:90 includes/usr_del.php:140
+msgid "Delete"
+msgstr "Видалити"
+
+#: includes/ads.php:281
+msgid "Are you sure want to delete link?"
+msgstr "Ви впевнені, що хочете видалити посилання?"
+
+#: includes/ads.php:285 includes/ads.php:302 includes/counters.php:145
+#: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:265
+#: includes/ipban.php:344 includes/karma.php:40 includes/usr_del.php:147
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: includes/ads.php:297 includes/ads.php:426
+msgid "Delete inactive links"
+msgstr "Видалити неактивні посилання"
+
+#: includes/ads.php:299
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Ви впевнені, що хочете видалити усі неактивні посилання?"
+
+#: includes/ads.php:370 includes/counters.php:310 includes/forum.php:506
+#: includes/forum.php:533
+msgid "Up"
+msgstr "Вгору"
+
+#: includes/ads.php:371 includes/counters.php:311 includes/forum.php:507
+#: includes/forum.php:534
+msgid "Down"
+msgstr "Вниз"
+
+#: includes/ads.php:374
+msgid "Hide"
+msgstr "Приховати"
+
+#: includes/ads.php:378
+msgid "Start date"
+msgstr "Дата початку"
+
+#: includes/ads.php:379
+msgid "Disposition"
+msgstr "Диспозиція"
+
+#: includes/ads.php:386 includes/ads.php:389
+msgid "hits"
+msgstr "хіти"
+
+#: includes/ads.php:403
+msgid "Agreement"
+msgstr "Угода"
+
+#: includes/ads.php:406
+msgid "Remains"
+msgstr "Залишилося"
+
+#: includes/ads.php:413 includes/ban_panel.php:102 includes/forum.php:514
+#: includes/forum.php:633 includes/forum.php:729 includes/ipban.php:394
+#: includes/reg.php:127
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: includes/ads.php:416 includes/antispy.php:393 includes/antispy.php:424
+#: includes/ban_panel.php:105 includes/forum.php:636 includes/forum.php:732
+#: includes/ipban.php:137 includes/ipban.php:398 includes/languages.php:86
+#: includes/reg.php:130 includes/search_ip.php:133 includes/smilies.php:66
+#: includes/usr.php:68 includes/usr_adm.php:71 includes/usr_clean.php:89
+msgid "Total"
+msgstr "Разом"
+
+#: includes/ads.php:422 includes/ban_panel.php:109 includes/forum.php:642
+#: includes/forum.php:738 includes/ipban.php:403 includes/reg.php:136
+#: includes/search_ip.php:139 includes/usr.php:72
+msgid "To Page"
+msgstr "На сторінку"
+
+#: includes/antiflood.php:33
+msgid "Antiflood Settings"
+msgstr "Налаштування антифлуду"
+
+#: includes/antiflood.php:93
+msgid "Operation mode"
+msgstr "Режим роботи"
+
+#: includes/antiflood.php:94 includes/antiflood.php:96
+#: includes/antiflood.php:103
+msgid "Day"
+msgstr "День"
+
+#: includes/antiflood.php:95 includes/antiflood.php:96
+#: includes/antiflood.php:104
+msgid "Night"
+msgstr "Ніч"
+
+#: includes/antiflood.php:97
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Автоматичний перехід з денного на нічний режим, згідно заданому в налаштуваннях часу"
+
+#: includes/antiflood.php:99
+msgid "Adaptive"
+msgstr "Адаптивний"
+
+#: includes/antiflood.php:100
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Якщо хтось з Адміністрації онлайн (на сайті), система працює в &quot;денному&quot; режимі, в іншому випадку переходить у &quot;нічний&quot;"
+
+#: includes/antiflood.php:102
+msgid "Time limit"
+msgstr "Ліміт часу"
+
+#: includes/antiflood.php:105
+msgid "Min. 4, max. 300 seconds"
+msgstr "Мін. 4, макс. 300 секунд"
+
+#: includes/antiflood.php:106
+msgid "Day mode"
+msgstr "Денний режим"
+
+#: includes/antiflood.php:107
+msgid "Beginning of day"
+msgstr "Початок дня"
+
+#: includes/antiflood.php:108
+msgid "End of day"
+msgstr "Кінець дня"
+
+#: includes/antispy.php:384 includes/antispy.php:404 includes/antispy.php:430
+#: includes/antispy.php:447 index.php:128
+msgid "Anti-Spyware"
+msgstr "Антишпигун"
+
+#: includes/antispy.php:384 includes/antispy.php:449
+msgid "Distributive scan"
+msgstr "Сканування дістрибутиву"
+
+#: includes/antispy.php:387
+msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
+msgstr "Дистрибутив містить сторонні файли<br>Увага! Якщо файли, перераховані нижче, не відносяться до додаткових модулів і Ви не впевнені в їх безпеці, видаліть їх. Вони можуть бути небезпечні для Вашого сайту."
+
+#: includes/antispy.php:395
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>Чудово!</h3>Список файлів відповідає дистрибутиву"
+
+#: includes/antispy.php:398
+msgid "Rescan"
+msgstr "Пересканувати"
+
+#: includes/antispy.php:404 includes/antispy.php:451
+msgid "Snapshot scan"
+msgstr "Сканування по знімку"
+
+#: includes/antispy.php:410
+msgid "Snapshot is not created"
+msgstr "Знімок не створений"
+
+#: includes/antispy.php:410 includes/antispy.php:430 includes/antispy.php:439
+#: includes/antispy.php:453
+msgid "Create snapshot"
+msgstr "Створення знімка"
+
+#: includes/antispy.php:413
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr "Невідповідність знімку<br>Увага! Вам необхідно звернути увагу на всі файли з даного списку. Вони були додані або модифіковані після створення образу."
+
+#: includes/antispy.php:421
+msgid "Excellent!<br>All files are consistent with previously made image."
+msgstr "Чудово!<br>Всі файли відповідають зробленому образу."
+
+#: includes/antispy.php:434
+msgid "Snapshot successfully created"
+msgstr "Знімок успішно створений"
+
+#: includes/antispy.php:438
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr "УВАГА!!!<br>Перед продовженням, переконайтеся, що всі файли, які були виявлені в режимі сканування дистрибутиву надійні і не містять несанкціонованих модифікацій."
+
+#: includes/antispy.php:441
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr "Дана процедура створює список всіх скриптових файлів Вашого сайту, обчислює їх контрольні суми і заносить в базу для подальшого порівняння."
+
+#: includes/antispy.php:448
+msgid "Scan mode"
+msgstr "Режим сканування"
+
+#: includes/antispy.php:450
+msgid "Files identification which are not included in the original distributive"
+msgstr "Виявлення файлів, які не входять в оригінальний дистрибутив"
+
+#: includes/antispy.php:452
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr "Порівняння списку і контрольних сум файлів із заздалегідь зробленим образом. Дозволяє виявити незнайомі файли і несанкціоновані зміни."
+
+#: includes/antispy.php:454
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
+msgstr "Робиться &quot;знімок&quot; всіх скриптових файлів сайту, обчислюються їх контрольні суми і запам'ятовуються в базі."
+
+#: includes/antispy.php:458
+msgid "Scanner menu"
+msgstr "Меню сканеру"
+
+#: includes/ban_panel.php:32
+msgid "Amnesty is available for supervisors only"
+msgstr "Амністія доступна тільки для Супервізорів"
+
+#: includes/ban_panel.php:34 includes/ban_panel.php:67
+#: includes/ban_panel.php:73 index.php:89
+msgid "Ban Panel"
+msgstr "Бан панель"
+
+#: includes/ban_panel.php:34 includes/ban_panel.php:51
+#: includes/ban_panel.php:62 includes/ban_panel.php:113
+msgid "Amnesty"
+msgstr "Амністія"
+
+#: includes/ban_panel.php:42
+msgid "Amnesty has been successful"
+msgstr "Амністія була застосована успішно"
+
+#: includes/ban_panel.php:56
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Розбанені всі користувачі, які мали активні бани (окрім банів &quot;До відміни&quot;)"
+
+#: includes/ban_panel.php:60
+msgid "Unban all"
+msgstr "Розбанити всіх"
+
+#: includes/ban_panel.php:61
+msgid "Clear Ban database"
+msgstr "Очистити базу даних банів"
+
+#: includes/ban_panel.php:64
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "&quot;Розбанити всіх&quot; - припиняє дію всіх активних банів<br>&quot;Очистити базу&quot; - припиняє дію всіх банів і очищає всю історію порушень"
+
+#: includes/ban_panel.php:74 includes/usr.php:29
+msgid "Sort"
+msgstr "Сортувати"
+
+#: includes/ban_panel.php:77 includes/ban_panel.php:79
+msgid "Term"
+msgstr "Термін"
+
+#: includes/ban_panel.php:77 includes/ban_panel.php:79
+msgid "Violations"
+msgstr "Порушення"
+
+#: includes/ban_panel.php:96
+msgid "Violations history"
+msgstr "Історія порушень"
+
+#: includes/counters.php:49 includes/counters.php:142 includes/counters.php:169
+#: includes/counters.php:211 includes/counters.php:300
+#: includes/counters.php:321 index.php:108
+msgid "Counters"
+msgstr "Лічильники"
+
+#: includes/counters.php:49 includes/counters.php:225
+msgid "Viewing"
+msgstr "Перегляд"
+
+#: includes/counters.php:51 includes/counters.php:171 includes/counters.php:213
+#: includes/counters.php:217
+msgid "Option 1"
+msgstr "Варіант 1"
+
+#: includes/counters.php:52 includes/counters.php:172 includes/counters.php:214
+#: includes/counters.php:218
+msgid "Option 2"
+msgstr "Варіант 2"
+
+#: includes/counters.php:53 includes/counters.php:215
+msgid "Display mode"
+msgstr "Режим відображення"
+
+#: includes/counters.php:57
+msgid "On all pages showing option 1"
+msgstr "На всіх сторінках показувати варіант 1"
+
+#: includes/counters.php:61
+msgid "On all pages showing option 2"
+msgstr "На всіх сторінках показувати варіант 2"
+
+#: includes/counters.php:65
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "На головній показувати варіант 1, на інших - варіант 2"
+
+#: includes/counters.php:70
+msgid "Disable"
+msgstr "Вимкнути"
+
+#: includes/counters.php:71
+msgid "Enable"
+msgstr "Увімкнути"
+
+#: includes/counters.php:137
+msgid "Counter deleted"
+msgstr "Лічильник видалено"
+
+#: includes/counters.php:144 includes/forum.php:212
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: includes/counters.php:169
+msgid "Preview"
+msgstr "Прев'ю"
+
+#: includes/counters.php:173
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr "Якщо лічильники відображаються правильно і без помилок, натисніть кнопку &quot;Запам'ятати&quot;.<br>Якщо ні, поверніться та виправте помилки."
+
+#: includes/counters.php:213
+msgid "Code for main page"
+msgstr "Код для головної сторінки"
+
+#: includes/counters.php:214
+msgid "Code for other pages"
+msgstr "Код для інших сторінок"
+
+#: includes/counters.php:215 includes/ipban.php:174 includes/languages.php:79
+msgid "Default"
+msgstr "За умовчанням"
+
+#: includes/counters.php:216
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr "На головній показувати варіант 1, на інших сторінках - варіант 2.<br>Якщо &quot;параметри&quot; не заповнені, лічильник буде встановлено тільки на головній."
+
+#: includes/counters.php:219
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "УВАГА!<br>Переконайтеся, що ви правильно ввели код. Він повинен відповідати стандарту XML <br> Якщо при натисканні кнопки &quot;Переглянути&quot; сталися XHTML помилки, натисніть кнопку &quot;Назад&quot;у браузері, поверніться до цієї форми та виправте помилки."
+
+#: includes/counters.php:295
+msgid "Counter successfully changed"
+msgstr "Лічильник успішно змінено"
+
+#: includes/counters.php:295
+msgid "Counter successfully added"
+msgstr "Лічильник успішно додано"
+
+#: includes/forum.php:51 includes/forum.php:125 includes/forum.php:133
+#: includes/forum.php:235 includes/forum.php:329 includes/forum.php:484
+#: includes/forum.php:546 includes/forum.php:551 includes/forum.php:650
+#: includes/forum.php:755
+msgid "Forum Management"
+msgstr "Управління форумом"
+
+#: includes/forum.php:60
+msgid "Delete section"
+msgstr "Видалити розділ"
+
+#: includes/forum.php:60
+msgid "Delete category"
+msgstr "Видалити категорію"
+
+#: includes/forum.php:97 includes/forum.php:210
+msgid "Category deleted"
+msgstr "Категорію видалено"
+
+#: includes/forum.php:97 includes/forum.php:141
+msgid "All content has been moved to"
+msgstr "Весь контент був перенесений у"
+
+#: includes/forum.php:97
+msgid "selected category"
+msgstr "обрана категорія"
+
+#: includes/forum.php:100
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>УВАГА!</h3>Є підрозділи. Їх необхідно перемістити в іншу категорію."
+
+#: includes/forum.php:101
+msgid "Select category"
+msgstr "Вибрати категорію"
+
+#: includes/forum.php:108
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Всі розділи, теми і файли будуть переміщені у вибрану категорію. Стара категорія буде видалена."
+
+#: includes/forum.php:109 includes/forum.php:195
+msgid "Move"
+msgstr "Перемістити"
+
+#: includes/forum.php:113 includes/forum.php:199
+msgid "Complete removal"
+msgstr "Повне видалення"
+
+#: includes/forum.php:113
+msgid "If you want to destroy all the information, first remove"
+msgstr "Якщо Ви хочете знищити всю інформацію, спочатку видаліть"
+
+#: includes/forum.php:113
+msgid "subsections"
+msgstr "підрозділи"
+
+#: includes/forum.php:141 includes/forum.php:210
+msgid "Section deleted"
+msgstr "Розділ видалено"
+
+#: includes/forum.php:141
+msgid "selected section"
+msgstr "обраний розділ"
+
+#: includes/forum.php:145 includes/forum.php:569 includes/forum.php:666
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: includes/forum.php:175
+msgid "Section with all contents are removed"
+msgstr "Розділ з усім контентом видалено"
+
+#: includes/forum.php:176 includes/forum.php:301
+msgid "Go to category"
+msgstr "Перейти в категорію"
+
+#: includes/forum.php:179
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>УВАГА!</h3>У розділі є теми. Їх необхідно перемістити в інший розділ."
+
+#: includes/forum.php:179
+msgid "Select section"
+msgstr "Виберіть розділ"
+
+#: includes/forum.php:188
+msgid "Other category"
+msgstr "Інша категорія"
+
+#: includes/forum.php:195
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Всі теми і файли будуть переміщені у вибраний розділ. Старий розділ буде видалено."
+
+#: includes/forum.php:199
+msgid "WARNING! All the information will be deleted"
+msgstr "УВАГА! Вся інформація буде видалена"
+
+#: includes/forum.php:251 includes/forum.php:357
+msgid "You have not entered Title"
+msgstr "Ви не ввели назву"
+
+#: includes/forum.php:255 includes/forum.php:361
+msgid "Invalid length"
+msgstr "Невірна довжина"
+
+#: includes/forum.php:259 includes/forum.php:365
+msgid "Description should be at least 2 characters in length"
+msgstr "Опис має бути не менше 2 символів"
+
+#: includes/forum.php:298
+msgid "Add Section"
+msgstr "Додати розділ"
+
+#: includes/forum.php:298
+msgid "Add Category"
+msgstr "Додати категорію"
+
+#: includes/forum.php:308 includes/forum.php:405
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мін. 2, макс. 30 символів"
+
+#: includes/forum.php:309 includes/forum.php:406 includes/settings.php:82
+msgid "Description"
+msgstr "Опис"
+
+#: includes/forum.php:311 includes/forum.php:408
+msgid "Optional field"
+msgstr "Необов'язкове поле"
+
+#: includes/forum.php:311 includes/forum.php:408
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мін. 2, макс. 500 символів"
+
+#: includes/forum.php:314 includes/forum.php:412
+msgid "Common access"
+msgstr "Загальний доступ"
+
+#: includes/forum.php:315 includes/forum.php:413
+msgid "Only for reading"
+msgstr "Тільки для читання"
+
+#: includes/forum.php:316 includes/forum.php:414
+msgid "Allow authors to edit the 1st post"
+msgstr "Дозволити авторам редагувати 1-й пост"
+
+#: includes/forum.php:317 includes/forum.php:415
+msgid "Assign the newly created authors as curators"
+msgstr "Призначати кураторами нових авторів"
+
+#: includes/forum.php:351 includes/forum.php:353
+msgid "Category is not chosen"
+msgstr "Не вибрана категорія"
+
+#: includes/forum.php:400
+msgid "Edit Section"
+msgstr "Редагувати розділ"
+
+#: includes/forum.php:400
+msgid "Edit Category"
+msgstr "Редагувати категорію"
+
+#: includes/forum.php:416
+msgid "Category"
+msgstr "Категорія"
+
+#: includes/forum.php:484 includes/forum.php:765
+msgid "Forum structure"
+msgstr "Структура форуму"
+
+#: includes/forum.php:490
+msgid "List of sections"
+msgstr "Список розділів"
+
+#: includes/forum.php:518 includes/forum.php:546
+msgid "List of categories"
+msgstr "Список категорій"
+
+#: includes/forum.php:551 includes/forum.php:767
+msgid "Hidden topics"
+msgstr "Приховані теми"
+
+#: includes/forum.php:558 includes/forum.php:661
+msgid "Filter by author"
+msgstr "Фільтр по автору"
+
+#: includes/forum.php:564
+msgid "Filter by section"
+msgstr "Фільтр по розділу"
+
+#: includes/forum.php:613 includes/forum.php:712
+msgid "Filter"
+msgstr "Фільтр"
+
+#: includes/forum.php:614
+msgid "by section"
+msgstr "по розділу"
+
+#: includes/forum.php:615 includes/forum.php:714
+msgid "by author"
+msgstr "по авторові"
+
+#: includes/forum.php:629 includes/forum.php:726 includes/reg.php:143
+msgid "Delete all"
+msgstr "Видалити усе"
+
+#: includes/forum.php:650 includes/forum.php:766
+msgid "Hidden posts"
+msgstr "Приховані повідомлення"
+
+#: includes/forum.php:657
+msgid "Filter by topic"
+msgstr "Фільтр по темі"
+
+#: includes/forum.php:713
+msgid "by topic"
+msgstr "по темі"
+
+#: includes/forum.php:756
+msgid "Statistic"
+msgstr "Статистика"
+
+#: includes/forum.php:757
+msgid "Categories"
+msgstr "Категорії"
+
+#: includes/forum.php:758
+msgid "Sections"
+msgstr "Розділи"
+
+#: includes/forum.php:759
+msgid "Topics"
+msgstr "Теми"
+
+#: includes/forum.php:760
+msgid "Messages"
+msgstr "Повідомлення"
+
+#: includes/forum.php:761
+msgid "Files"
+msgstr "Файли"
+
+#: includes/forum.php:762
+msgid "Votes"
+msgstr "Голоси"
+
+#: includes/forum.php:764
+msgid "Settings"
+msgstr "Налаштування"
+
+#: includes/forum.php:769
+msgid "Go to Forum"
+msgstr "Перейти до форуму"
+
+#: includes/ipban.php:36 includes/ipban.php:271 includes/ipban.php:351
+#: includes/ipban.php:363 index.php:129
+msgid "Ban by IP"
+msgstr "Бан по IP"
+
+#: includes/ipban.php:36 includes/ipban.php:191 includes/ipban.php:213
+msgid "Add Ban"
+msgstr "Додати бан"
+
+#: includes/ipban.php:46 includes/ipban.php:89 includes/ipban.php:100
+#: includes/ipban.php:229 includes/ipban.php:282 includes/ipban.php:290
+#: includes/search_ip.php:73 includes/search_ip.php:82
+msgid "Invalid IP"
+msgstr "Невірний IP"
+
+#: includes/ipban.php:64 includes/search_ip.php:49
+msgid "First IP is entered incorrectly"
+msgstr "Перший IP був введений неправильно"
+
+#: includes/ipban.php:72 includes/search_ip.php:57
+msgid "Second IP is entered incorrectly"
+msgstr "Другий IP був введений неправильно"
+
+#: includes/ipban.php:113
+msgid "Address you entered conflicts with other who in the database"
+msgstr "Введена Вами адреса суперечить з іншими, що знаходяться в базі"
+
+#: includes/ipban.php:123 includes/ipban.php:174 includes/ipban.php:207
+#: includes/ipban.php:309 includes/ipban.php:380
+msgid "Redirect"
+msgstr "Редирект"
+
+#: includes/ipban.php:131 includes/ipban.php:182 includes/ipban.php:205
+#: includes/ipban.php:317 includes/ipban.php:388
+msgid "Block"
+msgstr "Заблокувати"
+
+#: includes/ipban.php:150
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Бан неможливий. Ваша власна адреса IP потрапляє в діапазон"
+
+#: includes/ipban.php:159
+msgid "Ban range address"
+msgstr "Банити діапазон адрес"
+
+#: includes/ipban.php:163
+msgid "Ban on the subnet mask"
+msgstr "Банити по масці підмережі"
+
+#: includes/ipban.php:167
+msgid "Ban IP address"
+msgstr "Банити IP адрес"
+
+#: includes/ipban.php:170 includes/ipban.php:204 includes/ipban.php:305
+msgid "Ban type"
+msgstr "Тип бану"
+
+#: includes/ipban.php:174 includes/ipban.php:208
+msgid "Redirect URL"
+msgstr "URL редіректу"
+
+#: includes/ipban.php:185 includes/ipban.php:211 includes/ipban.php:324
+msgid "Reason"
+msgstr "Причина"
+
+#: includes/ipban.php:185 includes/ipban.php:324
+msgid "Not specified"
+msgstr "Не вказано"
+
+#: includes/ipban.php:192
+msgid "Please, check up correctness of the input data"
+msgstr "Будь ласка, перевірте правильність введених даних"
+
+#: includes/ipban.php:202 includes/ipban.php:353
+msgid "IP address"
+msgstr "IP-адреса"
+
+#: includes/ipban.php:210
+msgid "If the ban on Redirect, then specify the URL"
+msgstr "Якщо заборона на переадресацію, то вкажіть URL-адресу"
+
+#: includes/ipban.php:214
+msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Приклади запитів:<br><span class='red'>10.5.7.1</span> - Банити одну адресу<br><span class='red'>10.5.7.1-10.5.7.100</span> - Банити діапазон адрес.<br><span class='red'>10.5.*.*</span> - Банити по масці. Буде забанена вся підмережа, починаючи з адреси 0 і закінчуючи 255"
+
+#: includes/ipban.php:263
+msgid "Are you sure you wan to unban all IP?"
+msgstr "Ви впевнені, що хочете розбанити всі IP?"
+
+#: includes/ipban.php:264
+msgid "Perform"
+msgstr "Виконати"
+
+#: includes/ipban.php:271
+msgid "Ban details"
+msgstr "Деталі бану"
+
+#: includes/ipban.php:297
+msgid "This address not in the database"
+msgstr "Такої адреси в базі немає"
+
+#: includes/ipban.php:325
+msgid "Who applied the ban?"
+msgstr "Хто наклав бан?"
+
+#: includes/ipban.php:326
+msgid "Date"
+msgstr "Дата"
+
+#: includes/ipban.php:327
+msgid "Time"
+msgstr "Час"
+
+#: includes/ipban.php:328
+msgid "Delete Ban"
+msgstr "Видалити бан"
+
+#: includes/ipban.php:339
+msgid "Ban has been successfully removed"
+msgstr "Бан успішно видалений"
+
+#: includes/ipban.php:342
+msgid "re you sure to remove ban?"
+msgstr "Ви впевнені, що хочете скасувати бан?"
+
+#: includes/ipban.php:351 includes/ipban.php:355 includes/ipban.php:409
+#: includes/search_ip.php:39
+msgid "Search"
+msgstr "Пошук"
+
+#: includes/ipban.php:356
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "Введіть одну адресу, маска і діапазон не дозволяються"
+
+#: includes/ipban.php:397 includes/usr.php:61
+msgid "Ban"
+msgstr "Бан"
+
+#: includes/ipban.php:409
+msgid "Unban all IP"
+msgstr "Розбанити всі IP"
+
+#: includes/karma.php:36
+msgid "Karma is cleared"
+msgstr "Карму очищено"
+
+#: includes/karma.php:38
+msgid "You really want to clear the Karma?"
+msgstr "Ви дійсно хочете очистити карму?"
+
+#: includes/karma.php:39
+msgid "Clear"
+msgstr "Очистити"
+
+#: includes/karma.php:44 index.php:91
+msgid "Karma"
+msgstr "Карма"
+
+#: includes/karma.php:73
+msgid "Voices per day"
+msgstr "Голосів на добу"
+
+#: includes/karma.php:75
+msgid "Restriction for vote"
+msgstr "Обмеження для голосування"
+
+#: includes/karma.php:76
+msgid "Forum posts"
+msgstr "Пости на форумі"
+
+#: includes/karma.php:77
+msgid "Stay on site"
+msgstr "Провів на сайті"
+
+#: includes/karma.php:78
+msgid "Hours"
+msgstr "Годин"
+
+#: includes/karma.php:80
+msgid "General Settings"
+msgstr "Загальні налаштування"
+
+#: includes/karma.php:81
+msgid "Switch module ON"
+msgstr "Увімкнути модуль"
+
+#: includes/karma.php:82
+msgid "Forbid to vote for the administration"
+msgstr "Заборонити голосувати за адміністрацію"
+
+#: includes/karma.php:84
+msgid "Clear Karma"
+msgstr "Очистити карму"
+
+#: includes/languages.php:36
+msgid "Default language"
+msgstr "Мова за замовчуванням"
+
+#: includes/languages.php:56
+msgid "Descriptions have been updated successfully"
+msgstr "Описи було успішно оновлено"
+
+#: includes/languages.php:73
+msgid "Select language"
+msgstr "Обрати мову"
+
+#: includes/languages.php:84
+msgid "Apply"
+msgstr "Застосувати"
+
+#: includes/languages.php:87
+msgid "Update List"
+msgstr "Оновити список"
+
+#: includes/news.php:29
+msgid "News on the mainpage"
+msgstr "Новини на головній"
+
+#: includes/news.php:63
+msgid "Appearance"
+msgstr "Відображення"
+
+#: includes/news.php:64
+msgid "Title + Text"
+msgstr "Назва + текст"
+
+#: includes/news.php:66
+msgid "Text"
+msgstr "Текст"
+
+#: includes/news.php:67
+msgid "Not to show"
+msgstr "Не показувати"
+
+#: includes/news.php:68
+msgid "Line breaks"
+msgstr "Розриви рядків"
+
+#: includes/news.php:69 includes/smilies.php:24
+msgid "Smilies"
+msgstr "Смайли"
+
+#: includes/news.php:70
+msgid "bbCode Tags"
+msgstr "Теги bbCode"
+
+#: includes/news.php:72
+msgid "Text size"
+msgstr "Розмір тексту"
+
+#: includes/news.php:74
+msgid "Quantity of news"
+msgstr "Кількість новин"
+
+#: includes/news.php:75
+msgid "How many days to show?"
+msgstr "Скільки днів показувати?"
+
+#: includes/news.php:77
+msgid "Reset Settings"
+msgstr "Скинути налаштування"
+
+#: includes/reg.php:33
+msgid "Registration confirmation"
+msgstr "Підтвердження реєстрації"
+
+#: includes/reg.php:45 includes/reg.php:51
+msgid "Registration is confirmed"
+msgstr "Реєстрація підтверджена"
+
+#: includes/reg.php:69 includes/usr_del.php:123
+msgid "User deleted"
+msgstr "Користувач видалений"
+
+#: includes/reg.php:75
+msgid "All unconfirmed registrations were removed"
+msgstr "Всі непідтверджені реєстрації видалені"
+
+#: includes/reg.php:91
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "Всі непідтверджені реєстрації з обраного IP були видалені"
+
+#: includes/reg.php:114
+msgid "Approve"
+msgstr "Підтвердити"
+
+#: includes/reg.php:116
+msgid "Remove IP"
+msgstr "Видалити IP"
+
+#: includes/reg.php:143
+msgid "Confirm all"
+msgstr "Підтвердити всі"
+
+#: includes/search_ip.php:31
+msgid "Actual IP"
+msgstr "Фактичний IP"
+
+#: includes/search_ip.php:32
+msgid "IP history"
+msgstr "Історія IP"
+
+#: includes/search_ip.php:35 index.php:94
+msgid "Search IP"
+msgstr "Пошук IP"
+
+#: includes/search_ip.php:95
+msgid "Search results"
+msgstr "Результати пошуку"
+
+#: includes/search_ip.php:130
+msgid "At your request, nothing found"
+msgstr "За вашим запитом нічого не знайдено"
+
+#: includes/search_ip.php:142
+msgid "New Search"
+msgstr "Новий пошук"
+
+#: includes/search_ip.php:150
+msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr "<b>Приклади запитів:</b><br><span class=\"red\">10.5.7.1</span> - Пошук однієї адреси<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Пошук по діапазону адрес (знак маски * використовувати не можна)<br><span class=\"red\">10.5.*.*</span> - Пошук по масці. Буде знайдена вся підмережа, починаючи з адреси 0 і закінчуючи 255"
+
+#: includes/settings.php:29 index.php:117
+msgid "System Settings"
+msgstr "Системні налаштування"
+
+#: includes/settings.php:62
+msgid "Common Settings"
+msgstr "Загальні налаштування"
+
+#: includes/settings.php:63
+msgid "Web site address without the slash at the end"
+msgstr "Адреса веб-сайту без слешу в кінці"
+
+#: includes/settings.php:64
+msgid "Site copyright"
+msgstr "Копірайт сайту"
+
+#: includes/settings.php:65
+msgid "Site Email"
+msgstr "E-mail сайту"
+
+#: includes/settings.php:66
+msgid "Max. file size"
+msgstr "Макс. розмір файлу"
+
+#: includes/settings.php:67
+msgid "Gzip compression"
+msgstr "Gzip стиснення"
+
+#: includes/settings.php:72
+msgid "Time shift"
+msgstr "Зсув часу"
+
+#: includes/settings.php:74
+msgid "System Time"
+msgstr "Системний час"
+
+#: includes/settings.php:75
+msgid "Server Time"
+msgstr "Серверний час"
+
+#: includes/settings.php:80
+msgid "META tags"
+msgstr "META теги"
+
+#: includes/settings.php:81
+msgid "Keywords"
+msgstr "Ключові слова"
+
+#: includes/settings.php:86
+msgid "Themes"
+msgstr "Теми"
+
+#: includes/smilies.php:61
+msgid "Smilie cache updated successfully"
+msgstr "Кеш смайлів успішно оновлено"
+
+#: includes/smilies.php:63
+msgid "Error updating cache"
+msgstr "Помилка оновлення кешу"
+
+#: includes/usr.php:27
+msgid "List of Users"
+msgstr "Список користувачів"
+
+#: includes/usr.php:34 includes/usr.php:40 includes/usr.php:46
+msgid "Nickname"
+msgstr "Нікнейм"
+
+#: includes/usr_adm.php:19 index.php:87
+msgid "Administration"
+msgstr "Адміністрація"
+
+#: includes/usr_adm.php:23
+msgid "Supervisors"
+msgstr "Супервайзори"
+
+#: includes/usr_adm.php:35
+msgid "Administrators"
+msgstr "Адміністратори"
+
+#: includes/usr_adm.php:48
+msgid "Super Moderators"
+msgstr "Супермодератори"
+
+#: includes/usr_adm.php:61
+msgid "Moderators"
+msgstr "Модератори"
+
+#: includes/usr_clean.php:32 index.php:88
+msgid "Database cleanup"
+msgstr "Очищення бази даних"
+
+#: includes/usr_clean.php:75
+msgid "Inactive profiles deleted"
+msgstr "Неактивні профилі видалено"
+
+#: includes/usr_clean.php:87
+msgid "Inactive profiles"
+msgstr "Неактивні профілі"
+
+#: includes/usr_clean.php:88
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "Ця категорія містить профілі, зареєстровані понад 6 місяців тому, з датою останнього відвідування більш ніж 5 місяців тому і з нульовою активністю.<br>Ви спокійно можете їх видаляти."
+
+#: includes/usr_del.php:46
+msgid "You cannot delete higher administration"
+msgstr "Ви на можете видаляти вищу за Вас адміністрацію"
+
+#: includes/usr_del.php:49
+msgid "User does not exists"
+msgstr "Користувача не існує"
+
+#: includes/usr_del.php:78
+msgid "Delete user"
+msgstr "Видалити користувача"
+
+#: includes/usr_del.php:128
+msgid "Cleaning activities"
+msgstr "Очищення активності"
+
+#: includes/usr_del.php:136
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr "Всі теми і пости, створені користувачем, перейдуть у прихований стан"
+
+#: includes/usr_del.php:139
+msgid "Are you sure that you want to delete this user?"
+msgstr "Ви дійсно хочете видалити цього користувача?"
+
+#: index.php:83
+msgid "On registration"
+msgstr "На реєстрації"
+
+#: index.php:90
+msgid "Antiflood"
+msgstr "Антифлуд"
+
+#: index.php:93
+msgid "Search by Nickname"
+msgstr "Пошук за ніком"
+
+#: index.php:102
+msgid "Modules"
+msgstr "Модулі"
+
+#: index.php:104
+msgid "News"
+msgstr "Новини"
+
+#: index.php:115
+msgid "System"
+msgstr "Система"
+
+#: index.php:118
+msgid "Update Smilies"
+msgstr "Оновлення смайли"
+
+#: index.php:119
+msgid "Language Settings"
+msgstr "Налаштування мови"
+
+#: index.php:126
+msgid "Security"
+msgstr "Безпека"
+

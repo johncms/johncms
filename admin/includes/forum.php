@@ -12,17 +12,17 @@
 
 defined('_IN_JOHNADM') or die('Error: restricted access');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {
@@ -671,13 +671,14 @@ switch ($mod) {
             $req = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `close` = '1' $sort");
 
             while ($res = $req->fetch()) {
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "' LIMIT 1");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 
                 if ($req_f->rowCount()) {
-                    $res_f = $req_f->fetch();
-                    // Удаляем файлы
-                    unlink('../files/forum/attach/' . $res_f['filename']);
-                    $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "' LIMIT 1");
+                    while ($res_f = $req_f->fetch()) {
+                        // Удаляем файлы
+                        unlink('../files/forum/attach/' . $res_f['filename']);
+                    }
+                    $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
                 }
             }
 

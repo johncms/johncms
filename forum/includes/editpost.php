@@ -14,17 +14,17 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (!$systemUser->isValid() || !$id) {
     echo $tools->displayError(_t('Wrong data'));
@@ -83,11 +83,13 @@ if ($req->rowCount()) {
             }
 
             if ($check) {
-                $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` DESC LIMIT 1")->fetch();
+                $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `close` != 1 ORDER BY `id` DESC LIMIT 1")->fetch();
 
                 if ($res_m['user_id'] != $systemUser->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
-                } elseif ($res['time'] < time() - 300) {
+                } elseif ($res['time'] < time() - 300
+                    && $res_m['user_id'] != $systemUser->id && $res_m['time'] + 3600 > strtotime('+ 1 hour')
+                ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
             }
@@ -96,6 +98,8 @@ if ($req->rowCount()) {
 } else {
     $error = _t('Message does not exists or has been deleted') . '<br /><a href="index.php">' . _t('Forum') . '</a>';
 }
+
+$fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs(intval($_GET['fid'])) : false;
 
 if (!$error) {
     switch ($do) {
@@ -110,13 +114,40 @@ if (!$error) {
             }
 
             $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
-            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
             if ($req_f->rowCount()) {
-                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id' LIMIT 1");
+                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id'");
             }
 
             header('Location: ' . $link);
+            break;
+
+        case 'delfile':
+            // Удаление поста, предварительное напоминание
+            echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>'
+                . '<div class="rmenu"><p>'
+                . _t('Do you really want to delete?') . '</p>'
+                . '<form method="post" action="index.php?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '"><input type="submit" name="delfile" value="' . _t('Delete') . '" /></form>'
+                . '<p><a href="' . $link . '">' . _t('Cancel') . '</a></p>'
+                . '</div>';
+            break;
+
+        case 'deletefile':
+            if (isset($_POST['delfile'])) {
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = " . $fid);
+                $res_f = $req_f->fetch();
+
+                if ($req_f->rowCount()) {
+                    $db->exec("DELETE FROM `cms_forum_files` WHERE `id` = " . $fid);
+                    unlink('../files/forum/attach/' . $res_f['filename']);
+                    header('Location: ' . $link);
+                } else {
+                    echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
+                    require('../system/end.php');
+                    exit;
+                }
+            }
             break;
 
         case 'delete':
@@ -134,14 +165,15 @@ if (!$error) {
 
             if ($systemUser->rights == 9 && !isset($_GET['hide'])) {
                 // Удаление поста (для Супервизоров)
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
-                    // Если есть прикрепленный файл, удаляем его
-                    $res_f = $req_f->fetch();
-                    unlink('../files/forum/attach/' . $res_f['filename']);
-                    $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                    // Если есть прикрепленные файлы, удаляем их
+                    while ($res_f = $req_f->fetch()) {
+                        unlink('../files/forum/attach/' . $res_f['filename']);
+                    }
                 }
+                $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = " . $id);
 
                 // Формируем ссылку на нужную страницу темы
                 $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">" : "<") . " '$id'")->fetchColumn() / $kmess);
@@ -155,11 +187,11 @@ if (!$error) {
                 }
             } else {
                 // Скрытие поста
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id' LIMIT 1");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
                 if ($req_f->rowCount()) {
-                    // Если есть прикрепленный файл, скрываем его
-                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id' LIMIT 1");
+                    // Если есть прикрепленные файлы, скрываем их
+                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id'");
                 }
 
                 if ($posts == 1) {
@@ -233,7 +265,7 @@ if (!$error) {
                 }
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
-                echo App::getContainer()->get('bbcode')->buttons('form', 'msg');
+                echo App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
                 echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
 
                 echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .

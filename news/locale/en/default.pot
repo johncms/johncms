@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-12-26 14:58+0400\n"
+"POT-Creation-Date: 2017-03-25 19:16+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -17,137 +17,137 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: index.php:40 index.php:47 index.php:179 index.php:236 index.php:281
-#: index.php:298
+#: index.php:38 index.php:45 index.php:182 index.php:239 index.php:284
+#: index.php:301
 msgid "News"
 msgstr ""
 
-#: index.php:47 index.php:301
+#: index.php:45 index.php:304
 msgid "Add"
 msgstr ""
 
-#: index.php:56 index.php:191
+#: index.php:54 index.php:194
 msgid "You have not entered news title"
 msgstr ""
 
-#: index.php:60 index.php:195
+#: index.php:58 index.php:198
 msgid "You have not entered news text"
 msgstr ""
 
-#: index.php:66
+#: index.php:64
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
 msgstr ""
 
-#: index.php:142
+#: index.php:145
 msgid "News added"
 msgstr ""
 
-#: index.php:142 index.php:144 index.php:169 index.php:182 index.php:226
-#: index.php:247 index.php:254 index.php:261 index.php:286
+#: index.php:145 index.php:147 index.php:172 index.php:185 index.php:229
+#: index.php:250 index.php:257 index.php:264 index.php:289
 msgid "Back to news"
 msgstr ""
 
-#: index.php:148 index.php:220
+#: index.php:151 index.php:223
 msgid "Title"
 msgstr ""
 
-#: index.php:150 index.php:222
+#: index.php:153 index.php:225
 msgid "Text"
 msgstr ""
 
-#: index.php:152
+#: index.php:155
 msgid "Discussion"
 msgstr ""
 
-#: index.php:154
+#: index.php:157
 msgid "Do not discuss"
 msgstr ""
 
-#: index.php:167 index.php:224
+#: index.php:170 index.php:227
 msgid "Save"
 msgstr ""
 
-#: index.php:179 index.php:325
+#: index.php:182 index.php:328
 msgid "Edit"
 msgstr ""
 
-#: index.php:182
+#: index.php:185
 msgid "Wrong data"
 msgstr ""
 
-#: index.php:213
+#: index.php:216
 msgid "Repeat"
 msgstr ""
 
-#: index.php:215
+#: index.php:218
 msgid "Article changed"
 msgstr ""
 
-#: index.php:215
+#: index.php:218
 msgid "Continue"
 msgstr ""
 
-#: index.php:236 index.php:269 index.php:301
+#: index.php:239 index.php:272 index.php:304
 msgid "Clear"
 msgstr ""
 
-#: index.php:247
+#: index.php:250
 msgid "Delete all news older than 1 week"
 msgstr ""
 
-#: index.php:254
+#: index.php:257
 msgid "Delete all news"
 msgstr ""
 
-#: index.php:261
+#: index.php:264
 msgid "Delete all news older than 1 month"
 msgstr ""
 
-#: index.php:265
+#: index.php:268
 msgid "Clearing parameters"
 msgstr ""
 
-#: index.php:266
+#: index.php:269
 msgid "Older than 1 month"
 msgstr ""
 
-#: index.php:267
+#: index.php:270
 msgid "Older than 1 week"
 msgstr ""
 
-#: index.php:268
+#: index.php:271
 msgid "Clear all"
 msgstr ""
 
-#: index.php:271 index.php:289
+#: index.php:274 index.php:292
 msgid "Cancel"
 msgstr ""
 
-#: index.php:281 index.php:289 index.php:326
+#: index.php:284 index.php:292 index.php:329
 msgid "Delete"
 msgstr ""
 
-#: index.php:286
+#: index.php:289
 msgid "Article deleted"
 msgstr ""
 
-#: index.php:288
+#: index.php:291
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: index.php:313
+#: index.php:316
 msgid "Author"
 msgstr ""
 
-#: index.php:320
+#: index.php:323
 msgid "Discuss in Forum"
 msgstr ""
 
-#: index.php:332
+#: index.php:335
 msgid "Total"
 msgstr ""
 
-#: index.php:338
+#: index.php:341
 msgid "To Page"
 msgstr ""

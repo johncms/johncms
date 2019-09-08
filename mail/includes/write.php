@@ -18,20 +18,20 @@ $total = 0;
 $ch = 0;
 $mod = isset($_REQUEST['mod']) ? $_REQUEST['mod'] : '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id' LIMIT 1");
@@ -438,10 +438,10 @@ if (!$tools->isIgnor($id) && empty($systemUser->ban['1']) && empty($systemUser->
         '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (!empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
-    $out .= $container->get('bbcode')->buttons('form', 'text');
+    $out .= $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'text');
     $out .= '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text"></textarea></p>';
     $out .= '<p><input type="file" name="fail" style="width: 100%; max-width: 160px"/></p>';
-    $out .= '<p><input type="submit" name="submit" value="' . _t('Sent') . '"/></p>' .
+    $out .= '<p><input type="submit" name="submit" value="' . _t('Send') . '"/></p>' .
         '</form></div>' .
         '<div class="phdr"><b>' . ($id && isset($qs) ? _t('Personal correspondence with') . ' <a href="../profile/?user=' . $qs['id'] . '">' . $qs['name'] . '</a>' : _t('Send a message')) . '</b></div>';
 }

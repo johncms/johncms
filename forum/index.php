@@ -18,23 +18,21 @@ $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Johncms\Counters $counters */
 $counters = App::getContainer()->get('counters');
@@ -141,7 +139,8 @@ if (empty($id)) {
     $textl = _t('Forum');
 } else {
     $res = $db->query("SELECT `text` FROM `forum` WHERE `id`= " . $id)->fetch();
-    $hdr = strtr($res['text'], [
+    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['text']);
+    $hdr = strtr($hdr, [
         '&laquo;' => '',
         '&raquo;' => '',
         '&quot;'  => '',
@@ -151,8 +150,8 @@ if (empty($id)) {
         '&#039;'  => '',
     ]);
     $hdr = mb_substr($hdr, 0, 30);
-    $hdr = $tools->checkout($hdr);
-    $textl = mb_strlen($res['text']) > 30 ? $hdr . '...' : $hdr;
+    $hdr = $tools->checkout($hdr, 2, 2);
+    $textl = empty($hdr) ? _t('Forum') : $hdr;
 }
 
 // Переключаем режимы работы
@@ -585,7 +584,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>' .
-                            $container->get('bbcode')->buttons('form1', 'msg') .
+                            $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form1', 'msg') .
                             '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg"></textarea></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File') .
                             '</p><p><input type="submit" name="submit" value="' . _t('Write') . '" style="width: 107px; cursor: pointer;"/> ' .
@@ -683,41 +682,57 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . $tools->displayDate($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
                     }
 
-                    // Если есть прикрепленный файл, выводим его описание
-                    $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
-
-                    if ($freq->rowCount()) {
-                        $fres = $freq->fetch();
-                        $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
-                        echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
-                        // Предпросмотр изображений
-                        $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
-                        $pic_ext = [
-                            'gif',
-                            'jpg',
-                            'jpeg',
-                            'png',
-                        ];
-
-                        if (in_array($att_ext, $pic_ext)) {
-                            echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
-                            echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
-                        } else {
-                            echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
-                        }
-
-                        echo ' (' . $fls . ' кб.)<br>';
-                        echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time') . '</div>';
-                        $file_id = $fres['id'];
-                    }
-
-                    // Ссылки на редактирование / удаление постов
+                    // Задаем права на редактирование постов
                     if (
                         (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
                         || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
                         || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
                         || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
                     ) {
+                        $allowEdit = true;
+                    } else {
+                        $allowEdit = false;
+                    }
+
+                    // Если есть прикрепленные файлы, выводим их
+                    $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
+
+                    if ($freq->rowCount()) {
+                        echo '<div class="post-files">';
+                        while ($fres = $freq->fetch()) {
+                            $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
+                            echo '<div class="gray" style="font-size: x-small;background-color: rgba(128, 128, 128, 0.1);padding: 2px 4px;float: left;margin: 4px 4px 0 0;">' . _t('Attachment') . ':';
+                            // Предпросмотр изображений
+                            $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
+                            $pic_ext = [
+                                'gif',
+                                'jpg',
+                                'jpeg',
+                                'png',
+                            ];
+
+                            if (in_array($att_ext, $pic_ext)) {
+                                echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+                                echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
+                            } else {
+                                echo '<br><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+                            }
+
+                            echo ' (' . $fls . ' кб.)<br>';
+                            echo _t('Downloads') . ': ' . $fres['dlcount'] . ' ' . _t('Time');
+
+                            if ($allowEdit) {
+                                echo '<br><a href="?act=editpost&amp;do=delfile&amp;fid=' . $fres['id'] . '&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
+                            }
+
+                            echo '</div>';
+                            $file_id = $fres['id'];
+                        }
+                        echo '<div style="clear: both;"></div></div>';
+                    }
+
+                    // Ссылки на редактирование / удаление постов
+                    if ($allowEdit) {
                         echo '<div class="sub">';
 
                         // Чекбокс массового удаления постов
@@ -772,7 +787,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         $token = mt_rand(1000, 100000);
                         $_SESSION['token'] = $token;
                         echo '<p>';
-                        echo $container->get('bbcode')->buttons('form2', 'msg');
+                        echo $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form2', 'msg');
                         echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg"></textarea><br></p>' .
                             '<p><input type="checkbox" name="addfiles" value="1" /> ' . _t('Add File');
 

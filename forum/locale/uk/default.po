@@ -1,0 +1,830 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-04-06 13:58+0400\n"
+"PO-Revision-Date: 2017-04-06 06:11-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: uk_UA\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /forum/default.pot\n"
+
+#: includes/addfile.php:33 includes/addfile.php:42 includes/addvote.php:33
+#: includes/deltema.php:30 includes/delvote.php:32 includes/editpost.php:30
+#: includes/editvote.php:32 includes/files.php:83 includes/filter.php:24
+#: includes/filter.php:82 includes/loadtem.php:23 includes/loadtem.php:44
+#: includes/nt.php:97 includes/per.php:30 includes/per.php:39
+#: includes/per.php:49 includes/per.php:58 includes/post.php:30
+#: includes/ren.php:30 includes/ren.php:39 includes/tema.php:41
+#: includes/tema.php:61 includes/users.php:32 includes/vip.php:30
+#: includes/vip.php:40 includes/vote.php:35 index.php:882
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: includes/addfile.php:49
+msgid "The time allotted for the file upload has expired"
+msgstr "Час відведений для вивантаження файлу минув"
+
+#: includes/addfile.php:49 includes/addvote.php:33 includes/addvote.php:101
+#: includes/curators.php:81 includes/editpost.php:62 includes/editpost.php:69
+#: includes/editpost.php:89 includes/editpost.php:93 includes/editpost.php:146
+#: includes/editpost.php:275 includes/filter.php:42 includes/massdel.php:40
+#: includes/massdel.php:43 includes/nt.php:88 includes/nt.php:270
+#: includes/per.php:105 includes/ren.php:75 includes/say.php:88
+#: includes/say.php:102 includes/say.php:120 includes/say.php:132
+#: includes/say.php:258 includes/say.php:268 includes/say.php:275
+#: includes/say.php:328 includes/say.php:341 includes/say.php:453
+#: includes/vote.php:43
+msgid "Back"
+msgstr "Повернутися"
+
+#: includes/addfile.php:75
+msgid "File size exceed"
+msgstr "Вага файлу перевищує"
+
+#: includes/addfile.php:80
+msgid "You may upload only files with a name and one extension <b>(name.ext</b>). Files without a name, extension, or with double extension are forbidden."
+msgstr "Ви можете долучити файли тільки з ім'ям і розширенням одного <b>(name.ext</b>). Файли без імені, розширення, або з подвійним розширенням заборонені."
+
+#: includes/addfile.php:85
+msgid "The forbidden file format.<br>You can upload files of the following extension"
+msgstr "Заборонений тип файлу!<br>Дозволені типи"
+
+#: includes/addfile.php:98
+msgid "File name contains invalid characters"
+msgstr "У назві файлу присутні неприпустимі символи"
+
+#: includes/addfile.php:112
+msgid "File attached"
+msgstr "Файл прикріплено"
+
+#: includes/addfile.php:114 includes/addfile.php:160
+msgid "Error uploading file"
+msgstr "Помилка додавання файлу"
+
+#: includes/addfile.php:157 includes/addfile.php:160 includes/addvote.php:74
+#: includes/editpost.php:235 includes/nt.php:235 includes/ren.php:49
+#: includes/ren.php:59 includes/say.php:320
+msgid "Repeat"
+msgstr "Повторити"
+
+#: includes/addfile.php:165 includes/addvote.php:72 includes/delvote.php:41
+#: includes/editvote.php:89
+msgid "Continue"
+msgstr "Продовжити"
+
+#: includes/addfile.php:168 includes/nt.php:261 includes/say.php:246
+#: includes/say.php:442 index.php:589 index.php:792
+msgid "Add File"
+msgstr "Додати файл"
+
+#: includes/addfile.php:171
+msgid "Upload"
+msgstr "Завантаження"
+
+#: includes/addfile.php:172
+msgid "Max. Size"
+msgstr "Макс. розмір"
+
+#: includes/addvote.php:72
+msgid "Poll added"
+msgstr "Опитування додано"
+
+#: includes/addvote.php:74
+msgid "The required fields are not filled"
+msgstr "Обов'язкові поля не заповнені"
+
+#: includes/addvote.php:78 includes/editvote.php:97
+msgid "Poll (max. 150)"
+msgstr "Опитування (макс. 150)"
+
+#: includes/addvote.php:94 includes/editvote.php:104 includes/tema.php:78
+msgid "Answer"
+msgstr "Відповідь"
+
+#: includes/addvote.php:98
+msgid "Add Answer"
+msgstr "Додати відповідь"
+
+#: includes/addvote.php:99 includes/editvote.php:133
+msgid "Delete last"
+msgstr "Видалити останній"
+
+#: includes/addvote.php:100 includes/editpost.php:271 includes/editvote.php:136
+#: includes/nt.php:265 includes/ren.php:73
+msgid "Save"
+msgstr "Зберегти"
+
+#: includes/curators.php:33 includes/deltema.php:40 includes/say.php:458
+#: index.php:214
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема була видалена або не існує"
+
+#: includes/curators.php:43 includes/deltema.php:74 includes/editpost.php:99
+#: includes/editpost.php:128 includes/editpost.php:211
+#: includes/editpost.php:260 includes/editvote.php:94 includes/file.php:46
+#: includes/files.php:83 includes/files.php:192 includes/filter.php:24
+#: includes/filter.php:67 includes/new.php:15 includes/new.php:64
+#: includes/new.php:79 includes/new.php:152 includes/new.php:223
+#: includes/new.php:261 includes/nt.php:245 includes/per.php:81
+#: includes/post.php:133 includes/ren.php:69 includes/say.php:408
+#: includes/say.php:458 includes/tema.php:96 includes/tema.php:102
+#: includes/tema.php:145 includes/who.php:90 includes/who.php:198 index.php:139
+#: index.php:154 index.php:214 index.php:254 index.php:891 index.php:916
+#: search.php:29 search.php:228
+msgid "Forum"
+msgstr "Форум"
+
+#: includes/curators.php:43 index.php:825
+msgid "Curators"
+msgstr "Куратори"
+
+#: includes/curators.php:71
+msgid "Assign"
+msgstr "Призначити"
+
+#: includes/curators.php:78 includes/files.php:162 includes/new.php:202
+#: includes/new.php:259 includes/who.php:71 includes/who.php:186
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: includes/curators.php:80 includes/files.php:150 includes/files.php:187
+#: includes/new.php:139 includes/new.php:205 includes/users.php:55
+#: includes/who.php:77 includes/who.php:189 index.php:334 index.php:393
+#: index.php:804 search.php:167
+msgid "Total"
+msgstr "Всього"
+
+#: includes/deltema.php:74 index.php:853
+msgid "Delete Topic"
+msgstr "Видалити тему"
+
+#: includes/deltema.php:76 includes/editpost.php:130 includes/editpost.php:218
+#: includes/massdel.php:54
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: includes/deltema.php:77 includes/editpost.php:222
+msgid "Hide"
+msgstr "Приховати"
+
+#: includes/deltema.php:78 includes/delvote.php:44 includes/editpost.php:131
+#: includes/editpost.php:219 includes/editvote.php:57 includes/massdel.php:54
+#: index.php:725 index.php:747 index.php:778
+msgid "Delete"
+msgstr "Видалити"
+
+#: includes/deltema.php:79
+msgid "Perform"
+msgstr "Виконати"
+
+#: includes/deltema.php:80 includes/delvote.php:45 includes/editpost.php:132
+#: includes/editpost.php:219 includes/editvote.php:58 includes/editvote.php:138
+#: includes/massdel.php:55 search.php:60
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: includes/delvote.php:41
+msgid "Poll deleted"
+msgstr "Опитування видалено"
+
+#: includes/delvote.php:43
+msgid "Do you really want to delete a poll?"
+msgstr "Ви дійсно хочете видалити опитування?"
+
+#: includes/editpost.php:62
+msgid "You cannot edit posts of higher administration"
+msgstr "Ви не можете редагувати пости вищої за вас адміністрації"
+
+#: includes/editpost.php:69
+msgid "You are trying to change another's post"
+msgstr "Ви намагаєтеся змінити чужий пост"
+
+#: includes/editpost.php:89
+msgid "Your message not already latest, you cannot change it"
+msgstr "Ваше повідомлення вже не останнє, Ви не можете змінити його"
+
+#: includes/editpost.php:93 includes/editpost.php:146
+msgid "You cannot edit your posts after 5 minutes"
+msgstr "З моменту створення повідомлення пройшло більше 5 хвилин і Ви не можете його редагувати"
+
+#: includes/editpost.php:99
+msgid "Message does not exists or has been deleted"
+msgstr "Пост не існує, або був видалений"
+
+#: includes/editpost.php:128
+msgid "Delete file"
+msgstr "Видалити файл"
+
+#: includes/editpost.php:211
+msgid "Delete Message"
+msgstr "Видалити повідомлення"
+
+#: includes/editpost.php:215
+msgid "WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too"
+msgstr "УВАГА!<br>Це останній пост теми. Разом з ним буде видалена (або прихована) і сама тема"
+
+#: includes/editpost.php:226
+msgid "After deleting, one point will be subtracted from the counter of forum posts"
+msgstr "У разі видалення, з лічильника постів форуму зніметься один бал"
+
+#: includes/editpost.php:235 includes/nt.php:127 includes/say.php:320
+msgid "You have not entered the message"
+msgstr "Ви не ввели повідомлення"
+
+#: includes/editpost.php:260
+msgid "Edit Message"
+msgstr "Редагувати повідомлення"
+
+#: includes/editpost.php:272 includes/nt.php:266 includes/say.php:252
+#: includes/say.php:447 index.php:591 index.php:795
+msgid "Preview"
+msgstr "Прев'ю"
+
+#: includes/editpost.php:274 includes/nt.php:269 includes/say.php:257
+#: includes/say.php:452
+msgid "Smilies"
+msgstr "Смайли"
+
+#: includes/editvote.php:56
+msgid "Do you really want to delete the answer?"
+msgstr "Ви дійсно бажаєте видалити цю відповідь?"
+
+#: includes/editvote.php:89
+msgid "Poll changed"
+msgstr "Опитування змінено"
+
+#: includes/editvote.php:94 index.php:837
+msgid "Edit Poll"
+msgstr "Редагувати опитування"
+
+#: includes/editvote.php:132
+msgid "Add"
+msgstr "Додати"
+
+#: includes/file.php:46
+msgid "File does not exist"
+msgstr "Файл не існує"
+
+#: includes/files.php:31
+msgid "Windows applications"
+msgstr "Додатки Windows"
+
+#: includes/files.php:32
+msgid "Java applications"
+msgstr "Java-додатки"
+
+#: includes/files.php:33
+msgid "SIS"
+msgstr "SIS"
+
+#: includes/files.php:34
+msgid "txt"
+msgstr "txt"
+
+#: includes/files.php:35
+msgid "Pictures"
+msgstr "Зображення"
+
+#: includes/files.php:36
+msgid "Archive"
+msgstr "Архів"
+
+#: includes/files.php:37
+msgid "Videos"
+msgstr "Відео"
+
+#: includes/files.php:38
+msgid "MP3"
+msgstr "MP3"
+
+#: includes/files.php:39
+msgid "Other"
+msgstr "Інше"
+
+#: includes/files.php:53 index.php:268
+msgid "Category Files"
+msgstr "Файли категорії"
+
+#: includes/files.php:59
+msgid "Section files"
+msgstr "Файли розділу"
+
+#: includes/files.php:65 index.php:280
+msgid "Topic Files"
+msgstr "Файли теми"
+
+#: includes/files.php:71
+msgid "Forum Files"
+msgstr "Файли форуму"
+
+#: includes/files.php:95 includes/files.php:168
+msgid "New Files"
+msgstr "Нові файли"
+
+#: includes/files.php:114 index.php:550 search.php:156
+msgid "Read more"
+msgstr "Детальніше"
+
+#: includes/files.php:131 includes/post.php:118 index.php:716
+msgid "Click to view image"
+msgstr "Для перегляду натисніть на зображення"
+
+#: includes/files.php:139
+msgid "Size"
+msgstr "Розмір"
+
+#: includes/files.php:139
+msgid "Downloaded"
+msgstr "Завантажено"
+
+#: includes/files.php:139 index.php:722
+msgid "Time"
+msgstr "Час"
+
+#: includes/files.php:159 includes/new.php:145 includes/new.php:212
+#: includes/users.php:61 includes/who.php:83 includes/who.php:195 index.php:399
+#: index.php:811 search.php:224
+msgid "To Page"
+msgstr "До сторінки"
+
+#: includes/files.php:169
+msgid "No new files"
+msgstr "Нових файлів немає"
+
+#: includes/files.php:191
+msgid "List of sections"
+msgstr "Список розділів"
+
+#: includes/filter.php:42
+msgid "You have not selected any author"
+msgstr "Ви не вибрали жодного автора"
+
+#: includes/filter.php:67 index.php:873
+msgid "Filter by author"
+msgstr "Фільтр по автору"
+
+#: includes/filter.php:78
+msgid "Filter"
+msgstr "Фільтр"
+
+#: includes/filter.php:79
+msgid "Filter will be display posts from selected authors only"
+msgstr "Фільтрація дозволить відображати пости тільки обраних авторів"
+
+#: includes/filter.php:86 includes/post.php:132
+msgid "Back to topic"
+msgstr "Повернутися до теми"
+
+#: includes/massdel.php:40
+msgid "Marked posts are deleted"
+msgstr "Відмічені пости видалені"
+
+#: includes/massdel.php:43
+msgid "You did not choose something to delete"
+msgstr "Ви нічого не вибрали для видалення"
+
+#: includes/new.php:15 includes/new.php:152
+msgid "Unread"
+msgstr "Непрочитане"
+
+#: includes/new.php:64
+msgid "All topics marked as read"
+msgstr "Всі теми відмічені як прочитані"
+
+#: includes/new.php:79
+#, php-format
+msgid "All for period %d hours"
+msgstr "Всього за період %d годин"
+
+#: includes/new.php:84
+msgid "Show period"
+msgstr "Показати період"
+
+#: includes/new.php:136
+msgid "There is nothing new in this forum for selected period"
+msgstr "За вибраний період нового на форумі немає"
+
+#: includes/new.php:217
+msgid "Mark as read"
+msgstr "Позначити як прочитане"
+
+#: includes/new.php:223
+msgid "Last 10"
+msgstr "Останні 10"
+
+#: includes/nt.php:38 includes/say.php:38
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: includes/nt.php:88 includes/say.php:88
+#, php-format
+msgid "You cannot add the message so often<br>Please, wait %d sec."
+msgstr "Ви не можете додавати повідомлення так часто<br>Будь ласка, зачекайте %d секунд."
+
+#: includes/nt.php:119 includes/ren.php:49
+msgid "You have not entered topic name"
+msgstr "Ви не ввели назву теми"
+
+#: includes/nt.php:123
+msgid "Topic name too short"
+msgstr "Назва теми дуже коротка"
+
+#: includes/nt.php:131 includes/say.php:120 includes/say.php:328
+msgid "Text is too short"
+msgstr "Занадто короткий текст"
+
+#: includes/nt.php:139 includes/ren.php:59
+msgid "Topic with same name already exists in this section"
+msgstr "Тема з такою назвою вже є в цьому розділі"
+
+#: includes/nt.php:149 includes/say.php:132 includes/say.php:341
+msgid "Message already exists"
+msgstr "Повідомлення вже існує"
+
+#: includes/nt.php:245 index.php:345
+msgid "New Topic"
+msgstr "Нова тема"
+
+#: includes/nt.php:254 includes/per.php:85
+msgid "Section"
+msgstr "Розділ"
+
+#: includes/nt.php:256
+msgid "Title(max. 100)"
+msgstr "Назва(макс. 100)"
+
+#: includes/nt.php:258 includes/say.php:243 includes/say.php:439
+msgid "Message"
+msgstr "Повідомлення"
+
+#: includes/per.php:81 index.php:861
+msgid "Move Topic"
+msgstr "Перемістити тему"
+
+#: includes/per.php:84
+msgid "Category"
+msgstr "Категорія"
+
+#: includes/per.php:94
+msgid "Move"
+msgstr "Перемістити"
+
+#: includes/per.php:96
+msgid "Other categories"
+msgstr "Інші категорії"
+
+#: includes/post.php:42 includes/say.php:236 includes/say.php:414
+msgid "Topic"
+msgstr "Тема"
+
+#: includes/post.php:81 index.php:527 index.php:657
+msgid "[r]"
+msgstr "[r]"
+
+#: includes/post.php:82 index.php:528 index.php:658
+msgid "[q]"
+msgstr "[q]"
+
+#: includes/post.php:106 index.php:704
+msgid "Attachment"
+msgstr "Вкладення"
+
+#: includes/post.php:124 index.php:722
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: includes/ren.php:69 index.php:839
+msgid "Rename Topic"
+msgstr "Перейменувати тему"
+
+#: includes/ren.php:71
+msgid "Topic name"
+msgstr "Назва теми"
+
+#: includes/say.php:102 includes/say.php:268
+msgid "You cannot write in a closed topic"
+msgstr "Ви не можете писати в закритій темі"
+
+#: includes/say.php:251 includes/say.php:446
+msgid "Send"
+msgstr "Відправити"
+
+#: includes/say.php:275
+msgid "You can not reply to your own message"
+msgstr "Ви не можете відповідати на власне повідомлення"
+
+#: includes/say.php:297 includes/say.php:435
+msgid "I am glad to answer you"
+msgstr "Із задоволенням тобі відповім"
+
+#: includes/say.php:301 includes/say.php:436
+msgid "respond to Your message"
+msgstr "відповісти на Ваше повідомлення"
+
+#: includes/say.php:428 includes/tema.php:77
+msgid "Quote"
+msgstr "Цитата"
+
+#: includes/say.php:430
+msgid "Only allowed 200 characters, other text will be cropped."
+msgstr "Допустимо макс. 200 символів, весь зайвий текст обрізається."
+
+#: includes/say.php:433
+msgid "Appeal"
+msgstr "Звернення"
+
+#: includes/tema.php:96 includes/tema.php:145 includes/tema.php:153
+msgid "Download"
+msgstr "Завантажити"
+
+#: includes/tema.php:96 includes/tema.php:145
+msgid "Link active 5 minutes"
+msgstr "Посилання активне 5 хвилин"
+
+#: includes/tema.php:135
+msgid "This theme was downloaded from the forum site"
+msgstr "Дана тема завантажена з форуму сайту"
+
+#: includes/tema.php:149
+msgid "Select format"
+msgstr "Виберіть формат"
+
+#: includes/users.php:37
+msgid "Who voted in the poll"
+msgstr "Користувачі, що взяли участь в опитуванні"
+
+#: includes/users.php:52
+msgid "No one has voted in this poll yet"
+msgstr "У цьому опитуванні ще ніхто не брав участь"
+
+#: includes/users.php:64 includes/who.php:87 search.php:159
+msgid "Go to Topic"
+msgstr "Перейти в тему"
+
+#: includes/vote.php:43
+msgid "Vote accepted"
+msgstr "Ваш голос прийнятий"
+
+#: includes/who.php:15 includes/who.php:90 index.php:910
+msgid "Who in Forum"
+msgstr "Хто на форумі"
+
+#: includes/who.php:42
+msgid "Who in Topic"
+msgstr "Хто у темі"
+
+#: includes/who.php:46
+msgid "Authorized"
+msgstr "Авторизований"
+
+#: includes/who.php:46 includes/who.php:93 includes/who.php:94
+msgid "Guests"
+msgstr "Гості"
+
+#: includes/who.php:93 includes/who.php:94
+msgid "Users"
+msgstr "Користувачі"
+
+#: includes/who.php:123
+msgid "In the forum Main"
+msgstr "На головній форуму"
+
+#: includes/who.php:127
+msgid "Here, in the List"
+msgstr "Тут, у списку"
+
+#: includes/who.php:131
+msgid "Looking forum files"
+msgstr "Перегляд файлів форуму"
+
+#: includes/who.php:135
+msgid "In the unreads"
+msgstr "У непрочитаних"
+
+#: includes/who.php:139 search.php:27
+msgid "Forum search"
+msgstr "Пошук по форуму"
+
+#: includes/who.php:153
+msgid "In the Category"
+msgstr "У категорії"
+
+#: includes/who.php:157
+msgid "In the Section"
+msgstr "У розділі"
+
+#: includes/who.php:161
+msgid "Writes in the Topic"
+msgstr "Пише в тему"
+
+#: includes/who.php:161 includes/who.php:169
+msgid "In the Topic"
+msgstr "У темі"
+
+#: includes/who.php:169
+msgid "Answers in the Topic"
+msgstr "Відповідає в темі"
+
+#: index.php:123 index.php:193
+msgid "Forum is closed"
+msgstr "Форум закритий"
+
+#: index.php:125
+msgid "For registered users only"
+msgstr "Тільки для зареєстрованих користувачів"
+
+#: index.php:195
+msgid "Read only"
+msgstr "Лише для читання"
+
+#: index.php:274
+msgid "Section Files"
+msgstr "Файли розділу"
+
+#: index.php:292
+msgid "Who is here"
+msgstr "Хто тут"
+
+#: index.php:298 index.php:892 search.php:29 search.php:77
+msgid "Search"
+msgstr "Пошук"
+
+#: index.php:331
+msgid "There are no sections in this category"
+msgstr "У даній категорії немає розділів"
+
+#: index.php:390
+msgid "No topics in this section"
+msgstr "У даному розділі немає жодної теми"
+
+#: index.php:431
+msgid "Topic deleted"
+msgstr "Тема видалена"
+
+#: index.php:431
+msgid "Go to Section"
+msgstr "Перейти в розділ"
+
+#: index.php:453
+msgid "Topic deleted by"
+msgstr "Тему видалив"
+
+#: index.php:455
+msgid "Undelete topic"
+msgstr "Скасувати видалення теми"
+
+#: index.php:460
+msgid "Topic closed"
+msgstr "Тема закрита"
+
+#: index.php:479 index.php:502
+msgid "Vote"
+msgstr "Голосувати"
+
+#: index.php:480
+msgid "Results"
+msgstr "Результати"
+
+#: index.php:488
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: index.php:491
+msgid "Total votes"
+msgstr "Всього голосів"
+
+#: index.php:544 index.php:753
+msgid "Post deleted"
+msgstr "Пост видалено"
+
+#: index.php:558
+msgid "Filter by author is activated"
+msgstr "Фільтр по автору активовано"
+
+#: index.php:590 index.php:595 index.php:794 index.php:799
+msgid "Write"
+msgstr "Написати"
+
+#: index.php:682
+msgid "Edited"
+msgstr "Відредаговано"
+
+#: index.php:745
+msgid "Edit"
+msgstr "Редагувати"
+
+#: index.php:746
+msgid "Restore"
+msgstr "Відновити"
+
+#: index.php:755
+msgid "Post restored by"
+msgstr "Пост відновив"
+
+#: index.php:833
+msgid "Curators of the Topic"
+msgstr "Куратори теми"
+
+#: index.php:837
+msgid "Delete Poll"
+msgstr "Видалити опитування"
+
+#: index.php:838
+msgid "Add Poll"
+msgstr "Додати опитування"
+
+#: index.php:843
+msgid "Open Topic"
+msgstr "Відкрити тему"
+
+#: index.php:845
+msgid "Close Topic"
+msgstr "Закрити тему"
+
+#: index.php:850
+msgid "Restore Topic"
+msgstr "Відновити тему"
+
+#: index.php:856
+msgid "Unfix Topic"
+msgstr "Відкріпити тему"
+
+#: index.php:858
+msgid "Pin Topic"
+msgstr "Закріпити тему"
+
+#: index.php:871
+msgid "Cancel Filter"
+msgstr "Відмінити фільтрацію"
+
+#: index.php:877
+msgid "Download Topic"
+msgstr "Завантажити тему"
+
+#: index.php:892
+msgid "Files"
+msgstr "Файли"
+
+#: index.php:919
+msgid "Forum rules"
+msgstr "Правила форуму"
+
+#: index.php:926
+msgid "New at the top"
+msgstr "Нові вгорі"
+
+#: index.php:928
+msgid "New at the bottom"
+msgstr "Нові внизу"
+
+#: search.php:58
+msgid "Do you really want to clear the search history?"
+msgstr "Ви дійсно хочете очистити історію пошуку?"
+
+#: search.php:59
+msgid "Clear"
+msgstr "Очистити"
+
+#: search.php:78
+msgid "Search in the topic names"
+msgstr "Шукати в назвах тем"
+
+#: search.php:94
+msgid "Search results"
+msgstr "Результати пошуку"
+
+#: search.php:160
+msgid "Go to Message"
+msgstr "Перейти до повідомлення"
+
+#: search.php:165
+msgid "Your search did not match any results"
+msgstr "За вашим запитом нічого не знайдено"
+
+#: search.php:170
+msgid "Invalid length"
+msgstr "Невірна довжина"
+
+#: search.php:173
+msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
+msgstr "Довжина запиту: мін. 4, макс. 64.<br>Пошук нечутливий до регістру букв<br>Результати виводяться з сортуванням по релевантності."
+
+#: search.php:206
+msgid "Search History"
+msgstr "Історія пошуку"
+
+#: search.php:228
+msgid "New Search"
+msgstr "Новий пошук"
+

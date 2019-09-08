@@ -14,8 +14,8 @@ define('_IN_JOHNCMS', 1);
 
 require('system/bootstrap.php');
 
-/** @var Johncms\Config $config */
-$config = App::getContainer()->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = App::getContainer()->get(Johncms\Api\ConfigInterface::class);
 
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 

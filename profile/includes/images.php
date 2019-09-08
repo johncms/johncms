@@ -15,14 +15,14 @@ defined('_IN_JOHNCMS') or die('Error: restricted access');
 $textl = _t('Edit Profile');
 require('../system/head.php');
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
     || $user['rights'] > $systemUser->rights
@@ -33,8 +33,8 @@ if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
     exit;
 }
 
-/** @var Johncms\Config $config */
-$config = $container->get(Johncms\Config::class);
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 switch ($mod) {
     case 'avatar':

@@ -13,8 +13,8 @@
 defined('_IN_JOHNADM') or die('Error: restricted access');
 define('ROOT_DIR', '..');
 
-/** @var Johncms\User $systemUser */
-$systemUser = App::getContainer()->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 7) {
@@ -404,8 +404,8 @@ switch ($mod) {
         echo '<div class="phdr"><a href="index.php?act=antispy"><b>' . _t('Anti-Spyware') . '</b></a> | ' . _t('Snapshot scan') . '</div>';
 
         if (count($scaner->track_files) == 0) {
-            /** @var Johncms\Tools $tools */
-            $tools = \App::getContainer()->get('tools');
+            /** @var Johncms\Api\ToolsInterface $tools */
+            $tools = \App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
             echo $tools->displayError(_t('Snapshot is not created'), '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
         } else {

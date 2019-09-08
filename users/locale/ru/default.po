@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-12-26 14:59+0400\n"
-"PO-Revision-Date: 2016-12-26 06:07-0500\n"
+"POT-Creation-Date: 2017-03-25 19:18+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "X-Generator: crowdin.com\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"Language: ru\n"
+"Language: ru_RU\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -19,13 +19,13 @@ msgstr ""
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: /users/default.pot\n"
 
-#: includes/admlist.php:15 includes/admlist.php:29 index.php:82
+#: includes/admlist.php:15 includes/admlist.php:29 index.php:80
 msgid "Administration"
 msgstr "Администрация"
 
 #: includes/admlist.php:29 includes/birth.php:29 includes/top.php:64
 #: includes/top.php:72 includes/top.php:81 includes/top.php:101
-#: includes/userlist.php:30 index.php:68 index.php:74 search.php:35
+#: includes/userlist.php:30 index.php:66 index.php:72 search.php:35
 msgid "Community"
 msgstr "Сообщество"
 
@@ -44,11 +44,11 @@ msgid "User Search"
 msgstr "Поиск пользователя"
 
 #: includes/admlist.php:49 includes/birth.php:54 includes/top.php:107
-#: includes/userlist.php:54 index.php:87 search.php:102
+#: includes/userlist.php:54 index.php:85 search.php:102
 msgid "Back"
 msgstr "Назад"
 
-#: includes/birth.php:15 includes/birth.php:29 index.php:83
+#: includes/birth.php:15 includes/birth.php:29 index.php:81
 msgid "Birthdays"
 msgstr "Именинники"
 
@@ -61,7 +61,7 @@ msgstr "Список пуст"
 msgid "Online"
 msgstr "Онлайн"
 
-#: includes/online.php:38 index.php:81
+#: includes/online.php:38 index.php:79
 msgid "Users"
 msgstr "Пользователи"
 
@@ -81,7 +81,7 @@ msgstr "Активность IP"
 msgid "Who is online?"
 msgstr "Кто на сайте"
 
-#: includes/top.php:16 index.php:85
+#: includes/top.php:16 index.php:83
 msgid "Top Activity"
 msgstr "Топ активности"
 
@@ -125,23 +125,23 @@ msgstr "Самые активные на Форуме"
 msgid "List of users"
 msgstr "Список пользователей"
 
-#: index.php:43
+#: index.php:41
 msgid "For registered users only"
 msgstr "Только для зарегистрированных посетителей"
 
-#: index.php:76
+#: index.php:74
 msgid "Look for the User"
 msgstr "Искать пользователя"
 
-#: index.php:78 search.php:39
+#: index.php:76 search.php:39
 msgid "Search"
 msgstr "Поиск"
 
-#: index.php:79
+#: index.php:77
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr "Поиск осуществляется по нику и не зависят от регистра."
 
-#: index.php:84
+#: index.php:82
 msgid "Photo Albums"
 msgstr "Фотоальбомы"
 

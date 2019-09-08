@@ -9,154 +9,154 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: index.php:58 index.php:331
+#: index.php:56 index.php:329
 msgid "Admin Club"
 msgstr ""
 
-#: index.php:58 index.php:76 index.php:198 index.php:252 index.php:293
-#: index.php:296 index.php:326 index.php:330
+#: index.php:56 index.php:74 index.php:196 index.php:250 index.php:291
+#: index.php:294 index.php:324 index.php:328
 msgid "Guestbook"
 msgstr ""
 
-#: index.php:63
+#: index.php:61
 msgid "Guestbook is closed"
 msgstr ""
 
-#: index.php:76
+#: index.php:74
 msgid "Delete message"
 msgstr ""
 
-#: index.php:77
+#: index.php:75
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: index.php:78 index.php:437
+#: index.php:76 index.php:435
 msgid "Delete"
 msgstr ""
 
-#: index.php:79 index.php:305
+#: index.php:77 index.php:303
 msgid "Cancel"
 msgstr ""
 
-#: index.php:98
+#: index.php:96
 msgid "Wrong data"
 msgstr ""
 
-#: index.php:102
+#: index.php:100
 msgid "You have not entered a name"
 msgstr ""
 
-#: index.php:106
+#: index.php:104
 msgid "You have not entered the message"
 msgstr ""
 
-#: index.php:110
+#: index.php:108
 msgid "Access forbidden"
 msgstr ""
 
-#: index.php:115
+#: index.php:113
 msgid "The security code is not correct"
 msgstr ""
 
-#: index.php:134
+#: index.php:132
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d seconds."
 msgstr ""
 
-#: index.php:177 index.php:213 index.php:261
+#: index.php:175 index.php:211 index.php:259
 msgid "Back"
 msgstr ""
 
-#: index.php:198 index.php:208 index.php:210 index.php:436
+#: index.php:196 index.php:206 index.php:208 index.php:434
 msgid "Reply"
 msgstr ""
 
-#: index.php:252 index.php:437
+#: index.php:250 index.php:435
 msgid "Edit"
 msgstr ""
 
-#: index.php:255
+#: index.php:253
 msgid "Author"
 msgstr ""
 
-#: index.php:258
+#: index.php:256
 msgid "Save"
 msgstr ""
 
-#: index.php:278
+#: index.php:276
 msgid "All messages older than 1 day were deleted"
 msgstr ""
 
-#: index.php:284
+#: index.php:282
 msgid "Full clearing is finished"
 msgstr ""
 
-#: index.php:289
+#: index.php:287
 msgid "All messages older than 1 week were deleted"
 msgstr ""
 
-#: index.php:296 index.php:303 index.php:332
+#: index.php:294 index.php:301 index.php:330
 msgid "Clear"
 msgstr ""
 
-#: index.php:299
+#: index.php:297
 msgid "Clearing parameters"
 msgstr ""
 
-#: index.php:300
+#: index.php:298
 msgid "Older than 1 week"
 msgstr ""
 
-#: index.php:301
+#: index.php:299
 msgid "Older than 1 day"
 msgstr ""
 
-#: index.php:302
+#: index.php:300
 msgid "Clear all"
 msgstr ""
 
-#: index.php:323
+#: index.php:321
 msgid "The guestbook is closed"
 msgstr ""
 
-#: index.php:344
+#: index.php:342
 msgid "Name"
 msgstr ""
 
-#: index.php:347
+#: index.php:345
 msgid "Message"
 msgstr ""
 
-#: index.php:353 index.php:354
+#: index.php:351 index.php:352
 msgid "Symbols on the picture"
 msgstr ""
 
-#: index.php:357
-msgid "Sent"
+#: index.php:355
+msgid "Send"
 msgstr ""
 
-#: index.php:359
+#: index.php:357
 msgid "For registered users only"
 msgstr ""
 
-#: index.php:363
+#: index.php:361
 msgid "Comments"
 msgstr ""
 
-#: index.php:452
+#: index.php:450
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""
 
-#: index.php:455
+#: index.php:453
 msgid "Total"
 msgstr ""
 
-#: index.php:460
+#: index.php:458
 msgid "To Page"
 msgstr ""

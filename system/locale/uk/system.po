@@ -1,0 +1,496 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-04-05 06:22-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Ukrainian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: login.php\n"
+"X-Poedit-SearchPath-1: go.php\n"
+"X-Poedit-SearchPath-2: exit.php\n"
+"X-Poedit-SearchPath-3: system/johncms\n"
+"X-Poedit-SearchPath-4: system/head.php\n"
+"X-Poedit-SearchPath-5: system/end.php\n"
+"X-Poedit-SearchPath-6: system/mainmenu.php\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /system/system.pot\n"
+"Language: uk_UA\n"
+
+#: exit.php:30
+msgid "Are you sure you want to leave the site?"
+msgstr "Ви впевнені в тому, що хочете залишити сайт?"
+
+#: exit.php:31
+msgid "Logout"
+msgstr "Вийти"
+
+#: exit.php:32 system/johncms/Comments.php:243
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: go.php:37
+msgid "Select language"
+msgstr "Оберіть мову"
+
+#: go.php:43
+msgid "Default"
+msgstr "За умовчанням"
+
+#: go.php:50
+msgid "Apply"
+msgstr "Застосувати"
+
+#: go.php:50 go.php:67 system/johncms/Comments.php:112
+#: system/johncms/Comments.php:135 system/johncms/Comments.php:143
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:163
+#: system/johncms/Comments.php:191 system/johncms/Comments.php:200
+#: system/johncms/Comments.php:203 system/johncms/Comments.php:247
+msgid "Back"
+msgstr "Повернутись"
+
+#: go.php:58
+msgid "External Link"
+msgstr "Зовнішні посилання"
+
+#: go.php:61
+msgid "ATTENTION!"
+msgstr "УВАГА!"
+
+#: go.php:62
+msgid "You are going to leave our site and go to an external link"
+msgstr "Ви маєте намір покинути наш сайт і перейти по зовнішньому посиланню"
+
+#: go.php:63
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Адміністрація нашого ресурсу не несе відповідальності за контент стороннього сайту"
+
+#: go.php:64
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Не рекомедується вказувати ваші дані, що відносяться до %s (логін, пароль), на сторонніх сайтах"
+
+#: go.php:65
+msgid "Go to Link"
+msgstr "Перейти за посиланням"
+
+#: login.php:37 system/end.php:35 system/head.php:110
+msgid "Home"
+msgstr "На головну"
+
+#: login.php:39 login.php:158 system/head.php:112
+msgid "Login"
+msgstr "Увійти"
+
+#: login.php:49
+msgid "You have not entered login"
+msgstr "Ви не ввели логін"
+
+#: login.php:53
+msgid "You have not entered password"
+msgstr "Ви не ввели пароль"
+
+#: login.php:57
+msgid "Nickname"
+msgstr "Нікнейм"
+
+#: login.php:57 login.php:61
+msgid "Invalid length"
+msgstr "Неприпустима кількість символів"
+
+#: login.php:61 login.php:155
+msgid "Password"
+msgstr "Пароль"
+
+#: login.php:81
+msgid "The security code is not correct"
+msgstr "Захисний код введено не вірно"
+
+#: login.php:87
+msgid "Verification code"
+msgstr "Перевірочний код"
+
+#: login.php:88
+msgid "Enter verification code"
+msgstr "Введіть перевірочний код"
+
+#: login.php:92
+msgid "Continue"
+msgstr "Продовжити"
+
+#: login.php:104
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Вибачте, але ваша заявка на реєстрацію ще не розглянута. Будь ласка, будьте терплячими."
+
+#: login.php:128
+msgid "Enter site"
+msgstr "Увійти на сайт"
+
+#: login.php:137 login.php:141
+msgid "Authorization failed"
+msgstr "Помилка авторизації"
+
+#: login.php:153
+msgid "Username"
+msgstr "Ім'я кристувача"
+
+#: login.php:157
+msgid "Remember"
+msgstr "Запам’ятати"
+
+#: login.php:160
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: login.php:161
+msgid "Forgot password?"
+msgstr "Забули пароль?"
+
+#: system/head.php:53
+msgid "Site News"
+msgstr "Новини сайту"
+
+#: system/head.php:106
+msgid "Hi"
+msgstr "Привіт"
+
+#: system/head.php:106 system/johncms/Tools.php:299
+msgid "Guest"
+msgstr "Гість"
+
+#: system/head.php:111
+msgid "Personal"
+msgstr "Особисте"
+
+#: system/head.php:198
+msgid "Ban"
+msgstr "Бан"
+
+#: system/head.php:198
+msgid "Details"
+msgstr "Деталі"
+
+#: system/head.php:207
+msgid "System"
+msgstr "Система"
+
+#: system/head.php:219
+msgid "Mail"
+msgstr "Пошта"
+
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
+msgid "Guestbook"
+msgstr "Гостьова книга"
+
+#: system/head.php:229
+msgid "Comments"
+msgstr "Коментарі"
+
+#: system/head.php:233 system/johncms/Counters.php:164
+msgid "Unread"
+msgstr "Непрочитане"
+
+#: system/johncms/Bbcode.php:164
+msgid "Edit List"
+msgstr "Редагувати список"
+
+#: system/johncms/Bbcode.php:175
+msgid "Add Smilies"
+msgstr "Додати смайли"
+
+#: system/johncms/Bbcode.php:233
+msgid "Bold"
+msgstr "Жирний"
+
+#: system/johncms/Bbcode.php:234
+msgid "Italic"
+msgstr "Курсив"
+
+#: system/johncms/Bbcode.php:235
+msgid "Underline"
+msgstr "Підкреслений"
+
+#: system/johncms/Bbcode.php:236
+msgid "Strike"
+msgstr "Закреслений"
+
+#: system/johncms/Bbcode.php:237
+msgid "Text Color"
+msgstr "Колір тексту"
+
+#: system/johncms/Bbcode.php:238
+msgid "Background Color"
+msgstr "Колір фону"
+
+#: system/johncms/Bbcode.php:239
+msgid "List"
+msgstr "Список"
+
+#: system/johncms/Bbcode.php:240
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: system/johncms/Bbcode.php:241
+msgid "Quote"
+msgstr "Цитата"
+
+#: system/johncms/Bbcode.php:242
+msgid "URL"
+msgstr "Посилання"
+
+#: system/johncms/Bbcode.php:243
+msgid "Code"
+msgstr "Код"
+
+#: system/johncms/Bbcode.php:247
+msgid "Smilies"
+msgstr "Смайли"
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
+msgstr "Додано"
+
+#: system/johncms/Comments.php:104 system/johncms/Comments.php:299
+msgid "Reply"
+msgstr "Відповісти"
+
+#: system/johncms/Comments.php:112
+msgid "Administrator already replied to this message"
+msgstr "Адміністратор вже відповів на це повідомлення"
+
+#: system/johncms/Comments.php:146 system/johncms/Comments.php:200
+msgid "Wrong data"
+msgstr "Невірні дані"
+
+#: system/johncms/Comments.php:154 system/johncms/Comments.php:300
+msgid "Edit"
+msgstr "Редагувати"
+
+#: system/johncms/Comments.php:163
+msgid "You cannot edit posts of higher administration"
+msgstr "Редагування повідомлень адміністрації заборонено"
+
+#: system/johncms/Comments.php:240 system/johncms/Comments.php:242
+#: system/johncms/Comments.php:301
+msgid "Delete"
+msgstr "Видалити"
+
+#: system/johncms/Comments.php:241
+msgid "Do you really want to delete?"
+msgstr "Ви дійсно бажаєте видалити?"
+
+#: system/johncms/Comments.php:244
+msgid "Clear all messages from this user"
+msgstr "Видалити всі повідомлення цього користувача"
+
+#: system/johncms/Comments.php:245
+msgid "Clear"
+msgstr "Очистити"
+
+#: system/johncms/Comments.php:307
+msgid "Edited"
+msgstr "Відредаговано"
+
+#: system/johncms/Comments.php:331
+msgid "The list is empty"
+msgstr "Список порожній"
+
+#: system/johncms/Comments.php:334
+msgid "Total"
+msgstr "Всього"
+
+#: system/johncms/Comments.php:340
+msgid "To Page"
+msgstr "На сторінку"
+
+#: system/johncms/Comments.php:399
+msgid "Message"
+msgstr "Повідомлення"
+
+#: system/johncms/Comments.php:402
+msgid "Send"
+msgstr "Надіслати"
+
+#: system/johncms/Comments.php:422
+msgid "Text is too short"
+msgstr "Занадто короткий текст"
+
+#: system/johncms/Comments.php:428
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Ви не можете так часто додавати повідомлення<br>Зачекайте, будь ласка"
+
+#: system/johncms/Comments.php:428
+msgid "seconds"
+msgstr "секунд"
+
+#: system/johncms/Comments.php:438
+msgid "Message already exists"
+msgstr "Таке повідомлення вже існує"
+
+#: system/johncms/Counters.php:163
+msgid "Show for Period"
+msgstr "Показати за період"
+
+#: system/johncms/Counters.php:170
+msgid "Last activity"
+msgstr "Остання активність"
+
+#: system/johncms/NewsWidget.php:63
+msgid "show more"
+msgstr "показати більше"
+
+#: system/johncms/NewsWidget.php:98
+msgid "Discuss"
+msgstr "Обговорити"
+
+#: system/johncms/Tools.php:135
+msgid "Today"
+msgstr "Сьогодні"
+
+#: system/johncms/Tools.php:138
+msgid "Yesterday"
+msgstr "Вчора"
+
+#: system/johncms/Tools.php:154
+msgid "ERROR"
+msgstr "ПОМИЛКА"
+
+#: system/johncms/Tools.php:234
+msgid "List of Admins"
+msgstr "Список адміністрації"
+
+#: system/johncms/Tools.php:235
+msgid "Watching the photo album"
+msgstr "Перегляду фотоальбому"
+
+#: system/johncms/Tools.php:236
+msgid "List of birthdays"
+msgstr "Список іменинників"
+
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
+msgid "Downloads"
+msgstr "Завантаження"
+
+#: system/johncms/Tools.php:238
+msgid "Reading the FAQ"
+msgstr "Читання FAQ"
+
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
+msgid "Forum"
+msgstr "Форум"
+
+#: system/johncms/Tools.php:240
+msgid "Forum Files"
+msgstr "Файли форуму"
+
+#: system/johncms/Tools.php:241
+msgid "Looking, who in Forum?"
+msgstr "Дивитись хто на форумі?"
+
+#: system/johncms/Tools.php:243
+msgid "Here, in the list"
+msgstr "Тут, у списку"
+
+#: system/johncms/Tools.php:244
+msgid "On the Homepage"
+msgstr "На Головній"
+
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
+msgid "Library"
+msgstr "Бібліотека"
+
+#: system/johncms/Tools.php:246
+msgid "Personal correspondence"
+msgstr "Особиста переписка"
+
+#: system/johncms/Tools.php:247
+msgid "Reading the news"
+msgstr "Читає новини"
+
+#: system/johncms/Tools.php:248
+msgid "Who is online?"
+msgstr "Хто в мережі?"
+
+#: system/johncms/Tools.php:249
+msgid "Profile"
+msgstr "Анкета"
+
+#: system/johncms/Tools.php:250
+msgid "Personal Profile"
+msgstr "Особиста анкета"
+
+#: system/johncms/Tools.php:251
+msgid "Registered on the site"
+msgstr "Реєструється на сайті"
+
+#: system/johncms/Tools.php:252
+msgid "List of users"
+msgstr "Список користувачів"
+
+#: system/johncms/Tools.php:253
+msgid "Watching Top 10 Users"
+msgstr "Переглянути Топ 10 користувачів"
+
+#: system/johncms/Tools.php:367
+msgid "Last Visit"
+msgstr "Останнє відвідування"
+
+#: system/johncms/Tools.php:373
+msgid "Browser"
+msgstr "Браузер"
+
+#: system/johncms/Tools.php:374
+msgid "IP address"
+msgstr "IP-адреса"
+
+#: system/johncms/Tools.php:393
+msgid "IP History"
+msgstr "Історія IP"
+
+#: system/johncms/Tools.php:594
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "День"
+msgstr[1] "Дні"
+msgstr[2] "Днів"
+
+#: system/mainmenu.php:30
+msgid "Information"
+msgstr "Інформація"
+
+#: system/mainmenu.php:32
+msgid "News archive"
+msgstr "Архів новин"
+
+#: system/mainmenu.php:33
+msgid "Information, FAQ"
+msgstr "Інформація, FAQ"
+
+#: system/mainmenu.php:38
+msgid "Communication"
+msgstr "Спілкування"
+
+#: system/mainmenu.php:53
+msgid "Useful"
+msgstr "Корисне"
+
+#: system/mainmenu.php:69
+msgid "Community"
+msgstr "Спільнота"
+
+#: system/mainmenu.php:70
+msgid "Users"
+msgstr "Користувачі"
+
+#: system/mainmenu.php:71
+msgid "Photo Albums"
+msgstr "Фотоальбоми"
+

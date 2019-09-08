@@ -16,20 +16,20 @@ $textl = _t('Mail');
 require_once('../system/head.php');
 echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\User $systemUser */
-$systemUser = $container->get(Johncms\User::class);
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-/** @var Johncms\Tools $tools */
-$tools = $container->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-/** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+/** @var Johncms\Api\BbcodeInterface $bbcode */
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 $total = $db->query("
   SELECT COUNT(DISTINCT `cms_mail`.`from_id`)

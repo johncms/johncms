@@ -15,8 +15,8 @@ defined('_IN_JOHNADM') or die('Error: restricted access');
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
-/** @var Johncms\Tools $tools */
-$tools = App::getContainer()->get('tools');
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
 function whoisQuery($whoisserver, $domain)
 {

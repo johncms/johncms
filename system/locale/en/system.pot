@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: _t;_p:1,2\n"
@@ -78,11 +78,11 @@ msgstr ""
 msgid "Go to Link"
 msgstr ""
 
-#: login.php:37 system/end.php:35 system/head.php:108
+#: login.php:37 system/end.php:35 system/head.php:110
 msgid "Home"
 msgstr ""
 
-#: login.php:39 login.php:158 system/head.php:110
+#: login.php:39 login.php:158 system/head.php:112
 msgid "Login"
 msgstr ""
 
@@ -150,104 +150,108 @@ msgstr ""
 msgid "Forgot password?"
 msgstr ""
 
-#: system/head.php:51
+#: system/head.php:53
 msgid "Site News"
 msgstr ""
 
-#: system/head.php:104
+#: system/head.php:106
 msgid "Hi"
 msgstr ""
 
-#: system/head.php:104 system/johncms/Tools.php:299
+#: system/head.php:106 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr ""
 
-#: system/head.php:109
+#: system/head.php:111
 msgid "Personal"
 msgstr ""
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Ban"
 msgstr ""
 
-#: system/head.php:196
+#: system/head.php:198
 msgid "Details"
 msgstr ""
 
-#: system/head.php:205
+#: system/head.php:207
 msgid "System"
 msgstr ""
 
-#: system/head.php:217
+#: system/head.php:219
 msgid "Mail"
 msgstr ""
 
-#: system/head.php:221 system/johncms/Tools.php:242 system/mainmenu.php:42
+#: system/head.php:223 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr ""
 
-#: system/head.php:227
+#: system/head.php:229
 msgid "Comments"
 msgstr ""
 
-#: system/head.php:231 system/johncms/Counters.php:164
+#: system/head.php:233 system/johncms/Counters.php:164
 msgid "Unread"
 msgstr ""
 
-#: system/johncms/Bbcode.php:148
+#: system/johncms/Bbcode.php:164
 msgid "Edit List"
 msgstr ""
 
-#: system/johncms/Bbcode.php:159
+#: system/johncms/Bbcode.php:175
 msgid "Add Smilies"
 msgstr ""
 
-#: system/johncms/Bbcode.php:217
+#: system/johncms/Bbcode.php:233
 msgid "Bold"
 msgstr ""
 
-#: system/johncms/Bbcode.php:218
+#: system/johncms/Bbcode.php:234
 msgid "Italic"
 msgstr ""
 
-#: system/johncms/Bbcode.php:219
+#: system/johncms/Bbcode.php:235
 msgid "Underline"
 msgstr ""
 
-#: system/johncms/Bbcode.php:220
+#: system/johncms/Bbcode.php:236
 msgid "Strike"
 msgstr ""
 
-#: system/johncms/Bbcode.php:221
-msgid "List"
-msgstr ""
-
-#: system/johncms/Bbcode.php:222
-msgid "Spoiler"
-msgstr ""
-
-#: system/johncms/Bbcode.php:223
-msgid "Quote"
-msgstr ""
-
-#: system/johncms/Bbcode.php:224
-msgid "URL"
-msgstr ""
-
-#: system/johncms/Bbcode.php:225
-msgid "Code"
-msgstr ""
-
-#: system/johncms/Bbcode.php:226
+#: system/johncms/Bbcode.php:237
 msgid "Text Color"
 msgstr ""
 
-#: system/johncms/Bbcode.php:227
+#: system/johncms/Bbcode.php:238
 msgid "Background Color"
 msgstr ""
 
-#: system/johncms/Bbcode.php:230
+#: system/johncms/Bbcode.php:239
+msgid "List"
+msgstr ""
+
+#: system/johncms/Bbcode.php:240
+msgid "Spoiler"
+msgstr ""
+
+#: system/johncms/Bbcode.php:241
+msgid "Quote"
+msgstr ""
+
+#: system/johncms/Bbcode.php:242
+msgid "URL"
+msgstr ""
+
+#: system/johncms/Bbcode.php:243
+msgid "Code"
+msgstr ""
+
+#: system/johncms/Bbcode.php:247
 msgid "Smilies"
+msgstr ""
+
+#: system/johncms/Bbcode.php:287
+msgid "Added"
 msgstr ""
 
 #: system/johncms/Comments.php:104 system/johncms/Comments.php:299
@@ -335,11 +339,11 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/johncms/NewsWidget.php:62
+#: system/johncms/NewsWidget.php:63
 msgid "show more"
 msgstr ""
 
-#: system/johncms/NewsWidget.php:95
+#: system/johncms/NewsWidget.php:98
 msgid "Discuss"
 msgstr ""
 

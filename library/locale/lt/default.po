@@ -1,0 +1,466 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-03-25 19:15+0400\n"
+"PO-Revision-Date: 2017-03-25 11:49-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Lithuanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: lt_LT\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: lt\n"
+"X-Crowdin-File: /library/default.pot\n"
+
+#: classes/Hashtags.php:237 includes/lastcom.php:46 includes/top.php:47
+#: index.php:212 index.php:271 index.php:326
+msgid "The list is empty"
+msgstr "Sąrašas tuščias"
+
+#: classes/Rating.php:140
+msgid "Vote"
+msgstr "Balsuoti"
+
+#: classes/Tree.php:196 includes/addnew.php:185 includes/comments.php:51
+#: includes/del.php:31 includes/lastcom.php:24 includes/mkdir.php:48
+#: includes/moder.php:127 includes/new.php:27 includes/premod.php:26
+#: includes/search.php:35 includes/search.php:61 includes/tagcloud.php:23
+#: includes/tags.php:34 includes/top.php:34 index.php:60 index.php:157
+#: index.php:369
+msgid "Library"
+msgstr "Biblioteka"
+
+#: includes/addnew.php:39
+#, php-format
+msgid "You cannot add the Article so often<br>Please, wait %d sec."
+msgstr "Jūs negalite papildyti straipsnius taip dažnai.<br> Prašome palaukti %d sek."
+
+#: includes/addnew.php:40 includes/addnew.php:204 includes/del.php:62
+#: includes/del.php:86 includes/del.php:99 includes/del.php:144
+#: includes/del.php:152 includes/lastcom.php:49 includes/mkdir.php:62
+#: includes/moder.php:112 includes/moder.php:197 includes/top.php:105
+msgid "Back"
+msgstr "Atgal"
+
+#: includes/addnew.php:54 includes/mkdir.php:30
+msgid "You have not entered the name"
+msgstr "Jus neįvedėte pavadinimo"
+
+#: includes/addnew.php:69
+msgid "The file is invalid encoding, preferably UTF-8"
+msgstr "Failas klaidingo formato, privalomas UTF-8"
+
+#: includes/addnew.php:69 includes/addnew.php:77 includes/addnew.php:82
+#: includes/addnew.php:160 includes/mkdir.php:31
+msgid "Repeat"
+msgstr "Pakartoti"
+
+#: includes/addnew.php:77
+msgid "Error uploading"
+msgstr "Įkelimo klaida"
+
+#: includes/addnew.php:82
+msgid "Invalid file format allowed * .txt"
+msgstr "Netinkamas failo formatas leidžiama * .txt"
+
+#: includes/addnew.php:89
+msgid "You have not entered text"
+msgstr "Jūs neįrašėte jokio teksto"
+
+#: includes/addnew.php:160 includes/moder.php:102
+msgid "Photo uploading error"
+msgstr "Nuotraukos įkėlimo klaida"
+
+#: includes/addnew.php:174
+msgid "Article added"
+msgstr "Straipsnis pridėtas"
+
+#: includes/addnew.php:174
+msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
+msgstr "Ačiu, kad parašėte mums. Po administracijos patikrinimo, jūsų straipsnis atsiras bibliotekoje."
+
+#: includes/addnew.php:176
+msgid "To Article"
+msgstr "Prie straipsnio"
+
+#: includes/addnew.php:176 includes/mkdir.php:45
+msgid "To Section"
+msgstr "Prie skyriaus"
+
+#: includes/addnew.php:185 index.php:333
+msgid "Write Article"
+msgstr "Parašyti straipsnį"
+
+#: includes/addnew.php:188 includes/mkdir.php:51 includes/moder.php:138
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: includes/addnew.php:190 includes/moder.php:143
+msgid "Announce"
+msgstr "Anonsas"
+
+#: includes/addnew.php:192 includes/moder.php:147
+msgid "Text"
+msgstr "Tekstas"
+
+#: includes/addnew.php:195 includes/moder.php:190
+msgid "Commenting on the Article"
+msgstr "Komentuojam straipsnį"
+
+#: includes/addnew.php:196 includes/moder.php:136
+msgid "To upload a photo"
+msgstr "Įkelti nuotrauką"
+
+#: includes/addnew.php:198
+msgid "Select the text file"
+msgstr "Pasirinkite tekstinį failą"
+
+#: includes/addnew.php:199
+msgid "Text entry field will be ignored"
+msgstr "Teksto įvedimo laukas bus ignoruojamas"
+
+#: includes/addnew.php:200 includes/comments.php:56 includes/moder.php:154
+#: includes/new.php:56 includes/tags.php:34 includes/tags.php:52
+#: includes/top.php:76
+msgid "Tags"
+msgstr "Žymės"
+
+#: includes/addnew.php:201
+msgid "Specify the Tag to the Article, separated by commas"
+msgstr "Parašykit žymės straipsniui, per kablelius"
+
+#: includes/addnew.php:202 includes/mkdir.php:60 includes/moder.php:195
+msgid "Save"
+msgstr "Išsaugoti"
+
+#: includes/comments.php:31 includes/comments.php:43 index.php:69
+msgid "Access forbidden"
+msgstr "Prieiga uždrausta"
+
+#: includes/comments.php:57 includes/lastcom.php:42 includes/new.php:59
+#: includes/premod.php:56 includes/search.php:104 includes/tags.php:50
+#: includes/top.php:79 index.php:315 index.php:398
+msgid "Who added"
+msgstr "Kas pridėjo"
+
+#: includes/comments.php:58 includes/moder.php:192 includes/new.php:69
+#: includes/search.php:106 includes/tags.php:51 includes/top.php:89
+#: index.php:408
+msgid "Number of readings"
+msgstr "Skaitytojų skaičius"
+
+#: includes/comments.php:79 includes/new.php:75 includes/new.php:77
+#: includes/tags.php:53 includes/top.php:95 includes/top.php:97 index.php:414
+#: index.php:417
+msgid "Comments"
+msgstr "Komentarai"
+
+#: includes/comments.php:90
+msgid "Wrong data"
+msgstr "Klaidingi duomenys"
+
+#: includes/del.php:31 includes/del.php:92 includes/del.php:117
+#: includes/del.php:128 includes/del.php:134 includes/premod.php:58
+#: index.php:206 index.php:265 index.php:279 index.php:335 index.php:457
+msgid "Delete"
+msgstr "Ištrinti"
+
+#: includes/del.php:43
+msgid "Section does not exist"
+msgstr "Tokio skyriaus nėra"
+
+#: includes/del.php:50
+msgid "Are you sure you want to move the contents?"
+msgstr "Ar tikrai norite pašalinti šį turinį?"
+
+#: includes/del.php:50
+msgid "Move"
+msgstr "Perkelti"
+
+#: includes/del.php:50 includes/del.php:92 includes/del.php:117
+#: includes/del.php:128 includes/del.php:134
+msgid "Cancel"
+msgstr "Atšaukti"
+
+#: includes/del.php:62
+msgid "Successful transfer"
+msgstr "Sėkmingai perkeltą"
+
+#: includes/del.php:74 includes/moder.php:158
+msgid "Move to Section"
+msgstr "Perkelti į skyriu"
+
+#: includes/del.php:82 includes/premod.php:58
+msgid "Approve"
+msgstr "Patvirtinti"
+
+#: includes/del.php:86
+msgid "There are no Sections for moving"
+msgstr "Nera skyriu perkelimui"
+
+#: includes/del.php:92
+msgid "Are you sure you want to delete content?"
+msgstr "Ar Jūs esate įsitikinęs, kad norite ištrinti šį turinį?"
+
+#: includes/del.php:96
+#, php-format
+msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
+msgstr "Sėkmingai ištrintą.<br> Skyrių: (%d)<br> Straipsnių: (%d)<br>Žymių: (%d)<br>Komentarijų: (%d)<br>Paveikslėlių: (%d)"
+
+#: includes/del.php:104
+msgid "Section is not empty"
+msgstr "Skyrius ne tuščias"
+
+#: includes/del.php:105
+msgid "Select action"
+msgstr "Pasirinkite veiksmą"
+
+#: includes/del.php:107
+msgid "Delete with movement"
+msgstr "Ištrinti su perkelimų"
+
+#: includes/del.php:108
+msgid "Delete all Sections and Articles"
+msgstr "Ištrinti visus skyrius ir straipsnius"
+
+#: includes/del.php:109
+msgid "Do"
+msgstr "Paleisti"
+
+#: includes/del.php:117 includes/del.php:128 includes/del.php:134
+msgid "Delete confirmation"
+msgstr "Patvirtinti ištrinimą"
+
+#: includes/del.php:124
+msgid "Articles do not exist"
+msgstr "Straipsnio nėra"
+
+#: includes/del.php:144 includes/del.php:152
+msgid "Deleted"
+msgstr "Ištrinta"
+
+#: includes/download.php:57
+msgid "Author name"
+msgstr "Autorio vardas"
+
+#: includes/download.php:58
+msgid "Author last name"
+msgstr "Autorio pavarde"
+
+#: includes/download.php:60
+msgid "Name of the book"
+msgstr "Knygos pavadinimas"
+
+#: includes/download.php:62
+msgid "Date"
+msgstr "Data"
+
+#: includes/lastcom.php:24 index.php:182
+msgid "Latest comments"
+msgstr "Paskutini komentarai"
+
+#: includes/mkdir.php:45
+msgid "Section created"
+msgstr "Skyrius sukurtas"
+
+#: includes/mkdir.php:48 index.php:218
+msgid "Create Section"
+msgstr "Sukurti skyrių"
+
+#: includes/mkdir.php:53 includes/moder.php:140
+msgid "Section description"
+msgstr "Skyriaus aprašymas"
+
+#: includes/mkdir.php:55 includes/moder.php:178
+msgid "Section type"
+msgstr "Skyriaus tipas"
+
+#: includes/mkdir.php:57 includes/moder.php:181 index.php:254
+msgid "Sections"
+msgstr "Skyriai"
+
+#: includes/mkdir.php:58 includes/moder.php:182 index.php:254
+msgid "Articles"
+msgstr "Straipsniai"
+
+#: includes/moder.php:112
+msgid "Changed"
+msgstr "Pakeista"
+
+#: includes/moder.php:128
+msgid "Edit Section"
+msgstr "Redaguoti skyrių"
+
+#: includes/moder.php:128
+msgid "Edit Article"
+msgstr "Redeguoti straipsnį"
+
+#: includes/moder.php:151
+msgid "The text of the Article can not be edited, a large amount of data !!!"
+msgstr "Straipsnio tekstas negali buti redaguojamas del didelio duomenų kiekio!!!"
+
+#: includes/moder.php:164
+msgid "The ROOT"
+msgstr "ŠAKNIS"
+
+#: includes/moder.php:184
+msgid "Allow users to add their Articles?"
+msgstr "Leisti vartotojams rašyti savo straipsnius?"
+
+#: includes/moder.php:185
+msgid "Yes"
+msgstr "Taip"
+
+#: includes/moder.php:186
+msgid "No"
+msgstr "Ne"
+
+#: includes/moder.php:188
+msgid "Verified"
+msgstr "Patikrinta"
+
+#: includes/new.php:27 index.php:176
+msgid "New Articles"
+msgstr "Nauji straipsniai"
+
+#: includes/new.php:52 includes/top.php:72
+msgid "Section"
+msgstr "Skyrius"
+
+#: includes/new.php:64 includes/top.php:84 index.php:320 index.php:403
+msgid "Rating"
+msgstr "Įvertinimas"
+
+#: includes/new.php:77 includes/top.php:97 index.php:418
+msgid "Comments are closed"
+msgstr "Komentarai uždaryti"
+
+#: includes/new.php:84 includes/premod.php:63 includes/search.php:114
+#: includes/tags.php:57 index.php:215 index.php:274 index.php:329
+msgid "Total"
+msgstr "Viso"
+
+#: includes/new.php:86 includes/premod.php:67 includes/search.php:133
+#: includes/tagcloud.php:26 includes/tags.php:63
+msgid "To Library"
+msgstr "Į biblioteką"
+
+#: includes/premod.php:26
+msgid "Moderation Articles"
+msgstr "Straipsnių moderacija"
+
+#: includes/premod.php:30
+msgid "Article"
+msgstr "Straipsnis"
+
+#: includes/premod.php:30
+msgid "Added to the database"
+msgstr "Įtraukti į duomenų bazę"
+
+#: includes/premod.php:33
+msgid "All Articles added in database"
+msgstr "Visi straipsniai įtraukti į duomenų bazę"
+
+#: includes/premod.php:66
+msgid "Approve all"
+msgstr "Patvirtinti visus"
+
+#: includes/search.php:35 includes/search.php:38 index.php:158
+msgid "Search"
+msgstr "Paieška"
+
+#: includes/search.php:39
+msgid "Search in titles Articles"
+msgstr "Paieška pagal straipsnių pavadinimus"
+
+#: includes/search.php:46 includes/search.php:129
+msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
+msgstr "Ilgio užklausa: 4 min., 64 maks.<br> Paieška nejautri raudžių registrui.<br> Rezultatai rikiuojami pagal tinkamumą"
+
+#: includes/search.php:61
+msgid "Search results"
+msgstr "Paieškos rezultatai"
+
+#: includes/search.php:111
+msgid "Your search did not match any results"
+msgstr "Jūsų paieška nesutapo su jokiu rezultatu"
+
+#: includes/search.php:121
+msgid "To Page"
+msgstr "Į puslapį"
+
+#: includes/search.php:132
+msgid "New Search"
+msgstr "Nauja paieška"
+
+#: includes/tagcloud.php:19
+msgid "Sorted by alphabetical"
+msgstr "Rūšiuoti pagal abėcėlę"
+
+#: includes/tagcloud.php:20
+msgid "Sorted by relevance"
+msgstr "Rušiuoti pagal svarbumą"
+
+#: includes/tagcloud.php:23 index.php:158
+msgid "Tag Cloud"
+msgstr "Žymių debesis"
+
+#: includes/tagcloud.php:24 includes/top.php:35
+msgid "Sort"
+msgstr "Rūšiuoti"
+
+#: includes/top.php:29
+msgid "Most readings"
+msgstr "Labiausiai skaitomi"
+
+#: includes/top.php:30
+msgid "By rating"
+msgstr "Pagal reitingą"
+
+#: includes/top.php:31
+msgid "By comments"
+msgstr "Pagal komentarijus"
+
+#: includes/top.php:34 index.php:180
+msgid "Rating articles"
+msgstr "Straipniū vertinimai"
+
+#: index.php:67 index.php:132
+msgid "Library is closed"
+msgstr "Biblioteka uždarytą"
+
+#: index.php:166
+msgid "On moderation"
+msgstr "Moderacijoje"
+
+#: index.php:203 index.php:259 index.php:260
+msgid "Up"
+msgstr "Į viršų"
+
+#: index.php:204 index.php:262 index.php:263
+msgid "Down"
+msgstr "Į apačią"
+
+#: index.php:205 index.php:264 index.php:278 index.php:334 index.php:456
+msgid "Edit"
+msgstr "Redaguoti"
+
+#: index.php:280
+msgid "Create"
+msgstr "Sukurti"
+
+#: index.php:310 index.php:393
+msgid "The Tags"
+msgstr "Žymes"
+
+#: index.php:450
+msgid "Download file"
+msgstr "Atsisiųsti failą"
+

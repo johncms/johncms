@@ -27,14 +27,14 @@ $image_lib = file_exists('../files/library/images/orig/' . $id . '.png')
 
 $out = '';
 
-/** @var Interop\Container\ContainerInterface $container */
+/** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Bbcode $bbcode */
-$bbcode = $container->get('bbcode');
+/** @var Johncms\Api\BbcodeInterface $bbcode */
+$bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 switch ($type) {
     case 'txt':
