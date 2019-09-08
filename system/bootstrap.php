@@ -16,10 +16,16 @@ error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
+// Check the current PHP version
+if (version_compare(PHP_VERSION, '5.6', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 5.6 or higher</div>');
+}
+
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('CONFIG_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
+define('CACHE_PATH', ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR);
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -61,6 +67,9 @@ session_start();
 
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
+
+// Автоочистка системы
+$container->get(Johncms\Cleanup::class);
 
 /** @var Johncms\Environment $env */
 $env = App::getContainer()->get('env');
@@ -104,7 +113,6 @@ $config = $container->get(Johncms\Config::class);
 /** @var Johncms\UserConfig $userConfig */
 $userConfig = $container->get(Johncms\User::class)->getConfig();
 
-//TODO: Добавить пользовательский выбор языка
 if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
     $locale = trim($_POST['setlng']);
     $_SESSION['lng'] = $locale;
@@ -146,7 +154,7 @@ function _t($message, $textDomain = 'default')
  *
  * @param string $singular
  * @param string $plural
- * @param int $number
+ * @param int    $number
  * @param string $textDomain
  * @return string
  */
@@ -166,7 +174,7 @@ $kmess = $userConfig->kmess;
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
 
-if (extension_loaded('zlib')) {
+if (extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
     ob_start('ob_gzhandler');
 } else {
     ob_start();

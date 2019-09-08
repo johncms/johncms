@@ -12,8 +12,6 @@
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-require_once '../system/head.php';
-
 /** @var Interop\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -28,6 +26,8 @@ $tools = $container->get('tools');
 
 /** @var Johncms\Config $config */
 $config = $container->get(Johncms\Config::class);
+
+require_once '../system/head.php';
 
 // Обзор комментариев
 if (!$config['mod_down_comm'] && $systemUser->rights < 7) {

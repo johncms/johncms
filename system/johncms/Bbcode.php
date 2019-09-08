@@ -451,7 +451,7 @@ text-decoration: none;
      */
     private function highlightBbcodeUrl($var)
     {
-        return preg_replace_callback('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]~',
+        return preg_replace_callback('~\[url=(https?://.+?|//.+?)](.+?)\[/url]~iu',
             function ($url) {
                 $home = parse_url($this->homeUrl);
                 $tmp = parse_url($url[1]);

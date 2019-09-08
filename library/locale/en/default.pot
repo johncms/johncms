@@ -2,14 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: JohnCMS 7.0\n"
-"POT-Creation-Date: 2016-11-15 19:16+0400\n"
+"POT-Creation-Date: 2016-12-26 14:57+0400\n"
 "PO-Revision-Date: 2016-08-26 11:27+0400\n"
 "Last-Translator: \n"
 "Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Basepath: ../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en\n"
@@ -17,447 +17,447 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: classes/Hashtags.php:151 includes/lastcom.php:36 includes/top.php:37
-#: index.php:189 index.php:242 index.php:291
+#: classes/Hashtags.php:237 includes/lastcom.php:46 includes/top.php:47
+#: index.php:214 index.php:273 index.php:328
 msgid "The list is empty"
 msgstr ""
 
-#: classes/Rating.php:83
+#: classes/Rating.php:140
 msgid "Vote"
 msgstr ""
 
-#: classes/Tree.php:168 includes/addnew.php:174 includes/comments.php:41
-#: includes/del.php:21 includes/lastcom.php:14 includes/mkdir.php:37
-#: includes/moder.php:116 includes/new.php:17 includes/premod.php:16
-#: includes/search.php:24 includes/search.php:50 includes/tagcloud.php:13
-#: includes/tags.php:24 includes/top.php:24 index.php:52 index.php:143
-#: index.php:333
+#: classes/Tree.php:196 includes/addnew.php:185 includes/comments.php:51
+#: includes/del.php:31 includes/lastcom.php:24 includes/mkdir.php:48
+#: includes/moder.php:127 includes/new.php:27 includes/premod.php:26
+#: includes/search.php:35 includes/search.php:61 includes/tagcloud.php:23
+#: includes/tags.php:34 includes/top.php:34 index.php:62 index.php:159
+#: index.php:371
 msgid "Library"
 msgstr ""
 
-#: includes/addnew.php:29
+#: includes/addnew.php:39
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
 msgstr ""
 
-#: includes/addnew.php:29 includes/addnew.php:192 includes/del.php:52
-#: includes/del.php:76 includes/del.php:87 includes/del.php:132
-#: includes/del.php:140 includes/lastcom.php:39 includes/mkdir.php:51
-#: includes/moder.php:102 includes/moder.php:185 includes/top.php:95
+#: includes/addnew.php:40 includes/addnew.php:204 includes/del.php:62
+#: includes/del.php:86 includes/del.php:99 includes/del.php:144
+#: includes/del.php:152 includes/lastcom.php:49 includes/mkdir.php:62
+#: includes/moder.php:112 includes/moder.php:197 includes/top.php:105
 msgid "Back"
 msgstr ""
 
-#: includes/addnew.php:43 includes/mkdir.php:20
+#: includes/addnew.php:54 includes/mkdir.php:30
 msgid "You have not entered the name"
 msgstr ""
 
-#: includes/addnew.php:58
+#: includes/addnew.php:69
 msgid "The file is invalid encoding, preferably UTF-8"
 msgstr ""
 
-#: includes/addnew.php:58 includes/addnew.php:66 includes/addnew.php:71
-#: includes/addnew.php:149 includes/mkdir.php:20
+#: includes/addnew.php:69 includes/addnew.php:77 includes/addnew.php:82
+#: includes/addnew.php:160 includes/mkdir.php:31
 msgid "Repeat"
 msgstr ""
 
-#: includes/addnew.php:66
+#: includes/addnew.php:77
 msgid "Error uploading"
 msgstr ""
 
-#: includes/addnew.php:71
+#: includes/addnew.php:82
 msgid "Invalid file format allowed * .txt"
 msgstr ""
 
-#: includes/addnew.php:78
+#: includes/addnew.php:89
 msgid "You have not entered text"
 msgstr ""
 
-#: includes/addnew.php:149 includes/moder.php:92
+#: includes/addnew.php:160 includes/moder.php:102
 msgid "Photo uploading error"
 msgstr ""
 
-#: includes/addnew.php:163
+#: includes/addnew.php:174
 msgid "Article added"
 msgstr ""
 
-#: includes/addnew.php:163
+#: includes/addnew.php:174
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
 msgstr ""
 
-#: includes/addnew.php:165
+#: includes/addnew.php:176
 msgid "To Article"
 msgstr ""
 
-#: includes/addnew.php:165 includes/mkdir.php:34
+#: includes/addnew.php:176 includes/mkdir.php:45
 msgid "To Section"
 msgstr ""
 
-#: includes/addnew.php:174 index.php:298
+#: includes/addnew.php:185 index.php:335
 msgid "Write Article"
 msgstr ""
 
-#: includes/addnew.php:177 includes/mkdir.php:40 includes/moder.php:127
+#: includes/addnew.php:188 includes/mkdir.php:51 includes/moder.php:138
 msgid "Title"
 msgstr ""
 
-#: includes/addnew.php:179 includes/moder.php:132
+#: includes/addnew.php:190 includes/moder.php:143
 msgid "Announce"
 msgstr ""
 
-#: includes/addnew.php:181 includes/moder.php:136
+#: includes/addnew.php:192 includes/moder.php:147
 msgid "Text"
 msgstr ""
 
-#: includes/addnew.php:183 includes/moder.php:178
+#: includes/addnew.php:195 includes/moder.php:190
 msgid "Commenting on the Article"
 msgstr ""
 
-#: includes/addnew.php:184 includes/moder.php:125
+#: includes/addnew.php:196 includes/moder.php:136
 msgid "To upload a photo"
 msgstr ""
 
-#: includes/addnew.php:186
+#: includes/addnew.php:198
 msgid "Select the text file"
 msgstr ""
 
-#: includes/addnew.php:187
+#: includes/addnew.php:199
 msgid "Text entry field will be ignored"
 msgstr ""
 
-#: includes/addnew.php:188 includes/comments.php:46 includes/moder.php:142
-#: includes/new.php:45 includes/tags.php:24 includes/tags.php:41
-#: includes/top.php:66
+#: includes/addnew.php:200 includes/comments.php:56 includes/moder.php:154
+#: includes/new.php:56 includes/tags.php:34 includes/tags.php:52
+#: includes/top.php:76
 msgid "Tags"
 msgstr ""
 
-#: includes/addnew.php:189
+#: includes/addnew.php:201
 msgid "Specify the Tag to the Article, separated by commas"
 msgstr ""
 
-#: includes/addnew.php:190 includes/mkdir.php:49 includes/moder.php:183
+#: includes/addnew.php:202 includes/mkdir.php:60 includes/moder.php:195
 msgid "Save"
 msgstr ""
 
-#: includes/comments.php:21 includes/comments.php:33 index.php:61
+#: includes/comments.php:31 includes/comments.php:43 index.php:71
 msgid "Access forbidden"
 msgstr ""
 
-#: includes/comments.php:47 includes/lastcom.php:32 includes/new.php:48
-#: includes/premod.php:46 includes/search.php:92 includes/tags.php:39
-#: includes/top.php:69 index.php:280 index.php:354
+#: includes/comments.php:57 includes/lastcom.php:42 includes/new.php:59
+#: includes/premod.php:56 includes/search.php:104 includes/tags.php:50
+#: includes/top.php:79 index.php:317 index.php:400
 msgid "Who added"
 msgstr ""
 
-#: includes/comments.php:48 includes/moder.php:180 includes/new.php:58
-#: includes/search.php:94 includes/tags.php:40 includes/top.php:79
-#: index.php:364
+#: includes/comments.php:58 includes/moder.php:192 includes/new.php:69
+#: includes/search.php:106 includes/tags.php:51 includes/top.php:89
+#: index.php:410
 msgid "Number of readings"
 msgstr ""
 
-#: includes/comments.php:60 includes/new.php:64 includes/new.php:66
-#: includes/tags.php:42 includes/top.php:85 includes/top.php:87 index.php:370
-#: index.php:372
+#: includes/comments.php:79 includes/new.php:75 includes/new.php:77
+#: includes/tags.php:53 includes/top.php:95 includes/top.php:97 index.php:416
+#: index.php:419
 msgid "Comments"
 msgstr ""
 
-#: includes/comments.php:69
+#: includes/comments.php:90
 msgid "Wrong data"
 msgstr ""
 
-#: includes/del.php:21 includes/del.php:82 includes/del.php:105
-#: includes/del.php:116 includes/del.php:122 includes/premod.php:48
-#: index.php:183 index.php:236 index.php:250 index.php:300 index.php:405
+#: includes/del.php:31 includes/del.php:92 includes/del.php:117
+#: includes/del.php:128 includes/del.php:134 includes/premod.php:58
+#: index.php:208 index.php:267 index.php:281 index.php:337 index.php:459
 msgid "Delete"
 msgstr ""
 
-#: includes/del.php:33
+#: includes/del.php:43
 msgid "Section does not exist"
 msgstr ""
 
-#: includes/del.php:40
+#: includes/del.php:50
 msgid "Are you sure you want to move the contents?"
 msgstr ""
 
-#: includes/del.php:40
+#: includes/del.php:50
 msgid "Move"
 msgstr ""
 
-#: includes/del.php:40 includes/del.php:82 includes/del.php:105
-#: includes/del.php:116 includes/del.php:122
+#: includes/del.php:50 includes/del.php:92 includes/del.php:117
+#: includes/del.php:128 includes/del.php:134
 msgid "Cancel"
 msgstr ""
 
-#: includes/del.php:52
+#: includes/del.php:62
 msgid "Successful transfer"
 msgstr ""
 
-#: includes/del.php:64 includes/moder.php:146
+#: includes/del.php:74 includes/moder.php:158
 msgid "Move to Section"
 msgstr ""
 
-#: includes/del.php:72 includes/premod.php:48
+#: includes/del.php:82 includes/premod.php:58
 msgid "Approve"
 msgstr ""
 
-#: includes/del.php:76
+#: includes/del.php:86
 msgid "There are no Sections for moving"
 msgstr ""
 
-#: includes/del.php:82
+#: includes/del.php:92
 msgid "Are you sure you want to delete content?"
 msgstr ""
 
-#: includes/del.php:86
+#: includes/del.php:96
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
 msgstr ""
 
-#: includes/del.php:92
+#: includes/del.php:104
 msgid "Section is not empty"
 msgstr ""
 
-#: includes/del.php:93
+#: includes/del.php:105
 msgid "Select action"
 msgstr ""
 
-#: includes/del.php:95
+#: includes/del.php:107
 msgid "Delete with movement"
 msgstr ""
 
-#: includes/del.php:96
+#: includes/del.php:108
 msgid "Delete all Sections and Articles"
 msgstr ""
 
-#: includes/del.php:97
+#: includes/del.php:109
 msgid "Do"
 msgstr ""
 
-#: includes/del.php:105 includes/del.php:116 includes/del.php:122
+#: includes/del.php:117 includes/del.php:128 includes/del.php:134
 msgid "Delete confirmation"
 msgstr ""
 
-#: includes/del.php:112
+#: includes/del.php:124
 msgid "Articles do not exist"
 msgstr ""
 
-#: includes/del.php:132 includes/del.php:140
+#: includes/del.php:144 includes/del.php:152
 msgid "Deleted"
 msgstr ""
 
-#: includes/download.php:47
+#: includes/download.php:57
 msgid "Author name"
 msgstr ""
 
-#: includes/download.php:48
+#: includes/download.php:58
 msgid "Author last name"
 msgstr ""
 
-#: includes/download.php:50
+#: includes/download.php:60
 msgid "Name of the book"
 msgstr ""
 
-#: includes/download.php:52
+#: includes/download.php:62
 msgid "Date"
 msgstr ""
 
-#: includes/lastcom.php:14 index.php:163
+#: includes/lastcom.php:24 index.php:184
 msgid "Latest comments"
 msgstr ""
 
-#: includes/mkdir.php:34
+#: includes/mkdir.php:45
 msgid "Section created"
 msgstr ""
 
-#: includes/mkdir.php:37 index.php:195
+#: includes/mkdir.php:48 index.php:220
 msgid "Create Section"
 msgstr ""
 
-#: includes/mkdir.php:42 includes/moder.php:129
+#: includes/mkdir.php:53 includes/moder.php:140
 msgid "Section description"
 msgstr ""
 
-#: includes/mkdir.php:44 includes/moder.php:166
+#: includes/mkdir.php:55 includes/moder.php:178
 msgid "Section type"
 msgstr ""
 
-#: includes/mkdir.php:46 includes/moder.php:169 index.php:226
+#: includes/mkdir.php:57 includes/moder.php:181 index.php:256
 msgid "Sections"
 msgstr ""
 
-#: includes/mkdir.php:47 includes/moder.php:170 index.php:226
+#: includes/mkdir.php:58 includes/moder.php:182 index.php:256
 msgid "Articles"
 msgstr ""
 
-#: includes/moder.php:102
+#: includes/moder.php:112
 msgid "Changed"
 msgstr ""
 
-#: includes/moder.php:117
+#: includes/moder.php:128
 msgid "Edit Section"
 msgstr ""
 
-#: includes/moder.php:117
+#: includes/moder.php:128
 msgid "Edit Article"
 msgstr ""
 
-#: includes/moder.php:139
+#: includes/moder.php:151
 msgid "The text of the Article can not be edited, a large amount of data !!!"
 msgstr ""
 
-#: includes/moder.php:152
+#: includes/moder.php:164
 msgid "The ROOT"
 msgstr ""
 
-#: includes/moder.php:172
+#: includes/moder.php:184
 msgid "Allow users to add their Articles?"
 msgstr ""
 
-#: includes/moder.php:173
+#: includes/moder.php:185
 msgid "Yes"
 msgstr ""
 
-#: includes/moder.php:174
+#: includes/moder.php:186
 msgid "No"
 msgstr ""
 
-#: includes/moder.php:176
+#: includes/moder.php:188
 msgid "Verified"
 msgstr ""
 
-#: includes/new.php:17 index.php:159
+#: includes/new.php:27 index.php:178
 msgid "New Articles"
 msgstr ""
 
-#: includes/new.php:41 includes/top.php:62
+#: includes/new.php:52 includes/top.php:72
 msgid "Section"
 msgstr ""
 
-#: includes/new.php:53 includes/top.php:74 index.php:285 index.php:359
+#: includes/new.php:64 includes/top.php:84 index.php:322 index.php:405
 msgid "Rating"
 msgstr ""
 
-#: includes/new.php:66 includes/top.php:87 index.php:372
+#: includes/new.php:77 includes/top.php:97 index.php:420
 msgid "Comments are closed"
 msgstr ""
 
-#: includes/new.php:73 includes/premod.php:53 includes/search.php:102
-#: includes/tags.php:46 index.php:192 index.php:245 index.php:294
+#: includes/new.php:84 includes/premod.php:63 includes/search.php:114
+#: includes/tags.php:57 index.php:217 index.php:276 index.php:331
 msgid "Total"
 msgstr ""
 
-#: includes/new.php:75 includes/premod.php:56 includes/search.php:120
-#: includes/tagcloud.php:16 includes/tags.php:51
+#: includes/new.php:86 includes/premod.php:67 includes/search.php:133
+#: includes/tagcloud.php:26 includes/tags.php:63
 msgid "To Library"
 msgstr ""
 
-#: includes/premod.php:16
+#: includes/premod.php:26
 msgid "Moderation Articles"
 msgstr ""
 
-#: includes/premod.php:20
+#: includes/premod.php:30
 msgid "Article"
 msgstr ""
 
-#: includes/premod.php:20
+#: includes/premod.php:30
 msgid "Added to the database"
 msgstr ""
 
-#: includes/premod.php:23
+#: includes/premod.php:33
 msgid "All Articles added in database"
 msgstr ""
 
-#: includes/premod.php:55
+#: includes/premod.php:66
 msgid "Approve all"
 msgstr ""
 
-#: includes/search.php:24 includes/search.php:27 index.php:144
+#: includes/search.php:35 includes/search.php:38 index.php:160
 msgid "Search"
 msgstr ""
 
-#: includes/search.php:28
+#: includes/search.php:39
 msgid "Search in titles Articles"
 msgstr ""
 
-#: includes/search.php:35 includes/search.php:116
+#: includes/search.php:46 includes/search.php:129
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
 msgstr ""
 
-#: includes/search.php:50
+#: includes/search.php:61
 msgid "Search results"
 msgstr ""
 
-#: includes/search.php:99
+#: includes/search.php:111
 msgid "Your search did not match any results"
 msgstr ""
 
-#: includes/search.php:108
+#: includes/search.php:121
 msgid "To Page"
 msgstr ""
 
-#: includes/search.php:119
+#: includes/search.php:132
 msgid "New Search"
 msgstr ""
 
-#: includes/tagcloud.php:9
+#: includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
 msgstr ""
 
-#: includes/tagcloud.php:10
+#: includes/tagcloud.php:20
 msgid "Sorted by relevance"
 msgstr ""
 
-#: includes/tagcloud.php:13 index.php:144
+#: includes/tagcloud.php:23 index.php:160
 msgid "Tag Cloud"
 msgstr ""
 
-#: includes/tagcloud.php:14 includes/top.php:25
+#: includes/tagcloud.php:24 includes/top.php:35
 msgid "Sort"
 msgstr ""
 
-#: includes/top.php:19
+#: includes/top.php:29
 msgid "Most readings"
 msgstr ""
 
-#: includes/top.php:20
+#: includes/top.php:30
 msgid "By rating"
 msgstr ""
 
-#: includes/top.php:21
+#: includes/top.php:31
 msgid "By comments"
 msgstr ""
 
-#: includes/top.php:24 index.php:162
+#: includes/top.php:34 index.php:182
 msgid "Rating articles"
 msgstr ""
 
-#: index.php:59 index.php:118
+#: index.php:69 index.php:134
 msgid "Library is closed"
 msgstr ""
 
-#: index.php:152
+#: index.php:168
 msgid "On moderation"
 msgstr ""
 
-#: index.php:183 index.php:231 index.php:232
+#: index.php:205 index.php:261 index.php:262
 msgid "Up"
 msgstr ""
 
-#: index.php:183 index.php:234 index.php:235
+#: index.php:206 index.php:264 index.php:265
 msgid "Down"
 msgstr ""
 
-#: index.php:183 index.php:236 index.php:249 index.php:299 index.php:404
+#: index.php:207 index.php:266 index.php:280 index.php:336 index.php:458
 msgid "Edit"
 msgstr ""
 
-#: index.php:251
+#: index.php:282
 msgid "Create"
 msgstr ""
 
-#: index.php:277 index.php:351
+#: index.php:312 index.php:395
 msgid "The Tags"
 msgstr ""
 
-#: index.php:399
+#: index.php:452
 msgid "Download file"
 msgstr ""

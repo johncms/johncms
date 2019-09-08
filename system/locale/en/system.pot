@@ -158,7 +158,7 @@ msgstr ""
 msgid "Hi"
 msgstr ""
 
-#: system/head.php:104 system/johncms/Tools.php:300
+#: system/head.php:104 system/johncms/Tools.php:299
 msgid "Guest"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "Mail"
 msgstr ""
 
-#: system/head.php:221 system/johncms/Tools.php:243 system/mainmenu.php:42
+#: system/head.php:221 system/johncms/Tools.php:242 system/mainmenu.php:42
 msgid "Guestbook"
 msgstr ""
 
@@ -343,111 +343,111 @@ msgstr ""
 msgid "Discuss"
 msgstr ""
 
-#: system/johncms/Tools.php:136
+#: system/johncms/Tools.php:135
 msgid "Today"
 msgstr ""
 
-#: system/johncms/Tools.php:139
+#: system/johncms/Tools.php:138
 msgid "Yesterday"
 msgstr ""
 
-#: system/johncms/Tools.php:155
+#: system/johncms/Tools.php:154
 msgid "ERROR"
 msgstr ""
 
-#: system/johncms/Tools.php:235
+#: system/johncms/Tools.php:234
 msgid "List of Admins"
 msgstr ""
 
-#: system/johncms/Tools.php:236
+#: system/johncms/Tools.php:235
 msgid "Watching the photo album"
 msgstr ""
 
-#: system/johncms/Tools.php:237
+#: system/johncms/Tools.php:236
 msgid "List of birthdays"
 msgstr ""
 
-#: system/johncms/Tools.php:238 system/mainmenu.php:57
+#: system/johncms/Tools.php:237 system/mainmenu.php:57
 msgid "Downloads"
 msgstr ""
 
-#: system/johncms/Tools.php:239
+#: system/johncms/Tools.php:238
 msgid "Reading the FAQ"
 msgstr ""
 
-#: system/johncms/Tools.php:240 system/mainmenu.php:47
+#: system/johncms/Tools.php:239 system/mainmenu.php:47
 msgid "Forum"
 msgstr ""
 
-#: system/johncms/Tools.php:241
+#: system/johncms/Tools.php:240
 msgid "Forum Files"
 msgstr ""
 
-#: system/johncms/Tools.php:242
+#: system/johncms/Tools.php:241
 msgid "Looking, who in Forum?"
 msgstr ""
 
-#: system/johncms/Tools.php:244
+#: system/johncms/Tools.php:243
 msgid "Here, in the list"
 msgstr ""
 
-#: system/johncms/Tools.php:245
+#: system/johncms/Tools.php:244
 msgid "On the Homepage"
 msgstr ""
 
-#: system/johncms/Tools.php:246 system/mainmenu.php:62
+#: system/johncms/Tools.php:245 system/mainmenu.php:62
 msgid "Library"
 msgstr ""
 
-#: system/johncms/Tools.php:247
+#: system/johncms/Tools.php:246
 msgid "Personal correspondence"
 msgstr ""
 
-#: system/johncms/Tools.php:248
+#: system/johncms/Tools.php:247
 msgid "Reading the news"
 msgstr ""
 
-#: system/johncms/Tools.php:249
+#: system/johncms/Tools.php:248
 msgid "Who is online?"
 msgstr ""
 
-#: system/johncms/Tools.php:250
+#: system/johncms/Tools.php:249
 msgid "Profile"
 msgstr ""
 
-#: system/johncms/Tools.php:251
+#: system/johncms/Tools.php:250
 msgid "Personal Profile"
 msgstr ""
 
-#: system/johncms/Tools.php:252
+#: system/johncms/Tools.php:251
 msgid "Registered on the site"
 msgstr ""
 
-#: system/johncms/Tools.php:253
+#: system/johncms/Tools.php:252
 msgid "List of users"
 msgstr ""
 
-#: system/johncms/Tools.php:254
+#: system/johncms/Tools.php:253
 msgid "Watching Top 10 Users"
 msgstr ""
 
-#: system/johncms/Tools.php:368
+#: system/johncms/Tools.php:367
 msgid "Last Visit"
 msgstr ""
 
-#: system/johncms/Tools.php:374
+#: system/johncms/Tools.php:373
 msgid "Browser"
 msgstr ""
 
-#: system/johncms/Tools.php:375
+#: system/johncms/Tools.php:374
 msgid "IP address"
 msgstr ""
 
-#: system/johncms/Tools.php:394
+#: system/johncms/Tools.php:393
 msgid "IP History"
 msgstr ""
 
-#: system/johncms/Tools.php:595
+#: system/johncms/Tools.php:594
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""

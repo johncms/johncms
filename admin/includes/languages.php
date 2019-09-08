@@ -63,7 +63,9 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
         exit;
     }
 
-    opcache_reset();
+    if (function_exists('opcache_reset')) {
+        opcache_reset();
+    }
 }
 
 echo '<div class="menu">'

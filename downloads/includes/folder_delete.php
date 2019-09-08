@@ -30,7 +30,9 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
 
     if (!$req->rowCount() || $del_cat) {
+        require_once('../system/head.php');
         echo ($del_cat ? _t('Before removing, delete subdirectories') : _t('The directory does not exist')) . ' <a href="?">' . _t('Downloads') . '</a>';
+        require_once('../system/end.php');
         exit;
     }
 

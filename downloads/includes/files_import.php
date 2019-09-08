@@ -183,6 +183,6 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             '<div class="phdr"><small>' . _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
             '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
-}
 
-require '../system/end.php';
+    require '../system/end.php';
+}

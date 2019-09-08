@@ -24,7 +24,9 @@ $systemUser = $container->get(Johncms\User::class);
 /** @var Johncms\Tools $tools */
 $tools = $container->get('tools');
 
-// Файлы на модерации
+require '../system/head.php';
+require 'classes/download.php';
+
 $textl = _t('Files on moderation');
 
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
@@ -74,3 +76,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
     echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
 }
+
+require '../system/end.php';

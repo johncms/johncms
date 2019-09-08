@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: johncms\n"
-"POT-Creation-Date: 2016-11-15 19:13+0400\n"
-"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"POT-Creation-Date: 2016-12-26 14:56+0400\n"
+"PO-Revision-Date: 2016-12-31 10:06-0500\n"
 "Last-Translator: mobiCMS <dev@mobicms.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -19,398 +19,402 @@ msgstr ""
 "X-Crowdin-Language: id\n"
 "X-Crowdin-File: /album/default.pot\n"
 
-#: includes/comments.php:26 index.php:47
+#: includes/comments.php:36 index.php:57
 msgid "User does not exists"
 msgstr "Pengguna tidak ada"
 
-#: includes/comments.php:38 includes/image_download.php:34 includes/show.php:63
+#: includes/comments.php:48 includes/image_download.php:44 includes/show.php:73
 msgid "Access forbidden"
 msgstr "Akses ditolak"
 
-#: includes/comments.php:39 includes/show.php:63 includes/show.php:85
-#: includes/show.php:182
+#: includes/comments.php:49 includes/show.php:73 includes/show.php:95
+#: includes/show.php:193
 msgid "Album List"
 msgstr "Daftar Album"
 
-#: includes/comments.php:44 includes/list.php:24 includes/show.php:37
-#: includes/top.php:113 includes/users.php:36 index.php:139
+#: includes/comments.php:54 includes/list.php:34 includes/show.php:47
+#: includes/top.php:123 includes/users.php:46 index.php:148
 msgid "Photo Albums"
 msgstr "Album foto"
 
-#: includes/comments.php:45 includes/list.php:24 includes/show.php:37
+#: includes/comments.php:55 includes/list.php:34 includes/show.php:47
 msgid "Personal"
 msgstr "Personal"
 
-#: includes/comments.php:58 includes/show.php:161 includes/top.php:158
+#: includes/comments.php:68 includes/show.php:172 includes/top.php:168
 msgid "Views"
 msgstr "Dilihat"
 
-#: includes/comments.php:58 includes/show.php:161 includes/top.php:158
+#: includes/comments.php:68 includes/show.php:172 includes/top.php:168
 msgid "Downloads"
 msgstr "Unduhan"
 
-#: includes/comments.php:59 includes/show.php:164 includes/top.php:161
+#: includes/comments.php:69 includes/show.php:175 includes/top.php:171
 msgid "Download"
 msgstr "Unduh"
 
-#: includes/comments.php:75 includes/show.php:163 includes/top.php:160
+#: includes/comments.php:85 includes/show.php:174 includes/top.php:170
 msgid "Comments"
 msgstr "Komentar"
 
-#: includes/comments.php:94 includes/delete.php:55 includes/edit.php:32
-#: includes/edit.php:69 includes/image_delete.php:47
-#: includes/image_download.php:37 includes/image_download.php:46
-#: includes/image_edit.php:208 includes/image_move.php:38
-#: includes/image_move.php:61 includes/image_upload.php:28 includes/show.php:20
-#: includes/show.php:28 includes/top.php:26 includes/vote.php:22
-#: includes/vote.php:67
+#: includes/comments.php:105 includes/delete.php:65 includes/edit.php:42
+#: includes/edit.php:79 includes/image_delete.php:57
+#: includes/image_download.php:47 includes/image_download.php:56
+#: includes/image_edit.php:218 includes/image_move.php:48
+#: includes/image_move.php:71 includes/image_upload.php:38 includes/show.php:30
+#: includes/show.php:38 includes/top.php:36 includes/vote.php:32
+#: includes/vote.php:77
 msgid "Wrong data"
 msgstr "Data salah"
 
-#: includes/delete.php:25 includes/image_delete.php:26
-#: includes/image_edit.php:26 includes/image_move.php:24
-#: includes/image_upload.php:34
+#: includes/delete.php:35 includes/image_delete.php:36
+#: includes/image_edit.php:36 includes/image_move.php:34
+#: includes/image_upload.php:44
 msgid "Photo Album"
 msgstr "Album Foto"
 
-#: includes/delete.php:25 includes/delete.php:50 includes/image_delete.php:42
-#: includes/list.php:47 includes/show.php:152
+#: includes/delete.php:35 includes/delete.php:60 includes/image_delete.php:52
+#: includes/list.php:57 includes/show.php:163
 msgid "Delete"
 msgstr "Hapus"
 
-#: includes/delete.php:44
+#: includes/delete.php:54
 msgid "Album deleted"
 msgstr "Album berhasil dihapus"
 
-#: includes/delete.php:45 includes/edit.php:127 includes/image_edit.php:159
-#: includes/image_move.php:36 includes/image_move.php:57
-#: includes/image_upload.php:99
+#: includes/delete.php:55 includes/edit.php:137 includes/image_edit.php:169
+#: includes/image_move.php:46 includes/image_move.php:67
+#: includes/image_upload.php:109
 msgid "Continue"
 msgstr "Lanjutkan"
 
-#: includes/delete.php:48 includes/show.php:44 index.php:28
+#: includes/delete.php:58 includes/show.php:54 index.php:38
 msgid "Album"
 msgstr "Album"
 
-#: includes/delete.php:49
+#: includes/delete.php:59
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
 msgstr "Apakah Anda yakin menghapus album ini? Jika ada foto, akan ikut terhapus."
 
-#: includes/delete.php:52 includes/edit.php:154 includes/image_delete.php:44
-#: includes/image_edit.php:205 includes/image_move.php:55
+#: includes/delete.php:62 includes/edit.php:164 includes/image_delete.php:54
+#: includes/image_edit.php:215 includes/image_move.php:65
 msgid "Cancel"
 msgstr "Batal"
 
-#: includes/edit.php:25
+#: includes/edit.php:35
 msgid "Edit Album"
 msgstr "Sunting Album"
 
-#: includes/edit.php:37 includes/list.php:29
+#: includes/edit.php:47 includes/list.php:39
 msgid "Create Album"
 msgstr "Buat Album"
 
-#: includes/edit.php:55
+#: includes/edit.php:65
 msgid "You have not entered Title"
 msgstr "Anda belum memasukkan Judul"
 
-#: includes/edit.php:57 includes/edit.php:139
+#: includes/edit.php:67 includes/edit.php:149
 msgid "Title"
 msgstr "Judul"
 
-#: includes/edit.php:57 includes/edit.php:65
+#: includes/edit.php:67 includes/edit.php:75
 msgid "Invalid length"
 msgstr "Panjang tidak valid"
 
-#: includes/edit.php:63
+#: includes/edit.php:73
 msgid "You have not entered password"
 msgstr "Ands belum memasukkan kata sandi"
 
-#: includes/edit.php:65 includes/edit.php:145
+#: includes/edit.php:75 includes/edit.php:155
 msgid "Password"
 msgstr "Kata sandi"
 
-#: includes/edit.php:74
+#: includes/edit.php:84
 msgid "The album already exists"
 msgstr "Album sudah ada"
 
-#: includes/edit.php:126
+#: includes/edit.php:136
 msgid "Album successfully changed"
 msgstr "Album berhasil diubah"
 
-#: includes/edit.php:126
+#: includes/edit.php:136
 msgid "Album successfully created"
 msgstr "Album berhasil dibuat"
 
-#: includes/edit.php:141
+#: includes/edit.php:151
 msgid "Min. 2, Max. 30"
 msgstr "Min. 2, maks. 30"
 
-#: includes/edit.php:142 includes/image_edit.php:166
-#: includes/image_upload.php:113
+#: includes/edit.php:152 includes/image_edit.php:176
+#: includes/image_upload.php:125
 msgid "Description"
 msgstr "Deskripsi"
 
-#: includes/edit.php:144 includes/image_edit.php:168
-#: includes/image_upload.php:115
+#: includes/edit.php:154 includes/image_edit.php:178
+#: includes/image_upload.php:127
 msgid "Optional field"
 msgstr "Kolom tidak wajib"
 
-#: includes/edit.php:144
+#: includes/edit.php:154
 msgid "Max. 500"
 msgstr "Maks. 500"
 
-#: includes/edit.php:147
+#: includes/edit.php:157
 msgid "This field is required if the password access is activated"
 msgstr "Kolom ini diperlukan jika akses dengan kata sandi diaktifkan"
 
-#: includes/edit.php:148
+#: includes/edit.php:158
 msgid "Access"
 msgstr "Akses"
 
-#: includes/edit.php:149
+#: includes/edit.php:159
 msgid "Everyone"
 msgstr "Publik"
 
-#: includes/edit.php:150
+#: includes/edit.php:160
 msgid "With Password"
 msgstr "Dengan kata sandi"
 
-#: includes/edit.php:151
+#: includes/edit.php:161
 msgid "Only for me"
 msgstr "Hanya saya"
 
-#: includes/edit.php:152 includes/image_edit.php:203
+#: includes/edit.php:162 includes/image_edit.php:213
 msgid "Save"
 msgstr "Simpan"
 
-#: includes/image_delete.php:26
+#: includes/image_delete.php:36
 msgid "Delete image"
 msgstr "Hapus gambar"
 
-#: includes/image_delete.php:41
+#: includes/image_delete.php:51
 msgid "Are you sure you want to delete this image?"
 msgstr "Apakah Anda yakin menghapus gambar ini?"
 
-#: includes/image_download.php:43
+#: includes/image_download.php:53
 msgid "File does not exist"
 msgstr "Berkas tidak ada"
 
-#: includes/image_download.php:59 includes/image_upload.php:120
+#: includes/image_download.php:69 includes/image_upload.php:132
 msgid "Back"
 msgstr "Kembali"
 
-#: includes/image_edit.php:26
+#: includes/image_edit.php:36
 msgid "Edit image"
 msgstr "Sunting gambar"
 
-#: includes/image_edit.php:158
+#: includes/image_edit.php:168
 msgid "Image successfully changed"
 msgstr "Gambar berhasil diubah"
 
-#: includes/image_edit.php:164 includes/image_upload.php:111
+#: includes/image_edit.php:174 includes/image_upload.php:123
 msgid "Image"
 msgstr "Gambar"
 
-#: includes/image_edit.php:198
+#: includes/image_edit.php:208
 msgid "Rotate"
 msgstr "Putar"
 
-#: includes/image_edit.php:199
+#: includes/image_edit.php:209
 msgid "do not rotate"
 msgstr "jangan putar"
 
-#: includes/image_edit.php:200
+#: includes/image_edit.php:210
 msgid "clockwise"
 msgstr "searah jarum jam"
 
-#: includes/image_edit.php:201
+#: includes/image_edit.php:211
 msgid "counterclockwise"
 msgstr "berlawanan"
 
-#: includes/image_edit.php:202
+#: includes/image_edit.php:212
 msgid "Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason."
 msgstr "Catatan, Anda mungkin kehilangan kualitas gambar jika anda mengubah kecerahan, kontras dan memutarnya berkali-kali. Jangan membuat perubahan tanpa alasan."
 
-#: includes/image_move.php:24
+#: includes/image_move.php:34
 msgid "Move image"
 msgstr "Pindah gambar"
 
-#: includes/image_move.php:35
+#: includes/image_move.php:45
 msgid "Image successfully moved to the selected album"
 msgstr "Gambar berhasil dipindah ke album yang dipilih"
 
-#: includes/image_move.php:45
+#: includes/image_move.php:55
 msgid "Select Album"
 msgstr "Pilih album"
 
-#: includes/image_move.php:53 includes/show.php:151
+#: includes/image_move.php:63 includes/show.php:162
 msgid "Move"
 msgstr "Pindah"
 
-#: includes/image_move.php:57
+#: includes/image_move.php:67
 msgid "You must create at least one additional album in order to move the image"
 msgstr "Anda harus membuat setidaknya satu album tambahan untuk memindah gambar"
 
-#: includes/image_upload.php:34
+#: includes/image_upload.php:44
 msgid "Upload image"
 msgstr "Unggah gambar"
 
-#: includes/image_upload.php:98
+#: includes/image_upload.php:108
 msgid "Image uploaded"
 msgstr "Gambar berhasil diunggah"
 
-#: includes/image_upload.php:100
+#: includes/image_upload.php:110
 msgid "Profile"
 msgstr "Profil"
 
-#: includes/image_upload.php:117
+#: includes/image_upload.php:119
+msgid "File not selected"
+msgstr "File tidak dipilih"
+
+#: includes/image_upload.php:129
 msgid "Upload"
 msgstr "Unggah"
 
-#: includes/image_upload.php:119
+#: includes/image_upload.php:131
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr "Diizinkan format gambar JPG, JPEG, PNG, GIF<br>Ukuran berkas tidak melebihi %d kb."
 
-#: includes/list.php:44
+#: includes/list.php:54
 msgid "Up"
 msgstr "Naik"
 
-#: includes/list.php:45
+#: includes/list.php:55
 msgid "Down"
 msgstr "Turun"
 
-#: includes/list.php:46 includes/show.php:150
+#: includes/list.php:56 includes/show.php:161
 msgid "Edit"
 msgstr "Sunting"
 
-#: includes/list.php:59 includes/show.php:169 includes/top.php:167
-#: includes/users.php:58
+#: includes/list.php:69 includes/show.php:180 includes/top.php:177
+#: includes/users.php:68
 msgid "The list is empty"
 msgstr "Daftar ini kosong"
 
-#: includes/list.php:62 includes/show.php:172 includes/top.php:170
-#: includes/users.php:60
+#: includes/list.php:72 includes/show.php:183 includes/top.php:180
+#: includes/users.php:70
 msgid "Total"
 msgstr "Total"
 
-#: includes/show.php:40
+#: includes/show.php:50
 msgid "Add image"
 msgstr "Tambahkan gambar"
 
-#: includes/show.php:75
+#: includes/show.php:85
 msgid "Incorrect Password"
 msgstr "Kata Sandi Salah"
 
-#: includes/show.php:81
+#: includes/show.php:91
 msgid "You must type a password to view this album"
 msgstr "Anda harus memasukkan kata sandi untuk melihat album ini"
 
-#: includes/show.php:83
+#: includes/show.php:93
 msgid "Login"
 msgstr "Masuk"
 
-#: includes/show.php:127
+#: includes/show.php:138
 msgid "Photo added to the profile"
 msgstr "Foto ditambahkan ke profil"
 
-#: includes/show.php:156
+#: includes/show.php:167
 msgid "Add to Profile"
 msgstr "Tambahkan ke profil"
 
-#: includes/show.php:162 includes/top.php:159
+#: includes/show.php:173 includes/top.php:169
 msgid "Date"
 msgstr "Tanggal"
 
-#: includes/show.php:178 includes/top.php:176 includes/users.php:65
+#: includes/show.php:189 includes/top.php:186 includes/users.php:75
 msgid "To Page"
 msgstr "Ke halaman"
 
-#: includes/top.php:31
+#: includes/top.php:41
 msgid "Unread Comments"
 msgstr "Komentar belum dibaca"
 
-#: includes/top.php:42
+#: includes/top.php:52
 msgid "Recent comments"
 msgstr "Komentar terbaru"
 
-#: includes/top.php:52 index.php:157
+#: includes/top.php:62 index.php:166
 msgid "Top Views"
 msgstr "Paling banyak dilihat"
 
-#: includes/top.php:62 index.php:156
+#: includes/top.php:72 index.php:165
 msgid "Top Downloads"
 msgstr "Paling banyak diunduh"
 
-#: includes/top.php:72 index.php:158
+#: includes/top.php:82 index.php:167
 msgid "Top Comments"
 msgstr "Komentar teratas"
 
-#: includes/top.php:82 index.php:155
+#: includes/top.php:92 index.php:164
 msgid "Top Votes"
 msgstr "Nilai teratas"
 
-#: includes/top.php:92 index.php:159
+#: includes/top.php:102 index.php:168
 msgid "Top Worst"
 msgstr "Paling buruk"
 
-#: includes/top.php:102
+#: includes/top.php:112
 msgid "New photos"
 msgstr "Foto baru"
 
-#: includes/users.php:32
+#: includes/users.php:42
 msgid "All"
 msgstr "Semua"
 
-#: includes/users.php:33 index.php:146
+#: includes/users.php:43 index.php:155
 msgid "Guys"
 msgstr "Pria"
 
-#: includes/users.php:34 index.php:147
+#: includes/users.php:44 index.php:156
 msgid "Girls"
 msgstr "Wanita"
 
-#: includes/users.php:36
+#: includes/users.php:46
 msgid "List"
 msgstr "Daftar"
 
-#: index.php:37
+#: index.php:47
 msgid "For registered users only"
 msgstr "Hanya untuk pengguna terdaftar"
 
-#: index.php:79 index.php:154
+#: index.php:89 index.php:163
 msgid "Rating"
 msgstr "Rating"
 
-#: index.php:80
+#: index.php:90
 msgid "Against"
 msgstr "Buruk"
 
-#: index.php:80
+#: index.php:90
 msgid "For"
 msgstr "Untuk"
 
-#: index.php:87
+#: index.php:97
 msgid "Vote"
 msgstr "Beri nilai"
 
-#: index.php:141
+#: index.php:150
 msgid "New Photos"
 msgstr "Foto baru"
 
-#: index.php:142
+#: index.php:151
 msgid "New Comments"
 msgstr "Komentar baru"
 
-#: index.php:145
+#: index.php:154
 msgid "Albums"
 msgstr "Album"
 
-#: index.php:150
+#: index.php:159
 msgid "My Album"
 msgstr "Album Saya"
 
-#: index.php:162
+#: index.php:171
 msgid "Users"
 msgstr "Pengguna"
 
