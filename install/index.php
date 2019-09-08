@@ -1,17 +1,18 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
-define('_IN_JOHNCMS', 1);
+const JOHNCMS = '7.0.0';
 
-define('VERSION', '6.2.2'); // Инсталлируемая версия
+require '../system/vendor/autoload.php';
 
 class install
 {
@@ -20,14 +21,28 @@ class install
      *
      * @return array|bool
      */
-    static function check_php_errors()
+    public static function checkPhpErrors()
     {
-        $error = array();
-        if (version_compare(phpversion(), '5.3.0', '<')) $error[] = 'PHP ' . phpversion();
-        if (!extension_loaded('mysql')) $error[] = 'mysql';
-        if (!extension_loaded('gd')) $error[] = 'gd';
-        if (!extension_loaded('zlib')) $error[] = 'zlib';
-        if (!extension_loaded('mbstring')) $error[] = 'mbstring';
+        $error = [];
+        if (version_compare(phpversion(), '5.5.0', '<')) {
+            $error[] = 'PHP ' . phpversion();
+        }
+
+        if (!class_exists(PDO::class)) {
+            $error[] = 'PDO';
+        }
+
+        if (!extension_loaded('gd')) {
+            $error[] = 'gd';
+        }
+
+        if (!extension_loaded('zlib')) {
+            $error[] = 'zlib';
+        }
+
+        if (!extension_loaded('mbstring')) {
+            $error[] = 'mbstring';
+        }
 
         return !empty($error) ? $error : false;
     }
@@ -37,10 +52,12 @@ class install
      *
      * @return array|bool
      */
-    static function check_php_warnings()
+    public static function check_php_warnings()
     {
-        $error = array();
-        if (ini_get('register_globals')) $error[] = 'register_globals';
+        $error = [];
+        if (ini_get('register_globals')) {
+            $error[] = 'register_globals';
+        }
 
         return !empty($error) ? $error : false;
     }
@@ -50,13 +67,10 @@ class install
      *
      * @return array|bool
      */
-    static function check_folders_rights()
+    public static function check_folders_rights()
     {
-        $folders = array(
-            '/download/arctemp/',
-            '/download/files/',
-            '/download/graftemp/',
-            '/download/screen/',
+        //TODO: добавить для проверки папки нового загруза
+        $folders = [
             '/files/cache/',
             '/files/forum/attach/',
             '/files/library/',
@@ -65,16 +79,13 @@ class install
             '/files/library/images/big',
             '/files/library/images/orig',
             '/files/library/images/small',
-            '/files/lng_edit/',
             '/files/users/album/',
             '/files/users/avatar/',
             '/files/users/photo/',
             '/files/mail/',
-            '/gallery/foto/',
-            '/gallery/temp/',
-            '/incfiles/'
-        );
-        $error = array();
+            '/system/config/',
+        ];
+        $error = [];
 
         foreach ($folders as $val) {
             if (!is_writable('..' . $val)) {
@@ -90,15 +101,12 @@ class install
      *
      * @return array|bool
      */
-    static function check_files_rights()
+    public static function check_files_rights()
     {
-        $files = array();
-        $error = array();
+        $error = [];
 
-        foreach ($files as $val) {
-            if (!is_writable('..' . $val)) {
-                $error[] = $val;
-            }
+        if (is_file('../system/config/database.local.php') && !is_writable('../system/config/database.local.php')) {
+            $error[] = '/system/config/database.local.php';
         }
 
         return !empty($error) ? $error : false;
@@ -109,15 +117,15 @@ class install
     Парсинг SQL файла
     -----------------------------------------------------------------
     */
-    static function parse_sql($file = false)
+    public static function parse_sql($file = false, PDO $pdo)
     {
-        $errors = array();
+        $errors = [];
         if ($file && file_exists($file)) {
             $query = fread(fopen($file, 'r'), filesize($file));
             $query = trim($query);
             $query = preg_replace("/\n\#[^\n]*/", '', "\n" . $query);
-            $buffer = array();
-            $ret = array();
+            $buffer = [];
+            $ret = [];
             $in_string = false;
             for ($i = 0; $i < strlen($query) - 1; $i++) {
                 if ($query[$i] == ";" && !$in_string) {
@@ -141,8 +149,11 @@ class install
             for ($i = 0; $i < count($ret); $i++) {
                 $ret[$i] = trim($ret[$i]);
                 if (!empty($ret[$i]) && $ret[$i] != "#") {
-                    if (!mysql_query($ret[$i])) {
-                        $errors[] = mysql_error();
+                    //TODO: проверить показ ошибок
+                    try {
+                        $pdo->query($ret[$i]);
+                    } catch (PDOException $e) {
+                        $errors[] = $e->getMessage();
                     }
                 }
             }
@@ -160,7 +171,9 @@ function show_errors($error)
     if (!empty($error)) {
         // Показываем ошибки
         $out = '<div class="red" style="margin-bottom: 4px"><b>' . $lng['error'] . '</b>';
-        foreach ($error as $val) $out .= '<div>' . $val . '</div>';
+        foreach ($error as $val) {
+            $out .= '<div>' . $val . '</div>';
+        }
         $out .= '</div>';
 
         return $out;
@@ -176,12 +189,13 @@ function show_errors($error)
 */
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : false;
 
-if (file_exists('../incfiles/db.php') && $act == 'final') {
-    require('../incfiles/core.php');
-} else {
-    session_name('SESID');
-    session_start();
-}
+//TODO: запилить проверку имеющейся инсталляции
+//if (file_exists('../incfiles/db.php') && $act == 'final') {
+//    require('../system/bootstrap.php');
+//} else {
+session_name('SESID');
+session_start();
+//}
 
 
 // Загружаем язык интерфейса
@@ -190,10 +204,10 @@ if (isset($_POST['lng']) && ($_POST['lng'] == 'ru' || $_POST['lng'] == 'en')) {
 }
 
 $language = isset($_SESSION['language']) ? $_SESSION['language'] : 'en';
-$lng_file = $language . '.lng';
+$lng_file = __DIR__ . '/locale/' . $language . '/install.php';
 
 if (file_exists($lng_file)) {
-    $lng = parse_ini_file($lng_file) or die('ERROR: language file');
+    $lng = include $lng_file;
 } else {
     die('ERROR: Language file is missing');
 }
@@ -203,7 +217,7 @@ echo '<!DOCTYPE html>' . "\n" .
     '<html lang="' . $language . '">' . "\n" .
     '<head>' . "\n" .
     '<meta charset="utf-8">' . "\n" .
-    '<title>JohnCMS ' . VERSION . '</title>' . "\n" .
+    '<title>JohnCMS ' . JOHNCMS . '</title>' . "\n" .
     '<style type="text/css">' .
     'a, a:link, a:visited{color: blue;}' .
     'body {font-family: Arial, Helvetica, sans-serif; font-size: small; color: #000000; background-color: #FFFFFF}' .
@@ -223,7 +237,7 @@ echo '<!DOCTYPE html>' . "\n" .
     '</style>' . "\n" .
     '</head>' . "\n" .
     '<body>' . "\n" .
-    '<h1>JohnCMS ' . VERSION . '</h1><hr />';
+    '<h1>JohnCMS ' . JOHNCMS . '</h1><hr />';
 if (!$act) {
     echo '<form action="index.php" method="post">' .
         '<p><h3 class="green">' . $lng['change_language'] . '</h3>' .
@@ -235,31 +249,28 @@ if (!$act) {
 }
 
 switch ($act) {
+    case 'doc':
+        break;
+
     case 'changelog':
-        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        echo '<a href="?">&lt;&lt; ' . _t('Back') . '</a><br><br><br>';
         if (($changelog = file_get_contents('../CHANGELOG.md')) !== false) {
-            require_once('../incfiles/lib/Parsedown.php');
             $parsedown = new Parsedown();
             echo $parsedown->text($changelog);
         }
         break;
 
     case 'license':
-        echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
+        echo '<a href="?">&lt;&lt; ' . _t('Back') . '</a><br><br><br>';
         if (($changelog = file_get_contents('../LICENSE.md')) !== false) {
-            require_once('../incfiles/lib/Parsedown.php');
             $parsedown = new Parsedown();
             echo $parsedown->text($changelog);
         }
         break;
 
     case 'final':
-        /*
-        -----------------------------------------------------------------
-        Установка завершена
-        -----------------------------------------------------------------
-        */
-        functions::smileys(0, 2);
+        // Установка завершена
+        //TODO: разобраться с обновлением смайлов
         echo '<span class="st">' . $lng['check_1'] . '</span><br />' .
             '<span class="st">' . $lng['database'] . '</span><br />' .
             '<span class="st">' . $lng['site_settings'] . '</span>' .
@@ -267,22 +278,18 @@ switch ($act) {
             '<hr />';
         echo '<h3 class="blue">' . $lng['congratulations'] . '</h3>' .
             $lng['installation_completed'] . '<p><ul>' .
-            '<li><a href="../panel">' . $lng['admin_panel'] . '</a></li>' .
+            '<li><a href="../admin">' . $lng['admin_panel'] . '</a></li>' .
             '<li><a href="../index.php">' . $lng['to_site'] . '</a></li>' .
             '</ul></p>' .
             $lng['final_warning'];
         break;
 
     case 'set':
-        /*
-        -----------------------------------------------------------------
-        Создание базы данных и Администратора системы
-        -----------------------------------------------------------------
-        */
+        // Создание базы данных и Администратора системы
         $db_check = false;
-        $db_error = array();
-        $site_error = array();
-        $admin_error = array();
+        $db_error = [];
+        $site_error = [];
+        $admin_error = [];
 
         // Принимаем данные формы
         $db_host = isset($_POST['dbhost']) ? htmlentities(trim($_POST['dbhost'])) : 'localhost';
@@ -311,28 +318,33 @@ switch ($act) {
 
             // Проверяем подключение к серверу базы данных
             if (empty($db_error)) {
-                $con_err = false;
-                @mysql_connect($db_host, $db_user, $db_pass) or $con_err = mysql_error();
+                try {
+                    $pdo = new \PDO('mysql:host=' . $db_host . ';dbname=' . $db_name, $db_user, $db_pass,
+                        [
+                            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+                            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+                            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
+                            \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
+                        ]
+                    );
+                } catch (\PDOException $e) {
+                    $pdo_error = $e->getMessage();
 
-                if ($con_err && stristr($con_err, 'no such host')) {
-                    $db_error['host'] = $lng['error_db_host'];
-                } elseif ($con_err && stristr($con_err, 'access denied for user')) {
-                    $db_error['access'] = $lng['error_db_user'];
-                } elseif ($con_err) {
-                    $db_error['unknown'] = $lng['error_db_unknown'];
+                    if (stristr($pdo_error, 'no such host')) {
+                        $db_error['host'] = $lng['error_db_host'];
+                    } elseif (stristr($pdo_error, 'access denied for user')) {
+                        $db_error['access'] = $lng['error_db_user'];
+                    } elseif (stristr($pdo_error, 'unknown database')) {
+                        $db_error['name'] = $lng['error_db_name'];
+                    } else {
+                        $db_error['unknown'] = $lng['error_db_unknown'] . ' ' . $pdo_error;
+                    }
                 }
-            }
-
-            // Проверяем наличие базы данных
-            if (empty($db_error) && @mysql_select_db($db_name) == false) {
-                $db_error['name'] = $lng['error_db_name'];
             }
 
             if (empty($db_error)) {
                 $db_check = true;
             }
-
-            @mysql_close();
         }
 
         if ($db_check && isset($_POST['install'])) {
@@ -366,64 +378,129 @@ switch ($act) {
                 $admin_error['pass'] = $lng['error_password_lenght'];
             }
 
-            // Проверяем пароль Админа на допустимые символы
-            if (preg_match("/[^\dA-Za-z]+/", $admin_pass)) {
-                $admin_error['pass'] = $lng['error_pass_symbols'];
-            }
-
             // Если предварительные проверки прошли, заливаем базу данных
             if ($db_check && empty($site_error) && empty($admin_error)) {
-                // Создаем системный файл db.php
-                $dbfile = "<?php\r\n\r\n" .
-                    "defined('_IN_JOHNCMS') or die ('Error: restricted access');\r\n\r\n" .
-                    '$db_host = ' . "'$db_host';\r\n" .
-                    '$db_name = ' . "'$db_name';\r\n" .
-                    '$db_user = ' . "'$db_user';\r\n" .
-                    '$db_pass = ' . "'$db_pass';";
-                if (!file_put_contents('../incfiles/db.php', $dbfile)) {
-                    echo 'ERROR: Can not write db.php</body></html>';
+                // Создаем системный файл database.local.php
+                $pdoattr = [
+                    'pdo' => [
+                        'db_host' => $db_host,
+                        'db_name' => $db_name,
+                        'db_user' => $db_user,
+                        'db_pass' => $db_pass,
+                    ],
+                ];
+                $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ";\n";
+
+                if (!file_put_contents('../system/config/database.local.php', $dbfile)) {
+                    echo 'ERROR: Can not write database.local.php</body></html>';
                     exit;
                 }
 
-                // Соединяемся с базой данных
-                $connect = mysql_connect($db_host, $db_user, $db_pass) or die('ERROR: cannot connect to DB server</body></html>');
-                mysql_select_db($db_name) or die('ERROR: cannot select DB</body></html>');
-                mysql_query("SET NAMES 'utf8'", $connect);
-
                 // Заливаем базу данных
-                $sql = install::parse_sql('install.sql');
+                $sql = install::parse_sql(__DIR__ . '/sql/install.sql', $pdo);
+
                 if (!empty($sql)) {
-                    foreach ($sql as $val) echo $val . '<br />';
+                    foreach ($sql as $val) {
+                        echo $val . '<br />';
+                    }
                     echo '</body></html>';
                     exit;
                 }
 
-                // Записываем системные настройки
-                mysql_query("UPDATE `cms_settings` SET `val`='$language' WHERE `key`='lng'");
-                mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($site_url) . "' WHERE `key`='homeurl'");
-                mysql_query("UPDATE `cms_settings` SET `val`='" . mysql_real_escape_string($site_mail) . "' WHERE `key`='email'");
+                // Читаем каталог с файлами языков
+                $lng_list = [];
+
+                foreach (glob('../system/locale/*/lng.ini') as $val) {
+                    $iso = array_pop(explode('/', dirname($val)));
+                    $desc = parse_ini_file($val);
+                    $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
+                }
+
+                $systemSettings = [
+                    'johncms' => [
+                        'active'        => 1,
+                        'antiflood'     => [
+                            'mode'    => 2,
+                            'day'     => 10,
+                            'night'   => 30,
+                            'dayfrom' => 10,
+                            'dayto'   => 22,
+                        ],
+                        'clean_time'    => 0,
+                        'copyright'     => 'Powered by JohnCMS',
+                        'email'         => $site_mail,
+                        'flsz'          => '16000',
+                        'gzip'          => 1,
+                        'homeurl'       => $site_url,
+                        'karma'         => [
+                            'karma_points' => 5,
+                            'karma_time'   => 86400,
+                            'forum'        => 20,
+                            'time'         => 0,
+                            'on'           => 1,
+                            'adm'          => 0,
+                        ],
+                        'lng'           => $language,
+                        'lng_list'      => $lng_list,
+                        'mod_reg'       => 2,
+                        'mod_forum'     => 2,
+                        'mod_guest'     => 2,
+                        'mod_lib'       => 2,
+                        'mod_lib_comm'  => 1,
+                        'mod_down'      => 2,
+                        'mod_down_comm' => 1,
+                        'meta_key'      => 'johncms',
+                        'meta_desc'     => 'Powered by JohnCMS http://johncms.com',
+                        'news'          => [
+                            'view'     => 1,
+                            'size'     => 200,
+                            'quantity' => 3,
+                            'days'     => 7,
+                            'breaks'   => true,
+                            'smileys'  => false,
+                            'tags'     => true,
+                            'kom'      => true,
+                        ],
+                        'skindef'       => 'default',
+                    ],
+                ];
+                $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
+
+                if (!file_put_contents('../system/config/system.local.php', $configFile)) {
+                    echo 'ERROR: Can not write system.local.php</body></html>';
+                    exit;
+                }
 
                 // Создаем Администратора
-                mysql_query("INSERT INTO `users` SET
-                    `name` = '" . mysql_real_escape_string($admin_user) . "',
-                    `name_lat` = '" . mysql_real_escape_string(mb_strtolower($admin_user)) . "',
-                    `password` = '" . md5(md5($admin_pass)) . "',
-                    `sex` = 'm',
-                    `datereg` = '" . time() . "',
-                    `lastdate` = '" . time() . "',
-                    `mail` = '" . mysql_real_escape_string($site_mail) . "',
-                    `www` = '" . mysql_real_escape_string($site_url) . "',
-                    `about` = '',
-                    `set_user` = '',
-                    `set_forum` = '',
-                    `set_mail` = '',
-                    `smileys` = '',
-                    `rights` = '9',
-                    `ip` = '" . ip2long($_SERVER["REMOTE_ADDR"]) . "',
-                    `browser` = '" . mysql_real_escape_string(htmlentities($_SERVER["HTTP_USER_AGENT"])) . "',
-                    `preg` = '1'
-                ") or die('ERROR: Administrator setup<br/>' . mysql_error() . '</body></html>');
-                $user_id = mysql_insert_id();
+                $stmt = $pdo->prepare("INSERT INTO `users` SET
+                      `name`     = ?,
+                      `name_lat` = ?,
+                      `password` = ?,
+                      `sex` = 'm',
+                      `datereg` = '" . time() . "',
+                      `lastdate` = '" . time() . "',
+                      `mail` = ?,
+                      `www` = ?,
+                      `about` = '',
+                      `set_user` = '',
+                      `set_forum` = '',
+                      `set_mail` = '',
+                      `smileys` = '',
+                      `rights` = '9',
+                      `ip` = '" . ip2long($_SERVER["REMOTE_ADDR"]) . "',
+                      `browser` = ?,
+                      `preg` = '1'
+                      ");
+                $stmt->execute([
+                    $admin_user,
+                    mb_strtolower($admin_user),
+                    md5(md5($admin_pass)),
+                    $site_mail,
+                    $site_url,
+                    htmlentities($_SERVER["HTTP_USER_AGENT"]),
+                ]);
+
+                $user_id = $pdo->lastInsertId();
 
                 // Устанавливаем сессию и COOKIE c данными администратора
                 $_SESSION['uid'] = $user_id;
@@ -433,7 +510,7 @@ switch ($act) {
 
                 // Установка ДЕМО данных
                 if ($demo) {
-                    $demo_data = install::parse_sql('demo.sql');
+                    $demo_data = install::parse_sql(__DIR__ . '/sql/demo.sql', $pdo);
                 }
 
                 // Установка завершена
@@ -492,39 +569,43 @@ switch ($act) {
         break;
 
     default:
-        /*
-        -----------------------------------------------------------------
-        Проверка настроек PHP и прав доступа
-        -----------------------------------------------------------------
-        */
+        // Проверка настроек PHP и прав доступа
         echo '<p>' . $lng['install_note'] . '</p>';
         echo '<p><h3 class="green">' . $lng['check_1'] . '</h3>';
 
         // Проверка критических ошибок PHP
-        if (($php_errors = install::check_php_errors()) !== false) {
+        if (($php_errors = install::checkPhpErrors()) !== false) {
             echo '<h3>' . $lng['php_critical_error'] . '</h3><ul>';
-            foreach ($php_errors as $val) echo '<li>' . $val . '</li>';
+            foreach ($php_errors as $val) {
+                echo '<li>' . $val . '</li>';
+            }
             echo '</ul>';
         }
 
         // Проверка предупреждений PHP
         if (($php_warnings = install::check_php_warnings()) !== false) {
             echo '<h3>' . $lng['php_warnings'] . '</h3><ul>';
-            foreach ($php_warnings as $val) echo '<li>' . $val . '</li>';
+            foreach ($php_warnings as $val) {
+                echo '<li>' . $val . '</li>';
+            }
             echo '</ul>';
         }
 
         // Проверка прав доступа к папкам
         if (($folders = install::check_folders_rights()) !== false) {
             echo '<h3>' . $lng['access_rights'] . ' 777</h3><ul>';
-            foreach ($folders as $val) echo '<li>' . $val . '</li>';
+            foreach ($folders as $val) {
+                echo '<li>' . $val . '</li>';
+            }
             echo '</ul>';
         }
 
         // Проверка прав доступа к файлам
         if (($files = install::check_files_rights()) !== false) {
             echo '<h3>' . $lng['access_rights'] . ' 666</h3><ul>';
-            foreach ($files as $val) echo '<li>' . $val . '</li>';
+            foreach ($files as $val) {
+                echo '<li>' . $val . '</li>';
+            }
             echo '</ul>';
         }
 

@@ -1,37 +1,57 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-$lng_gal = core::load_lng('gallery');
 
-if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id), 0) > 0) && isset($id) && $user_id)) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+use Library\Hashtags;
+
+if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд
-    $flood = functions::antiflood();
-    if ($flood) {
-        require('../incfiles/head.php');
+    $flood = $tools->antiflood();
 
-        echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'], '<br /><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a>');
-        require('../incfiles/end.php');
+    if ($flood) {
+        require('../system/head.php');
+
+        echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
+            '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
+        require('../system/end.php');
         exit;
     }
 
-    $name = isset($_POST['name']) ? mb_substr(functions::checkin($_POST['name']), 0, 100) : '';
-    $announce = isset($_POST['announce']) ? mb_substr(functions::checkin($_POST['announce']), 0, 500) : '';
-    $text = isset($_POST['text']) ? functions::checkin($_POST['text']) : '';
-    $tag = isset($_POST['tags']) ? functions::checkin($_POST['tags']) : '';
+    $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 100) : '';
+    $announce = isset($_POST['announce']) ? mb_substr(trim($_POST['announce']), 0, 500) : '';
+    $text = isset($_POST['text']) ? trim($_POST['text']) : '';
+    $tag = isset($_POST['tags']) ? trim($_POST['tags']) : '';
 
     if (isset($_POST['submit'])) {
-        $err = array();
+        $err = [];
 
         if (empty($_POST['name'])) {
-            $err[] = $lng['error_empty_title'];
+            $err[] = _t('You have not entered the name');
         }
 
         if (!empty($_FILES['textfile']['name'])) {
@@ -46,30 +66,30 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo functions::display_error($lng_lib['invalid_file_encoding'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-                        require_once('../incfiles/end.php');
+                        echo $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                        require_once('../system/end.php');
                         exit;
                     }
 
                     $text = trim($txt);
                     unlink('../files/library/tmp' . DIRECTORY_SEPARATOR . $newname);
                 } else {
-                    echo functions::display_error($lng_lib['error_uploading'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-                    require_once('../incfiles/end.php');
+                    echo $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    require_once('../system/end.php');
                     exit;
                 }
             } else {
-                echo functions::display_error($lng_lib['invalid_file_format'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-                require_once('../incfiles/end.php');
+                echo $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                require_once('../system/end.php');
                 exit;
             }
         } elseif (!empty($_POST['text'])) {
             $text = trim($_POST['text']);
         } else {
-            $err[] = $lng['error_empty_text'];
+            $err[] = _t('You have not entered text');
         }
 
-        if(empty($announce)){
+        if (empty($announce)) {
             $announce = mb_substr($text, 0, 500);
         }
 
@@ -77,37 +97,36 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
 
         if (sizeof($err) > 0) {
             foreach ($err as $e) {
-                echo functions::display_error($e);
+                echo $tools->displayError($e);
             }
         } else {
             $sql = "
               INSERT INTO `library_texts`
               SET
                 `cat_id` = $id,
-                `name` = '" . mysql_real_escape_string($name) . "',
-                `announce` = '" . mysql_real_escape_string($announce) . "',
-                `text` = '" . mysql_real_escape_string($text) . "',
-                `uploader` = '" . $login . "',
-                `uploader_id` = " . core::$user_id . ",
+                `name` = " . $db->quote($name) . ",
+                `announce` = " . $db->quote($announce) . ",
+                `text` = " . $db->quote($text) . ",
+                `uploader` = '" . $systemUser->name . "',
+                `uploader_id` = " . $systemUser->id . ",
                 `premod` = $md,
                 `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ",
                 `time` = " . time() . "
             ";
 
-            if (mysql_query($sql)) {
-                $cid = mysql_insert_id();
-                require('../incfiles/lib/class.upload.php');
+            if ($db->query($sql)) {
+                $cid = $db->lastInsertId();
 
                 $handle = new upload($_FILES['image']);
                 if ($handle->uploaded) {
                     // Обрабатываем фото
                     $handle->file_new_name_body = $cid;
-                    $handle->allowed = array(
+                    $handle->allowed = [
                         'image/jpeg',
                         'image/gif',
-                        'image/png'
-                    );
-                    $handle->file_max_size = 1024 * $set['flsz'];
+                        'image/png',
+                    ];
+                    $handle->file_max_size = 1024 * $config['flsz'];
                     $handle->file_overwrite = true;
                     $handle->image_x = $handle->image_src_x;
                     $handle->image_y = $handle->image_src_y;
@@ -138,7 +157,7 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                     $handle->process('../files/library/images/small/');
 
                     if ($err_image) {
-                        echo functions::display_error($lng_gal['error_uploading_photo'] . '<br /><a href="?act=addnew&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
+                        echo $tools->displayError(_t('Photo uploading error') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     }
                     $handle->clean();
                 }
@@ -147,41 +166,42 @@ if (($adm || (mysql_result(mysql_query("SELECT `user_add` FROM `library_cats` WH
                     $tags = array_map('trim', explode(',', $_POST['tags']));
                     if (sizeof($tags > 0)) {
                         $obj = new Hashtags($cid);
-                        $obj->add_tags($tags);
-                        $obj->del_cache();
+                        $obj->addTags($tags);
+                        $obj->delCache();
                     }
                 }
 
-                echo '<div>' . $lng_lib['article_added'] . '</div>' . ($md == 0 ? '<div>' . $lng_lib['article_added_thanks'] . '</div>' : '');
-                mysql_query("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $user_id);
-                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . $lng_lib['to_article'] . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
-                require_once('../incfiles/end.php');
+                echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
+                $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $systemUser->id);
+                echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
+                require_once('../system/end.php');
                 exit;
             } else {
-                echo mysql_error();
+                echo $db->errorInfo();
 //                exit;
             }
         }
     }
-    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['write_article'] . '</div>'
+    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write Article') . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=addnew&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
-        . '<p><h3>' . $lng['title'] . ' (max. 100):</h3>'
+        . '<p><h3>' . _t('Title') . ' (max. 100):</h3>'
         . '<input type="text" name="name" value="' . $name . '" /></p>'
-        . '<p><h3>' . $lng_lib['announce'] . ' (max. 500):</h3>'
+        . '<p><h3>' . _t('Announce') . ' (max. 500):</h3>'
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
-        . '<p><h3>' . $lng['text'] . ':</h3>'
-        . bbcode::auto_bb('form', 'text') . '<textarea name="text" rows="' . $set_user['field_h'] . '" cols="20">' . $text . '</textarea></p>'
-        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . $lng_lib['comment_article'] . '</p>'
-        . '<p><h3>' . $lng_gal['upload_photo'] . '</h3>'
+        . '<p><h3>' . _t('Text') . ':</h3>'
+        . $container->get('bbcode')->buttons('form',
+            'text') . '<textarea name="text" rows="' . $systemUser->getConfig()->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
+        . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
+        . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'
-        . '<p><h3>' . $lng_lib['select_text_file'] . '</h3>'
-        . '<input type="file" name="textfile" accept="text/plain" /><br/><small>' . $lng_lib['ignor_input'] . '</small></p>'
-        . '<p><h3>' . $lng_lib['tags'] . '</h3>'
-        . '<input name="tags" type="text" value="' . $tag . '" /><br/><small>' . $lng_lib['input_tags'] . '</small></p>'
-        . '<p><input type="submit" name="submit" value="' . $lng['save'] . '" /></p>'
+        . '<p><h3>' . _t('Select the text file') . '</h3>'
+        . '<input type="file" name="textfile" accept="text/plain" /><br><small>' . _t('Text entry field will be ignored') . '</small></p>'
+        . '<p><h3>' . _t('Tags') . '</h3>'
+        . '<input name="tags" type="text" value="' . $tag . '" /><br><small>' . _t('Specify the Tag to the Article, separated by commas') . '</small></p>'
+        . '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>'
         . '</div></form>'
-        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . $lng['back'] . '</a></div>';
+        . '<div class="phdr"><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 } else {
     header('location: ?');
 }

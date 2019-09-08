@@ -1,0 +1,316 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/admsmilies.php:16 includes/set_my_sm.php:21
+msgid "Wrong data"
+msgstr ""
+
+#: includes/admsmilies.php:16 includes/admsmilies.php:70
+#: includes/avatars.php:25 includes/avatars.php:71 includes/avatars.php:89
+#: includes/forum.php:51 includes/my_smilies.php:62 includes/smilies.php:43
+#: includes/tags.php:71 includes/usersmilies.php:80 index.php:74
+msgid "Back"
+msgstr ""
+
+#: includes/admsmilies.php:21 includes/my_smilies.php:15
+#: includes/set_my_sm.php:21 includes/smilies.php:9 includes/usersmilies.php:31
+#: index.php:73
+msgid "Smilies"
+msgstr ""
+
+#: includes/admsmilies.php:21 includes/smilies.php:17
+msgid "For administration"
+msgstr ""
+
+#: includes/admsmilies.php:28 includes/my_smilies.php:15
+#: includes/smilies.php:13 includes/usersmilies.php:44
+msgid "My smilies"
+msgstr ""
+
+#: includes/admsmilies.php:54 includes/my_smilies.php:46
+#: includes/usersmilies.php:60
+msgid "or"
+msgstr ""
+
+#: includes/admsmilies.php:57 includes/avatars.php:58
+#: includes/my_smilies.php:53 includes/usersmilies.php:68
+msgid "The list is empty"
+msgstr ""
+
+#: includes/admsmilies.php:60 includes/usersmilies.php:65
+msgid "Add"
+msgstr ""
+
+#: includes/admsmilies.php:61 includes/avatars.php:61 includes/avatars.php:88
+#: includes/my_smilies.php:56 includes/usersmilies.php:71
+msgid "Total"
+msgstr ""
+
+#: includes/admsmilies.php:67 includes/avatars.php:67
+#: includes/usersmilies.php:77
+msgid "To Page"
+msgstr ""
+
+#: includes/avatars.php:22
+msgid "Avatar has been successfully applied"
+msgstr ""
+
+#: includes/avatars.php:23
+msgid "Continue"
+msgstr ""
+
+#: includes/avatars.php:25
+msgid "An error occurred"
+msgstr ""
+
+#: includes/avatars.php:28 includes/avatars.php:37 includes/avatars.php:75
+#: index.php:72
+msgid "Avatars"
+msgstr ""
+
+#: includes/avatars.php:28
+msgid "Set to Profile"
+msgstr ""
+
+#: includes/avatars.php:29
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr ""
+
+#: includes/avatars.php:31
+msgid "Save"
+msgstr ""
+
+#: includes/avatars.php:33
+msgid "Cancel"
+msgstr ""
+
+#: includes/avatars.php:52
+msgid "Select"
+msgstr ""
+
+#: includes/avatars.php:75 includes/forum.php:6 includes/smilies.php:9
+#: includes/tags.php:8 index.php:69
+msgid "Information, FAQ"
+msgstr ""
+
+#: includes/forum.php:6 index.php:70
+msgid "Forum rules"
+msgstr ""
+
+#: includes/forum.php:20
+msgid "FORBIDDEN"
+msgstr ""
+
+#: includes/forum.php:22
+msgid "Advertising messages"
+msgstr ""
+
+#: includes/forum.php:23
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr ""
+
+#: includes/forum.php:24
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr ""
+
+#: includes/forum.php:25
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr ""
+
+#: includes/forum.php:26
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr ""
+
+#: includes/forum.php:27
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr ""
+
+#: includes/forum.php:28
+msgid "Post messages not related to the topic"
+msgstr ""
+
+#: includes/forum.php:29
+msgid "Continuing topics that have been closed by moderator"
+msgstr ""
+
+#: includes/forum.php:32
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr ""
+
+#: includes/forum.php:34
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr ""
+
+#: includes/forum.php:35
+msgid "Register the nicknames having offensive tone for other users"
+msgstr ""
+
+#: includes/forum.php:38
+msgid "UNACCEPTABLE"
+msgstr ""
+
+#: includes/forum.php:40
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr ""
+
+#: includes/forum.php:41
+msgid "Post messages only contains external link"
+msgstr ""
+
+#: includes/forum.php:42
+msgid "Post messages written in translite"
+msgstr ""
+
+#: includes/forum.php:43
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr ""
+
+#: includes/forum.php:48
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr ""
+
+#: includes/forum.php:49
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr ""
+
+#: includes/my_smilies.php:51
+msgid "Delete"
+msgstr ""
+
+#: includes/my_smilies.php:53
+msgid "Add Smilies"
+msgstr ""
+
+#: includes/tags.php:8 index.php:71
+msgid "bbCode Tags"
+msgstr ""
+
+#: includes/tags.php:14
+msgid "PHP code"
+msgstr ""
+
+#: includes/tags.php:17
+msgid "Link name"
+msgstr ""
+
+#: includes/tags.php:18
+msgid "URL Link"
+msgstr ""
+
+#: includes/tags.php:21
+msgid "Bold"
+msgstr ""
+
+#: includes/tags.php:25
+msgid "Italic"
+msgstr ""
+
+#: includes/tags.php:29
+msgid "Underline"
+msgstr ""
+
+#: includes/tags.php:33
+msgid "Strike"
+msgstr ""
+
+#: includes/tags.php:37
+msgid "Red"
+msgstr ""
+
+#: includes/tags.php:41
+msgid "Green"
+msgstr ""
+
+#: includes/tags.php:45
+msgid "Blue"
+msgstr ""
+
+#: includes/tags.php:49
+msgid "Text Color"
+msgstr ""
+
+#: includes/tags.php:53
+msgid "Background Color"
+msgstr ""
+
+#: includes/tags.php:57
+msgid "Quote"
+msgstr ""
+
+#: includes/tags.php:61
+msgid "Bulleted list"
+msgstr ""
+
+#: includes/tags.php:64
+msgid "Title"
+msgstr ""
+
+#: includes/tags.php:64
+msgid "Text"
+msgstr ""
+
+#: includes/tags.php:65
+msgid "Spoiler"
+msgstr ""
+
+#: index.php:38
+msgid "Animals"
+msgstr ""
+
+#: index.php:39
+msgid "Brawl, Weapons"
+msgstr ""
+
+#: index.php:40
+msgid "Emotions"
+msgstr ""
+
+#: index.php:41
+msgid "Flowers"
+msgstr ""
+
+#: index.php:42
+msgid "Food, Alcohol"
+msgstr ""
+
+#: index.php:43
+msgid "Gestures"
+msgstr ""
+
+#: index.php:44
+msgid "Holidays"
+msgstr ""
+
+#: index.php:45
+msgid "Love"
+msgstr ""
+
+#: index.php:46
+msgid "Miscellaneous"
+msgstr ""
+
+#: index.php:47
+msgid "Music, Dancing"
+msgstr ""
+
+#: index.php:48
+msgid "Sports"
+msgstr ""
+
+#: index.php:49
+msgid "Technology"
+msgstr ""

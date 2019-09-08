@@ -1,0 +1,321 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /help/default.pot\n"
+"Language: ru_RU\n"
+
+#: includes/admsmilies.php:16 includes/set_my_sm.php:21
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: includes/admsmilies.php:16 includes/admsmilies.php:70
+#: includes/avatars.php:25 includes/avatars.php:71 includes/avatars.php:89
+#: includes/forum.php:51 includes/my_smilies.php:62 includes/smilies.php:43
+#: includes/tags.php:71 includes/usersmilies.php:80 index.php:74
+msgid "Back"
+msgstr "Назад"
+
+#: includes/admsmilies.php:21 includes/my_smilies.php:15
+#: includes/set_my_sm.php:21 includes/smilies.php:9 includes/usersmilies.php:31
+#: index.php:73
+msgid "Smilies"
+msgstr "Смайлы"
+
+#: includes/admsmilies.php:21 includes/smilies.php:17
+msgid "For administration"
+msgstr "Для администрации"
+
+#: includes/admsmilies.php:28 includes/my_smilies.php:15
+#: includes/smilies.php:13 includes/usersmilies.php:44
+msgid "My smilies"
+msgstr "Мои смайлы"
+
+#: includes/admsmilies.php:54 includes/my_smilies.php:46
+#: includes/usersmilies.php:60
+msgid "or"
+msgstr "или"
+
+#: includes/admsmilies.php:57 includes/avatars.php:58
+#: includes/my_smilies.php:53 includes/usersmilies.php:68
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: includes/admsmilies.php:60 includes/usersmilies.php:65
+msgid "Add"
+msgstr "Добавить"
+
+#: includes/admsmilies.php:61 includes/avatars.php:61 includes/avatars.php:88
+#: includes/my_smilies.php:56 includes/usersmilies.php:71
+msgid "Total"
+msgstr "Всего"
+
+#: includes/admsmilies.php:67 includes/avatars.php:67
+#: includes/usersmilies.php:77
+msgid "To Page"
+msgstr "На страницу"
+
+#: includes/avatars.php:22
+msgid "Avatar has been successfully applied"
+msgstr "Аватар успешно установлен"
+
+#: includes/avatars.php:23
+msgid "Continue"
+msgstr "Продолжить"
+
+#: includes/avatars.php:25
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: includes/avatars.php:28 includes/avatars.php:37 includes/avatars.php:75
+#: index.php:72
+msgid "Avatars"
+msgstr "Аватары"
+
+#: includes/avatars.php:28
+msgid "Set to Profile"
+msgstr "Установить в анкету"
+
+#: includes/avatars.php:29
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Вы действительно хотите установить себе этот аватар?"
+
+#: includes/avatars.php:31
+msgid "Save"
+msgstr "Сохранить"
+
+#: includes/avatars.php:33
+msgid "Cancel"
+msgstr "Отмена"
+
+#: includes/avatars.php:52
+msgid "Select"
+msgstr "Выбрать"
+
+#: includes/avatars.php:75 includes/forum.php:6 includes/smilies.php:9
+#: includes/tags.php:8 index.php:69
+msgid "Information, FAQ"
+msgstr "Информация, FAQ"
+
+#: includes/forum.php:6 index.php:70
+msgid "Forum rules"
+msgstr "Правила форума"
+
+#: includes/forum.php:20
+msgid "FORBIDDEN"
+msgstr "ЗАПРЕЩЕНО"
+
+#: includes/forum.php:22
+msgid "Advertising messages"
+msgstr "Рекламные сообщения"
+
+#: includes/forum.php:23
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Сообщения, содержащие прямую пропаганду расовой, национальной и религиозной вражды"
+
+#: includes/forum.php:24
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Оскорбительный, непристойный, вульгарный, клеветнический, ненавистный, угрожающий, сексуально-ориентированный, или любой другой материал, который может нарушить любые применимые законы"
+
+#: includes/forum.php:25
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr "Сообщения, явно оскорбляющие кого-то"
+
+#: includes/forum.php:26
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr "Намеренно искажать написание ников других пользователей с целью придания сообщению оскорбительного оттенка"
+
+#: includes/forum.php:27
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr "Повторная публикация сообщений, удаленных модератором"
+
+#: includes/forum.php:28
+msgid "Post messages not related to the topic"
+msgstr "Отправлять сообщения, не относящиеся к теме"
+
+#: includes/forum.php:29
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Продолжать темы, которые были закрыты Модератором"
+
+#: includes/forum.php:32
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "КАТЕГОРИЧЕСКИ ЗАПРЕЩЕНО"
+
+#: includes/forum.php:34
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr "Выражать в публичных разделах недовольство неадекватными действиями других пользователей и обсуждать работу модераторов. Для этого используйте личные сообщения"
+
+#: includes/forum.php:35
+msgid "Register the nicknames having offensive tone for other users"
+msgstr "Регистрация ников, имеющих оскорбительный тон для других пользователей"
+
+#: includes/forum.php:38
+msgid "UNACCEPTABLE"
+msgstr "НЕЖЕЛАТЕЛЬНО"
+
+#: includes/forum.php:40
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr "Цитата полного сообщения предыдущего пользователя и цитировать сообщения, уже содержащие другие цитаты"
+
+#: includes/forum.php:41
+msgid "Post messages only contains external link"
+msgstr "Размещать сообщения, которые содержат только внешнюю ссылку"
+
+#: includes/forum.php:42
+msgid "Post messages written in translite"
+msgstr "Размещать сообщения написанные на транслите"
+
+#: includes/forum.php:43
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr "Размещение бессмысленных сообщений состоящих только из смайлов или типа \"ок\", \"что?\", \"Кто тут?\", и т. д."
+
+#: includes/forum.php:48
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr "Сообщения, опубликованные несмотря на вышеуказанные предупреждения, будут изменены или удалены."
+
+#: includes/forum.php:49
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Это правило распространяется на всех участников и модераторов, повторные действия могут привести к бану, или даже блокировке Вашей учетной записи."
+
+#: includes/my_smilies.php:51
+msgid "Delete"
+msgstr "Удалить"
+
+#: includes/my_smilies.php:53
+msgid "Add Smilies"
+msgstr "Добавить Смайлы"
+
+#: includes/tags.php:8 index.php:71
+msgid "bbCode Tags"
+msgstr "bbCode Теги"
+
+#: includes/tags.php:14
+msgid "PHP code"
+msgstr "PHP код"
+
+#: includes/tags.php:17
+msgid "Link name"
+msgstr "Имя ссылки"
+
+#: includes/tags.php:18
+msgid "URL Link"
+msgstr "URL-ссылка"
+
+#: includes/tags.php:21
+msgid "Bold"
+msgstr "Жирный"
+
+#: includes/tags.php:25
+msgid "Italic"
+msgstr "Наклонный"
+
+#: includes/tags.php:29
+msgid "Underline"
+msgstr "Подчёркнутый"
+
+#: includes/tags.php:33
+msgid "Strike"
+msgstr "Зачеркнутый"
+
+#: includes/tags.php:37
+msgid "Red"
+msgstr "Красный"
+
+#: includes/tags.php:41
+msgid "Green"
+msgstr "Зеленый"
+
+#: includes/tags.php:45
+msgid "Blue"
+msgstr "Синий"
+
+#: includes/tags.php:49
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: includes/tags.php:53
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: includes/tags.php:57
+msgid "Quote"
+msgstr "Цитата"
+
+#: includes/tags.php:61
+msgid "Bulleted list"
+msgstr "Маркированный список"
+
+#: includes/tags.php:64
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/tags.php:64
+msgid "Text"
+msgstr "Текст"
+
+#: includes/tags.php:65
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: index.php:38
+msgid "Animals"
+msgstr "Животные"
+
+#: index.php:39
+msgid "Brawl, Weapons"
+msgstr "Драки, Оружие"
+
+#: index.php:40
+msgid "Emotions"
+msgstr "Эмоции"
+
+#: index.php:41
+msgid "Flowers"
+msgstr "Цветы"
+
+#: index.php:42
+msgid "Food, Alcohol"
+msgstr "Еда, алкоголь"
+
+#: index.php:43
+msgid "Gestures"
+msgstr "Жесты"
+
+#: index.php:44
+msgid "Holidays"
+msgstr "Праздники"
+
+#: index.php:45
+msgid "Love"
+msgstr "Любовь"
+
+#: index.php:46
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: index.php:47
+msgid "Music, Dancing"
+msgstr "Музыка, танцы"
+
+#: index.php:48
+msgid "Sports"
+msgstr "Спорт"
+
+#: index.php:49
+msgid "Technology"
+msgstr "Техника"
+

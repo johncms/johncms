@@ -1,0 +1,492 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: login.php\n"
+"X-Poedit-SearchPath-1: go.php\n"
+"X-Poedit-SearchPath-2: exit.php\n"
+"X-Poedit-SearchPath-3: system/johncms\n"
+"X-Poedit-SearchPath-4: system/head.php\n"
+"X-Poedit-SearchPath-5: system/end.php\n"
+"X-Poedit-SearchPath-6: system/mainmenu.php\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /system/system.pot\n"
+"Language: ru_RU\n"
+
+#: exit.php:20
+msgid "Are you sure you want to leave the site?"
+msgstr "Вы уверены, что хотите покинуть сайт?"
+
+#: exit.php:21
+msgid "Logout"
+msgstr "Выход"
+
+#: exit.php:22 system/johncms/Comments.php:233
+msgid "Cancel"
+msgstr "Отмена"
+
+#: go.php:27
+msgid "Select language"
+msgstr "Выберите язык"
+
+#: go.php:33
+msgid "Default"
+msgstr "По умолчанию"
+
+#: go.php:40
+msgid "Apply"
+msgstr "Применить"
+
+#: go.php:40 go.php:57 system/johncms/Comments.php:102
+#: system/johncms/Comments.php:125 system/johncms/Comments.php:133
+#: system/johncms/Comments.php:136 system/johncms/Comments.php:153
+#: system/johncms/Comments.php:181 system/johncms/Comments.php:190
+#: system/johncms/Comments.php:193 system/johncms/Comments.php:237
+msgid "Back"
+msgstr "Назад"
+
+#: go.php:48
+msgid "External Link"
+msgstr "Внешняя ссылка"
+
+#: go.php:51
+msgid "ATTENTION!"
+msgstr "ВНИМАНИЕ!"
+
+#: go.php:52
+msgid "You are going to leave our site and go to an external link"
+msgstr "Вы собираетесь покинуть наш сайт и перейти по внешней ссылке"
+
+#: go.php:53
+msgid "Administration of our site is not responsible for the content of external sites"
+msgstr "Администрация нашего ресурса не несёт ответственности за содержание постороннего сайта"
+
+#: go.php:54
+#, php-format
+msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
+msgstr "Рекомендуется не указывать ваши данные, относящиеся к %s (логин, пароль), на посторонних сайтах"
+
+#: go.php:55
+msgid "Go to Link"
+msgstr "Перейти по ссылке"
+
+#: login.php:27 system/end.php:25 system/head.php:98
+msgid "Home"
+msgstr "Главная"
+
+#: login.php:29 login.php:148 system/head.php:100
+msgid "Login"
+msgstr "Вход"
+
+#: login.php:39
+msgid "You have not entered login"
+msgstr "Вы не ввели логин"
+
+#: login.php:43
+msgid "You have not entered password"
+msgstr "Вы не ввели пароль"
+
+#: login.php:47
+msgid "Nickname"
+msgstr "Ник"
+
+#: login.php:47 login.php:51
+msgid "Invalid length"
+msgstr "Недопустимая длина"
+
+#: login.php:51 login.php:145
+msgid "Password"
+msgstr "Пароль"
+
+#: login.php:71
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: login.php:77
+msgid "Verification code"
+msgstr "Проверочный код"
+
+#: login.php:78
+msgid "Enter verification code"
+msgstr "Введите проверочный код"
+
+#: login.php:82
+msgid "Continue"
+msgstr "Продолжить"
+
+#: login.php:94
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Приносим извинения, но Ваша заявка на регистрацию ещё не рассмотрена. Пожалуйста, ожидайте."
+
+#: login.php:118
+msgid "Enter site"
+msgstr "Войти на сайт"
+
+#: login.php:127 login.php:131
+msgid "Authorization failed"
+msgstr "Авторизация не прошла"
+
+#: login.php:143
+msgid "Username"
+msgstr "Ваш логин"
+
+#: login.php:147
+msgid "Remember"
+msgstr "Запомнить"
+
+#: login.php:150
+msgid "Registration"
+msgstr "Регистрация"
+
+#: login.php:151
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#: system/head.php:41
+msgid "Site News"
+msgstr "Новости ресурса"
+
+#: system/head.php:94
+msgid "Hi"
+msgstr "Привет"
+
+#: system/head.php:94 system/johncms/Tools.php:290
+msgid "Guest"
+msgstr "Гость"
+
+#: system/head.php:99
+msgid "Personal"
+msgstr "Личное"
+
+#: system/head.php:186
+msgid "Ban"
+msgstr "Бан"
+
+#: system/head.php:186
+msgid "Details"
+msgstr "Подробно"
+
+#: system/head.php:195
+msgid "System"
+msgstr "Система"
+
+#: system/head.php:208
+msgid "Mail"
+msgstr "Почта"
+
+#: system/head.php:212 system/johncms/Tools.php:233 system/mainmenu.php:32
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: system/head.php:218
+msgid "Comments"
+msgstr "Комментарии"
+
+#: system/head.php:222 system/johncms/Counters.php:154
+msgid "Unread"
+msgstr "Непрочитанное"
+
+#: system/johncms/Bbcode.php:139
+msgid "Edit List"
+msgstr "Изменить список"
+
+#: system/johncms/Bbcode.php:150
+msgid "Add Smilies"
+msgstr "Добавить Смайлы"
+
+#: system/johncms/Bbcode.php:208
+msgid "Bold"
+msgstr "Жирный"
+
+#: system/johncms/Bbcode.php:209
+msgid "Italic"
+msgstr "Наклонный"
+
+#: system/johncms/Bbcode.php:210
+msgid "Underline"
+msgstr "Подчёркнутый"
+
+#: system/johncms/Bbcode.php:211
+msgid "Strike"
+msgstr "Зачеркнутый"
+
+#: system/johncms/Bbcode.php:212
+msgid "List"
+msgstr "Список"
+
+#: system/johncms/Bbcode.php:213
+msgid "Spoiler"
+msgstr "Спойлер"
+
+#: system/johncms/Bbcode.php:214
+msgid "Quote"
+msgstr "Цитата"
+
+#: system/johncms/Bbcode.php:215
+msgid "URL"
+msgstr "Ссылка"
+
+#: system/johncms/Bbcode.php:216
+msgid "Code"
+msgstr "Код"
+
+#: system/johncms/Bbcode.php:217
+msgid "Text Color"
+msgstr "Цвет текста"
+
+#: system/johncms/Bbcode.php:218
+msgid "Background Color"
+msgstr "Цвет фона"
+
+#: system/johncms/Bbcode.php:221
+msgid "Smilies"
+msgstr "Смайлы"
+
+#: system/johncms/Comments.php:94 system/johncms/Comments.php:289
+msgid "Reply"
+msgstr "Ответить"
+
+#: system/johncms/Comments.php:102
+msgid "Administrator already replied to this message"
+msgstr "На это сообщение уже ответил Администратор"
+
+#: system/johncms/Comments.php:136 system/johncms/Comments.php:190
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: system/johncms/Comments.php:144 system/johncms/Comments.php:290
+msgid "Edit"
+msgstr "Изменить"
+
+#: system/johncms/Comments.php:153
+msgid "You cannot edit posts of higher administration"
+msgstr "Вы не можете редактировать сообщение старшего Вас по должности"
+
+#: system/johncms/Comments.php:230 system/johncms/Comments.php:232
+#: system/johncms/Comments.php:291
+msgid "Delete"
+msgstr "Удалить"
+
+#: system/johncms/Comments.php:231
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+#: system/johncms/Comments.php:234
+msgid "Clear all messages from this user"
+msgstr "Очистить все сообщения от данного пользователя"
+
+#: system/johncms/Comments.php:235
+msgid "Clear"
+msgstr "Очистить"
+
+#: system/johncms/Comments.php:297
+msgid "Edited"
+msgstr "Изм."
+
+#: system/johncms/Comments.php:321
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: system/johncms/Comments.php:324
+msgid "Total"
+msgstr "Всего"
+
+#: system/johncms/Comments.php:330
+msgid "To Page"
+msgstr "На страницу"
+
+#: system/johncms/Comments.php:389
+msgid "Message"
+msgstr "Сообщение"
+
+#: system/johncms/Comments.php:392
+msgid "Send"
+msgstr "Отправить"
+
+#: system/johncms/Comments.php:412
+msgid "Text is too short"
+msgstr "Слишком короткий текст"
+
+#: system/johncms/Comments.php:418
+msgid "You cannot add the message so often<br>Please, wait"
+msgstr "Вы не можете так часто добавлять сообщения<br>Пожалуйста, подождите"
+
+#: system/johncms/Comments.php:418
+msgid "seconds"
+msgstr "секунд"
+
+#: system/johncms/Comments.php:428
+msgid "Message already exists"
+msgstr "Такое сообщение уже было"
+
+#: system/johncms/Counters.php:153
+msgid "Show for Period"
+msgstr "Показать за период"
+
+#: system/johncms/Counters.php:160
+msgid "Last activity"
+msgstr "Последняя активность"
+
+#: system/johncms/NewsWidget.php:52
+msgid "show more"
+msgstr "читать дальше"
+
+#: system/johncms/NewsWidget.php:85
+msgid "Discuss"
+msgstr "Обсудить"
+
+#: system/johncms/Tools.php:126
+msgid "Today"
+msgstr "Сегодня"
+
+#: system/johncms/Tools.php:129
+msgid "Yesterday"
+msgstr "Вчера"
+
+#: system/johncms/Tools.php:145
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: system/johncms/Tools.php:225
+msgid "List of Admins"
+msgstr "Список админов"
+
+#: system/johncms/Tools.php:226
+msgid "Watching the photo album"
+msgstr "Смотрит фотоальбомы"
+
+#: system/johncms/Tools.php:227
+msgid "List of birthdays"
+msgstr "Список именинников"
+
+#: system/johncms/Tools.php:228 system/mainmenu.php:47
+msgid "Downloads"
+msgstr "Загрузки"
+
+#: system/johncms/Tools.php:229
+msgid "Reading the FAQ"
+msgstr "Читает справку"
+
+#: system/johncms/Tools.php:230 system/mainmenu.php:37
+msgid "Forum"
+msgstr "Форум"
+
+#: system/johncms/Tools.php:231
+msgid "Forum Files"
+msgstr "Файлы Форума"
+
+#: system/johncms/Tools.php:232
+msgid "Looking, who in Forum?"
+msgstr "Смотрит, кто в Форуме?"
+
+#: system/johncms/Tools.php:234
+msgid "Here, in the list"
+msgstr "Тут, в списке"
+
+#: system/johncms/Tools.php:235
+msgid "On the Homepage"
+msgstr "На Главной"
+
+#: system/johncms/Tools.php:236 system/mainmenu.php:52
+msgid "Library"
+msgstr "Библиотека"
+
+#: system/johncms/Tools.php:237
+msgid "Personal correspondence"
+msgstr "Личная переписка"
+
+#: system/johncms/Tools.php:238
+msgid "Reading the news"
+msgstr "Читает новости"
+
+#: system/johncms/Tools.php:239
+msgid "Who is online?"
+msgstr "Кто на сайте?"
+
+#: system/johncms/Tools.php:240
+msgid "Profile"
+msgstr "Профиль"
+
+#: system/johncms/Tools.php:241
+msgid "Personal Profile"
+msgstr "В своей Анкете"
+
+#: system/johncms/Tools.php:242
+msgid "Registered on the site"
+msgstr "Регистрируется на сайте"
+
+#: system/johncms/Tools.php:243
+msgid "List of users"
+msgstr "Список пользователей"
+
+#: system/johncms/Tools.php:244
+msgid "Watching Top 10 Users"
+msgstr "Смотрит Топ 10 Пользователей"
+
+#: system/johncms/Tools.php:358
+msgid "Last Visit"
+msgstr "Последний визит"
+
+#: system/johncms/Tools.php:364
+msgid "Browser"
+msgstr "Браузер"
+
+#: system/johncms/Tools.php:365
+msgid "IP address"
+msgstr "IP адрес"
+
+#: system/johncms/Tools.php:384
+msgid "IP History"
+msgstr "История IP"
+
+#: system/johncms/Tools.php:583
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] "День"
+msgstr[1] "Дня"
+msgstr[2] "Дней"
+
+#: system/mainmenu.php:20
+msgid "Information"
+msgstr "Информация"
+
+#: system/mainmenu.php:22
+msgid "News archive"
+msgstr "Архив новостей"
+
+#: system/mainmenu.php:23
+msgid "Information, FAQ"
+msgstr "Информация, FAQ"
+
+#: system/mainmenu.php:28
+msgid "Communication"
+msgstr "Общение"
+
+#: system/mainmenu.php:43
+msgid "Useful"
+msgstr "Полезное"
+
+#: system/mainmenu.php:59
+msgid "Community"
+msgstr "Сообщество"
+
+#: system/mainmenu.php:60
+msgid "Users"
+msgstr "Пользователи"
+
+#: system/mainmenu.php:61
+msgid "Photo Albums"
+msgstr "Фотоальбомы"
+

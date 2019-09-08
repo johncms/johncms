@@ -1,0 +1,305 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: JohnCMS 7.0\n"
+"POT-Creation-Date: 2016-11-15 19:16+0400\n"
+"PO-Revision-Date: 2016-08-26 11:27+0400\n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/delete.php:6 includes/deluser.php:6 includes/files.php:6
+#: includes/ignor.php:6 includes/input.php:5 includes/load.php:5
+#: includes/new.php:5 includes/output.php:5 includes/systems.php:103
+#: includes/write.php:30 includes/write.php:40 includes/write.php:96
+#: includes/write.php:518 index.php:71
+msgid "Mail"
+msgstr ""
+
+#: includes/delete.php:9
+msgid "Deleting messages"
+msgstr ""
+
+#: includes/delete.php:29
+msgid "Message does not exist"
+msgstr ""
+
+#: includes/delete.php:40 includes/delete.php:67
+msgid "Message deleted"
+msgstr ""
+
+#: includes/delete.php:41 includes/delete.php:68 includes/deluser.php:66
+#: includes/ignor.php:91 includes/write.php:85
+msgid "Back"
+msgstr ""
+
+#: includes/delete.php:72
+msgid "You really want to remove the message?"
+msgstr ""
+
+#: includes/delete.php:73 includes/deluser.php:59 includes/deluser.php:63
+#: includes/ignor.php:117 includes/input.php:78 includes/new.php:45
+#: includes/output.php:79 includes/systems.php:44 includes/systems.php:79
+#: includes/write.php:80 includes/write.php:485 index.php:135
+msgid "Delete"
+msgstr ""
+
+#: includes/delete.php:77
+msgid "The message for removal isn't chosen"
+msgstr ""
+
+#: includes/delete.php:80 includes/files.php:60 includes/ignor.php:142
+#: includes/input.php:105 includes/new.php:69 includes/output.php:106
+#: includes/systems.php:113 includes/write.php:86 includes/write.php:527
+#: index.php:158
+msgid "Personal"
+msgstr ""
+
+#: includes/deluser.php:57
+msgid "Contact deleted"
+msgstr ""
+
+#: includes/deluser.php:57 includes/deluser.php:69 includes/input.php:68
+#: includes/output.php:69 index.php:105
+msgid "Continue"
+msgstr ""
+
+#: includes/deluser.php:62
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr ""
+
+#: includes/deluser.php:69
+msgid "Contact does not exist"
+msgstr ""
+
+#: includes/deluser.php:72
+msgid "Contact for removal isn't chosen"
+msgstr ""
+
+#: includes/files.php:6 includes/files.php:21
+msgid "Files"
+msgstr ""
+
+#: includes/files.php:46 includes/ignor.php:128 includes/input.php:92
+#: includes/new.php:56 includes/output.php:93 includes/systems.php:89
+#: includes/write.php:503 index.php:146
+msgid "The list is empty"
+msgstr ""
+
+#: includes/files.php:50 includes/ignor.php:131 includes/input.php:95
+#: includes/new.php:59 includes/output.php:96 includes/systems.php:92
+#: includes/write.php:506 index.php:149
+msgid "Total"
+msgstr ""
+
+#: includes/files.php:57 includes/ignor.php:138 includes/input.php:102
+#: includes/new.php:66 includes/output.php:103 includes/systems.php:99
+#: includes/write.php:514 index.php:155
+msgid "To Page"
+msgstr ""
+
+#: includes/ignor.php:21 includes/ignor.php:97 includes/output.php:79
+#: index.php:115
+msgid "Blocklist"
+msgstr ""
+
+#: includes/ignor.php:29 includes/ignor.php:58 includes/write.php:32
+#: includes/write.php:134 index.php:85
+msgid "User does not exists"
+msgstr ""
+
+#: includes/ignor.php:39
+msgid "User not blocked"
+msgstr ""
+
+#: includes/ignor.php:42
+msgid "User is unblocked"
+msgstr ""
+
+#: includes/ignor.php:46
+msgid "You really want to unblock contact?"
+msgstr ""
+
+#: includes/ignor.php:47 includes/ignor.php:117
+msgid "Unblock"
+msgstr ""
+
+#: includes/ignor.php:51 includes/ignor.php:94
+msgid "Contact isn't chosen"
+msgstr ""
+
+#: includes/ignor.php:68
+msgid "This user can not be blocked"
+msgstr ""
+
+#: includes/ignor.php:84
+msgid "User is blocked"
+msgstr ""
+
+#: includes/ignor.php:88
+msgid "You really want to block contact?"
+msgstr ""
+
+#: includes/ignor.php:89
+msgid "Block"
+msgstr ""
+
+#: includes/ignor.php:97 index.php:115
+msgid "My Contacts"
+msgstr ""
+
+#: includes/ignor.php:117 includes/input.php:78 includes/new.php:45
+#: includes/output.php:79 index.php:135
+msgid "Correspondence"
+msgstr ""
+
+#: includes/input.php:7
+msgid "Incoming messages"
+msgstr ""
+
+#: includes/load.php:25 includes/load.php:37
+msgid "Such file does not exist"
+msgstr ""
+
+#: includes/load.php:40
+msgid "No file selected"
+msgstr ""
+
+#: includes/new.php:20
+msgid "New Messages"
+msgstr ""
+
+#: includes/new.php:45 index.php:135
+msgid "Block User"
+msgstr ""
+
+#: includes/output.php:7
+msgid "Sent messages"
+msgstr ""
+
+#: includes/systems.php:38 includes/write.php:75
+msgid "Messages are deleted"
+msgstr ""
+
+#: includes/systems.php:41 includes/write.php:79
+msgid "Confirm the deletion of messages"
+msgstr ""
+
+#: includes/systems.php:105
+msgid "System messages"
+msgstr ""
+
+#: includes/systems.php:110 includes/write.php:42 includes/write.php:524
+msgid "Clear messages"
+msgstr ""
+
+#: includes/write.php:112
+msgid "Specify the recipient's login"
+msgstr ""
+
+#: includes/write.php:116
+msgid "Message cannot be empty"
+msgstr ""
+
+#: includes/write.php:120
+msgid "You cannot send messages to yourself"
+msgstr ""
+
+#: includes/write.php:126
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d sec."
+msgstr ""
+
+#: includes/write.php:152
+msgid "To this user can write only contacts"
+msgstr ""
+
+#: includes/write.php:159
+msgid "To this user can write only friends"
+msgstr ""
+
+#: includes/write.php:191 includes/write.php:203 includes/write.php:358
+#: includes/write.php:379 includes/write.php:382
+msgid "Error uploading file"
+msgstr ""
+
+#: includes/write.php:278
+msgid "It is forbidden to upload files without a name"
+msgstr ""
+
+#: includes/write.php:282
+msgid "It is forbidden to upload files without extension"
+msgstr ""
+
+#: includes/write.php:286
+msgid "The size of the file exceeds the maximum allowable upload"
+msgstr ""
+
+#: includes/write.php:290
+msgid "File name contains invalid characters"
+msgstr ""
+
+#: includes/write.php:294
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr ""
+
+#: includes/write.php:308
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr ""
+
+#: includes/write.php:318
+msgid "The user added you in the ignore list. Sending the message isn't possible."
+msgstr ""
+
+#: includes/write.php:396
+msgid "Message already exists"
+msgstr ""
+
+#: includes/write.php:429
+msgid "To Whom"
+msgstr ""
+
+#: includes/write.php:434
+msgid "Sent"
+msgstr ""
+
+#: includes/write.php:436
+msgid "Personal correspondence with"
+msgstr ""
+
+#: includes/write.php:436
+msgid "Send a message"
+msgstr ""
+
+#: includes/write.php:482
+msgid "File"
+msgstr ""
+
+#: index.php:73
+msgid "Contacts"
+msgstr ""
+
+#: index.php:93
+msgid "You cannot add yourself as a contact"
+msgstr ""
+
+#: index.php:105
+msgid "User has been added to your contact list"
+msgstr ""
+
+#: index.php:109
+msgid "You really want to add contact?"
+msgstr ""
+
+#: index.php:110
+msgid "Add"
+msgstr ""

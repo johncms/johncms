@@ -1,0 +1,156 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-11-15 19:17+0400\n"
+"PO-Revision-Date: 2016-11-15 10:28-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Vietnamese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: vi\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /news/default.pot\n"
+
+#: index.php:30 index.php:37 index.php:169 index.php:226 index.php:271
+#: index.php:288
+msgid "News"
+msgstr "Tin tức"
+
+#: index.php:37 index.php:291
+msgid "Add"
+msgstr "Thêm"
+
+#: index.php:46 index.php:181
+msgid "You have not entered news title"
+msgstr "Bạn chưa nhập tiêu đề tin tức"
+
+#: index.php:50 index.php:185
+msgid "You have not entered news text"
+msgstr "Bạn chưa nhập tiêu đề văn bản"
+
+#: index.php:56
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "Bạn không thể thêm những tin nhắn vì vậy thường. Xin vui lòng, chờ %d giây."
+
+#: index.php:132
+msgid "News added"
+msgstr "Tin tức thêm"
+
+#: index.php:132 index.php:134 index.php:159 index.php:172 index.php:216
+#: index.php:237 index.php:244 index.php:251 index.php:276
+msgid "Back to news"
+msgstr "Quay lại tin"
+
+#: index.php:138 index.php:210
+msgid "Title"
+msgstr "Tiêu đề"
+
+#: index.php:140 index.php:212
+msgid "Text"
+msgstr "Văn bản"
+
+#: index.php:142
+msgid "Discussion"
+msgstr "Thảo luận"
+
+#: index.php:144
+msgid "Do not discuss"
+msgstr "Không cho thảo luận"
+
+#: index.php:157 index.php:214
+msgid "Save"
+msgstr "Lưu"
+
+#: index.php:169 index.php:315
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: index.php:172
+msgid "Wrong data"
+msgstr "Lỗi dữ liệu"
+
+#: index.php:203
+msgid "Repeat"
+msgstr "Lặp lại"
+
+#: index.php:205
+msgid "Article changed"
+msgstr "Điều thay đổi"
+
+#: index.php:205
+msgid "Continue"
+msgstr "Tiếp tục"
+
+#: index.php:226 index.php:259 index.php:291
+msgid "Clear"
+msgstr "Xoá"
+
+#: index.php:237
+msgid "Delete all news older than 1 week"
+msgstr "Hủy bỏ tất cả các tin tức lớn hơn 1 tuần"
+
+#: index.php:244
+msgid "Delete all news"
+msgstr "Hủy bỏ tất cả tin tức"
+
+#: index.php:251
+msgid "Delete all news older than 1 month"
+msgstr "Hủy bỏ tất cả các tin tức cũ hơn 1 tháng"
+
+#: index.php:255
+msgid "Clearing parameters"
+msgstr "Xóa cài đặt"
+
+#: index.php:256
+msgid "Older than 1 month"
+msgstr "Cách đây hơn 1 tháng"
+
+#: index.php:257
+msgid "Older than 1 week"
+msgstr "Cách đây hơn 1 tuần"
+
+#: index.php:258
+msgid "Clear all"
+msgstr "Xoá tất cả các bài viết"
+
+#: index.php:261 index.php:279
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: index.php:271 index.php:279 index.php:316
+msgid "Delete"
+msgstr "Xóa"
+
+#: index.php:276
+msgid "Article deleted"
+msgstr "Đã xóa bài viết"
+
+#: index.php:278
+msgid "Do you really want to delete?"
+msgstr "Bạn có thực sự muốn xóa?"
+
+#: index.php:303
+msgid "Author"
+msgstr "Tác giả"
+
+#: index.php:310
+msgid "Discuss in Forum"
+msgstr "Thảo luận trong Diễn đàn"
+
+#: index.php:322
+msgid "Total"
+msgstr "Tổng số"
+
+#: index.php:328
+msgid "To Page"
+msgstr "Đến trang"
+

@@ -1,0 +1,321 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-12-02 13:49-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Indonesian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /help/default.pot\n"
+"Language: id_ID\n"
+
+#: includes/admsmilies.php:16 includes/set_my_sm.php:21
+msgid "Wrong data"
+msgstr "Data salah"
+
+#: includes/admsmilies.php:16 includes/admsmilies.php:70
+#: includes/avatars.php:25 includes/avatars.php:71 includes/avatars.php:89
+#: includes/forum.php:51 includes/my_smilies.php:62 includes/smilies.php:43
+#: includes/tags.php:71 includes/usersmilies.php:80 index.php:74
+msgid "Back"
+msgstr "Kembali"
+
+#: includes/admsmilies.php:21 includes/my_smilies.php:15
+#: includes/set_my_sm.php:21 includes/smilies.php:9 includes/usersmilies.php:31
+#: index.php:73
+msgid "Smilies"
+msgstr "Smile"
+
+#: includes/admsmilies.php:21 includes/smilies.php:17
+msgid "For administration"
+msgstr "Untuk admin"
+
+#: includes/admsmilies.php:28 includes/my_smilies.php:15
+#: includes/smilies.php:13 includes/usersmilies.php:44
+msgid "My smilies"
+msgstr "Smile saya"
+
+#: includes/admsmilies.php:54 includes/my_smilies.php:46
+#: includes/usersmilies.php:60
+msgid "or"
+msgstr "atau"
+
+#: includes/admsmilies.php:57 includes/avatars.php:58
+#: includes/my_smilies.php:53 includes/usersmilies.php:68
+msgid "The list is empty"
+msgstr "Daftar ini kosong"
+
+#: includes/admsmilies.php:60 includes/usersmilies.php:65
+msgid "Add"
+msgstr "Tambahkan"
+
+#: includes/admsmilies.php:61 includes/avatars.php:61 includes/avatars.php:88
+#: includes/my_smilies.php:56 includes/usersmilies.php:71
+msgid "Total"
+msgstr "Total"
+
+#: includes/admsmilies.php:67 includes/avatars.php:67
+#: includes/usersmilies.php:77
+msgid "To Page"
+msgstr "Ke halaman"
+
+#: includes/avatars.php:22
+msgid "Avatar has been successfully applied"
+msgstr "Avatar berhasil dipasang"
+
+#: includes/avatars.php:23
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: includes/avatars.php:25
+msgid "An error occurred"
+msgstr "Terjadi kesalahan"
+
+#: includes/avatars.php:28 includes/avatars.php:37 includes/avatars.php:75
+#: index.php:72
+msgid "Avatars"
+msgstr "Avatar"
+
+#: includes/avatars.php:28
+msgid "Set to Profile"
+msgstr "Setel dalam profil"
+
+#: includes/avatars.php:29
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Apakah Anda yakin mengatur avatar sendiri?"
+
+#: includes/avatars.php:31
+msgid "Save"
+msgstr "Simpan"
+
+#: includes/avatars.php:33
+msgid "Cancel"
+msgstr "Batal"
+
+#: includes/avatars.php:52
+msgid "Select"
+msgstr "Pilih"
+
+#: includes/avatars.php:75 includes/forum.php:6 includes/smilies.php:9
+#: includes/tags.php:8 index.php:69
+msgid "Information, FAQ"
+msgstr "Informasi, FAQ"
+
+#: includes/forum.php:6 index.php:70
+msgid "Forum rules"
+msgstr "Ketentuan Forum"
+
+#: includes/forum.php:20
+msgid "FORBIDDEN"
+msgstr "DILARANG"
+
+#: includes/forum.php:22
+msgid "Advertising messages"
+msgstr "Pesan Iklan"
+
+#: includes/forum.php:23
+msgid "The messages containing direct propagation of racial, national and religious animosity"
+msgstr "Pesan yang berisi langsung penyebaran kebencian rasial, nasional dan keagamaan"
+
+#: includes/forum.php:24
+msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
+msgstr "Segala sesuatu yang kasar, cabul, vulgar, memfitnah, kebencian, mengancam dan berorientasi seksual pesan atau materi lainnya yang melanggar undang-undang yang berlaku"
+
+#: includes/forum.php:25
+msgid "The messages obviously offending someone, espcially forum users"
+msgstr ""
+
+#: includes/forum.php:26
+msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
+msgstr ""
+
+#: includes/forum.php:27
+msgid "Publishing deleted by moderator messages repeatedly"
+msgstr ""
+
+#: includes/forum.php:28
+msgid "Post messages not related to the topic"
+msgstr "Pos pesan tidak terkait dengan topik"
+
+#: includes/forum.php:29
+msgid "Continuing topics that have been closed by moderator"
+msgstr "Melanjutkan topik telah ditutup oleh Moderator"
+
+#: includes/forum.php:32
+msgid "ABSOLUTELY FORBIDDEN"
+msgstr "SANGAT DILARANG"
+
+#: includes/forum.php:34
+msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
+msgstr ""
+
+#: includes/forum.php:35
+msgid "Register the nicknames having offensive tone for other users"
+msgstr ""
+
+#: includes/forum.php:38
+msgid "UNACCEPTABLE"
+msgstr "TIDAK DAPAT DITERIMA"
+
+#: includes/forum.php:40
+msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
+msgstr ""
+
+#: includes/forum.php:41
+msgid "Post messages only contains external link"
+msgstr "Pos yang hanya berisi tautan eksternal"
+
+#: includes/forum.php:42
+msgid "Post messages written in translite"
+msgstr ""
+
+#: includes/forum.php:43
+msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
+msgstr ""
+
+#: includes/forum.php:48
+msgid "Message posted despite the above warnings will be changed or deleted."
+msgstr ""
+
+#: includes/forum.php:49
+msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
+msgstr "Ketentuan ini berlaku untuk semua pengguna dan moderator, melanggar ketentuan Anda akan diblokir atau kehilangan akun."
+
+#: includes/my_smilies.php:51
+msgid "Delete"
+msgstr "Hapus"
+
+#: includes/my_smilies.php:53
+msgid "Add Smilies"
+msgstr "Tambahkan Smile"
+
+#: includes/tags.php:8 index.php:71
+msgid "bbCode Tags"
+msgstr "tag bbCode"
+
+#: includes/tags.php:14
+msgid "PHP code"
+msgstr "Kode PHP"
+
+#: includes/tags.php:17
+msgid "Link name"
+msgstr "Nama tautan"
+
+#: includes/tags.php:18
+msgid "URL Link"
+msgstr "Tautan URL"
+
+#: includes/tags.php:21
+msgid "Bold"
+msgstr "Tebal"
+
+#: includes/tags.php:25
+msgid "Italic"
+msgstr "Miring"
+
+#: includes/tags.php:29
+msgid "Underline"
+msgstr "Bergaris bawah"
+
+#: includes/tags.php:33
+msgid "Strike"
+msgstr "Coret"
+
+#: includes/tags.php:37
+msgid "Red"
+msgstr "Merah"
+
+#: includes/tags.php:41
+msgid "Green"
+msgstr "Hijau"
+
+#: includes/tags.php:45
+msgid "Blue"
+msgstr "Biru"
+
+#: includes/tags.php:49
+msgid "Text Color"
+msgstr "Warna Teks"
+
+#: includes/tags.php:53
+msgid "Background Color"
+msgstr "Warna Latarbelakang"
+
+#: includes/tags.php:57
+msgid "Quote"
+msgstr "Kutipan"
+
+#: includes/tags.php:61
+msgid "Bulleted list"
+msgstr "Daftar berbutir"
+
+#: includes/tags.php:64
+msgid "Title"
+msgstr "Judul"
+
+#: includes/tags.php:64
+msgid "Text"
+msgstr "Teks"
+
+#: includes/tags.php:65
+msgid "Spoiler"
+msgstr "Spoiler"
+
+#: index.php:38
+msgid "Animals"
+msgstr "Binatang"
+
+#: index.php:39
+msgid "Brawl, Weapons"
+msgstr "Perkelahian, Senjata"
+
+#: index.php:40
+msgid "Emotions"
+msgstr "Emosi"
+
+#: index.php:41
+msgid "Flowers"
+msgstr "Bunga"
+
+#: index.php:42
+msgid "Food, Alcohol"
+msgstr "Makanan, Alkohol"
+
+#: index.php:43
+msgid "Gestures"
+msgstr "Gerakan"
+
+#: index.php:44
+msgid "Holidays"
+msgstr "Liburan"
+
+#: index.php:45
+msgid "Love"
+msgstr "Cinta"
+
+#: index.php:46
+msgid "Miscellaneous"
+msgstr "Lainnya"
+
+#: index.php:47
+msgid "Music, Dancing"
+msgstr "Musik, Tari"
+
+#: index.php:48
+msgid "Sports"
+msgstr "Olahraga"
+
+#: index.php:49
+msgid "Technology"
+msgstr "Teknologi"
+

@@ -1,49 +1,63 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
- 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
-$adm ?: redir404();
 
-  if (isset($_POST['submit'])) {
+defined('_IN_JOHNCMS') or die('Error: restricted access');
+
+if (!$adm) {
+    Library\Utils::redir404();
+}
+
+if (isset($_POST['submit'])) {
+    /** @var Interop\Container\ContainerInterface $container */
+    $container = App::getContainer();
+
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    /** @var Johncms\Tools $tools */
+    $tools = $container->get('tools');
+
     if (empty($_POST['name'])) {
-      echo functions::display_error($lng['error_empty_title'], '<a href="?act=mkdir&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-      require_once ('../incfiles/end.php');
-      exit;
+        echo $tools->displayError(_t('You have not entered the name'),
+            '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        require_once('../system/end.php');
+        exit;
     }
-    $lastinsert = mysql_result(mysql_query("SELECT MAX(`id`) FROM `library_cats`") , 0);
+
+    $lastinsert = $db->query('SELECT MAX(`id`) FROM `library_cats`')->fetchColumn();
     ++$lastinsert;
-    $name = functions::check($_POST['name']);
-    $desc = functions::check($_POST['description']);
+    $name = $_POST['name'];
+    $desc = $_POST['description'];
     $type = intval($_POST['type']);
-    $sql = "INSERT INTO `library_cats`
-        (`parent`, `name`, `description`, `dir`, `pos`) 
-    VALUES
-        (" . $id . ", '" . $name . "', '" . $desc . "', " . $type . ", " . $lastinsert . ")";
-    if (mysql_query($sql)) {
-      echo '<div>' . $lng_lib['category_created'] . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . $lng_lib['to_category'] . '</a></div>';
+    $stmt = $db->prepare('INSERT INTO `library_cats` (`parent`, `name`, `description`, `dir`, `pos`) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$id, $name, $desc, $type, $lastinsert]);
+
+    if ($stmt->rowCount()) {
+        echo '<div>' . _t('Section created') . '</div><div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
     }
-  }
-  else {
-    echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['create_category'] . '</div>'  
-    . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">' 
-    . '<div class="menu">'
-    . '<h3>' . $lng['title'] . ':</h3>' 
-    . '<div><input type="text" name="name" /></div>' 
-    . '<h3>' . $lng_lib['add_dir_descriptions'] . ':</h3>' 
-    . '<div><textarea name="description" rows="4" cols="20"></textarea></div>' 
-    . '<h3>' . $lng_lib['category_type'] . '</h3>' 
-    . '<div><select name="type">' 
-    . '<option value="1">' . $lng_lib['categories'] . '</option>' 
-    . '<option value="0">' . $lng_lib['articles'] . '</option>' 
-    . '</select></div>' 
-    . '<div><input type="submit" name="submit" value="' . $lng['save'] . '"/></div>' 
-    . '</div></form>' 
-    . '<p><a href ="?">' . $lng['back'] . '</a></p>';
-  }
+} else {
+    echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Create Section') . '</div>'
+        . '<form action="?act=mkdir&amp;id=' . $id . '" method="post">'
+        . '<div class="menu">'
+        . '<h3>' . _t('Title') . ':</h3>'
+        . '<div><input type="text" name="name" /></div>'
+        . '<h3>' . _t('Section description') . ':</h3>'
+        . '<div><textarea name="description" rows="4" cols="20"></textarea></div>'
+        . '<h3>' . _t('Section type') . '</h3>'
+        . '<div><select name="type">'
+        . '<option value="1">' . _t('Sections') . '</option>'
+        . '<option value="0">' . _t('Articles') . '</option>'
+        . '</select></div>'
+        . '<div><input type="submit" name="submit" value="' . _t('Save') . '"/></div>'
+        . '</div></form>'
+        . '<p><a href ="?">' . _t('Back') . '</a></p>';
+}

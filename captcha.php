@@ -1,24 +1,18 @@
 <?php
-
-/**
-* @package     JohnCMS
-* @link        http://johncms.com
-* @copyright   Copyright (C) 2008-2011 JohnCMS Community
-* @license     LICENSE.txt (see attached file)
-* @version     VERSION.txt (see attached file)
-* @author      http://johncms.com/about
-*
-* Данный модуль построен на основе алгоритма и кода KCAPTCHA v.1.2.6
-* KCAPTCHA PROJECT, Copyright by Kruglov Sergei, 2006, 2007, 2008
-* www.captcha.ru, www.kruglov.ru
-*/
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 class KCAPTCHA {
-    // generates keystring and image
     function KCAPTCHA() {
-        ////////////////////////////////////////////////////////////
-        // Настройки CAPTCHA                                      //
-        ////////////////////////////////////////////////////////////
+        // Настройки CAPTCHA
         $alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
         //$allowed_symbols = "0123456789";
         $allowed_symbols = "23456789abcdeghkmnpqsuvxyz"; // Не ставить похожие символы (o=0, 1=l, i=j, t=f)
@@ -43,7 +37,7 @@ class KCAPTCHA {
         );
 
         $jpeg_quality = 90;
-        ////////////////////////////////////////////////////////////
+
         $fonts = array ();
         $fontsdir_absolute = dirname(__FILE__) . '/' . $fontsdir;
 

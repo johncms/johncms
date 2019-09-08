@@ -1,28 +1,37 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if (($rights != 3 && $rights < 6) || !$id) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+if (($systemUser->rights != 3 && $systemUser->rights < 6) || !$id) {
     header('Location: index.php');
     exit;
 }
-if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'"), 0)) {
-    if (isset($_GET['closed']))
-        mysql_query("UPDATE `forum` SET `edit` = '1' WHERE `id` = '$id'");
-    else
-        mysql_query("UPDATE `forum` SET `edit` = '0' WHERE `id` = '$id'");
+
+if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'")->fetchColumn()) {
+    if (isset($_GET['closed'])) {
+        $db->exec("UPDATE `forum` SET `edit` = '1' WHERE `id` = '$id'");
+    } else {
+        $db->exec("UPDATE `forum` SET `edit` = '0' WHERE `id` = '$id'");
+    }
 }
 
 header("Location: index.php?id=$id");

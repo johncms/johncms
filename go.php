@@ -1,75 +1,83 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 define('_IN_JOHNCMS', 1);
 
-require('incfiles/core.php');
+require('system/bootstrap.php');
 
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
 if (isset($_GET['lng'])) {
-    /*
-    -----------------------------------------------------------------
-    Переключатель языков
-    -----------------------------------------------------------------
-    */
-    require('incfiles/head.php');
+    // Переключатель языков
+    require('system/head.php');
     echo '<div class="menu"><form action="' . $referer . '" method="post"><p>';
-    if (count(core::$lng_list) > 1) {
-        echo '<p><h3>' . $lng['language_select'] . '</h3>';
-        foreach (core::$lng_list as $key => $val) {
-            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == core::$lng_iso ? 'checked="checked"' : '') . '/>&#160;' .
-                 (file_exists('images/flags/' . $key . '.gif') ? '<img src="images/flags/' . $key . '.gif" alt=""/>&#160;' : '') .
-                 $val .
-                 ($key == core::$system_set['lng'] ? ' <small class="red">[' . $lng['default'] . ']</small>' : '') .
-                 '</div>';
+
+    if (count($config->lng_list) > 1) {
+        echo '<p><h3>' . _t('Select language', 'system') . '</h3>';
+
+        foreach ($config->lng_list as $key => $val) {
+            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $locale ? 'checked="checked"' : '') . '/>&#160;' .
+                $tools->getFlag($key) .
+                $val .
+                ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .
+                '</div>';
         }
+
         echo '</p>';
     }
-    echo '</p><p><input type="submit" name="submit" value="' . $lng['apply'] . '" /></p>' .
-         '<p><a href="' . $referer . '">' . $lng['back'] . '</a></p></form></div>';
-    require('incfiles/end.php');
+
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Apply', 'system') . '" /></p><p><a href="' . $referer . '">' . _t('Back', 'system') . '</a></p></form></div>';
+    require('system/end.php');
 } elseif ($url) {
-    /*
-    -----------------------------------------------------------------
-    Редирект по ссылкам в текстах, обработанным функцией tags()
-    -----------------------------------------------------------------
-    */
+    // Редирект по ссылкам в текстах, обработанным функцией tags()
     if (isset($_POST['submit'])) {
         header('Location: ' . $url);
     } else {
-        require('incfiles/head.php');
-        echo '<div class="phdr"><b>' . $lng['external_link'] . '</b></div>' .
-             '<div class="rmenu">' .
-             '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
-             '<p>' . $lng['redirect_1'] . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
-             '<p>' . $lng['redirect_2'] . '.<br />' .
-             $lng['redirect_3'] . ' <span class="green">' . $set['homeurl'] . '</span> ' . $lng['redirect_4'] . '.</p>' .
-             '<p><input type="submit" name="submit" value="' . $lng['redirect_5'] . '" /></p>' .
-             '</form></div>' .
-             '<div class="phdr"><a href="' . $referer . '">' . $lng['back'] . '</a></div>';
-        require('incfiles/end.php');
+        require('system/head.php');
+        echo '<div class="phdr"><b>' . _t('External Link', 'system') . '</b></div>' .
+            '<div class="rmenu">' .
+            '<form action="go.php?url=' . rawurlencode($url) . '" method="post">' .
+            '<p><h3>' . _t('ATTENTION!', 'system') . '</h3>' .
+            _t('You are going to leave our site and go to an external link', 'system') . ':<br /><span class="red">' . htmlspecialchars($url) . '</span></p>' .
+            '<p>' . _t('Administration of our site is not responsible for the content of external sites', 'system') . '.<br />' .
+            sprintf(_t('It is recommended not to specify your data, relating to %s (Login, Password), on third party sites', 'system'), '<span class="green">' . $config->homeurl . '</span>') . '.</p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Go to Link', 'system') . '" /></p>' .
+            '</form></div>' .
+            '<div class="phdr"><a href="' . $referer . '">' . _t('Back', 'system') . '</a></div>';
+        require('system/end.php');
     }
 } elseif ($id) {
-    /*
-    -----------------------------------------------------------------
-    Редирект по рекламной ссылке
-    -----------------------------------------------------------------
-    */
-    $req = mysql_query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
-    if (mysql_num_rows($req)) {
-        $res = mysql_fetch_assoc($req);
+    /** @var PDO $db */
+    $db = $container->get(PDO::class);
+
+    // Редирект по рекламной ссылке
+    $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
+
+    if ($req->rowCount()) {
+        $res = $req->fetch();
         $count_link = $res['count'] + 1;
-        mysql_query("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
+        $db->exec("UPDATE `cms_ads` SET `count` = '$count_link'  WHERE `id` = '$id'");
         header('Location: ' . $res['link']);
     } else {
         header("Location: http://johncms.com/index.php?act=404");

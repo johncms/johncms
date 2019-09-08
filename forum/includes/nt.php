@@ -1,95 +1,111 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-/*
------------------------------------------------------------------
-Закрываем доступ для определенных ситуаций
------------------------------------------------------------------
-*/
-if (!$id || !$user_id || isset($ban['1']) || isset($ban['11']) || (!core::$user_rights && $set['mod_forum'] == 3)) {
-    require('../incfiles/head.php');
-    echo functions::display_error($lng['access_forbidden']);
-    require('../incfiles/end.php');
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+/** @var Johncms\Config $config */
+$config = $container->get(Johncms\Config::class);
+
+// Закрываем доступ для определенных ситуаций
+if (!$id
+    || !$systemUser->isValid()
+    || isset($systemUser->ban['1'])
+    || isset($systemUser->ban['11'])
+    || (!$systemUser->rights && $config['mod_forum'] == 3)
+) {
+    require('../system/head.php');
+    echo $tools->displayError(_t('Access forbidden'));
+    require('../system/end.php');
     exit;
 }
 
-/*
------------------------------------------------------------------
-Вспомогательная Функция обработки ссылок форума
------------------------------------------------------------------
-*/
+// Вспомогательная Функция обработки ссылок форума
 function forum_link($m)
 {
-    global $set;
+    global $config, $db;
+
     if (!isset($m[3])) {
         return '[url=' . $m[1] . ']' . $m[2] . '[/url]';
     } else {
         $p = parse_url($m[3]);
-        if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $set['homeurl'] . '/forum/index.php?id=') {
+
+        if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config['homeurl'] . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = mysql_query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
-            if (mysql_num_rows($req) > 0) {
-                $res = mysql_fetch_array($req);
-                $name = strtr($res['text'], array(
+            $req = $db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
+
+            if ($req->rowCount()) {
+                $res = $req->fetch();
+                $name = strtr($res['text'], [
                     '&quot;' => '',
                     '&amp;'  => '',
                     '&lt;'   => '',
                     '&gt;'   => '',
                     '&#039;' => '',
                     '['      => '',
-                    ']'      => ''
-                ));
-                if (mb_strlen($name) > 40)
+                    ']'      => '',
+                ]);
+
+                if (mb_strlen($name) > 40) {
                     $name = mb_substr($name, 0, 40) . '...';
+                }
 
                 return '[url=' . $m[3] . ']' . $name . '[/url]';
             } else {
                 return $m[3];
             }
-        } else
+        } else {
             return $m[3];
+        }
     }
 }
 
 // Проверка на флуд
-$flood = functions::antiflood();
+$flood = $tools->antiflood();
+
 if ($flood) {
-    require('../incfiles/head.php');
-    echo functions::display_error($lng['error_flood'] . ' ' . $flood . $lng['sec'] . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . $lng['back'] . '</a>');
-    require('../incfiles/end.php');
+    require('../system/head.php');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    require('../system/end.php');
     exit;
 }
 
-$req_r = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
-if (!mysql_num_rows($req_r)) {
-    require('../incfiles/head.php');
-    echo functions::display_error($lng['error_wrong_data']);
-    require('../incfiles/end.php');
+$req_r = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
+
+if (!$req_r->rowCount()) {
+    require('../system/head.php');
+    echo $tools->displayError(_t('Wrong data'));
+    require('../system/end.php');
     exit;
 }
-$res_r = mysql_fetch_assoc($req_r);
+
+$res_r = $req_r->fetch();
 
 $th = filter_has_var(INPUT_POST, 'th')
-    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, array('flag' => FILTER_FLAG_ENCODE_HIGH)), 0, 100)
+    ? mb_substr(filter_input(INPUT_POST, 'th', FILTER_SANITIZE_SPECIAL_CHARS, ['flag' => FILTER_FLAG_ENCODE_HIGH]), 0, 100)
     : '';
 
-$msg = isset($_POST['msg']) ? functions::checkin(trim($_POST['msg'])) : '';
-
-if (isset($_POST['msgtrans'])) {
-    $th = functions::trans($th);
-    $msg = functions::trans($msg);
-}
-
+$msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
 $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
 
 if (isset($_POST['submit'])
@@ -97,77 +113,114 @@ if (isset($_POST['submit'])
     && isset($_SESSION['token'])
     && $_POST['token'] == $_SESSION['token']
 ) {
-    $error = array();
-    if (empty($th))
-        $error[] = $lng_forum['error_topic_name'];
-    if (mb_strlen($th) < 2)
-        $error[] = $lng_forum['error_topic_name_lenght'];
-    if (empty($msg))
-        $error[] = $lng['error_empty_message'];
-    if (mb_strlen($msg) < 4)
-        $error[] = $lng['error_message_short'];
+    $error = [];
+
+    if (empty($th)) {
+        $error[] = _t('You have not entered topic name');
+    }
+
+    if (mb_strlen($th) < 2) {
+        $error[] = _t('Topic name too short');
+    }
+
+    if (empty($msg)) {
+        $error[] = _t('You have not entered the message');
+    }
+
+    if (mb_strlen($msg) < 4) {
+        $error[] = _t('Text is too short');
+    }
+
     if (!$error) {
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
+
         // Прверяем, есть ли уже такая тема в текущем разделе?
-        if (mysql_result(mysql_query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'"), 0) > 0)
-            $error[] = $lng_forum['error_topic_exists'];
+        if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'")->fetchColumn() > 0) {
+            $error[] = _t('Topic with same name already exists in this section');
+        }
+
         // Проверяем, не повторяется ли сообщение?
-        $req = mysql_query("SELECT * FROM `forum` WHERE `user_id` = '$user_id' AND `type` = 'm' ORDER BY `time` DESC");
-        if (mysql_num_rows($req) > 0) {
-            $res = mysql_fetch_array($req);
-            if ($msg == $res['text'])
-                $error[] = $lng['error_message_exists'];
+        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC");
+
+        if ($req->rowCount()) {
+            $res = $req->fetch();
+
+            if ($msg == $res['text']) {
+                $error[] = _t('Message already exists');
+            }
         }
     }
+
     if (!$error) {
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
-        $curator = $res_r['edit'] == 1 ? serialize(array($user_id => $login)) : '';
+        $curator = $res_r['edit'] == 1 ? serialize([$systemUser->id => $systemUser->name]) : '';
 
         // Добавляем тему
-        mysql_query("INSERT INTO `forum` SET
-            `refid` = '$id',
-            `type` = 't',
-            `time` = '" . time() . "',
-            `user_id` = '$user_id',
-            `from` = '$login',
-            `text` = '$th',
-            `soft` = '',
-            `edit` = '',
-            `curators` = '$curator'
-        ");
-        $rid = mysql_insert_id();
+        $db->prepare('
+          INSERT INTO `forum` SET
+          `refid` = ?,
+          `type` = \'t\',
+           `time` = ?,
+           `user_id` = ?,
+           `from` = ?,
+           `text` = ?,
+           `soft` = \'\',
+           `edit` = \'\',
+           `curators` = ?
+        ')->execute([
+            $id,
+            time(),
+            $systemUser->id,
+            $systemUser->name,
+            $th,
+            $curator,
+        ]);
+
+        /** @var Johncms\Environment $env */
+        $env = App::getContainer()->get('env');
+        $rid = $db->lastInsertId();
 
         // Добавляем текст поста
-        mysql_query("INSERT INTO `forum` SET
-            `refid` = '$rid',
-            `type` = 'm',
-            `time` = '" . time() . "',
-            `user_id` = '$user_id',
-            `from` = '$login',
-            `ip` = '" . core::$ip . "',
-            `ip_via_proxy` = '" . core::$ip_via_proxy . "',
-            `soft` = '" . mysql_real_escape_string($agn) . "',
-            `text` = '" . mysql_real_escape_string($msg) . "',
-            `edit` = '',
-            `curators` = ''
-        ");
+        $db->prepare('
+          INSERT INTO `forum` SET
+          `refid` = ?,
+          `type` = \'m\',
+          `time` = ?,
+          `user_id` = ?,
+          `from` = ?,
+          `ip` = ?,
+          `ip_via_proxy` = ?,
+          `soft` = ?,
+          `text` = ?,
+          `edit` = \'\',
+          `curators` = \'\'
+        ')->execute([
+            $rid,
+            time(),
+            $systemUser->id,
+            $systemUser->name,
+            $env->getIp(),
+            $env->getIpViaProxy(),
+            $env->getUserAgent(),
+            $msg,
+        ]);
 
-        $postid = mysql_insert_id();
+        $postid = $db->lastInsertId();
 
         // Записываем счетчик постов юзера
-        $fpst = $datauser['postforum'] + 1;
-        mysql_query("UPDATE `users` SET
+        $fpst = $systemUser->postforum + 1;
+        $db->exec("UPDATE `users` SET
             `postforum` = '$fpst',
             `lastpost` = '" . time() . "'
-            WHERE `id` = '$user_id'
+            WHERE `id` = '" . $systemUser->id . "'
         ");
 
         // Ставим метку о прочтении
-        mysql_query("INSERT INTO `cms_forum_rdm` SET
+        $db->exec("INSERT INTO `cms_forum_rdm` SET
             `topic_id`='$rid',
-            `user_id`='$user_id',
+            `user_id`='" . $systemUser->id . "',
             `time`='" . time() . "'
         ");
 
@@ -178,52 +231,41 @@ if (isset($_POST['submit'])
         }
     } else {
         // Выводим сообщение об ошибке
-        require('../incfiles/head.php');
-        echo functions::display_error($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-        require('../incfiles/end.php');
+        require('../system/head.php');
+        echo $tools->displayError($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        require('../system/end.php');
         exit;
     }
 } else {
-    $req_c = mysql_query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'");
-    $res_c = mysql_fetch_assoc($req_c);
-    require('../incfiles/head.php');
-    if ($datauser['postforum'] == 0) {
-        if (!isset($_GET['yes'])) {
-            $lng_faq = core::load_lng('faq');
-            echo '<p>' . $lng_faq['forum_rules_text'] . '</p>';
-            echo '<p><a href="index.php?act=nt&amp;id=' . $id . '&amp;yes">' . $lng_forum['agree'] . '</a> | <a href="index.php?id=' . $id . '">' . $lng_forum['not_agree'] . '</a></p>';
-            require('../incfiles/end.php');
-            exit;
-        }
-    }
-    $msg_pre = functions::checkout($msg, 1, 1);
-    if ($set_user['smileys'])
-        $msg_pre = functions::smileys($msg_pre, $datauser['rights'] ? 1 : 0);
+    $res_c = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'")->fetch();
+    require('../system/head.php');
+    $msg_pre = $tools->checkout($msg, 1, 1);
+    $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['new_topic'] . '</div>';
-    if ($msg && $th && !isset($_POST['submit']))
-        echo '<div class="list1">' . functions::image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
-            '<div class="list2">' . functions::display_user($datauser, array('iphide' => 1, 'header' => '<span class="gray">(' . functions::display_date(time()) . ')</span>', 'body' => $msg_pre)) . '</div>';
+    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
+
+    if ($msg && $th && !isset($_POST['submit'])) {
+        echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
+            '<div class="list2">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+    }
+
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .
-        '<p><h3>' . $lng['section'] . '</h3>' .
+        '<p><h3>' . _t('Section') . '</h3>' .
         '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
-        '<p><h3>' . $lng_forum['new_topic_name'] . '</h3>' .
+        '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
-        '<p><h3>' . $lng_forum['post'] . '</h3>';
-    echo '</p><p>' . bbcode::auto_bb('form', 'msg');
-    echo '<textarea rows="' . $set_user['field_h'] . '" name="msg">' . (isset($_POST['msg']) ? functions::checkout($_POST['msg']) : '') . '</textarea></p>' .
-        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . $lng_forum['add_file'];
-    if ($set_user['translit']) {
-        echo '<br /><input type="checkbox" name="msgtrans" value="1" ' . (isset($_POST['msgtrans']) ? 'checked="checked" ' : '') . '/> ' . $lng['translit'];
-    }
+        '<p><h3>' . _t('Message') . '</h3>';
+    echo '</p><p>' . $container->get('bbcode')->buttons('form', 'msg');
+    echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
+        '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
+
     $token = mt_rand(1000, 100000);
     $_SESSION['token'] = $token;
-    echo '</p><p><input type="submit" name="submit" value="' . $lng['save'] . '" style="width: 107px; cursor: pointer;"/> ' .
-        ($set_forum['preview'] ? '<input type="submit" value="' . $lng['preview'] . '" style="width: 107px; cursor: pointer;"/>' : '') .
+    echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
+        ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
-        '<div class="phdr"><a href="../pages/faq.php?act=trans">' . $lng['translit'] . '</a> | ' .
-        '<a href="../pages/faq.php?act=smileys">' . $lng['smileys'] . '</a></div>' .
-        '<p><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></p>';
+        '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
+        '<p><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></p>';
 }

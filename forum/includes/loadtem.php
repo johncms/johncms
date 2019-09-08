@@ -1,44 +1,53 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
 if (empty($_GET['n'])) {
-    require('../incfiles/head.php');
-    echo functions::display_error($lng['error_wrong_data']);
-    require('../incfiles/end.php');
+    require('../system/head.php');
+    echo $tools->displayError(_t('Wrong data'));
+    require('../system/end.php');
     exit;
 }
+
 $n = trim($_GET['n']);
 $o = opendir("../files/forum/topics");
+
 while ($f = readdir($o)) {
     if ($f != "." && $f != ".." && $f != "index.php" && $f != ".htaccess") {
-        $ff = functions::format($f);
+        $ff = pathinfo($f, PATHINFO_EXTENSION);
         $f1 = str_replace(".$ff", "", $f);
         $a[] = $f;
         $b[] = $f1;
     }
 }
+
 $tt = count($a);
+
 if (!in_array($n, $b)) {
-    require_once('../incfiles/head.php');
-    echo functions::display_error($lng['error_wrong_data']);
-    require_once('../incfiles/end.php');
+    require_once('../system/head.php');
+    echo $tools->displayError(_t('Wrong data'));
+    require_once('../system/end.php');
     exit;
 }
+
 for ($i = 0; $i < $tt; $i++) {
-    $tf = functions::format($a[$i]);
+    $tf = pathinfo($a[$i], PATHINFO_EXTENSION);
     $tf1 = str_replace(".$tf", "", $a[$i]);
     if ($n == $tf1) {
         header("Location: ../files/forum/topics/$n.$tf");

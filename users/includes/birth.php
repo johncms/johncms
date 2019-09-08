@@ -1,44 +1,54 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 define('_IN_JOHNCMS', 1);
 
-$textl = $lng['birthday_men'];
+$textl = _t('Birthdays');
 $headmod = 'birth';
-require('../incfiles/head.php');
+require('../system/head.php');
 
-/*
------------------------------------------------------------------
-Выводим список именинников
------------------------------------------------------------------
-*/
-echo '<div class="phdr"><a href="index.php"><b>' . $lng['community'] . '</b></a> | ' . $lng['birthday_men'] . '</div>';
-$total = mysql_result(mysql_query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'"), 0);
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+// Выводим список именинников
+echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Birthdays') . '</div>';
+$total = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
+
 if ($total) {
-    $req = mysql_query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT $start, $kmess");
-    while ($res = mysql_fetch_assoc($req)) {
+    $req = $db->query("SELECT * FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1' LIMIT $start, $kmess");
+
+    while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo functions::display_user($res) . '</div>';
+        echo $tools->displayUser($res) . '</div>';
         ++$i;
     }
-    echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+
+    echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+
     if ($total > $kmess) {
-        echo '<p>' . functions::display_pagination('index.php?act=birth&amp;', $start, $total, $kmess) . '</p>';
+        echo '<p>' . $tools->displayPagination('index.php?act=birth&amp;', $start, $total, $kmess) . '</p>';
         echo '<p><form action="index.php?act=birth" method="post">' .
              '<input type="text" name="page" size="2"/>' .
-             '<input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/>' .
+             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
              '</form></p>';
     }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
-echo '<p><a href="index.php">' . $lng['back'] . '</a></p>';
-?>
+
+echo '<p><a href="index.php">' . _t('Back') . '</a></p>';

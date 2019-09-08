@@ -1,35 +1,48 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if ($rights == 3 || $rights >= 6) {
-    $topic_vote = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '$id'"), 0);
-    require('../incfiles/head.php');
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
+    $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '$id'")->fetchColumn();
+    require('../system/head.php');
+
     if ($topic_vote == 0) {
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
+
     if (isset($_GET['yes'])) {
-        mysql_query("DELETE FROM `cms_forum_vote` WHERE `topic` = '$id'");
-        mysql_query("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '$id'");
-        mysql_query("UPDATE `forum` SET  `realid` = '0'  WHERE `id` = '$id'");
-        echo $lng_forum['voting_deleted'] . '<br /><a href="' . $_SESSION['prd'] . '">' . $lng['continue'] . '</a>';
+        $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '$id'");
+        $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '$id'");
+        $db->exec("UPDATE `forum` SET  `realid` = '0'  WHERE `id` = '$id'");
+        echo _t('Poll deleted') . '<br /><a href="' . $_SESSION['prd'] . '">' . _t('Continue') . '</a>';
     } else {
-        echo '<p>' . $lng_forum['voting_delete_warning'] . '</p>';
-        echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . $lng['delete'] . '</a><br />';
-        echo '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . $lng['cancel'] . '</a></p>';
+        echo '<p>' . _t('Do you really want to delete a poll?') . '</p>';
+        echo '<p><a href="?act=delvote&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a><br />';
+        echo '<a href="' . htmlspecialchars(getenv("HTTP_REFERER")) . '">' . _t('Cancel') . '</a></p>';
         $_SESSION['prd'] = htmlspecialchars(getenv("HTTP_REFERER"));
     }
 } else {

@@ -1,0 +1,308 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2016-11-15 19:16+0400\n"
+"PO-Revision-Date: 2016-11-28 04:57-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: ru\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /mail/default.pot\n"
+
+#: includes/delete.php:6 includes/deluser.php:6 includes/files.php:6
+#: includes/ignor.php:6 includes/input.php:5 includes/load.php:5
+#: includes/new.php:5 includes/output.php:5 includes/systems.php:103
+#: includes/write.php:30 includes/write.php:40 includes/write.php:96
+#: includes/write.php:518 index.php:71
+msgid "Mail"
+msgstr "Почта"
+
+#: includes/delete.php:9
+msgid "Deleting messages"
+msgstr "Удаление сообщений"
+
+#: includes/delete.php:29
+msgid "Message does not exist"
+msgstr "Такого сообщения не существует"
+
+#: includes/delete.php:40 includes/delete.php:67
+msgid "Message deleted"
+msgstr "Сообщение удалено"
+
+#: includes/delete.php:41 includes/delete.php:68 includes/deluser.php:66
+#: includes/ignor.php:91 includes/write.php:85
+msgid "Back"
+msgstr "Назад"
+
+#: includes/delete.php:72
+msgid "You really want to remove the message?"
+msgstr "Вы действительно хотите удалить сообщение?"
+
+#: includes/delete.php:73 includes/deluser.php:59 includes/deluser.php:63
+#: includes/ignor.php:117 includes/input.php:78 includes/new.php:45
+#: includes/output.php:79 includes/systems.php:44 includes/systems.php:79
+#: includes/write.php:80 includes/write.php:485 index.php:135
+msgid "Delete"
+msgstr "Удалить"
+
+#: includes/delete.php:77
+msgid "The message for removal isn't chosen"
+msgstr "Не выбрано сообщение для удаления"
+
+#: includes/delete.php:80 includes/files.php:60 includes/ignor.php:142
+#: includes/input.php:105 includes/new.php:69 includes/output.php:106
+#: includes/systems.php:113 includes/write.php:86 includes/write.php:527
+#: index.php:158
+msgid "Personal"
+msgstr "Личное"
+
+#: includes/deluser.php:57
+msgid "Contact deleted"
+msgstr "Контакт удален"
+
+#: includes/deluser.php:57 includes/deluser.php:69 includes/input.php:68
+#: includes/output.php:69 index.php:105
+msgid "Continue"
+msgstr "Продолжить"
+
+#: includes/deluser.php:62
+msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
+msgstr "При удалении контакта, удаляется и вся переписка с ним.<br>Вы действительно хотите удалить?"
+
+#: includes/deluser.php:69
+msgid "Contact does not exist"
+msgstr "Контакта не существует"
+
+#: includes/deluser.php:72
+msgid "Contact for removal isn't chosen"
+msgstr "Не выбран контакт для удаления"
+
+#: includes/files.php:6 includes/files.php:21
+msgid "Files"
+msgstr "Файлы"
+
+#: includes/files.php:46 includes/ignor.php:128 includes/input.php:92
+#: includes/new.php:56 includes/output.php:93 includes/systems.php:89
+#: includes/write.php:503 index.php:146
+msgid "The list is empty"
+msgstr "Список пуст"
+
+#: includes/files.php:50 includes/ignor.php:131 includes/input.php:95
+#: includes/new.php:59 includes/output.php:96 includes/systems.php:92
+#: includes/write.php:506 index.php:149
+msgid "Total"
+msgstr "Всего"
+
+#: includes/files.php:57 includes/ignor.php:138 includes/input.php:102
+#: includes/new.php:66 includes/output.php:103 includes/systems.php:99
+#: includes/write.php:514 index.php:155
+msgid "To Page"
+msgstr "На страницу"
+
+#: includes/ignor.php:21 includes/ignor.php:97 includes/output.php:79
+#: index.php:115
+msgid "Blocklist"
+msgstr "Заблокированные"
+
+#: includes/ignor.php:29 includes/ignor.php:58 includes/write.php:32
+#: includes/write.php:134 index.php:85
+msgid "User does not exists"
+msgstr "Такого пользователя не существует"
+
+#: includes/ignor.php:39
+msgid "User not blocked"
+msgstr "Пользователь не заблокирован"
+
+#: includes/ignor.php:42
+msgid "User is unblocked"
+msgstr "Пользователь разблокирован"
+
+#: includes/ignor.php:46
+msgid "You really want to unblock contact?"
+msgstr "Вы действительно хотите разблокировать контакт?"
+
+#: includes/ignor.php:47 includes/ignor.php:117
+msgid "Unblock"
+msgstr "Разблокировать"
+
+#: includes/ignor.php:51 includes/ignor.php:94
+msgid "Contact isn't chosen"
+msgstr "Не выбран контакт"
+
+#: includes/ignor.php:68
+msgid "This user can not be blocked"
+msgstr "Данного пользователя нельзя заблокировать"
+
+#: includes/ignor.php:84
+msgid "User is blocked"
+msgstr "Пользователь заблокирован"
+
+#: includes/ignor.php:88
+msgid "You really want to block contact?"
+msgstr "Вы действительно хотите заблокировать контакт?"
+
+#: includes/ignor.php:89
+msgid "Block"
+msgstr "Заблокировать"
+
+#: includes/ignor.php:97 index.php:115
+msgid "My Contacts"
+msgstr "Мои контакты"
+
+#: includes/ignor.php:117 includes/input.php:78 includes/new.php:45
+#: includes/output.php:79 index.php:135
+msgid "Correspondence"
+msgstr "Переписка"
+
+#: includes/input.php:7
+msgid "Incoming messages"
+msgstr "Входящие сообщения"
+
+#: includes/load.php:25 includes/load.php:37
+msgid "Such file does not exist"
+msgstr "Такого файла не существует"
+
+#: includes/load.php:40
+msgid "No file selected"
+msgstr "Не выбран файл"
+
+#: includes/new.php:20
+msgid "New Messages"
+msgstr "Новые сообщения"
+
+#: includes/new.php:45 index.php:135
+msgid "Block User"
+msgstr "Заблокировать пользователя"
+
+#: includes/output.php:7
+msgid "Sent messages"
+msgstr "Отправленные сообщения"
+
+#: includes/systems.php:38 includes/write.php:75
+msgid "Messages are deleted"
+msgstr "Сообщения удалены"
+
+#: includes/systems.php:41 includes/write.php:79
+msgid "Confirm the deletion of messages"
+msgstr "Подтвердите удаление сообщений"
+
+#: includes/systems.php:105
+msgid "System messages"
+msgstr "Системные сообщения"
+
+#: includes/systems.php:110 includes/write.php:42 includes/write.php:524
+msgid "Clear messages"
+msgstr "Очистить сообщения"
+
+#: includes/write.php:112
+msgid "Specify the recipient's login"
+msgstr "Укажите логин получателя"
+
+#: includes/write.php:116
+msgid "Message cannot be empty"
+msgstr "Собщение не может быть пустым"
+
+#: includes/write.php:120
+msgid "You cannot send messages to yourself"
+msgstr "Самому себе нельзя отправлять сообщения"
+
+#: includes/write.php:126
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d sec."
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+
+#: includes/write.php:152
+msgid "To this user can write only contacts"
+msgstr "Данному пользователю могут писать только контакты"
+
+#: includes/write.php:159
+msgid "To this user can write only friends"
+msgstr "Данному пользователю могут писать только друзья"
+
+#: includes/write.php:191 includes/write.php:203 includes/write.php:358
+#: includes/write.php:379 includes/write.php:382
+msgid "Error uploading file"
+msgstr "Ошибка выгрузки файла"
+
+#: includes/write.php:278
+msgid "It is forbidden to upload files without a name"
+msgstr "Запрещается выгружать файлы без имени"
+
+#: includes/write.php:282
+msgid "It is forbidden to upload files without extension"
+msgstr "Запрещается выгружать файлы без расширения"
+
+#: includes/write.php:286
+msgid "The size of the file exceeds the maximum allowable upload"
+msgstr "Размер выгружаемого файла превышает максимально допустимый"
+
+#: includes/write.php:290
+msgid "File name contains invalid characters"
+msgstr "В названии файла присутствуют недопустимые символы"
+
+#: includes/write.php:294
+msgid "Forbidden file type! By uploading permitted only files with the following extension"
+msgstr "Запрещенный тип файла! К отправке разрешены только файлы, имеющие следующее расширение"
+
+#: includes/write.php:308
+msgid "The user at your ignore list. Sending the message is impossible."
+msgstr "Пользователь у Вас в игноре. Отправка сообщения не возможна."
+
+#: includes/write.php:318
+msgid "The user added you in the ignore list. Sending the message isn't possible."
+msgstr "Пользователь добаил Вас в игнор. Отправка сообщения не возможна."
+
+#: includes/write.php:396
+msgid "Message already exists"
+msgstr "Такое сообщение уже было"
+
+#: includes/write.php:429
+msgid "To Whom"
+msgstr "Кому"
+
+#: includes/write.php:434
+msgid "Sent"
+msgstr "Отправить"
+
+#: includes/write.php:436
+msgid "Personal correspondence with"
+msgstr "Личная переписка с"
+
+#: includes/write.php:436
+msgid "Send a message"
+msgstr "Отправка сообщения"
+
+#: includes/write.php:482
+msgid "File"
+msgstr "Файл"
+
+#: index.php:73
+msgid "Contacts"
+msgstr "Контакты"
+
+#: index.php:93
+msgid "You cannot add yourself as a contact"
+msgstr "Самого себя нельзя добавить в контакт"
+
+#: index.php:105
+msgid "User has been added to your contact list"
+msgstr "Пользователь добавлен в список контактов"
+
+#: index.php:109
+msgid "You really want to add contact?"
+msgstr "Вы действительно хотите добавить контакт?"
+
+#: index.php:110
+msgid "Add"
+msgstr "Добавить"
+

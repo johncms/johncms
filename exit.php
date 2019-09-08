@@ -1,18 +1,23 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 define('_IN_JOHNCMS', 1);
 
-require('incfiles/core.php');
-$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : core::$system_set['homeurl'];
+require('system/bootstrap.php');
+
+/** @var Johncms\Config $config */
+$config = App::getContainer()->get(Johncms\Config::class);
+
+$referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 
 if (isset($_POST['submit'])) {
     setcookie('cuid', '');
@@ -20,11 +25,11 @@ if (isset($_POST['submit'])) {
     session_destroy();
     header('Location: index.php');
 } else {
-    require('incfiles/head.php');
-    echo'<div class="rmenu">' .
-        '<p>Вы действительно хотите покинуть сайт?</p>' .
-        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . core::$lng['exit'] . '" /></p></form>' .
-        '<p><a href="' . $referer . '">' . core::$lng['cancel'] . '</a></p>' .
+    require('system/head.php');
+    echo '<div class="rmenu">' .
+        '<p>' . _t('Are you sure you want to leave the site?', 'system') . '</p>' .
+        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .
+        '<p><a href="' . $referer . '">' . _t('Cancel', 'system') . '</a></p>' .
         '</div>';
-    require('incfiles/end.php');
+    require('system/end.php');
 }

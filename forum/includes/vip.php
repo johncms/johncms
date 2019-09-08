@@ -1,34 +1,44 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-if ($rights == 3 || $rights >= 6) {
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (empty($_GET['id'])) {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+        require('../system/head.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
-    $req = mysql_query("SELECT COUNT(*) FROM `forum` WHERE `id` = '" . $id . "' AND `type` = 't'");
-    if (mysql_result($req, 0) > 0) {
-        mysql_query("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id'");
+
+    if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '" . $id . "' AND `type` = 't'")->fetchColumn()) {
+        $db->exec("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id'");
         header('Location: index.php?id=' . $id);
     } else {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+        require('../system/head.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
 }

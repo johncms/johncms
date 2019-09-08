@@ -1,32 +1,47 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-echo '<div class="phdr"><strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['new_articles'] . '</div>';
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
 
-$total = mysql_result(mysql_query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1"), 0);
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+use Library\Hashtags;
+use Library\Rating;
+
+echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New Articles') . '</div>';
+
+$total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
 $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-$sql = mysql_query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `count_comments`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
-$nav = ($total > $kmess) ? '<div class="topmenu">' . functions::display_pagination('?act=new&amp;', $start, $total, $kmess) . '</div>' : '';
+$sql = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `comm_count`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+$nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
+        $kmess) . '</div>' : '';
 echo $nav;
 if ($total) {
     $i = 0;
-    while ($row = mysql_fetch_assoc($sql)) {
+    while ($row = $sql->fetch()) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
             . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
-            . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . functions::checkout($row['name']) . '</a></h4>'
-            . '<div><small>' . functions::checkout(bbcode::notags($row['announce'])) . '</small></div></div>';
+            . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
+            . '<div><small>' . $tools->checkout($row['announce'], 0, 2) . '</small></div></div>';
 
         // Описание к статье
         $obj = new Hashtags($row['id']);
@@ -34,38 +49,38 @@ if ($total) {
         echo '<table class="desc">'
             // Раздел
             . '<tr>'
-            . '<td class="caption">' . $lng['section'] . ':</td>'
-            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . functions::checkout(mysql_result(mysql_query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id']), 0)) . '</a></td>'
+            . '<td class="caption">' . _t('Section') . ':</td>'
+            . '<td><a href="?do=dir&amp;id=' . $row['cat_id'] . '">' . $tools->checkout($db->query("SELECT `name` FROM `library_cats` WHERE `id`=" . $row['cat_id'])->fetchColumn()) . '</a></td>'
             . '</tr>'
             // Тэги
-            . ($obj->get_all_stat_tags() ? '<tr><td class="caption">' . $lng_lib['tags'] . ':</td><td>' . $obj->get_all_stat_tags(1) . '</td></tr>' : '')
+            . ($obj->getAllStatTags() ? '<tr><td class="caption">' . _t('Tags') . ':</td><td>' . $obj->getAllStatTags(1) . '</td></tr>' : '')
             // Кто добавил?
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['added'] . ':</td>'
-            . '<td><a href="' . core::$system_set['homeurl'] . '/users/profile.php?user=' . $row['uploader_id'] . '">' . functions::checkout($row['uploader']) . '</a> (' . functions::display_date($row['time']) . ')</td>'
+            . '<td class="caption">' . _t('Who added') . ':</td>'
+            . '<td><a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a> (' . $tools->displayDate($row['time']) . ')</td>'
             . '</tr>'
             // Рейтинг
             . '<tr>'
-            . '<td class="caption">' . $lng['rating'] . ':</td>'
-            . '<td>' . $rate->view_rate() . '</td>'
+            . '<td class="caption">' . _t('Rating') . ':</td>'
+            . '<td>' . $rate->viewRate() . '</td>'
             . '</tr>'
             // Прочтений
             . '<tr>'
-            . '<td class="caption">' . $lng_lib['reads'] . ':</td>'
+            . '<td class="caption">' . _t('Number of readings') . ':</td>'
             . '<td>' . $row['count_views'] . '</td>'
             . '</tr>'
             // Комментарии
             . '<tr>';
         if ($row['comments']) {
-            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $lng['comments'] . '</a>:</td><td>' . $row['count_comments'] . '</td>';
+            echo '<td class="caption"><a href="?act=comments&amp;id=' . $row['id'] . '">' . _t('Comments') . '</a>:</td><td>' . $row['comm_count'] . '</td>';
         } else {
-            echo '<td class="caption">' . $lng['comments'] . ':</td><td>' . $lng['comments_closed'] . '</td>';
+            echo '<td class="caption">' . _t('Comments') . ':</td><td>' . _t('Comments are closed') . '</td>';
         }
         echo '</tr></table>';
 
         echo '</div>';
     }
 }
-echo '<div class="phdr">' . $lng['total'] . ': ' . intval($total) . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
 echo $nav;
-echo '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>';
+echo '<p><a href="?">' . _t('To Library') . '</a></p>';

@@ -1,38 +1,54 @@
 <?php
-
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2011 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$textl = $lng['mail'];
-require_once('../incfiles/head.php');
-echo '<div class="phdr"><b>' . $lng_mail['sent_messages'] . '</b></div>';
+$textl = _t('Mail');
+require_once('../system/head.php');
+echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
 
-$total = mysql_result(mysql_query("
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+/** @var Johncms\Bbcode $bbcode */
+$bbcode = $container->get('bbcode');
+
+$total = $db->query("
   SELECT COUNT(DISTINCT `cms_mail`.`from_id`)
   FROM `cms_mail`
   LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id`
-  AND `cms_contact`.`user_id`='$user_id'
-  WHERE `cms_mail`.`user_id`='$user_id'
-  AND `cms_mail`.`delete`!='$user_id'
+  AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+  WHERE `cms_mail`.`user_id`='" . $systemUser->id . "'
+  AND `cms_mail`.`delete`!='" . $systemUser->id . "'
   AND `cms_mail`.`sys`='0'
   AND `cms_contact`.`ban`!='1'
-"), 0);
+")->fetchColumn();
 
 if ($total) {
-    $req = mysql_query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
+    $req = $db->query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
         FROM `cms_mail`
 	    LEFT JOIN `users` ON `cms_mail`.`from_id`=`users`.`id`
-		LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='$user_id'
-		WHERE `cms_mail`.`user_id`='" . $user_id . "'
-		AND `cms_mail`.`delete`!='$user_id'
+		LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+		WHERE `cms_mail`.`user_id`='" . $systemUser->id . "'
+		AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 		AND `cms_mail`.`sys`='0'
 		AND `cms_contact`.`ban`!='1'
 		GROUP BY `cms_mail`.`from_id`
@@ -40,75 +56,61 @@ if ($total) {
 		LIMIT " . $start . "," . $kmess
     );
 
-    for ($i = 0; $row = mysql_fetch_assoc($req); ++$i) {
-        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail`
-            WHERE `user_id`='$user_id'
+    for ($i = 0; $row = $req->fetch(); ++$i) {
+        $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
+            WHERE `user_id`='" . $systemUser->id . "'
             AND `from_id`='{$row['id']}'
-            AND `delete`!='$user_id'
+            AND `delete`!='" . $systemUser->id . "'
             AND `sys`!='1'
-        "), 0);
+        ")->fetchColumn();
 
-        $last_msg = mysql_fetch_assoc(mysql_query("SELECT *
+        $last_msg = $db->query("SELECT *
             FROM `cms_mail`
             WHERE `from_id`='{$row['id']}'
-            AND `user_id` = '$user_id'
-            AND `delete` != '$user_id'
+            AND `user_id` = '" . $systemUser->id . "'
+            AND `delete` != '" . $systemUser->id . "'
             ORDER BY `id` DESC
-            LIMIT 1"));
+            LIMIT 1")->fetch();
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
-            $text = functions::checkout($text, 1, 1);
-            if ($set_user['smileys']) {
-                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
-            }
-            $text = bbcode::notags($text);
-            $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng['continue'] . ' &gt;&gt;</a>';
+            $text = $tools->checkout($text, 1, 1);
+            $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
+            $text = $bbcode->notags($text);
+            $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
-            $text = functions::checkout($last_msg['text'], 1, 1);
-            if ($set_user['smileys'])
-                $text = functions::smileys($text, $row['rights'] ? 1 : 0);
+            $text = $tools->checkout($last_msg['text'], 1, 1);
+            $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
         }
 
-        $arg = array(
-            'header' => '<span class="gray">(' . functions::display_date($last_msg['time']) . ')</span>',
+        $arg = [
+            'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . $lng_mail['correspondence'] . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a></p>',
-            'iphide' => 1
-        );
+            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
+            'iphide' => 1,
+        ];
 
         if (!$last_msg['read']) {
             echo '<div class="gmenu">';
         } else {
             echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
         }
-        echo functions::display_user($row, $arg);
+
+        echo $tools->displayUser($row, $arg);
         echo '</div>';
     }
-
-//    for ($i = 0; $row = mysql_fetch_assoc($req); ++$i) {
-//        echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-//        $subtext = '<a href="index.php?act=output&amp;id=' . $row['id'] . '">' . $lng_mail['sent'] . '</a> | <a href="index.php?act=write&amp;id=' . $row['id'] . '">' . $lng_mail['correspondence'] . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . $lng['delete'] . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . $lng_mail['ban_contact'] . '</a>';
-//        $count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `user_id`='$user_id' AND `from_id`='{$row['id']}' AND `delete`!='$user_id';"), 0);
-//        $new_count_message = mysql_result(mysql_query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='$user_id' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='$user_id'"), 0);
-//        $arg = array(
-//            'header' => '(' . $count_message . ($new_count_message ? '/<span class="red">+' . $new_count_message . '</span>' : '') . ')',
-//            'sub'    => $subtext
-//        );
-//        echo functions::display_user($row, $arg);
-//        echo '</div>';
-//    }
 } else {
-    echo '<div class="menu"><p>' . $lng['list_empty'] . '</p></div>';
+    echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
-echo '<div class="phdr">' . $lng['total'] . ': ' . $total . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
+
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . functions::display_pagination('index.php?act=output&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=output&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php" method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>
-                <input type="submit" value="' . $lng['to_page'] . ' &gt;&gt;"/></form></p>';
+                <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 
-echo '<p><a href="../users/profile.php?act=office">' . $lng['personal'] . '</a></p>';
+echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';

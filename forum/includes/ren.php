@@ -1,67 +1,77 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if ($rights == 3 || $rights >= 6) {
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (!$id) {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+        require('../system/head.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
-    $typ = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id'");
-    $ms = mysql_fetch_assoc($typ);
-    if ($ms[type] != "t") {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+
+    $ms = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
+
+    if ($ms['type'] != "t") {
+        require('../system/head.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
+
     if (isset($_POST['submit'])) {
-        $nn = isset($_POST['nn']) ? functions::check($_POST['nn']) : false;
+        $nn = isset($_POST['nn']) ? trim($_POST['nn']) : '';
+
         if (!$nn) {
-            require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_name'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-            require('../incfiles/end.php');
+            require('../system/head.php');
+            echo $tools->displayError(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            require('../system/end.php');
             exit;
         }
+
         // Проверяем, есть ли тема с таким же названием?
-        $pt = mysql_query("SELECT * FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and text='$nn' LIMIT 1");
-        if (mysql_num_rows($pt) != 0) {
-            require('../incfiles/head.php');
-            echo functions::display_error($lng_forum['error_topic_exists'], '<a href="index.php?act=ren&amp;id=' . $id . '">' . $lng['repeat'] . '</a>');
-            require('../incfiles/end.php');
+        $pt = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and text=" . $db->quote($nn) . " LIMIT 1");
+
+        if ($pt->rowCount()) {
+            require('../system/head.php');
+            echo $tools->displayError(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            require('../system/end.php');
             exit;
         }
-        mysql_query("update `forum` set  text='" . $nn . "' where id='" . $id . "';");
+
+        $db->exec("UPDATE `forum` SET  text=" . $db->quote($nn) . " WHERE id='" . $id . "'");
         header("Location: index.php?id=$id");
     } else {
-        /*
-        -----------------------------------------------------------------
-        Переименовываем тему
-        -----------------------------------------------------------------
-        */
-        require('../incfiles/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_rename'] . '</div>' .
+        // Переименовываем тему
+        require('../system/head.php');
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
-            '<p><h3>' . $lng_forum['topic_name'] . '</h3>' .
+            '<p><h3>' . _t('Topic name') . '</h3>' .
             '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
-            '<p><input type="submit" name="submit" value="' . $lng['save'] . '"/></p>' .
+            '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
             '</form></div>' .
-            '<div class="phdr"><a href="index.php?id=' . $id . '">' . $lng['back'] . '</a></div>';
+            '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
-} else {
-    require('../incfiles/head.php');
-    echo functions::display_error($lng['access_forbidden']);
 }

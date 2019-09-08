@@ -1,0 +1,167 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-11-15 10:27-0500\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /guestbook/default.pot\n"
+"Language: ru_RU\n"
+
+#: index.php:48 index.php:321
+msgid "Admin Club"
+msgstr "Админ клуб"
+
+#: index.php:48 index.php:66 index.php:188 index.php:242 index.php:283
+#: index.php:286 index.php:316 index.php:320
+msgid "Guestbook"
+msgstr "Гостевая"
+
+#: index.php:53
+msgid "Guestbook is closed"
+msgstr "Гостевая закрыта"
+
+#: index.php:66
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+#: index.php:67
+msgid "Do you really want to delete?"
+msgstr "Действительно хотите удалить?"
+
+#: index.php:68 index.php:427
+msgid "Delete"
+msgstr "Удалить"
+
+#: index.php:69 index.php:295
+msgid "Cancel"
+msgstr "Отмена"
+
+#: index.php:88
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: index.php:92
+msgid "You have not entered a name"
+msgstr "Вы не ввели имя"
+
+#: index.php:96
+msgid "You have not entered the message"
+msgstr "Вы не ввели сообщение"
+
+#: index.php:100
+msgid "Access forbidden"
+msgstr "Доступ запрещен"
+
+#: index.php:105
+msgid "The security code is not correct"
+msgstr "Проверочный код введен неверно"
+
+#: index.php:124
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr "Вы не можете так часто добавлять сообщения. Пожалуйста, подождите %d секунд."
+
+#: index.php:167 index.php:203 index.php:251
+msgid "Back"
+msgstr "Назад"
+
+#: index.php:188 index.php:198 index.php:200 index.php:426
+msgid "Reply"
+msgstr "Ответить"
+
+#: index.php:242 index.php:427
+msgid "Edit"
+msgstr "Изменить"
+
+#: index.php:245
+msgid "Author"
+msgstr "Автор"
+
+#: index.php:248
+msgid "Save"
+msgstr "Сохранить"
+
+#: index.php:268
+msgid "All messages older than 1 day were deleted"
+msgstr "Удалены все сообщения, старше 1 дня"
+
+#: index.php:274
+msgid "Full clearing is finished"
+msgstr "Проведена полная очистка"
+
+#: index.php:279
+msgid "All messages older than 1 week were deleted"
+msgstr "Удалены все сообщения, старше 1 недели"
+
+#: index.php:286 index.php:293 index.php:322
+msgid "Clear"
+msgstr "Очистить"
+
+#: index.php:289
+msgid "Clearing parameters"
+msgstr "Параметры очистки"
+
+#: index.php:290
+msgid "Older than 1 week"
+msgstr "Старше 1 недели"
+
+#: index.php:291
+msgid "Older than 1 day"
+msgstr "Старше 1 дня"
+
+#: index.php:292
+msgid "Clear all"
+msgstr "Очищаем все"
+
+#: index.php:313
+msgid "The guestbook is closed"
+msgstr "Гостевая закрыта"
+
+#: index.php:334
+msgid "Name"
+msgstr "Имя"
+
+#: index.php:337
+msgid "Message"
+msgstr "Сообщение"
+
+#: index.php:343 index.php:344
+msgid "Symbols on the picture"
+msgstr "Код с картинки"
+
+#: index.php:347
+msgid "Sent"
+msgstr "Отправить"
+
+#: index.php:349
+msgid "For registered users only"
+msgstr "Только для зарегистрированных посетителей"
+
+#: index.php:353
+msgid "Comments"
+msgstr "Комментарии"
+
+#: index.php:442
+msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
+msgstr "В Гостевой сообщений нет<br><strong>Будь первым! :)</strong>"
+
+#: index.php:445
+msgid "Total"
+msgstr "Всего"
+
+#: index.php:450
+msgid "To Page"
+msgstr "На страницу"
+

@@ -1,0 +1,153 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: JohnCMS 7.0\n"
+"POT-Creation-Date: 2016-11-15 19:17+0400\n"
+"PO-Revision-Date: 2016-08-26 11:27+0400\n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:30 index.php:37 index.php:169 index.php:226 index.php:271
+#: index.php:288
+msgid "News"
+msgstr ""
+
+#: index.php:37 index.php:291
+msgid "Add"
+msgstr ""
+
+#: index.php:46 index.php:181
+msgid "You have not entered news title"
+msgstr ""
+
+#: index.php:50 index.php:185
+msgid "You have not entered news text"
+msgstr ""
+
+#: index.php:56
+#, php-format
+msgid "You cannot add the message so often. Please, wait %d seconds."
+msgstr ""
+
+#: index.php:132
+msgid "News added"
+msgstr ""
+
+#: index.php:132 index.php:134 index.php:159 index.php:172 index.php:216
+#: index.php:237 index.php:244 index.php:251 index.php:276
+msgid "Back to news"
+msgstr ""
+
+#: index.php:138 index.php:210
+msgid "Title"
+msgstr ""
+
+#: index.php:140 index.php:212
+msgid "Text"
+msgstr ""
+
+#: index.php:142
+msgid "Discussion"
+msgstr ""
+
+#: index.php:144
+msgid "Do not discuss"
+msgstr ""
+
+#: index.php:157 index.php:214
+msgid "Save"
+msgstr ""
+
+#: index.php:169 index.php:315
+msgid "Edit"
+msgstr ""
+
+#: index.php:172
+msgid "Wrong data"
+msgstr ""
+
+#: index.php:203
+msgid "Repeat"
+msgstr ""
+
+#: index.php:205
+msgid "Article changed"
+msgstr ""
+
+#: index.php:205
+msgid "Continue"
+msgstr ""
+
+#: index.php:226 index.php:259 index.php:291
+msgid "Clear"
+msgstr ""
+
+#: index.php:237
+msgid "Delete all news older than 1 week"
+msgstr ""
+
+#: index.php:244
+msgid "Delete all news"
+msgstr ""
+
+#: index.php:251
+msgid "Delete all news older than 1 month"
+msgstr ""
+
+#: index.php:255
+msgid "Clearing parameters"
+msgstr ""
+
+#: index.php:256
+msgid "Older than 1 month"
+msgstr ""
+
+#: index.php:257
+msgid "Older than 1 week"
+msgstr ""
+
+#: index.php:258
+msgid "Clear all"
+msgstr ""
+
+#: index.php:261 index.php:279
+msgid "Cancel"
+msgstr ""
+
+#: index.php:271 index.php:279 index.php:316
+msgid "Delete"
+msgstr ""
+
+#: index.php:276
+msgid "Article deleted"
+msgstr ""
+
+#: index.php:278
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: index.php:303
+msgid "Author"
+msgstr ""
+
+#: index.php:310
+msgid "Discuss in Forum"
+msgstr ""
+
+#: index.php:322
+msgid "Total"
+msgstr ""
+
+#: index.php:328
+msgid "To Page"
+msgstr ""

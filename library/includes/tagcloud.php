@@ -1,24 +1,26 @@
 <?php
-/**
- * @package     JohnCMS
- * @link        http://johncms.com
- * @copyright   Copyright (C) 2008-2015 JohnCMS Community
- * @license     LICENSE.txt (see attached file)
- * @version     VERSION.txt (see attached file)
- * @author      http://johncms.com/about
+/*
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
  */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
-$obj = new Hashtags();
+$obj = new Library\Hashtags();
 
 $sort = isset($_GET['sort']) && $_GET['sort'] == 'rel' ? 'cmprang' : 'cmpalpha';
 
-$menu[] = $sort == 'cmpalpha' ? '<strong>' . $lng_lib['alphabet'] . '</strong>' : '<a href="?act=tagcloud&amp;sort=alpha">' . $lng_lib['alphabet'] . '</a>';
-$menu[] = $sort == 'cmprang' ? '<strong>' . $lng_lib['relevance'] . '</strong>' : '<a href="?act=tagcloud&amp;sort=rel">' . $lng_lib['relevance'] . '</a> ';
+$menu[] = $sort == 'cmpalpha' ? '<strong>' . _t('Sorted by alphabetical') . '</strong>' : '<a href="?act=tagcloud&amp;sort=alpha">' . _t('Sorted by alphabetical') . '</a>';
+$menu[] = $sort == 'cmprang' ? '<strong>' . _t('Sorted by relevance') . '</strong>' : '<a href="?act=tagcloud&amp;sort=rel">' . _t('Sorted by relevance') . '</a> ';
 
-echo '<div class="phdr">' . 
-    '<strong><a href="?">' . $lng['library'] . '</a></strong> | ' . $lng_lib['cloud_of_tags'] . '</div>' .
-    '<div class="topmenu">' . $lng_lib['sort'] . ': ' . functions::display_menu($menu) . '</div>' .
-    '<div class="gmenu">' . $obj->get_cache($sort) . '</div>' .
-    '<p><a href="?">' . $lng_lib['to_library'] . '</a></p>';
+echo '<div class="phdr">' .
+    '<strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Tag Cloud') . '</div>' .
+    '<div class="topmenu">' . _t('Sort') . ': ' . implode(' | ', $menu) . '</div>' .
+    '<div class="gmenu">' . $obj->getCache($sort) . '</div>' .
+    '<p><a href="?">' . _t('To Library') . '</a></p>';

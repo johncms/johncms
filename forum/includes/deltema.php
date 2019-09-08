@@ -1,79 +1,84 @@
 <?php
-
 /*
-////////////////////////////////////////////////////////////////////////////////
-// JohnCMS                Mobile Content Management System                    //
-// Project site:          http://johncms.com                                  //
-// Support site:          http://gazenwagen.com                               //
-////////////////////////////////////////////////////////////////////////////////
-// Lead Developer:        Oleg Kasyanov   (AlkatraZ)  alkatraz@gazenwagen.com //
-// Development Team:      Eugene Ryabinin (john77)    john77@gazenwagen.com   //
-//                        Dmitry Liseenko (FlySelf)   flyself@johncms.com     //
-////////////////////////////////////////////////////////////////////////////////
-*/
+ * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ *
+ * For copyright and license information, please see the LICENSE.md
+ * Installing the system or redistributions of files must retain the above copyright notice.
+ *
+ * @link        http://johncms.com JohnCMS Project
+ * @copyright   Copyright (C) JohnCMS Community
+ * @license     GPL-3
+ */
 
 defined('_IN_JOHNCMS') or die('Error: restricted access');
-if ($rights == 3 || $rights >= 6) {
+
+/** @var Interop\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\User $systemUser */
+$systemUser = $container->get(Johncms\User::class);
+
+/** @var Johncms\Tools $tools */
+$tools = $container->get('tools');
+
+if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (!$id) {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng['error_wrong_data']);
-        require('../incfiles/end.php');
+        require('../system/head.php');
+        echo $tools->displayError(_t('Wrong data'));
+        require('../system/end.php');
         exit;
     }
+
     // Проверяем, существует ли тема
-    $req = mysql_query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
-    if (!mysql_num_rows($req)) {
-        require('../incfiles/head.php');
-        echo functions::display_error($lng_forum['error_topic_deleted']);
-        require('../incfiles/end.php');
+    $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
+
+    if (!$req->rowCount()) {
+        require('../system/head.php');
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'));
+        require('../system/end.php');
         exit;
     }
-    $res = mysql_fetch_assoc($req);
+
+    $res = $req->fetch();
+
     if (isset($_POST['submit'])) {
-        $del = isset($_POST['del']) ? intval($_POST['del']) : NULL;
-        if ($del == 2 && core::$user_rights == 9) {
-            /*
-            -----------------------------------------------------------------
-            Удаляем топик
-            -----------------------------------------------------------------
-            */
-            $req1 = mysql_query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
-            if (mysql_num_rows($req1)) {
-                while ($res1 = mysql_fetch_assoc($req1)) {
+        $del = isset($_POST['del']) ? intval($_POST['del']) : null;
+
+        if ($del == 2 && $systemUser->rights == 9) {
+            // Удаляем топик
+            $req1 = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = '$id'");
+
+            if ($req1->rowCount()) {
+                while ($res1 = $req1->fetch()) {
                     unlink('../files/forum/attach/' . $res1['filename']);
                 }
-                mysql_query("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
-                mysql_query("OPTIMIZE TABLE `cms_forum_files`");
+
+                $db->exec("DELETE FROM `cms_forum_files` WHERE `topic` = '$id'");
+                $db->query("OPTIMIZE TABLE `cms_forum_files`");
             }
-            mysql_query("DELETE FROM `forum` WHERE `refid` = '$id'");
-            mysql_query("DELETE FROM `forum` WHERE `id`='$id'");
+
+            $db->exec("DELETE FROM `forum` WHERE `refid` = '$id'");
+            $db->exec("DELETE FROM `forum` WHERE `id`='$id'");
         } elseif ($del = 1) {
-            /*
-            -----------------------------------------------------------------
-            Скрываем топик
-            -----------------------------------------------------------------
-            */
-            mysql_query("UPDATE `forum` SET `close` = '1', `close_who` = '$login' WHERE `id` = '$id'");
-            mysql_query("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
+            // Скрываем топик
+            $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
+            $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '$id'");
         }
         header('Location: index.php?id=' . $res['refid']);
     } else {
-        /*
-        -----------------------------------------------------------------
-        Меню выбора режима удаления темы
-        -----------------------------------------------------------------
-        */
-        require('../incfiles/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . $lng['forum'] . '</b></a> | ' . $lng_forum['topic_delete'] . '</div>' .
-             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
-             '<p><h3>' . $lng['delete_confirmation'] . '</h3>' .
-             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . $lng['hide'] . '<br />' .
-             (core::$user_rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . $lng['delete'] . '</p>' : '') .
-             '<p><input type="submit" name="submit" value="' . $lng['do'] . '" /></p>' .
-             '<p><a href="index.php?id=' . $id . '">' . $lng['cancel'] . '</a>' .
-             '</p></form></div>' .
-             '<div class="phdr">&#160;</div>';
+        // Меню выбора режима удаления темы
+        require('../system/head.php');
+        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
+            '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
+            '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
+            '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
+            ($systemUser->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
+            '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
+            '<p><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a>' .
+            '</p></form></div>' .
+            '<div class="phdr">&#160;</div>';
     }
-} else {
-    echo functions::display_error($lng['access_forbidden']);
 }
