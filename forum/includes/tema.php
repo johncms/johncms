@@ -65,7 +65,7 @@ if (!$req->rowCount()) {
 
 if (isset($_POST['submit'])) {
     $type1 = $req->fetch();
-    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND `deleted` != '1'") . " ORDER BY `id` ASC");
+    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . " ORDER BY `id` ASC");
     $mod = intval($_POST['mod']);
 
     switch ($mod) {
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                 $txt_tmp = str_replace("[l]", "", $txt_tmp);
                 $txt_tmp = str_replace("[l/]", "-", $txt_tmp);
                 $txt_tmp = str_replace("[/l]", "", $txt_tmp);
-                $stroka = $arr['from'] . '(' . date("d.m.Y/H:i", $arr['date']) . ")\r\n" . $txt_tmp . "\r\n\r\n";
+                $stroka = $arr['user_name'] . '(' . date("d.m.Y/H:i", $arr['date']) . ")\r\n" . $txt_tmp . "\r\n\r\n";
                 $text .= $stroka;
             }
 
@@ -128,7 +128,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $txt_tmp = App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->tags($txt_tmp);
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
                 $txt_tmp = str_replace("\r\n", "<br>", $txt_tmp);
-                $stroka = "$div <b>$arr[from]</b>(" . date("d.m.Y/H:i", $arr['date']) . ")<br>$txt_tmp</div>";
+                $stroka = "$div <b>".$arr['user_name']."</b>(" . date("d.m.Y/H:i", $arr['date']) . ")<br>$txt_tmp</div>";
                 $text = "$text $stroka";
                 ++$i;
             }
