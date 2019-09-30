@@ -35,11 +35,11 @@ if (!$systemUser->isValid()) {
 
 if ($id) {
     // Показываем общий список тех, кто в выбранной теме
-    $req = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
+    $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '$id'");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
-        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
+        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?type=topic&id=' . $id . '">' . $res['name'] . '</a></div>';
 
         if ($systemUser->rights > 0) {
             echo '<div class="topmenu">' .
@@ -84,7 +84,7 @@ if ($id) {
             '</form></p>';
     }
 
-    echo '<p><a href="index.php?id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
+    echo '<p><a href="index.php?type=topic&id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 } else {
     // Показываем общий список тех, кто в форуме
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';

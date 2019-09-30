@@ -138,6 +138,7 @@ $headmod = $id ? 'forum,' . $id : 'forum';
 if (empty($id)) {
     $textl = _t('Forum');
 } else {
+    // TODO: Пофиксить
     $res = $db->query("SELECT `text` FROM `forum` WHERE `id`= " . $id)->fetch();
     $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['text']);
     $hdr = strtr($hdr, [
@@ -227,10 +228,6 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $type1 = $type->fetch();
 
         // Фиксация факта прочтения Топика
-        // TODO: Прочтение!
-
-
-
         if ($systemUser->isValid() && $show_type == 'topic') {
             $req_r = $db->query("SELECT * FROM `cms_forum_rdm` WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
 
@@ -297,7 +294,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         // Счетчик "Кто в теме?"
         $wholink = false;
 
-        if ($systemUser->isValid() && $type1['type'] == 't') {
+        if ($systemUser->isValid() && $show_type == 'topic') {
             $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
             $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
             $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br>';
