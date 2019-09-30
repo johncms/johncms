@@ -85,14 +85,12 @@ switch ($act) {
             // Выводим результаты запроса
             $array = explode(' ', $search);
             $count = count($array);
-
-
             if ($search_t) {
                 $query = $db->quote('%'.$search.'%');
                 $total = $db->query("
                 SELECT COUNT(*) FROM `forum_topic`
                 WHERE `name` LIKE ".$query."
-                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)'"))->fetchColumn();
+                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
             } else {
                 $query = $db->quote($search);
                 $total = $db->query("
