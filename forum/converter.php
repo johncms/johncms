@@ -43,6 +43,10 @@ ini_set('memory_limit', '3G');
 
 $structure = [];
 
+if($systemUser->rights < 9) {
+    exit('Access denied');
+}
+
 // Получаем первый уровень разделов
 /*$first_sections = $db->query("SELECT * FROM forum where type = 'f'")->fetchAll();
 
@@ -161,10 +165,10 @@ while ($topic = $topics->fetch()) {
 
 
 // Пересчет топиков
-$topics = $db->query("SELECT * FROM forum_topic");
+/*$topics = $db->query("SELECT * FROM forum_topic");
 while ($topic = $topics->fetch()) {
     $tools->recountForumTopic($topic['id']);
-}
+}*/
 
 
 // Обновляем файлы
@@ -208,6 +212,53 @@ while ($vote = $votes->fetch()) {
 }*/
 
 
+// Прописываем в таблицу редиректов новые адреса страниц
+/*$items = $db->query("SELECT * FROM forum ORDER BY id");
+
+$all_items = 0;
+$links = 0;
+
+while ($item = $items->fetch()) {
+    $all_items++;
+    $link = '';
+    switch ($item['type']) {
+        case 'f':
+        case 'r':
+            $section = $db->query("SELECT * FROM forum_sections WHERE old_id = ".$item['id'])->fetch();
+            if(!empty($section)) {
+                if(!empty($section['section_type'])) {
+                    $link = '/forum/index.php?type=topics&id='.$section['id'];
+                } else {
+                    $link = '/forum/index.php?id='.$section['id'];
+                }
+            }
+            break;
+
+        case 't':
+            $topic = $db->query("SELECT * FROM forum_topic WHERE old_id = ".$item['id'])->fetch();
+            if(!empty($topic)) {
+                $link = '/forum/index.php?type=topic&id='.$topic['id'];
+            }
+            break;
+
+        case 'm':
+            $message = $db->query("SELECT * FROM forum_messages WHERE old_id = ".$item['id'])->fetch();
+            if(!empty($message)) {
+                $link = '/forum/index.php?act=show_post&id='.$message['id'];
+            }
+            break;
+
+    }
+
+    if(!empty($link)) {
+        $links++;
+        $db->query("INSERT INTO forum_redirects SET old_id = ".$item['id'].", new_link = '".$link."'");
+    }
+
+}
+
+echo 'Всего записей: '. $all_items.'<br>';
+echo 'Ссылок для редиректов: '. $links.'<br>';*/
 
 
 

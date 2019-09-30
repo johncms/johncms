@@ -124,7 +124,7 @@ switch ($mod) {
 
                 echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
+                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
                     '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .

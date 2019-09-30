@@ -173,11 +173,11 @@ switch ($act) {
                     echo $text;
 
                     if (mb_strlen($res['text']) > 500) {
-                        echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+                        echo '...<a href="index.php?act=show_post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
                     echo '<br /><a href="index.php?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
-                            : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
+                            : ' | <a href="index.php?act=show_post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
                     echo '</div>';
                     ++$i;
                 }

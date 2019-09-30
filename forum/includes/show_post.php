@@ -74,7 +74,7 @@ echo @$user_rights[$res['rights']];
 
 // Метка Онлайн / Офлайн
 echo(time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
-echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+echo '<a href="index.php?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
 // Ссылки на ответ и цитирование
 if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {

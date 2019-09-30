@@ -194,7 +194,7 @@ $mods = [
     'new',
     'nt',
     'per',
-    'post',
+    'show_post',
     'ren',
     'restore',
     'say',
@@ -209,6 +209,22 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
 } else {
+
+    // Редирект на новые адреса страниц
+    if(!empty($id)) {
+        $check_section = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '$id'");
+        if (!$check_section->rowCount() && (empty($_REQUEST['type']) || (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'post'))) {
+            $check_link = $db->query("SELECT * FROM `forum_redirects` WHERE `old_id`= '$id'")->fetch();
+            if(!empty($check_link)) {
+                http_response_code(301);
+                header('Location: '.$check_link['new_link']);
+                exit;
+            }
+        }
+    }
+
+
+
     require('../system/head.php');
 
     // Если форум закрыт, то для Админов выводим напоминание
@@ -588,7 +604,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo $tools->checkout(mb_substr($postres['text'], 0, 500), 0, 2);
 
                     if (mb_strlen($postres['text']) > 500) {
-                        echo '...<a href="index.php?act=post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
+                        echo '...<a href="index.php?act=show_post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
                     }
 
                     echo '</p></div>';
@@ -691,7 +707,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo(time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
 
                     // Ссылка на пост
-                    echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+                    echo '<a href="index.php?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
                     // Ссылки на ответ и цитирование
                     if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {

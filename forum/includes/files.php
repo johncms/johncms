@@ -118,7 +118,7 @@ if ($do || isset($_GET['new'])) {
             $text = '<b><a href="index.php?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
-                $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+                $text .= '<br /><a href="index.php?act=show_post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
             }
 
             // Формируем ссылку на файл

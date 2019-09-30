@@ -305,7 +305,7 @@ switch ($post_type) {
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date("d.m.Y H:i", $type1['date']);
-            $msg = '[c][url=' . $config['homeurl'] . '/forum/index.php?act=post&id=' . $type1['id'] . ']#[/url] ' . $type1['user_name'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
+            $msg = '[c][url=' . $config['homeurl'] . '/forum/index.php?act=show_post&id=' . $type1['id'] . ']#[/url] ' . $type1['user_name'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
@@ -314,7 +314,7 @@ switch ($post_type) {
                     break;
 
                 case 3:
-                    $repl = $type1['user_name'] . ', ' . _t('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/index.php?act=post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
+                    $repl = $type1['user_name'] . ', ' . _t('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/index.php?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
                     break;
 
                 default :
@@ -449,7 +449,7 @@ switch ($post_type) {
                 echo '<p><h3>' . _t('Appeal') . '</h3>' .
                     '<input type="radio" value="0" ' . (!$txt ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>,<br />' .
                     '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('I am glad to answer you') . ',<br />' .
-                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="index.php?act=post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
+                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="index.php?act=show_post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
             }
 
             echo '<p><h3>' . _t('Message') . '</h3>';
