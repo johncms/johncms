@@ -13,7 +13,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Who in Forum');
-$headmod = $id ? 'forum,' . $id : 'forumwho';
+$headmod = $id ? 'forum,' . $id .',topic' : 'forumwho';
 require_once('../system/head.php');
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -47,7 +47,7 @@ if ($id) {
                 '</div>';
         }
 
-        $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
 
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
@@ -59,7 +59,7 @@ if ($id) {
         }
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
+            $req = $db->query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
 
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

@@ -134,47 +134,6 @@ if ($error) {
 $show_type = $_REQUEST['type'] ?? 'section';
 
 
-// Заголовки страниц форума
-if (empty($id)) {
-    $headmod = 'forum';
-    $textl = _t('Forum');
-} else {
-
-    // Фиксируем местоположение и получаем заголовок страницы
-    switch ($show_type) {
-        case 'section':
-            $headmod = 'forum,' . $id .',section';
-            $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
-            break;
-
-        case 'topics':
-            $headmod = 'forum,' . $id .',topics';
-            $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
-            break;
-
-        case 'topic':
-            $headmod = 'forum,' . $id .',topic';
-            $res = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= " . $id)->fetch();
-            break;
-
-        default:
-            $headmod = 'forum';
-    }
-
-    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
-    $hdr = strtr($hdr, [
-        '&laquo;' => '',
-        '&raquo;' => '',
-        '&quot;'  => '',
-        '&amp;'   => '',
-        '&lt;'    => '',
-        '&gt;'    => '',
-        '&#039;'  => '',
-    ]);
-    $hdr = mb_substr($hdr, 0, 30);
-    $hdr = $tools->checkout($hdr, 2, 2);
-    $textl = empty($hdr) ? _t('Forum') : $hdr;
-}
 
 
 // Переключаем режимы работы
@@ -209,6 +168,49 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
 } else {
+
+    // Заголовки страниц форума
+    if (empty($id)) {
+        $headmod = 'forum';
+        $textl = _t('Forum');
+    } else {
+
+        // Фиксируем местоположение и получаем заголовок страницы
+        switch ($show_type) {
+            case 'section':
+                $headmod = 'forum,' . $id .',section';
+                $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+                break;
+
+            case 'topics':
+                $headmod = 'forum,' . $id .',topics';
+                $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+                break;
+
+            case 'topic':
+                $headmod = 'forum,' . $id .',topic';
+                $res = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= " . $id)->fetch();
+                break;
+
+            default:
+                $headmod = 'forum';
+        }
+
+        $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
+        $hdr = strtr($hdr, [
+            '&laquo;' => '',
+            '&raquo;' => '',
+            '&quot;'  => '',
+            '&amp;'   => '',
+            '&lt;'    => '',
+            '&gt;'    => '',
+            '&#039;'  => '',
+        ]);
+        $hdr = mb_substr($hdr, 0, 30);
+        $hdr = $tools->checkout($hdr, 2, 2);
+        $textl = empty($hdr) ? _t('Forum') : $hdr;
+    }
+
 
     // Редирект на новые адреса страниц
     if(!empty($id)) {
