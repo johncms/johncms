@@ -30,9 +30,9 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         $prd = $_SESSION['prd'];
 
         if (!empty($dc)) {
-            $db->exec("UPDATE `forum` SET
-                `close` = '1',
-                `close_who` = '" . $systemUser->name . "'
+            $db->exec("UPDATE `forum_messages` SET
+                `deleted` = '1',
+                `deleted_by` = '" . $systemUser->name . "'
                 WHERE `id` IN (" . implode(',', $dc) . ")
             ");
         }

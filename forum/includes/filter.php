@@ -31,7 +31,7 @@ switch ($do) {
         // Удаляем фильтр
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);
-        header("Location: index.php?id=$id");
+        header("Location: index.php?type=topic&id=$id");
         break;
 
     case 'set':
@@ -39,7 +39,7 @@ switch ($do) {
         $users = isset($_POST['users']) ? $_POST['users'] : '';
 
         if (empty($_POST['users'])) {
-            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
+            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
             require('../system/end.php');
             exit;
         }
@@ -52,7 +52,7 @@ switch ($do) {
 
         $_SESSION['fsort_id'] = $id;
         $_SESSION['fsort_users'] = serialize($array);
-        header("Location: index.php?id=$id");
+        header("Location: index.php?type=topic&id=$id");
         break;
 
     default :
@@ -60,18 +60,18 @@ switch ($do) {
         $db = $container->get(PDO::class);
 
         // Показываем список авторов темы, с возможностью выбора
-        $req = $db->query("SELECT *, COUNT(`from`) AS `count` FROM `forum` WHERE `refid` = '$id' GROUP BY `from` ORDER BY `from`");
+        $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '$id' GROUP BY `user_id` ORDER BY `user_name`");
         $total = $req->rowCount();
 
         if ($total) {
-            echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
+            echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
                 '<form action="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
             $i = 0;
 
             while ($res = $req->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<input type="checkbox" name="users[]" value="' . $res['user_id'] . '"/>&#160;' .
-                    '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a> [' . $res['count'] . ']</div>';
+                    '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> [' . $res['count'] . ']</div>';
                 ++$i;
             }
 

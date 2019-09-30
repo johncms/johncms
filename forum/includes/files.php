@@ -74,11 +74,18 @@ if ($c) {
 
 if ($c || $s || $t) {
     // Получаем имя нужной категории форума
-    $req = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id'");
+
+    if(!empty($t)) {
+        $req = $db->query("SELECT `text` FROM `forum_messages` WHERE `id` = '$id'");
+    } elseif (!empty($s)) {
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
+    } elseif (!empty($c)) {
+        $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '$id'");
+    }
 
     if ($req->rowCount()) {
         $res = $req->fetch();
-        $caption .= $res['text'];
+        $caption .= $res['name'];
     } else {
         echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
         require('../system/end.php');
@@ -93,10 +100,10 @@ if ($do || isset($_GET['new'])) {
     if ($total) {
         // Заголовок раздела
         echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . _t('New Files') : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
-        $req = $db->query("SELECT `cms_forum_files`.*, `forum`.`user_id`, `forum`.`text`, `topicname`.`text` AS `topicname`
+        $req = $db->query("SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
             FROM `cms_forum_files`
-            LEFT JOIN `forum` ON `cms_forum_files`.`post` = `forum`.`id`
-            LEFT JOIN `forum` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
+            LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
+            LEFT JOIN `forum_topic` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
             WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
             "ORDER BY `time` DESC LIMIT $start,$kmess");
 
@@ -107,8 +114,8 @@ if ($do || isset($_GET['new'])) {
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
-            $text = '<b><a href="index.php?id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
+            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
+            $text = '<b><a href="index.php?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
                 $text .= '<br /><a href="index.php?act=post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
@@ -187,6 +194,17 @@ if ($do || isset($_GET['new'])) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 }
 
+$type = '';
+
+if($c) {
+    $type = '';
+} elseif ($s) {
+    $type = 'type=topics';
+} elseif ($t) {
+    $type = 'type=topic';
+}
+
+
 echo '<p>' . (($do || isset($_GET['new']))
         ? '<a href="index.php?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'
-        : '') . '<a href="index.php' . ($id ? '?id=' . $id : '') . '">' . _t('Forum') . '</a></p>';
+        : '') . '<a href="index.php' . ($id ? '?id=' . $id . '&' . $type : '?' . $type) . '">' . _t('Forum') . '</a></p>';

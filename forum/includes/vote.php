@@ -25,7 +25,7 @@ if ($systemUser->isValid()) {
     /** @var Johncms\Api\ToolsInterface $tools */
     $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-    $topic = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `id` = '$id' AND `edit` != '1'")->fetchColumn();
+    $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '$id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $vote = abs(intval($_POST['vote']));
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '$vote' AND `topic` = '$id'")->fetchColumn();
     $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user` = '" . $systemUser->id . "' AND `topic` = '$id'")->fetchColumn();

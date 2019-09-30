@@ -37,7 +37,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (isset($_GET['yes'])) {
         $db->exec("DELETE FROM `cms_forum_vote` WHERE `topic` = '$id'");
         $db->exec("DELETE FROM `cms_forum_vote_users` WHERE `topic` = '$id'");
-        $db->exec("UPDATE `forum` SET  `realid` = '0'  WHERE `id` = '$id'");
+        $db->exec("UPDATE `forum_topic` SET  `has_poll` = NULL  WHERE `id` = '$id'");
         echo _t('Poll deleted') . '<br /><a href="' . $_SESSION['prd'] . '">' . _t('Continue') . '</a>';
     } else {
         echo '<p>' . _t('Do you really want to delete a poll?') . '</p>';

@@ -26,12 +26,12 @@ if (($systemUser->rights != 3 && $systemUser->rights < 6) || !$id) {
     exit;
 }
 
-if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$id' AND `type` = 't'")->fetchColumn()) {
+if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '$id'")->fetchColumn()) {
     if (isset($_GET['closed'])) {
-        $db->exec("UPDATE `forum` SET `edit` = '1' WHERE `id` = '$id'");
+        $db->exec("UPDATE `forum_topic` SET `closed` = '1' WHERE `id` = '$id'");
     } else {
-        $db->exec("UPDATE `forum` SET `edit` = '0' WHERE `id` = '$id'");
+        $db->exec("UPDATE `forum_topic` SET `closed` = '0' WHERE `id` = '$id'");
     }
 }
 
-header("Location: index.php?id=$id");
+header("Location: index.php?type=topic&id=$id");

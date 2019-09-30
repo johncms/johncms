@@ -27,7 +27,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights >= 7) {
-    $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
+    $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
 
     if (!$req->rowCount() || $systemUser->rights < 7) {
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
@@ -36,12 +36,12 @@ if ($systemUser->rights >= 7) {
     }
 
     $topic = $req->fetch();
-    $req = $db->query("SELECT `forum`.*, `users`.`id`
-        FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-        WHERE `forum`.`refid`='$id' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum`.`from` ORDER BY `forum`.`from`");
+    $req = $db->query("SELECT `forum_messages`.*, `users`.`id`
+        FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
+        WHERE `forum_messages`.`topic_id`='$id' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum_messages`.`user_id` ORDER BY `forum_messages`.`user_name`");
     $total = $req->rowCount();
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
-        '<div class="bmenu">' . $topic['text'] . '</div>';
+    echo '<div class="phdr"><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
+        '<div class="bmenu">' . $topic['name'] . '</div>';
     $curators = [];
     $users = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
 
@@ -60,23 +60,23 @@ if ($systemUser->rights >= 7) {
             $checked = array_key_exists($res['user_id'], $users) ? true : false;
 
             if ($checked) {
-                $curators[$res['user_id']] = $res['from'];
+                $curators[$res['user_id']] = $res['user_name'];
             }
 
             echo ($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
-                '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['from'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
-                '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a></div>';
+                '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['user_name'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
+                '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a></div>';
         }
 
         echo '<div class="gmenu"><input type="submit" value="' . _t('Assign') . '" name="submit" /></div></form>';
 
         if (isset($_POST['submit'])) {
-            $db->exec("UPDATE `forum` SET `curators`=" . $db->quote(serialize($curators)) . " WHERE `id` = '$id'");
+            $db->exec("UPDATE `forum_topic` SET `curators`=" . $db->quote(serialize($curators)) . " WHERE `id` = '$id'");
         }
 
     } else {
         echo $tools->displayError(_t('The list is empty'));
     }
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-        '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
+        '<p><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
 }

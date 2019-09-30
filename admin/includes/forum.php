@@ -46,6 +46,12 @@ if (!isset($set_forum) || empty($set_forum)) {
 
 switch ($mod) {
     case 'del':
+
+        // TODO: Реализовать удаление
+        echo $tools->displayError(_t('Удаление пока в разработке...'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
+        require('../system/end.php');
+        exit;
+
         // Удаление категории, или раздела
         if (!$id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
@@ -226,7 +232,7 @@ switch ($mod) {
         // Добавление категории
         if ($id) {
             // Проверяем наличие категории
-            $req = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 'f'");
+            $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '$id'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -243,6 +249,7 @@ switch ($mod) {
             $name = isset($_POST['name']) ? trim($_POST['name']) : '';
             $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
             $allow = isset($_POST['allow']) ? intval($_POST['allow']) : 0;
+            $section_type = isset($_POST['section_type']) ? intval($_POST['section_type']) : 0;
 
             // Проверяем на ошибки
             $error = [];
@@ -261,30 +268,29 @@ switch ($mod) {
 
             if (!$error) {
                 // Добавляем в базу категорию
-                $req = $db->query("SELECT `realid` FROM `forum` WHERE " . ($id ? "`refid` = '$id' AND `type` = 'r'" : "`type` = 'f'") . " ORDER BY `realid` DESC LIMIT 1");
+                $req = $db->query("SELECT `sort`, parent FROM `forum_sections` WHERE " . ($id ? "`parent` = '$id'" : "1=1") . " ORDER BY `sort` DESC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
-                    $sort = $res['realid'] + 1;
+                    $sort = $res['sort'] + 1;
                 } else {
                     $sort = 1;
                 }
 
                 $db->prepare('
-                  INSERT INTO `forum` SET
-                  `refid` = ?,
-                  `type` = ?,
-                  `text` = ?,
-                  `soft` = ?,
-                  `edit` = ?,
-                  `curators` = \'\',
-                  `realid` = ?
+                  INSERT INTO `forum_sections` SET
+                  `parent` = ?,
+                  `name` = ?,
+                  `description` = ?,
+                  `access` = ?,
+                  `section_type` = ?,
+                  `sort` = ?
                 ')->execute([
                     ($id ? $id : 0),
-                    ($id ? 'r' : 'f'),
                     $name,
                     $desc,
                     $allow,
+                    $section_type,
                     $sort,
                 ]);
 
@@ -317,6 +323,11 @@ switch ($mod) {
                     '<input type="radio" name="allow" value="1"/>&#160;' . _t('Assign the newly created authors as curators') . '</p>';
             }
 
+            echo '<h3 style="margin-top: 5px;">' . _t('Section type') . '</h3>
+                 <p><input type="radio" name="section_type" value="0" checked="checked"/>&#160;' . _t('For subsections') . '<br>' .
+                '<input type="radio" name="section_type" value="1"/>&#160;' . _t('For topics') . '</p>';
+
+
             echo '<p><input type="submit" value="' . _t('Add') . '" name="submit" />' .
                 '</p></div></form>' .
                 '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a></div>';
@@ -331,153 +342,115 @@ switch ($mod) {
             exit;
         }
 
-        $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'");
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
+
 
         if ($req->rowCount()) {
             $res = $req->fetch();
 
-            if ($res['type'] == 'f' || $res['type'] == 'r') {
-                if (isset($_POST['submit'])) {
-                    // Принимаем данные
-                    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-                    $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
-                    $category = isset($_POST['category']) ? intval($_POST['category']) : 0;
-                    $allow = isset($_POST['allow']) ? intval($_POST['allow']) : 0;
+            if (isset($_POST['submit'])) {
+                // Принимаем данные
+                $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+                $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
+                $sort = isset($_POST['sort']) ? intval($_POST['sort']) : 100;
+                $section_type = isset($_POST['section_type']) ? intval($_POST['section_type']) : 0;
+                $category = isset($_POST['category']) ? intval($_POST['category']) : 0;
+                $allow = isset($_POST['allow']) ? intval($_POST['allow']) : 0;
 
-                    // проверяем на ошибки
-                    $error = [];
+                // проверяем на ошибки
+                $error = [];
 
-                    if ($res['type'] == 'r' && !$category) {
-                        $error[] = _t('Category is not chosen');
-                    } elseif ($res['type'] == 'r' && !$db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '$category' AND `type` = 'f'")->fetchColumn()) {
-                        $error[] = _t('Category is not chosen');
+                if (!$name) {
+                    $error[] = _t('You have not entered Title');
+                }
+
+                if ($name && (mb_strlen($name) < 2 || mb_strlen($name) > 30)) {
+                    $error[] = _t('Title') . ': ' . _t('Invalid length');
+                }
+
+                if ($desc && mb_strlen($desc) < 2) {
+                    $error[] = _t('Description should be at least 2 characters in length');
+                }
+
+                if (!$error) {
+                    // Записываем в базу
+                    $db->prepare('
+                      UPDATE `forum_sections` SET
+                      `name` = ?,
+                      `description` = ?,
+                      `access` = ?,
+                      `sort` = ?,
+                      `section_type` = ?
+                      WHERE `id` = ?
+                    ')->execute([
+                        $name,
+                        $desc,
+                        $allow,
+                        $sort,
+                        $section_type,
+                        $id,
+                    ]);
+
+                    if ($category != $res['parent']) {
+                        // Вычисляем сортировку
+                        $req_s = $db->query("SELECT `sort` FROM `forum_sections` WHERE `parent` = '$category' ORDER BY `sort` DESC LIMIT 1");
+                        $res_s = $req_s->fetch();
+                        $sort = $res_s['sort'] + 1;
+                        // Меняем категорию
+                        $db->exec("UPDATE `forum_sections` SET `parent` = '$category', `sort` = '$sort' WHERE `id` = '$id'");
+                        // Меняем категорию для прикрепленных файлов
+                        $db->exec("UPDATE `cms_forum_files` SET `cat` = '$category' WHERE `cat` = '" . $res['parent'] . "'");
                     }
-
-                    if (!$name) {
-                        $error[] = _t('You have not entered Title');
-                    }
-
-                    if ($name && (mb_strlen($name) < 2 || mb_strlen($name) > 30)) {
-                        $error[] = _t('Title') . ': ' . _t('Invalid length');
-                    }
-
-                    if ($desc && mb_strlen($desc) < 2) {
-                        $error[] = _t('Description should be at least 2 characters in length');
-                    }
-
-                    if (!$error) {
-                        // Записываем в базу
-                        $db->prepare('
-                          UPDATE `forum` SET
-                          `text` = ?,
-                          `soft` = ?,
-                          `edit` = ?
-                          WHERE `id` = ?
-                        ')->execute([
-                            $name,
-                            $desc,
-                            $allow,
-                            $id,
-                        ]);
-
-                        if ($res['type'] == 'r' && $category != $res['refid']) {
-                            // Вычисляем сортировку
-                            $req_s = $db->query("SELECT `realid` FROM `forum` WHERE `refid` = '$category' AND `type` = 'r' ORDER BY `realid` DESC LIMIT 1");
-                            $res_s = $req_s->fetch();
-                            $sort = $res_s['realid'] + 1;
-                            // Меняем категорию
-                            $db->exec("UPDATE `forum` SET `refid` = '$category', `realid` = '$sort' WHERE `id` = '$id'");
-                            // Меняем категорию для прикрепленных файлов
-                            $db->exec("UPDATE `cms_forum_files` SET `cat` = '$category' WHERE `cat` = '" . $res['refid'] . "'");
-                        }
-                        header('Location: index.php?act=forum&mod=cat' . ($res['type'] == 'r' ? '&id=' . $res['refid'] : ''));
-                    } else {
-                        // Выводим сообщение об ошибках
-                        echo $tools->displayError($error);
-                    }
+                    header('Location: index.php?act=forum&mod=cat' . (!empty($res['parent']) ? '&id=' . $res['parent'] : ''));
                 } else {
-                    // Форма ввода
-                    echo '<div class="phdr"><b>' . ($res['type'] == 'r' ? _t('Edit Section') : _t('Edit Category')) . '</b></div>' .
-                        '<form action="index.php?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
-                        '<div class="gmenu">' .
-                        '<p><h3>' . _t('Title') . '</h3>' .
-                        '<input type="text" name="name" value="' . $res['text'] . '"/>' .
-                        '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
-                        '<p><h3>' . _t('Description') . '</h3>' .
-                        '<textarea name="desc" rows="' . $systemUser->getConfig()->fieldHeight . '">' . str_replace('<br>', "\r\n", $res['soft']) . '</textarea>' .
-                        '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
-
-                    if ($res['type'] == 'r') {
-                        $allow = !empty($res['edit']) ? intval($res['edit']) : 0;
-                        echo '<p><input type="radio" name="allow" value="0" ' . (!$allow ? 'checked="checked"' : '') . '/>&#160;' . _t('Common access') . '<br>' .
-                            '<input type="radio" name="allow" value="4" ' . ($allow == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for reading') . '<br>' .
-                            '<input type="radio" name="allow" value="2" ' . ($allow == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Allow authors to edit the 1st post') . '<br>' .
-                            '<input type="radio" name="allow" value="1" ' . ($allow == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Assign the newly created authors as curators') . '</p>';
-                        echo '<p><h3>' . _t('Category') . '</h3><select name="category" size="1">';
-
-                        $req_c = $db->query("SELECT * FROM `forum` WHERE `type` = 'f' ORDER BY `realid` ASC");
-
-                        while ($res_c = $req_c->fetch()) {
-                            echo '<option value="' . $res_c['id'] . '"' . ($res_c['id'] == $res['refid'] ? ' selected="selected"' : '') . '>' . $res_c['text'] . '</option>';
-                        }
-                        echo '</select></p>';
-                    }
-                    echo '<p><input type="submit" value="' . _t('Save') . '" name="submit" />' .
-                        '</p></div></form>' .
-                        '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($res['type'] == 'r' ? '&amp;id=' . $res['refid'] : '') . '">' . _t('Back') . '</a></div>';
+                    // Выводим сообщение об ошибках
+                    echo $tools->displayError($error);
                 }
             } else {
-                header('Location: index.php?act=forum&mod=cat');
+                // Форма ввода
+                echo '<div class="phdr"><b>' . _t('Edit Section') . '</b></div>' .
+                    '<form action="index.php?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
+                    '<div class="gmenu">' .
+                    '<p><h3>' . _t('Title') . '</h3>' .
+                    '<input type="text" name="name" value="' . $res['name'] . '"/>' .
+                    '<p><h3>' . _t('Order') . '</h3>' .
+                    '<input type="text" name="sort" value="' . $res['sort'] . '"/><br>' .
+                    '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
+                    '<p><h3>' . _t('Description') . '</h3>' .
+                    '<textarea name="desc" rows="' . $systemUser->getConfig()->fieldHeight . '">' . str_replace('<br>', "\r\n", $res['description']) . '</textarea>' .
+                    '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
+
+
+                $allow = !empty($res['access']) ? intval($res['access']) : 0;
+                echo '<p><input type="radio" name="allow" value="0" ' . (!$allow ? 'checked="checked"' : '') . '/>&#160;' . _t('Common access') . '<br>' .
+                    '<input type="radio" name="allow" value="4" ' . ($allow == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for reading') . '<br>' .
+                    '<input type="radio" name="allow" value="2" ' . ($allow == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Allow authors to edit the 1st post') . '<br>' .
+                    '<input type="radio" name="allow" value="1" ' . ($allow == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Assign the newly created authors as curators') . '</p>';
+                echo '<p><h3>' . _t('Category') . '</h3><select name="category" size="1">';
+
+                echo '<option value="0" ' . (empty($res['parent']) ? ' selected="selected"' : '') . '>-</option>';
+                $req_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '".$res['is']."' ORDER BY `sort` ASC");
+
+                while ($res_c = $req_c->fetch()) {
+                    echo '<option value="' . $res_c['id'] . '"' . ($res_c['id'] == $res['parent'] ? ' selected="selected"' : '') . '>' . $res_c['name'] . '</option>';
+                }
+                echo '</select></p>';
+
+                $section_type = !empty($res['section_type']) ? intval($res['section_type']) : 0;
+                echo '<h3 style="margin-top: 5px;">' . _t('Section type') . '</h3>
+                    <p><input type="radio" name="section_type" value="0" ' . (!$section_type ? 'checked="checked"' : '') . '/>&#160;' . _t('For subsections') . '<br>' .
+                    '<input type="radio" name="section_type" value="1" ' . ($section_type == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('For topics') . '</p>';
+
+                echo '<p><input type="submit" value="' . _t('Save') . '" name="submit" />' .
+                    '</p></div></form>' .
+                    '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . (!empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '">' . _t('Back') . '</a></div>';
             }
+
         } else {
             header('Location: index.php?act=forum&mod=cat');
         }
         break;
 
-    case 'up':
-        // Перемещение на одну позицию вверх
-        if ($id) {
-            $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'");
-
-            if ($req->rowCount()) {
-                $res1 = $req->fetch();
-                $sort = $res1['realid'];
-                $req = $db->query("SELECT * FROM `forum` WHERE `type` = '" . ($res1['type'] == 'f' ? 'f' : 'r') . "' AND `realid` < '$sort' ORDER BY `realid` DESC LIMIT 1");
-
-                if ($req->rowCount()) {
-                    $res = $req->fetch();
-                    $id2 = $res['id'];
-                    $sort2 = $res['realid'];
-                    $db->exec("UPDATE `forum` SET `realid` = '$sort2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `forum` SET `realid` = '$sort' WHERE `id` = '$id2'");
-                }
-            }
-        }
-
-        header('Location: index.php?act=forum&mod=cat' . ($res1['type'] == 'r' ? '&id=' . $res1['refid'] : ''));
-        break;
-
-    case 'down':
-        // Перемещение на одну позицию вниз
-        if ($id) {
-            $req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'");
-
-            if ($req->rowCount()) {
-                $res1 = $req->fetch();
-                $sort = $res1['realid'];
-                $req = $db->query("SELECT * FROM `forum` WHERE `type` = '" . ($res1['type'] == 'f' ? 'f' : 'r') . "' AND `realid` > '$sort' ORDER BY `realid` ASC LIMIT 1");
-
-                if ($req->rowCount()) {
-                    $res = $req->fetch();
-                    $id2 = $res['id'];
-                    $sort2 = $res['realid'];
-                    $db->exec("UPDATE `forum` SET `realid` = '$sort2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `forum` SET `realid` = '$sort' WHERE `id` = '$id2'");
-                }
-            }
-        }
-        header('Location: index.php?act=forum&mod=cat' . ($res1['type'] == 'r' ? '&id=' . $res1['refid'] : ''));
-        break;
 
     case 'cat':
         // Управление категориями и разделами
@@ -485,26 +458,24 @@ switch ($mod) {
 
         if ($id) {
             // Управление разделами
-            $req = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 'f'");
+            $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
             $res = $req->fetch();
-            echo '<div class="bmenu"><a href="index.php?act=forum&amp;mod=cat"><b>' . $res['text'] . '</b></a> | ' . _t('List of sections') . '</div>';
-            $req = $db->query("SELECT * FROM `forum` WHERE `refid` = '$id' AND `type` = 'r' ORDER BY `realid` ASC");
+            echo '<div class="bmenu"><a href="index.php?act=forum&amp;mod=cat' . (!empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '"><b>' . $res['name'] . '</b></a> | ' . _t('List of sections') . '</div>';
+            $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '$id' ORDER BY `sort` ASC");
 
             if ($req->rowCount()) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo '<b>' . $res['text'] . '</b>' .
+                    echo '[' . $res['sort'] . '] <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a>' .
                         '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
 
-                    if (!empty($res['soft'])) {
-                        echo '<br><span class="gray"><small>' . $res['soft'] . '</small></span><br>';
+                    if (!empty($res['description'])) {
+                        echo '<br><span class="gray"><small>' . $res['description'] . '</small></span><br>';
                     }
 
                     echo '<div class="sub">' .
-                        '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ' .
-                        '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ' .
                         '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
                         '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
                         '</div></div>';
@@ -516,22 +487,20 @@ switch ($mod) {
         } else {
             // Управление категориями
             echo '<div class="bmenu">' . _t('List of categories') . '</div>';
-            $req = $db->query("SELECT * FROM `forum` WHERE `type` = 'f' ORDER BY `realid` ASC");
+            $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = 0 OR `parent` IS NULL ORDER BY `sort` ASC");
             $i = 0;
 
             while ($res = $req->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['text'] . '</b></a> ' .
-                    '(' . $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'r' AND `refid` = '" . $res['id'] . "'")->fetchColumn() . ')' .
+                echo '[' . $res['sort'] . '] <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a> ' .
+                    '(' . $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn() . ')' .
                     '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
 
-                if (!empty($res['soft'])) {
-                    echo '<br><span class="gray"><small>' . $res['soft'] . '</small></span><br>';
+                if (!empty($res['description'])) {
+                    echo '<br><span class="gray"><small>' . $res['description'] . '</small></span><br>';
                 }
 
                 echo '<div class="sub">' .
-                    '<a href="index.php?act=forum&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ' .
-                    '<a href="index.php?act=forum&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ' .
                     '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
                     '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
                     '</div></div>';
@@ -547,6 +516,7 @@ switch ($mod) {
         break;
 
     case 'htopics':
+        // TODO: Реализовать
         // Управление скрытыми темами форума
         echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden topics') . '</div>';
         $sort = '';
@@ -646,6 +616,7 @@ switch ($mod) {
         break;
 
     case 'hposts':
+        // TODO: Реализовать
         // Управление скрытыми постави форума
         echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden posts') . '</div>';
         $sort = '';
@@ -742,6 +713,7 @@ switch ($mod) {
         break;
 
     default:
+        // TODO: Реализовать
         // Панель управления форумом
         $total_cat = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'f'")->fetchColumn();
         $total_sub = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'r'")->fetchColumn();

@@ -26,18 +26,13 @@ if (($systemUser->rights != 3 && $systemUser->rights < 6) || !$id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND (`type` = 't' OR `type` = 'm')");
+$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
 
 if ($req->rowCount()) {
     $res = $req->fetch();
-    $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
+    $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '$id'");
 
-    if ($res['type'] == 't') {
-        header('Location: index.php?id=' . $id);
-    } else {
-        $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $id . "'")->fetchColumn() / $kmess);
-        header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
-    }
+    header('Location: index.php?type=topic&id=' . $id);
 } else {
     header('Location: index.php');
 }

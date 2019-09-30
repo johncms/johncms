@@ -61,7 +61,7 @@ if ($topic_vote == 0 || $systemUser->rights < 7) {
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
-    echo '<p><a href="index.php?id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
+    echo '<p><a href="index.php?&type=topic&amp;id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 }
 
 require('../system/end.php');

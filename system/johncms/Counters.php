@@ -129,8 +129,8 @@ class Counters
             $top = $res['top'];
             $msg = $res['msg'];
         } else {
-            $top = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `close` != '1'")->fetchColumn();
-            $msg = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` != '1'")->fetchColumn();
+            $top = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
+            $msg = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
             file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]), LOCK_EX);
         }
 
@@ -153,11 +153,11 @@ class Counters
     public function forumNew($mod = 0)
     {
         if ($this->systemUser->isValid()) {
-            $total = $this->db->query("SELECT COUNT(*) FROM `forum`
-                LEFT JOIN `cms_forum_rdm` ON `forum`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
-                WHERE `forum`.`type` = 't'" . ($this->systemUser->rights >= 7 ? "" : " AND `forum`.`close` != 1") . "
-                AND (`cms_forum_rdm`.`topic_id` IS NULL
-                OR `forum`.`time` > `cms_forum_rdm`.`time`)")->fetchColumn();
+            $total = $this->db->query("SELECT COUNT(*) FROM `forum_topic`
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
+                WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`) 
+                " . ($this->systemUser->rights >= 7 ? "" : " AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)") . "
+                ")->fetchColumn();
 
             if ($mod) {
                 return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .

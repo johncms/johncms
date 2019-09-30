@@ -32,9 +32,9 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         exit;
     }
 
-    if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `id` = '" . $id . "' AND `type` = 't'")->fetchColumn()) {
-        $db->exec("UPDATE `forum` SET  `vip` = '" . (isset($_GET['vip']) ? '1' : '0') . "' WHERE `id` = '$id'");
-        header('Location: index.php?id=' . $id);
+    if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '" . $id . "'")->fetchColumn()) {
+        $db->exec("UPDATE `forum_topic` SET  `pinned` = '" . (isset($_GET['vip']) ? '1' : NULL) . "' WHERE `id` = '$id'");
+        header('Location: index.php?type=topic&id=' . $id);
     } else {
         require('../system/head.php');
         echo $tools->displayError(_t('Wrong data'));

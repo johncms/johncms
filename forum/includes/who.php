@@ -142,13 +142,13 @@ if ($id) {
                 default:
                     $where = explode(",", $res['place']);
                     if ($where[0] == 'forum' && intval($where[1])) {
-                        $req_t = $db->query("SELECT `type`, `refid`, `text` FROM `forum` WHERE `id` = '$where[1]'");
+                        $req_t = $db->query("SELECT `section_id`, `name` FROM `forum_topic` WHERE `id` = '$where[1]'");
 
                         if ($req_t->rowCount()) {
                             $res_t = $req_t->fetch();
-                            $link = '<a href="index.php?id=' . $where[1] . '">' . (empty($res_t['text']) ? '-----' : $res_t['text']) . '</a>';
+                            $link = '<a href="index.php?type=topic&id=' . $where[1] . '">' . (empty($res_t['name']) ? '-----' : $res_t['name']) . '</a>';
 
-                            switch ($res_t['type']) {
+                            switch ('t') {
                                 case 'f':
                                     $place = _t('In the Category') . ' &quot;' . $link . '&quot;';
                                     break;

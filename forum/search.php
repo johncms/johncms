@@ -85,12 +85,22 @@ switch ($act) {
             // Выводим результаты запроса
             $array = explode(' ', $search);
             $count = count($array);
-            $query = $db->quote($search);
-            $total = $db->query("
-                SELECT COUNT(*) FROM `forum`
+
+
+            if ($search_t) {
+                $query = $db->quote('%'.$search.'%');
+                $total = $db->query("
+                SELECT COUNT(*) FROM `forum_topic`
+                WHERE `name` LIKE ".$query."
+                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)'"))->fetchColumn();
+            } else {
+                $query = $db->quote($search);
+                $total = $db->query("
+                SELECT COUNT(*) FROM `forum_messages`
                 WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
-                AND `type` = '" . ($search_t ? 't' : 'm') . "'" . ($systemUser->rights >= 7 ? "" : " AND `close` != '1'
-            "))->fetchColumn();
+                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+            }
+
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
             if ($total > $kmess) {
@@ -99,14 +109,26 @@ switch ($act) {
 
             if ($total) {
                 $to_history = true;
-                $req = $db->query("
+                if ($search_t) {
+                    $req = $db->query("
+                    SELECT *
+                    FROM `forum_topic`
+                    WHERE `name` LIKE ".$query."
+                    ".($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)")."
+                    ORDER BY `name` DESC
+                    LIMIT $start, $kmess
+                ");
+                } else {
+                    $req = $db->query("
                     SELECT *, MATCH (`text`) AGAINST ($query IN BOOLEAN MODE) as `rel`
-                    FROM `forum`
+                    FROM `forum_messages`
                     WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
-                    AND `type` = '" . ($search_t ? 't' : 'm') . "'
+                    ".($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)")."
                     ORDER BY `rel` DESC
                     LIMIT $start, $kmess
                 ");
+                }
+
                 $i = 0;
 
                 while ($res = $req->fetch()) {
@@ -114,22 +136,22 @@ switch ($act) {
 
                     if (!$search_t) {
                         // Поиск только в тексте
-                        $res_t = $db->query("SELECT `id`,`text` FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                        echo '<b>' . $res_t['text'] . '</b><br />';
+                        $res_t = $db->query("SELECT `id`,`name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+                        echo '<b>' . $res_t['name'] . '</b><br />';
                     } else {
                         // Поиск в названиях тем
-                        $res_p = $db->query("SELECT `text` FROM `forum` WHERE `refid` = '" . $res['id'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
+                        $res_p = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '" . $res['id'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
 
                         foreach ($array as $val) {
-                            $res['text'] = ReplaceKeywords($val, $res['text']);
+                            $res['name'] = ReplaceKeywords($val, $res['name']);
                         }
 
-                        echo '<b>' . $res['text'] . '</b><br />';
+                        echo '<b>' . $res['name'] . '</b><br />';
                     }
 
-                    echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['from'] . '</a> ';
-                    echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br>';
-                    $text = $search_t ? $res_p['text'] : $res['text'];
+                    echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> ';
+                    echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br>';
+                    $text = $search_t ? $res_p['name'] : $res['text'];
 
                     foreach ($array as $srch) {
                         if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {
@@ -156,7 +178,7 @@ switch ($act) {
                         echo '...<a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
-                    echo '<br /><a href="index.php?id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
+                    echo '<br /><a href="index.php?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
                             : ' | <a href="index.php?act=post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
                     echo '</div>';
                     ++$i;
