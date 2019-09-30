@@ -131,16 +131,37 @@ if ($error) {
     require('../system/end.php');
     exit;
 }
+$show_type = $_REQUEST['type'] ?? 'section';
 
-$headmod = $id ? 'forum,' . $id : 'forum';
 
 // Заголовки страниц форума
 if (empty($id)) {
+    $headmod = 'forum';
     $textl = _t('Forum');
 } else {
-    // TODO: Пофиксить
-    $res = $db->query("SELECT `text` FROM `forum` WHERE `id`= " . $id)->fetch();
-    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['text']);
+
+    // Фиксируем местоположение и получаем заголовок страницы
+    switch ($show_type) {
+        case 'section':
+            $headmod = 'forum,' . $id .',section';
+            $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+            break;
+
+        case 'topics':
+            $headmod = 'forum,' . $id .',topics';
+            $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+            break;
+
+        case 'topic':
+            $headmod = 'forum,' . $id .',topic';
+            $res = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= " . $id)->fetch();
+            break;
+
+        default:
+            $headmod = 'forum';
+    }
+
+    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
     $hdr = strtr($hdr, [
         '&laquo;' => '',
         '&raquo;' => '',
@@ -154,6 +175,7 @@ if (empty($id)) {
     $hdr = $tools->checkout($hdr, 2, 2);
     $textl = empty($hdr) ? _t('Forum') : $hdr;
 }
+
 
 // Переключаем режимы работы
 $mods = [
@@ -207,7 +229,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 
     if ($id) {
-        $show_type = $_REQUEST['type'] ?? 'section';
+
 
         // Определяем тип запроса (каталог, или тема)
         if($show_type == 'topic') {
@@ -295,8 +317,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $wholink = false;
 
         if ($systemUser->isValid() && $show_type == 'topic') {
-            $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
-            $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
+            $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
+            $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
             $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br>';
         }
 

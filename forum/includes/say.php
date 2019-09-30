@@ -52,11 +52,11 @@ function forum_link($m)
 
         if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config->homeurl . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = $db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
+            $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '$thid' AND (`deleted` != '1' OR deleted IS NULL)");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $name = strtr($res['text'], [
+                $name = strtr($res['name'], [
                     '&quot;' => '',
                     '&amp;'  => '',
                     '&lt;'   => '',
@@ -90,7 +90,7 @@ if ($flood) {
     exit;
 }
 
-$headmod = 'forum,' . $id . ',1';
+$headmod = 'forum,' . $id . ',message';
 
 $post_type = $_REQUEST['type'] ?? 'post';
 
