@@ -337,13 +337,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         if ($systemUser->isValid() && $show_type == 'topic') {
             $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
             $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
-            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br>';
+            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span>';
         }
 
         // Выводим верхнюю панель навигации
         echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
-            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') .'</div>';
 
         switch ($show_type) {
             case 'section':
@@ -491,6 +491,15 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     require('../system/end.php');
                     exit;
                 }
+
+                $view_count = intval($type1['view_count']);
+                // Фиксируем количество просмотров топика
+                if (!empty($type1['id']) && (empty($_SESSION['viewed_topics']) || !in_array($type1['id'], $_SESSION['viewed_topics']))) {
+                    $view_count = intval($type1['view_count']) + 1;
+                    $db->query("UPDATE forum_topic SET view_count = ".$view_count." WHERE id = ".$type1['id']);
+                    $_SESSION['viewed_topics'][] = $type1['id'];
+                }
+
 
                 // Счетчик постов темы
                 $colmes = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id`='$id'$sql" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)"))->fetchColumn();
@@ -919,6 +928,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     echo '<br><a href="index.php?act=per&amp;id=' . $id . '">' . _t('Move Topic') . '</a></div></p>';
                 }
+
+                echo '<div>'._t('Views') . ': ' . $view_count .'</div>';
 
                 // Ссылка на список "Кто в теме"
                 if ($wholink) {
