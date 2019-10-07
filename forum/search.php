@@ -148,7 +148,14 @@ switch ($act) {
                     }
 
                     echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> ';
-                    echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br>';
+
+                    if ($search_t) {
+                        $date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
+                    } else {
+                        $date = $res['date'];
+                    }
+
+                    echo ' <span class="gray">(' . $tools->displayDate($date) . ')</span><br>';
                     $text = $search_t ? $res_p['name'] : $res['text'];
 
                     foreach ($array as $srch) {
