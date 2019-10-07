@@ -52,7 +52,7 @@ function forum_link($m)
 
         if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config['homeurl'] . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = $db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
+            $req = $db->query("SELECT `text` FROM `forum_topic` WHERE `id`= '$thid' AND (`deleted` != '1' OR deleted IS NULL)");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -135,12 +135,12 @@ if (isset($_POST['submit'])
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
 
         // Прверяем, есть ли уже такая тема в текущем разделе?
-        if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'")->fetchColumn() > 0) {
+        if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '$id' AND `name` = '$th'")->fetchColumn() > 0) {
             $error[] = _t('Topic with same name already exists in this section');
         }
 
         // Проверяем, не повторяется ли сообщение?
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC");
+        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $systemUser->id . "' ORDER BY `date` DESC");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
