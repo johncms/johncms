@@ -24,6 +24,9 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
+/** @var Johncms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Johncms\Api\UserInterface::class);
+
 // Рекламный блок сайта
 if (!empty($cms_ads[2])) {
     echo '<div class="gmenu">' . $cms_ads[2] . '</div>';
@@ -69,5 +72,15 @@ ATTENTION!!!
 The copyright could not be removed within 90 days of installation scripts
 -----------------------------------------------------------------
 */
-echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>' .
-    '</div></body></html>';
+echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>';
+
+if($systemUser->rights > 0) {
+    $end_time = microtime(true);
+    echo '<div style="margin-top: 3px;">'.round($end_time - START_TIME, 2).' сек.</div>';
+}
+
+echo '</div>
+<script src="/theme/default/js/jquery-3.4.1.min.js"></script>
+<script src="/theme/default/magnific_popup/jquery.magnific-popup.min.js"></script>
+<script src="/theme/default/js/scripts.js"></script>
+</body></html>';
