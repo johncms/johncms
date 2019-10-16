@@ -7,16 +7,20 @@ INSERT INTO `news` (`time`, `avt`, `name`, `text`, `kom`) VALUES
 --
 -- ДЕМО данные Форума
 --
-INSERT INTO `forum` (`id`, `refid`, `type`, `time`, `user_id`, `from`, `realid`, `ip`, `ip_via_proxy`, `soft`, `text`, `close`, `close_who`, `vip`, `edit`, `tedit`, `kedit`, `curators`) VALUES
-(1, 0, 'f', 0, 0, '', 1, 0, 0, 'Свободное общение на любую тему', 'Общение', 0, '', 0, '', 0, 0, ''),
-(2, 1, 'r', 0, 0, '', 2, 0, 0, '', 'О разном', 0, '', 0, '', 0, 0, ''),
-(3, 1, 'r', 0, 0, '', 1, 0, 0, '', 'Знакомства', 0, '', 0, '', 0, 0, ''),
-(4, 0, 'f', 0, 0, '', 2, 0, 0, '', 'Жизнь ресурса', 0, '', 0, '', 0, 0, ''),
-(5, 4, 'r', 0, 0, '', 1, 0, 0, '', 'Новости', 0, '', 0, '', 0, 0, ''),
-(6, 4, 'r', 0, 0, '', 2, 0, 0, '', 'Предложения и пожелания', 0, '', 0, '', 0, 0, ''),
-(7, 4, 'r', 0, 0, '', 3, 0, 0, '', 'Разное', 0, '', 0, '', 0, 0, ''),
-(8, 3, 't', 1260814062, 1, 'JohnCMS', 0, 0, 0, '', 'Привет всем!', 0, '', 0, '', 0, 0, ''),
-(9, 8, 'm', 1260814062, 1, 'JohnCMS', 0, 1270, 0, 'Opera/9.80 (Windows NT 6.1; U; ru) Presto/2.2.15 Version/10.10', 'Мы рады приветствовать Вас на нашем сайте :)\r\nДавайте знакомиться!', 0, '', 0, '', 0, 0, '');
+INSERT INTO `forum_sections` (`id`, `parent`, `name`, `description`, `sort`, `access`, `section_type`, `old_id`) VALUES
+(1, 0, 'Общение', 'Свободное общение на любую тему', 1, 0, 0, NULL),
+(2, 1, 'О разном', '', 1, 0, 1, NULL),
+(3, 1, 'Знакомства', '', 2, 0, 1, NULL),
+(4, 1, 'Жизнь ресурса', '', 3, 0, 1, NULL),
+(5, 1, 'Новости', '', 4, 0, 1, NULL),
+(6, 1, 'Предложения и пожелания', '', 5, 0, 1, NULL),
+(7, 1, 'Разное', '', 6, 0, 1, NULL);
+
+INSERT INTO `forum_topic` (`id`, `section_id`, `name`, `description`, `view_count`, `user_id`, `user_name`, `created_at`, `post_count`, `mod_post_count`, `last_post_date`, `last_post_author`, `last_post_author_name`, `last_message_id`, `mod_last_post_date`, `mod_last_post_author`, `mod_last_post_author_name`, `mod_last_message_id`, `closed`, `closed_by`, `deleted`, `deleted_by`, `curators`, `pinned`, `has_poll`, `old_id`) VALUES
+(1, 3, 'Привет всем!', NULL, 1, 1, 'admin', '2019-10-16 20:18:00', 1, 1, 1571257080, 1, 'admin', 1, 1571257080, 1, 'admin', 1, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL);
+
+INSERT INTO `forum_messages` (`id`, `topic_id`, `text`, `date`, `user_id`, `user_name`, `user_agent`, `ip`, `ip_via_proxy`, `pinned`, `editor_name`, `edit_time`, `edit_count`, `deleted`, `deleted_by`, `old_id`) VALUES
+(1, 1, 'Мы рады приветствовать Вас на нашем сайте :)\r\nДавайте знакомиться!', 1571257080, 1, 'admin', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.121 Safari/537.36 Vivaldi/2.8.1664.44', 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- ДЕМО данные Гостевой

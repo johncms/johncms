@@ -867,3 +867,19 @@ ALTER TABLE `forum_sections`
 ALTER TABLE `forum_topic`
   ADD PRIMARY KEY (`id`),
   ADD KEY `deleted` (`deleted`);
+
+--
+-- AUTO_INCREMENT для таблицы `forum_messages`
+--
+ALTER TABLE `forum_messages`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT для таблицы `forum_sections`
+--
+ALTER TABLE `forum_sections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT для таблицы `forum_topic`
+--
+ALTER TABLE `forum_topic`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;

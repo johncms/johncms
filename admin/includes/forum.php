@@ -715,12 +715,12 @@ switch ($mod) {
     default:
         // TODO: Реализовать
         // Панель управления форумом
-        $total_cat = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'f'")->fetchColumn();
-        $total_sub = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'r'")->fetchColumn();
-        $total_thm = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't'")->fetchColumn();
-        $total_thm_del = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `close` = '1'")->fetchColumn();
-        $total_msg = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm'")->fetchColumn();
-        $total_msg_del = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` = '1'")->fetchColumn();
+        $total_cat = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `section_type` != 1 OR `section_type` IS NULL")->fetchColumn();
+        $total_sub = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `section_type` = 1")->fetchColumn();
+        $total_thm = $db->query("SELECT COUNT(*) FROM `forum_topic`")->fetchColumn();
+        $total_thm_del = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = 1")->fetchColumn();
+        $total_msg = $db->query("SELECT COUNT(*) FROM `forum_messages`")->fetchColumn();
+        $total_msg_del = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = 1")->fetchColumn();
         $total_files = $db->query("SELECT COUNT(*) FROM `cms_forum_files`")->fetchColumn();
         $total_votes = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1'")->fetchColumn();
 
