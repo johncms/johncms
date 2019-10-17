@@ -623,11 +623,11 @@ switch ($mod) {
         $link = '';
 
         if (isset($_GET['tsort'])) {
-            $sort = " AND `forum`.`refid` = '" . abs(intval($_GET['tsort'])) . "'";
+            $sort = " AND `forum_messages`.`topic_id` = '" . abs(intval($_GET['tsort'])) . "'";
             $link = '&amp;tsort=' . abs(intval($_GET['tsort']));
             echo '<div class="bmenu">' . _t('Filter by topic') . ' <a href="index.php?act=forum&amp;mod=hposts">[x]</a></div>';
         } elseif (isset($_GET['usort'])) {
-            $sort = " AND `forum`.`user_id` = '" . abs(intval($_GET['usort'])) . "'";
+            $sort = " AND `forum_messages`.`user_id` = '" . abs(intval($_GET['usort'])) . "'";
             $link = '&amp;usort=' . abs(intval($_GET['usort']));
             echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="index.php?act=forum&amp;mod=hposts">[x]</a></div>';
         }
@@ -639,7 +639,7 @@ switch ($mod) {
                 exit;
             }
 
-            $req = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `close` = '1' $sort");
+            $req = $db->query("SELECT `id` FROM `forum_messages` WHERE `deleted` = '1' $sort");
 
             while ($res = $req->fetch()) {
                 $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
@@ -654,19 +654,19 @@ switch ($mod) {
             }
 
             // Удаляем посты
-            $db->exec("DELETE FROM `forum` WHERE `type` = 'm' AND `close` = '1' $sort");
+            $db->exec("DELETE FROM `forum_messages` WHERE `deleted` = '1' $sort");
 
             header('Location: index.php?act=forum&mod=hposts');
         } else {
-            $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `close` = '1' $sort")->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' $sort")->fetchColumn();
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=hposts&amp;', $start, $total, $kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum`.*, `forum`.`id` AS `fid`, `forum`.`user_id` AS `id`, `forum`.`from` AS `name`, `forum`.`soft` AS `browser`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
-            FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-            WHERE `forum`.`type` = 'm' AND `forum`.`close` = '1' $sort ORDER BY `forum`.`id` DESC LIMIT $start, $kmess");
+            $req = $db->query("SELECT `forum_messages`.*, `forum_messages`.`id` AS `fid`, `forum_messages`.`user_id` AS `id`, `forum_messages`.`user_name` AS `name`, `forum_messages`.`user_agent` AS `browser`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+            FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
+            WHERE `forum_messages`.`deleted` = '1' $sort ORDER BY `forum_messages`.`id` DESC LIMIT $start, $kmess");
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -674,12 +674,12 @@ switch ($mod) {
                 while ($res = $req->fetch()) {
                     $res['ip'] = ip2long($res['ip']);
                     $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-                    $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['fid'] . "'")->fetchColumn() / $kmess);
+                    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['fid'] . "'")->fetchColumn() / $kmess);
                     $text = mb_substr($res['text'], 0, 500);
                     $text = $tools->checkout($text, 1, 0);
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
-                    $theme = $db->query("SELECT `id`, `text` FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                    $text = '<b>' . $theme['text'] . '</b> <a href="../forum/index.php?id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
+                    $theme = $db->query("SELECT `id`, `name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+                    $text = '<b>' . $theme['name'] . '</b> <a href="../forum/index.php?type=topic&id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
@@ -713,7 +713,6 @@ switch ($mod) {
         break;
 
     default:
-        // TODO: Реализовать
         // Панель управления форумом
         $total_cat = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `section_type` != 1 OR `section_type` IS NULL")->fetchColumn();
         $total_sub = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `section_type` = 1")->fetchColumn();
