@@ -516,20 +516,19 @@ switch ($mod) {
         break;
 
     case 'htopics':
-        // TODO: Реализовать
         // Управление скрытыми темами форума
         echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden topics') . '</div>';
         $sort = '';
         $link = '';
 
         if (isset($_GET['usort'])) {
-            $sort = " AND `forum`.`user_id` = '" . abs(intval($_GET['usort'])) . "'";
+            $sort = " AND `forum_topic`.`user_id` = '" . abs(intval($_GET['usort'])) . "'";
             $link = '&amp;usort=' . abs(intval($_GET['usort']));
             echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="index.php?act=forum&amp;mod=htopics">[x]</a></div>';
         }
 
         if (isset($_GET['rsort'])) {
-            $sort = " AND `forum`.`refid` = '" . abs(intval($_GET['rsort'])) . "'";
+            $sort = " AND `forum_topic`.`section_id` = '" . abs(intval($_GET['rsort'])) . "'";
             $link = '&amp;rsort=' . abs(intval($_GET['rsort']));
             echo '<div class="bmenu">' . _t('Filter by section') . ' <a href="index.php?act=forum&amp;mod=htopics">[x]</a></div>';
         }
@@ -541,7 +540,7 @@ switch ($mod) {
                 exit;
             }
 
-            $req = $db->query("SELECT `id` FROM `forum` WHERE `type` = 't' AND `close` = '1' $sort");
+            $req = $db->query("SELECT `id` FROM `forum_topic` WHERE `deleted` = '1' $sort");
 
             while ($res = $req->fetch()) {
                 $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = " . $res['id']);
@@ -554,34 +553,36 @@ switch ($mod) {
                     $db->exec("DELETE FROM `cms_forum_files` WHERE `topic` = " . $res['id']);
                 }
                 // Удаляем посты
-                $db->exec("DELETE FROM `forum` WHERE `type` = 'm' AND `refid` = " . $res['id']);
+                $db->exec("DELETE FROM `forum_messages` WHERE `topic_id` = " . $res['id']);
             }
             // Удаляем темы
-            $db->exec("DELETE FROM `forum` WHERE `type` = 't' AND `close` = '1' $sort");
+            $db->exec("DELETE FROM `forum_topic` WHERE `deleted` = '1' $sort");
 
             header('Location: index.php?act=forum&mod=htopics');
         } else {
-            $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `close` = '1' $sort")->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' $sort")->fetchColumn();
 
             if ($total > $kmess) {
                 echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=htopics&amp;', $start, $total, $kmess) . '</div>';
             }
 
-            $req = $db->query("SELECT `forum`.*, `forum`.`id` AS `fid`, `forum`.`user_id` AS `id`, `forum`.`from` AS `name`, `forum`.`soft` AS `browser`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
-            FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-            WHERE `forum`.`type` = 't' AND `forum`.`close` = '1' $sort ORDER BY `forum`.`id` DESC LIMIT $start, $kmess");
+            $req = $db->query("SELECT `forum_topic`.*, `forum_topic`.`id` AS `fid`, `forum_topic`.`name` AS `topic_name`, 
+            `forum_topic`.`user_id` AS `id`, `forum_topic`.`user_name` AS `name`, 
+            `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+            FROM `forum_topic` LEFT JOIN `users` ON `forum_topic`.`user_id` = `users`.`id`
+            WHERE `forum_topic`.`deleted` = '1' $sort ORDER BY `forum_topic`.`id` DESC LIMIT $start, $kmess");
 
             if ($req->rowCount()) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
-                    $subcat = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                    $cat = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $subcat['refid'] . "'")->fetch();
-                    $ttime = '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-                    $text = '<a href="../forum/index.php?id=' . $res['fid'] . '"><b>' . $res['text'] . '</b></a>';
-                    $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['text'] . '</a> / <a href="../forum/index.php?id=' . $subcat['id'] . '">' . $subcat['text'] . '</a></small>';
+                    $subcat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
+                    $cat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $subcat['parent'] . "'")->fetch();
+                    $ttime = '<span class="gray">(' . $tools->displayDate($res['mod_last_post_date']) . ')</span>';
+                    $text = '<a href="../forum/index.php?type=topic&id=' . $res['fid'] . '"><b>' . $res['topic_name'] . '</b></a>';
+                    $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['name'] . '</a> / <a href="../forum/index.php?type=topics&id=' . $subcat['id'] . '">' . $subcat['name'] . '</a></small>';
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
-                    $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;rsort=' . $res['refid'] . '">' . _t('by section') . '</a> | ';
+                    $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;rsort=' . $res['section_id'] . '">' . _t('by section') . '</a> | ';
                     $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $tools->displayUser($res, [
@@ -616,7 +617,6 @@ switch ($mod) {
         break;
 
     case 'hposts':
-        // TODO: Реализовать
         // Управление скрытыми постави форума
         echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden posts') . '</div>';
         $sort = '';
