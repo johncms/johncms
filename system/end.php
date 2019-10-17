@@ -81,6 +81,6 @@ if($systemUser->rights > 0) {
 
 echo '</div>
 <script src="/theme/default/js/jquery-3.4.1.min.js"></script>
-<script src="/theme/default/magnific_popup/jquery.magnific-popup.min.js"></script>
+<script src="/theme/default/magnific_popup/jquery.magnific-popup.js"></script>
 <script src="/theme/default/js/scripts.js"></script>
 </body></html>';
