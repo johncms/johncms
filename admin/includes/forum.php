@@ -1,11 +1,11 @@
 <?php
-/*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+/**
+ * JohnCMS Content Management System (https://johncms.com)
  *
- * For copyright and license information, please see the LICENSE.md
+ * For copyright and license information, please see the LICENSE
  * Installing the system or redistributions of files must retain the above copyright notice.
  *
- * @link        http://johncms.com JohnCMS Project
+ * @link        https://johncms.com JohnCMS Project
  * @copyright   Copyright (C) JohnCMS Community
  * @license     GPL-3
  */
@@ -214,7 +214,7 @@ switch ($mod) {
             } else {
                 // Удаление пустого раздела, или категории
                 if (isset($_POST['submit'])) {
-                    $db->exec("DELETE FROM `forum` WHERE `id` = '$id'");
+                    $db->exec("DELETE FROM `forum_section` WHERE `id` = '$id'");
                     echo '<div class="rmenu"><p>'.($res['type'] == 'r' ? _t('Section deleted') : _t('Category deleted')).'</p></div>';
                 } else {
                     echo '<div class="rmenu"><p>'._t('Do you really want to delete?').'</p>'.
