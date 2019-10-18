@@ -43,21 +43,15 @@ if ($systemUser->isValid()) {
     switch ($do) {
         case 'reset':
             // Отмечаем все темы как прочитанные
-            $db->exec("INSERT INTO `cms_forum_rdm` (`topic_id`, `user_id`, `time`)
-            SELECT `forum_topic`.`id`, '" . $systemUser->id . "', '" . time() . "'
+            $ids = $db->query("SELECT `forum_topic`.`id`, `forum_topic`.`last_post_date`
             FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
-            WHERE `cms_forum_rdm`.`topic_id` IS NULL");
-
-            $ids = $db->query("SELECT `forum_topic`.`id`
-            FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
-            WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`")->fetchAll(PDO::FETCH_COLUMN);
-
-            if (!empty($ids)) {
-                $db->exec("UPDATE `cms_forum_rdm` SET
-                    `time` = '" . time() . "'
-                    WHERE `topic_id` IN (" . implode(',', $ids) . ") AND `user_id` = '" . $systemUser->id . "'
-                ");
+            WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time` OR `cms_forum_rdm`.`topic_id` IS NULL")->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($ids as $val) {
+                $values[] = '(' . $val['id'] . ', ' . $systemUser->id . ', ' . $val['last_post_date'] . ')';
             }
+
+            $db->query('INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
+            ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
 
             echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="index.php">' . _t('Forum') . '</a></p></div>';
             break;

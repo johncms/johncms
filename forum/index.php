@@ -269,17 +269,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
         // Фиксация факта прочтения Топика
         if ($systemUser->isValid() && $show_type == 'topic') {
-            $req_r = $db->query("SELECT * FROM `cms_forum_rdm` WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
-
-            if ($req_r->rowCount()) {
-                $res_r = $req_r->fetch();
-
-                if ($type1['last_post_date'] > $res_r['time']) {
-                    $db->exec("UPDATE `cms_forum_rdm` SET `time` = '" . time() . "' WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
-                }
-            } else {
-                $db->exec("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '" . $systemUser->id . "', `time` = '" . time() . "'");
-            }
+            $db->query("INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+                VALUES ('$id', '" . $systemUser->id . "', '" . time() . "')
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)");
         }
 
         // Получаем структуру форума
