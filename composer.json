@@ -1,15 +1,28 @@
 {
-  "name": "john-cms/johncms",
+  "name": "simba77/johncms",
   "description": "Mobile Content Management System",
-  "homepage": "http://johncms.com/",
-  "license": "GPL-3.0",
+  "homepage": "http://johncms.com",
+  "license": "GPL-3.0-only",
+  "keywords": [
+    "johncms",
+    "cms",
+    "php",
+    "mysql",
+    "mobile"
+  ],
   "authors": [
     {
-      "name": "JohnCMS Community",
-      "homepage": "https://johncms.com/about/"
+      "name": "JohnCMS Contributors",
+      "homepage": "https://github.com/simba77/johncms/graphs/contributors"
     }
   ],
+  "support": {
+    "forum": "https://johncms.com/forum",
+    "source": "https://github.com/simba77/johncms",
+    "issues": "https://johncms.com/forum/index.php?id=67"
+  },
   "config": {
+    "sort-packages": true,
     "vendor-dir": "system/vendor"
   },
   "require": {
