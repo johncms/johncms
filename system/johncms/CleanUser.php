@@ -1,11 +1,11 @@
 <?php
-/*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+/**
+ * JohnCMS Content Management System (https://johncms.com)
  *
- * For copyright and license information, please see the LICENSE.md
+ * For copyright and license information, please see the LICENSE
  * Installing the system or redistributions of files must retain the above copyright notice.
  *
- * @link        http://johncms.com JohnCMS Project
+ * @link        https://johncms.com JohnCMS Project
  * @copyright   Copyright (C) JohnCMS Community
  * @license     GPL-3
  */
@@ -103,9 +103,9 @@ class CleanUser
     public function cleanForum($clean_id)
     {
         // Скрываем темы на форуме
-        $this->db->exec("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 't' AND `user_id` = '" . $clean_id . "'");
+        $this->db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = 'SYSTEM' WHERE `user_id` = '" . $clean_id . "'");
         // Скрываем посты на форуме
-        $this->db->exec("UPDATE `forum` SET `close` = '1', `close_who` = 'SYSTEM' WHERE `type` = 'm' AND `user_id` = '" . $clean_id . "'");
+        $this->db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = 'SYSTEM' WHERE `user_id` = '" . $clean_id . "'");
         // Удаляем метки прочтения на Форуме
         $this->db->exec("DELETE FROM `cms_forum_rdm` WHERE `user_id` = '" . $clean_id . "'");
     }

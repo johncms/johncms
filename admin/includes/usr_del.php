@@ -1,11 +1,11 @@
 <?php
-/*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+/**
+ * JohnCMS Content Management System (https://johncms.com)
  *
- * For copyright and license information, please see the LICENSE.md
+ * For copyright and license information, please see the LICENSE
  * Installing the system or redistributions of files must retain the above copyright notice.
  *
- * @link        http://johncms.com JohnCMS Project
+ * @link        https://johncms.com JohnCMS Project
  * @copyright   Copyright (C) JohnCMS Community
  * @license     GPL-3
  */
@@ -26,7 +26,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
-    header('Location: http://johncms.com/?err');
+    header('Location: /?err');
     exit;
 }
 
@@ -70,10 +70,10 @@ if (!$error) {
     $guest_count = $db->query("SELECT COUNT(*) FROM `guest` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     // Считаем созданные темы на Форуме
-    $forumt_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't' AND `close` != '1'")->fetchColumn();
+    $forumt_count = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
 
     // Считаем посты на Форуме
-    $forump_count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'  AND `close` != '1'")->fetchColumn();
+    $forump_count = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
 
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
 
