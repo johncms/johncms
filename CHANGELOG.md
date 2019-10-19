@@ -7,10 +7,10 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 ## Unreleased - TBD
 
 #### Added
-- Nothing
+- Добавлен предпросмотр прикрепленных фотографий к постам на форуме
 
 #### Changed
-- Nothing
+- Изменена структура таблиц форума для повышения производительности
 
 #### Deprecated
 - Nothing
@@ -20,6 +20,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Fixed
 - Исправлена проблема зависания сайта при автоочистке на больших базах
+- Исправлена постраничная навигация в списке избранных смайлов
 
 #### Security
 - Nothing
