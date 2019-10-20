@@ -148,7 +148,7 @@ switch ($post_type) {
             unset($_SESSION['token']);
 
             // Проверяем, было ли последнее сообщение от того же автора?
-            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum_messages` WHERE `topic_id` = " . $id . " AND (`deleted` != 1 OR deleted IS NULL) ORDER BY `date` DESC LIMIT 1");
+            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum_messages` WHERE `topic_id` = " . $id . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")." ORDER BY `date` DESC LIMIT 1");
 
             $update = false;
 
