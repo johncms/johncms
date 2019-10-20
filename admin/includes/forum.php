@@ -571,9 +571,19 @@ switch ($mod) {
                         $start, $total, $kmess).'</div>';
             }
 
-            $req = $db->query("SELECT `forum_topic`.*, `forum_topic`.`id` AS `fid`, `forum_topic`.`name` AS `topic_name`, 
-            `forum_topic`.`user_id` AS `id`, `forum_topic`.`user_name` AS `name`, 
-            `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+            $req = $db->query("SELECT `forum_topic`.*, 
+            `forum_topic`.`id` AS `fid`, 
+            `forum_topic`.`name` AS `topic_name`, 
+            `forum_topic`.`user_id` AS `id`, 
+            `forum_topic`.`user_name` AS `name`, 
+            `users`.`rights`, 
+            `users`.`lastdate`, 
+            `users`.`sex`, 
+            `users`.`status`, 
+            `users`.`datereg`,
+            `users`.`ip`,
+            `users`.`browser`,
+            `users`.`ip_via_proxy`
             FROM `forum_topic` LEFT JOIN `users` ON `forum_topic`.`user_id` = `users`.`id`
             WHERE `forum_topic`.`deleted` = '1' $sort ORDER BY `forum_topic`.`id` DESC LIMIT $start, $kmess");
 
@@ -671,7 +681,16 @@ switch ($mod) {
                         $start, $total, $kmess).'</div>';
             }
 
-            $req = $db->query("SELECT `forum_messages`.*, `forum_messages`.`id` AS `fid`, `forum_messages`.`user_id` AS `id`, `forum_messages`.`user_name` AS `name`, `forum_messages`.`user_agent` AS `browser`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`
+            $req = $db->query("SELECT `forum_messages`.*, 
+            `forum_messages`.`id` AS `fid`, 
+            `forum_messages`.`user_id` AS `id`, 
+            `forum_messages`.`user_name` AS `name`, 
+            `forum_messages`.`user_agent` AS `browser`,
+            `users`.`rights`, 
+            `users`.`lastdate`, 
+            `users`.`sex`, 
+            `users`.`status`, 
+            `users`.`datereg`
             FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
             WHERE `forum_messages`.`deleted` = '1' $sort ORDER BY `forum_messages`.`id` DESC LIMIT $start, $kmess");
 
@@ -679,7 +698,6 @@ switch ($mod) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
-                    $res['ip'] = ip2long($res['ip']);
                     $posttime = ' <span class="gray">('.$tools->displayDate($res['time']).')</span>';
                     $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '".$res['topic_id']."' AND `id` ".($set_forum['upfp'] ? ">=" : "<=")." '".$res['fid']."'")->fetchColumn() / $kmess);
                     $text = mb_substr($res['text'], 0, 500);
