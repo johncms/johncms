@@ -460,3 +460,53 @@ table.desc td.caption{
 h4{
     margin: 6px 0 2px 0;
 }
+
+
+.vote-results {
+    max-width: 250px;
+    margin-bottom: 5px;
+}
+
+.vote-name {
+    padding: 5px 0 2px 0;
+}
+
+.progress {
+    display: flex;
+    height: 0.9rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    border: 1px solid #cccccc;
+}
+
+.progress-bar {
+    display: flex;
+    transition: width .6s ease;
+    color: #000;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5px;
+}
+
+.progress-bg-blue {
+    color: #fff;
+    background-color: #17a2b8;
+}
+
+.progress-bg-green {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.progress-bg-red {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.progress-bg-yellow {
+    color: #fff;
+    background-color: #ffc107;
+}

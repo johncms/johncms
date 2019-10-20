@@ -540,15 +540,34 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             '">' . _t('Results') . '</a></p></form></div>';
                     } else {
                         // Выводим результаты голосования
-                        echo '<small>';
+                        ?>
+                        <div class="vote-results">
+                            <?php
+                            while ($vote = $vote_result->fetch()) {
+                                $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
+                                $color = '';
+                                if($count_vote > 0 && $count_vote <= 25) {
+                                    $color = 'progress-bg-green';
+                                } elseif($count_vote > 25 && $count_vote <= 50) {
+                                    $color = 'progress-bg-blue';
+                                } elseif ($count_vote > 50 && $count_vote <= 75) {
+                                    $color = 'progress-bg-yellow';
+                                } elseif ($count_vote > 75 && $count_vote <= 100) {
+                                    $color = 'progress-bg-red';
+                                }
+                                ?>
+                                <div class="vote-name">
+                                    <?= ($tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']') ?>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar <?= $color ?>" style="width: <?=$count_vote ?>%"><?= $count_vote ?>%</div>
+                                </div>
+                                <?php
+                            }?>
+                        </div>
+                        <?php
 
-                        while ($vote = $vote_result->fetch()) {
-                            $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-                            echo $tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']<br />';
-                            echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . _t('Rating') . ': ' . $count_vote . '%" /><br />';
-                        }
-
-                        echo '</small></div><div class="bmenu">' . _t('Total votes') . ': ';
+                        echo '</div><div class="bmenu">' . _t('Total votes') . ': ';
 
                         if ($systemUser->rights > 6) {
                             echo '<a href="index.php?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
