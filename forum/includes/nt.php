@@ -134,20 +134,19 @@ if (isset($_POST['submit'])
     if (!$error) {
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
 
+        $sql = 'SELECT (
+SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
+SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg';
+        $sth = $db->prepare($sql);
+        $sth->execute([$id, $th, $systemUser->id, $msg]);
+        $row = $sth->fetch();
         // Прверяем, есть ли уже такая тема в текущем разделе?
-        if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '$id' AND `name` = '$th'")->fetchColumn() > 0) {
+        if ($row['topic']) {
             $error[] = _t('Topic with same name already exists in this section');
         }
-
         // Проверяем, не повторяется ли сообщение?
-        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $systemUser->id . "' ORDER BY `date` DESC");
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-
-            if ($msg == $res['text']) {
-                $error[] = _t('Message already exists');
-            }
+        if ($row['msg']) {
+            $error[] = _t('Message already exists');
         }
     }
 
