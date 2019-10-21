@@ -445,3 +445,22 @@ h4{
     color: #fff;
     background-color: #ffc107;
 }
+
+.form-group {
+    padding: 5px 0;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: .2rem;
+    display: inline-block;
+}
+
+.form-control {
+    display: block;
+    padding: 0.2rem;
+}
+
+.mt-3 {
+    margin-top: 0.5rem;
+}
