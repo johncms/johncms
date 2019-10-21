@@ -231,7 +231,7 @@ if ($systemUser->isValid()) {
     WHERE (`deleted` <> 1 OR deleted IS NULL)
     ORDER BY `last_post_date` DESC LIMIT 10");
 
-    if ($req) {
+    if ($req->rowCount()) {
         for ($i = 0; $res = $req->fetch(); ++$i) {
             $colmes1 = $res['post_count'];
             $cpg = ceil($colmes1 / $kmess);
