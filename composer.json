@@ -42,6 +42,9 @@
     "psr-4": {
       "Johncms\\": "system/johncms/",
       "Library\\": "library/classes"
-    }
+    },
+    "files": [
+      "system/helpers.php"
+    ]
   }
 }
