@@ -327,9 +327,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $wholink = false;
 
         if ($systemUser->isValid() && $show_type == 'topic') {
-            $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
-            $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
-            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span>';
+            $online = $db->query("SELECT (
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic') AS online_g")->fetch();
+            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
         }
 
         // Выводим верхнюю панель навигации
@@ -392,7 +393,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 if ($total) {
-                    $req = $db->query("SELECT * FROM `forum_topic` WHERE `section_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . " ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT $start, $kmess");
+                    $req = $db->query("SELECT tpc.*, (
+SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = " . $systemUser->id . ") as `np`
+FROM `forum_topic` tpc WHERE `section_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
+ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT $start, $kmess");
                     $i = 0;
 
                     while ($res = $req->fetch()) {
@@ -402,10 +406,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         }
 
-                        $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['last_post_date'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id` = " . $systemUser->id)->fetchColumn();
                         // Значки
                         $icons = [
-                            ($np ? (!$res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
+                            ($res['np'] ? (!$res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
                             ($res['pinned'] ? $tools->image('pt.gif') : ''),
                             ($res['has_poll'] ? $tools->image('rate.gif') : ''),
                             ($res['closed'] ? $tools->image('tz.gif') : ''),
@@ -523,12 +526,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Блок голосований
                 if ($type1['has_poll']) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
-                    $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $systemUser->id . "' AND `topic`='$id'")->fetchColumn();
-                    $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id' LIMIT 1")->fetch();
+                    $topic_vote = $db->query("SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
+SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $systemUser->id . "' AND `topic`='" . $id . "') as vote_user
+FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1")->fetch();
                     echo '<div  class="gmenu"><b>' . $tools->checkout($topic_vote['name']) . '</b><br />';
                     $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
 
-                    if (!$type1['closed'] && !isset($_GET['vote_result']) && $systemUser->isValid() && $vote_user == 0) {
+                    if (!$type1['closed'] && !isset($_GET['vote_result']) && $systemUser->isValid() && $topic_vote['vote_user'] == 0) {
                         // Выводим форму с опросами
                         echo '<form action="index.php?act=vote&amp;id=' . $id . '" method="post">';
 
@@ -577,7 +581,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                         echo '</div>';
 
-                        if ($systemUser->isValid() && $vote_user == 0) {
+                        if ($systemUser->isValid() && $topic_vote['vote_user'] == 0) {
                             echo '<div class="bmenu"><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . _t('Vote') . '</a></div>';
                         }
                     }
@@ -648,7 +652,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Основной запрос в базу, получаем список постов темы    //
                 ////////////////////////////////////////////////////////////
                 $req = $db->query("
-                  SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+                  SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`, (
+                  SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = forum_messages.id) as file
                   FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                   WHERE `forum_messages`.`topic_id` = '$id'"
                     . ($systemUser->rights >= 7 ? "" : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "$sql
@@ -774,9 +779,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Если есть прикрепленные файлы, выводим их
-                    $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
+                    if ($res['file']) {
+                        $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 
-                    if ($freq->rowCount()) {
                         echo '<div class="post-files">';
                         while ($fres = $freq->fetch()) {
                             $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
@@ -971,13 +976,14 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         echo '<p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
             '<div class="topmenu"><a href="search.php">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
-        $req = $db->query("SELECT `id`, `name`, `description` FROM `forum_sections` WHERE parent IS NULL OR parent = 0 ORDER BY `sort`");
+        $req = $db->query("SELECT sct.`id`, sct.`name`, sct.`description`, (
+SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
+FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`");
         $i = 0;
 
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $count = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent`='" . $res['id'] . "'")->fetchColumn();
-            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['name'] . '</a> [' . $count . ']';
+            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['name'] . '</a> [' . $res['cnt'] . ']';
 
             if (!empty($res['description'])) {
                 echo '<div class="sub"><span class="gray">' . $res['description'] . '</span></div>';
@@ -986,9 +992,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
             echo '</div>';
             ++$i;
         }
-        $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
-        $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
-        echo '<div class="phdr">' . ($systemUser->isValid() ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online_u . '&#160;/&#160;' . $online_g . ')</div>';
+        $online = $db->query("SELECT (
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_g")->fetch();
+        echo '<div class="phdr">' . ($systemUser->isValid() ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</div>';
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);
     }
