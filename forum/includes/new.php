@@ -84,15 +84,21 @@ if ($systemUser->isValid()) {
 
             if ($count) {
                 if ($systemUser->rights == 9) {
-                    $req = $db->query("SELECT * FROM `forum_topic` WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . "," . $kmess);
+                    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+                    FROM `forum_topic` tpc
+                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
+                    JOIN forum_sections frm ON frm.id = rzd.parent
+                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . "," . $kmess);
                 } else {
-                    $req = $db->query("SELECT * FROM `forum_topic` WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` != '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . "," . $kmess);
+                    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
+                    FROM `forum_topic` tpc
+                    JOIN forum_sections rzd ON rzd.id = tpc.section_id
+                    JOIN forum_sections frm ON frm.id = rzd.parent
+                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . "," . $kmess);
                 }
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    $razd = $db->query("SELECT `id`, `parent`, `name` FROM `forum_sections` WHERE `id`='" . $res['section_id'] . "'")->fetch();
-                    $frm = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`='" . $razd['parent'] . "'")->fetch();
                     $colmes1 = $systemUser->rights >= 7  ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($colmes1 / $kmess);
 
@@ -119,7 +125,7 @@ if ($systemUser->isValid()) {
                         echo '<a href="index.php?type=topic&id=' . $res['id'] . (!$set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
                     }
 
-                    echo '<br /><div class="sub"><a href="index.php?type=topics&id=' . $razd['id'] . '">' . $frm['name'] . '&#160;/&#160;' . $razd['name'] . '</a><br />';
+                    echo '<br /><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
 
                     echo $res['user_name'];
 
@@ -154,13 +160,13 @@ if ($systemUser->isValid()) {
             }
 
             if ($total > 0) {
-                $req = $db->query("SELECT * FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
-                WHERE " . ($systemUser->rights >= 7 ? "" : "(`forum_topic`.`deleted` != '1' OR `forum_topic`.`deleted` IS NULL) AND ") . "
-                (`cms_forum_rdm`.`topic_id` Is Null
-                OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
-                ORDER BY `forum_topic`.`last_post_date` DESC
-                LIMIT $start, $kmess");
+                $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
+                FROM `forum_topic` tpc
+                LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $systemUser->id . "'
+                JOIN forum_sections rzd ON rzd.id = tpc.section_id
+                JOIN forum_sections frm ON frm.id = rzd.parent
+                WHERE " . ($systemUser->rights >= 7 ? "" : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
+                ORDER BY `tpc`.`last_post_date` DESC LIMIT $start, $kmess");
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     if ($res['deleted']) {
@@ -168,9 +174,6 @@ if ($systemUser->isValid()) {
                     } else {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     }
-
-                    $razd = $db->query("SELECT `id`, `parent`, `name` FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "' LIMIT 1")->fetch();
-                    $frm = $db->query("SELECT `id`, `name` FROM `forum_sections` WHERE `id` = '" . $razd['parent'] . "' LIMIT 1")->fetch();
 
                     $post_count = $systemUser->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($post_count / $kmess);
@@ -195,7 +198,7 @@ if ($systemUser->isValid()) {
 
                     echo '<div class="sub">' . $res['user_name'] . ($post_count > 1 ? '&#160;/&#160;' . $last_author : '') .
                         ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span><br />' .
-                        '<a href="index.php?id=' . $frm['id'] . '">' . $frm['name'] . '</a>&#160;/&#160;<a href="index.php?type=topics&id=' . $razd['id'] . '">' . $razd['name'] . '</a>' .
+                        '<a href="index.php?id=' . $res['frm_id'] . '">' . $res['frm_name'] . '</a>&#160;/&#160;<a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['rzd_name'] . '</a>' .
                         '</div></div>';
                 }
             } else {
@@ -221,12 +224,15 @@ if ($systemUser->isValid()) {
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
-    $req = $db->query("SELECT * FROM `forum_topic` WHERE (`deleted` != '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT 10");
+    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name 
+    FROM `forum_topic` tpc
+    JOIN forum_sections rzd ON rzd.id = tpc.section_id
+    JOIN forum_sections frm ON frm.id = rzd.parent
+    WHERE (`deleted` <> 1 OR deleted IS NULL)
+    ORDER BY `last_post_date` DESC LIMIT 10");
 
-    if ($req->rowCount()) {
+    if ($req) {
         for ($i = 0; $res = $req->fetch(); ++$i) {
-            $razd = $db->query("SELECT `id`, `parent`, `name` FROM `forum_sections` WHERE id='" . $res['section_id'] . "' LIMIT 1")->fetch();
-            $frm = $db->query("SELECT `id`, `parent`, `name` FROM `forum_sections` WHERE id='" . $razd['parent'] . "' LIMIT 1")->fetch();
             $colmes1 = $res['post_count'];
             $cpg = ceil($colmes1 / $kmess);
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -243,7 +249,7 @@ if ($systemUser->isValid()) {
                 echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';
             }
 
-            echo '<br><div class="sub"><a href="index.php?type=topics&id=' . $razd['id'] . '">' . $frm['name'] . '&#160;/&#160;' . $razd['name'] . '</a><br />';
+            echo '<br><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
             echo $res['user_name'];
 
             if (!empty($res['last_post_author_name'])) {
