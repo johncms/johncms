@@ -27,13 +27,14 @@
   },
   "require": {
     "php": "^7.1",
-    "ext-pdo": "*",
     "ext-mbstring": "*",
-    "zendframework/zend-servicemanager": "^3.4",
-    "zendframework/zend-i18n": "^2.9",
-    "verot/class.upload.php": "dev-master",
+    "ext-pdo": "*",
+    "erusev/parsedown": "^1.7",
     "geshi/geshi": "dev-master",
-    "erusev/parsedown": "^1.7"
+    "hybridauth/hybridauth": "^3.0",
+    "verot/class.upload.php": "dev-master",
+    "zendframework/zend-i18n": "^2.9",
+    "zendframework/zend-servicemanager": "^3.4"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
