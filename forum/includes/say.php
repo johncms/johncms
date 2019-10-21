@@ -148,15 +148,28 @@ switch ($post_type) {
             unset($_SESSION['token']);
 
             // Проверяем, было ли последнее сообщение от того же автора?
-            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum_messages` WHERE `topic_id` = " . $id . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")." ORDER BY `date` DESC LIMIT 1");
+            $req = $db->query("SELECT *, CHAR_LENGTH(`text`) AS `strlen` FROM `forum_messages` 
+            WHERE `topic_id` = " . $id . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)")." 
+            ORDER BY `date` DESC LIMIT 1");
 
             $update = false;
-
             if ($req->rowCount()) {
                 $update = true;
-                $res = $req->fetch();
 
-                if (!isset($_POST['addfiles']) && $res['date'] + 3600 < strtotime('+ 1 hour') && $res['strlen'] + strlen($msg) < 65536 && $res['user_id'] == $systemUser->id) {
+                $check_files = false;
+                // Если пост текущего пользователя, то проверяем наличие у него файлов
+                if($res['user_id'] == $systemUser->id) {
+                    $check_files = $db->query("SELECT id FROM cms_forum_files WHERE post = ".$res['id'])->rowCount();
+                }
+
+                $res = $req->fetch();
+                if (
+                    !isset($_POST['addfiles']) &&
+                    $res['date'] + 3600 < strtotime('+ 1 hour') &&
+                    $res['strlen'] + strlen($msg) < 65536 &&
+                    $res['user_id'] == $systemUser->id &&
+                    empty($check_files)
+                ) {
                     $newpost = $res['text'];
 
                     if (strpos($newpost, '[timestamp]') === false) {
