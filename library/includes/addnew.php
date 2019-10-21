@@ -10,6 +10,9 @@
  * @license     GPL-3
  */
 
+use Library\Hashtags;
+use Verot\Upload\Upload;
+
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -26,8 +29,6 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-use Library\Hashtags;
 
 if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд
@@ -117,7 +118,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             if ($db->query($sql)) {
                 $cid = $db->lastInsertId();
 
-                $handle = new upload($_FILES['image']);
+                $handle = new Upload($_FILES['image']);
                 if ($handle->uploaded) {
                     // Обрабатываем фото
                     $handle->file_new_name_body = $cid;
@@ -163,8 +164,9 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                 }
 
                 if (!empty($_POST['tags'])) {
-                    $tags = array_map('trim', explode(',', $_POST['tags']));
-                    if (sizeof($tags > 0)) {
+                    $tags = (array) array_map('trim', explode(',', $_POST['tags']));
+
+                    if (count($tags)) {
                         $obj = new Hashtags($cid);
                         $obj->addTags($tags);
                         $obj->delCache();
