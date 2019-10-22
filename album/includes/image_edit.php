@@ -46,7 +46,7 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
                 $description = mb_substr($description, 0, 500);
                 if ($rotate == 1 || $rotate == 2 || ($brightness > 0 && $brightness < 5) || ($contrast > 0 && $contrast < 5)) {
                     $path = '../files/users/album/' . $user['id'] . '/';
-                    $handle = new upload($path . $res['img_name']);
+                    $handle = new \Verot\Upload\Upload($path . $res['img_name']);
                     // Обрабатываем основное изображение
                     $handle->file_new_name_body = 'img_' . time();
 

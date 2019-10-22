@@ -117,7 +117,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 ]);
                 $file_id = $db->lastInsertId();
 
-                $handle = new upload($_FILES['screen']);
+                $handle = new \Verot\Upload\Upload($_FILES['screen']);
 
                 if ($handle->uploaded) {
                     if (mkdir(DOWNLOADS_SCR . $file_id, 0777) == true) {

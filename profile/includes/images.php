@@ -41,7 +41,7 @@ switch ($mod) {
         // Выгружаем аватар
         echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Avatar') . '</div>';
         if (isset($_POST['submit'])) {
-            $handle = new upload($_FILES['imagefile']);
+            $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];
@@ -82,7 +82,7 @@ switch ($mod) {
     case 'up_photo':
         echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Upload Photo') . '</div>';
         if (isset($_POST['submit'])) {
-            $handle = new upload($_FILES['imagefile']);
+            $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $user['id'];

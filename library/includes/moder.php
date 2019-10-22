@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
             $image = isset($_FILES['image']['tmp_name']) ? $_FILES['image'] : '';
 
-            $handle = new upload($image);
+            $handle = new \Verot\Upload\Upload($image);
             if ($handle->uploaded) {
                 // Обрабатываем фото
                 $handle->file_new_name_body = $id;
