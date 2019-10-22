@@ -113,56 +113,5 @@ if ($systemUser->rights >= 1) {
 }
 echo '</p></div>';
 
-
-// TODO: Перевести
-
-$socials = $container->get('config')['social'];
-$active_socials = [];
-
-foreach ($socials as $key=>$social) {
-    if(!empty($social['active'])) {
-        $active_socials[$key] = $db->quote($key);
-    }
-}
-
-$social_res = $db->query("SELECT * FROM social_users WHERE user_id = ".$systemUser->id." AND service IN(".implode(',', $active_socials).");");
-?>
-    <div class="menu">
-        <h3><?= _t('Привязка к соц. сетям') ?></h3>
-        <div>
-            <h4><?= _t('Активные привязки:') ?></h4>
-            <?php if ($social_res->rowCount()) { ?>
-                <ul>
-                    <?php while ($social_user = $social_res->fetch()) {
-                        unset($active_socials[$social_user['service']]);
-                        ?>
-                        <li>
-                            <span><?= htmlspecialchars($social_user['name']) ?></span>
-                        </li>
-                    <? } ?>
-                </ul>
-            <?php } else { ?>
-                <div>
-                    Привязок не установлено
-                </div>
-            <?php } ?>
-        </div>
-        <div>
-            <h4><?= _t('Привязать профиль:') ?></h4>
-            <ul>
-                <? foreach ($active_socials as $key=>$social) {
-                    ?>
-                    <li>
-                        <a href="/profile/social_auth.php?service=<?= $key ?>"><?= $key ?></a>
-                    </li>
-                    <?php
-                } ?>
-            </ul>
-        </div>
-    </div>
-
-
-
-<?php
 // Выход с сайта
 echo '<div class="rmenu"><p><a href="' . $config['homeurl'] . '/exit.php">' . $tools->image('del.png') . _t('Exit') . '</a></p></div>';

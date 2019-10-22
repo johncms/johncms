@@ -118,7 +118,6 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             ($systemUser->rights == 9 ? '<li><a href="index.php?act=settings"><b>' . _t('System Settings') . '</b></a></li>' : '') .
             '<li><a href="index.php?act=smilies">' . _t('Update Smilies') . '</a></li>' .
             ($systemUser->rights == 9 ? '<li><a href="index.php?act=languages">' . _t('Language Settings') . '</a></li>' : '') .
-            ($systemUser->rights == 9 ? '<li><a href="index.php?act=social_setting">' . _t('Social website integration') . '</a></li>' : '') .
             '<li><a href="index.php?act=access">' . _t('Permissions') . '</a></li>' .
             '</ul>' .
             '</p></div>';
