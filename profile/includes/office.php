@@ -137,7 +137,7 @@ $social_res = $db->query("SELECT * FROM social_users WHERE user_id = ".$systemUs
                         unset($active_socials[$social_user['service']]);
                         ?>
                         <li>
-                            <span><?= htmlspecialchars($social_user['name']) ?></span>
+                            <span>[<?= $social_user['service'] ?>] <?= htmlspecialchars($social_user['name']) ?> <?= htmlspecialchars($social_user['last_name']) ?></span>
                         </li>
                     <? } ?>
                 </ul>
@@ -147,18 +147,22 @@ $social_res = $db->query("SELECT * FROM social_users WHERE user_id = ".$systemUs
                 </div>
             <?php } ?>
         </div>
-        <div>
-            <h4><?= _t('Привязать профиль:') ?></h4>
-            <ul>
-                <? foreach ($active_socials as $key=>$social) {
-                    ?>
-                    <li>
-                        <a href="/profile/social_auth.php?service=<?= $key ?>"><?= $key ?></a>
-                    </li>
-                    <?php
-                } ?>
-            </ul>
-        </div>
+        <?php if(!empty($active_socials)) {
+            ?>
+            <div>
+                <h4><?= _t('Привязать профиль:') ?></h4>
+                <ul>
+                    <? foreach ($active_socials as $key=>$social) {
+                        ?>
+                        <li>
+                            <a href="/profile/social_auth.php?service=<?= $key ?>"><?= $key ?></a>
+                        </li>
+                        <?php
+                    } ?>
+                </ul>
+            </div>
+            <?php
+        } ?>
     </div>
 
 

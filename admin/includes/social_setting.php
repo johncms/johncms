@@ -66,6 +66,7 @@ echo '<form action="index.php?act=social_setting" method="post"><div class="menu
     <!-- VK -->
     <h3><?= _t('Settings for VK') ?></h3>
     <div class="form-check">
+        <input type="hidden" name="social[vk][active]" value="0">
         <input class="form-check-input" type="checkbox" name="social[vk][active]" id="vk_active"
             <?= !empty($config['vk']['active']) ? 'checked' : '' ?>>
         <label class="form-check-label" for="vk_active">
@@ -90,8 +91,9 @@ echo '<form action="index.php?act=social_setting" method="post"><div class="menu
     <!-- Twitter -->
     <h3 class="mt-3"><?= _t('Settings for Twitter') ?></h3>
     <div class="form-check">
+        <input type="hidden" name="social[twitter][active]" value="0">
         <input class="form-check-input" type="checkbox" name="social[twitter][active]" id="twitter_active"
-            <?= !empty($config['twitter][']['active']) ? 'checked' : '' ?>>
+            <?= !empty($config['twitter']['active']) ? 'checked' : '' ?>>
         <label class="form-check-label" for="twitter_active">
             <?= _t('Active') ?>
         </label>
@@ -114,6 +116,7 @@ echo '<form action="index.php?act=social_setting" method="post"><div class="menu
     <!-- GitHub -->
     <h3 class="mt-3"><?= _t('Settings for GitHub') ?></h3>
     <div class="form-check">
+        <input type="hidden" name="social[github][active]" value="0">
         <input class="form-check-input" type="checkbox" name="social[github][active]" id="github_active"
             <?= !empty($config['github']['active']) ? 'checked' : '' ?>>
         <label class="form-check-label" for="github_active">
@@ -138,8 +141,9 @@ echo '<form action="index.php?act=social_setting" method="post"><div class="menu
     <!-- Google -->
     <h3 class="mt-3"><?= _t('Settings for Google') ?></h3>
     <div class="form-check">
+        <input type="hidden" name="social[google][active]" value="0">
         <input class="form-check-input" type="checkbox" name="social[google][active]" id="google_active"
-            <?= !empty($config['github']['active']) ? 'checked' : '' ?>>
+            <?= !empty($config['google']['active']) ? 'checked' : '' ?>>
         <label class="form-check-label" for="google_active">
             <?= _t('Active') ?>
         </label>
