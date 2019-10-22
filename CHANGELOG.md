@@ -4,13 +4,15 @@ All notable changes to this project will be documented in this file.
 Detailed change can see in the [repository log](https://github.com/simba77/johncms/commits).
 
 
-## Unreleased - TBD
+## 8.0.0 - 2019-10-23
 
 #### Added
 - Добавлен предпросмотр прикрепленных фотографий к постам на форуме
+- Добавлен счетчик просмотров темы на форуме
 
 #### Changed
 - Изменена структура таблиц форума для повышения производительности
+- Изменено отображение результатов опросов на форуме
 
 #### Deprecated
 - Nothing
@@ -21,6 +23,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 #### Fixed
 - Исправлена проблема зависания сайта при автоочистке на больших базах
 - Исправлена постраничная навигация в списке избранных смайлов
+- Исправлены ошибки при добавлении статьи в библиотеке
 
 #### Security
 - Nothing

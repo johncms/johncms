@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: mobiCMS\n"
+"POT-Creation-Date: 2019-10-22 23:17+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: https://crowdin.com/project/johncms <translate@mobicms.net>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: update.php:45 update.php:47
+msgid "Site update"
+msgstr "Обновление сайта"
+
+#: update.php:56
+msgid "Create new tables"
+msgstr "Создание новых таблиц"
+
+#: update.php:153 update.php:203 update.php:271 update.php:357 update.php:409
+#: update.php:472 update.php:527 update.php:582 update.php:666
+msgid "Completed"
+msgstr "Завершено"
+
+#: update.php:158 update.php:208 update.php:276 update.php:362 update.php:414
+#: update.php:477 update.php:532 update.php:587 update.php:671
+msgid "Next step"
+msgstr "Следующий шаг"
+
+#: update.php:170
+msgid "Convert the forum structure"
+msgstr "Конвертация структуры форума"
+
+#: update.php:220
+msgid "Convert forum topics"
+msgstr "Конвертация тем форума"
+
+#: update.php:255 update.php:341
+msgid "Converted:"
+msgstr "Конвертировано:"
+
+#: update.php:288
+msgid "Convert forum messages"
+msgstr "Конвертация сообщений форума"
+
+#: update.php:376
+msgid "Recount messages in topics"
+msgstr "Пересчет сообщений в темах"
+
+#: update.php:393 update.php:456 update.php:511 update.php:566 update.php:650
+msgid "Completed:"
+msgstr "Завершено:"
+
+#: update.php:427
+msgid "Update forum files table"
+msgstr "Обновление таблицы файлов форума"
+
+#: update.php:489
+msgid "Update forum votes table"
+msgstr "Обновление таблицы опросов форума"
+
+#: update.php:545
+msgid "Update forum vote users table"
+msgstr "Обновление таблицы пользователей опросов форума"
+
+#: update.php:600
+msgid "Setting redirects"
+msgstr "Настройка редиректов"
+
+#: update.php:684
+msgid "Delete old tables"
+msgstr "Удаление старых таблиц"
+
+#: update.php:691
+msgid "Update is finished"
+msgstr "Обновление завершено"
+
+#: update.php:695
+msgid "Home page"
+msgstr "Главная страница"
+
+#: update.php:708
+msgid "This wizard will convert tables to a new structure"
+msgstr "Этот мастер сконвертирует таблицы в новую структуру"
+
+#: update.php:709
+msgid "Be sure to back up before starting."
+msgstr "ОБЯЗАТЕЛЬНО выполните резервное копирование перед началом обновления."
+
+#: update.php:713
+msgid "Start"
+msgstr "Начать"
