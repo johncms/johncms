@@ -52,7 +52,7 @@ function forum_link($m)
 
         if ('http://' . $p['host'] . (isset($p['path']) ? $p['path'] : '') . '?id=' == $config['homeurl'] . '/forum/index.php?id=') {
             $thid = abs(intval(preg_replace('/(.*?)id=/si', '', $m[3])));
-            $req = $db->query("SELECT `text` FROM `forum` WHERE `id`= '$thid' AND `type` = 't' AND `close` != '1'");
+            $req = $db->query("SELECT `text` FROM `forum_topic` WHERE `id`= '$thid' AND (`deleted` != '1' OR deleted IS NULL)");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -90,7 +90,7 @@ if ($flood) {
     exit;
 }
 
-$req_r = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'r' LIMIT 1");
+$req_r = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id' AND `section_type` = 1 LIMIT 1");
 
 if (!$req_r->rowCount()) {
     require('../system/head.php');
@@ -134,20 +134,19 @@ if (isset($_POST['submit'])
     if (!$error) {
         $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
 
+        $sql = 'SELECT (
+SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
+SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg';
+        $sth = $db->prepare($sql);
+        $sth->execute([$id, $th, $systemUser->id, $msg]);
+        $row = $sth->fetch();
         // Прверяем, есть ли уже такая тема в текущем разделе?
-        if ($db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '$id' AND `text` = '$th'")->fetchColumn() > 0) {
+        if ($row['topic']) {
             $error[] = _t('Topic with same name already exists in this section');
         }
-
         // Проверяем, не повторяется ли сообщение?
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $systemUser->id . "' AND `type` = 'm' ORDER BY `time` DESC");
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-
-            if ($msg == $res['text']) {
-                $error[] = _t('Message already exists');
-            }
+        if ($row['msg']) {
+            $error[] = _t('Message already exists');
         }
     }
 
@@ -155,26 +154,29 @@ if (isset($_POST['submit'])
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
-        $curator = $res_r['edit'] == 1 ? serialize([$systemUser->id => $systemUser->name]) : '';
+        $curator = $res_r['access'] == 1 ? serialize([$systemUser->id => $systemUser->name]) : '';
+
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');
 
         // Добавляем тему
         $db->prepare('
-          INSERT INTO `forum` SET
-          `refid` = ?,
-          `type` = \'t\',
-           `time` = ?,
+          INSERT INTO `forum_topic` SET
+          `section_id` = ?,
+           `created_at` = ?,
            `user_id` = ?,
-           `from` = ?,
-           `text` = ?,
-           `soft` = \'\',
-           `edit` = \'\',
+           `user_name` = ?,
+           `name` = ?,
+           `last_post_date` = ?,
+           `post_count` = 0,
            `curators` = ?
         ')->execute([
             $id,
-            time(),
+            $date,
             $systemUser->id,
             $systemUser->name,
             $th,
+            time(),
             $curator,
         ]);
 
@@ -184,18 +186,15 @@ if (isset($_POST['submit'])
 
         // Добавляем текст поста
         $db->prepare('
-          INSERT INTO `forum` SET
-          `refid` = ?,
-          `type` = \'m\',
-          `time` = ?,
+          INSERT INTO `forum_messages` SET
+          `topic_id` = ?,
+          `date` = ?,
           `user_id` = ?,
-          `from` = ?,
+          `user_name` = ?,
           `ip` = ?,
           `ip_via_proxy` = ?,
-          `soft` = ?,
-          `text` = ?,
-          `edit` = \'\',
-          `curators` = \'\'
+          `user_agent` = ?,
+          `text` = ?
         ')->execute([
             $rid,
             time(),
@@ -208,6 +207,9 @@ if (isset($_POST['submit'])
         ]);
 
         $postid = $db->lastInsertId();
+
+        // Пересчитаем топик
+        $tools->recountForumTopic($rid);
 
         // Записываем счетчик постов юзера
         $fpst = $systemUser->postforum + 1;
@@ -227,7 +229,7 @@ if (isset($_POST['submit'])
         if ($_POST['addfiles'] == 1) {
             header("Location: index.php?id=$postid&act=addfile");
         } else {
-            header("Location: index.php?id=$rid");
+            header("Location: index.php?type=topic&id=$rid");
         }
     } else {
         // Выводим сообщение об ошибке
@@ -237,7 +239,7 @@ if (isset($_POST['submit'])
         exit;
     }
 } else {
-    $res_c = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res_r['refid'] . "'")->fetch();
+    $res_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res_r['parent'] . "'")->fetch();
     require('../system/head.php');
     $msg_pre = $tools->checkout($msg, 1, 1);
     $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
@@ -252,7 +254,7 @@ if (isset($_POST['submit'])
     echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .
         '<p><h3>' . _t('Section') . '</h3>' .
-        '<a href="index.php?id=' . $res_c['id'] . '">' . $res_c['text'] . '</a> | <a href="index.php?id=' . $res_r['id'] . '">' . $res_r['text'] . '</a></p>' .
+        '<a href="index.php?'. ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') .'id=' . $res_c['id'] . '">' . $res_c['name'] . '</a> | <a href="index.php?'. ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') .'id=' . $res_r['id'] . '">' . $res_r['name'] . '</a></p>' .
         '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
@@ -267,5 +269,5 @@ if (isset($_POST['submit'])
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
         '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-        '<p><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></p>';
+        '<p><a href="index.php?'. ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') .'id=' . $id . '">' . _t('Back') . '</a></p>';
 }

@@ -91,11 +91,13 @@ class NewsWidget
 
                     // Ссылка на каменты
                     if (!empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
-                        $mes = $this->db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'")->fetchColumn();
-                        $komm = $mes - 1;
-
+                        $res_mes = $this->db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
+                        $komm = 0;
+                        if($mes = $res_mes->fetch()) {
+                            $komm = $mes['post_count'] - 1;
+                        }
                         if ($komm >= 0) {
-                            $news .= '<br /><a href="../forum/?id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
+                            $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
                         }
                     }
                     $news .= '</div>';

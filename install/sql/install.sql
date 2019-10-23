@@ -2,7 +2,8 @@
 -- Структура таблицы `cms_ads`
 --
 DROP TABLE IF EXISTS `cms_ads`;
-CREATE TABLE `cms_ads` (
+CREATE TABLE `cms_ads`
+(
   `id`         INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `type`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   `view`       TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -29,7 +30,8 @@ CREATE TABLE `cms_ads` (
 -- Структура таблицы `cms_album_cat`
 --
 DROP TABLE IF EXISTS `cms_album_cat`;
-CREATE TABLE `cms_album_cat` (
+CREATE TABLE `cms_album_cat`
+(
   `id`          INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `user_id`     INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `sort`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
@@ -48,7 +50,8 @@ CREATE TABLE `cms_album_cat` (
 -- Структура таблицы `cms_album_comments`
 --
 DROP TABLE IF EXISTS `cms_album_comments`;
-CREATE TABLE `cms_album_comments` (
+CREATE TABLE `cms_album_comments`
+(
   `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sub_id`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `time`       INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -67,7 +70,8 @@ CREATE TABLE `cms_album_comments` (
 -- Структура таблицы `cms_album_downloads`
 --
 DROP TABLE IF EXISTS `cms_album_downloads`;
-CREATE TABLE `cms_album_downloads` (
+CREATE TABLE `cms_album_downloads`
+(
   `user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `file_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `time`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -80,7 +84,8 @@ CREATE TABLE `cms_album_downloads` (
 -- Структура таблицы `cms_album_files`
 --
 DROP TABLE IF EXISTS `cms_album_files`;
-CREATE TABLE `cms_album_files` (
+CREATE TABLE `cms_album_files`
+(
   `id`              INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `user_id`         INT(10) UNSIGNED    NOT NULL,
   `album_id`        INT(10) UNSIGNED    NOT NULL,
@@ -108,7 +113,8 @@ CREATE TABLE `cms_album_files` (
 -- Структура таблицы `cms_album_views`
 --
 DROP TABLE IF EXISTS `cms_album_views`;
-CREATE TABLE `cms_album_views` (
+CREATE TABLE `cms_album_views`
+(
   `user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `file_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `time`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -121,7 +127,8 @@ CREATE TABLE `cms_album_views` (
 -- Структура таблицы `cms_album_votes`
 --
 DROP TABLE IF EXISTS `cms_album_votes`;
-CREATE TABLE `cms_album_votes` (
+CREATE TABLE `cms_album_votes`
+(
   `id`      INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `file_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -137,7 +144,8 @@ CREATE TABLE `cms_album_votes` (
 -- Структура таблицы `cms_ban_ip`
 --
 DROP TABLE IF EXISTS `cms_ban_ip`;
-CREATE TABLE `cms_ban_ip` (
+CREATE TABLE `cms_ban_ip`
+(
   `id`       INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip1`      BIGINT(11)       NOT NULL DEFAULT '0',
   `ip2`      BIGINT(11)       NOT NULL DEFAULT '0',
@@ -157,7 +165,8 @@ CREATE TABLE `cms_ban_ip` (
 -- Структура таблицы `cms_ban_users`
 --
 DROP TABLE IF EXISTS `cms_ban_users`;
-CREATE TABLE `cms_ban_users` (
+CREATE TABLE `cms_ban_users`
+(
   `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id`    INT(11)          NOT NULL DEFAULT '0',
   `ban_time`   INT(11)          NOT NULL DEFAULT '0',
@@ -178,7 +187,8 @@ CREATE TABLE `cms_ban_users` (
 -- Структура таблицы `cms_contact`
 --
 DROP TABLE IF EXISTS `cms_contact`;
-CREATE TABLE IF NOT EXISTS `cms_contact` (
+CREATE TABLE IF NOT EXISTS `cms_contact`
+(
   `id`      INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `user_id` INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `from_id` INT(10) UNSIGNED    NOT NULL DEFAULT '0',
@@ -199,7 +209,8 @@ CREATE TABLE IF NOT EXISTS `cms_contact` (
 -- Структура таблицы `cms_counters`
 --
 DROP TABLE IF EXISTS `cms_counters`;
-CREATE TABLE `cms_counters` (
+CREATE TABLE `cms_counters`
+(
   `id`     INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sort`   INT(10)          NOT NULL DEFAULT '1',
   `name`   VARCHAR(30)      NOT NULL DEFAULT '',
@@ -216,7 +227,8 @@ CREATE TABLE `cms_counters` (
 -- Структура таблицы `cms_forum_files`
 --
 DROP TABLE IF EXISTS `cms_forum_files`;
-CREATE TABLE `cms_forum_files` (
+CREATE TABLE `cms_forum_files`
+(
   `id`       INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `cat`      INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `subcat`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
@@ -240,7 +252,8 @@ CREATE TABLE `cms_forum_files` (
 -- Структура таблицы `cms_forum_rdm`
 --
 DROP TABLE IF EXISTS `cms_forum_rdm`;
-CREATE TABLE `cms_forum_rdm` (
+CREATE TABLE `cms_forum_rdm`
+(
   `topic_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `user_id`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `time`     INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -254,7 +267,8 @@ CREATE TABLE `cms_forum_rdm` (
 -- Структура таблицы `cms_forum_vote`
 --
 DROP TABLE IF EXISTS `cms_forum_vote`;
-CREATE TABLE `cms_forum_vote` (
+CREATE TABLE `cms_forum_vote`
+(
   `id`    INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `type`  INT(2)           NOT NULL DEFAULT '0',
   `time`  INT(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -272,7 +286,8 @@ CREATE TABLE `cms_forum_vote` (
 -- Структура таблицы `cms_forum_vote_users`
 --
 DROP TABLE IF EXISTS `cms_forum_vote_users`;
-CREATE TABLE `cms_forum_vote_users` (
+CREATE TABLE `cms_forum_vote_users`
+(
   `id`    INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user`  INT(11)          NOT NULL DEFAULT '0',
   `topic` INT(11)          NOT NULL,
@@ -287,7 +302,8 @@ CREATE TABLE `cms_forum_vote_users` (
 -- Структура таблицы `cms_mail`
 --
 DROP TABLE IF EXISTS `cms_mail`;
-CREATE TABLE IF NOT EXISTS `cms_mail` (
+CREATE TABLE IF NOT EXISTS `cms_mail`
+(
   `id`        INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `user_id`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `from_id`   INT(10) UNSIGNED    NOT NULL DEFAULT '0',
@@ -316,7 +332,8 @@ CREATE TABLE IF NOT EXISTS `cms_mail` (
 -- Структура таблицы `cms_sessions`
 --
 DROP TABLE IF EXISTS `cms_sessions`;
-CREATE TABLE `cms_sessions` (
+CREATE TABLE `cms_sessions`
+(
   `session_id`   CHAR(32)             NOT NULL DEFAULT '',
   `ip`           BIGINT(11)           NOT NULL DEFAULT '0',
   `ip_via_proxy` BIGINT(11)           NOT NULL DEFAULT '0',
@@ -337,7 +354,8 @@ CREATE TABLE `cms_sessions` (
 -- Структура таблицы `cms_users_data`
 --
 DROP TABLE IF EXISTS `cms_users_data`;
-CREATE TABLE `cms_users_data` (
+CREATE TABLE `cms_users_data`
+(
   `id`      INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `key`     VARCHAR(30)      NOT NULL DEFAULT '',
@@ -353,7 +371,8 @@ CREATE TABLE `cms_users_data` (
 -- Структура таблицы `cms_users_guestbook`
 --
 DROP TABLE IF EXISTS `cms_users_guestbook`;
-CREATE TABLE `cms_users_guestbook` (
+CREATE TABLE `cms_users_guestbook`
+(
   `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sub_id`     INT(10) UNSIGNED NOT NULL,
   `time`       INT(11)          NOT NULL,
@@ -372,7 +391,8 @@ CREATE TABLE `cms_users_guestbook` (
 -- Структура таблицы `cms_users_iphistory`
 --
 DROP TABLE IF EXISTS `cms_users_iphistory`;
-CREATE TABLE `cms_users_iphistory` (
+CREATE TABLE `cms_users_iphistory`
+(
   `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id`      INT(10) UNSIGNED    NOT NULL,
   `ip`           BIGINT(11)          NOT NULL DEFAULT '0',
@@ -389,7 +409,8 @@ CREATE TABLE `cms_users_iphistory` (
 -- Структура таблицы `download__bookmark`
 --
 DROP TABLE IF EXISTS `download__bookmark`;
-CREATE TABLE `download__bookmark` (
+CREATE TABLE `download__bookmark`
+(
   `id`      INT(11) NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) NOT NULL,
   `file_id` INT(11) NOT NULL,
@@ -404,7 +425,8 @@ CREATE TABLE `download__bookmark` (
 -- Структура таблицы `download__category`
 --
 DROP TABLE IF EXISTS `download__category`;
-CREATE TABLE `download__category` (
+CREATE TABLE `download__category`
+(
   `id`       INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `refid`    INT(11) UNSIGNED NOT NULL DEFAULT '0',
   `dir`      TEXT             NOT NULL,
@@ -426,7 +448,8 @@ CREATE TABLE `download__category` (
 -- Структура таблицы `download__comments`
 --
 DROP TABLE IF EXISTS `download__comments`;
-CREATE TABLE `download__comments` (
+CREATE TABLE `download__comments`
+(
   `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sub_id`     INT(10) UNSIGNED NOT NULL,
   `time`       INT(11)          NOT NULL,
@@ -445,13 +468,14 @@ CREATE TABLE `download__comments` (
 -- Структура таблицы `download__files`
 --
 DROP TABLE IF EXISTS `download__files`;
-CREATE TABLE `download__files` (
+CREATE TABLE `download__files`
+(
   `id`         INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `refid`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `dir`        TEXT             NOT NULL,
   `time`       INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `name`       TEXT             NOT NULL,
-  `type`       INT(2)  UNSIGNED NOT NULL DEFAULT '0',
+  `type`       INT(2) UNSIGNED  NOT NULL DEFAULT '0',
   `user_id`    INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `rus_name`   TEXT             NOT NULL,
   `text`       TEXT             NOT NULL,
@@ -474,7 +498,8 @@ CREATE TABLE `download__files` (
 -- Структура таблицы `download__more`
 --
 DROP TABLE IF EXISTS `download__more`;
-CREATE TABLE `download__more` (
+CREATE TABLE `download__more`
+(
   `id`       INT(11) NOT NULL AUTO_INCREMENT,
   `refid`    INT(11) NOT NULL,
   `time`     INT(11) NOT NULL,
@@ -489,44 +514,11 @@ CREATE TABLE `download__more` (
   DEFAULT CHARSET = utf8mb4;
 
 --
--- Структура таблицы `forum`
---
-DROP TABLE IF EXISTS `forum`;
-CREATE TABLE `forum` (
-  `id`           INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `refid`        INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `type`         CHAR(1)          NOT NULL DEFAULT '',
-  `time`         INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `user_id`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `from`         VARCHAR(25)      NOT NULL DEFAULT '',
-  `realid`       INT(3)           NOT NULL DEFAULT '0',
-  `ip`           BIGINT(11)       NOT NULL DEFAULT '0',
-  `ip_via_proxy` BIGINT(11)       NOT NULL DEFAULT '0',
-  `soft`         TEXT             NOT NULL,
-  `text`         TEXT             NOT NULL,
-  `close`        TINYINT(1)       NOT NULL DEFAULT '0',
-  `close_who`    VARCHAR(25)      NOT NULL DEFAULT '',
-  `vip`          TINYINT(1)       NOT NULL DEFAULT '0',
-  `edit`         TEXT             NOT NULL,
-  `tedit`        INT(10) UNSIGNED NOT NULL DEFAULT '0',
-  `kedit`        INT(2) UNSIGNED  NOT NULL DEFAULT '0',
-  `curators`     TEXT             NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `refid` (`refid`),
-  KEY `type` (`type`),
-  KEY `time` (`time`),
-  KEY `close` (`close`),
-  KEY `user_id` (`user_id`),
-  FULLTEXT KEY `text` (`text`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8mb4;
-
---
 -- Структура таблицы `guest`
 --
 DROP TABLE IF EXISTS `guest`;
-CREATE TABLE `guest` (
+CREATE TABLE `guest`
+(
   `id`         INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `adm`        TINYINT(1)          NOT NULL DEFAULT '0',
   `time`       INT(10) UNSIGNED    NOT NULL DEFAULT '0',
@@ -553,7 +545,8 @@ CREATE TABLE `guest` (
 -- Структура таблицы `karma_users`
 --
 DROP TABLE IF EXISTS `karma_users`;
-CREATE TABLE `karma_users` (
+CREATE TABLE `karma_users`
+(
   `id`         INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `user_id`    INT(10) UNSIGNED    NOT NULL DEFAULT '0',
   `name`       VARCHAR(50)         NOT NULL DEFAULT '',
@@ -574,7 +567,8 @@ CREATE TABLE `karma_users` (
 -- Структура таблицы `library_cats`
 --
 DROP TABLE IF EXISTS `library_cats`;
-CREATE TABLE `library_cats` (
+CREATE TABLE `library_cats`
+(
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `parent`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `name`        VARCHAR(200)     NOT NULL DEFAULT '',
@@ -591,7 +585,8 @@ CREATE TABLE `library_cats` (
 -- Структура таблицы `library_texts`
 --
 DROP TABLE IF EXISTS `library_texts`;
-CREATE TABLE `library_texts` (
+CREATE TABLE `library_texts`
+(
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `cat_id`      INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `text`        MEDIUMTEXT       NOT NULL,
@@ -615,7 +610,8 @@ CREATE TABLE `library_texts` (
 -- Структура таблицы `library_tags`
 --
 DROP TABLE IF EXISTS `library_tags`;
-CREATE TABLE `library_tags` (
+CREATE TABLE `library_tags`
+(
   `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `lib_text_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `tag_name`    VARCHAR(250)     NOT NULL DEFAULT '',
@@ -630,7 +626,8 @@ CREATE TABLE `library_tags` (
 -- Структура таблицы `cms_library_comments`
 --
 DROP TABLE IF EXISTS `cms_library_comments`;
-CREATE TABLE `cms_library_comments` (
+CREATE TABLE `cms_library_comments`
+(
   `id`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sub_id`     INT(11) UNSIGNED NOT NULL,
   `time`       INT(11)          NOT NULL,
@@ -649,7 +646,8 @@ CREATE TABLE `cms_library_comments` (
 -- Структура таблицы `cms_library_rating`
 --
 DROP TABLE IF EXISTS `cms_library_rating`;
-CREATE TABLE IF NOT EXISTS `cms_library_rating` (
+CREATE TABLE IF NOT EXISTS `cms_library_rating`
+(
   `id`      INT(11)    NOT NULL AUTO_INCREMENT,
   `user_id` INT(11)    NOT NULL,
   `st_id`   INT(11)    NOT NULL,
@@ -664,7 +662,8 @@ CREATE TABLE IF NOT EXISTS `cms_library_rating` (
 -- Структура таблицы `news`
 --
 DROP TABLE IF EXISTS `news`;
-CREATE TABLE `news` (
+CREATE TABLE `news`
+(
   `id`   INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `time` INT(10) UNSIGNED NOT NULL DEFAULT '0',
   `avt`  VARCHAR(25)      NOT NULL DEFAULT '',
@@ -680,7 +679,8 @@ CREATE TABLE `news` (
 -- Структура таблицы `users`
 --
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
+CREATE TABLE `users`
+(
   `id`            INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `name`          VARCHAR(25)         NOT NULL DEFAULT '',
   `name_lat`      VARCHAR(40)         NOT NULL DEFAULT '',
@@ -736,3 +736,150 @@ CREATE TABLE `users` (
 )
   ENGINE = MyISAM
   DEFAULT CHARSET = utf8mb4;
+
+
+--
+-- Структура таблицы `forum_messages`
+--
+DROP TABLE IF EXISTS `forum_messages`;
+CREATE TABLE `forum_messages`
+(
+  `id`           bigint(20) NOT NULL,
+  `topic_id`     bigint(20) NOT NULL,
+  `text`         longtext   NOT NULL,
+  `date`         int(11)      DEFAULT NULL,
+  `user_id`      bigint(20) NOT NULL,
+  `user_name`    varchar(255) DEFAULT NULL,
+  `user_agent`   varchar(255) DEFAULT NULL,
+  `ip`           bigint(20)   DEFAULT NULL,
+  `ip_via_proxy` bigint(20)   DEFAULT NULL,
+  `pinned`       tinyint(1)   DEFAULT NULL,
+  `editor_name`  varchar(255) DEFAULT NULL,
+  `edit_time`    int(11)      DEFAULT NULL,
+  `edit_count`   int(11)      DEFAULT NULL,
+  `deleted`      tinyint(1)   DEFAULT NULL,
+  `deleted_by`   varchar(255) DEFAULT NULL,
+  `old_id`       int(11)      DEFAULT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `forum_redirects`
+--
+DROP TABLE IF EXISTS `forum_redirects`;
+CREATE TABLE `forum_redirects`
+(
+  `old_id`   int(11)      NOT NULL,
+  `new_link` varchar(255) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `forum_sections`
+--
+DROP TABLE IF EXISTS `forum_sections`;
+CREATE TABLE `forum_sections`
+(
+  `id`           int(11)                         NOT NULL,
+  `parent`       int(11) DEFAULT NULL,
+  `name`         varchar(255) CHARACTER SET utf8 NOT NULL,
+  `description`  text CHARACTER SET utf8,
+  `sort`         int(11) DEFAULT '100',
+  `access`       int(11) DEFAULT NULL,
+  `section_type` int(11) DEFAULT NULL,
+  `old_id`       int(11) DEFAULT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `forum_topic`
+--
+DROP TABLE IF EXISTS `forum_topic`;
+CREATE TABLE `forum_topic`
+(
+  `id`                        bigint(20) UNSIGNED NOT NULL,
+  `section_id`                int(10) UNSIGNED    NOT NULL COMMENT 'Id родительского раздела',
+  `name`                      varchar(255)        NOT NULL COMMENT 'Название темы',
+  `description`               mediumtext COMMENT 'Краткое описание',
+  `view_count`                bigint(20)   DEFAULT NULL COMMENT 'Количество просмотров',
+  `user_id`                   bigint(20)          NOT NULL COMMENT 'Id автора темы',
+  `user_name`                 varchar(255) DEFAULT NULL COMMENT 'Имя автора',
+  `created_at`                datetime     DEFAULT NULL COMMENT 'Дата создания темы',
+  `post_count`                int(11)      DEFAULT NULL COMMENT 'Количество постов',
+  `mod_post_count`            int(11)      DEFAULT NULL COMMENT 'Количество постов с учетом удаленных',
+  `last_post_date`            int(11)      DEFAULT NULL COMMENT 'Дата последнего поста',
+  `last_post_author`          bigint(20)   DEFAULT NULL COMMENT 'id автора последнего поста',
+  `last_post_author_name`     varchar(255) DEFAULT NULL COMMENT 'Имя автора последнего поста',
+  `last_message_id`           bigint(20)   DEFAULT NULL COMMENT 'Id последнего сообщения',
+  `mod_last_post_date`        int(11)      DEFAULT NULL COMMENT 'Дата последнего поста для модератора',
+  `mod_last_post_author`      bigint(20)   DEFAULT NULL COMMENT 'id автора последнего поста для модератора',
+  `mod_last_post_author_name` varchar(255) DEFAULT NULL COMMENT 'Имя автора последнего поста для модератора',
+  `mod_last_message_id`       bigint(20)   DEFAULT NULL COMMENT 'Id последнего поста для модератора',
+  `closed`                    tinyint(1)   DEFAULT NULL COMMENT 'Флаг закрытия темы',
+  `closed_by`                 varchar(255) DEFAULT NULL COMMENT 'Имя закрывшего тему',
+  `deleted`                   tinyint(1)   DEFAULT NULL COMMENT 'Флаг удаленной темы',
+  `deleted_by`                varchar(255) DEFAULT NULL COMMENT 'Имя удалившего тему',
+  `curators`                  mediumtext COMMENT 'Кураторы',
+  `pinned`                    tinyint(1)   DEFAULT NULL COMMENT 'Флаг закрепленной темы',
+  `has_poll`                  tinyint(1)   DEFAULT NULL COMMENT 'Флаг наличия опроса',
+  `old_id`                    int(11)      DEFAULT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `forum_messages`
+--
+ALTER TABLE `forum_messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `topic` (`topic_id`),
+  ADD KEY `deleted` (`deleted`),
+  ADD KEY `old_id` (`old_id`);
+ALTER TABLE `forum_messages`
+  ADD FULLTEXT KEY `text` (`text`);
+
+--
+-- Индексы таблицы `forum_redirects`
+--
+ALTER TABLE `forum_redirects`
+  ADD UNIQUE KEY `old_id` (`old_id`);
+
+--
+-- Индексы таблицы `forum_sections`
+--
+ALTER TABLE `forum_sections`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent` (`parent`),
+  ADD KEY `old_id` (`old_id`);
+
+--
+-- Индексы таблицы `forum_topic`
+--
+ALTER TABLE `forum_topic`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `deleted` (`deleted`);
+
+--
+-- AUTO_INCREMENT для таблицы `forum_messages`
+--
+ALTER TABLE `forum_messages`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT для таблицы `forum_sections`
+--
+ALTER TABLE `forum_sections`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
+-- AUTO_INCREMENT для таблицы `forum_topic`
+--
+ALTER TABLE `forum_topic`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;

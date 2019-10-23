@@ -86,12 +86,12 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                 }
             }
 
-            echo '<div class="gmenu"><p>' . _t('Poll changed') . '<br /><a href="index.php?id=' . $id . '">' . _t('Continue') . '</a></p></div>';
+            echo '<div class="gmenu"><p>' . _t('Poll changed') . '<br /><a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма редактирования опроса
             $countvote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '$id'")->fetchColumn();
             $topic_vote = $db->query("SELECT `name` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '$id' LIMIT 1")->fetch();
-            echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Poll') . '</div>' .
+            echo '<div class="phdr"><a href="index.php?type=topic&amp;id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Poll') . '</div>' .
                 '<form action="index.php?act=editvote&amp;id=' . $id . '" method="post">' .
                 '<div class="gmenu"><p>' .
                 '<b>' . _t('Poll (max. 150)') . ':</b><br>' .
@@ -135,7 +135,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             echo '</p></div><div class="gmenu">' .
                 '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                 '</div></form>' .
-                '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a></div>';
+                '<div class="phdr"><a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
         }
     }
 }

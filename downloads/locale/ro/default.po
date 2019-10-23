@@ -1,0 +1,667 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-03-25 19:13+0400\n"
+"PO-Revision-Date: 2017-04-30 13:45-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Romanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"Language: ro_RO\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /downloads/default.pot\n"
+
+#: classes/download.php:150 includes/view.php:183 includes/view.php:192
+msgid "Rating"
+msgstr "Voturi"
+
+#: classes/download.php:164 includes/comments.php:49 includes/comments.php:63
+#: includes/comments_review.php:65 includes/view.php:195
+msgid "Comments"
+msgstr "Comentarii"
+
+#: classes/download.php:219
+msgid "Uploaded"
+msgstr "Incarcat"
+
+#: classes/download.php:270 includes/bookmark.php:38 includes/bookmark.php:70
+#: includes/comments.php:28 includes/comments.php:39
+#: includes/comments_review.php:34 includes/comments_review.php:44
+#: includes/comments_review.php:110 includes/fileControl/custom_size.php:44
+#: includes/fileControl/delete_file.php:31
+#: includes/fileControl/edit_about.php:31 includes/fileControl/edit_file.php:32
+#: includes/fileControl/edit_screen.php:34
+#: includes/fileControl/files_more.php:37 includes/fileControl/jad_file.php:32
+#: includes/fileControl/jad_file.php:41 includes/fileControl/mp3tags.php:33
+#: includes/fileControl/transfer_file.php:31 includes/files_import.php:34
+#: includes/files_moderation.php:33 includes/files_moderation.php:77
+#: includes/files_new.php:36 includes/files_new.php:45
+#: includes/files_new.php:76 includes/files_top.php:40
+#: includes/files_top.php:62 includes/files_upload.php:203
+#: includes/files_user.php:74 includes/folder_add.php:34
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
+#: includes/scan_dir.php:94 includes/search.php:26 includes/search.php:99
+#: includes/top_users.php:28 includes/top_users.php:62 includes/view.php:38
+#: includes/view.php:158 index.php:36 index.php:161 index.php:174 index.php:358
+msgid "Downloads"
+msgstr "Descarcari"
+
+#: includes/bookmark.php:28 index.php:364
+msgid "Favorites"
+msgstr "Favorite"
+
+#: includes/bookmark.php:33 index.php:62
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: includes/bookmark.php:57 includes/comments_review.php:97
+#: includes/fileControl/transfer_file.php:124 includes/files_moderation.php:64
+#: includes/files_new.php:62 includes/files_user.php:60
+#: includes/top_users.php:49 index.php:295
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: includes/bookmark.php:60 includes/comments_review.php:100
+#: includes/fileControl/files_more.php:230
+#: includes/fileControl/transfer_file.php:127 includes/files_moderation.php:67
+#: includes/files_new.php:65 includes/files_user.php:63 includes/search.php:78
+#: includes/top_users.php:52
+msgid "Total"
+msgstr "Total"
+
+#: includes/bookmark.php:67 includes/comments_review.php:107
+#: includes/files_moderation.php:74 includes/files_new.php:73
+#: includes/files_user.php:71 includes/search.php:87 includes/top_users.php:59
+#: index.php:319
+msgid "To Page"
+msgstr "La pagina"
+
+#: includes/comments.php:28 includes/comments.php:45
+#: includes/comments_review.php:34 includes/comments_review.php:41
+msgid "Comments are disabled"
+msgstr "Comentariile sunt dezactivate"
+
+#: includes/comments.php:39 includes/fileControl/custom_size.php:44
+#: includes/fileControl/delete_file.php:31 includes/fileControl/jad_file.php:32
+#: includes/fileControl/jad_file.php:41
+#: includes/fileControl/transfer_file.php:31 includes/view.php:38
+msgid "File not found"
+msgstr "Fisierul nu a fost gasit"
+
+#: includes/comments.php:65 includes/fileControl/delete_file.php:90
+#: includes/fileControl/edit_about.php:57 includes/fileControl/edit_file.php:66
+#: includes/fileControl/edit_screen.php:80
+#: includes/fileControl/edit_screen.php:121
+#: includes/fileControl/files_more.php:71
+#: includes/fileControl/files_more.php:176
+#: includes/fileControl/files_more.php:232 includes/fileControl/mp3tags.php:73
+#: includes/fileControl/transfer_file.php:49
+#: includes/fileControl/transfer_file.php:55
+#: includes/fileControl/transfer_file.php:134 includes/files_import.php:167
+#: includes/files_import.php:184 includes/files_upload.php:176
+#: includes/files_upload.php:197 includes/files_upload.php:200
+#: includes/folder_add.php:130 includes/folder_add.php:133
+#: includes/folder_delete.php:85 includes/folder_edit.php:128
+#: includes/scan_dir.php:83 includes/scan_dir.php:302
+msgid "Back"
+msgstr "Înapoi"
+
+#: includes/comments_review.php:38 index.php:361
+msgid "Review comments"
+msgstr "Comentariile de revizuire"
+
+#: includes/fileControl/delete_file.php:88 includes/view.php:256
+msgid "Delete File"
+msgstr "Sterge fisier"
+
+#: includes/fileControl/delete_file.php:89
+#: includes/fileControl/edit_screen.php:117
+#: includes/fileControl/files_more.php:88
+#: includes/fileControl/files_more.php:227 includes/files_moderation.php:59
+#: includes/folder_delete.php:83 index.php:229
+msgid "Delete"
+msgstr "Șterge"
+
+#: includes/fileControl/edit_about.php:52 includes/files_import.php:181
+#: includes/files_upload.php:192 includes/folder_add.php:116
+#: includes/folder_edit.php:117
+msgid "Description"
+msgstr "Descriere"
+
+#: includes/fileControl/edit_about.php:54
+msgid "Maximum 500 characters"
+msgstr "Maxim 500 de caractere"
+
+#: includes/fileControl/edit_about.php:56 includes/fileControl/edit_file.php:65
+#: includes/fileControl/files_more.php:70 includes/fileControl/mp3tags.php:72
+#: includes/folder_edit.php:125
+msgid "Save"
+msgstr "Salveaza"
+
+#: includes/fileControl/edit_file.php:57
+#: includes/fileControl/files_more.php:134 includes/files_import.php:72
+#: includes/files_upload.php:64 includes/folder_add.php:50
+#: includes/folder_edit.php:63
+msgid "The required fields are not filled"
+msgstr "Campurile necesare nu au fost completate"
+
+#: includes/fileControl/edit_file.php:57
+#: includes/fileControl/files_more.php:113
+#: includes/fileControl/files_more.php:154
+#: includes/fileControl/files_more.php:192
+#: includes/fileControl/files_more.php:196 includes/files_import.php:91
+#: includes/files_import.php:169 includes/files_upload.php:84
+#: includes/files_upload.php:178 includes/files_upload.php:182
+#: includes/folder_add.php:68 includes/folder_add.php:108
+#: includes/folder_edit.php:88
+msgid "Repeat"
+msgstr "Repeta"
+
+#: includes/fileControl/edit_file.php:63
+msgid "Name for display"
+msgstr "Numele de afișat"
+
+#: includes/fileControl/edit_file.php:64 includes/fileControl/files_more.php:68
+#: includes/fileControl/files_more.php:205 includes/files_import.php:179
+#: includes/files_upload.php:191
+msgid "Link to download file"
+msgstr "Adresa de descarcare"
+
+#: includes/fileControl/edit_screen.php:71 includes/files_import.php:145
+#: includes/files_upload.php:150
+msgid "Screenshot is attached"
+msgstr "Captura de ecran este atașata"
+
+#: includes/fileControl/edit_screen.php:73
+#: includes/fileControl/edit_screen.php:76 includes/files_import.php:147
+#: includes/files_upload.php:152 includes/files_upload.php:155
+msgid "Screenshot not attached"
+msgstr "Captura de ecran nu este atașata"
+
+#: includes/fileControl/edit_screen.php:79
+#: includes/fileControl/files_more.php:176 includes/files_import.php:167
+#: includes/files_upload.php:176
+msgid "Upload more"
+msgstr "Incarca mai multe"
+
+#: includes/fileControl/edit_screen.php:83 includes/files_import.php:177
+#: includes/files_upload.php:189 includes/view.php:143 includes/view.php:147
+msgid "Screenshot"
+msgstr "Captura de ecran"
+
+#: includes/fileControl/edit_screen.php:85
+#: includes/fileControl/files_more.php:207 includes/files_import.php:182
+#: includes/files_upload.php:193
+msgid "Upload"
+msgstr "Incarca"
+
+#: includes/fileControl/edit_screen.php:86
+#: includes/fileControl/files_more.php:209 includes/files_upload.php:194
+msgid "File weight should not exceed"
+msgstr "Dimensiunea fisierului trebuie respectata"
+
+#: includes/fileControl/edit_screen.php:87
+#: includes/fileControl/files_more.php:210 includes/files_import.php:183
+#: includes/files_upload.php:196
+msgid "A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)"
+msgstr "O captura de ecran este convertita automat in poza, cu marimea de maxim 240px (inaltimea va fi calculate automat)"
+
+#: includes/fileControl/files_more.php:66 includes/view.php:252
+msgid "Edit File"
+msgstr "Editeaza fisier"
+
+#: includes/fileControl/files_more.php:88 includes/folder_delete.php:82
+msgid "Do you really want to delete?"
+msgstr "Esti sigur ca vrei sa stergi?"
+
+#: includes/fileControl/files_more.php:88
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: includes/fileControl/files_more.php:99
+#: includes/fileControl/files_more.php:108 includes/files_import.php:48
+#: includes/files_import.php:87
+msgid "Invalid Link"
+msgstr "Adresa invalida"
+
+#: includes/fileControl/files_more.php:138 includes/files_upload.php:68
+msgid "The weight of the file exceeds"
+msgstr "Dimensiunea fisierului este depasita"
+
+#: includes/fileControl/files_more.php:142 includes/files_import.php:76
+#: includes/files_upload.php:72
+msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
+msgstr "Tip de fișier interzis!<br>Incarca fisiere care sunt permise cu urmatoarele extensii"
+
+#: includes/fileControl/files_more.php:146 includes/files_import.php:80
+#: includes/files_upload.php:76
+msgid "The file name length must not exceed 100 characters"
+msgstr "Numele fisierului nu trebuie sa depaseasca 100 de caractere"
+
+#: includes/fileControl/files_more.php:150 includes/files_import.php:84
+#: includes/files_upload.php:80
+msgid "The file name contains invalid characters"
+msgstr "Numele fisierului contine caractere invalide"
+
+#: includes/fileControl/files_more.php:175 includes/files_import.php:100
+#: includes/files_upload.php:95
+msgid "File attached"
+msgstr "Fisier atasat"
+
+#: includes/fileControl/files_more.php:192
+#: includes/fileControl/files_more.php:196 includes/files_import.php:169
+#: includes/files_upload.php:178 includes/files_upload.php:182
+msgid "File not attached"
+msgstr "Fisierul nu este atasat"
+
+#: includes/fileControl/files_more.php:200 includes/scan_dir.php:285
+#: includes/view.php:255
+msgid "Additional Files"
+msgstr "Fisiere aditionale"
+
+#: includes/fileControl/files_more.php:202 includes/files_upload.php:187
+msgid "Select File"
+msgstr "Selecteaza fisier"
+
+#: includes/fileControl/files_more.php:203
+msgid "Or link to it"
+msgstr "Sau o adresa catre el"
+
+#: includes/fileControl/files_more.php:204 includes/files_import.php:176
+#: includes/files_upload.php:188
+msgid "Save as (max. 30, without extension)"
+msgstr "Salveaza ca (max. 30, fara extensie)"
+
+#: includes/fileControl/files_more.php:206
+msgid "Download the additional file"
+msgstr "Descarca fisierul aditional"
+
+#: includes/fileControl/files_more.php:210 includes/files_import.php:183
+#: includes/files_upload.php:195 includes/folder_add.php:120
+#: includes/folder_edit.php:121 index.php:221
+msgid "Allowed extensions"
+msgstr "Extensii permise"
+
+#: includes/fileControl/files_more.php:226 index.php:228
+msgid "Edit"
+msgstr "Editeaza"
+
+#: includes/fileControl/mp3tags.php:38 includes/view.php:261
+msgid "Edit MP3 Tags"
+msgstr "Editeaza Tag MP3"
+
+#: includes/fileControl/mp3tags.php:63
+msgid "Tags saved"
+msgstr "Tag salvat"
+
+#: includes/fileControl/mp3tags.php:67 includes/view.php:100
+msgid "Artist"
+msgstr "Artist"
+
+#: includes/fileControl/mp3tags.php:68 includes/view.php:103
+msgid "Title"
+msgstr "Titlu"
+
+#: includes/fileControl/mp3tags.php:69 includes/view.php:106
+msgid "Album"
+msgstr "Album"
+
+#: includes/fileControl/mp3tags.php:70 includes/view.php:109
+msgid "Genre"
+msgstr "Genul"
+
+#: includes/fileControl/mp3tags.php:71 includes/view.php:112
+msgid "Year"
+msgstr "Anul"
+
+#: includes/fileControl/transfer_file.php:49
+#: includes/fileControl/transfer_file.php:101 includes/view.php:259
+msgid "Move File"
+msgstr "Muta fisier"
+
+#: includes/fileControl/transfer_file.php:98
+msgid "The file has been moved"
+msgstr "Fisierul a fost mutat"
+
+#: includes/fileControl/transfer_file.php:99 includes/scan_dir.php:289
+#: index.php:346
+msgid "Update counters"
+msgstr "Actualizeaza contor"
+
+#: includes/fileControl/transfer_file.php:118
+#: includes/fileControl/transfer_file.php:130
+msgid "Move to this folder"
+msgstr "Muta la acest folder"
+
+#: includes/files_import.php:34 includes/files_new.php:36
+#: includes/files_upload.php:203 includes/folder_add.php:34
+#: includes/folder_delete.php:34 includes/folder_edit.php:32
+#: includes/scan_dir.php:94 index.php:161
+msgid "The directory does not exist"
+msgstr "Directorul nu exista"
+
+#: includes/files_import.php:99 includes/files_import.php:173
+msgid "File import"
+msgstr "Importa fisier"
+
+#: includes/files_import.php:151 includes/files_upload.php:159
+#: includes/folder_add.php:106
+msgid "Continue"
+msgstr "Continua"
+
+#: includes/files_import.php:175
+msgid "Link to file"
+msgstr "Adresa catre fisier"
+
+#: includes/files_import.php:178 includes/files_upload.php:190
+#: includes/search.php:28
+msgid "File Name"
+msgstr "Numele fisierului"
+
+#: includes/files_moderation.php:30 index.php:189
+msgid "Files on moderation"
+msgstr "Fisiere cu moderare"
+
+#: includes/files_moderation.php:37
+msgid "File accepted"
+msgstr "Fisier acceptat"
+
+#: includes/files_moderation.php:41
+msgid "All files accepted"
+msgstr "Toate fisierele sunt acceptate"
+
+#: includes/files_moderation.php:58
+msgid "Accept"
+msgstr "Accepta"
+
+#: includes/files_moderation.php:62
+msgid "Accept all files"
+msgstr "Accepta toate fisierele"
+
+#: includes/files_new.php:28 includes/files_new.php:41 index.php:171
+#: index.php:181
+msgid "New Files"
+msgstr "Fisiere noi"
+
+#: includes/files_top.php:32 includes/files_top.php:39
+msgid "Most Commented"
+msgstr "Cele mai comentate"
+
+#: includes/files_top.php:34 includes/files_top.php:44
+#: includes/files_top.php:50
+msgid "Most Downloaded"
+msgstr "Cele mai descarcate"
+
+#: includes/files_top.php:36 includes/files_top.php:43
+#: includes/files_top.php:47
+msgid "Popular Files"
+msgstr "Fisiere populare"
+
+#: includes/files_upload.php:92 includes/files_upload.php:185 index.php:326
+#: index.php:350
+msgid "Upload File"
+msgstr "Incarca fisier"
+
+#: includes/files_upload.php:98
+msgid "If you pass moderation, it will be added to the Downloads"
+msgstr "Daca treci de moderare, va fi adaugat in Descarcari"
+
+#: includes/files_upload.php:191 includes/scan_dir.php:201
+msgid "Download"
+msgstr "Descarcă"
+
+#: includes/files_upload.php:200
+msgid "Access forbidden"
+msgstr "Acess interzis"
+
+#: includes/files_user.php:28 includes/files_user.php:41
+#: includes/top_users.php:46
+msgid "User Files"
+msgstr "Fisier Utilizator"
+
+#: includes/files_user.php:34
+msgid "User does not exists"
+msgstr "Utilizatorul nu exista"
+
+#: includes/files_user.php:39
+msgid "Profile"
+msgstr "Profil"
+
+#: includes/folder_add.php:54
+msgid "Invalid characters"
+msgstr "Caractere invalide"
+
+#: includes/folder_add.php:60 includes/folder_add.php:121
+#: includes/folder_edit.php:84 includes/folder_edit.php:122
+msgid "You can write only the following extensions"
+msgstr "Puteți scrie doar următoarele extensii"
+
+#: includes/folder_add.php:67 includes/folder_add.php:105
+#: includes/folder_add.php:112 index.php:334
+msgid "Create Folder"
+msgstr "Creeaza folder"
+
+#: includes/folder_add.php:106
+msgid "The Folder is created"
+msgstr "Folderul este creat"
+
+#: includes/folder_add.php:108
+msgid "Error creating categories"
+msgstr "Eroare la crearea categoriilor"
+
+#: includes/folder_add.php:114
+msgid "Folder Name"
+msgstr "Numele dosarului"
+
+#: includes/folder_add.php:115 includes/folder_edit.php:116
+msgid "Title to display"
+msgstr "Titlu de afisat"
+
+#: includes/folder_add.php:119 includes/folder_edit.php:120
+msgid "Allow users to upload files"
+msgstr "Permite utilizatorilor sa incarce fisiere"
+
+#: includes/folder_add.php:124
+msgid "Create"
+msgstr "Creeaza"
+
+#: includes/folder_delete.php:34
+msgid "Before removing, delete subdirectories"
+msgstr "Inainte de eliminare, sterge subfoldere"
+
+#: includes/folder_delete.php:80 index.php:338
+msgid "Delete Folder"
+msgstr "Sterge folder"
+
+#: includes/folder_edit.php:114 index.php:337
+msgid "Change Folder"
+msgstr "Modifica folder"
+
+#: includes/scan_dir.php:81 includes/scan_dir.php:288 index.php:345
+msgid "Remove missing files"
+msgstr "Inlatura fisiere lipsa"
+
+#: includes/scan_dir.php:82
+msgid "Database successfully updated"
+msgstr "Baza de date actualizata cu sucess"
+
+#: includes/scan_dir.php:101 index.php:344
+msgid "Update Files"
+msgstr "Actualizeaza fisiere"
+
+#: includes/scan_dir.php:282
+msgid "Added"
+msgstr "Adaugat"
+
+#: includes/scan_dir.php:283
+msgid "Categories"
+msgstr "Categorii"
+
+#: includes/scan_dir.php:284 index.php:309
+msgid "Files"
+msgstr "Fisiere"
+
+#: includes/scan_dir.php:292
+msgid "Update"
+msgstr "Actualizeaza"
+
+#: includes/scan_dir.php:295
+msgid "Current folder"
+msgstr "Folder curent"
+
+#: includes/scan_dir.php:296
+msgid "Current folder and all subfolders"
+msgstr "Folder current si toate subfolderele"
+
+#: includes/scan_dir.php:299
+msgid "Entire Downloads"
+msgstr "Toate descarcarile"
+
+#: includes/search.php:26 includes/search.php:30 index.php:175
+msgid "Search"
+msgstr "Cauta"
+
+#: includes/search.php:29
+msgid "Search in description"
+msgstr "Cauta in descriere"
+
+#: includes/search.php:37
+msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
+msgstr "Lungimea numelui fisierului invalida. Sunt permise minim 3 si maxim 64 de caractere."
+
+#: includes/search.php:59
+msgid "Search results"
+msgstr "Rezultatele cautarii"
+
+#: includes/search.php:75
+msgid "No items found"
+msgstr "Nici in obiect gasit"
+
+#: includes/search.php:89
+msgid "New Search"
+msgstr "Cautare noua"
+
+#: includes/search.php:96
+msgid "Search by file Name and is case insensitive.<br>The length of the request: 2mins. 64макс."
+msgstr "Cauta dupa numele fisierului. <br> Lungime necesara: min. 2, max. 64 de caractere"
+
+#: includes/top_users.php:27 index.php:177
+msgid "Top Users"
+msgstr "Top utilizatori"
+
+#: includes/view.php:47
+msgid "The file is on moderation"
+msgstr "Fisierul este sub moderare"
+
+#: includes/view.php:93
+msgid "Channels"
+msgstr "Canale"
+
+#: includes/view.php:94
+msgid "Sample rate"
+msgstr "Evaluare de probă"
+
+#: includes/view.php:95
+msgid "Bitrate"
+msgstr "Numarul de biti (bitrate)"
+
+#: includes/view.php:96
+msgid "Duration"
+msgstr "Durata"
+
+#: includes/view.php:130
+msgid "Resolution"
+msgstr "Rezolutie"
+
+#: includes/view.php:156
+msgid "File name"
+msgstr "Numele fisierului"
+
+#: includes/view.php:157
+msgid "Uploaded by"
+msgstr "Incarcat de"
+
+#: includes/view.php:178
+msgid "Voice adopted"
+msgstr "Voce adaptata"
+
+#: includes/view.php:205
+msgid "Files for Download"
+msgstr "Fisiere pentru descarcare"
+
+#: includes/view.php:241
+msgid "Add to Favorites"
+msgstr "Adauga la favorite"
+
+#: includes/view.php:243
+msgid "Remove from Favorites"
+msgstr "Sterge de la favorite"
+
+#: includes/view.php:253
+msgid "Edit Description"
+msgstr "Editeaza descriere"
+
+#: includes/view.php:254
+msgid "Managing Screenshots"
+msgstr "Administreaza captura de ecran"
+
+#: index.php:60 index.php:150
+msgid "Downloads are closed"
+msgstr "Descarcarile sunt inchise"
+
+#: index.php:176
+msgid "Top Files"
+msgstr "Top fisiere"
+
+#: index.php:210
+msgid "List of category"
+msgstr "Lista categoriilor"
+
+#: index.php:226
+msgid "Up"
+msgstr "Sus"
+
+#: index.php:227
+msgid "Down"
+msgstr "Jos"
+
+#: index.php:244
+msgid "List of Files"
+msgstr "Lista fisierelor"
+
+#: index.php:268
+msgid "Sorting"
+msgstr "Sortare"
+
+#: index.php:270
+msgid "by time"
+msgstr "dupa timp"
+
+#: index.php:271
+msgid "by name"
+msgstr "dupa nume"
+
+#: index.php:273
+msgid "descending"
+msgstr "descrescator"
+
+#: index.php:274
+msgid "ascending"
+msgstr "crescator"
+
+#: index.php:301
+msgid "Folders"
+msgstr "Dosare"
+
+#: index.php:327
+msgid "Import File"
+msgstr "Importa fisier"
+

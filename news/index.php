@@ -70,7 +70,7 @@ switch ($do) {
                     if (!empty($_POST['pf']) && ($_POST['pf'] != '0')) {
                         $pf = intval($_POST['pf']);
                         $rz = $_POST['rz'];
-                        $pr = $db->query("SELECT * FROM `forum` WHERE `refid` = '$pf' AND `type` = 'r'");
+                        $pr = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '$pf'");
 
                         while ($pr1 = $pr->fetch()) {
                             $arr[] = $pr1['id'];
@@ -78,23 +78,25 @@ switch ($do) {
 
                         foreach ($rz as $v) {
                             if (in_array($v, $arr)) {
+                                $date = new DateTime();
+                                $date = $date->format('Y-m-d H:i:s');
+
                                 $db->prepare('
-                                  INSERT INTO `forum` SET
-                                  `refid` = ?,
-                                  `type` = \'t\',
-                                  `time` = ?,
+                                  INSERT INTO `forum_topic` SET
+                                  `section_id` = ?,
+                                  `created_at` = ?,
                                   `user_id` = ?,
-                                  `from` = ?,
-                                  `text` = ?,
-                                  `soft` = \'\',
-                                  `edit` = \'\',
-                                  `curators` = \'\'
+                                  `user_name` = ?,
+                                  `name` = ?,
+                                  `last_post_date` = ?,
+                                  `post_count` = 0
                                 ')->execute([
                                     $v,
-                                    time(),
+                                    $date,
                                     $systemUser->id,
                                     $systemUser->name,
                                     $name,
+                                    time()
                                 ]);
 
                                 /** @var Johncms\Api\EnvironmentInterface $env */
@@ -102,26 +104,26 @@ switch ($do) {
                                 $rid = $db->lastInsertId();
 
                                 $db->prepare('
-                                  INSERT INTO `forum` SET
-                                  `refid` = ?,
-                                  `type` = \'m\',
-                                  `time` = ?,
+                                  INSERT INTO `forum_messages` SET
+                                  `topic_id` = ?,
+                                  `date` = ?,
                                   `user_id` = ?,
-                                  `from` = ?,
+                                  `user_name` = ?,
                                   `ip` = ?,
-                                  `soft` = ?,
-                                  `text` = ?,
-                                  `edit` = \'\',
-                                  `curators` = \'\'
+                                  `ip_via_proxy` = ?,
+                                  `user_agent` = ?,
+                                  `text` = ?
                                 ')->execute([
                                     $rid,
                                     time(),
                                     $systemUser->id,
                                     $systemUser->name,
                                     $env->getIp(),
+                                    $env->getIpViaProxy(),
                                     $env->getUserAgent(),
                                     $text,
                                 ]);
+                                $tools->recountForumTopic($rid);
                             }
                         }
                     }
@@ -153,15 +155,15 @@ switch ($do) {
                     '<p><h3>' . _t('Text') . '</h3>' .
                     '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text"></textarea></p>' .
                     '<p><h3>' . _t('Discussion') . '</h3>';
-                $fr = $db->query("SELECT * FROM `forum` WHERE `type` = 'f'");
+                $fr = $db->query("SELECT * FROM `forum_sections` WHERE `section_type` = 0");
                 echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
 
                 while ($fr1 = $fr->fetch()) {
-                    echo '<input type="radio" name="pf" value="' . $fr1['id'] . '"/>' . $fr1['text'] . '<select name="rz[]">';
-                    $pr = $db->query("SELECT * FROM `forum` WHERE `type` = 'r' AND `refid` = '" . $fr1['id'] . "'");
+                    echo '<input type="radio" name="pf" value="' . $fr1['id'] . '"/>' . $fr1['name'] . '<select name="rz[]">';
+                    $pr = $db->query("SELECT * FROM `forum_sections` WHERE `section_type` = 1 AND `parent` = '" . $fr1['id'] . "'");
 
                     while ($pr1 = $pr->fetch()) {
-                        echo '<option value="' . $pr1['id'] . '">' . $pr1['text'] . '</option>';
+                        echo '<option value="' . $pr1['id'] . '">' . $pr1['name'] . '</option>';
                     }
                     echo '</select><br>';
                 }
@@ -317,10 +319,13 @@ switch ($do) {
                 '<br />' . $text . '<div class="sub">';
 
             if ($res['kom'] != 0 && $res['kom'] != "") {
-                $komm = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['kom'] . "'")->fetchColumn();
-
+                $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
+                $komm = 0;
+                if($mes = $res_mes->fetch()) {
+                    $komm = $mes['post_count'] - 1;
+                }
                 if ($komm >= 0) {
-                    echo '<a href="../forum/?id=' . $res['kom'] . '">' . _t('Discuss in Forum') . ' (' . $komm . ')</a><br>';
+                    echo '<a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss in Forum') . ' (' . $komm . ')</a><br>';
                 }
             }
 

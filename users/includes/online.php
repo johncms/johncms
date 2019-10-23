@@ -138,6 +138,8 @@ if ($total) {
     $i = 0;
 
     while ($res = $req->fetch()) {
+        $res['id'] = isset($res['id']) ? $res['id'] : 0;
+
         if ($res['id'] == $systemUser->id) {
             echo '<div class="gmenu">';
         } else {

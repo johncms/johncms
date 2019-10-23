@@ -66,7 +66,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . ' / ' . $user_smileys . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('faq.php?act=my_smileys&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=my_smilies&amp;', $start, $total, $kmess) . '</div>';
 }
 
 echo '<p><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></p>';

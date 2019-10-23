@@ -131,28 +131,10 @@ if ($error) {
     require('../system/end.php');
     exit;
 }
+$show_type = $_REQUEST['type'] ?? 'section';
 
-$headmod = $id ? 'forum,' . $id : 'forum';
 
-// Заголовки страниц форума
-if (empty($id)) {
-    $textl = _t('Forum');
-} else {
-    $res = $db->query("SELECT `text` FROM `forum` WHERE `id`= " . $id)->fetch();
-    $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['text']);
-    $hdr = strtr($hdr, [
-        '&laquo;' => '',
-        '&raquo;' => '',
-        '&quot;'  => '',
-        '&amp;'   => '',
-        '&lt;'    => '',
-        '&gt;'    => '',
-        '&#039;'  => '',
-    ]);
-    $hdr = mb_substr($hdr, 0, 30);
-    $hdr = $tools->checkout($hdr, 2, 2);
-    $textl = empty($hdr) ? _t('Forum') : $hdr;
-}
+
 
 // Переключаем режимы работы
 $mods = [
@@ -171,7 +153,7 @@ $mods = [
     'new',
     'nt',
     'per',
-    'post',
+    'show_post',
     'ren',
     'restore',
     'say',
@@ -186,6 +168,65 @@ $mods = [
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
     require('includes/' . $mods[$key] . '.php');
 } else {
+
+    // Заголовки страниц форума
+    if (empty($id)) {
+        $headmod = 'forum';
+        $textl = _t('Forum');
+    } else {
+
+        // Фиксируем местоположение и получаем заголовок страницы
+        switch ($show_type) {
+            case 'section':
+                $headmod = 'forum,' . $id .',section';
+                $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+                break;
+
+            case 'topics':
+                $headmod = 'forum,' . $id .',topics';
+                $res = $db->query("SELECT `name` FROM `forum_sections` WHERE `id`= " . $id)->fetch();
+                break;
+
+            case 'topic':
+                $headmod = 'forum,' . $id .',topic';
+                $res = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= " . $id)->fetch();
+                break;
+
+            default:
+                $headmod = 'forum';
+        }
+
+        $hdr = preg_replace('#\[c\](.*?)\[/c\]#si', '', $res['name']);
+        $hdr = strtr($hdr, [
+            '&laquo;' => '',
+            '&raquo;' => '',
+            '&quot;'  => '',
+            '&amp;'   => '',
+            '&lt;'    => '',
+            '&gt;'    => '',
+            '&#039;'  => '',
+        ]);
+        $hdr = mb_substr($hdr, 0, 30);
+        $hdr = $tools->checkout($hdr, 2, 2);
+        $textl = empty($hdr) ? _t('Forum') : $hdr;
+    }
+
+
+    // Редирект на новые адреса страниц
+    if(!empty($id)) {
+        $check_section = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '$id'");
+        if (!$check_section->rowCount() && (empty($_REQUEST['type']) || (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'post'))) {
+            $check_link = $db->query("SELECT * FROM `forum_redirects` WHERE `old_id`= '$id'")->fetch();
+            if(!empty($check_link)) {
+                http_response_code(301);
+                header('Location: '.$check_link['new_link']);
+                exit;
+            }
+        }
+    }
+
+
+
     require('../system/head.php');
 
     // Если форум закрыт, то для Админов выводим напоминание
@@ -206,8 +247,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 
     if ($id) {
+
+
         // Определяем тип запроса (каталог, или тема)
-        $type = $db->query("SELECT * FROM `forum` WHERE `id`= '$id'");
+        if($show_type == 'topic') {
+            $type = $db->query("SELECT * FROM `forum_topic` WHERE `id`= '$id'");
+        } else {
+            $type = $db->query("SELECT * FROM `forum_sections` WHERE `id`= '$id'");
+        }
+
+
 
         if (!$type->rowCount()) {
             // Если темы не существует, показываем ошибку
@@ -219,65 +268,56 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         $type1 = $type->fetch();
 
         // Фиксация факта прочтения Топика
-        if ($systemUser->isValid() && $type1['type'] == 't') {
-            $req_r = $db->query("SELECT * FROM `cms_forum_rdm` WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
-
-            if ($req_r->rowCount()) {
-                $res_r = $req_r->fetch();
-
-                if ($type1['time'] > $res_r['time']) {
-                    $db->exec("UPDATE `cms_forum_rdm` SET `time` = '" . time() . "' WHERE `topic_id` = '$id' AND `user_id` = '" . $systemUser->id . "' LIMIT 1");
-                }
-            } else {
-                $db->exec("INSERT INTO `cms_forum_rdm` SET `topic_id` = '$id', `user_id` = '" . $systemUser->id . "', `time` = '" . time() . "'");
-            }
+        if ($systemUser->isValid() && $show_type == 'topic') {
+            $db->query("INSERT INTO `cms_forum_rdm` (topic_id,  user_id, `time`)
+                VALUES ('$id', '" . $systemUser->id . "', '" . time() . "')
+                ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)");
         }
 
         // Получаем структуру форума
         $res = true;
         $allow = 0;
-        $parent = $type1['refid'];
 
-        while ($parent != '0' && $res != false) {
-            $res = $db->query("SELECT * FROM `forum` WHERE `id` = '$parent' LIMIT 1")->fetch();
+        $parent = $show_type == 'topic' ? $type1['section_id'] : $type1['parent'];
 
-            if ($res['type'] == 'f' || $res['type'] == 'r') {
-                $tree[] = '<a href="index.php?id=' . $parent . '">' . $res['text'] . '</a>';
+        while (!empty($parent) && $res != false) {
+            $res = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$parent' LIMIT 1")->fetch();
 
-                if ($res['type'] == 'r' && !empty($res['edit'])) {
-                    $allow = intval($res['edit']);
-                }
-            }
-            $parent = $res['refid'];
+            $tree[] = '<a href="index.php?'. ($res['section_type'] == 1 ? 'type=topics&amp;' : '') .'id=' . $parent . '">' . $res['name'] . '</a>';
+
+            /*if ($res['type'] == 'r' && !empty($res['edit'])) {
+                $allow = intval($res['edit']);
+            }*/
+
+            $parent = $res['parent'];
         }
 
         $tree[] = '<a href="index.php">' . _t('Forum') . '</a>';
         krsort($tree);
 
-        if ($type1['type'] != 't' && $type1['type'] != 'm') {
-            $tree[] = '<b>' . $type1['text'] . '</b>';
-        }
+        $tree[] = '<b>' . $type1['name'] . '</b>';
+
 
         // Счетчик файлов и ссылка на них
         $sql = ($systemUser->rights == 9) ? "" : " AND `del` != '1'";
 
-        if ($type1['type'] == 'f') {
-            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = '$id'" . $sql)->fetchColumn();
-
-            if ($count > 0) {
-                $filelink = '<a href="index.php?act=files&amp;c=' . $id . '">' . _t('Category Files') . '</a>';
-            }
-        } elseif ($type1['type'] == 'r') {
-            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '$id'" . $sql)->fetchColumn();
-
-            if ($count > 0) {
-                $filelink = '<a href="index.php?act=files&amp;s=' . $id . '">' . _t('Section Files') . '</a>';
-            }
-        } elseif ($type1['type'] == 't') {
+        if ($show_type == 'topic') {
             $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `topic` = '$id'" . $sql)->fetchColumn();
 
             if ($count > 0) {
                 $filelink = '<a href="index.php?act=files&amp;t=' . $id . '">' . _t('Topic Files') . '</a>';
+            }
+        } elseif ($type1['section_type'] == 0) {
+            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `cat` = ". $type1['id'] . $sql)->fetchColumn();
+
+            if ($count > 0) {
+                $filelink = '<a href="index.php?act=files&amp;c=' . $id . '">' . _t('Category Files') . '</a>';
+            }
+        } elseif ($type1['section_type'] == 1) {
+            $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `subcat` = '$id'" . $sql)->fetchColumn();
+
+            if ($count > 0) {
+                $filelink = '<a href="index.php?act=files&amp;s=' . $id . '">' . _t('Section Files') . '</a>';
             }
         }
 
@@ -286,23 +326,24 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         // Счетчик "Кто в теме?"
         $wholink = false;
 
-        if ($systemUser->isValid() && $type1['type'] == 't') {
-            $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
-            $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
-            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online_u . '&#160;/&#160;' . $online_g . ')</span><br>';
+        if ($systemUser->isValid() && $show_type == 'topic') {
+            $online = $db->query("SELECT (
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic') AS online_g")->fetch();
+            $wholink = '<a href="index.php?act=who&amp;id=' . $id . '">' . _t('Who is here') . '?</a>&#160;<span class="red">(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</span>';
         }
 
         // Выводим верхнюю панель навигации
         echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
-            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') .'</div>';
 
-        switch ($type1['type']) {
-            case 'f':
+        switch ($show_type) {
+            case 'section':
                 ////////////////////////////////////////////////////////////
                 // Список разделов форума                                 //
                 ////////////////////////////////////////////////////////////
-                $req = $db->query("SELECT `id`, `text`, `soft`, `edit` FROM `forum` WHERE `type`='r' AND `refid`='$id' ORDER BY `realid`");
+                $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent`='$id' ORDER BY `sort`");
                 $total = $req->rowCount();
 
                 if ($total) {
@@ -310,15 +351,21 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     while ($res = $req->fetch()) {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                        $coltem = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type` = 't' AND `refid` = '" . $res['id'] . "'")->fetchColumn();
-                        echo '<a href="?id=' . $res['id'] . '">' . $res['text'] . '</a>';
+
+                        if ($res['section_type'] == 1) {
+                            $coltem = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '".$res['id']."'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                        } else {
+                            $coltem = $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '".$res['id']."'")->fetchColumn();
+                        }
+
+                        echo '<a href="?'. ($res['section_type'] == 1 ? 'type=topics&amp;' : '') .'id=' . $res['id'] . '">' . $res['name'] . '</a>';
 
                         if ($coltem) {
                             echo " [$coltem]";
                         }
 
-                        if (!empty($res['soft'])) {
-                            echo '<div class="sub"><span class="gray">' . $res['soft'] . '</span></div>';
+                        if (!empty($res['description'])) {
+                            echo '<div class="sub"><span class="gray">' . $res['description'] . '</span></div>';
                         }
 
                         echo '</div>';
@@ -334,11 +381,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                 break;
 
-            case 'r':
+            case 'topics':
                 ////////////////////////////////////////////////////////////
                 // Список топиков                                         //
                 ////////////////////////////////////////////////////////////
-                $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+                $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
 
                 if (($systemUser->isValid() && !isset($systemUser->ban['1']) && !isset($systemUser->ban['11']) && $config->mod_forum != 4) || $systemUser->rights) {
                     // Кнопка создания новой темы
@@ -346,42 +393,48 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 if ($total) {
-                    $req = $db->query("SELECT * FROM `forum` WHERE `type`='t'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " AND `refid`='$id' ORDER BY `vip` DESC, `time` DESC LIMIT $start, $kmess");
+                    $req = $db->query("SELECT tpc.*, (
+SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = " . $systemUser->id . ") as `np`
+FROM `forum_topic` tpc WHERE `section_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
+ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT $start, $kmess");
                     $i = 0;
 
                     while ($res = $req->fetch()) {
-                        if ($res['close']) {
+                        if ($res['deleted']) {
                             echo '<div class="rmenu">';
                         } else {
                             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         }
 
-                        $nam = $db->query("SELECT `from` FROM `forum` WHERE `type` = 'm' AND `close` != '1' AND `refid` = '" . $res['id'] . "' ORDER BY `time` DESC LIMIT 1")->fetch();
-                        $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m' AND `refid`='" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
-                        $cpg = ceil($colmes / $kmess);
-                        $np = $db->query("SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= '" . $res['time'] . "' AND `topic_id` = '" . $res['id'] . "' AND `user_id` = " . $systemUser->id)->fetchColumn();
                         // Значки
                         $icons = [
-                            ($np ? (!$res['vip'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
-                            ($res['vip'] ? $tools->image('pt.gif') : ''),
-                            ($res['realid'] ? $tools->image('rate.gif') : ''),
-                            ($res['edit'] ? $tools->image('tz.gif') : ''),
+                            ($res['np'] ? (!$res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
+                            ($res['pinned'] ? $tools->image('pt.gif') : ''),
+                            ($res['has_poll'] ? $tools->image('rate.gif') : ''),
+                            ($res['closed'] ? $tools->image('tz.gif') : ''),
                         ];
                         echo implode('', array_filter($icons));
-                        echo '<a href="index.php?id=' . $res['id'] . '">' . (empty($res['text']) ? '-----' : $res['text']) . '</a> [' . $colmes . ']';
 
+                        $post_count = $systemUser->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
+                        echo '<a href="index.php?type=topic&amp;id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a> [' . $post_count . ']';
+
+                        $cpg = ceil($post_count / $kmess);
                         if ($cpg > 1) {
-                            echo '<a href="index.php?id=' . $res['id'] . '&amp;page=' . $cpg . '">&#160;&gt;&gt;</a>';
+                            echo '<a href="index.php?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg . '">&#160;&gt;&gt;</a>';
                         }
 
                         echo '<div class="sub">';
-                        echo $res['from'];
+                        echo $res['user_name'];
 
-                        if (!empty($nam['from'])) {
-                            echo '&#160;/&#160;' . $nam['from'];
+                        $last_author = $systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
+
+                        if (!empty($last_author)) {
+                            echo '&#160;/&#160;' . $last_author;
                         }
 
-                        echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span></div></div>';
+                        $last_post_date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
+
+                        echo ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span></div></div>';
                         ++$i;
                     }
                     unset($_SESSION['fsort_id']);
@@ -393,15 +446,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
                 if ($total > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?type=topics&id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
+                        '<p><form action="index.php?type=topics&id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
                 }
                 break;
 
-            case 't':
+
+            case 'topic':
                 ////////////////////////////////////////////////////////////
                 // Показываем тему с постами                              //
                 ////////////////////////////////////////////////////////////
@@ -420,21 +474,30 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         }
 
                         $sortid = intval($val);
-                        $sql .= "`forum`.`user_id` = '$sortid'";
+                        $sql .= "`forum_messages`.`user_id` = '$sortid'";
                         $sw = 1;
                     }
                     $sql .= ')';
                 }
 
                 // Если тема помечена для удаления, разрешаем доступ только администрации
-                if ($systemUser->rights < 6 && $type1['close'] == 1) {
-                    echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?id=' . $type1['refid'] . '">' . _t('Go to Section') . '</a></p></div>';
+                if ($systemUser->rights < 6 && $type1['deleted'] == 1) {
+                    echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?type=topics&amp;id=' . $type1['section_id'] . '">' . _t('Go to Section') . '</a></p></div>';
                     require('../system/end.php');
                     exit;
                 }
 
+                $view_count = intval($type1['view_count']);
+                // Фиксируем количество просмотров топика
+                if (!empty($type1['id']) && (empty($_SESSION['viewed_topics']) || !in_array($type1['id'], $_SESSION['viewed_topics']))) {
+                    $view_count = intval($type1['view_count']) + 1;
+                    $db->query("UPDATE forum_topic SET view_count = ".$view_count." WHERE id = ".$type1['id']);
+                    $_SESSION['viewed_topics'][] = $type1['id'];
+                }
+
+
                 // Счетчик постов темы
-                $colmes = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='m'$sql AND `refid`='$id'" . ($systemUser->rights >= 7 ? '' : " AND `close` != '1'"))->fetchColumn();
+                $colmes = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id`='$id'$sql" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)"))->fetchColumn();
 
                 if ($start >= $colmes) {
                     // Исправляем запрос на несуществующую страницу
@@ -442,33 +505,34 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Выводим название топика
-                echo '<div class="phdr"><a href="#down">' . $tools->image('down.png', ['class' => '']) . '</a>&#160;&#160;<b>' . (empty($type1['text']) ? '-----' : $type1['text']) . '</b></div>';
+                echo '<div class="phdr"><a href="#down">' . $tools->image('down.png', ['class' => '']) . '</a>&#160;&#160;<b>' . (empty($type1['name']) ? '-----' : $type1['name']) . '</b></div>';
 
                 if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>';
                 }
 
                 // Метка удаления темы
-                if ($type1['close']) {
-                    echo '<div class="rmenu">' . _t('Topic deleted by') . ': <b>' . $type1['close_who'] . '</b></div>';
-                } elseif (!empty($type1['close_who']) && $systemUser->rights >= 7) {
-                    echo '<div class="gmenu"><small>' . _t('Undelete topic') . ': <b>' . $type1['close_who'] . '</b></small></div>';
+                if ($type1['deleted']) {
+                    echo '<div class="rmenu">' . _t('Topic deleted by') . ': <b>' . $type1['deleted_by'] . '</b></div>';
+                } elseif (!empty($type1['deleted_by']) && $systemUser->rights >= 7) {
+                    echo '<div class="gmenu"><small>' . _t('Undelete topic') . ': <b>' . $type1['deleted_by'] . '</b></small></div>';
                 }
 
                 // Метка закрытия темы
-                if ($type1['edit']) {
+                if ($type1['closed']) {
                     echo '<div class="rmenu">' . _t('Topic closed') . '</div>';
                 }
 
                 // Блок голосований
-                if ($type1['realid']) {
+                if ($type1['has_poll']) {
                     $clip_forum = isset($_GET['clip']) ? '&amp;clip' : '';
-                    $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $systemUser->id . "' AND `topic`='$id'")->fetchColumn();
-                    $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id' LIMIT 1")->fetch();
+                    $topic_vote = $db->query("SELECT `fvt`.`name`, `fvt`.`time`, `fvt`.`count`, (
+SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user`='" . $systemUser->id . "' AND `topic`='" . $id . "') as vote_user
+FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . "' LIMIT 1")->fetch();
                     echo '<div  class="gmenu"><b>' . $tools->checkout($topic_vote['name']) . '</b><br />';
                     $vote_result = $db->query("SELECT `id`, `name`, `count` FROM `cms_forum_vote` WHERE `type`='2' AND `topic`='" . $id . "' ORDER BY `id` ASC");
 
-                    if (!$type1['edit'] && !isset($_GET['vote_result']) && $systemUser->isValid() && $vote_user == 0) {
+                    if (!$type1['closed'] && !isset($_GET['vote_result']) && $systemUser->isValid() && $topic_vote['vote_user'] == 0) {
                         // Выводим форму с опросами
                         echo '<form action="index.php?act=vote&amp;id=' . $id . '" method="post">';
 
@@ -476,19 +540,38 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             echo '<input type="radio" value="' . $vote['id'] . '" name="vote"/> ' . $tools->checkout($vote['name'], 0, 1) . '<br />';
                         }
 
-                        echo '<p><input type="submit" name="submit" value="' . _t('Vote') . '"/><br /><a href="index.php?id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
+                        echo '<p><input type="submit" name="submit" value="' . _t('Vote') . '"/><br /><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
                             '">' . _t('Results') . '</a></p></form></div>';
                     } else {
                         // Выводим результаты голосования
-                        echo '<small>';
+                        ?>
+                        <div class="vote-results">
+                            <?php
+                            while ($vote = $vote_result->fetch()) {
+                                $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
+                                $color = '';
+                                if($count_vote > 0 && $count_vote <= 25) {
+                                    $color = 'progress-bg-green';
+                                } elseif($count_vote > 25 && $count_vote <= 50) {
+                                    $color = 'progress-bg-blue';
+                                } elseif ($count_vote > 50 && $count_vote <= 75) {
+                                    $color = 'progress-bg-yellow';
+                                } elseif ($count_vote > 75 && $count_vote <= 100) {
+                                    $color = 'progress-bg-red';
+                                }
+                                ?>
+                                <div class="vote-name">
+                                    <?= ($tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']') ?>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar <?= $color ?>" style="width: <?=$count_vote ?>%"><?= $count_vote ?>%</div>
+                                </div>
+                                <?php
+                            }?>
+                        </div>
+                        <?php
 
-                        while ($vote = $vote_result->fetch()) {
-                            $count_vote = $topic_vote['count'] ? round(100 / $topic_vote['count'] * $vote['count']) : 0;
-                            echo $tools->checkout($vote['name'], 0, 1) . ' [' . $vote['count'] . ']<br />';
-                            echo '<img src="vote_img.php?img=' . $count_vote . '" alt="' . _t('Rating') . ': ' . $count_vote . '%" /><br />';
-                        }
-
-                        echo '</small></div><div class="bmenu">' . _t('Total votes') . ': ';
+                        echo '</div><div class="bmenu">' . _t('Total votes') . ': ';
 
                         if ($systemUser->rights > 6) {
                             echo '<a href="index.php?act=users&amp;id=' . $id . '">' . $topic_vote['count'] . '</a>';
@@ -498,8 +581,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                         echo '</div>';
 
-                        if ($systemUser->isValid() && $vote_user == 0) {
-                            echo '<div class="bmenu"><a href="index.php?id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . _t('Vote') . '</a></div>';
+                        if ($systemUser->isValid() && $topic_vote['vote_user'] == 0) {
+                            echo '<div class="bmenu"><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . $clip_forum . '">' . _t('Vote') . '</a></div>';
                         }
                     }
                 }
@@ -516,18 +599,18 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                 // Фиксация первого поста в теме
                 if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($colmes - $kmess)) : $start > 0)) || isset($_GET['clip'])) {
-                    $postres = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
-                    FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-                    WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "
-                    ORDER BY `forum`.`id` LIMIT 1")->fetch();
+                    $postres = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+                    FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
+                    WHERE `forum_messages`.`topic_id` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "
+                    ORDER BY `forum_messages`.`id` LIMIT 1")->fetch();
                     echo '<div class="topmenu"><p>';
 
                     if ($systemUser->isValid() && $systemUser->id != $postres['user_id']) {
-                        echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['from'] . '</b></a> ' .
+                        echo '<a href="../profile/?user=' . $postres['user_id'] . '&amp;fid=' . $postres['id'] . '"><b>' . $postres['user_name'] . '</b></a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '"> ' . _t('[r]') . '</a> ' .
                             '<a href="index.php?act=say&amp;id=' . $postres['id'] . '&amp;start=' . $start . '&amp;cyt"> ' . _t('[q]') . '</a> ';
                     } else {
-                        echo '<b>' . $postres['from'] . '</b> ';
+                        echo '<b>' . $postres['user_name'] . '</b> ';
                     }
 
                     $user_rights = [
@@ -538,16 +621,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     ];
                     echo @$user_rights[$postres['rights']];
                     echo(time() > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
-                    echo ' <span class="gray">(' . $tools->displayDate($postres['time']) . ')</span><br>';
+                    echo ' <span class="gray">(' . $tools->displayDate($postres['date']) . ')</span><br>';
 
-                    if ($postres['close']) {
+                    if ($postres['deleted']) {
                         echo '<span class="red">' . _t('Post deleted') . '</span><br>';
                     }
 
                     echo $tools->checkout(mb_substr($postres['text'], 0, 500), 0, 2);
 
                     if (mb_strlen($postres['text']) > 500) {
-                        echo '...<a href="index.php?act=post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
+                        echo '...<a href="index.php?act=show_post&amp;id=' . $postres['id'] . '">' . _t('Read more') . '</a>';
                     }
 
                     echo '</p></div>';
@@ -569,15 +652,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 // Основной запрос в базу, получаем список постов темы    //
                 ////////////////////////////////////////////////////////////
                 $req = $db->query("
-                  SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
-                  FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-                  WHERE `forum`.`type` = 'm' AND `forum`.`refid` = '$id'"
-                    . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . "$sql
-                  ORDER BY `forum`.`id` $order LIMIT $start, $kmess
+                  SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`, (
+                  SELECT COUNT(*) FROM `cms_forum_files` WHERE `post` = forum_messages.id) as file
+                  FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
+                  WHERE `forum_messages`.`topic_id` = '$id'"
+                    . ($systemUser->rights >= 7 ? "" : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "$sql
+                  ORDER BY `forum_messages`.`id` $order LIMIT $start, $kmess
                 ");
 
                 // Верхнее поле "Написать"
-                if (($systemUser->isValid() && !$type1['edit'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && $set_forum['upfp'])) {
+                if (($systemUser->isValid() && !$type1['closed'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && $set_forum['upfp'])) {
                     echo '<div class="gmenu"><form name="form1" action="index.php?act=say&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
@@ -607,7 +691,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 ////////////////////////////////////////////////////////////
                 while ($res = $req->fetch()) {
                     // Фон поста
-                    if ($res['close']) {
+                    if ($res['deleted']) {
                         echo '<div class="rmenu">';
                     } else {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -617,9 +701,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo '<table cellpadding="0" cellspacing="0"><tr><td>';
 
                     if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-                        echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+                        echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
                     } else {
-                        echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+                        echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
                     }
                     echo '</td><td>';
 
@@ -632,9 +716,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     // Ник юзера и ссылка на его анкету
                     if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
-                        echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
+                        echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> ';
                     } else {
-                        echo '<b>' . $res['from'] . '</b> ';
+                        echo '<b>' . $res['user_name'] . '</b> ';
                     }
 
                     // Метка должности
@@ -650,16 +734,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo(time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
 
                     // Ссылка на пост
-                    echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+                    echo '<a href="index.php?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
                     // Ссылки на ответ и цитирование
                     if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
-                        echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
-                            '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
+                        echo '&#160;<a href="index.php?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
+                            '<a href="index.php?act=say&amp;type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
                     }
 
                     // Время поста
-                    echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br />';
+                    echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
 
                     // Статус пользователя
                     if (!empty($res['status'])) {
@@ -678,15 +762,15 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo $text;
 
                     // Если пост редактировался, показываем кем и когда
-                    if ($res['kedit']) {
-                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['edit'] . '</b> (' . $tools->displayDate($res['tedit']) . ') <b>[' . $res['kedit'] . ']</b></small></span>';
+                    if ($res['edit_count']) {
+                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['editor_name'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                     }
 
                     // Задаем права на редактирование постов
                     if (
                         (($systemUser->rights == 3 || $systemUser->rights >= 6 || $curator) && $systemUser->rights >= $res['rights'])
-                        || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['time'] > time() - 300)
-                        || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['time'] > time() - 300)
+                        || ($res['user_id'] == $systemUser->id && !$set_forum['upfp'] && ($start + $i) == $colmes && $res['date'] > time() - 300)
+                        || ($res['user_id'] == $systemUser->id && $set_forum['upfp'] && $start == 0 && $i == 1 && $res['date'] > time() - 300)
                         || ($i == 1 && $allow == 2 && $res['user_id'] == $systemUser->id)
                     ) {
                         $allowEdit = true;
@@ -695,9 +779,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     }
 
                     // Если есть прикрепленные файлы, выводим их
-                    $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
+                    if ($res['file']) {
+                        $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id'] . "'");
 
-                    if ($freq->rowCount()) {
                         echo '<div class="post-files">';
                         while ($fres = $freq->fetch()) {
                             $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
@@ -712,7 +796,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             ];
 
                             if (in_array($att_ext, $pic_ext)) {
-                                echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+                                echo '<div><a class="image-preview" title="'.$fres['filename'].'" data-source="index.php?act=file&amp;id=' . $fres['id'] . '" href="index.php?act=file&amp;id=' . $fres['id'] . '">';
                                 echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
                             } else {
                                 echo '<br><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
@@ -743,16 +827,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                         // Служебное меню поста
                         $menu = [
                             '<a href="index.php?act=editpost&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
-                            ($systemUser->rights >= 7 && $res['close'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
-                            ($res['close'] == 1 ? '' : '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>'),
+                            ($systemUser->rights >= 7 && $res['deleted'] == 1 ? '<a href="index.php?act=editpost&amp;do=restore&amp;id=' . $res['id'] . '">' . _t('Restore') . '</a>' : ''),
+                            ($res['deleted'] == 1 ? '' : '<a href="index.php?act=editpost&amp;do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>'),
                         ];
                         echo implode(' | ', array_filter($menu));
 
                         // Показываем, кто удалил пост
-                        if ($res['close']) {
-                            echo '<div class="red">' . _t('Post deleted') . ': <b>' . $res['close_who'] . '</b></div>';
-                        } elseif (!empty($res['close_who'])) {
-                            echo '<div class="green">' . _t('Post restored by') . ': <b>' . $res['close_who'] . '</b></div>';
+                        if ($res['deleted']) {
+                            echo '<div class="red">' . _t('Post deleted') . ': <b>' . $res['deleted_by'] . '</b></div>';
+                        } elseif (!empty($res['deleted_by'])) {
+                            echo '<div class="green">' . _t('Post restored by') . ': <b>' . $res['deleted_by'] . '</b></div>';
                         }
 
                         // Показываем IP и Useragent
@@ -760,9 +844,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                             if ($res['ip_via_proxy']) {
                                 echo '<div class="gray"><b class="red"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a></b> - ' .
                                     '<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
-                                    ' - ' . $res['soft'] . '</div>';
+                                    ' - ' . $res['user_agent'] . '</div>';
                             } else {
-                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['soft'] . '</div>';
+                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['user_agent'] . '</div>';
                             }
                         }
 
@@ -780,8 +864,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                 }
 
                 // Нижнее поле "Написать"
-                if (($systemUser->isValid() && !$type1['edit'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && !$set_forum['upfp'])) {
-                    echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;id=' . $id . '" method="post">';
+                if (($systemUser->isValid() && !$type1['closed'] && !$set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($systemUser->rights >= 7 && !$set_forum['upfp'])) {
+                    echo '<div class="gmenu"><form name="form2" action="index.php?act=say&amp;type=post&amp;id=' . $id . '" method="post">';
 
                     if ($set_forum['farea']) {
                         $token = mt_rand(1000, 100000);
@@ -805,8 +889,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                 // Постраничная навигация
                 if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .
-                        '<p><form action="index.php?id=' . $id . '" method="post">' .
+                    echo '<div class="topmenu">' . $tools->displayPagination('index.php?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $kmess) . '</div>' .
+                        '<p><form action="index.php?type=topic&amp;id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                         '</form></p>';
@@ -839,20 +923,20 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
                     echo '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Rename Topic') . '</a><br>';
 
                     // Закрыть - открыть тему
-                    if ($type1['edit'] == 1) {
+                    if ($type1['closed'] == 1) {
                         echo '<a href="index.php?act=close&amp;id=' . $id . '">' . _t('Open Topic') . '</a><br>';
                     } else {
                         echo '<a href="index.php?act=close&amp;id=' . $id . '&amp;closed">' . _t('Close Topic') . '</a><br>';
                     }
 
                     // Удалить - восстановить тему
-                    if ($type1['close'] == 1) {
+                    if ($type1['deleted'] == 1) {
                         echo '<a href="index.php?act=restore&amp;id=' . $id . '">' . _t('Restore Topic') . '</a><br>';
                     }
 
                     echo '<a href="index.php?act=deltema&amp;id=' . $id . '">' . _t('Delete Topic') . '</a><br>';
 
-                    if ($type1['vip'] == 1) {
+                    if ($type1['pinned'] == 1) {
                         echo '<a href="index.php?act=vip&amp;id=' . $id . '">' . _t('Unfix Topic') . '</a>';
                     } else {
                         echo '<a href="index.php?act=vip&amp;id=' . $id . '&amp;vip">' . _t('Pin Topic') . '</a>';
@@ -860,6 +944,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 
                     echo '<br><a href="index.php?act=per&amp;id=' . $id . '">' . _t('Move Topic') . '</a></div></p>';
                 }
+
+                echo '<div>'._t('Views') . ': ' . $view_count .'</div>';
 
                 // Ссылка на список "Кто в теме"
                 if ($wholink) {
@@ -890,24 +976,26 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         echo '<p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
             '<div class="topmenu"><a href="search.php">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
-        $req = $db->query("SELECT `id`, `text`, `soft` FROM `forum` WHERE `type`='f' ORDER BY `realid`");
+        $req = $db->query("SELECT sct.`id`, sct.`name`, sct.`description`, (
+SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
+FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`");
         $i = 0;
 
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            $count = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='r' AND `refid`='" . $res['id'] . "'")->fetchColumn();
-            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['text'] . '</a> [' . $count . ']';
+            echo '<a href="index.php?id=' . $res['id'] . '">' . $res['name'] . '</a> [' . $res['cnt'] . ']';
 
-            if (!empty($res['soft'])) {
-                echo '<div class="sub"><span class="gray">' . $res['soft'] . '</span></div>';
+            if (!empty($res['description'])) {
+                echo '<div class="sub"><span class="gray">' . $res['description'] . '</span></div>';
             }
 
             echo '</div>';
             ++$i;
         }
-        $online_u = $db->query("SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
-        $online_g = $db->query("SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%'")->fetchColumn();
-        echo '<div class="phdr">' . ($systemUser->isValid() ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online_u . '&#160;/&#160;' . $online_g . ')</div>';
+        $online = $db->query("SELECT (
+SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_u, (
+SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum%') AS online_g")->fetch();
+        echo '<div class="phdr">' . ($systemUser->isValid() ? '<a href="index.php?act=who">' . _t('Who in Forum') . '</a>' : _t('Who in Forum')) . '&#160;(' . $online['online_u'] . '&#160;/&#160;' . $online['online_g'] . ')</div>';
         unset($_SESSION['fsort_id']);
         unset($_SESSION['fsort_users']);
     }

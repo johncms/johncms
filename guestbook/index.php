@@ -15,6 +15,10 @@ define('_IN_JOHNCMS', 1);
 $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
+// Сюда можно (через запятую) добавить ID тех юзеров, кто не в администрации,
+// но которым разрешено читать и писать в Админ клубе
+$guestAccess = [];
+
 $headmod = 'guestbook';
 require('../system/bootstrap.php');
 
@@ -48,7 +52,7 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Проверяем права доступа в Админ-Клуб
-if (isset($_SESSION['ga']) && $systemUser->rights < 1) {
+if (isset($_SESSION['ga']) && $systemUser->rights < 1 && !in_array($systemUser->id, $guestAccess)) {
     unset($_SESSION['ga']);
 }
 
@@ -124,7 +128,7 @@ switch ($act) {
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $flood = time() - $res['time'];
+                $flood = 60 - (time() - $res['time']);
             }
         }
 
@@ -307,7 +311,7 @@ switch ($act) {
 
     case 'ga':
         // Переключение режима работы Гостевая / Админ-клуб
-        if ($systemUser->rights >= 1) {
+        if ($systemUser->rights >= 1 || in_array($systemUser->id, $guestAccess)) {
             if (isset($_GET['do']) && $_GET['do'] == 'set') {
                 $_SESSION['ga'] = 1;
             } else {
@@ -323,7 +327,7 @@ switch ($act) {
 
         echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
 
-        if ($systemUser->rights > 0) {
+        if ($systemUser->rights > 0 || in_array($systemUser->id, $guestAccess)) {
             $menu = [
                 isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
                 isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
@@ -365,7 +369,7 @@ switch ($act) {
         }
 
         if ($total) {
-            if (isset($_SESSION['ga']) && $systemUser->rights >= "1") {
+            if (isset($_SESSION['ga']) && ($systemUser->rights >= 1 || in_array($systemUser->id, $guestAccess))) {
                 // Запрос для Админ клуба
                 echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`

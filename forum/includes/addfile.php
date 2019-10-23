@@ -36,17 +36,17 @@ if (!$id || !$systemUser->isValid()) {
 }
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
-$res = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
+$res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id'")->fetch();
 
-if ($res['type'] != 'm' || $res['user_id'] != $systemUser->id) {
+if (empty($res) || $res['user_id'] != $systemUser->id) {
     echo $tools->displayError(_t('Wrong data'));
     require('../system/end.php');
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
-if ($res['time'] < (time() - 3600)) {
-    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
+if ($res['date'] < (time() - 3600)) {
+    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
     require('../system/end.php');
     exit;
 }
@@ -139,17 +139,17 @@ if (isset($_POST['submit'])) {
             }
 
             // Определяем ID субкатегории и категории
-            $res2 = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-            $res3 = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res2['refid'] . "'")->fetch();
+            $res2 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+            $res3 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res2['section_id'] . "'")->fetch();
 
             // Заносим данные в базу
             $db->exec("
               INSERT INTO `cms_forum_files` SET
-              `cat` = '" . $res3['refid'] . "',
-              `subcat` = '" . $res2['refid'] . "',
-              `topic` = '" . $res['refid'] . "',
+              `cat` = '" . $res3['parent'] . "',
+              `subcat` = '" . $res2['section_id'] . "',
+              `topic` = '" . $res['topic_id'] . "',
               `post` = '$id',
-              `time` = '" . $res['time'] . "',
+              `time` = '" . $res['date'] . "',
               `filename` = " . $db->quote($fname) . ",
               `filetype` = '$type'
             ");
@@ -160,9 +160,9 @@ if (isset($_POST['submit'])) {
         echo  $tools->displayError(_t('Error uploading file'), '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
     }
 
-    $pa2 = $db->query("SELECT `id` FROM `forum` WHERE `type` = 'm' AND `refid` = '" . $res['refid'] . "'")->rowCount();
+    $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
     $page = ceil($pa2 / $kmess);
-    echo '<br><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
+    echo '<br><a href="index.php?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки
     echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>'

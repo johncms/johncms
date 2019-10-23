@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /*
  * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
  *
@@ -12,14 +15,31 @@
 
 namespace Johncms;
 
+use PDO;
+
 class Cleanup
 {
-    public function __construct(\PDO $db)
-    {
-        $db->exec('DELETE FROM `cms_sessions` WHERE `lastdate` < ' . (time() - 86400));
-        $db->exec("DELETE FROM `cms_users_iphistory` WHERE `time` < " . (time() - 7776000));
-        $db->query('OPTIMIZE TABLE `cms_sessions`, `cms_users_iphistory`, `cms_mail`, `cms_contact`');
+    /**
+     * @var PDO
+     */
+    private $pdo;
 
-        return true;
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+
+        // Очищаем таблицу `cms_sessions`
+        $this->cleanupTable('cms_sessions', 'lastdate', time() - 86400);
+
+        // Очищаем таблицу `cms_users_iphistory`
+        $this->cleanupTable('cms_users_iphistory', 'time', time() - 7776000);
+    }
+
+    private function cleanupTable(string $table, string $timestampField, int $condition): void
+    {
+        $this->pdo->query('LOCK TABLE `' . $table . '` WRITE');
+        $this->pdo->query('DELETE FROM `' . $table . '` WHERE `' . $timestampField . '` < ' . $condition);
+        $this->pdo->query('OPTIMIZE TABLE `' . $table . '`');
+        $this->pdo->query('UNLOCK TABLES');
     }
 }

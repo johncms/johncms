@@ -67,31 +67,31 @@ switch ($mod) {
 
     case 'topic':
         // Список тем Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Themes') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 't'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             $i = 0;
 
             while ($res = $req->fetch()) {
-                $post = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` ASC LIMIT 1")->fetch();
-                $section = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                $category = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $section['refid'] . "'")->fetch();
+                $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` ASC LIMIT 1")->fetch();
+                $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
+                $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
                 echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $res['id'] . '">' . $res['text'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?id=' . $res['id'] . '"> &gt;&gt;</a>' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
+                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['text'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $section['id'] . '">' . $section['text'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['last_post_date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -102,33 +102,33 @@ switch ($mod) {
 
     default:
         // Список постов Форума
-        $total = $db->query("SELECT COUNT(*) FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm'" . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'"))->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)"))->fetchColumn();
         echo '<div class="phdr"><b>' . _t('Forum') . '</b>: ' . _t('Messages') . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum` WHERE `user_id` = '" . $user['id'] . "' AND `type` = 'm' " . ($systemUser->rights >= 7 ? '' : " AND `close`!='1'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' " . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             $i = 0;
 
             while ($res = $req->fetch()) {
-                $topic = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                $section = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $topic['refid'] . "'")->fetch();
-                $category = $db->query("SELECT * FROM `forum` WHERE `id` = '" . $section['refid'] . "'")->fetch();
+                $topic = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+                $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $topic['section_id'] . "'")->fetch();
+                $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($res['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
                 echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $topic['id'] . '">' . $topic['text'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
+                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['text'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $section['id'] . '">' . $section['text'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
+                    '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }

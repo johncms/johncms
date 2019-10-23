@@ -667,4 +667,38 @@ class Tools implements Api\ToolsInterface
 
         return strtr($str, $replace);
     }
+
+
+
+    /**
+     * Метод для пересчета сообщений в топике и обновления основных данных топика
+     *
+     * @param $topic_id
+     */
+    public function recountForumTopic($topic_id)
+    {
+        $topic_id = intval($topic_id);
+        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id'")->fetchColumn();
+
+        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch();
+        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' ORDER BY id DESC LIMIT 1")->fetch();
+
+        // Обновляем время топика
+        $this->db->exec("UPDATE `forum_topic` SET
+            `post_count` = '" . $post_count . "',
+            `mod_post_count` = '" . $mod_post_count . "',
+            `last_post_date` = '" . $last_post['date'] . "',
+            `last_post_author` = '" . $last_post['user_id'] . "',
+            `last_post_author_name` = '" . $last_post['user_name'] . "',
+            `last_message_id` = '" . $last_post['id'] . "',
+            `mod_last_post_date` = '" . $mod_last_post['date'] . "',
+            `mod_last_post_author` = '" . $mod_last_post['user_id'] . "',
+            `mod_last_post_author_name` = '" . $mod_last_post['user_name'] . "',
+            `mod_last_message_id` = '" . $mod_last_post['id'] . "'
+            WHERE `id` = '$topic_id'
+        ");
+
+    }
+
 }

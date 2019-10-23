@@ -48,7 +48,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
 } else {
     if (isset($_POST['submit'])) {
         // Загрузка скриншота
-        $handle = new upload($_FILES['screen']);
+        $handle = new \Verot\Upload\Upload($_FILES['screen']);
 
         if ($handle->uploaded) {
             $handle->file_new_name_body = $id;

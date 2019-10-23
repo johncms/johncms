@@ -1,0 +1,1382 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: 2017-04-05 13:59+0400\n"
+"PO-Revision-Date: 2017-04-30 13:45-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Romanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ../..\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"Language: ro_RO\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /admin/default.pot\n"
+
+#: includes/access.php:29 includes/access.php:112 includes/ads.php:222
+#: includes/ads.php:321 includes/ads.php:427 includes/antiflood.php:33
+#: includes/antispy.php:447 includes/antispy.php:458 includes/ban_panel.php:67
+#: includes/ban_panel.php:73 includes/ban_panel.php:115
+#: includes/counters.php:300 includes/counters.php:321 includes/forum.php:755
+#: includes/forum.php:772 includes/ip_whois.php:16 includes/ipban.php:138
+#: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:329
+#: includes/ipban.php:358 includes/ipban.php:363 includes/ipban.php:412
+#: includes/karma.php:44 includes/karma.php:85 includes/languages.php:36
+#: includes/languages.php:88 includes/news.php:29 includes/news.php:79
+#: includes/reg.php:33 includes/reg.php:146 includes/search_ip.php:35
+#: includes/search_ip.php:142 includes/search_ip.php:151
+#: includes/settings.php:29 includes/settings.php:101 includes/smilies.php:24
+#: includes/smilies.php:67 includes/usr.php:27 includes/usr.php:75
+#: includes/usr_adm.php:19 includes/usr_adm.php:72 includes/usr_clean.php:32
+#: includes/usr_del.php:78 index.php:44 index.php:77
+msgid "Admin Panel"
+msgstr "Panou Administrator"
+
+#: includes/access.php:29 index.php:120
+msgid "Permissions"
+msgstr "Permisiuni"
+
+#: includes/access.php:49 includes/antiflood.php:84 includes/karma.php:64
+#: includes/news.php:54 includes/settings.php:50
+msgid "Settings are saved successfully"
+msgstr "Setarile au fost salvate cu sucess"
+
+#: includes/access.php:61 includes/usr_del.php:135 index.php:103
+msgid "Forum"
+msgstr "Forum"
+
+#: includes/access.php:63 includes/access.php:72 includes/access.php:80
+#: includes/access.php:89 includes/access.php:98 includes/access.php:105
+msgid "Access is allowed"
+msgstr "Acessul este permis"
+
+#: includes/access.php:64 includes/access.php:73 includes/access.php:81
+#: includes/access.php:90 includes/access.php:99
+msgid "Only for authorized"
+msgstr "Doar pentru cei autorizati"
+
+#: includes/access.php:65
+msgid "Read only"
+msgstr "Doar de citit"
+
+#: includes/access.php:66 includes/access.php:74 includes/access.php:82
+#: includes/access.php:91 includes/access.php:107
+msgid "Access denied"
+msgstr "Acess interzis"
+
+#: includes/access.php:70
+msgid "Guestbook"
+msgstr "Guestbook"
+
+#: includes/access.php:78
+msgid "Library"
+msgstr "Librarie"
+
+#: includes/access.php:83 includes/access.php:92 includes/news.php:71
+#: includes/usr_del.php:131
+msgid "Comments"
+msgstr "Comentarii"
+
+#: includes/access.php:87
+msgid "Downloads"
+msgstr "Descarcari"
+
+#: includes/access.php:96
+msgid "Community"
+msgstr "Comunitate"
+
+#: includes/access.php:103 includes/ipban.php:127 includes/ipban.php:178
+#: includes/ipban.php:206 includes/ipban.php:313 includes/ipban.php:384
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: includes/access.php:106
+msgid "With moderation"
+msgstr "Cu moderare"
+
+#: includes/access.php:110
+msgid "Administrators always have access to all closed modules and comments"
+msgstr "Administratorii vor avea intotdeauna permisiunea la comentarii si module chiar daca sunt inchise"
+
+#: includes/access.php:111 includes/antiflood.php:109 includes/counters.php:184
+#: includes/forum.php:425 includes/karma.php:83 includes/news.php:76
+#: includes/settings.php:99
+msgid "Save"
+msgstr "Salveaza"
+
+#: includes/ads.php:36 includes/ads.php:221 includes/ads.php:279
+#: includes/ads.php:297 includes/ads.php:321 index.php:105
+msgid "Advertisement"
+msgstr "Reclama"
+
+#: includes/ads.php:36
+msgid "Edit link"
+msgstr "Editeaza link"
+
+#: includes/ads.php:36 includes/ads.php:425
+msgid "Add link"
+msgstr "Adauga link"
+
+#: includes/ads.php:45 includes/counters.php:74 includes/counters.php:127
+#: includes/counters.php:148 includes/counters.php:204
+#: includes/counters.php:248 includes/forum.php:51 includes/forum.php:71
+#: includes/forum.php:79 includes/forum.php:125 includes/forum.php:133
+#: includes/forum.php:235 includes/forum.php:329 includes/ip_whois.php:113
+#: includes/reg.php:39 includes/reg.php:57 includes/reg.php:94
+#: includes/usr_del.php:52
+msgid "Wrong data"
+msgstr "Date gresite"
+
+#: includes/ads.php:45 includes/ads.php:96 includes/antiflood.php:110
+#: includes/counters.php:127 includes/counters.php:148
+#: includes/counters.php:164 includes/counters.php:204
+#: includes/counters.php:238 includes/forum.php:218 includes/forum.php:322
+#: includes/forum.php:427 includes/ip_whois.php:117 includes/ipban.php:47
+#: includes/ipban.php:138 includes/ipban.php:197 includes/ipban.php:230
+#: includes/ipban.php:283 includes/ipban.php:291 includes/ipban.php:298
+#: includes/ipban.php:358 includes/usr_clean.php:91
+msgid "Back"
+msgstr "Inapoi"
+
+#: includes/ads.php:71 includes/counters.php:164 includes/counters.php:238
+msgid "The required fields are not filled"
+msgstr "Campurile necesare nu au fost completate"
+
+#: includes/ads.php:82
+msgid "This place is occupied"
+msgstr "Acest loc este ocupat"
+
+#: includes/ads.php:88
+msgid "Invalid characters"
+msgstr "Caractere invalide"
+
+#: includes/ads.php:91
+msgid "Color is specified incorrectly"
+msgstr "Culoare a fost specificata gresit"
+
+#: includes/ads.php:181
+msgid "Link successfully changed"
+msgstr "Link schimbat cu sucess"
+
+#: includes/ads.php:181
+msgid "Link successfully added"
+msgstr "Link adaugat cu sucess"
+
+#: includes/ads.php:182 includes/antispy.php:435 includes/counters.php:137
+#: includes/ipban.php:340 includes/reg.php:45 includes/reg.php:51
+#: includes/reg.php:69 includes/reg.php:75 includes/reg.php:92
+#: includes/usr_clean.php:75
+msgid "Continue"
+msgstr "Continua"
+
+#: includes/ads.php:186
+msgid "Link"
+msgstr "Link"
+
+#: includes/ads.php:188 includes/ads.php:409
+msgid "Direct Link"
+msgstr "Link Direct"
+
+#: includes/ads.php:189
+msgid "Click statistics won't be counted, If the direct link is turned on"
+msgstr "Statisticile nu vor fi contorizate, daca se utilizeaza Link Direct"
+
+#: includes/ads.php:190 includes/counters.php:170 includes/counters.php:212
+#: includes/forum.php:255 includes/forum.php:306 includes/forum.php:361
+#: includes/forum.php:403 includes/news.php:65
+msgid "Title"
+msgstr "Titlu"
+
+#: includes/ads.php:192
+msgid "To change the name when updating pages, you must wtite names trought the symbol |"
+msgstr "Pentru a schimba numele cand se reincarca pagina, trebuie sa scrii numele cu simbolul |"
+
+#: includes/ads.php:193
+msgid "Color"
+msgstr "Culoare"
+
+#: includes/ads.php:195
+msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
+msgstr "Informatul FFFFFF, daca nu vrei sa folosesti culoare link, lasa aces camp liber"
+
+#: includes/ads.php:196
+msgid "Hits"
+msgstr "Click-uri"
+
+#: includes/ads.php:198
+msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Numarul de click-uri pentru existenta link-ului care vor fi inlaturate automat de pe pagina<br>0 - Nelimitat"
+
+#: includes/ads.php:199 includes/karma.php:79
+msgid "Days"
+msgstr "Zile"
+
+#: includes/ads.php:201
+msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
+msgstr "Numărul de zile pentru existența link-ului care va fi eliminat automat din pagina <br> 0 - nelimitat"
+
+#: includes/ads.php:203 includes/ads.php:374 includes/ads.php:380
+msgid "Show"
+msgstr "Arata"
+
+#: includes/ads.php:204 includes/ads.php:328
+msgid "Everyone"
+msgstr "La oricine"
+
+#: includes/ads.php:205 includes/ads.php:329
+msgid "Guests"
+msgstr "Oaspeti"
+
+#: includes/ads.php:206 includes/ads.php:330 index.php:80 index.php:86
+msgid "Users"
+msgstr "Utilizatori"
+
+#: includes/ads.php:207
+msgid "Location"
+msgstr "Locatia"
+
+#: includes/ads.php:208 includes/ads.php:334
+msgid "Above logo"
+msgstr "Deasupra Logo-ului"
+
+#: includes/ads.php:209 includes/ads.php:335
+msgid "Under menu"
+msgstr "Sub meniu"
+
+#: includes/ads.php:210 includes/ads.php:336
+msgid "Over the counter"
+msgstr "Deasupra contorului"
+
+#: includes/ads.php:211 includes/ads.php:337
+msgid "Under counter"
+msgstr "Sub contor"
+
+#: includes/ads.php:212
+msgid "Layout"
+msgstr "Schema"
+
+#: includes/ads.php:213 includes/ads.php:323
+msgid "All pages"
+msgstr "Toate paginile"
+
+#: includes/ads.php:214 includes/ads.php:324
+msgid "Only on Homepage"
+msgstr "Doar pe prima pagina"
+
+#: includes/ads.php:215 includes/ads.php:325
+msgid "On all, except Homepage"
+msgstr "Pe toate, exceptie Prima pagina"
+
+#: includes/ads.php:216
+msgid "Styling links"
+msgstr "Stilul de link"
+
+#: includes/ads.php:217
+msgid "Bold"
+msgstr "Ingrosat"
+
+#: includes/ads.php:218
+msgid "Italic"
+msgstr "Italic"
+
+#: includes/ads.php:219
+msgid "Underline"
+msgstr "Subliniat"
+
+#: includes/ads.php:220 includes/ads.php:372 includes/counters.php:72
+#: includes/counters.php:312 includes/forum.php:508 includes/forum.php:535
+#: includes/usr.php:58
+msgid "Edit"
+msgstr "Editeaza"
+
+#: includes/ads.php:220 includes/counters.php:211 includes/counters.php:318
+#: includes/forum.php:320 includes/forum.php:544
+msgid "Add"
+msgstr "Adauga"
+
+#: includes/ads.php:279 includes/ads.php:282 includes/ads.php:300
+#: includes/ads.php:373 includes/counters.php:72 includes/counters.php:142
+#: includes/counters.php:144 includes/counters.php:313 includes/forum.php:200
+#: includes/forum.php:214 includes/forum.php:509 includes/forum.php:536
+#: includes/ipban.php:343 includes/reg.php:115 includes/usr.php:58
+#: includes/usr_clean.php:90 includes/usr_del.php:140
+msgid "Delete"
+msgstr "Sterge"
+
+#: includes/ads.php:281
+msgid "Are you sure want to delete link?"
+msgstr "Esti sigur ca vrei sa stergi link-ul?"
+
+#: includes/ads.php:285 includes/ads.php:302 includes/counters.php:145
+#: includes/ipban.php:194 includes/ipban.php:216 includes/ipban.php:265
+#: includes/ipban.php:344 includes/karma.php:40 includes/usr_del.php:147
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: includes/ads.php:297 includes/ads.php:426
+msgid "Delete inactive links"
+msgstr "Sterge link-uri inactive"
+
+#: includes/ads.php:299
+msgid "Are you sure you want to delete all inactive links?"
+msgstr "Esti sigur ca vrei sa stergi toate link-urile inactive?"
+
+#: includes/ads.php:370 includes/counters.php:310 includes/forum.php:506
+#: includes/forum.php:533
+msgid "Up"
+msgstr "Sus"
+
+#: includes/ads.php:371 includes/counters.php:311 includes/forum.php:507
+#: includes/forum.php:534
+msgid "Down"
+msgstr "Jos"
+
+#: includes/ads.php:374
+msgid "Hide"
+msgstr "AScunde"
+
+#: includes/ads.php:378
+msgid "Start date"
+msgstr "Data de inceput"
+
+#: includes/ads.php:379
+msgid "Disposition"
+msgstr "Dispoziţie"
+
+#: includes/ads.php:386 includes/ads.php:389
+msgid "hits"
+msgstr "click-uri"
+
+#: includes/ads.php:403
+msgid "Agreement"
+msgstr "Acord"
+
+#: includes/ads.php:406
+msgid "Remains"
+msgstr "Ramas"
+
+#: includes/ads.php:413 includes/ban_panel.php:102 includes/forum.php:514
+#: includes/forum.php:633 includes/forum.php:729 includes/ipban.php:394
+#: includes/reg.php:127
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: includes/ads.php:416 includes/antispy.php:393 includes/antispy.php:424
+#: includes/ban_panel.php:105 includes/forum.php:636 includes/forum.php:732
+#: includes/ipban.php:137 includes/ipban.php:398 includes/languages.php:86
+#: includes/reg.php:130 includes/search_ip.php:133 includes/smilies.php:66
+#: includes/usr.php:68 includes/usr_adm.php:71 includes/usr_clean.php:89
+msgid "Total"
+msgstr "Total"
+
+#: includes/ads.php:422 includes/ban_panel.php:109 includes/forum.php:642
+#: includes/forum.php:738 includes/ipban.php:403 includes/reg.php:136
+#: includes/search_ip.php:139 includes/usr.php:72
+msgid "To Page"
+msgstr "La pagina"
+
+#: includes/antiflood.php:33
+msgid "Antiflood Settings"
+msgstr "Setari Antiflood"
+
+#: includes/antiflood.php:93
+msgid "Operation mode"
+msgstr "Mod de operare"
+
+#: includes/antiflood.php:94 includes/antiflood.php:96
+#: includes/antiflood.php:103
+msgid "Day"
+msgstr "Ziua"
+
+#: includes/antiflood.php:95 includes/antiflood.php:96
+#: includes/antiflood.php:104
+msgid "Night"
+msgstr "Noaptea"
+
+#: includes/antiflood.php:97
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr "Schimbare automata de la zi la noapte, in functie de timpul setat"
+
+#: includes/antiflood.php:99
+msgid "Adaptive"
+msgstr "Adaptat"
+
+#: includes/antiflood.php:100
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr "Daca unul din administrator este online (pe site), sistemul lucreaza \"ziua\", daca administratorul este offline, se schimba la noapte"
+
+#: includes/antiflood.php:102
+msgid "Time limit"
+msgstr "Limita de timp"
+
+#: includes/antiflood.php:105
+msgid "Min. 4, max. 300 seconds"
+msgstr "Min. 4, max. 300 de secunde"
+
+#: includes/antiflood.php:106
+msgid "Day mode"
+msgstr "Mod de zi"
+
+#: includes/antiflood.php:107
+msgid "Beginning of day"
+msgstr "Ziua incepe la"
+
+#: includes/antiflood.php:108
+msgid "End of day"
+msgstr "Ziua se termina la"
+
+#: includes/antispy.php:384 includes/antispy.php:404 includes/antispy.php:430
+#: includes/antispy.php:447 index.php:128
+msgid "Anti-Spyware"
+msgstr "Anti-Spyware"
+
+#: includes/antispy.php:384 includes/antispy.php:449
+msgid "Distributive scan"
+msgstr "Scanare distributiva"
+
+#: includes/antispy.php:387
+msgid "Distributive contains complementary files<br>Warning! If the files listed below does not pertain to your additional modules and you are not assured of their safety, remove them. They can be dangerous for your site."
+msgstr "Distributiv conține fișiere complementare <br> Atenție! În cazul în care fișierele enumerate mai jos nu se referă la modulele suplimentare și nu sunteți siguri de siguranța lor, scoateți-le. Ele pot fi periculoase pentru site."
+
+#: includes/antispy.php:395
+msgid "<h3>EXCELLENT!!!</h3>List of files corresponds to the distributive"
+msgstr "<h3>EXCELENT!!!</h3>Lista de fisiere corespunde cu originalul"
+
+#: includes/antispy.php:398
+msgid "Rescan"
+msgstr "Scaneaza din nou"
+
+#: includes/antispy.php:404 includes/antispy.php:451
+msgid "Snapshot scan"
+msgstr "Sanare instantanee"
+
+#: includes/antispy.php:410
+msgid "Snapshot is not created"
+msgstr "Sanareainstantanee nu este creeata"
+
+#: includes/antispy.php:410 includes/antispy.php:430 includes/antispy.php:439
+#: includes/antispy.php:453
+msgid "Create snapshot"
+msgstr "Creeaza scanare instantanee"
+
+#: includes/antispy.php:413
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr "Instantaneu incoerent<br>Atentie! Trebuie sa acorzi o atentie fisierelor din lista. Ele au fost modificate sau adaugate de la ultima imagine creeata."
+
+#: includes/antispy.php:421
+msgid "Excellent!<br>All files are consistent with previously made image."
+msgstr "Excelent!<br>Toate fisierele sunt la fel cu cele din versiunea anterioara."
+
+#: includes/antispy.php:434
+msgid "Snapshot successfully created"
+msgstr "Instantaneu creeat cu sucess"
+
+#: includes/antispy.php:438
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr "ATENTIE!!<br>Inainte de a continua ai grija ca toate fisierele sa fie identificate in modul scanare si ca nu contin modificari neutorizate."
+
+#: includes/antispy.php:441
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr "Aceasta procedura creeaza o lista a fisierelor din script, calculeaza suma si le scrie in baza de date, pentru o comparatie tarzie."
+
+#: includes/antispy.php:448
+msgid "Scan mode"
+msgstr "Mod scanare"
+
+#: includes/antispy.php:450
+msgid "Files identification which are not included in the original distributive"
+msgstr "Identificarea fisierelor care nu sunt incluse in scriptul original"
+
+#: includes/antispy.php:452
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr "Se compară lista de fișiere și suma cu modul deja făcut. Vă permite să identificați fișierele necunoscute și modificările neautorizate."
+
+#: includes/antispy.php:454
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
+msgstr "Efectueaza un instantaneu tuturor fisierelor din script ale site-ului ,calculeaza suma si le stocheaza in baza de date."
+
+#: includes/antispy.php:458
+msgid "Scanner menu"
+msgstr "Meniu scanare"
+
+#: includes/ban_panel.php:32
+msgid "Amnesty is available for supervisors only"
+msgstr "Amnistitia este valabila doar pentru Administratorii principali"
+
+#: includes/ban_panel.php:34 includes/ban_panel.php:67
+#: includes/ban_panel.php:73 index.php:89
+msgid "Ban Panel"
+msgstr "Panou Banari"
+
+#: includes/ban_panel.php:34 includes/ban_panel.php:51
+#: includes/ban_panel.php:62 includes/ban_panel.php:113
+msgid "Amnesty"
+msgstr "Amnistitie"
+
+#: includes/ban_panel.php:42
+msgid "Amnesty has been successful"
+msgstr "Amnistitia a fost creeata cu sucess"
+
+#: includes/ban_panel.php:56
+msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
+msgstr "Toti utilizatorii banati au fost acum debanati (Cu exceptia celor care au la motiv \"pana se anuleaza\")"
+
+#: includes/ban_panel.php:60
+msgid "Unban all"
+msgstr "Debaneaza pe toti"
+
+#: includes/ban_panel.php:61
+msgid "Clear Ban database"
+msgstr "Sterge baza de date banati"
+
+#: includes/ban_panel.php:64
+msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
+msgstr "\"Debanare toti\" - inceteaza toate banarile active<br>\"Sterge baza de date\" - inceteaza toate banarile si sterge tot istoricul banarilor"
+
+#: includes/ban_panel.php:74 includes/usr.php:29
+msgid "Sort"
+msgstr "Sorteaza"
+
+#: includes/ban_panel.php:77 includes/ban_panel.php:79
+msgid "Term"
+msgstr "Termen"
+
+#: includes/ban_panel.php:77 includes/ban_panel.php:79
+msgid "Violations"
+msgstr "Incalcare"
+
+#: includes/ban_panel.php:96
+msgid "Violations history"
+msgstr "Istoric incalcari"
+
+#: includes/counters.php:49 includes/counters.php:142 includes/counters.php:169
+#: includes/counters.php:211 includes/counters.php:300
+#: includes/counters.php:321 index.php:108
+msgid "Counters"
+msgstr "Contoare"
+
+#: includes/counters.php:49 includes/counters.php:225
+msgid "Viewing"
+msgstr "Se afișează"
+
+#: includes/counters.php:51 includes/counters.php:171 includes/counters.php:213
+#: includes/counters.php:217
+msgid "Option 1"
+msgstr "Optiunea 1"
+
+#: includes/counters.php:52 includes/counters.php:172 includes/counters.php:214
+#: includes/counters.php:218
+msgid "Option 2"
+msgstr "Optiunea 2"
+
+#: includes/counters.php:53 includes/counters.php:215
+msgid "Display mode"
+msgstr "Modul de afișare"
+
+#: includes/counters.php:57
+msgid "On all pages showing option 1"
+msgstr "Pe toate paginile arata optiunea 1"
+
+#: includes/counters.php:61
+msgid "On all pages showing option 2"
+msgstr "Pe toate paginile arata optiunea 2"
+
+#: includes/counters.php:65
+msgid "On the main showing option 1, on the other pages option 2"
+msgstr "Pe pagina princilapa arata optiunea 1, si pe alte pagini optiunea 2"
+
+#: includes/counters.php:70
+msgid "Disable"
+msgstr "Dezactiveaza"
+
+#: includes/counters.php:71
+msgid "Enable"
+msgstr "Activeaza"
+
+#: includes/counters.php:137
+msgid "Counter deleted"
+msgstr "Contoar sters"
+
+#: includes/counters.php:144 includes/forum.php:212
+msgid "Do you really want to delete?"
+msgstr "Esti sigur ca vrei sa stergi?"
+
+#: includes/counters.php:169
+msgid "Preview"
+msgstr "Previzualizare"
+
+#: includes/counters.php:173
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr "Daca contoarele sunt afisate corect si fara erori, clik pe &quot;Salveaza&quot;.<br>Altfel,click pe butonul Inapoi si corecteaza erorile."
+
+#: includes/counters.php:213
+msgid "Code for main page"
+msgstr "Cod pentru pagina principala"
+
+#: includes/counters.php:214
+msgid "Code for other pages"
+msgstr "Cod pentru alte pagini"
+
+#: includes/counters.php:215 includes/ipban.php:174 includes/languages.php:79
+msgid "Default"
+msgstr "Implicit"
+
+#: includes/counters.php:216
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr "Pe pagina principal arata optiunea 1, pe alte pagini optiunea 2.<br>Daca &quot;optiunea 2&quot; nu este completata, contoarele vor aparea doar pe prima pagina."
+
+#: includes/counters.php:219
+msgid "WARNING!<br>Make sure you have correctly entered the code. It must meet the standard of XML <br> If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "ATENTIE!<br> Ai grija sa introduce codul correct. Trebuie sa indeplineasca standardul XML <br> Daca click pe &quot;Vizualizeaza&quot; si apar erori XHTML, atunci trebuie sa dai click pe butonul &quot;Inapoi&quot; din browser, te intorci la formular si corectezi erorile. "
+
+#: includes/counters.php:295
+msgid "Counter successfully changed"
+msgstr "Contor modificat cu succes"
+
+#: includes/counters.php:295
+msgid "Counter successfully added"
+msgstr "Contor adăugat cu succes"
+
+#: includes/forum.php:51 includes/forum.php:125 includes/forum.php:133
+#: includes/forum.php:235 includes/forum.php:329 includes/forum.php:484
+#: includes/forum.php:546 includes/forum.php:551 includes/forum.php:650
+#: includes/forum.php:755
+msgid "Forum Management"
+msgstr "Administrare Forum"
+
+#: includes/forum.php:60
+msgid "Delete section"
+msgstr "Șterge sectiune"
+
+#: includes/forum.php:60
+msgid "Delete category"
+msgstr "Șterge categorie"
+
+#: includes/forum.php:97 includes/forum.php:210
+msgid "Category deleted"
+msgstr "Categorie stearsa"
+
+#: includes/forum.php:97 includes/forum.php:141
+msgid "All content has been moved to"
+msgstr "Tot continutul a fost mutat la"
+
+#: includes/forum.php:97
+msgid "selected category"
+msgstr "categoria selectata"
+
+#: includes/forum.php:100
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>ATENTIE</h3> Exista subsectiuni. Muta-le in alta categorie."
+
+#: includes/forum.php:101
+msgid "Select category"
+msgstr "Selecteaza categorie"
+
+#: includes/forum.php:108
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Toate categoriile, topicurile și fișierele vor fi mutate în categoria selectată. Categoria veche va fi eliminată."
+
+#: includes/forum.php:109 includes/forum.php:195
+msgid "Move"
+msgstr "Muta"
+
+#: includes/forum.php:113 includes/forum.php:199
+msgid "Complete removal"
+msgstr "Îndepărtare completa"
+
+#: includes/forum.php:113
+msgid "If you want to destroy all the information, first remove"
+msgstr "Dacă doriți ca să distrugeti toate informațiile, mai întâi eliminațile"
+
+#: includes/forum.php:113
+msgid "subsections"
+msgstr "subsecțiuni"
+
+#: includes/forum.php:141 includes/forum.php:210
+msgid "Section deleted"
+msgstr "Secțiunea eliminata"
+
+#: includes/forum.php:141
+msgid "selected section"
+msgstr "secțiunea selectată"
+
+#: includes/forum.php:145 includes/forum.php:569 includes/forum.php:666
+msgid "Access forbidden"
+msgstr "Acess interzis"
+
+#: includes/forum.php:175
+msgid "Section with all contents are removed"
+msgstr "Secțiunea cu tot conținutul au fost eliminate"
+
+#: includes/forum.php:176 includes/forum.php:301
+msgid "Go to category"
+msgstr "Dute la categorie"
+
+#: includes/forum.php:179
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<hr3>ATENTIE!</h3> Exista topicuri in sectiune. Va trebui sa le muti in alta sectiune."
+
+#: includes/forum.php:179
+msgid "Select section"
+msgstr "Selecteaza sectiune"
+
+#: includes/forum.php:188
+msgid "Other category"
+msgstr "Alta categorie"
+
+#: includes/forum.php:195
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Toate topicurile si fisierele vor fi mutate in sectiunea selectata. Sectiunea veche va fi stearsa."
+
+#: includes/forum.php:199
+msgid "WARNING! All the information will be deleted"
+msgstr "ATENTIE! Toate informatiile vor fi sterse"
+
+#: includes/forum.php:251 includes/forum.php:357
+msgid "You have not entered Title"
+msgstr "Nu ai introdus nici un titlu"
+
+#: includes/forum.php:255 includes/forum.php:361
+msgid "Invalid length"
+msgstr "Lungime invalida"
+
+#: includes/forum.php:259 includes/forum.php:365
+msgid "Description should be at least 2 characters in length"
+msgstr "Descriere trebuie sa fie de cel putin 2 caractere"
+
+#: includes/forum.php:298
+msgid "Add Section"
+msgstr "Adauga sectiune"
+
+#: includes/forum.php:298
+msgid "Add Category"
+msgstr "Adauga categorie"
+
+#: includes/forum.php:308 includes/forum.php:405
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 de caractere"
+
+#: includes/forum.php:309 includes/forum.php:406 includes/settings.php:82
+msgid "Description"
+msgstr "Descriere"
+
+#: includes/forum.php:311 includes/forum.php:408
+msgid "Optional field"
+msgstr "Camp optional"
+
+#: includes/forum.php:311 includes/forum.php:408
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 500 de caractere"
+
+#: includes/forum.php:314 includes/forum.php:412
+msgid "Common access"
+msgstr "Acces comun"
+
+#: includes/forum.php:315 includes/forum.php:413
+msgid "Only for reading"
+msgstr "Doar pentru citit"
+
+#: includes/forum.php:316 includes/forum.php:414
+msgid "Allow authors to edit the 1st post"
+msgstr "Permite autorilor sa editeze prima postare"
+
+#: includes/forum.php:317 includes/forum.php:415
+msgid "Assign the newly created authors as curators"
+msgstr "Atribuiți autorii noi creati ca custode"
+
+#: includes/forum.php:351 includes/forum.php:353
+msgid "Category is not chosen"
+msgstr "Categoria nu este selectata"
+
+#: includes/forum.php:400
+msgid "Edit Section"
+msgstr "Editeaza sectiune"
+
+#: includes/forum.php:400
+msgid "Edit Category"
+msgstr "Editeaza categorie"
+
+#: includes/forum.php:416
+msgid "Category"
+msgstr "Categorie"
+
+#: includes/forum.php:484 includes/forum.php:765
+msgid "Forum structure"
+msgstr "Structura forum"
+
+#: includes/forum.php:490
+msgid "List of sections"
+msgstr "Lista de sectiuni"
+
+#: includes/forum.php:518 includes/forum.php:546
+msgid "List of categories"
+msgstr "Lisa de categorii"
+
+#: includes/forum.php:551 includes/forum.php:767
+msgid "Hidden topics"
+msgstr "Topicuri ascunse"
+
+#: includes/forum.php:558 includes/forum.php:661
+msgid "Filter by author"
+msgstr "Filtreaza dupa autor"
+
+#: includes/forum.php:564
+msgid "Filter by section"
+msgstr "Filtreaza dupa sectiune"
+
+#: includes/forum.php:613 includes/forum.php:712
+msgid "Filter"
+msgstr "Filtreaza"
+
+#: includes/forum.php:614
+msgid "by section"
+msgstr "in functie de sectiune"
+
+#: includes/forum.php:615 includes/forum.php:714
+msgid "by author"
+msgstr "in functie de autor"
+
+#: includes/forum.php:629 includes/forum.php:726 includes/reg.php:143
+msgid "Delete all"
+msgstr "Sterge tot"
+
+#: includes/forum.php:650 includes/forum.php:766
+msgid "Hidden posts"
+msgstr "Postari ascunse"
+
+#: includes/forum.php:657
+msgid "Filter by topic"
+msgstr "Filtrat dupa topic"
+
+#: includes/forum.php:713
+msgid "by topic"
+msgstr "dupa topic"
+
+#: includes/forum.php:756
+msgid "Statistic"
+msgstr "Statistici"
+
+#: includes/forum.php:757
+msgid "Categories"
+msgstr "Categorii"
+
+#: includes/forum.php:758
+msgid "Sections"
+msgstr "Sectiuni"
+
+#: includes/forum.php:759
+msgid "Topics"
+msgstr "Topicuri"
+
+#: includes/forum.php:760
+msgid "Messages"
+msgstr "Mesaje"
+
+#: includes/forum.php:761
+msgid "Files"
+msgstr "Fisiere"
+
+#: includes/forum.php:762
+msgid "Votes"
+msgstr "Voturi"
+
+#: includes/forum.php:764
+msgid "Settings"
+msgstr "Setari"
+
+#: includes/forum.php:769
+msgid "Go to Forum"
+msgstr "Du-te in forum"
+
+#: includes/ipban.php:36 includes/ipban.php:271 includes/ipban.php:351
+#: includes/ipban.php:363 index.php:129
+msgid "Ban by IP"
+msgstr "Baneaza pe IP"
+
+#: includes/ipban.php:36 includes/ipban.php:191 includes/ipban.php:213
+msgid "Add Ban"
+msgstr "Adauga ban"
+
+#: includes/ipban.php:46 includes/ipban.php:89 includes/ipban.php:100
+#: includes/ipban.php:229 includes/ipban.php:282 includes/ipban.php:290
+#: includes/search_ip.php:73 includes/search_ip.php:82
+msgid "Invalid IP"
+msgstr "IP invalid"
+
+#: includes/ipban.php:64 includes/search_ip.php:49
+msgid "First IP is entered incorrectly"
+msgstr "Primul IP este introdus gresit"
+
+#: includes/ipban.php:72 includes/search_ip.php:57
+msgid "Second IP is entered incorrectly"
+msgstr "Al doilea IP este introdus gresit"
+
+#: includes/ipban.php:113
+msgid "Address you entered conflicts with other who in the database"
+msgstr "Adresa pe care ai introdus-o intra in conflict cu alta din baza de date"
+
+#: includes/ipban.php:123 includes/ipban.php:174 includes/ipban.php:207
+#: includes/ipban.php:309 includes/ipban.php:380
+msgid "Redirect"
+msgstr "Redirectioneaza"
+
+#: includes/ipban.php:131 includes/ipban.php:182 includes/ipban.php:205
+#: includes/ipban.php:317 includes/ipban.php:388
+msgid "Block"
+msgstr "Blocheaza"
+
+#: includes/ipban.php:150
+msgid "Ban impossible. Your own IP address in the range"
+msgstr "Ban imposibil. IP-ul tau este in aceeasi raza"
+
+#: includes/ipban.php:159
+msgid "Ban range address"
+msgstr "Baneaza raza adresa"
+
+#: includes/ipban.php:163
+msgid "Ban on the subnet mask"
+msgstr "Baneaza masca subnet"
+
+#: includes/ipban.php:167
+msgid "Ban IP address"
+msgstr "Baneaza adresa IP"
+
+#: includes/ipban.php:170 includes/ipban.php:204 includes/ipban.php:305
+msgid "Ban type"
+msgstr "Tipul banarii"
+
+#: includes/ipban.php:174 includes/ipban.php:208
+msgid "Redirect URL"
+msgstr "Adresa de redirectionare"
+
+#: includes/ipban.php:185 includes/ipban.php:211 includes/ipban.php:324
+msgid "Reason"
+msgstr "Motiv"
+
+#: includes/ipban.php:185 includes/ipban.php:324
+msgid "Not specified"
+msgstr "Nespecificat"
+
+#: includes/ipban.php:192
+msgid "Please, check up correctness of the input data"
+msgstr "Te rog, verifica corectitudinea datelor de intrare"
+
+#: includes/ipban.php:202 includes/ipban.php:353
+msgid "IP address"
+msgstr "Adresa IP"
+
+#: includes/ipban.php:210
+msgid "If the ban on Redirect, then specify the URL"
+msgstr "Daca se baneaza cu redirectionare, specifia URL (adresa)"
+
+#: includes/ipban.php:214
+msgid "Example:<br><span class='red'>10.5.7.1</span> - Ban one address<br><span class='red'>10.5.7.1-10.5.7.100</span> - Ban range of address.<br><span class='red'>10.5.*.*</span> - Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr "Exemplu:<br><span class='red'>10.5.7.1</span> - Baneaza o singura adresa<br><span class='red'>10.5.7.1-10.5.7.100</span> - Baneaza o raza de adrese.<br><span class='red'>10.5.*.*</span> - Baneaza o masca. Vor fi banati pe intregul subnet, de la adresele care incep cu 0 si se termina cu 255"
+
+#: includes/ipban.php:263
+msgid "Are you sure you wan to unban all IP?"
+msgstr "Esti sigur ca vrei sa debanezi toate IP-urile?"
+
+#: includes/ipban.php:264
+msgid "Perform"
+msgstr "Efectueaza"
+
+#: includes/ipban.php:271
+msgid "Ban details"
+msgstr "Detalii Ban"
+
+#: includes/ipban.php:297
+msgid "This address not in the database"
+msgstr "Adresa nu este in baza de date"
+
+#: includes/ipban.php:325
+msgid "Who applied the ban?"
+msgstr "Cine a banat?"
+
+#: includes/ipban.php:326
+msgid "Date"
+msgstr "Data"
+
+#: includes/ipban.php:327
+msgid "Time"
+msgstr "Timpul"
+
+#: includes/ipban.php:328
+msgid "Delete Ban"
+msgstr "Sterge Ban"
+
+#: includes/ipban.php:339
+msgid "Ban has been successfully removed"
+msgstr "Ban inlaturat cu succes"
+
+#: includes/ipban.php:342
+msgid "re you sure to remove ban?"
+msgstr "Sigur vrei sa inlaturi ban?"
+
+#: includes/ipban.php:351 includes/ipban.php:355 includes/ipban.php:409
+#: includes/search_ip.php:39
+msgid "Search"
+msgstr "Cauta"
+
+#: includes/ipban.php:356
+msgid "Enter a single address, mask and range are not allowed"
+msgstr "Introdu o singura adresa, masca sau rangul nu sunt permise"
+
+#: includes/ipban.php:397 includes/usr.php:61
+msgid "Ban"
+msgstr "Baneaza"
+
+#: includes/ipban.php:409
+msgid "Unban all IP"
+msgstr "Debaneaza toate IP-urile"
+
+#: includes/karma.php:36
+msgid "Karma is cleared"
+msgstr "Karma a fost stearsa"
+
+#: includes/karma.php:38
+msgid "You really want to clear the Karma?"
+msgstr "Sigur vrei sa stergi Karma?"
+
+#: includes/karma.php:39
+msgid "Clear"
+msgstr "Sterge"
+
+#: includes/karma.php:44 index.php:91
+msgid "Karma"
+msgstr "Karma"
+
+#: includes/karma.php:73
+msgid "Voices per day"
+msgstr "Voci pe zi"
+
+#: includes/karma.php:75
+msgid "Restriction for vote"
+msgstr "Restrictii de votare"
+
+#: includes/karma.php:76
+msgid "Forum posts"
+msgstr "Postari in forum"
+
+#: includes/karma.php:77
+msgid "Stay on site"
+msgstr "A stat pe site"
+
+#: includes/karma.php:78
+msgid "Hours"
+msgstr "Ore"
+
+#: includes/karma.php:80
+msgid "General Settings"
+msgstr "Setari generale"
+
+#: includes/karma.php:81
+msgid "Switch module ON"
+msgstr "Modul de comutare ON"
+
+#: includes/karma.php:82
+msgid "Forbid to vote for the administration"
+msgstr "Interzis a se vota membrii echipei"
+
+#: includes/karma.php:84
+msgid "Clear Karma"
+msgstr "Sterge Karma"
+
+#: includes/languages.php:36
+msgid "Default language"
+msgstr "Limba implicita"
+
+#: includes/languages.php:56
+msgid "Descriptions have been updated successfully"
+msgstr "Descrierea a fost actualizata cu sucess"
+
+#: includes/languages.php:73
+msgid "Select language"
+msgstr "Selecteaza Limba"
+
+#: includes/languages.php:84
+msgid "Apply"
+msgstr "Aplica"
+
+#: includes/languages.php:87
+msgid "Update List"
+msgstr "Actualizeaza lista"
+
+#: includes/news.php:29
+msgid "News on the mainpage"
+msgstr "Stiri pe pagina principala"
+
+#: includes/news.php:63
+msgid "Appearance"
+msgstr "Aspect"
+
+#: includes/news.php:64
+msgid "Title + Text"
+msgstr "Titlu + Text"
+
+#: includes/news.php:66
+msgid "Text"
+msgstr "Text"
+
+#: includes/news.php:67
+msgid "Not to show"
+msgstr "Nu se arata"
+
+#: includes/news.php:68
+msgid "Line breaks"
+msgstr "Intreruperi de linie"
+
+#: includes/news.php:69 includes/smilies.php:24
+msgid "Smilies"
+msgstr "Emoticoane"
+
+#: includes/news.php:70
+msgid "bbCode Tags"
+msgstr "Tag-uri Coduri BB"
+
+#: includes/news.php:72
+msgid "Text size"
+msgstr "Marimea textului"
+
+#: includes/news.php:74
+msgid "Quantity of news"
+msgstr "Cantitatea stirilor"
+
+#: includes/news.php:75
+msgid "How many days to show?"
+msgstr "Cate zile se arata?"
+
+#: includes/news.php:77
+msgid "Reset Settings"
+msgstr "Reseteaza setari"
+
+#: includes/reg.php:33
+msgid "Registration confirmation"
+msgstr "Confirmare inregistrare"
+
+#: includes/reg.php:45 includes/reg.php:51
+msgid "Registration is confirmed"
+msgstr "Inregistrarea a fost confirmata"
+
+#: includes/reg.php:69 includes/usr_del.php:123
+msgid "User deleted"
+msgstr "Utilizator sters"
+
+#: includes/reg.php:75
+msgid "All unconfirmed registrations were removed"
+msgstr "Toate inregistrarile neconfirmate au fost sterse"
+
+#: includes/reg.php:91
+msgid "All unconfirmed registrations with selected IP were deleted"
+msgstr "Toate inregistrarile neconfirmate cu IP-ul selectat au fost sterse"
+
+#: includes/reg.php:114
+msgid "Approve"
+msgstr "Aproba"
+
+#: includes/reg.php:116
+msgid "Remove IP"
+msgstr "Inlatura IP"
+
+#: includes/reg.php:143
+msgid "Confirm all"
+msgstr "Confirma tot"
+
+#: includes/search_ip.php:31
+msgid "Actual IP"
+msgstr "IP Actual"
+
+#: includes/search_ip.php:32
+msgid "IP history"
+msgstr "Istoric IP"
+
+#: includes/search_ip.php:35 index.php:94
+msgid "Search IP"
+msgstr "Cauta IP"
+
+#: includes/search_ip.php:95
+msgid "Search results"
+msgstr "Rezultatele cautarii"
+
+#: includes/search_ip.php:130
+msgid "At your request, nothing found"
+msgstr "La aceasta cautare, nu sa gasit nimic"
+
+#: includes/search_ip.php:142
+msgid "New Search"
+msgstr "Cautare noua"
+
+#: includes/search_ip.php:150
+msgid "<b>Sample queries:</b><br><span class=\"red\">10.5.7.1</span> - Search for a single address<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class=\"red\">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr "<b>interogări de propoziții:</b><span class=\"red\">10.5.7.1</span> - Cautare pentru o singura adresa<br><span class=\"red\">10.5.7.1-10.5.7.100</span> - Cautare o adresa completa (interzis a se folosi simbolul *)<br><span class=\"red\">10.5.*.*</span>Cauta toate adresele.  Vor fi găsite toate subnet, care încep cu 0 și se termină cu 255"
+
+#: includes/settings.php:29 index.php:117
+msgid "System Settings"
+msgstr "Setari Sistem"
+
+#: includes/settings.php:62
+msgid "Common Settings"
+msgstr "Setari comune"
+
+#: includes/settings.php:63
+msgid "Web site address without the slash at the end"
+msgstr "Adresa site-ului fara bara ( / ) la sfarsit"
+
+#: includes/settings.php:64
+msgid "Site copyright"
+msgstr "Drepturi de autor"
+
+#: includes/settings.php:65
+msgid "Site Email"
+msgstr "E-mail Site"
+
+#: includes/settings.php:66
+msgid "Max. file size"
+msgstr "Marime maxima fisier"
+
+#: includes/settings.php:67
+msgid "Gzip compression"
+msgstr "Comprezie Gzip"
+
+#: includes/settings.php:72
+msgid "Time shift"
+msgstr "Trecerea timpului"
+
+#: includes/settings.php:74
+msgid "System Time"
+msgstr "Timp Sistem"
+
+#: includes/settings.php:75
+msgid "Server Time"
+msgstr "Timp Server"
+
+#: includes/settings.php:80
+msgid "META tags"
+msgstr "META taguri"
+
+#: includes/settings.php:81
+msgid "Keywords"
+msgstr "Cuvinte cheie"
+
+#: includes/settings.php:86
+msgid "Themes"
+msgstr "Teme"
+
+#: includes/smilies.php:61
+msgid "Smilie cache updated successfully"
+msgstr "Cache emoticon actializat cu sucess"
+
+#: includes/smilies.php:63
+msgid "Error updating cache"
+msgstr "Eroare actualizare cache"
+
+#: includes/usr.php:27
+msgid "List of Users"
+msgstr "Lista utilizatorilor"
+
+#: includes/usr.php:34 includes/usr.php:40 includes/usr.php:46
+msgid "Nickname"
+msgstr "Nickname"
+
+#: includes/usr_adm.php:19 index.php:87
+msgid "Administration"
+msgstr "Administrare"
+
+#: includes/usr_adm.php:23
+msgid "Supervisors"
+msgstr "Administratori Principali"
+
+#: includes/usr_adm.php:35
+msgid "Administrators"
+msgstr "Adnistratori"
+
+#: includes/usr_adm.php:48
+msgid "Super Moderators"
+msgstr "Super Moderatori"
+
+#: includes/usr_adm.php:61
+msgid "Moderators"
+msgstr "Moderatori"
+
+#: includes/usr_clean.php:32 index.php:88
+msgid "Database cleanup"
+msgstr "Curata baza de date"
+
+#: includes/usr_clean.php:75
+msgid "Inactive profiles deleted"
+msgstr "Profile inactive sterse"
+
+#: includes/usr_clean.php:87
+msgid "Inactive profiles"
+msgstr "Profile inactive"
+
+#: includes/usr_clean.php:88
+msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
+msgstr "Aceasta categorie include profile, inregistrare de mai mult de 6 luni, cu data ultimei vizite de mai mult de 5 luni si cu activitate zero.<br>Se pot sterge in siguranta."
+
+#: includes/usr_del.php:46
+msgid "You cannot delete higher administration"
+msgstr "Nu poti sterge in membru al echipei"
+
+#: includes/usr_del.php:49
+msgid "User does not exists"
+msgstr "Utilizatorul nu exista"
+
+#: includes/usr_del.php:78
+msgid "Delete user"
+msgstr "Sterge utilizator"
+
+#: includes/usr_del.php:128
+msgid "Cleaning activities"
+msgstr "Sterge activitati"
+
+#: includes/usr_del.php:136
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr "Toate subiectele si postarile create de utilizator vor fi puse in modul ascuns"
+
+#: includes/usr_del.php:139
+msgid "Are you sure that you want to delete this user?"
+msgstr "Esti sigur ca vrei sa stergi acest utilizator?"
+
+#: index.php:83
+msgid "On registration"
+msgstr "La inregistrare"
+
+#: index.php:90
+msgid "Antiflood"
+msgstr "Antiflood"
+
+#: index.php:93
+msgid "Search by Nickname"
+msgstr "Cauta dupa Nickname"
+
+#: index.php:102
+msgid "Modules"
+msgstr "Module"
+
+#: index.php:104
+msgid "News"
+msgstr "Stiri"
+
+#: index.php:115
+msgid "System"
+msgstr "Sistem"
+
+#: index.php:118
+msgid "Update Smilies"
+msgstr "Actualizeaza emoticon"
+
+#: index.php:119
+msgid "Language Settings"
+msgstr "Setari Limba"
+
+#: index.php:126
+msgid "Security"
+msgstr "Securitate"
+

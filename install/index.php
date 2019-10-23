@@ -10,11 +10,11 @@
  * @license     GPL-3
  */
 
-const JOHNCMS = '7.1.0';
+const JOHNCMS = '8.0.0';
 
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '5.6', '<')) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 5.6 or higher</div>');
+if (version_compare(PHP_VERSION, '7.1', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.1 or higher</div>');
 }
 
 require '../system/vendor/autoload.php';
@@ -29,7 +29,7 @@ class install
     public static function checkPhpErrors()
     {
         $error = [];
-        if (version_compare(phpversion(), '5.5.0', '<')) {
+        if (version_compare(phpversion(), '7.1.0', '<')) {
             $error[] = 'PHP ' . phpversion();
         }
 
@@ -411,7 +411,8 @@ switch ($act) {
                 $lng_list = [];
 
                 foreach (glob('../system/locale/*/lng.ini') as $val) {
-                    $iso = array_pop(explode('/', dirname($val)));
+                    $tmp = explode('/', dirname($val));
+                    $iso = array_pop($tmp);
                     $desc = parse_ini_file($val);
                     $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
                 }

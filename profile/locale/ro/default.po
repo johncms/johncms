@@ -1,0 +1,1014 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: johncms\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-04-30 13:45-0400\n"
+"Last-Translator: mobiCMS <dev@mobicms.net>\n"
+"Language-Team: Romanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _t;_p:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /profile/default.pot\n"
+"Language: ro_RO\n"
+
+#: includes/activity.php:16 includes/activity.php:34 includes/stat.php:51
+#: index.php:213
+msgid "Activity"
+msgstr "Activitate"
+
+#: includes/activity.php:34 includes/ban.php:205 includes/ban.php:309
+#: includes/edit.php:50 includes/guestbook.php:16 includes/guestbook.php:31
+#: includes/images.php:42 includes/images.php:83 includes/info.php:27
+#: includes/ip.php:41 includes/karma.php:122 includes/karma.php:209
+#: includes/karma.php:220 includes/karma.php:281 includes/office.php:46
+#: includes/password.php:103 includes/reset.php:33 includes/stat.php:27
+#: index.php:120
+msgid "Profile"
+msgstr "Profil"
+
+#: includes/activity.php:36 includes/activity.php:106
+msgid "Messages"
+msgstr "Mesaje"
+
+#: includes/activity.php:37 includes/activity.php:71
+msgid "Themes"
+msgstr "Teme"
+
+#: includes/activity.php:38 includes/activity.php:47 includes/ban.php:163
+#: includes/guestbook.php:44 includes/stat.php:54 includes/stat.php:67
+msgid "Comments"
+msgstr "Comentarii"
+
+#: includes/activity.php:64 includes/activity.php:99 includes/activity.php:136
+#: includes/ban.php:387 includes/ip.php:63 includes/karma.php:198
+#: includes/karma.php:268
+msgid "The list is empty"
+msgstr "Lista este goala"
+
+#: includes/activity.php:71 includes/activity.php:106 includes/ban.php:171
+#: includes/settings.php:45 includes/settings.php:76 includes/stat.php:52
+#: includes/stat.php:65
+msgid "Forum"
+msgstr "Forum"
+
+#: includes/activity.php:140 includes/ban.php:297 includes/ban.php:390
+#: includes/ip.php:66 includes/karma.php:200 includes/karma.php:271
+msgid "Total"
+msgstr "Total"
+
+#: includes/activity.php:146 includes/ban.php:396 includes/ip.php:72
+#: includes/karma.php:206 includes/karma.php:277
+msgid "To Page"
+msgstr "La Pagina"
+
+#: includes/ban.php:38
+msgid "You do not have enought rights to ban this user"
+msgstr "Nu ai permisiunea necesara sa banezi acest utilizator"
+
+#: includes/ban.php:40
+msgid "Ban the User"
+msgstr "Baneaza Utilizator"
+
+#: includes/ban.php:52
+msgid "Reason not specified"
+msgstr "Motivul nu este specificat"
+
+#: includes/ban.php:56
+msgid "There is no required data"
+msgstr "Nu necesita date"
+
+#: includes/ban.php:60
+msgid "You have no rights to ban in this section"
+msgstr "Nu ai nici o permisiune sa banezi in aceasta sectiune"
+
+#: includes/ban.php:64
+msgid "Ban already active"
+msgstr "Ban deja activ"
+
+#: includes/ban.php:138 includes/office.php:84
+msgid "System"
+msgstr "Sistem"
+
+#: includes/ban.php:142 index.php:136
+msgid "Ban"
+msgstr "Ban"
+
+#: includes/ban.php:148
+msgid "User banned"
+msgstr "Utilizator banat"
+
+#: includes/ban.php:155
+msgid "Ban type"
+msgstr "Tipul banarii"
+
+#: includes/ban.php:159
+msgid "Full block"
+msgstr "Blocare totala"
+
+#: includes/ban.php:161
+msgid "Private messages"
+msgstr "Mesaje private"
+
+#: includes/ban.php:165 includes/guestbook.php:16 includes/guestbook.php:31
+#: includes/office.php:49 includes/stat.php:53 includes/stat.php:66
+#: index.php:223
+msgid "Guestbook"
+msgstr "Guestbook"
+
+#: includes/ban.php:176
+msgid "Library"
+msgstr "Librarie"
+
+#: includes/ban.php:179
+msgid "Ban time"
+msgstr "Durata banarii"
+
+#: includes/ban.php:181
+msgid "Minutes (60 max.)"
+msgstr "Minute (max. 60)"
+
+#: includes/ban.php:182
+msgid "Hours (24 max.)"
+msgstr "Ore (max. 24)"
+
+#: includes/ban.php:185
+msgid "Days (30 max.)"
+msgstr "Zile (max. 30)"
+
+#: includes/ban.php:189 includes/ban.php:362
+msgid "Till cancel"
+msgstr "Pana se anuleaza"
+
+#: includes/ban.php:192
+msgid "Reason"
+msgstr "Motiv"
+
+#: includes/ban.php:197
+msgid "Violation"
+msgstr "Incalcare"
+
+#: includes/ban.php:202
+msgid "Apply Ban"
+msgstr "Aplica ban"
+
+#: includes/ban.php:212 includes/ban.php:242 includes/ban.php:250
+#: includes/ban.php:275 skl.php:116
+msgid "Wrong data"
+msgstr "Date invalide"
+
+#: includes/ban.php:221
+msgid "Ban not active"
+msgstr "Banare inactiva"
+
+#: includes/ban.php:225
+msgid "Ban termination"
+msgstr "Terminarea banarii"
+
+#: includes/ban.php:230
+msgid "Ban terminated"
+msgstr "Banare terminata"
+
+#: includes/ban.php:233
+msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
+msgstr "Timpul banarii se apropie de sfarsit. Date vor fi salvate in istoricul bazei de date"
+
+#: includes/ban.php:234
+msgid "Terminate Ban"
+msgstr "Inceteaza banare"
+
+#: includes/ban.php:236 includes/ban.php:272 includes/edit.php:45
+#: includes/info.php:61 includes/karma.php:71 includes/karma.php:126
+#: includes/stat.php:87 skl.php:106
+msgid "Back"
+msgstr "Inapoi"
+
+#: includes/ban.php:256 includes/ban.php:376
+msgid "Delete Ban"
+msgstr "Sterge ban"
+
+#: includes/ban.php:266
+msgid "Ban deleted"
+msgstr "Banare stearsa"
+
+#: includes/ban.php:266 includes/images.php:63 includes/images.php:114
+#: includes/karma.php:103 includes/password.php:81
+msgid "Continue"
+msgstr "Continua"
+
+#: includes/ban.php:269
+msgid "Removing ban along with a record in the bans history"
+msgstr "Inlatura banare impreuna cu istoricul banarii"
+
+#: includes/ban.php:270 includes/edit.php:192 includes/edit.php:207
+#: includes/karma.php:154 includes/karma.php:171 index.php:132
+msgid "Delete"
+msgstr "Sterge"
+
+#: includes/ban.php:283 includes/ban.php:299
+msgid "Violations history"
+msgstr "Istoricul incalcarii"
+
+#: includes/ban.php:288
+msgid "Violations history cleared"
+msgstr "Istoricul incalcarii sters"
+
+#: includes/ban.php:291
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Esti sigur ca vrei sa stergi intregul istoric al incalcarilor a acestui utilizator?"
+
+#: includes/ban.php:292
+msgid "Clear"
+msgstr "Sterge"
+
+#: includes/ban.php:301 includes/ban.php:314
+msgid "Ban Panel"
+msgstr "Panou banari"
+
+#: includes/ban.php:303
+msgid "Violations history can be cleared by Supervisor only"
+msgstr "Istoricul incalcarilor poate fi sters doar de Administratorul Principal"
+
+#: includes/ban.php:309
+msgid "Violations History"
+msgstr "Istoric Incalcari"
+
+#: includes/ban.php:318
+msgid "Clear history"
+msgstr "Sterge istoric"
+
+#: includes/ban.php:328
+msgid "My Violations"
+msgstr "Incalcarile mele"
+
+#: includes/ban.php:358
+msgid "Who applied the Ban?"
+msgstr "Cine a banat?"
+
+#: includes/ban.php:361
+msgid "Time"
+msgstr "Timpul"
+
+#: includes/ban.php:365
+msgid "Remains"
+msgstr "Ramas"
+
+#: includes/ban.php:372
+msgid "Cancel Ban"
+msgstr "Anuleaza Ban"
+
+#: includes/edit.php:15 includes/images.php:15 includes/office.php:108
+#: includes/reset.php:26
+msgid "Edit Profile"
+msgstr "Editeaza Profil"
+
+#: includes/edit.php:32 includes/images.php:31
+msgid "You cannot edit profile of higher administration"
+msgstr "Nu poti edita profilul unui utilizator cu permisiuni mai mari ca ale tale"
+
+#: includes/edit.php:45 includes/settings.php:111 includes/settings.php:194
+msgid "Default settings are set"
+msgstr "Setarile implicite sunt setate"
+
+#: includes/edit.php:50 index.php:122
+msgid "My Profile"
+msgstr "Profilul meu"
+
+#: includes/edit.php:50 includes/info.php:30 index.php:128
+msgid "Edit"
+msgstr "Editeaza"
+
+#: includes/edit.php:55
+msgid "Avatar is successfully removed"
+msgstr "Avatarul a fost inlaturat cu sucess"
+
+#: includes/edit.php:60
+msgid "Photo is successfully removed"
+msgstr "Poza a fost inlaturata cu sucess"
+
+#: includes/edit.php:91
+msgid "Min. nick length 2, max. 20 characters"
+msgstr "Lungime nick min. 2, max. 20 de caractere"
+
+#: includes/edit.php:97
+msgid "Nick contains invalid characters"
+msgstr "Nick-ul contine caractere invalide"
+
+#: includes/edit.php:102
+msgid "Invalid format date of birth"
+msgstr "Data de nastere nu este valida"
+
+#: includes/edit.php:107
+msgid "ICQ number must be at least 5 digits and max. 10"
+msgstr "Numaruk ICQ trebuie sa fie de minim 5 cifre si maxim 10"
+
+#: includes/edit.php:165
+msgid "Data saved"
+msgstr "Date salvate"
+
+#: includes/edit.php:177 skl.php:165
+msgid "Username"
+msgstr "Nume"
+
+#: includes/edit.php:180 includes/edit.php:183
+msgid "Nickname"
+msgstr "Nume utilizator"
+
+#: includes/edit.php:180
+msgid "Min.2, Max. 20"
+msgstr "Min.2, Max. 20"
+
+#: includes/edit.php:181 includes/edit.php:184
+msgid "Status"
+msgstr "Status"
+
+#: includes/edit.php:181
+msgid "Max. 50"
+msgstr "Max. 50"
+
+#: includes/edit.php:187
+msgid "Avatar"
+msgstr "Avatar"
+
+#: includes/edit.php:195 includes/edit.php:210 includes/images.php:74
+#: includes/images.php:127
+msgid "Upload"
+msgstr "Incarca"
+
+#: includes/edit.php:198
+msgid "Select in Catalog"
+msgstr "Selecteaza din Catalog"
+
+#: includes/edit.php:202
+msgid "Photo"
+msgstr "Poza"
+
+#: includes/edit.php:213 includes/info.php:35
+msgid "Personal info"
+msgstr "Informatii personale"
+
+#: includes/edit.php:214
+msgid "Your name"
+msgstr "Numele tau"
+
+#: includes/edit.php:215
+msgid "Date of birth (d.m.y)"
+msgstr "Data de nastere (z.l.a)"
+
+#: includes/edit.php:219 includes/info.php:44
+msgid "City, Country"
+msgstr "Oras, Tara"
+
+#: includes/edit.php:220 includes/info.php:45
+msgid "About myself"
+msgstr "Despre mine"
+
+#: includes/edit.php:221 includes/info.php:47 includes/office.php:95
+#: includes/office.php:99
+msgid "Contacts"
+msgstr "Contacte"
+
+#: includes/edit.php:222 includes/info.php:48
+msgid "Phone number"
+msgstr "Numar de telefon"
+
+#: includes/edit.php:225
+msgid "Show in Profile"
+msgstr "Arata in profil"
+
+#: includes/edit.php:226
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr "ATENTIE! Scrie adresa de e-mail correct. PArola ta va fi trimisa pe adresa de e-mail in cazul in care o vei uita"
+
+#: includes/edit.php:230 includes/info.php:59
+msgid "Site"
+msgstr "Site"
+
+#: includes/edit.php:235
+msgid "Administrative Functions"
+msgstr "Functii Administrative"
+
+#: includes/edit.php:236
+msgid "Prohibit Karma"
+msgstr "Interzice Karma"
+
+#: includes/edit.php:237 includes/office.php:109 includes/password.php:34
+#: includes/password.php:91
+msgid "Change Password"
+msgstr "Schimba parola"
+
+#: includes/edit.php:240
+msgid "Reset User options to default"
+msgstr "Reseteaza optiunile utilizatorului la implicit"
+
+#: includes/edit.php:243
+msgid "Select gender"
+msgstr "Selecteaza SEX"
+
+#: includes/edit.php:244
+msgid "Man"
+msgstr "Barbat"
+
+#: includes/edit.php:245
+msgid "Woman"
+msgstr "Femeie"
+
+#: includes/edit.php:249
+msgid "Position on the Site"
+msgstr "Pozitia pe site"
+
+#: includes/edit.php:250
+msgid "User"
+msgstr "Utilizator"
+
+#: includes/edit.php:251
+msgid "Forum Moderator"
+msgstr "Moderator Forum"
+
+#: includes/edit.php:252
+msgid "Download Moderator"
+msgstr "Moderator Descarcari"
+
+#: includes/edit.php:253
+msgid "Library Moderator"
+msgstr "Moderator Librarie"
+
+#: includes/edit.php:254
+msgid "Super Modererator"
+msgstr "Super Moderator"
+
+#: includes/edit.php:257
+msgid "Administrator"
+msgstr "Administrator"
+
+#: includes/edit.php:258
+msgid "Supervisor"
+msgstr "Administrator Principal"
+
+#: includes/edit.php:265 includes/password.php:101 includes/settings.php:70
+#: includes/settings.php:123 includes/settings.php:238
+msgid "Save"
+msgstr "Salveaza"
+
+#: includes/images.php:42
+msgid "Upload Avatar"
+msgstr "Incarca Avatar"
+
+#: includes/images.php:62
+msgid "The avatar is successfully uploaded"
+msgstr "Avatarul a fost incarcat cu sucess"
+
+#: includes/images.php:71
+msgid "Select Image"
+msgstr "Selecteaza Imagine"
+
+#: includes/images.php:77 includes/images.php:129
+#, php-format
+msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
+msgstr "Format imagine permis: JPG, PNG, GIF. Fisierul nu trebuie sa fie mai mare de %d kb.<br> Imaginea noua o va inlocui pe cea veche (daca exista)"
+
+#: includes/images.php:83
+msgid "Upload Photo"
+msgstr "Incarca poza"
+
+#: includes/images.php:114
+msgid "The photo is successfully uploaded"
+msgstr "Poza a fost incarcata cu sucess"
+
+#: includes/images.php:124
+msgid "Select image"
+msgstr "Selecteaza imaginea"
+
+#: includes/info.php:25 includes/info.php:27 index.php:212
+msgid "Information"
+msgstr "Informatii"
+
+#: includes/info.php:42
+msgid "Name"
+msgstr "Nume"
+
+#: includes/info.php:43 index.php:145
+msgid "Birthday"
+msgstr "Ziua de nastere"
+
+#: includes/info.php:52
+msgid "hidden"
+msgstr "ascuns"
+
+#: includes/ip.php:15 includes/ip.php:41
+msgid "IP History"
+msgstr "Istoric IP"
+
+#: includes/ip.php:32 includes/office.php:33 includes/password.php:29
+#: includes/settings.php:35
+msgid "Access forbidden"
+msgstr "Acess interzis"
+
+#: includes/karma.php:15 includes/karma.php:180 includes/karma.php:220
+#: includes/karma.php:239 index.php:185
+msgid "Karma"
+msgstr "Karma"
+
+#: includes/karma.php:43
+msgid "It is forbidden to vote for administration"
+msgstr "Este interzis sa votezi in administrator"
+
+#: includes/karma.php:47
+msgid "Cheating karma is forbidden"
+msgstr "Interzis inselaciune"
+
+#: includes/karma.php:52
+#, php-format
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Utilizatorii pot lua parte la votare daca au stat mai mult de %s pe site si scorul in postarile pe forum este de %d"
+
+#: includes/karma.php:53
+msgid "hours"
+msgstr "ore"
+
+#: includes/karma.php:53
+msgid "days"
+msgstr "zile"
+
+#: includes/karma.php:61
+msgid "You can vote for single user just one time for 24 hours\""
+msgstr "Poti vota un singur utilizator,doar o singura data, in timp de 24 de ore\""
+
+#: includes/karma.php:67
+#, php-format
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Ai deposit limita de voturi. Noi voturi vor fi adaugate %s"
+
+#: includes/karma.php:103
+msgid "You have successfully voted"
+msgstr "Ai votat cu sucess"
+
+#: includes/karma.php:105
+msgid "Vote for"
+msgstr "Voteaza pentru"
+
+#: includes/karma.php:107
+msgid "Type of vote"
+msgstr "Tipul de vot"
+
+#: includes/karma.php:108 includes/karma.php:217
+msgid "Positive"
+msgstr "Pozitiv"
+
+#: includes/karma.php:109 includes/karma.php:218
+msgid "Negative"
+msgstr "Negativ"
+
+#: includes/karma.php:110
+msgid "Votes quantity"
+msgstr "Cantitatea voturilor"
+
+#: includes/karma.php:117
+msgid "Comment"
+msgstr "Comenteaza"
+
+#: includes/karma.php:119
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 500 de caractere"
+
+#: includes/karma.php:120 index.php:196
+msgid "Vote"
+msgstr "Voteaza"
+
+#: includes/karma.php:126
+msgid "You are not allowed to vote for users"
+msgstr "Nu poti vota acest utilizator"
+
+#: includes/karma.php:153
+msgid "Do you really want to delete comment?"
+msgstr "Esti sigur ca vrei sa stergi comentariul?"
+
+#: includes/karma.php:155 includes/karma.php:172
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: includes/karma.php:170
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Esti sigur ca vrei sa stergi toare recenziile despre utilizator?"
+
+#: includes/karma.php:180
+msgid "New responses"
+msgstr "Raspunsuri noi"
+
+#: includes/karma.php:216
+msgid "All"
+msgstr "Toate"
+
+#: includes/karma.php:241 index.php:187
+msgid "For"
+msgstr "Pentru"
+
+#: includes/karma.php:242 index.php:188
+msgid "Against"
+msgstr "Impotriva"
+
+#: includes/karma.php:280
+msgid "Reset Karma"
+msgstr "Reseteaza Karma"
+
+#: includes/office.php:16
+msgid "My Account"
+msgstr "Contul meu"
+
+#: includes/office.php:45
+msgid "My Pages"
+msgstr "Paginile mele"
+
+#: includes/office.php:47
+msgid "Statistics"
+msgstr "Statistica"
+
+#: includes/office.php:48 index.php:222
+msgid "Photo Album"
+msgstr "Album foto"
+
+#: includes/office.php:53
+msgid "Admin-Club"
+msgstr "Club-Admin"
+
+#: includes/office.php:58
+msgid "My Mailbox"
+msgstr "Cutia mea poștală"
+
+#: includes/office.php:70
+msgid "Received"
+msgstr "Primite"
+
+#: includes/office.php:79
+msgid "Sent"
+msgstr "Trimise"
+
+#: includes/office.php:88
+msgid "Files"
+msgstr "Fisiere"
+
+#: includes/office.php:91 index.php:249
+msgid "Write"
+msgstr "Scrie"
+
+#: includes/office.php:103
+msgid "Blocked"
+msgstr "Blocate"
+
+#: includes/office.php:107 includes/settings.php:15 includes/settings.php:52
+#: includes/settings.php:76 includes/settings.php:128
+msgid "Settings"
+msgstr "Setari"
+
+#: includes/office.php:110
+msgid "System Settings"
+msgstr "Setari sistem"
+
+#: includes/office.php:112
+msgid "Admin Panel"
+msgstr "Panou Admin"
+
+#: includes/office.php:117
+msgid "Exit"
+msgstr "Iesire"
+
+#: includes/password.php:48 includes/password.php:52
+msgid "It is necessary to fill in all fields"
+msgstr "Este necesar sa completezi toate campurile"
+
+#: includes/password.php:57
+msgid "Old password entered incorrectly"
+msgstr "Parola veche nu este corecta"
+
+#: includes/password.php:61
+msgid "The password confirmation you entered is wrong"
+msgstr "Confirmarea parolei a fost introdusa gresit"
+
+#: includes/password.php:65
+msgid "The password must contain at least 3 characters"
+msgstr "Parola trebuie sa contina cel putin 3 caractere"
+
+#: includes/password.php:80
+msgid "Password successfully changed"
+msgstr "Parola schimbata cu sucess"
+
+#: includes/password.php:85
+msgid "Repeat"
+msgstr "Repeta"
+
+#: includes/password.php:95
+msgid "Enter old password"
+msgstr "Introdu parola veche"
+
+#: includes/password.php:98
+msgid "Enter new password"
+msgstr "Introdu parola noua"
+
+#: includes/password.php:99
+msgid "Repeat password"
+msgstr "Repeta parola"
+
+#: includes/reset.php:31
+#, php-format
+msgid "For user %s default settings were set."
+msgstr "Pentru utilizatorul %s setarile au fost setate la implicit"
+
+#: includes/settings.php:44 includes/settings.php:128
+msgid "General setting"
+msgstr "Setari generale"
+
+#: includes/settings.php:46 includes/settings.php:52
+msgid "Mail"
+msgstr "Mail"
+
+#: includes/settings.php:67
+msgid "Who can write you?"
+msgstr "Cine iti poate scrie"
+
+#: includes/settings.php:68
+msgid "All can write"
+msgstr "Toata lumea"
+
+#: includes/settings.php:69
+msgid "Only my contacts"
+msgstr "Doar prietenii"
+
+#: includes/settings.php:96 includes/settings.php:189
+msgid "Settings saved successfully"
+msgstr "Setari salvate cu sucess"
+
+#: includes/settings.php:115
+msgid "Basic settings"
+msgstr "Setari de baza"
+
+#: includes/settings.php:116
+msgid "Inverse sorting"
+msgstr "Sortare inversa"
+
+#: includes/settings.php:117
+msgid "Use the form of a quick answer"
+msgstr "Foloseste formularul pentru a raspunde mai rapid"
+
+#: includes/settings.php:118
+msgid "Preview of messages"
+msgstr "Previzualizare mesaje"
+
+#: includes/settings.php:119
+msgid "Attach first post"
+msgstr "Ataseaza primul mesaj"
+
+#: includes/settings.php:120
+msgid "Always"
+msgstr "Intotdeauna"
+
+#: includes/settings.php:121
+msgid "In unread topics"
+msgstr "In topicuri necitite"
+
+#: includes/settings.php:122
+msgid "Never"
+msgstr "Niciodata"
+
+#: includes/settings.php:124
+msgid "Reset settings"
+msgstr "Reseteaza setari"
+
+#: includes/settings.php:199
+msgid "Time settings"
+msgstr "Setari de timp"
+
+#: includes/settings.php:200
+msgid "Shift of time"
+msgstr "Schimbari ale timpului"
+
+#: includes/settings.php:202
+msgid "System time"
+msgstr "Timpul Sistemului"
+
+#: includes/settings.php:203
+msgid "System Functions"
+msgstr "Functionarile Sistemului"
+
+#: includes/settings.php:204
+msgid "Direct URL"
+msgstr "URL Direct"
+
+#: includes/settings.php:205
+msgid "Youtube Player"
+msgstr "Playerul YouTube"
+
+#: includes/settings.php:206
+msgid "Text entering"
+msgstr "Introducerea textului"
+
+#: includes/settings.php:207
+msgid "Height of field"
+msgstr "Inaltimea campului"
+
+#: includes/settings.php:209
+msgid "Appearance"
+msgstr "Aspect"
+
+#: includes/settings.php:219
+msgid "Theme"
+msgstr "Tema"
+
+#: includes/settings.php:220
+msgid "Size of Lists"
+msgstr "Marimea listei"
+
+#: includes/settings.php:225
+msgid "Select Language"
+msgstr "Selecteaza Limba"
+
+#: includes/settings.php:231
+msgid "Site Default"
+msgstr "Implicit"
+
+#: includes/settings.php:239
+msgid "Reset Settings"
+msgstr "Reseteaza setari"
+
+#: includes/stat.php:25 includes/stat.php:27 includes/stat.php:30 index.php:214
+msgid "Statistic"
+msgstr "Statistici"
+
+#: includes/stat.php:34 index.php:164
+msgid "Pending confirmation"
+msgstr "Asteapta confirmarea"
+
+#: includes/stat.php:36
+msgid "Registration confirmed"
+msgstr "Inregistrare confirmata"
+
+#: includes/stat.php:38
+msgid "Free registration"
+msgstr "Inregistrare gratuita"
+
+#: includes/stat.php:42
+msgid "Registered"
+msgstr "Inregistrat"
+
+#: includes/stat.php:43
+msgid "He stay on the site"
+msgstr "A stat pe site"
+
+#: includes/stat.php:43
+msgid "She stay on the site"
+msgstr "A stat pe site"
+
+#: includes/stat.php:47
+msgid "Last visit"
+msgstr "Ultima vizita"
+
+#: includes/stat.php:56
+msgid "Achievements"
+msgstr "Realizari"
+
+#: index.php:43
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: index.php:53
+msgid "This User does not exists"
+msgstr "Acest utilizator nu exista"
+
+#: index.php:122
+msgid "User Profile"
+msgstr "Profil utilizator"
+
+#: index.php:156
+msgid "Where?"
+msgstr "Unde?"
+
+#: index.php:203
+msgid "New reviews"
+msgstr "Recenzii noi"
+
+#: index.php:218
+msgid "Violations"
+msgstr "Incalcari"
+
+#: index.php:230
+msgid "Add to Contacts"
+msgstr "Adauga la prieteni"
+
+#: index.php:232
+msgid "Remove from Contacts"
+msgstr "Sterge de la prieteni"
+
+#: index.php:237
+msgid "Block User"
+msgstr "Blocheaza utilizator"
+
+#: index.php:239
+msgid "Unlock User"
+msgstr "Deblocheaza utilizator"
+
+#: skl.php:36 skl.php:89 skl.php:163
+msgid "Password recovery"
+msgstr "Recuperare parola"
+
+#: skl.php:60
+msgid "The required fields are not filled"
+msgstr "Campurile necesare nu au fost completate"
+
+#: skl.php:62
+msgid "Incorrect code"
+msgstr "Codul este incorect"
+
+#: skl.php:75
+msgid "Invalid Email address"
+msgstr "Adresa de e-mail invalida"
+
+#: skl.php:79
+msgid "Password can be recovered 1 time per day"
+msgstr "Parola poate fi recuperate doar o data pe zi"
+
+#: skl.php:82 skl.php:133
+msgid "User does not exists"
+msgstr "Utilizatorul nu exista"
+
+#: skl.php:91
+#, php-format
+msgid "Hello %s!\n"
+"You start process of password recovery on the site %s\n"
+"In order to recover your password, you must click on the link: %s\n"
+"Link valid for 1 hour\n\n"
+"If you receive this mail by mistake, just ignore this letter"
+msgstr "Salut %s!n\n"
+"Ai inceput procesul de recuperare a parolei de pe acest site %s\n"
+"In vederea recuperarii parolei, trebuie sa dai clik pe acest link : %s\n"
+"Link valid pentru o ora\n\n"
+"Daca ai primit acest e-mai din greseala, te rog sa il stergi"
+
+#: skl.php:100
+msgid "Check your e-mail for further information"
+msgstr "Verifica e-mail pentru mai multe informatii"
+
+#: skl.php:102
+msgid "Error sending E-mail"
+msgstr "Eroare in trimitere e-mail"
+
+#: skl.php:125
+msgid "Password recovery is impossible"
+msgstr "Recuperarea parolei este imposibila"
+
+#: skl.php:129
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Timpul alocat pentru recuperarea parolei a fost depasit"
+
+#: skl.php:139
+msgid "Your new password"
+msgstr "Parola ta noua"
+
+#: skl.php:141
+#, php-format
+msgid "Hello %s\n"
+"You have changed your password on the site %s\n\n"
+"Your new password: %s\n\n"
+"After logging in, you can change your password to new one."
+msgstr "Salut %s\n"
+"Ai schimbat parola de pe acest site %s\n\n"
+"Parola ta noua este : %s\n\n"
+"Dupa logare, iti poti schimba parola in una mai usoara"
+
+#: skl.php:150
+msgid "Change password"
+msgstr "Schimba parola"
+
+#: skl.php:151
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Parola a fost schimbata.<br>Noua parola va fi trimisa pe adresa ta de E-mail."
+
+#: skl.php:153
+msgid "Error sending Email"
+msgstr "Eroare in trimitere E-mail"
+
+#: skl.php:166
+msgid "Your E-mail"
+msgstr "Adresa ta de E-mail"
+
+#: skl.php:167
+msgid "Verification code"
+msgstr "Cod de verificare"
+
+#: skl.php:168
+msgid "Enter code"
+msgstr "Introdu codul"
+
+#: skl.php:169
+msgid "Send"
+msgstr "Trimite"
+
+#: skl.php:170
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Parola va fi trimisa la adresa de e-mail specificata in profilul tau.<br />ATENTIE !! Daca adresa de e-mail nu a fost specificata in profil, nu iti poti recupera parola."
+

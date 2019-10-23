@@ -32,9 +32,9 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         exit;
     }
 
-    $ms = $db->query("SELECT * FROM `forum` WHERE `id` = '$id'")->fetch();
+    $ms = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'")->fetch();
 
-    if ($ms['type'] != "t") {
+    if (empty($ms)) {
         require('../system/head.php');
         echo $tools->displayError(_t('Wrong data'));
         require('../system/end.php');
@@ -52,7 +52,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         }
 
         // Проверяем, есть ли тема с таким же названием?
-        $pt = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `refid` = '" . $ms['refid'] . "' and text=" . $db->quote($nn) . " LIMIT 1");
+        $pt = $db->query("SELECT * FROM `forum_topic` WHERE section_id = '" . $ms['section_id'] . "' AND `name` = " . $db->quote($nn) . " LIMIT 1");
 
         if ($pt->rowCount()) {
             require('../system/head.php');
@@ -61,17 +61,17 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             exit;
         }
 
-        $db->exec("UPDATE `forum` SET  text=" . $db->quote($nn) . " WHERE id='" . $id . "'");
-        header("Location: index.php?id=$id");
+        $db->exec("UPDATE `forum_topic` SET `name` =" . $db->quote($nn) . " WHERE id='" . $id . "'");
+        header("Location: index.php?type=topic&id=$id");
     } else {
         // Переименовываем тему
         require('../system/head.php');
-        echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
+        echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
             '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . _t('Topic name') . '</h3>' .
-            '<input type="text" name="nn" value="' . $ms['text'] . '"/></p>' .
+            '<input type="text" name="nn" value="' . $ms['name'] . '"/></p>' .
             '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
             '</form></div>' .
-            '<div class="phdr"><a href="index.php?id=' . $id . '">' . _t('Back') . '</a></div>';
+            '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 }

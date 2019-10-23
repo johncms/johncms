@@ -194,7 +194,7 @@ switch ($mod) {
                 if (isset($_GET['fid'])) {
                     // Если бан из форума, фиксируем ID поста
                     $fid = intval($_GET['fid']);
-                    echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/index.php?act=post&amp;id=' . $fid . '"></a><br />' .
+                    echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/index.php?act=show_post&amp;id=' . $fid . '"></a><br />' .
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
 

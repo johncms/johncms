@@ -13,7 +13,7 @@
 defined('_IN_JOHNCMS') or die('Error: restricted access');
 
 $textl = _t('Who in Forum');
-$headmod = $id ? 'forum,' . $id : 'forumwho';
+$headmod = $id ? 'forum,' . $id .',topic' : 'forumwho';
 require_once('../system/head.php');
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -35,11 +35,11 @@ if (!$systemUser->isValid()) {
 
 if ($id) {
     // Показываем общий список тех, кто в выбранной теме
-    $req = $db->query("SELECT `text` FROM `forum` WHERE `id` = '$id' AND `type` = 't'");
+    $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id` = '$id'");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
-        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?id=' . $id . '">' . $res['text'] . '</a></div>';
+        echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="index.php?type=topic&id=' . $id . '">' . $res['name'] . '</a></div>';
 
         if ($systemUser->rights > 0) {
             echo '<div class="topmenu">' .
@@ -47,7 +47,7 @@ if ($id) {
                 '</div>';
         }
 
-        $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id,topic'")->fetchColumn();
 
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
@@ -59,7 +59,7 @@ if ($id) {
         }
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` = 'forum,$id' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
+            $req = $db->query("SELECT * FROM `" . ($do == 'guest' ? 'cms_sessions' : 'users') . "` WHERE `lastdate` > " . (time() - 300) . " AND `place` LIKE 'forum,$id,topic' ORDER BY " . ($do == 'guest' ? "`movings` DESC" : "`name` ASC") . " LIMIT $start, $kmess");
 
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -84,7 +84,7 @@ if ($id) {
             '</form></p>';
     }
 
-    echo '<p><a href="index.php?id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
+    echo '<p><a href="index.php?type=topic&id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 } else {
     // Показываем общий список тех, кто в форуме
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';
@@ -141,37 +141,51 @@ if ($id) {
 
                 default:
                     $where = explode(",", $res['place']);
-                    if ($where[0] == 'forum' && intval($where[1])) {
-                        $req_t = $db->query("SELECT `type`, `refid`, `text` FROM `forum` WHERE `id` = '$where[1]'");
+                    if ($where[0] == 'forum' && intval($where[1]) && !empty($where[2])) {
 
-                        if ($req_t->rowCount()) {
-                            $res_t = $req_t->fetch();
-                            $link = '<a href="index.php?id=' . $where[1] . '">' . (empty($res_t['text']) ? '-----' : $res_t['text']) . '</a>';
+                        switch ($where[2]) {
+                            case 'section':
+                                $section = $db->query("SELECT * FROM `forum_sections` WHERE `id`= " . $where[1])->fetch();
+                                if(!empty($section)) {
+                                    $link = '<a href="index.php?id=' . $section['id'] . '">' . (empty($section['name']) ? '-----' : $section['name']) . '</a>';
+                                    $place = _t('In the Category').' &quot;'.$link.'&quot;';
+                                } else {
+                                    $place = '<a href="index.php">' . _t('In the forum Main') . '</a>';
+                                }
+                                break;
 
-                            switch ($res_t['type']) {
-                                case 'f':
-                                    $place = _t('In the Category') . ' &quot;' . $link . '&quot;';
-                                    break;
+                            case 'topics':
+                                $topics = $db->query("SELECT * FROM `forum_sections` WHERE `id`= " . $where[1])->fetch();
+                                if(!empty($topics)) {
+                                    $link = '<a href="index.php?type=topics&id='.$topics['id'].'">'.(empty($topics['name']) ? '-----' : $topics['name']).'</a>';
+                                    $place = _t('In the Section').' &quot;'.$link.'&quot;';
+                                } else {
+                                    $place = '<a href="index.php">' . _t('In the forum Main') . '</a>';
+                                }
+                                break;
 
-                                case 'r':
-                                    $place = _t('In the Section') . ' &quot;' . $link . '&quot;';
-                                    break;
+                            case 'topic':
+                                $topic = $db->query("SELECT * FROM `forum_topic` WHERE `id`= " . $where[1])->fetch();
+                                if(!empty($topic)) {
+                                    $link = '<a href="index.php?type=topic&id=' . $topic['id'] . '">' . (empty($topic['name']) ? '-----' : $topic['name']) . '</a>';
+                                    $place = (isset($where[3]) ? _t('Writes in the Topic').' &quot;' : _t('In the Topic').' &quot;').$link.'&quot;';
+                                } else {
+                                    $place = '<a href="index.php">' . _t('In the forum Main') . '</a>';
+                                }
+                                break;
 
-                                case 't':
-                                    $place = (isset($where[2]) ? _t('Writes in the Topic') . ' &quot;' : _t('In the Topic') . ' &quot;') . $link . '&quot;';
-                                    break;
-
-                                case 'm':
-                                    $req_m = $db->query("SELECT `text` FROM `forum` WHERE `id` = '" . $res_t['refid'] . "' AND `type` = 't'");
-
+                            case 'message':
+                                $message = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '".$where[1]."'")->fetch();
+                                if(!empty($message)) {
+                                    $req_m = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '".$message['topic_id']."'");
                                     if ($req_m->rowCount()) {
                                         $res_m = $req_m->fetch();
-                                        $place = (isset($where[2]) ? _t('Answers in the Topic') : _t('In the Topic')) . ' &quot;<a href="index.php?id=' . $res_t['refid'] . '">' . (empty($res_m['text']) ? '-----' : $res_m['text']) . '</a>&quot;';
+                                        $place = (isset($where[2]) ? _t('Answers in the Topic') : _t('In the Topic')).' &quot;<a href="index.php?type=topic&id='.$res_m['id'].'">'.(empty($res_m['name']) ? '-----' : $res_m['name']).'</a>&quot;';
                                     }
-
-                                    break;
-                            }
+                                }
+                                break;
                         }
+
                     }
             }
 

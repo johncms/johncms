@@ -33,20 +33,20 @@ if (empty($_GET['id'])) {
 }
 
 // Запрос сообщения
-$res = $db->query("SELECT `forum`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
-FROM `forum` LEFT JOIN `users` ON `forum`.`user_id` = `users`.`id`
-WHERE `forum`.`type` = 'm' AND `forum`.`id` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND `forum`.`close` != '1'") . " LIMIT 1")->fetch();
+$res = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
+FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
+WHERE `forum_messages`.`id` = '$id'" . ($systemUser->rights >= 7 ? "" : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . " LIMIT 1")->fetch();
 
 // Запрос темы
-$them = $db->query("SELECT * FROM `forum` WHERE `type` = 't' AND `id` = '" . $res['refid'] . "'")->fetch();
-echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['text'] . '</div><div class="menu">';
+$them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $them['name'] . '</div><div class="menu">';
 
 // Данные пользователя
 echo '<table cellpadding="0" cellspacing="0"><tr><td>';
 if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-    echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+    echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
 } else {
-    echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['from'] . '" />&#160;';
+    echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
 }
 echo '</td><td>';
 
@@ -58,9 +58,9 @@ if ($res['sex']) {
 
 // Ник юзера и ссылка на его анкету
 if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
-    echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['from'] . '</b></a> ';
+    echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> ';
 } else {
-    echo '<b>' . $res['from'] . '</b> ';
+    echo '<b>' . $res['user_name'] . '</b> ';
 }
 
 // Метка должности
@@ -74,16 +74,16 @@ echo @$user_rights[$res['rights']];
 
 // Метка Онлайн / Офлайн
 echo(time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ');
-echo '<a href="index.php?act=post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+echo '<a href="index.php?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
 // Ссылки на ответ и цитирование
 if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
-    echo '&#160;<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
-        '<a href="index.php?act=say&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
+    echo '&#160;<a href="index.php?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
+        '<a href="index.php?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
 }
 
 // Время поста
-echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br />';
+echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
 
 // Статус юзера
 if (!empty($res['status'])) {
@@ -114,7 +114,7 @@ if ($freq->rowCount()) {
     ];
 
     if (in_array($att_ext, $pic_ext)) {
-        echo '<div><a href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+        echo '<div><a class="image-preview" title="'.$fres['filename'].'" data-source="index.php?act=file&amp;id=' . $fres['id'] . '" href="index.php?act=file&amp;id=' . $fres['id'] . '">';
         echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
     } else {
         echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
@@ -128,6 +128,6 @@ if ($freq->rowCount()) {
 echo '</div>';
 
 // Вычисляем, на какой странице сообщение?
-$page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'")->fetchColumn() / $kmess);
-echo '<div class="phdr"><a href="index.php?id=' . $res['refid'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
+$page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'")->fetchColumn() / $kmess);
+echo '<div class="phdr"><a href="index.php?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
 echo '<p><a href="index.php">' . _t('Forum') . '</a></p>';

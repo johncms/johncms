@@ -32,22 +32,22 @@ if (!$systemUser->isValid() || !$id) {
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum` WHERE `id` = '$id' AND `type` = 'm' " . ($systemUser->rights >= 7 ? "" : " AND `close` != '1'"));
+$req = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id' " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"));
 
 if ($req->rowCount()) {
     // Предварительные проверки
     $res = $req->fetch();
 
-    $topic = $db->query("SELECT `refid`, `curators` FROM `forum` WHERE `id` = " . $res['refid'])->fetch();
+    $topic = $db->query("SELECT `section_id`, `curators` FROM `forum_topic` WHERE `id` = " . $res['topic_id'])->fetch();
     $curators = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
 
     if (array_key_exists($systemUser->id, $curators)) {
         $systemUser->rights = 3;
     }
 
-    $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'" . ($systemUser->rights < 7 ? " AND `close` != '1'" : ''))->fetchColumn() / $kmess);
-    $posts = $db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `close` != '1'")->fetchColumn();
-    $link = 'index.php?id=' . $res['refid'] . '&amp;page=' . $page;
+    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'" . ($systemUser->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $kmess);
+    $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
+    $link = 'index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
     $error = false;
 
     if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
@@ -70,12 +70,12 @@ if ($req->rowCount()) {
         }
 
         if (!$error) {
-            $section = $db->query("SELECT * FROM `forum` WHERE `id` = " . $topic['refid'])->fetch();
-            $allow = !empty($section['edit']) ? intval($section['edit']) : 0;
+            $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = " . $topic['section_id'])->fetch();
+            $allow = !empty($section['access']) ? intval($section['access']) : 0;
             $check = true;
 
             if ($allow == 2) {
-                $first = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
+                $first = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' ORDER BY `id` ASC LIMIT 1")->fetch();
 
                 if ($first['user_id'] == $systemUser->id && $first['id'] == $id) {
                     $check = false;
@@ -83,12 +83,12 @@ if ($req->rowCount()) {
             }
 
             if ($check) {
-                $res_m = $db->query("SELECT * FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `close` != 1 ORDER BY `id` DESC LIMIT 1")->fetch();
+                $res_m = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != 1 OR deleted IS NULL) ORDER BY `id` DESC LIMIT 1")->fetch();
 
                 if ($res_m['user_id'] != $systemUser->id) {
                     $error = _t('Your message not already latest, you cannot change it') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
-                } elseif ($res['time'] < time() - 300
-                    && $res_m['user_id'] != $systemUser->id && $res_m['time'] + 3600 > strtotime('+ 1 hour')
+                } elseif ($res['date'] < time() - 300
+                    && $res_m['user_id'] != $systemUser->id && $res_m['date'] + 3600 > strtotime('+ 1 hour')
                 ) {
                     $error = _t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
                 }
@@ -113,13 +113,13 @@ if (!$error) {
                 $db->exec("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "'");
             }
 
-            $db->exec("UPDATE `forum` SET `close` = '0', `close_who` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
+            $db->exec("UPDATE `forum_messages` SET `deleted` = NULL, `deleted_by` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
             $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
 
             if ($req_f->rowCount()) {
                 $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id'");
             }
-
+            $tools->recountForumTopic($res['topic_id']);
             header('Location: ' . $link);
             break;
 
@@ -152,7 +152,7 @@ if (!$error) {
 
         case 'delete':
             // Удаление поста и прикрепленного файла
-            if ($res['close'] != 1) {
+            if ($res['deleted'] != 1) {
                 $req_u = $db->query("SELECT `postforum` FROM `users` WHERE `id` = '" . $res['user_id'] . "'");
 
                 if ($req_u->rowCount()) {
@@ -175,15 +175,17 @@ if (!$error) {
                 }
                 $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = " . $id);
 
+
                 // Формируем ссылку на нужную страницу темы
-                $page = ceil($db->query("SELECT COUNT(*) FROM `forum` WHERE `refid` = '" . $res['refid'] . "' AND `id` " . ($set_forum['upfp'] ? ">" : "<") . " '$id'")->fetchColumn() / $kmess);
-                $db->exec("DELETE FROM `forum` WHERE `id` = '$id'");
+                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">" : "<") . " '$id'")->fetchColumn() / $kmess);
+                $db->exec("DELETE FROM `forum_messages` WHERE `id` = '$id'");
+
 
                 if ($posts < 2) {
                     // Пересылка на удаление всей темы
-                    header('Location: index.php?act=deltema&id=' . $res['refid']);
+                    header('Location: index.php?act=deltema&id=' . $res['topic_id']);
                 } else {
-                    header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
+                    header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 }
             } else {
                 // Скрытие поста
@@ -196,14 +198,21 @@ if (!$error) {
 
                 if ($posts == 1) {
                     // Если это был последний пост темы, то скрываем саму тему
-                    $res_l = $db->query("SELECT `refid` FROM `forum` WHERE `id` = '" . $res['refid'] . "'")->fetch();
-                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '" . $res['refid'] . "' AND `type` = 't'");
-                    header('Location: index.php?id=' . $res_l['refid']);
+                    $res_l = $db->query("SELECT `section_id` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
+                    $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '" . $res['topic_id'] . "'");
+
+                    header('Location: index.php?type=topics&id=' . $res_l['section_id']);
                 } else {
-                    $db->exec("UPDATE `forum` SET `close` = '1', `close_who` = '" . $systemUser->name . "' WHERE `id` = '$id'");
-                    header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
+                    $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '$id'");
+                    // Пересчитываем топик
+                    $tools->recountForumTopic($res['topic_id']);
+                    header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 }
             }
+
+            // Пересчитываем топик
+            $tools->recountForumTopic($res['topic_id']);
+
             break;
 
         case 'del':
@@ -238,21 +247,21 @@ if (!$error) {
                 }
 
                 $db->prepare('
-                  UPDATE `forum` SET
-                  `tedit` = ?,
-                  `edit` = ?,
-                  `kedit` = ?,
+                  UPDATE `forum_messages` SET
+                  `edit_time` = ?,
+                  `editor_name` = ?,
+                  `edit_count` = ?,
                   `text` = ?
                   WHERE `id` = ?
                 ')->execute([
                     time(),
                     $systemUser->name,
-                    ($res['kedit'] + 1),
+                    ($res['edit_count'] + 1),
                     $msg,
                     $id,
                 ]);
 
-                header('Location: index.php?id=' . $res['refid'] . '&page=' . $page);
+                header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
             } else {
                 $msg_pre = $tools->checkout($msg, 1, 1);
                 $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);

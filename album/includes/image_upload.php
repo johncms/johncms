@@ -44,7 +44,7 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
     echo '<div class="phdr"><a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Upload image') . '</div>';
 
     if (isset($_POST['submit'])) {
-        $handle = new upload($_FILES['imagefile']);
+        $handle = new \Verot\Upload\Upload($_FILES['imagefile']);
 
         if ($handle->uploaded) {
             // Обрабатываем фото

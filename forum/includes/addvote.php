@@ -25,7 +25,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
-    $topic = $db->query("SELECT COUNT(*) FROM `forum` WHERE `type`='t' AND `id`='$id' AND `edit` != '1'")->fetchColumn();
+    $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='$id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='$id'")->fetchColumn();
     require_once('../system/head.php');
 
@@ -45,7 +45,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                 `type` = '1',
                 `topic`='$id'
             ");
-            $db->exec("UPDATE `forum` SET  `realid` = '1'  WHERE `id` = '$id'");
+            $db->exec("UPDATE `forum_topic` SET `has_poll` = '1'  WHERE `id` = '$id'");
             $vote_count = abs(intval($_POST['count_vote']));
 
             if ($vote_count > 20) {
@@ -69,7 +69,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
                     `topic`='$id'
                 ");
             }
-            echo _t('Poll added') . '<br /><a href="?id=' . $id . '">' . _t('Continue') . '</a>';
+            echo _t('Poll added') . '<br /><a href="?type=topic&amp;id=' . $id . '">' . _t('Continue') . '</a>';
         } else {
             echo _t('The required fields are not filled') . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
         }
@@ -98,7 +98,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add Answer') . '"/>' : '';
         echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/><br>' : '<br>';
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form>';
-        echo '<a href="index.php?id=' . $id . '">' . _t('Back') . '</a>';
+        echo '<a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>';
     }
 } else {
     header('location: ../index.php?err');

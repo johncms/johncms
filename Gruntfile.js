@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    require('time-grunt')(grunt);
+    // require('time-grunt')(grunt);
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -22,13 +22,17 @@ module.exports = function (grunt) {
                             '!system/config/database.local.php',
                             '!system/config/system.local.php',
 
+                            '!system/vendor/bin/**',
                             '!system/vendor/container-interop/container-interop/docs/**',
-                            '!system/vendor/container-interop/container-interop/composer.json',
 
                             '!system/vendor/erusev/parsedown/test/**',
-                            '!system/vendor/erusev/parsedown/composer.json',
                             '!system/vendor/erusev/parsedown/phpunit.xml.dist',
 
+                            '!system/vendor/geshi/geshi/contrib/**',
+                            '!system/vendor/geshi/geshi/docs/**',
+                            '!system/vendor/geshi/geshi/tests/**',
+                            '!system/vendor/geshi/geshi/build.xml',
+                            '!system/vendor/geshi/geshi/build.properties.dist',
                             '!system/vendor/geshi/geshi/src/geshi/*',
                             'system/vendor/geshi/geshi/src/geshi/css.php',
                             'system/vendor/geshi/geshi/src/geshi/html5.php',
@@ -36,46 +40,15 @@ module.exports = function (grunt) {
                             'system/vendor/geshi/geshi/src/geshi/php.php',
                             'system/vendor/geshi/geshi/src/geshi/sql.php',
                             'system/vendor/geshi/geshi/src/geshi/xml.php',
-                            '!system/vendor/geshi/geshi/src/contrib/**',
-                            '!system/vendor/geshi/geshi/src/docs/**',
-                            '!system/vendor/geshi/geshi/build.properties.dist',
-                            '!system/vendor/geshi/geshi/build.xml',
-                            '!system/vendor/geshi/geshi/composer.json',
 
                             '!system/vendor/verot/class.upload.php/test/**',
-                            '!system/vendor/verot/class.upload.php/composer.json',
-
-                            '!system/vendor/zendframework/zend-i18n/doc/**',
-                            '!system/vendor/zendframework/zend-i18n/CHANGELOG.md',
-                            '!system/vendor/zendframework/zend-i18n/composer.json',
-                            '!system/vendor/zendframework/zend-i18n/CONDUCT.md',
-                            '!system/vendor/zendframework/zend-i18n/CONTRIBUTING.md',
-                            '!system/vendor/zendframework/zend-i18n/mkdocs.yml',
-
-                            '!system/vendor/zendframework/zend-servicemanager/benchmarks/**',
-                            '!system/vendor/zendframework/zend-servicemanager/doc/**',
-                            '!system/vendor/zendframework/zend-servicemanager/CHANGELOG.md',
-                            '!system/vendor/zendframework/zend-servicemanager/CONDUCT.md',
-                            '!system/vendor/zendframework/zend-servicemanager/CONTRIBUTING.md',
-                            '!system/vendor/zendframework/zend-servicemanager/composer.json',
-                            '!system/vendor/zendframework/zend-servicemanager/phpbench.json',
-                            '!system/vendor/zendframework/zend-servicemanager/phpcs.xml',
-                            '!system/vendor/zendframework/zend-servicemanager/mkdocs.yml',
-
-                            '!system/vendor/zendframework/zend-stdlib/benchmarks/**',
-                            '!system/vendor/zendframework/zend-stdlib/doc/**',
-                            '!system/vendor/zendframework/zend-stdlib/CHANGELOG.md',
-                            '!system/vendor/zendframework/zend-stdlib/CONDUCT.md',
-                            '!system/vendor/zendframework/zend-stdlib/CONTRIBUTING.md',
-                            '!system/vendor/zendframework/zend-stdlib/composer.json',
-                            '!system/vendor/zendframework/zend-stdlib/mkdocs.yml',
-                            '!system/vendor/zendframework/zend-stdlib/phpcs.xml',
 
                             '!dist/**',
                             '!distributive/**',
                             '!node_modules/**',
                             '!Gruntfile.js',
                             '!package.json',
+                            '!package-lock.json',
                             '!composer.*'
                         ],
                         dest: 'distributive/'
@@ -169,6 +142,29 @@ module.exports = function (grunt) {
                             'registration/locale/pl/**',
                             'system/locale/pl/**',
                             'users/locale/pl/**'
+                        ],
+                        dest: 'distributive/'
+                    }
+                ]
+            },
+            lng_ro: {
+                files: [
+                    {
+                        expand: true,
+                        src: [
+                            'admin/locale/ro/**',
+                            'album/locale/ro/**',
+                            'downloads/locale/ro/**',
+                            'forum/locale/ro/**',
+                            'guestbook/locale/ro/**',
+                            'help/locale/ro/**',
+                            'library/locale/ro/**',
+                            'mail/locale/ro/**',
+                            'news/locale/ro/**',
+                            'profile/locale/ro/**',
+                            'registration/locale/ro/**',
+                            'system/locale/ro/**',
+                            'users/locale/ro/**'
                         ],
                         dest: 'distributive/'
                     }
@@ -323,6 +319,20 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            lng_ro: {
+                options: {
+                    archive: 'dist/locales/ro.zip'
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'distributive/',
+                        src: ['**']
+                    }
+                ]
+            },
             lng_ru: {
                 options: {
                     archive: 'dist/locales/ru.zip'
@@ -437,6 +447,23 @@ module.exports = function (grunt) {
                 stdout: false,
                 stderr: true
             },
+            makemo_ro: {
+                command: 'msgfmt -o admin/locale/ro/default.mo admin/locale/ro/default.po' +
+                '& msgfmt -o album/locale/ro/default.mo album/locale/ro/default.po' +
+                '& msgfmt -o downloads/locale/ro/default.mo downloads/locale/ro/default.po' +
+                '& msgfmt -o forum/locale/ro/default.mo forum/locale/ro/default.po' +
+                '& msgfmt -o guestbook/locale/ro/default.mo guestbook/locale/ro/default.po' +
+                '& msgfmt -o help/locale/ro/default.mo help/locale/ro/default.po' +
+                '& msgfmt -o library/locale/ro/default.mo library/locale/ro/default.po' +
+                '& msgfmt -o mail/locale/ro/default.mo mail/locale/ro/default.po' +
+                '& msgfmt -o news/locale/ro/default.mo news/locale/ro/default.po' +
+                '& msgfmt -o profile/locale/ro/default.mo profile/locale/ro/default.po' +
+                '& msgfmt -o registration/locale/ro/default.mo registration/locale/ro/default.po' +
+                '& msgfmt -o system/locale/ro/system.mo system/locale/ro/system.po' +
+                '& msgfmt -o users/locale/ro/default.mo users/locale/ro/default.po',
+                stdout: false,
+                stderr: true
+            },
             makemo_ru: {
                 command: 'msgfmt -o admin/locale/ru/default.mo admin/locale/ru/default.po' +
                 '& msgfmt -o album/locale/ru/default.mo album/locale/ru/default.po' +
@@ -523,6 +550,7 @@ module.exports = function (grunt) {
         'exec:makemo_id',
         'exec:makemo_lt',
         'exec:makemo_pl',
+        'exec:makemo_ro',
         'exec:makemo_ru',
         'exec:makemo_uk',
         'exec:makemo_vi'
@@ -546,6 +574,10 @@ module.exports = function (grunt) {
 
         'copy:lng_pl',
         'compress:lng_pl',
+        'clean:distributive',
+
+        'copy:lng_ro',
+        'compress:lng_ro',
         'clean:distributive',
 
         'copy:lng_ru',

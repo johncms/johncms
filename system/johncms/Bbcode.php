@@ -36,7 +36,11 @@ class Bbcode implements Api\BbcodeInterface
      */
     protected $geshi;
 
+    protected $tags;
     protected $homeUrl;
+    protected $codeId;
+    protected $codeIndex;
+    protected $codeParts;
 
     public function __invoke(ContainerInterface $container)
     {
@@ -45,58 +49,45 @@ class Bbcode implements Api\BbcodeInterface
         $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];
 
+        $globalcnf = $container->get('config');
+        $this->tags = isset($globalcnf['bbcode']) ? $globalcnf['bbcode'] : [];
+
+        $this->codeId = uniqid();
+        $this->codeIndex = 0;
+        $this->codeParts = [];
+
         return $this;
     }
 
     // Обработка тэгов и ссылок
     public function tags($var)
     {
-        $var = $this->parseTime($var);               // Обработка тэга времени
         $var = $this->highlightCode($var);           // Подсветка кода
+        $var = $this->parseTime($var);               // Обработка тэга времени
         $var = $this->highlightBb($var);             // Обработка ссылок
         $var = $this->highlightUrl($var);            // Обработка ссылок
         $var = $this->highlightBbcodeUrl($var);      // Обработка ссылок в BBcode
         $var = $this->youtube($var);
+        $var = $this->postprocessCode($var);         // Окончательная обработка кода
 
         return $var;
     }
 
     public function notags($var = '')
     {
-        $var = preg_replace('#\[color=(.+?)\](.+?)\[/color]#si', '$2', $var);
+        $replacements = array_values($this->tags);
+        $search = array_column($replacements, 'from');
+        $replace = array_column($replacements, 'data');
+        $var = preg_replace($search, $replace, $var);
+
         $var = preg_replace('#\[timestamp\](.+?)\[/timestamp]#si', '$2', $var);
         $var = preg_replace('#\[code=(.+?)\](.+?)\[/code]#si', '$2', $var);
-        $var = preg_replace('!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is', '$2', $var);
-        $var = preg_replace('#\[spoiler=(.+?)\]#si', '$2', $var);
+
         $replace = [
-            '[small]'    => '',
-            '[/small]'   => '',
-            '[big]'      => '',
-            '[/big]'     => '',
-            '[green]'    => '',
-            '[/green]'   => '',
-            '[red]'      => '',
-            '[/red]'     => '',
-            '[blue]'     => '',
-            '[/blue]'    => '',
-            '[b]'        => '',
-            '[/b]'       => '',
-            '[i]'        => '',
-            '[/i]'       => '',
-            '[u]'        => '',
-            '[/u]'       => '',
-            '[s]'        => '',
-            '[/s]'       => '',
-            '[quote]'    => '',
-            '[/quote]'   => '',
             '[youtube]'  => '',
             '[/youtube]' => '',
             '[php]'      => '',
             '[/php]'     => '',
-            '[c]'        => '',
-            '[/c]'       => '',
-            '[*]'        => '',
-            '[/*]'       => '',
         ];
 
         return strtr($var, $replace);
@@ -418,6 +409,9 @@ class Bbcode implements Api\BbcodeInterface
     /**
      * Подсветка кода
      *
+     * Вырезает содержимое тега code и помещает в отдельный массив
+     * во избежание последующей обработки другими тегами
+     *
      * @param string $var
      * @return mixed
      */
@@ -425,6 +419,25 @@ class Bbcode implements Api\BbcodeInterface
     {
         $var = preg_replace_callback('#\[php\](.+?)\[\/php\]#s', [$this, 'phpCodeCallback'], $var);
         $var = preg_replace_callback('#\[code=(.+?)\](.+?)\[\/code]#is', [$this, 'codeCallback'], $var);
+
+        return $var;
+    }
+
+     /**
+     * Постобработка кода
+     *
+     * Собирает ранее распарсенное содержимое тега code в результирующую строку
+     *
+     * @param string $var
+     * @return mixed
+     */
+    protected function postprocessCode($var)
+    {
+        $var = preg_replace_callback(
+                '#\[code\|' . $this->codeId . '\](\d+)\[\/code\]#s',
+                [$this, 'postprocessCodeCallback'], $var);
+        $this->codeIndex = 0;
+        $this->codeParts = [];
 
         return $var;
     }
@@ -460,8 +473,17 @@ class Bbcode implements Api\BbcodeInterface
         $php = strtr($code[2], ['<br />' => '']);
         $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
         $this->geshi->set_source($php);
+        $this->codeIndex++;
+        $this->codeParts[$this->codeIndex] = $this->geshi->parse_code();
 
-        return '<div class="phpcode" style="overflow-x: auto">' . $this->geshi->parse_code() . '</div>';
+        return '[code|' . $this->codeId . ']' . $this->codeIndex . '[/code]';
+    }
+
+    protected function postprocessCodeCallback($code)
+    {
+        $part = $this->codeParts[$code[1]];
+        unset($this->codeParts[$code[1]]);
+        return '<div class="phpcode" style="overflow-x: auto">' . $part . '</div>';
     }
 
     /**
@@ -487,87 +509,6 @@ class Bbcode implements Api\BbcodeInterface
     }
 
     /**
-     * Список замен для основных тегов BB-кода.
-     *
-     * @return array
-     */
-    protected function replacements()
-    {
-        return [
-            // Жирный
-            'b'       => [
-                'from' => '#\[b](.+?)\[/b]#is',
-                'to'   => '<span style="font-weight: bold">$1</span>',
-            ],
-            // Курсив
-            'i'       => [
-                'from' => '#\[i](.+?)\[/i]#is',
-                'to'   => '<span style="font-style:italic">$1</span>',
-            ],
-            // Подчёркнутый
-            'u'       => [
-                'from' => '#\[u](.+?)\[/u]#is',
-                'to'   => '<span style="text-decoration:underline">$1</span>',
-            ],
-            // Зачёркнутый
-            's'       => [
-                'from' => '#\[s](.+?)\[/s]#is',
-                'to'   => '<span style="text-decoration:line-through">$1</span>',
-            ],
-            // Маленький шрифт
-            'small'   => [
-                'from' => '#\[small](.+?)\[/small]#is',
-                'to'   => '<span style="font-size:x-small">$1</span>',
-            ],
-            // Большой шрифт
-            'big'     => [
-                'from' => '#\[big](.+?)\[/big]#is',
-                'to'   => '<span style="font-size:large">$1</span>',
-            ],
-            // Красный
-            'red'     => [
-                'from' => '#\[red](.+?)\[/red]#is',
-                'to'   => '<span style="color:red">$1</span>',
-            ],
-            // Зеленый
-            'green'   => [
-                'from' => '#\[green](.+?)\[/green]#is',
-                'to'   => '<span style="color:green">$1</span>',
-            ],
-            // Синий
-            'blue'    => [
-                'from' => '#\[blue](.+?)\[/blue]#is',
-                'to'   => '<span style="color:blue">$1</span>',
-            ],
-            // Цвет шрифта
-            'color'   => [
-                'from' => '!\[color=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/color]!is',
-                'to'   => '<span style="color:$1">$2</span>',
-            ],
-            // Цвет фона
-            'bg'      => [
-                'from' => '!\[bg=(#[0-9a-f]{3}|#[0-9a-f]{6}|[a-z\-]+)](.+?)\[/bg]!is',
-                'to'   => '<span style="background-color:$1">$2</span>',
-            ],
-            // Цитата
-            'quote'   => [
-                'from' => '#\[(quote|c)](.+?)\[/(quote|c)]#is',
-                'to'   => '<span class="quote" style="display:block">$2</span>',
-            ],
-            // Список
-            'list'    => [
-                'from' => '#\[\*](.+?)\[/\*]#is',
-                'to'   => '<span class="bblist">$1</span>',
-            ],
-            // Спойлер
-            'spoiler' => [
-                'from' => '#\[spoiler=(.+?)](.+?)\[/spoiler]#is',
-                'to'   => '<div><div class="spoilerhead" style="cursor:pointer;" onclick="var _n=this.parentNode.getElementsByTagName(\'div\')[1];if(_n.style.display==\'none\'){_n.style.display=\'\';}else{_n.style.display=\'none\';}">$1 (+/-)</div><div class="spoilerbody" style="display:none">$2</div></div>',
-            ],
-        ];
-    }
-
-    /**
      * Обработка bbCode
      *
      * @param string $var
@@ -575,7 +516,7 @@ class Bbcode implements Api\BbcodeInterface
      */
     protected function highlightBb($var)
     {
-        $replacements = array_values($this->replacements());
+        $replacements = array_values($this->tags);
         $search = array_column($replacements, 'from');
         $replace = array_column($replacements, 'to');
 

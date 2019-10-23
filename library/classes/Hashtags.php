@@ -48,7 +48,7 @@ class Hashtags
      */
     public function getAllTagStats($tag)
     {
-        $stmt = $this->db->prepare('SELECT `lib_text_id` FROM `library_tags` WHERE `tag_name` = ?');
+        $stmt = $this->db->prepare('SELECT `library_texts`.`id`, `library_tags`.`lib_text_id` FROM `library_tags` JOIN `library_texts` ON `library_texts`.`id` = `library_tags`.`lib_text_id` WHERE `tag_name` = ?');
         $stmt->execute([$tag]);
         if ($stmt->rowCount()) {
             $res = $stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
@@ -143,7 +143,7 @@ class Hashtags
     public function arrayCloudTags()
     {
         $result = [];
-        $stmt = $this->db->query('SELECT `tag_name`, COUNT(*) as `count` FROM `library_tags` GROUP BY `tag_name` ORDER BY `count` DESC;');
+        $stmt = $this->db->query('SELECT `library_texts`.`id`, `library_tags`.`lib_text_id`, `library_tags`.`tag_name`, COUNT(*) as `count` FROM `library_tags` JOIN `library_texts` ON `library_texts`.`id` = `library_tags`.`lib_text_id` GROUP BY `tag_name` ORDER BY `count` DESC;');
         if ($stmt->rowCount()) {
             while ($row = $stmt->fetch()) {
                 $result[$row['tag_name']] = $row['count'];

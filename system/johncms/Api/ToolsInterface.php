@@ -44,5 +44,7 @@ interface ToolsInterface
 
     public function timecount($var);
 
+    public function recountForumTopic($topic_id);
+
     public function trans($str); // DEPRECATED!!!
 }
