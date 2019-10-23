@@ -18,7 +18,7 @@ class NewsWidget
     public $newscount;    // Общее к-во новостей
     public $lastnewsdate; // Дата последней новости
     private $settings = [];
-
+    private $check;
     /**
      * @var \PDO
      */
@@ -28,7 +28,7 @@ class NewsWidget
      * @var \Johncms\Tools
      */
     private $tools;
-
+    
     public function __construct()
     {
         /** @var \Psr\Container\ContainerInterface $container */
@@ -37,16 +37,19 @@ class NewsWidget
         $this->db = $container->get(\PDO::class);
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->settings = $container->get('config')['johncms']['news'];
-        $this->newscount = $this->newscount() . $this->lastnewscount();
+        $this->check = $this->newscount();
+        $this->newscount = $this->check->all_news . ($this->check->new_news ? ' / <span class="red">+' . $this->check->new_news . '</span>' : null);
         $this->news = $this->news();
     }
-
+    
     // Запрос свежих новостей на Главную
     private function news()
     {
-        if ($this->settings['view'] > 0) {
+        if (/*$this->check->new_news && */$this->settings['view'] > 0) {
             $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
-            $req = $this->db->query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
+            $req = $this->db->query("SELECT nws.*, tpc.post_count FROM `news` nws
+LEFT JOIN forum_topic tpc ON `tpc`.`id`=`nws`.`kom`
+WHERE `nws`.`time` > '$reqtime' ORDER BY `nws`.`time` DESC LIMIT " . $this->settings['quantity']);
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -90,15 +93,14 @@ class NewsWidget
                     }
 
                     // Ссылка на каменты
-                    if (!empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
-                        $res_mes = $this->db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
+                    if (!empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {                        
                         $komm = 0;
-                        if($mes = $res_mes->fetch()) {
-                            $komm = $mes['post_count'] - 1;
-                        }
-                        if ($komm >= 0) {
-                            $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
-                        }
+                        
+                        if($res['post_count']) {
+                            $komm = $res['post_count'] - 1;
+                        }                        
+                        
+                        $news .= '<br /><a href="../forum/?type=topic&id=' . $res['kom'] . '">' . _t('Discuss', 'system') . '</a> (' . $komm . ')';
                     }
                     $news .= '</div>';
                     ++$i;
@@ -107,7 +109,7 @@ class NewsWidget
                 return $news;
             }
         }
-
+        
         return false;
     }
 
@@ -118,20 +120,9 @@ class NewsWidget
      */
     private function newscount()
     {
-        $count = $this->db->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
-
-        return ($count ? $count : '0');
-    }
-
-    /**
-     * Счетчик свежих новостей
-     *
-     * @return bool|string
-     */
-    private function lastnewscount()
-    {
-        $count = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
-
-        return ($count > 0 ? '/<span class="red">+' . $count . '</span>' : false);
+        $counters = $this->db->query('SELECT (
+SELECT COUNT(*) FROM `news`) all_news, (
+SELECT COUNT(*) FROM `news` WHERE `time` > ' . (time() - 259200) . ') new_news')->fetch(\PDO::FETCH_OBJ);
+        return $counters;
     }
 }
