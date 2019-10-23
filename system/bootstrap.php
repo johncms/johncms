@@ -16,11 +16,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
-ini_set('display_errors', 1);
+// Раскомментировать для включения ошибок
+// ini_set('display_errors', 1);
 
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '5.6', '<')) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 5.6 or higher</div>');
+if (version_compare(PHP_VERSION, '7.1', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.1 or higher</div>');
 }
 
 define('START_MEMORY', memory_get_usage());

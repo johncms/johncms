@@ -131,7 +131,7 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
             '</ul>' .
             '</p></div>';
     }
-    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 7.1.0</b></div>';
+    echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 8.0.0</b></div>';
 }
 
 require('../system/end.php');
