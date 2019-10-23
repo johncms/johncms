@@ -48,6 +48,7 @@ module.exports = function (grunt) {
                             '!node_modules/**',
                             '!Gruntfile.js',
                             '!package.json',
+                            '!package-lock.json',
                             '!composer.*'
                         ],
                         dest: 'distributive/'
