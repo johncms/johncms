@@ -40,11 +40,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Johncms\\": "system/johncms/",
+      "Johncms\\": "system/src/",
       "Library\\": "library/classes"
-    },
-    "files": [
-      "system/helpers.php"
-    ]
+    }
   }
 }
