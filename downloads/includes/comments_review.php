@@ -58,7 +58,7 @@ if ($total) {
     while ($res = $req->fetch()) {
         $text = '';
         echo ($i++ % 2) ? '<div class="list2">' : '<div class="list1">';
-        $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
+        $text = ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
         $post = $tools->checkout($res['text'], 1, 1);
         $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
 
@@ -71,7 +71,7 @@ if ($total) {
 
         if (isset($attributes['edit_count'])) {
             $post .= '<br><span class="gray"><small>Изменен: <b>' . $attributes['edit_name'] . '</b>' .
-                ' (' . $tools->displayDate($attributes['edit_time']) . ') <b>' .
+                ' (' . $tools->displayDate((int) $attributes['edit_time']) . ') <b>' .
                 '[' . $attributes['edit_count'] . ']</b></small></span>';
         }
 
@@ -82,7 +82,7 @@ if ($total) {
             $post .= '<div class="reply"><small>' .
                 //TODO: Переделать ссылку
                 '<a href="' . $config['homeurl'] . '?profile.php?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                ' (' . $tools->displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                ' (' . $tools->displayDate((int) $attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
         }
 
         $arg = [

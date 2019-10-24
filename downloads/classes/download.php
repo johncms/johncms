@@ -216,7 +216,7 @@ class download
             $out .= ' <span class="red">(NEW)</span>';
         }
 
-        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate($array['res']['time']);
+        $out .= '<div class="sub">' . _t('Uploaded') . ': ' . $tools->displayDate((int) $array['res']['time']);
         $out .= '</div></td></tr></table>';
 
         return $out;

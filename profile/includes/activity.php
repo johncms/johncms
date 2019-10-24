@@ -56,7 +56,7 @@ switch ($mod) {
             $i = 0;
             while ($res = $req->fetch()) {
                 echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
-                    '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
+                    '<span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -91,7 +91,7 @@ switch ($mod) {
                     '<div class="sub">' .
                     '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['last_post_date']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate((int) $res['last_post_date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }

@@ -155,7 +155,7 @@ switch ($act) {
                         $date = $res['date'];
                     }
 
-                    echo ' <span class="gray">(' . $tools->displayDate($date) . ')</span><br>';
+                    echo ' <span class="gray">(' . $tools->displayDate((int) $date) . ')</span><br>';
                     $text = $search_t ? $res_p['name'] : $res['text'];
 
                     foreach ($array as $srch) {

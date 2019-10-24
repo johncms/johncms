@@ -83,7 +83,7 @@ if ($total) {
         }
 
         $arg = [
-            'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
+            'header' => '<span class="gray">(' . $tools->displayDate((int) $last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
             'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
             'iphide' => 1,

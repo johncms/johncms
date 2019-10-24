@@ -131,7 +131,7 @@ if ($systemUser->isValid()) {
                         echo '&#160;/&#160;' . ($systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
                     }
 
-                    echo ' <span class="gray">' . $tools->displayDate(($systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
+                    echo ' <span class="gray">' . $tools->displayDate((int) ($systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
                     echo '</div></div>';
                 }
             } else {
@@ -195,7 +195,7 @@ if ($systemUser->isValid()) {
                     $last_post_date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
 
                     echo '<div class="sub">' . $res['user_name'] . ($post_count > 1 ? '&#160;/&#160;' . $last_author : '') .
-                        ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span><br />' .
+                        ' <span class="gray">(' . $tools->displayDate((int) $last_post_date) . ')</span><br />' .
                         '<a href="index.php?id=' . $res['frm_id'] . '">' . $res['frm_name'] . '</a>&#160;/&#160;<a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['rzd_name'] . '</a>' .
                         '</div></div>';
                 }

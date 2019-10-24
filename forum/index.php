@@ -420,7 +420,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
 
                         $last_post_date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
 
-                        echo ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span></div></div>';
+                        echo ' <span class="gray">(' . $tools->displayDate((int) $last_post_date) . ')</span></div></div>';
                         ++$i;
                     }
                     unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
@@ -602,7 +602,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     ];
                     echo @$user_rights[$postres['rights']];
                     echo time() > $postres['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>';
-                    echo ' <span class="gray">(' . $tools->displayDate($postres['date']) . ')</span><br>';
+                    echo ' <span class="gray">(' . $tools->displayDate((int) $postres['date']) . ')</span><br>';
 
                     if ($postres['deleted']) {
                         echo '<span class="red">' . _t('Post deleted') . '</span><br>';
@@ -724,7 +724,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     }
 
                     // Время поста
-                    echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
+                    echo ' <span class="gray">(' . $tools->displayDate((int) $res['date']) . ')</span><br />';
 
                     // Статус пользователя
                     if (! empty($res['status'])) {
@@ -744,7 +744,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                     // Если пост редактировался, показываем кем и когда
                     if ($res['edit_count']) {
-                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['editor_name'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
+                        echo '<br /><span class="gray"><small>' . _t('Edited') . ' <b>' . $res['editor_name'] . '</b> (' . $tools->displayDate((int) $res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                     }
 
                     // Задаем права на редактирование постов
@@ -827,7 +827,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                                     '<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip_via_proxy']) . '">' . long2ip($res['ip_via_proxy']) . '</a>' .
                                     ' - ' . $res['user_agent'] . '</div>';
                             } else {
-                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a> - ' . $res['user_agent'] . '</div>';
+                                echo '<div class="gray"><a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . long2ip((int) $res['ip']) . '">' . long2ip((int) $res['ip']) . '</a> - ' . $res['user_agent'] . '</div>';
                             }
                         }
 

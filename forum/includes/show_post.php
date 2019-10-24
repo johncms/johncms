@@ -83,7 +83,7 @@ if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
 }
 
 // Время поста
-echo ' <span class="gray">(' . $tools->displayDate($res['date']) . ')</span><br />';
+echo ' <span class="gray">(' . $tools->displayDate((int) $res['date']) . ')</span><br />';
 
 // Статус юзера
 if (! empty($res['status'])) {

@@ -588,7 +588,7 @@ switch ($mod) {
                 while ($res = $req->fetch()) {
                     $subcat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                     $cat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $subcat['parent'] . "'")->fetch();
-                    $ttime = '<span class="gray">(' . $tools->displayDate($res['mod_last_post_date']) . ')</span>';
+                    $ttime = '<span class="gray">(' . $tools->displayDate((int) $res['mod_last_post_date']) . ')</span>';
                     $text = '<a href="../forum/index.php?type=topic&id=' . $res['fid'] . '"><b>' . $res['topic_name'] . '</b></a>';
                     $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['name'] . '</a> / <a href="../forum/index.php?type=topics&id=' . $subcat['id'] . '">' . $subcat['name'] . '</a></small>';
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
@@ -693,7 +693,7 @@ switch ($mod) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
-                    $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
+                    $posttime = ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
                     $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $kmess);
                     $text = mb_substr($res['text'], 0, 500);
                     $text = $tools->checkout($text, 1, 0);

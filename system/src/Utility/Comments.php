@@ -209,7 +209,7 @@ class Comments
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
-                            $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
+                            $author .= ' (' . $this->tools->displayDate((int) $res['time']) . ')<br />';
                             $text = $this->tools->checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
@@ -322,7 +322,7 @@ class Comments
 
                         if (isset($attributes['edit_count'])) {
                             $text .= '<br /><span class="gray"><small>' . _t('Edited', 'system') . ': <b>' . $attributes['edit_name'] . '</b>' .
-                                ' (' . $this->tools->displayDate($attributes['edit_time']) . ') <b>' .
+                                ' (' . $this->tools->displayDate((int) $attributes['edit_time']) . ') <b>' .
                                 '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
 
@@ -331,7 +331,7 @@ class Comments
                             $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
                                 '<a href="' . $homeurl . '/profile/?user=' . $attributes['reply_id'] . '"><b>' . $attributes['reply_name'] . '</b></a>' .
-                                ' (' . $this->tools->displayDate($attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
+                                ' (' . $this->tools->displayDate((int) $attributes['reply_time']) . ')</small><br>' . $reply . '</div>';
                         }
 
                         $user_arg = [

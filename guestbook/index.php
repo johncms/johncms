@@ -420,7 +420,7 @@ switch ($act) {
 
                 if ($res['edit_count']) {
                     // Если пост редактировался, показываем кем и когда
-                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
+                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate((int) $res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                 }
 
                 if (! empty($res['otvet'])) {
