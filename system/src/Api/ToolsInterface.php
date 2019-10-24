@@ -18,7 +18,7 @@ interface ToolsInterface
 
     public function checkout($string, $br, $tags);
 
-    public function displayDate($var);
+    public function displayDate(int $var);
 
     public function displayError($error, $link = '');
 

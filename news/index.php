@@ -315,7 +315,7 @@ switch ($do) {
             $text = $tools->checkout($res['text'], 1, 1);
             $text = $tools->smilies($text, 1);
             echo '<h3>' . $res['name'] . '</h3>' .
-                '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate($res['time']) . ')</small></span>' .
+                '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate((int) $res['time']) . ')</small></span>' .
                 '<br />' . $text . '<div class="sub">';
 
             if ($res['kom'] != 0 && $res['kom'] != '') {

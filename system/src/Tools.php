@@ -126,7 +126,7 @@ class Tools implements Api\ToolsInterface
      * @param int $var Время в Unix формате
      * @return string Отформатированное время
      */
-    public function displayDate($var)
+    public function displayDate(int $var)
     {
         $shift = ($this->config->timeshift + $this->userConfig->timeshift) * 3600;
 
