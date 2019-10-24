@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Database;
 
+use PDO;
 use Psr\Container\ContainerInterface;
 
 class PdoFactory
@@ -22,7 +23,7 @@ class PdoFactory
      */
     public function __invoke(ContainerInterface $container)
     {
-        $config = $container->get('config')['pdo'];
+        $config = $container->get('config')['pdo'] ?? [];
 
         $dbHost = $config['db_host'] ?? 'localhost';
         $dbUser = $config['db_user'] ?? 'root';
@@ -32,10 +33,10 @@ class PdoFactory
         try {
             $pdo = new \PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,
                 [
-                    \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
-                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'",
-                    \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'",
+                    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,
                 ]
             );
         } catch (\PDOException $e) {

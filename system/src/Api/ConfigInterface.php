@@ -15,7 +15,6 @@ namespace Johncms\Api;
 /**
  * Interface ConfigInterface
  *
- * @package Johncms\Api
  * @property $active
  * @property $antiflood
  * @property $clean_time

@@ -18,7 +18,7 @@ return [
             Johncms\Api\EnvironmentInterface::class => Johncms\Environment::class,
             Johncms\Api\ToolsInterface::class       => Johncms\Tools::class,
             Johncms\Api\UserInterface::class        => Johncms\UserFactory::class,
-            PDO::class                              => Johncms\PdoFactory::class,
+            PDO::class                              => Johncms\Database\PdoFactory::class,
 
             'counters' => Johncms\Counters::class,
         ],
