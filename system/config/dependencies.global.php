@@ -10,15 +10,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Http\ServerRequestFactory;
+use Johncms\Router\RouteCollectorFactory;
+use Psr\Http\Message\ServerRequestInterface;
+
 return [
     'dependencies' => [
         'factories' => [
+            FastRoute\RouteCollector::class         => RouteCollectorFactory::class,
             Johncms\Api\BbcodeInterface::class      => Johncms\Utility\Bbcode::class,
             Johncms\Api\ConfigInterface::class      => Johncms\Config\ConfigFactory::class,
             Johncms\Api\EnvironmentInterface::class => Johncms\Http\Environment::class,
             Johncms\Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
             Johncms\Api\UserInterface::class        => Johncms\Users\UserFactory::class,
             PDO::class                              => Johncms\Database\PdoFactory::class,
+            ServerRequestInterface::class           => ServerRequestFactory::class,
 
             'counters' => Johncms\Utility\Counters::class,
         ],
