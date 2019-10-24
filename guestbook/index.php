@@ -389,7 +389,7 @@ switch ($act) {
                 }
 
                 // Время создания поста
-                $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
+                $text = ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
 
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
@@ -427,7 +427,7 @@ switch ($act) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     $otvet = $tools->smilies($otvet, 1);
-                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
+                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate((int) $res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
                 if ($systemUser->rights >= 6) {

@@ -10,19 +10,24 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Utility;
 
+use Johncms\Api\BbcodeInterface;
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
+use Johncms\UserConfig;
 use Psr\Container\ContainerInterface;
 
-class Bbcode implements Api\BbcodeInterface
+class Bbcode implements BbcodeInterface
 {
     /**
-     * @var Api\ConfigInterface
+     * @var ConfigInterface
      */
     protected $config;
 
     /**
-     * @var Api\UserInterface::class
+     * @var UserInterface
      */
     protected $user;
 
@@ -48,8 +53,8 @@ class Bbcode implements Api\BbcodeInterface
 
     public function __invoke(ContainerInterface $container)
     {
-        $this->config = $container->get(Api\ConfigInterface::class);
-        $this->user = $container->get(Api\UserInterface::class);
+        $this->config = $container->get(ConfigInterface::class);
+        $this->user = $container->get(UserInterface::class);
         $this->userConfig = $this->user->getConfig();
         $this->homeUrl = $this->config['homeurl'];
 
@@ -162,8 +167,8 @@ class Bbcode implements Api\BbcodeInterface
                 $res_sm .= '<a href="javascript:tag(\':' . $value . '\', \':\'); show_hide(\'sm\');">:' . $value . ':</a> ';
             }
 
-            /** @var Api\ToolsInterface::class $tools */
-            $tools = \App::getContainer()->get(Api\ToolsInterface::class);
+            /** @var ToolsInterface $tools */
+            $tools = \App::getContainer()->get(ToolsInterface::class);
 
             $bb_smileys .= $tools->smilies($res_sm, $this->user->rights >= 1 ? 1 : 0);
         } else {

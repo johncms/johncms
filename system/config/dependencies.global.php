@@ -13,7 +13,7 @@ declare(strict_types=1);
 return [
     'dependencies' => [
         'factories' => [
-            Johncms\Api\BbcodeInterface::class      => Johncms\Bbcode::class,
+            Johncms\Api\BbcodeInterface::class      => Johncms\Utility\Bbcode::class,
             Johncms\Api\ConfigInterface::class      => Johncms\ConfigFactory::class,
             Johncms\Api\EnvironmentInterface::class => Johncms\Environment::class,
             Johncms\Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
