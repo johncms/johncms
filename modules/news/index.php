@@ -13,7 +13,6 @@ declare(strict_types=1);
 define('_IN_JOHNCMS', 1);
 
 $headmod = 'news';
-require '../system/bootstrap.php';
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -36,7 +35,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('News');
-require '../system/head.php';
+require 'system/head.php';
 
 switch ($do) {
     case 'add':
@@ -347,4 +346,4 @@ switch ($do) {
         }
 }
 
-require '../system/end.php';
+require 'system/end.php';

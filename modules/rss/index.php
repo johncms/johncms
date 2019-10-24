@@ -10,10 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
-require_once '../system/bootstrap.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -41,7 +37,7 @@ if ($req->rowCount()) {
              '<link>' . $config->homeurl . '/news/index.php</link>' .
              '<author>' . htmlspecialchars($res['avt']) . '</author>' .
              '<description>' . htmlspecialchars($res['text']) . '</description>' .
-             '<pubDate>' . date('r', $res['time']) .
+             '<pubDate>' . date('r', (int) $res['time']) .
              '</pubDate>' .
              '</item>';
     }
@@ -58,7 +54,7 @@ if ($req->rowCount()) {
              '<author>' . htmlspecialchars($res['uploader']) . '</author>' .
              '<description>' . htmlspecialchars($res['announce']) .
              '</description>' .
-             '<pubDate>' . date('r', $res['time']) . '</pubDate>' .
+             '<pubDate>' . date('r', (int) $res['time']) . '</pubDate>' .
              '</item>';
     }
 }
