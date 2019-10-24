@@ -55,7 +55,7 @@ class Counters
         $file = ROOT_PATH . 'files/cache/count_album.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $album = $res['album'];
             $photo = $res['photo'];
             $new = $res['new'];
@@ -65,7 +65,7 @@ class Counters
             $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
             $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
             $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, serialize(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
+            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
         }
 
         $newcount = 0;
@@ -89,7 +89,7 @@ class Counters
         $file = ROOT_PATH . 'files/cache/count_downloads.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $total = $res['total'] ?? 0;
             $new = $res['new'] ?? 0;
             $mod = $res['mod'] ?? 0;
@@ -99,7 +99,7 @@ class Counters
             $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
             $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
         }
 
         if ($new > 0) {
@@ -126,13 +126,13 @@ class Counters
         $new = '';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $top = $res['top'];
             $msg = $res['msg'];
         } else {
             $top = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
             $msg = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
-            file_put_contents($file, serialize(['top' => $top, 'msg' => $msg]), LOCK_EX);
+            file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg]), LOCK_EX);
         }
 
         if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
@@ -221,7 +221,7 @@ class Counters
         $file = ROOT_PATH . 'files/cache/count_library.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $total = $res['total'];
             $new = $res['new'];
             $mod = $res['mod'];
@@ -230,7 +230,7 @@ class Counters
             $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
             $mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
         }
 
         if ($new) {
@@ -254,14 +254,14 @@ class Counters
         $file = ROOT_PATH . 'files/cache/count_online.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 10)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $users = $res['users'];
             $guests = $res['guests'];
         } else {
             $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
             $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
-            file_put_contents($file, serialize(['users' => $users, 'guests' => $guests]), LOCK_EX);
+            file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
 
         return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
@@ -277,14 +277,14 @@ class Counters
         $file = ROOT_PATH . 'files/cache/count_users.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = unserialize(file_get_contents($file));
+            $res = json_decode(file_get_contents($file), true);
             $total = $res['total'];
             $new = $res['new'];
         } else {
             $total = $this->db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
             $new = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `datereg` > ' . (time() - 86400))->fetchColumn();
 
-            file_put_contents($file, serialize(['total' => $total, 'new' => $new]), LOCK_EX);
+            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
         }
 
         return $total . ($new ? '&#160;/&#160;<span class="red">+' . $new . '</span>' : '');
