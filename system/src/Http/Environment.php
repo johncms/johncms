@@ -10,11 +10,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Http;
 
+use Johncms\Api\EnvironmentInterface;
 use Psr\Container\ContainerInterface;
 
-class Environment implements Api\EnvironmentInterface
+class Environment implements EnvironmentInterface
 {
     private $ip;
 

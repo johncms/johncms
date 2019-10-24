@@ -15,7 +15,7 @@ return [
         'factories' => [
             Johncms\Api\BbcodeInterface::class      => Johncms\Utility\Bbcode::class,
             Johncms\Api\ConfigInterface::class      => Johncms\Config\ConfigFactory::class,
-            Johncms\Api\EnvironmentInterface::class => Johncms\Environment::class,
+            Johncms\Api\EnvironmentInterface::class => Johncms\Http\Environment::class,
             Johncms\Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
             Johncms\Api\UserInterface::class        => Johncms\Users\UserFactory::class,
             PDO::class                              => Johncms\Database\PdoFactory::class,
