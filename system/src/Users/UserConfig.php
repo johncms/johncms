@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Users;
 
 use Zend\Stdlib\ArrayObject;
 

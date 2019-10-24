@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Users;
 
+use Johncms\Api\UserInterface;
 use Zend\Stdlib\ArrayObject;
 
 /**
@@ -19,7 +20,7 @@ use Zend\Stdlib\ArrayObject;
  *
  * @package Johncms
  */
-class User extends ArrayObject implements Api\UserInterface
+class User extends ArrayObject implements UserInterface
 {
     private $userConfigObject;
 

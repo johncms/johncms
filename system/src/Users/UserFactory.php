@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Users;
 
+use Johncms\Api\EnvironmentInterface;
 use Psr\Container\ContainerInterface;
 
 class UserFactory
@@ -22,7 +23,7 @@ class UserFactory
     private $db;
 
     /**
-     * @var Api\EnvironmentInterface::class
+     * @var EnvironmentInterface
      */
     private $env;
 
@@ -31,10 +32,10 @@ class UserFactory
     public function __invoke(ContainerInterface $container)
     {
         $this->db = $container->get(\PDO::class);
-        $this->env = $container->get(Api\EnvironmentInterface::class);
+        $this->env = $container->get(EnvironmentInterface::class);
         $this->userData = $this->authorize();
 
-        return new User($this->userData, User::ARRAY_AS_PROPS);
+        return new User($this->userData);
     }
 
     /**

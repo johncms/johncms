@@ -10,9 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Users;
 
-class CleanUser
+class UserClean
 {
     /**
      * @var \PDO
