@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -34,10 +34,10 @@ $settings = $config['news'];
 // Настройки Новостей
 if (isset($_POST['submit'])) {
     // Принимаем настройки из формы
-    $settings['view'] = isset($_POST['view']) && $_POST['view'] >= 0 && $_POST['view'] < 4 ? intval($_POST['view']) : 1;
-    $settings['size'] = isset($_POST['size']) && $_POST['size'] > 49 && $_POST['size'] < 501 ? intval($_POST['size']) : 200;
-    $settings['quantity'] = isset($_POST['quantity']) && $_POST['quantity'] > 0 && $_POST['quantity'] < 16 ? intval($_POST['quantity']) : 3;
-    $settings['days'] = isset($_POST['days']) && $_POST['days'] > 0 && $_POST['days'] < 31 ? intval($_POST['days']) : 7;
+    $settings['view'] = isset($_POST['view']) && $_POST['view'] >= 0 && $_POST['view'] < 4 ? (int) ($_POST['view']) : 1;
+    $settings['size'] = isset($_POST['size']) && $_POST['size'] > 49 && $_POST['size'] < 501 ? (int) ($_POST['size']) : 200;
+    $settings['quantity'] = isset($_POST['quantity']) && $_POST['quantity'] > 0 && $_POST['quantity'] < 16 ? (int) ($_POST['quantity']) : 3;
+    $settings['days'] = isset($_POST['days']) && $_POST['days'] > 0 && $_POST['days'] < 31 ? (int) ($_POST['days']) : 7;
     $settings['breaks'] = isset($_POST['breaks']);
     $settings['smileys'] = isset($_POST['smileys']);
     $settings['tags'] = isset($_POST['tags']);
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
     $config['news'] = $settings;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+    if (! file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
         echo 'ERROR: Can not write system.local.php</body></html>';
         exit;
     }
@@ -64,7 +64,7 @@ echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
     '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title + Text') . '<br>' .
     '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title') . '<br>' .
     '<input type="radio" value="3" name="view" ' . ($settings['view'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Text') . '<br>' .
-    '<input type="radio" value="0" name="view" ' . (!$settings['view'] ? 'checked="checked"' : '') . '/>&#160;<span class="red">' . _t('Not to show') . '</span></p>' .
+    '<input type="radio" value="0" name="view" ' . (! $settings['view'] ? 'checked="checked"' : '') . '/>&#160;<span class="red">' . _t('Not to show') . '</span></p>' .
     '<p><input name="breaks" type="checkbox" value="1" ' . ($settings['breaks'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Line breaks') . '<br>' .
     '<input name="smileys" type="checkbox" value="1" ' . ($settings['smileys'] ? 'checked="checked"' : '') . ' />&#160;' . _t('Smilies') . '<br>' .
     '<input name="tags" type="checkbox" value="1" ' . ($settings['tags'] ? 'checked="checked"' : '') . ' />&#160;' . _t('bbCode Tags') . '<br>' .

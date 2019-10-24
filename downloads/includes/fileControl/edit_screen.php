@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,7 +30,7 @@ require '../system/head.php';
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
     require '../system/end.php';
     exit;
@@ -45,7 +45,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
     unlink(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do);
     header('Location: ?act=edit_screen&id=' . $id);
     exit;
-} else {
+}
     if (isset($_POST['submit'])) {
         // Загрузка скриншота
         $handle = new \Verot\Upload\Upload($_FILES['screen']);
@@ -93,7 +93,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
             $dir = opendir(DOWNLOADS_SCR . $id);
 
             while ($file = readdir($dir)) {
-                if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
+                if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
                     $screen[] = '../files/downloads/screen/' . $id . '/' . $file;
                 }
             }
@@ -105,13 +105,13 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
             }
         }
 
-        if (!empty($screen)) {
+        if (! empty($screen)) {
             $total = count($screen);
 
             for ($i = 0; $i < $total; $i++) {
                 $screen_name = htmlentities($screen[$i], ENT_QUOTES, 'utf-8');
                 $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
-                echo (($i % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<table  width="100%"><tr><td width="40" valign="top">' .
                     '<a href="' . $screen_name . '"><img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$i]) . '" alt="screen" /></a></td><td>' .
                     '<a href="?act=edit_screen&amp;id=' . $id . '&amp;do=' . basename($file) . '">' . _t('Delete') . '</a></td></tr></table></div>';
@@ -120,6 +120,5 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
 
         echo '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
-}
 
 require '../system/end.php';

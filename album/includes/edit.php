@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,7 +29,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Создать / изменить альбом
 if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 7) {
     if ($al) {
-        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
+        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $user['id']);
 
         if ($req->rowCount()) {
             echo '<div class="phdr"><b>' . _t('Edit Album') . '</b></div>';
@@ -40,7 +40,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
             $access = $res['access'];
         } else {
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
     } else {
@@ -58,7 +58,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $description = isset($_POST['description']) ? trim($_POST['description']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-        $access = isset($_POST['access']) ? abs(intval($_POST['access'])) : null;
+        $access = isset($_POST['access']) ? abs((int) ($_POST['access'])) : null;
 
         // Проверяем на ошибки
         if (empty($name)) {
@@ -80,14 +80,14 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         }
 
         // Проверяем, есть ли уже альбом с таким же именем?
-        if (!$al && $db->query("SELECT * FROM `cms_album_cat` WHERE `name` = " . $db->quote($name) . " AND `user_id` = '" . $user['id'] . "' LIMIT 1")->rowCount()) {
+        if (! $al && $db->query('SELECT * FROM `cms_album_cat` WHERE `name` = ' . $db->quote($name) . " AND `user_id` = '" . $user['id'] . "' LIMIT 1")->rowCount()) {
             $error[] = _t('The album already exists');
         }
 
-        if (!$error) {
+        if (! $error) {
             if ($al) {
                 // Изменяем данные в базе
-                $db->exec("UPDATE `cms_album_files` SET `access` = '$access' WHERE `album_id` = '$al' AND `user_id` = " . $user['id']);
+                $db->exec("UPDATE `cms_album_files` SET `access` = '${access}' WHERE `album_id` = '${al}' AND `user_id` = " . $user['id']);
                 $db->prepare('
                   UPDATE `cms_album_cat` SET
                   `name` = ?,
@@ -135,7 +135,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
 
             echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
     }
@@ -156,7 +156,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         '<input type="text" name="password" value="' . $tools->checkout($password) . '" maxlength="15" /><br>' .
         '<small>' . _t('This field is required if the password access is activated') . '<br>Min. 3, Max. 15</small></p>' .
         '<p><h3>' . _t('Access') . '</h3>' .
-        '<input type="radio" name="access" value="4" ' . (!$access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Everyone') . '<br>' .
+        '<input type="radio" name="access" value="4" ' . (! $access || $access == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Everyone') . '<br>' .
         '<input type="radio" name="access" value="2" ' . ($access == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('With Password') . '<br>' .
         '<input type="radio" name="access" value="1" ' . ($access == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for me') . '</p>' .
         '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>' .

@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,25 +29,25 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-if (!$id || !$systemUser->isValid()) {
+if (! $id || ! $systemUser->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
-$res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id'")->fetch();
+$res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch();
 
 if (empty($res) || $res['user_id'] != $systemUser->id) {
     echo $tools->displayError(_t('Wrong data'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['date'] < (time() - 3600)) {
     echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
     if ($do_file) {
         // Список допустимых расширений файлов.
         $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
-        $ext = explode(".", $file);
+        $ext = explode('.', $file);
         $error = [];
 
         // Проверка на допустимый размер файла
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
         }
 
         // Проверка допустимых расширений файлов
-        if (!in_array($ext[1], $al_ext)) {
+        if (! in_array($ext[1], $al_ext)) {
             $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
         }
 
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
             $ext[0] = '---';
         }
 
-        $ext[0] = str_replace(" ", "_", $ext[0]);
+        $ext[0] = str_replace(' ', '_', $ext[0]);
         $fname = mb_substr($ext[0], 0, 32) . '.' . $ext[1];
 
         // Проверка на запрещенные символы
@@ -99,23 +99,23 @@ if (isset($_POST['submit'])) {
         }
 
         // Проверка наличия файла с таким же именем
-        if (file_exists("../files/forum/attach/$fname")) {
+        if (file_exists("../files/forum/attach/${fname}")) {
             $fname = time() . $fname;
         }
 
         // Окончательная обработка
-        if (!$error && $do_file) {
+        if (! $error && $do_file) {
             // Для обычного браузера
-            if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "../files/forum/attach/$fname")) == true) {
-                @chmod("$fname", 0777);
-                @chmod("../files/forum/attach/$fname", 0777);
+            if ((move_uploaded_file($_FILES['fail']['tmp_name'], "../files/forum/attach/${fname}")) == true) {
+                @chmod("${fname}", 0777);
+                @chmod("../files/forum/attach/${fname}", 0777);
                 echo _t('File attached') . '<br>';
             } else {
                 $error[] = _t('Error uploading file');
             }
         }
 
-        if (!$error) {
+        if (! $error) {
             // Определяем тип файла
             $ext = strtolower($ext[1]);
             if (in_array($ext, $ext_win)) {
@@ -148,10 +148,10 @@ if (isset($_POST['submit'])) {
               `cat` = '" . $res3['parent'] . "',
               `subcat` = '" . $res2['section_id'] . "',
               `topic` = '" . $res['topic_id'] . "',
-              `post` = '$id',
+              `post` = '${id}',
               `time` = '" . $res['date'] . "',
               `filename` = " . $db->quote($fname) . ",
-              `filetype` = '$type'
+              `filetype` = '${type}'
             ");
         } else {
             echo $tools->displayError($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');

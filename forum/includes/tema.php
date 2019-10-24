@@ -1,26 +1,26 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
-require('../system/head.php');
+require '../system/head.php';
 $delf = opendir('../files/forum/topics');
 $tm = [];
 
 while ($tt = readdir($delf)) {
-    if ($tt != "." && $tt != ".." && $tt != 'index.php' && $tt != '.svn') {
+    if ($tt != '.' && $tt != '..' && $tt != 'index.php' && $tt != '.svn') {
         $tm[] = $tt;
     }
 }
@@ -29,17 +29,17 @@ closedir($delf);
 $totalt = count($tm);
 
 for ($it = 0; $it < $totalt; $it++) {
-    $filtime[$it] = filemtime("../files/forum/topics/$tm[$it]");
+    $filtime[$it] = filemtime("../files/forum/topics/{$tm[$it]}");
     $tim = time();
     $ftime1 = $tim - 300;
     if ($filtime[$it] < $ftime1) {
-        unlink("../files/forum/topics/$tm[$it]");
+        unlink("../files/forum/topics/{$tm[$it]}");
     }
 }
 
-if (!$id) {
+if (! $id) {
     echo $tools->displayError(_t('Wrong data'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -55,18 +55,18 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id' AND (`deleted` != '1' OR `deleted` IS NULL)");
+$req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)");
 
-if (!$req->rowCount()) {
+if (! $req->rowCount()) {
     echo $tools->displayError(_t('Wrong data'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 if (isset($_POST['submit'])) {
     $type1 = $req->fetch();
-    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '$id'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . " ORDER BY `id` ASC");
-    $mod = intval($_POST['mod']);
+    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '${id}'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . ' ORDER BY `id` ASC');
+    $mod = (int) ($_POST['mod']);
 
     switch ($mod) {
         case 1:
@@ -76,23 +76,23 @@ if (isset($_POST['submit'])) {
             while ($arr = $tema->fetch()) {
                 $txt_tmp = str_replace('[c]', _t('Quote') . ':{', $arr['text']);
                 $txt_tmp = str_replace('[/c]', '}-' . _t('Answer') . ':', $txt_tmp);
-                $txt_tmp = str_replace("&quot;", "\"", $txt_tmp);
-                $txt_tmp = str_replace("[l]", "", $txt_tmp);
-                $txt_tmp = str_replace("[l/]", "-", $txt_tmp);
-                $txt_tmp = str_replace("[/l]", "", $txt_tmp);
-                $stroka = $arr['user_name'] . '(' . date("d.m.Y/H:i", $arr['date']) . ")\r\n" . $txt_tmp . "\r\n\r\n";
+                $txt_tmp = str_replace('&quot;', '"', $txt_tmp);
+                $txt_tmp = str_replace('[l]', '', $txt_tmp);
+                $txt_tmp = str_replace('[l/]', '-', $txt_tmp);
+                $txt_tmp = str_replace('[/l]', '', $txt_tmp);
+                $stroka = $arr['user_name'] . '(' . date('d.m.Y/H:i', $arr['date']) . ")\r\n" . $txt_tmp . "\r\n\r\n";
                 $text .= $stroka;
             }
 
             $num = time() . $id;
-            $fp = fopen("../files/forum/topics/$num.txt", "a+");
+            $fp = fopen("../files/forum/topics/${num}.txt", 'a+');
             flock($fp, LOCK_EX);
-            fputs($fp, "$text\r\n");
+            fwrite($fp, "${text}\r\n");
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("$fp", 0777);
-            @chmod("../files/forum/topics/$num.txt", 0777);
+            @chmod("${fp}", 0777);
+            @chmod("../files/forum/topics/${num}.txt", 0777);
             echo '<a href="index.php?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="index.php">' . _t('Forum') . '</a><br>';
             break;
 
@@ -108,7 +108,7 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
 .quote{font-size: x-small; padding: 2px 0px 2px 4px; color: #878787; border-left: 3px solid #c0c0c0;
 }
 </style></head>
-<body><p><b><u>$type1[text]</u></b></p>";
+<body><p><b><u>{$type1['text']}</u></b></p>";
 
             $i = 1;
 
@@ -127,21 +127,21 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
                 $txt_tmp = htmlentities($arr['text'], ENT_QUOTES, 'UTF-8');
                 $txt_tmp = App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->tags($txt_tmp);
                 $txt_tmp = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $txt_tmp);
-                $txt_tmp = str_replace("\r\n", "<br>", $txt_tmp);
-                $stroka = "$div <b>".$arr['user_name']."</b>(" . date("d.m.Y/H:i", $arr['date']) . ")<br>$txt_tmp</div>";
-                $text = "$text $stroka";
+                $txt_tmp = str_replace("\r\n", '<br>', $txt_tmp);
+                $stroka = "${div} <b>" . $arr['user_name'] . '</b>(' . date('d.m.Y/H:i', $arr['date']) . ")<br>${txt_tmp}</div>";
+                $text = "${text} ${stroka}";
                 ++$i;
             }
             $text = $text . '<p>' . _t('This theme was downloaded from the forum site') . ': <b>' . $config['copyright'] . '</b></p></body></html>';
             $num = time() . $id;
-            $fp = fopen("../files/forum/topics/$num.htm", "a+");
+            $fp = fopen("../files/forum/topics/${num}.htm", 'a+');
             flock($fp, LOCK_EX);
-            fputs($fp, "$text\r\n");
+            fwrite($fp, "${text}\r\n");
             fflush($fp);
             flock($fp, LOCK_UN);
             fclose($fp);
-            @chmod("$fp", 0777);
-            @chmod("../files/forum/topics/$num.htm", 0777);
+            @chmod("${fp}", 0777);
+            @chmod("../files/forum/topics/${num}.htm", 0777);
             echo '<a href="index.php?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="index.php">' . _t('Forum') . '</a><br>';
             break;
     }

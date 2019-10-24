@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -26,7 +26,7 @@ require '../system/head.php';
 // Топ юзеров
 $textl = _t('Top Users');
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
-$req = $db->query("SELECT * FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY COUNT(`user_id`)");
+$req = $db->query('SELECT * FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY COUNT(`user_id`)');
 $total = $req->rowCount();
 
 // Навигация
@@ -38,11 +38,11 @@ if ($total > $kmess) {
 $i = 0;
 
 if ($total) {
-    $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT $start, $kmess");
+    $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT ${start}, ${kmess}");
 
     while ($res_down = $req_down->fetch()) {
-        $user = $db->query("SELECT * FROM `users` WHERE `id`=" . $res_down['user_id'])->fetch();
-        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+        $user = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
+        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
             $tools->displayUser($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
     }
 } else {

@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-require_once ('../system/bootstrap.php');
+require_once '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -48,7 +48,7 @@ if ($req->rowCount()) {
 }
 
 // Библиотека
-$req = $db->query("select * from `library_texts` where `premod`=1 limit 15;");
+$req = $db->query('select * from `library_texts` where `premod`=1 limit 15;');
 
 if ($req->rowCount()) {
     while ($res = $req->fetch()) {

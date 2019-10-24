@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -24,14 +24,14 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Каталог Админских Смайлов
 if ($systemUser->rights < 1) {
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('For administration') . '</div>';
 $user_sm = unserialize($systemUser->smileys);
 
-if (!is_array($user_sm)) {
+if (! is_array($user_sm)) {
     $user_sm = [];
 }
 
@@ -41,7 +41,7 @@ $array = [];
 $dir = opendir('../images/smileys/admin');
 
 while (($file = readdir($dir)) !== false) {
-    if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
+    if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
         $array[] = $file;
     }
 }

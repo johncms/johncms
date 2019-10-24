@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $obj = new Library\Hashtags(0);
 
@@ -27,7 +27,7 @@ if (isset($_GET['tag'])) {
     $tag = urldecode($_GET['tag']);
 
     if ($obj->getAllTagStats($tag)) {
-        $total = sizeof($obj->getAllTagStats($tag));
+        $total = count($obj->getAllTagStats($tag));
         $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
         $start = $page == 1 ? 0 : ($page - 1) * $kmess;
 
@@ -39,7 +39,7 @@ if (isset($_GET['tag'])) {
         }
 
         foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), $start, $kmess) as $txt) {
-            $query = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = " . $txt);
+            $query = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = ' . $txt);
             if ($query->rowCount()) {
                 $row = $query->fetch();
                 $obj = new Library\Hashtags($row['id']);
@@ -48,7 +48,7 @@ if (isset($_GET['tag'])) {
                     ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')
                 . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
-                . '<div>' . $tools->checkout($db->query("SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=" . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
+                . '<div>' . $tools->checkout($db->query('SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=' . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
                 . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' . ' (' . $tools->displayDate($row['time']) . ')</div>'
                 . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'
                 . '<div>' . ($obj->getAllStatTags() ? _t('Tags') . ' [ ' . $obj->getAllStatTags(1) . ' ]' : '') . '</div>'
@@ -57,7 +57,7 @@ if (isset($_GET['tag'])) {
             }
         }
 
-        echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
+        echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
 
         if ($total > $kmess) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;',

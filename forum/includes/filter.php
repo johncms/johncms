@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -20,47 +20,47 @@ $container = App::getContainer();
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if (!$id) {
+if (! $id) {
     echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 switch ($do) {
     case 'unset':
         // Удаляем фильтр
-        unset($_SESSION['fsort_id']);
-        unset($_SESSION['fsort_users']);
-        header("Location: index.php?type=topic&id=$id");
+        unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+
+        header("Location: index.php?type=topic&id=${id}");
         break;
 
     case 'set':
         // Устанавливаем фильтр по авторам
-        $users = isset($_POST['users']) ? $_POST['users'] : '';
+        $users = $_POST['users'] ?? '';
 
         if (empty($_POST['users'])) {
             echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
         $array = [];
 
         foreach ($users as $val) {
-            $array[] = intval($val);
+            $array[] = (int) $val;
         }
 
         $_SESSION['fsort_id'] = $id;
         $_SESSION['fsort_users'] = serialize($array);
-        header("Location: index.php?type=topic&id=$id");
+        header("Location: index.php?type=topic&id=${id}");
         break;
 
-    default :
+    default:
         /** @var PDO $db */
         $db = $container->get(PDO::class);
 
         // Показываем список авторов темы, с возможностью выбора
-        $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '$id' GROUP BY `user_id` ORDER BY `user_name`");
+        $req = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `forum_messages` WHERE `topic_id` = '${id}' GROUP BY `user_id` ORDER BY `user_name`");
         $total = $req->rowCount();
 
         if ($total) {

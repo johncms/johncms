@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
-    $avatar = isset($_GET['avatar']) ? intval($_GET['avatar']) : false;
+    $avatar = isset($_GET['avatar']) ? (int) ($_GET['avatar']) : false;
 
     if ($systemUser->isValid() && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
         if (isset($_POST['submit'])) {

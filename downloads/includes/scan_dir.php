@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,15 +27,15 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
-    $mod = isset($_GET['mod']) ? intval($_GET['mod']) : '';
+    $mod = isset($_GET['mod']) ? (int) ($_GET['mod']) : '';
 
     switch ($do) {
         case 'clean':
             // Удаляем отсутствующие файлы
-            $query = $db->query("SELECT `id`, `dir`, `name`, `type` FROM `download__files`");
+            $query = $db->query('SELECT `id`, `dir`, `name`, `type` FROM `download__files`');
 
             while ($result = $query->fetch()) {
-                if (!file_exists($result['dir'] . '/' . $result['name'])) {
+                if (! file_exists($result['dir'] . '/' . $result['name'])) {
                     $req = $db->query("SELECT `id` FROM `download__more` WHERE `refid` = '" . $result['id'] . "'");
 
                     while ($res = $req->fetch()) {
@@ -49,10 +49,10 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 }
             }
 
-            $query = $db->query("SELECT `id`, `dir`, `name` FROM `download__category`");
+            $query = $db->query('SELECT `id`, `dir`, `name` FROM `download__category`');
 
             while ($result = $query->fetch()) {
-                if (!file_exists($result['dir'])) {
+                if (! file_exists($result['dir'])) {
                     $arrayClean = [];
                     $req = $db->query("SELECT `id` FROM `download__files` WHERE `refid` = '" . $result['id'] . "'");
 
@@ -61,22 +61,22 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     }
 
                     $idClean = implode(',', $arrayClean);
-                    $db->exec("DELETE FROM `download__bookmark` WHERE `file_id` IN (" . $idClean . ")");
-                    $db->exec("DELETE FROM `download__comments` WHERE `sub_id` IN (" . $idClean . ")");
-                    $db->exec("DELETE FROM `download__more` WHERE `refid` IN (" . $idClean . ")");
+                    $db->exec('DELETE FROM `download__bookmark` WHERE `file_id` IN (' . $idClean . ')');
+                    $db->exec('DELETE FROM `download__comments` WHERE `sub_id` IN (' . $idClean . ')');
+                    $db->exec('DELETE FROM `download__more` WHERE `refid` IN (' . $idClean . ')');
                     $db->exec("DELETE FROM `download__files` WHERE `refid` = '" . $result['id'] . "'");
                     $db->exec("DELETE FROM `download__category` WHERE `id` = '" . $result['id'] . "'");
                 }
             }
 
-            $req_down = $db->query("SELECT `dir`, `name`, `id` FROM `download__category`");
+            $req_down = $db->query('SELECT `dir`, `name`, `id` FROM `download__category`');
 
             while ($res_down = $req_down->fetch()) {
                 $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir']) . "%'")->fetchColumn();
-                $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
+                $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $res_down['id'] . "'");
             }
 
-            $db->query("OPTIMIZE TABLE `download__bookmark`, `download__files`, `download__comments`,`download__more`");
+            $db->query('OPTIMIZE TABLE `download__bookmark`, `download__files`, `download__comments`,`download__more`');
 
             echo '<div class="phdr"><b>' . _t('Remove missing files') . '</b></div>' .
                 '<div class="rmenu"><p>' . _t('Database successfully updated') . '</p></div>' .
@@ -90,7 +90,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 $res_down_cat = $cat->fetch();
                 $scan_dir = $res_down_cat['dir'];
 
-                if (!$cat->rowCount() || !is_dir($scan_dir)) {
+                if (! $cat->rowCount() || ! is_dir($scan_dir)) {
                     echo _t('The directory does not exist') . ' <a href="?">' . _t('Downloads') . '</a>';
                     exit;
                 }
@@ -105,21 +105,21 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 $array_dowm = [];
                 $array_id = [];
                 $array_more = [];
-                $query = $db->query("SELECT `dir`, `name`, `id` FROM `download__files`");
+                $query = $db->query('SELECT `dir`, `name`, `id` FROM `download__files`');
 
                 while ($result = $query->fetch()) {
                     $array_dowm[] = $result['dir'] . '/' . $result['name'];
                     $array_id[$result['dir'] . '/' . $result['name']] = $result['id'];
                 }
 
-                $queryCat = $db->query("SELECT `dir`, `id` FROM `download__category`");
+                $queryCat = $db->query('SELECT `dir`, `id` FROM `download__category`');
 
                 while ($resultCat = $queryCat->fetch()) {
                     $array_dowm[] = $resultCat['dir'];
                     $array_id[$resultCat['dir']] = $resultCat['id'];
                 }
 
-                $query_more = $db->query("SELECT `name` FROM `download__more`");
+                $query_more = $db->query('SELECT `name` FROM `download__more`');
 
                 while ($result_more = $query_more->fetch()) {
                     $array_more[] = $result_more['name'];
@@ -136,7 +136,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     foreach ($arr_dir as $val) {
                         if (is_dir($val)) {
                             $array_scan[] = $val;
-                            if (!$mod) {
+                            if (! $mod) {
                                 scan_dir($val);
                             }
                         } else {
@@ -162,11 +162,11 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                         VALUES (?, ?, ?, ?, 0, ?, '', '')
                     ");
 
-                    $stmt_m = $db->prepare("
+                    $stmt_m = $db->prepare('
                         INSERT INTO `download__more`
                         (`refid`, `time`, `name`, `rus_name`, `size`)
                         VALUES (?, ?, ?, ?, ?)
-                    ");
+                    ');
 
                     $stmt_f = $db->prepare("
                         INSERT INTO `download__files`
@@ -175,7 +175,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     ");
 
                     foreach ($arr_scan_dir as $val) {
-                        if (!in_array($val, $array_dowm)) {
+                        if (! in_array($val, $array_dowm)) {
                             if (is_dir($val)) {
                                 $name = basename($val);
                                 $dir = dirname($val);
@@ -184,19 +184,19 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
                                 $stmt_c->execute([
                                     $refid,
-                                    $dir . "/" . $name,
+                                    $dir . '/' . $name,
                                     $sort,
                                     $name,
                                     $name,
                                 ]);
 
-                                $array_id[$dir . "/" . $name] = $db->lastInsertId();
+                                $array_id[$dir . '/' . $name] = $db->lastInsertId();
 
                                 ++$i;
                             } else {
                                 $name = basename($val);
-                                if (preg_match("/^file([0-9]+)_/", $name)) {
-                                    if (!in_array($name, $array_more)) {
+                                if (preg_match('/^file([0-9]+)_/', $name)) {
+                                    if (! in_array($name, $array_more)) {
                                         $refid = (int)str_replace('file', '', $name);
                                         $name_link = htmlspecialchars(mb_substr(str_replace('file' . $refid . '_', _t('Download') . ' ', $name), 0, 200));
                                         $size = filesize($val);
@@ -269,13 +269,13 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
                 if ($id) {
                     $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down_cat['dir'] . '/' . $res_down_cat['name']) . "%'")->fetchColumn();
-                    $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $id . "'");
+                    $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $id . "'");
                 } else {
-                    $req_down = $db->query("SELECT `dir`, `name`, `id` FROM `download__files` WHERE `type` = 1");
+                    $req_down = $db->query('SELECT `dir`, `name`, `id` FROM `download__files` WHERE `type` = 1');
 
                     while ($res_down = $req_down->fetch()) {
                         $dir_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `dir` LIKE '" . ($res_down['dir'] . '/' . $res_down['name']) . "%'")->fetchColumn();
-                        $db->exec("UPDATE `download__category` SET `total` = '$dir_files' WHERE `id` = '" . $res_down['id'] . "'");
+                        $db->exec("UPDATE `download__category` SET `total` = '${dir_files}' WHERE `id` = '" . $res_down['id'] . "'");
                     }
                 }
 

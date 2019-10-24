@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Настраиваем список своих смайлов
 $adm = isset($_GET['adm']);
@@ -27,15 +27,15 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if (($adm && !$systemUser->rights) || ($add && !$adm && !$cat) || ($delete && !$_POST['delete_sm']) || ($add && !$_POST['add_sm'])) {
+if (($adm && ! $systemUser->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
     echo $tools->displayError(_t('Wrong data'), '<a href="faq.php?act=smileys">' . _t('Smilies') . '</a>');
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 $smileys = unserialize($systemUser->smileys);
 
-if (!is_array($smileys)) {
+if (! is_array($smileys)) {
     $smileys = [];
 }
 
@@ -53,7 +53,7 @@ if (count($smileys) > $user_smileys) {
     $smileys = $smileys[0];
 }
 
-$db->query("UPDATE `users` SET `smileys` = " . $db->quote(serialize($smileys)) . " WHERE `id` = " . $systemUser->id);
+$db->query('UPDATE `users` SET `smileys` = ' . $db->quote(serialize($smileys)) . ' WHERE `id` = ' . $systemUser->id);
 
 if ($delete || isset($_GET['clean'])) {
     header('location: index.php?act=my_smilies&start=' . $start . '');

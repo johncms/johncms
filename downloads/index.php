@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -49,23 +49,23 @@ $set_down =
         'screen_resize' => 1,
     ];
 
-if ($set_down['video_screen'] && !extension_loaded('ffmpeg')) {
+if ($set_down['video_screen'] && ! extension_loaded('ffmpeg')) {
     $set_down['video_screen'] = 0;
 }
 
 // Ограничиваем доступ к Загрузкам
 $error = '';
 
-if (!$config['mod_down'] && $systemUser->rights < 7) {
+if (! $config['mod_down'] && $systemUser->rights < 7) {
     $error = _t('Downloads are closed');
-} elseif ($config['mod_down'] == 1 && !$systemUser->id) {
+} elseif ($config['mod_down'] == 1 && ! $systemUser->id) {
     $error = _t('For registered users only');
 }
 
 if ($error) {
-    require_once('../system/head.php');
+    require_once '../system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require_once("../system/end.php");
+    require_once '../system/end.php';
     exit;
 }
 
@@ -135,7 +135,7 @@ $actions = [
 ];
 
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
-    require_once(__DIR__ . '/includes/' . $actions[$act]);
+    require_once __DIR__ . '/includes/' . $actions[$act];
 } else {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -146,7 +146,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require __DIR__ . '/classes/download.php';
     require '../system/head.php';
 
-    if (!$config['mod_down']) {
+    if (! $config['mod_down']) {
         echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';
     }
 
@@ -154,10 +154,10 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     $notice = false;
 
     if ($id) {
-        $cat = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
+        $cat = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
         $res_down_cat = $cat->fetch();
 
-        if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
+        if (! $cat->rowCount() || ! is_dir($res_down_cat['dir'])) {
             echo _t('The directory does not exist') . ' <a href="' . $url . '">' . _t('Downloads') . '</a>';
             exit;
         }
@@ -165,7 +165,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $title_pages = htmlspecialchars(mb_substr($res_down_cat['rus_name'], 0, 30));
         $textl = mb_strlen($res_down_cat['rus_name']) > 30 ? $title_pages . '...' : $title_pages;
         $navigation = Download::navigation(['dir' => $res_down_cat['dir'], 'refid' => $res_down_cat['refid'], 'name' => $res_down_cat['rus_name']]);
-        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
+        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
             $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br>';
@@ -175,7 +175,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             '<div class="topmenu"><a href="' . $url . '?act=search">' . _t('Search') . '</a> | ' .
             '<a href="' . $url . '?act=top_files&amp;id=0">' . _t('Top Files') . '</a> | ' .
             '<a href="' . $url . '?act=top_users">' . _t('Top Users') . '</a>';
-        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old")->fetchColumn();
+        $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old}")->fetchColumn();
 
         if ($total_new) {
             $notice = '<a href="' . $url . '?act=new_files&amp;id=' . $id . '">' . _t('New Files') . '</a> (' . $total_new . ')<br>';
@@ -214,14 +214,14 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $url . '?id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['total'] . ')';
 
                 if ($res_down['field']) {
                     echo '<div><small>' . _t('Allowed extensions') . ': <span class="green"><b>' . $res_down['text'] . '</b></span></small></div>';
                 }
 
-                if ($systemUser->rights == 4 || $systemUser->rights >= 6 || !empty($res_down['desc'])) {
+                if ($systemUser->rights == 4 || $systemUser->rights >= 6 || ! empty($res_down['desc'])) {
                     $menu = [
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
@@ -229,7 +229,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                         '<a href="' . $url . '?act=folder_delete&amp;id=' . $res_down['id'] . '">' . _t('Delete') . '</a>',
                     ];
                     echo '<div class="sub">' .
-                        (!empty($res_down['desc']) ? '<div class="gray">' . htmlspecialchars($res_down['desc']) . '</div>' : '') .
+                        (! empty($res_down['desc']) ? '<div class="gray">' . htmlspecialchars($res_down['desc']) . '</div>' : '') .
                         ($systemUser->rights == 4 || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
                         '</div>';
                 }
@@ -246,11 +246,11 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             if ($total_files > 1) {
                 // Сортировка файлов
-                if (!isset($_SESSION['sort_down'])) {
+                if (! isset($_SESSION['sort_down'])) {
                     $_SESSION['sort_down'] = 0;
                 }
 
-                if (!isset($_SESSION['sort_down2'])) {
+                if (! isset($_SESSION['sort_down2'])) {
                     $_SESSION['sort_down2'] = 0;
                 }
 
@@ -267,10 +267,10 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                 echo '<form action="' . $url . '?id=' . $id . '" method="post"><div class="topmenu">' .
                     '<b>' . _t('Sorting') . ': </b>' .
                     '<select name="sort_down" style="font-size:x-small">' .
-                    '<option value="0"' . (!$_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . _t('by time') . '</option>' .
+                    '<option value="0"' . (! $_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . _t('by time') . '</option>' .
                     '<option value="1"' . ($_SESSION['sort_down'] ? ' selected="selected"' : '') . '>' . _t('by name') . '</option></select> &amp; ' .
                     '<select name="sort_down2" style="font-size:x-small">' .
-                    '<option value="0"' . (!$_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . _t('descending') . '</option>' .
+                    '<option value="0"' . (! $_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . _t('descending') . '</option>' .
                     '<option value="1"' . ($_SESSION['sort_down2'] ? ' selected="selected"' : '') . '>' . _t('ascending') . '</option></select>' .
                     '<input type="submit" value="&gt;&gt;" style="font-size:x-small"/></div></form>';
             } else {
@@ -284,11 +284,11 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             // Выводи данные
             //TODO: Добавить LIMIT
-            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ASC $sql_sort ");
+            $req_down = $db->query("SELECT * FROM `download__files` WHERE `refid` = '" . $id . "' AND `type` < 3 ORDER BY `type` ASC ${sql_sort} ");
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
             }
         }
     } else {
@@ -297,7 +297,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     echo '<div class="phdr">';
 
-    if ($total_cat || !$total_files) {
+    if ($total_cat || ! $total_files) {
         echo _t('Folders') . ': ' . $total_cat;
     }
 
@@ -366,5 +366,5 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     echo '</p>';
 
-    require_once('../system/end.php');
+    require_once '../system/end.php';
 }

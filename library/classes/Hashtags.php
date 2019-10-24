@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Library;
@@ -73,12 +73,12 @@ class Hashtags
             $obj = new Links($res);
             if ($tpl == 1) {
                 return $obj->proccess('tplTag')->linkSeparator()->result();
-            } else {
-                return $obj->linkSeparator(', ')->result();
             }
-        } else {
-            return null; // у статьи нет тегов
+
+            return $obj->linkSeparator(', ')->result();
         }
+
+        return null; // у статьи нет тегов
     }
 
     /**
@@ -90,12 +90,11 @@ class Hashtags
     {
         if (empty($tags)) {
             return null;
-        } else {
-            $stmt = $this->db->prepare('INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES (?, ?)');
-            foreach ($tags as $tag) {
-                if (!$this->issetTag($this->validTag($tag))) {
-                    $stmt->execute([$this->lib_id, $this->validTag($tag)]);
-                }
+        }
+        $stmt = $this->db->prepare('INSERT INTO `library_tags` (`lib_text_id`, `tag_name`) VALUES (?, ?)');
+        foreach ($tags as $tag) {
+            if (! $this->issetTag($this->validTag($tag))) {
+                $stmt->execute([$this->lib_id, $this->validTag($tag)]);
             }
         }
 
@@ -110,6 +109,7 @@ class Hashtags
     {
         $stmt = $this->db->prepare('DELETE FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
+
         return $stmt->rowCount();
     }
 
@@ -148,10 +148,11 @@ class Hashtags
             while ($row = $stmt->fetch()) {
                 $result[$row['tag_name']] = $row['count'];
             }
+
             return $result;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -180,10 +181,9 @@ class Hashtags
             uasort($return, 'Library\Utils::' . $sort);
 
             return $return;
-
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -193,13 +193,13 @@ class Hashtags
      */
     public function cloud($array)
     {
-        if (sizeof($array) > 0) {
+        if (count($array) > 0) {
             $obj = new Links($array);
 
             return $obj->proccess('tplCloud')->linkSeparator(PHP_EOL)->result();
-        } else {
-            return $this->getCache();
         }
+
+        return $this->getCache();
     }
 
     /**
@@ -220,9 +220,9 @@ class Hashtags
     {
         if (file_exists('../files/cache/' . $sort . 'libcloud.dat')) {
             return file_get_contents('../files/cache/' . $sort . 'libcloud.dat');
-        } else {
-            return $this->setCache($sort);
         }
+
+        return $this->setCache($sort);
     }
 
     /**

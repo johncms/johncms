@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
 $headmod = 'login';
-require('system/bootstrap.php');
-require('system/head.php');
+require 'system/bootstrap.php';
+require 'system/head.php';
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -40,16 +40,16 @@ if ($systemUser->isValid()) {
     $error = [];
     $captcha = false;
     $display_form = 1;
-    $user_login = isset($_POST['n']) ? $_POST['n'] : null;
-    $user_pass = isset($_POST['p']) ? $_POST['p'] : null;
+    $user_login = $_POST['n'] ?? '';
+    $user_pass = $_POST['p'] ?? '';
     $user_mem = isset($_POST['mem']) ? 1 : 0;
     $user_code = isset($_POST['code']) ? trim($_POST['code']) : null;
 
-    if ($user_pass && !$user_login) {
+    if ($user_pass && ! $user_login) {
         $error[] = _t('You have not entered login', 'system');
     }
 
-    if ($user_login && !$user_pass) {
+    if ($user_login && ! $user_pass) {
         $error[] = _t('You have not entered password', 'system');
     }
 
@@ -61,7 +61,7 @@ if ($systemUser->isValid()) {
         $error[] = _t('Password', 'system') . ': ' . _t('Invalid length', 'system');
     }
 
-    if (!$error && $user_pass && $user_login) {
+    if (! $error && $user_pass && $user_login) {
         // Запрос в базу на юзера
         $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
         $stmt->execute([$tools->rusLat($user_login)]);
@@ -99,7 +99,7 @@ if ($systemUser->isValid()) {
                     $display_form = 0;
                     $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $systemUser['id']);
 
-                    if (!$systemUser['preg']) {
+                    if (! $systemUser['preg']) {
                         // Если регистрация не подтверждена
                         echo '<div class="rmenu"><p>' . _t('Sorry, but your request for registration is not considered yet. Please, be patient.', 'system') . '</p></div>';
                     } else {
@@ -108,8 +108,8 @@ if ($systemUser->isValid()) {
                             // Установка данных COOKIE
                             $cuid = base64_encode($systemUser['id']);
                             $cups = md5($user_pass);
-                            setcookie("cuid", $cuid, time() + 3600 * 24 * 365);
-                            setcookie("cups", $cups, time() + 3600 * 24 * 365);
+                            setcookie('cuid', $cuid, time() + 3600 * 24 * 365);
+                            setcookie('cups', $cups, time() + 3600 * 24 * 365);
                         }
 
                         // Установка данных сессии
@@ -162,4 +162,4 @@ if ($systemUser->isValid()) {
     }
 }
 
-require('system/end.php');
+require 'system/end.php';

@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -25,57 +25,56 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
-    if (!$id) {
-        require('../system/head.php');
+    if (! $id) {
+        require '../system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 
-    $typ = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '$id'");
+    $typ = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
-    if (!$typ->rowCount()) {
-        require('../system/head.php');
+    if (! $typ->rowCount()) {
+        require '../system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 
     if (isset($_POST['submit'])) {
-        $razd = isset($_POST['razd']) ? abs(intval($_POST['razd'])) : false;
+        $razd = isset($_POST['razd']) ? abs((int) ($_POST['razd'])) : false;
 
-        if (!$razd) {
-            require('../system/head.php');
+        if (! $razd) {
+            require '../system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
-        $typ1 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$razd'");
+        $typ1 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${razd}'");
 
-        if (!$typ1->rowCount()) {
-            require('../system/head.php');
+        if (! $typ1->rowCount()) {
+            require '../system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
         $db->exec("UPDATE `forum_topic` SET
-            `section_id` = '$razd'
-            WHERE `id` = '$id'
+            `section_id` = '${razd}'
+            WHERE `id` = '${id}'
         ");
-        header("Location: index.php?type=topic&id=$id");
+        header("Location: index.php?type=topic&id=${id}");
     } else {
         // Перенос темы
         $ms = $typ->fetch();
-        require('../system/head.php');
-
+        require '../system/head.php';
 
         if (empty($_GET['other'])) {
             $rz1 = $db->query("SELECT * FROM `forum_topic` WHERE id='" . $ms['section_id'] . "'")->fetch();
             $other = $ms['section_id'];
         } else {
-            $other = intval($_GET['other']);
+            $other = (int) ($_GET['other']);
         }
 
         $fr1 = $db->query("SELECT * FROM `forum_sections` WHERE id='" . $other . "'")->fetch();
@@ -85,7 +84,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             '<h3>' . _t('Category') . '</h3>' . $fr1['name'] . '</p>' .
             '<p><h3>' . _t('Section') . '</h3>' .
             '<select name="razd">';
-        $raz = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '".$fr1['parent']."' AND section_type = 1 AND  `id` != '" . $ms['section_id'] . "' ORDER BY `sort` ASC");
+        $raz = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '" . $fr1['parent'] . "' AND section_type = 1 AND  `id` != '" . $ms['section_id'] . "' ORDER BY `sort` ASC");
 
         while ($raz1 = $raz->fetch()) {
             echo '<option value="' . $raz1['id'] . '">' . $raz1['name'] . '</option>';
@@ -95,7 +94,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             '<p><input type="submit" name="submit" value="' . _t('Move') . '"/></p>' .
             '</div></form>' .
             '<div class="phdr">' . _t('Other categories') . '</div>';
-        $frm = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '$other' AND (section_type != 1 OR section_type IS NULL) ORDER BY `sort` ASC");
+        $frm = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '${other}' AND (section_type != 1 OR section_type IS NULL) ORDER BY `sort` ASC");
 
         while ($frm1 = $frm->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

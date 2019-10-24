@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 // Список альбомов юзера
 if (isset($_SESSION['ap'])) {
@@ -32,24 +32,24 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
-$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $systemUser->id || $systemUser->rights >= 6 ? "" : "AND `access` > 1") . " ORDER BY `sort` ASC");
+$req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $systemUser->id || $systemUser->rights >= 6 ? '' : 'AND `access` > 1') . ' ORDER BY `sort` ASC');
 $total = $req->rowCount();
 
 if ($user['id'] == $systemUser->id && $total < $max_album && empty($systemUser->ban) || $systemUser->rights >= 7) {
     echo '<div class="topmenu"><a href="?act=edit&amp;user=' . $user['id'] . '">' . _t('Create Album') . '</a></div>';
 }
 
-echo '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>';
+echo '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';
 
 if ($total) {
     $i = 0;
     while ($res = $req->fetch()) {
         $count = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '" . $res['id'] . "'")->fetchColumn();
-        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
             '<img src="../images/album-' . $res['access'] . '.gif" width="16" height="16" class="left" />&#160;' .
             '<a href="?act=show&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($res['name']) . '</b></a>&#160;(' . $count . ')';
 
-        if ($user['id'] == $systemUser->id || $systemUser->rights >= 6 || !empty($res['description'])) {
+        if ($user['id'] == $systemUser->id || $systemUser->rights >= 6 || ! empty($res['description'])) {
             $menu = [
                 '<a href="?act=sort&amp;mod=up&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Up') . '</a>',
                 '<a href="?act=sort&amp;mod=down&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Down') . '</a>',
@@ -57,7 +57,7 @@ if ($total) {
                 '<a href="?act=delete&amp;al=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Delete') . '</a>',
             ];
             echo '<div class="sub">' .
-                (!empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1, 1) . '</div>' : '') .
+                (! empty($res['description']) ? '<div class="gray">' . $tools->checkout($res['description'], 1, 1) . '</div>' : '') .
                 ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
                 '</div>';
         }

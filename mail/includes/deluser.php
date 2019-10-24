@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 if ($id) {
     /** @var Psr\Container\ContainerInterface $container */
@@ -33,7 +33,7 @@ if ($id) {
             //Удаляем сообщения
             if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $systemUser->id)) {
                 //Удаляем файлы
-                if (!empty($row['file_name']) && file_exists('../files/mail/' . $row['file_name'])) {
+                if (! empty($row['file_name']) && file_exists('../files/mail/' . $row['file_name'])) {
                     @unlink('../files/mail/' . $row['file_name']);
                 }
 

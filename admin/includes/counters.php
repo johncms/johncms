@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -48,7 +48,7 @@ switch ($mod) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
-                echo ($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
+                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
                 echo '<p><h3>' . _t('Display mode') . '</h3>';
 
@@ -84,14 +84,14 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` < '$sort' ORDER BY `sort` DESC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` < '${sort}' ORDER BY `sort` DESC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort2}' WHERE `id` = '${id}'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
                 }
             }
         }
@@ -107,14 +107,14 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $sort = $res['sort'];
-                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` > '$sort' ORDER BY `sort` ASC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_counters` WHERE `sort` > '${sort}' ORDER BY `sort` ASC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $sort2 = $res['sort'];
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `cms_counters` SET `sort` = '$sort' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort2}' WHERE `id` = '${id}'");
+                    $db->exec("UPDATE `cms_counters` SET `sort` = '${sort}' WHERE `id` = '${id2}'");
                 }
             }
         }
@@ -123,9 +123,9 @@ switch ($mod) {
 
     case 'del':
         // Удаление счетчика
-        if (!$id) {
+        if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
@@ -135,18 +135,17 @@ switch ($mod) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
                 echo '<p>' . _t('Counter deleted') . '<br><a href="index.php?act=counters">' . _t('Continue') . '</a></p>';
-                require('../system/end.php');
+                require '../system/end.php';
                 exit;
-            } else {
-                echo '<form action="index.php?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
-                echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Delete') . '</div>';
-                $res = $req->fetch();
-                echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . _t('Do you really want to delete?') . '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" /></p></div>';
-                echo '<div class="phdr"><a href="index.php?act=counters">' . _t('Cancel') . '</a></div></form>';
             }
+            echo '<form action="index.php?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
+            echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Delete') . '</div>';
+            $res = $req->fetch();
+            echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . _t('Do you really want to delete?') . '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" /></p></div>';
+            echo '<div class="phdr"><a href="index.php?act=counters">' . _t('Cancel') . '</a></div></form>';
         } else {
             echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
         break;
@@ -158,11 +157,11 @@ switch ($mod) {
             $name = isset($_POST['name']) ? mb_substr(trim($_POST['name']), 0, 25) : '';
             $link1 = isset($_POST['link1']) ? trim($_POST['link1']) : '';
             $link2 = isset($_POST['link2']) ? trim($_POST['link2']) : '';
-            $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
+            $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
             if (empty($name) || empty($link1)) {
                 echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-                require('../system/end.php');
+                require '../system/end.php';
                 exit;
             }
 
@@ -202,7 +201,7 @@ switch ($mod) {
                     $switch = 1;
                 } else {
                     echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-                    require('../system/end.php');
+                    require '../system/end.php';
                     exit;
                 }
             }
@@ -230,13 +229,13 @@ switch ($mod) {
     case 'add':
         // Запись счетчика в базу
         $name = isset($_POST['name']) ? mb_substr($_POST['name'], 0, 25) : '';
-        $link1 = isset($_POST['link1']) ? $_POST['link1'] : '';
-        $link2 = isset($_POST['link2']) ? $_POST['link2'] : '';
-        $mode = isset($_POST['mode']) ? intval($_POST['mode']) : 1;
+        $link1 = $_POST['link1'] ?? '';
+        $link2 = $_POST['link2'] ?? '';
+        $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
         if (empty($name) || empty($link1)) {
             echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-            require_once('../system/end.php');
+            require_once '../system/end.php';
             exit;
         }
 
@@ -244,9 +243,9 @@ switch ($mod) {
             // Режим редактирования
             $req = $db->query('SELECT * FROM `cms_counters` WHERE `id` = ' . $id);
 
-            if (!$req->rowCount()) {
+            if (! $req->rowCount()) {
                 echo $tools->displayError(_t('Wrong data'));
-                require_once('../system/end.php');
+                require_once '../system/end.php';
                 exit;
             }
 

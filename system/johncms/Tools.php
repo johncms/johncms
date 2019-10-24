@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -132,14 +132,14 @@ class Tools implements Api\ToolsInterface
 
         if (date('Y', $var) == date('Y', time())) {
             if (date('z', $var + $shift) == date('z', time() + $shift)) {
-                return _t('Today', 'system') . ', ' . date("H:i", $var + $shift);
+                return _t('Today', 'system') . ', ' . date('H:i', $var + $shift);
             }
             if (date('z', $var + $shift) == date('z', time() + $shift) - 1) {
-                return _t('Yesterday', 'system') . ', ' . date("H:i", $var + $shift);
+                return _t('Yesterday', 'system') . ', ' . date('H:i', $var + $shift);
             }
         }
 
-        return date("d.m.Y / H:i", $var + $shift);
+        return date('d.m.Y / H:i', $var + $shift);
     }
 
     /**
@@ -153,7 +153,7 @@ class Tools implements Api\ToolsInterface
     {
         return '<div class="rmenu"><p><b>' . _t('ERROR', 'system') . '!</b><br>'
             . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
-            . (!empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
+            . (! empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
     }
 
     /**
@@ -224,11 +224,12 @@ class Tools implements Api\ToolsInterface
      *
      * @param int    $user_id
      * @param string $place
+     * @param mixed $headmod
      * @return mixed|string
      */
     public function displayPlace($user_id = 0, $place = '', $headmod = '')
     {
-        $place = explode(",", $place);
+        $place = explode(',', $place);
 
         $placelist = [
             'admlist'          => '<a href="#home#/users/index.php?act=admlist">' . _t('List of Admins', 'system') . '</a>',
@@ -257,16 +258,15 @@ class Tools implements Api\ToolsInterface
             if ($place[0] == 'profile') {
                 if ($place[1] == $user_id) {
                     return '<a href="' . $this->config['homeurl'] . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
-                } else {
-                    $user = $this->getUser($place[1]);
-
-                    return $placelist['profile'] . ': <a href="' . $this->config['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
                 }
-            } elseif ($place[0] == 'online' && !empty($headmod) && $headmod == 'online') {
+                $user = $this->getUser($place[1]);
+
+                return $placelist['profile'] . ': <a href="' . $this->config['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
+            } elseif ($place[0] == 'online' && ! empty($headmod) && $headmod == 'online') {
                 return $placelist['here'];
-            } else {
-                return str_replace('#home#', $this->config['homeurl'], $placelist[$place[0]]);
             }
+
+            return str_replace('#home#', $this->config['homeurl'], $placelist[$place[0]]);
         }
 
         return '<a href="' . $this->config['homeurl'] . '/index.php">' . $placelist['homepage'] . '</a>';
@@ -295,14 +295,14 @@ class Tools implements Api\ToolsInterface
         $out = false;
         $homeurl = $this->config['homeurl'];
 
-        if (!$user['id']) {
+        if (! $user['id']) {
             $out = '<b>' . _t('Guest', 'system') . '</b>';
 
-            if (!empty($user['name'])) {
+            if (! empty($user['name'])) {
                 $out .= ': ' . $user['name'];
             }
 
-            if (!empty($arg['header'])) {
+            if (! empty($arg['header'])) {
                 $out .= ' ' . $arg['header'];
             }
         } else {
@@ -322,7 +322,7 @@ class Tools implements Api\ToolsInterface
                 $out .= $this->image('del.png');
             }
 
-            $out .= !$this->user->isValid() || $this->user->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
+            $out .= ! $this->user->isValid() || $this->user->id == $user['id'] ? '<b>' . $user['name'] . '</b>' : '<a href="' . $homeurl . '/profile/?user=' . $user['id'] . '"><b>' . $user['name'] . '</b></a>';
             $rank = [
                 0 => '',
                 1 => '(GMod)',
@@ -334,15 +334,15 @@ class Tools implements Api\ToolsInterface
                 7 => '(Adm)',
                 9 => '(SV!)',
             ];
-            $rights = isset($user['rights']) ? $user['rights'] : 0;
+            $rights = $user['rights'] ?? 0;
             $out .= ' ' . $rank[$rights];
             $out .= (time() > $user['lastdate'] + 300 ? '<span class="red"> [Off]</span>' : '<span class="green"> [ON]</span>');
 
-            if (!empty($arg['header'])) {
+            if (! empty($arg['header'])) {
                 $out .= ' ' . $arg['header'];
             }
 
-            if (!isset($arg['stshide']) && !empty($user['status'])) {
+            if (! isset($arg['stshide']) && ! empty($user['status'])) {
                 $out .= '<div class="status">' . $this->image('label.png', ['class' => 'icon-inline']) . $user['status'] . '</div>';
             }
 
@@ -353,10 +353,10 @@ class Tools implements Api\ToolsInterface
             $out .= '<div>' . $arg['body'] . '</div>';
         }
 
-        $ipinf = isset($arg['iphide']) ? !$arg['iphide'] : ($this->user->rights ? 1 : 0);
+        $ipinf = isset($arg['iphide']) ? ! $arg['iphide'] : ($this->user->rights ? 1 : 0);
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
-        if ($ipinf || $lastvisit || isset($arg['sub']) && !empty($arg['sub']) || isset($arg['footer'])) {
+        if ($ipinf || $lastvisit || isset($arg['sub']) && ! empty($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
 
             if (isset($arg['sub'])) {
@@ -373,7 +373,7 @@ class Tools implements Api\ToolsInterface
                 $out .= '<div><span class="gray">' . _t('Browser', 'system') . ':</span> ' . htmlspecialchars($user['browser']) . '</div>' .
                     '<div><span class="gray">' . _t('IP address', 'system') . ':</span> ';
                 $hist = $mod == 'history' ? '&amp;mod=history' : '';
-                $ip = long2ip($user['ip']);
+                $ip = long2ip((int) $user['ip']);
 
                 if ($this->user->rights && isset($user['ip_via_proxy']) && $user['ip_via_proxy']) {
                     $out .= '<b class="red"><a href="' . $homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . $hist . '">' . $ip . '</a></b>';
@@ -424,7 +424,7 @@ class Tools implements Api\ToolsInterface
      */
     public function getSkin()
     {
-        return $this->user->isValid() && !empty($this->userConfig->skin)
+        return $this->user->isValid() && ! empty($this->userConfig->skin)
             ? $this->userConfig->skin
             : $this->config->skindef;
     }
@@ -438,16 +438,16 @@ class Tools implements Api\ToolsInterface
     public function getUser($id = 0)
     {
         if ($id && $id != $this->user->id) {
-            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '$id'");
+            $req = $this->db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
 
             if ($req->rowCount()) {
                 return $req->fetch();
-            } else {
-                return false;
             }
-        } else {
-            return $this->user;
+
+            return false;
         }
+
+        return $this->user;
     }
 
     /**
@@ -467,10 +467,10 @@ class Tools implements Api\ToolsInterface
             return false;
         }
 
-        return '<img src="' . $src . '" alt="' . (isset($args['alt']) ? $args['alt'] : '') . '"' .
+        return '<img src="' . $src . '" alt="' . ($args['alt'] ?? '') . '"' .
             (isset($args['width']) ? ' width="' . $args['width'] . '"' : '') .
             (isset($args['height']) ? ' height="' . $args['height'] . '"' : '') .
-            ' class="' . (isset($args['class']) ? $args['class'] : 'icon') . '"/>';
+            ' class="' . ($args['class'] ?? 'icon') . '"/>';
     }
 
     /**
@@ -484,13 +484,13 @@ class Tools implements Api\ToolsInterface
         static $user_id = null;
         static $return = false;
 
-        if (!$this->user->isValid() && !$id) {
+        if (! $this->user->isValid() && ! $id) {
             return false;
         }
 
-        if (is_null($user_id) || $id != $user_id) {
+        if (null === $user_id || $id != $user_id) {
             $user_id = $id;
-            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$id' AND `from_id` = " . $this->user->id);
+            $req = $this->db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '${id}' AND `from_id` = " . $this->user->id);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -539,9 +539,9 @@ class Tools implements Api\ToolsInterface
             'ч' => 'ch',
             'ш' => 'sh',
             'щ' => 'sch',
-            'ъ' => "",
+            'ъ' => '',
             'ы' => 'y',
-            'ь' => "",
+            'ь' => '',
             'э' => 'ye',
             'ю' => 'yu',
             'я' => 'ya',
@@ -568,12 +568,12 @@ class Tools implements Api\ToolsInterface
                 $smiliesCache = unserialize($smileys);
 
                 return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
-            } else {
-                return $str;
             }
-        } else {
-            return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
+
+            return $str;
         }
+
+        return strtr($str, ($adm ? array_merge($smiliesCache['usr'], $smiliesCache['adm']) : $smiliesCache['usr']));
     }
 
     /**
@@ -592,7 +592,7 @@ class Tools implements Api\ToolsInterface
 
         return $var >= 86400
             ? $day . ' ' . _p('Day', 'Days', $day, 'system')
-            : date("G:i:s", mktime(0, 0, $var));
+            : date('G:i:s', mktime(0, 0, $var));
     }
 
     // Транслитерация текста
@@ -668,8 +668,6 @@ class Tools implements Api\ToolsInterface
         return strtr($str, $replace);
     }
 
-
-
     /**
      * Метод для пересчета сообщений в топике и обновления основных данных топика
      *
@@ -677,12 +675,12 @@ class Tools implements Api\ToolsInterface
      */
     public function recountForumTopic($topic_id)
     {
-        $topic_id = intval($topic_id);
-        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
-        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '$topic_id'")->fetchColumn();
+        $topic_id = (int) $topic_id;
+        $post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
+        $mod_post_count = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '${topic_id}'")->fetchColumn();
 
-        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch();
-        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '$topic_id' ORDER BY id DESC LIMIT 1")->fetch();
+        $last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' AND (`deleted` != '1' OR `deleted` IS NULL) ORDER BY id DESC LIMIT 1")->fetch();
+        $mod_last_post = $this->db->query("SELECT * FROM forum_messages WHERE `topic_id` = '${topic_id}' ORDER BY id DESC LIMIT 1")->fetch();
 
         // Обновляем время топика
         $this->db->exec("UPDATE `forum_topic` SET
@@ -696,9 +694,7 @@ class Tools implements Api\ToolsInterface
             `mod_last_post_author` = '" . $mod_last_post['user_id'] . "',
             `mod_last_post_author_name` = '" . $mod_last_post['user_name'] . "',
             `mod_last_message_id` = '" . $mod_last_post['id'] . "'
-            WHERE `id` = '$topic_id'
+            WHERE `id` = '${topic_id}'
         ");
-
     }
-
 }

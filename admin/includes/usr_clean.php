@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -54,10 +54,10 @@ switch ($mod) {
                 $del->removeKarma($res['id']);      // Удаляем карму
                 $del->cleanComments($res['id']);    // Удаляем комментарии
                 $del->removeUser($res['id']);       // Удаляем пользователя
-                $db->exec("DELETE FROM `cms_forum_rdm` WHERE `user_id` = " . $res['id']);
+                $db->exec('DELETE FROM `cms_forum_rdm` WHERE `user_id` = ' . $res['id']);
             }
 
-            $db->query("
+            $db->query('
                 OPTIMIZE TABLE
                 `users`,
                 `cms_album_cat`,
@@ -69,7 +69,7 @@ switch ($mod) {
                 `cms_mail`,
                 `cms_contact`,
                 `cms_forum_rdm`
-            ");
+            ');
         }
 
         echo '<div class="rmenu"><p>' . _t('Inactive profiles deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';

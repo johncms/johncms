@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -51,7 +51,7 @@ if ($total) {
 		AND `cms_mail`.`delete` != " . $systemUser->id . "
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY `cms_contact`.`time` DESC
-		LIMIT $start, $kmess"
+		LIMIT ${start}, ${kmess}"
     );
 
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {

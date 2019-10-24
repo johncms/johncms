@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'userstop';
 $textl = _t('Top Activity');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,7 +29,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 function get_top($order = 'postforum')
 {
     global $db, $tools;
-    $req = $db->query("SELECT * FROM `users` WHERE `$order` > 0 ORDER BY `$order` DESC LIMIT 9");
+    $req = $db->query("SELECT * FROM `users` WHERE `${order}` > 0 ORDER BY `${order}` DESC LIMIT 9");
 
     if ($req->rowCount()) {
         $out = '';
@@ -42,14 +42,14 @@ function get_top($order = 'postforum')
         }
 
         return $out;
-    } else {
-        return '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
+
+    return '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 
 // Меню выбора
 $menu = [
-    (!$mod ? '<b>' . _t('Forum') . '</b>' : '<a href="index.php?act=top">' . _t('Forum') . '</a>'),
+    (! $mod ? '<b>' . _t('Forum') . '</b>' : '<a href="index.php?act=top">' . _t('Forum') . '</a>'),
     ($mod == 'guest' ? '<b>' . _t('Guestbook') . '</b>' : '<a href="index.php?act=top&amp;mod=guest">' . _t('Guestbook') . '</a>'),
     ($mod == 'comm' ? '<b>' . _t('Comments') . '</b>' : '<a href="index.php?act=top&amp;mod=comm">' . _t('Comments') . '</a>'),
 ];
@@ -80,7 +80,7 @@ switch ($mod) {
         if ($set_karma['on']) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Best Karma') . '</div>';
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
-            $req = $db->query("SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9");
+            $req = $db->query('SELECT *, (`karma_plus` - `karma_minus`) AS `karma` FROM `users` WHERE (`karma_plus` - `karma_minus`) > 0 ORDER BY `karma` DESC LIMIT 9');
 
             if ($req->rowCount()) {
                 while ($res = $req->fetch()) {

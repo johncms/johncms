@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require('../system/head.php');
+require '../system/head.php';
 
 // Список посетителей. у которых есть фотографии
 switch ($mod) {
@@ -38,24 +38,24 @@ switch ($mod) {
         $sql = "WHERE `users`.`sex` != ''";
 }
 
-$menu = array(
-    (!$mod ? '<b>' . _t('All') . '</b>' : '<a href="?act=users">' . _t('All') . '</a>'),
+$menu = [
+    (! $mod ? '<b>' . _t('All') . '</b>' : '<a href="?act=users">' . _t('All') . '</a>'),
     ($mod == 'boys' ? '<b>' . _t('Guys') . '</b>' : '<a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a>'),
-    ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>')
-);
+    ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>'),
+];
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
      '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
-    LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` $sql
+    LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
 ")->fetchColumn();
 
 if ($total) {
     $req = $db->query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
         FROM `cms_album_files`
-        LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` $sql
-        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT $start, $kmess
+        LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
+        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, ${kmess}
     ");
     $i = 0;
 

@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Library;
@@ -37,7 +37,9 @@ class Tree
      * @var int|bool
      */
     private $start_id = false;
+
     private $child;
+
     private $parent;
 
     /** @var PDO $db */
@@ -89,7 +91,7 @@ class Tree
      */
     public function cleanTrash($data)
     {
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             $stmt = $this->db->prepare('DELETE FROM `cms_library_comments` WHERE `sub_id` = ?');
             $stmt->execute([$data]);
             $this->cleaned['comments'] += $stmt->rowCount();
@@ -104,7 +106,7 @@ class Tree
                 $this->cleaned['images'] += 3;
             }
         } else {
-            array_map(array($this, 'cleanTrash'), $data);
+            array_map([$this, 'cleanTrash'], $data);
         }
 
         return $this->cleaned;
@@ -158,7 +160,7 @@ class Tree
 
     /**
      * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
-     * @param integer $id
+     * @param int $id
      * @return Tree
      */
     public function processNavPanel($id = 0)
@@ -167,14 +169,16 @@ class Tree
         $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
         $this->parent = $stmt->fetch();
-        $this->result[] = array('id' => $this->parent['id'], 'name' => $this->parent['name']);
+        $this->result[] = ['id' => $this->parent['id'], 'name' => $this->parent['name']];
         if ($this->parent['parent'] != 0) {
             $this->processNavPanel($this->parent['parent']);
         } else {
             krsort($this->result);
         }
+
         return $this;
     }
+
     /**
      * Собирает ссылки в верхнюю панель навигации
      * @param void
@@ -190,6 +194,7 @@ class Tree
             $return[] = $x == $cnt ? '<strong>' . $this->tools->checkout($cat['name']) . '</strong>' : '<a href="?do=dir&amp;id=' . $cat['id'] . '">' . $this->tools->checkout($cat['name']) . '</a>';
             $x++;
         }
+
         return '<a href="?"><strong>' . _t('Library') . '</strong></a> | ' . implode(' | ', $return);
     }
 

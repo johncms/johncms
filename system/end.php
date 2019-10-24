@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,13 +28,13 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Рекламный блок сайта
-if (!empty($cms_ads[2])) {
+if (! empty($cms_ads[2])) {
     echo '<div class="gmenu">' . $cms_ads[2] . '</div>';
 }
 
 echo '</div><div class="fmenu">';
 
-if (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && isset($_GET['act']))) {
+if (isset($_GET['err']) || $headmod != 'mainpage' || ($headmod == 'mainpage' && isset($_GET['act']))) {
     echo '<div><a href=\'' . $config->homeurl . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a></div>';
 }
 
@@ -52,14 +52,14 @@ if ($req->rowCount()) {
         $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
         $count = ($headmod == 'mainpage') ? $link1 : $link2;
 
-        if (!empty($count)) {
+        if (! empty($count)) {
             echo $count;
         }
     }
 }
 
 // Рекламный блок сайта
-if (!empty($cms_ads[3])) {
+if (! empty($cms_ads[3])) {
     echo '<br />' . $cms_ads[3];
 }
 
@@ -74,9 +74,9 @@ The copyright could not be removed within 90 days of installation scripts
 */
 echo '<div><small>&copy; <a href="http://johncms.com">JohnCMS</a></small></div>';
 
-if($systemUser->rights > 0) {
+if ($systemUser->rights > 0) {
     $end_time = microtime(true);
-    echo '<div style="margin-top: 3px;">'.round($end_time - START_TIME, 2).' сек.</div>';
+    echo '<div style="margin-top: 3px;">' . round($end_time - START_TIME, 2) . ' сек.</div>';
 }
 
 echo '</div>

@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -26,26 +26,26 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if (!$systemUser->isValid() || !$id) {
+if (! $systemUser->isValid() || ! $id) {
     echo $tools->displayError(_t('Wrong data'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
-$req = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '$id' " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"));
+$req = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}' " . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"));
 
 if ($req->rowCount()) {
     // Предварительные проверки
     $res = $req->fetch();
 
-    $topic = $db->query("SELECT `section_id`, `curators` FROM `forum_topic` WHERE `id` = " . $res['topic_id'])->fetch();
-    $curators = !empty($topic['curators']) ? unserialize($topic['curators']) : [];
+    $topic = $db->query('SELECT `section_id`, `curators` FROM `forum_topic` WHERE `id` = ' . $res['topic_id'])->fetch();
+    $curators = ! empty($topic['curators']) ? unserialize($topic['curators']) : [];
 
     if (array_key_exists($systemUser->id, $curators)) {
         $systemUser->rights = 3;
     }
 
-    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '$id'" . ($systemUser->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $kmess);
+    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($systemUser->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $kmess);
     $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
     $link = 'index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
     $error = false;
@@ -69,9 +69,9 @@ if ($req->rowCount()) {
             $error = _t('You are trying to change another\'s post') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>';
         }
 
-        if (!$error) {
-            $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = " . $topic['section_id'])->fetch();
-            $allow = !empty($section['access']) ? intval($section['access']) : 0;
+        if (! $error) {
+            $section = $db->query('SELECT * FROM `forum_sections` WHERE `id` = ' . $topic['section_id'])->fetch();
+            $allow = ! empty($section['access']) ? (int) ($section['access']) : 0;
             $check = true;
 
             if ($allow == 2) {
@@ -99,9 +99,9 @@ if ($req->rowCount()) {
     $error = _t('Message does not exists or has been deleted') . '<br /><a href="index.php">' . _t('Forum') . '</a>';
 }
 
-$fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs(intval($_GET['fid'])) : false;
+$fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs((int) ($_GET['fid'])) : false;
 
-if (!$error) {
+if (! $error) {
     switch ($do) {
         case 'restore':
             // Восстановление удаленного поста
@@ -113,11 +113,11 @@ if (!$error) {
                 $db->exec("UPDATE `users` SET `postforum` = '" . ($res_u['postforum'] + 1) . "' WHERE `id` = '" . $res['user_id'] . "'");
             }
 
-            $db->exec("UPDATE `forum_messages` SET `deleted` = NULL, `deleted_by` = " . $db->quote($systemUser->name) . " WHERE `id` = '$id'");
-            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
+            $db->exec('UPDATE `forum_messages` SET `deleted` = NULL, `deleted_by` = ' . $db->quote($systemUser->name) . " WHERE `id` = '${id}'");
+            $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
 
             if ($req_f->rowCount()) {
-                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '$id'");
+                $db->exec("UPDATE `cms_forum_files` SET `del` = '0' WHERE `post` = '${id}'");
             }
             $tools->recountForumTopic($res['topic_id']);
             header('Location: ' . $link);
@@ -135,16 +135,16 @@ if (!$error) {
 
         case 'deletefile':
             if (isset($_POST['delfile'])) {
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = " . $fid);
+                $req_f = $db->query('SELECT * FROM `cms_forum_files` WHERE `id` = ' . $fid);
                 $res_f = $req_f->fetch();
 
                 if ($req_f->rowCount()) {
-                    $db->exec("DELETE FROM `cms_forum_files` WHERE `id` = " . $fid);
+                    $db->exec('DELETE FROM `cms_forum_files` WHERE `id` = ' . $fid);
                     unlink('../files/forum/attach/' . $res_f['filename']);
                     header('Location: ' . $link);
                 } else {
                     echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
-                    require('../system/end.php');
+                    require '../system/end.php';
                     exit;
                 }
             }
@@ -163,9 +163,9 @@ if (!$error) {
                 }
             }
 
-            if ($systemUser->rights == 9 && !isset($_GET['hide'])) {
+            if ($systemUser->rights == 9 && ! isset($_GET['hide'])) {
                 // Удаление поста (для Супервизоров)
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
 
                 if ($req_f->rowCount()) {
                     // Если есть прикрепленные файлы, удаляем их
@@ -173,13 +173,11 @@ if (!$error) {
                         unlink('../files/forum/attach/' . $res_f['filename']);
                     }
                 }
-                $db->exec("DELETE FROM `cms_forum_files` WHERE `post` = " . $id);
-
+                $db->exec('DELETE FROM `cms_forum_files` WHERE `post` = ' . $id);
 
                 // Формируем ссылку на нужную страницу темы
-                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? ">" : "<") . " '$id'")->fetchColumn() / $kmess);
-                $db->exec("DELETE FROM `forum_messages` WHERE `id` = '$id'");
-
+                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>' : '<') . " '${id}'")->fetchColumn() / $kmess);
+                $db->exec("DELETE FROM `forum_messages` WHERE `id` = '${id}'");
 
                 if ($posts < 2) {
                     // Пересылка на удаление всей темы
@@ -189,11 +187,11 @@ if (!$error) {
                 }
             } else {
                 // Скрытие поста
-                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '$id'");
+                $req_f = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '${id}'");
 
                 if ($req_f->rowCount()) {
                     // Если есть прикрепленные файлы, скрываем их
-                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '$id'");
+                    $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `post` = '${id}'");
                 }
 
                 if ($posts == 1) {
@@ -203,7 +201,7 @@ if (!$error) {
 
                     header('Location: index.php?type=topics&id=' . $res_l['section_id']);
                 } else {
-                    $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '$id'");
+                    $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
                     // Пересчитываем топик
                     $tools->recountForumTopic($res['topic_id']);
                     header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
@@ -242,7 +240,7 @@ if (!$error) {
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
                     echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    require('../system/end.php');
+                    require '../system/end.php';
                     exit;
                 }
 
@@ -268,7 +266,7 @@ if (!$error) {
                 $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
                 echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Edit Message') . '</div>';
 
-                if ($msg && !isset($_POST['submit'])) {
+                if ($msg && ! isset($_POST['submit'])) {
                     $user = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
                     echo '<div class="list1">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>', 'body' => $msg_pre]) . '</div>';
                 }

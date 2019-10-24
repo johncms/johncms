@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if ($id) {
     /** @var Psr\Container\ContainerInterface $container */
@@ -25,14 +25,14 @@ if ($id) {
     $error = false;
 
     // Скачивание прикрепленного файла Форума
-    $req = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '$id'");
+    $req = $db->query("SELECT * FROM `cms_forum_files` WHERE `id` = '${id}'");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
 
         if (file_exists('../files/forum/attach/' . $res['filename'])) {
             $dlcount = $res['dlcount'] + 1;
-            $db->exec("UPDATE `cms_forum_files` SET  `dlcount` = '$dlcount' WHERE `id` = '$id'");
+            $db->exec("UPDATE `cms_forum_files` SET  `dlcount` = '${dlcount}' WHERE `id` = '${id}'");
             header('location: ../files/forum/attach/' . $res['filename']);
         } else {
             $error = true;
@@ -42,9 +42,9 @@ if ($id) {
     }
 
     if ($error) {
-        require('../system/head.php');
+        require '../system/head.php';
         echo $tools->displayError(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 } else {

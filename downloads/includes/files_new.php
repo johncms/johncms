@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -32,7 +32,7 @@ if ($id) {
     $cat = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
     $res_down_cat = $cat->fetch();
 
-    if (!$cat->rowCount() || !is_dir($res_down_cat['dir'])) {
+    if (! $cat->rowCount() || ! is_dir($res_down_cat['dir'])) {
         echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
@@ -43,7 +43,7 @@ if ($id) {
 }
 
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
-$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old $sql_down")->fetchColumn();
+$total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down}")->fetchColumn();
 
 // Навигация
 if ($total > $kmess) {
@@ -53,10 +53,10 @@ if ($total > $kmess) {
 // Выводим список
 if ($total) {
     $i = 0;
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > $old $sql_down ORDER BY `time` DESC LIMIT $start, $kmess");
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
 
     while ($res_down = $req_down->fetch()) {
-        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
     echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';

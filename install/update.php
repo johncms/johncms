@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * JohnCMS Content Management System (https://johncms.com)
  *
@@ -9,7 +9,6 @@
  * @copyright   Copyright (C) JohnCMS Community
  * @license     GPL-3
  */
-
 define('_IN_JOHNCMS', 1);
 require '../system/bootstrap.php';
 
@@ -21,7 +20,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__.'/locale', '/%s/default.mo');
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -43,12 +42,10 @@ if ($systemUser->rights < 9) {
 }
 
 $textl = _t('Site update');
-require('../system/head.php');
-echo '<div class="phdr"><b>'._t('Site update').'</b></div>';
-
+require '../system/head.php';
+echo '<div class="phdr"><b>' . _t('Site update') . '</b></div>';
 
 switch ($step) {
-
     // Создаем новые таблицы форума
     case 'create_tables':
         ?>
@@ -56,7 +53,7 @@ switch ($step) {
             <?= _t('Create new tables'); ?>
         </div>
         <?php
-        $db->exec("CREATE TABLE `forum_messages`
+        $db->exec('CREATE TABLE `forum_messages`
             (
               `id`           bigint(20) NOT NULL,
               `topic_id`     bigint(20) NOT NULL,
@@ -75,14 +72,14 @@ switch ($step) {
               `deleted_by`   varchar(255) DEFAULT NULL,
               `old_id`       int(11)      DEFAULT NULL
             ) ENGINE = InnoDB
-              DEFAULT CHARSET = utf8mb4;");
+              DEFAULT CHARSET = utf8mb4;');
 
-        $db->exec("CREATE TABLE `forum_redirects`
+        $db->exec('CREATE TABLE `forum_redirects`
             (
               `old_id`   int(11)      NOT NULL,
               `new_link` varchar(255) NOT NULL
             ) ENGINE = InnoDB
-              DEFAULT CHARSET = utf8mb4;");
+              DEFAULT CHARSET = utf8mb4;');
 
         $db->exec("CREATE TABLE `forum_sections`
             (
@@ -128,24 +125,23 @@ switch ($step) {
             ) ENGINE = InnoDB
               DEFAULT CHARSET = utf8mb4;");
 
-        $db->exec("ALTER TABLE `forum_messages`
+        $db->exec('ALTER TABLE `forum_messages`
               ADD PRIMARY KEY (`id`),
               ADD KEY `topic` (`topic_id`),
               ADD KEY `deleted` (`deleted`),
               ADD KEY `old_id` (`old_id`);
               ALTER TABLE `forum_messages`
               ADD FULLTEXT KEY `text` (`text`);
-        ");
+        ');
 
-        $db->exec("ALTER TABLE `forum_redirects` ADD UNIQUE KEY `old_id` (`old_id`);");
-        $db->exec("ALTER TABLE `forum_sections` ADD PRIMARY KEY (`id`), ADD KEY `parent` (`parent`), ADD KEY `old_id` (`old_id`);");
-        $db->exec("ALTER TABLE `forum_topic` ADD PRIMARY KEY (`id`), ADD KEY `deleted` (`deleted`);");
-        $db->exec("ALTER TABLE `forum_messages` MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;");
+        $db->exec('ALTER TABLE `forum_redirects` ADD UNIQUE KEY `old_id` (`old_id`);');
+        $db->exec('ALTER TABLE `forum_sections` ADD PRIMARY KEY (`id`), ADD KEY `parent` (`parent`), ADD KEY `old_id` (`old_id`);');
+        $db->exec('ALTER TABLE `forum_topic` ADD PRIMARY KEY (`id`), ADD KEY `deleted` (`deleted`);');
+        $db->exec('ALTER TABLE `forum_messages` MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;');
 
-        $db->exec("ALTER TABLE `forum_sections` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;");
+        $db->exec('ALTER TABLE `forum_sections` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;');
 
-        $db->exec("ALTER TABLE `forum_topic` MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;");
-
+        $db->exec('ALTER TABLE `forum_topic` MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;');
 
         ?>
         <div class="gmenu">
@@ -174,25 +170,25 @@ switch ($step) {
         foreach ($first_sections as $section) {
             $db->query("INSERT INTO forum_sections SET 
                 parent = 0, 
-                name = '".$section['text']."',
-                description = '".$section['soft']."',
+                name = '" . $section['text'] . "',
+                description = '" . $section['soft'] . "',
                 sort = 100,
-                access = '".$section['edit']."',
+                access = '" . $section['edit'] . "',
                 section_type = 0,
-                old_id = '".$section['id']."'
+                old_id = '" . $section['id'] . "'
             ");
 
             $section_id = $db->lastInsertId();
-            $subsections = $db->query("SELECT * FROM forum where type = 'r' AND refid = '".$section['id']."'")->fetchAll();
+            $subsections = $db->query("SELECT * FROM forum where type = 'r' AND refid = '" . $section['id'] . "'")->fetchAll();
             foreach ($subsections as $subsection) {
                 $db->query("INSERT INTO forum_sections SET 
-                    parent = '".$section_id."', 
-                    name = '".$subsection['text']."',
-                    description = '".$subsection['soft']."',
+                    parent = '" . $section_id . "', 
+                    name = '" . $subsection['text'] . "',
+                    description = '" . $subsection['soft'] . "',
                     sort = 100,
-                    access = '".$subsection['edit']."',
+                    access = '" . $subsection['edit'] . "',
                     section_type = 1,
-                    old_id = '".$subsection['id']."'
+                    old_id = '" . $subsection['id'] . "'
                 ");
             }
         }
@@ -223,26 +219,26 @@ switch ($step) {
 
         $for_step = 200;
 
-        $start = !empty($_SESSION['convert_topics']) ? intval($_SESSION['convert_topics']) : 0;
+        $start = ! empty($_SESSION['convert_topics']) ? (int) ($_SESSION['convert_topics']) : 0;
         $completed = false;
         $counter = 0;
 
-        $topics = $db->query("SELECT * FROM forum where type = 't' ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $topics = $db->query("SELECT * FROM forum where type = 't' ORDER BY id ASC LIMIT " . $start . ', ' . $for_step);
         while ($topic = $topics->fetch()) {
             // Получаем id нового раздела
-            $new_section = $db->query("SELECT * FROM forum_sections where old_id = '".$topic['refid']."'")->fetch();
-            if (!empty($new_section)) {
+            $new_section = $db->query("SELECT * FROM forum_sections where old_id = '" . $topic['refid'] . "'")->fetch();
+            if (! empty($new_section)) {
                 $db->query("INSERT INTO forum_topic SET
-                    section_id = '".$new_section['id']."',
-                    name = '".$topic['text']."',
-                    user_id = '".$topic['user_id']."',
-                    user_name = '".$topic['from']."',
-                    pinned = ".($topic['vip'] == 1 ? 1 : 'NULL').",
-                    closed = ".($topic['edit'] == 1 ? 1 : 'NULL').",
-                    deleted = ".($topic['close'] == 1 ? 1 : 'NULL').",
-                    has_poll = ".($topic['realid'] == 1 ? 1 : 'NULL').",
-                    deleted_by = '".($topic['close_who'] ?? '')."',
-                    old_id = '".$topic['id']."'
+                    section_id = '" . $new_section['id'] . "',
+                    name = '" . $topic['text'] . "',
+                    user_id = '" . $topic['user_id'] . "',
+                    user_name = '" . $topic['from'] . "',
+                    pinned = " . ($topic['vip'] == 1 ? 1 : 'NULL') . ',
+                    closed = ' . ($topic['edit'] == 1 ? 1 : 'NULL') . ',
+                    deleted = ' . ($topic['close'] == 1 ? 1 : 'NULL') . ',
+                    has_poll = ' . ($topic['realid'] == 1 ? 1 : 'NULL') . ",
+                    deleted_by = '" . ($topic['close_who'] ?? '') . "',
+                    old_id = '" . $topic['id'] . "'
                 ");
             }
 
@@ -250,8 +246,7 @@ switch ($step) {
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['convert_topics'] = $start + $for_step;
-            ?>
+            $_SESSION['convert_topics'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Converted:') ?> <?= $_SESSION['convert_topics'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -288,15 +283,15 @@ switch ($step) {
             <?= _t('Convert forum messages'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['convert_messages']) ? intval($_SESSION['convert_messages']) : 0;
+        $start = ! empty($_SESSION['convert_messages']) ? (int) ($_SESSION['convert_messages']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 500;
 
-        $messages = $db->query("SELECT * FROM forum where type = 'm' ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $messages = $db->query("SELECT * FROM forum where type = 'm' ORDER BY id ASC LIMIT " . $start . ', ' . $for_step);
         while ($message = $messages->fetch()) {
-            $new_topic = $db->query("SELECT * FROM forum_topic where old_id = '".$message['refid']."'")->fetch();
-            if (!empty($new_topic)) {
+            $new_topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $message['refid'] . "'")->fetch();
+            if (! empty($new_topic)) {
                 $db->prepare('
                   INSERT INTO `forum_messages` SET
                   `topic_id` = ?,
@@ -336,8 +331,7 @@ switch ($step) {
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['convert_messages'] = $start + $for_step;
-            ?>
+            $_SESSION['convert_messages'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Converted:') ?> <?= $_SESSION['convert_messages'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -368,7 +362,6 @@ switch ($step) {
 
         break;
 
-
     // Пересчет сообщений в темах
     case 'forum_topics_recount':
         ?>
@@ -376,20 +369,19 @@ switch ($step) {
             <?= _t('Recount messages in topics'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['recount_topic']) ? intval($_SESSION['recount_topic']) : 0;
+        $start = ! empty($_SESSION['recount_topic']) ? (int) ($_SESSION['recount_topic']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 200;
 
-        $topics = $db->query("SELECT * FROM forum_topic ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $topics = $db->query('SELECT * FROM forum_topic ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($topic = $topics->fetch()) {
             $tools->recountForumTopic($topic['id']);
             $counter++;
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['recount_topic'] = $start + $for_step;
-            ?>
+            $_SESSION['recount_topic'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['recount_topic'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -419,7 +411,6 @@ switch ($step) {
         }
         break;
 
-
     // Обновление привязки файлов
     case 'forum_files':
         ?>
@@ -427,32 +418,30 @@ switch ($step) {
             <?= _t('Update forum files table'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['forum_files_convert']) ? intval($_SESSION['forum_files_convert']) : 0;
+        $start = ! empty($_SESSION['forum_files_convert']) ? (int) ($_SESSION['forum_files_convert']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 400;
 
-        $files = $db->query("SELECT * FROM `cms_forum_files` ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $files = $db->query('SELECT * FROM `cms_forum_files` ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($file = $files->fetch()) {
-
-            $cat = $db->query("SELECT * FROM forum_sections where old_id = '".$file['cat']."'")->fetch();
-            $subcat = $db->query("SELECT * FROM forum_sections where old_id = '".$file['subcat']."'")->fetch();
-            $topic = $db->query("SELECT * FROM forum_topic where old_id = '".$file['topic']."'")->fetch();
-            $post = $db->query("SELECT * FROM forum_messages where old_id = '".$file['post']."'")->fetch();
+            $cat = $db->query("SELECT * FROM forum_sections where old_id = '" . $file['cat'] . "'")->fetch();
+            $subcat = $db->query("SELECT * FROM forum_sections where old_id = '" . $file['subcat'] . "'")->fetch();
+            $topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $file['topic'] . "'")->fetch();
+            $post = $db->query("SELECT * FROM forum_messages where old_id = '" . $file['post'] . "'")->fetch();
 
             $db->query("UPDATE cms_forum_files SET
-                cat = '".$cat['id']."',   
-                subcat = '".$subcat['id']."',   
-                topic = '".$topic['id']."',
-                post = '".$post['id']."'
-                WHERE id = ".$file['id']."
-            ");
+                cat = '" . $cat['id'] . "',   
+                subcat = '" . $subcat['id'] . "',   
+                topic = '" . $topic['id'] . "',
+                post = '" . $post['id'] . "'
+                WHERE id = " . $file['id'] . '
+            ');
             $counter++;
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['forum_files_convert'] = $start + $for_step;
-            ?>
+            $_SESSION['forum_files_convert'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_files_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -489,25 +478,23 @@ switch ($step) {
             <?= _t('Update forum votes table'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['forum_votes_convert']) ? intval($_SESSION['forum_votes_convert']) : 0;
+        $start = ! empty($_SESSION['forum_votes_convert']) ? (int) ($_SESSION['forum_votes_convert']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 500;
 
-        $votes = $db->query("SELECT * FROM `cms_forum_vote` ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $votes = $db->query('SELECT * FROM `cms_forum_vote` ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($vote = $votes->fetch()) {
-            $topic = $db->query("SELECT * FROM forum_topic where old_id = '".$vote['topic']."'")->fetch();
+            $topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $vote['topic'] . "'")->fetch();
             $db->query("UPDATE cms_forum_vote SET 
-              topic = '".$topic['id']."'
-              WHERE id = ".$vote['id']."
-            ");
+              topic = '" . $topic['id'] . "'
+              WHERE id = " . $vote['id'] . '
+            ');
             $counter++;
         }
 
-
         if ($counter >= $for_step) {
-            $_SESSION['forum_votes_convert'] = $start + $for_step;
-            ?>
+            $_SESSION['forum_votes_convert'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_votes_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -537,7 +524,6 @@ switch ($step) {
         }
         break;
 
-
     // Обновление привязки файлов
     case 'forum_vote_users':
         ?>
@@ -545,24 +531,23 @@ switch ($step) {
             <?= _t('Update forum vote users table'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['forum_vote_users_convert']) ? intval($_SESSION['forum_vote_users_convert']) : 0;
+        $start = ! empty($_SESSION['forum_vote_users_convert']) ? (int) ($_SESSION['forum_vote_users_convert']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 1000;
 
-        $votes = $db->query("SELECT * FROM `cms_forum_vote_users` ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $votes = $db->query('SELECT * FROM `cms_forum_vote_users` ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($vote = $votes->fetch()) {
-            $topic = $db->query("SELECT * FROM forum_topic where old_id = '".$vote['topic']."'")->fetch();
+            $topic = $db->query("SELECT * FROM forum_topic where old_id = '" . $vote['topic'] . "'")->fetch();
             $db->query("UPDATE cms_forum_vote_users SET 
-              topic = '".$topic['id']."'
-              WHERE id = ".$vote['id']."
-            ");
+              topic = '" . $topic['id'] . "'
+              WHERE id = " . $vote['id'] . '
+            ');
             $counter++;
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['forum_vote_users_convert'] = $start + $for_step;
-            ?>
+            $_SESSION['forum_vote_users_convert'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_vote_users_convert'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -592,7 +577,6 @@ switch ($step) {
         }
         break;
 
-
     // Настройка редиректов со старых ссылок на новые
     case 'forum_redirects':
         ?>
@@ -600,53 +584,51 @@ switch ($step) {
             <?= _t('Setting redirects'); ?>
         </div>
         <?php
-        $start = !empty($_SESSION['forum_redirects']) ? intval($_SESSION['forum_redirects']) : 0;
+        $start = ! empty($_SESSION['forum_redirects']) ? (int) ($_SESSION['forum_redirects']) : 0;
         $completed = false;
         $counter = 0;
         $for_step = 5000;
 
-        $items = $db->query("SELECT * FROM forum ORDER BY id ASC LIMIT ".$start.", ".$for_step);
+        $items = $db->query('SELECT * FROM forum ORDER BY id ASC LIMIT ' . $start . ', ' . $for_step);
         while ($item = $items->fetch()) {
             $link = '';
             switch ($item['type']) {
                 case 'f':
                 case 'r':
-                    $section = $db->query("SELECT * FROM forum_sections WHERE old_id = ".$item['id'])->fetch();
-                    if (!empty($section)) {
-                        if (!empty($section['section_type'])) {
-                            $link = '/forum/index.php?type=topics&id='.$section['id'];
+                    $section = $db->query('SELECT * FROM forum_sections WHERE old_id = ' . $item['id'])->fetch();
+                    if (! empty($section)) {
+                        if (! empty($section['section_type'])) {
+                            $link = '/forum/index.php?type=topics&id=' . $section['id'];
                         } else {
-                            $link = '/forum/index.php?id='.$section['id'];
+                            $link = '/forum/index.php?id=' . $section['id'];
                         }
                     }
                     break;
 
                 case 't':
-                    $topic = $db->query("SELECT * FROM forum_topic WHERE old_id = ".$item['id'])->fetch();
-                    if (!empty($topic)) {
-                        $link = '/forum/index.php?type=topic&id='.$topic['id'];
+                    $topic = $db->query('SELECT * FROM forum_topic WHERE old_id = ' . $item['id'])->fetch();
+                    if (! empty($topic)) {
+                        $link = '/forum/index.php?type=topic&id=' . $topic['id'];
                     }
                     break;
 
                 case 'm':
-                    $message = $db->query("SELECT * FROM forum_messages WHERE old_id = ".$item['id'])->fetch();
-                    if (!empty($message)) {
-                        $link = '/forum/index.php?act=show_post&id='.$message['id'];
+                    $message = $db->query('SELECT * FROM forum_messages WHERE old_id = ' . $item['id'])->fetch();
+                    if (! empty($message)) {
+                        $link = '/forum/index.php?act=show_post&id=' . $message['id'];
                     }
                     break;
-
             }
 
-            if (!empty($link)) {
-                $db->query("INSERT INTO forum_redirects SET old_id = ".$item['id'].", new_link = '".$link."'");
+            if (! empty($link)) {
+                $db->query('INSERT INTO forum_redirects SET old_id = ' . $item['id'] . ", new_link = '" . $link . "'");
             }
 
             $counter++;
         }
 
         if ($counter >= $for_step) {
-            $_SESSION['forum_redirects'] = $start + $for_step;
-            ?>
+            $_SESSION['forum_redirects'] = $start + $for_step; ?>
             <div class="gmenu"><?= _t('Completed:') ?> <?= $_SESSION['forum_redirects'] ?></div>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -684,7 +666,7 @@ switch ($step) {
             <?= _t('Delete old tables'); ?>
         </div>
         <?php
-        $db->exec("DROP TABLE `forum`");
+        $db->exec('DROP TABLE `forum`');
         ?>
         <div class="gmenu">
             <div style="margin-bottom: 5px;">
@@ -699,7 +681,6 @@ switch ($step) {
         <?php
 
         break;
-
 
     default:
         ?>
@@ -716,4 +697,4 @@ switch ($step) {
     <?php
 }
 
-require('../system/end.php');
+require '../system/end.php';

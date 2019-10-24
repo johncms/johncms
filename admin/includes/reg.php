@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -35,9 +35,9 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a>
 switch ($mod) {
     case 'approve':
         // Подтверждаем регистрацию выбранного пользователя
-        if (!$id) {
+        if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
@@ -53,17 +53,17 @@ switch ($mod) {
 
     case 'del':
         // Удаляем регистрацию выбранного пользователя
-        if (!$id) {
+        if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
 
-        $req = $db->query("SELECT `id` FROM `users` WHERE `id` = '$id' AND `preg` = '0'");
+        $req = $db->query("SELECT `id` FROM `users` WHERE `id` = '${id}' AND `preg` = '0'");
 
         if ($req->rowCount()) {
-            $db->exec("DELETE FROM `users` WHERE `id` = '$id'");
-            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '$id' LIMIT 1");
+            $db->exec("DELETE FROM `users` WHERE `id` = '${id}'");
+            $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '${id}' LIMIT 1");
         }
 
         echo '<div class="menu"><p>' . _t('User deleted') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
@@ -71,28 +71,28 @@ switch ($mod) {
 
     case 'massdel':
         $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
-        $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
+        $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
         echo '<div class="menu"><p>' . _t('All unconfirmed registrations were removed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'delip':
         // Удаляем все регистрации с заданным адресом IP
-        $ip = isset($_GET['ip']) ? intval($_GET['ip']) : false;
+        $ip = isset($_GET['ip']) ? (int) ($_GET['ip']) : false;
 
         if ($ip) {
-            $req = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
+            $req = $db->query("SELECT `id` FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
 
             while ($res = $req->fetch()) {
                 $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '" . $res['id'] . "'");
             }
 
-            $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '$ip'");
-            $db->query("OPTIMIZE TABLE `cms_users_iphistory` , `users`");
+            $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
+            $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
             echo '<div class="menu"><p>' . _t('All unconfirmed registrations with selected IP were deleted') . '<br>' .
                 '<a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
         } else {
             echo $tools->displayError(_t('Wrong data'));
-            require('../system/end.php');
+            require '../system/end.php';
             exit;
         }
         break;
@@ -106,7 +106,7 @@ switch ($mod) {
         }
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT $start,$kmess");
+            $req = $db->query("SELECT * FROM `users` WHERE `preg` = '0' ORDER BY `id` DESC LIMIT ${start},${kmess}");
             $i = 0;
 
             while ($res = $req->fetch()) {

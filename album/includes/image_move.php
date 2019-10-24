@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,19 +28,19 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Перемещение картинки в другой альбом
 if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = " . $user['id']);
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $user['id']);
     if ($req->rowCount()) {
         $image = $req->fetch();
         echo '<div class="phdr"><a href="?act=show&amp;al=' . $image['album_id'] . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Move image') . '</div>';
         if (isset($_POST['submit'])) {
-            $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '$al' AND `user_id` = " . $user['id']);
+            $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $user['id']);
 
             if ($req_a->rowCount()) {
                 $res_a = $req_a->fetch();
                 $db->exec("UPDATE `cms_album_files` SET
-                    `album_id` = '$al',
+                    `album_id` = '${al}',
                     `access` = '" . $res_a['access'] . "'
-                    WHERE `id` = '$img'
+                    WHERE `id` = '${img}'
                 ");
                 echo '<div class="gmenu"><p>' . _t('Image successfully moved to the selected album') . '<br>' .
                     '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';

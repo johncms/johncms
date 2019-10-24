@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,25 +23,25 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
-require('../system/head.php');
+require '../system/head.php';
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
-    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>' .
+    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>' .
     '<div class="list2">' .
     '<p><h3>' . $tools->image('rate.gif') . _t('Statistic') . '</h3><ul>';
 
 if ($systemUser->rights >= 7) {
-    if (!$user['preg'] && empty($user['regadm'])) {
+    if (! $user['preg'] && empty($user['regadm'])) {
         echo '<li>' . _t('Pending confirmation') . '</li>';
-    } elseif ($user['preg'] && !empty($user['regadm'])) {
+    } elseif ($user['preg'] && ! empty($user['regadm'])) {
         echo '<li>' . _t('Registration confirmed') . ': ' . $user['regadm'] . '</li>';
     } else {
         echo '<li>' . _t('Free registration') . '</li>';
     }
 }
 
-echo '<li><span class="gray">' . _t('Registered') . ':</span> ' . date("d.m.Y", $user['datereg']) . '</li>';
+echo '<li><span class="gray">' . _t('Registered') . ':</span> ' . date('d.m.Y', $user['datereg']) . '</li>';
 echo '<li><span class="gray">' . ($user['sex'] == 'm' ? _t('He stay on the site') : _t('She stay on the site')) . ':</span> ' . $tools->timecount($user['total_on_site']) . '</li>';
-$lastvisit = time() > $user['lastdate'] + 300 ? date("d.m.Y (H:i)", $user['lastdate']) : false;
+$lastvisit = time() > $user['lastdate'] + 300 ? date('d.m.Y (H:i)', $user['lastdate']) : false;
 
 if ($lastvisit) {
     echo '<li><span class="gray">' . _t('Last visit') . ':</span> ' . $lastvisit . '</li>';

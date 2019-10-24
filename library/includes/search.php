@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -46,7 +46,7 @@ if ($search && (mb_strlen($search) < 4 || mb_strlen($search) > 64)) {
     $error = _t('Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance');
 }
 
-if ($search && !$error) {
+if ($search && ! $error) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
 
@@ -83,7 +83,7 @@ if ($search && !$error) {
                 }
             }
 
-            if (!isset($pos) || $pos < 100) {
+            if (! isset($pos) || $pos < 100) {
                 $pos = 100;
             }
 
@@ -111,7 +111,7 @@ if ($search && !$error) {
         echo '<div class="rmenu"><p>' . _t('Your search did not match any results') . '</p></div>';
     }
 
-    echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
+    echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
 
     if ($total > $kmess) {
         echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',

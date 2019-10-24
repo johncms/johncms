@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,10 +27,10 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     require '../system/head.php';
 
-    $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
+    $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
-    if (!$req->rowCount() || !is_dir($res['dir'])) {
+    if (! $req->rowCount() || ! is_dir($res['dir'])) {
         echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
         require '../system/end.php';
         exit;
@@ -51,17 +51,17 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             }
         }
 
-        if ($url && !$error) {
+        if ($url && ! $error) {
             $fname = basename($url);
             $new_file = isset($_POST['new_file']) ? trim($_POST['new_file']) : null;
             $name = isset($_POST['text']) ? trim($_POST['text']) : null;
             $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
             $text = isset($_POST['opis']) ? trim($_POST['opis']) : null;
-            $ext = explode(".", $fname);
+            $ext = explode('.', $fname);
 
-            if (!empty($new_file)) {
+            if (! empty($new_file)) {
                 $fname = strtolower($new_file . '.' . $ext[1]);
-                $ext = explode(".", $fname);
+                $ext = explode('.', $fname);
             }
 
             if (empty($name)) {
@@ -72,7 +72,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 $error[] = _t('The required fields are not filled');
             }
 
-            if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
+            if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
                 $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
             }
 
@@ -83,7 +83,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             if (preg_match("/[^\da-zA-Z_\-.]+/", $fname)) {
                 $error[] = _t('The file name contains invalid characters');
             }
-        } elseif (!$url) {
+        } elseif (! $url) {
             $error[] = _t('Invalid Link');
         }
 
@@ -91,11 +91,11 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             $error[] = '<a href="?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
             echo $error;
         } else {
-            if (file_exists("$load_cat/$fname")) {
+            if (file_exists("${load_cat}/${fname}")) {
                 $fname = time() . $fname;
             }
 
-            if (copy('http://' . $url, "$load_cat/$fname")) {
+            if (copy('http://' . $url, "${load_cat}/${fname}")) {
                 echo '<div class="phdr"><b>' . _t('File import') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>';
                 echo '<div class="gmenu">' . _t('File attached') . '</div>';
 
@@ -153,8 +153,8 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 $sql = '';
                 $i = 0;
 
-                while ($dirid != '0' && $dirid != "") {
-                    $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
+                while ($dirid != '0' && $dirid != '') {
+                    $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
                     if ($i) {
                         $sql .= ' OR ';
                     }
@@ -163,7 +163,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     ++$i;
                 }
 
-                $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
+                $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE ${sql}");
                 echo '<div class="phdr"><a href="?act=import&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
             } else {
                 echo '<div class="rmenu">' . _t('File not attached') . '<br><a href="?act=import&amp;id=' . $id . '">' . _t('Repeat') . '</a></div>';

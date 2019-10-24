@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -17,8 +17,11 @@ use Psr\Container\ContainerInterface;
 class Environment implements Api\EnvironmentInterface
 {
     private $ip;
+
     private $ipViaProxy;
+
     private $userAgent;
+
     private $ipCount = [];
 
     /**
@@ -39,7 +42,7 @@ class Environment implements Api\EnvironmentInterface
         if (null === $this->ip) {
             $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
             $ip = ip2long($ip);
-            $this->ip = sprintf("%u", $ip);
+            $this->ip = sprintf('%u', $ip);
         }
 
         return $this->ip;
@@ -56,11 +59,11 @@ class Environment implements Api\EnvironmentInterface
                 $vars
             )
         ) {
-            foreach ($vars[0] AS $var) {
+            foreach ($vars[0] as $var) {
                 $ipViaProxy = ip2long($var);
 
-                if ($ipViaProxy && $ipViaProxy != $this->getIp() && !preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
-                    return $this->ipViaProxy = sprintf("%u", $ipViaProxy);
+                if ($ipViaProxy && $ipViaProxy != $this->getIp() && ! preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
+                    return $this->ipViaProxy = sprintf('%u', $ipViaProxy);
                 }
             }
         }
@@ -76,9 +79,9 @@ class Environment implements Api\EnvironmentInterface
             return $this->userAgent = 'Opera Mini: ' . mb_substr(filter_var($_SERVER['HTTP_X_OPERAMINI_PHONE_UA'], FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
         } elseif (isset($_SERVER['HTTP_USER_AGENT'])) {
             return $this->userAgent = mb_substr(filter_var($_SERVER['HTTP_USER_AGENT'], FILTER_SANITIZE_SPECIAL_CHARS), 0, 150);
-        } else {
-            return $this->userAgent = 'Not Recognised';
         }
+
+        return $this->userAgent = 'Not Recognised';
     }
 
     public function getIpLog()
@@ -92,17 +95,17 @@ class Environment implements Api\EnvironmentInterface
         $tmp = [];
         $requests = 1;
 
-        if (!file_exists($file)) {
-            $in = fopen($file, "w+");
+        if (! file_exists($file)) {
+            $in = fopen($file, 'w+');
         } else {
-            $in = fopen($file, "r+");
+            $in = fopen($file, 'r+');
         }
 
-        flock($in, LOCK_EX) or die("Cannot flock ANTIFLOOD file.");
+        flock($in, LOCK_EX) || die('Cannot flock ANTIFLOOD file.');
         $now = time();
 
         while ($block = fread($in, 8)) {
-            $arr = unpack("Lip/Ltime", $block);
+            $arr = unpack('Lip/Ltime', $block);
 
             if (($now - $arr['time']) > 60) {
                 continue;

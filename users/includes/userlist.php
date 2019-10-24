@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('List of users');
 $headmod = 'userlist';
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -26,14 +26,14 @@ $db = $container->get(PDO::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Выводим список пользователей
-$total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = 1")->fetchColumn();
+$total = $db->query('SELECT COUNT(*) FROM `users` WHERE `preg` = 1')->fetchColumn();
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('List of users') . '</div>';
 
 if ($total > $kmess) {
     echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=userlist&amp;', $start, $total, $kmess) . '</div>';
 }
 
-$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT $start, $kmess");
+$req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT ${start}, ${kmess}");
 
 for ($i = 0; ($res = $req->fetch()) !== false; $i++) {
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

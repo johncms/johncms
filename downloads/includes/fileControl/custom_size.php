@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,17 +27,17 @@ $res_down = $req_down->fetch();
 $format_file = pathinfo($res_down['name'], PATHINFO_EXTENSION);
 $pic_ext = ['gif', 'jpg', 'jpeg', 'png'];
 $array = ['240x320', '320x240', '320x480', '480x360', '360x640', '480x800', '768x1024', '640x960', '1280x800'];
-$size_img = isset($_GET['img_size']) ? abs(intval($_GET['img_size'])) : 0;
-$proportion = isset($_GET['proportion']) ? abs(intval($_GET['proportion'])) : 0;
-$val = isset($_GET['val']) ? abs(intval($_GET['val'])) : 100;
+$size_img = isset($_GET['img_size']) ? abs((int) ($_GET['img_size'])) : 0;
+$proportion = isset($_GET['proportion']) ? abs((int) ($_GET['proportion'])) : 0;
+$val = isset($_GET['val']) ? abs((int) ($_GET['val'])) : 100;
 
 if ($val < 50 || $val > 100) {
     $val = 100;
 }
 
-if (!$req_down->rowCount()
-    || !is_file($res_down['dir'] . '/' . $res_down['name'])
-    || !in_array($format_file, $pic_ext)
+if (! $req_down->rowCount()
+    || ! is_file($res_down['dir'] . '/' . $res_down['name'])
+    || ! in_array($format_file, $pic_ext)
     || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)
     || empty($array[$size_img])
 ) {
@@ -71,25 +71,24 @@ if ($proportion) {
 }
 
 switch ($format_file) {
-    case "gif":
+    case 'gif':
         $image_create = imagecreatefromgif($res_down['dir'] . '/' . $res_down['name']);
         break;
 
-    case "jpg":
+    case 'jpg':
         $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
         break;
 
-    case "jpeg":
+    case 'jpeg':
         $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
         break;
 
-    case "png":
+    case 'png':
         $image_create = imagecreatefrompng($res_down['dir'] . '/' . $res_down['name']);
         break;
 }
 
-
-if (!isset($_SESSION['down_' . $id])) {
+if (! isset($_SESSION['down_' . $id])) {
     $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`='" . $id . "'");
     $_SESSION['down_' . $id] = 1;
 }

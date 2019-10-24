@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Karma');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -36,7 +36,7 @@ if ($set_karma['on']) {
     switch ($mod) {
         case 'vote':
             // Отдаем голос за пользователя
-            if (!$systemUser->karma_off && empty($systemUser->ban)) {
+            if (! $systemUser->karma_off && empty($systemUser->ban)) {
                 $error = [];
 
                 if ($user['rights'] && $set_karma['adm']) {
@@ -72,10 +72,10 @@ if ($set_karma['on']) {
                 } else {
                     if (isset($_POST['submit'])) {
                         $text = isset($_POST['text']) ? mb_substr(trim($_POST['text']), 0, 500) : '';
-                        $type = intval($_POST['type']) ? 1 : 0;
-                        $points = abs(intval($_POST['points']));
+                        $type = (int) ($_POST['type']) ? 1 : 0;
+                        $points = abs((int) ($_POST['points']));
 
-                        if (!$points || $points > ($set_karma['karma_points'] - $sum)) {
+                        if (! $points || $points > ($set_karma['karma_points'] - $sum)) {
                             $points = 1;
                         }
 
@@ -99,7 +99,7 @@ if ($set_karma['on']) {
                         ]);
 
                         $sql = $type ? "`karma_plus` = '" . ($user['karma_plus'] + $points) . "'" : "`karma_minus` = '" . ($user['karma_minus'] + $points) . "'";
-                        $db->query("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
+                        $db->query("UPDATE `users` SET ${sql} WHERE `id` = " . $user['id']);
                         echo '<div class="gmenu">' . _t('You have successfully voted') . '!<br /><a href="?user=' . $user['id'] . '">' . _t('Continue') . '</a></div>';
                     } else {
                         echo '<div class="phdr"><b>' . _t('Vote for') . '</b>: ' . $tools->checkout($user['name']) . '</div>' .
@@ -131,14 +131,14 @@ if ($set_karma['on']) {
         case 'delete':
             // Удаляем отдельный голос
             if ($systemUser->rights == 9) {
-                $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : null;
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '$id' AND `karma_user` = '" . $user['id'] . "'");
+                $type = isset($_GET['type']) ? abs((int) ($_GET['type'])) : null;
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `id` = '${id}' AND `karma_user` = '" . $user['id'] . "'");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
 
                     if (isset($_GET['yes'])) {
-                        $db->exec("DELETE FROM `karma_users` WHERE `id` = '$id'");
+                        $db->exec("DELETE FROM `karma_users` WHERE `id` = '${id}'");
 
                         //TODO: Доработать калькуляцию
                         if ($res['type']) {
@@ -147,7 +147,7 @@ if ($set_karma['on']) {
                             $sql = "`karma_minus` = '" . ($user['karma_minus'] > $res['points'] ? $user['karma_minus'] - $res['points'] : 0) . "'";
                         }
 
-                        $db->exec("UPDATE `users` SET $sql WHERE `id` = " . $user['id']);
+                        $db->exec("UPDATE `users` SET ${sql} WHERE `id` = " . $user['id']);
                         header('Location: ?act=karma&user=' . $user['id'] . '&type=' . $type);
                     } else {
                         echo '<div class="rmenu"><p>' . _t('Do you really want to delete comment?') . '<br>' .
@@ -162,7 +162,7 @@ if ($set_karma['on']) {
             // Очищаем все голоса за пользователя
             if ($systemUser->rights == 9) {
                 if (isset($_GET['yes'])) {
-                    $db->exec("DELETE FROM `karma_users` WHERE `karma_user` = " . $user['id']);
+                    $db->exec('DELETE FROM `karma_users` WHERE `karma_user` = ' . $user['id']);
                     $db->query('OPTIMIZE TABLE `karma_users`');
                     $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user['id']);
                     header('Location: ?user=' . $user['id']);
@@ -181,14 +181,14 @@ if ($set_karma['on']) {
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $systemUser->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $systemUser->id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $systemUser->id == $res['user_id'] || ! $res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-                    if (!empty($res['text'])) {
+                    if (! empty($res['text'])) {
                         echo '<div class="sub">' . $tools->checkout($res['text']) . '</div>';
                     }
                     echo '</div>';
@@ -211,15 +211,15 @@ if ($set_karma['on']) {
 
         default:
             // Главная страница Кармы, список отзывов
-            $type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
+            $type = isset($_GET['type']) ? abs((int) ($_GET['type'])) : 0;
             $menu = [
                 ($type == 2 ? '<b>' . _t('All') . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=2">' . _t('All') . '</a>'),
                 ($type == 1 ? '<b>' . _t('Positive') . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _t('Positive') . '</a>'),
-                (!$type ? '<b>' . _t('Negative') . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Negative') . '</a>'),
+                (! $type ? '<b>' . _t('Negative') . '</b>' : '<a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Negative') . '</a>'),
             ];
             echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Karma') . '</div>' .
                 '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
-                '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>';
+                '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';
             $karma = $user['karma_plus'] - $user['karma_minus'];
 
             if ($karma > 0) {
@@ -241,23 +241,23 @@ if ($set_karma['on']) {
                 '<span class="green">' . _t('For') . ' (' . $user['karma_plus'] . ')</span> | ' .
                 '<span class="red">' . _t('Against') . ' (' . $user['karma_minus'] . ')</span>';
             echo '</div></td></tr></table></div>';
-            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'"))->fetchColumn();
+            $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'"))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? "" : " AND `type` = '$type'") . " ORDER BY `time` DESC LIMIT $start, $kmess");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
                 $i = 0;
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
-                    echo $systemUser->id == $res['user_id'] || !$res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
+                    echo $systemUser->id == $res['user_id'] || ! $res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
                     echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
                     if ($systemUser->rights == 9) {
                         echo ' <span class="red"><a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';
                     }
 
-                    if (!empty($res['text'])) {
+                    if (! empty($res['text'])) {
                         echo '<br />' . $tools->smilies($tools->checkout($res['text']));
                     }
 

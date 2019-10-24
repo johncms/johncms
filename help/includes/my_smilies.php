@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Список своих смайлов
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('My smilies') . '</div>';
-$smileys = !empty($systemUser->smileys) ? unserialize($systemUser->smileys) : [];
+$smileys = ! empty($systemUser->smileys) ? unserialize($systemUser->smileys) : [];
 $total = count($smileys);
 
 if ($total) {
@@ -37,7 +37,7 @@ if ($total > $kmess) {
         $key = ($start - $start % $kmess) / $kmess;
         $smileys_view = $smileys[$key];
 
-        if (!count($smileys_view)) {
+        if (! count($smileys_view)) {
             $smileys_view = $smileys[0];
         }
 
@@ -51,7 +51,7 @@ $i = 0;
 
 foreach ($smileys as $value) {
     $smile = ':' . $value . ':';
-    echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+    echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
         '<input type="checkbox" name="delete_sm[]" value="' . $value . '" />&#160;' .
         $tools->smilies($smile, $systemUser->rights >= 1 ? 1 : 0) . '&#160;' . $smile . ' ' . _t('or') . ' ' . $tools->trans($smile) . '</div>';
     $i++;

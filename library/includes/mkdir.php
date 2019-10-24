@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-if (!$adm) {
+if (! $adm) {
     Library\Utils::redir404();
 }
 
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         echo $tools->displayError(_t('You have not entered the name'),
             '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require_once('../system/end.php');
+        require_once '../system/end.php';
         exit;
     }
 
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     ++$lastinsert;
     $name = $_POST['name'];
     $desc = $_POST['description'];
-    $type = intval($_POST['type']);
+    $type = (int) ($_POST['type']);
     $stmt = $db->prepare('INSERT INTO `library_cats` (`parent`, `name`, `description`, `dir`, `pos`) VALUES (?, ?, ?, ?, ?)');
     $stmt->execute([$id, $name, $desc, $type, $lastinsert]);
 

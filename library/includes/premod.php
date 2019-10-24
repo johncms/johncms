@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -26,8 +26,8 @@ use Library\Tree;
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Moderation Articles') . '</div>';
 
 if ($id && isset($_GET['yes'])) {
-    $sql = "UPDATE `library_texts` SET `premod`=1 WHERE `id`=" . $id;
-    echo '<div class="rmenu">' . _t('Article') . ' <strong>' . $tools->checkout($db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id)->fetchColumn()) . '</strong> ' . _t('Added to the database') . '</div>';
+    $sql = 'UPDATE `library_texts` SET `premod`=1 WHERE `id`=' . $id;
+    echo '<div class="rmenu">' . _t('Article') . ' <strong>' . $tools->checkout($db->query('SELECT `name` FROM `library_texts` WHERE `id`=' . $id)->fetchColumn()) . '</strong> ' . _t('Added to the database') . '</div>';
 } elseif (isset($_GET['all'])) {
     $sql = 'UPDATE `library_texts` SET `premod`=1';
     echo '<div>' . _t('All Articles added in database') . '</div>';
@@ -60,7 +60,7 @@ if ($total) {
     }
 }
 
-echo '<div class="phdr">' . _t('Total') . ': ' . intval($total) . '</div>';
+echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
 echo ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total,
         $kmess) . '</div>' : '';
 echo $total ? '<div><a href="?act=premod&amp;all">' . _t('Approve all') . '</a></div>' : '';

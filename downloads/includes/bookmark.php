@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,14 +29,14 @@ $textl = _t('Favorites');
 require 'classes/download.php';
 require '../system/head.php';
 
-if (!$systemUser->isValid()) {
+if (! $systemUser->isValid()) {
     echo _t('For registered users only');
     require '../system/end.php';
     exit;
 }
 
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
-$total = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = " . $systemUser->id)->fetchColumn();
+$total = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = ' . $systemUser->id)->fetchColumn();
 
 // Навигация
 if ($total > $kmess) {
@@ -45,13 +45,13 @@ if ($total > $kmess) {
 
 // Список закладок
 if ($total) {
-    $req_down = $db->query("SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
+    $req_down = $db->query('SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
     FROM `download__files` LEFT JOIN `download__bookmark` ON `download__files`.`id` = `download__bookmark`.`file_id`
-    WHERE `download__bookmark`.`user_id`=" . $systemUser->id . " ORDER BY `download__files`.`time` DESC LIMIT $start, $kmess");
+    WHERE `download__bookmark`.`user_id`=' . $systemUser->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, ${kmess}");
     $i = 0;
 
     while ($res_down = $req_down->fetch()) {
-        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

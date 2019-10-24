@@ -1,21 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if ($adm) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);
-    $stmt = $db->query("SELECT `id`, `pos` FROM `library_cats` WHERE " . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . " ORDER BY `pos` ASC");
+    $stmt = $db->query('SELECT `id`, `pos` FROM `library_cats` WHERE ' . ($do == 'dir' ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC');
     $y = 0;
     $arrsort = [];
 
@@ -27,7 +27,7 @@ if ($adm) {
     }
 
     $type = isset($_GET['moveset']) && in_array($_GET['moveset'], ['up', 'down']) ? $_GET['moveset'] : redir404();
-    $posid = isset($_GET['posid']) && $_GET['posid'] > 0 ? intval($_GET['posid']) : redir404();
+    $posid = isset($_GET['posid']) && $_GET['posid'] > 0 ? (int) ($_GET['posid']) : redir404();
     list($num1, $pos1) = explode('|', $arrsort[$posid]);
     list($num2, $pos2) = explode('|', $arrsort[($type == 'up' ? $posid - 1 : $posid + 1)]);
     $db->exec('UPDATE `library_cats` SET `pos`=' . $pos2 . ' WHERE `id`=' . $num1);

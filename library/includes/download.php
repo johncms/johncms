@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 ob_end_clean();
 ob_start();
@@ -38,7 +38,7 @@ $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 switch ($type) {
     case 'txt':
-        $out .= $bbcode->notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn());
+        $out .= $bbcode->notags($db->query('SELECT `text` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn());
         break;
 
     case 'fb2':
@@ -79,11 +79,11 @@ switch ($type) {
             . '</description>' . PHP_EOL
             . '<body>' . PHP_EOL . '<title>';
 
-        $out .= '<p>' . $db->query("SELECT `name` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn() . '</p>' . PHP_EOL;
+        $out .= '<p>' . $db->query('SELECT `name` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn() . '</p>' . PHP_EOL;
         $out .= '</title>' . PHP_EOL . '<section>';
         $out .= '<p>' . str_replace('<p></p>', '<empty-line/>',
                 str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>',
-                    $bbcode->notags($db->query("SELECT `text` FROM `library_texts` WHERE `id`=" . $id . " LIMIT 1")->fetchColumn()))) . '</p>' . PHP_EOL;
+                    $bbcode->notags($db->query('SELECT `text` FROM `library_texts` WHERE `id`=' . $id . ' LIMIT 1')->fetchColumn()))) . '</p>' . PHP_EOL;
         $out .= '</section>' . PHP_EOL . '</body>' . PHP_EOL;
 
         if ($image_lib) {

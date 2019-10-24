@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'userban';
-require('../system/head.php');
-$ban = isset($_GET['ban']) ? intval($_GET['ban']) : 0;
+require '../system/head.php';
+$ban = isset($_GET['ban']) ? (int) ($_GET['ban']) : 0;
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -42,11 +42,11 @@ switch ($mod) {
 
             if (isset($_POST['submit'])) {
                 $error = false;
-                $term = isset($_POST['term']) ? intval($_POST['term']) : false;
-                $timeval = isset($_POST['timeval']) ? intval($_POST['timeval']) : false;
-                $time = isset($_POST['time']) ? intval($_POST['time']) : false;
-                $reason = !empty($_POST['reason']) ? trim($_POST['reason']) : '';
-                $banref = isset($_POST['banref']) ? intval($_POST['banref']) : false;
+                $term = isset($_POST['term']) ? (int) ($_POST['term']) : false;
+                $timeval = isset($_POST['timeval']) ? (int) ($_POST['timeval']) : false;
+                $time = isset($_POST['time']) ? (int) ($_POST['time']) : false;
+                $reason = ! empty($_POST['reason']) ? trim($_POST['reason']) : '';
+                $banref = isset($_POST['banref']) ? (int) ($_POST['banref']) : false;
 
                 if (empty($reason) && empty($banref)) {
                     $reason = _t('Reason not specified');
@@ -60,7 +60,7 @@ switch ($mod) {
                     $error = _t('You have no rights to ban in this section');
                 }
 
-                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '$term'")->fetchColumn()) {
+                if ($db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' AND `ban_time` > '" . time() . "' AND `ban_type` = '${term}'")->fetchColumn()) {
                     $error = _t('Ban already active');
                 }
 
@@ -102,7 +102,7 @@ switch ($mod) {
                     $timeval = 2592000;
                 }
 
-                if (!$error) {
+                if (! $error) {
                     // Заносим в базу
                     $stmt = $db->prepare('INSERT INTO `cms_ban_users` SET
                       `user_id` = ?,
@@ -142,7 +142,7 @@ switch ($mod) {
                             _t('Ban'),
                         ]);
 
-                        $db->exec("UPDATE `users` SET `karma_minus` = " . intval($user['karma_minus'] + $points) . " WHERE `id` = " . $user['id']);
+                        $db->exec('UPDATE `users` SET `karma_minus` = ' . (int) ($user['karma_minus'] + $points) . ' WHERE `id` = ' . $user['id']);
                     }
 
                     echo '<div class="rmenu"><p><h3>' . _t('User banned') . '</h3></p></div>';
@@ -193,7 +193,7 @@ switch ($mod) {
 
                 if (isset($_GET['fid'])) {
                     // Если бан из форума, фиксируем ID поста
-                    $fid = intval($_GET['fid']);
+                    $fid = (int) ($_GET['fid']);
                     echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/index.php?act=show_post&amp;id=' . $fid . '"></a><br />' .
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
@@ -208,10 +208,10 @@ switch ($mod) {
 
     case 'cancel':
         // Разбаниваем пользователя (с сохранением истории)
-        if (!$ban || $user['id'] == $systemUser->id || $systemUser->rights < 7) {
+        if (! $ban || $user['id'] == $systemUser->id || $systemUser->rights < 7) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -221,12 +221,12 @@ switch ($mod) {
                     $error = _t('Ban not active');
                 }
 
-                if (!$error) {
+                if (! $error) {
                     echo '<div class="phdr"><b>' . _t('Ban termination') . '</b></div>';
                     echo '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
                     if (isset($_POST['submit'])) {
-                        $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '$ban'");
+                        $db->exec("UPDATE `cms_ban_users` SET `ban_time` = '" . time() . "' WHERE `id` = '${ban}'");
                         echo '<div class="gmenu"><p><h3>' . _t('Ban terminated') . '</h3></p></div>';
                     } else {
                         echo '<form action="?act=ban&amp;mod=cancel&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
@@ -246,10 +246,10 @@ switch ($mod) {
 
     case 'delete':
         // Удаляем бан (с удалением записи из истории)
-        if (!$ban || $systemUser->rights < 9) {
+        if (! $ban || $systemUser->rights < 9) {
             echo $tools->displayError(_t('Wrong data'));
         } else {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '$ban' AND `user_id` = " . $user['id']);
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `id` = '${ban}' AND `user_id` = " . $user['id']);
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -262,7 +262,7 @@ switch ($mod) {
                     $db->exec("UPDATE `users` SET
                         `karma_minus` = '" . ($user['karma_minus'] > $points ? $user['karma_minus'] - $points : 0) . "'
                         WHERE `id` = " . $user['id']);
-                    $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '$ban'");
+                    $db->exec("DELETE FROM `cms_ban_users` WHERE `id` = '${ban}'");
                     echo '<div class="gmenu"><p><h3>' . _t('Ban deleted') . '</h3><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
                 } else {
                     echo '<form action="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $ban . '" method="POST">' .
@@ -284,7 +284,7 @@ switch ($mod) {
                 '<div class="gmenu"><p>' . $tools->displayUser($user) . '</p></div>';
 
             if (isset($_POST['submit'])) {
-                $db->exec("DELETE FROM `cms_ban_users` WHERE `user_id` = " . $user['id']);
+                $db->exec('DELETE FROM `cms_ban_users` WHERE `user_id` = ' . $user['id']);
                 echo '<div class="gmenu"><h3>' . _t('Violations history cleared') . '</h3></div>';
             } else {
                 echo '<form action="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '" method="post">' .
@@ -318,7 +318,7 @@ switch ($mod) {
             $menu[] = '<a href="?act=ban&amp;mod=delhist&amp;user=' . $user['id'] . '">' . _t('Clear history') . '</a>';
         }
 
-        if (!empty($menu)) {
+        if (! empty($menu)) {
             echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
         }
 
@@ -331,7 +331,7 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT $start, $kmess");
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, ${kmess}");
             $i = 0;
 
             $types = [
@@ -350,7 +350,7 @@ switch ($mod) {
                 echo '<img src="../images/' . ($remain > 0 ? 'red'
                         : 'green') . '.gif" width="16" height="16" align="left" />&#160;' .
                     '<b>' . $types[$res['ban_type']] . '</b>' .
-                    ' <span class="gray">(' . date("d.m.Y / H:i", $res['ban_while']) . ')</span>' .
+                    ' <span class="gray">(' . date('d.m.Y / H:i', $res['ban_while']) . ')</span>' .
                     '<br />' . $tools->checkout($res['ban_reason']) .
                     '<div class="sub">';
 
@@ -376,7 +376,7 @@ switch ($mod) {
                     $menu[] = '<a href="?act=ban&amp;mod=delete&amp;user=' . $user['id'] . '&amp;ban=' . $res['id'] . '">' . _t('Delete Ban') . '</a>';
                 }
 
-                if (!empty($menu)) {
+                if (! empty($menu)) {
                     echo '<div>' . implode(' | ', $menu) . '</div>';
                 }
 

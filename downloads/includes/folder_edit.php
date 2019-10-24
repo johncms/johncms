@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,12 +23,12 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Редактирование категорий
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require_once('../system/head.php');
+    require_once '../system/head.php';
 
-    $req = $db->query("SELECT * FROM `download__category` WHERE `id` = " . $id);
+    $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
-    if (!$req->rowCount() || !is_dir($res['dir'])) {
+    if (! $req->rowCount() || ! is_dir($res['dir'])) {
         echo _t('The directory does not exist') . ' <a href="?">' . _t('Downloads') . '</a>';
         exit;
     }
@@ -43,7 +43,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             $val = '>';
         }
 
-        $req_two = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $res['refid'] . "' AND `sort` $val '" . $res['sort'] . "' ORDER BY `sort` $order LIMIT 1");
+        $req_two = $db->query("SELECT * FROM `download__category` WHERE `refid` = '" . $res['refid'] . "' AND `sort` ${val} '" . $res['sort'] . "' ORDER BY `sort` ${order} LIMIT 1");
 
         if ($req_two->rowCount()) {
             $res_two = $req_two->fetch();
@@ -69,7 +69,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             $format = isset($_POST['format']) ? trim($_POST['format']) : false;
             $format_array = explode(', ', $format);
             foreach ($format_array as $value) {
-                if (!in_array($value, $defaultExt)) {
+                if (! in_array($value, $defaultExt)) {
                     $error_format .= 1;
                 }
             }
@@ -91,14 +91,14 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
         $desc = isset($_POST['desc']) ? trim($_POST['desc']) : '';
 
-        $stmt = $db->prepare("
+        $stmt = $db->prepare('
             UPDATE `download__category` SET
             `field`    = ?,
             `text`     = ?,
             `desc`     = ?,
             `rus_name` = ?
             WHERE `id` = ?
-        ");
+        ');
 
         $stmt->execute([
             $user_down,
@@ -126,5 +126,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     }
 
     echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
-    require_once('../system/end.php');
+    require_once '../system/end.php';
 }

@@ -1,21 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-require('system/bootstrap.php');
+require 'system/bootstrap.php';
 
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
-
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
@@ -31,7 +30,7 @@ switch ($act) {
         $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
         $headmod = 'error404';
-        require('system/head.php');
+        require 'system/head.php';
         echo $tools->displayError(_t('The requested page does not exists'));
         break;
 
@@ -41,8 +40,8 @@ switch ($act) {
             unset($_SESSION['ref']);
         }
         $headmod = 'mainpage';
-        require('system/head.php');
+        require 'system/head.php';
         include 'system/mainmenu.php';
 }
 
-require('system/end.php');
+require 'system/end.php';

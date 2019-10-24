@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -38,14 +38,14 @@ switch ($mod) {
         if (isset($_POST['submit'])) {
             $error = '';
             $get_ip = isset($_POST['ip']) ? trim($_POST['ip']) : '';
-            $ban_term = isset($_POST['term']) ? intval($_POST['term']) : 1;
+            $ban_term = isset($_POST['term']) ? (int) ($_POST['term']) : 1;
             $ban_url = isset($_POST['url']) ? htmlentities(trim($_POST['url']), ENT_QUOTES, 'UTF-8') : '';
             $reason = isset($_POST['reason']) ? htmlentities(trim($_POST['reason']), ENT_QUOTES, 'UTF-8') : '';
 
             if (empty($get_ip)) {
                 echo $tools->displayError(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-                require_once('../system/end.php');
+                require_once '../system/end.php';
                 exit;
             }
 
@@ -60,7 +60,7 @@ switch ($mod) {
                 $array = explode('-', $get_ip);
                 $get_ip = trim($array[0]);
 
-                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('First IP is entered incorrectly');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -68,7 +68,7 @@ switch ($mod) {
 
                 $get_ip = trim($array[1]);
 
-                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error[] = _t('Second IP is entered incorrectly');
                 } else {
                     $ip2 = ip2long($get_ip);
@@ -79,7 +79,7 @@ switch ($mod) {
                 $array = explode('.', $get_ip);
 
                 for ($i = 0; $i < 4; $i++) {
-                    if (!isset($array[$i]) || $array[$i] == '*') {
+                    if (! isset($array[$i]) || $array[$i] == '*') {
                         $ipt1[$i] = '0';
                         $ipt2[$i] = '255';
                     } elseif (is_numeric($array[$i]) && $array[$i] >= 0 && $array[$i] <= 255) {
@@ -96,7 +96,7 @@ switch ($mod) {
                 // Обрабатываем одиночный адрес
                 $mode = 3;
 
-                if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
+                if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $get_ip)) {
                     $error = _t('Invalid IP');
                 } else {
                     $ip1 = ip2long($get_ip);
@@ -104,9 +104,9 @@ switch ($mod) {
                 }
             }
 
-            if (!$error) {
+            if (! $error) {
                 // Проверка на конфликты адресов
-                $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE ('$ip1' BETWEEN `ip1` AND `ip2`) OR ('$ip2' BETWEEN `ip1` AND `ip2`) OR (`ip1` >= '$ip1' AND `ip2` <= '$ip2')");
+                $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE ('${ip1}' BETWEEN `ip1` AND `ip2`) OR ('${ip2}' BETWEEN `ip1` AND `ip2`) OR (`ip1` >= '${ip1}' AND `ip2` <= '${ip2}')");
                 $total = $req->rowCount();
 
                 if ($total) {
@@ -136,7 +136,7 @@ switch ($mod) {
 
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                     echo '<p><a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
-                    require_once('../system/end.php');
+                    require_once '../system/end.php';
                     exit;
                 }
             }
@@ -150,7 +150,7 @@ switch ($mod) {
                 $error = _t('Ban impossible. Your own IP address in the range');
             }
 
-            if (!$error) {
+            if (! $error) {
                 // Окно подтверждения
                 echo '<form action="index.php?act=ipban&amp;mod=insert" method="post">';
 
@@ -219,16 +219,16 @@ switch ($mod) {
 
     case 'insert':
         // Проверяем адрес и вставляем в базу
-        $ip1 = isset($_POST['ip1']) ? intval($_POST['ip1']) : '';
-        $ip2 = isset($_POST['ip2']) ? intval($_POST['ip2']) : '';
-        $ban_term = isset($_POST['term']) ? intval($_POST['term']) : 1;
+        $ip1 = isset($_POST['ip1']) ? (int) ($_POST['ip1']) : '';
+        $ip2 = isset($_POST['ip2']) ? (int) ($_POST['ip2']) : '';
+        $ban_term = isset($_POST['term']) ? (int) ($_POST['term']) : 1;
         $ban_url = isset($_POST['url']) ? htmlspecialchars(trim($_POST['url'])) : '';
         $reason = isset($_POST['reason']) ? htmlspecialchars(trim($_POST['reason'])) : '';
 
-        if (!$ip1 || !$ip2) {
+        if (! $ip1 || ! $ip2) {
             echo $tools->displayError(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-            require_once('../system/end.php');
+            require_once '../system/end.php';
             exit;
         }
 
@@ -257,7 +257,7 @@ switch ($mod) {
     case 'clear':
         // Очистка таблицы банов по IP
         if (isset($_GET['yes'])) {
-            $db->query("TRUNCATE TABLE `cms_ban_ip`");
+            $db->query('TRUNCATE TABLE `cms_ban_ip`');
             header('Location: index.php?act=ipban');
         } else {
             echo '<div class="rmenu"><p>' . _t('Are you sure you wan to unban all IP?') . '</p>' .
@@ -272,33 +272,33 @@ switch ($mod) {
 
         if ($id) {
             // Поиск адреса по ссылке (ID)
-            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE `id` = '$id'");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE `id` = '${id}'");
             $get_ip = '';
         } elseif (isset($_POST['ip'])) {
             // Поиск адреса по запросу из формы
             $get_ip = ip2long($_POST['ip']);
 
-            if (!$get_ip) {
+            if (! $get_ip) {
                 echo $tools->displayError(_t('Invalid IP'),
                     '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-                require_once('../system/end.php');
+                require_once '../system/end.php';
                 exit;
             }
 
-            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '$get_ip' BETWEEN `ip1` AND `ip2` LIMIT 1");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` WHERE '${get_ip}' BETWEEN `ip1` AND `ip2` LIMIT 1");
         } else {
             echo $tools->displayError(_t('Invalid IP'),
                 '<a href="index.php?act=ipban&amp;mod=new">' . _t('Back') . '</a>');
-            require_once('../system/end.php');
+            require_once '../system/end.php';
             exit;
         }
 
-        if (!$req->rowCount()) {
+        if (! $req->rowCount()) {
             echo '<div class="menu"><p>' . _t('This address not in the database') . '</p></div>';
             echo '<div class="phdr"><a href="index.php?act=ipban">' . _t('Back') . '</a></div>';
-            require_once('../system/end.php');
+            require_once '../system/end.php';
             exit;
-        } else {
+        }
             $res = $req->fetch();
             $get_ip = $res['ip1'] == $res['ip2'] ? '<b>' . long2ip($res['ip1']) . '</b>' : '[<b>' . long2ip($res['ip1']) . '</b>] - [<b>' . long2ip($res['ip2']) . '</b>]';
             echo '<div class="rmenu"><p>' . $get_ip . '</p></div>';
@@ -327,15 +327,15 @@ switch ($mod) {
             echo _t('Time') . ': <b>' . date('H:i:s', $res['date']) . '</b></div>';
             echo '<div class="phdr"><a href="index.php?act=ipban&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete Ban') . '</a></div>';
             echo '<p><a href="index.php?act=ipban">В список</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
-        }
+
         break;
 
     case 'del':
         // Удаление выбранного IP из базы
         if ($id) {
             if (isset($_GET['yes'])) {
-                $db->exec("DELETE FROM `cms_ban_ip` WHERE `id`='$id'");
-                $db->query("OPTIMIZE TABLE `cms_ban_ip`");
+                $db->exec("DELETE FROM `cms_ban_ip` WHERE `id`='${id}'");
+                $db->query('OPTIMIZE TABLE `cms_ban_ip`');
                 echo '<p>' . _t('Ban has been successfully removed') . '</p>';
                 echo '<p><a href="index.php?act=ipban">' . _t('Continue') . '</a></p>';
             } else {
@@ -361,13 +361,13 @@ switch ($mod) {
     default:
         // Вывод общего списка забаненных IP
         echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Ban by IP') . '</div>';
-        $total = $db->query("SELECT COUNT(*) FROM `cms_ban_ip`")->fetchColumn();
+        $total = $db->query('SELECT COUNT(*) FROM `cms_ban_ip`')->fetchColumn();
 
         if ($total) {
-            $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-            $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+            $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
+            $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
-            $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT $start,$kmess");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT ${start},${kmess}");
             $i = 0;
 
             while ($res = $req->fetch()) {

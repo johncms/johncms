@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 // Сюда можно (через запятую) добавить ID тех юзеров, кто не в администрации,
@@ -20,7 +20,7 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $guestAccess = [];
 
 $headmod = 'guestbook';
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -52,18 +52,18 @@ if (isset($_SESSION['ref'])) {
 }
 
 // Проверяем права доступа в Админ-Клуб
-if (isset($_SESSION['ga']) && $systemUser->rights < 1 && !in_array($systemUser->id, $guestAccess)) {
+if (isset($_SESSION['ga']) && $systemUser->rights < 1 && ! in_array($systemUser->id, $guestAccess)) {
     unset($_SESSION['ga']);
 }
 
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
-require('../system/head.php');
+require '../system/head.php';
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
-if (!$config->mod_guest && $systemUser->rights < 7) {
+if (! $config->mod_guest && $systemUser->rights < 7) {
     echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -73,7 +73,7 @@ switch ($act) {
         if ($systemUser->rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
-                header("Location: index.php");
+                header('Location: index.php');
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Delete message') . '</div>' .
                     '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '?<br>' .
@@ -96,11 +96,11 @@ switch ($act) {
         $error = [];
         $flood = false;
 
-        if (!isset($_POST['token']) || !isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
+        if (! isset($_POST['token']) || ! isset($_SESSION['token']) || $_POST['token'] != $_SESSION['token']) {
             $error[] = _t('Wrong data');
         }
 
-        if (!$systemUser->isValid() && empty($name)) {
+        if (! $systemUser->isValid() && empty($name)) {
             $error[] = _t('You have not entered a name');
         }
 
@@ -113,7 +113,7 @@ switch ($act) {
         }
 
         // CAPTCHA для гостей
-        if (!$systemUser->isValid() && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code'])) {
+        if (! $systemUser->isValid() && (empty($code) || mb_strlen($code) < 4 || $code != $_SESSION['code'])) {
             $error[] = _t('The security code is not correct');
         }
 
@@ -136,18 +136,18 @@ switch ($act) {
             $error = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
         }
 
-        if (!$error) {
+        if (! $error) {
             // Проверка на одинаковые сообщения
             $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $systemUser->id . "' ORDER BY `time` DESC");
             $res = $req->fetch();
 
             if ($res['text'] == $msg) {
-                header("location: index.php");
+                header('location: index.php');
                 exit;
             }
         }
 
-        if (!$error) {
+        if (! $error) {
             // Вставляем сообщение в базу
             $db->prepare("INSERT INTO `guest` SET
                 `adm` = ?,
@@ -171,7 +171,7 @@ switch ($act) {
             // Фиксируем время последнего поста (антиспам)
             if ($systemUser->isValid()) {
                 $postguest = $systemUser->postguest + 1;
-                $db->exec("UPDATE `users` SET `postguest` = '$postguest', `lastpost` = '" . time() . "' WHERE `id` = " . $systemUser->id);
+                $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $systemUser->id);
             }
 
             header('location: index.php');
@@ -183,9 +183,7 @@ switch ($act) {
     case 'otvet':
         // Добавление "ответа Админа"
         if ($systemUser->rights >= 6 && $id) {
-            if (isset($_POST['submit'])
-                && isset($_POST['token'])
-                && isset($_SESSION['token'])
+            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
@@ -193,12 +191,12 @@ switch ($act) {
                     `admin` = '" . $systemUser->name . "',
                     `otvet` = " . $db->quote($reply) . ",
                     `otime` = '" . time() . "'
-                    WHERE `id` = '$id'
+                    WHERE `id` = '${id}'
                 ");
-                header("location: index.php");
+                header('location: index.php');
             } else {
                 echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Reply') . '</div>';
-                $req = $db->query("SELECT * FROM `guest` WHERE `id` = '$id'");
+                $req = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'");
                 $res = $req->fetch();
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
@@ -221,12 +219,10 @@ switch ($act) {
     'edit':
         // Редактирование поста
         if ($systemUser->rights >= 6 && $id) {
-            if (isset($_POST['submit'])
-                && isset($_POST['token'])
-                && isset($_SESSION['token'])
+            if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
-                $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='$id'")->fetch();
+                $res = $db->query("SELECT `edit_count` FROM `guest` WHERE `id`='${id}'")->fetch();
                 $edit_count = $res['edit_count'] + 1;
                 $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
 
@@ -245,11 +241,11 @@ switch ($act) {
                     $id,
                 ]);
 
-                header("location: index.php");
+                header('location: index.php');
             } else {
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
-                $res = $db->query("SELECT * FROM `guest` WHERE `id` = '$id'")->fetch();
+                $res = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
                 echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Edit') . '</div>' .
                     '<div class="rmenu">' .
@@ -271,27 +267,27 @@ switch ($act) {
             if (isset($_POST['submit'])) {
                 // Проводим очистку Гостевой, согласно заданным параметрам
                 $adm = isset($_SESSION['ga']) ? 1 : 0;
-                $cl = isset($_POST['cl']) ? intval($_POST['cl']) : '';
+                $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
                 switch ($cl) {
                     case '1':
                         // Чистим сообщения, старше 1 дня
-                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time` < '" . (time() - 86400) . "'");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time` < '" . (time() - 86400) . "'");
                         echo '<p>' . _t('All messages older than 1 day were deleted') . '</p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
-                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm'");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}'");
                         echo '<p>' . _t('Full clearing is finished') . '</p>';
                         break;
-                    default :
+                    default:
                         // Чистим сообщения, старше 1 недели
-                        $db->exec("DELETE FROM `guest` WHERE `adm`='$adm' AND `time`<='" . (time() - 604800) . "';");
+                        $db->exec("DELETE FROM `guest` WHERE `adm`='${adm}' AND `time`<='" . (time() - 604800) . "';");
                         echo '<p>' . _t('All messages older than 1 week were deleted') . '</p>';
                 }
 
-                $db->query("OPTIMIZE TABLE `guest`");
+                $db->query('OPTIMIZE TABLE `guest`');
                 echo '<p><a href="index.php">' . _t('Guestbook') . '</a></p>';
             } else {
                 // Запрос параметров очистки
@@ -321,7 +317,7 @@ switch ($act) {
 
     default:
         // Отображаем Гостевую, или Админ клуб
-        if (!$config->mod_guest) {
+        if (! $config->mod_guest) {
             echo '<div class="alarm">' . _t('The guestbook is closed') . '</div>';
         }
 
@@ -337,12 +333,12 @@ switch ($act) {
         }
 
         // Форма ввода нового сообщения
-        if (($systemUser->isValid() || $config->mod_guest == 2) && !isset($systemUser->ban['1']) && !isset($systemUser->ban['13'])) {
+        if (($systemUser->isValid() || $config->mod_guest == 2) && ! isset($systemUser->ban['1']) && ! isset($systemUser->ban['13'])) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
 
-            if (!$systemUser->isValid()) {
+            if (! $systemUser->isValid()) {
                 echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
             }
 
@@ -350,7 +346,7 @@ switch ($act) {
             echo $bbcode->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg"></textarea><br>';
 
-            if (!$systemUser->isValid()) {
+            if (! $systemUser->isValid()) {
                 // CAPTCHA для гостей
                 echo '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Symbols on the picture') . '"/><br />' .
                     '<input type="text" size="5" maxlength="5"  name="code"/>&#160;' . _t('Symbols on the picture') . '<br />';
@@ -374,19 +370,19 @@ switch ($act) {
                 echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+                WHERE `guest`.`adm`='1' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
             } else {
                 // Запрос для обычной Гастивухи
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                 FROM `guest` LEFT JOIN `users` ON `guest`.`user_id` = `users`.`id`
-                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+                WHERE `guest`.`adm`='0' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
             }
 
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 $text = '';
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
 
-                if (!$res['id']) {
+                if (! $res['id']) {
                     // Запрос по гостям
                     $res_g = $db->query("SELECT `lastdate` FROM `cms_sessions` WHERE `session_id` = '" . md5($res['ip'] . $res['browser']) . "' LIMIT 1")->fetch();
                     $res['lastdate'] = $res_g['lastdate'];
@@ -427,7 +423,7 @@ switch ($act) {
                     $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                 }
 
-                if (!empty($res['otvet'])) {
+                if (! empty($res['otvet'])) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     $otvet = $tools->smilies($otvet, 1);
@@ -465,4 +461,4 @@ switch ($act) {
         break;
 }
 
-require('../system/end.php');
+require '../system/end.php';

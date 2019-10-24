@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -52,7 +52,7 @@ if ($total) {
 		AND `cms_contact`.`ban`!='1'
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY MAX(`cms_mail`.`time`) DESC
-		LIMIT " . $start . "," . $kmess);
+		LIMIT " . $start . ',' . $kmess);
 
     for ($i = 0; $row = $req->fetch(); ++$i) {
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -89,7 +89,7 @@ if ($total) {
             'iphide' => 1,
         ];
 
-        if (!$last_msg['read']) {
+        if (! $last_msg['read']) {
             echo '<div class="gmenu">';
         } else {
             echo $i % 2 ? '<div class="list1">' : '<div class="list2">';

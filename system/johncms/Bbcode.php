@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -37,9 +37,13 @@ class Bbcode implements Api\BbcodeInterface
     protected $geshi;
 
     protected $tags;
+
     protected $homeUrl;
+
     protected $codeId;
+
     protected $codeIndex;
+
     protected $codeParts;
 
     public function __invoke(ContainerInterface $container)
@@ -50,7 +54,7 @@ class Bbcode implements Api\BbcodeInterface
         $this->homeUrl = $this->config['homeurl'];
 
         $globalcnf = $container->get('config');
-        $this->tags = isset($globalcnf['bbcode']) ? $globalcnf['bbcode'] : [];
+        $this->tags = $globalcnf['bbcode'] ?? [];
 
         $this->codeId = uniqid();
         $this->codeIndex = 0;
@@ -148,9 +152,9 @@ class Bbcode implements Api\BbcodeInterface
         }
 
         // Смайлы
-        $smileys = !empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
+        $smileys = ! empty($this->user->smileys) ? unserialize($this->user->smileys) : [];
 
-        if (!empty($smileys)) {
+        if (! empty($smileys)) {
             $res_sm = '';
             $bb_smileys = '<small><a href="' . $this->homeUrl . '/help/?act=my_smilies">' . _t('Edit List', 'system') . '</a></small><br />';
 
@@ -261,10 +265,10 @@ class Bbcode implements Api\BbcodeInterface
                 $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
 
                 if (($out = strtotime($matches[1])) !== false) {
-                    return date("d.m.Y / H:i", $out + $shift);
-                } else {
-                    return $matches[1];
+                    return date('d.m.Y / H:i', $out + $shift);
                 }
+
+                return $matches[1];
             },
             $var
         );
@@ -275,10 +279,10 @@ class Bbcode implements Api\BbcodeInterface
                 $shift = ($this->config['timeshift'] + $this->userConfig->timeshift) * 3600;
 
                 if (($out = strtotime($matches[1])) !== false) {
-                    return '<small class="gray">' . _t('Added', 'system') . ': ' . date("d.m.Y / H:i", $out + $shift) . '</small>';
-                } else {
-                    return $matches[1];
+                    return '<small class="gray">' . _t('Added', 'system') . ': ' . date('d.m.Y / H:i', $out + $shift) . '</small>';
                 }
+
+                return $matches[1];
             },
             $var
         );
@@ -382,14 +386,14 @@ class Bbcode implements Api\BbcodeInterface
                 $relative_url = preg_replace('/[&?]sid=[0-9a-f]{32}$/', '', preg_replace('/([&?])sid=[0-9a-f]{32}&/', '$1', $relative_url));
                 $url = $url . '/' . $relative_url;
                 $text = $relative_url;
-                if (!$relative_url) {
+                if (! $relative_url) {
                     return $whitespace . $orig_url . '/' . $orig_relative;
                 }
                 break;
 
             case 2:
                 $text = $short_url;
-                if (!$this->userConfig->directUrl) {
+                if (! $this->userConfig->directUrl) {
                     $url = $this->homeUrl . '/go.php?url=' . rawurlencode($url);
                 }
                 break;
@@ -423,7 +427,7 @@ class Bbcode implements Api\BbcodeInterface
         return $var;
     }
 
-     /**
+    /**
      * Постобработка кода
      *
      * Собирает ранее распарсенное содержимое тега code в результирующую строку
@@ -458,7 +462,7 @@ class Bbcode implements Api\BbcodeInterface
             'xml'  => 'xml',
         ];
 
-        $parser = isset($code[1]) && isset($parsers[$code[1]]) ? $parsers[$code[1]] : 'php';
+        $parser = isset($code[1], $parsers[$code[1]]) ? $parsers[$code[1]] : 'php';
 
         if (null === $this->geshi) {
             $this->geshi = new \GeSHi;
@@ -483,6 +487,7 @@ class Bbcode implements Api\BbcodeInterface
     {
         $part = $this->codeParts[$code[1]];
         unset($this->codeParts[$code[1]]);
+
         return '<div class="phpcode" style="overflow-x: auto">' . $part . '</div>';
     }
 
@@ -501,9 +506,9 @@ class Bbcode implements Api\BbcodeInterface
 
                 if ($home['host'] == $tmp['host'] || $this->userConfig->directUrl) {
                     return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
-                } else {
-                    return '<a href="' . $this->homeUrl . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
                 }
+
+                return '<a href="' . $this->homeUrl . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
             },
             $var);
     }
@@ -541,11 +546,10 @@ class Bbcode implements Api\BbcodeInterface
                     return $this->youtubePlayer($valuesto[0]);
                 } elseif (preg_match('/youtu.be/', $matches[1])) {
                     return $this->youtubePlayer(trim(parse_url($matches[1])['path'], '//'));
-                } else {
-                    $valuesto = explode('&', $matches[1]);
-
-                    return $this->youtubePlayer($valuesto[0]);
                 }
+                $valuesto = explode('&', $matches[1]);
+
+                return $this->youtubePlayer($valuesto[0]);
             },
             $var, 3
         );
@@ -574,8 +578,8 @@ class Bbcode implements Api\BbcodeInterface
 <div class="video-container">
 <iframe allowfullscreen="allowfullscreen" src="//www.youtube.com/embed/' . $result . '" frameborder="0"></iframe>
 </div></div>';
-        } else {
-            return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $result . '"><img src="//img.youtube.com/vi/' . $result . '/1.jpg" border="0" alt="youtube.com/embed/' . $result . '"></a></div>';
         }
+
+        return '<div><a target="_blank" href="//m.youtube.com/watch?v=' . $result . '"><img src="//img.youtube.com/vi/' . $result . '/1.jpg" border="0" alt="youtube.com/embed/' . $result . '"></a></div>';
     }
 }

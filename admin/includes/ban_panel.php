@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -38,7 +38,7 @@ switch ($mod) {
 
                 if ($term) {
                     // Очищаем таблицу Банов
-                    $db->query("TRUNCATE TABLE `cms_ban_users`");
+                    $db->query('TRUNCATE TABLE `cms_ban_users`');
                     echo '<div class="gmenu"><p>' . _t('Amnesty has been successful') . '</p></div>';
                 } else {
                     // Разбаниваем активные Баны
@@ -49,7 +49,7 @@ switch ($mod) {
 
                         if ($ban_left < 2592000) {
                             $amnesty_msg = _t('Amnesty');
-                            $db->exec("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--$amnesty_msg--' WHERE `id` = '" . $res['id'] . "'");
+                            $db->exec("UPDATE `cms_ban_users` SET `ban_time`='" . time() . "', `ban_raz`='--${amnesty_msg}--' WHERE `id` = '" . $res['id'] . "'");
                         }
                     }
 
@@ -80,14 +80,14 @@ switch ($mod) {
         }
 
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
-        $total = $db->query("SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`")->rowCount();
+        $total = $db->query('SELECT `user_id` FROM `cms_ban_users` GROUP BY `user_id`')->rowCount();
 
         $req = $db->query("
           SELECT COUNT(`cms_ban_users`.`user_id`) AS `bancount`, MAX(`cms_ban_users`.`ban_time`) AS `bantime`, `cms_ban_users`.`id` AS `ban_id`, `users`.*
           FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
           GROUP BY `user_id`
-          ORDER BY `$sort` DESC
-          LIMIT $start, $kmess");
+          ORDER BY `${sort}` DESC
+          LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {

@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 use Library\Hashtags;
 use Verot\Upload\Upload;
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,16 +30,16 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
+if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд
     $flood = $tools->antiflood();
 
     if ($flood) {
-        require('../system/head.php');
+        require '../system/head.php';
 
         echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
             '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 
@@ -55,7 +55,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             $err[] = _t('You have not entered the name');
         }
 
-        if (!empty($_FILES['textfile']['name'])) {
+        if (! empty($_FILES['textfile']['name'])) {
             $ext = explode('.', $_FILES['textfile']['name']);
             if (mb_strtolower(end($ext)) == 'txt') {
                 $newname = $_FILES['textfile']['name'];
@@ -68,7 +68,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
                         echo $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                        require_once('../system/end.php');
+                        require_once '../system/end.php';
                         exit;
                     }
 
@@ -76,15 +76,15 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     unlink('../files/library/tmp' . DIRECTORY_SEPARATOR . $newname);
                 } else {
                     echo $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    require_once('../system/end.php');
+                    require_once '../system/end.php';
                     exit;
                 }
             } else {
                 echo $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                require_once('../system/end.php');
+                require_once '../system/end.php';
                 exit;
             }
-        } elseif (!empty($_POST['text'])) {
+        } elseif (! empty($_POST['text'])) {
             $text = trim($_POST['text']);
         } else {
             $err[] = _t('You have not entered text');
@@ -96,7 +96,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
 
         $md = $adm ? 1 : 0;
 
-        if (sizeof($err) > 0) {
+        if (count($err) > 0) {
             foreach ($err as $e) {
                 echo $tools->displayError($e);
             }
@@ -104,16 +104,16 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
             $sql = "
               INSERT INTO `library_texts`
               SET
-                `cat_id` = $id,
-                `name` = " . $db->quote($name) . ",
-                `announce` = " . $db->quote($announce) . ",
-                `text` = " . $db->quote($text) . ",
+                `cat_id` = ${id},
+                `name` = " . $db->quote($name) . ',
+                `announce` = ' . $db->quote($announce) . ',
+                `text` = ' . $db->quote($text) . ",
                 `uploader` = '" . $systemUser->name . "',
                 `uploader_id` = " . $systemUser->id . ",
-                `premod` = $md,
-                `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ",
-                `time` = " . time() . "
-            ";
+                `premod` = ${md},
+                `comments` = " . (isset($_POST['comments']) ? 1 : 0) . ',
+                `time` = ' . time() . '
+            ';
 
             if ($db->query($sql)) {
                 $cid = $db->lastInsertId();
@@ -163,7 +163,7 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                     $handle->clean();
                 }
 
-                if (!empty($_POST['tags'])) {
+                if (! empty($_POST['tags'])) {
                     $tags = (array) array_map('trim', explode(',', $_POST['tags']));
 
                     if (count($tags)) {
@@ -174,14 +174,13 @@ if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $
                 }
 
                 echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
-                $db->exec("UPDATE `users` SET `lastpost` = " . time() . " WHERE `id` = " . $systemUser->id);
+                $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
                 echo $md == 1 ? '<div><a href="index.php?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
-                require_once('../system/end.php');
+                require_once '../system/end.php';
                 exit;
-            } else {
-                echo $db->errorInfo();
-//                exit;
             }
+            echo $db->errorInfo();
+//                exit;
         }
     }
     echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('Write Article') . '</div>'

@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('UTC');
@@ -80,16 +80,16 @@ $db = $container->get(PDO::class);
 $req = $db->query("
   SELECT `ban_type`, `link` FROM `cms_ban_ip`
   WHERE '" . $env->getIp() . "' BETWEEN `ip1` AND `ip2`
-  " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . "
+  " . ($env->getIpViaProxy() ? " OR '" . $env->getIpViaProxy() . "' BETWEEN `ip1` AND `ip2`" : '') . '
   LIMIT 1
-");
+');
 
 if ($req->rowCount()) {
     $res = $req->fetch();
 
     switch ($res['ban_type']) {
         case 2:
-            if (!empty($res['link'])) {
+            if (! empty($res['link'])) {
                 header('Location: ' . $res['link']);
             } else {
                 header('Location: http://johncms.com');
@@ -100,8 +100,8 @@ if ($req->rowCount()) {
             //TODO: реализовать запрет регистрации
             //self::$deny_registration = true;
             break;
-        default :
-            header("HTTP/1.0 404 Not Found");
+        default:
+            header('HTTP/1.0 404 Not Found');
             exit;
     }
 }
@@ -109,7 +109,7 @@ if ($req->rowCount()) {
 // Автоочистка системы
 $cacheFile = CACHE_PATH . 'cleanup.dat';
 
-if (!file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
+if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     new Johncms\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
@@ -178,10 +178,10 @@ function _p($singular, $plural, $number, $textDomain = 'default')
 }
 
 $kmess = $userConfig->kmess;
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? intval($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs(intval($_GET['start'])) : 0);
+$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
+$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
-if (extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
+if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
     ob_start('ob_gzhandler');
 } else {
     ob_start();

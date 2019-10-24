@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Settings');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -33,7 +33,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -41,7 +41,7 @@ if ($user['id'] != $systemUser->id) {
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 $menu = [
-    (!$mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
+    (! $mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),
     ($mod == 'forum' ? '<b>' . _t('Forum') . '</b>' : '<a href="?act=settings&amp;mod=forum">' . _t('Forum') . '</a>'),
     ($mod == 'mail' ? '<b>' . _t('Mail') . '</b>' : '<a href="?act=settings&amp;mod=mail">' . _t('Mail') . '</a>'),
 ];
@@ -55,7 +55,7 @@ switch ($mod) {
         $set_mail_user = unserialize($systemUser->set_mail);
 
         if (isset($_POST['submit'])) {
-            $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs(intval($_POST['access'])) : 0;
+            $set_mail_user['access'] = isset($_POST['access']) && $_POST['access'] >= 0 && $_POST['access'] <= 2 ? abs((int) ($_POST['access'])) : 0;
             $db->prepare('UPDATE `users` SET `set_mail` = ? WHERE `id` = ?')->execute([
                 serialize($set_mail_user),
                 $systemUser->id,
@@ -65,7 +65,7 @@ switch ($mod) {
         echo '<form method="post" action="?act=settings&amp;mod=mail">' .
             '<div class="menu">' .
             '<strong>' . _t('Who can write you?') . '</strong><br />' .
-            '<input type="radio" value="0" name="access" ' . (!$set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
+            '<input type="radio" value="0" name="access" ' . (! $set_mail_user['access'] ? 'checked="checked"' : '') . '/>&#160;' . _t('All can write') . '<br />' .
             '<input type="radio" value="1" name="access" ' . ($set_mail_user['access'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only my contacts') .
             '<br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
             '<div class="phdr">&#160;</div>';
@@ -82,7 +82,7 @@ switch ($mod) {
             $set_forum['farea'] = isset($_POST['farea']);
             $set_forum['upfp'] = isset($_POST['upfp']);
             $set_forum['preview'] = isset($_POST['preview']);
-            $set_forum['postclip'] = isset($_POST['postclip']) ? intval($_POST['postclip']) : 1;
+            $set_forum['postclip'] = isset($_POST['postclip']) ? (int) ($_POST['postclip']) : 1;
 
             if ($set_forum['postclip'] < 0 || $set_forum['postclip'] > 2) {
                 $set_forum['postclip'] = 1;
@@ -119,7 +119,7 @@ switch ($mod) {
             '</p><p><h3>' . _t('Attach first post') . '</h3>' .
             '<input type="radio" value="2" name="postclip" ' . ($set_forum['postclip'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Always') . '<br />' .
             '<input type="radio" value="1" name="postclip" ' . ($set_forum['postclip'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('In unread topics') . '<br />' .
-            '<input type="radio" value="0" name="postclip" ' . (!$set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
+            '<input type="radio" value="0" name="postclip" ' . (! $set_forum['postclip'] ? 'checked="checked"' : '') . '/>&#160;' . _t('Never') .
             '</p><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
             '<div class="phdr"><a href="?act=settings&amp;mod=forum&amp;reset">' . _t('Reset settings') . '</a></div>';
         break;
@@ -132,11 +132,11 @@ switch ($mod) {
             $set_user = $userConfig->getArrayCopy();
 
             // Записываем новые настройки, заданные пользователем
-            $set_user['timeshift'] = isset($_POST['timeshift']) ? intval($_POST['timeshift']) : 0;
+            $set_user['timeshift'] = isset($_POST['timeshift']) ? (int) ($_POST['timeshift']) : 0;
             $set_user['directUrl'] = isset($_POST['directUrl']);
             $set_user['youtube'] = isset($_POST['youtube']);
-            $set_user['fieldHeight'] = isset($_POST['fieldHeight']) ? abs(intval($_POST['fieldHeight'])) : 3;
-            $set_user['kmess'] = isset($_POST['kmess']) ? abs(intval($_POST['kmess'])) : 10;
+            $set_user['fieldHeight'] = isset($_POST['fieldHeight']) ? abs((int) ($_POST['fieldHeight'])) : 3;
+            $set_user['kmess'] = isset($_POST['kmess']) ? abs((int) ($_POST['kmess'])) : 10;
 
             if ($set_user['timeshift'] < -12) {
                 $set_user['timeshift'] = -12;
@@ -198,7 +198,7 @@ switch ($mod) {
         echo '<form action="?act=settings" method="post" >' .
             '<div class="menu"><p><h3>' . _t('Time settings') . '</h3>' .
             '<input type="text" name="timeshift" size="2" maxlength="3" value="' . $userConfig->timeshift . '"/> ' . _t('Shift of time') . ' (+-12)<br />' .
-            '<span style="font-weight:bold; background-color:#CCC">' . date("H:i",
+            '<span style="font-weight:bold; background-color:#CCC">' . date('H:i',
                 time() + ($config['timeshift'] + $userConfig->timeshift) * 3600) . '</span> ' . _t('System time') .
             '</p><p><h3>' . _t('System Functions') . '</h3>' .
             '<input name="directUrl" type="checkbox" value="1" ' . ($userConfig->directUrl ? 'checked="checked"' : '') . ' />&#160;' . _t('Direct URL') . '<br />' .
@@ -223,7 +223,7 @@ switch ($mod) {
         // Выбор языка
         if (count($config->lng_list) > 1) {
             echo '<p><h3>' . _t('Select Language') . '</h3>';
-            $user_lng = isset($userConfig['lng']) ? $userConfig['lng'] : $config->lng;
+            $user_lng = $userConfig['lng'] ?? $config->lng;
 
             foreach ($config->lng_list as $key => $val) {
                 echo '<div><input type="radio" value="' . $key . '" name="iso" ' . ($key == $user_lng ? 'checked="checked"' : '') . '/>&#160;' .

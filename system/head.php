@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -31,8 +31,8 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
-$headmod = isset($headmod) ? $headmod : '';
-$textl = isset($textl) ? $textl : $config['copyright'];
+$headmod = $headmod ?? '';
+$textl = $textl ?? $config['copyright'];
 $keywords = isset($keywords) ? htmlspecialchars($keywords) : $config->meta_key;
 $descriptions = isset($descriptions) ? htmlspecialchars($descriptions) : $config->meta_desc;
 
@@ -58,17 +58,17 @@ echo '<!DOCTYPE html>' .
 // Рекламный модуль
 $cms_ads = [];
 
-if (!isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
+if (! isset($_GET['err']) && $act != '404' && $headmod != 'admin') {
     $view = $systemUser->id ? 2 : 1;
-    $layout = ($headmod == 'mainpage' && !$act) ? 1 : 2;
-    $req = $db->query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '$layout' or `layout` = '0') AND (`view` = '$view' or `view` = '0') ORDER BY  `mesto` ASC");
+    $layout = ($headmod == 'mainpage' && ! $act) ? 1 : 2;
+    $req = $db->query("SELECT * FROM `cms_ads` WHERE `to` = '0' AND (`layout` = '${layout}' or `layout` = '0') AND (`view` = '${view}' or `view` = '0') ORDER BY  `mesto` ASC");
 
     if ($req->rowCount()) {
         while ($res = $req->fetch()) {
-            $name = explode("|", $res['name']);
+            $name = explode('|', $res['name']);
             $name = htmlentities($name[mt_rand(0, (count($name) - 1))], ENT_QUOTES, 'UTF-8');
 
-            if (!empty($res['color'])) {
+            if (! empty($res['color'])) {
                 $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
             }
 
@@ -108,13 +108,13 @@ echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($systemUser->id ? '<
 
 // Главное меню пользователя
 echo '<div class="tmn">' .
-    (isset($_GET['err']) || $headmod != "mainpage" || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $config['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
+    (isset($_GET['err']) || $headmod != 'mainpage' || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $config['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
     ($systemUser->id && $headmod != 'office' ? '<a href="' . $config['homeurl'] . '/profile/?act=office">' . $tools->image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
-    (!$systemUser->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
+    (! $systemUser->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 
 // Рекламный блок сайта
-if (!empty($cms_ads[1])) {
+if (! empty($cms_ads[1])) {
     echo '<div class="gmenu">' . $cms_ads[1] . '</div>';
 }
 
@@ -124,24 +124,24 @@ $set_karma = $config['karma'];
 
 if ($systemUser->isValid()) {
     // Фиксируем местоположение авторизованных
-    if (!$systemUser->karma_off && $set_karma['on'] && $systemUser->karma_time <= (time() - 86400)) {
-        $sql .= " `karma_time` = " . time() . ", ";
+    if (! $systemUser->karma_off && $set_karma['on'] && $systemUser->karma_time <= (time() - 86400)) {
+        $sql .= ' `karma_time` = ' . time() . ', ';
     }
 
     $movings = $systemUser->movings;
 
     if ($systemUser->lastdate < (time() - 300)) {
         $movings = 0;
-        $sql .= " `sestime` = " . time() . ", ";
+        $sql .= ' `sestime` = ' . time() . ', ';
     }
 
     if ($systemUser->place != $headmod) {
         ++$movings;
-        $sql .= " `place` = " . $db->quote($headmod) . ", ";
+        $sql .= ' `place` = ' . $db->quote($headmod) . ', ';
     }
 
     if ($systemUser->browser != $env->getUserAgent()) {
-        $sql .= " `browser` = " . $db->quote($env->getUserAgent()) . ", ";
+        $sql .= ' `browser` = ' . $db->quote($env->getUserAgent()) . ', ';
     }
 
     $totalonsite = $systemUser->total_on_site;
@@ -150,16 +150,16 @@ if ($systemUser->isValid()) {
         $totalonsite = $totalonsite + time() - $systemUser->lastdate;
     }
 
-    $db->query("UPDATE `users` SET $sql
-        `movings` = '$movings',
-        `total_on_site` = '$totalonsite',
+    $db->query("UPDATE `users` SET ${sql}
+        `movings` = '${movings}',
+        `total_on_site` = '${totalonsite}',
         `lastdate` = '" . time() . "'
         WHERE `id` = " . $systemUser->id);
 } else {
     // Фиксируем местоположение гостей
     $movings = 0;
     $session = md5($env->getIp() . $env->getIpViaProxy() . $env->getUserAgent());
-    $req = $db->query("SELECT * FROM `cms_sessions` WHERE `session_id` = " . $db->quote($session) . " LIMIT 1");
+    $req = $db->query('SELECT * FROM `cms_sessions` WHERE `session_id` = ' . $db->quote($session) . ' LIMIT 1');
 
     if ($req->rowCount()) {
         // Если есть в базе, то обновляем данные
@@ -172,14 +172,14 @@ if ($systemUser->isValid()) {
         }
 
         if ($res['place'] != $headmod) {
-            $sql .= " `place` = " . $db->quote($headmod) . ", ";
+            $sql .= ' `place` = ' . $db->quote($headmod) . ', ';
         }
 
-        $db->exec("UPDATE `cms_sessions` SET $sql
-            `movings` = '$movings',
+        $db->exec("UPDATE `cms_sessions` SET ${sql}
+            `movings` = '${movings}',
             `lastdate` = '" . time() . "'
-            WHERE `session_id` = " . $db->quote($session) . "
-        ");
+            WHERE `session_id` = " . $db->quote($session) . '
+        ');
     } else {
         // Если еще небыло в базе, то добавляем запись
         $db->exec("INSERT INTO `cms_sessions` SET
@@ -189,13 +189,13 @@ if ($systemUser->isValid()) {
             `browser` = " . $db->quote($env->getUserAgent()) . ",
             `lastdate` = '" . time() . "',
             `sestime` = '" . time() . "',
-            `place` = " . $db->quote($headmod) . "
-        ");
+            `place` = " . $db->quote($headmod) . '
+        ');
     }
 }
 
 // Выводим сообщение о Бане
-if (!empty($systemUser->ban)) {
+if (! empty($systemUser->ban)) {
     echo '<div class="alarm">' . _t('Ban', 'system') . '&#160;<a href="' . $config['homeurl'] . '/profile/?act=ban">' . _t('Details', 'system') . '</a></div>';
 }
 
@@ -230,7 +230,7 @@ if ($systemUser->id) {
         $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
     }
 
-    if (!empty($list)) {
+    if (! empty($list)) {
         echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . implode(', ', $list) . '</div>';
     }
 }

@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -32,12 +32,12 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 $textl = _t('Registration');
 $headmod = 'registration';
-require('../system/head.php');
+require '../system/head.php';
 
 // Если регистрация закрыта, выводим предупреждение
-if (!$config->mod_reg || $systemUser->isValid()) {
+if (! $config->mod_reg || $systemUser->isValid()) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -82,8 +82,8 @@ if (isset($_POST['submit'])) {
     }
 
     // Проверка кода CAPTCHA
-    if (!$captcha
-        || !isset($_SESSION['code'])
+    if (! $captcha
+        || ! isset($_SESSION['code'])
         || mb_strlen($captcha) < 4
         || $captcha != $_SESSION['code']
     ) {
@@ -163,7 +163,7 @@ if (isset($_POST['submit'])) {
         }
 
         echo '</div>';
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 }
@@ -207,4 +207,4 @@ echo '<form action="index.php" method="post"><div class="gmenu">' .
     '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
     '<div class="phdr"><small>' . _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') . '</small></div>';
 
-require('../system/end.php');
+require '../system/end.php';

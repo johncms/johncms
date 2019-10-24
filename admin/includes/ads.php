@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -43,7 +43,7 @@ switch ($mod) {
                 $res = $req->fetch();
             } else {
                 echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
-                require('../system/end.php');
+                require '../system/end.php';
                 exit;
             }
         } else {
@@ -57,13 +57,13 @@ switch ($mod) {
             $italic = isset($_POST['italic']) ? 1 : 0;
             $underline = isset($_POST['underline']) ? 1 : 0;
             $show = isset($_POST['show']) ? 1 : 0;
-            $view = isset($_POST['view']) ? abs(intval($_POST['view'])) : 0;
-            $day = isset($_POST['day']) ? abs(intval($_POST['day'])) : 0;
-            $count = isset($_POST['count']) ? abs(intval($_POST['count'])) : 0;
-            $day = isset($_POST['day']) ? abs(intval($_POST['day'])) : 0;
-            $layout = isset($_POST['layout']) ? abs(intval($_POST['layout'])) : 0;
-            $type = isset($_POST['type']) ? intval($_POST['type']) : 0;
-            $mesto = isset($_POST['mesto']) ? abs(intval($_POST['mesto'])) : 0;
+            $view = isset($_POST['view']) ? abs((int) ($_POST['view'])) : 0;
+            $day = isset($_POST['day']) ? abs((int) ($_POST['day'])) : 0;
+            $count = isset($_POST['count']) ? abs((int) ($_POST['count'])) : 0;
+            $day = isset($_POST['day']) ? abs((int) ($_POST['day'])) : 0;
+            $layout = isset($_POST['layout']) ? abs((int) ($_POST['layout'])) : 0;
+            $type = isset($_POST['type']) ? (int) ($_POST['type']) : 0;
+            $mesto = isset($_POST['mesto']) ? abs((int) ($_POST['mesto'])) : 0;
             $color = isset($_POST['color']) ? mb_substr(trim($_POST['color']), 0, 6) : '';
             $error = [];
 
@@ -75,7 +75,7 @@ switch ($mod) {
                 $type = 0;
             }
 
-            if (!$mesto) {
+            if (! $mesto) {
                 $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `mesto` = '" . $mesto . "' AND `type` = '" . $type . "'")->fetchColumn();
 
                 if ($total) {
@@ -94,7 +94,7 @@ switch ($mod) {
 
             if ($error) {
                 echo $tools->displayError($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
-                require('../system/end.php');
+                require '../system/end.php';
                 exit;
             }
 
@@ -132,7 +132,7 @@ switch ($mod) {
                 ]);
             } else {
                 // Добавляем новую ссылку
-                $req = $db->query("SELECT `mesto` FROM `cms_ads` ORDER BY `mesto` DESC LIMIT 1");
+                $req = $db->query('SELECT `mesto` FROM `cms_ads` ORDER BY `mesto` DESC LIMIT 1');
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
@@ -201,16 +201,16 @@ switch ($mod) {
                 '<small>' . _t('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited') . '</small></p>' .
                 '</div><div class="gmenu">' .
                 '<p><h3>' . _t('Show') . '</h3>' .
-                '<input type="radio" name="view" value="0" ' . (!$res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Everyone') . '<br>' .
+                '<input type="radio" name="view" value="0" ' . (! $res['view'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Everyone') . '<br>' .
                 '<input type="radio" name="view" value="1" ' . ($res['view'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Guests') . '<br>' .
                 '<input type="radio" name="view" value="2" ' . ($res['view'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Users') . '</p>' .
                 '<p><h3>' . _t('Location') . '</h3>' .
-                '<input type="radio" name="type" value="0" ' . (!$res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Above logo') . '<br>' .
+                '<input type="radio" name="type" value="0" ' . (! $res['type'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Above logo') . '<br>' .
                 '<input type="radio" name="type" value="1" ' . ($res['type'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under menu') . '<br>' .
                 '<input type="radio" name="type" value="2" ' . ($res['type'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Over the counter') . '<br>' .
                 '<input type="radio" name="type" value="3" ' . ($res['type'] == 3 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Under counter') . '</p>' .
                 '<p><h3>' . _t('Layout') . '</h3>' .
-                '<input type="radio" name="layout" value="0" ' . (!$res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('All pages') . '<br>' .
+                '<input type="radio" name="layout" value="0" ' . (! $res['layout'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('All pages') . '<br>' .
                 '<input type="radio" name="layout" value="1" ' . ($res['layout'] == 1 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Only on Homepage') . '<br>' .
                 '<input type="radio" name="layout" value="2" ' . ($res['layout'] == 2 ? 'checked="checked"' : '') . '/>&nbsp;' . _t('On all, except Homepage') . '</p>' .
                 '<p><h3>' . _t('Styling links') . '</h3>' .
@@ -226,54 +226,54 @@ switch ($mod) {
     case 'down':
         // Перемещаем на позицию вниз
         if ($id) {
-            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
+            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '${id}'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $mesto = $res['mesto'];
 
-                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` > '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
+                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` > '${mesto}' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` ASC");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto2}' WHERE `id` = '${id}'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto}' WHERE `id` = '${id2}'");
                 }
             }
         }
-        header('Location: ' . getenv("HTTP_REFERER"));
+        header('Location: ' . getenv('HTTP_REFERER'));
         break;
 
     case 'up':
         // Перемещаем на позицию вверх
         if ($id) {
-            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '$id'");
+            $req = $db->query("SELECT `mesto`, `type` FROM `cms_ads` WHERE `id` = '${id}'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 $mesto = $res['mesto'];
 
-                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` < '$mesto' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
+                $req = $db->query("SELECT * FROM `cms_ads` WHERE `mesto` < '${mesto}' AND `type` = '" . $res['type'] . "' ORDER BY `mesto` DESC");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
                     $id2 = $res['id'];
                     $mesto2 = $res['mesto'];
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto2' WHERE `id` = '$id'");
-                    $db->exec("UPDATE `cms_ads` SET `mesto` = '$mesto' WHERE `id` = '$id2'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto2}' WHERE `id` = '${id}'");
+                    $db->exec("UPDATE `cms_ads` SET `mesto` = '${mesto}' WHERE `id` = '${id2}'");
                 }
             }
         }
-        header('Location: ' . getenv("HTTP_REFERER") . '');
+        header('Location: ' . getenv('HTTP_REFERER') . '');
         break;
 
     case 'del':
         // Удаляем ссылку
         if ($id) {
             if (isset($_POST['submit'])) {
-                $db->exec("DELETE FROM `cms_ads` WHERE `id` = '$id'");
+                $db->exec("DELETE FROM `cms_ads` WHERE `id` = '${id}'");
                 header('Location: ' . $_POST['ref']);
             } else {
                 echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete') . '</div>' .
@@ -291,7 +291,7 @@ switch ($mod) {
         // Очистка базы от неактивных ссылок
         if (isset($_POST['submit'])) {
             $db->exec("DELETE FROM `cms_ads` WHERE `to` = '1'");
-            $db->query("OPTIMIZE TABLE `cms_ads`");
+            $db->query('OPTIMIZE TABLE `cms_ads`');
             header('location: index.php?act=ads');
         } else {
             echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete inactive links') . '</div>' .
@@ -306,11 +306,11 @@ switch ($mod) {
     case 'show':
         // Восстанавливаем / скрываем ссылку
         if ($id) {
-            $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '$id'");
+            $req = $db->query("SELECT * FROM `cms_ads` WHERE `id` = '${id}'");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
-                $db->exec("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '$id'");
+                $db->exec("UPDATE `cms_ads` SET `to`='" . ($res['to'] ? 0 : 1) . "' WHERE `id` = '${id}'");
             }
         }
         header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -329,19 +329,19 @@ switch ($mod) {
             _t('Guests'),
             _t('Users'),
         ];
-        $type = isset($_GET['type']) ? intval($_GET['type']) : 0;
+        $type = isset($_GET['type']) ? (int) ($_GET['type']) : 0;
         $array_menu = [
-            (!$type ? _t('Above logo') : '<a href="index.php?act=ads">' . _t('Above logo') . '</a>'),
+            (! $type ? _t('Above logo') : '<a href="index.php?act=ads">' . _t('Above logo') . '</a>'),
             ($type == 1 ? _t('Under menu') : '<a href="index.php?act=ads&amp;type=1">' . _t('Under menu') . '</a>'),
             ($type == 2 ? _t('Over the counter') : '<a href="index.php?act=ads&amp;type=2">' . _t('Over the counter') . '</a>'),
             ($type == 3 ? _t('Under counter') : '<a href="index.php?act=ads&amp;type=3">' . _t('Under counter') . '</a>'),
         ];
         echo '<div class="topmenu">' . implode(' | ', $array_menu) . '</div>';
 
-        $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '$type'")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '${type}'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '$type' ORDER BY `mesto` ASC LIMIT $start,$kmess");
+            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '${type}' ORDER BY `mesto` ASC LIMIT ${start},${kmess}");
             $i = 0;
 
             while ($res = $req->fetch()) {
@@ -350,7 +350,7 @@ switch ($mod) {
                 $name = htmlentities($name, ENT_QUOTES, 'UTF-8');
 
                 // Если был задан цвет, то применяем
-                if (!empty($res['color'])) {
+                if (! empty($res['color'])) {
                     $name = '<span style="color:#' . $res['color'] . '">' . $name . '</span>';
                 }
 
@@ -382,7 +382,7 @@ switch ($mod) {
                 $agreement = [];
                 $remains = [];
 
-                if (!empty($res['count_link'])) {
+                if (! empty($res['count_link'])) {
                     $agreement[] = $res['count_link'] . ' ' . _t('hits');
                     $remains_count = $res['count_link'] - $res['count'];
                     if ($remains_count > 0) {
@@ -390,7 +390,7 @@ switch ($mod) {
                     }
                 }
 
-                if (!empty($res['day'])) {
+                if (! empty($res['day'])) {
                     $agreement[] = $tools->timecount($res['day'] * 86400);
                     $remains_count = $res['day'] * 86400 - (time() - $res['time']);
                     if ($remains_count > 0) {
@@ -400,13 +400,13 @@ switch ($mod) {
 
                 // Если был договор, то выводим описание
                 if ($agreement) {
-                    echo '<br><span class="gray">' . _t('Agreement') . ':</span>&nbsp;' . implode($agreement, ', ');
+                    echo '<br><span class="gray">' . _t('Agreement') . ':</span>&nbsp;' . implode(', ', $agreement);
 
                     if ($remains) {
-                        echo '<br><span class="gray">' . _t('Remains') . ':</span> ' . implode($remains, ', ');
+                        echo '<br><span class="gray">' . _t('Remains') . ':</span> ' . implode(', ', $remains);
                     }
                 }
-                echo ($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
+                echo($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
                 ++$i;
             }
         } else {

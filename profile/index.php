@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -38,20 +38,20 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 // Закрываем от неавторизованных юзеров
-if (!$systemUser->isValid()) {
-    require('../system/head.php');
+if (! $systemUser->isValid()) {
+    require '../system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 // Получаем данные пользователя
-$user = $tools->getUser(isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : 0);
+$user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
-if (!$user) {
-    require('../system/head.php');
+if (! $user) {
+    require '../system/head.php';
     echo $tools->displayError(_t('This User does not exists'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -71,13 +71,13 @@ function is_contact($id = 0)
     static $user_id = null;
     static $return = 0;
 
-    if (!$systemUser->isValid() && !$id) {
+    if (! $systemUser->isValid() && ! $id) {
         return 0;
     }
 
-    if (is_null($user_id) || $id != $user_id) {
+    if (null === $user_id || $id != $user_id) {
         $user_id = $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $systemUser->id . "' AND `from_id` = '$id'");
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $systemUser->id . "' AND `from_id` = '${id}'");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -110,15 +110,15 @@ $array = [
     'settings'  => 'includes',
     'stat'      => 'includes',
 ];
-$path = !empty($array[$act]) ? $array[$act] . '/' : '';
+$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
 if (isset($array[$act]) && file_exists($path . $act . '.php')) {
-    require_once($path . $act . '.php');
+    require_once $path . $act . '.php';
 } else {
     // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
     $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
-    require('../system/head.php');
+    require '../system/head.php';
     echo '<div class="phdr"><b>' . ($user['id'] != $systemUser->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты
@@ -136,7 +136,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         $menu[] = '<a href="?act=ban&amp;mod=do&amp;user=' . $user['id'] . '">' . _t('Ban') . '</a>';
     }
 
-    if (!empty($menu)) {
+    if (! empty($menu)) {
         echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
     }
 
@@ -160,7 +160,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     echo '<div class="user"><p>' . $tools->displayUser($user, $arg) . '</p></div>';
 
     // Если юзер ожидает подтверждения регистрации, выводим напоминание
-    if ($systemUser->rights >= 7 && !$user['preg'] && empty($user['regadm'])) {
+    if ($systemUser->rights >= 7 && ! $user['preg'] && empty($user['regadm'])) {
         echo '<div class="rmenu">' . _t('Pending confirmation') . '</div>';
     }
 
@@ -188,11 +188,11 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
             '<span class="red"><a href="?act=karma&amp;user=' . $user['id'] . '">' . _t('Against') . ' (' . $user['karma_minus'] . ')</a></span>';
 
         if ($user['id'] != $systemUser->id) {
-            if (!$systemUser->karma_off && (!$user['rights'] || ($user['rights'] && !$set_karma['adm'])) && $user['ip'] != $systemUser->ip) {
+            if (! $systemUser->karma_off && (! $user['rights'] || ($user['rights'] && ! $set_karma['adm'])) && $user['ip'] != $systemUser->ip) {
                 $sum = $db->query("SELECT SUM(`points`) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `time` >= '" . $systemUser->karma_time . "'")->fetchColumn();
                 $count = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `user_id` = '" . $systemUser->id . "' AND `karma_user` = '" . $user['id'] . "' AND `time` > '" . (time() - 86400) . "'")->fetchColumn();
 
-                if (empty($systemUser->ban) && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && !$count) {
+                if (empty($systemUser->ban) && $systemUser->postforum >= $set_karma['forum'] && $systemUser->total_on_site >= $set_karma['karma_time'] && ($set_karma['karma_points'] - $sum) > 0 && ! $count) {
                     echo '<br /><a href="?act=karma&amp;mod=vote&amp;user=' . $user['id'] . '">' . _t('Vote') . '</a>';
                 }
             }
@@ -226,7 +226,7 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
         echo '<div class="menu"><p>';
         // Контакты
         if (is_contact($user['id']) != 2) {
-            if (!is_contact($user['id'])) {
+            if (! is_contact($user['id'])) {
                 echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
             } else {
                 echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
@@ -241,10 +241,10 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
 
         echo '</p>';
 
-        if (!$tools->isIgnor($user['id'])
+        if (! $tools->isIgnor($user['id'])
             && is_contact($user['id']) != 2
-            && !isset($systemUser->ban['1'])
-            && !isset($systemUser->ban['3'])
+            && ! isset($systemUser->ban['1'])
+            && ! isset($systemUser->ban['3'])
         ) {
             echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
@@ -253,4 +253,4 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 }
 
-require_once('../system/end.php');
+require_once '../system/end.php';

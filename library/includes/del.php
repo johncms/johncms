@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -24,7 +24,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 use Library\Tree;
 use Library\Utils;
 
-if (!$adm) {
+if (! $adm) {
     Utils::redir404();
 }
 
@@ -35,29 +35,29 @@ if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article', 'image'])
 } else {
     Utils::redir404();
 }
-$change = ($type == 'dir' ? $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0 || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1 : '');
+$change = ($type == 'dir' ? $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0 || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1 : '');
 
 switch ($type) {
     case 'dir':
-        if ($db->query("SELECT COUNT(*) FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() == 0) {
+        if ($db->query('SELECT COUNT(*) FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() == 0) {
             echo $tools->displayError(_t('Section does not exist'));
-        } elseif (!$change) {
-            $mode = isset($_POST['mode']) ? $_POST['mode'] : (isset($do) ? $do : false);
-            $dirtype = $db->query("SELECT `dir` FROM `library_cats` WHERE `id` = " . $id . " LIMIT 1")->fetchColumn();
+        } elseif (! $change) {
+            $mode = $_POST['mode'] ?? ($do ?? false);
+            $dirtype = $db->query('SELECT `dir` FROM `library_cats` WHERE `id` = ' . $id . ' LIMIT 1')->fetchColumn();
             switch ($mode) {
                 case 'moveaction':
-                    if (!isset($_GET['movedeny'])) {
-                        echo '<div class="alarm"><div>' . _t('Are you sure you want to move the contents?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' . intval($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
+                    if (! isset($_GET['movedeny'])) {
+                        echo '<div class="alarm"><div>' . _t('Are you sure you want to move the contents?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;movedeny&amp;do=moveaction&amp;move=' . (int) ($_POST['move']) . '">' . _t('Move') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
-                        $move = intval($_GET['move']);
+                        $move = (int) ($_GET['move']);
                         if ($dirtype) {
-                            $afr = $db->exec("UPDATE `library_cats` SET `parent`=" . $move . " WHERE `parent` = " . $id);
+                            $afr = $db->exec('UPDATE `library_cats` SET `parent`=' . $move . ' WHERE `parent` = ' . $id);
                         } else {
-                            $afr = $db->exec("UPDATE `library_texts` SET `cat_id` = " . $move . " WHERE `cat_id` = " . $id);
+                            $afr = $db->exec('UPDATE `library_texts` SET `cat_id` = ' . $move . ' WHERE `cat_id` = ' . $id);
                         }
 
                         if ($afr) {
-                            $afr = $db->exec("DELETE FROM `library_cats` WHERE `id` = " . $id);
+                            $afr = $db->exec('DELETE FROM `library_cats` WHERE `id` = ' . $id);
                             if ($afr) {
                                 echo '<div class="gmenu">' . _t('Successful transfer') . '</div><div><a href="?do=dir&amp;id=' . $move . '">' . _t('Back') . '</a></div>' . PHP_EOL;
                             }
@@ -68,7 +68,7 @@ switch ($type) {
                 case 'delmove':
                     $child_dir = new Tree($id);
                     $childrens = $child_dir->getChildsDir()->result();
-                    $list = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `dir`=" . $dirtype . " AND " . ($dirtype && sizeof($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
+                    $list = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `dir`=' . $dirtype . ' AND ' . ($dirtype && count($childrens) ? '`id` NOT IN(' . implode(', ', $childrens) . ', ' . $id . ')' : '`id`  != ' . $id));
                     if ($list->rowCount()) {
                         echo '<div class="menu">'
                             . '<h3>' . _t('Move to Section') . '</h3>'
@@ -88,7 +88,7 @@ switch ($type) {
                     break;
 
                 case 'delall':
-                    if (!isset($_GET['deldeny'])) {
+                    if (! isset($_GET['deldeny'])) {
                         echo '<div class="alarm"><div>' . _t('Are you sure you want to delete content?') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;deldeny&amp;do=delall">' . _t('Delete') . '</a> | <a href="?">' . _t('Cancel') . '</a></div></div>';
                     } else {
                         $childs = new Tree($id);
@@ -112,25 +112,25 @@ switch ($type) {
                     break;
             }
         } else {
-            $sql = "DELETE FROM `library_cats` WHERE `id`=" . $id;
-            if (!isset($_GET['yes'])) {
+            $sql = 'DELETE FROM `library_cats` WHERE `id`=' . $id;
+            if (! isset($_GET['yes'])) {
                 echo '<div class="alarm"><div>' . _t('Delete confirmation') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?do=dir&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
             }
         }
         break;
 
     case 'article':
-        if ($db->query("SELECT COUNT(*) FROM `library_texts` WHERE `id`=" . $id)->rowCount() == 0) {
+        if ($db->query('SELECT COUNT(*) FROM `library_texts` WHERE `id`=' . $id)->rowCount() == 0) {
             echo $tools->displayError(_t('Articles do not exist'));
         } else {
-            $sql = "DELETE FROM `library_texts` WHERE `id`=" . $id;
-            if (!isset($_GET['yes'])) {
+            $sql = 'DELETE FROM `library_texts` WHERE `id`=' . $id;
+            if (! isset($_GET['yes'])) {
                 echo '<div class="rmenu"><p>' . _t('Delete confirmation') . '<br><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a></p></div>';
             }
         }
         break;
     case 'image':
-        if (!isset($_GET['yes'])) {
+        if (! isset($_GET['yes'])) {
             echo '<div class="alarm"><div>' . _t('Delete confirmation') . '</div><div><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Cancel') . '</a></div></div>';
         }
         break;

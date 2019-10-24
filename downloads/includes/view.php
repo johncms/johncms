@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -34,7 +34,7 @@ require 'classes/download.php';
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
     require '../system/end.php';
     exit;
@@ -64,7 +64,7 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
     $dir = opendir(DOWNLOADS_SCR . $id);
 
     while ($file = readdir($dir)) {
-        if (($file != '.') && ($file != "..") && ($file != "name.dat") && ($file != ".svn") && ($file != "index.php")) {
+        if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
             $screen[] = '../files/downloads/screen/' . $id . '/' . $file;
         }
     }
@@ -82,9 +82,9 @@ switch ($format_file) {
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
         $mp3info = true;
 
-        if (!empty($getid['tags']['id3v2'])) {
+        if (! empty($getid['tags']['id3v2'])) {
             $tagsArray = $getid['tags']['id3v2'];
-        } elseif (!empty($getid['tags']['id3v1'])) {
+        } elseif (! empty($getid['tags']['id3v1'])) {
             $tagsArray = $getid['tags']['id3v1'];
         } else {
             $mp3info = false;
@@ -108,7 +108,7 @@ switch ($format_file) {
             if (isset($tagsArray['genre'][0])) {
                 $text_info .= '<b>' . _t('Genre') . '</b>: ' . Download::mp3tagsOut($tagsArray['genre'][0]) . '<br>';
             }
-            if (intval($tagsArray['year'][0])) {
+            if ((int) ($tagsArray['year'][0])) {
                 $text_info .= '<b>' . _t('Year') . '</b>: ' . (int)$tagsArray['year'][0] . '<br>';
             }
         }
@@ -132,7 +132,7 @@ switch ($format_file) {
 }
 
 // Выводим скриншоты
-if (!empty($screen)) {
+if (! empty($screen)) {
     $total = count($screen);
 
     if ($total > 1) {
@@ -150,7 +150,7 @@ if (!empty($screen)) {
 }
 
 // Выводим данные
-$user = $db->query("SELECT `name`, `id` FROM `users` WHERE `id` = " . $res_down['user_id'])->fetch();
+$user = $db->query('SELECT `name`, `id` FROM `users` WHERE `id` = ' . $res_down['user_id'])->fetch();
 echo '<div class="list1">'
     . '<p><h3>' . $res_down['rus_name'] . '</h3></p>'
     . '<span class="gray">' . _t('File name') . ':</span> ' . $res_down['name'] . '<br>'
@@ -159,15 +159,15 @@ echo '<div class="list1">'
 
 echo '</div>';
 
-if (!empty($res_down['about'])) {
-    echo '<div class="topmenu" style="font-size: small">' . $tools->checkout($res_down['about'],1 ,1) . '</div>';
+if (! empty($res_down['about'])) {
+    echo '<div class="topmenu" style="font-size: small">' . $tools->checkout($res_down['about'], 1, 1) . '</div>';
 }
 
 echo '<div class="list1"><p>';
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
     if (isset($_GET['plus'])) {
         $file_rate[0] = $file_rate[0] + 1;
     } else {
@@ -182,7 +182,7 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && !isset($_SESSION['rate_fi
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 echo '<b>' . _t('Rating') . ' </b>';
 
-if (!isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
+if (! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
     echo '(<a href="?act=view&amp;id=' . $id . '&amp;plus">+</a>/<a href="?act=view&amp;id=' . $id . '&amp;minus">-</a>)';
 } else {
     echo '(+/-)';
@@ -198,7 +198,7 @@ if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
 echo '</div>';
 
 // Запрашиваем дополнительные файлы
-$req_file_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = " . $id . " ORDER BY `time` ASC");
+$req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id . ' ORDER BY `time` ASC');
 $total_files_more = $req_file_more->rowCount();
 
 // Скачка файла
@@ -214,7 +214,7 @@ if ($total_files_more) {
     while ($res_file_more = $req_file_more->fetch()) {
         $res_file_more['dir'] = $res_down['dir'];
         $res_file_more['text'] = $res_file_more['rus_name'];
-        echo (($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
+        echo(($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
             Download::downloadLlink([
                 'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,
@@ -225,9 +225,9 @@ if ($total_files_more) {
 
 // Управление закладками
 if ($systemUser->isValid()) {
-    $bookmark = $db->query("SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = " . $id . "  AND `user_id` = " . $systemUser->id)->fetchColumn();
+    $bookmark = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = ' . $id . '  AND `user_id` = ' . $systemUser->id)->fetchColumn();
 
-    if (isset($_GET['addBookmark']) && !$bookmark) {
+    if (isset($_GET['addBookmark']) && ! $bookmark) {
         $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id` = " . $systemUser->id);
         $bookmark = 1;
     } elseif (isset($_GET['delBookmark']) && $bookmark) {
@@ -237,7 +237,7 @@ if ($systemUser->isValid()) {
 
     echo '<div class="phdr">';
 
-    if (!$bookmark) {
+    if (! $bookmark) {
         echo '<a href="?act=view&amp;id=' . $id . '&amp;addBookmark">' . _t('Add to Favorites') . '</a>';
     } else {
         echo '<a href="?act=view&amp;id=' . $id . '&amp;delBookmark">' . _t('Remove from Favorites') . '</a>';

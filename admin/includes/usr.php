@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -41,14 +41,14 @@ switch ($sort) {
         $order = '`ip` ASC';
         break;
 
-    default :
+    default:
         $sort = 'id';
         echo 'ID | <a href="index.php?act=usr&amp;sort=nick">' . _t('Nickname') . '</a> | <a href="index.php?act=usr&amp;sort=ip">IP</a></div>';
         $order = '`id` ASC';
 }
 
-$total = $db->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
-$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY $order LIMIT " . $start . ", " . $kmess);
+$total = $db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
+$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY ${order} LIMIT " . $start . ', ' . $kmess);
 $i = 0;
 
 while ($res = $req->fetch()) {

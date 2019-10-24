@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -16,11 +16,17 @@ class Comments
 {
     // Служебные данные
     private $object_table;                                // Таблица комментируемых объектов
+
     private $comments_table;                              // Таблица с комментариями
+
     private $sub_id = false;                              // Идентификатор комментируемого объекта
+
     private $item;                                        // Локальный идентификатор
+
     private $owner = false;
+
     private $ban = false;                                 // Находится ли юзер в бане?
+
     private $url;                                         // URL формируемых ссылок
 
     /**
@@ -40,20 +46,26 @@ class Comments
 
     // Права доступа
     private $access_reply = false;                        // Возможность отвечать на комментарий
+
     private $access_edit = false;                         // Возможность редактировать комментарий
+
     private $access_delete = false;                       // Возможность удалять комментарий
+
     private $access_level = 6;                            // Уровень доступа для Администрации
 
     // Параметры отображения комментариев
     public $min_lenght = 4;                               // Мин. к-во символов в комментарии
+
     public $max_lenght = 5000;                            // Макс. к-во символов в комментарии
+
     public $captcha = false;                              // Показывать CAPTCHA
 
     // Возвращаемые значения
     public $total = 0;                                    // Общее число комментариев объекта
+
     public $added = false;                                // Метка добавления нового комментария
 
-    function __construct($arg = [])
+    public function __construct($arg = [])
     {
         global $mod, $start, $kmess;
 
@@ -61,32 +73,32 @@ class Comments
         $container = \App::getContainer();
         $this->tools = $container->get(Api\ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(Api\UserInterface::class );
+        $this->systemUser = $container->get(Api\UserInterface::class);
 
         $this->comments_table = $arg['comments_table'];
-        $this->object_table = !empty($arg['object_table']) ? $arg['object_table'] : false;
+        $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
         $homeurl = \App::getContainer()->get('config')['johncms']['homeurl'];
 
-        if (!empty($arg['sub_id_name']) && !empty($arg['sub_id'])) {
+        if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];
             $this->url = $arg['script'] . '&amp;' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
         } else {
             $this->url = $arg['script'];
         }
 
-        $this->item = isset($_GET['item']) ? abs(intval($_GET['item'])) : false;
+        $this->item = isset($_GET['item']) ? abs((int) ($_GET['item'])) : false;
 
         // Получаем данные пользователя
-        $this->ban = !empty($this->systemUser->ban);
+        $this->ban = ! empty($this->systemUser->ban);
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {
             $this->owner = $arg['owner'];
 
-            if ($this->systemUser->isValid() && $arg['owner'] == $this->systemUser->id && !$this->ban) {
-                $this->access_delete = isset($arg['owner_delete']) ? $arg['owner_delete'] : false;
-                $this->access_reply = isset($arg['owner_reply']) ? $arg['owner_reply'] : false;
-                $this->access_edit = isset($arg['owner_edit']) ? $arg['owner_edit'] : false;
+            if ($this->systemUser->isValid() && $arg['owner'] == $this->systemUser->id && ! $this->ban) {
+                $this->access_delete = $arg['owner_delete'] ?? false;
+                $this->access_reply = $arg['owner_reply'] ?? false;
+                $this->access_edit = $arg['owner_edit'] ?? false;
             }
         }
 
@@ -100,15 +112,15 @@ class Comments
         switch ($mod) {
             case 'reply':
                 // Отвечаем на комментарий
-                if ($this->systemUser->isValid() && $this->item && $this->access_reply && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_reply && ! $this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Reply', 'system') . '</div>';
-                    $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+                    $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes']);
 
-                        if (!empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
+                        if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
                             echo $this->tools->displayError(_t('Administrator already replied to this message', 'system'), '<a href="' . $this->url . '">' . _t('Back', 'system') . '</a>');
                         } elseif (isset($_POST['submit'])) {
                             $message = $this->msg_check();
@@ -150,9 +162,9 @@ class Comments
 
             case 'edit':
                 // Редактируем комментарий
-                if ($this->systemUser->isValid() && $this->item && $this->access_edit && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_edit && ! $this->ban) {
                     echo '<div class="phdr"><a href="' . $this->url . '"><b>' . $arg['title'] . '</b></a> | ' . _t('Edit', 'system') . '</div>';
-                    $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+                    $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                     if ($req->rowCount()) {
                         $res = $req->fetch();
@@ -206,21 +218,21 @@ class Comments
 
             case 'del':
                 // Удаляем комментарий
-                if ($this->systemUser->isValid() && $this->item && $this->access_delete && !$this->ban) {
+                if ($this->systemUser->isValid() && $this->item && $this->access_delete && ! $this->ban) {
                     if (isset($_GET['yes'])) {
-                        $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
+                        $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "' AND `sub_id` = '" . $this->sub_id . "' LIMIT 1");
 
                         if ($req->rowCount()) {
                             $res = $req->fetch();
 
                             if (isset($_GET['all'])) {
                                 // Удаляем все комментарии выбранного пользователя
-                                $count = $this->db->query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'")->fetchColumn();
-                                $this->db->exec("DELETE FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'");
+                                $count = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'")->fetchColumn();
+                                $this->db->exec('DELETE FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "' AND `user_id` = '" . $res['user_id'] . "'");
                             } else {
                                 // Удаляем отдельный комментарий
                                 $count = 1;
-                                $this->db->exec("DELETE FROM `" . $this->comments_table . "` WHERE `id` = '" . $this->item . "'");
+                                $this->db->exec('DELETE FROM `' . $this->comments_table . "` WHERE `id` = '" . $this->item . "'");
                             }
 
                             // Вычитаем баллы из статистики пользователя
@@ -229,7 +241,7 @@ class Comments
                             if ($req_u->rowCount()) {
                                 $res_u = $req_u->fetch();
                                 $count = $res_u['komm'] > $count ? $res_u['komm'] - $count : 0;
-                                $this->db->exec("UPDATE `users` SET `komm` = '$count' WHERE `id` = '" . $res['user_id'] . "'");
+                                $this->db->exec("UPDATE `users` SET `komm` = '${count}' WHERE `id` = '" . $res['user_id'] . "'");
                             }
 
                             // Обновляем счетчик комментариев
@@ -250,12 +262,12 @@ class Comments
                 break;
 
             default:
-                if (!empty($arg['context_top'])) {
+                if (! empty($arg['context_top'])) {
                     echo $arg['context_top'];
                 }
 
                 // Добавляем новый комментарий
-                if ($this->systemUser->isValid() && !$this->ban && !$this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
+                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner) && isset($_POST['submit']) && ($message = $this->msg_check(1)) !== false) {
                     if (empty($message['error'])) {
                         // Записываем комментарий в базу
                         $this->add_comment($message['text']);
@@ -271,7 +283,7 @@ class Comments
                 }
 
                 // Показываем форму ввода
-                if ($this->systemUser->isValid() && !$this->ban && !$this->tools->isIgnor($this->owner)) {
+                if ($this->systemUser->isValid() && ! $this->ban && ! $this->tools->isIgnor($this->owner)) {
                     echo $this->msg_form();
                 }
 
@@ -283,16 +295,16 @@ class Comments
                 }
 
                 if ($this->total) {
-                    $req = $this->db->query("SELECT `" . $this->comments_table . "`.*, `" . $this->comments_table . "`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
-                    FROM `" . $this->comments_table . "` LEFT JOIN `users` ON `" . $this->comments_table . "`.`user_id` = `users`.`id`
-                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT $start, $kmess");
+                    $req = $this->db->query('SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                    FROM `' . $this->comments_table . '` LEFT JOIN `users` ON `' . $this->comments_table . "`.`user_id` = `users`.`id`
+                    WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT ${start}, ${kmess}");
                     $i = 0;
 
                     while ($res = $req->fetch()) {
                         $attributes = unserialize($res['attributes']);
                         $res['name'] = $attributes['author_name'];
                         $res['ip'] = $attributes['author_ip'];
-                        $res['ip_via_proxy'] = isset($attributes['author_ip_via_proxy']) ? $attributes['author_ip_via_proxy'] : 0;
+                        $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
                         $res['browser'] = $attributes['author_browser'];
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                         $menu = [
@@ -309,7 +321,7 @@ class Comments
                                 '[' . $attributes['edit_count'] . ']</b></small></span>';
                         }
 
-                        if (!empty($res['reply'])) {
+                        if (! empty($res['reply'])) {
                             $reply = $this->tools->checkout($res['reply'], 1, 1);
                             $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             $text .= '<div class="' . ($attributes['reply_rights'] ? '' : 'g') . 'reply"><small>' .
@@ -341,7 +353,7 @@ class Comments
                         '</form></p>';
                 }
 
-                if (!empty($arg['context_bottom'])) {
+                if (! empty($arg['context_bottom'])) {
                     echo $arg['context_bottom'];
                 }
         }
@@ -374,7 +386,7 @@ class Comments
           `time` = ?,
           `attributes` = ?
         ')->execute([
-            intval($this->sub_id),
+            (int) ($this->sub_id),
             $this->systemUser->id,
             $message,
             time(),
@@ -395,7 +407,7 @@ class Comments
     private function msg_form($submit_link = '', $text = '', $reply = '')
     {
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
-            (!empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
+            (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
             '</p><p>' . \App::getContainer()->get(Api\BbcodeInterface::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
@@ -408,8 +420,8 @@ class Comments
     {
         $error = [];
         $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : false;
-        $code = isset($_POST['code']) ? intval($_POST['code']) : null;
-        $code_chk = isset($_SESSION['code']) ? $_SESSION['code'] : null;
+        $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
+        $code_chk = $_SESSION['code'] ?? null;
         $translit = isset($_POST['translit']);
 
         // Проверяем код
@@ -430,8 +442,8 @@ class Comments
         }
 
         // Проверка на повтор сообщений
-        if (!$error && $rpt_check) {
-            $req = $this->db->query("SELECT * FROM `" . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
+        if (! $error && $rpt_check) {
+            $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
             $res = $req->fetch();
 
             if (mb_strtolower($message) == mb_strtolower($res['text'])) {
@@ -450,11 +462,11 @@ class Comments
     // Счетчик комментариев
     private function msg_total($update = false)
     {
-        $total = $this->db->query("SELECT COUNT(*) FROM `" . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
+        $total = $this->db->query('SELECT COUNT(*) FROM `' . $this->comments_table . "` WHERE `sub_id` = '" . $this->sub_id . "'")->fetchColumn();
 
         if ($update) {
             // Обновляем счетчики в таблице объекта
-            $this->db->exec("UPDATE `" . $this->object_table . "` SET `comm_count` = '$total' WHERE `id` = '" . $this->sub_id . "'");
+            $this->db->exec('UPDATE `' . $this->object_table . "` SET `comm_count` = '${total}' WHERE `id` = '" . $this->sub_id . "'");
         }
 
         return $total;

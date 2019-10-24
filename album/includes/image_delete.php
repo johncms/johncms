@@ -1,18 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,7 +28,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Удалить картинку
 if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '$img' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = '" . $user['id'] . "' LIMIT 1");
 
     if ($req->rowCount()) {
         $res = $req->fetch();
@@ -41,9 +41,9 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
             @unlink('../files/users/album/' . $user['id'] . '/' . $res['tmb_name']);
 
             // Удаляем записи из таблиц
-            $db->exec("DELETE FROM `cms_album_files` WHERE `id` = '$img'");
-            $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '$img'");
-            $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '$img'");
+            $db->exec("DELETE FROM `cms_album_files` WHERE `id` = '${img}'");
+            $db->exec("DELETE FROM `cms_album_votes` WHERE `file_id` = '${img}'");
+            $db->exec("DELETE FROM `cms_album_comments` WHERE `sub_id` = '${img}'");
 
             header('Location: ?act=show&al=' . $album . '&user=' . $user['id']);
         } else {

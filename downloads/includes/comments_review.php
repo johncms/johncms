@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,23 +30,23 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 require_once '../system/head.php';
 
 // Обзор комментариев
-if (!$config['mod_down_comm'] && $systemUser->rights < 7) {
+if (! $config['mod_down_comm'] && $systemUser->rights < 7) {
     echo _t('Comments are disabled') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
 
 $textl = _t('Review comments');
 
-if (!$config['mod_down_comm']) {
+if (! $config['mod_down_comm']) {
     echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
 }
 
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
-$total = $db->query("SELECT COUNT(*) FROM `download__comments`")->fetchColumn();
+$total = $db->query('SELECT COUNT(*) FROM `download__comments`')->fetchColumn();
 
 if ($total) {
     $req = $db->query("SELECT `download__comments`.*, `download__comments`.`id` AS `cid`, `users`.`rights`, `users`.`name`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `download__files`.`rus_name`
-	FROM `download__comments` LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id` LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id` ORDER BY `download__comments`.`time` DESC LIMIT $start, $kmess");
+	FROM `download__comments` LEFT JOIN `users` ON `download__comments`.`user_id` = `users`.`id` LEFT JOIN `download__files` ON `download__comments`.`sub_id` = `download__files`.`id` ORDER BY `download__comments`.`time` DESC LIMIT ${start}, ${kmess}");
     $i = 0;
 
     // Навигация
@@ -66,7 +66,7 @@ if ($total) {
         $attributes = unserialize($res['attributes']);
         $res['nickname'] = $attributes['author_name'];
         $res['ip'] = $attributes['author_ip'];
-        $res['ip_via_proxy'] = isset($attributes['author_ip_via_proxy']) ? $attributes['author_ip_via_proxy'] : 0;
+        $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
         $res['user_agent'] = $attributes['author_browser'];
 
         if (isset($attributes['edit_count'])) {
@@ -75,7 +75,7 @@ if ($total) {
                 '[' . $attributes['edit_count'] . ']</b></small></span>';
         }
 
-        if (!empty($res['reply'])) {
+        if (! empty($res['reply'])) {
             $reply = htmlspecialchars($res['reply'], 1, 1);
             $reply = $tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
 

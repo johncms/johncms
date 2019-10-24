@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -39,7 +39,7 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
     if (isset($_POST['lng'])) {
         $select = trim($_POST['lng']);
 
-        if(isset($config['lng_list'][$select])){
+        if (isset($config['lng_list'][$select])) {
             $config['lng'] = $select;
         }
     } elseif (isset($_GET['refresh'])) {
@@ -49,7 +49,7 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
         foreach (glob(ROOT_PATH . 'system/locale/*/lng.ini') as $val) {
             $iso = basename(dirname($val));
             $desc = parse_ini_file($val);
-            $lng_list[$iso] = isset($desc['name']) && !empty($desc['name']) ? $desc['name'] : $iso;
+            $lng_list[$iso] = isset($desc['name']) && ! empty($desc['name']) ? $desc['name'] : $iso;
         }
 
         $config['lng_list'] = $lng_list;
@@ -58,7 +58,7 @@ if (isset($_POST['lng']) || isset($_GET['refresh'])) {
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+    if (! file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
         echo 'ERROR: Can not write system.local.php</body></html>';
         exit;
     }

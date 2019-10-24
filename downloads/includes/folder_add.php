@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -24,13 +24,13 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     require_once '../system/head.php';
 
-    if (!$id) {
+    if (! $id) {
         $load_cat = $files_path;
     } else {
         $req_down = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
         $res_down = $req_down->fetch();
 
-        if (!$req_down->rowCount() || !is_dir($res_down['dir'])) {
+        if (! $req_down->rowCount() || ! is_dir($res_down['dir'])) {
             echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
             exit;
         }
@@ -50,13 +50,13 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             $error[] = _t('The required fields are not filled');
         }
 
-        if (preg_match("/[^0-9a-zA-Z]+/", $name)) {
+        if (preg_match('/[^0-9a-zA-Z]+/', $name)) {
             $error[] = _t('Invalid characters');
         }
 
         if ($systemUser->rights == 9 && $user_down) {
             foreach (explode(',', $format) as $value) {
-                if (!in_array(trim($value), $defaultExt)) {
+                if (! in_array(trim($value), $defaultExt)) {
                     $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
                     break;
                 }
@@ -66,7 +66,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         if ($error) {
             echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
             echo '<div class="rmenu"><p>' . implode('<br>', $error) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
-            require_once('../system/end.php');
+            require_once '../system/end.php';
             exit;
         }
 
@@ -77,18 +77,18 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         $dir = false;
         $load_cat = $load_cat . '/' . $name;
 
-        if (!is_dir($load_cat)) {
+        if (! is_dir($load_cat)) {
             $dir = mkdir($load_cat, 0777);
         }
 
         if ($dir == true) {
             chmod($load_cat, 0777);
 
-            $stmt = $db->prepare("
+            $stmt = $db->prepare('
                 INSERT INTO `download__category`
                 (`refid`, `dir`, `sort`, `name`, `desc`, `field`, `text`, `rus_name`)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ");
+            ');
 
             $stmt->execute([
                 $id,

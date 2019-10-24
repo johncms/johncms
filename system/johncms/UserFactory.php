@@ -1,19 +1,18 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
 
 use Psr\Container\ContainerInterface;
-use Zend\Stdlib\ArrayUtils;
 
 class UserFactory
 {
@@ -46,13 +45,13 @@ class UserFactory
         $user_id = false;
         $user_ps = false;
 
-        if (isset($_SESSION['uid']) && isset($_SESSION['ups'])) {
+        if (isset($_SESSION['uid'], $_SESSION['ups'])) {
             // Авторизация по сессии
-            $user_id = intval($_SESSION['uid']);
+            $user_id = (int) ($_SESSION['uid']);
             $user_ps = $_SESSION['ups'];
-        } elseif (isset($_COOKIE['cuid']) && isset($_COOKIE['cups'])) {
+        } elseif (isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
             // Авторизация по COOKIE
-            $user_id = abs(intval(base64_decode(trim($_COOKIE['cuid']))));
+            $user_id = abs((int) (base64_decode(trim($_COOKIE['cuid']))));
             $_SESSION['uid'] = $user_id;
             $user_ps = md5(trim($_COOKIE['cups']));
             $_SESSION['ups'] = $user_ps;
@@ -75,7 +74,7 @@ class UserFactory
                     $userData['ban'] = $this->banCheck($userData['id']);
 
                     // Если есть бан, обнуляем привилегии
-                    if (!empty($userData['ban'])) {
+                    if (! empty($userData['ban'])) {
                         $userData['rights'] = 0;
                     }
 
@@ -85,11 +84,10 @@ class UserFactory
                     }
 
                     return $userData;
-                } else {
-                    // Если авторизация не прошла
-                    $this->db->query("UPDATE `users` SET `failed_login` = '" . ($userData['failed_login'] + 1) . "' WHERE `id` = " . $userData['id']);
-                    $this->userUnset();
                 }
+                // Если авторизация не прошла
+                $this->db->query("UPDATE `users` SET `failed_login` = '" . ($userData['failed_login'] + 1) . "' WHERE `id` = " . $userData['id']);
+                $this->userUnset();
             } else {
                 // Если пользователь не существует
                 $this->userUnset();
@@ -108,7 +106,7 @@ class UserFactory
     protected function banCheck($userId)
     {
         $ban = [];
-        $req = $this->db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = " . $userId . " AND `ban_time` > '" . time() . "'");
+        $req = $this->db->query('SELECT * FROM `cms_ban_users` WHERE `user_id` = ' . $userId . " AND `ban_time` > '" . time() . "'");
 
         while ($res = $req->fetch()) {
             $ban[$res['ban_type']] = 1;
@@ -210,8 +208,8 @@ class UserFactory
      */
     protected function userUnset()
     {
-        unset($_SESSION['uid']);
-        unset($_SESSION['ups']);
+        unset($_SESSION['uid'], $_SESSION['ups']);
+
         setcookie('cuid', '');
         setcookie('cups', '');
     }

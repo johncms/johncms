@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,12 +27,12 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] > $systemUser->rights)) {
     echo $tools->displayError(_t('Access forbidden'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Change Password');
-require('../system/head.php');
+require '../system/head.php';
 
 switch ($mod) {
     case 'change':
@@ -44,16 +44,16 @@ switch ($mod) {
         $autologin = isset($_POST['autologin']) ? 1 : 0;
 
         if ($user['id'] != $systemUser->id) {
-            if (!$newpass || !$newconf) {
+            if (! $newpass || ! $newconf) {
                 $error[] = _t('It is necessary to fill in all fields');
             }
         } else {
-            if (!$oldpass || !$newpass || !$newconf) {
+            if (! $oldpass || ! $newpass || ! $newconf) {
                 $error[] = _t('It is necessary to fill in all fields');
             }
         }
 
-        if (!$error && $user['id'] == $systemUser->id && md5(md5($oldpass)) !== $user['password']) {
+        if (! $error && $user['id'] == $systemUser->id && md5(md5($oldpass)) !== $user['password']) {
             $error[] = _t('Old password entered incorrectly');
         }
 
@@ -61,11 +61,11 @@ switch ($mod) {
             $error[] = _t('The password confirmation you entered is wrong');
         }
 
-        if (!$error && (strlen($newpass) < 3)) {
+        if (! $error && (strlen($newpass) < 3)) {
             $error[] = _t('The password must contain at least 3 characters');
         }
 
-        if (!$error) {
+        if (! $error) {
             // Записываем в базу
             $db->prepare('UPDATE `users` SET `password` = ? WHERE `id` = ?')->execute([
                 md5(md5($newpass)),
@@ -73,7 +73,7 @@ switch ($mod) {
             ]);
 
             // Проверяем и записываем COOKIES
-            if (isset($_COOKIE['cuid']) && isset($_COOKIE['cups'])) {
+            if (isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
                 setcookie('cups', md5($newpass), time() + 3600 * 24 * 365);
             }
 

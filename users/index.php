@@ -1,23 +1,23 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $headmod = 'users';
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -36,10 +36,10 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Закрываем от неавторизованных юзеров
-if (!$systemUser->isValid() && !$config->active) {
-    require('../system/head.php');
+if (! $systemUser->isValid() && ! $config->active) {
+    require '../system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -51,10 +51,10 @@ $array = [
     'top'      => 'includes',
     'userlist' => 'includes',
 ];
-$path = !empty($array[$act]) ? $array[$act] . '/' : '';
+$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once($path . $act . '.php');
+    require_once $path . $act . '.php';
 } else {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -64,10 +64,10 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 
     // Актив сайта
     $textl = _t('Community');
-    require('../system/head.php');
+    require '../system/head.php';
 
     $brth = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
-    $count_adm = $db->query("SELECT COUNT(*) FROM `users` WHERE `rights` > 0")->fetchColumn();
+    $count_adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0')->fetchColumn();
 
     echo '<div class="phdr"><b>' . _t('Community') . '</b></div>' .
         '<div class="gmenu"><form action="search.php" method="post">' .
@@ -85,4 +85,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
 }
 
-require_once('../system/end.php');
+require_once '../system/end.php';

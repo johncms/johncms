@@ -1,16 +1,16 @@
 <?php
-/**
- * JohnCMS Content Management System (https://johncms.com)
+
+declare(strict_types=1);
+
+/*
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        https://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -52,7 +52,7 @@ if ($id && $id != $systemUser->id) {
     $error = _t('Wrong data');
 }
 
-if (!$error) {
+if (! $error) {
     // Считаем комментарии в библиотеке
     $comm_lib = (int)$db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
@@ -84,7 +84,6 @@ if (!$error) {
         ]) . '</p></div>';
 
     switch ($mod) {
-
         case 'del':
             // Удаляем личные данные
             $del = new Johncms\CleanUser;
@@ -104,7 +103,7 @@ if (!$error) {
             $del->removeUser($user['id']);          // Удаляем пользователя
 
             // Оптимизируем таблицы
-            $db->query("
+            $db->query('
                 OPTIMIZE TABLE
                 `cms_users_iphistory`,
                 `cms_ban_users`,
@@ -118,7 +117,7 @@ if (!$error) {
                 `cms_album_cat`,
                 `cms_album_files`,
                 `cms_forum_rdm`
-            ");
+            ');
 
             echo '<div class="rmenu"><p><h3>' . _t('User deleted') . '</h3></p></div>';
             break;

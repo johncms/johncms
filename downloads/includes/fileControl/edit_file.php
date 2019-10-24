@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,7 +28,7 @@ $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . 
 $res_down = $req_down->fetch();
 
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
+    if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
         echo '<a href="?">' . _t('Downloads') . '</a>';
         require '../system/end.php';
         exit;
@@ -39,12 +39,12 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
 
         if ($name_link && $name) {
-            $stmt = $db->prepare("
+            $stmt = $db->prepare('
             UPDATE `download__files` SET
             `rus_name` = ?,
             `text`     = ?
             WHERE `id` = ?
-        ");
+        ');
 
             $stmt->execute([
                 $name,

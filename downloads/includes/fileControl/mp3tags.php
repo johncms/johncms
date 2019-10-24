@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,7 +29,7 @@ require 'classes/getid3/getid3.php';
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name']) || pathinfo($res_down['name'], PATHINFO_EXTENSION) != 'mp3' || $systemUser->rights < 6) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || pathinfo($res_down['name'], PATHINFO_EXTENSION) != 'mp3' || $systemUser->rights < 6) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
     require '../system/end.php';
     exit;
@@ -41,17 +41,17 @@ $getID3 = new getID3;
 $getID3->encoding = 'cp1251';
 $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);
 
-if (!empty($getid['tags']['id3v2'])) {
+if (! empty($getid['tags']['id3v2'])) {
     $tagsArray = $getid['tags']['id3v2'];
-} elseif (!empty($getid['tags']['id3v1'])) {
+} elseif (! empty($getid['tags']['id3v1'])) {
     $tagsArray = $getid['tags']['id3v1'];
 }
 
 if (isset($_POST['submit'])) {
     $tagsArray['artist'][0] = isset($_POST['artist']) ? Download::mp3tagsOut($_POST['artist'], 1) : '';
     $tagsArray['title'][0] = isset($_POST['title']) ? Download::mp3tagsOut($_POST['title'], 1) : '';
-    $tagsArray['album'][0] = isset($_POST['album']) && !empty($_POST['album']) ? Download::mp3tagsOut($_POST['album'], 1) : '';
-    $tagsArray['genre'][0] = isset($_POST['genre']) && !empty($_POST['genre']) ? Download::mp3tagsOut($_POST['genre'], 1) : '';
+    $tagsArray['album'][0] = isset($_POST['album']) && ! empty($_POST['album']) ? Download::mp3tagsOut($_POST['album'], 1) : '';
+    $tagsArray['genre'][0] = isset($_POST['genre']) && ! empty($_POST['genre']) ? Download::mp3tagsOut($_POST['genre'], 1) : '';
     $tagsArray['year'][0] = isset($_POST['year']) ? (int)$_POST['year'] : 0;
     require 'classes/getid3/write.php';
     $tagsWriter = new getid3_writetags;

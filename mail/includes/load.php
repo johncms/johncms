@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,24 +28,23 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($id) {
-    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '$id' AND `file_name` != '' AND `delete`!='" . $systemUser->id . "' LIMIT 1");
+    $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '${id}' AND `file_name` != '' AND `delete`!='" . $systemUser->id . "' LIMIT 1");
 
-    if (!$req->rowCount()) {
+    if (! $req->rowCount()) {
         //Выводим ошибку
         echo $tools->displayError(_t('Such file does not exist'));
-        require_once("../system/end.php");
+        require_once '../system/end.php';
         exit;
     }
 
     $res = $req->fetch();
 
     if (file_exists('../files/mail/' . $res['file_name'])) {
-        $db->exec("UPDATE `cms_mail` SET `count` = `count`+1 WHERE `id` = '$id' LIMIT 1");
+        $db->exec("UPDATE `cms_mail` SET `count` = `count`+1 WHERE `id` = '${id}' LIMIT 1");
         header('Location: ../files/mail/' . $res['file_name']);
         exit;
-    } else {
-        echo $tools->displayError(_t('Such file does not exist'));
     }
+    echo $tools->displayError(_t('Such file does not exist'));
 } else {
     echo $tools->displayError(_t('No file selected'));
 }

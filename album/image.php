@@ -1,37 +1,38 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 function format($name)
 {
-    $f1 = strrpos($name, ".");
+    $f1 = strrpos($name, '.');
     $f2 = substr($name, $f1 + 1, 999);
     $fname = strtolower($f2);
+
     return $fname;
 }
 
-$u = isset($_GET['u']) ? abs(intval($_GET['u'])) : NULL;
-$file = isset($_GET['f']) ? htmlspecialchars(urldecode($_GET['f'])) : NULL;
+$u = isset($_GET['u']) ? abs((int) ($_GET['u'])) : null;
+$file = isset($_GET['f']) ? htmlspecialchars(urldecode($_GET['f'])) : null;
 
 if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
     $att_ext = strtolower(format('../files/users/album/' . $u . '/' . $file));
-    $pic_ext = array(
+    $pic_ext = [
         'gif',
         'jpg',
         'jpeg',
-        'png'
-    );
+        'png',
+    ];
 
     if (in_array($att_ext, $pic_ext)) {
-        $sizs = GetImageSize('../files/users/album/' . $u . '/' . $file);
+        $sizs = getimagesize('../files/users/album/' . $u . '/' . $file);
         $razm = 230;
         $width = $sizs[0];
         $height = $sizs[1];
@@ -41,7 +42,7 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         if (($width <= $razm) && ($height <= $razm)) {
             $tn_width = $width;
             $tn_height = $height;
-        } else if (($x_ratio * $height) < $razm) {
+        } elseif (($x_ratio * $height) < $razm) {
             $tn_height = ceil($x_ratio * $height);
             $tn_width = $razm;
         } else {
@@ -50,20 +51,20 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         }
 
         switch ($att_ext) {
-            case "gif":
-                $im = ImageCreateFromGIF('../files/users/album/' . $u . '/' . $file);
+            case 'gif':
+                $im = imagecreatefromgif('../files/users/album/' . $u . '/' . $file);
                 break;
 
-            case "jpg":
-                $im = ImageCreateFromJPEG('../files/users/album/' . $u . '/' . $file);
+            case 'jpg':
+                $im = imagecreatefromjpeg('../files/users/album/' . $u . '/' . $file);
                 break;
 
-            case "jpeg":
-                $im = ImageCreateFromJPEG('../files/users/album/' . $u . '/' . $file);
+            case 'jpeg':
+                $im = imagecreatefromjpeg('../files/users/album/' . $u . '/' . $file);
                 break;
 
-            case "png":
-                $im = ImageCreateFromPNG('../files/users/album/' . $u . '/' . $file);
+            case 'png':
+                $im = imagecreatefrompng('../files/users/album/' . $u . '/' . $file);
                 break;
         }
 
@@ -71,8 +72,8 @@ if ($u && $file && file_exists('../files/users/album/' . $u . '/' . $file)) {
         imagecopyresized($im1, $im, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
         // Передача изображения в Браузер
         ob_start();
-        imageJpeg($im1, NULL, 60);
-        ImageDestroy($im);
+        imagejpeg($im1, null, 60);
+        imagedestroy($im);
         imagedestroy($im1);
         header('Content-Type: image/jpeg');
         header('Content-Disposition: inline; filename=thumbinal.jpg');

@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail') . ' | ' . _t('Files');
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -45,7 +45,7 @@ if ($total) {
 	    AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 	    AND `cms_mail`.`file_name`!=''
 	    ORDER BY `cms_mail`.`time` DESC
-	    LIMIT " . $start . "," . $kmess);
+	    LIMIT " . $start . ',' . $kmess);
 
     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
@@ -55,7 +55,6 @@ if ($total) {
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
-
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 

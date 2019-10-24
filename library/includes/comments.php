@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,26 +27,26 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-if (!$systemUser->isValid()) {
+if (! $systemUser->isValid()) {
     echo $tools->displayError(_t('Access forbidden'));
-    require_once('../system/end.php');
+    require_once '../system/end.php';
     exit;
 }
 
 // Проверяем наличие комментируемого объекта
-$req_obj = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id);
+$req_obj = $db->query('SELECT * FROM `library_texts` WHERE `id`=' . $id);
 
 if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
-    if (!$res_obj) {
+    if (! $res_obj) {
         echo $tools->displayError(_t('Access forbidden'));
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 
     $obj = new Library\Hashtags($id);
-    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id`=" . $res_obj['cat_id'] . " LIMIT 1")->fetch();
+    $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id`=' . $res_obj['cat_id'] . ' LIMIT 1')->fetch();
     $context_top =
         '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
@@ -84,7 +84,7 @@ if ($req_obj->rowCount()) {
     $comm = new Johncms\Comments($arg);
 
     if ($comm->added) {
-        $db->exec("UPDATE `library_texts` SET `comm_count`=" . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . " WHERE `id`=" . $id);
+        $db->exec('UPDATE `library_texts` SET `comm_count`=' . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . ' WHERE `id`=' . $id);
     }
 } else {
     echo $tools->displayError(_t('Wrong data'));

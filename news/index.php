@@ -1,21 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
 $headmod = 'news';
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
@@ -36,7 +36,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('News');
-require('../system/head.php');
+require '../system/head.php';
 
 switch ($do) {
     case 'add':
@@ -50,11 +50,11 @@ switch ($do) {
                 $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : false;
                 $text = isset($_POST['text']) ? trim($_POST['text']) : false;
 
-                if (!$name) {
+                if (! $name) {
                     $error[] = _t('You have not entered news title');
                 }
 
-                if (!$text) {
+                if (! $text) {
                     $error[] = _t('You have not entered news text');
                 }
 
@@ -64,13 +64,13 @@ switch ($do) {
                     $error[] = sprintf(_t('You cannot add the message so often. Please, wait %d seconds.'), $flood);
                 }
 
-                if (!$error) {
+                if (! $error) {
                     $rid = 0;
 
-                    if (!empty($_POST['pf']) && ($_POST['pf'] != '0')) {
-                        $pf = intval($_POST['pf']);
+                    if (! empty($_POST['pf']) && ($_POST['pf'] != '0')) {
+                        $pf = (int) ($_POST['pf']);
                         $rz = $_POST['rz'];
-                        $pr = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '$pf'");
+                        $pr = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${pf}'");
 
                         while ($pr1 = $pr->fetch()) {
                             $arr[] = $pr1['id'];
@@ -96,7 +96,7 @@ switch ($do) {
                                     $systemUser->id,
                                     $systemUser->name,
                                     $name,
-                                    time()
+                                    time(),
                                 ]);
 
                                 /** @var Johncms\Api\EnvironmentInterface $env */
@@ -155,7 +155,7 @@ switch ($do) {
                     '<p><h3>' . _t('Text') . '</h3>' .
                     '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text"></textarea></p>' .
                     '<p><h3>' . _t('Discussion') . '</h3>';
-                $fr = $db->query("SELECT * FROM `forum_sections` WHERE `section_type` = 0");
+                $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
                 echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
 
                 while ($fr1 = $fr->fetch()) {
@@ -174,7 +174,7 @@ switch ($do) {
                     '<p><a href="index.php">' . _t('Back to news') . '</a></p>';
             }
         } else {
-            header("location: index.php");
+            header('location: index.php');
         }
         break;
 
@@ -183,9 +183,9 @@ switch ($do) {
         if ($systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
-            if (!$id) {
+            if (! $id) {
                 echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
-                require('../system/end.php');
+                require '../system/end.php';
                 exit;
             }
 
@@ -203,7 +203,7 @@ switch ($do) {
                 $name = htmlspecialchars(trim($_POST['name']));
                 $text = trim($_POST['text']);
 
-                if (!$error) {
+                if (! $error) {
                     $db->prepare('
                       UPDATE `news` SET
                       `name` = ?,
@@ -219,7 +219,7 @@ switch ($do) {
                 }
                 echo '<p>' . _t('Article changed') . '<br /><a href="index.php">' . _t('Continue') . '</a></p>';
             } else {
-                $res = $db->query("SELECT * FROM `news` WHERE `id` = '$id'")->fetch();
+                $res = $db->query("SELECT * FROM `news` WHERE `id` = '${id}'")->fetch();
 
                 echo '<div class="menu"><form action="index.php?do=edit&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Title') . '</h3>' .
@@ -241,27 +241,27 @@ switch ($do) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
 
             if (isset($_POST['submit'])) {
-                $cl = isset($_POST['cl']) ? intval($_POST['cl']) : '';
+                $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
 
                 switch ($cl) {
                     case '1':
                         // Чистим новости, старше 1 недели
-                        $db->query("DELETE FROM `news` WHERE `time` <= " . (time() - 604800));
-                        $db->query("OPTIMIZE TABLE `news`");
+                        $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
+                        $db->query('OPTIMIZE TABLE `news`');
 
                         echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
-                        $db->query("TRUNCATE TABLE `news`");
+                        $db->query('TRUNCATE TABLE `news`');
 
                         echo '<p>' . _t('Delete all news') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                         break;
-                    default :
+                    default:
                         // Чистим сообщения, старше 1 месяца
-                        $db->query("DELETE FROM `news` WHERE `time` <= " . (time() - 2592000));
-                        $db->query("OPTIMIZE TABLE `news`;");
+                        $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
+                        $db->query('OPTIMIZE TABLE `news`;');
 
                         echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
                 }
@@ -276,7 +276,7 @@ switch ($do) {
                     '<div class="phdr"><a href="index.php">' . _t('Cancel') . '</a></div>';
             }
         } else {
-            header("location: index.php");
+            header('location: index.php');
         }
         break;
 
@@ -286,7 +286,7 @@ switch ($do) {
             echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
 
             if (isset($_GET['yes'])) {
-                $db->query("DELETE FROM `news` WHERE `id` = '$id'");
+                $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
 
                 echo '<p>' . _t('Article deleted') . '<br><a href="index.php">' . _t('Back to news') . '</a></p>';
             } else {
@@ -294,7 +294,7 @@ switch ($do) {
                     '<a href="index.php?do=del&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="index.php">' . _t('Cancel') . '</a></p>';
             }
         } else {
-            header("location: index.php");
+            header('location: index.php');
         }
         break;
 
@@ -306,8 +306,8 @@ switch ($do) {
             echo '<div class="topmenu"><a href="index.php?do=add">' . _t('Add') . '</a> | <a href="index.php?do=clean">' . _t('Clear') . '</a></div>';
         }
 
-        $total = $db->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
-        $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT $start, $kmess");
+        $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
+        $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
         $i = 0;
 
         while ($res = $req->fetch()) {
@@ -318,10 +318,10 @@ switch ($do) {
                 '<span class="gray"><small>' . _t('Author') . ': ' . $res['avt'] . ' (' . $tools->displayDate($res['time']) . ')</small></span>' .
                 '<br />' . $text . '<div class="sub">';
 
-            if ($res['kom'] != 0 && $res['kom'] != "") {
+            if ($res['kom'] != 0 && $res['kom'] != '') {
                 $res_mes = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
                 $komm = 0;
-                if($mes = $res_mes->fetch()) {
+                if ($mes = $res_mes->fetch()) {
                     $komm = $mes['post_count'] - 1;
                 }
                 if ($komm >= 0) {
@@ -347,4 +347,4 @@ switch ($do) {
         }
 }
 
-require('../system/end.php');
+require '../system/end.php';

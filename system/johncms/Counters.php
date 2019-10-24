@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -35,7 +35,6 @@ class Counters
 
     public function __invoke(ContainerInterface $container)
     {
-
         $this->db = $container->get(\PDO::class);
         $this->systemUser = $container->get(Api\UserInterface::class);
         $this->tools = $container->get(Api\ToolsInterface::class);
@@ -89,13 +88,13 @@ class Counters
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = unserialize(file_get_contents($file));
-            $total = isset($res['total']) ? $res['total'] : 0;
-            $new = isset($res['new']) ? $res['new'] : 0;
-            $mod = isset($res['mod']) ? $res['mod'] : 0;
+            $total = $res['total'] ?? 0;
+            $new = $res['new'] ?? 0;
+            $mod = $res['mod'] ?? 0;
         } else {
             $old = time() - (3 * 24 * 3600);
             $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
+            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '${old}'")->fetchColumn();
             $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
             file_put_contents($file, serialize(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
@@ -156,22 +155,21 @@ class Counters
             $total = $this->db->query("SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->systemUser->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`) 
-                " . ($this->systemUser->rights >= 7 ? "" : " AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)") . "
-                ")->fetchColumn();
+                " . ($this->systemUser->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                ')->fetchColumn();
 
             if ($mod) {
                 return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
                     ($total ? '<br><a href="index.php?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
-            } else {
-                return $total;
             }
-        } else {
-            if ($mod) {
-                return '<a href="index.php?act=new">' . _t('Last activity', 'system') . '</a>';
-            } else {
-                return false;
-            }
+
+            return $total;
         }
+        if ($mod) {
+            return '<a href="index.php?act=new">' . _t('Last activity', 'system') . '</a>';
+        }
+
+        return false;
     }
 
     /**

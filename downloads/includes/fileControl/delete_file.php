@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,7 +27,7 @@ require '../system/head.php';
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
     require '../system/end.php';
     exit;
@@ -49,7 +49,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         }
 
         @unlink(ROOT_PATH . 'files/download/java_icons/' . $id . '.png');
-        $req_file_more = $db->query("SELECT * FROM `download__more` WHERE `refid` = " . $id);
+        $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id);
 
         if ($req_file_more->rowCount()) {
             while ($res_file_more = $req_file_more->fetch()) {
@@ -60,18 +60,18 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 @unlink(ROOT_PATH . 'files/download/java_icons/' . $res_file_more['id'] . '_' . $id . '.png');
             }
 
-            $db->exec("DELETE FROM `download__more` WHERE `refid` = " . $id);
+            $db->exec('DELETE FROM `download__more` WHERE `refid` = ' . $id);
         }
 
-        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id` = " . $id);
-        $db->exec("DELETE FROM `download__comments` WHERE `sub_id` = " . $id);
+        $db->exec('DELETE FROM `download__bookmark` WHERE `file_id` = ' . $id);
+        $db->exec('DELETE FROM `download__comments` WHERE `sub_id` = ' . $id);
         @unlink($res_down['dir'] . '/' . $res_down['name']);
         $dirid = $res_down['refid'];
         $sql = '';
         $i = 0;
 
-        while ($dirid != '0' && $dirid != "") {
-            $res = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
+        while ($dirid != '0' && $dirid != '') {
+            $res = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
             if ($i) {
                 $sql .= ' OR ';
             }
@@ -80,9 +80,9 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             ++$i;
         }
 
-        $db->exec("UPDATE `download__category` SET `total` = (`total`-1) WHERE $sql");
-        $db->exec("DELETE FROM `download__files` WHERE `id` = " . $id);
-        $db->query("OPTIMIZE TABLE `download__files`");
+        $db->exec("UPDATE `download__category` SET `total` = (`total`-1) WHERE ${sql}");
+        $db->exec('DELETE FROM `download__files` WHERE `id` = ' . $id);
+        $db->query('OPTIMIZE TABLE `download__files`');
         header('Location: ?id=' . $res_down['refid']);
     } else {
         echo '<div class="phdr"><b>' . _t('Delete File') . '</b></div>' .

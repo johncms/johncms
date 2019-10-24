@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -27,7 +27,7 @@ require '../system/head.php';
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'])) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
     require '../system/end.php';
     exit;
@@ -36,12 +36,12 @@ if (!$req_down->rowCount() || !is_file($res_down['dir'] . '/' . $res_down['name'
 $do = isset($_GET['do']) ? trim($_GET['do']) : '';
 
 if ($systemUser->rights > 6) {
-    $catId = isset($_GET['catId']) ? abs(intval($_GET['catId'])) : 0;
+    $catId = isset($_GET['catId']) ? abs((int) ($_GET['catId'])) : 0;
 
     if ($catId) {
-        $queryDir = $db->query("SELECT * FROM `download__category` WHERE `id` = '$catId' LIMIT 1");
+        $queryDir = $db->query("SELECT * FROM `download__category` WHERE `id` = '${catId}' LIMIT 1");
 
-        if (!$queryDir->rowCount()) {
+        if (! $queryDir->rowCount()) {
             $catId = 0;
         }
     }
@@ -74,19 +74,18 @@ if ($systemUser->rights > 6) {
                     if (is_file($newFile)) {
                         $name = time() . '_' . $res_down['name'];
                         $newFile = $resDir['dir'] . '/' . $name;
-
                     }
 
                     copy($res_down['dir'] . '/' . $res_down['name'], $newFile);
                     unlink($res_down['dir'] . '/' . $res_down['name']);
 
-                    $stmt = $db->prepare("
+                    $stmt = $db->prepare('
                         UPDATE `download__files` SET
                         `name`     = ?,
                         `dir`      = ?,
                         `refid`    = ?
                         WHERE `id` = ?
-                    ");
+                    ');
 
                     $stmt->execute([
                         $name,
@@ -105,7 +104,7 @@ if ($systemUser->rights > 6) {
             break;
 
         default:
-            $queryCat = $db->query("SELECT * FROM `download__category` WHERE `refid` = '$catId'");
+            $queryCat = $db->query("SELECT * FROM `download__category` WHERE `refid` = '${catId}'");
             $totalCat = $queryCat->rowCount();
             $i = 0;
 

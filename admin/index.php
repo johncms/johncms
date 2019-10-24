@@ -1,25 +1,25 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-@ini_set("max_execution_time", "600");
+@ini_set('max_execution_time', '600');
 define('_IN_JOHNCMS', 1);
 define('_IN_JOHNADM', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -42,7 +42,7 @@ if ($systemUser->rights < 1) {
 
 $headmod = 'admin';
 $textl = _t('Admin Panel');
-require('../system/head.php');
+require '../system/head.php';
 
 $array = [
     'forum',
@@ -71,7 +71,7 @@ $array = [
 ];
 
 if ($act && ($key = array_search($act, $array)) !== false && file_exists('includes/' . $array[$key] . '.php')) {
-    require('includes/' . $array[$key] . '.php');
+    require 'includes/' . $array[$key] . '.php';
 } else {
     $regtotal = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
     $bantotal = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `ban_time` > '" . time() . "'")->fetchColumn();
@@ -134,4 +134,4 @@ if ($act && ($key = array_search($act, $array)) !== false && file_exists('includ
     echo '<div class="phdr" style="font-size: x-small"><b>JohnCMS 8.0.0</b></div>';
 }
 
-require('../system/end.php');
+require '../system/end.php';

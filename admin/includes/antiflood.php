@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -34,11 +34,11 @@ echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a>
 
 if (isset($_POST['submit']) || isset($_POST['save'])) {
     // Принимаем данные из формы
-    $set_af['mode'] = isset($_POST['mode']) && $_POST['mode'] > 0 && $_POST['mode'] < 5 ? intval($_POST['mode']) : 1;
-    $set_af['day'] = isset($_POST['day']) ? intval($_POST['day']) : 10;
-    $set_af['night'] = isset($_POST['night']) ? intval($_POST['night']) : 30;
-    $set_af['dayfrom'] = isset($_POST['dayfrom']) ? intval($_POST['dayfrom']) : 10;
-    $set_af['dayto'] = isset($_POST['dayto']) ? intval($_POST['dayto']) : 22;
+    $set_af['mode'] = isset($_POST['mode']) && $_POST['mode'] > 0 && $_POST['mode'] < 5 ? (int) ($_POST['mode']) : 1;
+    $set_af['day'] = isset($_POST['day']) ? (int) ($_POST['day']) : 10;
+    $set_af['night'] = isset($_POST['night']) ? (int) ($_POST['night']) : 30;
+    $set_af['dayfrom'] = isset($_POST['dayfrom']) ? (int) ($_POST['dayfrom']) : 10;
+    $set_af['dayto'] = isset($_POST['dayto']) ? (int) ($_POST['dayto']) : 22;
 
     // Проверяем правильность ввода данных
     if ($set_af['day'] < 4) {
@@ -76,7 +76,7 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
     $config['antiflood'] = $set_af;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    if (!file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+    if (! file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
         echo 'ERROR: Can not write system.local.php</body></html>';
         exit;
     }

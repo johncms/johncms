@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Подробная информация, контактные данные
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Information');
-require('../system/head.php');
+require '../system/head.php';
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Information') . '</div>';
 
 if ($user['id'] == $systemUser->id || ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'])) {
@@ -40,7 +40,7 @@ if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
 }
 
 echo '<li><span class="gray">' . _t('Name') . ':</span> ' . (empty($user['imname']) ? '' : $user['imname']) . '</li>' .
-    '<li><span class="gray">' . _t('Birthday') . ':</span> ' . (empty($user['dayb']) ? '' : sprintf("%02d", $user['dayb']) . '.' . sprintf("%02d", $user['monthb']) . '.' . $user['yearofbirth']) . '</li>' .
+    '<li><span class="gray">' . _t('Birthday') . ':</span> ' . (empty($user['dayb']) ? '' : sprintf('%02d', $user['dayb']) . '.' . sprintf('%02d', $user['monthb']) . '.' . $user['yearofbirth']) . '</li>' .
     '<li><span class="gray">' . _t('City, Country') . ':</span> ' . (empty($user['live']) ? '' : $user['live']) . '</li>' .
     '<li><span class="gray">' . _t('About myself') . ':</span> ' . (empty($user['about']) ? '' : '<br />' . $tools->smilies($tools->checkout($user['about'], 1, 1))) . '</li>' .
     '</ul></p><p>' .
@@ -48,7 +48,7 @@ echo '<li><span class="gray">' . _t('Name') . ':</span> ' . (empty($user['imname
     '<li><span class="gray">' . _t('Phone number') . ':</span> ' . (empty($user['mibile']) ? '' : $user['mibile']) . '</li>' .
     '<li><span class="gray">E-mail:</span> ';
 
-if (!empty($user['mail']) && $user['mailvis'] || $systemUser->rights >= 7 || $user['id'] == $systemUser->id) {
+if (! empty($user['mail']) && $user['mailvis'] || $systemUser->rights >= 7 || $user['id'] == $systemUser->id) {
     echo $user['mail'] . ($user['mailvis'] ? '' : '<span class="gray"> [' . _t('hidden') . ']</span>');
 }
 

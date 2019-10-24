@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 define('ROOT_DIR', '..');
 
 /** @var Johncms\Api\UserInterface $systemUser */
@@ -255,14 +255,20 @@ class scaner
     ];
 
     public $snap_base = 'scan_snapshot.dat';
+
     public $snap_files = [];
+
     public $bad_files = [];
+
     public $snap = false;
+
     public $track_files = [];
+
     private $checked_folders = [];
+
     private $cache_files = [];
 
-    function scan()
+    public function scan()
     {
         // Сканирование на соответствие дистрибутиву
         foreach ($this->scan_folders as $data) {
@@ -270,14 +276,14 @@ class scaner
         }
     }
 
-    function snapscan()
+    public function snapscan()
     {
         // Сканирование по образу
         if (file_exists('../files/cache/' . $this->snap_base)) {
             $filecontents = file('../files/cache/' . $this->snap_base);
 
             foreach ($filecontents as $name => $value) {
-                $filecontents[$name] = explode("|", trim($value));
+                $filecontents[$name] = explode('|', trim($value));
                 $this->track_files[$filecontents[$name][0]] = $filecontents[$name][1];
             }
 
@@ -289,29 +295,29 @@ class scaner
         }
     }
 
-    function snap()
+    public function snap()
     {
         // Добавляем снимок надежных файлов в базу
         foreach ($this->scan_folders as $data) {
             $this->scan_files(ROOT_DIR . $data, true);
         }
 
-        $filecontents = "";
+        $filecontents = '';
 
         foreach ($this->snap_files as $idx => $data) {
-            $filecontents .= $data['file_path'] . "|" . $data['file_crc'] . "\r\n";
+            $filecontents .= $data['file_path'] . '|' . $data['file_crc'] . "\r\n";
         }
 
-        $filehandle = fopen('../files/cache/' . $this->snap_base, "w+");
+        $filehandle = fopen('../files/cache/' . $this->snap_base, 'w+');
         fwrite($filehandle, $filecontents);
         fclose($filehandle);
         @chmod('../files/cache/' . $this->snap_base, 0666);
     }
 
-    function scan_files($dir, $snap = false)
+    public function scan_files($dir, $snap = false)
     {
         // Служебная функция сканирования
-        if (!isset($file)) {
+        if (! isset($file)) {
             $file = false;
         }
 
@@ -319,7 +325,7 @@ class scaner
 
         if ($dh = @opendir($dir)) {
             while (false !== ($file = readdir($dh))) {
-                if ($file == '.' or $file == '..' or $file == '.svn' or $file == '.DS_store') {
+                if ($file == '.' || $file == '..' || $file == '.svn' || $file == '.DS_store') {
                     continue;
                 }
 
@@ -328,17 +334,17 @@ class scaner
                         $this->scan_files($dir . '/' . $file, $snap);
                     }
                 } else {
-                    if ($this->snap or $snap) {
-                        $templates = "|tpl";
+                    if ($this->snap || $snap) {
+                        $templates = '|tpl';
                     } else {
-                        $templates = "";
+                        $templates = '';
                     }
 
-                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ")$#i", $file)) {
-                        $folder = str_replace("../..", ".", $dir);
+                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ')$#i', $file)) {
+                        $folder = str_replace('../..', '.', $dir);
                         $file_size = filesize($dir . '/' . $file);
                         $file_crc = strtoupper(dechex(crc32(file_get_contents($dir . '/' . $file))));
-                        $file_date = date("d.m.Y H:i:s", filectime($dir . '/' . $file));
+                        $file_date = date('d.m.Y H:i:s', filectime($dir . '/' . $file));
 
                         if ($snap) {
                             $this->snap_files[] = [
@@ -347,7 +353,7 @@ class scaner
                             ];
                         } else {
                             if ($this->snap) {
-                                if ($this->track_files[$folder . '/' . $file] != $file_crc and !in_array($folder . '/' . $file, $this->cache_files)) {
+                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file, $this->cache_files)) {
                                     $this->bad_files[] = [
                                         'file_path' => $folder . '/' . $file,
                                         'file_name' => $file,
@@ -357,7 +363,7 @@ class scaner
                                     ];
                                 }
                             } else {
-                                if (!in_array($folder . '/' . $file, $this->good_files) or $file_size > 300000) {
+                                if (! in_array($folder . '/' . $file, $this->good_files) || $file_size > 300000) {
                                     $this->bad_files[] = [
                                         'file_path' => $folder . '/' . $file,
                                         'file_name' => $file,

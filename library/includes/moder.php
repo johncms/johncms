@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -38,16 +38,16 @@ if (isset($_GET['type']) && in_array($_GET['type'], ['dir', 'article'])) {
     Utils::redir404();
 }
 
-$author = ($type == 'article' && $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) ? 1 : 0;
+$author = ($type == 'article' && $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) ? 1 : 0;
 
-if (!$adm || (!$author && $type == 'article')) {
+if (! $adm || (! $author && $type == 'article')) {
     Utils::redir404();
 }
 
 if (isset($_POST['submit'])) {
     switch ($type) {
         case 'dir':
-            $sql = "UPDATE `library_cats` SET `name`=" . $db->quote($_POST['name']) . ", `description`=" . $db->quote($_POST['description']) . " " . (isset($_POST['move']) && $db->query("SELECT count(*) FROM `library_cats`")->fetchColumn() > 1 ? ', `parent`=' . intval($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . intval($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . intval($_POST['user_add']) : '') . " WHERE `id`=" . $id;
+            $sql = 'UPDATE `library_cats` SET `name`=' . $db->quote($_POST['name']) . ', `description`=' . $db->quote($_POST['description']) . ' ' . (isset($_POST['move']) && $db->query('SELECT count(*) FROM `library_cats`')->fetchColumn() > 1 ? ', `parent`=' . (int) ($_POST['move']) : '') . (isset($_POST['dir']) ? ', `dir`=' . (int) ($_POST['dir']) : '') . (isset($_POST['user_add']) ? ' , `user_add`=' . (int) ($_POST['user_add']) : '') . ' WHERE `id`=' . $id;
             break;
 
         case 'article':
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
             if (isset($_POST['tags'])) {
                 $obj->delCache();
                 $tags = array_map('trim', explode(',', $_POST['tags']));
-                if (sizeof($tags > 0)) {
+                if (count($tags > 0)) {
                     $obj->addTags($tags);
                 }
             }
@@ -103,24 +103,23 @@ if (isset($_POST['submit'])) {
                 }
                 $handle->clean();
             }
-            $sql = "UPDATE `library_texts` SET `name`=" . $db->quote($_POST['name']) . ", " . ($_POST['text'] != 'do_not_change' ? " `text`=" . $db->quote($_POST['text']) . ", " : '') . " " . (isset($_POST['move']) ? '`cat_id`=' . intval($_POST['move']) . ', ' : '') . " `announce`=" . $db->quote(mb_substr(trim($_POST['announce']),
+            $sql = 'UPDATE `library_texts` SET `name`=' . $db->quote($_POST['name']) . ', ' . ($_POST['text'] != 'do_not_change' ? ' `text`=' . $db->quote($_POST['text']) . ', ' : '') . ' ' . (isset($_POST['move']) ? '`cat_id`=' . (int) ($_POST['move']) . ', ' : '') . ' `announce`=' . $db->quote(mb_substr(trim($_POST['announce']),
                     0,
-                    500)) . " " . ($adm ? ", `count_views`=" . intval($_POST['count_views']) . ", `premod`=" . intval($_POST['premod']) . ", `comments`=" . (isset($_POST['comments']) ? intval($_POST['comments']) : 0) : '') . " WHERE `id`=" . $id;
+                    500)) . ' ' . ($adm ? ', `count_views`=' . (int) ($_POST['count_views']) . ', `premod`=' . (int) ($_POST['premod']) . ', `comments`=' . (isset($_POST['comments']) ? (int) ($_POST['comments']) : 0) : '') . ' WHERE `id`=' . $id;
             break;
     }
     $db->exec($sql);
     echo '<div>' . _t('Changed') . '</div><div><a href="?do=' . ($type == 'dir' ? 'dir' : 'text') . '&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
-
 } else {
     $child_dir = new Tree($id);
     $childrens = $child_dir->getChildsDir()->result();
-    $sqlsel = $db->query("SELECT " . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ", `name` FROM `library_cats` "
-        . "WHERE `dir`=" . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && sizeof($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
-    $row = $db->query("SELECT * FROM `" . ($type == 'article' ? 'library_texts' : 'library_cats') . "` WHERE `id`=" . $id)->fetch();
-    $empty = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=" . $id)->fetchColumn() > 0
-            || $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=" . $id)->fetchColumn() > 0 ? 0 : 1;
+    $sqlsel = $db->query('SELECT ' . ($type == 'dir' ? '`id`, `parent`' : '`id`') . ', `name` FROM `library_cats` '
+        . 'WHERE `dir`=' . ($type == 'dir' ? 1 : 0) . ' ' . ($type == 'dir' && count($childrens) ? 'AND `id` NOT IN(' . implode(', ', $childrens) . ')' : ''));
+    $row = $db->query('SELECT * FROM `' . ($type == 'article' ? 'library_texts' : 'library_cats') . '` WHERE `id`=' . $id)->fetch();
+    $empty = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=' . $id)->fetchColumn() > 0
+            || $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `cat_id`=' . $id)->fetchColumn() > 0 ? 0 : 1;
 
-    if (!$row) {
+    if (! $row) {
         Utils::redir404();
     }
 
@@ -174,7 +173,7 @@ if (isset($_POST['submit'])) {
             }
             echo '</select></div>';
         }
-        echo (($type == 'dir' && $empty)
+        echo(($type == 'dir' && $empty)
                 ? '<h3>' . _t('Section type') . '</h3><div><input type="radio" name="dir" value="1" '
                 . ($row['dir'] == 1
                     ? 'checked="checked"'
@@ -190,7 +189,7 @@ if (isset($_POST['submit'])) {
                 . ($row['comments'] > 0 ? 'checked="checked"' : '') . ' /> ' . _t('Commenting on the Article') . '</div>'
                 . '<div class="rmenu">'
                 . '<h3>' . _t('Number of readings')
-                . '</h3><div><input type="text" name="count_views" value="' . intval($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
+                . '</h3><div><input type="text" name="count_views" value="' . (int) ($row['count_views']) . '" /></div></div>' . PHP_EOL : '');
     }
     echo '<div class="bmenu"><input type="submit" name="submit" value="' . _t('Save') . '" />'
         . '</div></div></form>' . PHP_EOL

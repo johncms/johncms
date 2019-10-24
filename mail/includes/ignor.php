@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -35,9 +35,9 @@ if (isset($_GET['del'])) {
         //Проверяем существование пользователя
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
-        if (!$req->rowCount()) {
+        if (! $req->rowCount()) {
             echo $tools->displayError(_t('User does not exists'));
-            require_once("../system/end.php");
+            require_once '../system/end.php';
             exit;
         }
 
@@ -45,10 +45,10 @@ if (isset($_GET['del'])) {
         if (isset($_POST['submit'])) {
             $q = $db->query("SELECT * FROM `cms_contact` WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='" . $id . "' AND `ban`='1'");
 
-            if (!$q->rowCount()) {
+            if (! $q->rowCount()) {
                 echo '<div class="rmenu">' . _t('User not blocked') . '</div>';
             } else {
-                $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id' AND `ban`='1'");
+                $db->exec("UPDATE `cms_contact` SET `ban`='0' WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='${id}' AND `ban`='1'");
                 echo '<div class="rmenu">' . _t('User is unblocked') . '</div>';
             }
         } else {
@@ -64,9 +64,9 @@ if (isset($_GET['del'])) {
     if ($id) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
-        if (!$req->rowCount()) {
+        if (! $req->rowCount()) {
             echo $tools->displayError(_t('User does not exists'));
-            require_once("../system/end.php");
+            require_once '../system/end.php';
             exit;
         }
 
@@ -80,15 +80,15 @@ if (isset($_GET['del'])) {
                 $q = $db->query("SELECT * FROM `cms_contact`
 				WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='" . $id . "';");
 
-                if (!$q->rowCount()) {
+                if (! $q->rowCount()) {
                     $db->query("INSERT INTO `cms_contact` SET
 					`user_id` = '" . $systemUser->id . "',
 					`from_id` = '" . $id . "',
 					`time` = '" . time() . "',
 					`ban`='1'");
                 } else {
-                    $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='$id'");
-                    $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='$id' AND `from_id`='" . $systemUser->id . "'");
+                    $db->exec("UPDATE `cms_contact` SET `ban`='1', `friends`='0', `type`='1' WHERE `user_id`='" . $systemUser->id . "' AND `from_id`='${id}'");
+                    $db->exec("UPDATE `cms_contact` SET `friends`='0', `type`='1' WHERE `user_id`='${id}' AND `from_id`='" . $systemUser->id . "'");
                 }
 
                 echo '<div class="rmenu">' . _t('User is blocked') . '</div>';
@@ -119,7 +119,7 @@ if (isset($_GET['del'])) {
 		    WHERE `cms_contact`.`user_id`='" . $systemUser->id . "'
 		    AND `ban`='1'
 		    ORDER BY `cms_contact`.`time` DESC
-		    LIMIT $start, $kmess"
+		    LIMIT ${start}, ${kmess}"
         );
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {

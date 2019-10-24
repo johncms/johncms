@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $error = [];
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
@@ -28,7 +28,7 @@ if (isset($_GET['ip'])) {
 }
 
 $menu = [
-    (!$mod ? '<b>' . _t('Actual IP') . '</b>' : '<a href="index.php?act=search_ip&amp;search=' . rawurlencode($search) . '">' . _t('Actual IP') . '</a>'),
+    (! $mod ? '<b>' . _t('Actual IP') . '</b>' : '<a href="index.php?act=search_ip&amp;search=' . rawurlencode($search) . '">' . _t('Actual IP') . '</a>'),
     ($mod == 'history' ? '<b>' . _t('IP history') . '</b>' : '<a href="index.php?act=search_ip&amp;mod=history&amp;search=' . rawurlencode($search) . '">' . _t('IP history') . '</a>'),
 ];
 
@@ -45,7 +45,7 @@ if ($search) {
         $array = explode('-', $search);
         $ip = trim($array[0]);
 
-        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
+        if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
             $error[] = _t('First IP is entered incorrectly');
         } else {
             $ip1 = ip2long($ip);
@@ -53,7 +53,7 @@ if ($search) {
 
         $ip = trim($array[1]);
 
-        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
+        if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $ip)) {
             $error[] = _t('Second IP is entered incorrectly');
         } else {
             $ip2 = ip2long($ip);
@@ -63,7 +63,7 @@ if ($search) {
         $array = explode('.', $search);
 
         for ($i = 0; $i < 4; $i++) {
-            if (!isset($array[$i]) || $array[$i] == '*') {
+            if (! isset($array[$i]) || $array[$i] == '*') {
                 $ipt1[$i] = '0';
                 $ipt2[$i] = '255';
             } elseif (is_numeric($array[$i]) && $array[$i] >= 0 && $array[$i] <= 255) {
@@ -78,7 +78,7 @@ if ($search) {
         }
     } else {
         // Обрабатываем одиночный адрес
-        if (!preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $search)) {
+        if (! preg_match('#^(?:(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$#', $search)) {
             $error = _t('Invalid IP');
         } else {
             $ip1 = ip2long($search);
@@ -87,7 +87,7 @@ if ($search) {
     }
 }
 
-if ($search && !$error) {
+if ($search && ! $error) {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
 
@@ -95,9 +95,9 @@ if ($search && !$error) {
     echo '<div class="phdr">' . _t('Search results') . '</div>';
 
     if ($mod == 'history') {
-        $total = $db->query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
+        $total = $db->query("SELECT COUNT(DISTINCT `cms_users_iphistory`.`user_id`) FROM `cms_users_iphistory` WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}")->fetchColumn();
     } else {
-        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2")->fetchColumn();
+        $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}")->fetchColumn();
     }
 
     if ($total > $kmess) {
@@ -108,14 +108,14 @@ if ($search && !$error) {
         if ($mod == 'history') {
             $req = $db->query("SELECT `cms_users_iphistory`.*, `users`.`name`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`, `users`.`browser`
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
-                WHERE `cms_users_iphistory`.`ip` BETWEEN $ip1 AND $ip2 OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN $ip1 AND $ip2
+                WHERE `cms_users_iphistory`.`ip` BETWEEN ${ip1} AND ${ip2} OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
                 GROUP BY `users`.`id`
-                ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess
+                ORDER BY `ip` ASC, `name` ASC LIMIT ${start}, ${kmess}
             ");
         } else {
             $req = $db->query("SELECT * FROM `users`
-            WHERE `ip` BETWEEN $ip1 AND $ip2 OR `ip_via_proxy` BETWEEN $ip1 AND $ip2
-            ORDER BY `ip` ASC, `name` ASC LIMIT $start, $kmess");
+            WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
+            ORDER BY `ip` ASC, `name` ASC LIMIT ${start}, ${kmess}");
         }
 
         $i = 0;

@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -24,7 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
 $res = $req->fetch();
@@ -49,11 +49,11 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $name = isset($_POST['text']) ? trim($_POST['text']) : null;
                 $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
                 $text = isset($_POST['opis']) ? trim($_POST['opis']) : null;
-                $ext = explode(".", $fname);
+                $ext = explode('.', $fname);
 
-                if (!empty($new_file)) {
+                if (! empty($new_file)) {
                     $fname = strtolower($new_file . '.' . $ext[1]);
-                    $ext = explode(".", $fname);
+                    $ext = explode('.', $fname);
                 }
 
                 if (empty($name)) {
@@ -68,7 +68,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = _t('The weight of the file exceeds') . ' ' . $config['flsz'] . 'kb.';
                 }
 
-                if (!in_array($ext[(count($ext) - 1)], $al_ext)) {
+                if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
                     $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
                 }
 
@@ -84,14 +84,14 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = '<a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo implode('<br>', $error);
                 } else {
-                    if (file_exists("$load_cat/$fname")) {
+                    if (file_exists("${load_cat}/${fname}")) {
                         $fname = time() . $fname;
                     }
 
-                    if ((move_uploaded_file($_FILES["fail"]["tmp_name"], "$load_cat/$fname")) == true) {
+                    if ((move_uploaded_file($_FILES['fail']['tmp_name'], "${load_cat}/${fname}")) == true) {
                         echo '<div class="phdr"><b>' . _t('Upload File') . ': ' . htmlspecialchars($res['rus_name']) . '</b></div>';
-                        @chmod("$fname", 0777);
-                        @chmod("$load_cat/$fname", 0777);
+                        @chmod("${fname}", 0777);
+                        @chmod("${load_cat}/${fname}", 0777);
                         echo '<div class="gmenu">' . _t('File attached');
 
                         if ($set_down['mod'] && ($systemUser->rights < 6 && $systemUser->rights != 4)) {
@@ -155,14 +155,14 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                             echo '<div class="rmenu">' . _t('Screenshot not attached') . '</div>';
                         }
 
-                        if (!$set_down['mod'] || $systemUser->rights > 6 || $systemUser->rights == 4) {
+                        if (! $set_down['mod'] || $systemUser->rights > 6 || $systemUser->rights == 4) {
                             echo '<div class="menu"><a href="?act=view&amp;id=' . $file_id . '">' . _t('Continue') . '</a></div>';
                             $dirid = $id;
                             $sql = '';
                             $i = 0;
 
-                            while ($dirid != '0' && $dirid != "") {
-                                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '$dirid' LIMIT 1")->fetch();
+                            while ($dirid != '0' && $dirid != '') {
+                                $res_down = $db->query("SELECT `refid` FROM `download__category` WHERE `id` = '${dirid}' LIMIT 1")->fetch();
                                 if ($i) {
                                     $sql .= ' OR ';
                                 }
@@ -171,7 +171,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                                 ++$i;
                             }
 
-                            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE $sql");
+                            $db->exec("UPDATE `download__category` SET `total` = (`total`+1) WHERE ${sql}");
                         }
                         echo '<div class="phdr"><a href="?act=down_file&amp;id=' . $id . '">' . _t('Upload more') . '</a> | <a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
                     } else {
@@ -204,4 +204,4 @@ if ($req->rowCount() && is_dir($res['dir'])) {
     exit;
 }
 
-require_once('../system/end.php');
+require_once '../system/end.php';

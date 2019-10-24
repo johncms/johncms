@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
@@ -15,7 +15,7 @@ define('_IN_JOHNCMS', 1);
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 $headmod = 'forumsearch';
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -25,7 +25,7 @@ $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('Forum search');
-require('../system/head.php');
+require '../system/head.php';
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
@@ -81,22 +81,22 @@ switch ($act) {
         // Проверям на ошибки
         $error = $search && mb_strlen($search) < 4 || mb_strlen($search) > 64 ? true : false;
 
-        if ($search && !$error) {
+        if ($search && ! $error) {
             // Выводим результаты запроса
             $array = explode(' ', $search);
             $count = count($array);
             if ($search_t) {
-                $query = $db->quote('%'.$search.'%');
-                $total = $db->query("
+                $query = $db->quote('%' . $search . '%');
+                $total = $db->query('
                 SELECT COUNT(*) FROM `forum_topic`
-                WHERE `name` LIKE ".$query."
-                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                WHERE `name` LIKE ' . $query . '
+                ' . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
             } else {
                 $query = $db->quote($search);
                 $total = $db->query("
                 SELECT COUNT(*) FROM `forum_messages`
-                WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
-                " . ($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
+                " . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
             }
 
             echo '<div class="phdr">' . _t('Search results') . '</div>';
@@ -108,22 +108,22 @@ switch ($act) {
             if ($total) {
                 $to_history = true;
                 if ($search_t) {
-                    $req = $db->query("
+                    $req = $db->query('
                     SELECT *
                     FROM `forum_topic`
-                    WHERE `name` LIKE ".$query."
-                    ".($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)")."
+                    WHERE `name` LIKE ' . $query . '
+                    ' . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `name` DESC
-                    LIMIT $start, $kmess
+                    LIMIT ${start}, ${kmess}
                 ");
                 } else {
                     $req = $db->query("
-                    SELECT *, MATCH (`text`) AGAINST ($query IN BOOLEAN MODE) as `rel`
+                    SELECT *, MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE) as `rel`
                     FROM `forum_messages`
-                    WHERE MATCH (`text`) AGAINST ($query IN BOOLEAN MODE)
-                    ".($systemUser->rights >= 7 ? "" : " AND (`deleted` != '1' OR deleted IS NULL)")."
+                    WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
+                    " . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `rel` DESC
-                    LIMIT $start, $kmess
+                    LIMIT ${start}, ${kmess}
                 ");
                 }
 
@@ -132,7 +132,7 @@ switch ($act) {
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
 
-                    if (!$search_t) {
+                    if (! $search_t) {
                         // Поиск только в тексте
                         $res_t = $db->query("SELECT `id`,`name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
                         echo '<b>' . $res_t['name'] . '</b><br />';
@@ -164,14 +164,14 @@ switch ($act) {
                         }
                     }
 
-                    if (!isset($pos) || $pos < 100) {
+                    if (! isset($pos) || $pos < 100) {
                         $pos = 100;
                     }
 
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                     $text = $tools->checkout(mb_substr($text, ($pos - 100), 400), 1);
 
-                    if (!$search_t) {
+                    if (! $search_t) {
                         foreach ($array as $val) {
                             $text = ReplaceKeywords($val, $text);
                         }
@@ -209,14 +209,14 @@ switch ($act) {
                 $history = unserialize($res['val']);
 
                 // Добавляем запрос в историю
-                if ($to_history && !in_array($search, $history)) {
+                if ($to_history && ! in_array($search, $history)) {
                     if (count($history) > 20) {
                         array_shift($history);
                     }
 
                     $history[] = $search;
-                    $db->exec("UPDATE `cms_users_data` SET
-                        `val` = " . $db->quote(serialize($history)) . "
+                    $db->exec('UPDATE `cms_users_data` SET
+                        `val` = ' . $db->quote(serialize($history)) . "
                         WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search'
                         LIMIT 1
                     ");
@@ -238,8 +238,8 @@ switch ($act) {
                 $db->exec("INSERT INTO `cms_users_data` SET
                     `user_id` = '" . $systemUser->id . "',
                     `key` = 'forum_search',
-                    `val` = " . $db->quote(serialize($history)) . "
-                ");
+                    `val` = " . $db->quote(serialize($history)) . '
+                ');
             }
         }
 
@@ -255,4 +255,4 @@ switch ($act) {
         echo '<p>' . ($search ? '<a href="search.php">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
 }
 
-require('../system/end.php');
+require '../system/end.php';

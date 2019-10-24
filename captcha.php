@@ -1,21 +1,23 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-class KCAPTCHA {
-    function KCAPTCHA() {
+class KCAPTCHA
+{
+    public function __construct()
+    {
         // Настройки CAPTCHA
-        $alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+        $alphabet = '0123456789abcdefghijklmnopqrstuvwxyz';
         //$allowed_symbols = "0123456789";
-        $allowed_symbols = "23456789abcdeghkmnpqsuvxyz"; // Не ставить похожие символы (o=0, 1=l, i=j, t=f)
+        $allowed_symbols = '23456789abcdeghkmnpqsuvxyz'; // Не ставить похожие символы (o=0, 1=l, i=j, t=f)
         $fontsdir = 'images/captcha';
         $length = mt_rand(4, 5);
         $width = 100;
@@ -24,22 +26,22 @@ class KCAPTCHA {
         $no_spaces = true;
         $show_credits = false;
         $credits = '';
-        $foreground_color = array (
+        $foreground_color = [
             mt_rand(0, 100),
             mt_rand(0, 100),
-            mt_rand(0, 100)
-        );
+            mt_rand(0, 100),
+        ];
 
-        $background_color = array (
+        $background_color = [
             mt_rand(200, 255),
             mt_rand(200, 255),
-            mt_rand(200, 255)
-        );
+            mt_rand(200, 255),
+        ];
 
         $jpeg_quality = 90;
 
-        $fonts = array ();
-        $fontsdir_absolute = dirname(__FILE__) . '/' . $fontsdir;
+        $fonts = [];
+        $fontsdir_absolute = __DIR__ . '/' . $fontsdir;
 
         if (($handle = opendir($fontsdir_absolute)) !== false) {
             while (false !== ($file = readdir($handle))) {
@@ -56,29 +58,30 @@ class KCAPTCHA {
             while (true) {
                 $this->keystring = '';
                 for ($i = 0; $i < $length; $i++) {
-                    $this->keystring .= $allowed_symbols{mt_rand(0, strlen($allowed_symbols) - 1)};
+                    $this->keystring .= $allowed_symbols[mt_rand(0, strlen($allowed_symbols) - 1)];
                 }
-                if (!preg_match('/cp|cb|ck|c6|c9|rn|rm|mm|co|do|cl|db|qp|qb|dp|ww/', $this->keystring))
+                if (! preg_match('/cp|cb|ck|c6|c9|rn|rm|mm|co|do|cl|db|qp|qb|dp|ww/', $this->keystring)) {
                     break;
+                }
             }
             $font_file = $fonts[mt_rand(0, count($fonts) - 1)];
             $font = imagecreatefrompng($font_file);
             imagealphablending($font, true);
             $fontfile_width = imagesx($font);
             $fontfile_height = imagesy($font) - 1;
-            $font_metrics = array ();
+            $font_metrics = [];
             $symbol = 0;
             $reading_symbol = false;
             // loading font
             for ($i = 0; $i < $fontfile_width && $symbol < $alphabet_length; $i++) {
                 $transparent = (imagecolorat($font, $i, 0) >> 24) == 127;
-                if (!$reading_symbol && !$transparent) {
-                    $font_metrics[$alphabet{$symbol}] = array ('start' => $i);
+                if (! $reading_symbol && ! $transparent) {
+                    $font_metrics[$alphabet[$symbol]] = ['start' => $i];
                     $reading_symbol = true;
                     continue;
                 }
                 if ($reading_symbol && $transparent) {
-                    $font_metrics[$alphabet{$symbol}]['end'] = $i;
+                    $font_metrics[$alphabet[$symbol]]['end'] = $i;
                     $reading_symbol = false;
                     $symbol++;
                     continue;
@@ -91,7 +94,7 @@ class KCAPTCHA {
             // draw text
             $x = 1;
             for ($i = 0; $i < $length; $i++) {
-                $m = $font_metrics[$this->keystring{$i}];
+                $m = $font_metrics[$this->keystring[$i]];
                 $y = mt_rand(-$fluctuation_amplitude, $fluctuation_amplitude) + ($height - $fontfile_height) / 2 + 2;
                 if ($no_spaces) {
                     $shift = 0;
@@ -104,8 +107,9 @@ class KCAPTCHA {
                                 if ($opacity < 127) {
                                     $left = $sx - $m['start'] + $x;
                                     $py = $sy + $y;
-                                    if ($py > $height)
+                                    if ($py > $height) {
                                         break;
+                                    }
                                     for ($px = min($left, $width - 1); $px > $left - 12 && $px >= 0; $px -= 1) {
                                         $color = imagecolorat($img, $px, $py) & 0xff;
                                         if ($color + $opacity < 190) {
@@ -160,15 +164,15 @@ class KCAPTCHA {
                 $sy = $y + (sin($x * $rand2 + $rand7) + sin($y * $rand4 + $rand8)) * $rand10;
                 if ($sx < 0 || $sy < 0 || $sx >= $width - 1 || $sy >= $height - 1) {
                     continue;
-                } else {
-                    $color = imagecolorat($img, $sx, $sy) & 0xFF;
-                    $color_x = imagecolorat($img, $sx + 1, $sy) & 0xFF;
-                    $color_y = imagecolorat($img, $sx, $sy + 1) & 0xFF;
-                    $color_xy = imagecolorat($img, $sx + 1, $sy + 1) & 0xFF;
                 }
+                $color = imagecolorat($img, $sx, $sy) & 0xFF;
+                $color_x = imagecolorat($img, $sx + 1, $sy) & 0xFF;
+                $color_y = imagecolorat($img, $sx, $sy + 1) & 0xFF;
+                $color_xy = imagecolorat($img, $sx + 1, $sy + 1) & 0xFF;
+
                 if ($color == 255 && $color_x == 255 && $color_y == 255 && $color_xy == 255) {
                     continue;
-                } else if ($color == 0 && $color_x == 0 && $color_y == 0 && $color_xy == 0) {
+                } elseif ($color == 0 && $color_x == 0 && $color_y == 0 && $color_xy == 0) {
                     $newred = $foreground_color[0];
                     $newgreen = $foreground_color[1];
                     $newblue = $foreground_color[2];
@@ -179,8 +183,9 @@ class KCAPTCHA {
                     $frsy1 = 1 - $frsy;
 
                     $newcolor = ($color * $frsx1 * $frsy1 + $color_x * $frsx * $frsy1 + $color_y * $frsx1 * $frsy + $color_xy * $frsx * $frsy);
-                    if ($newcolor > 255)
+                    if ($newcolor > 255) {
                         $newcolor = 255;
+                    }
                     $newcolor = $newcolor / 255;
                     $newcolor0 = 1 - $newcolor;
                     $newred = $newcolor0 * $foreground_color[0] + $newcolor * $background_color[0];
@@ -193,19 +198,19 @@ class KCAPTCHA {
         ob_start();
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', FALSE);
+        header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache');
         $ext = '';
-        if (function_exists("imagejpeg")) {
-            header("Content-Type: image/jpeg");
+        if (function_exists('imagejpeg')) {
+            header('Content-Type: image/jpeg');
             imagejpeg($img2, null, $jpeg_quality);
             $ext = 'jpg';
-        } else if (function_exists("imagegif")) {
-            header("Content-Type: image/gif");
+        } elseif (function_exists('imagegif')) {
+            header('Content-Type: image/gif');
             imagegif($img2);
             $ext = 'gif';
-        } else if (function_exists("imagepng")) {
-            header("Content-Type: image/x-png");
+        } elseif (function_exists('imagepng')) {
+            header('Content-Type: image/x-png');
             imagepng($img2);
             $ext = 'png';
         }
@@ -215,7 +220,10 @@ class KCAPTCHA {
     }
 
     // returns keystring
-    function getKeyString() { return $this->keystring; }
+    public function getKeyString()
+    {
+        return $this->keystring;
+    }
 }
 
 // Обрабатываем запрос на картинку CAPTCHA
@@ -223,4 +231,3 @@ session_name('SESID');
 session_start();
 $captcha = new KCAPTCHA();
 $_SESSION['code'] = $captcha->getKeyString();
-?>

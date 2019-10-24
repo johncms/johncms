@@ -1,22 +1,22 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require_once('../system/bootstrap.php');
+require_once '../system/bootstrap.php';
 $headmod = 'mail';
 
 if (isset($_SESSION['ref'])) {
@@ -33,7 +33,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 //Проверка авторизации
-if (!$systemUser->isValid()) {
+if (! $systemUser->isValid()) {
     header('Location: ' . $config->homeurl . '/?err');
     exit;
 }
@@ -74,10 +74,10 @@ $mods = [
 
 //Проверка выбора функции
 if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
-    require('includes/' . $mods[$key] . '.php');
+    require 'includes/' . $mods[$key] . '.php';
 } else {
     $textl = _t('Mail');
-    require_once('../system/head.php');
+    require_once '../system/head.php';
     echo '<div class="phdr"><b>' . _t('Contacts') . '</b></div>';
 
     /** @var PDO $db */
@@ -87,11 +87,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     if ($id) {
-        $req = $db->query("SELECT * FROM `users` WHERE `id` = '$id'");
+        $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
 
-        if (!$req->rowCount()) {
+        if (! $req->rowCount()) {
             echo $tools->displayError(_t('User does not exists'));
-            require_once("../system/end.php");
+            require_once '../system/end.php';
             exit;
         }
 
@@ -102,13 +102,13 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         } else {
             //Добавляем в заблокированные
             if (isset($_POST['submit'])) {
-                $q = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = " . $systemUser->id . " AND `from_id` = " . $id);
+                $q = $db->query('SELECT * FROM `cms_contact` WHERE `user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id);
 
-                if (!$q->rowCount()) {
-                    $db->query("INSERT INTO `cms_contact` SET
-					`user_id` = " . $systemUser->id . ",
-					`from_id` = " . $id . ",
-					`time` = " . time());
+                if (! $q->rowCount()) {
+                    $db->query('INSERT INTO `cms_contact` SET
+					`user_id` = ' . $systemUser->id . ',
+					`from_id` = ' . $id . ',
+					`time` = ' . time());
                 }
                 echo '<div class="gmenu"><p>' . _t('User has been added to your contact list') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -135,7 +135,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
 			    WHERE `cms_contact`.`user_id`='" . $systemUser->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
-			    LIMIT $start, $kmess"
+			    LIMIT ${start}, ${kmess}"
             );
 
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
@@ -167,4 +167,4 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
     }
 }
 
-require_once(ROOT_PATH . 'system/end.php');
+require_once ROOT_PATH . 'system/end.php';

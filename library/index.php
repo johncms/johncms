@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /*
  * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
  *
@@ -12,13 +12,13 @@
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $headmod = 'library';
-require_once('../system/bootstrap.php');
+require_once '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -47,9 +47,9 @@ use Library\Utils;
 
 /*  php 7+
 use Library\{
-            Tree, 
-            Hashtags, 
-            Rating, 
+            Tree,
+            Hashtags,
+            Rating,
             Links
 }
 */
@@ -63,16 +63,16 @@ $textl = _t('Library');
 
 $error = '';
 
-if (!$config['mod_lib'] && $systemUser->rights < 7) {
+if (! $config['mod_lib'] && $systemUser->rights < 7) {
     $error = _t('Library is closed');
-} elseif ($config['mod_lib'] == 1 && !$systemUser->isValid()) {
+} elseif ($config['mod_lib'] == 1 && ! $systemUser->isValid()) {
     $error = _t('Access forbidden');
 }
 
 if ($error) {
-    require_once('../system/head.php');
+    require_once '../system/head.php';
     echo $tools->displayError($error);
-    require_once('../system/end.php');
+    require_once '../system/end.php';
     exit;
 }
 
@@ -86,8 +86,8 @@ switch ($do) {
         $tab = 'library_texts';
 }
 
-if ($id > 0) { 
-    $hdrsql = $db->query("SELECT `name` FROM `" . $tab . "` WHERE `id`=" . $id . " LIMIT 1");
+if ($id > 0) {
+    $hdrsql = $db->query('SELECT `name` FROM `' . $tab . '` WHERE `id`=' . $id . ' LIMIT 1');
 
     $hdrres = '';
     if ($hdrsql->rowCount()) {
@@ -96,11 +96,11 @@ if ($id > 0) {
 
     $hdr = htmlentities($hdrres, ENT_QUOTES, 'UTF-8');
     if ($hdr) {
-        $textl .=  ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
+        $textl .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }
 
-require_once('../system/head.php');
+require_once '../system/head.php';
 
 ?>
 
@@ -128,7 +128,7 @@ require_once('../system/head.php');
 
 <?php
 
-if (!$config['mod_lib']) {
+if (! $config['mod_lib']) {
     echo $tools->displayError(_t('Library is closed'));
 }
 
@@ -151,16 +151,16 @@ $array_includes = [
 $i = 0;
 
 if (in_array($act, $array_includes)) {
-    require_once('includes/' . $act . '.php');
+    require_once 'includes/' . $act . '.php';
 } else {
-    if (!$id) {
+    if (! $id) {
         echo '<div class="phdr"><strong>' . _t('Library') . '</strong></div>';
         echo '<div class="topmenu"><a href="?act=search">' . _t('Search') . '</a> | <a href="?act=tagcloud">' . _t('Tag Cloud') . '</a></div>';
         echo '<div class="gmenu"><p>';
 
         if ($adm) {
             // Считаем число статей, ожидающих модерацию
-            $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0")->fetchColumn();
+            $res = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0')->fetchColumn();
 
             if ($res > 0) {
                 echo '<div>' . _t('On moderation') . ': <a href="?act=premod">' . $res . '</a></div>';
@@ -177,19 +177,19 @@ if (in_array($act, $array_includes)) {
             $tools->image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
             '</p></div>';
 
-        $total = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0")->fetchColumn();
+        $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0')->fetchColumn();
         $y = 0;
 
         if ($total) {
-            $req = $db->query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC");
+            $req = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE `parent`=0 ORDER BY `pos` ASC');
 
             while ($row = $req->fetch()) {
                 $y++;
                 echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                     . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> ('
-                    . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE " . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ')';
+                    . $db->query('SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE ' . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ')';
 
-                if (!empty($row['description'])) {
+                if (! empty($row['description'])) {
                     echo '<div style="font-size: x-small; padding-top: 2px"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
                 }
 
@@ -219,8 +219,8 @@ if (in_array($act, $array_includes)) {
         switch ($do) {
             case 'dir':
                 // dir
-                $actdir = $db->query("SELECT `id`, `dir` FROM `library_cats` WHERE "
-                    . ($id !== null ? '`id`=' . $id : 1) . " LIMIT 1")->fetch();
+                $actdir = $db->query('SELECT `id`, `dir` FROM `library_cats` WHERE '
+                    . ($id !== null ? '`id`=' . $id : 1) . ' LIMIT 1')->fetch();
                 if ($actdir['id'] > 0) {
                     $actdir = $actdir['dir'];
                 } else {
@@ -229,14 +229,14 @@ if (in_array($act, $array_includes)) {
                 echo '<div class="phdr">' . $dir_nav->printNavPanel() . '</div>';
 
                 if ($actdir) {
-                    $total = $db->query("SELECT COUNT(*) FROM `library_cats` WHERE "
+                    $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE '
                         . ($id !== null ? '`parent`=' . $id : '`parent`=0'))->fetchColumn();
                     $nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;',
                             $start, $total, $kmess) . '</div>' : '';
                     $y = 0;
 
                     if ($total) {
-                        $sql = $db->query("SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE "
+                        $sql = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE '
                             . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $kmess);
                         echo $nav;
 
@@ -244,7 +244,7 @@ if (in_array($act, $array_includes)) {
                             $y++;
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
                                 . '<a href="?do=dir&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a> ('
-                                . $db->query("SELECT COUNT(*) FROM `" . ($row['dir'] ? 'library_cats' : 'library_texts') . "` WHERE "
+                                . $db->query('SELECT COUNT(*) FROM `' . ($row['dir'] ? 'library_cats' : 'library_texts') . '` WHERE '
                                     . ($row['dir'] ? '`parent`=' . $row['id'] : '`cat_id`=' . $row['id']))->fetchColumn() . ' '
                                 . ($row['dir'] ? ' ' . _t('Sections') : ' ' . _t('Articles')) . ')'
                                 . '<div class="sub"><span class="gray">' . $tools->checkout($row['description']) . '</span></div>';
@@ -282,7 +282,7 @@ if (in_array($act, $array_includes)) {
                             $start, $total, $kmess) . '</div>' : '';
 
                     if ($total) {
-                        $sql2 = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=" . $id . " ORDER BY `id` DESC LIMIT " . $start . "," . $kmess);
+                        $sql2 = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id . ' ORDER BY `id` DESC LIMIT ' . $start . ',' . $kmess);
                         echo $nav;
 
                         while ($row = $sql2->fetch()) {
@@ -324,7 +324,7 @@ if (in_array($act, $array_includes)) {
                     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
                     echo $nav;
 
-                    if (($adm || ($db->query("SELECT `user_add` FROM `library_cats` WHERE `id`=" . $id)->fetchColumn() > 0)) && isset($id) && $systemUser->isValid()) {
+                    if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->fetchColumn() > 0)) && isset($id) && $systemUser->isValid()) {
                         echo '<p><a href="?act=addnew&amp;id=' . $id . '">' . _t('Write Article') . '</a>'
                             . ($adm ? ('<br><a href="?act=moder&amp;type=dir&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                                 . '<a href="?act=del&amp;type=dir&amp;id=' . $id . '">' . _t('Delete') . '</a>') : '')
@@ -335,12 +335,11 @@ if (in_array($act, $array_includes)) {
                 break;
 
             default:
-                $row = $db->query("SELECT * FROM `library_texts` WHERE `id`=" . $id)->fetch();
+                $row = $db->query('SELECT * FROM `library_texts` WHERE `id`=' . $id)->fetch();
 
                 if ($row['premod'] || $adm) {
-
                     // Счетчик прочтений
-                    if (!isset($_SESSION['lib']) || isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
+                    if (! isset($_SESSION['lib']) || isset($_SESSION['lib']) && $_SESSION['lib'] != $id) {
                         $_SESSION['lib'] = $id;
                         $db->exec('UPDATE `library_texts` SET  `count_views`=' . ($row['count_views'] ? ++$row['count_views'] : 1) . ' WHERE `id`=' . $id);
                     }
@@ -349,10 +348,9 @@ if (in_array($act, $array_includes)) {
                     $symbols = 7000;
                     $count_pages = ceil($db->query("SELECT CHAR_LENGTH(`text`) FROM `library_texts` WHERE `id`= '" . $id . "' LIMIT 1")->fetchColumn() / $symbols);
                     if ($count_pages) {
-
                         // Чтоб всегда последнюю страницу считал правильно
                         $page = $page >= $count_pages ? $count_pages : $page;
-                        $text = $db->query("SELECT SUBSTRING(`text`, " . ($page == 1 ? 1 : ($page - 1) * $symbols) . ", " . ($symbols + 100) . ") FROM `library_texts` WHERE `id`='" . $id . "'")->fetchColumn();
+                        $text = $db->query('SELECT SUBSTRING(`text`, ' . ($page == 1 ? 1 : ($page - 1) * $symbols) . ', ' . ($symbols + 100) . ") FROM `library_texts` WHERE `id`='" . $id . "'")->fetchColumn();
                         $tmp = mb_substr($text, $symbols, 100);
                     } else {
                         Utils::redir404();
@@ -360,7 +358,7 @@ if (in_array($act, $array_includes)) {
 
                     $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;',
                             $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
-                    $catalog = $db->query("SELECT `id`, `name` FROM `library_cats` WHERE `id` = " . $row['cat_id'] . " LIMIT 1")->fetch();
+                    $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'] . ' LIMIT 1')->fetch();
                     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a>'
                         . ' | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a>'
                         . ($page > 1 ? ' | ' . $tools->checkout($row['name']) : '') . '</div>';
@@ -447,7 +445,7 @@ if (in_array($act, $array_includes)) {
 
                     echo $nav . ($systemUser->isValid() && $page == 1 ? $rate->printVote() : '');
 
-                    if ($adm || $db->query("SELECT `uploader_id` FROM `library_texts` WHERE `id` = " . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) {
+                    if ($adm || $db->query('SELECT `uploader_id` FROM `library_texts` WHERE `id` = ' . $id)->fetchColumn() == $systemUser->id && $systemUser->isValid()) {
                         echo '<p><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Edit') . '</a><br>'
                             . '<a href="?act=del&amp;type=article&amp;id=' . $id . '">' . _t('Delete') . '</a></p>';
                     }
@@ -458,4 +456,4 @@ if (in_array($act, $array_includes)) {
     } // end else !id
 } // end else $act
 
-require_once('../system/end.php');
+require_once '../system/end.php';

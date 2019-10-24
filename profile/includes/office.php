@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'office';
 $textl = _t('My Account');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -31,7 +31,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -87,7 +87,7 @@ echo '<div>' . $tools->image('mail-info.png') . '<a href="../mail/index.php?act=
 $count_file = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `delete`!='" . $systemUser->id . "' AND `file_name`!='';")->fetchColumn();
 echo '<div>' . $tools->image('file.gif') . '<a href="../mail/index.php?act=files">' . _t('Files') . '</a>&nbsp;(' . $count_file . ')</div>';
 
-if (!isset($systemUser->ban['1']) && !isset($systemUser->ban['3'])) {
+if (! isset($systemUser->ban['1']) && ! isset($systemUser->ban['3'])) {
     echo '<p><form action="../mail/index.php?act=write" method="post"><input type="submit" value="' . _t('Write') . '"/></form></p>';
 }
 

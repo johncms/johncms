@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // История активности
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Activity');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -33,12 +33,12 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Activity') . '</div>';
 $menu = [
-    (!$mod ? '<b>' . _t('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Messages') . '</a>'),
+    (! $mod ? '<b>' . _t('Messages') . '</b>' : '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Messages') . '</a>'),
     ($mod == 'topic' ? '<b>' . _t('Themes') . '</b>' : '<a href="?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '">' . _t('Themes') . '</a>'),
     ($mod == 'comments' ? '<b>' . _t('Comments') . '</b>' : '<a href="?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '">' . _t('Comments') . '</a>'),
 ];
 echo '<div class="topmenu">' . implode(' | ', $menu) . '</div>' .
-    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1,]) . '</p></div>';
+    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';
 
 switch ($mod) {
     case 'comments':
@@ -50,12 +50,12 @@ switch ($mod) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=comments&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 1 ? '' : " AND `adm` = '0'") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
             while ($res = $req->fetch()) {
-                echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
+                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
                     '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
@@ -74,18 +74,18 @@ switch ($mod) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;mod=topic&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum_topic` WHERE `user_id` = '" . $user['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
 
             while ($res = $req->fetch()) {
-                $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` ASC LIMIT 1")->fetch();
+                $post = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . ' ORDER BY `id` ASC LIMIT 1')->fetch();
                 $section = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
-                echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
@@ -109,7 +109,7 @@ switch ($mod) {
             echo '<div class="topmenu">' . $tools->displayPagination('?act=activity&amp;user=' . $user['id'] . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' " . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT $start, $kmess");
+        $req = $db->query("SELECT * FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' " . ($systemUser->rights >= 7 ? '' : " AND (`deleted`!='1' OR deleted IS NULL)") . " ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             $i = 0;
@@ -122,7 +122,7 @@ switch ($mod) {
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
-                echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .

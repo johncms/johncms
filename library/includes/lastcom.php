@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -39,7 +39,7 @@ if ($stmt->rowCount()) {
                 : '')
             . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
             . '<div>' . $tools->checkout(substr($row['text'], 0, 500), 0, 2) . '</div></div>'
-            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($db->query("SELECT `name` FROM `users` WHERE `id` = " . $row['user_id'])->fetchColumn()) . ' (' . $tools->displayDate($row['time']) . ')</div>'
+            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($db->query('SELECT `name` FROM `users` WHERE `id` = ' . $row['user_id'])->fetchColumn()) . ' (' . $tools->displayDate($row['time']) . ')</div>'
             . '</div>';
     }
 } else {

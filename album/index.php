@@ -1,24 +1,24 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-$id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$al = isset($_REQUEST['al']) ? abs(intval($_REQUEST['al'])) : null;
-$img = isset($_REQUEST['img']) ? abs(intval($_REQUEST['img'])) : null;
+$al = isset($_REQUEST['al']) ? abs((int) ($_REQUEST['al'])) : null;
+$img = isset($_REQUEST['img']) ? abs((int) ($_REQUEST['img'])) : null;
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -40,20 +40,20 @@ $max_album = 20;
 $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
-if (!$systemUser->isValid()) {
-    require('../system/head.php');
+if (! $systemUser->isValid()) {
+    require '../system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
 // Получаем данные пользователя
-$user = $tools->getUser(isset($_REQUEST['user']) ? abs(intval($_REQUEST['user'])) : 0);
+$user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
-if (!$user) {
-    require('../system/head.php');
+if (! $user) {
+    require '../system/head.php';
     echo $tools->displayError(_t('User does not exists'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -91,7 +91,7 @@ function vote_photo(array $arg)
         // Проверяем, имеет ли юзер право голоса
         $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
 
-        if (!$req->rowCount()) {
+        if (! $req->rowCount()) {
             $out .= '<br>' . _t('Vote') . ': <a href="?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | <a href="?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
         }
     }
@@ -119,10 +119,10 @@ $array = [
     'vote'           => 'includes',
 ];
 
-$path = !empty($array[$act]) ? $array[$act] . '/' : '';
+$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
 if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once($path . $act . '.php');
+    require_once $path . $act . '.php';
 } else {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -130,8 +130,8 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     /** @var Johncms\Api\ConfigInterface $config */
     $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-    require('../system/head.php');
-    $albumcount = $db->query("SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`")->fetchColumn();
+    require '../system/head.php';
+    $albumcount = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
     $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
       LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id`
@@ -169,4 +169,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Users') . '</a></div>';
 }
 
-require('../system/end.php');
+require '../system/end.php';

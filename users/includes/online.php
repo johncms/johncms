@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'online';
 $textl = _t('Online');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -35,7 +35,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Показываем список Online
-$menu[] = !$mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
+$menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
 $menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . _t('History') . '</a> ';
 
 if ($systemUser->rights) {
@@ -100,26 +100,26 @@ switch ($mod) {
             }
         }
 
-        require_once('../system/end.php');
+        require_once '../system/end.php';
         exit;
         break;
 
     case 'guest':
         // Список гостей Онлайн
-        $sql_total = "SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300);
-        $sql_list = "SELECT * FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " ORDER BY `movings` DESC LIMIT ";
+        $sql_total = 'SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300);
+        $sql_list = 'SELECT * FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300) . ' ORDER BY `movings` DESC LIMIT ';
         break;
 
     case 'history':
         // История посетилелей за последние 2 суток
-        $sql_total = "SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 172800 . " AND `lastdate` < " . (time() - 310));
-        $sql_list = "SELECT * FROM `users` WHERE `lastdate` > " . (time() - 172800) . " AND `lastdate` < " . (time() - 310) . " ORDER BY `sestime` DESC LIMIT ";
+        $sql_total = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 172800 . ' AND `lastdate` < ' . (time() - 310));
+        $sql_list = 'SELECT * FROM `users` WHERE `lastdate` > ' . (time() - 172800) . ' AND `lastdate` < ' . (time() - 310) . ' ORDER BY `sestime` DESC LIMIT ';
         break;
 
     default:
         // Список посетителей Онлайн
-        $sql_total = "SELECT COUNT(*) FROM `users` WHERE `lastdate` > " . (time() - 300);
-        $sql_list = "SELECT * FROM `users` WHERE `lastdate` > " . (time() - 300) . " ORDER BY `name` ASC LIMIT ";
+        $sql_total = 'SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300);
+        $sql_list = 'SELECT * FROM `users` WHERE `lastdate` > ' . (time() - 300) . ' ORDER BY `name` ASC LIMIT ';
 }
 
 $total = $db->query($sql_total)->fetchColumn();
@@ -134,11 +134,11 @@ if ($total > $kmess) {
 }
 
 if ($total) {
-    $req = $db->query($sql_list . "$start, $kmess");
+    $req = $db->query($sql_list . "${start}, ${kmess}");
     $i = 0;
 
     while ($res = $req->fetch()) {
-        $res['id'] = isset($res['id']) ? $res['id'] : 0;
+        $res['id'] = $res['id'] ?? 0;
 
         if ($res['id'] == $systemUser->id) {
             echo '<div class="gmenu">';

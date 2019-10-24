@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 $radius = 4;
@@ -148,7 +148,7 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
 
             imagedestroy($tmp);
             imagedestroy($image);
-            header("Content-Type: image/" . $att_ext);
+            header('Content-Type: image/' . $att_ext);
             header('Content-Disposition: inline; filename=thumbinal.' . $att_ext);
             header('Content-Length: ' . ob_get_length());
             ob_end_flush();

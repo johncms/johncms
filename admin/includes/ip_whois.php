@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNADM') or die('Error: restricted access');
+defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
@@ -24,25 +24,25 @@ function whoisQuery($whoisserver, $domain)
     $timeout = 5;
     $fp = @fsockopen($whoisserver, $port, $errno, $errstr, $timeout);
 
-    if(!$fp){
+    if (! $fp) {
         return false;
     }
 
-    fputs($fp, $domain . "\r\n");
+    fwrite($fp, $domain . "\r\n");
     $out = '';
 
-    while (!feof($fp)) {
+    while (! feof($fp)) {
         $out .= fgets($fp);
     }
 
     fclose($fp);
-    $res = "";
+    $res = '';
 
-    if ((strpos(strtolower($out), "error") === false) && (strpos(strtolower($out), "not allocated") === false)) {
+    if ((strpos(strtolower($out), 'error') === false) && (strpos(strtolower($out), 'not allocated') === false)) {
         $rows = explode("\n", $out);
         foreach ($rows as $row) {
             $row = trim($row);
-            if (($row != '') && ($row{0} != '#') && ($row{0} != '%')) {
+            if (($row != '') && ($row[0] != '#') && ($row[0] != '%')) {
                 $res .= $row . "\n";
             }
         }
@@ -52,30 +52,30 @@ function whoisQuery($whoisserver, $domain)
 }
 
 if ($ip) {
-    $whoisservers = array(
+    $whoisservers = [
         //"whois.afrinic.net",         // Africa - returns timeout error :-(
-        "whois.lacnic.net",            // Latin America and Caribbean - returns data for ALL locations worldwide :-)
-        "whois.apnic.net",             // Asia/Pacific only
-        "whois.arin.net",              // North America only
-        "whois.ripe.net"               // Europe, Middle East and Central Asia only
-    );
+        'whois.lacnic.net',            // Latin America and Caribbean - returns data for ALL locations worldwide :-)
+        'whois.apnic.net',             // Asia/Pacific only
+        'whois.arin.net',              // North America only
+        'whois.ripe.net',               // Europe, Middle East and Central Asia only
+    ];
 
-    $results = array();
+    $results = [];
 
-    foreach($whoisservers as $whoisserver) {
+    foreach ($whoisservers as $whoisserver) {
         $result = whoisQuery($whoisserver, $ip);
-        if($result && !in_array($result, $results)) {
+        if ($result && ! in_array($result, $results)) {
             $results[$whoisserver]= $result;
         }
     }
 
-    $res = "RESULTS FOUND: " . count($results);
+    $res = 'RESULTS FOUND: ' . count($results);
 
-    foreach($results as $whoisserver=>$result) {
-        $res .= "\n\n-------------\nLookup results for " . $ip . " from " . $whoisserver . " server:\n\n" . $result;
+    foreach ($results as $whoisserver=>$result) {
+        $res .= "\n\n-------------\nLookup results for " . $ip . ' from ' . $whoisserver . " server:\n\n" . $result;
     }
 
-    $array = array(
+    $array = [
         '%'              => '#',
         'inetnum:'       => '<strong class="red">inetnum:</strong>',
         'netname:'       => '<strong class="green">netname:</strong>',
@@ -105,8 +105,8 @@ if ($ip) {
         'mnt-ref:'       => '<strong class="gray">mnt-ref:</strong>',
         'fax-no:'        => '<strong class="green">fax-no:</strong>',
         'NetType:'       => '<strong class="gray">NetType:</strong>',
-        'Comment:'       => '<strong class="gray">Comment:</strong>'
-    );
+        'Comment:'       => '<strong class="gray">Comment:</strong>',
+    ];
     $ipwhois = trim($tools->checkout($res, 1, 1));
     $ipwhois = strtr($ipwhois, $array);
 } else {

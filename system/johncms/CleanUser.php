@@ -1,13 +1,13 @@
 <?php
-/**
- * JohnCMS Content Management System (https://johncms.com)
+
+declare(strict_types=1);
+
+/*
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        https://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -127,7 +127,7 @@ class CleanUser
      */
     public function cleanComments($clean_id)
     {
-        $req = $this->db->query("SELECT `name` FROM `users` WHERE `id` = " . $clean_id);
+        $req = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $clean_id);
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -152,7 +152,7 @@ class CleanUser
      */
     private function removeDir($dir)
     {
-        if ($objs = glob($dir . "/*")) {
+        if ($objs = glob($dir . '/*')) {
             foreach ($objs as $obj) {
                 is_dir($obj) ? $this->removeDir($obj) : unlink($obj);
             }

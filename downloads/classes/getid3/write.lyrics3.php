@@ -1,5 +1,15 @@
 <?php
-/////////////////////////////////////////////////////////////////
+
+declare(strict_types=1);
+
+/*
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
+ */
+
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
@@ -14,59 +24,63 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
-
 class getid3_write_lyrics3
 {
-	public $filename;
-	public $tag_data;
-	//public $lyrics3_version = 2;       // 1 or 2
-	public $warnings        = array(); // any non-critical errors will be stored here
-	public $errors          = array(); // any critical errors will be stored here
+    public $filename;
 
-	public function __construct() {
-		return true;
-	}
+    public $tag_data;
 
-	public function WriteLyrics3() {
-		$this->errors[] = 'WriteLyrics3() not yet functional - cannot write Lyrics3';
-		return false;
-	}
-	public function DeleteLyrics3() {
-		// Initialize getID3 engine
-		$getID3 = new getID3;
-		$ThisFileInfo = $getID3->analyze($this->filename);
-		if (isset($ThisFileInfo['lyrics3']['tag_offset_start']) && isset($ThisFileInfo['lyrics3']['tag_offset_end'])) {
-			if (is_readable($this->filename) && is_writable($this->filename) && is_file($this->filename) && ($fp = fopen($this->filename, 'a+b'))) {
+    //public $lyrics3_version = 2;       // 1 or 2
+    public $warnings        = []; // any non-critical errors will be stored here
 
-				flock($fp, LOCK_EX);
-				$oldignoreuserabort = ignore_user_abort(true);
+    public $errors          = []; // any critical errors will be stored here
 
-				fseek($fp, $ThisFileInfo['lyrics3']['tag_offset_end']);
-				$DataAfterLyrics3 = '';
-				if ($ThisFileInfo['filesize'] > $ThisFileInfo['lyrics3']['tag_offset_end']) {
-					$DataAfterLyrics3 = fread($fp, $ThisFileInfo['filesize'] - $ThisFileInfo['lyrics3']['tag_offset_end']);
-				}
+    public function __construct()
+    {
+        return true;
+    }
 
-				ftruncate($fp, $ThisFileInfo['lyrics3']['tag_offset_start']);
+    public function WriteLyrics3()
+    {
+        $this->errors[] = 'WriteLyrics3() not yet functional - cannot write Lyrics3';
 
-				if (!empty($DataAfterLyrics3)) {
-					fseek($fp, $ThisFileInfo['lyrics3']['tag_offset_start']);
-					fwrite($fp, $DataAfterLyrics3, strlen($DataAfterLyrics3));
-				}
+        return false;
+    }
 
-				flock($fp, LOCK_UN);
-				fclose($fp);
-				ignore_user_abort($oldignoreuserabort);
+    public function DeleteLyrics3()
+    {
+        // Initialize getID3 engine
+        $getID3 = new getID3;
+        $ThisFileInfo = $getID3->analyze($this->filename);
+        if (isset($ThisFileInfo['lyrics3']['tag_offset_start'], $ThisFileInfo['lyrics3']['tag_offset_end'])) {
+            if (is_readable($this->filename) && is_writable($this->filename) && is_file($this->filename) && ($fp = fopen($this->filename, 'a+b'))) {
+                flock($fp, LOCK_EX);
+                $oldignoreuserabort = ignore_user_abort(true);
 
-				return true;
+                fseek($fp, $ThisFileInfo['lyrics3']['tag_offset_end']);
+                $DataAfterLyrics3 = '';
+                if ($ThisFileInfo['filesize'] > $ThisFileInfo['lyrics3']['tag_offset_end']) {
+                    $DataAfterLyrics3 = fread($fp, $ThisFileInfo['filesize'] - $ThisFileInfo['lyrics3']['tag_offset_end']);
+                }
 
-			} else {
-				$this->errors[] = 'Cannot fopen('.$this->filename.', "a+b")';
-				return false;
-			}
-		}
-		// no Lyrics3 present
-		return true;
-	}
+                ftruncate($fp, $ThisFileInfo['lyrics3']['tag_offset_start']);
 
+                if (! empty($DataAfterLyrics3)) {
+                    fseek($fp, $ThisFileInfo['lyrics3']['tag_offset_start']);
+                    fwrite($fp, $DataAfterLyrics3, strlen($DataAfterLyrics3));
+                }
+
+                flock($fp, LOCK_UN);
+                fclose($fp);
+                ignore_user_abort($oldignoreuserabort);
+
+                return true;
+            }
+            $this->errors[] = 'Cannot fopen(' . $this->filename . ', "a+b")';
+
+            return false;
+        }
+        // no Lyrics3 present
+        return true;
+    }
 }

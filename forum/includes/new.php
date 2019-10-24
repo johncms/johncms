@@ -1,22 +1,21 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Forum') . ' | ' . _t('Unread');
 $headmod = 'forumnew';
-require('../system/head.php');
-unset($_SESSION['fsort_id']);
-unset($_SESSION['fsort_users']);
+require '../system/head.php';
+unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -47,26 +46,26 @@ if ($systemUser->isValid()) {
             FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
             WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time` OR `cms_forum_rdm`.`topic_id` IS NULL")->fetchAll(PDO::FETCH_ASSOC);
 
-            if (!empty($ids)) {
+            if (! empty($ids)) {
                 foreach ($ids as $val) {
                     $values[] = '(' . $val['id'] . ', ' . $systemUser->id . ', ' . $val['last_post_date'] . ')';
                 }
                 $db->query('INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
                     ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
             }
-            
+
             echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="index.php">' . _t('Forum') . '</a></p></div>';
             break;
 
         case 'period':
             // Показ новых тем за выбранный период
-            $vr = isset($_REQUEST['vr']) ? abs(intval($_REQUEST['vr'])) : 24;
+            $vr = isset($_REQUEST['vr']) ? abs((int) ($_REQUEST['vr'])) : 24;
             $vr1 = time() - $vr * 3600;
 
             if ($systemUser->rights == 9) {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > '$vr1'");
+                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > '${vr1}'");
             } else {
-                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '$vr1' AND (`deleted` != '1' OR deleted IS NULL)");
+                $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '${vr1}' AND (`deleted` != '1' OR deleted IS NULL)");
             }
 
             $count = $req->fetchColumn();
@@ -88,20 +87,19 @@ if ($systemUser->isValid()) {
                     FROM `forum_topic` tpc
                     JOIN forum_sections rzd ON rzd.id = tpc.section_id
                     JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . "," . $kmess);
+                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . ',' . $kmess);
                 } else {
                     $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
                     FROM `forum_topic` tpc
                     JOIN forum_sections rzd ON rzd.id = tpc.section_id
                     JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . "," . $kmess);
+                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $kmess);
                 }
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    $colmes1 = $systemUser->rights >= 7  ? $res['mod_post_count'] : $res['post_count'];
+                    $colmes1 = $systemUser->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($colmes1 / $kmess);
-
 
                     if ($res['closed']) {
                         echo $tools->image('tz.gif');
@@ -111,7 +109,7 @@ if ($systemUser->isValid()) {
                         echo $tools->image('np.gif');
                     }
 
-                    if($res['pinned']) {
+                    if ($res['pinned']) {
                         echo $tools->image('pt.gif');
                     }
 
@@ -122,7 +120,7 @@ if ($systemUser->isValid()) {
                     echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
                         '</a>&#160;[' . $colmes1 . ']';
                     if ($cpg > 1) {
-                        echo '<a href="index.php?type=topic&id=' . $res['id'] . (!$set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
+                        echo '<a href="index.php?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
                     }
 
                     echo '<br /><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
@@ -130,10 +128,10 @@ if ($systemUser->isValid()) {
                     echo $res['user_name'];
 
                     if ($colmes1 > 1) {
-                        echo '&#160;/&#160;' . ($systemUser->rights >= 7  ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
+                        echo '&#160;/&#160;' . ($systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
                     }
 
-                    echo ' <span class="gray">' . $tools->displayDate(($systemUser->rights >= 7  ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
+                    echo ' <span class="gray">' . $tools->displayDate(($systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
                     echo '</div></div>';
                 }
             } else {
@@ -165,8 +163,8 @@ if ($systemUser->isValid()) {
                 LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $systemUser->id . "'
                 JOIN forum_sections rzd ON rzd.id = tpc.section_id
                 JOIN forum_sections frm ON frm.id = rzd.parent
-                WHERE " . ($systemUser->rights >= 7 ? "" : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
-                ORDER BY `tpc`.`last_post_date` DESC LIMIT $start, $kmess");
+                WHERE " . ($systemUser->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
+                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, ${kmess}");
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     if ($res['deleted']) {
@@ -180,7 +178,7 @@ if ($systemUser->isValid()) {
 
                     // Значки
                     $icons = [
-                        (isset($np) ? (!$res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
+                        (isset($np) ? (! $res['pinned'] ? $tools->image('op.gif') : '') : $tools->image('np.gif')),
                         ($res['pinned'] ? $tools->image('pt.gif') : ''),
                         ($res['has_poll'] ? $tools->image('rate.gif') : ''),
                         ($res['closed'] ? $tools->image('tz.gif') : ''),
@@ -190,7 +188,7 @@ if ($systemUser->isValid()) {
                         '</a>&#160;[' . $post_count . ']';
 
                     if ($cpg > 1) {
-                        echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . (!$set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
+                        echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
                     }
 
                     $last_author = $systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
@@ -219,17 +217,16 @@ if ($systemUser->isValid()) {
             if ($total) {
                 echo '<p><a href="index.php?act=new&amp;do=reset">' . _t('Mark as read') . '</a></p>';
             }
-
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
     echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
-    $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name 
+    $req = $db->query('SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name 
     FROM `forum_topic` tpc
     JOIN forum_sections rzd ON rzd.id = tpc.section_id
     JOIN forum_sections frm ON frm.id = rzd.parent
     WHERE (`deleted` <> 1 OR deleted IS NULL)
-    ORDER BY `last_post_date` DESC LIMIT 10");
+    ORDER BY `last_post_date` DESC LIMIT 10');
 
     if ($req->rowCount()) {
         for ($i = 0; $res = $req->fetch(); ++$i) {
@@ -252,11 +249,11 @@ if ($systemUser->isValid()) {
             echo '<br><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
             echo $res['user_name'];
 
-            if (!empty($res['last_post_author_name'])) {
+            if (! empty($res['last_post_author_name'])) {
                 echo '&#160;/&#160;' . $res['last_post_author_name'];
             }
 
-            echo ' <span class="gray">' . date("d.m.y / H:i", $res['last_post_date']) . '</span>';
+            echo ' <span class="gray">' . date('d.m.y / H:i', $res['last_post_date']) . '</span>';
             echo '</div></div>';
         }
     } else {

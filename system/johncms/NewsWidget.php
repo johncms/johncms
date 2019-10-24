@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Johncms;
@@ -15,8 +15,11 @@ namespace Johncms;
 class NewsWidget
 {
     public $news;         // Текст новостей
+
     public $newscount;    // Общее к-во новостей
+
     public $lastnewsdate; // Дата последней новости
+
     private $settings = [];
 
     /**
@@ -46,7 +49,7 @@ class NewsWidget
     {
         if ($this->settings['view'] > 0) {
             $reqtime = $this->settings['days'] ? time() - ($this->settings['days'] * 86400) : 0;
-            $req = $this->db->query("SELECT * FROM `news` WHERE `time` > '$reqtime' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
+            $req = $this->db->query("SELECT * FROM `news` WHERE `time` > '${reqtime}' ORDER BY `time` DESC LIMIT " . $this->settings['quantity']);
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -85,15 +88,15 @@ class NewsWidget
                         case 3:
                             $news .= $text;
                             break;
-                        default :
+                        default:
                             $news .= '<b>' . $res['name'] . '</b><br />' . $text;
                     }
 
                     // Ссылка на каменты
-                    if (!empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
+                    if (! empty($res['kom']) && $this->settings['view'] != 2 && $this->settings['kom'] == 1) {
                         $res_mes = $this->db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['kom'] . "'");
                         $komm = 0;
-                        if($mes = $res_mes->fetch()) {
+                        if ($mes = $res_mes->fetch()) {
                             $komm = $mes['post_count'] - 1;
                         }
                         if ($komm >= 0) {
@@ -118,9 +121,9 @@ class NewsWidget
      */
     private function newscount()
     {
-        $count = $this->db->query("SELECT COUNT(*) FROM `news`")->fetchColumn();
+        $count = $this->db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
 
-        return ($count ? $count : '0');
+        return $count ? $count : '0';
     }
 
     /**
@@ -132,6 +135,6 @@ class NewsWidget
     {
         $count = $this->db->query("SELECT COUNT(*) FROM `news` WHERE `time` > '" . (time() - 259200) . "'")->fetchColumn();
 
-        return ($count > 0 ? '/<span class="red">+' . $count . '</span>' : false);
+        return $count > 0 ? '/<span class="red">+' . $count . '</span>' : false;
     }
 }

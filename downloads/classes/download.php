@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 /**
@@ -18,7 +18,7 @@
  * @version     VERSION.txt (see attached file)
  * @author      http://mobicms.net/about
  */
-class Download
+class download
 {
     private static $extensions =
         [
@@ -44,22 +44,22 @@ class Download
         $screen = false;
         $screen_video = false;
         if ($format_file == 'nth') {
-            require_once('pclzip.lib.php');
+            require_once 'pclzip.lib.php';
             $theme = new PclZip($file);
             $content = $theme->extract(PCLZIP_OPT_BY_NAME, 'theme_descriptor.xml', PCLZIP_OPT_EXTRACT_AS_STRING);
-            if (!$content) {
+            if (! $content) {
                 $content = $theme->extract(PCLZIP_OPT_BY_PREG, '\.xml$', PCLZIP_OPT_EXTRACT_AS_STRING);
             }
-            $val = simplexml_load_string($content[0]['content'])->wallpaper['src'] or $val = simplexml_load_string($content[0]['content'])->wallpaper['main_display_graphics'];
+            $val = simplexml_load_string($content[0]['content'])->wallpaper['src'] || $val = simplexml_load_string($content[0]['content'])->wallpaper['main_display_graphics'];
             $image = $theme->extract(PCLZIP_OPT_BY_NAME, trim($val), PCLZIP_OPT_EXTRACT_AS_STRING);
             $image = $image[0]['content'];
             $file_img = DOWNLOADS_SCR . $id . '/' . $id . '.jpg';
         } elseif ($format_file == 'thm') {
-            require_once('Tar.php');
+            require_once 'Tar.php';
             $theme = new Archive_Tar($file);
-            if (!$file_th = $theme->extractInString('Theme.xml') or !$file_th = $theme->extractInString(pathinfo($file, PATHINFO_FILENAME) . '.xml')) {
+            if (! $file_th = $theme->extractInString('Theme.xml') || ! $file_th = $theme->extractInString(pathinfo($file, PATHINFO_FILENAME) . '.xml')) {
                 $list = $theme->listContent();
-                $all = sizeof($list);
+                $all = count($list);
                 for ($i = 0; $i < $all; ++$i) {
                     if (pathinfo($list[$i]['filename'], PATHINFO_EXTENSION) == 'xml') {
                         $file_th = $theme->extractInString($list[$i]['filename']);
@@ -67,7 +67,7 @@ class Download
                     }
                 }
             }
-            if (!$file_th) {
+            if (! $file_th) {
                 preg_match('/<\?\s*xml\s*version\s*=\s*"1\.0"\s*\?>(.*)<\/.+>/isU', file_get_contents($file), $array);
                 $file_th = trim($array[0]);
             }
@@ -75,19 +75,19 @@ class Download
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
-            if (!$load_file) {
+            if (! $load_file) {
                 $load_file = trim((string )simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
-            if (!$load_file) {
+            if (! $load_file) {
                 $load_file = trim((string )simplexml_load_string($file_th)->Desktop_image['Source']);
             }
             if (strtolower(strrchr($load_file, '.')) == '.swf') {
                 $load_file = '';
             }
-            if (!$load_file) {
+            if (! $load_file) {
                 exit;
             }
             $image = $theme->extractInString($load_file);
@@ -99,9 +99,9 @@ class Download
             $file_img = DOWNLOADS_SCR . $id . '/' . $id . '.gif';
             $screen_video = true;
         }
-        if (!empty($image)) {
+        if (! empty($image)) {
             $is_dir = is_dir(DOWNLOADS_SCR . $id);
-            if (!$is_dir) {
+            if (! $is_dir) {
                 $is_dir = mkdir(DOWNLOADS_SCR . $id, 0777);
                 if ($is_dir == true) {
                     @chmod(DOWNLOADS_SCR . $id, 0777);
@@ -190,11 +190,11 @@ class Download
     // Обработка mp3 тегов
     public static function mp3tagsOut($name, $value = false)
     {
-        if (!$value) {
+        if (! $value) {
             return htmlspecialchars(iconv('windows-1251', 'UTF-8', $name));
-        } else {
-            return iconv('UTF-8', 'windows-1251', $name);
         }
+
+        return iconv('UTF-8', 'windows-1251', $name);
     }
 
     // Вывод ссылок на файл
@@ -205,12 +205,12 @@ class Download
         /** @var Johncms\Api\ToolsInterface $tools */
         $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
-        $id = isset($_REQUEST['id']) ? abs(intval($_REQUEST['id'])) : 0;
+        $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
         $morelink = isset($array['more']) ? '&amp;more=' . $array['more'] : '';
         $out = '<table  width="100%"><tr><td width="16" valign="top">';
         $icon_id = isset(self::$extensions[$array['format']]) ? self::$extensions[$array['format']] : 9;
         $out .= $tools->image('system/' . $icon_id . '.png') . '&nbsp;';
-        $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . Download::displayFileSize((isset($array['res']['size']) ? $array['res']['size'] : filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
+        $out .= '</td><td><a href="?act=load_file&amp;id=' . $id . $morelink . '">' . $array['res']['text'] . '</a> (' . self::displayFileSize(($array['res']['size'] ?? filesize($array['res']['dir'] . '/' . $array['res']['name']))) . ')';
 
         if ($array['res']['time'] > $old) {
             $out .= ' <span class="red">(NEW)</span>';
@@ -253,9 +253,9 @@ class Download
             'ч' => 'ch',
             'ш' => 'sh',
             'щ' => 'sch',
-            'ъ' => "",
+            'ъ' => '',
             'ы' => 'y',
-            'ь' => "",
+            'ь' => '',
             'э' => 'ye',
             'ю' => 'yu',
             'я' => 'ya',
@@ -272,7 +272,7 @@ class Download
         if ($array['refid']) {
             $sql = [];
 
-            if (!isset($array['count'])) {
+            if (! isset($array['count'])) {
                 $array['count'] = 1;
             }
 

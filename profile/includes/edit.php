@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,12 +30,12 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] >= $systemUser->rights)) {
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
-if(!empty($systemUser->ban)){
-    require('../system/end.php');
+if (! empty($systemUser->ban)) {
+    require '../system/end.php';
     exit;
 }
 
@@ -43,7 +43,7 @@ if(!empty($systemUser->ban)){
 if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -63,14 +63,14 @@ if (isset($_GET['delavatar'])) {
     $error = [];
     $user['imname'] = isset($_POST['imname']) ? htmlspecialchars(mb_substr(trim($_POST['imname']), 0, 25)) : '';
     $user['live'] = isset($_POST['live']) ? htmlspecialchars(mb_substr(trim($_POST['live']), 0, 50)) : '';
-    $user['dayb'] = isset($_POST['dayb']) ? intval($_POST['dayb']) : 0;
-    $user['monthb'] = isset($_POST['monthb']) ? intval($_POST['monthb']) : 0;
-    $user['yearofbirth'] = isset($_POST['yearofbirth']) ? intval($_POST['yearofbirth']) : 0;
+    $user['dayb'] = isset($_POST['dayb']) ? (int) ($_POST['dayb']) : 0;
+    $user['monthb'] = isset($_POST['monthb']) ? (int) ($_POST['monthb']) : 0;
+    $user['yearofbirth'] = isset($_POST['yearofbirth']) ? (int) ($_POST['yearofbirth']) : 0;
     $user['about'] = isset($_POST['about']) ? htmlspecialchars(mb_substr(trim($_POST['about']), 0, 500)) : '';
     $user['mibile'] = isset($_POST['mibile']) ? htmlspecialchars(mb_substr(trim($_POST['mibile']), 0, 40)) : '';
     $user['mail'] = isset($_POST['mail']) ? htmlspecialchars(mb_substr(trim($_POST['mail']), 0, 40)) : '';
     $user['mailvis'] = isset($_POST['mailvis']) ? 1 : 0;
-    $user['icq'] = isset($_POST['icq']) ? intval($_POST['icq']) : 0;
+    $user['icq'] = isset($_POST['icq']) ? (int) ($_POST['icq']) : 0;
     $user['skype'] = isset($_POST['skype']) ? htmlspecialchars(mb_substr(trim($_POST['skype']), 0, 40)) : '';
     $user['jabber'] = isset($_POST['jabber']) ? htmlspecialchars(mb_substr(trim($_POST['jabber']), 0, 40)) : '';
     $user['www'] = isset($_POST['www']) ? htmlspecialchars(mb_substr(trim($_POST['www']), 0, 40)) : '';
@@ -79,7 +79,7 @@ if (isset($_GET['delavatar'])) {
     $user['status'] = isset($_POST['status']) ? htmlspecialchars(mb_substr(trim($_POST['status']), 0, 50)) : '';
     $user['karma_off'] = isset($_POST['karma_off']) ? 1 : 0;
     $user['sex'] = isset($_POST['sex']) && $_POST['sex'] == 'm' ? 'm' : 'zh';
-    $user['rights'] = isset($_POST['rights']) ? abs(intval($_POST['rights'])) : $user['rights'];
+    $user['rights'] = isset($_POST['rights']) ? abs((int) ($_POST['rights'])) : $user['rights'];
 
     // Проводим необходимые проверки
     if ($user['rights'] > $systemUser->rights || $user['rights'] > 9 || $user['rights'] < 0) {
@@ -107,7 +107,7 @@ if (isset($_GET['delavatar'])) {
         $error[] = _t('ICQ number must be at least 5 digits and max. 10');
     }
 
-    if (!$error) {
+    if (! $error) {
         $stmt = $db->prepare('UPDATE `users` SET
           `imname` = ?,
           `live` = ?,
@@ -247,7 +247,7 @@ if ($systemUser->rights >= 7) {
 
     if ($user['id'] != $systemUser->id) {
         echo '<p><h3><img src="../images/forbidden.png" width="16" height="16" class="left" />&#160;' . _t('Position on the Site') . '</h3><ul>' .
-            '<input type="radio" value="0" name="rights" ' . (!$user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . _t('User') . '</b><br>' .
+            '<input type="radio" value="0" name="rights" ' . (! $user['rights'] ? 'checked="checked"' : '') . '/>&#160;<b>' . _t('User') . '</b><br>' .
             '<input type="radio" value="3" name="rights" ' . ($user['rights'] == 3 ? 'checked="checked"' : '') . '/>&#160;' . _t('Forum Moderator') . '<br>' .
             '<input type="radio" value="4" name="rights" ' . ($user['rights'] == 4 ? 'checked="checked"' : '') . '/>&#160;' . _t('Download Moderator') . '<br>' .
             '<input type="radio" value="5" name="rights" ' . ($user['rights'] == 5 ? 'checked="checked"' : '') . '/>&#160;' . _t('Library Moderator') . '<br>' .

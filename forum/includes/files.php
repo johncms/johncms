@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'forumfiles';
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -41,10 +41,10 @@ $types = [
 $new = time() - 86400; // Сколько времени файлы считать новыми?
 
 // Получаем ID раздела и подготавливаем запрос
-$c = isset($_GET['c']) ? abs(intval($_GET['c'])) : false; // ID раздела
-$s = isset($_GET['s']) ? abs(intval($_GET['s'])) : false; // ID подраздела
-$t = isset($_GET['t']) ? abs(intval($_GET['t'])) : false; // ID топика
-$do = isset($_GET['do']) && intval($_GET['do']) > 0 && intval($_GET['do']) < 10 ? intval($_GET['do']) : 0;
+$c = isset($_GET['c']) ? abs((int) ($_GET['c'])) : false; // ID раздела
+$s = isset($_GET['s']) ? abs((int) ($_GET['s'])) : false; // ID подраздела
+$t = isset($_GET['t']) ? abs((int) ($_GET['t'])) : false; // ID топика
+$do = isset($_GET['do']) && (int) ($_GET['do']) > 0 && (int) ($_GET['do']) < 10 ? (int) ($_GET['do']) : 0;
 
 if ($c) {
     $id = $c;
@@ -75,12 +75,12 @@ if ($c) {
 if ($c || $s || $t) {
     // Получаем имя нужной категории форума
 
-    if(!empty($t)) {
-        $req = $db->query("SELECT `text` FROM `forum_messages` WHERE `id` = '$id'");
-    } elseif (!empty($s)) {
-        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '$id'");
-    } elseif (!empty($c)) {
-        $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '$id'");
+    if (! empty($t)) {
+        $req = $db->query("SELECT `text` FROM `forum_messages` WHERE `id` = '${id}'");
+    } elseif (! empty($s)) {
+        $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
+    } elseif (! empty($c)) {
+        $req = $db->query("SELECT `name` FROM `forum_sections` WHERE `id` = '${id}'");
     }
 
     if ($req->rowCount()) {
@@ -88,24 +88,24 @@ if ($c || $s || $t) {
         $caption .= $res['name'];
     } else {
         echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-        require('../system/end.php');
+        require '../system/end.php';
         exit;
     }
 }
 
 if ($do || isset($_GET['new'])) {
     // Выводим список файлов нужного раздела
-    $total = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE " . (isset($_GET['new']) ? " `time` > '$new'" : " `filetype` = '$do'") . $sql)->fetchColumn();
+    $total = $db->query('SELECT COUNT(*) FROM `cms_forum_files` WHERE ' . (isset($_GET['new']) ? " `time` > '${new}'" : " `filetype` = '${do}'") . $sql)->fetchColumn();
 
     if ($total) {
         // Заголовок раздела
         echo '<div class="phdr">' . $caption . (isset($_GET['new']) ? '<br />' . _t('New Files') : '') . '</div>' . ($do ? '<div class="bmenu">' . $types[$do] . '</div>' : '');
-        $req = $db->query("SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
+        $req = $db->query('SELECT `cms_forum_files`.*, `forum_messages`.`user_id`, `forum_messages`.`text`, `topicname`.`name` AS `topicname`
             FROM `cms_forum_files`
             LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
             LEFT JOIN `forum_topic` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
-            WHERE " . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '$new'" : " `filetype` = '$do'") . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
-            "ORDER BY `time` DESC LIMIT $start,$kmess");
+            WHERE ' . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
+            "ORDER BY `time` DESC LIMIT ${start},${kmess}");
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
             $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
@@ -114,7 +114,7 @@ if ($do || isset($_GET['new'])) {
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? ">=" : "<=") . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
+            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
             $text = '<b><a href="index.php?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
@@ -134,7 +134,7 @@ if ($do || isset($_GET['new'])) {
 
             if (in_array($att_ext, $pic_ext)) {
                 // Если картинка, то выводим предпросмотр
-                $file = '<div><a class="image-preview" title="'.$res['filename'].'" data-source="index.php?act=file&amp;id=' . $res['id'] . '" href="index.php?act=file&amp;id=' . $res['id'] . '">';
+                $file = '<div><a class="image-preview" title="' . $res['filename'] . '" data-source="index.php?act=file&amp;id=' . $res['id'] . '" href="index.php?act=file&amp;id=' . $res['id'] . '">';
                 $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
             } else {
                 // Если обычный файл, выводим значок и ссылку
@@ -170,7 +170,7 @@ if ($do || isset($_GET['new'])) {
     }
 } else {
     // Выводим список разделов, в которых есть файлы
-    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '$new'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+    $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '${new}'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     echo '<p>' . ($countnew > 0
             ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
             : _t('No new files')) . '</p>';
@@ -178,7 +178,7 @@ if ($do || isset($_GET['new'])) {
     $link = [];
     $total = 0;
     for ($i = 1; $i < 10; $i++) {
-        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '$i'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
+        $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '${i}'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
 
         if ($count > 0) {
             $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="index.php?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
@@ -187,7 +187,7 @@ if ($do || isset($_GET['new'])) {
     }
 
     foreach ($link as $var) {
-        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
+        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
         ++$i;
     }
 
@@ -196,14 +196,13 @@ if ($do || isset($_GET['new'])) {
 
 $type = '';
 
-if($c) {
+if ($c) {
     $type = '';
 } elseif ($s) {
     $type = 'type=topics';
 } elseif ($t) {
     $type = 'type=topic';
 }
-
 
 echo '<p>' . (($do || isset($_GET['new']))
         ? '<a href="index.php?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'

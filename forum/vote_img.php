@@ -1,23 +1,23 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-$vote = abs(intval($_GET['img']));
+$vote = abs((int) ($_GET['img']));
 
 if ($vote > 100) {
     $vote = 100;
 }
 
-header("Content-type: image/gif");
-$vote_img = imageCreateFromGIF("../images/vote.gif");
+header('Content-type: image/gif');
+$vote_img = imagecreatefromgif('../images/vote.gif');
 $color = imagecolorallocate($vote_img, 234, 237, 237);
 $color2 = imagecolorallocate($vote_img, 227, 222, 222);
 $color3 = imagecolorallocate($vote_img, 204, 200, 200);
@@ -93,5 +93,5 @@ if ($vote >= 76 && $vote <= 100) {
     imagefilledrectangle($vote_img, 1, 9, $vote, 10, $color5);
 }
 
-imagestring($vote_img, 1, 78, 2, "$vote%", $color6);
+imagestring($vote_img, 1, 78, 2, "${vote}%", $color6);
 imagegif($vote_img);

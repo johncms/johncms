@@ -1,16 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $out = '';
 $total = 0;
@@ -42,7 +42,7 @@ if ($mod == 'clear') {
 
             if ($mass_del) {
                 $result = implode(',', $mass_del);
-                $db->exec("DELETE FROM `cms_mail` WHERE `id` IN (" . $result . ")");
+                $db->exec('DELETE FROM `cms_mail` WHERE `id` IN (' . $result . ')');
             }
         }
         $out .= '<div class="gmenu">' . _t('Messages are deleted') . '</div>';
@@ -70,7 +70,7 @@ if ($mod == 'clear') {
             $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=systems&amp;', $start, $total, $kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `delete`!='" . $systemUser->id . "' ORDER BY `time` DESC LIMIT " . $start . "," . $kmess);
+        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `delete`!='" . $systemUser->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
         $mass_read = [];
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
@@ -84,7 +84,7 @@ if ($mod == 'clear') {
             $post = $tools->checkout($post, 1, 1);
             $post = $tools->smilies($post);
             $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate($row['time']) . ')<br />';
-            $post = preg_replace_callback("/{TIME=(.+?)}/usi", 'time_parce', $post);
+            $post = preg_replace_callback('/{TIME=(.+?)}/usi', 'time_parce', $post);
             $out .= $post;
             $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
             $out .= '</div>';
@@ -93,7 +93,7 @@ if ($mod == 'clear') {
         //Ставим метку о прочтении
         if ($mass_read) {
             $result = implode(',', $mass_read);
-            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `id` IN (" . $result . ")");
+            $db->exec("UPDATE `cms_mail` SET `read`='1' WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `id` IN (" . $result . ')');
         }
     } else {
         $out .= '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
@@ -111,7 +111,7 @@ if ($mod == 'clear') {
 }
 
 $textl = _t('Mail');
-require_once('../system/head.php');
+require_once '../system/head.php';
 echo '<div class="phdr"><b>' . _t('System messages') . '</b></div>';
 echo $out;
 echo '<p>';

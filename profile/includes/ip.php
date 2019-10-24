@@ -1,19 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') or die('Error: restricted access');
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('IP History');
-require('../system/head.php');
+require '../system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,9 +28,9 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
-if (!$systemUser->rights && $systemUser->id != $user['id']) {
+if (! $systemUser->rights && $systemUser->id != $user['id']) {
     echo $tools->displayError(_t('Access forbidden'));
-    require('../system/end.php');
+    require '../system/end.php';
     exit;
 }
 
@@ -40,23 +40,23 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 // История IP адресов
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('IP History') . '</div>';
 echo '<div class="user"><p>';
-$arg = array(
+$arg = [
     'lastvisit' => 1,
-    'header' => '<b>ID:' . $user['id'] . '</b>'
-);
+    'header' => '<b>ID:' . $user['id'] . '</b>',
+];
 echo $tools->displayUser($user, $arg);
 echo '</p></div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
 if ($total) {
-    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `time` DESC LIMIT $start, $kmess");
+    $req = $db->query("SELECT * FROM `cms_users_iphistory` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
     $i = 0;
 
     while ($res = $req->fetch()) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         $link = $systemUser->rights ? '<a href="' . $config['homeurl'] . '/admin/index.php?act=search_ip&amp;mod=history&amp;ip=' . long2ip($res['ip']) . '">' . long2ip($res['ip']) . '</a>' : long2ip($res['ip']);
-        echo $link . ' <span class="gray">(' . date("d.m.Y / H:i", $res['time']) . ')</span></div>';
+        echo $link . ' <span class="gray">(' . date('d.m.Y / H:i', $res['time']) . ')</span></div>';
         ++$i;
     }
 } else {

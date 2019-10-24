@@ -1,20 +1,20 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 define('_IN_JOHNCMS', 1);
 
-require('../system/bootstrap.php');
+require '../system/bootstrap.php';
 
-$id = isset($_GET['id']) ? abs(intval($_GET['id'])) : 0;
+$id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -34,14 +34,14 @@ $db = $container->get(PDO::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $textl = _t('Password recovery');
-require('../system/head.php');
+require '../system/head.php';
 
 function passgen($length)
 {
-    $vals = "abcdefghijklmnopqrstuvwxyz0123456789";
+    $vals = 'abcdefghijklmnopqrstuvwxyz0123456789';
     $result = '';
     for ($i = 1; $i <= $length; $i++) {
-        $result .= $vals{rand(0, strlen($vals))};
+        $result .= $vals[rand(0, strlen($vals))];
     }
 
     return $result;
@@ -56,17 +56,17 @@ switch ($act) {
         $check_code = md5(rand(1000, 9999));
         $error = false;
 
-        if (!$nick || !$email || !$code) {
+        if (! $nick || ! $email || ! $code) {
             $error = _t('The required fields are not filled');
-        } elseif (!isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code']) {
+        } elseif (! isset($_SESSION['code']) || mb_strlen($code) < 4 || $code != $_SESSION['code']) {
             $error = _t('Incorrect code');
         }
 
         unset($_SESSION['code']);
 
-        if (!$error) {
+        if (! $error) {
             // Проверяем данные по базе
-            $req = $db->query("SELECT * FROM `users` WHERE `name_lat` = " . $db->quote($nick) . " LIMIT 1");
+            $req = $db->query('SELECT * FROM `users` WHERE `name_lat` = ' . $db->quote($nick) . ' LIMIT 1');
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -83,7 +83,7 @@ switch ($act) {
             }
         }
 
-        if (!$error) {
+        if (! $error) {
             // Высылаем инструкции на E-mail
             $link = $config['homeurl'] . '/profile/skl.php?act=set&id=' . $res['id'] . '&code=' . $check_code;
             $subject = _t('Password recovery');
@@ -93,10 +93,10 @@ switch ($act) {
                 $config['homeurl'],
                 $link
             );
-            $adds = "From: <" . $config['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
+            $adds = 'From: <' . $config['email'] . ">\r\nContent-Type: text/plain; charset=\"utf-8\"\r\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                $db->exec("UPDATE `users` SET `rest_code` = " . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
+                $db->exec('UPDATE `users` SET `rest_code` = ' . $db->quote($check_code) . ", `rest_time` = '" . time() . "' WHERE `id` = " . $res['id']);
                 echo '<div class="gmenu"><p>' . _t('Check your e-mail for further information') . '</p></div>';
             } else {
                 echo '<div class="rmenu"><p>' . _t('Error sending E-mail') . '</p></div>';
@@ -112,11 +112,11 @@ switch ($act) {
         $code = isset($_GET['code']) ? trim($_GET['code']) : '';
         $error = false;
 
-        if (!$id || !$code) {
+        if (! $id || ! $code) {
             $error = _t('Wrong data');
         }
 
-        $req = $db->query("SELECT * FROM `users` WHERE `id` = " . $id);
+        $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if ($req->rowCount()) {
             $res = $req->fetch();
@@ -125,7 +125,7 @@ switch ($act) {
                 $error = _t('Password recovery is impossible');
             }
 
-            if (!$error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
+            if (! $error && ($res['rest_time'] < time() - 3600 || $code != $res['rest_code'])) {
                 $error = _t('Time allotted for the password recovery has been exceeded');
                 $db->exec("UPDATE `users` SET `rest_code` = '', `rest_time` = '' WHERE `id` = " . $id);
             }
@@ -133,7 +133,7 @@ switch ($act) {
             _t('User does not exists');
         }
 
-        if (!$error) {
+        if (! $error) {
             // Высылаем пароль на E-mail
             $pass = passgen(4);
             $subject = _t('Your new password');
@@ -143,10 +143,10 @@ switch ($act) {
                 $config['homeurl'],
                 $pass
             );
-            $adds = "From: <" . $config['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
+            $adds = 'From: <' . $config['email'] . ">\nContent-Type: text/plain; charset=\"utf-8\"\n";
 
             if (mail($res['mail'], $subject, $mail, $adds)) {
-                $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . " WHERE `id` = " . $id);
+                $db->exec("UPDATE `users` SET `rest_code` = '', `password` = " . $db->quote(md5(md5($pass))) . ' WHERE `id` = ' . $id);
                 echo '<div class="phdr">' . _t('Change password') . '</div>';
                 echo '<div class="gmenu"><p>' . _t('Password successfully changed.<br>New password sent to your E-mail address.') . '</p></div>';
             } else {
@@ -171,4 +171,4 @@ switch ($act) {
         break;
 }
 
-require('../system/end.php');
+require '../system/end.php';

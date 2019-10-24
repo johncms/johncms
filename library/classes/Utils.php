@@ -1,13 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 namespace Library;
@@ -28,7 +28,7 @@ class Utils
         /** @var \Johncms\Api\ConfigInterface $config */
         $config = \App::getContainer()->get(\Johncms\Api\ConfigInterface::class);
 
-        ob_get_level() and ob_end_clean();
+        ob_get_level() && ob_end_clean();
         header('Location: ' . $config['homeurl'] . '/?err');
         exit;
     }
@@ -57,6 +57,7 @@ class Utils
         if ($a['rang'] == $b['rang']) {
             return 0;
         }
+
         return ($a['rang'] > $b['rang']) ? -1 : 1;
     }
 
@@ -71,6 +72,7 @@ class Utils
         if ($a['name'] == $b['name']) {
             return 0;
         }
+
         return ($a['name'] < $b['name']) ? -1 : 1;
     }
 }
