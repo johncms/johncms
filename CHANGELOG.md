@@ -3,6 +3,26 @@ This project follows [semantic versioning](https://semver.org/).
 All notable changes to this project will be documented in this file.  
 Detailed change can see in the [repository log](https://github.com/simba77/johncms/commits).
 
+## 9.0.0 - Unreleased
+
+#### Added
+- Nothing
+
+#### Changed
+- Строгая типизация, [проверка кода по style-ci](https://github.styleci.io/repos/30122305)
+
+#### Deprecated
+- Nothing
+
+#### Removed
+- Nothing
+
+#### Fixed
+- Nothing
+
+#### Security
+- Nothing
+
 
 ## 8.0.0 - 2019-10-23
 
@@ -14,19 +34,11 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Изменена структура таблиц форума для повышения производительности
 - Изменено отображение результатов опросов на форуме
 
-#### Deprecated
-- Nothing
-
-#### Removed
-- Nothing
-
 #### Fixed
 - Исправлена проблема зависания сайта при автоочистке на больших базах
 - Исправлена постраничная навигация в списке избранных смайлов
 - Исправлены ошибки при добавлении статьи в библиотеке
 
-#### Security
-- Nothing
 
 ## 7.1.0 - 2017-04-07  
 
