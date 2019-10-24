@@ -10,7 +10,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Utility;
+
+use Johncms\Api\BbcodeInterface;
+use Johncms\Api\EnvironmentInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
 
 class Comments
 {
@@ -35,12 +40,12 @@ class Comments
     private $db;
 
     /**
-     * @var \Johncms\Tools
+     * @var ToolsInterface
      */
     private $tools;
 
     /**
-     * @var Api\UserInterface::class
+     * @var UserInterface
      */
     private $systemUser;
 
@@ -71,9 +76,9 @@ class Comments
 
         /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
-        $this->tools = $container->get(Api\ToolsInterface::class);
+        $this->tools = $container->get(ToolsInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->systemUser = $container->get(Api\UserInterface::class);
+        $this->systemUser = $container->get(UserInterface::class);
 
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
@@ -148,7 +153,7 @@ class Comments
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
+                                ' (' . $this->tools->displayDate((int) $res['time']) . ')<br />' .
                                 $this->tools->checkout($res['text']);
                             $reply = $this->tools->checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
@@ -330,7 +335,7 @@ class Comments
                         }
 
                         $user_arg = [
-                            'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
+                            'header' => ' <span class="gray">(' . $this->tools->displayDate((int) $res['time']) . ')</span>',
                             'body' => $text,
                             'sub' => implode(' | ', array_filter($menu)),
                             'iphide' => ($this->systemUser->rights ? false : true),
@@ -365,8 +370,8 @@ class Comments
         /** @var \Psr\Container\ContainerInterface $container */
         $container = \App::getContainer();
 
-        /** @var Api\EnvironmentInterface $env */
-        $env = $container->get(Api\EnvironmentInterface::class);
+        /** @var EnvironmentInterface $env */
+        $env = $container->get(EnvironmentInterface::class);
 
         // Формируем атрибуты сообщения
         $attributes = [
@@ -409,7 +414,7 @@ class Comments
         return '<div class="gmenu"><form name="form" action="' . $this->url . $submit_link . '" method="post"><p>' .
             (! empty($text) ? '<div class="quote">' . $text . '</div></p><p>' : '') .
             '<b>' . _t('Message', 'system') . '</b>: <small>(Max. ' . $this->max_lenght . ')</small><br />' .
-            '</p><p>' . \App::getContainer()->get(Api\BbcodeInterface::class)->buttons('form', 'message') .
+            '</p><p>' . \App::getContainer()->get(BbcodeInterface::class)->buttons('form', 'message') .
             '<textarea rows="' . $this->systemUser->getConfig()->fieldHeight . '" name="message">' . $reply . '</textarea><br>' .
             '<input type="hidden" name="code" value="' . rand(1000, 9999) . '" /><input type="submit" name="submit" value="' . _t('Send', 'system') . '"/></p></form></div>';
     }
@@ -419,7 +424,7 @@ class Comments
     private function msg_check($rpt_check = false)
     {
         $error = [];
-        $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : false;
+        $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
         $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
         $code_chk = $_SESSION['code'] ?? null;
         $translit = isset($_POST['translit']);
@@ -434,7 +439,7 @@ class Comments
             $error[] = _t('Text is too short', 'system');
         } else {
             // Проверка на флуд
-            $flood = \App::getContainer()->get(Api\ToolsInterface::class)->antiflood();
+            $flood = \App::getContainer()->get(ToolsInterface::class)->antiflood();
 
             if ($flood) {
                 $error[] = _t('You cannot add the message so often<br>Please, wait', 'system') . ' ' . $flood . '&#160;' . _t('seconds', 'system');
@@ -446,7 +451,7 @@ class Comments
             $req = $this->db->query('SELECT * FROM `' . $this->comments_table . "` WHERE `user_id` = '" . $this->systemUser->id . "' ORDER BY `id` DESC LIMIT 1");
             $res = $req->fetch();
 
-            if (mb_strtolower($message) == mb_strtolower($res['text'])) {
+            if (mb_strtolower($message) == mb_strtolower((string) $res['text'])) {
                 $error[] = _t('Message already exists', 'system');
             }
         }

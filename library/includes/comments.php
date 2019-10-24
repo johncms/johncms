@@ -81,7 +81,7 @@ if ($req_obj->rowCount()) {
         'context_top' => $context_top,
         // Выводится вверху списка
     ];
-    $comm = new Johncms\Comments($arg);
+    $comm = new Johncms\Utility\Comments($arg);
 
     if ($comm->added) {
         $db->exec('UPDATE `library_texts` SET `comm_count`=' . ($res_obj['comm_count'] > 0 ? ++$res_obj['comm_count'] : 1) . ' WHERE `id`=' . $id);

@@ -94,7 +94,7 @@ if ($req_obj->rowCount()) {
 
     // Показываем комментарии
     require '../system/head.php';
-    $comm = new Johncms\Comments($arg);
+    $comm = new Johncms\Utility\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
     if ($comm->added && $systemUser->id != $owner['id']) {
