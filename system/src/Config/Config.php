@@ -10,8 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Config;
 
+use Johncms\Api\ConfigInterface;
 use Zend\Stdlib\ArrayObject;
 
 /**
@@ -20,7 +21,7 @@ use Zend\Stdlib\ArrayObject;
  * @package Johncms
  *
  */
-class Config extends ArrayObject implements Api\ConfigInterface
+class Config extends ArrayObject implements ConfigInterface
 {
     public function __construct(array $input)
     {
