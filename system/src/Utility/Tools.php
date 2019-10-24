@@ -589,7 +589,7 @@ class Tools implements ToolsInterface
      * @param int $var
      * @return bool|string
      */
-    public function timecount($var)
+    public function timecount(int $var)
     {
         if ($var < 0) {
             $var = 0;

@@ -66,9 +66,9 @@ switch ($act) {
 
     default:
         // Принимаем данные, выводим форму поиска
-        $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-        $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
-        $search = $search_post ? $search_post : $search_get;
+        $search_post = isset($_POST['search']) ? trim($_POST['search']) : '';
+        $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
+        $search = ! empty($search_post) ? $search_post : $search_get;
         //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
         $search_t = isset($_REQUEST['t']);
         $to_history = false;

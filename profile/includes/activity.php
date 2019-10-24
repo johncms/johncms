@@ -128,7 +128,7 @@ switch ($mod) {
                     '<div class="sub">' .
                     '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate($res['date']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate((int) $res['date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }

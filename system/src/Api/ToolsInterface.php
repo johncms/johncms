@@ -42,7 +42,7 @@ interface ToolsInterface
 
     public function smilies($string, $adm);
 
-    public function timecount($var);
+    public function timecount(int $var);
 
     public function recountForumTopic($topic_id);
 
