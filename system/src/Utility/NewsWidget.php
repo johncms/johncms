@@ -10,7 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Utility;
+
+use Johncms\Api\ToolsInterface;
 
 class NewsWidget
 {
@@ -28,7 +30,7 @@ class NewsWidget
     private $db;
 
     /**
-     * @var \Johncms\Tools
+     * @var ToolsInterface
      */
     private $tools;
 
@@ -38,7 +40,7 @@ class NewsWidget
         $container = \App::getContainer();
 
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get(Api\ToolsInterface::class);
+        $this->tools = $container->get(ToolsInterface::class);
         $this->settings = $container->get('config')['johncms']['news'];
         $this->newscount = $this->newscount() . $this->lastnewscount();
         $this->news = $this->news();

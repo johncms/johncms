@@ -40,7 +40,7 @@ interface ToolsInterface
 
     public function rusLat($str);
 
-    public function smilies($string, $adm);
+    public function smilies($string, $adm = false);
 
     public function timecount(int $var);
 

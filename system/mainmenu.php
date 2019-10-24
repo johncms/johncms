@@ -21,10 +21,10 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-/** @var Johncms\Counters $counters */
+/** @var Johncms\Utility\Counters $counters */
 $counters = $container->get('counters');
 
-$mp = new Johncms\NewsWidget();
+$mp = new Johncms\Utility\NewsWidget();
 
 // Блок информации
 echo '<div class="phdr"><b>' . _t('Information', 'system') . '</b></div>';
