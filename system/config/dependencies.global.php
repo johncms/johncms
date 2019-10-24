@@ -16,11 +16,11 @@ return [
             Johncms\Api\BbcodeInterface::class      => Johncms\Bbcode::class,
             Johncms\Api\ConfigInterface::class      => Johncms\ConfigFactory::class,
             Johncms\Api\EnvironmentInterface::class => Johncms\Environment::class,
-            Johncms\Api\ToolsInterface::class       => Johncms\Utilites\Tools::class,
+            Johncms\Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
             Johncms\Api\UserInterface::class        => Johncms\UserFactory::class,
             PDO::class                              => Johncms\Database\PdoFactory::class,
 
-            'counters' => Johncms\Counters::class,
+            'counters' => Johncms\Utility\Counters::class,
         ],
 
         // DEPRECATED!!!

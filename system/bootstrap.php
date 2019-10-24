@@ -110,7 +110,7 @@ if ($req->rowCount()) {
 $cacheFile = CACHE_PATH . 'cleanup.dat';
 
 if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
-    new Johncms\Cleanup($db);
+    new Johncms\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
 

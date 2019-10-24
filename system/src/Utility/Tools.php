@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms\Utilites;
+namespace Johncms\Utility;
 
 use Johncms\Api\BbcodeInterface;
 use Johncms\Api\ConfigInterface;
