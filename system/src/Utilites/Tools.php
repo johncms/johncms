@@ -10,11 +10,16 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms;
+namespace Johncms\Utilites;
 
+use Johncms\Api\BbcodeInterface;
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
+use Johncms\UserConfig;
 use Psr\Container\ContainerInterface;
 
-class Tools implements Api\ToolsInterface
+class Tools implements ToolsInterface
 {
     /**
      * @var ContainerInterface
@@ -27,7 +32,7 @@ class Tools implements Api\ToolsInterface
     private $db;
 
     /**
-     * @var Api\UserInterface::class
+     * @var UserInterface::class
      */
     private $user;
 
@@ -37,16 +42,16 @@ class Tools implements Api\ToolsInterface
     private $userConfig;
 
     /**
-     * @var Api\ConfigInterface
+     * @var ConfigInterface
      */
     private $config;
 
     public function __invoke(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->config = $container->get(Api\ConfigInterface::class);
+        $this->config = $container->get(ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
-        $this->user = $container->get(Api\UserInterface::class);
+        $this->user = $container->get(UserInterface::class);
         $this->userConfig = $this->user->getConfig();
 
         return $this;
@@ -112,9 +117,9 @@ class Tools implements Api\ToolsInterface
         }
 
         if ($tags == 1) {
-            $str = $this->container->get(Api\BbcodeInterface::class)->tags($str);
+            $str = $this->container->get(BbcodeInterface::class)->tags($str);
         } elseif ($tags == 2) {
-            $str = $this->container->get(Api\BbcodeInterface::class)->notags($str);
+            $str = $this->container->get(BbcodeInterface::class)->notags($str);
         }
 
         return trim($str);
@@ -225,11 +230,11 @@ class Tools implements Api\ToolsInterface
      * @param int    $user_id
      * @param string $place
      * @param mixed $headmod
-     * @return mixed|string
+     * @return string
      */
-    public function displayPlace($user_id = 0, $place = '', $headmod = '')
+    public function displayPlace(int $user_id = 0, string $placeCode = '', $headmod = '') : string
     {
-        $place = explode(',', $place);
+        $place = explode(',', $placeCode);
 
         $placelist = [
             'admlist'          => '<a href="#home#/users/index.php?act=admlist">' . _t('List of Admins', 'system') . '</a>',
@@ -255,14 +260,16 @@ class Tools implements Api\ToolsInterface
         ];
 
         if (array_key_exists($place[0], $placelist)) {
-            if ($place[0] == 'profile') {
+            if ($place[0] === 'profile') {
                 if ($place[1] == $user_id) {
                     return '<a href="' . $this->config['homeurl'] . '/profile/?user=' . $place[1] . '">' . $placelist['profile_personal'] . '</a>';
                 }
                 $user = $this->getUser($place[1]);
 
                 return $placelist['profile'] . ': <a href="' . $this->config['homeurl'] . '/profile/?user=' . $user['id'] . '">' . $user['name'] . '</a>';
-            } elseif ($place[0] == 'online' && ! empty($headmod) && $headmod == 'online') {
+            }
+
+            if ($place[0] === 'online' && ! empty($headmod) && $headmod === 'online') {
                 return $placelist['here'];
             }
 
@@ -317,7 +324,7 @@ class Tools implements Api\ToolsInterface
             $out .= '</td><td>';
 
             if ($user['sex']) {
-                $out .= $this->image(($user['sex'] == 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+                $out .= $this->image(($user['sex'] === 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
             } else {
                 $out .= $this->image('del.png');
             }
@@ -356,7 +363,7 @@ class Tools implements Api\ToolsInterface
         $ipinf = isset($arg['iphide']) ? ! $arg['iphide'] : ($this->user->rights ? 1 : 0);
         $lastvisit = time() > $user['lastdate'] + 300 && isset($arg['lastvisit']) ? $this->displayDate($user['lastdate']) : false;
 
-        if ($ipinf || $lastvisit || isset($arg['sub']) && ! empty($arg['sub']) || isset($arg['footer'])) {
+        if ($ipinf || $lastvisit || ! empty($arg['sub']) || isset($arg['footer'])) {
             $out .= '<div class="sub">';
 
             if (isset($arg['sub'])) {
