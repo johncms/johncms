@@ -69,7 +69,7 @@ class Bbcode implements BbcodeInterface
     }
 
     // Обработка тэгов и ссылок
-    public function tags($var)
+    public function tags(string $var) : string
     {
         $var = $this->highlightCode($var);           // Подсветка кода
         $var = $this->parseTime($var);               // Обработка тэга времени
@@ -82,7 +82,7 @@ class Bbcode implements BbcodeInterface
         return $var;
     }
 
-    public function notags($var = '')
+    public function notags(string $var = '') : string
     {
         $replacements = array_values($this->tags);
         $search = array_column($replacements, 'from');
@@ -104,12 +104,8 @@ class Bbcode implements BbcodeInterface
 
     /**
      * BbCode Toolbar
-     *
-     * @param string $form
-     * @param string $field
-     * @return string
      */
-    public function buttons($form, $field)
+    public function buttons(string $form, string $field) : string
     {
         $colors = [
             'ffffff',

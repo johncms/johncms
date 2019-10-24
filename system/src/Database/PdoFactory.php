@@ -17,11 +17,7 @@ use Psr\Container\ContainerInterface;
 
 class PdoFactory
 {
-    /**
-     * @param ContainerInterface $container
-     * @return \PDO
-     */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container) : PDO
     {
         $config = $container->get('config')['pdo'] ?? [];
 

@@ -19,11 +19,11 @@ namespace Johncms\Api;
  */
 interface EnvironmentInterface
 {
-    public function getIp();
+    public function getIp() : int;
 
-    public function getIpViaProxy();
+    public function getIpViaProxy() : int;
 
-    public function getUserAgent();
+    public function getUserAgent() : string;
 
-    public function getIpLog();
+    public function getIpLog() : array;
 }

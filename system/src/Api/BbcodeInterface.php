@@ -16,26 +16,16 @@ interface BbcodeInterface
 {
     /**
      * Обработка тэгов и ссылок
-     *
-     * @param $string
-     * @return mixed
      */
-    public function tags($string);
+    public function tags(string $string) : string;
 
     /**
      * Удаление BBcode тэгов
-     *
-     * @param $string
-     * @return mixed
      */
-    public function noTags($string);
+    public function noTags(string $string) : string;
 
     /**
      * Панель кнопок для форматирования текстов в полях ввода
-     *
-     * @param $form
-     * @param $field
-     * @return mixed
      */
-    public function buttons($form, $field);
+    public function buttons(string $form, string $field) : string;
 }

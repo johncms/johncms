@@ -37,7 +37,7 @@ class Environment implements Api\EnvironmentInterface
         return $this;
     }
 
-    public function getIp()
+    public function getIp() : int
     {
         if (null === $this->ip) {
             $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
@@ -45,10 +45,10 @@ class Environment implements Api\EnvironmentInterface
             $this->ip = sprintf('%u', $ip);
         }
 
-        return $this->ip;
+        return (int) $this->ip;
     }
 
-    public function getIpViaProxy()
+    public function getIpViaProxy() : int
     {
         if ($this->ipViaProxy !== null) {
             return $this->ipViaProxy;
@@ -63,7 +63,7 @@ class Environment implements Api\EnvironmentInterface
                 $ipViaProxy = ip2long($var);
 
                 if ($ipViaProxy && $ipViaProxy != $this->getIp() && ! preg_match('#^(10|172\.16|192\.168)\.#', $var)) {
-                    return $this->ipViaProxy = sprintf('%u', $ipViaProxy);
+                    return $this->ipViaProxy = (int) sprintf('%u', $ipViaProxy);
                 }
             }
         }
@@ -71,7 +71,7 @@ class Environment implements Api\EnvironmentInterface
         return $this->ipViaProxy = 0;
     }
 
-    public function getUserAgent()
+    public function getUserAgent() : string
     {
         if ($this->userAgent !== null) {
             return $this->userAgent;
@@ -84,12 +84,12 @@ class Environment implements Api\EnvironmentInterface
         return $this->userAgent = 'Not Recognised';
     }
 
-    public function getIpLog()
+    public function getIpLog() : array
     {
         return $this->ipCount;
     }
 
-    private function ipLog($ip)
+    private function ipLog($ip) : void
     {
         $file = ROOT_PATH . 'files/cache/ip_flood.dat';
         $tmp = [];
