@@ -77,16 +77,16 @@ switch ($mod) {
             }
 
             for ($i = $start; $i < $end; $i++) {
-                $out = each($ip_list[$i]);
-                $ip = long2ip($out[0]);
+                $ipLong = key($ip_list[$i]);
+                $ip = long2ip($ipLong);
 
-                if ($out[0] == $container->get(Johncms\Api\EnvironmentInterface::class)->getIp()) {
+                if ($ipLong == $container->get(Johncms\Api\EnvironmentInterface::class)->getIp()) {
                     echo '<div class="gmenu">';
                 } else {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
                 }
 
-                echo '[' . $out[1] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+                echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
                     '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
             }
 
