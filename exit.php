@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
     setcookie('cuid', '');
     setcookie('cups', '');
     session_destroy();
-    header('Location: index.php');
+    header('Location: ' . $config->homeurl);
 } else {
     require 'system/head.php';
     echo '<div class="rmenu">' .

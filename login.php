@@ -106,7 +106,7 @@ if ($systemUser->isValid()) {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         if (isset($_POST['mem'])) {
                             // Установка данных COOKIE
-                            $cuid = base64_encode($systemUser['id']);
+                            $cuid = base64_encode((string) $systemUser['id']);
                             $cups = md5($user_pass);
                             setcookie('cuid', $cuid, time() + 3600 * 24 * 365);
                             setcookie('cups', $cups, time() + 3600 * 24 * 365);
@@ -118,12 +118,7 @@ if ($systemUser->isValid()) {
 
                         $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $systemUser['id']);
                         $set_user = unserialize($systemUser['set_user']);
-
-                        if ($systemUser['lastdate'] < (time() - 3600) && $set_user['digest']) {
-                            header('Location: ' . $config->homeurl . '/index.php?act=digest&last=' . $systemUser['lastdate']);
-                        } else {
-                            header('Location: ' . $config->homeurl . '/index.php');
-                        }
+                        header('Location: ' . $config->homeurl);
 
                         echo '<div class="gmenu"><p><b><a href="index.php?act=digest">' . _t('Enter site', 'system') . '</a></b></p></div>';
                     }
