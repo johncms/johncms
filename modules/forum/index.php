@@ -152,6 +152,7 @@ $mods = [
     'ren',
     'restore',
     'say',
+    'search',
     'tema',
     'users',
     'vip',
@@ -321,7 +322,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
         // Выводим верхнюю панель навигации
         echo '<a id="up"></a><p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr">' . implode(' / ', $tree) . '</div>' .
-            '<div class="topmenu"><a href="search.php?id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
+            '<div class="topmenu"><a href="index.php?act=search&amp;id=' . $id . '">' . _t('Search') . '</a>' . ($filelink ? ' | ' . $filelink : '') . ($wholink ? ' | ' . $wholink : '') . '</div>';
 
         switch ($show_type) {
             case 'section':
@@ -335,7 +336,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                     $i = 0;
 
                     while ($res = $req->fetch()) {
-                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
 
                         if ($res['section_type'] == 1) {
                             $coltem = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = '" . $res['id'] . "'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
@@ -387,7 +388,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
                         if ($res['deleted']) {
                             echo '<div class="rmenu">';
                         } else {
-                            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
                         }
 
                         // Значки
@@ -673,7 +674,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     if ($res['deleted']) {
                         echo '<div class="rmenu">';
                     } else {
-                        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
                     }
 
                     // Пользовательский аватар
@@ -776,6 +777,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
 
                             if (in_array($att_ext, $pic_ext)) {
                                 echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="index.php?act=file&amp;id=' . $fres['id'] . '" href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+                                //TODO: thumbinal.php переместить в /assets
                                 echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
                             } else {
                                 echo '<br><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
@@ -954,14 +956,14 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
         $count = $db->query('SELECT COUNT(*) FROM `cms_forum_files`' . ($systemUser->rights >= 7 ? '' : " WHERE `del` != '1'"))->fetchColumn();
         echo '<p>' . $counters->forumNew(1) . '</p>' .
             '<div class="phdr"><b>' . _t('Forum') . '</b></div>' .
-            '<div class="topmenu"><a href="search.php">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
+            '<div class="topmenu"><a href="index.php?act=search">' . _t('Search') . '</a> | <a href="index.php?act=files">' . _t('Files') . '</a> <span class="red">(' . $count . ')</span></div>';
         $req = $db->query('SELECT sct.`id`, sct.`name`, sct.`description`, (
 SELECT COUNT(*) FROM `forum_sections` WHERE `parent`=sct.id) as cnt
 FROM `forum_sections` sct WHERE sct.parent IS NULL OR sct.parent = 0 ORDER BY sct.`sort`');
         $i = 0;
 
         while ($res = $req->fetch()) {
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
             echo '<a href="index.php?id=' . $res['id'] . '">' . $res['name'] . '</a> [' . $res['cnt'] . ']';
 
             if (! empty($res['description'])) {

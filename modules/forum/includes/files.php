@@ -135,6 +135,7 @@ if ($do || isset($_GET['new'])) {
             if (in_array($att_ext, $pic_ext)) {
                 // Если картинка, то выводим предпросмотр
                 $file = '<div><a class="image-preview" title="' . $res['filename'] . '" data-source="index.php?act=file&amp;id=' . $res['id'] . '" href="index.php?act=file&amp;id=' . $res['id'] . '">';
+                //TODO: thumbinal.php переместить в /assets
                 $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
             } else {
                 // Если обычный файл, выводим значок и ссылку

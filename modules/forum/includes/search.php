@@ -12,20 +12,19 @@ declare(strict_types=1);
 
 define('_IN_JOHNCMS', 1);
 
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $headmod = 'forumsearch';
-require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+//$translator = $container->get(Zend\I18n\Translator\Translator::class);
+//$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = _t('Forum search');
-require '../system/head.php';
+require 'system/head.php';
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
@@ -45,19 +44,19 @@ function ReplaceKeywords($search, $text)
     return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $text);
 }
 
-switch ($act) {
+switch ($mod) {
     case 'reset':
         // Очищаем историю личных поисковых запросов
         if ($systemUser->isValid()) {
             if (isset($_POST['submit'])) {
                 $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
-                header('Location: search.php');
+                header('Location: index.php?act=search');
             } else {
-                echo '<form action="search.php?act=reset" method="post">' .
+                echo '<form action="index.php?act=search&amp;mod=reset" method="post">' .
                     '<div class="rmenu">' .
                     '<p>' . _t('Do you really want to clear the search history?') . '</p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-                    '<p><a href="search.php">' . _t('Cancel') . '</a></p>' .
+                    '<p><a href="index.php?act=search">' . _t('Cancel') . '</a></p>' .
                     '</div>' .
                     '</form>';
             }
@@ -72,7 +71,7 @@ switch ($act) {
         //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
-        echo '<div class="gmenu"><form action="search.php" method="post"><p>' .
+        echo '<div class="gmenu"><form action="index.php?act=search" method="post"><p>' .
             '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />' .
             '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
             '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in the topic names') .
@@ -102,7 +101,7 @@ switch ($act) {
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
             }
 
             if ($total) {
@@ -130,7 +129,7 @@ switch ($act) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
-                    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+                    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
 
                     if (! $search_t) {
                         // Поиск только в тексте
@@ -159,7 +158,10 @@ switch ($act) {
                     $text = $search_t ? $res_p['name'] : $res['text'];
 
                     foreach ($array as $srch) {
-                        if (($pos = mb_strpos(strtolower($res['text']), strtolower(str_replace('*', '', $srch)))) !== false) {
+                        $needle = strtolower(str_replace('*', '', $srch));
+                        $pos = mb_stripos($res['text'] ?? '', $needle);
+
+                        if ($pos !== false) {
                             break;
                         }
                     }
@@ -179,7 +181,7 @@ switch ($act) {
 
                     echo $text;
 
-                    if (mb_strlen($res['text']) > 500) {
+                    if (mb_strlen($res['text'] ?? '') > 500) {
                         echo '...<a href="index.php?act=show_post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
@@ -225,12 +227,12 @@ switch ($act) {
                 sort($history);
 
                 foreach ($history as $val) {
-                    $history_list[] = '<a href="search.php?search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
+                    $history_list[] = '<a href="index.php?act=search&amp;search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
                 }
 
                 // Показываем историю запросов
                 echo '<div class="topmenu">' .
-                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="search.php?act=reset">[x]</a></span><br />' .
+                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="index.php?act=search&amp;mod=reset">[x]</a></span><br />' .
                     implode(' | ', $history_list) .
                     '</div>';
             } elseif ($to_history) {
@@ -245,14 +247,14 @@ switch ($act) {
 
         // Постраничная навигация
         if (isset($total) && $total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
-                '<p><form action="search.php?' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
+            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+                '<p><form action="index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                 '</form></p>';
         }
 
-        echo '<p>' . ($search ? '<a href="search.php">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
+        echo '<p>' . ($search ? '<a href="index.php?act=search">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
 }
 
-require '../system/end.php';
+require 'system/end.php';

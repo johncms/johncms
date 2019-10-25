@@ -115,6 +115,7 @@ if ($freq->rowCount()) {
 
     if (in_array($att_ext, $pic_ext)) {
         echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="index.php?act=file&amp;id=' . $fres['id'] . '" href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+        //TODO: thumbinal.php переместить в /assets
         echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
     } else {
         echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
