@@ -6,12 +6,13 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 ## 9.0.0 - Unreleased
 
 #### Added
-- Внедрен роутер nikic/fast-route
-- Внедрен PSR-7 интерфейс в реализации zendframework/zend-diactoros
+- Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
+- Внедрен PSR-7 интерфейс в реализации [zendframework/zend-diactoros](https://github.com/zendframework/zend-diactoros)
 
 #### Changed
-- Строгая типизация, [проверка кода по style-ci](https://github.styleci.io/repos/30122305)
 - Полный рефакторинг кода системы
+- Строгая типизация, проверка кода по [Style-CI](https://github.styleci.io/repos/30122305)
+- Заменена CAPTCHA, используется пакет [batumibiz/captcha](https://github.com/batumibiz/captcha)
 
 #### Deprecated
 - Nothing
