@@ -34,9 +34,9 @@ class Cleanup
 
     private function cleanupTable(string $table, string $timestampField, int $condition): void
     {
-        $this->pdo->query('LOCK TABLE `' . $table . '` WRITE');
+        $this->pdo->exec('LOCK TABLE `' . $table . '` WRITE');
         $this->pdo->query('DELETE FROM `' . $table . '` WHERE `' . $timestampField . '` < ' . $condition);
         $this->pdo->query('OPTIMIZE TABLE `' . $table . '`');
-        $this->pdo->query('UNLOCK TABLES');
+        $this->pdo->exec('UNLOCK TABLES');
     }
 }
