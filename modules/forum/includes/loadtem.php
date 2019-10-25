@@ -19,14 +19,14 @@ $container = App::getContainer();
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (empty($_GET['n'])) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
 $n = trim($_GET['n']);
-$o = opendir('../files/forum/topics');
+$o = opendir('../files/forum/topics'); //TODO: Разобраться с путем
 
 while ($f = readdir($o)) {
     if ($f != '.' && $f != '..' && $f != 'index.php' && $f != '.htaccess') {
@@ -40,9 +40,9 @@ while ($f = readdir($o)) {
 $tt = count($a);
 
 if (! in_array($n, $b)) {
-    require_once '../system/head.php';
+    require_once 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require_once '../system/end.php';
+    require_once 'system/end.php';
     exit;
 }
 

@@ -26,11 +26,11 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '${id}'")->fetchColumn();
-    require '../system/head.php';
+    require 'system/head.php';
 
     if ($topic_vote == 0) {
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 

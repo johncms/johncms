@@ -12,8 +12,6 @@
 
 define('_IN_JOHNCMS', 1);
 
-require '../system/bootstrap.php';
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -126,9 +124,9 @@ if (! $config->mod_forum && $systemUser->rights < 7) {
 }
 
 if ($error) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 $show_type = $_REQUEST['type'] ?? 'section';
@@ -162,8 +160,8 @@ $mods = [
     'curators',
 ];
 
-if ($act && ($key = array_search($act, $mods)) !== false && file_exists('includes/' . $mods[$key] . '.php')) {
-    require 'includes/' . $mods[$key] . '.php';
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+    require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     // Заголовки страниц форума
     if (empty($id)) {
@@ -219,7 +217,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         }
     }
 
-    require '../system/head.php';
+    require 'system/head.php';
 
     // Если форум закрыт, то для Админов выводим напоминание
     if (! $config->mod_forum) {
@@ -249,7 +247,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists('include
         if (! $type->rowCount()) {
             // Если темы не существует, показываем ошибку
             echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
@@ -998,4 +996,4 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
     }
 }
 
-require_once '../system/end.php';
+require_once 'system/end.php';

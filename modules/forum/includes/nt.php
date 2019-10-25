@@ -34,9 +34,9 @@ if (! $id
     || isset($systemUser->ban['11'])
     || (! $systemUser->rights && $config['mod_forum'] == 3)
 ) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('Access forbidden'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -83,18 +83,18 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
 $req_r = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}' AND `section_type` = 1 LIMIT 1");
 
 if (! $req_r->rowCount()) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -230,14 +230,14 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         }
     } else {
         // Выводим сообщение об ошибке
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 } else {
     $res_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res_r['parent'] . "'")->fetch();
-    require '../system/head.php';
+    require 'system/head.php';
     $msg_pre = $tools->checkout($msg, 1, 1);
     $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);

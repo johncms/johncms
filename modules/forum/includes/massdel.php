@@ -23,7 +23,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     // Массовое удаление выбранных постов форума
-    require '../system/head.php';
+    require 'system/head.php';
 
     if (isset($_GET['yes'])) {
         $dc = $_SESSION['dc'];
@@ -41,7 +41,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     } else {
         if (empty($_POST['delch'])) {
             echo '<p>' . _t('You did not choose something to delete') . '<br><a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a></p>';
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 

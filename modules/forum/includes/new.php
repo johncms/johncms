@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Forum') . ' | ' . _t('Unread');
 $headmod = 'forumnew';
-require '../system/head.php';
+require 'system/head.php';
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
 /** @var Psr\Container\ContainerInterface $container */

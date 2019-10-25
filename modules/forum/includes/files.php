@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'forumfiles';
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -88,7 +88,7 @@ if ($c || $s || $t) {
         $caption .= $res['name'];
     } else {
         echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 }

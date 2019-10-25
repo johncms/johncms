@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,7 +28,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $systemUser->isValid() || ! $id) {
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -140,11 +140,11 @@ if (! $error) {
 
                 if ($req_f->rowCount()) {
                     $db->exec('DELETE FROM `cms_forum_files` WHERE `id` = ' . $fid);
-                    unlink('../files/forum/attach/' . $res_f['filename']);
+                    unlink('../files/forum/attach/' . $res_f['filename']); //TODO: Разобраться с путем
                     header('Location: ' . $link);
                 } else {
                     echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
-                    require '../system/end.php';
+                    require 'system/end.php';
                     exit;
                 }
             }
@@ -240,7 +240,7 @@ if (! $error) {
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
                     echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    require '../system/end.php';
+                    require 'system/end.php';
                     exit;
                 }
 

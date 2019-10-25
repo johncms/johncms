@@ -27,11 +27,11 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
-    require_once '../system/head.php';
+    require_once 'system/head.php';
 
     if ($topic_vote != 0 || $topic == 0) {
         echo $tools->displayError(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>');
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 

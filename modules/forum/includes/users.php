@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,7 +30,7 @@ $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '
 
 if ($topic_vote == 0 || $systemUser->rights < 7) {
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
     $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
@@ -63,4 +63,4 @@ if ($topic_vote == 0 || $systemUser->rights < 7) {
 
     echo '<p><a href="index.php?&type=topic&amp;id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 
-require '../system/end.php';
+require 'system/end.php';

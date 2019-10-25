@@ -26,18 +26,18 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (! $id) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
     $typ = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $typ->rowCount()) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -45,18 +45,18 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         $razd = isset($_POST['razd']) ? abs((int) ($_POST['razd'])) : false;
 
         if (! $razd) {
-            require '../system/head.php';
+            require 'system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
         $typ1 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${razd}'");
 
         if (! $typ1->rowCount()) {
-            require '../system/head.php';
+            require 'system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
@@ -68,7 +68,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     } else {
         // Перенос темы
         $ms = $typ->fetch();
-        require '../system/head.php';
+        require 'system/head.php';
 
         if (empty($_GET['other'])) {
             $rz1 = $db->query("SELECT * FROM `forum_topic` WHERE id='" . $ms['section_id'] . "'")->fetch();

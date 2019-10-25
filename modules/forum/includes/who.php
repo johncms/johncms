@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id . ',topic' : 'forumwho';
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();

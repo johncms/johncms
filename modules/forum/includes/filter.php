@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -22,7 +22,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $id) {
     echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -40,7 +40,7 @@ switch ($do) {
 
         if (empty($_POST['users'])) {
             echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 

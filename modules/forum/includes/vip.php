@@ -26,9 +26,9 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (empty($_GET['id'])) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -36,9 +36,9 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         $db->exec("UPDATE `forum_topic` SET  `pinned` = '" . (isset($_GET['vip']) ? '1' : null) . "' WHERE `id` = '${id}'");
         header('Location: index.php?type=topic&id=' . $id);
     } else {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 }

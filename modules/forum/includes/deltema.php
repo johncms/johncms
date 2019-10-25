@@ -26,9 +26,9 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (! $id) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -36,9 +36,9 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $req->rowCount()) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -70,7 +70,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         header('Location: index.php?type=topics&id=' . $res['section_id']);
     } else {
         // Меню выбора режима удаления темы
-        require '../system/head.php';
+        require 'system/head.php';
         echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
             '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
