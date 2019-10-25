@@ -10,10 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
-require '../system/bootstrap.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -32,12 +28,12 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 $textl = _t('Registration');
 $headmod = 'registration';
-require '../system/head.php';
+require 'system/head.php';
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config->mod_reg || $systemUser->isValid()) {
     echo '<p>' . _t('Registration is temporarily closed') . '</p>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -84,8 +80,8 @@ if (isset($_POST['submit'])) {
     // Проверка кода CAPTCHA
     if (! $captcha
         || ! isset($_SESSION['code'])
-        || mb_strlen($captcha) < 4
-        || $captcha != $_SESSION['code']
+        || mb_strlen($captcha) < 3
+        || strtolower($captcha) != strtolower($_SESSION['code'])
     ) {
         $error['captcha'] = _t('The security code is not correct');
     }
@@ -163,7 +159,7 @@ if (isset($_POST['submit'])) {
         }
 
         echo '</div>';
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 }
@@ -172,6 +168,10 @@ if (isset($_POST['submit'])) {
 if ($config->mod_reg == 1) {
     echo '<div class="rmenu"><p>' . _t('You can get authorized on the site after confirmation of your registration.') . '</p></div>';
 }
+
+$captcha = new Batumibiz\Captcha\Captcha;
+$code = $captcha->generateCode();
+$_SESSION['code'] = $code;
 
 echo '<form action="index.php" method="post"><div class="gmenu">' .
     '<p><h3>' . _t('Choose Nickname') . '</h3>' .
@@ -200,11 +200,11 @@ echo '<form action="index.php" method="post"><div class="gmenu">' .
     '<small>' . _t('Max. 1000 characters') . '</small></p></div>' .
     '<div class="gmenu"><p>' .
     '<h3>' . _t('Verification code') . '</h3>' .
-    '<img src="../captcha.php?r=' . rand(1000, 9999) . '" alt="' . _t('Verification code') . '" border="1"/><br />' .
+    '<img alt="' . _t('Verification code') . '" width="' . $captcha->width . '" height="' . $captcha->height . '" src="' . $captcha->generateImage($code) . '"/><br>' .
     (isset($error['captcha']) ? '<span class="red"><small>' . $error['captcha'] . '</small></span><br />' : '') .
     '<input type="text" size="5" maxlength="5"  name="captcha" ' . (isset($error['captcha']) ? ' style="background-color: #FFCCCC"' : '') . '/><br />' .
     '<small>' . _t('If you cannot see the image code, enable graphics in your browser and refresh this page') . '</small></p>' .
     '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
     '<div class="phdr"><small>' . _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') . '</small></div>';
 
-require '../system/end.php';
+require 'system/end.php';
