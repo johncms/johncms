@@ -24,7 +24,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Каталог Админских Смайлов
 if ($systemUser->rights < 1) {
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 

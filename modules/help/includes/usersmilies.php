@@ -60,7 +60,7 @@ if ($total) {
     }
 
     for ($i = $start; $i < $end; $i++) {
-        $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', basename($smileys[$i], 1));
+        $smile = preg_replace('#^(.*?).(gif|jpg|png)$#isU', '$1', basename($smileys[$i]));
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
 
         if ($systemUser->isValid()) {
