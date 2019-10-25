@@ -29,7 +29,7 @@ $map->get('/rss[/]', 'modules/rss/index.php');                                  
 //$map->addRoute(['GET', 'POST'], '/album[/[index.php]]', 'modules/album/index.php');               // Фотоальбомы
 //$map->addRoute(['GET', 'POST'], '/downloads[/[index.php]]', 'modules/downloads/index.php');       // Загрузки
 $map->addRoute(['GET', 'POST'], '/forum[/[index.php]]', 'modules/forum/index.php');               // Форум
-//$map->addRoute(['GET', 'POST'], '/guestbook[/[index.php]]', 'modules/guestbook/index.php');       // Гостевая
+$map->addRoute(['GET', 'POST'], '/guestbook[/[index.php]]', 'modules/guestbook/index.php');       // Гостевая
 //$map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Справка
 //$map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                    // Переключатель языков
 //$map->addRoute(['GET', 'POST'], '/library[/[index.php]]', 'modules/library/index.php');           // Библиотека

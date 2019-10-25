@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
@@ -20,7 +18,6 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $guestAccess = [];
 
 $headmod = 'guestbook';
-require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -58,12 +55,12 @@ if (isset($_SESSION['ga']) && $systemUser->rights < 1 && ! in_array($systemUser-
 
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
-require '../system/head.php';
+require 'system/head.php';
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (! $config->mod_guest && $systemUser->rights < 7) {
     echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -461,4 +458,4 @@ switch ($act) {
         break;
 }
 
-require '../system/end.php';
+require 'system/end.php';
