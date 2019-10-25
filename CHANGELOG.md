@@ -6,10 +6,12 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 ## 9.0.0 - Unreleased
 
 #### Added
-- Nothing
+- Внедрен роутер nikic/fast-route
+- Внедрен PSR-7 интерфейс в реализации zendframework/zend-diactoros
 
 #### Changed
 - Строгая типизация, [проверка кода по style-ci](https://github.styleci.io/repos/30122305)
+- Полный рефакторинг кода системы
 
 #### Deprecated
 - Nothing
