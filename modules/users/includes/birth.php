@@ -14,7 +14,7 @@ define('_IN_JOHNCMS', 1);
 
 $textl = _t('Birthdays');
 $headmod = 'birth';
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();

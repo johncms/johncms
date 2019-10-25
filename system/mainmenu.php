@@ -39,7 +39,7 @@ echo '<div class="phdr"><b>' . _t('Communication', 'system') . '</b></div>';
 
 // Ссылка на гостевую
 if ($config->mod_guest || $systemUser->rights >= 7) {
-    echo '<div class="menu"><a href="guestbook/index.php">' . _t('Guestbook', 'system') . '</a> (' . $counters->guestbook() . ')</div>';
+    echo '<div class="menu"><a href="guestbook/">' . _t('Guestbook', 'system') . '</a> (' . $counters->guestbook() . ')</div>';
 }
 
 // Ссылка на Форум
@@ -67,8 +67,8 @@ if ($config->mod_lib || $systemUser->rights >= 7) {
 ////////////////////////////////////////////////////////////
 if ($systemUser->isValid() || $config->active) {
     echo '<div class="phdr"><b>' . _t('Community', 'system') . '</b></div>' .
-        '<div class="menu"><a href="users/index.php">' . _t('Users', 'system') . '</a> (' . $counters->users() . ')</div>' .
-        '<div class="menu"><a href="album/index.php">' . _t('Photo Albums', 'system') . '</a> (' . $counters->album() . ')</div>';
+        '<div class="menu"><a href="users/">' . _t('Users', 'system') . '</a> (' . $counters->users() . ')</div>' .
+        '<div class="menu"><a href="album/">' . _t('Photo Albums', 'system') . '</a> (' . $counters->album() . ')</div>';
 }
 
 echo '<div class="phdr"><a href="http://gazenwagen.com">Gazenwagen</a></div>';

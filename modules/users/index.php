@@ -10,14 +10,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $headmod = 'users';
-require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -37,24 +34,23 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Закрываем от неавторизованных юзеров
 if (! $systemUser->isValid() && ! $config->active) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
 // Переключаем режимы работы
-$array = [
-    'admlist'  => 'includes',
-    'birth'    => 'includes',
-    'online'   => 'includes',
-    'top'      => 'includes',
-    'userlist' => 'includes',
+$mods = [
+    'admlist',
+    'birth',
+    'online',
+    'top',
+    'userlist',
 ];
-$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
-if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once $path . $act . '.php';
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+    require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -64,7 +60,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
 
     // Актив сайта
     $textl = _t('Community');
-    require '../system/head.php';
+    require 'system/head.php';
 
     $brth = $db->query("SELECT COUNT(*) FROM `users` WHERE `dayb` = '" . date('j', time()) . "' AND `monthb` = '" . date('n', time()) . "' AND `preg` = '1'")->fetchColumn();
     $count_adm = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` > 0')->fetchColumn();
@@ -85,4 +81,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
 }
 
-require_once '../system/end.php';
+require_once 'system/end.php';

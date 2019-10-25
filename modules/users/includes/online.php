@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'online';
 $textl = _t('Online');
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -100,7 +100,7 @@ switch ($mod) {
             }
         }
 
-        require_once '../system/end.php';
+        require_once 'system/end.php';
         exit;
         break;
 
