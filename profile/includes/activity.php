@@ -55,8 +55,8 @@ switch ($mod) {
         if ($req->rowCount()) {
             $i = 0;
             while ($res = $req->fetch()) {
-                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
-                    '<span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>' .
+                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') . $tools->checkout($res['text'], 2, 1) . '<div class="sub">' .
+                    '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -85,13 +85,13 @@ switch ($mod) {
                 $category = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $section['parent'] . "'")->fetch();
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
-                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
                     '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate((int) $res['last_post_date']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['last_post_date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }
@@ -122,13 +122,13 @@ switch ($mod) {
                 $text = $tools->checkout($text, 2, 1);
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
-                echo($i % 2 ? '<div class="list2">' : '<div class="list1">') .
+                echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
                     '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
                     '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
                     '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
-                    '<br /><span class="gray">(' . $tools->displayDate((int) $res['date']) . ')</span>' .
+                    '<br /><span class="gray">(' . $tools->displayDate($res['date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
             }

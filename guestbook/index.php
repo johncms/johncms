@@ -389,7 +389,7 @@ switch ($act) {
                 }
 
                 // Время создания поста
-                $text = ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
+                $text = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
                 if ($res['user_id']) {
                     // Для зарегистрированных показываем ссылки и смайлы
@@ -420,14 +420,14 @@ switch ($act) {
 
                 if ($res['edit_count']) {
                     // Если пост редактировался, показываем кем и когда
-                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate((int) $res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
+                    $post .= '<br /><span class="gray"><small>Изм. <b>' . $res['edit_who'] . '</b> (' . $tools->displayDate($res['edit_time']) . ') <b>[' . $res['edit_count'] . ']</b></small></span>';
                 }
 
                 if (! empty($res['otvet'])) {
                     // Ответ Администрации
                     $otvet = $tools->checkout($res['otvet'], 1, 1);
                     $otvet = $tools->smilies($otvet, 1);
-                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate((int) $res['otime']) . ')<br>' . $otvet . '</div>';
+                    $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
                 if ($systemUser->rights >= 6) {

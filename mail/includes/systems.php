@@ -83,7 +83,7 @@ if ($mod == 'clear') {
             $post = $row['text'];
             $post = $tools->checkout($post, 1, 1);
             $post = $tools->smilies($post);
-            $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate((int) $row['time']) . ')<br />';
+            $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate($row['time']) . ')<br />';
             $post = preg_replace_callback('/{TIME=(.+?)}/usi', 'time_parce', $post);
             $out .= $post;
             $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';

@@ -167,7 +167,7 @@ if ($total) {
         if ($res['access'] == 4 || $systemUser->rights >= 6) {
             echo vote_photo($res) .
                 '<div class="gray">' . _t('Views') . ': ' . $res['views'] . ', ' . _t('Downloads') . ': ' . $res['downloads'] . '</div>' .
-                '<div class="gray">' . _t('Date') . ': ' . $tools->displayDate((int) $res['time']) . '</div>' .
+                '<div class="gray">' . _t('Date') . ': ' . $tools->displayDate($res['time']) . '</div>' .
                 '<a href="?act=comments&amp;img=' . $res['id'] . '">' . _t('Comments') . '</a> (' . $res['comm_count'] . ')' .
                 '<br><a href="?act=image_download&amp;img=' . $res['id'] . '">' . _t('Download') . '</a>';
         }

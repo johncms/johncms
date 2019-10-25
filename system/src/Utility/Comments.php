@@ -153,7 +153,7 @@ class Comments
                             }
                         } else {
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                ' (' . $this->tools->displayDate((int) $res['time']) . ')<br />' .
+                                ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
                                 $this->tools->checkout($res['text']);
                             $reply = $this->tools->checkout($res['reply']);
                             echo $this->msg_form('&amp;mod=reply&amp;item=' . $this->item, $text, $reply) .
@@ -209,7 +209,7 @@ class Comments
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
-                            $author .= ' (' . $this->tools->displayDate((int) $res['time']) . ')<br />';
+                            $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
                             $text = $this->tools->checkout($res['text']);
                             echo $this->msg_form('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                         }
@@ -335,7 +335,7 @@ class Comments
                         }
 
                         $user_arg = [
-                            'header' => ' <span class="gray">(' . $this->tools->displayDate((int) $res['time']) . ')</span>',
+                            'header' => ' <span class="gray">(' . $this->tools->displayDate($res['time']) . ')</span>',
                             'body' => $text,
                             'sub' => implode(' | ', array_filter($menu)),
                             'iphide' => ($this->systemUser->rights ? false : true),

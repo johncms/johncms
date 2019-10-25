@@ -375,7 +375,7 @@ switch ($mod) {
                 ];
                 echo '<div class="sub">' .
                     '<div>' . implode(' | ', $menu) . '</div>' .
-                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . $tools->displayDate((int) $res['time']) . '<br>' .
+                    '<p><span class="gray">' . _t('Start date') . ':</span> ' . $tools->displayDate($res['time']) . '<br>' .
                     '<span class="gray">' . _t('Disposition') . ':</span>&nbsp;' . $array_placing[$res['layout']] . '<br>' .
                     '<span class="gray">' . _t('Show') . ':</span>&nbsp;' . $array_show[$res['view']];
                 // Вычисляем условия договора на рекламу

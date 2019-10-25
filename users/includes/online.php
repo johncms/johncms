@@ -150,7 +150,7 @@ if ($total) {
         $arg['header'] = ' <span class="gray">(';
 
         if ($mod == 'history') {
-            $arg['header'] .= $tools->displayDate((int) $res['sestime']);
+            $arg['header'] .= $tools->displayDate($res['sestime']);
         } else {
             $arg['header'] .= $res['movings'] . ' - ' . $tools->timecount(time() - $res['sestime']);
         }

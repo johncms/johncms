@@ -187,7 +187,7 @@ if ($set_karma['on']) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $systemUser->id == $res['user_id'] || ! $res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
-                    echo ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
+                    echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
                     if (! empty($res['text'])) {
                         echo '<div class="sub">' . $tools->checkout($res['text']) . '</div>';
                     }
@@ -251,7 +251,7 @@ if ($set_karma['on']) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $res['type'] ? '<span class="green">+' . $res['points'] . '</span> ' : '<span class="red">-' . $res['points'] . '</span> ';
                     echo $systemUser->id == $res['user_id'] || ! $res['user_id'] ? '<b>' . $res['name'] . '</b>' : '<a href="?user=' . $res['user_id'] . '"><b>' . $res['name'] . '</b></a>';
-                    echo ' <span class="gray">(' . $tools->displayDate((int) $res['time']) . ')</span>';
+                    echo ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
 
                     if ($systemUser->rights == 9) {
                         echo ' <span class="red"><a href="?act=karma&amp;mod=delete&amp;user=' . $user['id'] . '&amp;id=' . $res['id'] . '&amp;type=' . $type . '">[X]</a></span>';

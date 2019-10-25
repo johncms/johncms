@@ -53,7 +53,7 @@ if ($total) {
                 ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></div>'
-            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($row['uploader']) . ' (' . $tools->displayDate((int) $row['time']) . ')</div>'
+            . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($row['uploader']) . ' (' . $tools->displayDate($row['time']) . ')</div>'
             . '<div>' . $dir_nav->printNavPanel() . '</div>'
             . '<a href="?act=premod&amp;yes&amp;id=' . $row['id'] . '">' . _t('Approve') . '</a> | <a href="?act=del&amp;type=article&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a>'
             . '</div>';
