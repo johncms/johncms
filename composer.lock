@@ -4,8 +4,48 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54f7e17b783ff41de309a2553c809b6c",
+    "content-hash": "a18a3004c283f21fdf93b99a065e8220",
     "packages": [
+        {
+            "name": "batumibiz/captcha",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/batumibiz/captcha.git",
+                "reference": "73bbde955fbcf062715206bab8f46d85e82c5b11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/batumibiz/captcha/zipball/73bbde955fbcf062715206bab8f46d85e82c5b11",
+                "reference": "73bbde955fbcf062715206bab8f46d85e82c5b11",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "^7.2",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0",
+                "squizlabs/php_codesniffer": "^3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Batumibiz\\Captcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "mobiCMS, Captcha package",
+            "homepage": "https://github.com/batumibiz/captcha",
+            "keywords": [
+                "captcha",
+                "mobicms"
+            ],
+            "time": "2019-04-07T22:07:21+00:00"
+        },
         {
             "name": "container-interop/container-interop",
             "version": "1.2.0",
