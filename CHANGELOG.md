@@ -14,6 +14,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Для работы требуется версия PHP 7.2, или новее
 - Строгая типизация, проверка кода по [Style-CI](https://github.styleci.io/repos/30122305)
 - Заменена CAPTCHA, используется пакет [batumibiz/captcha](https://github.com/batumibiz/captcha)
+- Весь функционал распределен по модулям и перемещен в папку `/modules`
 
 #### Deprecated
 - Nothing

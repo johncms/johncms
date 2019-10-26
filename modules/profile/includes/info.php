@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Подробная информация, контактные данные
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Information');
-require '../system/head.php';
+require 'system/head.php';
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Information') . '</div>';
 
 if ($user['id'] == $systemUser->id || ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'])) {
@@ -35,8 +35,8 @@ echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>' .
     '<h3><img src="../images/contacts.png" width="16" height="16" class="left" />&#160;' . _t('Personal info') . '</h3>' .
     '<ul>';
 
-if (file_exists('../files/users/photo/' . $user['id'] . '_small.jpg')) {
-    echo '<a href="../files/users/photo/' . $user['id'] . '.jpg"><img src="../files/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a>';
+if (file_exists(UPLOAD_PATH . 'users/photo/' . $user['id'] . '_small.jpg')) {
+    echo '<a href="../upload/users/photo/' . $user['id'] . '.jpg"><img src="../upload/users/photo/' . $user['id'] . '_small.jpg" alt="' . $user['name'] . '" border="0" /></a>';
 }
 
 echo '<li><span class="gray">' . _t('Name') . ':</span> ' . (empty($user['imname']) ? '' : $user['imname']) . '</li>' .

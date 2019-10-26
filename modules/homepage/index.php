@@ -37,7 +37,7 @@ switch ($act) {
         }
         $headmod = 'mainpage';
         require 'system/head.php';
-        include 'system/mainmenu.php';
+        include 'mainmenu.php';
 }
 
 require 'system/end.php';

@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'userban';
-require '../system/head.php';
+require 'system/head.php';
 $ban = isset($_GET['ban']) ? (int) ($_GET['ban']) : 0;
 
 /** @var Psr\Container\ContainerInterface $container */

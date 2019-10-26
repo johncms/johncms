@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'office';
 $textl = _t('My Account');
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -31,7 +31,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -45,7 +45,7 @@ echo '' .
     '<div class="gmenu"><p><h3>' . _t('My Pages') . '</h3>' .
     '<div>' . $tools->image('contacts.png') . '<a href="index.php">' . _t('Profile') . '</a></div>' .
     '<div>' . $tools->image('rate.gif') . '<a href="?act=stat">' . _t('Statistics') . '</a></div>' .
-    '<div>' . $tools->image('photo.gif') . '<a href="../album/index.php?act=list">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+    '<div>' . $tools->image('photo.gif') . '<a href="../album/?act=list">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
     '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($systemUser->rights >= 1) {

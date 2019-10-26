@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Settings');
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -33,7 +33,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
     echo $tools->displayError(_t('Access forbidden'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 

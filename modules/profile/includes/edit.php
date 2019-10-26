@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Edit Profile');
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -30,12 +30,12 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Проверяем права доступа для редактирования Профиля
 if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] >= $systemUser->rights)) {
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
 if (! empty($systemUser->ban)) {
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -43,7 +43,7 @@ if (! empty($systemUser->ban)) {
 if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights'] && $act == 'reset') {
     $db->exec("UPDATE `users` SET `set_user` = '', `set_forum` = '' WHERE `id` = " . $user['id']);
     echo '<div class="gmenu"><p>' . _t('Default settings are set') . '<br><a href="?user=' . $user['id'] . '">' . _t('Back') . '</a></p></div>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 

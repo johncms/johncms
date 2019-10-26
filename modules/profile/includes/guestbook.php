@@ -26,7 +26,7 @@ if ($systemUser->isValid() && $user['id'] == $systemUser->id) {
     $datauser['comm_old'] = $datauser['comm_count'];
 }
 
-require '../system/head.php';
+require 'system/head.php';
 
 $context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Guestbook') . '</div>' .
     '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';

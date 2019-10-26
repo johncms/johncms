@@ -75,10 +75,9 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         $tools->image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=userlist">' . _t('Users') . '</a> (' . $container->get('counters')->users() . ')<br />' .
         $tools->image('users.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=admlist">' . _t('Administration') . '</a> (' . $count_adm . ')<br>' .
         ($brth ? $tools->image('award.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=birth">' . _t('Birthdays') . '</a> (' . $brth . ')<br>' : '') .
-        $tools->image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/index.php">' . _t('Photo Albums') . '</a> (' . $counters->album() . ')<br>' .
+        $tools->image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/">' . _t('Photo Albums') . '</a> (' . $counters->album() . ')<br>' .
         $tools->image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=top">' . _t('Top Activity') . '</a></p>' .
-        '</div>' .
-        '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
+        '</div>';
 }
 
 require_once 'system/end.php';

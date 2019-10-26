@@ -34,7 +34,7 @@ $db = $container->get(PDO::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $textl = _t('Password recovery');
-require '../system/head.php';
+require 'system/head.php';
 
 function passgen($length)
 {
@@ -171,4 +171,4 @@ switch ($act) {
         break;
 }
 
-require '../system/end.php';
+require 'system/end.php';

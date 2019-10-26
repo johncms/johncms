@@ -76,7 +76,7 @@ class Counters
         }
 
         return $album . '&#160;/&#160;' . $photo .
-            ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/index.php?act=top">+' . $newcount . '</a></span>' : '');
+            ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/?act=top">+' . $newcount . '</a></span>' : '');
     }
 
     /**

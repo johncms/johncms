@@ -16,8 +16,6 @@ $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require '../system/bootstrap.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -39,9 +37,9 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 
 // Закрываем от неавторизованных юзеров
 if (! $systemUser->isValid()) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -49,9 +47,9 @@ if (! $systemUser->isValid()) {
 $user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
 if (! $user) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('This User does not exists'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -95,30 +93,29 @@ function is_contact($id = 0)
 }
 
 // Переключаем режимы работы
-$array = [
-    'activity'  => 'includes',
-    'ban'       => 'includes',
-    'edit'      => 'includes',
-    'images'    => 'includes',
-    'info'      => 'includes',
-    'ip'        => 'includes',
-    'guestbook' => 'includes',
-    'karma'     => 'includes',
-    'office'    => 'includes',
-    'password'  => 'includes',
-    'reset'     => 'includes',
-    'settings'  => 'includes',
-    'stat'      => 'includes',
+$mods = [
+    'activity',
+    'ban',
+    'edit',
+    'images',
+    'info',
+    'ip',
+    'guestbook',
+    'karma',
+    'office',
+    'password',
+    'reset',
+    'settings',
+    'stat',
 ];
-$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
-if (isset($array[$act]) && file_exists($path . $act . '.php')) {
-    require_once $path . $act . '.php';
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+    require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     // Анкета пользователя
     $headmod = 'profile,' . $user['id'];
     $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
-    require '../system/head.php';
+    require 'system/head.php';
     echo '<div class="phdr"><b>' . ($user['id'] != $systemUser->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты
@@ -253,4 +250,4 @@ if (isset($array[$act]) && file_exists($path . $act . '.php')) {
     }
 }
 
-require_once '../system/end.php';
+require_once 'system/end.php';

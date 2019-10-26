@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
-require '../system/head.php';
+require 'system/head.php';
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
     '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>' .
     '<div class="list2">' .
