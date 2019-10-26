@@ -22,13 +22,13 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Каталог пользовательских Аватаров
-if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
+if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
     $avatar = isset($_GET['avatar']) ? (int) ($_GET['avatar']) : false;
 
-    if ($systemUser->isValid() && $avatar && is_file('../images/avatars/' . $id . '/' . $avatar . '.png')) {
+    if ($systemUser->isValid() && $avatar && is_file(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png')) {
         if (isset($_POST['submit'])) {
             // Устанавливаем пользовательский Аватар
-            if (@copy('../images/avatars/' . $id . '/' . $avatar . '.png', '../files/users/avatar/' . $systemUser->id . '.png')) {
+            if (@copy(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png', UPLOAD_PATH . 'users/avatar/' . $systemUser->id . '.png')) {
                 echo '<div class="gmenu"><p>' . _t('Avatar has been successfully applied') . '<br />' .
                     '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -37,15 +37,17 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
         } else {
             echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . _t('Set to Profile') . '</div>' .
                 '<div class="rmenu"><p>' . _t('Are you sure you want to set yourself this avatar?') . '</p>' .
-                '<p><img src="../images/avatars/' . $id . '/' . $avatar . '.png" alt="" /></p>' .
+                '<p><img src="../assets/avatars/' . $id . '/' . $avatar . '.png" alt="" /></p>' .
                 '<p><form action="?act=avatars&amp;id=' . $id . '&amp;avatar=' . $avatar . '" method="post"><input type="submit" name="submit" value="' . _t('Save') . '"/></form></p>' .
                 '</div>' .
                 '<div class="phdr"><a href="?act=avatars&amp;id=' . $id . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
         // Показываем список Аватаров
-        echo '<div class="phdr"><a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . htmlentities(file_get_contents(ROOT_PATH . 'images/avatars/' . $id . '/name.dat'), ENT_QUOTES, 'utf-8') . '</div>';
-        $array = glob(ROOT_PATH . 'images/avatars/' . $id . '/*.png');
+        echo '<div class="phdr">' .
+            '<a href="?act=avatars"><b>' . _t('Avatars') . '</b></a> | ' . htmlentities(file_get_contents(ASSETS_PATH . 'avatars/' . $id . '/name.txt'), ENT_QUOTES, 'utf-8') .
+            '</div>';
+        $array = glob(ASSETS_PATH . 'avatars/' . $id . '/*.png');
         $total = count($array);
         $end = $start + $kmess;
 
@@ -56,7 +58,7 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
         if ($total > 0) {
             for ($i = $start; $i < $end; $i++) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '<img src="../images/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
+                echo '<img src="../assets/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
 
                 if ($systemUser->isValid()) {
                     echo ' - <a href="?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) . '">' . _t('Select') . '</a>';
@@ -83,7 +85,7 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
 } else {
     // Показываем каталоги с Аватарами
     echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Avatars') . '</div>';
-    $dir = glob(ROOT_PATH . 'images/avatars/*', GLOB_ONLYDIR);
+    $dir = glob(ASSETS_PATH . 'avatars/*', GLOB_ONLYDIR);
     $total = 0;
     $total_dir = count($dir);
 
@@ -91,7 +93,7 @@ if ($id && is_dir(ROOT_PATH . 'images/avatars/' . $id)) {
         $count = (int)count(glob($dir[$i] . '/*.png'));
         $total = $total + $count;
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-        echo '<a href="?act=avatars&amp;id=' . basename($dir[$i]) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.dat'), ENT_QUOTES, 'utf-8') .
+        echo '<a href="?act=avatars&amp;id=' . basename($dir[$i]) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.txt'), ENT_QUOTES, 'utf-8') .
             '</a> (' . $count . ')</div>';
     }
 
