@@ -1,5 +1,9 @@
 preset: psr2
 
+finder:
+  exclude:
+    - assets
+
 enabled:
   - binary_operator_spaces
   - blank_line_after_opening_tag

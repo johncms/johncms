@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /*
  * This file is part of JohnCMS Content Management System.
  *
@@ -12,10 +10,10 @@ declare(strict_types=1);
 
 $radius = 4;
 
-$file = isset($_GET['file']) ? htmlspecialchars(urldecode($_GET['file'])) : null;
+$file = htmlspecialchars(urldecode($_GET['file'])) ?? '';
 
-if ($file && file_exists('../files/forum/attach/' . $file)) {
-    list($width, $height, $type) = getimagesize('../files/forum/attach/' . $file);
+if (! empty($file) && file_exists('../../../upload/forum/attach/' . $file)) {
+    list($width, $height, $type) = getimagesize('../../../upload/forum/attach/' . $file);
 
     switch ($type) {
         case 1:
@@ -30,6 +28,8 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
         case 4:
             $att_ext = 'jpg';
             break;
+        default:
+            $att_ext = null;
     }
 
     if ($att_ext) {
@@ -51,13 +51,13 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
         }
 
         $function = 'imageCreateFrom' . $att_ext;
-        $image = $function('../files/forum/attach/' . $file);
+        $image = $function('../../../upload/forum/attach/' . $file);
 
         if ($att_ext == 'gif') {
             $tmp = imagecreate($tn_width, $tn_height);
             $color = imagecolorallocate($tmp, 0, 0, 0);
         } else {
-            $tmp = imagecreatetruecolor($tn_width, $tn_height);
+            $tmp = imagecreatetruecolor((int) $tn_width, (int) $tn_height);
         }
 
         if ($att_ext == 'png') {
@@ -69,7 +69,7 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
             }
         }
 
-        imagecopyresampled($tmp, $image, 0, 0, 0, 0, $tn_width, $tn_height, $width, $height);
+        imagecopyresampled($tmp, $image, 0, 0, 0, 0, (int) $tn_width, (int) $tn_height, $width, $height);
 
         if (($att_ext == 'jpg' || $att_ext == 'jpeg') && $radius > 1 && $radius <= 20) {
             $img = $tmp;
@@ -112,8 +112,8 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
                 $y += $rs_radius;
                 $x += $rs_radius;
 
-                imageline($corner, $x, $y, $rs_size, $y, $trans);
-                imageline($corner, 0, $y, $rs_size - $x, $y, $trans);
+                imageline($corner, (int) $x, $y, (int) $rs_size, $y, $trans);
+                imageline($corner, 0, (int) $y, (int) ($rs_size - $x), $y, $trans);
 
                 $lx = $x;
                 $ly = $y;
@@ -148,7 +148,7 @@ if ($file && file_exists('../files/forum/attach/' . $file)) {
 
             imagedestroy($tmp);
             imagedestroy($image);
-            header('Content-Type: image/' . $att_ext);
+            header("Content-Type: image/" . $att_ext);
             header('Content-Disposition: inline; filename=thumbinal.' . $att_ext);
             header('Content-Length: ' . ob_get_length());
             ob_end_flush();

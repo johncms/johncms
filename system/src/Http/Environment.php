@@ -92,7 +92,7 @@ class Environment implements EnvironmentInterface
 
     private function ipLog($ip) : void
     {
-        $file = ROOT_PATH . 'files/cache/ip_flood.dat';
+        $file = CACHE_PATH . 'ip-requests-list.cache';
         $tmp = [];
         $requests = 1;
 

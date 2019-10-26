@@ -76,7 +76,7 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
     $config['antiflood'] = $set_af;
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    if (! file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+    if (! file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
         echo 'ERROR: Can not write system.local.php</body></html>';
         exit;
     }

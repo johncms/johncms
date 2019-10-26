@@ -27,6 +27,7 @@
   },
   "require": {
     "php": "^7.2",
+    "ext-gd": "*",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-pdo": "*",

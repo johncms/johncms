@@ -65,7 +65,7 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
 
     while ($file = readdir($dir)) {
         if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
-            $screen[] = '../files/downloads/screen/' . $id . '/' . $file;
+            $screen[] = UPLOAD_PATH . 'downloads/screen/' . $id . '/' . $file;
         }
     }
 
@@ -76,7 +76,7 @@ switch ($format_file) {
     case 'mp3':
         // Проигрываем аудио файлы
         $text_info = '<audio src="' . $config['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
-        require 'classes/getid3/getid3.php';
+        require 'classes/getid3/getid3.php'; //TODO: Разобраться с устаревшим классом
         $getID3 = new getID3;
         $getID3->encoding = 'cp1251';
         $getid = $getID3->analyze($res_down['dir'] . '/' . $res_down['name']);

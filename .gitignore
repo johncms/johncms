@@ -1,7 +1,22 @@
-/files/cache/*
-!/files/cache/.htaccess
-/files/downloads/files/*
-!/files/downloads/files/index.php
+# Common ignores
+/dist
+/distributive
+/node_modules
+/.idea
+/package-lock.json
+
+# Data folder ignores
+/data/cache/*
+!/data/cache/.gitkeep
+
+# Upload folder ignores
+/upload/downloads/files/*
+!/upload/downloads/files/index.php
+/upload/forum/attach/*
+!/upload/forum/attach/index.php
+/upload/forum/topics/*
+!/upload/forum/topics/index.php
+
 /files/mail/*
 !/files/mail/index.php
 /files/users/album/*
@@ -11,9 +26,4 @@
 /files/users/photo/*
 !/files/users/photo/index.php
 /system/vendor
-/system/config/*.local.php
-/dist
-/distributive
-/node_modules
-/.idea
-/package-lock.json
+/config/autoload/*.local.php

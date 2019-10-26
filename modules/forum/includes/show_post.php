@@ -102,10 +102,10 @@ $freq = $db->query("SELECT * FROM `cms_forum_files` WHERE `post` = '" . $res['id
 
 if ($freq->rowCount()) {
     $fres = $freq->fetch();
-    $fls = round(@filesize('../files/forum/attach/' . $fres['filename']) / 1024, 2);
+    $fls = round(@filesize(UPLOAD_PATH . 'forum/attach/' . $fres['filename']) / 1024, 2);
     echo '<div class="gray" style="font-size: x-small; background-color: rgba(128, 128, 128, 0.1); padding: 2px 4px; margin-top: 4px">' . _t('Attachment') . ':';
     // Предпросмотр изображений
-    $att_ext = strtolower(pathinfo('./files/forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
+    $att_ext = strtolower(pathinfo(UPLOAD_PATH . 'forum/attach/' . $fres['filename'], PATHINFO_EXTENSION));
     $pic_ext = [
         'gif',
         'jpg',

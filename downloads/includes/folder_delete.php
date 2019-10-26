@@ -55,13 +55,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                 rmdir(DOWNLOADS_SCR . $res_down['id']);
             }
 
-            @unlink(ROOT_PATH . 'files/download/java_icons/' . $res_down['id'] . '.png');
             $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $res_down['id']);
-
-            while ($res_file_more = $req_file_more->fetch()) {
-                @unlink($res_down['dir'] . '/' . $res_file_more['name']);
-                @unlink(ROOT_PATH . 'files/download/java_icons/' . $res_file_more['id'] . '.png');
-            }
 
             @unlink($res_down['dir'] . '/' . $res_down['name']);
             $db->exec('DELETE FROM `download__more` WHERE `refid` = ' . $res_down['id']);

@@ -35,9 +35,9 @@ $url = $config['homeurl'] . '/downloads/';
 
 $textl = _t('Downloads');
 $headmod = 'downloads';
-const DOWNLOADS = ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR;
+const DOWNLOADS = UPLOAD_PATH . 'downloads' . DIRECTORY_SEPARATOR;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
-$files_path = '../files/downloads/files'; //TODO: переделать на константы
+$files_path = DOWNLOADS . 'files';
 
 // Настройки
 $set_down =

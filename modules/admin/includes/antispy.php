@@ -254,7 +254,7 @@ class scaner
         '../users/index.php',
     ];
 
-    public $snap_base = 'scan_snapshot.dat';
+    public $snap_base = 'security-scanner-snapshot.cache';
 
     public $snap_files = [];
 
@@ -279,8 +279,8 @@ class scaner
     public function snapscan()
     {
         // Сканирование по образу
-        if (file_exists('../files/cache/' . $this->snap_base)) {
-            $filecontents = file('../files/cache/' . $this->snap_base);
+        if (file_exists(CACHE_PATH . $this->snap_base)) {
+            $filecontents = file(CACHE_PATH . $this->snap_base);
 
             foreach ($filecontents as $name => $value) {
                 $filecontents[$name] = explode('|', trim($value));
@@ -308,10 +308,10 @@ class scaner
             $filecontents .= $data['file_path'] . '|' . $data['file_crc'] . "\r\n";
         }
 
-        $filehandle = fopen('../files/cache/' . $this->snap_base, 'w+');
+        $filehandle = fopen(CACHE_PATH . $this->snap_base, 'w+');
         fwrite($filehandle, $filecontents);
         fclose($filehandle);
-        @chmod('../files/cache/' . $this->snap_base, 0666);
+        @chmod(CACHE_PATH . $this->snap_base, 0666);
     }
 
     public function scan_files($dir, $snap = false)
@@ -340,7 +340,8 @@ class scaner
                         $templates = '';
                     }
 
-                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ')$#i', $file)) {
+                    if (preg_match("#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess" . $templates . ')$#i',
+                        $file)) {
                         $folder = str_replace('../..', '.', $dir);
                         $file_size = filesize($dir . '/' . $file);
                         $file_crc = strtoupper(dechex(crc32(file_get_contents($dir . '/' . $file))));
@@ -353,7 +354,8 @@ class scaner
                             ];
                         } else {
                             if ($this->snap) {
-                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file, $this->cache_files)) {
+                                if ($this->track_files[$folder . '/' . $file] != $file_crc && ! in_array($folder . '/' . $file,
+                                        $this->cache_files)) {
                                     $this->bad_files[] = [
                                         'file_path' => $folder . '/' . $file,
                                         'file_name' => $file,
@@ -413,7 +415,8 @@ switch ($mod) {
             /** @var Johncms\Api\ToolsInterface $tools */
             $tools = \App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
-            echo $tools->displayError(_t('Snapshot is not created'), '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
+            echo $tools->displayError(_t('Snapshot is not created'),
+                '<a href="index.php?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a>');
         } else {
             if (count($scaner->bad_files)) {
                 echo '<div class="rmenu">' . _t('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.') . '</div>';

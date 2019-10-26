@@ -52,7 +52,7 @@ class Counters
      */
     public function album()
     {
-        $file = ROOT_PATH . 'files/cache/count_album.dat';
+        $file = CACHE_PATH . 'count-albums.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = json_decode(file_get_contents($file), true);
@@ -86,7 +86,7 @@ class Counters
      */
     public function downloads()
     {
-        $file = ROOT_PATH . 'files/cache/count_downloads.dat';
+        $file = CACHE_PATH . 'count-downloads.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = json_decode(file_get_contents($file), true);
@@ -122,7 +122,7 @@ class Counters
      */
     public function forum()
     {
-        $file = ROOT_PATH . 'files/cache/count_forum.dat';
+        $file = CACHE_PATH . 'count-forum.cache';
         $new = '';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
@@ -218,7 +218,7 @@ class Counters
      */
     public function library()
     {
-        $file = ROOT_PATH . 'files/cache/count_library.dat';
+        $file = CACHE_PATH . 'count-library.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 3200)) {
             $res = json_decode(file_get_contents($file), true);
@@ -251,7 +251,7 @@ class Counters
      */
     public function online()
     {
-        $file = ROOT_PATH . 'files/cache/count_online.dat';
+        $file = CACHE_PATH . 'count-online.cache';
 
         if (file_exists($file) && filemtime($file) > (time() - 10)) {
             $res = json_decode(file_get_contents($file), true);
@@ -274,7 +274,7 @@ class Counters
      */
     public function users()
     {
-        $file = ROOT_PATH . 'files/cache/count_users.dat';
+        $file = CACHE_PATH . 'count-users.dat';
 
         if (file_exists($file) && filemtime($file) > (time() - 600)) {
             $res = json_decode(file_get_contents($file), true);

@@ -26,7 +26,7 @@ if (empty($_GET['n'])) {
 }
 
 $n = trim($_GET['n']);
-$o = opendir('../files/forum/topics'); //TODO: Разобраться с путем
+$o = opendir(UPLOAD_PATH . 'forum/topics');
 
 while ($f = readdir($o)) {
     if ($f != '.' && $f != '..' && $f != 'index.php' && $f != '.htaccess') {
@@ -50,6 +50,6 @@ for ($i = 0; $i < $tt; $i++) {
     $tf = pathinfo($a[$i], PATHINFO_EXTENSION);
     $tf1 = str_replace(".${tf}", '', $a[$i]);
     if ($n == $tf1) {
-        header("Location: ../files/forum/topics/${n}.${tf}");
+        header("Location: ../upload/forum/topics/${n}.${tf}"); //TODO: Разобраться с путем
     }
 }

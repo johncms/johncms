@@ -10,32 +10,37 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\EnvironmentInterface;
+use Johncms\Api\UserInterface;
+use Psr\Container\ContainerInterface;
+use Zend\I18n\Translator\Translator;
+use Zend\ServiceManager\ServiceManager;
+use Zend\ServiceManager\Config;
+use Zend\Stdlib\ArrayUtils;
+use Zend\Stdlib\Glob;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 error_reporting(E_ALL & ~E_NOTICE);
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
-// Раскомментировать для включения ошибок
-// ini_set('display_errors', 1);
-
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '7.1', '<')) {
+if (version_compare(PHP_VERSION, '7.2', '<')) {
     die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.1 or higher</div>');
 }
 
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
+
 define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-define('CONFIG_PATH', __DIR__ . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR);
-define('CACHE_PATH', ROOT_PATH . 'files' . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR);
+const CONFIG_PATH = ROOT_PATH . 'config' . DIRECTORY_SEPARATOR;
+const DATA_PATH = ROOT_PATH . 'data' . DIRECTORY_SEPARATOR;
+const UPLOAD_PATH = ROOT_PATH . 'upload' . DIRECTORY_SEPARATOR;
+const CACHE_PATH = DATA_PATH. 'cache' . DIRECTORY_SEPARATOR;
 
 require __DIR__ . '/vendor/autoload.php';
-
-use Zend\ServiceManager\ServiceManager;
-use Zend\ServiceManager\Config;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Glob;
 
 class App
 {
@@ -50,7 +55,7 @@ class App
             $config = [];
 
             // Read configuration
-            foreach (Glob::glob(CONFIG_PATH . '{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
+            foreach (Glob::glob(CONFIG_PATH . 'autoload/' . '{{,*.}global,{,*.}local}.php', Glob::GLOB_BRACE) as $file) {
                 $config = ArrayUtils::merge($config, include $file);
             }
 
@@ -67,11 +72,11 @@ class App
 session_name('SESID');
 session_start();
 
-/** @var Psr\Container\ContainerInterface $container */
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Api\EnvironmentInterface $env */
-$env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
+/** @var EnvironmentInterface $env */
+$env = App::getContainer()->get(EnvironmentInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -107,18 +112,18 @@ if ($req->rowCount()) {
 }
 
 // Автоочистка системы
-$cacheFile = CACHE_PATH . 'cleanup.dat';
+$cacheFile = CACHE_PATH . 'system-cleanup.cache';
 
 if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     new Johncms\Utility\Cleanup($db);
     file_put_contents($cacheFile, time());
 }
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
 
-/** @var Johncms\UserConfig $userConfig */
-$userConfig = $container->get(Johncms\Api\UserInterface::class)->getConfig();
+/** @var UserInterface $userConfig */
+$userConfig = $container->get(UserInterface::class)->getConfig();
 
 if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
     $locale = trim($_POST['setlng']);
@@ -132,8 +137,8 @@ if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_l
     $locale = $config->lng;
 }
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
 $translator->setLocale($locale);
 unset($translator);
 
@@ -146,11 +151,11 @@ unset($translator);
  */
 function _t($message, $textDomain = 'default')
 {
-    /** @var Zend\I18n\Translator\Translator $translator */
+    /** @var Translator $translator */
     static $translator;
 
     if (null === $translator) {
-        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+        $translator = App::getContainer()->get(Translator::class);
     }
 
     return $translator->translate($message, $textDomain);
@@ -167,11 +172,11 @@ function _t($message, $textDomain = 'default')
  */
 function _p($singular, $plural, $number, $textDomain = 'default')
 {
-    /** @var Zend\I18n\Translator\Translator $translator */
+    /** @var Translator $translator */
     static $translator;
 
     if (null === $translator) {
-        $translator = App::getContainer()->get(Zend\I18n\Translator\Translator::class);
+        $translator = App::getContainer()->get(Translator::class);
     }
 
     return $translator->translatePlural($singular, $plural, $number, $textDomain);

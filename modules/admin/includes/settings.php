@@ -42,12 +42,12 @@ if (isset($_POST['submit'])) {
 
     $configFile = "<?php\n\n" . 'return ' . var_export(['johncms' => $config], true) . ";\n";
 
-    if (! file_put_contents(ROOT_PATH . 'system/config/system.local.php', $configFile)) {
+    if (! file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
         echo 'ERROR: Can not write system.local.php</body></html>';
         exit;
     }
 
-    echo '<div class="rmenu">' . _t('Settings are saved successfully') . '</div>';
+    echo '<div class="gmenu"><p>' . _t('Settings are saved successfully') . '</p></div>';
 
     if (function_exists('opcache_reset')) {
         opcache_reset();
@@ -84,7 +84,7 @@ echo '<p>' .
 
 // Выбор темы оформления
 echo '<p><h3>' . _t('Themes') . '</h3>&#160;<select name="skindef">';
-$dir = opendir('../theme');
+$dir = opendir('theme');
 
 while ($skindef = readdir($dir)) {
     if (($skindef != '.') && ($skindef != '..') && ($skindef != '.svn')) {

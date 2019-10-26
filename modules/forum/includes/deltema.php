@@ -53,7 +53,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
             if ($req1->rowCount()) {
                 while ($res1 = $req1->fetch()) {
-                    unlink('../files/forum/attach/' . $res1['filename']);
+                    unlink(UPLOAD_PATH . 'forum/attach/' . $res1['filename']);
                 }
 
                 $db->exec("DELETE FROM `cms_forum_files` WHERE `topic` = '${id}'");

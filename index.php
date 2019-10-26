@@ -21,7 +21,7 @@ $container = App::getContainer();
 /** @var Psr\Http\Message\ServerRequestInterface $request */
 $request = $container->get(Psr\Http\Message\ServerRequestInterface::class);
 
-require 'system/routes.php';
+require CONFIG_PATH . 'routes.php';
 
 $dispatcher = new FastRoute\Dispatcher\GroupCountBased(
     $container->get(FastRoute\RouteCollector::class)->getData()

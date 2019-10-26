@@ -75,7 +75,7 @@ class install
     public static function check_folders_rights()
     {
         $folders = [
-            '/files/cache/',
+            '/data/cache/',
             '/files/downloads/files/',
             '/files/downloads/screen/',
             '/files/forum/attach/',
@@ -112,8 +112,8 @@ class install
     {
         $error = [];
 
-        if (is_file('../system/config/database.local.php') && ! is_writable('../system/config/database.local.php')) {
-            $error[] = '/system/config/database.local.php';
+        if (is_file('../config/autoload/database.local.php') && ! is_writable('../config/autoload/database.local.php')) {
+            $error[] = '/config/autoload/database.local.php';
         }
 
         return ! empty($error) ? $error : false;
@@ -391,7 +391,7 @@ switch ($act) {
                 ];
                 $dbfile = "<?php\n\n" . 'return ' . var_export($pdoattr, true) . ";\n";
 
-                if (! file_put_contents('../system/config/database.local.php', $dbfile)) {
+                if (! file_put_contents('../config/autoload/database.local.php', $dbfile)) {
                     echo 'ERROR: Can not write database.local.php</body></html>';
                     exit;
                 }
@@ -468,7 +468,7 @@ switch ($act) {
                 ];
                 $configFile = "<?php\n\n" . 'return ' . var_export($systemSettings, true) . ";\n";
 
-                if (! file_put_contents('../system/config/system.local.php', $configFile)) {
+                if (! file_put_contents('../config/autoload/system.local.php', $configFile)) {
                     echo 'ERROR: Can not write system.local.php</body></html>';
                     exit;
                 }
@@ -571,7 +571,7 @@ switch ($act) {
         break;
 
     default:
-        if (is_file('../system/config/database.local.php') || is_file('../system/config/system.local.php')) {
+        if (is_file('../config/autoload/database.local.php') || is_file('../config/autoload/system.local.php')) {
             echo '<h1 class="red">' . $lng['error'] . '</h1>';
             echo '<h2 class="red">' . $lng['already_installed'] . '</h2>';
             echo '<p>' . $lng['to_install_again'] . '.</p>';

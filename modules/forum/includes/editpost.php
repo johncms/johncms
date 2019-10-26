@@ -140,7 +140,7 @@ if (! $error) {
 
                 if ($req_f->rowCount()) {
                     $db->exec('DELETE FROM `cms_forum_files` WHERE `id` = ' . $fid);
-                    unlink('../files/forum/attach/' . $res_f['filename']); //TODO: Разобраться с путем
+                    unlink(UPLOAD_PATH . 'forum/attach/' . $res_f['filename']); //TODO: Разобраться с путем
                     header('Location: ' . $link);
                 } else {
                     echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
@@ -170,7 +170,7 @@ if (! $error) {
                 if ($req_f->rowCount()) {
                     // Если есть прикрепленные файлы, удаляем их
                     while ($res_f = $req_f->fetch()) {
-                        unlink('../files/forum/attach/' . $res_f['filename']);
+                        unlink(UPLOAD_PATH . 'forum/attach/' . $res_f['filename']);
                     }
                 }
                 $db->exec('DELETE FROM `cms_forum_files` WHERE `post` = ' . $id);

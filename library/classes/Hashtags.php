@@ -207,8 +207,8 @@ class Hashtags
      */
     public function delCache()
     {
-        file_exists('../files/cache/cmpranglibcloud.dat') ? unlink('../files/cache/cmpranglibcloud.dat') : false;
-        file_exists('../files/cache/cmpalphalibcloud.dat') ? unlink('../files/cache/cmpalphalibcloud.dat') : false;
+        file_exists(CACHE_PATH . 'cmpranglibcloud.dat') ? unlink(CACHE_PATH . 'cmpranglibcloud.dat') : false;
+        file_exists(CACHE_PATH . 'cmpalphalibcloud.dat') ? unlink(CACHE_PATH . 'cmpalphalibcloud.dat') : false;
     }
 
     /**
@@ -218,8 +218,8 @@ class Hashtags
      */
     public function getCache($sort = 'cmpalpha')
     {
-        if (file_exists('../files/cache/' . $sort . 'libcloud.dat')) {
-            return file_get_contents('../files/cache/' . $sort . 'libcloud.dat');
+        if (file_exists(CACHE_PATH . $sort . 'libcloud.dat')) {
+            return file_get_contents(CACHE_PATH . $sort . 'libcloud.dat');
         }
 
         return $this->setCache($sort);
@@ -235,7 +235,7 @@ class Hashtags
         $obj = new self();
         $tags = $this->db->query('SELECT `id` FROM `library_tags` LIMIT 1')->rowCount();
         $res = ($tags > 0 ? $obj->cloud($obj->tagRang($sort)) : '<p>' . _t('The list is empty') . '</p>');
-        file_put_contents('../files/cache/' . $sort . 'libcloud.dat', $res);
+        file_put_contents(CACHE_PATH . $sort . 'libcloud.dat', $res);
 
         return $this->getCache($sort);
     }

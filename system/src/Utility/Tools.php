@@ -569,7 +569,7 @@ class Tools implements ToolsInterface
         static $smiliesCache = [];
 
         if (empty($smiliesCache)) {
-            $file = ROOT_PATH . 'files/cache/smileys.dat';
+            $file = CACHE_PATH . 'smilies-list.cache';
 
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
                 $smiliesCache = unserialize($smileys);
