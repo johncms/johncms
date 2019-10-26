@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $set_mail = unserialize((string) $user['set_mail']);
 $out = '';
 $total = 0;

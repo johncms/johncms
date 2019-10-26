@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
 

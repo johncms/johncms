@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 require '../system/bootstrap.php';
 
 $id = isset($_GET['id']) ? abs((int) ($_GET['id'])) : 0;

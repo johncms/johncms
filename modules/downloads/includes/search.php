@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 
 // Поиск файлов

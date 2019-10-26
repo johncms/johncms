@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 // Правила Форума
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Forum rules') . '</div>' .
     '<div class="menu"><p>';

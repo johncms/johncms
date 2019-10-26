@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $textl = _t('Mail');
 require_once 'system/head.php';
 echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';

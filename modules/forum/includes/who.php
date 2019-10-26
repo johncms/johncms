@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $textl = _t('Who in Forum');
 $headmod = $id ? 'forum,' . $id . ',topic' : 'forumwho';
 require 'system/head.php';

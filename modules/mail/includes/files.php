@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $headmod = 'mail';
 $textl = _t('Mail') . ' | ' . _t('Files');
 require_once 'system/head.php';

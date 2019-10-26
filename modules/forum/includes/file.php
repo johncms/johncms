@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 if ($id) {
     /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();

@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 //TODO: Добавить проверку, пустой ли каталог, если нет, выводить предупреждение
 //TODO: Добавить рекурсивное удаление
 

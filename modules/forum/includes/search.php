@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 $headmod = 'forumsearch';

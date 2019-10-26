@@ -13,8 +13,6 @@ declare(strict_types=1);
 use Library\Hashtags;
 use Verot\Upload\Upload;
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 

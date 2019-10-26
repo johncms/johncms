@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 if ($adm) {
     /** @var PDO $db */
     $db = App::getContainer()->get(PDO::class);

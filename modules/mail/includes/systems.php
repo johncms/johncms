@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $out = '';
 $total = 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';

@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-defined('_IN_JOHNCMS') || die('Error: restricted access');
-
 $headmod = 'my_guest';
 $textl = _t('Profile') . ' | ' . _t('Guestbook');
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
