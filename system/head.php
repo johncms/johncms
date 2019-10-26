@@ -110,7 +110,7 @@ echo '<div class="header"> ' . _t('Hi', 'system') . ', ' . ($systemUser->id ? '<
 echo '<div class="tmn">' .
     (isset($_GET['err']) || $headmod != 'mainpage' || ($headmod == 'mainpage' && $act) ? '<a href=\'' . $config['homeurl'] . '\'>' . $tools->image('menu_home.png') . _t('Home', 'system') . '</a><br>' : '') .
     ($systemUser->id && $headmod != 'office' ? '<a href="' . $config['homeurl'] . '/profile/?act=office">' . $tools->image('menu_cabinet.png') . _t('Personal', 'system') . '</a><br>' : '') .
-    (! $systemUser->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config['homeurl'] . '/login.php">' . _t('Login', 'system') . '</a>' : '') .
+    (! $systemUser->id && $headmod != 'login' ? $tools->image('menu_login.png') . '<a href="' . $config->homeurl . '/login">' . _t('Login', 'system') . '</a>' : '') .
     '</div><div class="maintxt">';
 
 // Рекламный блок сайта

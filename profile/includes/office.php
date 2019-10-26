@@ -114,4 +114,4 @@ if ($systemUser->rights >= 1) {
 echo '</p></div>';
 
 // Выход с сайта
-echo '<div class="rmenu"><p><a href="' . $config['homeurl'] . '/exit.php">' . $tools->image('del.png') . _t('Exit') . '</a></p></div>';
+echo '<div class="rmenu"><p><a href="' . $config->homeurl . '/login">' . $tools->image('del.png') . _t('Exit') . '</a></p></div>';

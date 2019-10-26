@@ -10,10 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
-require 'system/bootstrap.php';
-
 /** @var Johncms\Api\ConfigInterface $config */
 $config = App::getContainer()->get(Johncms\Api\ConfigInterface::class);
 
@@ -28,7 +24,7 @@ if (isset($_POST['submit'])) {
     require 'system/head.php';
     echo '<div class="rmenu">' .
         '<p>' . _t('Are you sure you want to leave the site?', 'system') . '</p>' .
-        '<form action="exit.php" method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .
+        '<form method="post"><p><input type="submit" name="submit" value="' . _t('Logout', 'system') . '" /></p></form>' .
         '<p><a href="' . $referer . '">' . _t('Cancel', 'system') . '</a></p>' .
         '</div>';
     require 'system/end.php';

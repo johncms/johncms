@@ -34,7 +34,7 @@ interface ToolsInterface
 
     public function getUser($id);
 
-    public function image($name, array $args);
+    public function image($name, array $args = []);
 
     public function isIgnor($id);
 
