@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,7 +28,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $al) {
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -36,7 +36,7 @@ $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}'");
 
 if (! $req->rowCount()) {
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -71,7 +71,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
 ) {
     // Доступ закрыт
     echo $tools->displayError(_t('Access forbidden'), '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a>');
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 } elseif ($album['access'] == 2
     && $user['id'] != $systemUser->id
@@ -93,7 +93,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
             '<p><input type="submit" name="submit" value="' . _t('Login') . '"/></p>' .
             '</div></form>' .
             '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a></div>';
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 }
@@ -123,21 +123,23 @@ if ($total) {
     $i = 0;
 
     while ($res = $req->fetch()) {
-        echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+        echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
         if ($view) {
-            // Предпросмотр отдельного изображения
+            // Устанавливаем выбранную картинку в свою анкету
             if ($user['id'] == $systemUser->id && isset($_GET['profile'])) {
                 copy(
-                    '../files/users/album/' . $user['id'] . '/' . $res['tmb_name'],
-                    '../files/users/photo/' . $systemUser->id . '_small.jpg'
+                    UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['tmb_name'],
+                    UPLOAD_PATH . 'users/photo/' . $systemUser->id . '_small.jpg'
                 );
                 copy(
-                    '../files/users/album/' . $user['id'] . '/' . $res['img_name'],
-                    '../files/users/photo/' . $systemUser->id . '.jpg'
+                    UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['img_name'],
+                    UPLOAD_PATH . 'users/photo/' . $systemUser->id . '.jpg'
                 );
                 echo '<span class="green"><b>' . _t('Photo added to the profile') . '</b></span><br>';
             }
-            echo '<a href="' . $_SESSION['ref'] . '"><img src="image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
+
+            // Предпросмотр отдельного изображения
+            echo '<a href="' . $_SESSION['ref'] . '"><img src="../assets/modules/album/image.php?u=' . $user['id'] . '&amp;f=' . $res['img_name'] . '" /></a>';
 
             // Счетчик просмотров
             if (! $db->query("SELECT COUNT(*) FROM `cms_album_views` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = " . $res['id'])->fetchColumn()) {
@@ -147,7 +149,7 @@ if ($total) {
             }
         } else {
             // Предпросмотр изображения в списке
-            echo '<a href="?act=show&amp;al=' . $al . '&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '&amp;view"><img src="../files/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></a>';
+            echo '<a href="?act=show&amp;al=' . $al . '&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '&amp;view"><img src="../upload/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></a>';
         }
 
         if (! empty($res['description'])) {

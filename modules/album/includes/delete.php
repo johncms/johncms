@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -39,8 +39,8 @@ if ($al && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
 
             while ($res = $req->fetch()) {
                 // Удаляем файлы фотографий
-                @unlink('../files/users/album/' . $user['id'] . '/' . $res['img_name']);
-                @unlink('../files/users/album/' . $user['id'] . '/' . $res['tmb_name']);
+                @unlink(UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['img_name']);
+                @unlink(UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['tmb_name']);
                 // Удаляем записи из таблицы голосований
                 $db->exec('DELETE FROM `cms_album_votes` WHERE `file_id` = ' . $res['id']);
                 // Удаляем комментарии

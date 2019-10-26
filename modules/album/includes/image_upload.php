@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require '../system/head.php';
+require 'system/head.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -36,7 +36,7 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
     if (! $req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo $tools->displayError(_t('Wrong data'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -68,7 +68,7 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
             //$handle->image_text_background = '#AAAAAA';
             //$handle->image_text_background_percent = 50;
             //$handle->image_text_padding = 1;
-            $handle->process('../files/users/album/' . $user['id'] . '/');
+            $handle->process(UPLOAD_PATH . 'users/album/' . $user['id'] . '/');
             $img_name = $handle->file_dst_name;
 
             if ($handle->processed) {
@@ -79,7 +79,7 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
                 $handle->image_y = 100;
                 $handle->image_ratio_no_zoom_in = true;
                 $handle->image_convert = 'jpg';
-                $handle->process('../files/users/album/' . $user['id'] . '/');
+                $handle->process(UPLOAD_PATH . 'users/album/' . $user['id'] . '/');
                 $tmb_name = $handle->file_dst_name;
 
                 if ($handle->processed) {

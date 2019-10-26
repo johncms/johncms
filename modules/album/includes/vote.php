@@ -30,7 +30,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 // Голосуем за фотографию
 if (! $img) {
     echo $tools->displayError(_t('Wrong data'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 

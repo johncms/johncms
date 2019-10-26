@@ -34,7 +34,7 @@ switch ($mod) {
         // Непрочитанные комментарии в личных альбомах
         if (! $systemUser->isValid() || $systemUser->id != $user['id']) {
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
@@ -119,7 +119,7 @@ switch ($mod) {
 
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
-require '../system/head.php';
+require 'system/head.php';
 echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {
@@ -149,7 +149,7 @@ if ($total) {
 
         if ($res['access'] == 4 || $systemUser->rights >= 7) {
             // Если доступ открыт всем, или смотрит Администратор
-            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../files/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
+            echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../upload/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (! empty($res['description'])) {
                 echo '<div class="gray">' . $tools->smilies($tools->checkout($res['description'], 1)) . '</div>';
             }

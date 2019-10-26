@@ -23,7 +23,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-require '../system/head.php';
+require 'system/head.php';
 
 // Список посетителей. у которых есть фотографии
 switch ($mod) {

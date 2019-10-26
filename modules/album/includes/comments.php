@@ -32,9 +32,9 @@ if ($req_obj->rowCount()) {
     $owner = $tools->getUser($res_obj['user_id']);
 
     if (! $owner) {
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('User does not exists'));
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
@@ -44,16 +44,16 @@ if ($req_obj->rowCount()) {
 
     if (($res_a['access'] == 1 && $owner['id'] != $systemUser->id && $systemUser->rights < 7) || ($res_a['access'] == 2 && $systemUser->rights < 7 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $systemUser->id)) {
         // Если доступ закрыт
-        require '../system/head.php';
+        require 'system/head.php';
         echo $tools->displayError(_t('Access forbidden')) .
             '<div class="phdr"><a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Album List') . '</a></div>';
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 
     $context_top = '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' .
         '<a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Personal') . '</a></div>' .
-        '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../files/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
+        '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../upload/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 
     if (! empty($res_obj['description'])) {
         $context_top .= '<div class="gray">' . $tools->smilies($tools->checkout($res_obj['description'], 1)) . '</div>';
@@ -93,7 +93,7 @@ if ($req_obj->rowCount()) {
     }
 
     // Показываем комментарии
-    require '../system/head.php';
+    require 'system/head.php';
     $comm = new Johncms\Utility\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
@@ -101,6 +101,6 @@ if ($req_obj->rowCount()) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '${img}' LIMIT 1");
     }
 } else {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
 }

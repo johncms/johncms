@@ -10,15 +10,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $al = isset($_REQUEST['al']) ? abs((int) ($_REQUEST['al'])) : null;
 $img = isset($_REQUEST['img']) ? abs((int) ($_REQUEST['img'])) : null;
-
-require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -41,9 +37,9 @@ $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
 if (! $systemUser->isValid()) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('For registered users only'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -51,9 +47,9 @@ if (! $systemUser->isValid()) {
 $user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
 if (! $user) {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('User does not exists'));
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -101,28 +97,28 @@ function vote_photo(array $arg)
 }
 
 // Переключаем режимы работы
-$array = [
-    'comments'       => 'includes',
-    'delete'         => 'includes',
-    'edit'           => 'includes',
-    'image_delete'   => 'includes',
-    'image_download' => 'includes',
-    'image_edit'     => 'includes',
-    'image_move'     => 'includes',
-    'image_upload'   => 'includes',
-    'list'           => 'includes',
-    'new_comm'       => 'includes',
-    'show'           => 'includes',
-    'sort'           => 'includes',
-    'top'            => 'includes',
-    'users'          => 'includes',
-    'vote'           => 'includes',
+$mods = [
+    'comments',
+    'delete',
+    'edit',
+    'image_delete',
+    'image_download',
+    'image_edit',
+    'image_move',
+    'image_upload',
+    'list',
+    'new_comm',
+    'show',
+    'sort',
+    'top',
+    'users',
+    'vote',
 ];
 
 $path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
-if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
-    require_once $path . $act . '.php';
+if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+    require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -130,7 +126,7 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
     /** @var Johncms\Api\ConfigInterface $config */
     $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-    require '../system/head.php';
+    require 'system/head.php';
     $albumcount = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
     $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
@@ -169,4 +165,4 @@ if (array_key_exists($act, $array) && file_exists($path . $act . '.php')) {
         '<div class="phdr"><a href="index.php">' . _t('Users') . '</a></div>';
 }
 
-require '../system/end.php';
+require 'system/end.php';

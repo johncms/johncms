@@ -49,7 +49,7 @@ if ($req->rowCount()) {
     }
 
     // Проверка наличия файла
-    if (! $error && ! file_exists('../files/users/album/' . $res['user_id'] . '/' . $res['img_name'])) {
+    if (! $error && ! file_exists(UPLOAD_PATH . 'users/album/' . $res['user_id'] . '/' . $res['img_name'])) {
         $error[] = _t('File does not exist');
     }
 } else {
@@ -63,8 +63,8 @@ if (! $error) {
         $db->exec("UPDATE `cms_album_files` SET `downloads` = '${downloads}' WHERE `id` = '${img}'");
     }
     // Отдаем файл
-    header('location: ' . $config['homeurl'] . '/files/users/album/' . $res['user_id'] . '/' . $res['img_name']);
+    header('location: ' . $config['homeurl'] . '/upload/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
-    require '../system/head.php';
+    require 'system/head.php';
     echo $tools->displayError($error, '<a href="index.php">' . _t('Back') . '</a>');
 }
