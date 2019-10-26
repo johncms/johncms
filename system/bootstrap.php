@@ -33,12 +33,14 @@ if (version_compare(PHP_VERSION, '7.2', '<')) {
 
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
+const DS = DIRECTORY_SEPARATOR;
 
-define('ROOT_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR);
-const CONFIG_PATH = ROOT_PATH . 'config' . DIRECTORY_SEPARATOR;
-const DATA_PATH = ROOT_PATH . 'data' . DIRECTORY_SEPARATOR;
-const UPLOAD_PATH = ROOT_PATH . 'upload' . DIRECTORY_SEPARATOR;
-const CACHE_PATH = DATA_PATH. 'cache' . DIRECTORY_SEPARATOR;
+define('ROOT_PATH', dirname(__DIR__) . DS);
+const ASSETS_PATH = ROOT_PATH . 'assets' . DS;
+const CONFIG_PATH = ROOT_PATH . 'config' . DS;
+const DATA_PATH = ROOT_PATH . 'data' . DS;
+const UPLOAD_PATH = ROOT_PATH . 'upload' . DS;
+const CACHE_PATH = DATA_PATH. 'cache' . DS;
 
 require __DIR__ . '/vendor/autoload.php';
 

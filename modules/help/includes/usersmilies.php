@@ -22,7 +22,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Каталог пользовательских Смайлов
-$dir = glob(ROOT_PATH . 'images/smileys/user/*', GLOB_ONLYDIR);
+$dir = glob(ASSETS_PATH . 'emoticons/user/*', GLOB_ONLYDIR);
 
 foreach ($dir as $val) {
     $val = explode('/', $val);
@@ -30,7 +30,7 @@ foreach ($dir as $val) {
 }
 
 $cat = isset($_GET['cat']) && in_array(trim($_GET['cat']), $cat_list) ? trim($_GET['cat']) : $cat_list[0];
-$smileys = glob(ROOT_PATH . 'images/smileys/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE);
+$smileys = glob(ASSETS_PATH . 'emoticons/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE);
 $total = count($smileys);
 $end = $start + $kmess;
 
@@ -67,7 +67,7 @@ if ($total) {
             echo in_array($smile, $user_sm) ? '' : '<input type="checkbox" name="add_sm[]" value="' . $smile . '" />&#160;';
         }
 
-        echo '<img src="../images/smileys/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . $tools->trans($smile) . ':';
+        echo '<img src="../assets/emoticons/user/' . $cat . '/' . basename($smileys[$i]) . '" alt="" />&#160;:' . $smile . ': ' . _t('or') . ' :' . $tools->trans($smile) . ':';
         echo '</div>';
     }
 

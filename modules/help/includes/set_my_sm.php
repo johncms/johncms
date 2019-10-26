@@ -28,7 +28,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (($adm && ! $systemUser->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
-    echo $tools->displayError(_t('Wrong data'), '<a href="faq.php?act=smileys">' . _t('Smilies') . '</a>');
+    echo $tools->displayError(_t('Wrong data'), '<a href="?act=smileys">' . _t('Smilies') . '</a>');
     require 'system/end.php';
     exit;
 }
@@ -56,7 +56,7 @@ if (count($smileys) > $user_smileys) {
 $db->query('UPDATE `users` SET `smileys` = ' . $db->quote(serialize($smileys)) . ' WHERE `id` = ' . $systemUser->id);
 
 if ($delete || isset($_GET['clean'])) {
-    header('location: index.php?act=my_smilies&start=' . $start . '');
+    header('location: ?act=my_smilies&start=' . $start . '');
 } else {
-    header('location: index.php?act=' . ($adm ? 'admsmilies' : 'usersmilies&cat=' . urlencode($cat) . '') . '&start=' . $start . '');
+    header('location: ?act=' . ($adm ? 'admsmilies' : 'usersmilies&cat=' . urlencode($cat) . '') . '&start=' . $start . '');
 }
