@@ -4,29 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a18a3004c283f21fdf93b99a065e8220",
+    "content-hash": "55623b08a5c249dba295235f67bedd8b",
     "packages": [
         {
             "name": "batumibiz/captcha",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/batumibiz/captcha.git",
-                "reference": "73bbde955fbcf062715206bab8f46d85e82c5b11"
+                "reference": "6ce7cdfc3cf029d7ca458aef12400e6fbfbb6228"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/batumibiz/captcha/zipball/73bbde955fbcf062715206bab8f46d85e82c5b11",
-                "reference": "73bbde955fbcf062715206bab8f46d85e82c5b11",
+                "url": "https://api.github.com/repos/batumibiz/captcha/zipball/6ce7cdfc3cf029d7ca458aef12400e6fbfbb6228",
+                "reference": "6ce7cdfc3cf029d7ca458aef12400e6fbfbb6228",
                 "shasum": ""
             },
             "require": {
-                "ext-gd": "^7.2",
+                "ext-gd": "*",
                 "php": "^7.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "squizlabs/php_codesniffer": "^3.4"
+                "phpunit/phpunit": "^8.4",
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
             "autoload": {
@@ -44,7 +44,7 @@
                 "captcha",
                 "mobicms"
             ],
-            "time": "2019-04-07T22:07:21+00:00"
+            "time": "2019-10-26T06:30:47+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -878,7 +878,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*"
