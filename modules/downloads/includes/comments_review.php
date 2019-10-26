@@ -27,7 +27,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 // Обзор комментариев
 if (! $config['mod_down_comm'] && $systemUser->rights < 7) {
@@ -108,4 +108,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require_once '../system/end.php';
+require_once 'system/end.php';

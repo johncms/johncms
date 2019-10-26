@@ -1,22 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
-/*
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
-if (! isset($_GET['img'])) {
+if (!isset($_GET['img'])) {
     exit;
 }
 
 function format($name)
 {
-    $f1 = strrpos($name, '.');
+    $f1 = strrpos($name, ".");
     $f2 = substr($name, $f1 + 1, 999);
     $fname = strtolower($f2);
 
@@ -24,12 +14,9 @@ function format($name)
 }
 
 $copyright = '';
-$type = isset($_GET['type']) ? abs((int) ($_GET['type'])) : 0;
+$type = isset($_GET['type']) ? abs(intval($_GET['type'])) : 0;
 $image = htmlspecialchars(rawurldecode($_GET['img']));
-$image = '../' . strtr($image, [
-        '../' => '',
-        './'  => '_',
-    ]);
+$image = '../../../' . strtr($image, ['../' => '', './' => '_',]);
 
 if ($image && file_exists($image)) {
     $att_ext = strtolower(format($image));
@@ -68,19 +55,19 @@ if ($image && file_exists($image)) {
         }
 
         switch ($type_file) {
-            case 'image/gif':
+            case "image/gif":
                 $image_file = imagecreatefromgif($image);
                 break;
 
-            case 'image/jpg':
+            case "image/jpg":
                 $image_file = imagecreatefromjpeg($image);
                 break;
 
-            case 'image/jpeg':
+            case "image/jpeg":
                 $image_file = imagecreatefromjpeg($image);
                 break;
 
-            case 'image/png':
+            case "image/png":
                 $image_file = imagecreatefrompng($image);
                 break;
             default:
@@ -116,7 +103,7 @@ if ($image && file_exists($image)) {
         //    imagedestroy($copyright);
         //}
 
-        header('Content-Type: image/jpeg');
+        header("Content-Type: image/jpeg");
         header('Content-Disposition: inline; filename=preview.jpg');
         header('Content-Length: ' . ob_get_length());
         ob_end_flush();

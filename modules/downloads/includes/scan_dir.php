@@ -23,7 +23,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Обновление файлов
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require '../system/head.php';
+    require 'system/head.php';
 
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
@@ -302,5 +302,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 
-    require '../system/end.php';
+    require 'system/end.php';
 }

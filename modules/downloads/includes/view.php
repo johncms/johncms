@@ -27,8 +27,8 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require '../system/head.php';
-require 'classes/download.php';
+require 'system/head.php';
+require __DIR__ . '/../classes/download.php';
 
 // Выводим файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -36,7 +36,7 @@ $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -47,7 +47,7 @@ if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
 
     if ($systemUser->rights < 6 && $systemUser->rights != 4) {
-        require '../system/end.php';
+        require 'system/end.php';
         exit;
     }
 }
@@ -126,7 +126,7 @@ switch ($format_file) {
     case 'gif':
     case 'png':
         $info_file = getimagesize($res_down['dir'] . '/' . $res_down['name']);
-        echo '<div class="gmenu"><img src="preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
+        echo '<div class="gmenu"><img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($res_down['dir'] . '/' . $res_down['name']) . '" alt="preview" /></div>';
         $text_info = '<span class="gray">' . _t('Resolution') . ': </span>' . $info_file[0] . 'x' . $info_file[1] . ' px<br>';
         break;
 }
@@ -141,11 +141,11 @@ if (! empty($screen)) {
         }
 
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
-            '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
+            '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
         echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>';
     } else {
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ':</b><br>' .
-            '<img src="preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
+            '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
     }
 }
 
@@ -189,7 +189,7 @@ if (! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
 }
 
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
-    '<img src="rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
+    '<img src="../assets/modules/downloads/rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
 
 if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
@@ -265,4 +265,4 @@ if ($systemUser->rights > 6 || $systemUser->rights == 4) {
     echo '</div></p>';
 }
 
-require '../system/end.php';
+require 'system/end.php';

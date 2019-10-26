@@ -21,7 +21,7 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-require '../system/head.php';
+require 'system/head.php';
 
 // Перенос файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -29,7 +29,7 @@ $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -53,7 +53,7 @@ if ($systemUser->rights > 6) {
             if ($catId) {
                 if ($catId == $res_down['refid']) {
                     echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
-                    require '../system/end.php';
+                    require 'system/end.php';
                     exit;
                 }
 
@@ -133,4 +133,4 @@ if ($systemUser->rights > 6) {
     echo '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>';
 }
 
-require '../system/end.php';
+require 'system/end.php';

@@ -24,7 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require '../system/head.php';
+require 'system/head.php';
 
 // Управление скриншотами
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -32,7 +32,7 @@ $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
-    require '../system/end.php';
+    require 'system/end.php';
     exit;
 }
 
@@ -113,7 +113,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
                 $file = preg_replace('#^' . DOWNLOADS_SCR . $id . '/(.*?)$#isU', '$1', $screen_name, 1);
                 echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<table  width="100%"><tr><td width="40" valign="top">' .
-                    '<a href="' . $screen_name . '"><img src="preview.php?type=2&amp;img=' . rawurlencode($screen[$i]) . '" alt="screen" /></a></td><td>' .
+                    '<a href="' . $screen_name . '"><img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$i]) . '" alt="screen" /></a></td><td>' .
                     '<a href="?act=edit_screen&amp;id=' . $id . '&amp;do=' . basename($file) . '">' . _t('Delete') . '</a></td></tr></table></div>';
             }
         }
@@ -121,4 +121,4 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
         echo '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 
-require '../system/end.php';
+require 'system/end.php';

@@ -10,13 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
-
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-
-require '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -37,7 +33,7 @@ $textl = _t('Downloads');
 $headmod = 'downloads';
 const DOWNLOADS = UPLOAD_PATH . 'downloads' . DIRECTORY_SEPARATOR;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
-$files_path = DOWNLOADS . 'files';
+$files_path = 'upload/downloads/files';
 
 // Настройки
 $set_down =
@@ -63,9 +59,9 @@ if (! $config['mod_down'] && $systemUser->rights < 7) {
 }
 
 if ($error) {
-    require_once '../system/head.php';
+    require_once 'system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require_once '../system/end.php';
+    require_once 'system/end.php';
     exit;
 }
 
@@ -144,7 +140,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     require __DIR__ . '/classes/download.php';
-    require '../system/head.php';
+    require 'system/head.php';
 
     if (! $config['mod_down']) {
         echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';
@@ -366,5 +362,5 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     echo '</p>';
 
-    require_once '../system/end.php';
+    require_once 'system/end.php';
 }

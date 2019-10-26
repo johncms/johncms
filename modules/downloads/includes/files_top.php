@@ -24,7 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require '../system/head.php';
+require 'system/head.php';
 require 'classes/download.php';
 
 // Топ файлов
@@ -60,4 +60,4 @@ while ($res_down = $req_down->fetch()) {
 }
 
 echo '<div class="phdr"><a href="?">' . _t('Downloads') . '</a></div>';
-require '../system/end.php';
+require 'system/end.php';

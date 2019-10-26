@@ -136,7 +136,7 @@ class Counters
         }
 
         if ($this->systemUser->isValid() && ($new_msg = $this->forumNew()) > 0) {
-            $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/index.php?act=new">+' . $new_msg . '</a></span>';
+            $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/?act=new">+' . $new_msg . '</a></span>';
         }
 
         return $top . '&#160;/&#160;' . $msg . $new;
@@ -161,14 +161,14 @@ class Counters
                 ')->fetchColumn();
 
             if ($mod) {
-                return '<a href="index.php?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
-                    ($total ? '<br><a href="index.php?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
+                return '<a href="?act=new&amp;do=period">' . _t('Show for Period', 'system') . '</a>' .
+                    ($total ? '<br><a href="?act=new">' . _t('Unread', 'system') . '</a>&#160;<span class="red">(<b>' . $total . '</b>)</span>' : '');
             }
 
             return $total;
         }
         if ($mod) {
-            return '<a href="index.php?act=new">' . _t('Last activity', 'system') . '</a>';
+            return '<a href="?act=new">' . _t('Last activity', 'system') . '</a>';
         }
 
         return false;
@@ -204,7 +204,7 @@ class Counters
 
                 if ($this->systemUser->rights >= 1) {
                     $adm = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
-                    $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/index.php?act=ga&amp;do=set">' . $adm . '</a></span>';
+                    $count = $count . '&#160;/&#160;<span class="red"><a href="guestbook/?act=ga&amp;do=set">' . $adm . '</a></span>';
                 }
         }
 
@@ -234,11 +234,11 @@ class Counters
         }
 
         if ($new) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=new">+' . $new . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=new">+' . $new . '</a></span>';
         }
 
         if (($this->systemUser->rights == 5 || $this->systemUser->rights >= 6) && $mod) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/index.php?act=premod">M:' . $mod . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=premod">M:' . $mod . '</a></span>';
         }
 
         return $total;
@@ -264,7 +264,7 @@ class Counters
             file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
 
-        return '<a href="' . $this->homeurl . '/users/index.php?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
+        return '<a href="' . $this->homeurl . '/users/?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
     }
 
     /**

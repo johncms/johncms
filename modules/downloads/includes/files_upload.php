@@ -24,7 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
 $res = $req->fetch();
@@ -84,7 +84,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                     $error[] = '<a href="?act=down_file&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
                     echo implode('<br>', $error);
                 } else {
-                    if (file_exists("${load_cat}/${fname}")) {
+                    if (file_exists($load_cat . '/' . $fname)) {
                         $fname = time() . $fname;
                     }
 
@@ -204,4 +204,4 @@ if ($req->rowCount() && is_dir($res['dir'])) {
     exit;
 }
 
-require_once '../system/end.php';
+require_once 'system/end.php';

@@ -22,7 +22,7 @@ $db = $container->get(PDO::class);
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require_once '../system/head.php';
+    require_once 'system/head.php';
 
     if (! $id) {
         $load_cat = $files_path;
@@ -66,7 +66,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         if ($error) {
             echo '<div class="phdr"><b>' . _t('Create Folder') . '</b></div>';
             echo '<div class="rmenu"><p>' . implode('<br>', $error) . '<br><a href="?act=add_cat&amp;id=' . $id . '">' . _t('Repeat') . '</a></p></div>';
-            require_once '../system/end.php';
+            require_once 'system/end.php';
             exit;
         }
 
@@ -131,5 +131,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     }
 
     echo '<a href="?">' . _t('Back') . '</a></div>';
-    require_once '../system/end.php';
+    require_once 'system/end.php';
 }

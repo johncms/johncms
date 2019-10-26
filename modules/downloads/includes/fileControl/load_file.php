@@ -30,7 +30,7 @@ $res_down = $req_down->fetch();
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)) {
     $error = true;
 } else {
-    $link = $res_down['dir'] . '/' . $res_down['name'];
+    $link = '../' . $res_down['dir'] . '/' . $res_down['name'];
 }
 
 $more = isset($_GET['more']) ? abs((int) ($_GET['more'])) : false;
@@ -42,7 +42,7 @@ if ($more) {
     if (! $req_more->rowCount() || ! is_file($res_down['dir'] . '/' . $res_more['name'])) {
         $error = true;
     } else {
-        $link = $res_down['dir'] . '/' . $res_more['name'];
+        $link = '../' . $res_down['dir'] . '/' . $res_more['name'];
     }
 }
 
