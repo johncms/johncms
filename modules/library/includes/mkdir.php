@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
     if (empty($_POST['name'])) {
         echo $tools->displayError(_t('You have not entered the name'),
             '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require_once '../system/end.php';
+        require_once 'system/end.php';
         exit;
     }
 

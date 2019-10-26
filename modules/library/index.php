@@ -10,7 +10,10 @@
  * @license     GPL-3
  */
 
-define('_IN_JOHNCMS', 1);
+use Library\Tree;
+use Library\Hashtags;
+use Library\Rating;
+use Library\Utils;
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -18,7 +21,6 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $headmod = 'library';
-require_once '../system/bootstrap.php';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -38,12 +40,6 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-use Library\Tree;
-use Library\Hashtags;
-use Library\Rating;
-use Library\Links;
-use Library\Utils;
 
 /*  php 7+
 use Library\{
@@ -70,9 +66,9 @@ if (! $config['mod_lib'] && $systemUser->rights < 7) {
 }
 
 if ($error) {
-    require_once '../system/head.php';
+    require_once 'system/head.php';
     echo $tools->displayError($error);
-    require_once '../system/end.php';
+    require_once 'system/end.php';
     exit;
 }
 
@@ -100,7 +96,7 @@ if ($id > 0) {
     }
 }
 
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 ?>
 
@@ -287,10 +283,10 @@ if (in_array($act, $array_includes)) {
 
                         while ($row = $sql2->fetch()) {
                             echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-                                . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
-                                    ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
+                                . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
+                                    ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                                     : '')
-                                . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
+                                . '<div class="righttable"><h4><a href="?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
                                 . '<div><small>' . $tools->checkout($row['announce'], 0, 0) . '</small></div></div>';
 
                             // Описание к статье
@@ -356,7 +352,7 @@ if (in_array($act, $array_includes)) {
                         Utils::redir404();
                     }
 
-                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;',
+                    $nav = $count_pages > 1 ? '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;',
                             $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>' : '';
                     $catalog = $db->query('SELECT `id`, `name` FROM `library_cats` WHERE `id` = ' . $row['cat_id'] . ' LIMIT 1')->fetch();
                     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a>'
@@ -365,7 +361,7 @@ if (in_array($act, $array_includes)) {
 
                     // Верхняя постраничная навигация
                     if ($count_pages > 1) {
-                        echo '<div class="topmenu">' . $tools->displayPagination('index.php?id=' . $id . '&amp;',
+                        echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;',
                                 $page == 1 ? 0 : ($page - 1) * 1, $count_pages, 1) . '</div>';
                     }
 
@@ -428,10 +424,10 @@ if (in_array($act, $array_includes)) {
 
                     if ($page == 1) {
                         // Картинка статьи
-                        if (file_exists('../files/library/images/big/' . $id . '.png')) {
+                        if (file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png')) {
                             $img_style = 'width: 50%; max-width: 240px; height: auto; float: left; clear: both; margin: 10px';
-                            echo '<a href="../files/library/images/orig/' . $id . '.png">'
-                                . '<img style="' . $img_style . '" src="../files/library/images/big/' . $id . '.png" alt="screen" /></a>';
+                            echo '<a href="../upload/library/images/orig/' . $id . '.png">'
+                                . '<img style="' . $img_style . '" src="../upload/library/images/big/' . $id . '.png" alt="screen" /></a>';
                         }
                     }
 
@@ -456,4 +452,4 @@ if (in_array($act, $array_includes)) {
     } // end else !id
 } // end else $act
 
-require_once '../system/end.php';
+require_once 'system/end.php';

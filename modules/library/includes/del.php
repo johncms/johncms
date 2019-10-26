@@ -136,18 +136,18 @@ switch ($type) {
         break;
 }
 if (isset($_GET['yes']) && $type == 'image') {
-    if (file_exists('../files/library/images/small/' . $id . '.png')) {
-        @unlink('../files/library/images/big/' . $id . '.png');
-        @unlink('../files/library/images/orig/' . $id . '.png');
-        @unlink('../files/library/images/small/' . $id . '.png');
+    if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
+        @unlink(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
+        @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
+        @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
     }
     echo '<div class="gmenu">' . _t('Deleted') . '</div><div><a href="?act=moder&amp;type=article&amp;id=' . $id . '">' . _t('Back') . '</a></div>' . PHP_EOL;
 } elseif (isset($_GET['yes'])) {
     if ($db->exec($sql)) {
-        if (file_exists('../files/library/images/small/' . $id . '.png')) {
-            @unlink('../files/library/images/big/' . $id . '.png');
-            @unlink('../files/library/images/orig/' . $id . '.png');
-            @unlink('../files/library/images/small/' . $id . '.png');
+        if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
+            @unlink(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
+            @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
+            @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
         }
         echo '<div class="gmenu">' . _t('Deleted') . '</div><p><a href="?">' . _t('Back') . '</a></p>' . PHP_EOL;
     }

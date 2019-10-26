@@ -29,6 +29,7 @@ $map->addRoute(['GET', 'POST'], '/album[/]', 'modules/album/index.php');        
 $map->addRoute(['GET', 'POST'], '/forum[/[index.php]]', 'modules/forum/index.php');               // Форум
 $map->addRoute(['GET', 'POST'], '/guestbook[/[index.php]]', 'modules/guestbook/index.php');       // Гостевая
 $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                            // Справка
+$map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');           // Библиотека
 $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');                          // Вход / выход с сайта
 $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                            // Почта
 $map->addRoute(['GET', 'POST'], '/news[/[index.php]]', 'modules/news/index.php');                 // Новости
@@ -37,7 +38,6 @@ $map->addRoute(['GET', 'POST'], '/registration[/[index.php]]', 'modules/registra
 $map->addRoute(['GET', 'POST'], '/users[/[index.php]]', 'modules/users/index.php');               // Пользователи (актив сайта)
 //$map->addRoute(['GET', 'POST'], '/downloads[/[index.php]]', 'modules/downloads/index.php');       // Загрузки
 //$map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');                    // Переключатель языков
-//$map->addRoute(['GET', 'POST'], '/library[/[index.php]]', 'modules/library/index.php');           // Библиотека
 //$map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');                      // Регистрация
 
 if ($systemUser->isValid() && $systemUser->rights >= 6) {

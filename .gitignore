@@ -4,6 +4,8 @@
 /node_modules
 /.idea
 /package-lock.json
+/system/vendor
+/config/autoload/*.local.php
 
 # Data folder ignores
 /data/cache/*
@@ -16,14 +18,19 @@
 !/upload/forum/attach/index.php
 /upload/forum/topics/*
 !/upload/forum/topics/index.php
+/upload/mail/*
+!/upload/mail/index.php
 /upload/users/album/*
 !/upload/users/album/index.php
+/upload/users/avatar/*
+!/upload/users/avatar/index.php
 /upload/users/photo/*
 !/upload/users/photo/index.php
-
-/files/mail/*
-!/files/mail/index.php
-/files/users/avatar/*
-!/files/users/avatar/index.php
-/system/vendor
-/config/autoload/*.local.php
+/upload/library/tmp/*
+!/upload/library/tmp/.gitkeep
+/upload/library/images/big/*
+!/upload/library/images/big/.gitkeep
+/upload/library/images/orig/*
+!/upload/library/images/orig/.gitkeep
+/upload/library/images/small/*
+!/upload/library/images/small/.gitkeep

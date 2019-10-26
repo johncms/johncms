@@ -99,10 +99,10 @@ class Tree
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->delTags();
 
-            if (file_exists('../files/library/images/small/' . $data . '.png')) {
-                unlink('../files/library/images/big/' . $data . '.png');
-                unlink('../files/library/images/orig/' . $data . '.png');
-                unlink('../files/library/images/small/' . $data . '.png');
+            if (file_exists(UPLOAD_PATH . 'library/images/small/' . $data . '.png')) {
+                unlink(UPLOAD_PATH . 'library/images/big/' . $data . '.png');
+                unlink(UPLOAD_PATH . 'library/images/orig/' . $data . '.png');
+                unlink(UPLOAD_PATH . 'library/images/small/' . $data . '.png');
                 $this->cleaned['images'] += 3;
             }
         } else {

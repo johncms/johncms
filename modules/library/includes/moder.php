@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
                 $handle->image_x = $handle->image_src_x;
                 $handle->image_y = $handle->image_src_y;
                 $handle->image_convert = 'png';
-                $handle->process('../files/library/images/orig/');
+                $handle->process(UPLOAD_PATH . 'library/images/orig/');
                 $err_image = $handle->error;
                 $handle->file_new_name_body = $id;
                 $handle->file_overwrite = true;
@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
                     $handle->image_y = $handle->image_src_y;
                 }
                 $handle->image_convert = 'png';
-                $handle->process('../files/library/images/big/');
+                $handle->process(UPLOAD_PATH . 'library/images/big/');
                 $err_image = $handle->error;
                 $handle->file_new_name_body = $id;
                 $handle->file_overwrite = true;
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
                 $handle->image_x = 32;
                 $handle->image_y = 32;
                 $handle->image_convert = 'png';
-                $handle->process('../files/library/images/small/');
+                $handle->process(UPLOAD_PATH . 'library/images/small/');
                 if ($err_image) {
                     echo $tools->displayError(_t('Photo uploading error'));
                 }
@@ -128,8 +128,8 @@ if (isset($_POST['submit'])) {
         . '</div>'
         . '<form name="form" enctype="multipart/form-data" action="?act=moder&amp;type=' . $type . '&amp;id=' . $id . '" method="post">'
         . '<div class="menu">'
-        . ($type == 'article' ? (file_exists('../files/library/images/big/' . $id . '.png')
-                ? '<div><img src="../files/library/images/big/' . $id . '.png" alt="screen" />' . '</div>'
+        . ($type == 'article' ? (file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png')
+                ? '<div><img src="../upload/library/images/big/' . $id . '.png" alt="screen" />' . '</div>'
                 . '<div class="alarm"><a href="?act=del&amp;type=image&amp;id=' . $id . '">Удалить обложку</a></div>'
                 : '')
             . '<h3>' . _t('To upload a photo') . '</h3>'

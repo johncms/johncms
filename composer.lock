@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55623b08a5c249dba295235f67bedd8b",
+    "content-hash": "a7a578b7b0461bbed552d77d3bb3da64",
     "packages": [
         {
             "name": "batumibiz/captcha",
@@ -879,6 +879,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2",
+        "ext-gd": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-pdo": "*"

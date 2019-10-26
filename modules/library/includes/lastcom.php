@@ -34,8 +34,8 @@ if ($stmt->rowCount()) {
     $i = 0;
     while ($row = $stmt->fetch()) {
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-            . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
-                ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
+            . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
+                ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
             . '<div class="righttable"><a href="?act=comments&amp;id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
             . '<div>' . $tools->checkout(substr($row['text'], 0, 500), 0, 2) . '</div></div>'

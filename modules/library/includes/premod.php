@@ -49,8 +49,8 @@ if ($total) {
         $dir_nav = new Tree($row['cat_id']);
         $dir_nav->processNavPanel();
         echo '<div class="list' . (++$i % 2 ? 2 : 1) . '">'
-            . (file_exists('../files/library/images/small/' . $row['id'] . '.png')
-                ? '<div class="avatar"><img src="../files/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
+            . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
+                ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
             . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></div>'
             . '<div class="sub">' . _t('Who added') . ': ' . $tools->checkout($row['uploader']) . ' (' . $tools->displayDate($row['time']) . ')</div>'
