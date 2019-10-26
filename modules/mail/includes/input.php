@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $textl = _t('Mail');
-require_once '../system/head.php';
-echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
+require_once 'system/head.php';
+echo '<div class="phdr"><b>' . _t('Incoming messages') . '</b></div>';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -32,45 +32,44 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
 
 $total = $db->query("
-  SELECT COUNT(DISTINCT `cms_mail`.`from_id`)
-  FROM `cms_mail`
-  LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id`
-  AND `cms_contact`.`user_id`='" . $systemUser->id . "'
-  WHERE `cms_mail`.`user_id`='" . $systemUser->id . "'
-  AND `cms_mail`.`delete`!='" . $systemUser->id . "'
-  AND `cms_mail`.`sys`='0'
-  AND `cms_contact`.`ban`!='1'
-")->fetchColumn();
+	SELECT COUNT(DISTINCT `cms_mail`.`user_id`)
+	FROM `cms_mail`
+	LEFT JOIN `cms_contact`
+	ON `cms_mail`.`user_id`=`cms_contact`.`from_id`
+	AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+	WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
+	AND `cms_mail`.`sys`='0' AND `cms_mail`.`delete`!='" . $systemUser->id . "'
+	AND `cms_contact`.`ban`!='1' AND `spam`='0'")->fetchColumn();
 
 if ($total) {
     $req = $db->query("SELECT `users`.*, MAX(`cms_mail`.`time`) AS `time`
-        FROM `cms_mail`
-	    LEFT JOIN `users` ON `cms_mail`.`from_id`=`users`.`id`
-		LEFT JOIN `cms_contact` ON `cms_mail`.`from_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
-		WHERE `cms_mail`.`user_id`='" . $systemUser->id . "'
+		FROM `cms_mail`
+		LEFT JOIN `users` ON `cms_mail`.`user_id`=`users`.`id`
+		LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+		WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
 		AND `cms_mail`.`delete`!='" . $systemUser->id . "'
 		AND `cms_mail`.`sys`='0'
 		AND `cms_contact`.`ban`!='1'
-		GROUP BY `cms_mail`.`from_id`
+		GROUP BY `cms_mail`.`user_id`
 		ORDER BY MAX(`cms_mail`.`time`) DESC
-		LIMIT " . $start . ',' . $kmess
-    );
+		LIMIT " . $start . ',' . $kmess);
 
     for ($i = 0; $row = $req->fetch(); ++$i) {
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
-            WHERE `user_id`='" . $systemUser->id . "'
-            AND `from_id`='{$row['id']}'
+            WHERE `user_id`='{$row['id']}'
+            AND `from_id`='" . $systemUser->id . "'
             AND `delete`!='" . $systemUser->id . "'
             AND `sys`!='1'
         ")->fetchColumn();
 
         $last_msg = $db->query("SELECT *
             FROM `cms_mail`
-            WHERE `from_id`='{$row['id']}'
-            AND `user_id` = '" . $systemUser->id . "'
+            WHERE `from_id`='" . $systemUser->id . "'
+            AND `user_id` = '{$row['id']}'
             AND `delete` != '" . $systemUser->id . "'
             ORDER BY `id` DESC
             LIMIT 1")->fetch();
+
         if (mb_strlen($last_msg['text']) > 500) {
             $text = mb_substr($last_msg['text'], 0, 500);
             $text = $tools->checkout($text, 1, 1);
@@ -86,7 +85,7 @@ if ($total) {
         $arg = [
             'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Blocklist') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
+            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
             'iphide' => 1,
         ];
 
@@ -106,7 +105,7 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=output&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=input&amp;', $start, $total, $kmess) . '</div>' .
         '<p><form action="index.php" method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>

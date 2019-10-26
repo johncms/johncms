@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail');
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 if ($id) {
     /** @var Psr\Container\ContainerInterface $container */
@@ -33,8 +33,8 @@ if ($id) {
             //Удаляем сообщения
             if ($row['delete'] > 0 || ($row['read'] == 0 && $row['user_id'] == $systemUser->id)) {
                 //Удаляем файлы
-                if (! empty($row['file_name']) && file_exists('../files/mail/' . $row['file_name'])) {
-                    @unlink('../files/mail/' . $row['file_name']);
+                if (! empty($row['file_name']) && file_exists(UPLOAD_PATH . 'mail/' . $row['file_name'])) {
+                    @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
                 }
 
                 $db->exec('DELETE FROM `cms_mail` WHERE `id` = ' . $row['id']);

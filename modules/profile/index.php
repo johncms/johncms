@@ -126,7 +126,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 
     if ($user['id'] != $systemUser->id && $systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
-        $menu[] = '<a href="' . $config['homeurl'] . '/admin/index.php?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
+        $menu[] = '<a href="' . $config['homeurl'] . '/admin/?act=usr_del&amp;id=' . $user['id'] . '">' . _t('Delete') . '</a>';
     }
 
     if ($user['id'] != $systemUser->id && $systemUser->rights > $user['rights']) {
@@ -216,7 +216,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 
     echo '<br />' .
-        '<div>' . $tools->image('photo.gif') . '<a href="../album/index.php?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div>' . $tools->image('photo.gif') . '<a href="../album/?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
         '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
         '</p></div>';
     if ($user['id'] != $systemUser->id) {
@@ -224,16 +224,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         // Контакты
         if (is_contact($user['id']) != 2) {
             if (! is_contact($user['id'])) {
-                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
+                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
             } else {
-                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
+                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
             }
         }
 
         if (is_contact($user['id']) != 2) {
-            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
+            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
         } else {
-            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/index.php?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
+            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
         }
 
         echo '</p>';
@@ -243,7 +243,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             && ! isset($systemUser->ban['1'])
             && ! isset($systemUser->ban['3'])
         ) {
-            echo '<p><form action="../mail/index.php?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
+            echo '<p><form action="../mail/?act=write&amp;id=' . $user['id'] . '" method="post"><input type="submit" value="' . _t('Write') . '" style="margin-left: 18px"/></form></p>';
         }
 
         echo '</div>';

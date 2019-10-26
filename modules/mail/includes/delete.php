@@ -14,7 +14,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $headmod = 'mail';
 $textl = _t('Mail');
-require_once '../system/head.php';
+require_once 'system/head.php';
 
 echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 
@@ -37,7 +37,7 @@ if ($id) {
     if (! $req->rowCount()) {
         //Выводим ошибку
         echo $tools->displayError(_t('Message does not exist'));
-        require_once '../system/end.php';
+        require_once 'system/end.php';
         exit;
     }
 
@@ -54,7 +54,7 @@ if ($id) {
             if ($res['read'] == 0 && $res['user_id'] == $systemUser->id) {
                 //Удаляем файл
                 if ($res['file_name']) {
-                    @unlink('../files/mail/' . $res['file_name']);
+                    @unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
                 }
 
                 $db->exec("DELETE FROM `cms_mail` WHERE `user_id`='" . $systemUser->id . "' AND `id` = '${id}' LIMIT 1");
@@ -63,7 +63,7 @@ if ($id) {
                 if ($res['delete']) {
                     //Удаляем файл
                     if ($res['file_name']) {
-                        @unlink('../files/mail/' . $res['file_name']);
+                        @unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
                     }
 
                     $db->exec("DELETE FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '${id}' LIMIT 1");

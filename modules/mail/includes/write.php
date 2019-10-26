@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$set_mail = unserialize($user['set_mail']);
+$set_mail = unserialize((string) $user['set_mail']);
 $out = '';
 $total = 0;
 $ch = 0;
@@ -38,9 +38,9 @@ if ($id) {
 
     if (! $req->rowCount()) {
         $textl = _t('Mail');
-        require_once '../system/head.php';
+        require_once 'system/head.php';
         echo $tools->displayError(_t('User does not exists'));
-        require_once '../system/end.php';
+        require_once 'system/end.php';
         exit;
     }
 
@@ -48,7 +48,7 @@ if ($id) {
 
     if ($mod == 'clear') {
         $textl = _t('Mail');
-        require_once '../system/head.php';
+        require_once 'system/head.php';
         echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
@@ -60,8 +60,8 @@ if ($id) {
                 while ($row = $req->fetch()) {
                     if ($row['delete']) {
                         if ($row['file_name']) {
-                            if (file_exists('../files/mail/' . $row['file_name']) !== false) {
-                                @unlink('../files/mail/' . $row['file_name']);
+                            if (file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
+                                @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
                             }
                         }
 
@@ -69,8 +69,8 @@ if ($id) {
                     } else {
                         if ($row['read'] == 0 && $row['user_id'] == $systemUser->id) {
                             if ($row['file_name']) {
-                                if (file_exists('../files/mail/' . $row['file_name']) !== false) {
-                                    @unlink('../files/mail/' . $row['file_name']);
+                                if (file_exists(UPLOAD_PATH . 'mail/' . $row['file_name']) !== false) {
+                                    @unlink(UPLOAD_PATH . 'mail/' . $row['file_name']);
                                 }
                             }
 
@@ -94,7 +94,7 @@ if ($id) {
 
         echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-        require_once '../system/end.php';
+        require_once 'system/end.php';
         exit;
     }
 }
@@ -354,13 +354,13 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
     }
 
     // Проверка наличия файла с таким же именем
-    if (! empty($newfile) && file_exists('../files/mail/' . $newfile) !== false) {
+    if (! empty($newfile) && file_exists(UPLOAD_PATH . 'mail/' . $newfile) !== false) {
         $newfile = time() . '_' . $newfile;
     }
 
     if (empty($error) && $do_file) {
-        if ((move_uploaded_file($_FILES['fail']['tmp_name'], '../files/mail/' . $newfile)) === true) {
-            @ chmod('../files/mail/' . $newfile, 0666);
+        if ((move_uploaded_file($_FILES['fail']['tmp_name'], UPLOAD_PATH . 'mail/' . $newfile)) === true) {
+            @ chmod(UPLOAD_PATH . 'mail/' . $newfile, 0666);
             @unlink($_FILES['fail']['tmp_name']);
         } else {
             $error[] = _t('Error uploading file');
@@ -369,7 +369,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
 
     if (empty($error) && $do_file_mini) {
         if (strlen($filebase64) > 0) {
-            $FileName = '../files/mail/' . $newfile;
+            $FileName = UPLOAD_PATH . 'mail/' . $newfile;
             $filedata = base64_decode($filebase64);
             $fid = @fopen($FileName, 'wb');
             if ($fid) {
@@ -519,7 +519,7 @@ if ($id) {
 }
 
 $textl = _t('Mail');
-require_once '../system/head.php';
+require_once 'system/head.php';
 echo $out;
 echo '<p>';
 

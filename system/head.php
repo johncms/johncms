@@ -205,7 +205,7 @@ if ($systemUser->id) {
     $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
 
     if ($new_sys_mail) {
-        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/mail/?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
     }
 
     $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -217,7 +217,7 @@ if ($systemUser->id) {
                             AND `cms_contact`.`ban`!='1'")->fetchColumn();
 
     if ($new_mail) {
-        $list[] = '<a href="' . $config['homeurl'] . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
+        $list[] = '<a href="' . $config['homeurl'] . '/mail/?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
     }
 
     if ($systemUser->comm_count > $systemUser->comm_old) {
@@ -227,7 +227,7 @@ if ($systemUser->id) {
     $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $systemUser->id . ' AND `unread_comments` = 1')->fetchColumn();
 
     if ($new_album_comm) {
-        $list[] = '<a href="' . $config['homeurl'] . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
+        $list[] = '<a href="' . $config['homeurl'] . '/album/?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
     }
 
     if (! empty($list)) {
