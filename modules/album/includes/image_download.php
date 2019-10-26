@@ -66,5 +66,5 @@ if (! $error) {
     header('location: ' . $config['homeurl'] . '/upload/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
     require 'system/head.php';
-    echo $tools->displayError($error, '<a href="index.php">' . _t('Back') . '</a>');
+    echo $tools->displayError($error, '<a href="./">' . _t('Back') . '</a>');
 }

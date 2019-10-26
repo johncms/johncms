@@ -31,7 +31,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('Personal') . '</div>';
 $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' " . ($user['id'] == $systemUser->id || $systemUser->rights >= 6 ? '' : 'AND `access` > 1') . ' ORDER BY `sort` ASC');
 $total = $req->rowCount();
 

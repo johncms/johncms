@@ -120,7 +120,7 @@ switch ($mod) {
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
 require 'system/head.php';
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {
     $total = $new_album_comm;

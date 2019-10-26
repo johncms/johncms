@@ -44,7 +44,7 @@ $album = $req->fetch();
 $view = isset($_GET['view']);
 
 // Показываем выбранный альбом с фотографиями
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | <a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Personal') . '</a></div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | <a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Personal') . '</a></div>';
 
 if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 7) {
     echo '<div class="topmenu"><a href="?act=image_upload&amp;al=' . $al . '&amp;user=' . $user['id'] . '">' . _t('Add image') . '</a></div>';

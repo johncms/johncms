@@ -51,7 +51,7 @@ if ($req_obj->rowCount()) {
         exit;
     }
 
-    $context_top = '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' .
+    $context_top = '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' .
         '<a href="?act=list&amp;user=' . $owner['id'] . '">' . _t('Personal') . '</a></div>' .
         '<div class="menu"><a href="?act=show&amp;al=' . $res_obj['album_id'] . '&amp;img=' . $img . '&amp;user=' . $owner['id'] . '&amp;view"><img src="../upload/users/album/' . $owner['id'] . '/' . $res_obj['tmb_name'] . '" /></a>';
 

@@ -161,8 +161,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         '<li><a href="?act=top&amp;mod=comments">' . _t('Top Comments') . '</a></li>' .
         '<li><a href="?act=top&amp;mod=trash">' . _t('Top Worst') . '</a></li>' .
         '</ul></p>' .
-        '</div>' .
-        '<div class="phdr"><a href="index.php">' . _t('Users') . '</a></div>';
+        '</div>';
 }
 
 require 'system/end.php';

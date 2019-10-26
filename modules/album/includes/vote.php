@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-$ref = isset($_SERVER['HTTP_REFERER']) && ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'index.php';
+$ref = isset($_SERVER['HTTP_REFERER']) && ! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : './';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();

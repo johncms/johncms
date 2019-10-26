@@ -43,3 +43,6 @@ $map->addRoute(['GET', 'POST'], '/users[/[index.php]]', 'modules/users/index.php
 if ($systemUser->isValid() && $systemUser->rights >= 6) {
     $map->addRoute(['GET', 'POST'], '/admin/[index.php]', 'modules/admin/index.php');             // Админ панель
 }
+
+// Пример маршрута, где в URL присутствует index.php
+// $map->addRoute(['GET', 'POST'], '/users[/[index.php]]', 'modules/users/index.php');

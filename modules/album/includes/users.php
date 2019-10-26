@@ -43,7 +43,7 @@ $menu = [
     ($mod == 'boys' ? '<b>' . _t('Guys') . '</b>' : '<a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a>'),
     ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>'),
 ];
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
+echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
      '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
