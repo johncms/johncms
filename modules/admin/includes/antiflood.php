@@ -30,7 +30,7 @@ if ($systemUser->rights < 7) {
 }
 
 $set_af = $config['antiflood'];
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';
 
 if (isset($_POST['submit']) || isset($_POST['save'])) {
     // Принимаем данные из формы
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) || isset($_POST['save'])) {
 }
 
 // Форма ввода параметров Антифлуда
-echo '<form action="index.php?act=antiflood" method="post">'
+echo '<form action="?act=antiflood" method="post">'
     . '<div class="gmenu"><p><h3>' . _t('Operation mode') . '</h3><table cellspacing="2">'
     . '<tr><td valign="top"><input type="radio" name="mode" value="3" ' . ($set_af['mode'] == 3 ? 'checked="checked"' : '') . '/></td><td>' . _t('Day') . '</td></tr>'
     . '<tr><td valign="top"><input type="radio" name="mode" value="4" ' . ($set_af['mode'] == 4 ? 'checked="checked"' : '') . '/></td><td>' . _t('Night') . '</td></tr>'

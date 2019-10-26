@@ -46,7 +46,7 @@ if (empty($res) || $res['user_id'] != $systemUser->id) {
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['date'] < (time() - 3600)) {
-    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="index.php?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
     require 'system/end.php';
     exit;
 }
@@ -154,19 +154,19 @@ if (isset($_POST['submit'])) {
               `filetype` = '${type}'
             ");
         } else {
-            echo $tools->displayError($error, '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError($error, '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         }
     } else {
-        echo  $tools->displayError(_t('Error uploading file'), '<a href="index.php?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo  $tools->displayError(_t('Error uploading file'), '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
     }
 
     $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
     $page = ceil($pa2 / $kmess);
-    echo '<br><a href="index.php?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
+    echo '<br><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки
     echo '<div class="phdr"><b>' . _t('Add File') . '</b></div>'
-        . '<div class="gmenu"><form action="index.php?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>'
+        . '<div class="gmenu"><form action="?act=addfile&amp;id=' . $id . '" method="post" enctype="multipart/form-data"><p>'
         . '<input type="file" name="fail"/>'
         . '</p><p><input type="submit" name="submit" value="' . _t('Upload') . '"/></p></form></div>'
         . '<div class="phdr">' . _t('Max. Size') . ': ' . $config['flsz'] . 'kb.</div>';

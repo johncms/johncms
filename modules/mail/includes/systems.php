@@ -50,7 +50,7 @@ if ($mod == 'clear') {
         $out .= '
 		<div class="rmenu">' . _t('Confirm the deletion of messages') . '</div>
 		<div class="gmenu">
-		<form action="index.php?act=systems&amp;mod=clear" method="post"><div>
+		<form action="?act=systems&amp;mod=clear" method="post"><div>
 		<input type="submit" name="clear" value="' . _t('Delete') . '"/>
 		</div></form>
 		</div>';
@@ -67,7 +67,7 @@ if ($mod == 'clear') {
         }
 
         if ($total > $kmess) {
-            $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=systems&amp;', $start, $total, $kmess) . '</div>';
+            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `sys`='1' AND `delete`!='" . $systemUser->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
@@ -86,7 +86,7 @@ if ($mod == 'clear') {
             $out .= '<strong>' . $tools->checkout($row['them']) . '</strong> (' . $tools->displayDate($row['time']) . ')<br />';
             $post = preg_replace_callback('/{TIME=(.+?)}/usi', 'time_parce', $post);
             $out .= $post;
-            $out .= '<div class="sub"><a href="index.php?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
+            $out .= '<div class="sub"><a href="?act=delete&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></div>';
             $out .= '</div>';
         }
 
@@ -102,8 +102,8 @@ if ($mod == 'clear') {
     $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=systems&amp;', $start, $total, $kmess) . '</div>';
-        $out .= '<p><form action="index.php" method="get">
+        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $kmess) . '</div>';
+        $out .= '<p><form method="get">
 			<input type="hidden" name="act" value="systems"/>
 			<input type="text" name="page" size="2"/>
 			<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -117,7 +117,7 @@ echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=systems&amp;mod=clear">' . _t('Clear messages') . '</a><br>';
+    echo '<a href="?act=systems&amp;mod=clear">' . _t('Clear messages') . '</a><br>';
 }
 
 echo '<a href="../profile/?act=office">' . _t('Personal') . '</a></p>';

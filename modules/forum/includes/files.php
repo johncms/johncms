@@ -87,7 +87,7 @@ if ($c || $s || $t) {
         $res = $req->fetch();
         $caption .= $res['name'];
     } else {
-        echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');
         require 'system/end.php';
         exit;
     }
@@ -115,10 +115,10 @@ if ($do || isset($_GET['new'])) {
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
             $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
-            $text = '<b><a href="index.php?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
+            $text = '<b><a href="?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
-                $text .= '<br /><a href="index.php?act=show_post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+                $text .= '<br /><a href="?act=show_post&amp;id=' . $res['post'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
             }
 
             // Формируем ссылку на файл
@@ -134,7 +134,7 @@ if ($do || isset($_GET['new'])) {
 
             if (in_array($att_ext, $pic_ext)) {
                 // Если картинка, то выводим предпросмотр
-                $file = '<div><a class="image-preview" title="' . $res['filename'] . '" data-source="index.php?act=file&amp;id=' . $res['id'] . '" href="index.php?act=file&amp;id=' . $res['id'] . '">';
+                $file = '<div><a class="image-preview" title="' . $res['filename'] . '" data-source="?act=file&amp;id=' . $res['id'] . '" href="?act=file&amp;id=' . $res['id'] . '">';
                 //TODO: thumbinal.php переместить в /assets
                 $file .= '<img src="thumbinal.php?file=' . (urlencode($res['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
             } else {
@@ -143,7 +143,7 @@ if ($do || isset($_GET['new'])) {
                         : '') . '<img src="../images/system/' . $res['filetype'] . '.png" width="16" height="16" />&#160;';
             }
 
-            $file .= '<a href="index.php?act=file&amp;id=' . $res['id'] . '">' . htmlspecialchars($res['filename']) . '</a><br />';
+            $file .= '<a href="?act=file&amp;id=' . $res['id'] . '">' . htmlspecialchars($res['filename']) . '</a><br />';
             $file .= '<small><span class="gray">' . _t('Size') . ': ' . $fls . ' kb.<br />' . _t('Downloaded') . ': ' . $res['dlcount'] . ' ' . _t('Time') . '</span></small>';
             $arg = [
                 'iphide' => 1,
@@ -159,9 +159,9 @@ if ($do || isset($_GET['new'])) {
 
         if ($total > $kmess) {
             // Постраничная навигация
-            echo '<p>' . $tools->displayPagination('index.php?act=files&amp;' . (isset($_GET['new']) ? 'new'
+            echo '<p>' . $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new'
                         : 'do=' . $do) . $lnk . '&amp;', $start, $total, $kmess) . '</p>' .
-                '<p><form action="index.php" method="get">' .
+                '<p><form method="get">' .
                 '<input type="hidden" name="act" value="files"/>' .
                 '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -173,7 +173,7 @@ if ($do || isset($_GET['new'])) {
     // Выводим список разделов, в которых есть файлы
     $countnew = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `time` > '${new}'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
     echo '<p>' . ($countnew > 0
-            ? '<a href="index.php?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
+            ? '<a href="?act=files&amp;new' . $lnk . '">' . _t('New Files') . ' (' . $countnew . ')</a>'
             : _t('No new files')) . '</p>';
     echo '<div class="phdr">' . $caption . '</div>';
     $link = [];
@@ -182,7 +182,7 @@ if ($do || isset($_GET['new'])) {
         $count = $db->query("SELECT COUNT(*) FROM `cms_forum_files` WHERE `filetype` = '${i}'" . ($systemUser->rights >= 7 ? '' : " AND `del` != '1'") . $sql)->fetchColumn();
 
         if ($count > 0) {
-            $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="index.php?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
+            $link[] = '<img src="../images/system/' . $i . '.png" width="16" height="16" class="left" />&#160;<a href="?act=files&amp;do=' . $i . $lnk . '">' . $types[$i] . '</a>&#160;(' . $count . ')';
             $total = $total + $count;
         }
     }
@@ -206,5 +206,5 @@ if ($c) {
 }
 
 echo '<p>' . (($do || isset($_GET['new']))
-        ? '<a href="index.php?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'
-        : '') . '<a href="index.php' . ($id ? '?id=' . $id . '&' . $type : '?' . $type) . '">' . _t('Forum') . '</a></p>';
+        ? '<a href="?act=files' . $lnk . '">' . _t('List of sections') . '</a><br />'
+        : '') . '<a href="./' . ($id ? '?id=' . $id . '&' . $type : '?' . $type) . '">' . _t('Forum') . '</a></p>';

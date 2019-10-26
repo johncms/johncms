@@ -93,7 +93,7 @@ if ($do && is_file(DOWNLOADS_SCR . $id . DIRECTORY_SEPARATOR . $do)) {
             $dir = opendir(DOWNLOADS_SCR . $id);
 
             while ($file = readdir($dir)) {
-                if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != '.svn') && ($file != 'index.php')) {
+                if (($file != '.') && ($file != '..') && ($file != 'name.dat') && ($file != 'index.php')) {
                     $screen[] = UPLOAD_PATH . 'downloads/screen/' . $id . '/' . $file;
                 }
             }

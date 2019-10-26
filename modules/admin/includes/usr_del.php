@@ -75,7 +75,7 @@ if (! $error) {
     // Считаем посты на Форуме
     $forump_count = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = '" . $user['id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
 
-    echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
+    echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Delete user') . '</div>';
 
     // Выводим краткие данные
     echo '<div class="user"><p>' . $tools->displayUser($user, [
@@ -124,7 +124,7 @@ if (! $error) {
 
         default:
             // Форма параметров удаления
-            echo '<form action="index.php?act=usr_del&amp;mod=del&amp;id=' . $user['id'] . '" method="post"><div class="menu"><p><h3>' . _t('Cleaning activities') . '</h3>';
+            echo '<form action="?act=usr_del&amp;mod=del&amp;id=' . $user['id'] . '" method="post"><div class="menu"><p><h3>' . _t('Cleaning activities') . '</h3>';
 
             if ($comm_count) {
                 echo '<div><input type="checkbox" value="1" name="comments" checked="checked" />&#160;' . _t('Comments') . ' <span class="red">(' . $comm_count . ')</span></div>';
@@ -143,4 +143,4 @@ if (! $error) {
     echo $tools->displayError($error);
 }
 
-echo '<p><a href="index.php">' . _t('Cancel') . '</a></p>';
+echo '<p><a href="./">' . _t('Cancel') . '</a></p>';

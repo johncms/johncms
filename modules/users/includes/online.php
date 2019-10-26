@@ -35,12 +35,12 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Показываем список Online
-$menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="index.php?act=online">' . _t('Users') . '</a>';
-$menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="index.php?act=online&amp;mod=history">' . _t('History') . '</a> ';
+$menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="?act=online">' . _t('Users') . '</a>';
+$menu[] = $mod == 'history' ? '<b>' . _t('History') . '</b>' : '<a href="?act=online&amp;mod=history">' . _t('History') . '</a> ';
 
 if ($systemUser->rights) {
-    $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="index.php?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
-    $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="index.php?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
+    $menu[] = $mod == 'guest' ? '<b>' . _t('Guests') . '</b>' : '<a href="?act=online&amp;mod=guest">' . _t('Guests') . '</a>';
+    $menu[] = $mod == 'ip' ? '<b>' . _t('IP Activity') . '</b>' : '<a href="?act=online&amp;mod=ip">' . _t('IP Activity') . '</a>';
 }
 
 echo '<div class="phdr"><b>' . _t('Who is online?') . '</b></div>' .
@@ -73,7 +73,7 @@ switch ($mod) {
 
         if ($total && $systemUser->rights) {
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
             }
 
             for ($i = $start; $i < $end; $i++) {
@@ -86,15 +86,15 @@ switch ($mod) {
                     echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
                 }
 
-                echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/index.php?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
-                    '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/index.php?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
+                echo '[' . $ip_list[$i][$ipLong] . ']&#160;&#160;<a href="' . $config->homeurl . '/admin/?act=search_ip&amp;ip=' . $ip . '">' . $ip . '</a>' .
+                    '&#160;&#160;<small>[<a href="' . $config->homeurl . '/admin/?act=ip_whois&amp;ip=' . $ip . '">?</a>]</small></div>';
             }
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>' .
-                    '<p><form action="index.php?act=online&amp;mod=ip" method="post">' .
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>' .
+                    '<p><form action="?act=online&amp;mod=ip" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
@@ -130,7 +130,7 @@ if ($start >= $total) {
 }
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>';
 }
 
 if ($total) {
@@ -167,8 +167,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>' .
-        '<p><form action="index.php?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';

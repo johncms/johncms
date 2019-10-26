@@ -100,7 +100,7 @@ if ($search && ! $error) {
                 }
             }
 
-            echo '<strong><a href="index.php?id=' . $res['id'] . '">' . $name . '</a></strong><br>' . $text
+            echo '<strong><a href="?id=' . $res['id'] . '">' . $name . '</a></strong><br>' . $text
                 . ' <div class="sub"><span class="gray">' . _t('Who added') . ':</span> ' . $tools->checkout($res['author'])
                 . ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span><br>'
                 . '<span class="gray">' . _t('Number of readings') . ':</span> ' . $res['count_views']

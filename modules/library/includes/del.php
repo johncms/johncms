@@ -125,7 +125,7 @@ switch ($type) {
         } else {
             $sql = 'DELETE FROM `library_texts` WHERE `id`=' . $id;
             if (! isset($_GET['yes'])) {
-                echo '<div class="rmenu"><p>' . _t('Delete confirmation') . '<br><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="index.php?id=' . $id . '">' . _t('Cancel') . '</a></p></div>';
+                echo '<div class="rmenu"><p>' . _t('Delete confirmation') . '<br><a href="?act=del&amp;type=' . $type . '&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="?id=' . $id . '">' . _t('Cancel') . '</a></p></div>';
             }
         }
         break;

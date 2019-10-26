@@ -32,7 +32,7 @@ if ($req->rowCount()) {
     $res = $req->fetch();
     $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
 
-    header('Location: index.php?type=topic&id=' . $id);
+    header('Location: ?type=topic&id=' . $id);
 } else {
-    header('Location: index.php');
+    header('Location: ./');
 }

@@ -26,7 +26,7 @@ if ($systemUser->rights < 7) {
     exit;
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
 // Получаем сохраненные настройки
 $settings = $config['news'];
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Форма ввода настроек
-echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
+echo '<form action="?act=news" method="post"><div class="menu"><p>' .
     '<h3>' . _t('Appearance') . '</h3>' .
     '<input type="radio" value="1" name="view" ' . ($settings['view'] == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title + Text') . '<br>' .
     '<input type="radio" value="2" name="view" ' . ($settings['view'] == 2 ? 'checked="checked"' : '') . '/>&#160;' . _t('Title') . '<br>' .
@@ -74,6 +74,6 @@ echo '<form action="index.php?act=news" method="post"><div class="menu"><p>' .
     '<p><h3>' . _t('Quantity of news') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="quantity" value="' . $settings['quantity'] . '" />&#160;(1 - 15)</p>' .
     '<p><h3>' . _t('How many days to show?') . '</h3>&#160;<input type="text" size="3" maxlength="2" name="days" value="' . $settings['days'] . '" />&#160;(1 - 30)</p>' .
     '<br><p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '<div class="phdr"><a href="index.php?act=news&amp;reset">' . _t('Reset Settings') . '</a>' .
+    '<div class="phdr"><a href="?act=news&amp;reset">' . _t('Reset Settings') . '</a>' .
     '</div></form>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

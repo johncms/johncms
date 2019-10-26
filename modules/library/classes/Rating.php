@@ -124,7 +124,7 @@ class Rating
 
         $return = PHP_EOL;
 
-        $return .= '<form action="index.php?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
+        $return .= '<form action="?id=' . $this->lib_id . '&amp;vote" method="post"><div class="gmenu" style="padding: 8px">' . PHP_EOL;
         $return .= '<a id="rating"></a>';
         for ($r = 0; $r < 6; $r++) {
             $return .= ' <input type="radio" ' . ($r == $userVote ? 'checked="checked" ' : '') . 'name="vote" value="' . $r . '" />' . $r;

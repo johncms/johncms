@@ -26,7 +26,7 @@ if ($systemUser->rights < 7) {
     exit;
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Permissions') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Permissions') . '</div>';
 
 if (isset($_POST['submit'])) {
     $config['mod_reg'] = isset($_POST['reg']) ? (int) ($_POST['reg']) : 0;
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 }
 
 $color = ['red', 'yelow', 'green', 'gray'];
-echo '<form method="post" action="index.php?act=access">';
+echo '<form method="post" action="?act=access">';
 
 // Управление доступом к Форуму
 echo '<div class="menu"><p>' .
@@ -109,4 +109,4 @@ echo '<div class="gmenu"><h3><img src="../images/' . $color[$config['mod_reg']] 
 
 echo '<div class="phdr"><small>' . _t('Administrators always have access to all closed modules and comments') . '</small></div>' .
     '<p><input type="submit" name="submit" id="button" value="' . _t('Save') . '" /></p>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p></form>';
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p></form>';

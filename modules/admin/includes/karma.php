@@ -36,12 +36,12 @@ if ($systemUser->rights == 9 && $do == 'clean') {
         echo '<div class="gmenu">' . _t('Karma is cleared') . '</div>';
     } else {
         echo '<div class="rmenu"><p>' . _t('You really want to clear the Karma?') . '<br>' .
-            '<a href="index.php?act=karma&amp;do=clean&amp;yes">' . _t('Clear') . '</a> | ' .
-            '<a href="index.php?act=karma">' . _t('Cancel') . '</a></p></div>';
+            '<a href="?act=karma&amp;do=clean&amp;yes">' . _t('Clear') . '</a> | ' .
+            '<a href="?act=karma">' . _t('Cancel') . '</a></p></div>';
     }
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Karma') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Karma') . '</div>';
 $settings = $config['karma'];
 
 if (isset($_POST['submit'])) {
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 }
 
 $settings['karma_time'] = $settings['time'] ? $settings['karma_time'] / 3600 : $settings['karma_time'] / 86400;
-echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
+echo '<form action="?act=karma" method="post"><div class="menu">' .
     '<p><h3>' . _t('Voices per day') . '</h3>' .
     '<input type="text" name="karma_points" value="' . $settings['karma_points'] . '"/></p>' .
     '<p><h3>' . _t('Restriction for vote') . '</h3>' .
@@ -81,5 +81,5 @@ echo '<form action="index.php?act=karma" method="post"><div class="menu">' .
     '<input type="checkbox" name="on"' . ($settings['on'] ? ' checked="checked"' : '') . '/> ' . _t('Switch module ON') . '<br>' .
     '<input type="checkbox" name="adm"' . ($settings['adm'] ? ' checked="checked"' : '') . '/> ' . _t('Forbid to vote for the administration') . '</p>' .
     '<p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '</form><div class="phdr">' . ($systemUser->rights == 9 ? '<a href="index.php?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    '</form><div class="phdr">' . ($systemUser->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

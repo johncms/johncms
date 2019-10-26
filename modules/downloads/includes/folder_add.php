@@ -22,7 +22,7 @@ $db = $container->get(PDO::class);
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require_once 'system/head.php';
+    require 'system/head.php';
 
     if (! $id) {
         $load_cat = $files_path;

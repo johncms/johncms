@@ -58,7 +58,7 @@ if (! $total) {
             . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                 ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                 : '')
-            . '<div class="righttable"><h4><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
+            . '<div class="righttable"><h4><a href="?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a></h4>'
             . '<div><small>' . $tools->checkout($row['announce'], 0, 2) . '</small></div></div>';
 
         // Описание к статье

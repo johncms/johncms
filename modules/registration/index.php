@@ -173,7 +173,7 @@ $captcha = new Batumibiz\Captcha\Captcha;
 $code = $captcha->generateCode();
 $_SESSION['code'] = $code;
 
-echo '<form action="index.php" method="post"><div class="gmenu">' .
+echo '<form method="post"><div class="gmenu">' .
     '<p><h3>' . _t('Choose Nickname') . '</h3>' .
     (isset($error['login']) ? '<span class="red"><small>' . implode('<br />',
             $error['login']) . '</small></span><br />' : '') .

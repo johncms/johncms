@@ -206,7 +206,7 @@ if ($set_karma['on']) {
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
 
-            echo '<p><a href="index.php">' . _t('Profile') . '</a></p>';
+            echo '<p><a href="./">' . _t('Profile') . '</a></p>';
             break;
 
         default:

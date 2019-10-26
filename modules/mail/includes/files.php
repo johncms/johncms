@@ -35,7 +35,7 @@ $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $syst
 
 if ($total) {
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $kmess) . '</div>';
     }
 
     $req = $db->query("SELECT `cms_mail`.*, `users`.`name`
@@ -49,7 +49,7 @@ if ($total) {
 
     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-        echo '<a href="../profile/?user=' . $row['user_id'] . '"><b>' . $row['name'] . '</b></a>:: <a href="index.php?act=load&amp;id=' . $row['id'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ') (' . $row['count'] . ')';
+        echo '<a href="../profile/?user=' . $row['user_id'] . '"><b>' . $row['name'] . '</b></a>:: <a href="?act=load&amp;id=' . $row['id'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ') (' . $row['count'] . ')';
         echo '</div>';
     }
 } else {
@@ -59,8 +59,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=files&amp;', $start, $total, $kmess) . '</div>';
-    echo '<p><form action="index.php" method="get">
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<p><form action="./" method="get">
 		<input type="hidden" name="act" value="files"/>
 		<input type="text" name="page" size="2"/>
 		<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

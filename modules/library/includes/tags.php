@@ -47,7 +47,7 @@ if (isset($_GET['tag'])) {
                 . (file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png')
                     ? '<div class="avatar"><img src="../upload/library/images/small/' . $row['id'] . '.png" alt="screen" /></div>'
                     : '')
-                . '<div class="righttable"><a href="index.php?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
+                . '<div class="righttable"><a href="?id=' . $row['id'] . '">' . $tools->checkout($row['name']) . '</a>'
                 . '<div>' . $tools->checkout($db->query('SELECT SUBSTRING(`text`, 1 , 200) FROM `library_texts` WHERE `id`=' . $row['id'])->fetchColumn(), 0, 2) . '</div></div>'
                 . '<div class="sub">' . _t('Who added') . ': ' . '<a href="' . App::getContainer()->get('config')['johncms']['homeurl'] . '/profile/?user=' . $row['uploader_id'] . '">' . $tools->checkout($row['uploader']) . '</a>' . ' (' . $tools->displayDate($row['time']) . ')</div>'
                 . '<div><span class="gray">' . _t('Number of readings') . ':</span> ' . $row['count_views'] . '</div>'

@@ -26,13 +26,13 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $textl = _t('User Search');
-require '../system/head.php';
+require 'system/head.php';
 
 // Принимаем данные, выводим форму поиска
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
+echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('User Search') . '</div>' .
     '<form action="search.php" method="post">' .
     '<div class="gmenu"><p>' .
     '<input type="text" name="search" value="' . $tools->checkout($search) . '" />' .
@@ -99,6 +99,6 @@ if ($search && ! $error) {
 }
 
 echo '<p>' . ($search && ! $error ? '<a href="search.php">' . _t('New search') . '</a><br />' : '') .
-    '<a href="index.php">' . _t('Back') . '</a></p>';
+    '<a href="./">' . _t('Back') . '</a></p>';
 
-require '../system/end.php';
+require 'system/end.php';

@@ -54,7 +54,7 @@ if ($systemUser->isValid()) {
                     ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
             }
 
-            echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="index.php">' . _t('Forum') . '</a></p></div>';
+            echo '<div class="menu"><p>' . _t('All topics marked as read') . '<br /><a href="./">' . _t('Forum') . '</a></p></div>';
             break;
 
         case 'period':
@@ -69,16 +69,16 @@ if ($systemUser->isValid()) {
             }
 
             $count = $req->fetchColumn();
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'), $vr) . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'), $vr) . '</div>';
 
             // Форма выбора периода времени
-            echo '<div class="topmenu"><form action="index.php?act=new&amp;do=period" method="post">' .
+            echo '<div class="topmenu"><form action="?act=new&amp;do=period" method="post">' .
                 '<input type="text" maxlength="3" name="vr" value="' . $vr . '" size="3"/>' .
                 '<input type="submit" name="submit" value="' . _t('Show period') . '"/>' .
                 '</form></div>';
 
             if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>';
             }
 
             if ($count) {
@@ -117,13 +117,13 @@ if ($systemUser->isValid()) {
                         echo $tools->image('rate.gif');
                     }
 
-                    echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
+                    echo '&#160;<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
                         '</a>&#160;[' . $colmes1 . ']';
                     if ($cpg > 1) {
-                        echo '<a href="index.php?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
+                        echo '<a href="?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&#160;&gt;&gt;</a>';
                     }
 
-                    echo '<br /><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
+                    echo '<br /><div class="sub"><a href="?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
 
                     echo $res['user_name'];
 
@@ -141,8 +141,8 @@ if ($systemUser->isValid()) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
 
             if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>' .
-                    '<p><form action="index.php?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>' .
+                    '<p><form action="?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
                     <input type="text" name="page" size="2"/>
                     <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
             }
@@ -151,10 +151,10 @@ if ($systemUser->isValid()) {
         default:
             // Вывод непрочитанных тем (для зарегистрированных)
             $total = $container->get('counters')->forumNew();
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>';
             }
 
             if ($total > 0) {
@@ -184,11 +184,11 @@ if ($systemUser->isValid()) {
                         ($res['closed'] ? $tools->image('tz.gif') : ''),
                     ];
                     echo implode('', array_filter($icons));
-                    echo '<a href="index.php?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
+                    echo '<a href="?type=topic&id=' . $res['id'] . ($cpg > 1 && $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] && $cpg > 1 ? '&amp;page=' . $cpg : '') . '">' . (empty($res['name']) ? '-----' : $res['name']) .
                         '</a>&#160;[' . $post_count . ']';
 
                     if ($cpg > 1) {
-                        echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
+                        echo '&#160;<a href="?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
                     }
 
                     $last_author = $systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
@@ -196,7 +196,7 @@ if ($systemUser->isValid()) {
 
                     echo '<div class="sub">' . $res['user_name'] . ($post_count > 1 ? '&#160;/&#160;' . $last_author : '') .
                         ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span><br />' .
-                        '<a href="index.php?id=' . $res['frm_id'] . '">' . $res['frm_name'] . '</a>&#160;/&#160;<a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['rzd_name'] . '</a>' .
+                        '<a href="?id=' . $res['frm_id'] . '">' . $res['frm_name'] . '</a>&#160;/&#160;<a href="?type=topics&id=' . $res['section_id'] . '">' . $res['rzd_name'] . '</a>' .
                         '</div></div>';
                 }
             } else {
@@ -206,8 +206,8 @@ if ($systemUser->isValid()) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=new&amp;', $start, $total, $kmess) . '</div>' .
-                    '<p><form action="index.php" method="get">' .
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>' .
+                    '<p><form method="get">' .
                     '<input type="hidden" name="act" value="new"/>' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -215,12 +215,12 @@ if ($systemUser->isValid()) {
             }
 
             if ($total) {
-                echo '<p><a href="index.php?act=new&amp;do=reset">' . _t('Mark as read') . '</a></p>';
+                echo '<p><a href="?act=new&amp;do=reset">' . _t('Mark as read') . '</a></p>';
             }
     }
 } else {
     // Вывод 10 последних тем (для незарегистрированных)
-    echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
+    echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Last 10') . '</div>';
     $req = $db->query('SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name 
     FROM `forum_topic` tpc
     JOIN forum_sections rzd ON rzd.id = tpc.section_id
@@ -240,13 +240,13 @@ if ($systemUser->isValid()) {
                 ($res['closed'] ? $tools->image('tz.gif') : ''),
             ];
             echo implode('', array_filter($icons));
-            echo '<a href="index.php?type=topic&id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a>&#160;[' . $colmes1 . ']';
+            echo '<a href="?type=topic&id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a>&#160;[' . $colmes1 . ']';
 
             if ($cpg > 1) {
-                echo '&#160;<a href="index.php?type=topic&id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';
+                echo '&#160;<a href="?type=topic&id=' . $res['id'] . '&amp;clip&amp;page=' . $cpg . '">&gt;&gt;</a>';
             }
 
-            echo '<br><div class="sub"><a href="index.php?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
+            echo '<br><div class="sub"><a href="?type=topics&id=' . $res['section_id'] . '">' . $res['frm_name'] . '&#160;/&#160;' . $res['rzd_name'] . '</a><br />';
             echo $res['user_name'];
 
             if (! empty($res['last_post_author_name'])) {
@@ -259,5 +259,5 @@ if ($systemUser->isValid()) {
     } else {
         echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
     }
-    echo '<div class="phdr"><a href="index.php">' . _t('Forum') . '</a></div>';
+    echo '<div class="phdr"><a href="./">' . _t('Forum') . '</a></div>';
 }

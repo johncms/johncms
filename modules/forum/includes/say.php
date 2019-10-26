@@ -50,7 +50,7 @@ function forum_link($m)
     }
     $p = parse_url($m[3]);
 
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config->homeurl . '/forum/index.php?id=') {
+    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config->homeurl . '/forum/?id=') {
         $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
         $req = $db->query("SELECT `name` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
 
@@ -84,7 +84,7 @@ $flood = $tools->antiflood();
 
 if ($flood) {
     require 'system/head.php';
-    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require 'system/end.php';
     exit;
 }
@@ -100,7 +100,7 @@ switch ($post_type) {
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $systemUser->rights < 7) {
             // Проверка, закрыта ли тема
             require 'system/head.php';
-            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
             require 'system/end.php';
             exit;
         }
@@ -118,7 +118,7 @@ switch ($post_type) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require 'system/head.php';
-                echo $tools->displayError(_t('Text is too short'), '<a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
                 require 'system/end.php';
                 exit;
             }
@@ -130,7 +130,7 @@ switch ($post_type) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
                     require 'system/head.php';
-                    echo $tools->displayError(_t('Message already exists'), '<a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require 'system/end.php';
                     exit;
                 }
@@ -233,12 +233,12 @@ switch ($post_type) {
 
             if (isset($_POST['addfiles'])) {
                 if ($update) {
-                    header('Location: index.php?type=topic&id=' . $res['id'] . '&act=addfile');
+                    header('Location: ?type=topic&id=' . $res['id'] . '&act=addfile');
                 } else {
-                    header('Location: index.php?type=topic&id=' . $fadd . '&act=addfile');
+                    header('Location: ?type=topic&id=' . $fadd . '&act=addfile');
                 }
             } else {
-                header('Location: index.php?type=topic&id=' . $id . '&page=' . $page);
+                header('Location: ?type=topic&id=' . $id . '&page=' . $page);
             }
             exit;
         }
@@ -252,7 +252,7 @@ switch ($post_type) {
                 echo '<div class="list1">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
-            echo '<form name="form" action="index.php?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
+            echo '<form name="form" action="?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
             echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
@@ -267,7 +267,7 @@ switch ($post_type) {
                 '</p></div></form>';
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-            '<p><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
+            '<p><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     case 'reply':
@@ -276,7 +276,7 @@ switch ($post_type) {
 
         if (empty($type1)) {
             require 'system/head.php';
-            echo $tools->displayError(_t('Message not found'), '<a href="index.php?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('Message not found'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require 'system/end.php';
             exit;
         }
@@ -286,14 +286,14 @@ switch ($post_type) {
 
         if (($th1['deleted'] == 1 || $th1['closed'] == 1) && $systemUser->rights < 7) {
             require 'system/head.php';
-            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="index.php?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require 'system/end.php';
             exit;
         }
 
         if ($type1['user_id'] == $systemUser->id) {
             require 'system/head.php';
-            echo $tools->displayError(_t('You can not reply to your own message'), '<a href="index.php?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You can not reply to your own message'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             require 'system/end.php';
             exit;
         }
@@ -310,7 +310,7 @@ switch ($post_type) {
             $citata = preg_replace('#\[c\](.*?)\[/c\]#si', '', $citata);
             $citata = mb_substr($citata, 0, 200);
             $tp = date('d.m.Y H:i', $type1['date']);
-            $msg = '[c][url=' . $config['homeurl'] . '/forum/index.php?act=show_post&id=' . $type1['id'] . ']#[/url] ' . $type1['user_name'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
+            $msg = '[c][url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']#[/url] ' . $type1['user_name'] . ' ([time]' . $tp . "[/time])\n" . $citata . '[/c]' . $msg;
         } elseif (isset($_POST['txt'])) {
             // Если был ответ, обрабатываем реплику
             switch ($txt) {
@@ -319,7 +319,7 @@ switch ($post_type) {
                     break;
 
                 case 3:
-                    $repl = $type1['user_name'] . ', ' . _t('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/index.php?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
+                    $repl = $type1['user_name'] . ', ' . _t('respond to Your message') . ' ([url=' . $config['homeurl'] . '/forum/?act=show_post&id=' . $type1['id'] . ']' . $vr . '[/url]): ';
                     break;
 
                 default:
@@ -336,7 +336,7 @@ switch ($post_type) {
         ) {
             if (empty($_POST['msg'])) {
                 require 'system/head.php';
-                echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
+                echo $tools->displayError(_t('You have not entered the message'), '<a href="?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 require 'system/end.php';
                 exit;
             }
@@ -344,7 +344,7 @@ switch ($post_type) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
                 require 'system/head.php';
-                echo $tools->displayError(_t('Text is too short'), '<a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
                 require 'system/end.php';
                 exit;
             }
@@ -357,7 +357,7 @@ switch ($post_type) {
 
                 if ($msg == $res['text']) {
                     require 'system/head.php';
-                    echo $tools->displayError(_t('Message already exists'), '<a href="index.php?type=topic&amp;id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
                     require 'system/end.php';
                     exit;
                 }
@@ -417,9 +417,9 @@ switch ($post_type) {
             }
 
             if (isset($_POST['addfiles'])) {
-                header("Location: index.php?type=topic&id=${fadd}&act=addfile");
+                header("Location: ?type=topic&id=${fadd}&act=addfile");
             } else {
-                header("Location: index.php?type=topic&id=${th}&page=${page}");
+                header("Location: ?type=topic&id=${th}&page=${page}");
             }
             exit;
         }
@@ -438,7 +438,7 @@ switch ($post_type) {
                 echo '<div class="list1">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
             }
 
-            echo '<form name="form" action="index.php?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
+            echo '<form name="form" action="?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
 
             if (isset($_GET['cyt'])) {
                 // Форма с цитатой
@@ -451,7 +451,7 @@ switch ($post_type) {
                 echo '<p><h3>' . _t('Appeal') . '</h3>' .
                     '<input type="radio" value="0" ' . (! $txt ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>,<br />' .
                     '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('I am glad to answer you') . ',<br />' .
-                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="index.php?act=show_post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
+                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="?act=show_post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
             }
 
             echo '<p><h3>' . _t('Message') . '</h3>';
@@ -467,11 +467,11 @@ switch ($post_type) {
                 '</p></div></form>';
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-            '<p><a href="index.php?type=topic&amp;id=' . $type1['topic_id'] . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
+            '<p><a href="?type=topic&amp;id=' . $type1['topic_id'] . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     default:
         require 'system/head.php';
-        echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="./">' . _t('Forum') . '</a>');
         require 'system/end.php';
 }

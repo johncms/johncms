@@ -50,7 +50,7 @@ if ($req_obj->rowCount()) {
     $context_top =
         '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | <a href="?do=dir&amp;id=' . $catalog['id'] . '">' . $tools->checkout($catalog['name']) . '</a></div>' .
         '<div class="menu">' .
-        '<p><b><a href="index.php?id=' . $id . '">' . $tools->checkout($res_obj['name']) . '</a></b></p>' .
+        '<p><b><a href="?id=' . $id . '">' . $tools->checkout($res_obj['name']) . '</a></b></p>' .
         '<small>' . $tools->smilies($tools->checkout($res_obj['announce'], 1, 1)) . '</small>' .
         '<div class="sub">' .
         ($obj->getAllStatTags() ? '<span class="gray">' . _t('Tags') . ':</span> [ ' . $obj->getAllStatTags(1) . ' ]<br>' : '') .

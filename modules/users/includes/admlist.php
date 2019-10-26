@@ -26,7 +26,7 @@ $db = $container->get(PDO::class);
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Выводим список администрации
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Community') . '</b></a> | ' . _t('Administration') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Administration') . '</div>';
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `rights` >= 1')->fetchColumn();
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `rights` >= 1 ORDER BY `rights` DESC LIMIT ${start}, ${kmess}");
 
@@ -38,12 +38,12 @@ for ($i = 0; $res = $req->fetch(); ++$i) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<p>' . $tools->displayPagination('index.php?act=admlist&amp;', $start, $total, $kmess) . '</p>' .
-        '<p><form action="index.php?act=admlist" method="post">' .
+    echo '<p>' . $tools->displayPagination('?act=admlist&amp;', $start, $total, $kmess) . '</p>' .
+        '<p><form action="?act=admlist" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
 
-echo'<p><a href="index.php?act=search">' . _t('User Search') . '</a><br />' .
-    '<a href="index.php">' . _t('Back') . '</a></p>';
+echo'<p><a href="?act=search">' . _t('User Search') . '</a><br />' .
+    '<a href="./">' . _t('Back') . '</a></p>';

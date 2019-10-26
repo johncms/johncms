@@ -51,7 +51,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
         $_SESSION['dc'] = $dc;
         $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
-        echo '<p>' . _t('Do you really want to delete?') . '<br><a href="index.php?act=massdel&amp;yes">' . _t('Delete') . '</a> | ' .
+        echo '<p>' . _t('Do you really want to delete?') . '<br><a href="?act=massdel&amp;yes">' . _t('Delete') . '</a> | ' .
             '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Cancel') . '</a></p>';
     }
 }

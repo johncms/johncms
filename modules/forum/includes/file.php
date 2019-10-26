@@ -43,10 +43,10 @@ if ($id) {
 
     if ($error) {
         require 'system/head.php';
-        echo $tools->displayError(_t('File does not exist'), '<a href="index.php">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('File does not exist'), '<a href="./">' . _t('Forum') . '</a>');
         require 'system/end.php';
         exit;
     }
 } else {
-    header('location: index.php');
+    header('location: ./');
 }

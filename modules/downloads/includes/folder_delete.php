@@ -30,7 +30,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
 
     if (! $req->rowCount() || $del_cat) {
-        require_once 'system/head.php';
+        require 'system/head.php';
         echo($del_cat ? _t('Before removing, delete subdirectories') : _t('The directory does not exist')) . ' <a href="?">' . _t('Downloads') . '</a>';
         require_once 'system/end.php';
         exit;
@@ -70,7 +70,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
         rmdir($res['dir']);
         header('location: ?id=' . $res['refid']);
     } else {
-        require_once 'system/head.php';
+        require 'system/head.php';
         echo '<div class="phdr"><b>' . _t('Delete Folder') . '</b></div>' .
             '<div class="rmenu"><p>' .
             _t('Do you really want to delete?') . '<br>' .

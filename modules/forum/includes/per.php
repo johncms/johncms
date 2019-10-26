@@ -64,7 +64,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             `section_id` = '${razd}'
             WHERE `id` = '${id}'
         ");
-        header("Location: index.php?type=topic&id=${id}");
+        header("Location: ?type=topic&id=${id}");
     } else {
         // Перенос темы
         $ms = $typ->fetch();
@@ -78,8 +78,8 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         }
 
         $fr1 = $db->query("SELECT * FROM `forum_sections` WHERE id='" . $other . "'")->fetch();
-        echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Move Topic') . '</div>' .
-            '<form action="index.php?act=per&amp;id=' . $id . '" method="post">' .
+        echo '<div class="phdr"><a href="?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Move Topic') . '</div>' .
+            '<form action="?act=per&amp;id=' . $id . '" method="post">' .
             '<div class="gmenu"><p>' .
             '<h3>' . _t('Category') . '</h3>' . $fr1['name'] . '</p>' .
             '<p><h3>' . _t('Section') . '</h3>' .
@@ -98,10 +98,10 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
         while ($frm1 = $frm->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-            echo '<a href="index.php?act=per&amp;id=' . $id . '&amp;other=' . $frm1['id'] . '">' . $frm1['name'] . '</a></div>';
+            echo '<a href="?act=per&amp;id=' . $id . '&amp;other=' . $frm1['id'] . '">' . $frm1['name'] . '</a></div>';
             ++$i;
         }
 
-        echo '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
+        echo '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
     }
 }

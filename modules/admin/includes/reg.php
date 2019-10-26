@@ -30,32 +30,32 @@ if ($systemUser->rights < 6) {
     exit;
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
 
 switch ($mod) {
     case 'approve':
         // Подтверждаем регистрацию выбранного пользователя
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `id` = ' . $id);
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
         $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `preg` = 0');
-        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'del':
         // Удаляем регистрацию выбранного пользователя
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
 
@@ -66,13 +66,13 @@ switch ($mod) {
             $db->exec("DELETE FROM `cms_users_iphistory` WHERE `user_id` = '${id}' LIMIT 1");
         }
 
-        echo '<div class="menu"><p>' . _t('User deleted') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . _t('User deleted') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'massdel':
         $db->exec("DELETE FROM `users` WHERE `preg` = '0'");
         $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
-        echo '<div class="menu"><p>' . _t('All unconfirmed registrations were removed') . '<br><a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="menu"><p>' . _t('All unconfirmed registrations were removed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'delip':
@@ -89,10 +89,10 @@ switch ($mod) {
             $db->exec("DELETE FROM `users` WHERE `preg` = '0' AND `ip` = '${ip}'");
             $db->query('OPTIMIZE TABLE `cms_users_iphistory` , `users`');
             echo '<div class="menu"><p>' . _t('All unconfirmed registrations with selected IP were deleted') . '<br>' .
-                '<a href="index.php?act=reg">' . _t('Continue') . '</a></p></div>';
+                '<a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         } else {
             echo $tools->displayError(_t('Wrong data'));
-            require '../system/end.php';
+            require 'system/end.php';
             exit;
         }
         break;
@@ -102,7 +102,7 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'")->fetchColumn();
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $kmess) . '</div>';
         }
 
         if ($total) {
@@ -111,9 +111,9 @@ switch ($mod) {
 
             while ($res = $req->fetch()) {
                 $link = [
-                    '<a href="index.php?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . _t('Approve') . '</a>',
-                    '<a href="index.php?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
-                    '<a href="index.php?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
+                    '<a href="?act=reg&amp;mod=approve&amp;id=' . $res['id'] . '">' . _t('Approve') . '</a>',
+                    '<a href="?act=reg&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
+                    '<a href="?act=reg&amp;mod=delip&amp;ip=' . $res['ip'] . '">' . _t('Remove IP') . '</a>',
                 ];
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo $tools->displayUser($res, [
@@ -130,8 +130,8 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=reg&amp;', $start, $total, $kmess) . '</div>' .
-                '<p><form action="index.php?act=reg" method="post">' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $kmess) . '</div>' .
+                '<p><form action="?act=reg" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                 '</form></p>';
@@ -140,8 +140,8 @@ switch ($mod) {
         echo '<p>';
 
         if ($total) {
-            echo '<a href="index.php?act=reg&amp;mod=massapprove">' . _t('Confirm all') . '</a><br><a href="index.php?act=reg&amp;mod=massdel">' . _t('Delete all') . '</a><br>';
+            echo '<a href="?act=reg&amp;mod=massapprove">' . _t('Confirm all') . '</a><br><a href="?act=reg&amp;mod=massdel">' . _t('Delete all') . '</a><br>';
         }
 
-        echo '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+        echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }

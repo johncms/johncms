@@ -34,7 +34,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
     if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '" . $id . "'")->fetchColumn()) {
         $db->exec("UPDATE `forum_topic` SET  `pinned` = '" . (isset($_GET['vip']) ? '1' : null) . "' WHERE `id` = '${id}'");
-        header('Location: index.php?type=topic&id=' . $id);
+        header('Location: ?type=topic&id=' . $id);
     } else {
         require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));

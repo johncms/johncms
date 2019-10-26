@@ -25,7 +25,7 @@ $container = App::getContainer();
 
 $textl = _t('Forum search');
 require 'system/head.php';
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -50,13 +50,13 @@ switch ($mod) {
         if ($systemUser->isValid()) {
             if (isset($_POST['submit'])) {
                 $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
-                header('Location: index.php?act=search');
+                header('Location: ?act=search');
             } else {
-                echo '<form action="index.php?act=search&amp;mod=reset" method="post">' .
+                echo '<form action="?act=search&amp;mod=reset" method="post">' .
                     '<div class="rmenu">' .
                     '<p>' . _t('Do you really want to clear the search history?') . '</p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
-                    '<p><a href="index.php?act=search">' . _t('Cancel') . '</a></p>' .
+                    '<p><a href="?act=search">' . _t('Cancel') . '</a></p>' .
                     '</div>' .
                     '</form>';
             }
@@ -71,7 +71,7 @@ switch ($mod) {
         //$search = preg_replace("/[^\w\x7F-\xFF\s]/", " ", $search);
         $search_t = isset($_REQUEST['t']);
         $to_history = false;
-        echo '<div class="gmenu"><form action="index.php?act=search" method="post"><p>' .
+        echo '<div class="gmenu"><form action="?act=search" method="post"><p>' .
             '<input type="text" value="' . ($search ? $tools->checkout($search) : '') . '" name="search" />' .
             '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
             '<input name="t" type="checkbox" value="1" ' . ($search_t ? 'checked="checked"' : '') . ' />&nbsp;' . _t('Search in the topic names') .
@@ -101,7 +101,7 @@ switch ($mod) {
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
             }
 
             if ($total) {
@@ -182,11 +182,11 @@ switch ($mod) {
                     echo $text;
 
                     if (mb_strlen($res['text'] ?? '') > 500) {
-                        echo '...<a href="index.php?act=show_post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
+                        echo '...<a href="?act=show_post&amp;id=' . $res['id'] . '">' . _t('Read more') . ' &gt;&gt;</a>';
                     }
 
-                    echo '<br /><a href="index.php?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
-                            : ' | <a href="index.php?act=show_post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
+                    echo '<br /><a href="?type=topic&id=' . ($search_t ? $res['id'] : $res_t['id']) . '">' . _t('Go to Topic') . '</a>' . ($search_t ? ''
+                            : ' | <a href="?act=show_post&amp;id=' . $res['id'] . '">' . _t('Go to Message') . '</a>');
                     echo '</div>';
                     ++$i;
                 }
@@ -227,12 +227,12 @@ switch ($mod) {
                 sort($history);
 
                 foreach ($history as $val) {
-                    $history_list[] = '<a href="index.php?act=search&amp;search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
+                    $history_list[] = '<a href="?act=search&amp;search=' . urlencode($val) . '">' . htmlspecialchars($val) . '</a>';
                 }
 
                 // Показываем историю запросов
                 echo '<div class="topmenu">' .
-                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="index.php?act=search&amp;mod=reset">[x]</a></span><br />' .
+                    '<b>' . _t('Search History') . '</b> <span class="red"><a href="?act=search&amp;mod=reset">[x]</a></span><br />' .
                     implode(' | ', $history_list) .
                     '</div>';
             } elseif ($to_history) {
@@ -247,14 +247,14 @@ switch ($mod) {
 
         // Постраничная навигация
         if (isset($total) && $total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
-                '<p><form action="index.php?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+                '<p><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                 '</form></p>';
         }
 
-        echo '<p>' . ($search ? '<a href="index.php?act=search">' . _t('New Search') . '</a><br />' : '') . '<a href="index.php">' . _t('Forum') . '</a></p>';
+        echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br />' : '') . '<a href="./">' . _t('Forum') . '</a></p>';
 }
 
 require 'system/end.php';

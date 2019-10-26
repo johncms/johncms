@@ -13,7 +13,7 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);

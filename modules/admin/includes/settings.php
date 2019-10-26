@@ -26,7 +26,7 @@ if ($systemUser->rights < 9) {
     exit;
 }
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
 if (isset($_POST['submit'])) {
     // Сохраняем настройки системы
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 }
 
 // Форма ввода параметров системы
-echo '<form action="index.php?act=settings" method="post"><div class="menu">';
+echo '<form action="?act=settings" method="post"><div class="menu">';
 
 // Общие настройки
 echo '<p>' .
@@ -98,4 +98,4 @@ closedir($dir);
 echo '</select>' .
     '</p><br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
     '<div class="phdr">&#160;</div>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

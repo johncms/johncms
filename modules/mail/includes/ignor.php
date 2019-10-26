@@ -52,7 +52,7 @@ if (isset($_GET['del'])) {
                 echo '<div class="rmenu">' . _t('User is unblocked') . '</div>';
             }
         } else {
-            echo '<div class="gmenu"><form action="index.php?act=ignor&amp;id=' . $id . '&amp;del" method="post"><div>
+            echo '<div class="gmenu"><form action="?act=ignor&amp;id=' . $id . '&amp;del" method="post"><div>
 			' . _t('You really want to unblock contact?') . '<br />
 			<input type="submit" name="submit" value="' . _t('Unblock') . '"/>
 			</div></form></div>';
@@ -94,24 +94,24 @@ if (isset($_GET['del'])) {
                 echo '<div class="rmenu">' . _t('User is blocked') . '</div>';
             }
         } else {
-            echo '<div class="rmenu"><form action="index.php?act=ignor&amp;id=' . $id . '&amp;add" method="post">
+            echo '<div class="rmenu"><form action="?act=ignor&amp;id=' . $id . '&amp;add" method="post">
 			<p>' . _t('You really want to block contact?') . '</p>
 			<p><input type="submit" name="submit" value="' . _t('Block') . '"/></p>
 			</form></div>';
-            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
+            echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './') . '">' . _t('Back') . '</a></div>';
         }
     } else {
         echo $tools->displayError(_t('Contact isn\'t chosen'));
     }
 } else {
-    echo '<div class="topmenu"><a href="index.php">' . _t('My Contacts') . '</a> | <b>' . _t('Blocklist') . '</b></div>';
+    echo '<div class="topmenu"><a href="./">' . _t('My Contacts') . '</a> | <b>' . _t('Blocklist') . '</b></div>';
 
     //Отображаем список заблокированных контактов
     $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id` = '" . $systemUser->id . "' AND `ban`='1'")->fetchColumn();
 
     if ($total) {
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=ignor&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT `users`.* FROM `cms_contact`
@@ -124,7 +124,7 @@ if (isset($_GET['del'])) {
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
             echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
-            $subtext = '<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . _t('Unblock') . '</a>';
+            $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . _t('Unblock') . '</a>';
             $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $systemUser->id . "') OR (`user_id`='" . $systemUser->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $systemUser->id . "' AND `sys`!='1' AND `spam`!='1';")->fetchColumn();
             $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='" . $systemUser->id . "' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='" . $systemUser->id . "' AND `sys`!='1' AND `spam`!='1'")->fetchColumn();
             $arg = [
@@ -141,8 +141,8 @@ if (isset($_GET['del'])) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=ignor&amp;', $start, $total, $kmess) . '</div>';
-        echo '<p><form action="index.php" method="get">
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $kmess) . '</div>';
+        echo '<p><form method="get">
 			<input type="hidden" name="act" value="ignor"/>
 			<input type="text" name="page" size="2"/>
 			<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

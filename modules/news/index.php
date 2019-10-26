@@ -41,7 +41,7 @@ switch ($do) {
     case 'add':
         // Добавление новости
         if ($systemUser->rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Add') . '</div>';
             $old = 20;
 
             if (isset($_POST['submit'])) {
@@ -143,12 +143,12 @@ switch ($do) {
                     ]);
 
                     $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
-                    echo '<p>' . _t('News added') . '<br /><a href="index.php">' . _t('Back to news') . '</a></p>';
+                    echo '<p>' . _t('News added') . '<br /><a href="./">' . _t('Back to news') . '</a></p>';
                 } else {
-                    echo $tools->displayError($error, '<a href="index.php">' . _t('Back to news') . '</a>');
+                    echo $tools->displayError($error, '<a href="./">' . _t('Back to news') . '</a>');
                 }
             } else {
-                echo '<form action="index.php?do=add" method="post"><div class="menu">' .
+                echo '<form action="?do=add" method="post"><div class="menu">' .
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
@@ -170,21 +170,21 @@ switch ($do) {
                 echo '</p></div><div class="bmenu">' .
                     '<input type="submit" name="submit" value="' . _t('Save') . '"/>' .
                     '</div></form>' .
-                    '<p><a href="index.php">' . _t('Back to news') . '</a></p>';
+                    '<p><a href="./">' . _t('Back to news') . '</a></p>';
             }
         } else {
-            header('location: index.php');
+            header('location: ./');
         }
         break;
 
     case 'edit':
         // Редактирование новости
         if ($systemUser->rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (! $id) {
-                echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Back to news') . '</a>');
-                require '../system/end.php';
+                echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Back to news') . '</a>');
+                require 'system/end.php';
                 exit;
             }
 
@@ -214,30 +214,30 @@ switch ($do) {
                         $id,
                     ]);
                 } else {
-                    echo $tools->displayError($error, '<a href="index.php?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $tools->displayError($error, '<a href="?act=edit&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                 }
-                echo '<p>' . _t('Article changed') . '<br /><a href="index.php">' . _t('Continue') . '</a></p>';
+                echo '<p>' . _t('Article changed') . '<br /><a href="./">' . _t('Continue') . '</a></p>';
             } else {
                 $res = $db->query("SELECT * FROM `news` WHERE `id` = '${id}'")->fetch();
 
-                echo '<div class="menu"><form action="index.php?do=edit&amp;id=' . $id . '" method="post">' .
+                echo '<div class="menu"><form action="?do=edit&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
                     '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . _t('Back to news') . '</a></div>';
+                    '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';
             }
         } else {
-            header('location: index.php');
+            header('location: ./');
         }
         break;
 
     case 'clean':
         // Чистка новостей
         if ($systemUser->rights >= 7) {
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Clear') . '</div>';
 
             if (isset($_POST['submit'])) {
                 $cl = isset($_POST['cl']) ? (int) ($_POST['cl']) : '';
@@ -248,52 +248,52 @@ switch ($do) {
                         $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 604800));
                         $db->query('OPTIMIZE TABLE `news`');
 
-                        echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
+                        echo '<p>' . _t('Delete all news older than 1 week') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
                         break;
 
                     case '2':
                         // Проводим полную очистку
                         $db->query('TRUNCATE TABLE `news`');
 
-                        echo '<p>' . _t('Delete all news') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
+                        echo '<p>' . _t('Delete all news') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
                         break;
                     default:
                         // Чистим сообщения, старше 1 месяца
                         $db->query('DELETE FROM `news` WHERE `time` <= ' . (time() - 2592000));
                         $db->query('OPTIMIZE TABLE `news`;');
 
-                        echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="index.php">' . _t('Back to news') . '</a></p>';
+                        echo '<p>' . _t('Delete all news older than 1 month') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
                 }
             } else {
-                echo '<div class="menu"><form id="clean" method="post" action="index.php?do=clean">' .
+                echo '<div class="menu"><form id="clean" method="post" action="?do=clean">' .
                     '<p><h3>' . _t('Clearing parameters') . '</h3>' .
                     '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 month') . '<br />' .
                     '<input type="radio" name="cl" value="1" />' . _t('Older than 1 week') . '<br />' .
                     '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . _t('Cancel') . '</a></div>';
+                    '<div class="phdr"><a href="./">' . _t('Cancel') . '</a></div>';
             }
         } else {
-            header('location: index.php');
+            header('location: ./');
         }
         break;
 
     case 'del':
         // Удаление новости
         if ($systemUser->rights >= 6) {
-            echo '<div class="phdr"><a href="index.php"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Delete') . '</div>';
 
             if (isset($_GET['yes'])) {
                 $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
 
-                echo '<p>' . _t('Article deleted') . '<br><a href="index.php">' . _t('Back to news') . '</a></p>';
+                echo '<p>' . _t('Article deleted') . '<br><a href="./">' . _t('Back to news') . '</a></p>';
             } else {
                 echo '<p>' . _t('Do you really want to delete?') . '<br>' .
-                    '<a href="index.php?do=del&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="index.php">' . _t('Cancel') . '</a></p>';
+                    '<a href="?do=del&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | <a href="./">' . _t('Cancel') . '</a></p>';
             }
         } else {
-            header('location: index.php');
+            header('location: ./');
         }
         break;
 
@@ -302,7 +302,7 @@ switch ($do) {
         echo '<div class="phdr"><b>' . _t('News') . '</b></div>';
 
         if ($systemUser->rights >= 6) {
-            echo '<div class="topmenu"><a href="index.php?do=add">' . _t('Add') . '</a> | <a href="index.php?do=clean">' . _t('Clear') . '</a></div>';
+            echo '<div class="topmenu"><a href="?do=add">' . _t('Add') . '</a> | <a href="?do=clean">' . _t('Clear') . '</a></div>';
         }
 
         $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
@@ -329,8 +329,8 @@ switch ($do) {
             }
 
             if ($systemUser->rights >= 6) {
-                echo '<a href="index.php?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
-                    '<a href="index.php?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
+                echo '<a href="?do=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
+                    '<a href="?do=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>';
             }
 
             echo '</div></div>';
@@ -339,8 +339,8 @@ switch ($do) {
         echo '<div class="phdr">' . _t('Total') . ':&#160;' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?', $start, $total, $kmess) . '</div>' .
-                '<p><form action="index.php" method="post">' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>' .
+                '<p><form method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }

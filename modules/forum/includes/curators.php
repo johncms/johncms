@@ -40,7 +40,7 @@ if ($systemUser->rights >= 7) {
         FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
         WHERE `forum_messages`.`topic_id`='${id}' AND `users`.`rights` < 6 AND `users`.`rights` != 3 GROUP BY `forum_messages`.`user_id` ORDER BY `forum_messages`.`user_name`");
     $total = $req->rowCount();
-    echo '<div class="phdr"><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
+    echo '<div class="phdr"><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Curators') . '</div>' .
         '<div class="bmenu">' . $topic['name'] . '</div>';
     $curators = [];
     $users = ! empty($topic['curators']) ? unserialize($topic['curators']) : [];
@@ -53,7 +53,7 @@ if ($systemUser->rights >= 7) {
     }
 
     if ($total > 0) {
-        echo '<form action="index.php?act=curators&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
+        echo '<form action="?act=curators&amp;id=' . $id . '&amp;start=' . $start . '" method="post">';
         $i = 0;
 
         while ($res = $req->fetch()) {
@@ -77,5 +77,5 @@ if ($systemUser->rights >= 7) {
         echo $tools->displayError(_t('The list is empty'));
     }
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-        '<p><a href="index.php?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
+        '<p><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
 }

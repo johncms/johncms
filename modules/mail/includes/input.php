@@ -75,7 +75,7 @@ if ($total) {
             $text = $tools->checkout($text, 1, 1);
             $text = $tools->smilies($text, $row['rights'] ? 1 : 0);
             $text = $bbcode->notags($text);
-            $text .= '...<a href="index.php?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
+            $text .= '...<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Continue') . ' &gt;&gt;</a>';
         } else {
             // Или, обрабатываем тэги и выводим весь текст
             $text = $tools->checkout($last_msg['text'], 1, 1);
@@ -85,7 +85,7 @@ if ($total) {
         $arg = [
             'header' => '<span class="gray">(' . $tools->displayDate($last_msg['time']) . ')</span>',
             'body'   => '<div style="font-size: small">' . $text . '</div>',
-            'sub'    => '<p><a href="index.php?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="index.php?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="index.php?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
+            'sub'    => '<p><a href="?act=write&amp;id=' . $row['id'] . '"><b>' . _t('Correspondence') . '</b></a> (' . $count_message . ') | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">Игнор</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a></p>',
             'iphide' => 1,
         ];
 
@@ -105,8 +105,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=input&amp;', $start, $total, $kmess) . '</div>' .
-        '<p><form action="index.php" method="get">
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=input&amp;', $start, $total, $kmess) . '</div>' .
+        '<p><form method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>
                 <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

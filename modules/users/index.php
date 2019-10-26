@@ -72,11 +72,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         '<input type="submit" value="' . _t('Search') . '" name="submit" /><br />' .
         '<small>' . _t('The search is performed by Nickname and are case-insensitive.') . '</small></p></form></div>' .
         '<div class="menu"><p>' .
-        $tools->image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=userlist">' . _t('Users') . '</a> (' . $container->get('counters')->users() . ')<br />' .
-        $tools->image('users.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=admlist">' . _t('Administration') . '</a> (' . $count_adm . ')<br>' .
-        ($brth ? $tools->image('award.png', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=birth">' . _t('Birthdays') . '</a> (' . $brth . ')<br>' : '') .
+        $tools->image('contacts.png', ['width' => 16, 'height' => 16]) . '<a href="?act=userlist">' . _t('Users') . '</a> (' . $container->get('counters')->users() . ')<br />' .
+        $tools->image('users.png', ['width' => 16, 'height' => 16]) . '<a href="?act=admlist">' . _t('Administration') . '</a> (' . $count_adm . ')<br>' .
+        ($brth ? $tools->image('award.png', ['width' => 16, 'height' => 16]) . '<a href="?act=birth">' . _t('Birthdays') . '</a> (' . $brth . ')<br>' : '') .
         $tools->image('photo.gif', ['width' => 16, 'height' => 16]) . '<a href="../album/">' . _t('Photo Albums') . '</a> (' . $counters->album() . ')<br>' .
-        $tools->image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="index.php?act=top">' . _t('Top Activity') . '</a></p>' .
+        $tools->image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('Top Activity') . '</a></p>' .
         '</div>';
 }
 

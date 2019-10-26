@@ -46,7 +46,7 @@ switch ($mod) {
                 }
 
                 $res = $req->fetch();
-                echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
+                echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
                 echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
@@ -67,9 +67,9 @@ switch ($mod) {
 
                 echo '</p></div>';
                 echo '<div class="phdr">'
-                    . ($res['switch'] == 1 ? '<a href="index.php?act=counters&amp;mod=view&amp;go=off&amp;id=' . $id . '">' . _t('Disable') . '</a>'
-                        : '<a href="index.php?act=counters&amp;mod=view&amp;go=on&amp;id=' . $id . '">' . _t('Enable') . '</a>')
-                    . ' | <a href="index.php?act=counters&amp;mod=edit&amp;id=' . $id . '">' . _t('Edit') . '</a> | <a href="index.php?act=counters&amp;mod=del&amp;id=' . $id . '">' . _t('Delete') . '</a></div>';
+                    . ($res['switch'] == 1 ? '<a href="?act=counters&amp;mod=view&amp;go=off&amp;id=' . $id . '">' . _t('Disable') . '</a>'
+                        : '<a href="?act=counters&amp;mod=view&amp;go=on&amp;id=' . $id . '">' . _t('Enable') . '</a>')
+                    . ' | <a href="?act=counters&amp;mod=edit&amp;id=' . $id . '">' . _t('Edit') . '</a> | <a href="?act=counters&amp;mod=del&amp;id=' . $id . '">' . _t('Delete') . '</a></div>';
             } else {
                 echo $tools->displayError(_t('Wrong data'));
             }
@@ -96,7 +96,7 @@ switch ($mod) {
             }
         }
 
-        header('Location: index.php?act=counters');
+        header('Location: ?act=counters');
         break;
 
     case 'down':
@@ -118,14 +118,14 @@ switch ($mod) {
                 }
             }
         }
-        header('Location: index.php?act=counters');
+        header('Location: ?act=counters');
         break;
 
     case 'del':
         // Удаление счетчика
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require '../system/end.php';
+            echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+            require 'system/end.php';
             exit;
         }
 
@@ -134,18 +134,18 @@ switch ($mod) {
         if ($req->rowCount()) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
-                echo '<p>' . _t('Counter deleted') . '<br><a href="index.php?act=counters">' . _t('Continue') . '</a></p>';
-                require '../system/end.php';
+                echo '<p>' . _t('Counter deleted') . '<br><a href="?act=counters">' . _t('Continue') . '</a></p>';
+                require 'system/end.php';
                 exit;
             }
-            echo '<form action="index.php?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
-            echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Delete') . '</div>';
+            echo '<form action="?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
+            echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Delete') . '</div>';
             $res = $req->fetch();
             echo '<div class="rmenu"><p><h3>' . $res['name'] . '</h3>' . _t('Do you really want to delete?') . '</p><p><input type="submit" value="' . _t('Delete') . '" name="submit" /></p></div>';
-            echo '<div class="phdr"><a href="index.php?act=counters">' . _t('Cancel') . '</a></div></form>';
+            echo '<div class="phdr"><a href="?act=counters">' . _t('Cancel') . '</a></div></form>';
         } else {
-            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-            require '../system/end.php';
+            echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+            require 'system/end.php';
             exit;
         }
         break;
@@ -160,17 +160,17 @@ switch ($mod) {
             $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
             if (empty($name) || empty($link1)) {
-                echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-                require '../system/end.php';
+                echo $tools->displayError(_t('The required fields are not filled'), '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+                require 'system/end.php';
                 exit;
             }
 
-            echo '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Preview') . '</div>' .
+            echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Preview') . '</div>' .
                 '<div class="menu"><p><h3>' . _t('Title') . '</h3><b>' . htmlspecialchars($name) . '</b></p>' .
                 '<p><h3>' . _t('Option 1') . '</h3>' . $link1 . '</p>' .
                 '<p><h3>' . _t('Option 2') . '</h3>' . $link2 . '</p></div>' .
                 '<div class="rmenu">' . _t('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.') . '</div>' .
-                '<form action="index.php?act=counters&amp;mod=add" method="post">' .
+                '<form action="?act=counters&amp;mod=add" method="post">' .
                 '<input type="hidden" value="' . $name . '" name="name" />' .
                 '<input type="hidden" value="' . htmlspecialchars($link1) . '" name="link1" />' .
                 '<input type="hidden" value="' . htmlspecialchars($link2) . '" name="link2" />' .
@@ -200,14 +200,14 @@ switch ($mod) {
                     $mode = $res['mode'];
                     $switch = 1;
                 } else {
-                    echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=counters">' . _t('Back') . '</a>');
-                    require '../system/end.php';
+                    echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
+                    require 'system/end.php';
                     exit;
                 }
             }
 
-            echo '<form action="index.php?act=counters&amp;mod=edit" method="post">' .
-                '<div class="phdr"><a href="index.php?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Add') . '</div>' .
+            echo '<form action="?act=counters&amp;mod=edit" method="post">' .
+                '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Add') . '</div>' .
                 '<div class="menu"><p><h3>' . _t('Title') . '</h3><input type="text" name="name" value="' . $name . '" /></p>' .
                 '<p><h3>' . _t('Option 1') . '</h3><textarea rows="3" name="link1">' . $link1 . '</textarea><br><small>' . _t('Code for main page') . '</small></p>' .
                 '<p><h3>' . _t('Option 2') . '</h3><textarea rows="3" name="link2">' . $link2 . '</textarea><br><small>' . _t('Code for other pages') . '</small></p>' .
@@ -234,8 +234,8 @@ switch ($mod) {
         $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
         if (empty($name) || empty($link1)) {
-            echo $tools->displayError(_t('The required fields are not filled'), '<a href="index.php?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-            require_once '../system/end.php';
+            echo $tools->displayError(_t('The required fields are not filled'), '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+            require_once 'system/end.php';
             exit;
         }
 
@@ -245,7 +245,7 @@ switch ($mod) {
 
             if (! $req->rowCount()) {
                 echo $tools->displayError(_t('Wrong data'));
-                require_once '../system/end.php';
+                require_once 'system/end.php';
                 exit;
             }
 
@@ -296,7 +296,7 @@ switch ($mod) {
 
     default:
         // Вывод списка счетчиков
-        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Counters') . '</div>';
+        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Counters') . '</div>';
         $req = $db->query('SELECT * FROM `cms_counters` ORDER BY `sort` ASC');
 
         if ($req->rowCount()) {
@@ -305,16 +305,16 @@ switch ($mod) {
             while ($res = $req->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../images/' . ($res['switch'] == 1 ? 'green' : 'red') . '.gif" width="16" height="16" class="left"/>&#160;';
-                echo '<a href="index.php?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br>';
-                echo '<div class="sub"><a href="index.php?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ';
-                echo '<a href="index.php?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ';
-                echo '<a href="index.php?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ';
-                echo '<a href="index.php?act=counters&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a></div></div>';
+                echo '<a href="?act=counters&amp;mod=view&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a><br>';
+                echo '<div class="sub"><a href="?act=counters&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ';
+                echo '<a href="?act=counters&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a></div></div>';
                 ++$i;
             }
         }
 
-        echo '<div class="phdr"><a href="index.php?act=counters&amp;mod=edit">' . _t('Add') . '</a></div>';
+        echo '<div class="phdr"><a href="?act=counters&amp;mod=edit">' . _t('Add') . '</a></div>';
 }
 
-echo '<p>' . ($mod ? '<a href="index.php?act=counters">' . _t('Counters') . '</a><br>' : '') . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+echo '<p>' . ($mod ? '<a href="?act=counters">' . _t('Counters') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';

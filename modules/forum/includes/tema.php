@@ -20,7 +20,7 @@ $delf = opendir(UPLOAD_PATH . 'forum/topics');
 $tm = [];
 
 while ($tt = readdir($delf)) {
-    if ($tt != '.' && $tt != '..' && $tt != 'index.php' && $tt != '.svn') {
+    if ($tt != '.' && $tt != '..' && $tt != 'index.php') {
         $tm[] = $tt;
     }
 }
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
             fclose($fp);
             @chmod("${fp}", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.txt', 0777);
-            echo '<a href="index.php?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="index.php">' . _t('Forum') . '</a><br>';
+            echo '<a href="?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="./">' . _t('Forum') . '</a><br>';
             break;
 
         case 2:
@@ -142,12 +142,12 @@ div { margin: 1px 0px 1px 0px; padding: 5px 5px 5px 5px;}
             fclose($fp);
             @chmod("${fp}", 0777);
             @chmod(UPLOAD_PATH . 'forum/topics/' . $num . '.htm', 0777);
-            echo '<a href="index.php?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="index.php">' . _t('Forum') . '</a><br>';
+            echo '<a href="?act=loadtem&amp;n=' . $num . '">' . _t('Download') . '</a><br>' . _t('Link active 5 minutes') . '<br><a href="./">' . _t('Forum') . '</a><br>';
             break;
     }
 } else {
     echo '<p>' . _t('Select format') . '<br>' .
-        '<form action="index.php?act=tema&amp;id=' . $id . '" method="post">' .
+        '<form action="?act=tema&amp;id=' . $id . '" method="post">' .
         '<select name="mod"><option value="1">.txt</option>' .
         '<option value="2">.htm</option></select>' .
         '<input type="submit" name="submit" value="' . _t('Download') . '"/>' .

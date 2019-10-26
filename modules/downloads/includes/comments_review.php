@@ -27,7 +27,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require_once 'system/head.php';
+require 'system/head.php';
 
 // Обзор комментариев
 if (! $config['mod_down_comm'] && $systemUser->rights < 7) {
@@ -62,7 +62,7 @@ if ($total) {
         $post = $tools->checkout($res['text'], 1, 1);
         $post = $tools->smilies($post, $res['rights'] >= 1 ? 1 : 0);
 
-        $subtext = '<a href="index.php?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="?act=comments&amp;id=' . $res['sub_id'] . '">' . _t('Comments') . '</a>';
+        $subtext = '<a href="?act=view&amp;id=' . $res['sub_id'] . '">' . htmlspecialchars($res['rus_name']) . '</a> | <a href="?act=comments&amp;id=' . $res['sub_id'] . '">' . _t('Comments') . '</a>';
         $attributes = unserialize($res['attributes']);
         $res['nickname'] = $attributes['author_name'];
         $res['ip'] = $attributes['author_ip'];

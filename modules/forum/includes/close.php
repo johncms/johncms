@@ -22,7 +22,7 @@ $db = $container->get(PDO::class);
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if (($systemUser->rights != 3 && $systemUser->rights < 6) || ! $id) {
-    header('Location: index.php');
+    header('Location: ./');
     exit;
 }
 
@@ -34,4 +34,4 @@ if ($db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '${id}'")->fetch
     }
 }
 
-header("Location: index.php?type=topic&id=${id}");
+header("Location: ?type=topic&id=${id}");

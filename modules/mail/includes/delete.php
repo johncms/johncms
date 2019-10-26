@@ -48,7 +48,7 @@ if ($id) {
         if ($res['sys']) {
             $db->exec("DELETE FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `id` = '${id}' AND `sys`='1' LIMIT 1");
             echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
-            echo '<div class="bmenu"><a href="index.php?act=systems">' . _t('Back') . '</a></div>';
+            echo '<div class="bmenu"><a href="?act=systems">' . _t('Back') . '</a></div>';
         } else {
             //Удаляем непрочитанное сообщение
             if ($res['read'] == 0 && $res['user_id'] == $systemUser->id) {
@@ -73,10 +73,10 @@ if ($id) {
             }
 
             echo '<div class="gmenu">' . _t('Message deleted') . '</div>';
-            echo '<div class="bmenu"><a href="index.php?act=write&amp;id=' . ($res['user_id'] == $systemUser->id ? $res['from_id'] : $res['user_id']) . '">' . _t('Back') . '</a></div>';
+            echo '<div class="bmenu"><a href="?act=write&amp;id=' . ($res['user_id'] == $systemUser->id ? $res['from_id'] : $res['user_id']) . '">' . _t('Back') . '</a></div>';
         }
     } else {
-        echo '<div class="gmenu"><form action="index.php?act=delete&amp;id=' . $id . '" method="post"><div>
+        echo '<div class="gmenu"><form action="?act=delete&amp;id=' . $id . '" method="post"><div>
 		' . _t('You really want to remove the message?') . '<br />
 		<input type="submit" name="submit" value="' . _t('Delete') . '"/>
 		</div></form></div>';

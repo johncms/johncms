@@ -23,7 +23,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Редактирование категорий
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require_once 'system/head.php';
+    require 'system/head.php';
 
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();

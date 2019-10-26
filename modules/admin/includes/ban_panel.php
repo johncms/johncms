@@ -31,7 +31,7 @@ switch ($mod) {
         if ($systemUser->rights < 9) {
             echo $tools->displayError(_t('Amnesty is available for supervisors only'));
         } else {
-            echo '<div class="phdr"><a href="index.php?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
+            echo '<div class="phdr"><a href="?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
 
             if (isset($_POST['submit'])) {
                 $term = isset($_POST['term']) && $_POST['term'] == 1 ? 1 : 0;
@@ -56,7 +56,7 @@ switch ($mod) {
                     echo '<div class="gmenu"><p>' . _t('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)') . '</p></div>';
                 }
             } else {
-                echo '<form action="index.php?act=ban_panel&amp;mod=amnesty" method="post"><div class="menu"><p>' .
+                echo '<form action="?act=ban_panel&amp;mod=amnesty" method="post"><div class="menu"><p>' .
                     '<input type="radio" name="term" value="0" checked="checked" />&#160;' . _t('Unban all') . '<br>' .
                     '<input type="radio" name="term" value="1" />&#160;' . _t('Clear Ban database') .
                     '</p><p><input type="submit" name="submit" value="' . _t('Amnesty') . '" />' .
@@ -64,19 +64,19 @@ switch ($mod) {
                     '<div class="phdr"><small>' . _t('&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history') . '</small></div>';
             }
 
-            echo '<p><a href="index.php?act=ban_panel">' . _t('Ban Panel') . '</a><br><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            echo '<p><a href="?act=ban_panel">' . _t('Ban Panel') . '</a><br><a href="./">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
     default:
         // БАН-панель, список нарушителей
-        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Ban Panel') . '</div>';
+        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Ban Panel') . '</div>';
         echo '<div class="topmenu"><span class="gray">' . _t('Sort') . ':</span> ';
 
         if (isset($_GET['count'])) {
-            echo '<a href="index.php?act=ban_panel">' . _t('Term') . '</a> | ' . _t('Violations') . '</div>';
+            echo '<a href="?act=ban_panel">' . _t('Term') . '</a> | ' . _t('Violations') . '</div>';
         } else {
-            echo _t('Term') . ' | <a href="index.php?act=ban_panel&amp;count">' . _t('Violations') . '</a></div>';
+            echo _t('Term') . ' | <a href="?act=ban_panel&amp;count">' . _t('Violations') . '</a></div>';
         }
 
         $sort = isset($_GET['count']) ? 'bancount' : 'bantime';
@@ -105,12 +105,12 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=ban_panel&amp;', $start, $total, $kmess) . '</div>';
-            echo '<p><form action="index.php?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total, $kmess) . '</div>';
+            echo '<p><form action="?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
         echo '<p>' . ($systemUser->rights == 9 && $total
-                ? '<a href="index.php?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
+                ? '<a href="?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
                 : '')
-            . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+            . '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }

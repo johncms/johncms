@@ -45,6 +45,4 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         echo '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Cancel') . '</a></p>';
         $_SESSION['prd'] = htmlspecialchars(getenv('HTTP_REFERER'));
     }
-} else {
-    header('location: ../index.php?err');
 }

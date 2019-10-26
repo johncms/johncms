@@ -47,7 +47,7 @@ if ($req->rowCount()) {
 
     $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($systemUser->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $kmess);
     $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
-    $link = 'index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
+    $link = '?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
     $error = false;
 
     if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
@@ -96,7 +96,7 @@ if ($req->rowCount()) {
         }
     }
 } else {
-    $error = _t('Message does not exists or has been deleted') . '<br /><a href="index.php">' . _t('Forum') . '</a>';
+    $error = _t('Message does not exists or has been deleted') . '<br><a href="./">' . _t('Forum') . '</a>';
 }
 
 $fid = isset($_GET['fid']) && $_GET['fid'] > 0 ? abs((int) ($_GET['fid'])) : false;
@@ -128,7 +128,7 @@ if (! $error) {
             echo '<div class="phdr"><a href="' . $link . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete file') . '</div>'
                 . '<div class="rmenu"><p>'
                 . _t('Do you really want to delete?') . '</p>'
-                . '<form method="post" action="index.php?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '"><input type="submit" name="delfile" value="' . _t('Delete') . '" /></form>'
+                . '<form method="post" action="?act=editpost&amp;do=deletefile&amp;fid=' . $fid . '&amp;id=' . $id . '"><input type="submit" name="delfile" value="' . _t('Delete') . '" /></form>'
                 . '<p><a href="' . $link . '">' . _t('Cancel') . '</a></p>'
                 . '</div>';
             break;
@@ -181,9 +181,9 @@ if (! $error) {
 
                 if ($posts < 2) {
                     // Пересылка на удаление всей темы
-                    header('Location: index.php?act=deltema&id=' . $res['topic_id']);
+                    header('Location: ?act=deltema&id=' . $res['topic_id']);
                 } else {
-                    header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
+                    header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 }
             } else {
                 // Скрытие поста
@@ -199,12 +199,12 @@ if (! $error) {
                     $res_l = $db->query("SELECT `section_id` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
                     $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '" . $res['topic_id'] . "'");
 
-                    header('Location: index.php?type=topics&id=' . $res_l['section_id']);
+                    header('Location: ?type=topics&id=' . $res_l['section_id']);
                 } else {
                     $db->exec("UPDATE `forum_messages` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
                     // Пересчитываем топик
                     $tools->recountForumTopic($res['topic_id']);
-                    header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
+                    header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
                 }
             }
 
@@ -223,10 +223,10 @@ if (! $error) {
             }
 
             echo _t('Do you really want to delete?') . '</p>' .
-                '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="index.php?act=editpost&amp;do=delete&amp;id=' . $id . '">' . _t('Delete') . '</a>';
+                '<p><a href="' . $link . '">' . _t('Cancel') . '</a> | <a href="?act=editpost&amp;do=delete&amp;id=' . $id . '">' . _t('Delete') . '</a>';
 
             if ($systemUser->rights == 9) {
-                echo ' | <a href="index.php?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . _t('Hide') . '</a>';
+                echo ' | <a href="?act=editpost&amp;do=delete&amp;hide&amp;id=' . $id . '">' . _t('Hide') . '</a>';
             }
 
             echo '</p></div>';
@@ -239,7 +239,7 @@ if (! $error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo $tools->displayError(_t('You have not entered the message'), '<a href="index.php?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $tools->displayError(_t('You have not entered the message'), '<a href="?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require 'system/end.php';
                     exit;
                 }
@@ -259,7 +259,7 @@ if (! $error) {
                     $id,
                 ]);
 
-                header('Location: index.php?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
+                header('Location: ?type=topic&id=' . $res['topic_id'] . '&page=' . $page);
             } else {
                 $msg_pre = $tools->checkout($msg, 1, 1);
                 $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);

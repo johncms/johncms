@@ -49,8 +49,8 @@ switch ($mod) {
 
         // Удаление категории, или раздела
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-            require '../system/end.php';
+            echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+            require 'system/end.php';
             exit;
         }
 
@@ -75,7 +75,7 @@ switch ($mod) {
 
                         if (! $category || $category == $id) {
                             echo $tools->displayError(_t('Wrong data'));
-                            require '../system/end.php';
+                            require 'system/end.php';
                             exit;
                         }
 
@@ -83,7 +83,7 @@ switch ($mod) {
 
                         if (! $check) {
                             echo $tools->displayError(_t('Wrong data'));
-                            require '../system/end.php';
+                            require 'system/end.php';
                             exit;
                         }
 
@@ -100,9 +100,9 @@ switch ($mod) {
                         // Перемещаем файлы в выбранную категорию
                         $db->exec("UPDATE `cms_forum_files` SET `cat` = '" . $category . "' WHERE `cat` = " . $res['id']);
                         $db->exec("DELETE FROM `forum_sections` WHERE `id` = '${id}'");
-                        echo '<div class="rmenu"><p><h3>' . _t('Category deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/index.php?id=' . $category . '">' . _t('selected category') . '</a></p></div>';
+                        echo '<div class="rmenu"><p><h3>' . _t('Category deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/?id=' . $category . '">' . _t('selected category') . '</a></p></div>';
                     } else {
-                        echo '<form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
+                        echo '<form action="?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
                             '<div class="rmenu"><p>' . _t('<h3>WARNING!</h3>There are subsections. Move them to another category.') . '</p>' .
                             '<p><h3>' . _t('Select category') . '</h3><select name="category" size="1">';
                         $req_c = $db->query("SELECT * FROM `forum_sections` WHERE (`section_type` != 1 OR section_type IS NULL) AND `id` != '${id}' ORDER BY `sort` ASC");
@@ -116,7 +116,7 @@ switch ($mod) {
 
                         // Для супервайзоров запрос на полное удаление
                         if ($systemUser->rights == 9) {
-                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
+                            echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
                         }
 
                         echo '</form>';
@@ -129,8 +129,8 @@ switch ($mod) {
 
                         if (! $subcat || $subcat == $id) {
                             echo $tools->displayError(_t('Wrong data'),
-                                '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                            require '../system/end.php';
+                                '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                            require 'system/end.php';
                             exit;
                         }
 
@@ -138,20 +138,20 @@ switch ($mod) {
 
                         if (! $check) {
                             echo $tools->displayError(_t('Wrong data'),
-                                '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                            require '../system/end.php';
+                                '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                            require 'system/end.php';
                             exit;
                         }
 
                         $db->exec("UPDATE `forum_topic` SET `section_id` = '${subcat}' WHERE `section_id` = '${id}'");
                         $db->exec("UPDATE `cms_forum_files` SET `subcat` = '${subcat}' WHERE `subcat` = '${id}'");
                         $db->exec("DELETE FROM `forum_sections` WHERE `id` = '${id}'");
-                        echo '<div class="rmenu"><p><h3>' . _t('Section deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/index.php?id=' . $subcat . '">' . _t('selected section') . '</a>.' .
+                        echo '<div class="rmenu"><p><h3>' . _t('Section deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/?id=' . $subcat . '">' . _t('selected section') . '</a>.' .
                             '</p></div>';
                     } elseif (isset($_POST['delete'])) {
                         if ($systemUser->rights != 9) {
                             echo $tools->displayError(_t('Access forbidden'));
-                            require_once '../system/end.php';
+                            require_once 'system/end.php';
                             exit;
                         }
 
@@ -181,9 +181,9 @@ switch ($mod) {
                         // Оптимизируем таблицы
                         $db->query('OPTIMIZE TABLE `cms_forum_files` , `cms_forum_rdm` , `cms_forum_vote` , `cms_forum_vote_users`');
                         echo '<div class="rmenu"><p>' . _t('Section with all contents are removed') . '<br>' .
-                            '<a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['parent'] . '">' . _t('Go to category') . '</a></p></div>';
+                            '<a href="?act=forum&amp;mod=cat&amp;id=' . $res['parent'] . '">' . _t('Go to category') . '</a></p></div>';
                     } else {
-                        echo '<form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST"><div class="rmenu">' .
+                        echo '<form action="?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST"><div class="rmenu">' .
                             '<p>' . _t('<h3>WARNING!</h3>There are topics in the section. You must move them to another section.') . '</p>' . '<p><h3>' . _t('Select section') . '</h3>';
                         $cat = isset($_GET['cat']) ? abs((int) ($_GET['cat'])) : 0;
                         $ref = $cat ? $cat : $res['parent'];
@@ -197,7 +197,7 @@ switch ($mod) {
                         $req_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` != '${ref}' AND parent = 0 ORDER BY `sort` ASC");
 
                         while ($res_c = $req_c->fetch()) {
-                            echo '<li><a href="index.php?act=forum&amp;mod=del&amp;id=' . $id . '&amp;cat=' . $res_c['id'] . '">' . $res_c['name'] . '</a></li>';
+                            echo '<li><a href="?act=forum&amp;mod=del&amp;id=' . $id . '&amp;cat=' . $res_c['id'] . '">' . $res_c['name'] . '</a></li>';
                         }
 
                         echo '</ul><small>' . _t('All the topics and files will be moved to selected section. Old section will be deleted.') . '</small></p><p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
@@ -218,14 +218,14 @@ switch ($mod) {
                     echo '<div class="rmenu"><p>' . ($res['type'] == 'r' ? _t('Section deleted') : _t('Category deleted')) . '</p></div>';
                 } else {
                     echo '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '</p>' .
-                        '<p><form action="index.php?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
+                        '<p><form action="?act=forum&amp;mod=del&amp;id=' . $id . '" method="POST">' .
                         '<input type="submit" name="submit" value="' . _t('Delete') . '" />' .
                         '</form></p></div>';
                 }
             }
-            echo '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat">' . _t('Back') . '</a></div>';
+            echo '<div class="phdr"><a href="?act=forum&amp;mod=cat">' . _t('Back') . '</a></div>';
         } else {
-            header('Location: index.php?act=forum&mod=cat');
+            header('Location: ?act=forum&mod=cat');
         }
 
         break;
@@ -241,8 +241,8 @@ switch ($mod) {
                 $cat_name = $res['text'];
             } else {
                 echo $tools->displayError(_t('Wrong data'),
-                    '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-                require '../system/end.php';
+                    '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+                require 'system/end.php';
                 exit;
             }
         }
@@ -297,7 +297,7 @@ switch ($mod) {
                     $sort,
                 ]);
 
-                header('Location: index.php?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
+                header('Location: ?act=forum&mod=cat' . ($id ? '&id=' . $id : ''));
             } else {
                 // Выводим сообщение об ошибках
                 echo $tools->displayError($error);
@@ -310,7 +310,7 @@ switch ($mod) {
                 echo '<div class="bmenu"><b>' . _t('Go to category') . ':</b> ' . $cat_name . '</div>';
             }
 
-            echo '<form action="index.php?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
+            echo '<form action="?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
                 '<div class="gmenu">' .
                 '<p><h3>' . _t('Title') . '</h3>' .
                 '<input type="text" name="name" />' .
@@ -332,15 +332,15 @@ switch ($mod) {
 
             echo '<p><input type="submit" value="' . _t('Add') . '" name="submit" />' .
                 '</p></div></form>' .
-                '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a></div>';
+                '<div class="phdr"><a href="?act=forum&amp;mod=cat' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a></div>';
         }
         break;
 
     case 'edit':
         // Редактирование выбранной категории, или раздела
         if (! $id) {
-            echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>');
-            require '../system/end.php';
+            echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
+            require 'system/end.php';
             exit;
         }
 
@@ -402,7 +402,7 @@ switch ($mod) {
                         // Меняем категорию для прикрепленных файлов
                         $db->exec("UPDATE `cms_forum_files` SET `cat` = '${category}' WHERE `cat` = '" . $res['parent'] . "'");
                     }
-                    header('Location: index.php?act=forum&mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
+                    header('Location: ?act=forum&mod=cat' . (! empty($res['parent']) ? '&id=' . $res['parent'] : ''));
                 } else {
                     // Выводим сообщение об ошибках
                     echo $tools->displayError($error);
@@ -410,7 +410,7 @@ switch ($mod) {
             } else {
                 // Форма ввода
                 echo '<div class="phdr"><b>' . _t('Edit Section') . '</b></div>' .
-                    '<form action="index.php?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
+                    '<form action="?act=forum&amp;mod=edit&amp;id=' . $id . '" method="post">' .
                     '<div class="gmenu">' .
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/>' .
@@ -444,22 +444,22 @@ switch ($mod) {
 
                 echo '<p><input type="submit" value="' . _t('Save') . '" name="submit" />' .
                     '</p></div></form>' .
-                    '<div class="phdr"><a href="index.php?act=forum&amp;mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '">' . _t('Back') . '</a></div>';
+                    '<div class="phdr"><a href="?act=forum&amp;mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '">' . _t('Back') . '</a></div>';
             }
         } else {
-            header('Location: index.php?act=forum&mod=cat');
+            header('Location: ?act=forum&mod=cat');
         }
         break;
 
     case 'cat':
         // Управление категориями и разделами
-        echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Forum structure') . '</div>';
+        echo '<div class="phdr"><a href="?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Forum structure') . '</div>';
 
         if ($id) {
             // Управление разделами
             $req = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${id}'");
             $res = $req->fetch();
-            echo '<div class="bmenu"><a href="index.php?act=forum&amp;mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '"><b>' . $res['name'] . '</b></a> | ' . _t('List of sections') . '</div>';
+            echo '<div class="bmenu"><a href="?act=forum&amp;mod=cat' . (! empty($res['parent']) ? '&amp;id=' . $res['parent'] : '') . '"><b>' . $res['name'] . '</b></a> | ' . _t('List of sections') . '</div>';
             $req = $db->query("SELECT * FROM `forum_sections` WHERE `parent` = '${id}' ORDER BY `sort` ASC");
 
             if ($req->rowCount()) {
@@ -467,16 +467,16 @@ switch ($mod) {
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    echo '[' . $res['sort'] . '] <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a>' .
-                        '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
+                    echo '[' . $res['sort'] . '] <a href="?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a>' .
+                        '&#160;<a href="../forum/?id=' . $res['id'] . '">&gt;&gt;</a>';
 
                     if (! empty($res['description'])) {
                         echo '<br><span class="gray"><small>' . $res['description'] . '</small></span><br>';
                     }
 
                     echo '<div class="sub">' .
-                        '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
-                        '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
+                        '<a href="?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
+                        '<a href="?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
                         '</div></div>';
                     ++$i;
                 }
@@ -491,51 +491,51 @@ switch ($mod) {
 
             while ($res = $req->fetch()) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                echo '[' . $res['sort'] . '] <a href="index.php?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a> ' .
+                echo '[' . $res['sort'] . '] <a href="?act=forum&amp;mod=cat&amp;id=' . $res['id'] . '"><b>' . $res['name'] . '</b></a> ' .
                     '(' . $db->query("SELECT COUNT(*) FROM `forum_sections` WHERE `parent` = '" . $res['id'] . "'")->fetchColumn() . ')' .
-                    '&#160;<a href="../forum/index.php?id=' . $res['id'] . '">&gt;&gt;</a>';
+                    '&#160;<a href="../forum/?id=' . $res['id'] . '">&gt;&gt;</a>';
 
                 if (! empty($res['description'])) {
                     echo '<br><span class="gray"><small>' . $res['description'] . '</small></span><br>';
                 }
 
                 echo '<div class="sub">' .
-                    '<a href="index.php?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
-                    '<a href="index.php?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
+                    '<a href="?act=forum&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a> | ' .
+                    '<a href="?act=forum&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>' .
                     '</div></div>';
                 ++$i;
             }
         }
 
         echo '<div class="gmenu">' .
-            '<form action="index.php?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
+            '<form action="?act=forum&amp;mod=add' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
             '<input type="submit" value="' . _t('Add') . '" />' .
             '</form></div>' .
-            '<div class="phdr">' . ($mod == 'cat' && $id ? '<a href="index.php?act=forum&amp;mod=cat">' . _t('List of categories') . '</a>' : '<a href="index.php?act=forum">' . _t('Forum Management') . '</a>') . '</div>';
+            '<div class="phdr">' . ($mod == 'cat' && $id ? '<a href="?act=forum&amp;mod=cat">' . _t('List of categories') . '</a>' : '<a href="?act=forum">' . _t('Forum Management') . '</a>') . '</div>';
         break;
 
     case 'htopics':
         // Управление скрытыми темами форума
-        echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden topics') . '</div>';
+        echo '<div class="phdr"><a href="?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden topics') . '</div>';
         $sort = '';
         $link = '';
 
         if (isset($_GET['usort'])) {
             $sort = " AND `forum_topic`.`user_id` = '" . abs((int) ($_GET['usort'])) . "'";
             $link = '&amp;usort=' . abs((int) ($_GET['usort']));
-            echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="index.php?act=forum&amp;mod=htopics">[x]</a></div>';
+            echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="?act=forum&amp;mod=htopics">[x]</a></div>';
         }
 
         if (isset($_GET['rsort'])) {
             $sort = " AND `forum_topic`.`section_id` = '" . abs((int) ($_GET['rsort'])) . "'";
             $link = '&amp;rsort=' . abs((int) ($_GET['rsort']));
-            echo '<div class="bmenu">' . _t('Filter by section') . ' <a href="index.php?act=forum&amp;mod=htopics">[x]</a></div>';
+            echo '<div class="bmenu">' . _t('Filter by section') . ' <a href="?act=forum&amp;mod=htopics">[x]</a></div>';
         }
 
         if (isset($_POST['deltopic'])) {
             if ($systemUser->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
-                require '../system/end.php';
+                require 'system/end.php';
                 exit;
             }
 
@@ -557,12 +557,12 @@ switch ($mod) {
             // Удаляем темы
             $db->exec("DELETE FROM `forum_topic` WHERE `deleted` = '1' ${sort}");
 
-            header('Location: index.php?act=forum&mod=htopics');
+            header('Location: ?act=forum&mod=htopics');
         } else {
             $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' ${sort}")->fetchColumn();
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=htopics&amp;',
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;',
                         $start, $total, $kmess) . '</div>';
             }
 
@@ -589,11 +589,11 @@ switch ($mod) {
                     $subcat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res['section_id'] . "'")->fetch();
                     $cat = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $subcat['parent'] . "'")->fetch();
                     $ttime = '<span class="gray">(' . $tools->displayDate($res['mod_last_post_date']) . ')</span>';
-                    $text = '<a href="../forum/index.php?type=topic&id=' . $res['fid'] . '"><b>' . $res['topic_name'] . '</b></a>';
-                    $text .= '<br><small><a href="../forum/index.php?id=' . $cat['id'] . '">' . $cat['name'] . '</a> / <a href="../forum/index.php?type=topics&id=' . $subcat['id'] . '">' . $subcat['name'] . '</a></small>';
+                    $text = '<a href="../forum/?type=topic&id=' . $res['fid'] . '"><b>' . $res['topic_name'] . '</b></a>';
+                    $text .= '<br><small><a href="../forum/?id=' . $cat['id'] . '">' . $cat['name'] . '</a> / <a href="../forum/?type=topics&id=' . $subcat['id'] . '">' . $subcat['name'] . '</a></small>';
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
-                    $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;rsort=' . $res['section_id'] . '">' . _t('by section') . '</a> | ';
-                    $subtext .= '<a href="index.php?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
+                    $subtext .= '<a href="?act=forum&amp;mod=htopics&amp;rsort=' . $res['section_id'] . '">' . _t('by section') . '</a> | ';
+                    $subtext .= '<a href="?act=forum&amp;mod=htopics&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $tools->displayUser($res, [
                         'header' => $ttime,
@@ -605,7 +605,7 @@ switch ($mod) {
                 }
 
                 if ($systemUser->rights == 9) {
-                    echo '<form action="index.php?act=forum&amp;mod=htopics' . $link . '" method="POST">' .
+                    echo '<form action="?act=forum&amp;mod=htopics' . $link . '" method="POST">' .
                         '<div class="rmenu">' .
                         '<input type="submit" name="deltopic" value="' . _t('Delete all') . '" />' .
                         '</div></form>';
@@ -617,9 +617,9 @@ switch ($mod) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=htopics&amp;',
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;',
                         $start, $total, $kmess) . '</div>' .
-                    '<p><form action="index.php?act=forum&amp;mod=htopics" method="post">' .
+                    '<p><form action="?act=forum&amp;mod=htopics" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                     '</form></p>';
@@ -629,24 +629,24 @@ switch ($mod) {
 
     case 'hposts':
         // Управление скрытыми постави форума
-        echo '<div class="phdr"><a href="index.php?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden posts') . '</div>';
+        echo '<div class="phdr"><a href="?act=forum"><b>' . _t('Forum Management') . '</b></a> | ' . _t('Hidden posts') . '</div>';
         $sort = '';
         $link = '';
 
         if (isset($_GET['tsort'])) {
             $sort = " AND `forum_messages`.`topic_id` = '" . abs((int) ($_GET['tsort'])) . "'";
             $link = '&amp;tsort=' . abs((int) ($_GET['tsort']));
-            echo '<div class="bmenu">' . _t('Filter by topic') . ' <a href="index.php?act=forum&amp;mod=hposts">[x]</a></div>';
+            echo '<div class="bmenu">' . _t('Filter by topic') . ' <a href="?act=forum&amp;mod=hposts">[x]</a></div>';
         } elseif (isset($_GET['usort'])) {
             $sort = " AND `forum_messages`.`user_id` = '" . abs((int) ($_GET['usort'])) . "'";
             $link = '&amp;usort=' . abs((int) ($_GET['usort']));
-            echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="index.php?act=forum&amp;mod=hposts">[x]</a></div>';
+            echo '<div class="bmenu">' . _t('Filter by author') . ' <a href="?act=forum&amp;mod=hposts">[x]</a></div>';
         }
 
         if (isset($_POST['delpost'])) {
             if ($systemUser->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
-                require '../system/end.php';
+                require 'system/end.php';
                 exit;
             }
 
@@ -667,12 +667,12 @@ switch ($mod) {
             // Удаляем посты
             $db->exec("DELETE FROM `forum_messages` WHERE `deleted` = '1' ${sort}");
 
-            header('Location: index.php?act=forum&mod=hposts');
+            header('Location: ?act=forum&mod=hposts');
         } else {
             $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' ${sort}")->fetchColumn();
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=hposts&amp;',
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;',
                         $start, $total, $kmess) . '</div>';
             }
 
@@ -699,10 +699,10 @@ switch ($mod) {
                     $text = $tools->checkout($text, 1, 0);
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
                     $theme = $db->query("SELECT `id`, `name` FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
-                    $text = '<b>' . $theme['name'] . '</b> <a href="../forum/index.php?type=topic&id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
+                    $text = '<b>' . $theme['name'] . '</b> <a href="../forum/?type=topic&id=' . $theme['id'] . '&amp;page=' . $page . '">&gt;&gt;</a><br>' . $text;
                     $subtext = '<span class="gray">' . _t('Filter') . ':</span> ';
-                    $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
-                    $subtext .= '<a href="index.php?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
+                    $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;tsort=' . $theme['id'] . '">' . _t('by topic') . '</a> | ';
+                    $subtext .= '<a href="?act=forum&amp;mod=hposts&amp;usort=' . $res['user_id'] . '">' . _t('by author') . '</a>';
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $tools->displayUser($res, [
                         'header' => $posttime,
@@ -714,7 +714,7 @@ switch ($mod) {
                 }
 
                 if ($systemUser->rights == 9) {
-                    echo '<form action="index.php?act=forum&amp;mod=hposts' . $link . '" method="POST"><div class="rmenu"><input type="submit" name="delpost" value="' . _t('Delete all') . '" /></div></form>';
+                    echo '<form action="?act=forum&amp;mod=hposts' . $link . '" method="POST"><div class="rmenu"><input type="submit" name="delpost" value="' . _t('Delete all') . '" /></div></form>';
                 }
             } else {
                 echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
@@ -723,9 +723,9 @@ switch ($mod) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=forum&amp;mod=hposts&amp;',
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;',
                         $start, $total, $kmess) . '</div>' .
-                    '<p><form action="index.php?act=forum&amp;mod=hposts" method="post">' .
+                    '<p><form action="?act=forum&amp;mod=hposts" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
                     '</form></p>';
@@ -744,7 +744,7 @@ switch ($mod) {
         $total_files = $db->query('SELECT COUNT(*) FROM `cms_forum_files`')->fetchColumn();
         $total_votes = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '1'")->fetchColumn();
 
-        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Forum Management') . '</div>' .
+        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Forum Management') . '</div>' .
             '<div class="gmenu"><p><h3>' . $tools->image('rate.gif') . _t('Statistic') . '</h3><ul>' .
             '<li>' . _t('Categories') . ':&#160;' . $total_cat . '</li>' .
             '<li>' . _t('Sections') . ':&#160;' . $total_sub . '</li>' .
@@ -754,11 +754,11 @@ switch ($mod) {
             '<li>' . _t('Votes') . ':&#160;' . $total_votes . '</li>' .
             '</ul></p></div>' .
             '<div class="menu"><p><h3><img src="../images/settings.png" width="16" height="16" class="left" />&#160;' . _t('Settings') . '</h3><ul>' .
-            '<li><a href="index.php?act=forum&amp;mod=cat"><b>' . _t('Forum structure') . '</b></a></li>' .
-            '<li><a href="index.php?act=forum&amp;mod=hposts">' . _t('Hidden posts') . '</a> (' . $total_msg_del . ')</li>' .
-            '<li><a href="index.php?act=forum&amp;mod=htopics">' . _t('Hidden topics') . '</a> (' . $total_thm_del . ')</li>' .
+            '<li><a href="?act=forum&amp;mod=cat"><b>' . _t('Forum structure') . '</b></a></li>' .
+            '<li><a href="?act=forum&amp;mod=hposts">' . _t('Hidden posts') . '</a> (' . $total_msg_del . ')</li>' .
+            '<li><a href="?act=forum&amp;mod=htopics">' . _t('Hidden topics') . '</a> (' . $total_thm_del . ')</li>' .
             '</ul></p></div>' .
-            '<div class="phdr"><a href="../forum/index.php">' . _t('Go to Forum') . '</a></div>';
+            '<div class="phdr"><a href="../forum/">' . _t('Go to Forum') . '</a></div>';
 }
 
-echo '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

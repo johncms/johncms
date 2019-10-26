@@ -40,9 +40,9 @@ while ($f = readdir($o)) {
 $tt = count($a);
 
 if (! in_array($n, $b)) {
-    require_once 'system/head.php';
+    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require_once 'system/end.php';
+    require 'system/end.php';
     exit;
 }
 

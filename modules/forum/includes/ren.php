@@ -46,7 +46,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
         if (! $nn) {
             require 'system/head.php';
-            echo $tools->displayError(_t('You have not entered topic name'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('You have not entered topic name'), '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require 'system/end.php';
             exit;
         }
@@ -56,22 +56,22 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
 
         if ($pt->rowCount()) {
             require 'system/head.php';
-            echo $tools->displayError(_t('Topic with same name already exists in this section'), '<a href="index.php?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('Topic with same name already exists in this section'), '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             require 'system/end.php';
             exit;
         }
 
         $db->exec('UPDATE `forum_topic` SET `name` =' . $db->quote($nn) . " WHERE id='" . $id . "'");
-        header("Location: index.php?type=topic&id=${id}");
+        header("Location: ?type=topic&id=${id}");
     } else {
         // Переименовываем тему
         require 'system/head.php';
-        echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
-            '<div class="menu"><form action="index.php?act=ren&amp;id=' . $id . '" method="post">' .
+        echo '<div class="phdr"><a href="?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Rename Topic') . '</div>' .
+            '<div class="menu"><form action="?act=ren&amp;id=' . $id . '" method="post">' .
             '<p><h3>' . _t('Topic name') . '</h3>' .
             '<input type="text" name="nn" value="' . $ms['name'] . '"/></p>' .
             '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
             '</form></div>' .
-            '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '">' . _t('Back') . '</a></div>';
+            '<div class="phdr"><a href="?type=topic&id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 }

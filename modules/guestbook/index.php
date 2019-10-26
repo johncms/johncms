@@ -70,12 +70,12 @@ switch ($act) {
         if ($systemUser->rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
-                header('Location: index.php');
+                header('Location: ./');
             } else {
-                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Delete message') . '</div>' .
+                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Delete message') . '</div>' .
                     '<div class="rmenu"><p>' . _t('Do you really want to delete?') . '?<br>' .
-                    '<a href="index.php?act=delpost&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | ' .
-                    '<a href="index.php">' . _t('Cancel') . '</a></p></div>';
+                    '<a href="?act=delpost&amp;id=' . $id . '&amp;yes">' . _t('Delete') . '</a> | ' .
+                    '<a href="./">' . _t('Cancel') . '</a></p></div>';
             }
         }
         break;
@@ -139,7 +139,7 @@ switch ($act) {
             $res = $req->fetch();
 
             if ($res['text'] == $msg) {
-                header('location: index.php');
+                header('location: ./');
                 exit;
             }
         }
@@ -171,9 +171,9 @@ switch ($act) {
                 $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $systemUser->id);
             }
 
-            header('location: index.php');
+            header('location: ./');
         } else {
-            echo $tools->displayError($error, '<a href="index.php">' . _t('Back') . '</a>');
+            echo $tools->displayError($error, '<a href="./">' . _t('Back') . '</a>');
         }
         break;
 
@@ -190,9 +190,9 @@ switch ($act) {
                     `otime` = '" . time() . "'
                     WHERE `id` = '${id}'
                 ");
-                header('location: index.php');
+                header('location: ./');
             } else {
-                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Reply') . '</div>';
+                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Reply') . '</div>';
                 $req = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'");
                 $res = $req->fetch();
                 $token = mt_rand(1000, 100000);
@@ -201,13 +201,13 @@ switch ($act) {
                 echo '<div class="menu">' .
                     '<div class="quote"><b>' . $res['name'] . '</b>' .
                     '<br />' . $tools->checkout($res['text']) . '</div>' .
-                    '<form name="form" action="index.php?act=otvet&amp;id=' . $id . '" method="post">' .
+                    '<form name="form" action="?act=otvet&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
                     '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
+                    '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
             }
         }
         break;
@@ -238,22 +238,22 @@ switch ($act) {
                     $id,
                 ]);
 
-                header('location: index.php');
+                header('location: ./');
             } else {
                 $token = mt_rand(1000, 100000);
                 $_SESSION['token'] = $token;
                 $res = $db->query("SELECT * FROM `guest` WHERE `id` = '${id}'")->fetch();
                 $text = htmlentities($res['text'], ENT_QUOTES, 'UTF-8');
-                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Edit') . '</div>' .
+                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Edit') . '</div>' .
                     '<div class="rmenu">' .
-                    '<form name="form" action="index.php?act=edit&amp;id=' . $id . '" method="post">' .
+                    '<form name="form" action="?act=edit&amp;id=' . $id . '" method="post">' .
                     '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
                 echo $bbcode->buttons('form', 'msg');
                 echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . _t('Back') . '</a></div>';
+                    '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
             }
         }
         break;
@@ -285,19 +285,19 @@ switch ($act) {
                 }
 
                 $db->query('OPTIMIZE TABLE `guest`');
-                echo '<p><a href="index.php">' . _t('Guestbook') . '</a></p>';
+                echo '<p><a href="./">' . _t('Guestbook') . '</a></p>';
             } else {
                 // Запрос параметров очистки
-                echo '<div class="phdr"><a href="index.php"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Clear') . '</div>' .
+                echo '<div class="phdr"><a href="./"><b>' . _t('Guestbook') . '</b></a> | ' . _t('Clear') . '</div>' .
                     '<div class="menu">' .
-                    '<form id="clean" method="post" action="index.php?act=clean">' .
+                    '<form id="clean" method="post" action="?act=clean">' .
                     '<p><h3>' . _t('Clearing parameters') . '</h3>' .
                     '<input type="radio" name="cl" value="0" checked="checked" />' . _t('Older than 1 week') . '<br />' .
                     '<input type="radio" name="cl" value="1" />' . _t('Older than 1 day') . '<br />' .
                     '<input type="radio" name="cl" value="2" />' . _t('Clear all') . '</p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Clear') . '" /></p>' .
                     '</form></div>' .
-                    '<div class="phdr"><a href="index.php">' . _t('Cancel') . '</a></div>';
+                    '<div class="phdr"><a href="./">' . _t('Cancel') . '</a></div>';
             }
         }
         break;
@@ -322,9 +322,9 @@ switch ($act) {
 
         if ($systemUser->rights > 0 || in_array($systemUser->id, $guestAccess)) {
             $menu = [
-                isset($_SESSION['ga']) ? '<a href="index.php?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
-                isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="index.php?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
-                $systemUser->rights >= 7 ? '<a href="index.php?act=clean">' . _t('Clear') . '</a>' : '',
+                isset($_SESSION['ga']) ? '<a href="?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
+                isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
+                $systemUser->rights >= 7 ? '<a href="?act=clean">' . _t('Clear') . '</a>' : '',
             ];
             echo '<div class="topmenu">' . implode(' | ', array_filter($menu)) . '</div>';
         }
@@ -333,7 +333,7 @@ switch ($act) {
         if (($systemUser->isValid() || $config->mod_guest == 2) && ! isset($systemUser->ban['1']) && ! isset($systemUser->ban['13'])) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
-            echo '<div class="gmenu"><form name="form" action="index.php?act=say" method="post">';
+            echo '<div class="gmenu"><form name="form" action="?act=say" method="post">';
 
             if (! $systemUser->isValid()) {
                 echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
@@ -362,7 +362,7 @@ switch ($act) {
         echo '<div class="phdr"><b>' . _t('Comments') . '</b></div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>';
         }
 
         if ($total) {
@@ -432,8 +432,8 @@ switch ($act) {
                 }
 
                 if ($systemUser->rights >= 6) {
-                    $subtext = '<a href="index.php?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
-                        ($systemUser->rights >= $res['rights'] ? ' | <a href="index.php?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="index.php?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
+                    $subtext = '<a href="?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
+                        ($systemUser->rights >= $res['rights'] ? ' | <a href="?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
                 } else {
                     $subtext = '';
                 }
@@ -454,8 +454,8 @@ switch ($act) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?', $start, $total, $kmess) . '</div>' .
-                '<p><form action="index.php" method="get"><input type="text" name="page" size="2"/>' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>' .
+                '<p><form method="get"><input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 

@@ -16,7 +16,7 @@ $sw = 0;
 $adm = 0;
 $smd = 0;
 $mod = 0;
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Administration') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Administration') . '</div>';
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '9' ORDER BY `name` ASC");
 
 if ($req->rowCount()) {
@@ -69,4 +69,4 @@ if ($req->rowCount()) {
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . ($sw + $adm + $smd + $mod) . '</div>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

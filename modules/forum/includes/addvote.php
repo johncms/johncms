@@ -27,7 +27,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
-    require_once 'system/head.php';
+    require 'system/head.php';
 
     if ($topic_vote != 0 || $topic == 0) {
         echo $tools->displayError(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>');
@@ -74,7 +74,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             echo _t('The required fields are not filled') . '<br /><a href="?act=addvote&amp;id=' . $id . '">' . _t('Repeat') . '</a>';
         }
     } else {
-        echo '<form action="index.php?act=addvote&amp;id=' . $id . '" method="post">' .
+        echo '<form action="?act=addvote&amp;id=' . $id . '" method="post">' .
             '<br />' . _t('Poll (max. 150)') . ':<br>' .
             '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'], ENT_QUOTES, 'UTF-8') . '"/><br>';
 
@@ -98,8 +98,6 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         echo ($_POST['count_vote'] < 20) ? '<br><input type="submit" name="plus" value="' . _t('Add Answer') . '"/>' : '';
         echo $_POST['count_vote'] > 2 ? '<input type="submit" name="minus" value="' . _t('Delete last') . '"/><br>' : '<br>';
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form>';
-        echo '<a href="index.php?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>';
+        echo '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>';
     }
-} else {
-    header('location: ../index.php?err');
 }

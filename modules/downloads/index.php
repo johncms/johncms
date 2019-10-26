@@ -59,7 +59,7 @@ if (! $config['mod_down'] && $systemUser->rights < 7) {
 }
 
 if ($error) {
-    require_once 'system/head.php';
+    require 'system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
     require_once 'system/end.php';
     exit;

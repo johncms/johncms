@@ -85,14 +85,14 @@ if ($id) {
             echo '<div class="gmenu"><p>' . _t('Messages are deleted') . '</p></div>';
         } else {
             echo '<div class="rmenu">
-			<form action="index.php?act=write&amp;mod=clear&amp;id=' . $id . '" method="post">
+			<form action="?act=write&amp;mod=clear&amp;id=' . $id . '" method="post">
 			<p>' . _t('Confirm the deletion of messages') . '</p>
 			<p><input type="submit" name="clear" value="' . _t('Delete') . '"/></p>
 			</form>
 			</div>';
         }
 
-        echo '<div class="phdr"><a href="index.php?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
+        echo '<div class="phdr"><a href="?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
         require_once 'system/end.php';
         exit;
@@ -421,7 +421,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
             $db->exec("UPDATE `cms_contact` SET `time` = '" . time() . "' WHERE `user_id` = '" . $id . "' AND `from_id` = '" . $systemUser->id . "'");
         }
 
-        header('Location: index.php?act=write' . ($id ? '&id=' . $id : ''));
+        header('Location: ?act=write' . ($id ? '&id=' . $id : ''));
         exit;
     }
     $out .= '<div class="rmenu">' . implode('<br />', $error) . '</div>';
@@ -430,7 +430,7 @@ if (isset($_POST['submit']) && empty($systemUser->ban['1']) && empty($systemUser
 if (! $tools->isIgnor($id) && empty($systemUser->ban['1']) && empty($systemUser->ban['3'])) {
     $out .= $_SESSION['error'] ?? '';
     $out .= '<div class="gmenu">' .
-        '<form name="form" action="index.php?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
+        '<form name="form" action="?act=write' . ($id ? '&amp;id=' . $id : '') . '" method="post"  enctype="multipart/form-data">' .
         ($id ? '' : '<p><input type="text" name="nick" maxlength="15" value="' . (! empty($_POST['nick']) ? htmlspecialchars(trim($_POST['nick'])) : '') . '" placeholder="' . _t('To Whom') . '?"/></p>') .
         '<p>';
     $out .= $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'text');
@@ -446,7 +446,7 @@ if ($id) {
 
     if ($total) {
         if ($total > $kmess) {
-            $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
         }
 
         $req = $db->query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
@@ -482,10 +482,10 @@ if ($id) {
             $post = $tools->smilies($post, $row['rights'] >= 1 ? 1 : 0);
 
             if ($row['file_name']) {
-                $post .= '<div class="func">' . _t('File') . ': <a href="index.php?act=load&amp;id=' . $row['mid'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ')(' . $row['count'] . ')</div>';
+                $post .= '<div class="func">' . _t('File') . ': <a href="?act=load&amp;id=' . $row['mid'] . '">' . $row['file_name'] . '</a> (' . formatsize($row['size']) . ')(' . $row['count'] . ')</div>';
             }
 
-            $subtext = '<a href="index.php?act=delete&amp;id=' . $row['mid'] . '">' . _t('Delete') . '</a>';
+            $subtext = '<a href="?act=delete&amp;id=' . $row['mid'] . '">' . _t('Delete') . '</a>';
             $arg = [
                 'header'  => '(' . $tools->displayDate($row['mtime']) . ')',
                 'body'    => $post,
@@ -509,8 +509,8 @@ if ($id) {
     $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        $out .= '<div class="topmenu">' . $tools->displayPagination('index.php?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
-        $out .= '<p><form action="index.php" method="get">
+        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        $out .= '<p><form method="get">
 			<input type="hidden" name="act" value="write"/>
 			<input type="hidden" name="id" value="' . $id . '"/>
 			<input type="text" name="page" size="2"/>
@@ -524,7 +524,7 @@ echo $out;
 echo '<p>';
 
 if ($total) {
-    echo '<a href="index.php?act=write&amp;mod=clear&amp;id=' . $id . '">' . _t('Clear messages') . '</a><br>';
+    echo '<a href="?act=write&amp;mod=clear&amp;id=' . $id . '">' . _t('Clear messages') . '</a><br>';
 }
 
 echo '<a href="../profile/?act=office">' . _t('Personal') . '</a></p>';

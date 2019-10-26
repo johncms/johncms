@@ -50,7 +50,7 @@ function forum_link($m)
     }
     $p = parse_url($m[3]);
 
-    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/index.php?id=') {
+    if ('http://' . $p['host'] . ($p['path'] ?? '') . '?id=' == $config['homeurl'] . '/forum/?id=') {
         $thid = abs((int) (preg_replace('/(.*?)id=/si', '', $m[3])));
         $req = $db->query("SELECT `text` FROM `forum_topic` WHERE `id`= '${thid}' AND (`deleted` != '1' OR deleted IS NULL)");
 
@@ -84,7 +84,7 @@ $flood = $tools->antiflood();
 
 if ($flood) {
     require 'system/head.php';
-    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     require 'system/end.php';
     exit;
 }
@@ -224,14 +224,14 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         ");
 
         if ($_POST['addfiles'] == 1) {
-            header("Location: index.php?id=${postid}&act=addfile");
+            header("Location: ?id=${postid}&act=addfile");
         } else {
-            header("Location: index.php?type=topic&id=${rid}");
+            header("Location: ?type=topic&id=${rid}");
         }
     } else {
         // Выводим сообщение об ошибке
         require 'system/head.php';
-        echo $tools->displayError($error, '<a href="index.php?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo $tools->displayError($error, '<a href="?act=nt&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         require 'system/end.php';
         exit;
     }
@@ -241,17 +241,17 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     $msg_pre = $tools->checkout($msg, 1, 1);
     $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-    echo '<div class="phdr"><a href="index.php?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
+    echo '<div class="phdr"><a href="?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
     if ($msg && $th && ! isset($_POST['submit'])) {
         echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
             '<div class="list2">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
     }
 
-    echo '<form name="form" action="index.php?act=nt&amp;id=' . $id . '" method="post">' .
+    echo '<form name="form" action="?act=nt&amp;id=' . $id . '" method="post">' .
         '<div class="gmenu">' .
         '<p><h3>' . _t('Section') . '</h3>' .
-        '<a href="index.php?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id'] . '">' . $res_c['name'] . '</a> | <a href="index.php?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id'] . '">' . $res_r['name'] . '</a></p>' .
+        '<a href="?' . ($res_c['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_c['id'] . '">' . $res_c['name'] . '</a> | <a href="?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $res_r['id'] . '">' . $res_r['name'] . '</a></p>' .
         '<p><h3>' . _t('Title(max. 100)') . '</h3>' .
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
@@ -266,5 +266,5 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         '<input type="hidden" name="token" value="' . $token . '"/>' .
         '</p></div></form>' .
         '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
-        '<p><a href="index.php?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id . '">' . _t('Back') . '</a></p>';
+        '<p><a href="?' . ($res_r['section_type'] == 1 ? 'type=topics&amp;' : '') . 'id=' . $id . '">' . _t('Back') . '</a></p>';
 }

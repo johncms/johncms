@@ -21,7 +21,7 @@ $container = App::getContainer();
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $id) {
-    echo $tools->displayError(_t('Wrong data'), '<a href="index.php">' . _t('Forum') . '</a>');
+    echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');
     require 'system/end.php';
     exit;
 }
@@ -31,7 +31,7 @@ switch ($do) {
         // Удаляем фильтр
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-        header("Location: index.php?type=topic&id=${id}");
+        header("Location: ?type=topic&id=${id}");
         break;
 
     case 'set':
@@ -39,7 +39,7 @@ switch ($do) {
         $users = $_POST['users'] ?? '';
 
         if (empty($_POST['users'])) {
-            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="index.php?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
+            echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
             require 'system/end.php';
             exit;
         }
@@ -52,7 +52,7 @@ switch ($do) {
 
         $_SESSION['fsort_id'] = $id;
         $_SESSION['fsort_users'] = serialize($array);
-        header("Location: index.php?type=topic&id=${id}");
+        header("Location: ?type=topic&id=${id}");
         break;
 
     default:
@@ -64,8 +64,8 @@ switch ($do) {
         $total = $req->rowCount();
 
         if ($total) {
-            echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
-                '<form action="index.php?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
+            echo '<div class="phdr"><a href="?type=topic&id=' . $id . '&amp;start=' . $start . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Filter by author') . '</div>' .
+                '<form action="?act=filter&amp;id=' . $id . '&amp;start=' . $start . '&amp;do=set" method="post">';
             $i = 0;
 
             while ($res = $req->fetch()) {
@@ -83,4 +83,4 @@ switch ($do) {
         }
 }
 
-echo '<p><a href="index.php?id=' . $id . '&amp;start=' . $start . '">' . _t('Back to topic') . '</a></p>';
+echo '<p><a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back to topic') . '</a></p>';

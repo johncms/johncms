@@ -194,7 +194,7 @@ switch ($mod) {
                 if (isset($_GET['fid'])) {
                     // Если бан из форума, фиксируем ID поста
                     $fid = (int) ($_GET['fid']);
-                    echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/index.php?act=show_post&amp;id=' . $fid . '"></a><br />' .
+                    echo '&#160;' . _t('Violation') . ' <a href="' . $config['homeurl'] . '/forum/?act=show_post&amp;id=' . $fid . '"></a><br />' .
                         '<input type="hidden" value="' . $fid . '" name="banref" />';
                 }
 
@@ -298,7 +298,7 @@ switch ($mod) {
                 '<p>' . ($total
                     ? '<a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Violations history') . '</a><br />'
                     : '') .
-                '<a href="../admin/index.php?act=ban_panel">' . _t('Ban Panel') . '</a></p>';
+                '<a href="../admin/?act=ban_panel">' . _t('Ban Panel') . '</a></p>';
         } else {
             echo $tools->displayError(_t('Violations history can be cleared by Supervisor only'));
         }
@@ -311,7 +311,7 @@ switch ($mod) {
         $menu = [];
 
         if ($systemUser->rights >= 6) {
-            $menu[] = '<a href="../admin/index.php?act=ban_panel">' . _t('Ban Panel') . '</a>';
+            $menu[] = '<a href="../admin/?act=ban_panel">' . _t('Ban Panel') . '</a>';
         }
 
         if ($systemUser->rights == 9) {

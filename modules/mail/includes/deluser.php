@@ -45,16 +45,16 @@ if ($id) {
 
         //Удаляем контакт
         $db->exec('DELETE FROM `cms_contact` WHERE `user_id` = ' . $systemUser->id . ' AND `from_id` = ' . $id . ' LIMIT 1');
-        echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="index.php">' . _t('Continue') . '</a></p></div>';
+        echo '<div class="gmenu"><p>' . _t('Contact deleted') . '</p><p><a href="./">' . _t('Continue') . '</a></p></div>';
     } else {
         echo '<div class="phdr"><b>' . _t('Delete') . '</b></div>
 			<div class="rmenu">
-			<form action="index.php?act=deluser&amp;id=' . $id . '" method="post">
+			<form action="?act=deluser&amp;id=' . $id . '" method="post">
 			<p>' . _t('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?') . '</p>
 			<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p>
 			</form>
 			</div>';
-        echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : 'index.php') . '">' . _t('Back') . '</a></div>';
+        echo '<div class="phdr"><a href="' . (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './') . '">' . _t('Back') . '</a></div>';
     }
 } else {
     echo '<div class="rmenu"><p>' . _t('Contact for removal isn\'t chosen') . '</p></div>';

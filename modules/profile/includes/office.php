@@ -43,14 +43,14 @@ $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id
 
 echo '' .
     '<div class="gmenu"><p><h3>' . _t('My Pages') . '</h3>' .
-    '<div>' . $tools->image('contacts.png') . '<a href="index.php">' . _t('Profile') . '</a></div>' .
+    '<div>' . $tools->image('contacts.png') . '<a href="./">' . _t('Profile') . '</a></div>' .
     '<div>' . $tools->image('rate.gif') . '<a href="?act=stat">' . _t('Statistics') . '</a></div>' .
     '<div>' . $tools->image('photo.gif') . '<a href="../album/?act=list">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
     '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>';
 
 if ($systemUser->rights >= 1) {
     $guest = $container->get('counters')->guestbook(2);
-    echo '<div>' . $tools->image('forbidden.png') . '<a href="../guestbook/index.php?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
+    echo '<div>' . $tools->image('forbidden.png') . '<a href="../guestbook/?act=ga&amp;do=set">' . _t('Admin-Club') . '</a> (<span class="red">' . $guest . '</span>)</div>';
 }
 echo '</p></div>';
 

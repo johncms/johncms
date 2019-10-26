@@ -67,17 +67,17 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
             $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '${id}'");
         }
-        header('Location: index.php?type=topics&id=' . $res['section_id']);
+        header('Location: ?type=topics&id=' . $res['section_id']);
     } else {
         // Меню выбора режима удаления темы
         require 'system/head.php';
-        echo '<div class="phdr"><a href="index.php?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
-            '<div class="rmenu"><form method="post" action="index.php?act=deltema&amp;id=' . $id . '">' .
+        echo '<div class="phdr"><a href="?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
+            '<div class="rmenu"><form method="post" action="?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
             ($systemUser->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
             '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
-            '<p><a href="index.php?type=topic&id=' . $id . '">' . _t('Cancel') . '</a>' .
+            '<p><a href="?type=topic&id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .
             '<div class="phdr">&#160;</div>';
     }

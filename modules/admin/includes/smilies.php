@@ -21,7 +21,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Smilies') . '</div>';
 
 $ext = ['gif', 'jpg', 'jpeg', 'png']; // Список разрешенных расширений
 $smileys = [];
@@ -64,4 +64,4 @@ if (file_put_contents(CACHE_PATH . 'smilies-list.cache', serialize($smileys))) {
 }
 $total = count($smileys['adm']) + count($smileys['usr']);
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>' .
-    '<p><a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    '<p><a href="./">' . _t('Admin Panel') . '</a></p>';

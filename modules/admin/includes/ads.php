@@ -33,7 +33,7 @@ if ($systemUser->rights < 7) {
 switch ($mod) {
     case 'edit':
         // Добавляем / редактируем ссылку
-        echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . ($id ? _t('Edit link') : _t('Add link')) . '</div>';
+        echo '<div class="phdr"><a href="?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . ($id ? _t('Edit link') : _t('Add link')) . '</div>';
 
         if ($id) {
             // Если ссылка редактироется, запрашиваем ее данные в базе
@@ -42,8 +42,8 @@ switch ($mod) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
             } else {
-                echo $tools->displayError(_t('Wrong data'), '<a href="index.php?act=ads">' . _t('Back') . '</a>');
-                require '../system/end.php';
+                echo $tools->displayError(_t('Wrong data'), '<a href="?act=ads">' . _t('Back') . '</a>');
+                require 'system/end.php';
                 exit;
             }
         } else {
@@ -93,8 +93,8 @@ switch ($mod) {
             }
 
             if ($error) {
-                echo $tools->displayError($error, '<a href="index.php?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
-                require '../system/end.php';
+                echo $tools->displayError($error, '<a href="?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
+                require 'system/end.php';
                 exit;
             }
 
@@ -179,10 +179,10 @@ switch ($mod) {
             $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
 
             echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br>' .
-                '<a href="index.php?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';
+                '<a href="?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';
         } else {
             // Форма добавления / изменения ссылки
-            echo '<form action="index.php?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
+            echo '<form action="?act=ads&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '" method="post">' .
                 '<div class="menu"><p><h3>' . _t('Link') . '</h3>' .
                 '<input type="text" name="link" value="' . htmlentities($res['link'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
                 '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br>' .
@@ -218,8 +218,8 @@ switch ($mod) {
                 '<input type="checkbox" name="italic" ' . ($res['italic'] ? 'checked="checked"' : '') . '/>&nbsp;<i>' . _t('Italic') . '</i><br>' .
                 '<input type="checkbox" name="underline" ' . ($res['underline'] ? 'checked="checked"' : '') . '/>&nbsp;<u>' . _t('Underline') . '</u></p></div>' .
                 '<div class="phdr"><input type="submit" name="submit" value="' . ($id ? _t('Edit') : _t('Add')) . '" /></div></form>' .
-                '<p><a href="index.php?act=ads">' . _t('Advertisement') . '</a><br>' .
-                '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+                '<p><a href="?act=ads">' . _t('Advertisement') . '</a><br>' .
+                '<a href="./">' . _t('Admin Panel') . '</a></p>';
         }
         break;
 
@@ -276,8 +276,8 @@ switch ($mod) {
                 $db->exec("DELETE FROM `cms_ads` WHERE `id` = '${id}'");
                 header('Location: ' . $_POST['ref']);
             } else {
-                echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete') . '</div>' .
-                    '<div class="rmenu"><form action="index.php?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
+                echo '<div class="phdr"><a href="?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete') . '</div>' .
+                    '<div class="rmenu"><form action="?act=ads&amp;mod=del&amp;id=' . $id . '" method="post">' .
                     '<p>' . _t('Are you sure want to delete link?') . '</p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Delete') . '" /></p>' .
                     '<input type="hidden" name="ref" value="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '" />' .
@@ -292,14 +292,14 @@ switch ($mod) {
         if (isset($_POST['submit'])) {
             $db->exec("DELETE FROM `cms_ads` WHERE `to` = '1'");
             $db->query('OPTIMIZE TABLE `cms_ads`');
-            header('location: index.php?act=ads');
+            header('location: ?act=ads');
         } else {
-            echo '<div class="phdr"><a href="index.php?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete inactive links') . '</div>' .
-                '<div class="menu"><form method="post" action="index.php?act=ads&amp;mod=clear">' .
+            echo '<div class="phdr"><a href="?act=ads"><b>' . _t('Advertisement') . '</b></a> | ' . _t('Delete inactive links') . '</div>' .
+                '<div class="menu"><form method="post" action="?act=ads&amp;mod=clear">' .
                 '<p>' . _t('Are you sure you want to delete all inactive links?') . '</p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Delete') . '" />' .
                 '</p></form></div>' .
-                '<div class="phdr"><a href="index.php?act=ads">' . _t('Cancel') . '</a></div>';
+                '<div class="phdr"><a href="?act=ads">' . _t('Cancel') . '</a></div>';
         }
         break;
 
@@ -318,7 +318,7 @@ switch ($mod) {
 
     default:
         // Главное меню модуля управления рекламой
-        echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Advertisement') . '</div>';
+        echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Advertisement') . '</div>';
         $array_placing = [
             _t('All pages'),
             _t('Only on Homepage'),
@@ -331,10 +331,10 @@ switch ($mod) {
         ];
         $type = isset($_GET['type']) ? (int) ($_GET['type']) : 0;
         $array_menu = [
-            (! $type ? _t('Above logo') : '<a href="index.php?act=ads">' . _t('Above logo') . '</a>'),
-            ($type == 1 ? _t('Under menu') : '<a href="index.php?act=ads&amp;type=1">' . _t('Under menu') . '</a>'),
-            ($type == 2 ? _t('Over the counter') : '<a href="index.php?act=ads&amp;type=2">' . _t('Over the counter') . '</a>'),
-            ($type == 3 ? _t('Under counter') : '<a href="index.php?act=ads&amp;type=3">' . _t('Under counter') . '</a>'),
+            (! $type ? _t('Above logo') : '<a href="?act=ads">' . _t('Above logo') . '</a>'),
+            ($type == 1 ? _t('Under menu') : '<a href="?act=ads&amp;type=1">' . _t('Under menu') . '</a>'),
+            ($type == 2 ? _t('Over the counter') : '<a href="?act=ads&amp;type=2">' . _t('Over the counter') . '</a>'),
+            ($type == 3 ? _t('Under counter') : '<a href="?act=ads&amp;type=3">' . _t('Under counter') . '</a>'),
         ];
         echo '<div class="topmenu">' . implode(' | ', $array_menu) . '</div>';
 
@@ -367,11 +367,11 @@ switch ($mod) {
                 echo '<p><img src="../images/' . ($res['to'] ? 'red' : 'green') . '.gif" width="16" height="16" class="left"/>&#160;' .
                     '<a href="' . htmlspecialchars($res['link']) . '">' . htmlspecialchars($res['link']) . '</a>&nbsp;[' . $res['count'] . ']<br>' . $name . '</p>';
                 $menu = [
-                    '<a href="index.php?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
-                    '<a href="index.php?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? _t('Show') : _t('Hide')) . '</a>',
+                    '<a href="?act=ads&amp;mod=up&amp;id=' . $res['id'] . '">' . _t('Up') . '</a>',
+                    '<a href="?act=ads&amp;mod=down&amp;id=' . $res['id'] . '">' . _t('Down') . '</a>',
+                    '<a href="?act=ads&amp;mod=edit&amp;id=' . $res['id'] . '">' . _t('Edit') . '</a>',
+                    '<a href="?act=ads&amp;mod=del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a>',
+                    '<a href="?act=ads&amp;mod=show&amp;id=' . $res['id'] . '">' . ($res['to'] ? _t('Show') : _t('Hide')) . '</a>',
                 ];
                 echo '<div class="sub">' .
                     '<div>' . implode(' | ', $menu) . '</div>' .
@@ -416,13 +416,13 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('index.php?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
-                '<p><form action="index.php?act=ads&amp;type=' . $type . '" method="post">' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
+                '<p><form action="?act=ads&amp;type=' . $type . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p><a href="index.php?act=ads&amp;mod=edit">' . _t('Add link') . '</a><br>' .
-            '<a href="index.php?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br>' .
-            '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+        echo '<p><a href="?act=ads&amp;mod=edit">' . _t('Add link') . '</a><br>' .
+            '<a href="?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br>' .
+            '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }

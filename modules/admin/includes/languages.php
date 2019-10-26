@@ -33,7 +33,7 @@ if ($systemUser->rights < 9) {
 }
 
 // Выводим список доступных языков
-echo '<div class="phdr"><a href="index.php"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
+echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
 
 if (isset($_POST['lng']) || isset($_GET['refresh'])) {
     if (isset($_POST['lng'])) {
@@ -84,5 +84,5 @@ echo '</p><p>'
     . '<input type="submit" name="submit" value="' . _t('Apply') . '" />'
     . '</p></form></div>'
     . '<div class="phdr">' . _t('Total') . ': <b>' . count($config['lng_list']) . '</b></div><p>'
-    . '<a href="index.php?act=languages&amp;refresh">' . _t('Update List') . '</a><br>'
-    . '<a href="index.php">' . _t('Admin Panel') . '</a></p>';
+    . '<a href="?act=languages&amp;refresh">' . _t('Update List') . '</a><br>'
+    . '<a href="./">' . _t('Admin Panel') . '</a></p>';

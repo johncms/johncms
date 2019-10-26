@@ -141,7 +141,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                             }
                         } else {
                             $file_name = basename($val);
-                            if ($file_name != '.' && $file_name != '..' && $file_name != 'index.php' && $file_name != '.htaccess' && $file_name != '.svn') {
+                            if ($file_name != '.' && $file_name != '..' && $file_name != 'index.php' && $file_name != '.htaccess') {
                                 $array_scan[] = $val;
                             }
                         }

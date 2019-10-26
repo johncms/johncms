@@ -86,11 +86,11 @@ switch ($mod) {
                 $text = mb_substr($post['text'], 0, 300);
                 $text = $tools->checkout($text, 2, 1);
                 echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
+                    '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '">' . $res['name'] . '</a>' .
+                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
+                    '<a href="' . $config->homeurl . '/forum/?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
+                    '<a href="' . $config->homeurl . '/forum/?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
                     '<br /><span class="gray">(' . $tools->displayDate($res['last_post_date']) . ')</span>' .
                     '</div></div>';
                 ++$i;
@@ -123,11 +123,11 @@ switch ($mod) {
                 $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
                 echo(($i % 2) ? '<div class="list2">' : '<div class="list1">') .
-                    '<a href="' . $config->homeurl . '/forum/index.php?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
-                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/index.php?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
+                    '<a href="' . $config->homeurl . '/forum/?type=topic&id=' . $topic['id'] . '">' . $topic['name'] . '</a>' .
+                    '<br />' . $text . '...<a href="' . $config->homeurl . '/forum/?act=show_post&amp;id=' . $res['id'] . '"> &gt;&gt;</a>' .
                     '<div class="sub">' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
-                    '<a href="' . $config->homeurl . '/forum/index.php?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
+                    '<a href="' . $config->homeurl . '/forum/?id=' . $category['id'] . '">' . $category['name'] . '</a> | ' .
+                    '<a href="' . $config->homeurl . '/forum/?type=topics&id=' . $section['id'] . '">' . $section['name'] . '</a>' .
                     '<br /><span class="gray">(' . $tools->displayDate($res['date']) . ')</span>' .
                     '</div></div>';
                 ++$i;

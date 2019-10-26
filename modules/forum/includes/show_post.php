@@ -74,12 +74,12 @@ echo @$user_rights[$res['rights']];
 
 // Метка Онлайн / Офлайн
 echo time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<span class="green"> [ON]</span> ';
-echo '<a href="index.php?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
+echo '<a href="?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
 // Ссылки на ответ и цитирование
 if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
-    echo '&#160;<a href="index.php?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
-        '<a href="index.php?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
+    echo '&#160;<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
+        '<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
 }
 
 // Время поста
@@ -114,11 +114,11 @@ if ($freq->rowCount()) {
     ];
 
     if (in_array($att_ext, $pic_ext)) {
-        echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="index.php?act=file&amp;id=' . $fres['id'] . '" href="index.php?act=file&amp;id=' . $fres['id'] . '">';
+        echo '<div><a class="image-preview" title="' . $fres['filename'] . '" data-source="?act=file&amp;id=' . $fres['id'] . '" href="?act=file&amp;id=' . $fres['id'] . '">';
         //TODO: thumbinal.php переместить в /assets
         echo '<img src="thumbinal.php?file=' . (urlencode($fres['filename'])) . '" alt="' . _t('Click to view image') . '" /></a></div>';
     } else {
-        echo '<br /><a href="index.php?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
+        echo '<br /><a href="?act=file&amp;id=' . $fres['id'] . '">' . $fres['filename'] . '</a>';
     }
 
     echo ' (' . $fls . ' кб.)<br>';
@@ -130,5 +130,5 @@ echo '</div>';
 
 // Вычисляем, на какой странице сообщение?
 $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $kmess);
-echo '<div class="phdr"><a href="index.php?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
-echo '<p><a href="index.php">' . _t('Forum') . '</a></p>';
+echo '<div class="phdr"><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
+echo '<p><a href="./">' . _t('Forum') . '</a></p>';
