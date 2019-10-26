@@ -73,7 +73,7 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     }
 
                     $text = trim($txt);
-                    unlink(UPLOAD_PATH . 'library/tmp' . DIRECTORY_SEPARATOR . $newname);
+                    unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
                     echo $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
                     require_once 'system/end.php';

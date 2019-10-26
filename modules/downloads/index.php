@@ -31,8 +31,8 @@ $url = $config['homeurl'] . '/downloads/';
 
 $textl = _t('Downloads');
 $headmod = 'downloads';
-const DOWNLOADS = UPLOAD_PATH . 'downloads' . DIRECTORY_SEPARATOR;
-const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DIRECTORY_SEPARATOR;
+const DOWNLOADS = UPLOAD_PATH . 'downloads' . DS;
+const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DS;
 $files_path = 'upload/downloads/files';
 
 // Настройки
