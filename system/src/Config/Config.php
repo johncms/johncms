@@ -15,12 +15,6 @@ namespace Johncms\Config;
 use Johncms\Api\ConfigInterface;
 use Zend\Stdlib\ArrayObject;
 
-/**
- * Class Config
- *
- * @package Johncms
- *
- */
 class Config extends ArrayObject implements ConfigInterface
 {
     public function __construct(array $input)

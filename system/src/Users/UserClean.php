@@ -42,7 +42,7 @@ class UserClean
     public function removeAlbum($clean_id)
     {
         // Удаляем папку с файлами картинок
-        $dir = ROOT_PATH . 'files/users/album/' . $clean_id;
+        $dir = UPLOAD_PATH . 'users/album/' . $clean_id;
         if (is_dir($dir)) {
             $this->removeDir($dir);
         }
@@ -78,8 +78,8 @@ class UserClean
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 // Удаляем файлы почты
-                if (is_file(ROOT_PATH . 'files/mail/' . $res['file_name'])) {
-                    @unlink('../files/mail/' . $res['file_name']);
+                if (is_file(UPLOAD_PATH . 'mail/' . $res['file_name'])) {
+                    @unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
                 }
             }
         }
@@ -145,12 +145,7 @@ class UserClean
         }
     }
 
-    /**
-     * Рекурсивная функция удаления каталогов с файлами
-     *
-     * @param $dir
-     */
-    private function removeDir($dir)
+    private function removeDir(string $dir)
     {
         if ($objs = glob($dir . '/*')) {
             foreach ($objs as $obj) {

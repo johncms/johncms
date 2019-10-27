@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\ToolsInterface;
+
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
 if (isset($_SESSION['ref'])) {
@@ -22,8 +24,8 @@ if (isset($_GET['err'])) {
 
 switch ($act) {
     case '404':
-        /** @var Johncms\Api\ToolsInterface $tools */
-        $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
+        /** @var ToolsInterface $tools */
+        $tools = App::getContainer()->get(ToolsInterface::class);
 
         $headmod = 'error404';
         require 'system/head.php';

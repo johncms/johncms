@@ -10,19 +10,25 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\UserInterface;
+use Johncms\Utility\Counters;
+use Johncms\Utility\NewsWidget;
+use Psr\Container\ContainerInterface;
+
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var UserInterface $systemUser */
+$systemUser = $container->get(UserInterface::class);
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
 
-/** @var Johncms\Utility\Counters $counters */
+/** @var Counters $counters */
 $counters = $container->get('counters');
 
-$mp = new Johncms\Utility\NewsWidget();
+$mp = new NewsWidget();
 
 // Блок информации
 echo '<div class="phdr"><b>' . _t('Information', 'system') . '</b></div>';

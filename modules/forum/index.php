@@ -10,33 +10,38 @@
  * @license     GPL-3
  */
 
-define('_IN_JOHNCMS', 1);
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
+use Johncms\Utility\Counters;
+use Psr\Container\ContainerInterface;
+use Zend\I18n\Translator\Translator;
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
-/** @var Psr\Container\ContainerInterface $container */
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var UserInterface $systemUser */
+$systemUser = $container->get(UserInterface::class);
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/** @var ToolsInterface $tools */
+$tools = $container->get(ToolsInterface::class);
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
 
-/** @var Johncms\Counters $counters */
+/** @var Counters $counters */
 $counters = App::getContainer()->get('counters');
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 if (isset($_SESSION['ref'])) {

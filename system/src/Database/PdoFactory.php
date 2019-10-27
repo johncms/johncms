@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Database;
 
 use PDO;
+use PDOException;
 use Psr\Container\ContainerInterface;
 
 class PdoFactory
@@ -27,7 +28,7 @@ class PdoFactory
         $dbName = $config['db_name'] ?? 'johncms';
 
         try {
-            $pdo = new \PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,
+            $pdo = new PDO('mysql:host=' . $dbHost . ';dbname=' . $dbName, $dbUser, $dbPass,
                 [
                     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -36,7 +37,7 @@ class PdoFactory
                     PDO::ATTR_EMULATE_PREPARES => false,
                 ]
             );
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             echo '<h2>MySQL ERROR: ' . $e->getCode() . '</h2>';
 
             switch ($e->getCode()) {

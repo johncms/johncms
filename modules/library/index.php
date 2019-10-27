@@ -10,10 +10,15 @@
  * @license     GPL-3
  */
 
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
 use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
+use Psr\Container\ContainerInterface;
+use Zend\I18n\Translator\Translator;
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader;
@@ -27,23 +32,23 @@ $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
 $headmod = 'library';
 
-/** @var Psr\Container\ContainerInterface $container */
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var UserInterface $systemUser */
+$systemUser = $container->get(UserInterface::class);
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/** @var ToolsInterface $tools */
+$tools = $container->get(ToolsInterface::class);
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $adm = ($systemUser->rights > 4) ? true : false;

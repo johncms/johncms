@@ -12,11 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Api;
 
-/**
- * Interface EnvironmentInterface
- *
- * @package Johncms\Api
- */
 interface EnvironmentInterface
 {
     public function getIp() : int;

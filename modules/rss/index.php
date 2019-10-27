@@ -10,11 +10,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
+use Johncms\Api\ConfigInterface;
+use Psr\Container\ContainerInterface;
+
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);

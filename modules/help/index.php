@@ -10,15 +10,19 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\ConfigInterface;
+use Psr\Container\ContainerInterface;
+use Zend\I18n\Translator\Translator;
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var Psr\Container\ContainerInterface $container */
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Zend\I18n\Translator\Translator $translator */
-$translator = $container->get(Zend\I18n\Translator\Translator::class);
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 $textl = 'FAQ';
@@ -27,8 +31,8 @@ require 'system/head.php';
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
-    /** @var Johncms\Api\ConfigInterface $config */
-    $config = $container->get(Johncms\Api\ConfigInterface::class);
+    /** @var ConfigInterface $config */
+    $config = $container->get(ConfigInterface::class);
     $_SESSION['ref'] = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config['homeurl'];
 }
 

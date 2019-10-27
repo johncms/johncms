@@ -13,8 +13,6 @@ declare(strict_types=1);
 namespace Johncms\Api;
 
 /**
- * Interface ConfigInterface
- *
  * @property $active
  * @property $antiflood
  * @property $clean_time

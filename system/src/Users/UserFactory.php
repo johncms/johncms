@@ -147,9 +147,9 @@ class UserFactory
         ");
     }
 
-    protected function userTemplate()
+    protected function userTemplate() : array
     {
-        $template = [
+        return [
             'id'            => 0,
             'name'          => '',
             'name_lat'      => '',
@@ -200,8 +200,6 @@ class UserFactory
             'smileys'       => '',
             'ban'           => [],
         ];
-
-        return $template;
     }
 
     /**
