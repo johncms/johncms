@@ -7,7 +7,6 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Added
 - Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
-- Внедрен PSR-7 интерфейс в реализации [zendframework/zend-diactoros](https://github.com/zendframework/zend-diactoros)
 
 #### Changed
 - Полный рефакторинг кода системы

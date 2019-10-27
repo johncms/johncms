@@ -10,30 +10,34 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use FastRoute\Dispatcher;
+use FastRoute\Dispatcher\GroupCountBased;
+use FastRoute\RouteCollector;
+
 const DEBUG = true;
 const _IN_JOHNCMS = true;
 
 require('system/bootstrap.php');
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Psr\Http\Message\ServerRequestInterface $request */
-$request = $container->get(Psr\Http\Message\ServerRequestInterface::class);
-
 require CONFIG_PATH . 'routes.php';
 
-$dispatcher = new FastRoute\Dispatcher\GroupCountBased(
-    $container->get(FastRoute\RouteCollector::class)->getData()
+$dispatcher = new GroupCountBased(
+    App::getContainer()->get(RouteCollector::class)->getData()
 );
 
 $match = $dispatcher->dispatch(
-    $request->getMethod(),
-    $request->getUri()->getPath()
+    $_SERVER['REQUEST_METHOD'],
+    (function () {
+        $uri = $_SERVER['REQUEST_URI'];
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+
+        return rawurldecode($uri);
+    })()
 );
 
 switch ($match[0]) {
-    case FastRoute\Dispatcher::FOUND:
+    case Dispatcher::FOUND:
         if (is_callable($match[1])) {
             call_user_func_array($match[1], $match[2]);
         } else {
@@ -41,7 +45,7 @@ switch ($match[0]) {
         }
         break;
 
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+    case Dispatcher::METHOD_NOT_ALLOWED:
         echo '405 Method Not Allowed';
         break;
 
