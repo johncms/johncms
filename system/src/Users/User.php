@@ -12,50 +12,33 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Johncms\Api\UserConfigInterface;
 use Johncms\Api\UserInterface;
 use Zend\Stdlib\ArrayObject;
 
-/**
- * Class User
- *
- * @package Johncms
- */
 class User extends ArrayObject implements UserInterface
 {
     private $userConfigObject;
 
-    /**
-     * User constructor.
-     *
-     * @param array $input
-     */
     public function __construct(array $input)
     {
         parent::__construct($input, parent::ARRAY_AS_PROPS);
     }
 
     /**
-     * User validation
-     *
-     * @return bool
+     * @inheritDoc
      */
-    public function isValid()
+    public function isValid() : bool
     {
-        if ($this->offsetGet('id') > 0
-            && $this->offsetGet('preg') == 1
-        ) {
-            return true;
-        }
-
-        return false;
+        return $this->offsetGet('id') > 0 && $this->offsetGet('preg') == 1
+            ? true
+            : false;
     }
 
     /**
-     * Get User config
-     *
-     * @return UserConfig
+     * @inheritDoc
      */
-    public function getConfig()
+    public function getConfig() : UserConfigInterface
     {
         if (null === $this->userConfigObject) {
             $this->userConfigObject = new UserConfig($this);

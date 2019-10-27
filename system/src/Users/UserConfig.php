@@ -12,13 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Johncms\Api\UserConfigInterface;
 use Zend\Stdlib\ArrayObject;
 
 /**
- * Class UserConfig
- *
- * @package Johncms
- *
  * @property $directUrl
  * @property $fieldHeight
  * @property $fieldWidth
@@ -27,7 +24,7 @@ use Zend\Stdlib\ArrayObject;
  * @property $timeshift
  * @property $youtube
  */
-class UserConfig extends ArrayObject
+class UserConfig extends ArrayObject implements UserConfigInterface
 {
     public function __construct(User $user)
     {

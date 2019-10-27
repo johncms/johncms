@@ -13,10 +13,6 @@ declare(strict_types=1);
 namespace Johncms\Api;
 
 /**
- * Interface UserInterface
- *
- * @package Johncms\Api
- *
  * @property $id
  * @property $name
  * @property $name_lat
@@ -69,7 +65,13 @@ namespace Johncms\Api;
  */
 interface UserInterface
 {
-    public function isValid();
+    /**
+     * User validation
+     */
+    public function isValid() : bool;
 
-    public function getConfig();
+    /**
+     * Get User config
+     */
+    public function getConfig() : UserConfigInterface;
 }
