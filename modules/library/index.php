@@ -15,6 +15,11 @@ use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
 
+// Регистрируем автозагрузчик для классов библиотеки
+$loader = new Aura\Autoload\Loader;
+$loader->register();
+$loader->addPrefix('Library', __DIR__ . '/classes');
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -40,15 +45,6 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 /** @var Zend\I18n\Translator\Translator $translator */
 $translator = $container->get(Zend\I18n\Translator\Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/*  php 7+
-use Library\{
-            Tree,
-            Hashtags,
-            Rating,
-            Links
-}
-*/
 
 $adm = ($systemUser->rights > 4) ? true : false;
 $i = 0;

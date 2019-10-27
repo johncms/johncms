@@ -7,6 +7,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Added
 - Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
+- Для классов модулей используется отдельный автозагрузчик [Aura.Autoload](https://github.com/auraphp/Aura.Autoload)
 
 #### Changed
 - Полный рефакторинг кода системы

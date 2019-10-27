@@ -31,6 +31,7 @@
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-pdo": "*",
+    "aura/autoload": "^2.0",
     "batumibiz/captcha": "^2.0.1",
     "erusev/parsedown": "^1.7",
     "geshi/geshi": "dev-master",
@@ -44,8 +45,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Johncms\\": "system/src/",
-      "Library\\": "modules/library/classes"
+      "Johncms\\": "system/src/"
     }
   }
 }
