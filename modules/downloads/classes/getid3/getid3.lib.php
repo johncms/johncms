@@ -1271,7 +1271,7 @@ class getid3_lib
             }
 
             // yes this is ugly, feel free to suggest a better way
-            if (include_once(__DIR__ . '/getid3.php')) {
+            if (include_once __DIR__ . '/getid3.php') {
                 if ($getid3_temp = new getID3()) {
                     if ($getid3_temp_tempdir = $getid3_temp->tempdir) {
                         $tempdir = $getid3_temp_tempdir;
@@ -1459,7 +1459,7 @@ class getid3_lib
         global $GETID3_ERRORARRAY;
 
         if (file_exists($filename)) {
-            if (include_once($filename)) {
+            if (include_once $filename) {
                 return true;
             }
             $diemessage = basename($sourcefile) . ' depends on ' . $filename . ', which has errors';

@@ -40,7 +40,7 @@ const ASSETS_PATH = ROOT_PATH . 'assets' . DS;
 const CONFIG_PATH = ROOT_PATH . 'config' . DS;
 const DATA_PATH = ROOT_PATH . 'data' . DS;
 const UPLOAD_PATH = ROOT_PATH . 'upload' . DS;
-const CACHE_PATH = DATA_PATH. 'cache' . DS;
+const CACHE_PATH = DATA_PATH . 'cache' . DS;
 
 require __DIR__ . '/vendor/autoload.php';
 

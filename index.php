@@ -17,7 +17,7 @@ use FastRoute\RouteCollector;
 const DEBUG = true;
 const _IN_JOHNCMS = true;
 
-require('system/bootstrap.php');
+require 'system/bootstrap.php';
 require CONFIG_PATH . 'routes.php';
 
 $dispatcher = new GroupCountBased(

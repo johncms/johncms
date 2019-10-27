@@ -525,7 +525,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                         echo '<p><input type="submit" name="submit" value="' . _t('Vote') . '"/><br /><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '&amp;vote_result' . $clip_forum .
                             '">' . _t('Results') . '</a></p></form></div>';
                     } else {
-                        // Выводим результаты голосования ?>
+                        // Выводим результаты голосования?>
                         <div class="vote-results">
                             <?php
                             while ($vote = $vote_result->fetch()) {
