@@ -22,6 +22,7 @@
     "issues": "https://johncms.com/forum/index.php?id=67"
   },
   "config": {
+    "optimize-autoloader": true,
     "sort-packages": true,
     "vendor-dir": "system/vendor"
   },
