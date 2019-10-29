@@ -16,10 +16,10 @@
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="keywords" content="<?= $config->meta_key ?>">
     <meta name="description" content="<?= $config->meta_desc ?>">
-    <meta name="theme-color" content="#5d687c">
-    <link rel="stylesheet" href="<?= $config->homeurl ?>/themes/default/assets/css/old.css">
-    <link rel="shortcut icon" href="<?= $config->homeurl ?>/themes/default/assets/images/favicon.ico">
-    <link rel="alternate" type="application/rss+xml" title="RSS | Новости ресурса" href="<?= $config->homeurl ?>/rss/">
+    <meta name="theme-color" content="#586776">
+    <link rel="stylesheet" href="<?= $this->asset('css/old.css') ?>">
+    <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
+    <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config->homeurl ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config->copyright ?></title>
 </head>
 <body>
@@ -27,10 +27,12 @@
 <table style="width: 100%;" class="logo">
     <tr>
         <td valign="bottom">
-            <a href="<?= $config->homeurl ?>"><img src="<?= $config->homeurl ?>/themes/default/assets/images/logo.gif" alt="<?= $this->e($config->copyright) ?>" class="icon"/></a>
+            <a href="<?= $config->homeurl ?>">
+                <img src="<?= $this->asset('images/logo.gif') ?>" alt="<?= $this->e($config->copyright) ?>" class="icon"/>
+            </a>
         </td>
         <?php if (count($config->lng_list) > 1): ?>
-            <td align="right">
+            <td style="text-align: right">
                 <a href="<?= $config->homeurl ?>/language/"><strong><?= strtoupper($locale) ?></strong></a>&#160;
                 <a href="<?= $config->homeurl ?>/language/"><?= $tools->getFlag($locale) ?></a>
             </td>
@@ -43,7 +45,7 @@
 
 <div class="maintxt">
     <!-- Уведомления -->
-    <!--    --><?php //$this->insert('system::app/old/notifications') ?>
+    <?php $this->insert('system::app/old_notifications') ?>
 
     <!-- Основная информация -->
     <?= $this->section('content') ?>
@@ -51,13 +53,13 @@
 
 <div class="fmenu">
     <!-- Счетчик посетителей онлайн -->
-    <img src="<?= $config->homeurl ?>/themes/default/assets/images/old_menu_online.png" class="icon">
+    <img src="<?= $this->asset('images/old_menu_online.png') ?>" alt="" class="icon">
     <a href="<?= $config->homeurl ?>/users/?act=online"><?= $container->get('counters')->online() ?></a>
 </div>
 <div style="text-align:center">
     <p><?= $this->e($config->copyright) ?></p>
     <!-- Внешние счетчики -->
-    <!--    --><?php //$this->insert('system::app/old/counters') ?>
+    <?php $this->insert('system::app/old_counters') ?>
     <div>
         <small>&copy; <a href="https://johncms.com">JohnCMS</a></small>
     </div>

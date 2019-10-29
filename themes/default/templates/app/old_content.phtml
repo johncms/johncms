@@ -1,2 +1,16 @@
-<?php $this->layout('system::layout/legacy', ['title' => (isset($title) ? $this->e($title) : $config->copyright)]) ?>
-<?= $content ?>
+<?php
+
+/**
+ * Подключаем Layout
+ */
+$this->layout('system::layout/legacy', [
+    'title'      => $this->e(isset($title) ? $title : $config->copyright),
+    'homeButton' => (isset($headmod) ? true : false)
+]);
+
+/**
+ * Выводим содержимое старых модулей
+ *
+ * @var string $content
+ */
+echo $content;
