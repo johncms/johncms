@@ -40,7 +40,7 @@ class Assets implements ExtensionInterface
 
         foreach ([$this->config->skindef, 'default'] as $skin) {
             $file = realpath(ROOT_PATH . 'themes/' . $skin . '/assets/' . $url);
-            $resultUrl = 'themes/' . $skin . '/assets/' . $url;
+            $resultUrl = $this->config->homeurl . '/themes/' . $skin . '/assets/' . $url;
 
             if (is_file($file)) {
                 return $versionStamp
