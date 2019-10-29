@@ -22,8 +22,8 @@ $systemUser = $container->get(UserInterface::class);
 
 /** @var RouteCollector $map */
 $map = $container->get(RouteCollector::class);
-//TODO: после перенесения переключателя языков в модуль, переделать роут на ->get()
-$map->addRoute(['GET', 'POST'], '/', 'modules/homepage/index.php');                    // Главная страница
+
+$map->get('/', 'modules/homepage/index.php');                                          // Главная страница
 $map->get('/rss[/]', 'modules/rss/index.php');                                         // RSS
 $map->addRoute(['GET', 'POST'], '/album[/]', 'modules/album/index.php');               // Фотоальбомы
 $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');       // Загрузки
@@ -31,13 +31,13 @@ $map->addRoute(['GET', 'POST'], '/forum[/]', 'modules/forum/index.php');        
 $map->addRoute(['GET', 'POST'], '/guestbook[/]', 'modules/guestbook/index.php');       // Гостевая
 $map->addRoute(['GET', 'POST'], '/help[/]', 'modules/help/index.php');                 // Справка
 $map->addRoute(['GET', 'POST'], '/library[/]', 'modules/library/index.php');           // Библиотека
+$map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');         // Переключатель языков
 $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');               // Вход / выход с сайта
 $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                 // Почта
 $map->addRoute(['GET', 'POST'], '/news[/]', 'modules/news/index.php');                 // Новости
 $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');           // Пользовательские профили
 $map->addRoute(['GET', 'POST'], '/registration[/]', 'modules/registration/index.php'); // Регистрация
 $map->addRoute(['GET', 'POST'], '/users[/]', 'modules/users/index.php');               // Пользователи (актив сайта)
-//$map->addRoute(['GET', 'POST'], '/language[/]', 'modules/language/index.php');       // Переключатель языков
 //$map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');         // Регистрация
 
 if ($systemUser->isValid() && $systemUser->rights >= 6) {

@@ -1,0 +1,23 @@
+<?php
+$this->layout('system::layout/old', [
+    'title' => _t('Select language', 'system'),
+    'homeButton' => true
+])
+?>
+<div class="menu" style="padding-top: 16px; padding-bottom: 16px">
+    <form method="post">
+        <h3><?= _t('Select language', 'system') ?></h3>
+        <?php foreach ($config->lng_list as $key => $val): ?>
+            <div>
+                <label>
+                    <input type="radio" value="<?= $key ?>"
+                           name="setlng"<?= ($key == $locale ? ' checked="checked"' : '') ?>/>&#160;
+                    <?= $tools->getFlag($key) ?>
+                    <?= $val ?>
+                </label>
+            </div>
+        <?php endforeach ?>
+        <br>
+        <input type="submit" name="submit" value="<?= _t('Apply', 'system') ?>"/>
+    </form>
+</div>

@@ -5,7 +5,8 @@
 <div class="tmn">
     <?php if (isset($homeButton)): ?>
         <a href="<?= $config->homeurl ?>">
-            <img src="<?= $this->asset('images/old_menu_home.png') ?>" class="icon"><?= _t('Home', 'system') ?>
+            <img src="<?= $this->asset('images/old_menu_home.png') ?>" class="icon">
+            <?= _t('Home', 'system') ?>
         </a>
         <br>
     <?php endif ?>
@@ -16,7 +17,8 @@
         </a>
     <?php else: ?>
         <a href="<?= $config->homeurl ?>/login/">
-            <img src="<?= $this->asset('images/old_menu_login.png') ?>" class="icon"><?= _t('Login', 'system') ?>
+            <img src="<?= $this->asset('images/old_menu_login.png') ?>" class="icon">
+            <?= _t('Login', 'system') ?>
         </a>
     <?php endif ?>
 </div>
