@@ -36,6 +36,7 @@
     "batumibiz/captcha": "^2.0.1",
     "erusev/parsedown": "^1.7",
     "geshi/geshi": "dev-master",
+    "league/plates": "^3.3",
     "nikic/fast-route": "^1.3",
     "verot/class.upload.php": "^2.0",
     "zendframework/zend-i18n": "^2.9",
