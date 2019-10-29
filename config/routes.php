@@ -22,8 +22,8 @@ $systemUser = $container->get(UserInterface::class);
 
 /** @var RouteCollector $map */
 $map = $container->get(RouteCollector::class);
-
-$map->get('/', 'modules/homepage/index.php');                                          // Главная страница
+//TODO: после перенесения переключателя языков в модуль, переделать роут на ->get()
+$map->addRoute(['GET', 'POST'], '/', 'modules/homepage/index.php');                    // Главная страница
 $map->get('/rss[/]', 'modules/rss/index.php');                                         // RSS
 $map->addRoute(['GET', 'POST'], '/album[/]', 'modules/album/index.php');               // Фотоальбомы
 $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');       // Загрузки

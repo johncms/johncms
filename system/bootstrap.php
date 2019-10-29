@@ -10,7 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ConfigInterface;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\UserInterface;
 use Psr\Container\ContainerInterface;
@@ -121,29 +120,6 @@ if (! file_exists($cacheFile) || filemtime($cacheFile) < (time() - 86400)) {
     file_put_contents($cacheFile, time());
 }
 
-/** @var ConfigInterface $config */
-$config = $container->get(ConfigInterface::class);
-
-/** @var UserInterface $userConfig */
-$userConfig = $container->get(UserInterface::class)->getConfig();
-
-if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
-    $locale = trim($_POST['setlng']);
-    $_SESSION['lng'] = $locale;
-} elseif (isset($_SESSION['lng']) && array_key_exists($_SESSION['lng'], $config->lng_list)) {
-    $locale = $_SESSION['lng'];
-} elseif (isset($userConfig['lng']) && array_key_exists($userConfig['lng'], $config->lng_list)) {
-    $locale = $userConfig['lng'];
-    $_SESSION['lng'] = $locale;
-} else {
-    $locale = $config->lng;
-}
-
-/** @var Translator $translator */
-$translator = $container->get(Translator::class);
-$translator->setLocale($locale);
-unset($translator);
-
 /**
  * Translate a message
  *
@@ -184,7 +160,10 @@ function _p($singular, $plural, $number, $textDomain = 'default')
     return $translator->translatePlural($singular, $plural, $number, $textDomain);
 }
 
-$kmess = $userConfig->kmess;
+/** @var UserInterface $userConfig */
+$userConfig = $container->get(UserInterface::class)->getConfig();
+
+$kmess = $userConfig->kmess; //TODO: удалить $kmess ВЕЗДЕ, где используется!!!
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 

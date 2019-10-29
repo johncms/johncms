@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Zend\I18n\Translator\Translator;
+
 define('_IN_JOHNCMS', 1);
 
 require 'system/bootstrap.php';
@@ -25,6 +27,9 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
+
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 $url = isset($_REQUEST['url']) ? strip_tags(rawurldecode(trim($_REQUEST['url']))) : false;
 
@@ -37,7 +42,7 @@ if (isset($_GET['lng'])) {
         echo '<p><h3>' . _t('Select language', 'system') . '</h3>';
 
         foreach ($config->lng_list as $key => $val) {
-            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $locale ? 'checked="checked"' : '') . '/>&#160;' .
+            echo '<div><input type="radio" value="' . $key . '" name="setlng" ' . ($key == $translator->getLocale() ? 'checked="checked"' : '') . '/>&#160;' .
                 $tools->getFlag($key) .
                 $val .
                 ($key == $config->lng ? ' <small class="red">[' . _t('Default', 'system') . ']</small>' : '') .

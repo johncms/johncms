@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\i18n\TranslatorServiceFactory;
 use Zend\I18n\Translator;
 
 return [
@@ -31,7 +32,7 @@ return [
         ],
 
         'factories' => [
-            Translator\Translator::class          => Translator\TranslatorServiceFactory::class,
+            Translator\Translator::class          => TranslatorServiceFactory::class,
             Translator\LoaderPluginManager::class => Translator\LoaderPluginManagerFactory::class,
         ],
     ],

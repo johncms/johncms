@@ -10,25 +10,35 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\ConfigInterface;
+use Johncms\Api\EnvironmentInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
+use Psr\Container\ContainerInterface;
+use Zend\I18n\Translator\Translator;
+
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
+/** @var ContainerInterface $container */
 $container = App::getContainer();
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/** @var ToolsInterface $tools */
+$tools = $container->get(ToolsInterface::class);
 
-/** @var Johncms\Api\EnvironmentInterface $env */
-$env = $container->get(Johncms\Api\EnvironmentInterface::class);
+/** @var EnvironmentInterface $env */
+$env = $container->get(EnvironmentInterface::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var UserInterface $systemUser */
+$systemUser = $container->get(UserInterface::class);
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/** @var ConfigInterface $config */
+$config = $container->get(ConfigInterface::class);
+
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
 
 $act = isset($_REQUEST['act']) ? trim($_REQUEST['act']) : '';
 $headmod = $headmod ?? '';
@@ -100,7 +110,7 @@ if (isset($cms_ads[0])) {
 // Выводим логотип и переключатель языков
 echo '<table style="width: 100%;" class="logo"><tr>' .
     '<td valign="bottom"><a href="' . $config['homeurl'] . '">' . $tools->image('logo.gif', ['class' => '']) . '</a></td>' .
-    ($headmod == 'mainpage' && count($config->lng_list) > 1 ? '<td align="right"><a href="' . $config->homeurl . '/go.php?lng"><b>' . strtoupper($locale) . '</b></a>&#160;<a href="' . $config->homeurl . '/go.php?lng">' . $tools->getFlag($locale) . '</a></td>' : '') .
+    ($headmod == 'mainpage' && count($config->lng_list) > 1 ? '<td align="right"><a href="' . $config->homeurl . '/go.php?lng"><b>' . strtoupper($translator->getLocale()) . '</b></a>&#160;<a href="' . $config->homeurl . '/go.php?lng">' . $tools->getFlag($translator->getLocale()) . '</a></td>' : '') .
     '</tr></table>';
 
 // Выводим верхний блок с приветствием
