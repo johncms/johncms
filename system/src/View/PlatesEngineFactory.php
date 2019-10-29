@@ -14,6 +14,7 @@ namespace Johncms\View;
 
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\View\Extension\Assets;
 use League\Plates\Engine;
 use Johncms\Api\ConfigInterface;
 use Psr\Container\ContainerInterface;
@@ -23,17 +24,19 @@ class PlatesEngineFactory
 {
     public function __invoke(ContainerInterface $container)
     {
-        $plates = new Engine;
-        $plates->setFileExtension('phtml');
-        $plates->addFolder('system', ROOT_PATH . 'themes/default/templates');
-        $plates->addData([
-            'config'    => $container->get(ConfigInterface::class),
+        $engine = new Engine;
+        $engine->setFileExtension('phtml');
+        $engine->addFolder('system', ROOT_PATH . 'themes/default/templates');
+        $engine->loadExtension($container->get(Assets::class));
+
+        $engine->addData([
             'container' => $container,
+            'config'    => $container->get(ConfigInterface::class),
             'locale'    => $container->get(Translator::class)->getLocale(),
             'tools'     => $container->get(ToolsInterface::class),
             'user'      => $container->get(UserInterface::class),
         ]);
 
-        return $plates;
+        return $engine;
     }
 }

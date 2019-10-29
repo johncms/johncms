@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api;
+use Johncms\View\Extension\Assets;
 
 return [
     'dependencies' => [
@@ -20,6 +21,7 @@ return [
             Api\EnvironmentInterface::class => Johncms\Http\Environment::class,
             Api\ToolsInterface::class       => Johncms\Utility\Tools::class,
             Api\UserInterface::class        => Johncms\Users\UserFactory::class,
+            Assets::class                   => Assets::class,
             FastRoute\RouteCollector::class => Johncms\Router\RouteCollectorFactory::class,
             League\Plates\Engine::class     => Johncms\View\PlatesEngineFactory::class,
             PDO::class                      => Johncms\Database\PdoFactory::class,
