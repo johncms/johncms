@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\View;
 
 use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
 use League\Plates\Engine;
 use Johncms\Api\ConfigInterface;
 use Psr\Container\ContainerInterface;
@@ -26,9 +27,11 @@ class PlatesEngineFactory
         $plates->setFileExtension('phtml');
         $plates->addFolder('system', ROOT_PATH . 'themes/default/templates');
         $plates->addData([
-            'config' => $container->get(ConfigInterface::class),
-            'locale' => $container->get(Translator::class)->getLocale(),
-            'tools'  => $container->get(ToolsInterface::class)
+            'config'    => $container->get(ConfigInterface::class),
+            'container' => $container,
+            'locale'    => $container->get(Translator::class)->getLocale(),
+            'tools'     => $container->get(ToolsInterface::class),
+            'user'      => $container->get(UserInterface::class),
         ]);
 
         return $plates;

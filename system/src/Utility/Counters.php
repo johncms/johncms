@@ -264,7 +264,7 @@ class Counters
             file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
 
-        return '<a href="' . $this->homeurl . '/users/?act=online">' . $this->tools->image('menu_online.png') . $users . ' / ' . $guests . '</a>';
+        return $users . ' / ' . $guests;
     }
 
     /**

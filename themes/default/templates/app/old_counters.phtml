@@ -1,0 +1,22 @@
+<?php
+/** @var Psr\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+// Счетчики каталогов
+$req = $db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort` ASC');
+
+if ($req->rowCount()) {
+    while ($res = $req->fetch()) {
+        $link1 = ($res['mode'] == 1 || $res['mode'] == 2) ? $res['link1'] : $res['link2'];
+        $link2 = $res['mode'] == 2 ? $res['link1'] : $res['link2'];
+        //$count = ($headmod == 'mainpage') ? $link1 : $link2;
+        $count = $link1;
+
+        if (!empty($count)) {
+            echo $count;
+        }
+    }
+}

@@ -23,7 +23,7 @@ class TranslatorServiceFactory
     {
         // Configure the translator
         $config = $container->get('config');
-        $trConfig = isset($config['translator']) ? $config['translator'] : [];
+        $trConfig = $config['translator'] ?? [];
         $translator = Translator::factory($trConfig);
         $translator->setLocale($this->determineLocale($container));
 

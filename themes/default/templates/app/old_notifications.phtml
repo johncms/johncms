@@ -1,0 +1,51 @@
+<?php
+/** @var Psr\Container\ContainerInterface $container */
+$container = App::getContainer();
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Mobicms\Api\UserInterface $systemUser */
+$systemUser = $container->get(Mobicms\Api\UserInterface::class);
+
+// Ссылки на непрочитанное
+if ($systemUser->id) {
+    // Выводим сообщение о Бане
+    if (!empty($systemUser->ban)) {
+        echo '<div class="alarm">' . _t('Ban', 'system') . '&#160;<a href="' . $config->homeurl . '/profile/?act=ban">' . _t('Details', 'system') . '</a></div>';
+    }
+
+    $list = [];
+    $new_sys_mail = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `from_id`='" . $systemUser->id . "' AND `read`='0' AND `sys`='1' AND `delete`!='" . $systemUser->id . "'")->fetchColumn();
+
+    if ($new_sys_mail) {
+        $list[] = '<a href="' . $config->homeurl . '/mail/index.php?act=systems">' . _t('System', 'system') . '</a> (+' . $new_sys_mail . ')';
+    }
+
+    $new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $systemUser->id . "'
+                            WHERE `cms_mail`.`from_id`='" . $systemUser->id . "'
+                            AND `cms_mail`.`sys`='0'
+                            AND `cms_mail`.`read`='0'
+                            AND `cms_mail`.`delete`!='" . $systemUser->id . "'
+                            AND `cms_contact`.`ban`!='1'")->fetchColumn();
+
+    if ($new_mail) {
+        $list[] = '<a href="' . $config->homeurl . '/mail/index.php?act=new">' . _t('Mail', 'system') . '</a> (+' . $new_mail . ')';
+    }
+
+    if ($systemUser->comm_count > $systemUser->comm_old) {
+        $list[] = '<a href="' . $config->homeurl . '/profile/?act=guestbook&amp;user=' . $systemUser->id . '">' . _t('Guestbook', 'system') . '</a> (' . ($systemUser->comm_count - $systemUser->comm_old) . ')';
+    }
+
+    $new_album_comm = $db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = ' . $systemUser->id . ' AND `unread_comments` = 1')->fetchColumn();
+
+    if ($new_album_comm) {
+        $list[] = '<a href="' . $config->homeurl . '/album/index.php?act=top&amp;mod=my_new_comm">' . _t('Comments', 'system') . '</a>';
+    }
+
+    if (!empty($list)) {
+        echo '<div class="rmenu">' . _t('Unread', 'system') . ': ' . implode(', ', $list) . '</div>';
+    }
+}
+

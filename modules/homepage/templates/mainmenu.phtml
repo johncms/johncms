@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var Johncms\Utility\Counters   $counters
+ * @var Johncms\Utility\NewsWidget $news
+ * @var int                        $rights
+ */
+
+$this->layout('system::layout/old', ['title' => _t('Welcome', 'system')])
+?>
+
+<div class="phdr"><strong><?= _t('Information', 'system') ?></strong></div>
+<div><?= $news->news ?></div>
+<div class="menu"><a href="news/"><?= _t('News archive', 'system') ?></a> (<?= $news->newscount ?>)</div>
+<div class="menu"><a href="help/"><?= _t('Information, FAQ', 'system') ?></a></div>
+<div class="phdr"><strong><?= _t('Communication', 'system') ?></strong></div>
+<?php if ($config->mod_guest || $rights >= 7): ?>
+    <div class="menu"><a href="guestbook/"><?= _t('Guestbook', 'system') ?></a> (<?= $counters->guestbook() ?>)</div>
+<?php endif ?>
+<?php if ($config->mod_forum || $rights >= 7): ?>
+    <div class="menu"><a href="forum/"><?= _t('Forum', 'system') ?></a> (<?= $counters->forum() ?>)</div>
+<?php endif ?>
+<div class="phdr"><strong><?= _t('Useful', 'system') ?></strong></div>
+<?php if ($config->mod_down || $rights >= 7): ?>
+    <div class="menu"><a href="downloads/"><?= _t('Downloads', 'system') ?></a> (<?= $counters->downloads() ?>)</div>
+<?php endif ?>
+<?php if ($config->mod_lib || $rights >= 7): ?>
+    <div class="menu"><a href="library/"><?= _t('Library', 'system') ?></a> (<?= $counters->library() ?>)</div>
+<?php endif ?>
+<div class="phdr"><strong><?= _t('Community', 'system') ?></strong></div>
+<div class="menu"><a href="users/"><?= _t('Users', 'system') ?></a> (<?= $counters->users() ?>)</div>
+<div class="menu"><a href="album/"><?= _t('Photo Albums', 'system') ?></a> (<?= $counters->album() ?>)</div>

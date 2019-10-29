@@ -10,36 +10,23 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
+use Johncms\Utility\NewsWidget;
+use League\Plates\Engine;
+use Psr\Container\ContainerInterface;
 
-$act = isset($_GET['act']) ? trim($_GET['act']) : '';
+/** @var ContainerInterface $container */
+$container = App::getContainer();
 
-if (isset($_SESSION['ref'])) {
-    unset($_SESSION['ref']);
-}
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+$view->addFolder('homepage', __DIR__ . '/templates/');
 
-if (isset($_GET['err'])) {
-    $act = 404;
-}
+// Если нужно показать ссылку "На главную", то добавляем строку ниже
+//$view->addData(['homeButton' => true]);
 
-switch ($act) {
-    case '404':
-        /** @var ToolsInterface $tools */
-        $tools = App::getContainer()->get(ToolsInterface::class);
-
-        $headmod = 'error404';
-        require 'system/head.php';
-        echo $tools->displayError(_t('The requested page does not exists'));
-        break;
-
-    default:
-        // Главное меню сайта
-        if (isset($_SESSION['ref'])) {
-            unset($_SESSION['ref']);
-        }
-        $headmod = 'mainpage';
-        require 'system/head.php';
-        include 'mainmenu.php';
-}
-
-require 'system/end.php';
+echo $view->render('homepage::mainmenu', [
+    'counters' => $container->get('counters'),
+    'news'     => new NewsWidget(),
+    'rights'   => $container->get(UserInterface::class)->rights,
+]);
