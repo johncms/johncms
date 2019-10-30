@@ -36,9 +36,9 @@ $map->addRoute(['GET', 'POST'], '/login[/]', 'modules/login/index.php');        
 $map->addRoute(['GET', 'POST'], '/mail[/]', 'modules/mail/index.php');                 // Почта
 $map->addRoute(['GET', 'POST'], '/news[/]', 'modules/news/index.php');                 // Новости
 $map->addRoute(['GET', 'POST'], '/profile[/]', 'modules/profile/index.php');           // Пользовательские профили
+$map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');           // Редирект по ссылке
 $map->addRoute(['GET', 'POST'], '/registration[/]', 'modules/registration/index.php'); // Регистрация
 $map->addRoute(['GET', 'POST'], '/users[/]', 'modules/users/index.php');               // Пользователи (актив сайта)
-//$map->addRoute(['GET', 'POST'], '/redirect/', 'modules/redirect/index.php');         // Регистрация
 
 if ($systemUser->isValid() && $systemUser->rights >= 6) {
     $map->addRoute(['GET', 'POST'], '/admin[/]', 'modules/admin/index.php');  // Админ панель

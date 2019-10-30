@@ -395,7 +395,7 @@ class Bbcode implements BbcodeInterface
             case 2:
                 $text = $short_url;
                 if (! $this->userConfig->directUrl) {
-                    $url = $this->homeUrl . '/go.php?url=' . rawurlencode($url);
+                    $url = $this->homeUrl . '/redirect/?url=' . rawurlencode($url);
                 }
                 break;
 
@@ -509,7 +509,7 @@ class Bbcode implements BbcodeInterface
                     return '<a href="' . $url[1] . '">' . $url[2] . '</a>';
                 }
 
-                return '<a href="' . $this->homeUrl . '/go.php?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
+                return '<a href="' . $this->homeUrl . '/redirect/?url=' . urlencode(htmlspecialchars_decode($url[1])) . '">' . $url[2] . '</a>';
             },
             $var);
     }
