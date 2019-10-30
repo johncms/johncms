@@ -10,11 +10,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-const JOHNCMS = '8.0.0';
+const JOHNCMS = '9.0.0';
 
 // Check the current PHP version
-if (version_compare(PHP_VERSION, '7.1', '<')) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.1 or higher</div>');
+if (version_compare(PHP_VERSION, '7.2', '<')) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 7.2 or higher</div>');
 }
 
 require '../system/vendor/autoload.php';
@@ -29,7 +29,7 @@ class install
     public static function checkPhpErrors()
     {
         $error = [];
-        if (version_compare(PHP_VERSION, '7.1.0', '<')) {
+        if (version_compare(PHP_VERSION, '7.2.0', '<')) {
             $error[] = 'PHP ' . PHP_VERSION;
         }
 
@@ -76,21 +76,21 @@ class install
     {
         $folders = [
             '/data/cache/',
-            '/files/downloads/files/',
-            '/files/downloads/screen/',
-            '/files/forum/attach/',
-            '/files/forum/topics/',
-            '/files/library/',
-            '/files/library/tmp',
-            '/files/library/images',
-            '/files/library/images/big',
-            '/files/library/images/orig',
-            '/files/library/images/small',
-            '/files/users/album/',
-            '/files/users/avatar/',
-            '/files/users/photo/',
-            '/files/mail/',
-            '/system/config/',
+            '/upload/downloads/files/',
+            '/upload/downloads/screen/',
+            '/upload/forum/attach/',
+            '/upload/forum/topics/',
+            '/upload/library/',
+            '/upload/library/tmp',
+            '/upload/library/images',
+            '/upload/library/images/big',
+            '/upload/library/images/orig',
+            '/upload/library/images/small',
+            '/upload/users/album/',
+            '/upload/users/avatar/',
+            '/upload/users/photo/',
+            '/upload/mail/',
+            '/config/autoload/',
         ];
         $error = [];
 
@@ -279,7 +279,7 @@ switch ($act) {
         echo '<h3 class="blue">' . $lng['congratulations'] . '</h3>' .
             $lng['installation_completed'] . '<p><ul>' .
             '<li><a href="../admin">' . $lng['admin_panel'] . '</a></li>' .
-            '<li><a href="../index.php">' . $lng['to_site'] . '</a></li>' .
+            '<li><a href="../">' . $lng['to_site'] . '</a></li>' .
             '</ul></p>' .
             $lng['final_warning'];
         break;
