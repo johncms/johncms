@@ -3,7 +3,7 @@
 /**
  * Подключаем Layout
  */
-$this->layout('system::layout/legacy', [
+$this->layout('system::layout/old', [
     'title'      => $this->e(isset($title) ? $title : $config->copyright),
     'homeButton' => (isset($headmod) ? true : false)
 ]);
