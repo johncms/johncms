@@ -28,8 +28,6 @@ $(function () {
     });
 });
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.querySelectorAll('pre code').forEach((block) => {
-        hljs.highlightBlock(block);
-    });
-});
+// Подсветка синтаксиса
+hljs.initHighlightingOnLoad();
+hljs.initLineNumbersOnLoad();
