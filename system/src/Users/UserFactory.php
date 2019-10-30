@@ -52,7 +52,7 @@ class UserFactory
             $user_ps = $_SESSION['ups'];
         } elseif (isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
             // Авторизация по COOKIE
-            $user_id = abs((int) (base64_decode(trim($_COOKIE['cuid']))));
+            $user_id = abs((int) $_COOKIE['cuid']);
             $_SESSION['uid'] = $user_id;
             $user_ps = md5(trim($_COOKIE['cups']));
             $_SESSION['ups'] = $user_ps;

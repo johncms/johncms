@@ -109,10 +109,10 @@ if ($systemUser->isValid()) {
                         // Если все проверки прошли удачно, подготавливаем вход на сайт
                         if (isset($_POST['mem'])) {
                             // Установка данных COOKIE
-                            $cuid = base64_encode((string) $systemUser['id']);
+                            $cuid = (string) $systemUser['id'];
                             $cups = md5($user_pass);
-                            setcookie('cuid', $cuid, time() + 3600 * 24 * 365);
-                            setcookie('cups', $cups, time() + 3600 * 24 * 365);
+                            setcookie('cuid', $cuid, time() + 3600 * 24 * 365, '/');
+                            setcookie('cups', $cups, time() + 3600 * 24 * 365, '/');
                         }
 
                         // Установка данных сессии

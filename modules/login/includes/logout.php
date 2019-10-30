@@ -16,8 +16,8 @@ $config = App::getContainer()->get(Johncms\Api\ConfigInterface::class);
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 
 if (isset($_POST['submit'])) {
-    setcookie('cuid', '');
-    setcookie('cups', '');
+    setcookie('cuid', '', time() - 3600, '/');
+    setcookie('cups', '', time() - 3600, '/');
     session_destroy();
     header('Location: ' . $config->homeurl);
 } else {
