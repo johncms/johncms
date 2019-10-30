@@ -110,7 +110,7 @@ Intellij Idea-like styling (c) Vasily Polovnyov <vast@whiteants.net>
   color: #ccc;
   border-right: 1px solid #CCC;
   vertical-align: top;
-  padding-right: 5px;
+  padding-right: 5px!important;
 
   /* your custom style here */
 }
