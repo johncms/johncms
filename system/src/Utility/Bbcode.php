@@ -77,7 +77,6 @@ class Bbcode implements BbcodeInterface
         $var = $this->highlightUrl($var);            // Обработка ссылок
         $var = $this->highlightBbcodeUrl($var);      // Обработка ссылок в BBcode
         $var = $this->youtube($var);
-        $var = $this->postprocessCode($var);         // Окончательная обработка кода
 
         return $var;
     }
@@ -428,25 +427,6 @@ class Bbcode implements BbcodeInterface
         return $var;
     }
 
-    /**
-     * Постобработка кода
-     *
-     * Собирает ранее распарсенное содержимое тега code в результирующую строку
-     *
-     * @param string $var
-     * @return mixed
-     */
-    protected function postprocessCode($var)
-    {
-        $var = preg_replace_callback(
-                '#\[code\|' . $this->codeId . '\](\d+)\[\/code\]#s',
-                [$this, 'postprocessCodeCallback'], $var);
-        $this->codeIndex = 0;
-        $this->codeParts = [];
-
-        return $var;
-    }
-
     private function phpCodeCallback($code)
     {
         return $this->codeCallback([1 => 'php', 2 => $code[1]]);
@@ -457,39 +437,13 @@ class Bbcode implements BbcodeInterface
         $parsers = [
             'php'  => 'php',
             'css'  => 'css',
-            'html' => 'html5',
+            'html' => 'html',
             'js'   => 'javascript',
             'sql'  => 'sql',
             'xml'  => 'xml',
         ];
-
-        $parser = isset($code[1], $parsers[$code[1]]) ? $parsers[$code[1]] : 'php';
-
-        if (null === $this->geshi) {
-            $this->geshi = new \GeSHi;
-            $this->geshi->set_link_styles(GESHI_LINK, 'text-decoration: none');
-            $this->geshi->set_link_target('_blank');
-            $this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, 2);
-            $this->geshi->set_line_style('background: rgba(255, 255, 255, 0.5)', 'background: rgba(255, 255, 255, 0.35)', false);
-            $this->geshi->set_code_style('padding-left: 6px; white-space: pre-wrap');
-        }
-
-        $this->geshi->set_language($parser);
-        $php = strtr($code[2], ['<br />' => '']);
-        $php = html_entity_decode(trim($php), ENT_QUOTES, 'UTF-8');
-        $this->geshi->set_source($php);
-        $this->codeIndex++;
-        $this->codeParts[$this->codeIndex] = $this->geshi->parse_code();
-
-        return '[code|' . $this->codeId . ']' . $this->codeIndex . '[/code]';
-    }
-
-    protected function postprocessCodeCallback($code)
-    {
-        $part = $this->codeParts[$code[1]];
-        unset($this->codeParts[$code[1]]);
-
-        return '<div class="phpcode" style="overflow-x: auto">' . $part . '</div>';
+        $text = trim(strtr($code[2], ['<br />' => '']));
+        return '<pre><code class="'.(array_key_exists($code[1], $parsers) ? $parsers[$code[1]] : '').'">'.$text.'</code></pre>';
     }
 
     /**

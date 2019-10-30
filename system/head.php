@@ -60,6 +60,7 @@ echo '<!DOCTYPE html>' .
     "\n" . '<meta name="description" content="' . $descriptions . '">' .
     "\n" . '<link rel="stylesheet" href="/theme/' . $tools->getSkin() . '/style.css">' .
     "\n" . '<link rel="stylesheet" href="/theme/default/magnific_popup/magnific-popup.css">' .
+    "\n" . '<link rel="stylesheet" href="/theme/default/highlight/default.css">' .
     "\n" . '<link rel="shortcut icon" href="/favicon.ico">' .
     "\n" . '<link rel="alternate" type="application/rss+xml" title="RSS | ' . _t('Site News', 'system') . '" href="' . $config->homeurl . '/rss/rss.php">' .
     "\n" . '<title>' . $textl . '</title>' .
