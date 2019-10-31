@@ -244,15 +244,12 @@ if (! $act) {
         '<div><input type="radio" name="lng" value="en" ' . ($language == 'en' ? 'checked="checked"' : '') . ' />&#160;English</div>' .
         '<div><input type="radio" name="lng" value="ru" ' . ($language == 'ru' ? 'checked="checked"' : '') . ' />&#160;Русский</div>' .
         '</p><p><input type="submit" name="submit" value="' . $lng['change'] . '" /></p></form>' .
-        '<p>' . $lng['languages'] . '</p>' .
         '<hr />';
 }
 
 switch ($act) {
-    case 'doc':
-        break;
-
     case 'changelog':
+        require __DIR__ . '/includes/Parsedown.php';
         echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
         if (($changelog = file_get_contents('../CHANGELOG.md')) !== false) {
             $parsedown = new Parsedown();
@@ -261,8 +258,9 @@ switch ($act) {
         break;
 
     case 'license':
+        require __DIR__ . '/includes/Parsedown.php';
         echo '<a href="?">&lt;&lt; ' . $lng['back'] . '</a><br><br><br>';
-        if (($changelog = file_get_contents('../LICENSE.md')) !== false) {
+        if (($changelog = file_get_contents('../LICENSE')) !== false) {
             $parsedown = new Parsedown();
             echo $parsedown->text($changelog);
         }
