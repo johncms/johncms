@@ -27,7 +27,3 @@ $(function () {
         }
     });
 });
-
-// Подсветка синтаксиса
-hljs.initHighlightingOnLoad();
-hljs.initLineNumbersOnLoad();

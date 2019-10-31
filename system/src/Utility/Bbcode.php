@@ -435,15 +435,18 @@ class Bbcode implements BbcodeInterface
     private function codeCallback($code)
     {
         $parsers = [
-            'php'  => 'php',
-            'css'  => 'css',
+            'php' => 'php',
+            'css' => 'css',
             'html' => 'html',
-            'js'   => 'javascript',
-            'sql'  => 'sql',
-            'xml'  => 'xml',
+            'js' => 'javascript',
+            'sql' => 'sql',
+            'xml' => 'xml',
         ];
         $text = trim(strtr($code[2], ['<br />' => '']));
-        return '<pre><code class="'.(array_key_exists($code[1], $parsers) ? $parsers[$code[1]] : '').'">'.$text.'</code></pre>';
+
+        $code_lang = (array_key_exists($code[1], $parsers) ? $parsers[$code[1]] : 'php');
+
+        return '<pre class="line-numbers"><code class="language-' . $code_lang . '">' . $text . '</code></pre>';
     }
 
     /**
