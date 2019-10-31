@@ -31,7 +31,7 @@ $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 $view->addFolder('login', __DIR__ . '/templates/');
 
-$id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
+$id = isset($_POST['id']) ? abs((int) ($_POST['id'])) : 0;
 $referer = isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : $config->homeurl;
 
 if ($user->isValid()) {
@@ -97,21 +97,17 @@ if ($user->isValid()) {
                 } else {
                     // Показываем CAPTCHA
                     $display_form = 0;
-
                     $cap = new Captcha;
                     $code = $cap->generateCode();
                     $_SESSION['code'] = $code;
 
-                    echo '<form' . ($id ? 'action="?id=' . $id . '" ' : '') . ' method="post">' .
-                        '<div class="menu"><p>' .
-                        '<img alt="' . _t('Verification code') . '" width="' . $cap->width . '" height="' . $cap->height . '" src="' . $cap->generateImage($code) . '"/><br>' .
-                        _t('Enter verification code',
-                            'system') . ':<br><input type="text" size="5" maxlength="5"  name="code"/>' .
-                        '<input type="hidden" name="n" value="' . htmlspecialchars($user_login) . '"/>' .
-                        '<input type="hidden" name="p" value="' . $user_pass . '"/>' .
-                        '<input type="hidden" name="mem" value="' . $remember . '"/>' .
-                        '<input type="submit" name="submit" value="' . _t('Continue',
-                            'system') . '"/></p></div></form>';
+                    echo $view->render('login::captcha', [
+                        'captcha'    => $cap->generateImage($code),
+                        'user_login' => $user_login,
+                        'user_pass'  => $user_pass,
+                        'remember'   => $remember,
+                        'id'         => $loginUser->id
+                    ]);
                 }
             }
 

@@ -1,0 +1,22 @@
+<?php $this->layout('system::layout/old', ['title' => _t('Login', 'system'), 'homeButton' => true]) ?>
+<div class="phdr">
+    <b><?= _t('Login', 'system') ?></b>
+</div>
+<form method="post">
+    <div class="menu">
+        <p>
+            <img alt="<?= _t('Verification code') ?>" src="<?= $captcha ?>"><br>
+            <label>
+                <?= _t('Enter verification code', 'system') ?>:<br>
+                <input type="text" size="5" maxlength="5" name="code"/>
+            </label>
+            <?php if ($id): ?>
+                <input type="hidden" name="id" value="<?= $id ?>"/>
+            <?php endif ?>
+            <input type="hidden" name="n" value="<?= $user_login ?>"/>
+            <input type="hidden" name="p" value="<?= $user_pass ?>"/>
+            <input type="hidden" name="mem" value="<?= $remember ?>"/>
+            <input type="submit" name="login" value="<?= _t('Continue', 'system') ?>"/>
+        </p>
+    </div>
+</form>
