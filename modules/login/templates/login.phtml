@@ -1,0 +1,44 @@
+<?php $this->layout('system::layout/old', ['title' => _t('Login', 'system'), 'homeButton' => true]) ?>
+<div class="phdr">
+    <b><?= _t('Login', 'system') ?></b>
+</div>
+<?php if (! empty($error)): ?>
+    <?= $tools->displayError($error) ?>
+<?php endif ?>
+<div class="gmenu">
+    <form method="post">
+        <p>
+            <label>
+                <?= _t('Username', 'system') ?>:<br>
+                <input type="text" name="n" value="<?= $this->e($user_login) ?>" maxlength="20"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                <?= _t('Password', 'system') ?>:<br>
+                <input type="password" name="p" maxlength="20"/>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" name="mem" value="1" checked="checked"/>
+                <?= _t('Remember', 'system') ?>
+            </label>
+        </p>
+        <p>
+            <input type="submit" name="login" value="<?= _t('Login', 'system') ?>"/>
+        </p>
+    </form>
+</div>
+<div class="menu">
+    <p>
+        <img src="<?= $this->asset('images/old_user.png') ?>" alt="">
+        <a href="../registration"><?= _t('Registration', 'system') ?></a>
+    </p>
+</div>
+<div class="bmenu">
+    <p>
+        <img src="<?= $this->asset('images/old_lock.png') ?>" alt="">
+        <a href="../profile/skl.php?continue"><?= _t('Forgot password?', 'system') ?></a>
+    </p>
+</div>

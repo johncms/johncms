@@ -1,8 +1,8 @@
-<?php $this->layout('system::layout/old', ['title' => _t('Logout', 'system')]) ?>
+<?php $this->layout('system::layout/old', ['title' => _t('Login', 'system'), 'homeButton' => true]) ?>
 <div class="rmenu">
     <p><?= _t('Are you sure you want to leave the site?', 'system') ?></p>
     <form method="post">
-        <p><input type="submit" name="submit" value="<?= _t('Logout', 'system') ?>"/></p>
+        <p><input type="submit" name="logout" value="<?= _t('Logout', 'system') ?>"/></p>
         <p><a href="<?= $referer ?>"><?= _t('Cancel', 'system') ?></a></p>
     </form>
 </div>
