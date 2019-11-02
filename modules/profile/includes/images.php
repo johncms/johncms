@@ -10,29 +10,16 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Edit Profile');
-require 'system/head.php';
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-if (($systemUser->id != $user['id'] && $systemUser->rights < 7)
-    || $user['rights'] > $systemUser->rights
-) {
+if (($systemUser->id != $user['id'] && $systemUser->rights < 7) || $user['rights'] > $systemUser->rights) {
     // Если не хватает прав, выводим ошибку
     echo $tools->displayError(_t('You cannot edit profile of higher administration'));
     require 'system/end.php';
     exit;
 }
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 switch ($mod) {
     case 'avatar':
@@ -72,7 +59,8 @@ switch ($mod) {
                 . '<p><input type="submit" name="submit" value="' . _t('Upload') . '" />'
                 . '</p></div></form>'
                 . '<div class="phdr"><small>'
-                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $config['flsz'])
+                . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
+                    $config['flsz'])
                 . '</small></div>';
         }
         break;
@@ -124,7 +112,8 @@ switch ($mod) {
                 '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" /></p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
                 '</div></form>' .
-                '<div class="phdr"><small>' . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'), $config['flsz']) . '</small></div>';
+                '<div class="phdr"><small>' . sprintf(_t('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).'),
+                    $config['flsz']) . '</small></div>';
         }
         break;
 }

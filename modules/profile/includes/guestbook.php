@@ -10,21 +10,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'my_guest';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Profile') . ' | ' . _t('Guestbook');
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 if ($systemUser->isValid() && $user['id'] == $systemUser->id) {
     $datauser['comm_old'] = $datauser['comm_count'];
 }
-
-require 'system/head.php';
 
 $context_top = '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Guestbook') . '</div>' .
     '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>';

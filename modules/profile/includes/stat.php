@@ -10,18 +10,10 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Статистика
 $textl = htmlspecialchars($user['name']) . ': ' . _t('Statistic');
-require 'system/head.php';
 echo '<div class="phdr"><a href="?user=' . $user['id'] . '"><b>' . _t('Profile') . '</b></a> | ' . _t('Statistic') . '</div>' .
     '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 1]) . '</p></div>' .
     '<div class="list2">' .
@@ -76,7 +68,7 @@ foreach ($query as $key => $val) {
     echo '<tr>';
 
     foreach ($num as $achieve) {
-        echo '<td align="center">' . $tools->image(($user[$key] >= $achieve ? 'green' : 'red') . '.gif') . '</td>';
+        echo '<td align="center"><img src="' . $assets->url('images/old/' . ($user[$key] >= $achieve ? 'green' : 'red') . '.gif') . '" alt="">' . '</td>';
     }
 
     echo '<td><small><b>' . $val . '</b></small></td></tr>';

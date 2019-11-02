@@ -10,27 +10,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+$textl = htmlspecialchars($user['name']) . ': ' . _t('Change Password');
 
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id && ($systemUser->rights < 7 || $user['rights'] > $systemUser->rights)) {
-    echo $tools->displayError(_t('Access forbidden'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl,
+        'content' => $tools->displayError(_t('Access forbidden')),
+    ]);
     exit;
 }
-
-$textl = htmlspecialchars($user['name']) . ': ' . _t('Change Password');
-require 'system/head.php';
 
 switch ($mod) {
     case 'change':

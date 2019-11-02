@@ -13,8 +13,12 @@ declare(strict_types=1);
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\View\Extension\Assets;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -22,6 +26,9 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 /** @var ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var Assets $assets */
+$assets = $container->get(Assets::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -38,6 +45,9 @@ $config = $container->get(ConfigInterface::class);
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+/** @var Engine $view */
+$view = $container->get(Engine::class);
 
 // Закрываем от неавторизованных юзеров
 if (! $systemUser->isValid()) {
@@ -96,6 +106,8 @@ function is_contact($id = 0)
     return $return;
 }
 
+ob_start();
+
 // Переключаем режимы работы
 $mods = [
     'activity',
@@ -113,13 +125,11 @@ $mods = [
     'stat',
 ];
 
-if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
+if ($act && ($key = array_search($act,
+        $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     // Анкета пользователя
-    $headmod = 'profile,' . $user['id'];
-    $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
-    require 'system/head.php';
     echo '<div class="phdr"><b>' . ($user['id'] != $systemUser->id ? _t('User Profile') : _t('My Profile')) . '</b></div>';
 
     // Меню анкеты
@@ -143,7 +153,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
     //Уведомление о дне рожденья
     if ($user['dayb'] == date('j', time()) && $user['monthb'] == date('n', time())) {
-        echo '<div class="gmenu">' . _t('Birthday') . '!!!</div>';
+        echo '<div class="gmenu">' . _t('Birthday') . '!</div>';
     }
 
     // Информация о юзере
@@ -166,7 +176,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 
     // Карма
-    if ($set_karma['on']) {
+    if ($config->karma['on']) {
         $karma = $user['karma_plus'] - $user['karma_minus'];
 
         if ($karma > 0) {
@@ -182,7 +192,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
             }
         }
 
-        echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config['homeurl'] . '/images/k_' . $images . '.gif"/></td><td>' .
+        echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $assets->url('images/old/k_' . $images . '.gif') . '"/></td><td>' .
             '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
             '<div class="sub">' .
             '<span class="green"><a href="?act=karma&amp;user=' . $user['id'] . '&amp;type=1">' . _t('For') . ' (' . $user['karma_plus'] . ')</a></span> | ' .
@@ -210,34 +220,34 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     // Меню выбора
     $total_photo = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     echo '<div class="list2"><p>' .
-        '<div>' . $tools->image('contacts.png') . '<a href="?act=info&amp;user=' . $user['id'] . '">' . _t('Information') . '</a></div>' .
-        '<div>' . $tools->image('activity.gif') . '<a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Activity') . '</a></div>' .
-        '<div>' . $tools->image('rate.gif') . '<a href="?act=stat&amp;user=' . $user['id'] . '">' . _t('Statistic') . '</a></div>';
+        '<div><img src="' . $assets->url('images/old/contacts.png') . '" alt="" class="icon"><a href="?act=info&amp;user=' . $user['id'] . '">' . _t('Information') . '</a></div>' .
+        '<div><img src="' . $assets->url('images/old/activity.gif') . '" alt="" class="icon"><a href="?act=activity&amp;user=' . $user['id'] . '">' . _t('Activity') . '</a></div>' .
+        '<div><img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=stat&amp;user=' . $user['id'] . '">' . _t('Statistic') . '</a></div>';
     $bancount = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     if ($bancount) {
-        echo '<div><img src="../images/block.gif" width="16" height="16"/>&#160;<a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Violations') . '</a> (' . $bancount . ')</div>';
+        echo '<div><img src="' . $assets->url('images/old/block.gif') . '" alt="" class="icon"><a href="?act=ban&amp;user=' . $user['id'] . '">' . _t('Violations') . '</a> (' . $bancount . ')</div>';
     }
 
     echo '<br />' .
-        '<div>' . $tools->image('photo.gif') . '<a href="../album/?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
-        '<div>' . $tools->image('guestbook.gif') . '<a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
+        '<div><img src="' . $assets->url('images/old/photo.gif') . '" alt="" class="icon"><a href="../album/?act=list&amp;user=' . $user['id'] . '">' . _t('Photo Album') . '</a>&#160;(' . $total_photo . ')</div>' .
+        '<div><img src="' . $assets->url('images/old/guestbook.gif') . '" alt="" class="icon"><a href="?act=guestbook&amp;user=' . $user['id'] . '">' . _t('Guestbook') . '</a>&#160;(' . $user['comm_count'] . ')</div>' .
         '</p></div>';
     if ($user['id'] != $systemUser->id) {
         echo '<div class="menu"><p>';
         // Контакты
         if (is_contact($user['id']) != 2) {
             if (! is_contact($user['id'])) {
-                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
+                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?id=' . $user['id'] . '">' . _t('Add to Contacts') . '</a></div>';
             } else {
-                echo '<div><img src="../images/users.png" width="16" height="16"/>&#160;<a href="../mail/?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
+                echo '<div><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon"><a href="../mail/?act=deluser&amp;id=' . $user['id'] . '">' . _t('Remove from Contacts') . '</a></div>';
             }
         }
 
         if (is_contact($user['id']) != 2) {
-            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
+            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;add">' . _t('Block User') . '</a></div>';
         } else {
-            echo '<div><img src="../images/del.png" width="16" height="16"/>&#160;<a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
+            echo '<div><img src="' . $assets->url('images/old/del.png') . '" alt="" class="icon"><a href="../mail/?act=ignor&amp;id=' . $user['id'] . '&amp;del">' . _t('Unlock User') . '</a></div>';
         }
 
         echo '</p>';
@@ -252,6 +262,11 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         echo '</div>';
     }
+
+    $textl = _t('Profile') . ': ' . htmlspecialchars($user['name']);
 }
 
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl ?? '',
+    'content' => ob_get_clean(),
+]);

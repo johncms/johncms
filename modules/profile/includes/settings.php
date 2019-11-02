@@ -10,33 +10,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Settings');
-require 'system/head.php';
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\UserConfig $userConfig */
+/** @var Johncms\Users\UserConfig $userConfig */
 $userConfig = $systemUser->getConfig();
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {
-    echo $tools->displayError(_t('Access forbidden'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl,
+        'content' => $tools->displayError(_t('Access forbidden')),
+    ]);
     exit;
 }
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 $menu = [
     (! $mod ? '<b>' . _t('General setting') . '</b>' : '<a href="?act=settings">' . _t('General setting') . '</a>'),

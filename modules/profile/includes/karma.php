@@ -10,15 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Karma');
-require 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
 $set_karma = $config->karma;
 
 if ($set_karma['on']) {
@@ -123,7 +117,6 @@ if ($set_karma['on']) {
             } else {
                 echo $tools->displayError(_t('You are not allowed to vote for users'), '<a href="?user=' . $user['id'] . '">' . _t('Back') . '</a>');
             }
-
             break;
 
         case 'delete':
@@ -233,7 +226,7 @@ if ($set_karma['on']) {
                 }
             }
 
-            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $config->homeurl . '/images/k_' . $images . '.gif"/></td><td>' .
+            echo '<table  width="100%"><tr><td width="22" valign="top"><img src="' . $assets->url('images/old/k_' . $images . '.gif') . '"/></td><td>' .
                 '<b>' . _t('Karma') . ' (' . $karma . ')</b>' .
                 '<div class="sub">' .
                 '<span class="green">' . _t('For') . ' (' . $user['karma_plus'] . ')</span> | ' .
