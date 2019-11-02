@@ -56,7 +56,7 @@ ul {
 
 .bblist {
     color: #4a5663;
-    background: transparent url(../../images/dot.gif) no-repeat left;
+    background: transparent url(../images/old/dot.gif) no-repeat left;
     padding: 0px 0px 0px 10px;
 }
 
@@ -128,7 +128,7 @@ ul {
 }
 
 .header {
-    background: #000000 url(../images/old_bg.gif);
+    background: #000000 url(../images/old/bg.gif);
     border: 1px solid silver;
     border-top: 1px solid red;
     color: #d0d7dd;

@@ -10,18 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$textl = _t('List of users');
-$headmod = 'userlist';
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+ob_start();
 
 // Выводим список пользователей
 $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `preg` = 1')->fetchColumn();
@@ -51,3 +42,8 @@ if ($total > $kmess) {
 
 echo '<p><a href="search.php">' . _t('User Search') . '</a><br />' .
     '<a href="./">' . _t('Back') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('List of users'),
+    'content' => ob_get_clean(),
+]);

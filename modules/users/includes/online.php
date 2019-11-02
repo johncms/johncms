@@ -10,27 +10,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'online';
-$textl = _t('Online');
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+ob_start();
 
 /** @var Johncms\Api\EnvironmentInterface $env */
 $env = App::getContainer()->get(Johncms\Api\EnvironmentInterface::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Показываем список Online
 $menu[] = ! $mod ? '<b>' . _t('Users') . '</b>' : '<a href="?act=online">' . _t('Users') . '</a>';
@@ -98,9 +83,11 @@ switch ($mod) {
             }
         }
 
-        require_once 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => _t('Online'),
+            'content' => ob_get_clean(),
+        ]);
         exit;
-        break;
 
     case 'guest':
         // Список гостей Онлайн
@@ -171,3 +158,8 @@ if ($total > $kmess) {
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Online'),
+    'content' => ob_get_clean(),
+]);

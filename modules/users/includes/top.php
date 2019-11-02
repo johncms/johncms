@@ -10,18 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'userstop';
-$textl = _t('Top Activity');
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+ob_start();
 
 // Функция отображения списков
 function get_top($order = 'postforum')
@@ -103,3 +94,8 @@ switch ($mod) {
 }
 
 echo '<p><a href="./">' . _t('Back') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Top Activity'),
+    'content' => ob_get_clean(),
+]);

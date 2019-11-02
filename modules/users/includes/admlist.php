@@ -12,18 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Administration');
-$headmod = 'admlist';
-require 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+ob_start();
 
 // Выводим список администрации
 echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Administration') . '</div>';
@@ -47,3 +36,8 @@ if ($total > $kmess) {
 
 echo'<p><a href="?act=search">' . _t('User Search') . '</a><br />' .
     '<a href="./">' . _t('Back') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Administration'),
+    'content' => ob_get_clean(),
+]);

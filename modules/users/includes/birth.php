@@ -10,20 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-define('_IN_JOHNCMS', 1);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$textl = _t('Birthdays');
-$headmod = 'birth';
-require 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+ob_start();
 
 // Выводим список именинников
 echo '<div class="phdr"><a href="./"><b>' . _t('Community') . '</b></a> | ' . _t('Birthdays') . '</div>';
@@ -52,3 +41,8 @@ if ($total) {
 }
 
 echo '<p><a href="./">' . _t('Back') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Birthdays'),
+    'content' => ob_get_clean(),
+]);
