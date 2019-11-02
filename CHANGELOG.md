@@ -7,7 +7,10 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 
 #### Added
 - Внедрен роутер [nikic/fast-route](https://github.com/nikic/FastRoute)
+- Внедрен шаблонизатор [league/plates](https://platesphp.com/)
 - Для классов модулей используется отдельный автозагрузчик [Aura.Autoload](https://github.com/auraphp/Aura.Autoload)
+- Добавлен класс Assets, который формирует ссылки с учетом текущей темы оформления
+- Для подсветки синтаксиса кода в сообщениях используется JS библиотека [Prism](https://prismjs.com)
 
 #### Changed
 - Полный рефакторинг кода системы
@@ -21,7 +24,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Nothing
 
 #### Removed
-- Nothing
+- Удалена библиотека geshi/geshi
 
 #### Fixed
 - Nothing
