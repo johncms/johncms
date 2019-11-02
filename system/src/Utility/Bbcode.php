@@ -16,11 +16,15 @@ use Johncms\Api\BbcodeInterface;
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
-use Johncms\UserConfig;
+use Johncms\Users\UserConfig;
+use Johncms\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
 
 class Bbcode implements BbcodeInterface
 {
+    /** @var Assets */
+    protected $asset;
+
     /**
      * @var ConfigInterface
      */
@@ -36,11 +40,6 @@ class Bbcode implements BbcodeInterface
      */
     protected $userConfig;
 
-    /**
-     * @var \GeSHi
-     */
-    protected $geshi;
-
     protected $tags;
 
     protected $homeUrl;
@@ -53,6 +52,7 @@ class Bbcode implements BbcodeInterface
 
     public function __invoke(ContainerInterface $container)
     {
+        $this->asset = $container->get(Assets::class);
         $this->config = $container->get(ConfigInterface::class);
         $this->user = $container->get(UserInterface::class);
         $this->userConfig = $this->user->getConfig();
@@ -225,21 +225,21 @@ class Bbcode implements BbcodeInterface
               }
             }
             </script>
-            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/bold.gif" alt="b" title="' . _t('Bold', 'system') . '" /></a>
-            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/italics.gif" alt="i" title="' . _t('Italic', 'system') . '" /></a>
-            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/underline.gif" alt="u" title="' . _t('Underline', 'system') . '" /></a>
-            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/strike.gif" alt="s" title="' . _t('Strike', 'system') . '" /></a>
-            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color.gif" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
-            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/color_bg.gif" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>
-            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/list.gif" alt="li" title="' . _t('List', 'system') . '" /></a>
-            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/sp.gif" alt="spoiler" title="' . _t('Spoiler', 'system') . '" /></a>
-            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/quote.gif" alt="quote" title="' . _t('Quote', 'system') . '" /></a>
-            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/link.gif" alt="url" title="' . _t('URL', 'system') . '" /></a>
-            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/php.gif" title="' . _t('Code', 'system') . '" alt="Code" /></a>
-            <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/youtube.gif" title="Youtube" alt="bg youtube" /></a>';
+            <a href="javascript:tag(\'[b]\', \'[/b]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_bold.gif') . '" alt="b" title="' . _t('Bold', 'system') . '" /></a>
+            <a href="javascript:tag(\'[i]\', \'[/i]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_italics.gif') . '" alt="i" title="' . _t('Italic', 'system') . '" /></a>
+            <a href="javascript:tag(\'[u]\', \'[/u]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_underline.gif') . '" alt="u" title="' . _t('Underline', 'system') . '" /></a>
+            <a href="javascript:tag(\'[s]\', \'[/s]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_strike.gif') . '" alt="s" title="' . _t('Strike', 'system') . '" /></a>
+            <a href="javascript:show_hide(\'color\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color.gif') . '" title="' . _t('Text Color', 'system') . '" alt="color" /></a>
+            <a href="javascript:show_hide(\'bg\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_color_bg.gif') . '" title="' . _t('Background Color', 'system') . '" alt="bg color" /></a>
+            <a href="javascript:tag(\'[*]\', \'[/*]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_list.gif') . '" alt="li" title="' . _t('List', 'system') . '" /></a>
+            <a href="javascript:tag(\'[spoiler=]\', \'[/spoiler]\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_sp.gif') . '" alt="spoiler" title="' . _t('Spoiler', 'system') . '" /></a>
+            <a href="javascript:tag(\'[c]\', \'[/c]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_quote.gif') . '" alt="quote" title="' . _t('Quote', 'system') . '" /></a>
+            <a href="javascript:tag(\'[url=]\', \'[/url]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_link.gif') . '" alt="url" title="' . _t('URL', 'system') . '" /></a>
+            <a href="javascript:show_hide(\'code\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_php.gif') . '" title="' . _t('Code', 'system') . '" alt="Code" /></a>
+            <a href="javascript:tag(\'[youtube]\', \'[/youtube]\')"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_youtube.gif') . '" title="Youtube" alt="bg youtube" /></a>';
 
         if ($this->user->isValid()) {
-            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->homeUrl . '/images/bb/smileys.gif" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
+            $out .= ' <a href="javascript:show_hide(\'sm\');"><img style="border: 0;" src="' . $this->asset->url('images/old/bb_smileys.gif') . '" alt="sm" title="' . _t('Smilies', 'system') . '" /></a><br />
                 <div id="sm" style="display:none">' . $bb_smileys . '</div>';
         } else {
             $out .= '<br />';
