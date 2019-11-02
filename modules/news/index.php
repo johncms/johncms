@@ -12,10 +12,9 @@ declare(strict_types=1);
 
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
-
-$headmod = 'news';
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
@@ -37,8 +36,12 @@ $tools = $container->get(ToolsInterface::class);
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
 $textl = _t('News');
-require 'system/head.php';
+
+ob_start();
 
 switch ($do) {
     case 'add':
@@ -186,8 +189,10 @@ switch ($do) {
             echo '<div class="phdr"><a href="./"><b>' . _t('News') . '</b></a> | ' . _t('Edit') . '</div>';
 
             if (! $id) {
-                echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Back to news') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', [
+                    'title'   => $textl,
+                    'content' => $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Back to news') . '</a>'),
+                ]);
                 exit;
             }
 
@@ -257,7 +262,6 @@ switch ($do) {
                     case '2':
                         // Проводим полную очистку
                         $db->query('TRUNCATE TABLE `news`');
-
                         echo '<p>' . _t('Delete all news') . '</p><p><a href="./">' . _t('Back to news') . '</a></p>';
                         break;
                     default:
@@ -289,7 +293,6 @@ switch ($do) {
 
             if (isset($_GET['yes'])) {
                 $db->query("DELETE FROM `news` WHERE `id` = '${id}'");
-
                 echo '<p>' . _t('Article deleted') . '<br><a href="./">' . _t('Back to news') . '</a></p>';
             } else {
                 echo '<p>' . _t('Do you really want to delete?') . '<br>' .
@@ -349,4 +352,7 @@ switch ($do) {
         }
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl,
+    'content' => ob_get_clean(),
+]);
