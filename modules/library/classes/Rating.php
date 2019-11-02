@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Library;
 
+use Johncms\View\Extension\Assets;
+
 /**
  * Звездный рейтинг статей
  * Class Rating
@@ -21,10 +23,9 @@ namespace Library;
 class Rating
 {
     /**
-     * обязательный аргумент, индификатор статьи
-     * @var int
+     * @var Assets
      */
-    private $lib_id = false;
+    private $asset;
 
     /**
      * @var \PDO
@@ -32,9 +33,10 @@ class Rating
     private $db;
 
     /**
-     * @var \Johncms\Api\ToolsInterface
+     * обязательный аргумент, индификатор статьи
+     * @var int
      */
-    private $tools;
+    private $lib_id = false;
 
     /**
      * Rating constructor.
@@ -44,7 +46,7 @@ class Rating
     {
         $container = \App::getContainer();
         $this->db = $container->get(\PDO::class);
-        $this->tools = $container->get(\Johncms\Api\ToolsInterface::class);
+        $this->asset = $container->get(Assets::class);
 
         $this->lib_id = $id;
         $this->check();
@@ -104,9 +106,10 @@ class Rating
     {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
-        $res = ($anchor ? '<a href="#rating">' : '') . $this->tools->image('rating/star.' . (str_replace('.', '-',
-                    (string) $this->getRate())) . '.gif',
-                ['alt' => 'rating ' . $this->lib_id . ' article']) . ($anchor ? '</a>' : '') . ' (' . $stmt->fetchColumn() . ')';
+        $res = ($anchor ? '<a href="#rating">' : '') .
+            '<img src="' . $this->asset->url('images/old/star.' . (str_replace('.', '-', (string) $this->getRate())) . '.gif') . '" alt="">' .
+            ($anchor ? '</a>' : '') .
+            ' (' . $stmt->fetchColumn() . ')';
 
         return $res;
     }
