@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
@@ -32,14 +33,18 @@ $config = $container->get(ConfigInterface::class);
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$textl = _t('Registration');
-$headmod = 'registration';
-require 'system/head.php';
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
+ob_start();
 
 // Если регистрация закрыта, выводим предупреждение
 if (! $config->mod_reg || $systemUser->isValid()) {
-    echo '<p>' . _t('Registration is temporarily closed') . '</p>';
-    require 'system/end.php';
+    echo '<div class="menu padding">' . _t('Registration is temporarily closed') . '</div>';
+    echo $view->render('system::app/old_content', [
+        'title'   => _t('Registration'),
+        'content' => ob_get_clean(),
+    ]);
     exit;
 }
 
@@ -165,7 +170,11 @@ if (isset($_POST['submit'])) {
         }
 
         echo '</div>';
-        require 'system/end.php';
+
+        echo $view->render('system::app/old_content', [
+            'title'   => _t('Registration'),
+            'content' => ob_get_clean(),
+        ]);
         exit;
     }
 }
@@ -213,4 +222,7 @@ echo '<form method="post"><div class="gmenu">' .
     '<p><input type="submit" name="submit" value="' . _t('Registration') . '"/></p></div></form>' .
     '<div class="phdr"><small>' . _t('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted') . '</small></div>';
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Registration'),
+    'content' => ob_get_clean(),
+]);
