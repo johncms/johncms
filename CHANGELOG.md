@@ -24,6 +24,7 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 - Nothing
 
 #### Removed
+- Из сканера безопасности удалена функция "Сканирование по дистрибутиву"
 - Удалена библиотека geshi/geshi
 
 #### Fixed
