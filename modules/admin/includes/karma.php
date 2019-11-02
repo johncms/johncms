@@ -24,10 +24,11 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
+if ($systemUser->rights < 9) {
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 if ($systemUser->rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
@@ -83,3 +84,8 @@ echo '<form action="?act=karma" method="post"><div class="menu">' .
     '<p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
     '</form><div class="phdr">' . ($systemUser->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

@@ -20,11 +20,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 $config = $container->get('config')['johncms'];
 
-// Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+ob_start();
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('News on the mainpage') . '</div>';
 
@@ -77,3 +73,8 @@ echo '<form action="?act=news" method="post"><div class="menu"><p>' .
     '<div class="phdr"><a href="?act=news&amp;reset">' . _t('Reset Settings') . '</a>' .
     '</div></form>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

@@ -27,7 +27,7 @@ hr {
     margin: 0;
 }
 
-img{
+img {
     border: 0;
 }
 
@@ -366,7 +366,7 @@ a.pagenav:hover {
     border: 1px solid #dedede;
 }
 
-table.desc{
+table.desc {
     border-top: 1px dotted #c6c17f;
     width: 100%;
     overflow: auto;
@@ -374,18 +374,18 @@ table.desc{
     margin-top: 4px;
 }
 
-table.desc td{
+table.desc td {
     font-size: x-small;
 }
 
-table.desc td.caption{
+table.desc td.caption {
     width: 1%;
     text-align: right;
     color: #6f6f6f;
     white-space: nowrap;
 }
 
-h4{
+h4 {
     margin: 6px 0 2px 0;
 }
 
@@ -455,4 +455,8 @@ h4{
 
 .mt-3 {
     margin-top: 0.5rem;
+}
+
+.padding {
+    padding: 12px 6px
 }

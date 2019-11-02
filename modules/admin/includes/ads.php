@@ -24,11 +24,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-// Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+ob_start();
 
 switch ($mod) {
     case 'edit':
@@ -426,3 +422,8 @@ switch ($mod) {
             '<a href="?act=ads&amp;mod=clear">' . _t('Delete inactive links') . '</a><br>' .
             '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

@@ -26,6 +26,8 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
+ob_start();
+
 switch ($mod) {
     case 'amnesty':
         if ($systemUser->rights < 9) {
@@ -87,7 +89,7 @@ switch ($mod) {
           FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
           GROUP BY `user_id`
           ORDER BY `${sort}` DESC
-          LIMIT ${start}, ${kmess}");
+          LIMIT $start, $kmess");
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -114,3 +116,8 @@ switch ($mod) {
                 : '')
             . '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

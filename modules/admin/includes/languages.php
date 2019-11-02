@@ -28,9 +28,10 @@ $config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
-    header('Location: http://johncms.com/?err');
-    exit;
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 // Выводим список доступных языков
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';
@@ -86,3 +87,8 @@ echo '</p><p>'
     . '<div class="phdr">' . _t('Total') . ': <b>' . count($config['lng_list']) . '</b></div><p>'
     . '<a href="?act=languages&amp;refresh">' . _t('Update List') . '</a><br>'
     . '<a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

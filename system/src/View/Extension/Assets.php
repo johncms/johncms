@@ -39,7 +39,7 @@ class Assets implements ExtensionInterface
         $url = ltrim($url, '/');
 
         foreach ([$this->config->skindef, 'default'] as $skin) {
-            $file = realpath(ROOT_PATH . 'themes/' . $skin . '/assets/' . $url);
+            $file = (string) realpath(ROOT_PATH . 'themes/' . $skin . '/assets/' . $url);
             $resultUrl = $this->config->homeurl . '/themes/' . $skin . '/assets/' . $url;
 
             if (is_file($file)) {

@@ -33,9 +33,10 @@ if ($total > $kmess) {
 
 $req = $db->query("SELECT `id`, `name`, `sex`, `lastdate`, `datereg`, `status`, `rights`, `ip`, `browser`, `rights` FROM `users` WHERE `preg` = 1 ORDER BY `datereg` DESC LIMIT ${start}, ${kmess}");
 
-for ($i = 0; ($res = $req->fetch()) !== false; $i++) {
+while ($res = $req->fetch()) {
     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
     echo $tools->displayUser($res) . '</div>';
+    ++$i;
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';

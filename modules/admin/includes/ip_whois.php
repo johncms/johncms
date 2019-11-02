@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
+ob_start();
+
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
@@ -115,3 +117,8 @@ if ($ip) {
 
 echo '<div class="menu"><small>' . $ipwhois . '</small></div>' .
     '<div class="phdr"><a href="' . htmlspecialchars($_SERVER['HTTP_REFERER']) . '">' . _t('Back') . '</a></div>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

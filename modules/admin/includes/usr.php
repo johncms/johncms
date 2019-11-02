@@ -24,6 +24,8 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
+ob_start();
+
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('List of Users') . '</div>';
 $sort = isset($_GET['sort']) ? trim($_GET['sort']) : '';
 echo '<div class="topmenu"><span class="gray">' . _t('Sort') . ':</span> ';
@@ -73,3 +75,8 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

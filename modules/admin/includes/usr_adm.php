@@ -16,13 +16,18 @@ $sw = 0;
 $adm = 0;
 $smd = 0;
 $mod = 0;
+
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
+
+ob_start();
+
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Administration') . '</div>';
-$req = $db->query("SELECT * FROM `users` WHERE `rights` = '9' ORDER BY `name` ASC");
+$req = $db->query("SELECT * FROM `users` WHERE `rights` = '9'");
 
 if ($req->rowCount()) {
     echo '<div class="bmenu">' . _t('Supervisors') . '</div>';
     while ($res = $req->fetch()) {
-        echo $sw % 2 ? '<div class="list2">' : '<div class="list1">';
+        echo ($sw % 2) ? '<div class="list2">' : '<div class="list1">';
         echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>')]);
         echo '</div>';
         ++$sw;
@@ -31,7 +36,7 @@ if ($req->rowCount()) {
 
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '7' ORDER BY `name` ASC");
 
-if ($req->fetch()) {
+if ($req->rowCount()) {
     echo '<div class="bmenu">' . _t('Administrators') . '</div>';
 
     while ($res = $req->fetch()) {
@@ -70,3 +75,8 @@ if ($req->rowCount()) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . ($sw + $adm + $smd + $mod) . '</div>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

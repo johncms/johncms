@@ -1,7 +1,7 @@
 <?php $this->layout('system::layout/old', ['title' => _t('Admin Panel'), 'homeButton' => true]) ?>
 <div class="phdr"><strong><?= _t('Admin Panel') ?></strong></div>
 <!-- Блок пользователей -->
-<div class="user" style="padding: 12px 6px">
+<div class="user padding">
     <h3><?= _t('Users') ?></h3>
     <ul>
         <?php if ($regtotal): ?>
@@ -22,7 +22,7 @@
     </ul>
 </div>
 <!-- Блок модулей -->
-<div class="gmenu" style="padding: 12px 6px">
+<div class="gmenu padding">
     <h3><?= _t('Modules') ?></h3>
     <ul>
         <li><a href="?act=forum"><?= _t('Forum') ?></a></li>
@@ -34,7 +34,7 @@
     </ul>
 </div>
 <!-- Блок системных настроек -->
-<div class="menu" style="padding: 12px 6px">
+<div class="menu padding">
     <h3><?= _t('System') ?></h3>
     <ul>
         <?php if ($user->rights == 9): ?>
@@ -47,7 +47,7 @@
 </div>
 <?php if ($user->rights == 9): ?>
     <!-- Блок безопасности -->
-    <div class="rmenu" style="padding: 12px 6px">
+    <div class="rmenu padding">
         <h3><?= _t('Security') ?></h3>
         <ul>
             <li><a href="?act=antispy"><?= _t('Anti-Spyware') ?></a></li>

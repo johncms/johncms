@@ -17,7 +17,7 @@ use Zend\I18n\Translator\Translator;
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
-$id = abs(filter_input(INPUT_ENV, 'id', FILTER_SANITIZE_NUMBER_INT)) ?? 0;
+$id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
 $act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';
 $mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
 $do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
@@ -46,7 +46,7 @@ if ($user->rights < 7) {
 
 ob_start();
 
-$mods = [
+$actions = [
     'forum',
     'news',
     'ads',
@@ -72,9 +72,8 @@ $mods = [
     'social_setting',
 ];
 
-if ($act && ($key = array_search($act,
-        $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
-    require __DIR__ . '/includes/' . $mods[$key] . '.php';
+if (($key = array_search($act, $actions)) !== false) {
+    require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
     echo $view->render('admin::index', [
         'regtotal'   => $db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn(),

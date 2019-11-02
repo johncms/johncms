@@ -26,9 +26,10 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
-    header('Location: http://johncms.com/?err');
-    exit;
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 switch ($mod) {
     case 'new':
@@ -411,3 +412,8 @@ switch ($mod) {
 
         echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

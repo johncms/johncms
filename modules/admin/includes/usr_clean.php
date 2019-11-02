@@ -21,11 +21,7 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-// Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+ob_start();
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -90,3 +86,8 @@ switch ($mod) {
             '<p><input type="submit" name="submit" value="' . _t('Delete') . '"/></p></form></div>' .
             '<div class="phdr"><a href="./">' . _t('Back') . '</a></div>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

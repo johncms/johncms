@@ -13,8 +13,8 @@ declare(strict_types=1);
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
 $error = [];
-$search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
-$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : false;
+$search_post = isset($_POST['search']) ? trim($_POST['search']) : '';
+$search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
 /** @var Psr\Container\ContainerInterface $container */
@@ -150,3 +150,8 @@ if ($search && ! $error) {
     echo '<div class="phdr"><small>' . _t('<b>Sample queries:</b><br><span class="red">10.5.7.1</span> - Search for a single address<br><span class="red">10.5.7.1-10.5.7.100</span> - Search a range address (forbidden to use mask symbol *)<br><span class="red">10.5.*.*</span> - Search mask. Will be found all subnet addresses starting with 0 and ending with 255') . '</small></div>';
     echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

@@ -22,9 +22,10 @@ $config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
-    header('Location: http://johncms.com/?err');
-    exit;
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('System Settings') . '</div>';
 
@@ -99,3 +100,8 @@ echo '</select>' .
     '</p><br><p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>' .
     '<div class="phdr">&#160;</div>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

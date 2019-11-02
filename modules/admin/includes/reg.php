@@ -24,11 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-// Проверяем права доступа
-if ($systemUser->rights < 6) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+ob_start();
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
 
@@ -145,3 +141,8 @@ switch ($mod) {
 
         echo '<a href="./">' . _t('Admin Panel') . '</a></p>';
 }
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

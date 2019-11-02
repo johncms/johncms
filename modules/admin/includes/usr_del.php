@@ -26,9 +26,10 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Проверяем права доступа
 if ($systemUser->rights < 9) {
-    header('Location: /?err');
-    exit;
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -54,16 +55,16 @@ if ($id && $id != $systemUser->id) {
 
 if (! $error) {
     // Считаем комментарии в библиотеке
-    $comm_lib = (int)$db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_lib = (int) $db->query("SELECT COUNT(*) FROM `cms_library_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     // Считаем комментарии к загрузкам
-    $comm_dl = (int)$db->query("SELECT COUNT(*) FROM `download__comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_dl = (int) $db->query("SELECT COUNT(*) FROM `download__comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     // Считаем посты в личных гостевых
-    $comm_gb = (int)$db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_gb = (int) $db->query("SELECT COUNT(*) FROM `cms_users_guestbook` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
 
     // Считаем комментарии в личных альбомах
-    $comm_al = (int)$db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
+    $comm_al = (int) $db->query("SELECT COUNT(*) FROM `cms_album_comments` WHERE `user_id` = '" . $user['id'] . "'")->fetchColumn();
     $comm_count = $comm_lib + $comm_dl + $comm_gb + $comm_al;
 
     // Считаем посты в Гостевой
@@ -144,3 +145,8 @@ if (! $error) {
 }
 
 echo '<p><a href="./">' . _t('Cancel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

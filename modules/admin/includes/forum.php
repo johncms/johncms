@@ -24,11 +24,7 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-// Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
+ob_start();
 
 // Задаем пользовательские настройки форума
 $set_forum = unserialize($systemUser->set_forum);
@@ -762,3 +758,8 @@ switch ($mod) {
 }
 
 echo '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

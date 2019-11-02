@@ -23,13 +23,10 @@ $db = $container->get(PDO::class);
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 $config = $container->get('config')['johncms'];
-
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
-}
-
 $set_af = $config['antiflood'];
+
+ob_start();
+
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Antiflood Settings') . '</div>';
 
 if (isset($_POST['submit']) || isset($_POST['save'])) {
@@ -108,3 +105,8 @@ echo '<form action="?act=antiflood" method="post">'
     . '<input name="dayto" size="2" value="' . $set_af['dayto'] . '" maxlength="2" style="text-align:right"/>:00&#160;' . _t('End of day') . ' <span class="gray">(17-23)</span>'
     . '</p><p><br><input type="submit" name="submit" value="' . _t('Save') . '"/></p></div></form>'
     . '<div class="phdr"><a href="?">' . _t('Back') . '</a></div>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);

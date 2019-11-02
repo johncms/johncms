@@ -11,29 +11,30 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
-define('ROOT_DIR', '..');
+const ROOT_DIR = ROOT_PATH;
 
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
 
 // Проверяем права доступа
-if ($systemUser->rights < 7) {
-    header('Location: http://johncms.com/?err');
-    exit;
+if ($systemUser->rights < 9) {
+    exit(_t('Access denied'));
 }
+
+ob_start();
 
 class scaner
 {
     // Сканер - антишпион
     public $scan_folders = [
         '',
-        '/assets',
-        '/config',
-        '/data',
-        '/modules',
-        '/system',
-        '/theme',
-        '/upload',
+        'assets',
+        'config',
+        'data',
+        'modules',
+        'system',
+        'themes',
+        'upload',
     ];
 
     public $good_files = [];
@@ -51,14 +52,6 @@ class scaner
     private $checked_folders = [];
 
     private $cache_files = [];
-
-    public function scan()
-    {
-        // Сканирование на соответствие дистрибутиву
-        foreach ($this->scan_folders as $data) {
-            $this->scan_files(ROOT_DIR . $data);
-        }
-    }
 
     public function snapscan()
     {
@@ -100,16 +93,11 @@ class scaner
 
     public function scan_files($dir, $snap = false)
     {
-        // Служебная функция сканирования
-        if (! isset($file)) {
-            $file = false;
-        }
-
-        $this->checked_folders[] = $dir . '/' . $file;
+        $this->checked_folders[] = $dir . '/';
 
         if ($dh = @opendir($dir)) {
             while (false !== ($file = readdir($dh))) {
-                if ($file == '.' || $file == '..' || $file == '.svn' || $file == '.DS_store') {
+                if ($file == '.' || $file == '..') {
                     continue;
                 }
 
@@ -145,16 +133,6 @@ class scaner
                                         'file_name' => $file,
                                         'file_date' => $file_date,
                                         'type'      => 1,
-                                        'file_size' => $file_size,
-                                    ];
-                                }
-                            } else {
-                                if (! in_array($folder . '/' . $file, $this->good_files) || $file_size > 300000) {
-                                    $this->bad_files[] = [
-                                        'file_path' => $folder . '/' . $file,
-                                        'file_name' => $file,
-                                        'file_date' => $file_date,
-                                        'type'      => 0,
                                         'file_size' => $file_size,
                                     ];
                                 }
@@ -239,8 +217,6 @@ switch ($mod) {
         // Главное меню Сканера
         echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Anti-Spyware') . '</div>'
             . '<div class="menu"><p><h3>' . _t('Scan mode') . '</h3><ul>'
-            . '<li><a href="?act=antispy&amp;mod=scan">' . _t('Distributive scan') . '</a><br>'
-            . '<small>' . _t('Files identification which are not included in the original distributive') . '</small></li>'
             . '<li><a href="?act=antispy&amp;mod=snapscan">' . _t('Snapshot scan') . '</a><br>'
             . '<small>' . _t('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') . '</small></li>'
             . '<li><a href="?act=antispy&amp;mod=snap">' . _t('Create snapshot') . '</a><br>'
@@ -249,3 +225,8 @@ switch ($mod) {
 }
 
 echo '<p>' . ($mod ? '<a href="?act=antispy">' . _t('Scanner menu') . '</a><br>' : '') . '<a href="./">' . _t('Admin Panel') . '</a></p>';
+
+echo $view->render('system::app/old_content', [
+    'title'   => _t('Admin Panel'),
+    'content' => ob_get_clean(),
+]);
