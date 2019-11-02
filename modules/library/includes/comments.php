@@ -10,24 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if (! $systemUser->isValid()) {
-    echo $tools->displayError(_t('Access forbidden'));
-    require_once 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl,
+        'content' => $tools->displayError(_t('Access forbidden')),
+    ]);
     exit;
 }
 
@@ -38,8 +27,10 @@ if ($req_obj->rowCount()) {
     $res_obj = $req_obj->fetch();
 
     if (! $res_obj) {
-        echo $tools->displayError(_t('Access forbidden'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('Access forbidden')),
+        ]);
         exit;
     }
 

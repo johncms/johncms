@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 /*
  * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
  *
@@ -13,12 +14,16 @@
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\View\Extension\Assets;
+use League\Plates\Engine;
 use Library\Tree;
 use Library\Hashtags;
 use Library\Rating;
 use Library\Utils;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Регистрируем автозагрузчик для классов библиотеки
 $loader = new Aura\Autoload\Loader;
@@ -30,10 +35,11 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 
-$headmod = 'library';
-
 /** @var ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var Assets $assets */
+$assets = $container->get(Assets::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -51,6 +57,9 @@ $config = $container->get(ConfigInterface::class);
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
 $adm = ($systemUser->rights > 4) ? true : false;
 $i = 0;
 
@@ -66,10 +75,13 @@ if (! $config['mod_lib'] && $systemUser->rights < 7) {
     $error = _t('Access forbidden');
 }
 
+ob_start();
+
 if ($error) {
-    require_once 'system/head.php';
-    echo $tools->displayError($error);
-    require_once 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl,
+        'content' => $tools->displayError($error),
+    ]);
     exit;
 }
 
@@ -96,9 +108,6 @@ if ($id > 0) {
         $textl .= ' | ' . (mb_strlen($hdr) > 30 ? $hdr . '...' : $hdr);
     }
 }
-
-require_once 'system/head.php';
-
 ?>
 
     <!-- style table image -->
@@ -167,11 +176,14 @@ if (in_array($act, $array_includes)) {
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo $tools->image('green.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
+            echo $tools->image('green.gif', [
+                    'width'  => 16,
+                    'height' => 16
+                ]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
         }
 
-        echo $tools->image('rate.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('Rating articles') . '</a><br>' .
-            $tools->image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
+        echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=top">' . _t('Rating articles') . '</a><br>' .
+            '<img src="' . $assets->url('images/old/talk.gif') . '" alt="" class="icon"><a href="?act=lastcom">' . _t('Latest comments') . '</a>' .
             '</p></div>';
 
         $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE `parent`=0')->fetchColumn();
@@ -328,7 +340,6 @@ if (in_array($act, $array_includes)) {
                             . '</p>';
                     }
                 }
-
                 break;
 
             default:
@@ -453,4 +464,7 @@ if (in_array($act, $array_includes)) {
     } // end else !id
 } // end else $act
 
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl,
+    'content' => ob_get_clean(),
+]);

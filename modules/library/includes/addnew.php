@@ -13,31 +13,18 @@ declare(strict_types=1);
 use Library\Hashtags;
 use Verot\Upload\Upload;
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $id)->rowCount() > 0) && isset($id) && $systemUser->isValid())) {
     // Проверка на флуд
     $flood = $tools->antiflood();
 
     if ($flood) {
-        require 'system/head.php';
-
-        echo $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
-            '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>');
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => $tools->displayError(sprintf(_t('You cannot add the Article so often<br>Please, wait %d sec.'), $flood),
+                '<br><a href="?do=dir&amp;id=' . $id . '">' . _t('Back') . '</a>'),
+        ]);
         exit;
     }
 
@@ -65,21 +52,27 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                     } elseif (mb_check_encoding($txt, 'KOI8-R')) {
                         $txt = iconv('KOI8-R', 'UTF-8', $txt);
                     } else {
-                        echo $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                        require_once 'system/end.php';
+                        echo $view->render('system::app/old_content', [
+                            'title'   => $textl,
+                            'content' => $tools->displayError(_t('The file is invalid encoding, preferably UTF-8') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                        ]);
                         exit;
                     }
 
                     $text = trim($txt);
                     unlink(UPLOAD_PATH . 'library/tmp' . DS . $newname);
                 } else {
-                    echo $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    require_once 'system/end.php';
+                    echo $view->render('system::app/old_content', [
+                        'title'   => $textl,
+                        'content' => $tools->displayError(_t('Error uploading') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                    ]);
                     exit;
                 }
             } else {
-                echo $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                require_once 'system/end.php';
+                echo $view->render('system::app/old_content', [
+                    'title'   => $textl,
+                    'content' => $tools->displayError(_t('Invalid file format allowed * .txt') . '<br><a href="?act=addnew&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+                ]);
                 exit;
             }
         } elseif (! empty($_POST['text'])) {
@@ -174,7 +167,10 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
                 echo '<div>' . _t('Article added') . '</div>' . ($md == 0 ? '<div>' . _t('Thank you for what we have written. After checking moderated, your Article will be published in the library.') . '</div>' : '');
                 $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
                 echo $md == 1 ? '<div><a href="?id=' . $cid . '">' . _t('To Article') . '</a></div>' : '<div><a href="?do=dir&amp;id=' . $id . '">' . _t('To Section') . '</a></div>';
-                require_once 'system/end.php';
+                echo $view->render('system::app/old_content', [
+                    'title'   => $textl,
+                    'content' => ob_get_clean(),
+                ]);
                 exit;
             }
             echo $db->errorInfo();

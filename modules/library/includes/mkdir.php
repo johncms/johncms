@@ -10,24 +10,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 if (! $adm) {
     Library\Utils::redir404();
 }
 
 if (isset($_POST['submit'])) {
-    /** @var Psr\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     if (empty($_POST['name'])) {
-        echo $tools->displayError(_t('You have not entered the name'),
-            '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-        require_once 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('You have not entered the name'), '<a href="?act=mkdir&amp;id=' . $id . '">' . _t('Repeat') . '</a>'),
+        ]);
         exit;
     }
 

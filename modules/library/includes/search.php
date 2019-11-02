@@ -10,11 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)

@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 ob_end_clean();
 ob_start();
 
@@ -24,12 +26,6 @@ $image_lib = file_exists(UPLOAD_PATH . 'library/images/orig/' . $id . '.png')
     : '';
 
 $out = '';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 /** @var Johncms\Api\BbcodeInterface $bbcode */
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);
