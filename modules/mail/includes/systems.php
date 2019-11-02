@@ -10,21 +10,11 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $out = '';
 $total = 0;
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($mod == 'clear') {
     if (isset($_POST['clear'])) {
@@ -109,7 +99,6 @@ if ($mod == 'clear') {
 }
 
 $textl = _t('Mail');
-require_once 'system/head.php';
 echo '<div class="phdr"><b>' . _t('System messages') . '</b></div>';
 echo $out;
 echo '<p>';

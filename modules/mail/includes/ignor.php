@@ -10,22 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'mail';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Mail');
-require_once 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
 echo '<div class="phdr"><b>' . _t('Blocklist') . '</b></div>';
 
 if (isset($_GET['del'])) {
@@ -34,8 +21,10 @@ if (isset($_GET['del'])) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (! $req->rowCount()) {
-            echo $tools->displayError(_t('User does not exists'));
-            require_once 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl,
+                'content' => $tools->displayError(_t('User does not exists')),
+            ]);
             exit;
         }
 
@@ -63,8 +52,10 @@ if (isset($_GET['del'])) {
         $req = $db->query('SELECT * FROM `users` WHERE `id` = ' . $id);
 
         if (! $req->rowCount()) {
-            echo $tools->displayError(_t('User does not exists'));
-            require_once 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl,
+                'content' => $tools->displayError(_t('User does not exists')),
+            ]);
             exit;
         }
 

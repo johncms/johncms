@@ -10,21 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Mail');
-require_once 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
 echo '<div class="phdr"><b>' . _t('New Messages') . '</b></div>';
 $total = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_mail` WHERE `from_id` = ' . $systemUser->id . ' AND `delete` != ' . $systemUser->id . ' AND `read` = 0')->fetchColumn();
 

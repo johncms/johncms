@@ -10,35 +10,23 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $set_mail = unserialize((string) $user['set_mail']);
 $out = '';
 $total = 0;
 $ch = 0;
 $mod = $_REQUEST['mod'] ?? '';
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
 if ($id) {
     $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}' LIMIT 1");
 
     if (! $req->rowCount()) {
         $textl = _t('Mail');
-        require_once 'system/head.php';
-        echo $tools->displayError(_t('User does not exists'));
-        require_once 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('User does not exists')),
+        ]);
         exit;
     }
 
@@ -46,7 +34,6 @@ if ($id) {
 
     if ($mod == 'clear') {
         $textl = _t('Mail');
-        require_once 'system/head.php';
         echo '<div class="phdr"><b>' . _t('Clear messages') . '</b></div>';
 
         if (isset($_POST['clear'])) {
@@ -92,7 +79,10 @@ if ($id) {
 
         echo '<div class="phdr"><a href="?act=write&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
         echo '<p><a href="../profile/?act=office">' . _t('Personal') . '</a></p>';
-        require_once 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => ob_get_clean(),
+        ]);
         exit;
     }
 }
@@ -517,7 +507,6 @@ if ($id) {
 }
 
 $textl = _t('Mail');
-require_once 'system/head.php';
 echo $out;
 echo '<p>';
 

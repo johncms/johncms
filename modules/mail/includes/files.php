@@ -10,22 +10,9 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'mail';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Mail') . ' | ' . _t('Files');
-require_once 'system/head.php';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
 echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 
 //Отображаем список файлов

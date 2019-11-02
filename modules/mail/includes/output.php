@@ -10,21 +10,10 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 $textl = _t('Mail');
-require_once 'system/head.php';
 echo '<div class="phdr"><b>' . _t('Sent messages') . '</b></div>';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 /** @var Johncms\Api\BbcodeInterface $bbcode */
 $bbcode = $container->get(Johncms\Api\BbcodeInterface::class);

@@ -10,32 +10,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$headmod = 'mail';
-$textl = _t('Mail');
-require_once 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+$textl = _t('Mail');
 echo '<div class="phdr"><h3>' . _t('Deleting messages') . '</h3></div>';
 
 if ($id) {
-    /** @var Psr\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\UserInterface $systemUser */
-    $systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     //Проверяем наличие сообщения
     $req = $db->query("SELECT * FROM `cms_mail` WHERE (`user_id`='" . $systemUser->id . "' OR `from_id`='" . $systemUser->id . "') AND `id` = '${id}' AND `delete`!='" . $systemUser->id . "' LIMIT 1");
 
     if (! $req->rowCount()) {
         //Выводим ошибку
-        echo $tools->displayError(_t('Message does not exist'));
-        require_once 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl,
+            'content' => $tools->displayError(_t('Message does not exist')),
+        ]);
         exit;
     }
 

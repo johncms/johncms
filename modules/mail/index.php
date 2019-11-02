@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-
-$headmod = 'mail';
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
@@ -34,15 +33,24 @@ $systemUser = $container->get(UserInterface::class);
 /** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
 
-//Проверка авторизации
-if (! $systemUser->isValid()) {
-    header('Location: ' . $config->homeurl . '/?err');
-    exit;
-}
+/** @var PDO $db */
+$db = $container->get(PDO::class);
+
+/** @var Johncms\Api\ToolsInterface $tools */
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
+//Проверка авторизации
+if (! $systemUser->isValid()) {
+    header('Location: ' . $config->homeurl);
+    exit;
+}
 
 function formatsize($size)
 {
@@ -59,6 +67,8 @@ function formatsize($size)
 
     return $size;
 }
+
+ob_start();
 
 // Массив подключаемых функций
 $mods = [
@@ -79,21 +89,16 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     require __DIR__ . '/includes/' . $mods[$key] . '.php';
 } else {
     $textl = _t('Mail');
-    require_once 'system/head.php';
     echo '<div class="phdr"><b>' . _t('Contacts') . '</b></div>';
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     if ($id) {
         $req = $db->query("SELECT * FROM `users` WHERE `id` = '${id}'");
 
         if (! $req->rowCount()) {
-            echo $tools->displayError(_t('User does not exists'));
-            require_once 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl,
+                'content' => $tools->displayError(_t('User does not exists')),
+            ]);
             exit;
         }
 
@@ -169,4 +174,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 }
 
-require_once ROOT_PATH . 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl,
+    'content' => ob_get_clean(),
+]);
