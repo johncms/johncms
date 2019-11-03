@@ -13,13 +13,13 @@ declare(strict_types=1);
 namespace Johncms\Api;
 
 /**
- * @property $directUrl
- * @property $fieldHeight
- * @property $fieldWidth
- * @property $kmess
- * @property $skin
- * @property $timeshift
- * @property $youtube
+ * @property        $directUrl
+ * @property        $fieldHeight
+ * @property        $fieldWidth
+ * @property int    $kmess
+ * @property string $skin
+ * @property        $timeshift
+ * @property        $youtube
  */
 interface UserConfigInterface
 {

@@ -161,7 +161,7 @@ function _p($singular, $plural, $number, $textDomain = 'default')
 }
 
 /** @var UserInterface $userConfig */
-$userConfig = $container->get(UserInterface::class)->getConfig();
+$userConfig = $container->get(UserInterface::class)->config;
 
 $kmess = $userConfig->kmess; //TODO: удалить $kmess ВЕЗДЕ, где используется!!!
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;

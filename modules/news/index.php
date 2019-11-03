@@ -158,7 +158,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text"></textarea></p>' .
+                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="text"></textarea></p>' .
                     '<p><h3>' . _t('Discussion') . '</h3>';
                 $fr = $db->query('SELECT * FROM `forum_sections` WHERE `section_type` = 0');
                 echo '<input type="radio" name="pf" value="0" checked="checked" />' . _t('Do not discuss') . '<br />';
@@ -232,7 +232,7 @@ switch ($do) {
                     '<p><h3>' . _t('Title') . '</h3>' .
                     '<input type="text" name="name" value="' . $res['name'] . '"/></p>' .
                     '<p><h3>' . _t('Text') . '</h3>' .
-                    '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
+                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="text">' . htmlentities($res['text'], ENT_QUOTES, 'UTF-8') . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '</form></div>' .
                     '<div class="phdr"><a href="./">' . _t('Back to news') . '</a></div>';

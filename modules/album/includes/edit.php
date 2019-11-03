@@ -148,7 +148,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         '<input type="text" name="name" value="' . $tools->checkout($name) . '" maxlength="30" /><br>' .
         '<small>' . _t('Min. 2, Max. 30') . '</small></p>' .
         '<p><h3>' . _t('Description') . '</h3>' .
-        '<textarea name="description" rows="' . $systemUser->getConfig()->fieldHeight . '">' . $tools->checkout($description) . '</textarea><br>' .
+        '<textarea name="description" rows="' . $systemUser->config->fieldHeight . '">' . $tools->checkout($description) . '</textarea><br>' .
         '<small>' . _t('Optional field') . '. ' . _t('Max. 500') . '</small></p>' .
         '<p><h3>' . _t('Password') . '</h3>' .
         '<input type="text" name="password" value="' . $tools->checkout($password) . '" maxlength="15" /><br>' .

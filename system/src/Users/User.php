@@ -12,17 +12,15 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
-use Johncms\Api\UserConfigInterface;
 use Johncms\Api\UserInterface;
 use Zend\Stdlib\ArrayObject;
 
 class User extends ArrayObject implements UserInterface
 {
-    private $userConfigObject;
-
     public function __construct(array $input)
     {
         parent::__construct($input, parent::ARRAY_AS_PROPS);
+        $this->storage['config'] = new UserConfig($this);
     }
 
     /**
@@ -35,15 +33,8 @@ class User extends ArrayObject implements UserInterface
             : false;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getConfig() : UserConfigInterface
+    public function offsetSet($key, $value)
     {
-        if (null === $this->userConfigObject) {
-            $this->userConfigObject = new UserConfig($this);
-        }
-
-        return $this->userConfigObject;
+        throw new \LogicException('User object are immutable');
     }
 }

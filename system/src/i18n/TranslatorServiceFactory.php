@@ -40,7 +40,7 @@ class TranslatorServiceFactory
         $config = $container->get(ConfigInterface::class);
 
         /** @var UserInterface $userConfig */
-        $userConfig = $container->get(UserInterface::class)->getConfig();
+        $userConfig = $container->get(UserInterface::class)->config;
 
         if (isset($_POST['setlng']) && array_key_exists($_POST['setlng'], $config->lng_list)) {
             $locale = trim($_POST['setlng']);

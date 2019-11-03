@@ -52,7 +52,7 @@ class Tools implements ToolsInterface
         $this->config = $container->get(ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(UserInterface::class);
-        $this->userConfig = $this->user->getConfig();
+        $this->userConfig = $this->user->config;
 
         return $this;
     }

@@ -186,7 +186,7 @@ if (($adm || ($db->query('SELECT `user_add` FROM `library_cats` WHERE `id`=' . $
         . '<textarea name="announce" rows="2" cols="20">' . $announce . '</textarea></p>'
         . '<p><h3>' . _t('Text') . ':</h3>'
         . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form',
-            'text') . '<textarea name="text" rows="' . $systemUser->getConfig()->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
+            'text') . '<textarea name="text" rows="' . $systemUser->config->fieldHeight . '" cols="20">' . $text . '</textarea></p>'
         . '<p><input type="checkbox" name="comments" value="1" checked="checked" />' . _t('Commenting on the Article') . '</p>'
         . '<p><h3>' . _t('To upload a photo') . '</h3>'
         . '<input type="file" name="image" accept="image/*" /></p>'

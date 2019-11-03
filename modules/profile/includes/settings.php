@@ -15,7 +15,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $textl = _t('Settings');
 
 /** @var Johncms\Users\UserConfig $userConfig */
-$userConfig = $systemUser->getConfig();
+$userConfig = $systemUser->config;
 
 // Проверяем права доступа
 if ($user['id'] != $systemUser->id) {

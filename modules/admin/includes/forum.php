@@ -312,7 +312,7 @@ switch ($mod) {
                 '<input type="text" name="name" />' .
                 '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
-                '<textarea name="desc" rows="' . $systemUser->getConfig()->fieldHeight . '"></textarea>' .
+                '<textarea name="desc" rows="' . $systemUser->config->fieldHeight . '"></textarea>' .
                 '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
             if ($id) {
@@ -414,7 +414,7 @@ switch ($mod) {
                     '<input type="text" name="sort" value="' . $res['sort'] . '"/><br>' .
                     '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                     '<p><h3>' . _t('Description') . '</h3>' .
-                    '<textarea name="desc" rows="' . $systemUser->getConfig()->fieldHeight . '">' . str_replace('<br>',
+                    '<textarea name="desc" rows="' . $systemUser->config->fieldHeight . '">' . str_replace('<br>',
                         "\r\n", $res['description']) . '</textarea>' .
                     '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 

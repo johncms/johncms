@@ -253,7 +253,7 @@ switch ($post_type) {
             echo '<form name="form" action="?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
                 '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-            echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
+            echo '<textarea rows="' . $systemUser->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);
@@ -296,7 +296,7 @@ switch ($post_type) {
             exit;
         }
 
-        $shift = ($config['timeshift'] + $systemUser->getConfig()->timeshift) * 3600;
+        $shift = ($config['timeshift'] + $systemUser->config->timeshift) * 3600;
         $vr = date('d.m.Y / H:i', $type1['date'] + $shift);
         $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
         $txt = isset($_POST['txt']) ? (int) ($_POST['txt']) : false;
@@ -442,7 +442,7 @@ switch ($post_type) {
                 // Форма с цитатой
                 echo '<p><b>' . $type1['user_name'] . '</b> <span class="gray">(' . $vr . ')</span></p>' .
                     '<p><h3>' . _t('Quote') . '</h3>' .
-                    '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="citata">' . (empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'])) . '</textarea>' .
+                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="citata">' . (empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'])) . '</textarea>' .
                     '<br /><small>' . _t('Only allowed 200 characters, other text will be cropped.') . '</small></p>';
             } else {
                 // Форма с репликой
@@ -454,7 +454,7 @@ switch ($post_type) {
 
             echo '<p><h3>' . _t('Message') . '</h3>';
             echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-            echo '<textarea rows="' . $systemUser->getConfig()->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
+            echo '<textarea rows="' . $systemUser->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
                 '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
             $token = mt_rand(1000, 100000);

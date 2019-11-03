@@ -55,7 +55,7 @@ class Bbcode implements BbcodeInterface
         $this->asset = $container->get(Assets::class);
         $this->config = $container->get(ConfigInterface::class);
         $this->user = $container->get(UserInterface::class);
-        $this->userConfig = $this->user->getConfig();
+        $this->userConfig = $this->user->config;
         $this->homeUrl = $this->config['homeurl'];
 
         $globalcnf = $container->get('config');
