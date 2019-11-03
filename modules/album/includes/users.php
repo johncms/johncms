@@ -12,14 +12,10 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
@@ -42,7 +38,7 @@ $menu = [
     ($mod == 'girls' ? '<b>' . _t('Girls') . '</b>' : '<a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a>'),
 ];
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . _t('List') . '</div>' .
-     '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
+    '<div class="topmenu">' . implode(' | ', $menu) . '</div>';
 
 $total = $db->query("SELECT COUNT(DISTINCT `user_id`)
     FROM `cms_album_files`
@@ -67,9 +63,10 @@ if ($total) {
 }
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $kmess) . '</div>' .
-         '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
-         '<input type="text" name="page" size="2"/>' .
-         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
-         '</form></p>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;',
+            $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
+        '<input type="text" name="page" size="2"/>' .
+        '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
+        '</form></p>';
 }

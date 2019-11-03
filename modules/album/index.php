@@ -20,39 +20,33 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
+/**
+ * @var ContainerInterface $container
+ * @var Assets             $assets
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ * @var Engine             $view
+ */
+
+$container = App::getContainer();
+$assets = $container->get(Assets::class);
+$db = $container->get(PDO::class);
+$user = $container->get(UserInterface::class);
+$tools = $container->get(ToolsInterface::class);
+$view = $container->get(Engine::class);
+
+/** @var Translator $translator */
+$translator = $container->get(Translator::class);
+$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 $al = isset($_REQUEST['al']) ? abs((int) ($_REQUEST['al'])) : null;
 $img = isset($_REQUEST['img']) ? abs((int) ($_REQUEST['img'])) : null;
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Assets $assets */
-$assets = $container->get(Assets::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var UserInterface $user */
-$user = $container->get(UserInterface::class);
-
-/** @var Translator $translator */
-$translator = $container->get(Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var ToolsInterface $tools */
-$tools = $container->get(ToolsInterface::class);
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-
 $textl = _t('Album');
-$headmod = 'album';
 
 $max_album = 20;
 $max_photo = 400;
@@ -85,10 +79,7 @@ if (! $foundUser) {
  */
 function vote_photo(array $arg)
 {
-    global $container, $db;
-
-    /** @var UserInterface $systemUser */
-    $systemUser = $container->get(UserInterface::class);
+    global $db, $user;
 
     $rating = $arg['vote_plus'] - $arg['vote_minus'];
 
@@ -103,9 +94,9 @@ function vote_photo(array $arg)
     $out = '<div class="gray">' . _t('Rating') . ': <span style="color:#000;background-color:#' . $color . '">&#160;&#160;<big><b>' . $rating . '</b></big>&#160;&#160;</span> ' .
         '(' . _t('Against') . ': ' . $arg['vote_minus'] . ', ' . _t('For') . ': ' . $arg['vote_plus'] . ')';
 
-    if ($systemUser->id != $arg['user_id'] && empty($systemUser->ban) && $systemUser->postforum > 10 && $systemUser->total_on_site > 1200) {
+    if ($user->id != $arg['user_id'] && empty($user->ban) && $user->postforum > 10 && $user->total_on_site > 1200) {
         // Проверяем, имеет ли юзер право голоса
-        $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
+        $req = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '" . $arg['id'] . "' LIMIT 1");
 
         if (! $req->rowCount()) {
             $out .= '<br>' . _t('Vote') . ': <a href="?act=vote&amp;mod=minus&amp;img=' . $arg['id'] . '">&lt;&lt; -1</a> | <a href="?act=vote&amp;mod=plus&amp;img=' . $arg['id'] . '">+1 &gt;&gt;</a>';
@@ -133,8 +124,6 @@ $actions = [
     'users',
     'vote',
 ];
-
-$path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
 if (($key = array_search($act, $actions)) !== false) {
     require __DIR__ . '/includes/' . $actions[$key] . '.php';

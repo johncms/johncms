@@ -10,17 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 // Удалить альбом
 if ($al && $foundUser['id'] == $user->id || $user->rights >= 6) {

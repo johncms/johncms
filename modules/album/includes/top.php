@@ -12,17 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Psr\Container\ContainerInterface $container
+ * @var PDO                              $db
+ * @var Johncms\Api\ToolsInterface       $tools
+ * @var Johncms\Api\UserInterface        $user
+ */
 
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
@@ -132,7 +127,8 @@ if ($mod == 'my_new_comm') {
 
 if ($total) {
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total,
+                $kmess) . '</div>';
     }
 
     $req = $db->query("
@@ -183,7 +179,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total,
+            $kmess) . '</div>' .
         '<p><form action="?act=top' . $link . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

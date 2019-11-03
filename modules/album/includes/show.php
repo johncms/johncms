@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if (! $al) {
     echo $tools->displayError(_t('Wrong data'));
@@ -74,7 +68,8 @@ if (($album['access'] == 1 || $album['access'] == 3)
     && $user->rights < 7
 ) {
     // Доступ закрыт
-    echo $tools->displayError(_t('Access forbidden'), '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a>');
+    echo $tools->displayError(_t('Access forbidden'),
+        '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Album List') . '</a>');
     echo $view->render('system::app/old_content', [
         'title'   => $textl ?? '',
         'content' => ob_get_clean(),
@@ -125,7 +120,8 @@ if ($show) {
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
+            $start, $total, $kmess) . '</div>';
 }
 
 if ($total) {
@@ -195,7 +191,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
+            $start, $total, $kmess) . '</div>' .
         '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . ($show ? '&amp;view' : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

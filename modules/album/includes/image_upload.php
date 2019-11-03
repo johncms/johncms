@@ -12,17 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Psr\Container\ContainerInterface $container
+ * @var PDO                              $db
+ * @var Johncms\Api\ToolsInterface       $tools
+ * @var Johncms\Api\UserInterface        $user
+ */
 
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
@@ -129,7 +124,8 @@ if ($al && $foundUser['id'] == $user->id && empty($user->ban) || $user->rights >
             '<input type="hidden" name="MAX_FILE_SIZE" value="' . (1024 * $config['flsz']) . '" />' .
             '<p><input type="submit" name="submit" value="' . _t('Upload') . '" /></p>' .
             '</div></form>' .
-            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'), $config['flsz']) . '</small></div>' .
+            '<div class="phdr"><small>' . sprintf(_t('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.'),
+                $config['flsz']) . '</small></div>' .
             '<p><a href="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '">' . _t('Back') . '</a></p>';
     }
 }
