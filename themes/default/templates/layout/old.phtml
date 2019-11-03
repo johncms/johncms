@@ -18,6 +18,8 @@
     <meta name="description" content="<?= $config->meta_desc ?>">
     <meta name="theme-color" content="#586776">
     <link rel="stylesheet" href="<?= $this->asset('css/old.css', true) ?>">
+    <link rel="stylesheet" href="<?= $this->asset('css/prism.css') ?>">
+    <link rel="stylesheet" href="<?= $this->asset('css/magnific-popup.css') ?>">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config->homeurl ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config->copyright ?></title>
@@ -64,5 +66,9 @@
         <small>&copy; <a href="https://johncms.com">JohnCMS</a></small>
     </div>
 </div>
+<script src="<?= $this->asset('js/jquery-3.4.1.min.js') ?>"></script>
+<script src="<?= $this->asset('js/jquery.magnific-popup.js') ?>"></script>
+<script src="<?= $this->asset('js/prism.js') ?>"></script>
+<script src="<?= $this->asset('js/scripts.js') ?>"></script>
 </body>
 </html>

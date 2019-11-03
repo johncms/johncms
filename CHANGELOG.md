@@ -26,9 +26,10 @@ Detailed change can see in the [repository log](https://github.com/simba77/johnc
 #### Removed
 - Из сканера безопасности удалена функция "Сканирование по дистрибутиву"
 - Удалена библиотека geshi/geshi
+- Удалены старые темы оформления
 
 #### Fixed
-- Nothing
+- Исправлены замеченные ошибки
 
 #### Security
 - Nothing
