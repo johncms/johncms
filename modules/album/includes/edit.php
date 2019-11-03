@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -37,8 +35,10 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
             $password = htmlspecialchars($res['password']);
             $access = $res['access'];
         } else {
-            echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl ?? '',
+                'content' => $tools->displayError(_t('Wrong data')),
+            ]);
             exit;
         }
     } else {
@@ -133,7 +133,10 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
 
             echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
                 '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl ?? '',
+                'content' => ob_get_clean(),
+            ]);
             exit;
         }
     }

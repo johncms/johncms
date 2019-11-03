@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require 'system/head.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -28,7 +26,10 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $al) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? '',
+        'content' => ob_get_clean(),
+    ]);
     exit;
 }
 
@@ -36,12 +37,15 @@ $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}'");
 
 if (! $req->rowCount()) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? '',
+        'content' => ob_get_clean(),
+    ]);
     exit;
 }
 
 $album = $req->fetch();
-$view = isset($_GET['view']);
+$show = isset($_GET['view']);
 
 // Показываем выбранный альбом с фотографиями
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | <a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Personal') . '</a></div>';
@@ -52,7 +56,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
 
 echo '<div class="user"><p>' . $tools->displayUser($user) . '</p></div>' .
     '<div class="phdr">' . _t('Album') . ': ' .
-    ($view ? '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($album['name']) . '</b></a>' : '<b>' . $tools->checkout($album['name']) . '</b>');
+    ($show ? '<a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '"><b>' . $tools->checkout($album['name']) . '</b></a>' : '<b>' . $tools->checkout($album['name']) . '</b>');
 
 if (! empty($album['description'])) {
     echo '<div class="sub">' . $tools->checkout($album['description'], 1) . '</div>';
@@ -71,7 +75,10 @@ if (($album['access'] == 1 || $album['access'] == 3)
 ) {
     // Доступ закрыт
     echo $tools->displayError(_t('Access forbidden'), '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a>');
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? '',
+        'content' => ob_get_clean(),
+    ]);
     exit;
 } elseif ($album['access'] == 2
     && $user['id'] != $systemUser->id
@@ -93,13 +100,16 @@ if (($album['access'] == 1 || $album['access'] == 3)
             '<p><input type="submit" name="submit" value="' . _t('Login') . '"/></p>' .
             '</div></form>' .
             '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Album List') . '</a></div>';
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]);
         exit;
     }
 }
 
 // Просмотр альбома и фотографий
-if ($view) {
+if ($show) {
     $kmess = 1;
     $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
     $start = isset($_REQUEST['page']) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}' AND `id` > '${img}'")->fetchColumn());
@@ -115,7 +125,7 @@ if ($view) {
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($view ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>';
 }
 
 if ($total) {
@@ -124,7 +134,7 @@ if ($total) {
 
     while ($res = $req->fetch()) {
         echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
-        if ($view) {
+        if ($show) {
             // Устанавливаем выбранную картинку в свою анкету
             if ($user['id'] == $systemUser->id && isset($_GET['profile'])) {
                 copy(
@@ -165,7 +175,7 @@ if ($total) {
                 '<a href="?act=image_delete&amp;img=' . $res['id'] . '&amp;user=' . $user['id'] . '">' . _t('Delete') . '</a>',
             ]);
 
-            if ($user['id'] == $systemUser->id && $view) {
+            if ($user['id'] == $systemUser->id && $show) {
                 echo ' | <a href="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;view&amp;img=' . $res['id'] . '&amp;profile">' . _t('Add to Profile') . '</a>';
             }
         }
@@ -185,8 +195,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($view ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>' .
-        '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . ($view ? '&amp;view' : '') . '" method="post">' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . '&amp;' . ($show ? 'view&amp;' : ''), $start, $total, $kmess) . '</div>' .
+        '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $user['id'] . ($show ? '&amp;view' : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
         '</form></p>';

@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 

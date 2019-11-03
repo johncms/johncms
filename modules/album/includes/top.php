@@ -34,7 +34,10 @@ switch ($mod) {
         // Непрочитанные комментарии в личных альбомах
         if (! $systemUser->isValid() || $systemUser->id != $user['id']) {
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', [
+                'title'   => $textl ?? '',
+                'content' => ob_get_clean(),
+            ]);
             exit;
         }
 
@@ -119,7 +122,6 @@ switch ($mod) {
 
 // Показываем список фотографий, отсортированных по рейтингу
 unset($_SESSION['ref']);
-require 'system/head.php';
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {

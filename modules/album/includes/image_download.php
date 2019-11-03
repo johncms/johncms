@@ -63,6 +63,5 @@ if (! $error) {
     // Отдаем файл
     header('location: ' . $config['homeurl'] . '/upload/users/album/' . $res['user_id'] . '/' . $res['img_name']);
 } else {
-    require 'system/head.php';
     echo $tools->displayError($error, '<a href="./">' . _t('Back') . '</a>');
 }

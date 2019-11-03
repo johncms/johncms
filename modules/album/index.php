@@ -12,8 +12,13 @@ declare(strict_types=1);
 
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\View\Extension\Assets;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -23,6 +28,15 @@ $img = isset($_REQUEST['img']) ? abs((int) ($_REQUEST['img'])) : null;
 
 /** @var ContainerInterface $container */
 $container = App::getContainer();
+
+/** @var Assets $assets */
+$assets = $container->get(Assets::class);
+
+/** @var Johncms\Api\ConfigInterface $config */
+$config = $container->get(Johncms\Api\ConfigInterface::class);
+
+/** @var PDO $db */
+$db = $container->get(PDO::class);
 
 /** @var UserInterface $systemUser */
 $systemUser = $container->get(UserInterface::class);
@@ -34,6 +48,9 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 /** @var ToolsInterface $tools */
 $tools = $container->get(ToolsInterface::class);
 
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
 $textl = _t('Album');
 $headmod = 'album';
 
@@ -42,9 +59,10 @@ $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
 if (! $systemUser->isValid()) {
-    require 'system/head.php';
-    echo $tools->displayError(_t('For registered users only'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? '',
+        'content' => $tools->displayError(_t('For registered users only')),
+    ]);
     exit;
 }
 
@@ -52,9 +70,10 @@ if (! $systemUser->isValid()) {
 $user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
 if (! $user) {
-    require 'system/head.php';
-    echo $tools->displayError(_t('User does not exists'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? '',
+        'content' => $tools->displayError(_t('User does not exists')),
+    ]);
     exit;
 }
 
@@ -101,8 +120,7 @@ function vote_photo(array $arg)
     return $out;
 }
 
-// Переключаем режимы работы
-$mods = [
+$actions = [
     'comments',
     'delete',
     'edit',
@@ -122,16 +140,9 @@ $mods = [
 
 $path = ! empty($array[$act]) ? $array[$act] . '/' : '';
 
-if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
-    require __DIR__ . '/includes/' . $mods[$key] . '.php';
+if (($key = array_search($act, $actions)) !== false) {
+    require __DIR__ . '/includes/' . $actions[$key] . '.php';
 } else {
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ConfigInterface $config */
-    $config = $container->get(Johncms\Api\ConfigInterface::class);
-
-    require 'system/head.php';
     $albumcount = $db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
     $total_mans = $db->query("SELECT COUNT(DISTINCT `user_id`)
       FROM `cms_album_files`
@@ -145,12 +156,12 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     ")->fetchColumn();
     $newcount = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > '" . (time() - 259200) . "' AND `access` > '1'")->fetchColumn();
     echo '<div class="phdr"><b>' . _t('Photo Albums') . '</b></div>' .
-        '<div class="gmenu"><p>' .
-        $tools->image('users.png', ['width' => 16, 'height' => 16]) . '<a href="?act=top">' . _t('New Photos') . '</a> (' . $newcount . ')<br>' .
-        $tools->image('talk.gif', ['width' => 16, 'height' => 16]) . '<a href="?act=top&amp;mod=last_comm">' . _t('New Comments') . '</a>' .
+        '<div class="gmenu"><p>' . '<img src="' . $assets->url('images/old/user-ok.png') . '" alt="" class="icon">' .
+        '<a href="?act=top">' . _t('New Photos') . '</a> (' . $newcount . ')<br>' .
+        '<img src="' . $assets->url('images/old/talk.gif') . '" alt="" class="icon">' . '<a href="?act=top&amp;mod=last_comm">' . _t('New Comments') . '</a>' .
         '</p></div>' .
         '<div class="menu">' .
-        '<p><h3><img src="' . $config->homeurl . '/images/users.png" width="16" height="16" class="left" />&#160;' . _t('Albums') . '</h3><ul>' .
+        '<p><h3><img src="' . $assets->url('images/old/users.png') . '" alt="" class="icon">' . _t('Albums') . '</h3><ul>' .
         '<li><a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a> (' . $total_mans . ')</li>' .
         '<li><a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a> (' . $total_womans . ')</li>';
 
@@ -159,7 +170,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
     }
 
     echo '</ul></p>' .
-        '<p><h3>' . $tools->image('rate.gif') . _t('Rating') . '</h3><ul>' .
+        '<p><h3><img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon">' . _t('Rating') . '</h3><ul>' .
         '<li><a href="?act=top&amp;mod=votes">' . _t('Top Votes') . '</a></li>' .
         '<li><a href="?act=top&amp;mod=downloads">' . _t('Top Downloads') . '</a></li>' .
         '<li><a href="?act=top&amp;mod=views">' . _t('Top Views') . '</a></li>' .
@@ -169,4 +180,7 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         '</div>';
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl ?? '',
+    'content' => ob_get_clean(),
+]);

@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-require 'system/head.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -36,7 +34,10 @@ if ($al && $user['id'] == $systemUser->id && empty($systemUser->ban) || $systemU
     if (! $req_a->rowCount()) {
         // Если альбома не существует, завершаем скрипт
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', [
+            'title'   => $textl ?? '',
+            'content' => ob_get_clean(),
+        ]);
         exit;
     }
 
