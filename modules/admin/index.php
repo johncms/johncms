@@ -10,41 +10,43 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
 @ini_set('max_execution_time', '600');
 define('_IN_JOHNADM', 1);
 
-$id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
-$act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';
-$mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
-$do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
+/**
+ * @var ContainerInterface $container
+ * @var Engine             $view
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
+ */
 
-/** @var ContainerInterface $container */
 $container = App::getContainer();
-
-/** @var PDO $db */
 $db = $container->get(PDO::class);
-
-/** @var UserInterface $user */
+$tools = $container->get(ToolsInterface::class);
 $user = $container->get(UserInterface::class);
-
-/** @var League\Plates\Engine $view */
-$view = $container->get(League\Plates\Engine::class);
+$view = $container->get(Engine::class);
 $view->addFolder('admin', __DIR__ . '/templates/');
 
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+$id = isset($_REQUEST['id']) ? abs((int) $_REQUEST['id']) : 0;
+$act = filter_input(INPUT_GET, 'act', FILTER_SANITIZE_STRING) ?? '';
+$mod = filter_input(INPUT_GET, 'mod', FILTER_SANITIZE_STRING) ?? '';
+$do = filter_input(INPUT_GET, 'do', FILTER_SANITIZE_STRING) ?? '';
+
 // Проверяем права доступа
 if ($user->rights < 7) {
     exit(_t('Access denied'));
 }
-
-ob_start();
 
 $actions = [
     'forum',

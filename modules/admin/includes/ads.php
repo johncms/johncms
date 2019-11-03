@@ -11,20 +11,13 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-ob_start();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 switch ($mod) {
     case 'edit':
@@ -39,7 +32,7 @@ switch ($mod) {
                 $res = $req->fetch();
             } else {
                 echo $tools->displayError(_t('Wrong data'), '<a href="?act=ads">' . _t('Back') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
         } else {
@@ -90,7 +83,7 @@ switch ($mod) {
 
             if ($error) {
                 echo $tools->displayError($error, '<a href="?act=ads&amp;from=addlink">' . _t('Back') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
@@ -172,8 +165,6 @@ switch ($mod) {
                 ]);
             }
 
-            $db->exec('UPDATE `users` SET `lastpost` = ' . time() . ' WHERE `id` = ' . $systemUser->id);
-
             echo '<div class="menu"><p>' . ($id ? _t('Link successfully changed') : _t('Link successfully added')) . '<br>' .
                 '<a href="?act=ads&amp;sort=' . $type . '">' . _t('Continue') . '</a></p></div>';
         } else {
@@ -184,7 +175,8 @@ switch ($mod) {
                 '<input type="checkbox" name="show" ' . ($res['show'] ? 'checked="checked"' : '') . '/>&nbsp;' . _t('Direct Link') . '<br>' .
                 '<small>' . _t('Click statistics won\'t be counted, If the direct link is turned on') . '</small></p>' .
                 '<p><h3>' . _t('Title') . '</h3>' .
-                '<input type="text" name="name" value="' . htmlentities($res['name'], ENT_QUOTES, 'UTF-8') . '"/><br>' .
+                '<input type="text" name="name" value="' . htmlentities((string) $res['name'], ENT_QUOTES,
+                    'UTF-8') . '"/><br>' .
                 '<small>' . _t('To change the name when updating pages, you must wtite names trought the symbol |') . '</small></p>' .
                 '<p><h3>' . _t('Color') . '</h3>' .
                 '<input type="text" name="color" size="6" value="' . $res['color'] . '"/><br>' .
@@ -402,7 +394,7 @@ switch ($mod) {
                         echo '<br><span class="gray">' . _t('Remains') . ':</span> ' . implode(', ', $remains);
                     }
                 }
-                echo($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
+                echo ($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
                 ++$i;
             }
         } else {
@@ -411,9 +403,11 @@ switch ($mod) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ads&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
-                '<p><form action="?act=ads&amp;type=' . $type . '" method="post">' .
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' .
+                $tools->displayPagination('?act=ads&amp;type=' . $type . '&amp;', $start, $total,
+                    $user->config->kmess) .
+                '</div><p><form action="?act=ads&amp;type=' . $type . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }

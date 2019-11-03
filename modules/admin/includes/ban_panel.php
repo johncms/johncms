@@ -11,26 +11,19 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-ob_start();
-
 switch ($mod) {
     case 'amnesty':
-        if ($systemUser->rights < 9) {
+        if ($user->rights < 9) {
             echo $tools->displayError(_t('Amnesty is available for supervisors only'));
         } else {
             echo '<div class="phdr"><a href="?act=ban_panel"><b>' . _t('Ban Panel') . '</b></a> | ' . _t('Amnesty') . '</div>';
@@ -107,11 +100,12 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total,
+                    $kmess) . '</div>';
             echo '<p><form action="?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
-        echo '<p>' . ($systemUser->rights == 9 && $total
+        echo '<p>' . ($user->rights == 9 && $total
                 ? '<a href="?act=ban_panel&amp;mod=amnesty">' . _t('Amnesty') . '</a><br>'
                 : '')
             . '<a href="./">' . _t('Admin Panel') . '</a></p>';

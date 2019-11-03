@@ -11,25 +11,17 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-// Проверяем права доступа
-if ($systemUser->rights < 9) {
+if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
-
-ob_start();
 
 switch ($mod) {
     case 'view':
@@ -49,7 +41,7 @@ switch ($mod) {
                 $res = $req->fetch();
                 echo '<div class="phdr"><a href="?act=counters"><b>' . _t('Counters') . '</b></a> | ' . _t('Viewing') . '</div>';
                 echo '<div class="menu">' . ($res['switch'] == 1 ? '<span class="green">[ON]</span>' : '<span class="red">[OFF]</span>') . '&#160;<b>' . $res['name'] . '</b></div>';
-                echo($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
+                echo ($res['switch'] == 1 ? '<div class="gmenu">' : '<div class="rmenu">') . '<p><h3>' . _t('Option 1') . '</h3>' . $res['link1'] . '</p>';
                 echo '<p><h3>' . _t('Option 2') . '</h3>' . $res['link2'] . '</p>';
                 echo '<p><h3>' . _t('Display mode') . '</h3>';
 
@@ -126,7 +118,7 @@ switch ($mod) {
         // Удаление счетчика
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -136,7 +128,7 @@ switch ($mod) {
             if (isset($_POST['submit'])) {
                 $db->exec('DELETE FROM `cms_counters` WHERE `id` = ' . $id);
                 echo '<p>' . _t('Counter deleted') . '<br><a href="?act=counters">' . _t('Continue') . '</a></p>';
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
             echo '<form action="?act=counters&amp;mod=del&amp;id=' . $id . '" method="post">';
@@ -146,7 +138,7 @@ switch ($mod) {
             echo '<div class="phdr"><a href="?act=counters">' . _t('Cancel') . '</a></div></form>';
         } else {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
         break;
@@ -161,8 +153,9 @@ switch ($mod) {
             $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
             if (empty($name) || empty($link1)) {
-                echo $tools->displayError(_t('The required fields are not filled'), '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-                require 'system/end.php';
+                echo $tools->displayError(_t('The required fields are not filled'),
+                    '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
@@ -202,7 +195,7 @@ switch ($mod) {
                     $switch = 1;
                 } else {
                     echo $tools->displayError(_t('Wrong data'), '<a href="?act=counters">' . _t('Back') . '</a>');
-                    require 'system/end.php';
+                    echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -235,8 +228,9 @@ switch ($mod) {
         $mode = isset($_POST['mode']) ? (int) ($_POST['mode']) : 1;
 
         if (empty($name) || empty($link1)) {
-            echo $tools->displayError(_t('The required fields are not filled'), '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
-            require_once 'system/end.php';
+            echo $tools->displayError(_t('The required fields are not filled'),
+                '<a href="?act=counters&amp;mod=edit' . ($id ? '&amp;id=' . $id : '') . '">' . _t('Back') . '</a>');
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -246,7 +240,7 @@ switch ($mod) {
 
             if (! $req->rowCount()) {
                 echo $tools->displayError(_t('Wrong data'));
-                require_once 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 

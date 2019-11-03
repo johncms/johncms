@@ -11,20 +11,13 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-ob_start();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Registration confirmation') . '</div>';
 
@@ -33,17 +26,17 @@ switch ($mod) {
         // Подтверждаем регистрацию выбранного пользователя
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
-        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `id` = ' . $id);
+        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `id` = ' . $id);
         echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
     case 'massapprove':
         // Подтверждение всех регистраций
-        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($systemUser->name) . ' WHERE `preg` = 0');
+        $db->exec('UPDATE `users` SET `preg` = 1, `regadm` = ' . $db->quote($user->name) . ' WHERE `preg` = 0');
         echo '<div class="menu"><p>' . _t('Registration is confirmed') . '<br><a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         break;
 
@@ -51,7 +44,7 @@ switch ($mod) {
         // Удаляем регистрацию выбранного пользователя
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -88,7 +81,7 @@ switch ($mod) {
                 '<a href="?act=reg">' . _t('Continue') . '</a></p></div>';
         } else {
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
         break;
@@ -98,7 +91,8 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `preg` = '0'")->fetchColumn();
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total,
+                    $kmess) . '</div>';
         }
 
         if ($total) {
@@ -126,7 +120,8 @@ switch ($mod) {
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total, $kmess) . '</div>' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=reg&amp;', $start, $total,
+                    $kmess) . '</div>' .
                 '<p><form action="?act=reg" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

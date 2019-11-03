@@ -11,27 +11,21 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Psr\Container\ContainerInterface $container
+ * @var PDO                              $db
+ * @var Johncms\Api\ToolsInterface       $tools
+ * @var Johncms\Api\UserInterface        $user
+ */
 
 $config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
-if ($systemUser->rights < 9) {
+if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
-
-ob_start();
 
 // Выводим список доступных языков
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Default language') . '</div>';

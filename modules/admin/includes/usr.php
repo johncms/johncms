@@ -11,20 +11,12 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-ob_start();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('List of Users') . '</div>';
 $sort = isset($_GET['sort']) ? trim($_GET['sort']) : '';
@@ -54,14 +46,9 @@ $req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY ${order} LIMI
 $i = 0;
 
 while ($res = $req->fetch()) {
-    $link = '';
-
-    if ($systemUser->rights >= 7) {
-        $link .= '<a href="../profile/?act=edit&amp;user=' . $res['id'] . '">' . _t('Edit') . '</a> | <a href="?act=usr_del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a> | ';
-    }
-
+    $link = '<a href="../profile/?act=edit&amp;user=' . $res['id'] . '">' . _t('Edit') . '</a> | <a href="?act=usr_del&amp;id=' . $res['id'] . '">' . _t('Delete') . '</a> | ';
     $link .= '<a href="../profile/?act=ban&amp;mod=do&amp;user=' . $res['id'] . '">' . _t('Ban') . '</a>';
-    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
     echo $tools->displayUser($res, ['header' => ('<b>ID:' . $res['id'] . '</b>'), 'sub' => $link]);
     echo '</div>';
     ++$i;
@@ -70,7 +57,8 @@ while ($res = $req->fetch()) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=usr&amp;sort=' . $sort . '&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=usr&amp;sort=' . $sort . '&amp;', $start, $total,
+            $kmess) . '</div>';
     echo '<p><form action="?act=usr&amp;sort=' . $sort . '" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 

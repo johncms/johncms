@@ -77,7 +77,7 @@ session_start();
 $container = App::getContainer();
 
 /** @var EnvironmentInterface $env */
-$env = App::getContainer()->get(EnvironmentInterface::class);
+$env = $container->get(EnvironmentInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);

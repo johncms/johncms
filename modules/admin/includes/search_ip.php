@@ -11,17 +11,16 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 $error = [];
 $search_post = isset($_POST['search']) ? trim($_POST['search']) : '';
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (isset($_GET['ip'])) {
     $search = trim($_GET['ip']);

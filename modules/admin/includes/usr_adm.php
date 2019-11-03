@@ -11,15 +11,17 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 $sw = 0;
 $adm = 0;
 $smd = 0;
 $mod = 0;
-
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-ob_start();
 
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | ' . _t('Administration') . '</div>';
 $req = $db->query("SELECT * FROM `users` WHERE `rights` = '9'");

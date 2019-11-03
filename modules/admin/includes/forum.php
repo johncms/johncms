@@ -11,32 +11,24 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-ob_start();
-
-// Задаем пользовательские настройки форума
-$set_forum = unserialize($systemUser->set_forum);
+$set_forum = unserialize($user->set_forum);
 
 if (! isset($set_forum) || empty($set_forum)) {
     $set_forum = [
-        'farea' => 0,
-        'upfp' => 0,
-        'farea_w' => 20,
-        'farea_h' => 4,
+        'farea'    => 0,
+        'upfp'     => 0,
+        'farea_w'  => 20,
+        'farea_h'  => 4,
         'postclip' => 1,
-        'postcut' => 2,
+        'postcut'  => 2,
     ];
 }
 
@@ -46,7 +38,7 @@ switch ($mod) {
         // Удаление категории, или раздела
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -71,7 +63,7 @@ switch ($mod) {
 
                         if (! $category || $category == $id) {
                             echo $tools->displayError(_t('Wrong data'));
-                            require 'system/end.php';
+                            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
 
@@ -79,7 +71,7 @@ switch ($mod) {
 
                         if (! $check) {
                             echo $tools->displayError(_t('Wrong data'));
-                            require 'system/end.php';
+                            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
 
@@ -111,7 +103,7 @@ switch ($mod) {
                             '<p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
 
                         // Для супервайзоров запрос на полное удаление
-                        if ($systemUser->rights == 9) {
+                        if ($user->rights == 9) {
                             echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('If you want to destroy all the information, first remove') . ' <a href="?act=forum&amp;mod=cat&amp;id=' . $id . '">' . _t('subsections') . '</a></p></div>';
                         }
 
@@ -126,7 +118,7 @@ switch ($mod) {
                         if (! $subcat || $subcat == $id) {
                             echo $tools->displayError(_t('Wrong data'),
                                 '<a href="?act=forum">' . _t('Forum Management') . '</a>');
-                            require 'system/end.php';
+                            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
 
@@ -135,7 +127,7 @@ switch ($mod) {
                         if (! $check) {
                             echo $tools->displayError(_t('Wrong data'),
                                 '<a href="?act=forum">' . _t('Forum Management') . '</a>');
-                            require 'system/end.php';
+                            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
 
@@ -145,9 +137,9 @@ switch ($mod) {
                         echo '<div class="rmenu"><p><h3>' . _t('Section deleted') . '</h3>' . _t('All content has been moved to') . ' <a href="../forum/?id=' . $subcat . '">' . _t('selected section') . '</a>.' .
                             '</p></div>';
                     } elseif (isset($_POST['delete'])) {
-                        if ($systemUser->rights != 9) {
+                        if ($user->rights != 9) {
                             echo $tools->displayError(_t('Access forbidden'));
-                            require_once 'system/end.php';
+                            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                             exit;
                         }
 
@@ -198,7 +190,7 @@ switch ($mod) {
 
                         echo '</ul><small>' . _t('All the topics and files will be moved to selected section. Old section will be deleted.') . '</small></p><p><input type="submit" name="submit" value="' . _t('Move') . '" /></p></div>';
 
-                        if ($systemUser->rights == 9) {
+                        if ($user->rights == 9) {
                             // Для супервайзоров запрос на полное удаление
                             echo '<div class="rmenu"><p><h3>' . _t('Complete removal') . '</h3>' . _t('WARNING! All the information will be deleted');
                             echo '</p><p><input type="submit" name="delete" value="' . _t('Delete') . '" /></p></div>';
@@ -238,7 +230,7 @@ switch ($mod) {
             } else {
                 echo $tools->displayError(_t('Wrong data'),
                     '<a href="?act=forum">' . _t('Forum Management') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
         }
@@ -312,7 +304,7 @@ switch ($mod) {
                 '<input type="text" name="name" />' .
                 '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
-                '<textarea name="desc" rows="' . $systemUser->config->fieldHeight . '"></textarea>' .
+                '<textarea name="desc" rows="' . $user->config->fieldHeight . '"></textarea>' .
                 '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
             if ($id) {
@@ -336,7 +328,7 @@ switch ($mod) {
         // Редактирование выбранной категории, или раздела
         if (! $id) {
             echo $tools->displayError(_t('Wrong data'), '<a href="?act=forum">' . _t('Forum Management') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
             exit;
         }
 
@@ -414,7 +406,7 @@ switch ($mod) {
                     '<input type="text" name="sort" value="' . $res['sort'] . '"/><br>' .
                     '<br><small>' . _t('Min. 2, Max. 30 characters') . '</small></p>' .
                     '<p><h3>' . _t('Description') . '</h3>' .
-                    '<textarea name="desc" rows="' . $systemUser->config->fieldHeight . '">' . str_replace('<br>',
+                    '<textarea name="desc" rows="' . $user->config->fieldHeight . '">' . str_replace('<br>',
                         "\r\n", $res['description']) . '</textarea>' .
                     '<br><small>' . _t('Optional field') . '<br>' . _t('Min. 2, Max. 500 characters') . '</small></p>';
 
@@ -529,9 +521,9 @@ switch ($mod) {
         }
 
         if (isset($_POST['deltopic'])) {
-            if ($systemUser->rights != 9) {
+            if ($user->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
@@ -593,14 +585,14 @@ switch ($mod) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $tools->displayUser($res, [
                         'header' => $ttime,
-                        'body' => $text,
-                        'sub' => $subtext,
+                        'body'   => $text,
+                        'sub'    => $subtext,
                     ]);
                     echo '</div>';
                     ++$i;
                 }
 
-                if ($systemUser->rights == 9) {
+                if ($user->rights == 9) {
                     echo '<form action="?act=forum&amp;mod=htopics' . $link . '" method="POST">' .
                         '<div class="rmenu">' .
                         '<input type="submit" name="deltopic" value="' . _t('Delete all') . '" />' .
@@ -640,9 +632,9 @@ switch ($mod) {
         }
 
         if (isset($_POST['delpost'])) {
-            if ($systemUser->rights != 9) {
+            if ($user->rights != 9) {
                 echo $tools->displayError(_t('Access forbidden'));
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['content' => ob_get_clean()]);
                 exit;
             }
 
@@ -702,14 +694,14 @@ switch ($mod) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     echo $tools->displayUser($res, [
                         'header' => $posttime,
-                        'body' => $text,
-                        'sub' => $subtext,
+                        'body'   => $text,
+                        'sub'    => $subtext,
                     ]);
                     echo '</div>';
                     ++$i;
                 }
 
-                if ($systemUser->rights == 9) {
+                if ($user->rights == 9) {
                     echo '<form action="?act=forum&amp;mod=hposts' . $link . '" method="POST"><div class="rmenu"><input type="submit" name="delpost" value="' . _t('Delete all') . '" /></div></form>';
                 }
             } else {

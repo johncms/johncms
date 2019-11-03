@@ -11,17 +11,18 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
 const ROOT_DIR = ROOT_PATH;
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
+/**
+ * @var Johncms\Api\UserInterface $user
+ */
 
 // Проверяем права доступа
-if ($systemUser->rights < 9) {
+if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
-
-ob_start();
 
 class scaner
 {

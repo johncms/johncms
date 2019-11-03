@@ -11,14 +11,14 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
-
-ob_start();
+ob_start(); // Перехват вывода скриптов без шаблона
 
 $ip = isset($_GET['ip']) ? trim($_GET['ip']) : false;
 echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | IP WHOIS</div>';
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 function whoisQuery($whoisserver, $domain)
 {
@@ -67,13 +67,13 @@ if ($ip) {
     foreach ($whoisservers as $whoisserver) {
         $result = whoisQuery($whoisserver, $ip);
         if ($result && ! in_array($result, $results)) {
-            $results[$whoisserver]= $result;
+            $results[$whoisserver] = $result;
         }
     }
 
     $res = 'RESULTS FOUND: ' . count($results);
 
-    foreach ($results as $whoisserver=>$result) {
+    foreach ($results as $whoisserver => $result) {
         $res .= "\n\n-------------\nLookup results for " . $ip . ' from ' . $whoisserver . " server:\n\n" . $result;
     }
 

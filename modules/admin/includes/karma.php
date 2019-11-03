@@ -11,26 +11,22 @@ declare(strict_types=1);
  */
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var Psr\Container\ContainerInterface $container
+ * @var PDO                              $db
+ * @var Johncms\Api\UserInterface        $user
+ */
 
 $config = $container->get('config')['johncms'];
 
 // Проверяем права доступа
-if ($systemUser->rights < 9) {
+if ($user->rights < 9) {
     exit(_t('Access denied'));
 }
 
-ob_start();
-
-if ($systemUser->rights == 9 && $do == 'clean') {
+if ($user->rights == 9 && $do == 'clean') {
     if (isset($_GET['yes'])) {
         $db->query('TRUNCATE TABLE `karma_users`');
         $db->exec('UPDATE `users` SET `karma_plus` = 0, `karma_minus` = 0');
@@ -82,7 +78,7 @@ echo '<form action="?act=karma" method="post"><div class="menu">' .
     '<input type="checkbox" name="on"' . ($settings['on'] ? ' checked="checked"' : '') . '/> ' . _t('Switch module ON') . '<br>' .
     '<input type="checkbox" name="adm"' . ($settings['adm'] ? ' checked="checked"' : '') . '/> ' . _t('Forbid to vote for the administration') . '</p>' .
     '<p><input type="submit" value="' . _t('Save') . '" name="submit" /></p></div>' .
-    '</form><div class="phdr">' . ($systemUser->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
+    '</form><div class="phdr">' . ($user->rights == 9 ? '<a href="?act=karma&amp;do=clean">' . _t('Clear Karma') . '</a>' : '<br>') . '</div>' .
     '<p><a href="./">' . _t('Admin Panel') . '</a></p>';
 
 echo $view->render('system::app/old_content', [

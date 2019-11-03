@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 defined('_IN_JOHNADM') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var Psr\Container\ContainerInterface $container
+ */
 
 $config = $container->get('config')['johncms'];
 $confirmation = false;
