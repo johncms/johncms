@@ -11,8 +11,11 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
@@ -25,9 +28,9 @@ $container = App::getContainer();
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
-$textl = 'FAQ';
-$headmod = 'faq';
-require 'system/head.php';
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+$view->addFolder('help', __DIR__ . '/templates/');
 
 // Обрабатываем ссылку для возврата
 if (empty($_SESSION['ref'])) {
@@ -71,15 +74,13 @@ $array = [
 ];
 
 if ($act && ($key = array_search($act, $array)) !== false && file_exists(__DIR__ . '/includes/' . $array[$key] . '.php')) {
+    ob_start();
     require __DIR__ . '/includes/' . $array[$key] . '.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl ?? _t('Information, FAQ'),
+        'content' => ob_get_clean(),
+    ]);
 } else {
     // Главное меню FAQ
-    echo '<div class="phdr"><b>' . _t('Information, FAQ') . '</b></div>' .
-        '<div class="menu"><a href="?act=forum">' . _t('Forum rules') . '</a></div>' .
-        '<div class="menu"><a href="?act=tags">' . _t('bbCode Tags') . '</a></div>' .
-        '<div class="menu"><a href="?act=avatars">' . _t('Avatars') . '</a></div>' .
-        '<div class="menu"><a href="?act=smilies">' . _t('Smilies') . '</a></div>' .
-        '<div class="phdr"><a href="' . $_SESSION['ref'] . '">' . _t('Back') . '</a></div>';
+    echo $view->render('help::index');
 }
-
-require 'system/end.php';
