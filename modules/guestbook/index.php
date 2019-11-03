@@ -15,6 +15,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\EnvironmentInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
@@ -24,8 +25,6 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 // Сюда можно (через запятую) добавить ID тех юзеров, кто не в администрации,
 // но которым разрешено читать и писать в Админ клубе
 $guestAccess = [];
-
-$headmod = 'guestbook';
 
 /** @var ContainerInterface $container */
 $container = App::getContainer();
@@ -52,6 +51,9 @@ $config = $container->get(ConfigInterface::class);
 $translator = $container->get(Translator::class);
 $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
+/** @var Engine $view */
+$view = $container->get(Engine::class);
+
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
@@ -61,14 +63,17 @@ if (isset($_SESSION['ga']) && $systemUser->rights < 1 && ! in_array($systemUser-
     unset($_SESSION['ga']);
 }
 
+ob_start();
+
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
-require 'system/head.php';
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
 if (! $config->mod_guest && $systemUser->rights < 7) {
-    echo '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', [
+        'title'   => $textl,
+        'content' => '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>',
+    ]);
     exit;
 }
 
@@ -408,7 +413,8 @@ switch ($act) {
                     // Для гостей обрабатываем имя и фильтруем ссылки
                     $res['name'] = $tools->checkout($res['name']);
                     $post = $tools->checkout($res['text'], 0, 2);
-                    $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', '###', $post);
+                    $post = preg_replace('~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-z\.-]+\.[0-9a-z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+                        '###', $post);
                     $replace = [
                         '.ru'   => '***',
                         '.com'  => '***',
@@ -470,4 +476,7 @@ switch ($act) {
         break;
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', [
+    'title'   => $textl,
+    'content' => ob_get_clean(),
+]);
