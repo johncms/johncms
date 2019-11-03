@@ -50,5 +50,5 @@ if (isset($_POST['submit'])) {
 echo $view->render('admin::access', [
     'conf'         => $config,
     'errorMsg'     => $errorMsg,
-    'confirmation' => $confirmation
+    'confirmation' => $confirmation,
 ]);

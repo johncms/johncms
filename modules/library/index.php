@@ -178,7 +178,7 @@ if (in_array($act, $array_includes)) {
         if ($res) {
             echo $tools->image('green.gif', [
                     'width'  => 16,
-                    'height' => 16
+                    'height' => 16,
                 ]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
         }
 

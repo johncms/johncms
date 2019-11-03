@@ -79,7 +79,6 @@ if (($key = array_search($act, $actions)) !== false) {
         'usersCount' => $counters->users(),
         'adminCount' => $count_adm,
         'birthDays'  => $birthDays,
-        'albumCount' => $counters->album()
+        'albumCount' => $counters->album(),
     ]);
-
 }

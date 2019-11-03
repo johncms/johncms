@@ -20,6 +20,4 @@ if ($systemUser->rights >= 7 && $systemUser->rights > $user['rights']) {
     echo '<div class="gmenu"><p>' . sprintf(_t('For user %s default settings were set.'), $user['name'])
         . '<br />'
         . '<a href="?user=' . $user['id'] . '">' . _t('Profile') . '</a></p></div>';
-
-
 }

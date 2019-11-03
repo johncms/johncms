@@ -89,7 +89,7 @@ switch ($mod) {
           FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
           GROUP BY `user_id`
           ORDER BY `${sort}` DESC
-          LIMIT $start, $kmess");
+          LIMIT ${start}, ${kmess}");
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {

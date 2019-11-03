@@ -106,7 +106,7 @@ if ($user->isValid()) {
                         'user_login' => $user_login,
                         'user_pass'  => $user_pass,
                         'remember'   => $remember,
-                        'id'         => $loginUser->id
+                        'id'         => $loginUser->id,
                     ]);
                 }
             }
@@ -160,7 +160,7 @@ if ($user->isValid()) {
         // Показываем LOGIN форму
         echo $view->render('login::login', [
             'error'      => isset($_POST['login']) ? $error : [],
-            'user_login' => $user_login ?? ''
+            'user_login' => $user_login ?? '',
         ]);
     }
 }
