@@ -3,6 +3,7 @@ preset: psr2
 finder:
   exclude:
     - assets
+    - install
 
 enabled:
   - binary_operator_spaces
