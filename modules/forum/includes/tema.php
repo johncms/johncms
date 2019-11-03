@@ -46,8 +46,8 @@ if (! $id) {
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var PDO $db */
 $db = $container->get(PDO::class);
@@ -65,7 +65,7 @@ if (! $req->rowCount()) {
 
 if (isset($_POST['submit'])) {
     $type1 = $req->fetch();
-    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '${id}'" . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . ' ORDER BY `id` ASC');
+    $tema = $db->query("SELECT * FROM `forum_messages` WHERE `topic_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR `deleted` IS NULL)") . ' ORDER BY `id` ASC');
     $mod = (int) ($_POST['mod']);
 
     switch ($mod) {

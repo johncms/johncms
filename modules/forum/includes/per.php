@@ -16,13 +16,13 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
+if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
         require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));

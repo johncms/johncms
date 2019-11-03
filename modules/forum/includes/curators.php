@@ -18,16 +18,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if ($systemUser->rights >= 7) {
+if ($user->rights >= 7) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
-    if (! $req->rowCount() || $systemUser->rights < 7) {
+    if (! $req->rowCount() || $user->rights < 7) {
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
         require 'system/end.php';
         exit;

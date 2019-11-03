@@ -28,8 +28,8 @@ echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Se
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -45,9 +45,9 @@ function ReplaceKeywords($search, $text)
 switch ($mod) {
     case 'reset':
         // Очищаем историю личных поисковых запросов
-        if ($systemUser->isValid()) {
+        if ($user->isValid()) {
             if (isset($_POST['submit'])) {
-                $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
+                $db->exec("DELETE FROM `cms_users_data` WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search' LIMIT 1");
                 header('Location: ?act=search');
             } else {
                 echo '<form action="?act=search&amp;mod=reset" method="post">' .
@@ -87,13 +87,13 @@ switch ($mod) {
                 $total = $db->query('
                 SELECT COUNT(*) FROM `forum_topic`
                 WHERE `name` LIKE ' . $query . '
-                ' . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
             } else {
                 $query = $db->quote($search);
                 $total = $db->query("
                 SELECT COUNT(*) FROM `forum_messages`
                 WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
-                " . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
+                " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetchColumn();
             }
 
             echo '<div class="phdr">' . _t('Search results') . '</div>';
@@ -109,7 +109,7 @@ switch ($mod) {
                     SELECT *
                     FROM `forum_topic`
                     WHERE `name` LIKE ' . $query . '
-                    ' . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
+                    ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `name` DESC
                     LIMIT ${start}, ${kmess}
                 ");
@@ -118,7 +118,7 @@ switch ($mod) {
                     SELECT *, MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE) as `rel`
                     FROM `forum_messages`
                     WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
-                    " . ($systemUser->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
+                    " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `rel` DESC
                     LIMIT ${start}, ${kmess}
                 ");
@@ -147,7 +147,7 @@ switch ($mod) {
                     echo '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a> ';
 
                     if ($search_t) {
-                        $date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
+                        $date = $user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
                     } else {
                         $date = $res['date'];
                     }
@@ -201,8 +201,8 @@ switch ($mod) {
         }
 
         // Обрабатываем и показываем историю личных поисковых запросов
-        if ($systemUser->isValid()) {
-            $req = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search' LIMIT 1");
+        if ($user->isValid()) {
+            $req = $db->query("SELECT * FROM `cms_users_data` WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search' LIMIT 1");
 
             if ($req->rowCount()) {
                 $res = $req->fetch();
@@ -217,7 +217,7 @@ switch ($mod) {
                     $history[] = $search;
                     $db->exec('UPDATE `cms_users_data` SET
                         `val` = ' . $db->quote(serialize($history)) . "
-                        WHERE `user_id` = '" . $systemUser->id . "' AND `key` = 'forum_search'
+                        WHERE `user_id` = '" . $user->id . "' AND `key` = 'forum_search'
                         LIMIT 1
                     ");
                 }
@@ -236,7 +236,7 @@ switch ($mod) {
             } elseif ($to_history) {
                 $history[] = $search;
                 $db->exec("INSERT INTO `cms_users_data` SET
-                    `user_id` = '" . $systemUser->id . "',
+                    `user_id` = '" . $user->id . "',
                     `key` = 'forum_search',
                     `val` = " . $db->quote(serialize($history)) . '
                 ');

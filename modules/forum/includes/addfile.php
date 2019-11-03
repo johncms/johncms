@@ -18,8 +18,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -27,7 +27,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-if (! $id || ! $systemUser->isValid()) {
+if (! $id || ! $user->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
     require 'system/end.php';
     exit;
@@ -36,7 +36,7 @@ if (! $id || ! $systemUser->isValid()) {
 // Проверяем, тот ли юзер заливает файл и в нужное ли место
 $res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch();
 
-if (empty($res) || $res['user_id'] != $systemUser->id) {
+if (empty($res) || $res['user_id'] != $user->id) {
     echo $tools->displayError(_t('Wrong data'));
     require 'system/end.php';
     exit;

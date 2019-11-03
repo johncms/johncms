@@ -18,8 +18,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -33,7 +33,7 @@ if (empty($_GET['id'])) {
 // Запрос сообщения
 $res = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
 FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-WHERE `forum_messages`.`id` = '${id}'" . ($systemUser->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1')->fetch();
+WHERE `forum_messages`.`id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . ' LIMIT 1')->fetch();
 
 // Запрос темы
 $them = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '" . $res['topic_id'] . "'")->fetch();
@@ -55,7 +55,7 @@ if ($res['sex']) {
 }
 
 // Ник юзера и ссылка на его анкету
-if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
+if ($user->isValid() && $user->id != $res['user_id']) {
     echo '<a href="../profile/?user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> ';
 } else {
     echo '<b>' . $res['user_name'] . '</b> ';
@@ -75,7 +75,7 @@ echo time() > $res['lastdate'] + 300 ? '<span class="red"> [Off]</span> ' : '<sp
 echo '<a href="?act=show_post&amp;id=' . $res['id'] . '" title="Link to post">[#]</a>';
 
 // Ссылки на ответ и цитирование
-if ($systemUser->isValid() && $systemUser->id != $res['user_id']) {
+if ($user->isValid() && $user->id != $res['user_id']) {
     echo '&#160;<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '">' . _t('[r]') . '</a>&#160;' .
         '<a href="?act=say&type=reply&amp;id=' . $res['id'] . '&amp;start=' . $start . '&amp;cyt">' . _t('[q]') . '</a> ';
 }

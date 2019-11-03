@@ -18,10 +18,10 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
-if (($systemUser->rights != 3 && $systemUser->rights < 6) || ! $id) {
+if (($user->rights != 3 && $user->rights < 6) || ! $id) {
     header('Location: http://johncms.com?act=404');
     exit;
 }
@@ -30,7 +30,7 @@ $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
 if ($req->rowCount()) {
     $res = $req->fetch();
-    $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
+    $db->exec("UPDATE `forum_topic` SET `deleted` = NULL, `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
 
     header('Location: ?type=topic&id=' . $id);
 } else {

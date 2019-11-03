@@ -20,13 +20,13 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if (! $systemUser->isValid()) {
+if (! $user->isValid()) {
     header('Location: ./');
     exit;
 }
@@ -39,7 +39,7 @@ if ($id) {
         $res = $req->fetch();
         echo '<div class="phdr"><b>' . _t('Who in Topic') . ':</b> <a href="?type=topic&id=' . $id . '">' . $res['name'] . '</a></div>';
 
-        if ($systemUser->rights > 0) {
+        if ($user->rights > 0) {
             echo '<div class="topmenu">' .
                 ($do == 'guest' ? '<a href="?act=who&amp;id=' . $id . '">' . _t('Authorized') . '</a> | ' . _t('Guests') : _t('Authorized') . ' | <a href="?act=who&amp;do=guest&amp;id=' . $id . '">' . _t('Guests') . '</a>') .
                 '</div>';
@@ -62,7 +62,7 @@ if ($id) {
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
-                echo $tools->displayUser($res, ['iphide' => ($act == 'guest' || ($systemUser->rights >= 1 && $systemUser->rights >= $res['rights']) ? 0 : 1)]);
+                echo $tools->displayUser($res, ['iphide' => ($act == 'guest' || ($user->rights >= 1 && $user->rights >= $res['rights']) ? 0 : 1)]);
                 echo '</div>';
             }
         } else {
@@ -87,7 +87,7 @@ if ($id) {
     // Показываем общий список тех, кто в форуме
     echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Who in Forum') . '</div>';
 
-    if ($systemUser->rights > 0) {
+    if ($user->rights > 0) {
         echo '<div class="topmenu">' . ($do == 'guest' ? '<a href="?act=who">' . _t('Users') . '</a> | <b>' . _t('Guests') . '</b>'
                 : '<b>' . _t('Users') . '</b> | <a href="?act=who&amp;do=guest">' . _t('Guests') . '</a>') . '</div>';
     }
@@ -107,7 +107,7 @@ if ($id) {
         $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, ${kmess}");
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
-            if ($res['id'] == $systemUser->id) {
+            if ($res['id'] == $user->id) {
                 echo '<div class="gmenu">';
             } else {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';

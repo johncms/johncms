@@ -16,13 +16,13 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
+if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
         require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
@@ -45,7 +45,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
     if (isset($_POST['submit'])) {
         $del = isset($_POST['del']) ? (int) ($_POST['del']) : null;
 
-        if ($del == 2 && $systemUser->rights == 9) {
+        if ($del == 2 && $user->rights == 9) {
             // Удаляем топик
             $req1 = $db->query("SELECT * FROM `cms_forum_files` WHERE `topic` = '${id}'");
 
@@ -62,7 +62,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             $db->exec("DELETE FROM `forum_topic` WHERE `id`='${id}'");
         } elseif ($del = 1) {
             // Скрываем топик
-            $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $systemUser->name . "' WHERE `id` = '${id}'");
+            $db->exec("UPDATE `forum_topic` SET `deleted` = '1', `deleted_by` = '" . $user->name . "' WHERE `id` = '${id}'");
             $db->exec("UPDATE `cms_forum_files` SET `del` = '1' WHERE `topic` = '${id}'");
         }
         header('Location: ?type=topics&id=' . $res['section_id']);
@@ -73,7 +73,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
             '<div class="rmenu"><form method="post" action="?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
             '<input type="radio" value="1" name="del" checked="checked"/>&#160;' . _t('Hide') . '<br />' .
-            ($systemUser->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
+            ($user->rights == 9 ? '<input type="radio" value="2" name="del" />&#160;' . _t('Delete') . '</p>' : '') .
             '<p><input type="submit" name="submit" value="' . _t('Perform') . '" /></p>' .
             '<p><a href="?type=topic&id=' . $id . '">' . _t('Cancel') . '</a>' .
             '</p></form></div>' .

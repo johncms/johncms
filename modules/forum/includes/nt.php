@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -27,10 +27,10 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Закрываем доступ для определенных ситуаций
 if (! $id
-    || ! $systemUser->isValid()
-    || isset($systemUser->ban['1'])
-    || isset($systemUser->ban['11'])
-    || (! $systemUser->rights && $config['mod_forum'] == 3)
+    || ! $user->isValid()
+    || isset($user->ban['1'])
+    || isset($user->ban['11'])
+    || (! $user->rights && $config['mod_forum'] == 3)
 ) {
     require 'system/head.php';
     echo $tools->displayError(_t('Access forbidden'));
@@ -133,7 +133,7 @@ if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
 SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
 SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg';
         $sth = $db->prepare($sql);
-        $sth->execute([$id, $th, $systemUser->id, $msg]);
+        $sth->execute([$id, $th, $user->id, $msg]);
         $row = $sth->fetch();
         // Прверяем, есть ли уже такая тема в текущем разделе?
         if ($row['topic']) {
@@ -149,7 +149,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         unset($_SESSION['token']);
 
         // Если задано в настройках, то назначаем топикстартера куратором
-        $curator = $res_r['access'] == 1 ? serialize([$systemUser->id => $systemUser->name]) : '';
+        $curator = $res_r['access'] == 1 ? serialize([$user->id => $user->name]) : '';
 
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');
@@ -168,8 +168,8 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         ')->execute([
             $id,
             $date,
-            $systemUser->id,
-            $systemUser->name,
+            $user->id,
+            $user->name,
             $th,
             time(),
             $curator,
@@ -193,8 +193,8 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         ')->execute([
             $rid,
             time(),
-            $systemUser->id,
-            $systemUser->name,
+            $user->id,
+            $user->name,
             $env->getIp(),
             $env->getIpViaProxy(),
             $env->getUserAgent(),
@@ -207,17 +207,17 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         $tools->recountForumTopic($rid);
 
         // Записываем счетчик постов юзера
-        $fpst = $systemUser->postforum + 1;
+        $fpst = $user->postforum + 1;
         $db->exec("UPDATE `users` SET
             `postforum` = '${fpst}',
             `lastpost` = '" . time() . "'
-            WHERE `id` = '" . $systemUser->id . "'
+            WHERE `id` = '" . $user->id . "'
         ");
 
         // Ставим метку о прочтении
         $db->exec("INSERT INTO `cms_forum_rdm` SET
             `topic_id`='${rid}',
-            `user_id`='" . $systemUser->id . "',
+            `user_id`='" . $user->id . "',
             `time`='" . time() . "'
         ");
 
@@ -237,13 +237,13 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
     $res_c = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '" . $res_r['parent'] . "'")->fetch();
     require 'system/head.php';
     $msg_pre = $tools->checkout($msg, 1, 1);
-    $msg_pre = $tools->smilies($msg_pre, $systemUser->rights ? 1 : 0);
+    $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
     $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
     echo '<div class="phdr"><a href="?id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('New Topic') . '</div>';
 
     if ($msg && $th && ! isset($_POST['submit'])) {
         echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
-            '<div class="list2">' . $tools->displayUser($systemUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+            '<div class="list2">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
     }
 
     echo '<form name="form" action="?act=nt&amp;id=' . $id . '" method="post">' .
@@ -254,7 +254,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
         '<input type="text" size="20" maxlength="100" name="th" value="' . $th . '"/></p>' .
         '<p><h3>' . _t('Message') . '</h3>';
     echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-    echo '<textarea rows="' . $systemUser->config->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
+    echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (isset($_POST['msg']) ? $tools->checkout($_POST['msg']) : '') . '</textarea></p>' .
         '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
     $token = mt_rand(1000, 100000);

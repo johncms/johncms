@@ -23,8 +23,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -38,17 +38,17 @@ if (empty($_SESSION['uid'])) {
     }
 }
 
-if ($systemUser->isValid()) {
+if ($user->isValid()) {
     switch ($do) {
         case 'reset':
             // Отмечаем все темы как прочитанные
             $ids = $db->query("SELECT `forum_topic`.`id`, `forum_topic`.`last_post_date`
-            FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $systemUser->id . "'
+            FROM `forum_topic` LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $user->id . "'
             WHERE `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time` OR `cms_forum_rdm`.`topic_id` IS NULL")->fetchAll(PDO::FETCH_ASSOC);
 
             if (! empty($ids)) {
                 foreach ($ids as $val) {
-                    $values[] = '(' . $val['id'] . ', ' . $systemUser->id . ', ' . $val['last_post_date'] . ')';
+                    $values[] = '(' . $val['id'] . ', ' . $user->id . ', ' . $val['last_post_date'] . ')';
                 }
                 $db->query('INSERT INTO cms_forum_rdm (topic_id, user_id, `time`) VALUES ' . implode(',', $values) . '
                     ON DUPLICATE KEY UPDATE `time` = VALUES(`time`)');
@@ -62,7 +62,7 @@ if ($systemUser->isValid()) {
             $vr = isset($_REQUEST['vr']) ? abs((int) ($_REQUEST['vr'])) : 24;
             $vr1 = time() - $vr * 3600;
 
-            if ($systemUser->rights == 9) {
+            if ($user->rights == 9) {
                 $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `mod_last_post_date` > '${vr1}'");
             } else {
                 $req = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `last_post_date` > '${vr1}' AND (`deleted` != '1' OR deleted IS NULL)");
@@ -82,7 +82,7 @@ if ($systemUser->isValid()) {
             }
 
             if ($count) {
-                if ($systemUser->rights == 9) {
+                if ($user->rights == 9) {
                     $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
                     FROM `forum_topic` tpc
                     JOIN forum_sections rzd ON rzd.id = tpc.section_id
@@ -98,7 +98,7 @@ if ($systemUser->isValid()) {
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
-                    $colmes1 = $systemUser->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
+                    $colmes1 = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($colmes1 / $kmess);
 
                     if ($res['closed']) {
@@ -128,10 +128,10 @@ if ($systemUser->isValid()) {
                     echo $res['user_name'];
 
                     if ($colmes1 > 1) {
-                        echo '&#160;/&#160;' . ($systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
+                        echo '&#160;/&#160;' . ($user->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name']);
                     }
 
-                    echo ' <span class="gray">' . $tools->displayDate(($systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
+                    echo ' <span class="gray">' . $tools->displayDate(($user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'])) . '</span>';
                     echo '</div></div>';
                 }
             } else {
@@ -160,10 +160,10 @@ if ($systemUser->isValid()) {
             if ($total > 0) {
                 $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.id as frm_id, frm.`name` AS frm_name
                 FROM `forum_topic` tpc
-                LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $systemUser->id . "'
+                LEFT JOIN `cms_forum_rdm` rdm ON `tpc`.`id` = `rdm`.`topic_id` AND `rdm`.`user_id` = '" . $user->id . "'
                 JOIN forum_sections rzd ON rzd.id = tpc.section_id
                 JOIN forum_sections frm ON frm.id = rzd.parent
-                WHERE " . ($systemUser->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
+                WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
                 ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, ${kmess}");
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
@@ -173,7 +173,7 @@ if ($systemUser->isValid()) {
                         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     }
 
-                    $post_count = $systemUser->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
+                    $post_count = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                     $cpg = ceil($post_count / $kmess);
 
                     // Значки
@@ -191,8 +191,8 @@ if ($systemUser->isValid()) {
                         echo '&#160;<a href="?type=topic&id=' . $res['id'] . (! $set_forum['upfp'] && $set_forum['postclip'] ? '&amp;clip' : '') . ($set_forum['upfp'] ? '' : '&amp;page=' . $cpg) . '">&gt;&gt;</a>';
                     }
 
-                    $last_author = $systemUser->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
-                    $last_post_date = $systemUser->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
+                    $last_author = $user->rights >= 7 ? $res['mod_last_post_author_name'] : $res['last_post_author_name'];
+                    $last_post_date = $user->rights >= 7 ? $res['mod_last_post_date'] : $res['last_post_date'];
 
                     echo '<div class="sub">' . $res['user_name'] . ($post_count > 1 ? '&#160;/&#160;' . $last_author : '') .
                         ' <span class="gray">(' . $tools->displayDate($last_post_date) . ')</span><br />' .

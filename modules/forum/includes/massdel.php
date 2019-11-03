@@ -16,10 +16,10 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
-if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
+if ($user->rights == 3 || $user->rights >= 6) {
     // Массовое удаление выбранных постов форума
     require 'system/head.php';
 
@@ -30,7 +30,7 @@ if ($systemUser->rights == 3 || $systemUser->rights >= 6) {
         if (! empty($dc)) {
             $db->exec("UPDATE `forum_messages` SET
                 `deleted` = '1',
-                `deleted_by` = '" . $systemUser->name . "'
+                `deleted_by` = '" . $user->name . "'
                 WHERE `id` IN (" . implode(',', $dc) . ')
             ');
         }

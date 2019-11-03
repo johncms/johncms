@@ -16,10 +16,10 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
-if (($systemUser->rights != 3 && $systemUser->rights < 6) || ! $id) {
+if (($user->rights != 3 && $user->rights < 6) || ! $id) {
     header('Location: ./');
     exit;
 }
