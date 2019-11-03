@@ -92,7 +92,7 @@ echo '</p></div>';
 echo '<div class="bmenu"><p><h3>' . _t('Settings') . '</h3>' .
     '<div><img src="' . $assets->url('images/old/user-edit.png') . '" alt="" class="icon"><a href="?act=edit">' . _t('Edit Profile') . '</a></div>' .
     '<div><img src="' . $assets->url('images/old/lock.png') . '" alt="" class="icon"><a href="?act=password">' . _t('Change Password') . '</a></div>' .
-    '<div>' . $tools->image('settings.png') . '<a href="?act=settings">' . _t('System Settings') . '</a></div>';
+    '<div><img src="' . $assets->url('images/old/settings.png') . '" alt="" class="icon"><a href="?act=settings">' . _t('System Settings') . '</a></div>';
 if ($systemUser->rights >= 7) {
     echo '<div><img src="' . $assets->url('images/old/forbidden.png') . '" alt="" class="icon"><span class="red"><a href="../admin/"><b>' . _t('Admin Panel') . '</b></a></span></div>';
 }
