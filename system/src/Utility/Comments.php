@@ -399,7 +399,7 @@ class Comments
         ]);
 
         // Обновляем статистику пользователя
-        $this->db->exec("UPDATE `users` SET `komm` = '" . ++$this->systemUser->komm . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
+        $this->db->exec("UPDATE `users` SET `komm` = '" . ($this->systemUser->komm + 1) . "', `lastpost` = '" . time() . "' WHERE `id` = '" . $this->systemUser->id . "'");
 
         if ($this->owner && $this->systemUser->id == $this->owner) {
             $this->db->exec("UPDATE `users` SET `comm_old` = '" . $this->systemUser->komm . "' WHERE `id` = '" . $this->systemUser->id . "'");
