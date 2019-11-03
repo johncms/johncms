@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 if (! $id || ! $user->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
@@ -44,7 +36,8 @@ if (empty($res) || $res['user_id'] != $user->id) {
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['date'] < (time() - 3600)) {
-    echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(_t('The time allotted for the file upload has expired'),
+        '<a href="?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
@@ -64,7 +57,8 @@ if (isset($_POST['submit'])) {
     // Обработка файла (если есть), проверка на ошибки
     if ($do_file) {
         // Список допустимых расширений файлов.
-        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio, $ext_other);
+        $al_ext = array_merge($ext_win, $ext_java, $ext_sis, $ext_doc, $ext_pic, $ext_arch, $ext_video, $ext_audio,
+            $ext_other);
         $ext = explode('.', $file);
         $error = [];
 
@@ -80,7 +74,8 @@ if (isset($_POST['submit'])) {
 
         // Проверка допустимых расширений файлов
         if (! in_array($ext[1], $al_ext)) {
-            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ', $al_ext);
+            $error[] = _t('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . implode(', ',
+                    $al_ext);
         }
 
         // Обработка названия файла
@@ -155,7 +150,8 @@ if (isset($_POST['submit'])) {
             echo $tools->displayError($error, '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
         }
     } else {
-        echo  $tools->displayError(_t('Error uploading file'), '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+        echo $tools->displayError(_t('Error uploading file'),
+            '<a href="?act=addfile&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
     }
 
     $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();

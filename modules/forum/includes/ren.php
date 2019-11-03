@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
@@ -43,7 +37,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $nn = isset($_POST['nn']) ? trim($_POST['nn']) : '';
 
         if (! $nn) {
-            echo $tools->displayError(_t('You have not entered topic name'), '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('You have not entered topic name'),
+                '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
@@ -52,7 +47,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $pt = $db->query("SELECT * FROM `forum_topic` WHERE section_id = '" . $ms['section_id'] . "' AND `name` = " . $db->quote($nn) . ' LIMIT 1');
 
         if ($pt->rowCount()) {
-            echo $tools->displayError(_t('Topic with same name already exists in this section'), '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+            echo $tools->displayError(_t('Topic with same name already exists in this section'),
+                '<a href="?act=ren&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }

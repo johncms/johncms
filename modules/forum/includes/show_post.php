@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if (empty($_GET['id'])) {
     echo $tools->displayError(_t('Wrong data'));
@@ -49,7 +43,8 @@ if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
 echo '</td><td>';
 
 if ($res['sex']) {
-    echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+    echo $tools->image(($res['sex'] == 'm' ? 'm' : 'w') . ($res['datereg'] > time() - 86400 ? '_new' : '') . '.png',
+        ['class' => 'icon-inline']);
 } else {
     echo $tools->image('del.png');
 }

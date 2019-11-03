@@ -12,14 +12,10 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
 if (($user->rights != 3 && $user->rights < 6) || ! $id) {
     header('Location: ./');

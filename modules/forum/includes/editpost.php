@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if (! $user->isValid() || ! $id) {
     echo $tools->displayError(_t('Wrong data'));
@@ -142,7 +136,8 @@ if (! $error) {
                     header('Location: ' . $link);
                 } else {
                     echo $tools->displayError(_t('You cannot edit your posts after 5 minutes') . '<br /><a href="' . $link . '">' . _t('Back') . '</a>');
-                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -237,8 +232,10 @@ if (! $error) {
 
             if (isset($_POST['submit'])) {
                 if (empty($_POST['msg'])) {
-                    echo $tools->displayError(_t('You have not entered the message'), '<a href="?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
-                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $tools->displayError(_t('You have not entered the message'),
+                        '<a href="?act=editpost&amp;id=' . $id . '">' . _t('Repeat') . '</a>');
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
 
@@ -266,12 +263,17 @@ if (! $error) {
 
                 if ($msg && ! isset($_POST['submit'])) {
                     $foundUser = $db->query("SELECT * FROM `users` WHERE `id` = '" . $res['user_id'] . "' LIMIT 1")->fetch();
-                    echo '<div class="list1">' . $tools->displayUser($foundUser, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>', 'body' => $msg_pre]) . '</div>';
+                    echo '<div class="list1">' . $tools->displayUser($foundUser, [
+                            'iphide' => 1,
+                            'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>',
+                            'body'   => $msg_pre
+                        ]) . '</div>';
                 }
 
                 echo '<div class="rmenu"><form name="form" action="?act=editpost&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><p>';
                 echo App::getContainer()->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-                echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'], ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
+                echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? htmlentities($res['text'],
+                        ENT_QUOTES, 'UTF-8') : $tools->checkout($_POST['msg'])) . '</textarea><br>';
 
                 echo '</p><p><input type="submit" name="submit" value="' . _t('Save') . '" style="width: 107px; cursor: pointer;"/> ' .
                     ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .

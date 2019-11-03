@@ -14,6 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Utility\Counters;
+use Johncms\View\Extension\Assets;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
@@ -22,6 +23,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 ob_start(); // Перехват вывода скриптов без шаблона
 
 /**
+ * @var Assets             $assets
  * @var ContainerInterface $container
  * @var ConfigInterface    $config
  * @var Counters           $counters
@@ -31,6 +33,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var Engine             $view
  */
 $container = App::getContainer();
+$assets = $container->get(Assets::class);
 $config = $container->get(ConfigInterface::class);
 $counters = App::getContainer()->get('counters');
 $db = $container->get(PDO::class);
@@ -695,10 +698,10 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     // Пользовательский аватар
                     echo '<table cellpadding="0" cellspacing="0"><tr><td>';
 
-                    if (file_exists(('../files/users/avatar/' . $res['user_id'] . '.png'))) {
-                        echo '<img src="../files/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+                    if (file_exists(('upload/users/avatar/' . $res['user_id'] . '.png'))) {
+                        echo '<img src="../upload/users/avatar/' . $res['user_id'] . '.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
                     } else {
-                        echo '<img src="../images/empty.png" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
+                        echo '<img src="' . $assets->url('images/old/empty.png') . '" width="32" height="32" alt="' . $res['user_name'] . '" />&#160;';
                     }
                     echo '</td><td>';
 

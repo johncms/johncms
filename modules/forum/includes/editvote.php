@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
@@ -94,14 +88,16 @@ if ($user->rights == 3 || $user->rights >= 6) {
                 '<form action="?act=editvote&amp;id=' . $id . '" method="post">' .
                 '<div class="gmenu"><p>' .
                 '<b>' . _t('Poll (max. 150)') . ':</b><br>' .
-                '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($topic_vote['name'], ENT_QUOTES, 'UTF-8') . '"/>' .
+                '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($topic_vote['name'],
+                    ENT_QUOTES, 'UTF-8') . '"/>' .
                 '</p></div>' .
                 '<div class="menu"><p>';
             $vote_result = $db->query("SELECT `id`, `name` FROM `cms_forum_vote` WHERE `type` = '2' AND `topic` = '${id}'");
 
             while ($vote = $vote_result->fetch()) {
                 echo _t('Answer') . ' ' . ($i + 1) . ' (max. 50): <br>' .
-                    '<input type="text" name="' . $vote['id'] . 'vote" value="' . htmlentities($vote['name'], ENT_QUOTES, 'UTF-8') . '"/>';
+                    '<input type="text" name="' . $vote['id'] . 'vote" value="' . htmlentities($vote['name'],
+                        ENT_QUOTES, 'UTF-8') . '"/>';
 
                 if ($countvote > 2) {
                     echo '&nbsp;<a href="?act=editvote&amp;id=' . $id . '&amp;vote=' . $vote['id'] . '&amp;delvote">[x]</a>';

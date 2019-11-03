@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 if (! $id) {
     echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');

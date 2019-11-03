@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 // Закрываем доступ для определенных ситуаций
 if (! $id
@@ -56,14 +48,14 @@ function forum_link($m)
         if ($req->rowCount()) {
             $res = $req->fetch();
             $name = strtr($res['name'], [
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => '',
-                ]);
+                '&quot;' => '',
+                '&amp;'  => '',
+                '&lt;'   => '',
+                '&gt;'   => '',
+                '&#039;' => '',
+                '['      => '',
+                ']'      => '',
+            ]);
 
             if (mb_strlen($name) > 40) {
                 $name = mb_substr($name, 0, 40) . '...';
@@ -82,7 +74,8 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+        '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
@@ -97,14 +90,16 @@ switch ($post_type) {
         // Добавление простого сообщения
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $user->rights < 7) {
             // Проверка, закрыта ли тема
-            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'),
+                '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
         $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
         //Обрабатываем ссылки
-        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
+        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            'forum_link', $msg);
 
         if (isset($_POST['submit'])
             && ! empty($_POST['msg'])
@@ -114,7 +109,8 @@ switch ($post_type) {
         ) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'),
+                    '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
                 echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
@@ -125,8 +121,10 @@ switch ($post_type) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
-                    echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $tools->displayError(_t('Message already exists'),
+                        '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -164,10 +162,12 @@ switch ($post_type) {
                     $newpost = $res['text'];
 
                     if (strpos($newpost, '[timestamp]') === false) {
-                        $newpost = '[timestamp]' . date('d.m.Y H:i', $res['date']) . '[/timestamp]' . PHP_EOL . $newpost;
+                        $newpost = '[timestamp]' . date('d.m.Y H:i',
+                                $res['date']) . '[/timestamp]' . PHP_EOL . $newpost;
                     }
 
-                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date('d.m.Y H:i', time()) . '[/timestamp]' . PHP_EOL . $msg;
+                    $newpost .= PHP_EOL . PHP_EOL . '[timestamp]' . date('d.m.Y H:i',
+                            time()) . '[/timestamp]' . PHP_EOL . $msg;
 
                     // Обновляем пост
                     $db->prepare('UPDATE `forum_messages` SET
@@ -237,28 +237,32 @@ switch ($post_type) {
             }
             exit;
         }
-            $msg_pre = $tools->checkout($msg, 1, 1);
-            $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-            $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $type1['name'] . '</div>';
+        $msg_pre = $tools->checkout($msg, 1, 1);
+        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
+        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+        echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $type1['name'] . '</div>';
 
-            if ($msg && ! isset($_POST['submit'])) {
-                echo '<div class="list1">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
-            }
+        if ($msg && ! isset($_POST['submit'])) {
+            echo '<div class="list1">' . $tools->displayUser($user, [
+                    'iphide' => 1,
+                    'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
+                    'body'   => $msg_pre
+                ]) . '</div>';
+        }
 
-            echo '<form name="form" action="?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
-                '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-            echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
-                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
+        echo '<form name="form" action="?act=say&amp;type=post&amp;id=' . $id . '&amp;start=' . $start . '" method="post"><div class="gmenu">' .
+            '<p><h3>' . _t('Message') . '</h3>';
+        echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
+        echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($msg)) . '</textarea></p>' .
+            '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
-            $token = mt_rand(1000, 100000);
-            $_SESSION['token'] = $token;
-            echo '</p><p>' .
-                '<input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer"/> ' .
-                ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer"/>' : '') .
-                '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '</p></div></form>';
+        $token = mt_rand(1000, 100000);
+        $_SESSION['token'] = $token;
+        echo '</p><p>' .
+            '<input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer"/> ' .
+            ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer"/>' : '') .
+            '<input type="hidden" name="token" value="' . $token . '"/>' .
+            '</p></div></form>';
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
             '<p><a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
@@ -269,7 +273,8 @@ switch ($post_type) {
         $type1 = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
 
         if (empty($type1)) {
-            echo $tools->displayError(_t('Message not found'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('Message not found'),
+                '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
@@ -278,13 +283,15 @@ switch ($post_type) {
         $th1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${th}'")->fetch();
 
         if (($th1['deleted'] == 1 || $th1['closed'] == 1) && $user->rights < 7) {
-            echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You cannot write in a closed topic'),
+                '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
         if ($type1['user_id'] == $user->id) {
-            echo $tools->displayError(_t('You can not reply to your own message'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
+            echo $tools->displayError(_t('You can not reply to your own message'),
+                '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
             echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
@@ -320,20 +327,23 @@ switch ($post_type) {
         }
 
         //Обрабатываем ссылки
-        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
+        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            'forum_link', $msg);
 
         if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
             && $_POST['token'] == $_SESSION['token']
         ) {
             if (empty($_POST['msg'])) {
-                echo $tools->displayError(_t('You have not entered the message'), '<a href="?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
+                echo $tools->displayError(_t('You have not entered the message'),
+                    '<a href="?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
                 echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
 
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
+                echo $tools->displayError(_t('Text is too short'),
+                    '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
                 echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
@@ -345,8 +355,10 @@ switch ($post_type) {
                 $res = $req->fetch();
 
                 if ($msg == $res['text']) {
-                    echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $tools->displayError(_t('Message already exists'),
+                        '<a href="?type=topic&amp;id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -411,53 +423,58 @@ switch ($post_type) {
             }
             exit;
         }
-            $textl = _t('Forum');
-            $qt = $type1['text'];
-            $msg_pre = $tools->checkout($msg, 1, 1);
-            $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
-            $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
-            echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $th1['name'] . '</div>';
-            $qt = str_replace('<br>', "\r\n", $qt);
-            $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
-            $qt = $tools->checkout($qt, 0, 2);
+        $textl = _t('Forum');
+        $qt = $type1['text'];
+        $msg_pre = $tools->checkout($msg, 1, 1);
+        $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
+        $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
+        echo '<div class="phdr"><b>' . _t('Topic') . ':</b> ' . $th1['name'] . '</div>';
+        $qt = str_replace('<br>', "\r\n", $qt);
+        $qt = trim(preg_replace('#\[c\](.*?)\[/c\]#si', '', $qt));
+        $qt = $tools->checkout($qt, 0, 2);
 
-            if (! empty($_POST['msg']) && ! isset($_POST['submit'])) {
-                echo '<div class="list1">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
-            }
+        if (! empty($_POST['msg']) && ! isset($_POST['submit'])) {
+            echo '<div class="list1">' . $tools->displayUser($user, [
+                    'iphide' => 1,
+                    'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
+                    'body'   => $msg_pre
+                ]) . '</div>';
+        }
 
-            echo '<form name="form" action="?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
+        echo '<form name="form" action="?act=say&amp;type=reply&amp;id=' . $id . '&amp;start=' . $start . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '" method="post"><div class="gmenu">';
 
-            if (isset($_GET['cyt'])) {
-                // Форма с цитатой
-                echo '<p><b>' . $type1['user_name'] . '</b> <span class="gray">(' . $vr . ')</span></p>' .
-                    '<p><h3>' . _t('Quote') . '</h3>' .
-                    '<textarea rows="' . $user->config->fieldHeight . '" name="citata">' . (empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'])) . '</textarea>' .
-                    '<br /><small>' . _t('Only allowed 200 characters, other text will be cropped.') . '</small></p>';
-            } else {
-                // Форма с репликой
-                echo '<p><h3>' . _t('Appeal') . '</h3>' .
-                    '<input type="radio" value="0" ' . (! $txt ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>,<br />' .
-                    '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('I am glad to answer you') . ',<br />' .
-                    '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="?act=show_post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
-            }
+        if (isset($_GET['cyt'])) {
+            // Форма с цитатой
+            echo '<p><b>' . $type1['user_name'] . '</b> <span class="gray">(' . $vr . ')</span></p>' .
+                '<p><h3>' . _t('Quote') . '</h3>' .
+                '<textarea rows="' . $user->config->fieldHeight . '" name="citata">' . (empty($_POST['citata']) ? $qt : $tools->checkout($_POST['citata'])) . '</textarea>' .
+                '<br /><small>' . _t('Only allowed 200 characters, other text will be cropped.') . '</small></p>';
+        } else {
+            // Форма с репликой
+            echo '<p><h3>' . _t('Appeal') . '</h3>' .
+                '<input type="radio" value="0" ' . (! $txt ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>,<br />' .
+                '<input type="radio" value="2" ' . ($txt == 2 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('I am glad to answer you') . ',<br />' .
+                '<input type="radio" value="3" ' . ($txt == 3 ? 'checked="checked"' : '') . ' name="txt" />&#160;<b>' . $type1['user_name'] . '</b>, ' . _t('respond to Your message') . ' (<a href="?act=show_post&amp;id=' . $type1['id'] . '">' . $vr . '</a>):</p>';
+        }
 
-            echo '<p><h3>' . _t('Message') . '</h3>';
-            echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
-            echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
-                '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
+        echo '<p><h3>' . _t('Message') . '</h3>';
+        echo '</p><p>' . $container->get(Johncms\Api\BbcodeInterface::class)->buttons('form', 'msg');
+        echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . (empty($_POST['msg']) ? '' : $tools->checkout($_POST['msg'])) . '</textarea></p>' .
+            '<p><input type="checkbox" name="addfiles" value="1" ' . (isset($_POST['addfiles']) ? 'checked="checked" ' : '') . '/> ' . _t('Add File');
 
-            $token = mt_rand(1000, 100000);
-            $_SESSION['token'] = $token;
-            echo '</p><p><input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer;"/> ' .
-                ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
-                '<input type="hidden" name="token" value="' . $token . '"/>' .
-                '</p></div></form>';
+        $token = mt_rand(1000, 100000);
+        $_SESSION['token'] = $token;
+        echo '</p><p><input type="submit" name="submit" value="' . _t('Send') . '" style="width: 107px; cursor: pointer;"/> ' .
+            ($set_forum['preview'] ? '<input type="submit" value="' . _t('Preview') . '" style="width: 107px; cursor: pointer;"/>' : '') .
+            '<input type="hidden" name="token" value="' . $token . '"/>' .
+            '</p></div></form>';
 
         echo '<div class="phdr"><a href="../help/?act=smileys">' . _t('Smilies') . '</a></div>' .
             '<p><a href="?type=topic&amp;id=' . $type1['topic_id'] . '&amp;start=' . $start . '">' . _t('Back') . '</a></p>';
         break;
 
     default:
-        echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="./">' . _t('Forum') . '</a>');
+        echo $tools->displayError(_t('Topic has been deleted or does not exists'),
+            '<a href="./">' . _t('Forum') . '</a>');
         echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

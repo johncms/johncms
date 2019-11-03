@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if ($user->rights >= 7) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
@@ -61,7 +55,7 @@ if ($user->rights >= 7) {
                 $curators[$res['user_id']] = $res['user_name'];
             }
 
-            echo($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
+            echo ($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
                 '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['user_name'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
                 '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a></div>';
         }

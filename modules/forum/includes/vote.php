@@ -12,19 +12,13 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if ($user->isValid()) {
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id` = '${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $vote = abs((int) ($_POST['vote']));
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '${vote}' AND `topic` = '${id}'")->fetchColumn();

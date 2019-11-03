@@ -12,29 +12,23 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
+
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
 $textl = _t('Forum search');
 echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Функция подсветки результатов запроса
 function ReplaceKeywords($search, $text)
 {
     $search = str_replace('*', '', $search);
 
-    return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu', '<span style="background-color: #FFFF33">$1</span>', $text);
+    return mb_strlen($search) < 3 ? $text : preg_replace('|(' . preg_quote($search, '/') . ')|siu',
+        '<span style="background-color: #FFFF33">$1</span>', $text);
 }
 
 switch ($mod) {
@@ -94,7 +88,8 @@ switch ($mod) {
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
+                        $start, $total, $kmess) . '</div>';
             }
 
             if ($total) {
@@ -240,7 +235,8 @@ switch ($mod) {
 
         // Постраничная навигация
         if (isset($total) && $total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
+                    $start, $total, $kmess) . '</div>' .
                 '<p><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

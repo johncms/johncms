@@ -12,24 +12,19 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 if ($user->rights == 3 || $user->rights >= 6) {
     $topic = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `id`='${id}' AND (`deleted` != '1' OR `deleted` IS NULL)")->fetchColumn();
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic`='${id}'")->fetchColumn();
 
     if ($topic_vote != 0 || $topic == 0) {
-        echo $tools->displayError(_t('Wrong data'), '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>');
+        echo $tools->displayError(_t('Wrong data'),
+            '<a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a>');
         echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
@@ -75,7 +70,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     } else {
         echo '<form action="?act=addvote&amp;id=' . $id . '" method="post">' .
             '<br />' . _t('Poll (max. 150)') . ':<br>' .
-            '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'], ENT_QUOTES, 'UTF-8') . '"/><br>';
+            '<input type="text" size="20" maxlength="150" name="name_vote" value="' . htmlentities($_POST['name_vote'],
+                ENT_QUOTES, 'UTF-8') . '"/><br>';
 
         if (isset($_POST['plus'])) {
             ++$_POST['count_vote'];
@@ -90,7 +86,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
         }
 
         for ($vote = 0; $vote < $_POST['count_vote']; $vote++) {
-            echo _t('Answer') . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote], ENT_QUOTES, 'UTF-8') . '"/><br>';
+            echo _t('Answer') . ' ' . ($vote + 1) . '(max. 50): <br><input type="text" name="' . $vote . '" value="' . htmlentities($_POST[$vote],
+                    ENT_QUOTES, 'UTF-8') . '"/><br>';
         }
 
         echo '<input type="hidden" name="count_vote" value="' . abs((int) ($_POST['count_vote'])) . '"/>';

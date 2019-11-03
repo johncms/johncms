@@ -12,17 +12,11 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 $types = [
     1 => _t('Windows applications'),
@@ -185,7 +179,7 @@ if ($do || isset($_GET['new'])) {
     }
 
     foreach ($link as $var) {
-        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
+        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
         ++$i;
     }
 

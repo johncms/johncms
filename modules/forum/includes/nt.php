@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 // Закрываем доступ для определенных ситуаций
 if (! $id
@@ -56,14 +48,14 @@ function forum_link($m)
         if ($req->rowCount()) {
             $res = $req->fetch();
             $name = strtr($res['text'], [
-                    '&quot;' => '',
-                    '&amp;'  => '',
-                    '&lt;'   => '',
-                    '&gt;'   => '',
-                    '&#039;' => '',
-                    '['      => '',
-                    ']'      => '',
-                ]);
+                '&quot;' => '',
+                '&amp;'  => '',
+                '&lt;'   => '',
+                '&gt;'   => '',
+                '&#039;' => '',
+                '['      => '',
+                ']'      => '',
+            ]);
 
             if (mb_strlen($name) > 40) {
                 $name = mb_substr($name, 0, 40) . '...';
@@ -82,7 +74,8 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood) . ', <a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
+    echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'),
+            $flood) . ', <a href="?id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
@@ -102,7 +95,8 @@ $th = filter_has_var(INPUT_POST, 'th')
     : '';
 
 $msg = isset($_POST['msg']) ? trim($_POST['msg']) : '';
-$msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
+$msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+    'forum_link', $msg);
 
 if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     && $_POST['token'] == $_SESSION['token']
@@ -126,7 +120,8 @@ if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
     }
 
     if (! $error) {
-        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~', 'forum_link', $msg);
+        $msg = preg_replace_callback('~\\[url=(http://.+?)\\](.+?)\\[/url\\]|(http://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
+            'forum_link', $msg);
 
         $sql = 'SELECT (
 SELECT COUNT(*) FROM `forum_topic` WHERE `section_id` = ? AND `name` = ?) AS topic, (
@@ -240,7 +235,11 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
 
     if ($msg && $th && ! isset($_POST['submit'])) {
         echo '<div class="list1">' . $tools->image('op.gif') . '<span style="font-weight: bold">' . $th . '</span></div>' .
-            '<div class="list2">' . $tools->displayUser($user, ['iphide' => 1, 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>', 'body' => $msg_pre]) . '</div>';
+            '<div class="list2">' . $tools->displayUser($user, [
+                'iphide' => 1,
+                'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
+                'body'   => $msg_pre
+            ]) . '</div>';
     }
 
     echo '<form name="form" action="?act=nt&amp;id=' . $id . '" method="post">' .

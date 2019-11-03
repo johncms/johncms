@@ -12,20 +12,14 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
+
 $textl = _t('Forum') . ' | ' . _t('Unread');
 unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (empty($_SESSION['uid'])) {
     if (isset($_GET['newup'])) {
@@ -67,7 +61,8 @@ if ($user->isValid()) {
             }
 
             $count = $req->fetchColumn();
-            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'), $vr) . '</div>';
+            echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . sprintf(_t('All for period %d hours'),
+                    $vr) . '</div>';
 
             // Форма выбора периода времени
             echo '<div class="topmenu"><form action="?act=new&amp;do=period" method="post">' .
@@ -76,7 +71,8 @@ if ($user->isValid()) {
                 '</form></div>';
 
             if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;',
+                        $start, $count, $kmess) . '</div>';
             }
 
             if ($count) {
@@ -139,7 +135,8 @@ if ($user->isValid()) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
 
             if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $kmess) . '</div>' .
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;',
+                        $start, $count, $kmess) . '</div>' .
                     '<p><form action="?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
                     <input type="text" name="page" size="2"/>
                     <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -152,7 +149,8 @@ if ($user->isValid()) {
             echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
+                        $kmess) . '</div>';
             }
 
             if ($total > 0) {
@@ -204,7 +202,8 @@ if ($user->isValid()) {
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
             if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>' .
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
+                        $kmess) . '</div>' .
                     '<p><form method="get">' .
                     '<input type="hidden" name="act" value="new"/>' .
                     '<input type="text" name="page" size="2"/>' .

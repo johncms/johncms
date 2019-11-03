@@ -12,16 +12,12 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
+
 if ($id) {
-    /** @var Psr\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     $error = false;
 
     // Скачивание прикрепленного файла Форума

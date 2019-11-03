@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
+
 $textl = _t('Who in Forum');
-$headmod = $id ? 'forum,' . $id . ',topic' : 'forumwho';
-
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $user->isValid()) {
     header('Location: ./');
@@ -54,7 +47,8 @@ if ($id) {
         }
 
         if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>';
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
+                    $start, $total, $kmess) . '</div>';
         }
 
         if ($total) {
@@ -63,7 +57,8 @@ if ($id) {
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 $set_user['avatar'] = 0;
-                echo $tools->displayUser($res, ['iphide' => ($act == 'guest' || ($user->rights >= 1 && $user->rights >= $res['rights']) ? 0 : 1)]);
+                echo $tools->displayUser($res,
+                    ['iphide' => ($act == 'guest' || ($user->rights >= 1 && $user->rights >= $res['rights']) ? 0 : 1)]);
                 echo '</div>';
             }
         } else {
@@ -76,7 +71,8 @@ if ($id) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
+                $start, $total, $kmess) . '</div>' .
             '<p><form action="?act=who&amp;id=' . $id . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -101,7 +97,8 @@ if ($id) {
     }
 
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
+                $start, $total, $kmess) . '</div>';
     }
 
     if ($total) {
@@ -200,7 +197,8 @@ if ($id) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
+                $start, $total, $kmess) . '</div>' .
             '<p><form action="?act=who' . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
