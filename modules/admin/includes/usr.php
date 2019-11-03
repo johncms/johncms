@@ -42,7 +42,7 @@ switch ($sort) {
 }
 
 $total = $db->query('SELECT COUNT(*) FROM `users`')->fetchColumn();
-$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY ${order} LIMIT " . $start . ', ' . $kmess);
+$req = $db->query("SELECT * FROM `users` WHERE `preg` = 1 ORDER BY ${order} LIMIT " . $start . ', ' . $user->config->kmess);
 $i = 0;
 
 while ($res = $req->fetch()) {
@@ -56,9 +56,8 @@ while ($res = $req->fetch()) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=usr&amp;sort=' . $sort . '&amp;', $start, $total,
-            $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=usr&amp;sort=' . $sort . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     echo '<p><form action="?act=usr&amp;sort=' . $sort . '" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
 }
 

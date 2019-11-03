@@ -82,7 +82,7 @@ switch ($mod) {
           FROM `cms_ban_users` LEFT JOIN `users` ON `cms_ban_users`.`user_id` = `users`.`id`
           GROUP BY `user_id`
           ORDER BY `${sort}` DESC
-          LIMIT ${start}, ${kmess}");
+          LIMIT " . $start . ',' . $user->config->kmess);
 
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
@@ -99,9 +99,8 @@ switch ($mod) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total,
-                    $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ban_panel&amp;', $start, $total, $user->config->kmess) . '</div>';
             echo '<p><form action="?act=ban_panel" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 

@@ -99,8 +99,8 @@ if ($search && ! $error) {
         $total = $db->query("SELECT COUNT(*) FROM `users` WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}")->fetchColumn();
     }
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     if ($total) {
@@ -109,12 +109,11 @@ if ($search && ! $error) {
                 FROM `cms_users_iphistory` LEFT JOIN `users` ON `cms_users_iphistory`.`user_id` = `users`.`id`
                 WHERE `cms_users_iphistory`.`ip` BETWEEN ${ip1} AND ${ip2} OR `cms_users_iphistory`.`ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
                 GROUP BY `users`.`id`
-                ORDER BY `ip` ASC, `name` ASC LIMIT ${start}, ${kmess}
-            ");
+                ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess);
         } else {
             $req = $db->query("SELECT * FROM `users`
             WHERE `ip` BETWEEN ${ip1} AND ${ip2} OR `ip_via_proxy` BETWEEN ${ip1} AND ${ip2}
-            ORDER BY `ip` ASC, `name` ASC LIMIT ${start}, ${kmess}");
+            ORDER BY `ip` ASC, `name` ASC LIMIT " . $start . ',' . $user->config->kmess);
         }
 
         $i = 0;
@@ -131,9 +130,9 @@ if ($search && ! $error) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
+    if ($total > $user->config->kmess) {
         // Навигация по страницам
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
             '<p><form action="?act=search_ip' . ($mod == 'history' ? '&amp;mod=history' : '') . '&amp;search=' . urlencode($search) . '" method="post">' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
             '</form></p>';

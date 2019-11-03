@@ -549,9 +549,8 @@ switch ($mod) {
         } else {
             $total = $db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` = '1' ${sort}")->fetchColumn();
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;',
-                        $start, $total, $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
             $req = $db->query("SELECT `forum_topic`.*, 
@@ -568,7 +567,7 @@ switch ($mod) {
             `users`.`browser`,
             `users`.`ip_via_proxy`
             FROM `forum_topic` LEFT JOIN `users` ON `forum_topic`.`user_id` = `users`.`id`
-            WHERE `forum_topic`.`deleted` = '1' ${sort} ORDER BY `forum_topic`.`id` DESC LIMIT ${start}, ${kmess}");
+            WHERE `forum_topic`.`deleted` = '1' ${sort} ORDER BY `forum_topic`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess);
 
             if ($req->rowCount()) {
                 $i = 0;
@@ -604,9 +603,8 @@ switch ($mod) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;',
-                        $start, $total, $kmess) . '</div>' .
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=htopics&amp;', $start, $total, $user->config->kmess) . '</div>' .
                     '<p><form action="?act=forum&amp;mod=htopics" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -659,9 +657,8 @@ switch ($mod) {
         } else {
             $total = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` = '1' ${sort}")->fetchColumn();
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;',
-                        $start, $total, $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
             $req = $db->query("SELECT `forum_messages`.*, 
@@ -675,14 +672,14 @@ switch ($mod) {
             `users`.`status`, 
             `users`.`datereg`
             FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
-            WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT ${start}, ${kmess}");
+            WHERE `forum_messages`.`deleted` = '1' ${sort} ORDER BY `forum_messages`.`id` DESC LIMIT " . $start . ',' . $user->config->kmess);
 
             if ($req->rowCount()) {
                 $i = 0;
 
                 while ($res = $req->fetch()) {
                     $posttime = ' <span class="gray">(' . $tools->displayDate($res['time']) . ')</span>';
-                    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $kmess);
+                    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['fid'] . "'")->fetchColumn() / $user->config->kmess);
                     $text = mb_substr($res['text'], 0, 500);
                     $text = $tools->checkout($text, 1, 0);
                     $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
@@ -710,9 +707,8 @@ switch ($mod) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;',
-                        $start, $total, $kmess) . '</div>' .
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=forum&amp;mod=hposts&amp;', $start, $total, $user->config->kmess) . '</div>' .
                     '<p><form action="?act=forum&amp;mod=hposts" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

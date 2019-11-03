@@ -329,7 +329,7 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `cms_ads` WHERE `type` = '${type}'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '${type}' ORDER BY `mesto` ASC LIMIT ${start},${kmess}");
+            $req = $db->query("SELECT * FROM `cms_ads` WHERE `type` = '${type}' ORDER BY `mesto` ASC LIMIT " . $start . ',' . $user->config->kmess);
             $i = 0;
 
             while ($res = $req->fetch()) {

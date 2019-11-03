@@ -361,9 +361,9 @@ switch ($mod) {
 
         if ($total) {
             $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
-            $start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
+            $start = isset($_REQUEST['page']) ? $page * $user->config->kmess - $user->config->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
-            $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT ${start},${kmess}");
+            $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT " . $start . ',' . $user->config->kmess);
             $i = 0;
 
             while ($res = $req->fetch()) {
@@ -393,9 +393,8 @@ switch ($mod) {
         echo '<div class="rmenu"><form action="?act=ipban&amp;mod=new" method="post"><input type="submit" name="" value="' . _t('Ban') . '" /></form></div>';
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ipban&amp;', $start, $total,
-                    $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ipban&amp;', $start, $total, $user->config->kmess) . '</div>';
             echo '<p><form action="?act=ipban" method="post"><input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
         }
 
