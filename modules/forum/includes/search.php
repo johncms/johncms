@@ -10,19 +10,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$headmod = 'forumsearch';
+$mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
-/** @var Zend\I18n\Translator\Translator $translator */
-//$translator = $container->get(Zend\I18n\Translator\Translator::class);
-//$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
 $textl = _t('Forum search');
-require 'system/head.php';
 echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Search') . '</div>';
 
 /** @var PDO $db */
@@ -255,4 +250,4 @@ switch ($mod) {
         echo '<p>' . ($search ? '<a href="?act=search">' . _t('New Search') . '</a><br />' : '') . '<a href="./">' . _t('Forum') . '</a></p>';
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

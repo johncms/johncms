@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 if ($id) {
     /** @var Psr\Container\ContainerInterface $container */
     $container = App::getContainer();
@@ -40,9 +42,8 @@ if ($id) {
     }
 
     if ($error) {
-        require 'system/head.php';
         echo $tools->displayError(_t('File does not exist'), '<a href="./">' . _t('Forum') . '</a>');
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 } else {

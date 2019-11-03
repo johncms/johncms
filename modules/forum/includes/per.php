@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -24,18 +26,16 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
-        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 
     $typ = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $typ->rowCount()) {
-        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 
@@ -43,18 +43,16 @@ if ($user->rights == 3 || $user->rights >= 6) {
         $razd = isset($_POST['razd']) ? abs((int) ($_POST['razd'])) : false;
 
         if (! $razd) {
-            require 'system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
         $typ1 = $db->query("SELECT * FROM `forum_sections` WHERE `id` = '${razd}'");
 
         if (! $typ1->rowCount()) {
-            require 'system/head.php';
             echo $tools->displayError(_t('Wrong data'));
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
@@ -66,7 +64,6 @@ if ($user->rights == 3 || $user->rights >= 6) {
     } else {
         // Перенос темы
         $ms = $typ->fetch();
-        require 'system/head.php';
 
         if (empty($_GET['other'])) {
             $rz1 = $db->query("SELECT * FROM `forum_topic` WHERE id='" . $ms['section_id'] . "'")->fetch();

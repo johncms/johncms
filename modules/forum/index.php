@@ -14,6 +14,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Utility\Counters;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
@@ -27,6 +28,7 @@ ob_start(); // Перехват вывода скриптов без шабло�
  * @var PDO                $db
  * @var ToolsInterface     $tools
  * @var UserInterface      $user
+ * @var Engine             $view
  */
 $container = App::getContainer();
 $config = $container->get(ConfigInterface::class);
@@ -34,6 +36,7 @@ $counters = App::getContainer()->get('counters');
 $db = $container->get(PDO::class);
 $user = $container->get(UserInterface::class);
 $tools = $container->get(ToolsInterface::class);
+$view = $container->get(Engine::class);
 
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
@@ -129,9 +132,8 @@ if (! $config->mod_forum && $user->rights < 7) {
 }
 
 if ($error) {
-    require 'system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 $show_type = $_REQUEST['type'] ?? 'section';
@@ -224,8 +226,6 @@ if ($act && ($key = array_search($act,
         }
     }
 
-    require 'system/head.php';
-
     // Если форум закрыт, то для Админов выводим напоминание
     if (! $config->mod_forum) {
         echo '<div class="alarm">' . _t('Forum is closed') . '</div>';
@@ -255,7 +255,7 @@ if ($act && ($key = array_search($act,
             // Если темы не существует, показываем ошибку
             echo $tools->displayError(_t('Topic has been deleted or does not exists'),
                 '<a href="./">' . _t('Forum') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
@@ -474,7 +474,8 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
                 // Если тема помечена для удаления, разрешаем доступ только администрации
                 if ($user->rights < 6 && $type1['deleted'] == 1) {
                     echo '<div class="rmenu"><p>' . _t('Topic deleted') . '<br><a href="?type=topics&amp;id=' . $type1['section_id'] . '">' . _t('Go to Section') . '</a></p></div>';
-                    require 'system/end.php';
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
 
@@ -1016,4 +1017,4 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
     }
 }
 
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

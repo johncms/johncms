@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -32,9 +34,8 @@ if (! $id
     || isset($user->ban[11])
     || (! $user->rights && $config['mod_forum'] == 3)
 ) {
-    require 'system/head.php';
     echo $tools->displayError(_t('Access forbidden'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -81,9 +82,8 @@ function forum_link($m)
 $flood = $tools->antiflood();
 
 if ($flood) {
-    require 'system/head.php';
     echo $tools->displayError(sprintf(_t('You cannot add the message so often<br>Please, wait %d sec.'), $flood), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -97,9 +97,8 @@ switch ($post_type) {
         // Добавление простого сообщения
         if (($type1['edit'] == 1 || $type1['close'] == 1) && $user->rights < 7) {
             // Проверка, закрыта ли тема
-            require 'system/head.php';
             echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
@@ -115,9 +114,8 @@ switch ($post_type) {
         ) {
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                require 'system/head.php';
                 echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
 
@@ -127,9 +125,8 @@ switch ($post_type) {
             if ($req->rowCount()) {
                 $res = $req->fetch();
                 if ($msg == $res['text']) {
-                    require 'system/head.php';
                     echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-                    require 'system/end.php';
+                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -240,7 +237,6 @@ switch ($post_type) {
             }
             exit;
         }
-            require 'system/head.php';
             $msg_pre = $tools->checkout($msg, 1, 1);
             $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
             $msg_pre = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $msg_pre);
@@ -273,9 +269,8 @@ switch ($post_type) {
         $type1 = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)"))->fetch();
 
         if (empty($type1)) {
-            require 'system/head.php';
             echo $tools->displayError(_t('Message not found'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
@@ -283,16 +278,14 @@ switch ($post_type) {
         $th1 = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${th}'")->fetch();
 
         if (($th1['deleted'] == 1 || $th1['closed'] == 1) && $user->rights < 7) {
-            require 'system/head.php';
             echo $tools->displayError(_t('You cannot write in a closed topic'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
         if ($type1['user_id'] == $user->id) {
-            require 'system/head.php';
             echo $tools->displayError(_t('You can not reply to your own message'), '<a href="?type=topic&amp;id=' . $th1['id'] . '">' . _t('Back') . '</a>');
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 
@@ -333,17 +326,15 @@ switch ($post_type) {
             && $_POST['token'] == $_SESSION['token']
         ) {
             if (empty($_POST['msg'])) {
-                require 'system/head.php';
                 echo $tools->displayError(_t('You have not entered the message'), '<a href="?type=reply&amp;act=say&amp;id=' . $th . (isset($_GET['cyt']) ? '&amp;cyt' : '') . '">' . _t('Repeat') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
 
             // Проверяем на минимальную длину
             if (mb_strlen($msg) < 4) {
-                require 'system/head.php';
                 echo $tools->displayError(_t('Text is too short'), '<a href="?type=topic&amp;id=' . $id . '">' . _t('Back') . '</a>');
-                require 'system/end.php';
+                echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                 exit;
             }
 
@@ -354,9 +345,8 @@ switch ($post_type) {
                 $res = $req->fetch();
 
                 if ($msg == $res['text']) {
-                    require 'system/head.php';
                     echo $tools->displayError(_t('Message already exists'), '<a href="?type=topic&amp;id=' . $th . '&amp;start=' . $start . '">' . _t('Back') . '</a>');
-                    require 'system/end.php';
+                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
             }
@@ -422,7 +412,6 @@ switch ($post_type) {
             exit;
         }
             $textl = _t('Forum');
-            require 'system/head.php';
             $qt = $type1['text'];
             $msg_pre = $tools->checkout($msg, 1, 1);
             $msg_pre = $tools->smilies($msg_pre, $user->rights ? 1 : 0);
@@ -469,7 +458,6 @@ switch ($post_type) {
         break;
 
     default:
-        require 'system/head.php';
         echo $tools->displayError(_t('Topic has been deleted or does not exists'), '<a href="./">' . _t('Forum') . '</a>');
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

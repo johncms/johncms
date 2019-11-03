@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -28,7 +28,7 @@ $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '
 
 if ($topic_vote == 0 || $user->rights < 7) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
     $topic_vote = $db->query("SELECT `name`, `time`, `count` FROM `cms_forum_vote` WHERE `type` = '1' AND `topic` = '${id}' LIMIT 1")->fetch();
@@ -61,4 +61,4 @@ if ($topic_vote == 0 || $user->rights < 7) {
 
     echo '<p><a href="?&type=topic&amp;id=' . $id . '">' . _t('Go to Topic') . '</a></p>';
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

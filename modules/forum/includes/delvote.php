@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -24,11 +26,10 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($user->rights == 3 || $user->rights >= 6) {
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type`='1' AND `topic` = '${id}'")->fetchColumn();
-    require 'system/head.php';
 
     if ($topic_vote == 0) {
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 

@@ -29,11 +29,10 @@ if ($user->isValid()) {
     $vote = abs((int) ($_POST['vote']));
     $topic_vote = $db->query("SELECT COUNT(*) FROM `cms_forum_vote` WHERE `type` = '2' AND `id` = '${vote}' AND `topic` = '${id}'")->fetchColumn();
     $vote_user = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `user` = '" . $user->id . "' AND `topic` = '${id}'")->fetchColumn();
-    require 'system/head.php';
 
     if ($topic_vote == 0 || $vote_user > 0 || $topic == 0) {
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 

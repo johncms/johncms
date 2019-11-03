@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,7 +29,7 @@ if ($user->rights >= 7) {
 
     if (! $req->rowCount() || $user->rights < 7) {
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 

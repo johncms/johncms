@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -17,9 +19,8 @@ $container = App::getContainer();
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (empty($_GET['n'])) {
-    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -38,9 +39,8 @@ while ($f = readdir($o)) {
 $tt = count($a);
 
 if (! in_array($n, $b)) {
-    require 'system/head.php';
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 

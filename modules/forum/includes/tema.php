@@ -15,7 +15,6 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = App::getContainer()->get(Johncms\Api\ToolsInterface::class);
 
-require 'system/head.php';
 $delf = opendir(UPLOAD_PATH . 'forum/topics');
 $tm = [];
 
@@ -39,7 +38,7 @@ for ($it = 0; $it < $totalt; $it++) {
 
 if (! $id) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -59,7 +58,7 @@ $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}' AND (`delete
 
 if (! $req->rowCount()) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 

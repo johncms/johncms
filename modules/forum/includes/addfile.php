@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -29,7 +29,7 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 if (! $id || ! $user->isValid()) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -38,14 +38,14 @@ $res = $db->query("SELECT * FROM `forum_messages` WHERE `id` = '${id}'")->fetch(
 
 if (empty($res) || $res['user_id'] != $user->id) {
     echo $tools->displayError(_t('Wrong data'));
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
 // Проверяем лимит времени, отведенный для выгрузки файла
 if ($res['date'] < (time() - 3600)) {
     echo $tools->displayError(_t('The time allotted for the file upload has expired'), '<a href="?&typ=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back') . '</a>');
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 

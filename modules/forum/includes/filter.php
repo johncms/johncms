@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
@@ -20,7 +20,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if (! $id) {
     echo $tools->displayError(_t('Wrong data'), '<a href="./">' . _t('Forum') . '</a>');
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -38,7 +38,7 @@ switch ($do) {
 
         if (empty($_POST['users'])) {
             echo '<div class="rmenu"><p>' . _t('You have not selected any author') . '<br /><a href="?type=topic&act=filter&amp;id=' . $id . '&amp;start=' . $start . '">' . _t('Back') . '</a></p></div>';
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 

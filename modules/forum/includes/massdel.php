@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -21,8 +23,6 @@ $user = $container->get(Johncms\Api\UserInterface::class);
 
 if ($user->rights == 3 || $user->rights >= 6) {
     // Массовое удаление выбранных постов форума
-    require 'system/head.php';
-
     if (isset($_GET['yes'])) {
         $dc = $_SESSION['dc'];
         $prd = $_SESSION['prd'];
@@ -39,7 +39,7 @@ if ($user->rights == 3 || $user->rights >= 6) {
     } else {
         if (empty($_POST['delch'])) {
             echo '<p>' . _t('You did not choose something to delete') . '<br><a href="' . htmlspecialchars(getenv('HTTP_REFERER')) . '">' . _t('Back') . '</a></p>';
-            require 'system/end.php';
+            echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
             exit;
         }
 

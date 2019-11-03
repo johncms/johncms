@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -24,9 +26,8 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 if ($user->rights == 3 || $user->rights >= 6) {
     if (! $id) {
-        require 'system/head.php';
         echo $tools->displayError(_t('Wrong data'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 
@@ -34,9 +35,8 @@ if ($user->rights == 3 || $user->rights >= 6) {
     $req = $db->query("SELECT * FROM `forum_topic` WHERE `id` = '${id}'");
 
     if (! $req->rowCount()) {
-        require 'system/head.php';
         echo $tools->displayError(_t('Topic has been deleted or does not exists'));
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 
@@ -68,7 +68,6 @@ if ($user->rights == 3 || $user->rights >= 6) {
         header('Location: ?type=topics&id=' . $res['section_id']);
     } else {
         // Меню выбора режима удаления темы
-        require 'system/head.php';
         echo '<div class="phdr"><a href="?type=topic&id=' . $id . '"><b>' . _t('Forum') . '</b></a> | ' . _t('Delete Topic') . '</div>' .
             '<div class="rmenu"><form method="post" action="?act=deltema&amp;id=' . $id . '">' .
             '<p><h3>' . _t('Do you really want to delete?') . '</h3>' .
