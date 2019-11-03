@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -43,7 +43,7 @@ if ($req_obj->rowCount()) {
     unset($_SESSION['ref']);
     $res_a = $db->query('SELECT * FROM `cms_album_cat` WHERE `id` = ' . $res_obj['album_id'])->fetch();
 
-    if (($res_a['access'] == 1 && $owner['id'] != $systemUser->id && $systemUser->rights < 7) || ($res_a['access'] == 2 && $systemUser->rights < 7 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $systemUser->id)) {
+    if (($res_a['access'] == 1 && $owner['id'] != $user->id && $user->rights < 7) || ($res_a['access'] == 2 && $user->rights < 7 && (! isset($_SESSION['ap']) || $_SESSION['ap'] != $res_a['password']) && $owner['id'] != $user->id)) {
         // Если доступ закрыт
         echo $view->render('system::app/old_content', [
             'title'   => $textl ?? '',
@@ -65,7 +65,7 @@ if ($req_obj->rowCount()) {
         '<a href="../profile/?user=' . $owner['id'] . '"><b>' . $owner['name'] . '</b></a> | ' .
         '<a href="?act=show&amp;al=' . $res_a['id'] . '&amp;user=' . $owner['id'] . '">' . $tools->checkout($res_a['name']) . '</a>';
 
-    if ($res_obj['access'] == 4 || $systemUser->rights >= 7) {
+    if ($res_obj['access'] == 4 || $user->rights >= 7) {
         $context_top .= vote_photo($res_obj) .
             '<div class="gray">' . _t('Views') . ': ' . $res_obj['views'] . ', ' . _t('Downloads') . ': ' . $res_obj['downloads'] . '</div>' .
             '<a href="?act=image_download&amp;img=' . $res_obj['id'] . '">' . _t('Download') . '</a>';
@@ -75,22 +75,22 @@ if ($req_obj->rowCount()) {
 
     // Параметры комментариев
     $arg = [
-        'comments_table' => 'cms_album_comments',     // Таблица с комментариями
-        'object_table'   => 'cms_album_files',        // Таблица комментируемых объектов
-        'script'         => '?act=comments', // Имя скрипта (с параметрами вызова)
-        'sub_id_name'    => 'img',                    // Имя идентификатора комментируемого объекта
-        'sub_id'         => $img,                     // Идентификатор комментируемого объекта
-        'owner'          => $owner['id'],             // Владелец объекта
-        'owner_delete'   => true,                     // Возможность владельцу удалять комментарий
-        'owner_reply'    => true,                     // Возможность владельцу отвечать на комментарий
-        'owner_edit'     => false,                    // Возможность владельцу редактировать комментарий
-        'title'          => _t('Comments'),         // Название раздела
-        'context_top'    => $context_top,             // Выводится вверху списка
-        'context_bottom' => '',                        // Выводится внизу списка
+        'comments_table' => 'cms_album_comments', // Таблица с комментариями
+        'object_table'   => 'cms_album_files',    // Таблица комментируемых объектов
+        'script'         => '?act=comments',      // Имя скрипта (с параметрами вызова)
+        'sub_id_name'    => 'img',                // Имя идентификатора комментируемого объекта
+        'sub_id'         => $img,                 // Идентификатор комментируемого объекта
+        'owner'          => $owner['id'],         // Владелец объекта
+        'owner_delete'   => true,                 // Возможность владельцу удалять комментарий
+        'owner_reply'    => true,                 // Возможность владельцу отвечать на комментарий
+        'owner_edit'     => false,                // Возможность владельцу редактировать комментарий
+        'title'          => _t('Comments'),       // Название раздела
+        'context_top'    => $context_top,         // Выводится вверху списка
+        'context_bottom' => '',                   // Выводится внизу списка
     ];
 
     // Ставим метку прочтения
-    if ($systemUser->id == $owner['id'] && $res_obj['unread_comments']) {
+    if ($user->id == $owner['id'] && $res_obj['unread_comments']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '0' WHERE `id` = '${img}' LIMIT 1");
     }
 
@@ -98,7 +98,7 @@ if ($req_obj->rowCount()) {
     $comm = new Johncms\Utility\Comments($arg);
 
     // Обрабатываем метки непрочитанных комментариев
-    if ($comm->added && $systemUser->id != $owner['id']) {
+    if ($comm->added && $user->id != $owner['id']) {
         $db->exec("UPDATE `cms_album_files` SET `unread_comments` = '1' WHERE `id` = '${img}' LIMIT 1");
     }
 } else {

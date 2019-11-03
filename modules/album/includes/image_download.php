@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -33,7 +33,7 @@ if ($req->rowCount()) {
     $res = $req->fetch();
 
     // Проверка прав доступа
-    if ($systemUser->rights < 6 && $systemUser->id != $res['user_id']) {
+    if ($user->rights < 6 && $user->id != $res['user_id']) {
         $req_a = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '" . $res['album_id'] . "'");
 
         if ($req_a->rowCount()) {
@@ -55,8 +55,8 @@ if ($req->rowCount()) {
 }
 if (! $error) {
     // Счетчик скачиваний
-    if (! $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '${img}'")->fetchColumn()) {
-        $db->exec("INSERT INTO `cms_album_downloads` SET `user_id` = '" . $systemUser->id . "', `file_id` = '${img}', `time` = '" . time() . "'");
+    if (! $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '${img}'")->fetchColumn()) {
+        $db->exec("INSERT INTO `cms_album_downloads` SET `user_id` = '" . $user->id . "', `file_id` = '${img}', `time` = '" . time() . "'");
         $downloads = $db->query("SELECT COUNT(*) FROM `cms_album_downloads` WHERE `file_id` = '${img}'")->fetchColumn();
         $db->exec("UPDATE `cms_album_files` SET `downloads` = '${downloads}' WHERE `id` = '${img}'");
     }

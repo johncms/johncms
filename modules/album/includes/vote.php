@@ -21,8 +21,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -37,14 +37,14 @@ if (! $img) {
     exit;
 }
 
-$check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $systemUser->id . "' AND `file_id` = '${img}' LIMIT 1");
+$check = $db->query("SELECT * FROM `cms_album_votes` WHERE `user_id` = '" . $user->id . "' AND `file_id` = '${img}' LIMIT 1");
 
 if ($check->rowCount()) {
     header('Location: ' . $ref);
     exit;
 }
 
-$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` != " . $systemUser->id);
+$req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` != " . $user->id);
 
 if ($req->rowCount()) {
     $res = $req->fetch();
@@ -55,7 +55,7 @@ if ($req->rowCount()) {
              * Отдаем положительный голос
              */
             $db->exec("INSERT INTO `cms_album_votes` SET
-                `user_id` = '" . $systemUser->id . "',
+                `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '1'
             ");
@@ -67,7 +67,7 @@ if ($req->rowCount()) {
              * Отдаем отрицательный голос
              */
             $db->exec("INSERT INTO `cms_album_votes` SET
-                `user_id` = '" . $systemUser->id . "',
+                `user_id` = '" . $user->id . "',
                 `file_id` = '${img}',
                 `vote` = '-1'
             ");

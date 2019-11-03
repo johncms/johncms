@@ -18,8 +18,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -32,7 +32,7 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 switch ($mod) {
     case 'my_new_comm':
         // Непрочитанные комментарии в личных альбомах
-        if (! $systemUser->isValid() || $systemUser->id != $user['id']) {
+        if (! $user->isValid() || $user->id != $foundUser['id']) {
             echo $tools->displayError(_t('Wrong data'));
             echo $view->render('system::app/old_content', [
                 'title'   => $textl ?? '',
@@ -44,7 +44,7 @@ switch ($mod) {
         $title = _t('Unread Comments');
         $select = '';
         $join = 'INNER JOIN `cms_album_comments` ON `cms_album_files`.`id` = `cms_album_comments`.`sub_id`';
-        $where = "`cms_album_files`.`user_id` = '" . $systemUser->id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
+        $where = "`cms_album_files`.`user_id` = '" . $user->id . "' AND `cms_album_files`.`unread_comments` = 1 GROUP BY `cms_album_files`.`id`";
         $order = '`cms_album_comments`.`time` DESC';
         $link = '&amp;mod=my_new_comm';
         break;
@@ -65,7 +65,7 @@ switch ($mod) {
         $title = _t('Top Views');
         $select = '';
         $join = '';
-        $where = "`cms_album_files`.`views` > '0'" . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = "`cms_album_files`.`views` > '0'" . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`views` DESC';
         $link = '&amp;mod=views';
         break;
@@ -75,7 +75,7 @@ switch ($mod) {
         $title = _t('Top Downloads');
         $select = '';
         $join = '';
-        $where = '`cms_album_files`.`downloads` > 0' . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = '`cms_album_files`.`downloads` > 0' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`downloads` DESC';
         $link = '&amp;mod=downloads';
         break;
@@ -85,7 +85,7 @@ switch ($mod) {
         $title = _t('Top Comments');
         $select = '';
         $join = '';
-        $where = "`cms_album_files`.`comm_count` > '0'" . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = "`cms_album_files`.`comm_count` > '0'" . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`comm_count` DESC';
         $link = '&amp;mod=comments';
         break;
@@ -95,7 +95,7 @@ switch ($mod) {
         $title = _t('Top Votes');
         $select = ', (`vote_plus` - `vote_minus`) AS `rating`';
         $join = '';
-        $where = '(`vote_plus` - `vote_minus`) > 2' . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = '(`vote_plus` - `vote_minus`) > 2' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`rating` DESC';
         $link = '&amp;mod=votes';
         break;
@@ -105,7 +105,7 @@ switch ($mod) {
         $title = _t('Top Worst');
         $select = ', (`vote_plus` - `vote_minus`) AS `rating`';
         $join = '';
-        $where = '(`vote_plus` - `vote_minus`) < -2' . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = '(`vote_plus` - `vote_minus`) < -2' . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`rating` ASC';
         $link = '&amp;mod=trash';
         break;
@@ -115,7 +115,7 @@ switch ($mod) {
         $title = _t('New photos');
         $select = '';
         $join = '';
-        $where = "`cms_album_files`.`time` > '" . (time() - 259200) . "'" . ($systemUser->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
+        $where = "`cms_album_files`.`time` > '" . (time() - 259200) . "'" . ($user->rights >= 6 ? '' : " AND `cms_album_files`.`access` = '4'");
         $order = '`cms_album_files`.`time` DESC';
         $link = '';
 }
@@ -149,7 +149,7 @@ if ($total) {
     for ($i = 0; $res = $req->fetch(); ++$i) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
 
-        if ($res['access'] == 4 || $systemUser->rights >= 7) {
+        if ($res['access'] == 4 || $user->rights >= 7) {
             // Если доступ открыт всем, или смотрит Администратор
             echo '<a href="?act=show&amp;al=' . $res['album_id'] . '&amp;img=' . $res['id'] . '&amp;user=' . $res['user_id'] . '&amp;view"><img src="../upload/users/album/' . $res['user_id'] . '/' . $res['tmb_name'] . '" /></a>';
             if (! empty($res['description'])) {
@@ -166,7 +166,7 @@ if ($total) {
         echo '<div class="sub">' .
             '<a href="?act=list&amp;user=' . $res['user_id'] . '"><b>' . $res['user_name'] . '</b></a> | <a href="?act=show&amp;al=' . $res['album_id'] . '&amp;user=' . $res['user_id'] . '">' . $tools->checkout($res['album_name']) . '</a>';
 
-        if ($res['access'] == 4 || $systemUser->rights >= 6) {
+        if ($res['access'] == 4 || $user->rights >= 6) {
             echo vote_photo($res) .
                 '<div class="gray">' . _t('Views') . ': ' . $res['views'] . ', ' . _t('Downloads') . ': ' . $res['downloads'] . '</div>' .
                 '<div class="gray">' . _t('Date') . ': ' . $tools->displayDate($res['time']) . '</div>' .

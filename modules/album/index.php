@@ -38,8 +38,8 @@ $config = $container->get(Johncms\Api\ConfigInterface::class);
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
+/** @var UserInterface $user */
+$user = $container->get(UserInterface::class);
 
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
@@ -58,7 +58,7 @@ $max_album = 20;
 $max_photo = 400;
 
 // Закрываем от неавторизованных юзеров
-if (! $systemUser->isValid()) {
+if (! $user->isValid()) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl ?? '',
         'content' => $tools->displayError(_t('For registered users only')),
@@ -67,9 +67,9 @@ if (! $systemUser->isValid()) {
 }
 
 // Получаем данные пользователя
-$user = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
+$foundUser = $tools->getUser(isset($_REQUEST['user']) ? abs((int) ($_REQUEST['user'])) : 0);
 
-if (! $user) {
+if (! $foundUser) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl ?? '',
         'content' => $tools->displayError(_t('User does not exists')),
@@ -85,11 +85,7 @@ if (! $user) {
  */
 function vote_photo(array $arg)
 {
-    /** @var ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
+    global $container, $db;
 
     /** @var UserInterface $systemUser */
     $systemUser = $container->get(UserInterface::class);
@@ -165,7 +161,7 @@ if (($key = array_search($act, $actions)) !== false) {
         '<li><a href="?act=users&amp;mod=boys">' . _t('Guys') . '</a> (' . $total_mans . ')</li>' .
         '<li><a href="?act=users&amp;mod=girls">' . _t('Girls') . '</a> (' . $total_womans . ')</li>';
 
-    if ($systemUser->isValid()) {
+    if ($user->isValid()) {
         echo '<li><a href="?act=list">' . _t('My Album') . '</a></li>';
     }
 

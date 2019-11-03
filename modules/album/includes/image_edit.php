@@ -18,20 +18,20 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Редактировать картинку
-if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $user['id']);
+if ($img && $foundUser['id'] == $user->id || $user->rights >= 6) {
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `id` = '${img}' AND `user_id` = " . $foundUser['id']);
 
     if ($req->rowCount()) {
         $res = $req->fetch();
         $album = $res['album_id'];
-        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Edit image') . '</div>';
+        echo '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $foundUser['id'] . '"><b>' . _t('Photo Album') . '</b></a> | ' . _t('Edit image') . '</div>';
 
         if (isset($_POST['submit'])) {
             if (! isset($_SESSION['post'])) {
@@ -43,7 +43,7 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
                 $description = isset($_POST['description']) ? trim($_POST['description']) : '';
                 $description = mb_substr($description, 0, 500);
                 if ($rotate == 1 || $rotate == 2 || ($brightness > 0 && $brightness < 5) || ($contrast > 0 && $contrast < 5)) {
-                    $path = UPLOAD_PATH . 'users/album/' . $user['id'] . '/';
+                    $path = UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/';
                     $handle = new \Verot\Upload\Upload($path . $res['img_name']);
                     // Обрабатываем основное изображение
                     $handle->file_new_name_body = 'img_' . time();
@@ -152,8 +152,8 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
                     }
 
                     $handle->clean();
-                    @unlink(UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['img_name']);
-                    @unlink(UPLOAD_PATH . 'users/album/' . $user['id'] . '/' . $res['tmb_name']);
+                    @unlink(UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/' . $res['img_name']);
+                    @unlink(UPLOAD_PATH . 'users/album/' . $foundUser['id'] . '/' . $res['tmb_name']);
                     $sql = '`img_name` = ' . $db->quote($img_name) . ', `tmb_name` = ' . $db->quote($tmb_name) . ',';
                 }
 
@@ -164,15 +164,15 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
             }
 
             echo '<div class="gmenu"><p>' . _t('Image successfully changed') . '<br>' .
-                '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                '<a href="?act=show&amp;al=' . $album . '&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
         } else {
             unset($_SESSION['post']);
-            echo '<form action="?act=image_edit&amp;img=' . $img . '&amp;user=' . $user['id'] . '" method="post">' .
+            echo '<form action="?act=image_edit&amp;img=' . $img . '&amp;user=' . $foundUser['id'] . '" method="post">' .
                 '<div class="menu">' .
                 '<p><h3>' . _t('Image') . '</h3>' .
-                '<img src="../upload/users/album/' . $user['id'] . '/' . $res['tmb_name'] . '" /></p>' .
+                '<img src="../upload/users/album/' . $foundUser['id'] . '/' . $res['tmb_name'] . '" /></p>' .
                 '<p><h3>' . _t('Description') . '</h3>' .
-                '<textarea name="description" rows="' . $systemUser->config->fieldHeight . '">' . $tools->checkout($res['description']) . '</textarea><br>' .
+                '<textarea name="description" rows="' . $user->config->fieldHeight . '">' . $tools->checkout($res['description']) . '</textarea><br>' .
                 '<small>' . _t('Optional field') . ', max. 500</small></p>' .
                 '</div><div class="rmenu">' .
                 '<p><h3>Яркость</h3>' .
@@ -210,7 +210,7 @@ if ($img && $user['id'] == $systemUser->id || $systemUser->rights >= 6) {
                 '<p><small>' . _t('Note, you may lose the quality of an image if you change the brightness, contrast and rotate it for many times. Do not make any changes without a reason.') . '</small></p>' .
                 '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                 '</div></form>' .
-                '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
+                '<div class="phdr"><a href="?act=show&amp;al=' . $album . '&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
         }
     } else {
         echo $tools->displayError(_t('Wrong data'));

@@ -16,16 +16,16 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
 // Создать / изменить альбом
-if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->rights >= 7) {
+if ($foundUser['id'] == $user->id && empty($user->ban) || $user->rights >= 7) {
     if ($al) {
-        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $user['id']);
+        $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `id` = '${al}' AND `user_id` = " . $foundUser['id']);
 
         if ($req->rowCount()) {
             echo '<div class="phdr"><b>' . _t('Edit Album') . '</b></div>';
@@ -78,14 +78,14 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         }
 
         // Проверяем, есть ли уже альбом с таким же именем?
-        if (! $al && $db->query('SELECT * FROM `cms_album_cat` WHERE `name` = ' . $db->quote($name) . " AND `user_id` = '" . $user['id'] . "' LIMIT 1")->rowCount()) {
+        if (! $al && $db->query('SELECT * FROM `cms_album_cat` WHERE `name` = ' . $db->quote($name) . " AND `user_id` = '" . $foundUser['id'] . "' LIMIT 1")->rowCount()) {
             $error[] = _t('The album already exists');
         }
 
         if (! $error) {
             if ($al) {
                 // Изменяем данные в базе
-                $db->exec("UPDATE `cms_album_files` SET `access` = '${access}' WHERE `album_id` = '${al}' AND `user_id` = " . $user['id']);
+                $db->exec("UPDATE `cms_album_files` SET `access` = '${access}' WHERE `album_id` = '${al}' AND `user_id` = " . $foundUser['id']);
                 $db->prepare('
                   UPDATE `cms_album_cat` SET
                   `name` = ?,
@@ -99,11 +99,11 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
                     $password,
                     $access,
                     $al,
-                    $user['id'],
+                    $foundUser['id'],
                 ]);
             } else {
                 // Вычисляем сортировку
-                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $user['id'] . "' ORDER BY `sort` DESC LIMIT 1");
+                $req = $db->query("SELECT * FROM `cms_album_cat` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `sort` DESC LIMIT 1");
 
                 if ($req->rowCount()) {
                     $res = $req->fetch();
@@ -122,7 +122,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
                   `access` = ?,
                   `sort` = ?
                 ')->execute([
-                    $user['id'],
+                    $foundUser['id'],
                     $name,
                     $description,
                     $password,
@@ -132,7 +132,7 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
             }
 
             echo '<div class="gmenu"><p>' . ($al ? _t('Album successfully changed') : _t('Album successfully created')) . '<br>' .
-                '<a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Continue') . '</a></p></div>';
+                '<a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Continue') . '</a></p></div>';
             echo $view->render('system::app/old_content', [
                 'title'   => $textl ?? '',
                 'content' => ob_get_clean(),
@@ -146,12 +146,12 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
     }
 
     echo '<div class="menu">' .
-        '<form action="?act=edit&amp;user=' . $user['id'] . '&amp;al=' . $al . '" method="post">' .
+        '<form action="?act=edit&amp;user=' . $foundUser['id'] . '&amp;al=' . $al . '" method="post">' .
         '<p><h3>' . _t('Title') . '</h3>' .
         '<input type="text" name="name" value="' . $tools->checkout($name) . '" maxlength="30" /><br>' .
         '<small>' . _t('Min. 2, Max. 30') . '</small></p>' .
         '<p><h3>' . _t('Description') . '</h3>' .
-        '<textarea name="description" rows="' . $systemUser->config->fieldHeight . '">' . $tools->checkout($description) . '</textarea><br>' .
+        '<textarea name="description" rows="' . $user->config->fieldHeight . '">' . $tools->checkout($description) . '</textarea><br>' .
         '<small>' . _t('Optional field') . '. ' . _t('Max. 500') . '</small></p>' .
         '<p><h3>' . _t('Password') . '</h3>' .
         '<input type="text" name="password" value="' . $tools->checkout($password) . '" maxlength="15" /><br>' .
@@ -162,5 +162,5 @@ if ($user['id'] == $systemUser->id && empty($systemUser->ban) || $systemUser->ri
         '<input type="radio" name="access" value="1" ' . ($access == 1 ? 'checked="checked"' : '') . '/>&#160;' . _t('Only for me') . '</p>' .
         '<p><input type="submit" name="submit" value="' . _t('Save') . '" /></p>' .
         '</form></div>' .
-        '<div class="phdr"><a href="?act=list&amp;user=' . $user['id'] . '">' . _t('Cancel') . '</a></div>';
+        '<div class="phdr"><a href="?act=list&amp;user=' . $foundUser['id'] . '">' . _t('Cancel') . '</a></div>';
 }
