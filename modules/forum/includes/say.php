@@ -246,7 +246,7 @@ switch ($post_type) {
             echo '<div class="list1">' . $tools->displayUser($user, [
                     'iphide' => 1,
                     'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
-                    'body'   => $msg_pre
+                    'body'   => $msg_pre,
                 ]) . '</div>';
         }
 
@@ -437,7 +437,7 @@ switch ($post_type) {
             echo '<div class="list1">' . $tools->displayUser($user, [
                     'iphide' => 1,
                     'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
-                    'body'   => $msg_pre
+                    'body'   => $msg_pre,
                 ]) . '</div>';
         }
 

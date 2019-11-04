@@ -238,7 +238,7 @@ SELECT COUNT(*) FROM `forum_messages` WHERE `user_id` = ? AND `text`= ?) AS msg'
             '<div class="list2">' . $tools->displayUser($user, [
                 'iphide' => 1,
                 'header' => '<span class="gray">(' . $tools->displayDate(time()) . ')</span>',
-                'body'   => $msg_pre
+                'body'   => $msg_pre,
             ]) . '</div>';
     }
 

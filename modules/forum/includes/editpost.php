@@ -266,7 +266,7 @@ if (! $error) {
                     echo '<div class="list1">' . $tools->displayUser($foundUser, [
                             'iphide' => 1,
                             'header' => '<span class="gray">(' . $tools->displayDate($res['time']) . ')</span>',
-                            'body'   => $msg_pre
+                            'body'   => $msg_pre,
                         ]) . '</div>';
                 }
 

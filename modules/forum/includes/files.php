@@ -179,7 +179,7 @@ if ($do || isset($_GET['new'])) {
     }
 
     foreach ($link as $var) {
-        echo ($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
+        echo($i % 2 ? '<div class="list2">' : '<div class="list1">') . $var . '</div>';
         ++$i;
     }
 

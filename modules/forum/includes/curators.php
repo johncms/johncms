@@ -55,7 +55,7 @@ if ($user->rights >= 7) {
                 $curators[$res['user_id']] = $res['user_name'];
             }
 
-            echo ($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
+            echo($i++ % 2 ? '<div class="list2">' : '<div class="list1">') .
                 '<input type="checkbox" name="users[' . $res['user_id'] . ']" value="' . $res['user_name'] . '"' . ($checked ? ' checked="checked"' : '') . '/>&#160;' .
                 '<a href="../profile/?user=' . $res['user_id'] . '">' . $res['user_name'] . '</a></div>';
         }

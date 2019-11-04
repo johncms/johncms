@@ -363,7 +363,7 @@ switch ($mod) {
             $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
             $start = isset($_REQUEST['page']) ? $page * $user->config->kmess - $user->config->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
-            $req = $db->query("SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT " . $start . ',' . $user->config->kmess);
+            $req = $db->query('SELECT * FROM `cms_ban_ip` ORDER BY `id` ASC LIMIT ' . $start . ',' . $user->config->kmess);
             $i = 0;
 
             while ($res = $req->fetch()) {

@@ -18,6 +18,8 @@ echo '<div class="phdr"><a href="./"><b>' . _t('Admin Panel') . '</b></a> | IP W
 
 /**
  * @var Johncms\Api\ToolsInterface $tools
+ * @param mixed $whoisserver
+ * @param mixed $domain
  */
 
 function whoisQuery($whoisserver, $domain)

@@ -394,7 +394,7 @@ switch ($mod) {
                         echo '<br><span class="gray">' . _t('Remains') . ':</span> ' . implode(', ', $remains);
                     }
                 }
-                echo ($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
+                echo($res['show'] ? '<br><span class="red"><b>' . _t('Direct Link') . '</b></span>' : '') . '</p></div></div>';
                 ++$i;
             }
         } else {
