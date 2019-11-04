@@ -16,11 +16,11 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 // Обновление файлов
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
     $mod = isset($_GET['mod']) ? (int) ($_GET['mod']) : '';
@@ -219,7 +219,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                                             time(),
                                             $name,
                                             $name,
-                                            $systemUser->id,
+                                            $user->id,
                                         ]);
 
                                         if ($start) {

@@ -27,11 +27,11 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
  * @var ConfigInterface    $config
  * @var ContainerInterface $container
  * @var Engine             $view
- * @var UserInterface      $systemUser
+ * @var UserInterface      $user
  */
 $container = App::getContainer();
 $config = $container->get(ConfigInterface::class);
-$systemUser = $container->get(UserInterface::class);
+$user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 
 /** @var Translator $translator */
@@ -62,9 +62,9 @@ if ($set_down['video_screen'] && ! extension_loaded('ffmpeg')) {
 // Ограничиваем доступ к Загрузкам
 $error = '';
 
-if (! $config['mod_down'] && $systemUser->rights < 7) {
+if (! $config['mod_down'] && $user->rights < 7) {
     $error = _t('Downloads are closed');
-} elseif ($config['mod_down'] == 1 && ! $systemUser->id) {
+} elseif ($config['mod_down'] == 1 && ! $user->id) {
     $error = _t('For registered users only');
 }
 
@@ -190,7 +190,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         }
     }
 
-    if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+    if ($user->rights == 4 || $user->rights >= 6) {
         $mod_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
         if ($mod_files > 0) {
@@ -229,7 +229,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     echo '<div><small>' . _t('Allowed extensions') . ': <span class="green"><b>' . $res_down['text'] . '</b></span></small></div>';
                 }
 
-                if ($systemUser->rights == 4 || $systemUser->rights >= 6 || ! empty($res_down['desc'])) {
+                if ($user->rights == 4 || $user->rights >= 6 || ! empty($res_down['desc'])) {
                     $menu = [
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;up">' . _t('Up') . '</a>',
                         '<a href="' . $url . '?act=folder_edit&amp;id=' . $res_down['id'] . '&amp;down">' . _t('Down') . '</a>',
@@ -238,7 +238,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                     ];
                     echo '<div class="sub">' .
                         (! empty($res_down['desc']) ? '<div class="gray">' . htmlspecialchars($res_down['desc']) . '</div>' : '') .
-                        ($systemUser->rights == 4 || $systemUser->rights >= 6 ? implode(' | ', $menu) : '') .
+                        ($user->rights == 4 || $user->rights >= 6 ? implode(' | ', $menu) : '') .
                         '</div>';
                 }
 
@@ -329,7 +329,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
     }
 
-    if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+    if ($user->rights == 4 || $user->rights >= 6) {
         // Выводим ссылки на модерские функции
         if ($id) {
             echo '<p><div class="func">';
@@ -356,7 +356,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         echo '<div><a href="?act=recount&amp;id=' . $id . '">' . _t('Update counters') . '</a></div>';
         echo '</div></p>';
     } else {
-        if (isset($res_down_cat['field']) && $res_down_cat['field'] && $systemUser->isValid() && $id) {
+        if (isset($res_down_cat['field']) && $res_down_cat['field'] && $user->isValid() && $id) {
             echo '<p><div class="func"><a href="' . $url . '?act=down_file&amp;id=' . $id . '">' . _t('Upload File') . '</a></div></p>';
         }
     }
@@ -367,7 +367,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     if ($id) {
         echo '<a href="' . $url . '">' . _t('Downloads') . '</a>';
     } else {
-        if ($systemUser->rights >= 7 || isset($config['mod_down_comm']) && $config['mod_down_comm']) {
+        if ($user->rights >= 7 || isset($config['mod_down_comm']) && $config['mod_down_comm']) {
             echo '<a href="' . $url . '?act=review_comments">' . _t('Review comments') . '</a><br>';
         }
 

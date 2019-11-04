@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
@@ -33,10 +33,10 @@ if ($id == 2) {
     $textl = _t('Popular Files');
 }
 
-$linkTopComments = $config['mod_down_comm'] || $systemUser->rights >= 7 ? '<br><a href="?act=top_files&amp;id=2">' . _t('Most Commented') . '</a>' : '';
+$linkTopComments = $config['mod_down_comm'] || $user->rights >= 7 ? '<br><a href="?act=top_files&amp;id=2">' . _t('Most Commented') . '</a>' : '';
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . ' (' . $set_down['top'] . ')</div>';
 
-if ($id == 2 && ($config['mod_down_comm'] || $systemUser->rights >= 7)) {
+if ($id == 2 && ($config['mod_down_comm'] || $user->rights >= 7)) {
     echo '<div class="gmenu"><a href="?act=top_files&amp;id=0">' . _t('Popular Files') . '</a><br>' .
         '<a href="?act=top_files&amp;id=1">' . _t('Most Downloaded') . '</a></div>';
     $sql = '`comm_count`';

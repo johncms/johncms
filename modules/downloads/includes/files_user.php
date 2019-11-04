@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -27,14 +27,14 @@ $textl = _t('User Files');
 
 require 'classes/download.php';
 
-if (($user = $tools->getUser($id)) === false) {
+if (($foundUser = $tools->getUser($id)) === false) {
     echo _t('User does not exists');
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
 echo '<div class="phdr"><a href="/profile?user=' . $id . '">' . _t('Profile') . '</a></div>' .
-    '<div class="user"><p>' . $tools->displayUser($user, ['iphide' => 0]) . '</p></div>' .
+    '<div class="user"><p>' . $tools->displayUser($foundUser, ['iphide' => 0]) . '</p></div>' .
     '<div class="phdr"><b>' . _t('User Files') . '</b></div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `user_id` = " . $id)->fetchColumn();

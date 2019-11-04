@@ -16,10 +16,10 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     if (! $id) {
         $load_cat = $files_path;
     } else {
@@ -50,7 +50,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             $error[] = _t('Invalid characters');
         }
 
-        if ($systemUser->rights == 9 && $user_down) {
+        if ($user->rights == 9 && $user_down) {
             foreach (explode(',', $format) as $value) {
                 if (! in_array(trim($value), $defaultExt)) {
                     $error[] = _t('You can write only the following extensions') . ': ' . implode(', ', $defaultExt);
@@ -111,7 +111,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             '<p>' . _t('Title to display') . '<br><input type="text" name="rus_name"/></p>' .
             '<p>' . _t('Description') . ' (max. 500)<br><textarea name="desc" cols="24" rows="4"></textarea></p>';
 
-        if ($systemUser->rights == 9) {
+        if ($user->rights == 9) {
             echo '<p><input type="checkbox" name="user_down" value="1" /> ' . _t('Allow users to upload files') . '</p>' .
                 _t('Allowed extensions') . ':<br><input type="text" name="format"/>' .
                 '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ', $defaultExt) . '</div>';

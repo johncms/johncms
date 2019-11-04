@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -26,14 +26,14 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $textl = _t('Favorites');
 require 'classes/download.php';
 
-if (! $systemUser->isValid()) {
+if (! $user->isValid()) {
     echo _t('For registered users only');
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
-$total = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = ' . $systemUser->id)->fetchColumn();
+$total = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = ' . $user->id)->fetchColumn();
 
 // Навигация
 if ($total > $kmess) {
@@ -44,7 +44,7 @@ if ($total > $kmess) {
 if ($total) {
     $req_down = $db->query('SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
     FROM `download__files` LEFT JOIN `download__bookmark` ON `download__files`.`id` = `download__bookmark`.`file_id`
-    WHERE `download__bookmark`.`user_id`=' . $systemUser->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, ${kmess}");
+    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, ${kmess}");
     $i = 0;
 
     while ($res_down = $req_down->fetch()) {

@@ -16,11 +16,11 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 // Редактирование категорий
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
@@ -61,7 +61,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
 
         $error_format = false;
 
-        if ($systemUser->rights == 9 && isset($_POST['user_down'])) {
+        if ($user->rights == 9 && isset($_POST['user_down'])) {
             $format = isset($_POST['format']) ? trim($_POST['format']) : false;
             $format_array = explode(', ', $format);
             foreach ($format_array as $value) {
@@ -112,7 +112,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             _t('Title to display') . ':<br><input type="text" name="rus_name" value="' . $name . '"/><br>' .
             _t('Description') . ' (max. 500):<br><textarea name="desc" rows="4">' . htmlspecialchars($res['desc']) . '</textarea><br>';
 
-        if ($systemUser->rights == 9) {
+        if ($user->rights == 9) {
             echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br>' .
                 _t('Allowed extensions') . ':<br><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
                 '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ', $defaultExt) . '</div>';

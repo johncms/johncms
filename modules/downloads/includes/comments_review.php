@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -26,7 +26,7 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 // Обзор комментариев
-if (! $config['mod_down_comm'] && $systemUser->rights < 7) {
+if (! $config['mod_down_comm'] && $user->rights < 7) {
     echo _t('Comments are disabled') . '<a href="?">' . _t('Downloads') . '</a>';
     exit;
 }

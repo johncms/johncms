@@ -19,11 +19,11 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 // Удаление каталога
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     $del_cat = $db->query('SELECT COUNT(*) FROM `download__category` WHERE `refid` = ' . $id)->fetchColumn();
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
 

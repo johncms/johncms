@@ -16,13 +16,13 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
@@ -108,7 +108,7 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
                     $fname,
                     $name_link,
                     mb_substr($name, 0, 200),
-                    $systemUser->id,
+                    $user->id,
                     $text,
                 ]);
                 $file_id = $db->lastInsertId();

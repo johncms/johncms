@@ -16,8 +16,8 @@ $container = App::getContainer();
 /** @var PDO $db */
 $db = $container->get(PDO::class);
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/** @var Johncms\Api\UserInterface $user */
+$user = $container->get(Johncms\Api\UserInterface::class);
 
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
@@ -43,7 +43,7 @@ $textl = mb_strlen($res_down['rus_name']) > 30 ? $title_pages . '...' : $title_p
 if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
 
-    if ($systemUser->rights < 6 && $systemUser->rights != 4) {
+    if ($user->rights < 6 && $user->rights != 4) {
         echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
@@ -147,11 +147,11 @@ if (! empty($screen)) {
 }
 
 // Выводим данные
-$user = $db->query('SELECT `name`, `id` FROM `users` WHERE `id` = ' . $res_down['user_id'])->fetch();
+$foundUser = $db->query('SELECT `name`, `id` FROM `users` WHERE `id` = ' . $res_down['user_id'])->fetch();
 echo '<div class="list1">'
     . '<p><h3>' . $res_down['rus_name'] . '</h3></p>'
     . '<span class="gray">' . _t('File name') . ':</span> ' . $res_down['name'] . '<br>'
-    . '<span class="gray">' . _t('Uploaded by') . ':</span> ' . $user['name'] . '<br>' . $text_info
+    . '<span class="gray">' . _t('Uploaded by') . ':</span> ' . $foundUser['name'] . '<br>' . $text_info
     . '<span class="gray">' . _t('Downloads') . ':</span> ' . $res_down['field'];
 
 echo '</div>';
@@ -164,7 +164,7 @@ echo '<div class="list1"><p>';
 
 // Рейтинг файла
 $file_rate = explode('|', $res_down['rate']);
-if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
+if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
     if (isset($_GET['plus'])) {
         $file_rate[0] = $file_rate[0] + 1;
     } else {
@@ -179,7 +179,7 @@ if ((isset($_GET['plus']) || isset($_GET['minus'])) && ! isset($_SESSION['rate_f
 $sum = ($file_rate[1] + $file_rate[0]) ? round(100 / ($file_rate[1] + $file_rate[0]) * $file_rate[0]) : 50;
 echo '<b>' . _t('Rating') . ' </b>';
 
-if (! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
+if (! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
     echo '(<a href="?act=view&amp;id=' . $id . '&amp;plus">+</a>/<a href="?act=view&amp;id=' . $id . '&amp;minus">-</a>)';
 } else {
     echo '(+/-)';
@@ -188,7 +188,7 @@ if (! isset($_SESSION['rate_file_' . $id]) && $systemUser->isValid()) {
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
     '<img src="../assets/modules/downloads/rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
 
-if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
+if ($config['mod_down_comm'] || $user->rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
 }
 
@@ -221,14 +221,14 @@ if ($total_files_more) {
 }
 
 // Управление закладками
-if ($systemUser->isValid()) {
-    $bookmark = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = ' . $id . '  AND `user_id` = ' . $systemUser->id)->fetchColumn();
+if ($user->isValid()) {
+    $bookmark = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `file_id` = ' . $id . '  AND `user_id` = ' . $user->id)->fetchColumn();
 
     if (isset($_GET['addBookmark']) && ! $bookmark) {
-        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id` = " . $systemUser->id);
+        $db->exec("INSERT INTO `download__bookmark` SET `file_id`='" . $id . "', `user_id` = " . $user->id);
         $bookmark = 1;
     } elseif (isset($_GET['delBookmark']) && $bookmark) {
-        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id` = " . $systemUser->id);
+        $db->exec("DELETE FROM `download__bookmark` WHERE `file_id`='" . $id . "' AND `user_id` = " . $user->id);
         $bookmark = 0;
     }
 
@@ -244,7 +244,7 @@ if ($systemUser->isValid()) {
 }
 
 // Управление файлами
-if ($systemUser->rights > 6 || $systemUser->rights == 4) {
+if ($user->rights > 6 || $user->rights == 4) {
     echo '<p><div class="func">' .
         '<a href="?act=edit_file&amp;id=' . $id . '">' . _t('Edit File') . '</a><br>' .
         '<a href="?act=edit_about&amp;id=' . $id . '">' . _t('Edit Description') . '</a><br>' .
@@ -252,7 +252,7 @@ if ($systemUser->rights > 6 || $systemUser->rights == 4) {
         '<a href="?act=files_more&amp;id=' . $id . '">' . _t('Additional Files') . '</a><br>' .
         '<a href="?act=delete_file&amp;id=' . $id . '">' . _t('Delete File') . '</a>';
 
-    if ($systemUser->rights > 6) {
+    if ($user->rights > 6) {
         echo '<br><a href="?act=transfer_file&amp;id=' . $id . '">' . _t('Move File') . '</a>';
         if ($format_file == 'mp3') {
             echo '<br><a href="?act=mp3tags&amp;id=' . $id . '">' . _t('Edit MP3 Tags') . '</a>';

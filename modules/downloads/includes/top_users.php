@@ -37,9 +37,9 @@ if ($total) {
     $req_down = $db->query("SELECT *, COUNT(`user_id`) AS `count` FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY `count` DESC LIMIT ${start}, ${kmess}");
 
     while ($res_down = $req_down->fetch()) {
-        $user = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
+        $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
         echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            $tools->displayUser($user, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $user['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
+            $tools->displayUser($foundUser, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
