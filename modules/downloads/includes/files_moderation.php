@@ -22,7 +22,6 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-require 'system/head.php';
 require 'classes/download.php';
 
 $textl = _t('Files on moderation');
@@ -75,4 +74,4 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

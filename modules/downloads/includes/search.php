@@ -17,7 +17,6 @@ $search_post = isset($_POST['search']) ? trim($_POST['search']) : false;
 $search_get = isset($_GET['search']) ? rawurldecode(trim($_GET['search'])) : '';
 $search = $search_post ? $search_post : $search_get;
 
-require 'system/head.php';
 require 'classes/download.php';
 
 // Форма для поиска
@@ -95,4 +94,4 @@ if ($search && ! $error) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

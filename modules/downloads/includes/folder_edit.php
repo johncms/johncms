@@ -21,8 +21,6 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Редактирование категорий
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require 'system/head.php';
-
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
@@ -124,5 +122,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     }
 
     echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
-    require_once 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

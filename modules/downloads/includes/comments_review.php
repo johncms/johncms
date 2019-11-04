@@ -25,8 +25,6 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require 'system/head.php';
-
 // Обзор комментариев
 if (! $config['mod_down_comm'] && $systemUser->rights < 7) {
     echo _t('Comments are disabled') . '<a href="?">' . _t('Downloads') . '</a>';
@@ -106,4 +104,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

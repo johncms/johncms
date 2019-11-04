@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-require 'system/head.php';
-
 /** @var Psr\Container\ContainerInterface $container */
 $container = App::getContainer();
 
@@ -35,7 +33,7 @@ $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -66,4 +64,4 @@ $arg = [
 // Показываем комментарии
 $comm = new Johncms\Utility\Comments($arg);
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

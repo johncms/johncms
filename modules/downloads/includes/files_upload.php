@@ -22,8 +22,6 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require 'system/head.php';
-
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
 $res = $req->fetch();
 
@@ -202,4 +200,4 @@ if ($req->rowCount() && is_dir($res['dir'])) {
     exit;
 }
 
-require_once 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

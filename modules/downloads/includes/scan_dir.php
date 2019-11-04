@@ -21,8 +21,6 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
 // Обновление файлов
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require 'system/head.php';
-
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
     $mod = isset($_GET['mod']) ? (int) ($_GET['mod']) : '';
@@ -300,5 +298,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             echo '<div class="phdr"><a href="?id=' . $id . '">' . _t('Back') . '</a></div>';
     }
 
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

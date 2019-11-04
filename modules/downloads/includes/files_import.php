@@ -23,14 +23,12 @@ $systemUser = $container->get(Johncms\Api\UserInterface::class);
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
 if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
-    require 'system/head.php';
-
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
 
     if (! $req->rowCount() || ! is_dir($res['dir'])) {
         echo _t('The directory does not exist') . '<a href="?">' . _t('Downloads') . '</a>';
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 
@@ -182,5 +180,5 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
             '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

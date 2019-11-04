@@ -12,21 +12,27 @@ declare(strict_types=1);
 
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\UserInterface;
+use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
+
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
 
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 
-/** @var ContainerInterface $container */
+/**
+ * @var ConfigInterface    $config
+ * @var ContainerInterface $container
+ * @var Engine             $view
+ * @var UserInterface      $systemUser
+ */
 $container = App::getContainer();
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
+$systemUser = $container->get(UserInterface::class);
+$view = $container->get(Engine::class);
 
 /** @var Translator $translator */
 $translator = $container->get(Translator::class);
@@ -35,7 +41,6 @@ $translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/defa
 $url = $config['homeurl'] . '/downloads/';
 
 $textl = _t('Downloads');
-$headmod = 'downloads';
 const DOWNLOADS = UPLOAD_PATH . 'downloads' . DS;
 const DOWNLOADS_SCR = DOWNLOADS . 'screen' . DS;
 $files_path = 'upload/downloads/files';
@@ -64,9 +69,8 @@ if (! $config['mod_down'] && $systemUser->rights < 7) {
 }
 
 if ($error) {
-    require 'system/head.php';
     echo '<div class="rmenu"><p>' . $error . '</p></div>';
-    require_once 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -145,7 +149,6 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
     require __DIR__ . '/classes/download.php';
-    require 'system/head.php';
 
     if (! $config['mod_down']) {
         echo '<div class="rmenu">' . _t('Downloads are closed') . '</div>';
@@ -165,7 +168,11 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
         $title_pages = htmlspecialchars(mb_substr($res_down_cat['rus_name'], 0, 30));
         $textl = mb_strlen($res_down_cat['rus_name']) > 30 ? $title_pages . '...' : $title_pages;
-        $navigation = Download::navigation(['dir' => $res_down_cat['dir'], 'refid' => $res_down_cat['refid'], 'name' => $res_down_cat['rus_name']]);
+        $navigation = Download::navigation([
+            'dir'   => $res_down_cat['dir'],
+            'refid' => $res_down_cat['refid'],
+            'name'  => $res_down_cat['rus_name']
+        ]);
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
@@ -215,7 +222,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
                     '<a href="' . $url . '?id=' . $res_down['id'] . '">' . htmlspecialchars($res_down['rus_name']) . '</a> (' . $res_down['total'] . ')';
 
                 if ($res_down['field']) {
@@ -280,7 +287,8 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
             // Постраничная навигация
             if ($total_files > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>';
+                echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start,
+                        $total_files, $kmess) . '</div>';
             }
 
             // Выводи данные
@@ -289,7 +297,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
             $i = 0;
 
             while ($res_down = $req_down->fetch()) {
-                echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+                echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
             }
         }
     } else {
@@ -314,7 +322,8 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
 
     // Постраничная навигация
     if ($total_files > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination($url . '?id=' . $id . '&amp;', $start, $total_files,
+                $kmess) . '</div>' .
             '<p><form action="' . $url . '" method="get">' .
             '<input type="hidden" name="id" value="' . $id . '"/>' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -366,6 +375,5 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     }
 
     echo '</p>';
-
-    require_once 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
 }

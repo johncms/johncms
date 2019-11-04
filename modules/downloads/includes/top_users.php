@@ -19,8 +19,6 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\ToolsInterface $tools */
 $tools = $container->get(Johncms\Api\ToolsInterface::class);
 
-require 'system/head.php';
-
 // Топ юзеров
 $textl = _t('Top Users');
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
@@ -58,4 +56,4 @@ if ($total > $kmess) {
 }
 
 echo '<p><a href="?">' . _t('Downloads') . '</a></p>';
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

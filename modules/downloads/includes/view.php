@@ -25,7 +25,6 @@ $tools = $container->get(Johncms\Api\ToolsInterface::class);
 /** @var Johncms\Api\ConfigInterface $config */
 $config = $container->get(Johncms\Api\ConfigInterface::class);
 
-require 'system/head.php';
 require __DIR__ . '/../classes/download.php';
 
 // Выводим файл
@@ -34,7 +33,7 @@ $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo '<div class="rmenu"><p>' . _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a></p></div>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -45,7 +44,7 @@ if ($res_down['type'] == 3) {
     echo '<div class="rmenu">' . _t('The file is on moderation') . '</div>';
 
     if ($systemUser->rights < 6 && $systemUser->rights != 4) {
-        require 'system/end.php';
+        echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }
 }
@@ -263,4 +262,4 @@ if ($systemUser->rights > 6 || $systemUser->rights == 4) {
     echo '</div></p>';
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

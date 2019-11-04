@@ -19,15 +19,13 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-require 'system/head.php';
-
 // Удаление файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name'])) {
     echo _t('File not found') . ' <a href="?">' . _t('Downloads') . '</a>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -87,4 +85,4 @@ if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
     }
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);

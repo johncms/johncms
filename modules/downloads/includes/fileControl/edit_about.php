@@ -19,15 +19,13 @@ $db = $container->get(PDO::class);
 /** @var Johncms\Api\UserInterface $systemUser */
 $systemUser = $container->get(Johncms\Api\UserInterface::class);
 
-require 'system/head.php';
-
 // Редактирование описания файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
 if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
@@ -55,4 +53,4 @@ if (isset($_POST['submit'])) {
         '<div class="phdr"><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></div>';
 }
 
-require 'system/end.php';
+echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
