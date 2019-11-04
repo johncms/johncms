@@ -25,6 +25,7 @@
     <title><?= (isset($title) ? $this->e($title) . ' | ' : '') . $config->copyright ?></title>
 </head>
 <body>
+
 <!-- Логотип и переключатель языков -->
 <table style="width: 100%;" class="logo">
     <tr>
@@ -43,7 +44,30 @@
 </table>
 
 <!-- Верхнее меню -->
-<?php $this->insert('system::app/old_topmenu', ['homeButton' => $homeButton]) ?>
+<div class="header">
+    <?= _t('Hi', 'system') ?>,
+    <?= ($user->id ? '<b>' . $user->name . '</b>!' : _t('Guest', 'system') . '!') ?>
+</div>
+<div class="tmn">
+    <?php if (isset($homeButton)): ?>
+        <a href="<?= $config->homeurl ?>">
+            <img src="<?= $this->asset('images/old_menu_home.png') ?>" class="icon">
+            <?= _t('Home', 'system') ?>
+        </a>
+        <br>
+    <?php endif ?>
+    <?php if ($user->isValid()): ?>
+        <a href="<?= $config->homeurl ?>/profile/?act=office">
+            <img src="<?= $this->asset('images/old_menu_cabinet.png') ?>" class="icon">
+            <?= _t('Personal', 'system') ?>
+        </a>
+    <?php else: ?>
+        <a href="<?= $config->homeurl ?>/login/">
+            <img src="<?= $this->asset('images/old_menu_login.png') ?>" class="icon">
+            <?= _t('Login', 'system') ?>
+        </a>
+    <?php endif ?>
+</div>
 
 <div class="maintxt">
     <!-- Уведомления -->
