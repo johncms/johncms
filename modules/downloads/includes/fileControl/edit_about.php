@@ -10,20 +10,17 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-// Редактирование описания файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($user->rights < 6 && $user->rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;

@@ -10,6 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 
 // Поиск файлов
@@ -36,15 +43,6 @@ if (! empty($search) && mb_strlen($search) < 2 || mb_strlen($search) > 64) {
 
 // Выводим результаты поиска
 if ($search && ! $error) {
-    /** @var Psr\Container\ContainerInterface $container */
-    $container = App::getContainer();
-
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     // Подготавливаем данные для запроса
     $search = preg_replace("/[^\w\x7F-\xFF\s]/", ' ', $search);
     $search_db = strtr($search, ['_' => '\\_', '%' => '\\%', '*' => '%']);
@@ -58,7 +56,8 @@ if ($search && ! $error) {
 
     if ($total > $kmess) {
         $check_search = htmlspecialchars(rawurlencode($search));
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;',
+                $start, $total, $kmess) . '</div>';
     }
 
     if ($total) {
@@ -66,7 +65,7 @@ if ($search && ! $error) {
         $i = 0;
 
         while ($res_down = $req_down->fetch()) {
-            echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+            echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
         }
     } else {
         echo '<div class="rmenu"><p>' . _t('No items found') . '</p></div>';
@@ -76,7 +75,8 @@ if ($search && ! $error) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>' .
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;search=' . $check_search . '&amp;id=' . $id . '&amp;',
+                $start, $total, $kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="' . $check_search . '" name="search" />' .
             '<input type="hidden" value="search" name="act" />' .

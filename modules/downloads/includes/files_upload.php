@@ -10,17 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 $req = $db->query("SELECT * FROM `download__category` WHERE `id` = '" . $id . "' LIMIT 1");
 $res = $req->fetch();
@@ -43,7 +39,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 $error = [];
                 $new_file = isset($_POST['new_file']) ? trim($_POST['new_file']) : null;
                 $name = isset($_POST['text']) ? trim($_POST['text']) : null;
-                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
+                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0,
+                    200)) : null;
                 $text = isset($_POST['opis']) ? trim($_POST['opis']) : null;
                 $ext = explode('.', $fname);
 
@@ -65,7 +62,8 @@ if ($req->rowCount() && is_dir($res['dir'])) {
                 }
 
                 if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
-                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
+                            $al_ext);
                 }
 
                 if (strlen($fname) > 100) {

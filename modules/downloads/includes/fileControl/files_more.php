@@ -12,26 +12,17 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
-// Дополнительные файлы
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
-if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($systemUser->rights < 6 && $systemUser->rights != 4)) {
+if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['name']) || ($user->rights < 6 && $user->rights != 4)) {
     echo '<a href="?">' . _t('Downloads') . '</a>';
     echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
@@ -120,7 +111,8 @@ if ($edit) {
 
             if ($do_file) {
                 $new_file = isset($_POST['new_file']) ? trim($_POST['new_file']) : null;
-                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0, 200)) : null;
+                $name_link = isset($_POST['name_link']) ? htmlspecialchars(mb_substr($_POST['name_link'], 0,
+                    200)) : null;
                 $ext = explode('.', $fname);
 
                 if (! empty($new_file)) {
@@ -137,7 +129,8 @@ if ($edit) {
                 }
 
                 if (! in_array($ext[(count($ext) - 1)], $defaultExt)) {
-                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $defaultExt);
+                    $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
+                            $defaultExt);
                 }
 
                 if (strlen($fname) > 100) {
@@ -205,7 +198,8 @@ if ($edit) {
                 '<input type="submit" name="submit" value="' . _t('Upload') . '"/>' .
                 '</form></div>' .
                 '<div class="phdr"><small>' . _t('File weight should not exceed') . ' ' . $config['flsz'] . 'kb<br>' .
-                _t('Allowed extensions') . ': ' . implode(', ', $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
+                _t('Allowed extensions') . ': ' . implode(', ',
+                    $defaultExt) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>';
 
             // Дополнительные файлы
             $req_file_more = $db->query('SELECT * FROM `download__more` WHERE `refid` = ' . $id);

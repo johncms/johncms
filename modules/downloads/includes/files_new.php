@@ -10,14 +10,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
 require 'classes/download.php';
 
@@ -44,7 +42,8 @@ $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>';
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total,
+            $kmess) . '</div>';
 }
 
 // Выводим список
@@ -53,7 +52,7 @@ if ($total) {
     $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
 
     while ($res_down = $req_down->fetch()) {
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
+        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
     }
 } else {
     echo '<div class="rmenu"><p>' . _t('The list is empty') . '</p></div>';
@@ -63,7 +62,8 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total,
+            $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .

@@ -13,14 +13,12 @@ declare(strict_types=1);
 //TODO: Добавить проверку, пустой ли каталог, если нет, выводить предупреждение
 //TODO: Добавить рекурсивное удаление
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
 // Удаление каталога
 if ($user->rights == 4 || $user->rights >= 6) {
@@ -28,7 +26,7 @@ if ($user->rights == 4 || $user->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
 
     if (! $req->rowCount() || $del_cat) {
-        echo($del_cat ? _t('Before removing, delete subdirectories') : _t('The directory does not exist')) . ' <a href="?">' . _t('Downloads') . '</a>';
+        echo ($del_cat ? _t('Before removing, delete subdirectories') : _t('The directory does not exist')) . ' <a href="?">' . _t('Downloads') . '</a>';
         echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
         exit;
     }

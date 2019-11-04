@@ -10,16 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-// Удаление файл
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
@@ -29,7 +26,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     exit;
 }
 
-if ($systemUser->rights == 4 || $systemUser->rights >= 6) {
+if ($user->rights == 4 || $user->rights >= 6) {
     if (isset($_GET['yes'])) {
         if (is_dir(DOWNLOADS_SCR . $id)) {
             $dir_clean = opendir(DOWNLOADS_SCR . $id);

@@ -10,20 +10,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 // Обзор комментариев
 if (! $config['mod_down_comm'] && $user->rights < 7) {
@@ -47,7 +41,8 @@ if ($total) {
 
     // Навигация
     if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>';
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total,
+                $kmess) . '</div>';
     }
 
     // Выводим список
@@ -97,7 +92,8 @@ echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
 if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total, $kmess) . '</div>' .
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=review_comments&amp;', $start, $total,
+            $kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" value="review_comments" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

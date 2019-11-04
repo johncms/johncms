@@ -10,20 +10,14 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\ToolsInterface  $tools
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 require __DIR__ . '/../classes/download.php';
 
@@ -72,7 +66,8 @@ if (is_dir(DOWNLOADS_SCR . $id)) {
 switch ($format_file) {
     case 'mp3':
         // Проигрываем аудио файлы
-        $text_info = '<audio src="' . $config['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
+        $text_info = '<audio src="' . $config->homeurl . str_replace('../', '/',
+                $res_down['dir']) . '/' . $res_down['name'] . '" controls></audio><br>';
         require 'classes/getid3/getid3.php'; //TODO: Разобраться с устаревшим классом
         $getID3 = new getID3;
         $getID3->encoding = 'cp1251';
@@ -106,7 +101,7 @@ switch ($format_file) {
                 $text_info .= '<b>' . _t('Genre') . '</b>: ' . Download::mp3tagsOut($tagsArray['genre'][0]) . '<br>';
             }
             if ((int) ($tagsArray['year'][0])) {
-                $text_info .= '<b>' . _t('Year') . '</b>: ' . (int)$tagsArray['year'][0] . '<br>';
+                $text_info .= '<b>' . _t('Year') . '</b>: ' . (int) $tagsArray['year'][0] . '<br>';
             }
         }
         break;
@@ -115,7 +110,8 @@ switch ($format_file) {
     case 'webm':
     case 'mp4':
         // Проигрываем видео файлы
-        echo '<div class="gmenu"><video src="' . $config['homeurl'] . str_replace('../', '/', $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
+        echo '<div class="gmenu"><video src="' . $config->homeurl . str_replace('../', '/',
+                $res_down['dir']) . '/' . $res_down['name'] . '" controls></video></div>';
         break;
 
     case 'jpg':
@@ -139,7 +135,8 @@ if (! empty($screen)) {
 
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ' (' . $page . '/' . $total . '):</b><br>' .
             '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[$page - 1]) . '" alt="screen" /></div>';
-        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1, $total, 1) . '</div>';
+        echo '<div class="topmenu"> ' . $tools->displayPagination('?act=view&amp;id=' . $id . '&amp;', $page - 1,
+                $total, 1) . '</div>';
     } else {
         echo '<div class="gmenu"><b>' . _t('Screenshot') . ':</b><br>' .
             '<img src="../assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($screen[0]) . '" alt="screen" /></div>';
@@ -188,7 +185,7 @@ if (! isset($_SESSION['rate_file_' . $id]) && $user->isValid()) {
 echo ': <b><span class="green">' . $file_rate[0] . '</span>/<span class="red">' . $file_rate[1] . '</span></b><br>' .
     '<img src="../assets/modules/downloads/rating.php?img=' . $sum . '" alt="' . _t('Rating') . '" /></p>';
 
-if ($config['mod_down_comm'] || $user->rights >= 7) {
+if ($config->mod_down_comm || $user->rights >= 7) {
     echo '<p><a href="?act=comments&amp;id=' . $res_down['id'] . '">' . _t('Comments') . '</a> (' . $res_down['comm_count'] . ')</p>';
 }
 
@@ -211,7 +208,7 @@ if ($total_files_more) {
     while ($res_file_more = $req_file_more->fetch()) {
         $res_file_more['dir'] = $res_down['dir'];
         $res_file_more['text'] = $res_file_more['rus_name'];
-        echo(($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
+        echo (($i++ % 2) ? '<div class="list1">' : '<div class="list2">') .
             Download::downloadLlink([
                 'format' => pathinfo($res_file_more['name'], PATHINFO_EXTENSION),
                 'res'    => $res_file_more,

@@ -10,16 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                        $db
+ * @var Johncms\Api\ToolsInterface $tools
+ */
 
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-// Топ юзеров
 $textl = _t('Top Users');
 echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $textl . '</div>';
 $req = $db->query('SELECT * FROM `download__files` WHERE `user_id` > 0 GROUP BY `user_id` ORDER BY COUNT(`user_id`)');
@@ -38,8 +35,11 @@ if ($total) {
 
     while ($res_down = $req_down->fetch()) {
         $foundUser = $db->query('SELECT * FROM `users` WHERE `id`=' . $res_down['user_id'])->fetch();
-        echo(($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
-            $tools->displayUser($foundUser, ['iphide' => 0, 'sub' => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']]) . '</div>';
+        echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') .
+            $tools->displayUser($foundUser, [
+                'iphide' => 0,
+                'sub'    => '<a href="?act=user_files&amp;id=' . $foundUser['id'] . '">' . _t('User Files') . ':</a> ' . $res_down['count']
+            ]) . '</div>';
     }
 } else {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';

@@ -10,14 +10,12 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
 // Скачка изображения в особом размере
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
@@ -36,7 +34,7 @@ if ($val < 50 || $val > 100) {
 if (! $req_down->rowCount()
     || ! is_file($res_down['dir'] . '/' . $res_down['name'])
     || ! in_array($format_file, $pic_ext)
-    || ($res_down['type'] == 3 && $systemUser->rights < 6 && $systemUser->rights != 4)
+    || ($res_down['type'] == 3 && $user->rights < 6 && $user->rights != 4)
     || empty($array[$size_img])
 ) {
     echo _t('File not found') . '<br><a href="?">' . _t('Downloads') . '</a>';
@@ -74,9 +72,6 @@ switch ($format_file) {
         break;
 
     case 'jpg':
-        $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
-        break;
-
     case 'jpeg':
         $image_create = imagecreatefromjpeg($res_down['dir'] . '/' . $res_down['name']);
         break;
@@ -87,7 +82,7 @@ switch ($format_file) {
 }
 
 if (! isset($_SESSION['down_' . $id])) {
-    $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`='" . $id . "'");
+    $db->exec("UPDATE `download__files` SET `field`=`field`+1 WHERE `id`=" . $id);
     $_SESSION['down_' . $id] = 1;
 }
 

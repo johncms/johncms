@@ -10,16 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-// Редактирование категорий
 if ($user->rights == 4 || $user->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
     $res = $req->fetch();
@@ -115,7 +112,8 @@ if ($user->rights == 4 || $user->rights >= 6) {
         if ($user->rights == 9) {
             echo '<div class="sub"><input type="checkbox" name="user_down" value="1"' . ($res['field'] ? ' checked="checked"' : '') . '/> ' . _t('Allow users to upload files') . '<br>' .
                 _t('Allowed extensions') . ':<br><input type="text" name="format" value="' . $res['text'] . '"/></div>' .
-                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ', $defaultExt) . '</div>';
+                '<div class="sub">' . _t('You can write only the following extensions') . ':<br> ' . implode(', ',
+                    $defaultExt) . '</div>';
         }
 
         echo '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p></form></div>';

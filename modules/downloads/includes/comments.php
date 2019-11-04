@@ -10,23 +10,18 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\UserInterface   $user
+ */
 
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
-
-// Комментарии
-if (! $config['mod_down_comm'] && $user->rights < 7) {
+if (! $config->mod_down_comm && $user->rights < 7) {
     echo _t('Comments are disabled') . ' <a href="?">' . _t('Downloads') . '</a>';
     exit;
 }
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
@@ -37,7 +32,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
     exit;
 }
 
-if (! $config['mod_down_comm']) {
+if (! $config->mod_down_comm) {
     echo '<div class="rmenu">' . _t('Comments are disabled') . '</div>';
 }
 
@@ -46,19 +41,32 @@ $textl = _t('Comments') . ': ' . (mb_strlen($res_down['rus_name']) > 30 ? $title
 
 // Параметры комментариев
 $arg = [
-    'object_comm_count' => 'total', // Поле с числом комментариев
-    'comments_table'    => 'download__comments', // Таблица с комментариями
-    'object_table'      => 'download__files', // Таблица комментируемых объектов
-    'script'            => '?act=comments', // Имя скрипта (с параметрами вызова)
-    'sub_id_name'       => 'id', // Имя идентификатора комментируемого объекта
-    'sub_id'            => $id, // Идентификатор комментируемого объекта
-    'owner'             => false, // Владелец объекта
-    'owner_delete'      => false, // Возможность владельцу удалять комментарий
-    'owner_reply'       => false, // Возможность владельцу отвечать на комментарий
-    'owner_edit'        => false, // Возможность владельцу редактировать комментарий
-    'title'             => _t('Comments'), // Название раздела
-    'context_top'       => '<div class="phdr"><b>' . $textl . '</b></div>', // Выводится вверху списка
-    'context_bottom'    => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>', // Выводится внизу списка
+    // Поле с числом комментариев
+    'object_comm_count' => 'total',
+    // Таблица с комментариями
+    'comments_table'    => 'download__comments',
+    // Таблица комментируемых объектов
+    'object_table'      => 'download__files',
+    // Имя скрипта (с параметрами вызова)
+    'script'            => '?act=comments',
+    // Имя идентификатора комментируемого объекта
+    'sub_id_name'       => 'id',
+    // Идентификатор комментируемого объекта
+    'sub_id'            => $id,
+    // Владелец объекта
+    'owner'             => false,
+    // Возможность владельцу удалять комментарий
+    'owner_delete'      => false,
+    // Возможность владельцу отвечать на комментарий
+    'owner_reply'       => false,
+    // Возможность владельцу редактировать комментарий
+    'owner_edit'        => false,
+    // Название раздела
+    'title'             => _t('Comments'),
+    // Выводится вверху списка
+    'context_top'       => '<div class="phdr"><b>' . $textl . '</b></div>',
+    // Выводится внизу списка
+    'context_bottom'    => '<p><a href="?act=view&amp;id=' . $id . '">' . _t('Back') . '</a></p>',
 ];
 
 // Показываем комментарии

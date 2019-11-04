@@ -10,16 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-// Перенос файла
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();
 
@@ -31,7 +28,7 @@ if (! $req_down->rowCount() || ! is_file($res_down['dir'] . '/' . $res_down['nam
 
 $do = isset($_GET['do']) ? trim($_GET['do']) : '';
 
-if ($systemUser->rights > 6) {
+if ($user->rights > 6) {
     $catId = isset($_GET['catId']) ? abs((int) ($_GET['catId'])) : 0;
 
     if ($catId) {
@@ -49,7 +46,8 @@ if ($systemUser->rights > 6) {
             if ($catId) {
                 if ($catId == $res_down['refid']) {
                     echo '<a href="?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '">' . _t('Back') . '</a>';
-                    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
+                    echo $view->render('system::app/old_content',
+                        ['title' => $textl ?? '', 'content' => ob_get_clean()]);
                     exit;
                 }
 
@@ -59,7 +57,8 @@ if ($systemUser->rights > 6) {
 
                     if ($req_file_more->rowCount()) {
                         while ($res_file_more = $req_file_more->fetch()) {
-                            copy($res_down['dir'] . '/' . $res_file_more['name'], $resDir['dir'] . '/' . $res_file_more['name']);
+                            copy($res_down['dir'] . '/' . $res_file_more['name'],
+                                $resDir['dir'] . '/' . $res_file_more['name']);
                             unlink($res_down['dir'] . '/' . $res_file_more['name']);
                         }
                     }

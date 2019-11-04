@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
@@ -26,11 +27,16 @@ $mod = isset($_GET['mod']) ? trim($_GET['mod']) : '';
 /**
  * @var ConfigInterface    $config
  * @var ContainerInterface $container
+ * @var PDO                $db
+ * @var ToolsInterface     $tools
  * @var Engine             $view
  * @var UserInterface      $user
  */
+
 $container = App::getContainer();
 $config = $container->get(ConfigInterface::class);
+$db = $container->get(PDO::class);
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
 $user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 
@@ -142,12 +148,6 @@ $actions = [
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
     require_once __DIR__ . '/includes/' . $actions[$act];
 } else {
-    /** @var PDO $db */
-    $db = $container->get(PDO::class);
-
-    /** @var Johncms\Api\ToolsInterface $tools */
-    $tools = $container->get(Johncms\Api\ToolsInterface::class);
-
     require __DIR__ . '/classes/download.php';
 
     if (! $config['mod_down']) {

@@ -10,16 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
+/**
+ * @var PDO                       $db
+ * @var Johncms\Api\UserInterface $user
+ */
 
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-// Обновление файлов
 if ($user->rights == 4 || $user->rights >= 6) {
     set_time_limit(99999);
     $do = isset($_GET['do']) ? trim($_GET['do']) : '';
@@ -175,7 +172,7 @@ if ($user->rights == 4 || $user->rights >= 6) {
                             if (is_dir($val)) {
                                 $name = basename($val);
                                 $dir = dirname($val);
-                                $refid = isset($array_id[$dir]) ? (int)$array_id[$dir] : 0;
+                                $refid = isset($array_id[$dir]) ? (int) $array_id[$dir] : 0;
                                 $sort = isset($sort) ? ($sort + 1) : time();
 
                                 $stmt_c->execute([
@@ -193,8 +190,9 @@ if ($user->rights == 4 || $user->rights >= 6) {
                                 $name = basename($val);
                                 if (preg_match('/^file([0-9]+)_/', $name)) {
                                     if (! in_array($name, $array_more)) {
-                                        $refid = (int)str_replace('file', '', $name);
-                                        $name_link = htmlspecialchars(mb_substr(str_replace('file' . $refid . '_', _t('Download') . ' ', $name), 0, 200));
+                                        $refid = (int) str_replace('file', '', $name);
+                                        $name_link = htmlspecialchars(mb_substr(str_replace('file' . $refid . '_',
+                                            _t('Download') . ' ', $name), 0, 200));
                                         $size = filesize($val);
 
                                         $stmt_m->execute([
@@ -211,7 +209,7 @@ if ($user->rights == 4 || $user->rights >= 6) {
                                     $isFile = $start ? is_file($val) : true;
                                     if ($isFile) {
                                         $dir = dirname($val);
-                                        $refid = (int)$array_id[$dir];
+                                        $refid = (int) $array_id[$dir];
 
                                         $stmt_f->execute([
                                             $refid,
@@ -241,7 +239,9 @@ if ($user->rights == 4 || $user->rights >= 6) {
                                                     @chmod($screens_path . '/' . $fileId, 0777);
                                                 }
 
-                                                @copy($screenFile, $screens_path . '/' . $fileId . '/' . str_replace($val, $fileId, $screenFile));
+                                                @copy($screenFile,
+                                                    $screens_path . '/' . $fileId . '/' . str_replace($val, $fileId,
+                                                        $screenFile));
                                                 unlink($screenFile);
                                             }
 

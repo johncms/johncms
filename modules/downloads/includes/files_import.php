@@ -10,17 +10,13 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var Johncms\Api\UserInterface $user */
-$user = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ConfigInterface $config */
-$config = $container->get(Johncms\Api\ConfigInterface::class);
+/**
+ * @var Johncms\Api\ConfigInterface $config
+ * @var PDO                         $db
+ * @var Johncms\Api\UserInterface   $user
+ */
 
 if ($user->rights == 4 || $user->rights >= 6) {
     $req = $db->query('SELECT * FROM `download__category` WHERE `id` = ' . $id);
@@ -69,7 +65,8 @@ if ($user->rights == 4 || $user->rights >= 6) {
             }
 
             if (! in_array($ext[(count($ext) - 1)], $al_ext)) {
-                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $al_ext);
+                $error[] = _t('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ',
+                        $al_ext);
             }
 
             if (strlen($fname) > 100) {
@@ -176,7 +173,8 @@ if ($user->rights == 4 || $user->rights >= 6) {
             '<input type="text" name="name_link" value="Скачать файл"/><br>' .
             _t('Description') . ' (max. 500)<br><textarea name="opis"></textarea>' .
             '<br><input type="submit" name="submit" value="' . _t('Upload') . '"/></form></div>' .
-            '<div class="phdr"><small>' . _t('Allowed extensions') . ': ' . implode(', ', $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
+            '<div class="phdr"><small>' . _t('Allowed extensions') . ': ' . implode(', ',
+                $al_ext) . ($set_down['screen_resize'] ? '<br>' . _t('A screenshot is automatically converted to a picture, of a width not exceeding 240px (height will be calculated automatically)') : '') . '</small></div>' .
             '<p><a href="?id=' . $id . '">' . _t('Back') . '</a></p>';
     }
 
