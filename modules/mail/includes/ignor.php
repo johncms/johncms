@@ -99,8 +99,8 @@ if (isset($_GET['del'])) {
     $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id` = '" . $user->id . "' AND `ban`='1'")->fetchColumn();
 
     if ($total) {
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
         $req = $db->query("SELECT `users`.* FROM `cms_contact`
@@ -108,11 +108,10 @@ if (isset($_GET['del'])) {
 		    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 		    AND `ban`='1'
 		    ORDER BY `cms_contact`.`time` DESC
-		    LIMIT ${start}, ${kmess}"
-        );
+		    LIMIT ${start}, " . $user->config->kmess);
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
-            echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
+            echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
             $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;del">' . _t('Unblock') . '</a>';
             $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1';")->fetchColumn();
             $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='" . $user->id . "' AND `cms_mail`.`from_id`='{$row['id']}' AND `read`='0' AND `delete`!='" . $user->id . "' AND `sys`!='1' AND `spam`!='1'")->fetchColumn();
@@ -129,8 +128,8 @@ if (isset($_GET['del'])) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=ignor&amp;', $start, $total, $user->config->kmess) . '</div>';
         echo '<p><form method="get">
 			<input type="hidden" name="act" value="ignor"/>
 			<input type="text" name="page" size="2"/>

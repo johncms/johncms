@@ -433,8 +433,8 @@ if ($id) {
     $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='${id}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='${id}')) AND `sys`!='1' AND `delete`!='" . $user->id . "' AND `spam`='0'")->fetchColumn();
 
     if ($total) {
-        if ($total > $kmess) {
-            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
         $req = $db->query("SELECT `cms_mail`.*, `cms_mail`.`id` as `mid`, `cms_mail`.`time` as `mtime`, `users`.*
@@ -445,7 +445,7 @@ if ($id) {
             AND `cms_mail`.`sys`!='1'
             AND `cms_mail`.`spam`='0'
             ORDER BY `cms_mail`.`time` DESC
-            LIMIT " . $start . ',' . $kmess);
+            LIMIT " . $start . ',' . $user->config->kmess);
 
         $i = 1;
         $mass_read = [];
@@ -496,8 +496,8 @@ if ($id) {
 
     $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=write&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         $out .= '<p><form method="get">
 			<input type="hidden" name="act" value="write"/>
 			<input type="hidden" name="id" value="' . $id . '"/>

@@ -19,8 +19,8 @@ echo '<div class="phdr"><b>' . _t('Files') . '</b></div>';
 $total = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE (`user_id`='" . $user->id . "' OR `from_id`='" . $user->id . "') AND `delete`!='" . $user->id . "' AND `file_name`!=''")->fetchColumn();
 
 if ($total) {
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     $req = $db->query("SELECT `cms_mail`.*, `users`.`name`
@@ -30,7 +30,7 @@ if ($total) {
 	    AND `cms_mail`.`delete`!='" . $user->id . "'
 	    AND `cms_mail`.`file_name`!=''
 	    ORDER BY `cms_mail`.`time` DESC
-	    LIMIT " . $start . ',' . $kmess);
+	    LIMIT " . $start . ',' . $user->config->kmess);
 
     for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
@@ -43,8 +43,8 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=files&amp;', $start, $total, $user->config->kmess) . '</div>';
     echo '<p><form action="./" method="get">
 		<input type="hidden" name="act" value="files"/>
 		<input type="text" name="page" size="2"/>

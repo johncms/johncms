@@ -39,7 +39,7 @@ if ($total) {
 		AND `cms_contact`.`ban`!='1'
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY MAX(`cms_mail`.`time`) DESC
-		LIMIT " . $start . ',' . $kmess);
+		LIMIT " . $start . ',' . $user->config->kmess);
 
     for ($i = 0; $row = $req->fetch(); ++$i) {
         $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail`
@@ -91,8 +91,8 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=input&amp;', $start, $total, $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=input&amp;', $start, $total, $user->config->kmess) . '</div>' .
         '<p><form method="get">
                 <input type="hidden" name="act" value="input"/>
                 <input type="text" name="page" size="2"/>

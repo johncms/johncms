@@ -24,8 +24,8 @@ if ($total == 1) {
 }
 
 if ($total) {
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     //Групируем по контактам
@@ -37,8 +37,7 @@ if ($total) {
 		AND `cms_mail`.`delete` != " . $user->id . "
 		GROUP BY `cms_mail`.`user_id`
 		ORDER BY `cms_contact`.`time` DESC
-		LIMIT ${start}, ${kmess}"
-    );
+		LIMIT ${start}, " . $user->config->kmess);
 
     for ($i = 0; ($row = $query->fetch()) !== false; ++$i) {
         echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
@@ -58,8 +57,8 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $new_mail . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>';
     echo '<p><form method="get">
 		<input type="hidden" name="act" value="new"/>
 		<input type="text" name="page" size="2"/>

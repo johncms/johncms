@@ -131,8 +131,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
         $total = $db->query("SELECT COUNT(*) FROM `cms_contact` WHERE `user_id`='" . $user->id . "' AND `ban`!='1'")->fetchColumn();
 
         if ($total) {
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
             }
 
             $req = $db->query("SELECT `users`.*, `cms_contact`.`from_id` AS `id`
@@ -141,11 +141,10 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 			    WHERE `cms_contact`.`user_id`='" . $user->id . "'
 			    AND `cms_contact`.`ban`!='1'
 			    ORDER BY `users`.`name` ASC
-			    LIMIT ${start}, ${kmess}"
-            );
+			    LIMIT ${start}, " . $user->config->kmess);
 
             for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
-                echo $i % 2 ? '<div class="list1">' : '<div class="list2">';
+                echo ($i % 2) ? '<div class="list1">' : '<div class="list2">';
                 $subtext = '<a href="?act=write&amp;id=' . $row['id'] . '">' . _t('Correspondence') . '</a> | <a href="?act=deluser&amp;id=' . $row['id'] . '">' . _t('Delete') . '</a> | <a href="?act=ignor&amp;id=' . $row['id'] . '&amp;add">' . _t('Block User') . '</a>';
                 $count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE ((`user_id`='{$row['id']}' AND `from_id`='" . $user->id . "') OR (`user_id`='" . $user->id . "' AND `from_id`='{$row['id']}')) AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
                 $new_count_message = $db->query("SELECT COUNT(*) FROM `cms_mail` WHERE `cms_mail`.`user_id`='{$row['id']}' AND `cms_mail`.`from_id`='" . $user->id . "' AND `read`='0' AND `sys`!='1' AND `spam`!='1' AND `delete`!='" . $user->id . "'")->rowCount();
@@ -162,8 +161,8 @@ if ($act && ($key = array_search($act, $mods)) !== false && file_exists(__DIR__ 
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>';
             echo '<p><form method="get">
 				<input type="text" name="page" size="2"/>
 				<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

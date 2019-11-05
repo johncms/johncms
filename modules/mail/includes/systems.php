@@ -54,11 +54,11 @@ if ($mod == 'clear') {
             return $tools->displayDate((int) $var[1]);
         }
 
-        if ($total > $kmess) {
-            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1' AND `delete`!='" . $user->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
+        $req = $db->query("SELECT * FROM `cms_mail` WHERE `from_id`='" . $user->id . "' AND `sys`='1' AND `delete`!='" . $user->id . "' ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
         $mass_read = [];
 
         for ($i = 0; ($row = $req->fetch()) !== false; ++$i) {
@@ -89,8 +89,8 @@ if ($mod == 'clear') {
 
     $out .= '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        $out .= '<div class="topmenu">' . $tools->displayPagination('?act=systems&amp;', $start, $total, $user->config->kmess) . '</div>';
         $out .= '<p><form method="get">
 			<input type="hidden" name="act" value="systems"/>
 			<input type="text" name="page" size="2"/>
