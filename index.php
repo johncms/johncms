@@ -38,6 +38,9 @@ $match = $dispatcher->dispatch(
 
 switch ($match[0]) {
     case Dispatcher::FOUND:
+        // Фиксируем местоположение посетителя
+        new Johncms\Users\UserStat(App::getContainer());
+
         if (is_callable($match[1])) {
             call_user_func_array($match[1], $match[2]);
         } else {
