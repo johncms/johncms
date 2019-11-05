@@ -19,6 +19,32 @@ use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+ob_start(); // Перехват вывода скриптов без шаблона
+
+/**
+ * @var BbcodeInterface      $bbcode
+ * @var ConfigInterface      $config
+ * @var ContainerInterface   $container
+ * @var PDO                  $db
+ * @var EnvironmentInterface $env
+ * @var ToolsInterface       $tools
+ * @var UserInterface        $user
+ * @var Engine               $view
+ */
+
+$container = App::getContainer();
+$db = $container->get(PDO::class);
+$user = $container->get(UserInterface::class);
+$tools = $container->get(ToolsInterface::class);
+$env = $container->get(EnvironmentInterface::class);
+$bbcode = $container->get(BbcodeInterface::class);
+$config = $container->get(ConfigInterface::class);
+$view = $container->get(Engine::class);
+
+// Регистрируем языки модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+
 $id = isset($_REQUEST['id']) ? abs((int) ($_REQUEST['id'])) : 0;
 $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 
@@ -26,50 +52,20 @@ $act = isset($_GET['act']) ? trim($_GET['act']) : '';
 // но которым разрешено читать и писать в Админ клубе
 $guestAccess = [];
 
-/** @var ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var PDO $db */
-$db = $container->get(PDO::class);
-
-/** @var UserInterface $systemUser */
-$systemUser = $container->get(UserInterface::class);
-
-/** @var ToolsInterface $tools */
-$tools = $container->get(ToolsInterface::class);
-
-/** @var EnvironmentInterface $env */
-$env = $container->get(EnvironmentInterface::class);
-
-/** @var BbcodeInterface $bbcode */
-$bbcode = $container->get(BbcodeInterface::class);
-
-/** @var ConfigInterface $config */
-$config = $container->get(ConfigInterface::class);
-
-/** @var Translator $translator */
-$translator = $container->get(Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
-
-/** @var Engine $view */
-$view = $container->get(Engine::class);
-
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
 
 // Проверяем права доступа в Админ-Клуб
-if (isset($_SESSION['ga']) && $systemUser->rights < 1 && ! in_array($systemUser->id, $guestAccess)) {
+if (isset($_SESSION['ga']) && $user->rights < 1 && ! in_array($user->id, $guestAccess)) {
     unset($_SESSION['ga']);
 }
-
-ob_start();
 
 // Задаем заголовки страницы
 $textl = isset($_SESSION['ga']) ? _t('Admin Club') : _t('Guestbook');
 
 // Если гостевая закрыта, выводим сообщение и закрываем доступ (кроме Админов)
-if (! $config->mod_guest && $systemUser->rights < 7) {
+if (! $config->mod_guest && $user->rights < 7) {
     echo $view->render('system::app/old_content', [
         'title'   => $textl,
         'content' => '<div class="rmenu"><p>' . _t('Guestbook is closed') . '</p></div>',
@@ -80,7 +76,7 @@ if (! $config->mod_guest && $systemUser->rights < 7) {
 switch ($act) {
     case 'delpost':
         // Удаление отдельного поста
-        if ($systemUser->rights >= 6 && $id) {
+        if ($user->rights >= 6 && $id) {
             if (isset($_GET['yes'])) {
                 $db->exec('DELETE FROM `guest` WHERE `id` = ' . $id);
                 header('Location: ./');
@@ -101,7 +97,7 @@ switch ($act) {
         $msg = isset($_POST['msg']) ? mb_substr(trim($_POST['msg']), 0, 5000) : '';
         $trans = isset($_POST['msgtrans']) ? 1 : 0;
         $code = isset($_POST['code']) ? trim($_POST['code']) : '';
-        $from = $systemUser->isValid() ? $systemUser->name : $name;
+        $from = $user->isValid() ? $user->name : $name;
         // Проверяем на ошибки
         $error = [];
         $flood = false;
@@ -110,7 +106,7 @@ switch ($act) {
             $error[] = _t('Wrong data');
         }
 
-        if (! $systemUser->isValid() && empty($name)) {
+        if (! $user->isValid() && empty($name)) {
             $error[] = _t('You have not entered a name');
         }
 
@@ -118,18 +114,18 @@ switch ($act) {
             $error[] = _t('You have not entered the message');
         }
 
-        if ($systemUser->ban['1'] || $systemUser->ban['13']) {
+        if ($user->ban['1'] || $user->ban['13']) {
             $error[] = _t('Access forbidden');
         }
 
         // CAPTCHA для гостей
-        if (! $systemUser->isValid() && (empty($code) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code']))) {
+        if (! $user->isValid() && (empty($code) || mb_strlen($code) < 3 || strtolower($code) != strtolower($_SESSION['code']))) {
             $error[] = _t('The security code is not correct');
         }
 
         unset($_SESSION['code']);
 
-        if ($systemUser->isValid()) {
+        if ($user->isValid()) {
             // Антифлуд для зарегистрированных пользователей
             $flood = $tools->antiflood();
         } else {
@@ -148,7 +144,7 @@ switch ($act) {
 
         if (! $error) {
             // Проверка на одинаковые сообщения
-            $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $systemUser->id . "' ORDER BY `time` DESC");
+            $req = $db->query("SELECT * FROM `guest` WHERE `user_id` = '" . $user->id . "' ORDER BY `time` DESC");
             $res = $req->fetch();
 
             if ($res['text'] == $msg) {
@@ -171,7 +167,7 @@ switch ($act) {
             ")->execute([
                 $admset,
                 time(),
-                $systemUser->id,
+                $user->id,
                 $from,
                 $msg,
                 $env->getIp(),
@@ -179,9 +175,9 @@ switch ($act) {
             ]);
 
             // Фиксируем время последнего поста (антиспам)
-            if ($systemUser->isValid()) {
-                $postguest = $systemUser->postguest + 1;
-                $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $systemUser->id);
+            if ($user->isValid()) {
+                $postguest = $user->postguest + 1;
+                $db->exec("UPDATE `users` SET `postguest` = '${postguest}', `lastpost` = '" . time() . "' WHERE `id` = " . $user->id);
             }
 
             header('location: ./');
@@ -192,13 +188,13 @@ switch ($act) {
 
     case 'otvet':
         // Добавление "ответа Админа"
-        if ($systemUser->rights >= 6 && $id) {
+        if ($user->rights >= 6 && $id) {
             if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
                 $reply = isset($_POST['otv']) ? mb_substr(trim($_POST['otv']), 0, 5000) : '';
                 $db->exec("UPDATE `guest` SET
-                    `admin` = '" . $systemUser->name . "',
+                    `admin` = '" . $user->name . "',
                     `otvet` = " . $db->quote($reply) . ",
                     `otime` = '" . time() . "'
                     WHERE `id` = '${id}'
@@ -216,7 +212,7 @@ switch ($act) {
                     '<br />' . $tools->checkout($res['text']) . '</div>' .
                     '<form name="form" action="?act=otvet&amp;id=' . $id . '" method="post">' .
                     '<p><h3>' . _t('Reply') . '</h3>' . $bbcode->buttons('form', 'otv') .
-                    '<textarea rows="' . $systemUser->config->fieldHeight . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
+                    '<textarea rows="' . $user->config->fieldHeight . '" name="otv">' . $tools->checkout($res['otvet']) . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Reply') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -228,7 +224,7 @@ switch ($act) {
     case
     'edit':
         // Редактирование поста
-        if ($systemUser->rights >= 6 && $id) {
+        if ($user->rights >= 6 && $id) {
             if (isset($_POST['submit'], $_POST['token'], $_SESSION['token'])
                 && $_POST['token'] == $_SESSION['token']
             ) {
@@ -245,7 +241,7 @@ switch ($act) {
                   WHERE `id` = ?
                 ')->execute([
                     $msg,
-                    $systemUser->name,
+                    $user->name,
                     time(),
                     $edit_count,
                     $id,
@@ -262,7 +258,7 @@ switch ($act) {
                     '<form name="form" action="?act=edit&amp;id=' . $id . '" method="post">' .
                     '<p><b>' . _t('Author') . ':</b> ' . $res['name'] . '</p><p>';
                 echo $bbcode->buttons('form', 'msg');
-                echo '<textarea rows="' . $systemUser->config->fieldHeight . '" name="msg">' . $text . '</textarea></p>' .
+                echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg">' . $text . '</textarea></p>' .
                     '<p><input type="submit" name="submit" value="' . _t('Save') . '"/></p>' .
                     '<input type="hidden" name="token" value="' . $token . '"/>' .
                     '</form></div>' .
@@ -273,7 +269,7 @@ switch ($act) {
 
     case 'clean':
         // Очистка Гостевой
-        if ($systemUser->rights >= 7) {
+        if ($user->rights >= 7) {
             if (isset($_POST['submit'])) {
                 // Проводим очистку Гостевой, согласно заданным параметрам
                 $adm = isset($_SESSION['ga']) ? 1 : 0;
@@ -317,7 +313,7 @@ switch ($act) {
 
     case 'ga':
         // Переключение режима работы Гостевая / Админ-клуб
-        if ($systemUser->rights >= 1 || in_array($systemUser->id, $guestAccess)) {
+        if ($user->rights >= 1 || in_array($user->id, $guestAccess)) {
             if (isset($_GET['do']) && $_GET['do'] == 'set') {
                 $_SESSION['ga'] = 1;
             } else {
@@ -333,30 +329,30 @@ switch ($act) {
 
         echo '<div class="phdr"><b>' . _t('Guestbook') . '</b></div>';
 
-        if ($systemUser->rights > 0 || in_array($systemUser->id, $guestAccess)) {
+        if ($user->rights > 0 || in_array($user->id, $guestAccess)) {
             $menu = [
                 isset($_SESSION['ga']) ? '<a href="?act=ga">' . _t('Guestbook') . '</a>' : '<b>' . _t('Guestbook') . '</b>',
                 isset($_SESSION['ga']) ? '<b>' . _t('Admin Club') . '</b>' : '<a href="?act=ga&amp;do=set">' . _t('Admin Club') . '</a>',
-                $systemUser->rights >= 7 ? '<a href="?act=clean">' . _t('Clear') . '</a>' : '',
+                $user->rights >= 7 ? '<a href="?act=clean">' . _t('Clear') . '</a>' : '',
             ];
             echo '<div class="topmenu">' . implode(' | ', array_filter($menu)) . '</div>';
         }
 
         // Форма ввода нового сообщения
-        if (($systemUser->isValid() || $config->mod_guest == 2) && ! isset($systemUser->ban['1']) && ! isset($systemUser->ban['13'])) {
+        if (($user->isValid() || $config->mod_guest == 2) && ! isset($user->ban['1']) && ! isset($user->ban['13'])) {
             $token = mt_rand(1000, 100000);
             $_SESSION['token'] = $token;
             echo '<div class="gmenu"><form name="form" action="?act=say" method="post">';
 
-            if (! $systemUser->isValid()) {
+            if (! $user->isValid()) {
                 echo _t('Name') . ' (max 25):<br><input type="text" name="name" maxlength="25"/><br>';
             }
 
             echo '<b>' . _t('Message') . '</b> <small>(max 5000)</small>:<br>';
             echo $bbcode->buttons('form', 'msg');
-            echo '<textarea rows="' . $systemUser->config->fieldHeight . '" name="msg"></textarea><br>';
+            echo '<textarea rows="' . $user->config->fieldHeight . '" name="msg"></textarea><br>';
 
-            if (! $systemUser->isValid()) {
+            if (! $user->isValid()) {
                 // CAPTCHA для гостей
                 $captcha = new Batumibiz\Captcha\Captcha;
                 $code = $captcha->generateCode();
@@ -379,7 +375,7 @@ switch ($act) {
         }
 
         if ($total) {
-            if (isset($_SESSION['ga']) && ($systemUser->rights >= 1 || in_array($systemUser->id, $guestAccess))) {
+            if (isset($_SESSION['ga']) && ($user->rights >= 1 || in_array($user->id, $guestAccess))) {
                 // Запрос для Админ клуба
                 echo '<div class="rmenu"><b>АДМИН-КЛУБ</b></div>';
                 $req = $db->query("SELECT `guest`.*, `guest`.`id` AS `gid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
@@ -445,9 +441,9 @@ switch ($act) {
                     $post .= '<div class="reply"><b>' . $res['admin'] . '</b>: (' . $tools->displayDate($res['otime']) . ')<br>' . $otvet . '</div>';
                 }
 
-                if ($systemUser->rights >= 6) {
+                if ($user->rights >= 6) {
                     $subtext = '<a href="?act=otvet&amp;id=' . $res['gid'] . '">' . _t('Reply') . '</a>' .
-                        ($systemUser->rights >= $res['rights'] ? ' | <a href="?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
+                        ($user->rights >= $res['rights'] ? ' | <a href="?act=edit&amp;id=' . $res['gid'] . '">' . _t('Edit') . '</a> | <a href="?act=delpost&amp;id=' . $res['gid'] . '">' . _t('Delete') . '</a>' : '');
                 } else {
                     $subtext = '';
                 }

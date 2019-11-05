@@ -29,9 +29,8 @@ $tools = $container->get(ToolsInterface::class);
 /** @var ConfigInterface $config */
 $config = $container->get(ConfigInterface::class);
 
-/** @var Translator $translator */
-$translator = $container->get(Translator::class);
-$translator->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
+// Регистрируем языки модуля
+$container->get(Translator::class)->addTranslationFilePattern('gettext', __DIR__ . '/locale', '/%s/default.mo');
 
 /** @var Engine $view */
 $view = $container->get(Engine::class);
