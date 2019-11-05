@@ -343,8 +343,8 @@ switch ($do) {
         }
         echo '<div class="phdr">' . _t('Total') . ':&#160;' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $kmess) . '</div>' .
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?', $start, $total, $user->config->kmess) . '</div>' .
                 '<p><form method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
