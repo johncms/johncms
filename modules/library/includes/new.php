@@ -18,11 +18,10 @@ use Library\Rating;
 echo '<div class="phdr"><strong><a href="?">' . _t('Library') . '</a></strong> | ' . _t('New Articles') . '</div>';
 
 $total = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
-$page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-$start = $page == 1 ? 0 : ($page - 1) * $kmess;
-$sql = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `comm_count`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . ',' . $kmess);
-$nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
-        $kmess) . '</div>' : '';
+$page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
+$start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
+$sql = $db->query("SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comments`, `comm_count`, `cat_id`, `announce` FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1 ORDER BY `time` DESC LIMIT " . $start . ',' . $user->config->kmess);
+$nav = ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
 echo $nav;
 if ($total) {
     $i = 0;

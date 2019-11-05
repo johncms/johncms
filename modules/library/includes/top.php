@@ -30,16 +30,16 @@ if ($sort == 'read' || $sort == 'comm') {
     $total = $db->query('SELECT COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` GROUP BY `st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT 20')->fetchColumn(0);
 }
 
-$page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-$start = $page == 1 ? 0 : ($page - 1) * $kmess;
+$page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
+$start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 if (! $total) {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 } else {
     if ($sort == 'read' || $sort == 'comm') {
-        $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $kmess);
+        $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce` FROM `library_texts` WHERE ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' > 0 ORDER BY ' . ($sort == 'comm' ? '`comm_count`' : '`count_views`') . ' DESC LIMIT ' . $start . ',' . $user->config->kmess);
     } else {
-        $stmt = $db->query('SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT ' . $start . ',' . $kmess);
+        $stmt = $db->query('SELECT `library_texts`.*, COUNT(*) AS `cnt`, AVG(`point`) AS `avg` FROM `cms_library_rating` JOIN `library_texts` ON `cms_library_rating`.`st_id` = `library_texts`.`id` GROUP BY `cms_library_rating`.`st_id` ORDER BY `avg` DESC, `cnt` DESC LIMIT ' . $start . ',' . $user->config->kmess);
     }
 
     $i = 0;

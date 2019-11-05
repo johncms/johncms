@@ -54,9 +54,8 @@ if ($search && ! $error) {
 
     echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Search results') . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
-                $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     if ($total) {
@@ -65,7 +64,7 @@ if ($search && ! $error) {
             FROM `library_texts`
             WHERE MATCH (`' . ($search_t ? 'name' : 'text') . '`) AGAINST (' . $query . ' IN BOOLEAN MODE)
             ORDER BY `rel` DESC
-            LIMIT ' . $start . ', ' . $kmess
+            LIMIT ' . $start . ', ' . $user->config->kmess
         );
 
         while ($res = $req->fetch()) {
@@ -107,9 +106,8 @@ if ($search && ! $error) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
-                $start, $total, $kmess) . '</div>'
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>'
             . '<div><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">'
             . '<input type="text" name="page" size="2"/>'
             . '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>'

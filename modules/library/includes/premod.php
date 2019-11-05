@@ -29,11 +29,11 @@ if (isset($_GET['yes']) || isset($_GET['all'])) {
 }
 
 $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=0')->fetchColumn();
-$page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-$start = $page == 1 ? 0 : ($page - 1) * $kmess;
+$page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
+$start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
 
 if ($total) {
-    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $kmess);
+    $stmt = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `cat_id` FROM `library_texts` WHERE `premod`=0 ORDER BY `time` DESC LIMIT ' . $start . ',' . $user->config->kmess);
     $i = 0;
 
     while ($row = $stmt->fetch()) {
@@ -52,7 +52,6 @@ if ($total) {
 }
 
 echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
-echo ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total,
-        $kmess) . '</div>' : '';
+echo ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?act=premod&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
 echo $total ? '<div><a href="?act=premod&amp;all">' . _t('Approve all') . '</a></div>' : '';
 echo '<p><a href="?">' . _t('To Library') . '</a></p>' . PHP_EOL;

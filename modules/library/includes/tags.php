@@ -19,17 +19,16 @@ if (isset($_GET['tag'])) {
 
     if ($obj->getAllTagStats($tag)) {
         $total = count($obj->getAllTagStats($tag));
-        $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-        $start = $page == 1 ? 0 : ($page - 1) * $kmess;
+        $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
+        $start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
 
         echo '<div class="phdr"><a href="?"><strong>' . _t('Library') . '</strong></a> | ' . _t('Tags') . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;',
-                    $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
 
-        foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), $start, $kmess) as $txt) {
+        foreach (new LimitIterator(new ArrayIterator($obj->getAllTagStats($tag)), $start, $user->config->kmess) as $txt) {
             $query = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments` FROM `library_texts` WHERE `id` = ' . $txt);
             if ($query->rowCount()) {
                 $row = $query->fetch();
@@ -50,9 +49,8 @@ if (isset($_GET['tag'])) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . (int) $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;',
-                    $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=tags&amp;tag=' . urlencode($tag) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
         }
         echo '<p><a href="?">' . _t('To Library') . '</a></p>';
     } else {

@@ -1,14 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
- * JohnCMS NEXT Mobile Content Management System (http://johncms.com)
+ * This file is part of JohnCMS Content Management System.
  *
- * For copyright and license information, please see the LICENSE.md
- * Installing the system or redistributions of files must retain the above copyright notice.
- *
- * @link        http://johncms.com JohnCMS Project
- * @copyright   Copyright (C) JohnCMS Community
- * @license     GPL-3
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
 use Johncms\Api\ConfigInterface;
@@ -170,10 +169,7 @@ if (in_array($act, $array_includes)) {
         $res = $db->query("SELECT COUNT(*) FROM `library_texts` WHERE `time` > '" . (time() - 259200) . "' AND `premod`=1")->fetchColumn();
 
         if ($res) {
-            echo $tools->image('green.gif', [
-                    'width'  => 16,
-                    'height' => 16,
-                ]) . '<a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
+            echo '<img src="' . $assets->url('images/old/add.gif') . '" alt="" class="icon"><a href="?act=new">' . _t('New Articles') . '</a> (' . $res . ')<br>';
         }
 
         echo '<img src="' . $assets->url('images/old/rate.gif') . '" alt="" class="icon"><a href="?act=top">' . _t('Rating articles') . '</a><br>' .
@@ -234,13 +230,12 @@ if (in_array($act, $array_includes)) {
                 if ($actdir) {
                     $total = $db->query('SELECT COUNT(*) FROM `library_cats` WHERE '
                         . ($id !== null ? '`parent`=' . $id : '`parent`=0'))->fetchColumn();
-                    $nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;',
-                            $start, $total, $kmess) . '</div>' : '';
+                    $nav = ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
                     $y = 0;
 
                     if ($total) {
                         $sql = $db->query('SELECT `id`, `name`, `dir`, `description` FROM `library_cats` WHERE '
-                            . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $kmess);
+                            . ($id !== null ? '`parent`=' . $id : '`parent`=0') . ' ORDER BY `pos` ASC LIMIT ' . $start . ',' . $user->config->kmess);
                         echo $nav;
 
                         while ($row = $sql->fetch()) {
@@ -279,13 +274,12 @@ if (in_array($act, $array_includes)) {
                     }
                 } else {
                     $total = $db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id)->fetchColumn();
-                    $page = $page >= ceil($total / $kmess) ? ceil($total / $kmess) : $page;
-                    $start = $page == 1 ? 0 : ($page - 1) * $kmess;
-                    $nav = ($total > $kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;',
-                            $start, $total, $kmess) . '</div>' : '';
+                    $page = $page >= ceil($total / $user->config->kmess) ? ceil($total / $user->config->kmess) : $page;
+                    $start = $page == 1 ? 0 : ($page - 1) * $user->config->kmess;
+                    $nav = ($total > $user->config->kmess) ? '<div class="topmenu">' . $tools->displayPagination('?do=dir&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' : '';
 
                     if ($total) {
-                        $sql2 = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id . ' ORDER BY `id` DESC LIMIT ' . $start . ',' . $kmess);
+                        $sql2 = $db->query('SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, `announce` FROM `library_texts` WHERE `premod`=1 AND `cat_id`=' . $id . ' ORDER BY `id` DESC LIMIT ' . $start . ',' . $user->config->kmess);
                         echo $nav;
 
                         while ($row = $sql2->fetch()) {
