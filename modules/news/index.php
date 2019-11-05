@@ -311,7 +311,7 @@ switch ($do) {
         }
 
         $total = $db->query('SELECT COUNT(*) FROM `news`')->fetchColumn();
-        $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
+        $req = $db->query("SELECT * FROM `news` ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
         $i = 0;
 
         while ($res = $req->fetch()) {
