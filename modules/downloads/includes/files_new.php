@@ -41,15 +41,14 @@ echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $te
 $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down}")->fetchColumn();
 
 // Навигация
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total,
-            $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $user->config->kmess) . '</div>';
 }
 
 // Выводим список
 if ($total) {
     $i = 0;
-    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
+    $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '2'  AND `time` > ${old} ${sql_down} ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
     while ($res_down = $req_down->fetch()) {
         echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) . '</div>';
@@ -61,9 +60,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total,
-            $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?id=' . $id . '&amp;act=new_files&amp;', $start, $total, $user->config->kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" name="id" value="' . $id . '"/>' .
         '<input type="hidden" value="new_files" name="act" />' .

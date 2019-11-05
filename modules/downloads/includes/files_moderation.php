@@ -38,15 +38,14 @@ if ($user->rights == 4 || $user->rights >= 6) {
     $total = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
     // Навигация
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total,
-                $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     $i = 0;
 
     if ($total) {
-        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
+        $req_down = $db->query("SELECT * FROM `download__files` WHERE `type` = '3' ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
         while ($res_down = $req_down->fetch()) {
             echo (($i++ % 2) ? '<div class="list2">' : '<div class="list1">') . Download::displayFile($res_down) .
                 '<div class="sub"><a href="?act=mod_files&amp;id=' . $res_down['id'] . '">' . _t('Accept') . '</a> | ' .
@@ -61,9 +60,8 @@ if ($user->rights == 4 || $user->rights >= 6) {
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
     // Навигация
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total,
-                $kmess) . '</div>' .
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=mod_files&amp;', $start, $total, $user->config->kmess) . '</div>' .
             '<p><form action="?" method="get">' .
             '<input type="hidden" value="top_users" name="act" />' .
             '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

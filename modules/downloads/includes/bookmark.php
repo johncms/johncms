@@ -31,15 +31,15 @@ echo '<div class="phdr"><a href="?"><b>' . _t('Downloads') . '</b></a> | ' . $te
 $total = $db->query('SELECT COUNT(*) FROM `download__bookmark` WHERE `user_id` = ' . $user->id)->fetchColumn();
 
 // Навигация
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=bookmark&amp;', $start, $total, $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=bookmark&amp;', $start, $total, $user->config->kmess) . '</div>';
 }
 
 // Список закладок
 if ($total) {
     $req_down = $db->query('SELECT `download__files`.*, `download__bookmark`.`id` AS `bid`
     FROM `download__files` LEFT JOIN `download__bookmark` ON `download__files`.`id` = `download__bookmark`.`file_id`
-    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, ${kmess}");
+    WHERE `download__bookmark`.`user_id`=' . $user->id . " ORDER BY `download__files`.`time` DESC LIMIT ${start}, " . $user->config->kmess);
     $i = 0;
 
     while ($res_down = $req_down->fetch()) {
@@ -52,8 +52,8 @@ if ($total) {
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
 // Навигация
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=bookmark&amp;', $start, $total, $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=bookmark&amp;', $start, $total, $user->config->kmess) . '</div>' .
         '<p><form action="?" method="get">' .
         '<input type="hidden" value="bookmark" name="act" />' .
         '<input type="text" name="page" size="2"/><input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
