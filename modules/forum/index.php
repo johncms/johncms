@@ -391,7 +391,7 @@ SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > " . (time() - 300) . " AN
                     $req = $db->query('SELECT tpc.*, (
 SELECT COUNT(*) FROM `cms_forum_rdm` WHERE `time` >= tpc.last_post_date AND `topic_id` = tpc.id AND `user_id` = ' . $user->id . ") as `np`
 FROM `forum_topic` tpc WHERE `section_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`deleted` <> '1' OR deleted IS NULL)") . "
-ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
+ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
                     $i = 0;
 
                     while ($res = $req->fetch()) {
@@ -413,7 +413,7 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
                         $post_count = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
                         echo '<a href="?type=topic&amp;id=' . $res['id'] . '">' . (empty($res['name']) ? '-----' : $res['name']) . '</a> [' . $post_count . ']';
 
-                        $cpg = ceil($post_count / $kmess);
+                        $cpg = ceil($post_count / $user->config->kmess);
                         if ($cpg > 1) {
                             echo '<a href="?type=topic&amp;id=' . $res['id'] . '&amp;page=' . $cpg . '">&#160;&gt;&gt;</a>';
                         }
@@ -439,9 +439,8 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
 
                 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-                if ($total > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start,
-                            $total, $kmess) . '</div>' .
+                if ($total > $user->config->kmess) {
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topics&id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
                         '<p><form action="?type=topics&id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -496,16 +495,15 @@ ORDER BY `pinned` DESC, `last_post_date` DESC LIMIT ${start}, ${kmess}");
 
                 if ($start >= $colmes) {
                     // Исправляем запрос на несуществующую страницу
-                    $start = max(0, $colmes - (($colmes % $kmess) == 0 ? $kmess : ($colmes % $kmess)));
+                    $start = max(0, $colmes - (($colmes % $user->config->kmess) == 0 ? $user->config->kmess : ($colmes % $user->config->kmess)));
                 }
 
                 // Выводим название топика
                 echo '<div class="phdr"><a href="#down">' . $tools->image('down.png',
                         ['class' => '']) . '</a>&#160;&#160;<b>' . (empty($type1['name']) ? '-----' : $type1['name']) . '</b></div>';
 
-                if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
-                            $start, $colmes, $kmess) . '</div>';
+                if ($colmes > $user->config->kmess) {
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $user->config->kmess) . '</div>';
                 }
 
                 // Метка удаления темы
@@ -596,7 +594,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                 }
 
                 // Фиксация первого поста в теме
-                if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($colmes - $kmess)) : $start > 0)) || isset($_GET['clip'])) {
+                if (($set_forum['postclip'] == 2 && ($set_forum['upfp'] ? $start < (ceil($colmes - $user->config->kmess)) : $start > 0)) || isset($_GET['clip'])) {
                     $postres = $db->query("SELECT `forum_messages`.*, `users`.`sex`, `users`.`rights`, `users`.`lastdate`, `users`.`status`, `users`.`datereg`
                     FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                     WHERE `forum_messages`.`topic_id` = '${id}'" . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . '
@@ -655,8 +653,7 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                   FROM `forum_messages` LEFT JOIN `users` ON `forum_messages`.`user_id` = `users`.`id`
                   WHERE `forum_messages`.`topic_id` = '${id}'"
                     . ($user->rights >= 7 ? '' : " AND (`forum_messages`.`deleted` != '1' OR `forum_messages`.`deleted` IS NULL)") . "${sql}
-                  ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, ${kmess}
-                ");
+                  ORDER BY `forum_messages`.`id` ${order} LIMIT ${start}, " . $user->config->kmess);
 
                 // Верхнее поле "Написать"
                 if (($user->isValid() && ! $type1['closed'] && $set_forum['upfp'] && $config->mod_forum != 3 && $allow != 4) || ($user->rights >= 7 && $set_forum['upfp'])) {
@@ -890,9 +887,8 @@ FROM `cms_forum_vote` `fvt` WHERE `fvt`.`type`='1' AND `fvt`.`topic`='" . $id . 
                     '&#160;&#160;' . _t('Total') . ': ' . $colmes . '</div>';
 
                 // Постраничная навигация
-                if ($colmes > $kmess) {
-                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;',
-                            $start, $colmes, $kmess) . '</div>' .
+                if ($colmes > $user->config->kmess) {
+                    echo '<div class="topmenu">' . $tools->displayPagination('?type=topic&amp;id=' . $id . '&amp;', $start, $colmes, $user->config->kmess) . '</div>' .
                         '<p><form action="?type=topic&amp;id=' . $id . '" method="post">' .
                         '<input type="text" name="page" size="2"/>' .
                         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

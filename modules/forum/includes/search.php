@@ -87,9 +87,8 @@ switch ($mod) {
 
             echo '<div class="phdr">' . _t('Search results') . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
-                        $start, $total, $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
             if ($total) {
@@ -101,8 +100,7 @@ switch ($mod) {
                     WHERE `name` LIKE ' . $query . '
                     ' . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `name` DESC
-                    LIMIT ${start}, ${kmess}
-                ");
+                    LIMIT ${start}, " . $user->config->kmess);
                 } else {
                     $req = $db->query("
                     SELECT *, MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE) as `rel`
@@ -110,8 +108,7 @@ switch ($mod) {
                     WHERE MATCH (`text`) AGAINST (${query} IN BOOLEAN MODE)
                     " . ($user->rights >= 7 ? '' : " AND (`deleted` != '1' OR deleted IS NULL)") . "
                     ORDER BY `rel` DESC
-                    LIMIT ${start}, ${kmess}
-                ");
+                    LIMIT ${start}, " . $user->config->kmess);
                 }
 
                 $i = 0;
@@ -234,9 +231,8 @@ switch ($mod) {
         }
 
         // Постраничная навигация
-        if (isset($total) && $total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;',
-                    $start, $total, $kmess) . '</div>' .
+        if (isset($total) && $total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
                 '<p><form action="?act=search&amp;' . ($search_t ? 't=1&amp;' : '') . 'search=' . urlencode($search) . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

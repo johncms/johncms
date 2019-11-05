@@ -37,7 +37,7 @@ if ($req->rowCount()) {
         $user->rights = 3;
     }
 
-    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $kmess);
+    $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'" . ($user->rights < 7 ? " AND (`deleted` != '1' OR deleted IS NULL)" : ''))->fetchColumn() / $user->config->kmess);
     $posts = $db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND (`deleted` != '1' OR deleted IS NULL)")->fetchColumn();
     $link = '?type=topic&id=' . $res['topic_id'] . '&page=' . $page;
     $error = false;
@@ -169,7 +169,7 @@ if (! $error) {
                 $db->exec('DELETE FROM `cms_forum_files` WHERE `post` = ' . $id);
 
                 // Формируем ссылку на нужную страницу темы
-                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>' : '<') . " '${id}'")->fetchColumn() / $kmess);
+                $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>' : '<') . " '${id}'")->fetchColumn() / $user->config->kmess);
                 $db->exec("DELETE FROM `forum_messages` WHERE `id` = '${id}'");
 
                 if ($posts < 2) {

@@ -43,16 +43,15 @@ if ($id) {
 
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
-            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+            $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
         }
 
-        if ($total > $kmess) {
-            echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
-                    $start, $total, $kmess) . '</div>';
+        if ($total > $user->config->kmess) {
+            echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
         }
 
         if ($total) {
-            $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum,${id},topic' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, ${kmess}");
+            $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum,${id},topic' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess);
 
             for ($i = 0; $res = $req->fetch(); ++$i) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -70,9 +69,8 @@ if ($id) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
-                $start, $total, $kmess) . '</div>' .
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;id=' . $id . '&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
             '<p><form action="?act=who&amp;id=' . $id . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -93,16 +91,15 @@ if ($id) {
 
     if ($start >= $total) {
         // Исправляем запрос на несуществующую страницу
-        $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+        $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
     }
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
-                $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
     }
 
     if ($total) {
-        $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, ${kmess}");
+        $req = $db->query('SELECT * FROM `' . ($do == 'guest' ? 'cms_sessions' : 'users') . '` WHERE `lastdate` > ' . (time() - 300) . " AND `place` LIKE 'forum%' ORDER BY " . ($do == 'guest' ? '`movings` DESC' : '`name` ASC') . " LIMIT ${start}, " . $user->config->kmess);
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
             if ($res['id'] == $user->id) {
@@ -196,9 +193,8 @@ if ($id) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''),
-                $start, $total, $kmess) . '</div>' .
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=who&amp;' . ($do == 'guest' ? 'do=guest&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
             '<p><form action="?act=who' . ($do == 'guest' ? '&amp;do=guest' : '') . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

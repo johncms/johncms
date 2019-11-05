@@ -31,7 +31,7 @@ echo '<div  class="phdr">' . _t('Who voted in the poll') . ' &laquo;<b>' . htmle
 $total = $db->query("SELECT COUNT(*) FROM `cms_forum_vote_users` WHERE `topic`='${id}'")->fetchColumn();
 $req = $db->query("SELECT `cms_forum_vote_users`.*, `users`.`rights`, `users`.`lastdate`, `users`.`name`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
     FROM `cms_forum_vote_users` LEFT JOIN `users` ON `cms_forum_vote_users`.`user` = `users`.`id`
-    WHERE `cms_forum_vote_users`.`topic`='${id}' LIMIT ${start},${kmess}");
+    WHERE `cms_forum_vote_users`.`topic`='${id}' LIMIT ${start}, " . $user->config->kmess);
 $i = 0;
 
 while ($res = $req->fetch()) {
@@ -47,8 +47,8 @@ if ($total == 0) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<p>' . $tools->displayPagination('?act=users&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
+if ($total > $user->config->kmess) {
+    echo '<p>' . $tools->displayPagination('?act=users&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
         '<p><form action="?act=users&amp;id=' . $id . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

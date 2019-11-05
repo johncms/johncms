@@ -221,9 +221,9 @@ switch ($post_type) {
 
             // Вычисляем, на какую страницу попадает добавляемый пост
             if ($user->rights >= 7) {
-                $page = $set_forum['upfp'] ? 1 : ceil($cnt_all_messages / $kmess);
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_all_messages / $user->config->kmess);
             } else {
-                $page = $set_forum['upfp'] ? 1 : ceil($cnt_messages / $kmess);
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_messages / $user->config->kmess);
             }
 
             if (isset($_POST['addfiles'])) {
@@ -411,9 +411,9 @@ switch ($post_type) {
 
             // Вычисляем, на какую страницу попадает добавляемый пост
             if ($user->rights >= 7) {
-                $page = $set_forum['upfp'] ? 1 : ceil($cnt_all_messages / $kmess);
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_all_messages / $user->config->kmess);
             } else {
-                $page = $set_forum['upfp'] ? 1 : ceil($cnt_messages / $kmess);
+                $page = $set_forum['upfp'] ? 1 : ceil($cnt_messages / $user->config->kmess);
             }
 
             if (isset($_POST['addfiles'])) {

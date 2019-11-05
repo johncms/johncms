@@ -70,9 +70,8 @@ if ($user->isValid()) {
                 '<input type="submit" name="submit" value="' . _t('Show period') . '"/>' .
                 '</form></div>';
 
-            if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;',
-                        $start, $count, $kmess) . '</div>';
+            if ($count > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess) . '</div>';
             }
 
             if ($count) {
@@ -81,19 +80,19 @@ if ($user->isValid()) {
                     FROM `forum_topic` tpc
                     JOIN forum_sections rzd ON rzd.id = tpc.section_id
                     JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . ',' . $kmess);
+                    WHERE `mod_last_post_date` > '" . $vr1 . "' ORDER BY `mod_last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess);
                 } else {
                     $req = $db->query("SELECT tpc.*, rzd.`name` AS rzd_name, frm.`name` AS frm_name
                     FROM `forum_topic` tpc
                     JOIN forum_sections rzd ON rzd.id = tpc.section_id
                     JOIN forum_sections frm ON frm.id = rzd.parent
-                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $kmess);
+                    WHERE `last_post_date` > '" . $vr1 . "' AND (`deleted` <> '1' OR deleted IS NULL) ORDER BY `last_post_date` DESC LIMIT " . $start . ',' . $user->config->kmess);
                 }
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                     $colmes1 = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
-                    $cpg = ceil($colmes1 / $kmess);
+                    $cpg = ceil($colmes1 / $user->config->kmess);
 
                     if ($res['closed']) {
                         echo $tools->image('tz.gif');
@@ -134,9 +133,8 @@ if ($user->isValid()) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $count . '</div>';
 
-            if ($count > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;',
-                        $start, $count, $kmess) . '</div>' .
+            if ($count > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;do=period&amp;vr=' . $vr . '&amp;', $start, $count, $user->config->kmess) . '</div>' .
                     '<p><form action="?act=new&amp;do=period&amp;vr=' . $vr . '" method="post">
                     <input type="text" name="page" size="2"/>
                     <input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -148,9 +146,8 @@ if ($user->isValid()) {
             $total = $container->get('counters')->forumNew();
             echo '<div class="phdr"><a href="./"><b>' . _t('Forum') . '</b></a> | ' . _t('Unread') . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
-                        $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
             if ($total > 0) {
@@ -160,7 +157,7 @@ if ($user->isValid()) {
                 JOIN forum_sections rzd ON rzd.id = tpc.section_id
                 JOIN forum_sections frm ON frm.id = rzd.parent
                 WHERE " . ($user->rights >= 7 ? '' : "(`tpc`.`deleted` <> '1' OR `tpc`.`deleted` IS NULL) AND ") . "(`rdm`.`topic_id` IS NULL OR `tpc`.`last_post_date` > `rdm`.`time`)
-                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, ${kmess}");
+                ORDER BY `tpc`.`last_post_date` DESC LIMIT ${start}, " . $user->config->kmess);
 
                 for ($i = 0; $res = $req->fetch(); ++$i) {
                     if ($res['deleted']) {
@@ -170,7 +167,7 @@ if ($user->isValid()) {
                     }
 
                     $post_count = $user->rights >= 7 ? $res['mod_post_count'] : $res['post_count'];
-                    $cpg = ceil($post_count / $kmess);
+                    $cpg = ceil($post_count / $user->config->kmess);
 
                     // Значки
                     $icons = [
@@ -201,9 +198,8 @@ if ($user->isValid()) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total,
-                        $kmess) . '</div>' .
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=new&amp;', $start, $total, $user->config->kmess) . '</div>' .
                     '<p><form method="get">' .
                     '<input type="hidden" name="act" value="new"/>' .
                     '<input type="text" name="page" size="2"/>' .
@@ -228,8 +224,8 @@ if ($user->isValid()) {
     if ($req->rowCount()) {
         for ($i = 0; $res = $req->fetch(); ++$i) {
             $colmes1 = $res['post_count'];
-            $cpg = ceil($colmes1 / $kmess);
-            echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+            $cpg = ceil($colmes1 / $user->config->kmess);
+            echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
             // Значки
             $icons = [
                 ($res['pinned'] ? $tools->image('pt.gif') : ''),

@@ -155,7 +155,7 @@ if (isset($_POST['submit'])) {
     }
 
     $pa2 = $db->query("SELECT `id` FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "'")->rowCount();
-    $page = ceil($pa2 / $kmess);
+    $page = ceil($pa2 / $user->config->kmess);
     echo '<br><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Continue') . '</a><br>';
 } else {
     // Форма выбора файла для выгрузки

@@ -96,7 +96,7 @@ if ($do || isset($_GET['new'])) {
             LEFT JOIN `forum_messages` ON `cms_forum_files`.`post` = `forum_messages`.`id`
             LEFT JOIN `forum_topic` AS `topicname` ON `cms_forum_files`.`topic` = `topicname`.`id`
             WHERE ' . (isset($_GET['new']) ? " `cms_forum_files`.`time` > '${new}'" : " `filetype` = '${do}'") . ($user->rights >= 7 ? '' : " AND `del` != '1'") . $sql .
-            "ORDER BY `time` DESC LIMIT ${start},${kmess}");
+            "ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
         for ($i = 0; $res = $req->fetch(); ++$i) {
             $res_u = $db->query("SELECT `id`, `name`, `sex`, `rights`, `lastdate`, `status`, `datereg`, `ip`, `browser` FROM `users` WHERE `id` = '" . $res['user_id'] . "'")->fetch();
@@ -105,7 +105,7 @@ if ($do || isset($_GET['new'])) {
             $text = mb_substr($res['text'], 0, 500);
             $text = $tools->checkout($text, 1, 0);
             $text = preg_replace('#\[c\](.*?)\[/c\]#si', '', $text);
-            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $kmess);
+            $page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '" . $res['post'] . "'")->fetchColumn() / $user->config->kmess);
             $text = '<b><a href="?type=topic&id=' . $res['topic'] . '&amp;page=' . $page . '">' . $res['topicname'] . '</a></b><br />' . $text;
 
             if (mb_strlen($res['text']) > 500) {
@@ -148,10 +148,9 @@ if ($do || isset($_GET['new'])) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
+        if ($total > $user->config->kmess) {
             // Постраничная навигация
-            echo '<p>' . $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new'
-                        : 'do=' . $do) . $lnk . '&amp;', $start, $total, $kmess) . '</p>' .
+            echo '<p>' . $tools->displayPagination('?act=files&amp;' . (isset($_GET['new']) ? 'new' : 'do=' . $do) . $lnk . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
                 '<p><form method="get">' .
                 '<input type="hidden" name="act" value="files"/>' .
                 '<input type="hidden" name="do" value="' . $do . '"/>' . $input . '<input type="text" name="page" size="2"/>' .

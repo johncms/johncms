@@ -122,6 +122,6 @@ if ($freq->rowCount()) {
 echo '</div>';
 
 // Вычисляем, на какой странице сообщение?
-$page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $kmess);
+$page = ceil($db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `topic_id` = '" . $res['topic_id'] . "' AND `id` " . ($set_forum['upfp'] ? '>=' : '<=') . " '${id}'")->fetchColumn() / $user->config->kmess);
 echo '<div class="phdr"><a href="?type=topic&id=' . $res['topic_id'] . '&amp;page=' . $page . '">' . _t('Back to topic') . '</a></div>';
 echo '<p><a href="./">' . _t('Forum') . '</a></p>';
