@@ -172,7 +172,7 @@ if ($set_karma['on']) {
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $user->id . "' AND `time` > " . (time() - 86400) . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
 
                 while ($res = $req->fetch()) {
                     echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -190,8 +190,8 @@ if ($set_karma['on']) {
             }
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<p>' . $tools->displayPagination('?act=karma&amp;mod=new&amp;', $start, $total, $kmess) . '</p>' .
+            if ($total > $user->config->kmess) {
+                echo '<p>' . $tools->displayPagination('?act=karma&amp;mod=new&amp;', $start, $total, $user->config->kmess) . '</p>' .
                     '<p><form action="?act=karma&amp;mod=new" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -235,7 +235,7 @@ if ($set_karma['on']) {
             $total = $db->query("SELECT COUNT(*) FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'"))->fetchColumn();
 
             if ($total) {
-                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, ${kmess}");
+                $req = $db->query("SELECT * FROM `karma_users` WHERE `karma_user` = '" . $foundUser['id'] . "'" . ($type == 2 ? '' : " AND `type` = '${type}'") . " ORDER BY `time` DESC LIMIT ${start}, " . $user->config->kmess);
                 $i = 0;
 
                 while ($res = $req->fetch()) {
@@ -261,8 +261,8 @@ if ($set_karma['on']) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $kmess) . '</div>' .
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
                     '<p><form action="?act=karma&amp;user=' . $foundUser['id'] . '&amp;type=' . $type . '" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

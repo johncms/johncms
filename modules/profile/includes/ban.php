@@ -314,7 +314,7 @@ switch ($mod) {
         $total = $db->query("SELECT COUNT(*) FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "'")->fetchColumn();
 
         if ($total) {
-            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, ${kmess}");
+            $req = $db->query("SELECT * FROM `cms_ban_users` WHERE `user_id` = '" . $foundUser['id'] . "' ORDER BY `ban_time` DESC LIMIT ${start}, " . $user->config->kmess);
             $i = 0;
 
             $types = [
@@ -372,8 +372,8 @@ switch ($mod) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<p>' . $tools->displayPagination('?act=ban&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $kmess) . '</p>' .
+        if ($total > $user->config->kmess) {
+            echo '<p>' . $tools->displayPagination('?act=ban&amp;user=' . $foundUser['id'] . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
                 '<p><form action="?act=ban&amp;user=' . $foundUser['id'] . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
