@@ -18,6 +18,8 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\Api\UserInterface  $user
  */
 
+$itmOnPage = $user->config->kmess;
+
 if (! $al) {
     echo $tools->displayError(_t('Wrong data'));
     echo $view->render('system::app/old_content', [
@@ -105,7 +107,7 @@ if (($album['access'] == 1 || $album['access'] == 3)
 
 // Просмотр альбома и фотографий
 if ($show) {
-    $kmess = 1;
+    $itmOnPage = 1;
     $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
     $start = isset($_REQUEST['page']) ? $page - 1 : ($db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}' AND `id` > '${img}'")->fetchColumn());
 
@@ -119,13 +121,13 @@ if ($show) {
 
 $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE `album_id` = '${al}'")->fetchColumn();
 
-if ($total > $kmess) {
+if ($total > $itmOnPage) {
     echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start, $total, $kmess) . '</div>';
+            $start, $total, $itmOnPage) . '</div>';
 }
 
 if ($total) {
-    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `user_id` = '" . $foundUser['id'] . "' AND `album_id` = '${al}' ORDER BY `id` DESC LIMIT ${start}, ${kmess}");
+    $req = $db->query("SELECT * FROM `cms_album_files` WHERE `user_id` = '" . $foundUser['id'] . "' AND `album_id` = '${al}' ORDER BY `id` DESC LIMIT ${start}, ${itmOnPage}");
     $i = 0;
 
     while ($res = $req->fetch()) {
@@ -190,9 +192,9 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
+if ($total > $itmOnPage) {
     echo '<div class="topmenu">' . $tools->displayPagination('?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . '&amp;' . ($show ? 'view&amp;' : ''),
-            $start, $total, $kmess) . '</div>' .
+            $start, $total, $itmOnPage) . '</div>' .
         '<p><form action="?act=show&amp;al=' . $al . '&amp;user=' . $foundUser['id'] . ($show ? '&amp;view' : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

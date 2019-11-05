@@ -120,15 +120,14 @@ unset($_SESSION['ref']);
 echo '<div class="phdr"><a href="./"><b>' . _t('Photo Albums') . '</b></a> | ' . $title . '</div>';
 
 if ($mod == 'my_new_comm') {
-    $total = $new_album_comm;
+    $total = $new_album_comm; //TODO: разобраться
 } elseif (! isset($total)) {
     $total = $db->query("SELECT COUNT(*) FROM `cms_album_files` WHERE ${where}")->fetchColumn();
 }
 
 if ($total) {
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total,
-                $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     $req = $db->query("
@@ -139,8 +138,7 @@ if ($total) {
       ${join}
       WHERE ${where}
       ORDER BY ${order}
-      LIMIT ${start}, ${kmess}
-    ");
+      LIMIT ${start}, " . $user->config->kmess);
 
     for ($i = 0; $res = $req->fetch(); ++$i) {
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -178,9 +176,8 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total,
-            $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=top' . $link . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
         '<p><form action="?act=top' . $link . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

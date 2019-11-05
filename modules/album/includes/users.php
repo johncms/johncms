@@ -49,8 +49,7 @@ if ($total) {
     $req = $db->query("SELECT `cms_album_files`.*, COUNT(`cms_album_files`.`id`) AS `count`, `users`.`id` AS `uid`, `users`.`name` AS `nick`
         FROM `cms_album_files`
         LEFT JOIN `users` ON `cms_album_files`.`user_id` = `users`.`id` ${sql}
-        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, ${kmess}
-    ");
+        GROUP BY `cms_album_files`.`user_id` ORDER BY `users`.`name` ASC LIMIT ${start}, " . $user->config->kmess);
     $i = 0;
 
     while ($res = $req->fetch()) {
@@ -62,9 +61,8 @@ if ($total) {
     echo '<div class="menu"><p>' . _t('The list is empty') . '</p></div>';
 }
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;',
-            $start, $total, $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
         '<p><form action="?act=users' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
