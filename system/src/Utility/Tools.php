@@ -17,6 +17,7 @@ use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
 use Johncms\Users\UserConfig;
+use Johncms\View\Extension\Assets;
 use Psr\Container\ContainerInterface;
 
 class Tools implements ToolsInterface
@@ -25,6 +26,11 @@ class Tools implements ToolsInterface
      * @var ContainerInterface
      */
     private $container;
+
+    /**
+     * @var Assets
+     */
+    private $assets;
 
     /**
      * @var \PDO
@@ -49,6 +55,7 @@ class Tools implements ToolsInterface
     public function __invoke(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->assets = $container->get(Assets::class);
         $this->config = $container->get(ConfigInterface::class);
         $this->db = $container->get(\PDO::class);
         $this->user = $container->get(UserInterface::class);
@@ -309,13 +316,14 @@ class Tools implements ToolsInterface
             if (file_exists(UPLOAD_PATH . 'users/avatar/' . $user['id'] . '.png')) {
                 $out .= '<img src="' . $homeurl . '/upload/users/avatar/' . $user['id'] . '.png" width="32" height="32" alt="" />&#160;';
             } else {
-                $out .= '<img src="' . $homeurl . '/images/empty.png" width="32" height="32" alt="" />&#160;';
+                $out .= '<img src="' . $this->assets->url('images/old/empty.png') . '" alt="" />&#160;';
             }
 
             $out .= '</td><td>';
 
             if ($user['sex']) {
-                $out .= $this->image(($user['sex'] === 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png', ['class' => 'icon-inline']);
+                $iconName = ($user['sex'] === 'm' ? 'm' : 'w') . ($user['datereg'] > time() - 86400 ? '_new' : '') . '.png';
+                $out .= '<img src="' . $this->assets->url('images/old/' . $iconName) . '" alt="" class="icon-inline">';
             } else {
                 $out .= $this->image('del.png');
             }
