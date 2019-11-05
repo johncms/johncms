@@ -163,9 +163,8 @@ function _p($singular, $plural, $number, $textDomain = 'default')
 /** @var UserInterface $userConfig */
 $userConfig = $container->get(UserInterface::class)->config;
 
-$kmess = $userConfig->kmess; //TODO: удалить $kmess ВЕЗДЕ, где используется!!!
 $page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $kmess - $kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
+$start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
 
 if (extension_loaded('zlib') && ! ini_get('zlib.output_compression')) {
     ob_start('ob_gzhandler');
