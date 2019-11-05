@@ -10,23 +10,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 // Каталог пользовательских Аватаров
 if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
     $avatar = isset($_GET['avatar']) ? (int) ($_GET['avatar']) : false;
 
-    if ($systemUser->isValid() && $avatar && is_file(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png')) {
+    if ($user->isValid() && $avatar && is_file(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png')) {
         if (isset($_POST['submit'])) {
             // Устанавливаем пользовательский Аватар
-            if (@copy(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png', UPLOAD_PATH . 'users/avatar/' . $systemUser->id . '.png')) {
+            if (@copy(ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png', UPLOAD_PATH . 'users/avatar/' . $user->id . '.png')) {
                 echo '<div class="gmenu"><p>' . _t('Avatar has been successfully applied') . '<br />' .
                     '<a href="../profile/?act=edit">' . _t('Continue') . '</a></p></div>';
             } else {
@@ -47,7 +45,7 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
             '</div>';
         $array = glob(ASSETS_PATH . 'avatars/' . $id . '/*.png');
         $total = count($array);
-        $end = $start + $kmess;
+        $end = $start + $user->config->kmess;
 
         if ($end > $total) {
             $end = $total;
@@ -58,7 +56,7 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
                 echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
                 echo '<img src="../assets/avatars/' . $id . '/' . basename($array[$i]) . '" alt="" />';
 
-                if ($systemUser->isValid()) {
+                if ($user->isValid()) {
                     echo ' - <a href="?act=avatars&amp;id=' . $id . '&amp;avatar=' . basename($array[$i]) . '">' . _t('Select') . '</a>';
                 }
 
@@ -70,8 +68,8 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
 
         echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-        if ($total > $kmess) {
-            echo '<p>' . $tools->displayPagination('?act=avatars&amp;id=' . $id . '&amp;', $start, $total, $kmess) . '</p>' .
+        if ($total > $user->config->kmess) {
+            echo '<p>' . $tools->displayPagination('?act=avatars&amp;id=' . $id . '&amp;', $start, $total, $user->config->kmess) . '</p>' .
                 '<p><form action="?act=avatars&amp;id=' . $id . '" method="post">' .
                 '<input type="text" name="page" size="2"/>' .
                 '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
@@ -88,7 +86,7 @@ if ($id && is_dir(ASSETS_PATH . 'avatars/' . $id)) {
     $total_dir = count($dir);
 
     for ($i = 0; $i < $total_dir; $i++) {
-        $count = (int)count(glob($dir[$i] . '/*.png'));
+        $count = (int) count(glob($dir[$i] . '/*.png'));
         $total = $total + $count;
         echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
         echo '<a href="?act=avatars&amp;id=' . basename($dir[$i]) . '">' . htmlentities(file_get_contents($dir[$i] . '/name.txt'), ENT_QUOTES, 'utf-8') .

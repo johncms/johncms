@@ -10,24 +10,22 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
+defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
 
 // Каталог Админских Смайлов
-if ($systemUser->rights < 1) {
+if ($user->rights < 1) {
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smilies">' . _t('Back') . '</a>');
-    require 'system/end.php';
+    echo $view->render('system::app/old_content', ['title' => $textl ?? '', 'content' => ob_get_clean()]);
     exit;
 }
 
 echo '<div class="phdr"><a href="?act=smilies"><b>' . _t('Smilies') . '</b></a> | ' . _t('For administration') . '</div>';
-$user_sm = unserialize($systemUser->smileys);
+$user_sm = unserialize($user->smileys);
 
 if (! is_array($user_sm)) {
     $user_sm = [];
@@ -48,7 +46,7 @@ closedir($dir);
 $total = count($array);
 
 if ($total > 0) {
-    $end = $start + $kmess;
+    $end = $start + $user->config->kmess;
 
     if ($end > $total) {
         $end = $total;
@@ -68,8 +66,8 @@ if ($total > 0) {
 echo '<div class="gmenu"><input type="submit" name="add" value=" ' . _t('Add') . ' "/></div></form>';
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=admsmilies&amp;', $start, $total, $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=admsmilies&amp;', $start, $total, $user->config->kmess) . '</div>';
     echo '<p><form action="?act=admsmilies" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';

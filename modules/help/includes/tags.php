@@ -10,6 +10,8 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
 // Справка по BBcode
 echo '
 <div class="phdr">

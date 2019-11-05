@@ -10,18 +10,21 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = App::getContainer()->get(Johncms\Api\UserInterface::class);
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var Johncms\Api\UserInterface $user
+ */
 
 // Главное меню каталога смайлов
 echo '<div class="phdr"><a href="?"><b>' . _t('Information, FAQ') . '</b></a> | ' . _t('Smilies') . '</div>';
 
-if ($systemUser->isValid()) {
-    $mycount = ! empty($systemUser->smileys) ? count(unserialize($systemUser->smileys)) : '0';
+if ($user->isValid()) {
+    $mycount = ! empty($user->smileys) ? count(unserialize($user->smileys)) : '0';
     echo '<div class="topmenu"><a href="?act=my_smilies">' . _t('My smilies') . '</a> (' . $mycount . ' / ' . $user_smileys . ')</div>';
 }
 
-if ($systemUser->rights >= 1) {
+if ($user->rights >= 1) {
     echo '<div class="gmenu"><a href="?act=admsmilies">' . _t('For administration') . '</a> (' . (int)count(glob(ASSETS_PATH . 'emoticons/admin/*.gif')) . ')</div>';
 }
 
@@ -41,7 +44,7 @@ asort($smileys_cat);
 $i = 0;
 
 foreach ($smileys_cat as $key => $val) {
-    echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
+    echo ($i % 2) ? '<div class="list2">' : '<div class="list1">';
     echo '<a href="?act=usersmilies&amp;cat=' . urlencode($key) . '">' . htmlspecialchars($val) . '</a>' .
         ' (' . count(glob(ASSETS_PATH . 'emoticons/user/' . $key . '/*.{gif,jpg,png}', GLOB_BRACE)) . ')';
     echo '</div>';

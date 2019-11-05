@@ -10,28 +10,26 @@ declare(strict_types=1);
  * @link      https://johncms.com JohnCMS Project
  */
 
+defined('_IN_JOHNCMS') || die('Error: restricted access');
+
+/**
+ * @var Johncms\Api\ToolsInterface $tools
+ * @var Johncms\Api\UserInterface  $user
+ */
+
 // Настраиваем список своих смайлов
 $adm = isset($_GET['adm']);
 $add = isset($_POST['add']);
 $delete = isset($_POST['delete']);
 $cat = isset($_GET['cat']) ? trim($_GET['cat']) : '';
 
-/** @var Psr\Container\ContainerInterface $container */
-$container = App::getContainer();
-
-/** @var Johncms\Api\UserInterface $systemUser */
-$systemUser = $container->get(Johncms\Api\UserInterface::class);
-
-/** @var Johncms\Api\ToolsInterface $tools */
-$tools = $container->get(Johncms\Api\ToolsInterface::class);
-
-if (($adm && ! $systemUser->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
+if (($adm && ! $user->rights) || ($add && ! $adm && ! $cat) || ($delete && ! $_POST['delete_sm']) || ($add && ! $_POST['add_sm'])) {
     echo $tools->displayError(_t('Wrong data'), '<a href="?act=smileys">' . _t('Smilies') . '</a>');
     require 'system/end.php';
     exit;
 }
 
-$smileys = unserialize($systemUser->smileys);
+$smileys = unserialize($user->smileys);
 
 if (! is_array($smileys)) {
     $smileys = [];
@@ -51,7 +49,7 @@ if (count($smileys) > $user_smileys) {
     $smileys = $smileys[0];
 }
 
-$db->query('UPDATE `users` SET `smileys` = ' . $db->quote(serialize($smileys)) . ' WHERE `id` = ' . $systemUser->id);
+$db->query('UPDATE `users` SET `smileys` = ' . $db->quote(serialize($smileys)) . ' WHERE `id` = ' . $user->id);
 
 if ($delete || isset($_GET['clean'])) {
     header('location: ?act=my_smilies&start=' . $start . '');

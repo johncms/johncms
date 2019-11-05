@@ -11,6 +11,8 @@ declare(strict_types=1);
  */
 
 use Johncms\Api\ConfigInterface;
+use Johncms\Api\ToolsInterface;
+use Johncms\Api\UserInterface;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
@@ -20,11 +22,15 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 /**
  * @var ConfigInterface    $config
  * @var ContainerInterface $container
+ * @var ToolsInterface     $tools
+ * @var UserInterface      $user
  * @var Engine             $view
  */
 
 $container = App::getContainer();
 $config = $container->get(ConfigInterface::class);
+$tools = $container->get(Johncms\Api\ToolsInterface::class);
+$user = $container->get(UserInterface::class);
 $view = $container->get(Engine::class);
 
 // Регистрируем Namespace для шаблонов модуля
