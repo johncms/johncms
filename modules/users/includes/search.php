@@ -62,12 +62,12 @@ if ($search && ! $error) {
     $total = $db->query('SELECT COUNT(*) FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db))->fetchColumn();
     echo '<div class="phdr"><b>' . _t('Searching results') . '</b></div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>';
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>';
     }
 
     if ($total) {
-        $req = $db->query('SELECT * FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db) . " ORDER BY `name` ASC LIMIT ${start}, ${kmess}");
+        $req = $db->query('SELECT * FROM `users` WHERE `name_lat` LIKE ' . $db->quote($search_db) . " ORDER BY `name` ASC LIMIT ${start}, " . $user->config->kmess);
         $i = 0;
         while ($res = $req->fetch()) {
             echo $i % 2 ? '<div class="list2">' : '<div class="list1">';
@@ -82,8 +82,8 @@ if ($search && ! $error) {
 
     echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-    if ($total > $kmess) {
-        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $kmess) . '</div>' .
+    if ($total > $user->config->kmess) {
+        echo '<div class="topmenu">' . $tools->displayPagination('search.php?search=' . urlencode($search) . '&amp;', $start, $total, $user->config->kmess) . '</div>' .
             '<p><form action="search.php?search=' . urlencode($search) . '" method="post">' .
             '<input type="text" name="page" size="2"/>' .
             '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .

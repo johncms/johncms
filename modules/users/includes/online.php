@@ -37,10 +37,10 @@ switch ($mod) {
 
         if ($start >= $total) {
             // Исправляем запрос на несуществующую страницу
-            $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+            $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
         }
 
-        $end = $start + $kmess;
+        $end = $start + $user->config->kmess;
 
         if ($end > $total) {
             $end = $total;
@@ -55,8 +55,8 @@ switch ($mod) {
         }
 
         if ($total && $user->rights) {
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>';
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $user->config->kmess) . '</div>';
             }
 
             for ($i = $start; $i < $end; $i++) {
@@ -75,8 +75,8 @@ switch ($mod) {
 
             echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-            if ($total > $kmess) {
-                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $kmess) . '</div>' .
+            if ($total > $user->config->kmess) {
+                echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;mod=ip&amp;', $start, $total, $user->config->kmess) . '</div>' .
                     '<p><form action="?act=online&amp;mod=ip" method="post">' .
                     '<input type="text" name="page" size="2"/>' .
                     '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/></form></p>';
@@ -111,15 +111,15 @@ $total = $db->query($sql_total)->fetchColumn();
 
 // Исправляем запрос на несуществующую страницу
 if ($start >= $total) {
-    $start = max(0, $total - (($total % $kmess) == 0 ? $kmess : ($total % $kmess)));
+    $start = max(0, $total - (($total % $user->config->kmess) == 0 ? $user->config->kmess : ($total % $user->config->kmess)));
 }
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>';
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $user->config->kmess) . '</div>';
 }
 
 if ($total) {
-    $req = $db->query($sql_list . "${start}, ${kmess}");
+    $req = $db->query($sql_list . "${start}, " . $user->config->kmess);
     $i = 0;
 
     while ($res = $req->fetch()) {
@@ -151,8 +151,8 @@ if ($total) {
 
 echo '<div class="phdr">' . _t('Total') . ': ' . $total . '</div>';
 
-if ($total > $kmess) {
-    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $kmess) . '</div>' .
+if ($total > $user->config->kmess) {
+    echo '<div class="topmenu">' . $tools->displayPagination('?act=online&amp;' . ($mod ? 'mod=' . $mod . '&amp;' : ''), $start, $total, $user->config->kmess) . '</div>' .
         '<p><form action="?act=online' . ($mod ? '&amp;mod=' . $mod : '') . '" method="post">' .
         '<input type="text" name="page" size="2"/>' .
         '<input type="submit" value="' . _t('To Page') . ' &gt;&gt;"/>' .
