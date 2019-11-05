@@ -24,7 +24,7 @@ interface ToolsInterface
 
     public function displayPagination($url, $start, $total, $kmess);
 
-    public function displayPlace(int $user_id, string $place, $headmod) : string;
+    public function displayPlace(string $place, int $user_id = 0) : string;
 
     public function displayUser($user, array $arg = []);
 

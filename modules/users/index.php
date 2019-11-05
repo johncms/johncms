@@ -13,6 +13,7 @@ declare(strict_types=1);
 use Johncms\Api\ConfigInterface;
 use Johncms\Api\ToolsInterface;
 use Johncms\Api\UserInterface;
+use Johncms\View\Extension\Assets;
 use League\Plates\Engine;
 use Psr\Container\ContainerInterface;
 use Zend\I18n\Translator\Translator;
@@ -20,6 +21,7 @@ use Zend\I18n\Translator\Translator;
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
+ * @var Assets             $assets
  * @var ConfigInterface    $config
  * @var ContainerInterface $container
  * @var PDO                $db
@@ -29,6 +31,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  */
 
 $container = App::getContainer();
+$assets = $container->get(Assets::class);
 $config = $container->get(ConfigInterface::class);
 $db = $container->get(PDO::class);
 $tools = $container->get(ToolsInterface::class);

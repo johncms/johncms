@@ -140,7 +140,7 @@ if ($total) {
             $arg['header'] .= $res['movings'] . ' - ' . $tools->timecount(time() - $res['sestime']);
         }
 
-        $arg['header'] .= ')</span><br /><img src="../images/info.png" width="16" height="16" align="middle" />&#160;' . $tools->displayPlace((int) $res['id'], $res['place'], $headmod);
+        $arg['header'] .= ')</span><br /><img src="' . $assets->url('images/old/info.png') . '" alt="" class="icon">' . $tools->displayPlace($res['place'], (int) $res['id']);
         echo $tools->displayUser($res, $arg);
         echo '</div>';
         ++$i;
