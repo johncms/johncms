@@ -42,6 +42,15 @@ echo '</p></div>';
 // Блок почты
 echo '<div class="list2"><p><h3>' . _t('My Mailbox') . '</h3>';
 
+//TODO: Перенести данный запрос в счетчики и использовать результат вместе с уведомлениями
+$new_mail = $db->query("SELECT COUNT(*) FROM `cms_mail`
+  LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $user->id . "'
+  WHERE `cms_mail`.`from_id`='" . $user->id . "'
+  AND `cms_mail`.`sys`='0'
+  AND `cms_mail`.`read`='0'
+  AND `cms_mail`.`delete`!='" . $user->id . "'
+  AND `cms_contact`.`ban`!='1'")->fetchColumn();
+
 //Входящие сообщения
 $count_input = $db->query("
 	SELECT COUNT(*) 
